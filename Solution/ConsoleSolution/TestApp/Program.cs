@@ -1,4 +1,7 @@
-﻿// See https://aka.ms/new-console-template for more information
+﻿
+//Entry Point function
+
+// See https://aka.ms/new-console-template for more information
 Console.WriteLine("Hello, World!");
 
 
