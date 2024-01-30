@@ -8,19 +8,24 @@
     "net8.0": []
   },
   "packageFolders": {
-    "C:\\Users\\DELL\\.nuget\\packages\\": {}
+    "C:\\Users\\Dell\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\TAP\\TFLPortal\\TFLAssessment\\Solution\\ConsoleSolution\\TestApp\\TestApp.csproj",
+      "projectUniqueName": "D:\\TAP\\TFL\\TFLAssessment\\Solution\\ConsoleSolution\\TestApp\\TestApp.csproj",
       "projectName": "TestApp",
-      "projectPath": "D:\\TAP\\TFLPortal\\TFLAssessment\\Solution\\ConsoleSolution\\TestApp\\TestApp.csproj",
-      "packagesPath": "C:\\Users\\DELL\\.nuget\\packages\\",
-      "outputPath": "D:\\TAP\\TFLPortal\\TFLAssessment\\Solution\\ConsoleSolution\\TestApp\\obj\\",
+      "projectPath": "D:\\TAP\\TFL\\TFLAssessment\\Solution\\ConsoleSolution\\TestApp\\TestApp.csproj",
+      "packagesPath": "C:\\Users\\Dell\\.nuget\\packages\\",
+      "outputPath": "D:\\TAP\\TFL\\TFLAssessment\\Solution\\ConsoleSolution\\TestApp\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "C:\\Users\\DELL\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Dell\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
