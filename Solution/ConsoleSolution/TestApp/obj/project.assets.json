@@ -8,7 +8,7 @@
     "net8.0": []
   },
   "packageFolders": {
-    "C:\\Users\\Dell\\.nuget\\packages\\": {},
+    "C:\\Users\\SONY\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
@@ -17,14 +17,14 @@
       "projectUniqueName": "D:\\TAP\\TFL\\TFLAssessment\\Solution\\ConsoleSolution\\TestApp\\TestApp.csproj",
       "projectName": "TestApp",
       "projectPath": "D:\\TAP\\TFL\\TFLAssessment\\Solution\\ConsoleSolution\\TestApp\\TestApp.csproj",
-      "packagesPath": "C:\\Users\\Dell\\.nuget\\packages\\",
+      "packagesPath": "C:\\Users\\SONY\\.nuget\\packages\\",
       "outputPath": "D:\\TAP\\TFL\\TFLAssessment\\Solution\\ConsoleSolution\\TestApp\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\Dell\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\SONY\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
