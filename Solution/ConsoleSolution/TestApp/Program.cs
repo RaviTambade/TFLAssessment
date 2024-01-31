@@ -4,6 +4,7 @@
 // See https://aka.ms/new-console-template for more information
 //Import 
 
+
 using Assessment;
 using assignment;
 using System.Collections.Generic; //Inbuilt namespace for collection
@@ -24,18 +25,6 @@ int b = 15;
 int sub = b - c;
 Console.WriteLine("subtraction from b and c ="+ sub);
 
-<<<<<<< HEAD
-int e = 10;
-int f = 15;
-int sub = b - c;
-Console.WriteLine("subtraction from b and c ="+ sub);
-
-int c = 10;
-int b = 15;
-int sub = b - c;
-Console.WriteLine("subtraction from b and c ="+ sub);
-
-=======
 //Object created
 //emp1 and emp2 are references which points to objects created on heap
 //emp1 and emp2 are refences stored on Stack
@@ -148,4 +137,3 @@ Console.WriteLine("Enter Achived Target For marketing Manager");
 man2.Achieved=double.Parse(Console.ReadLine());
 
 Console.WriteLine("Total Salary With Incentive Is : "+man2.CalculateSalary());
->>>>>>> 716900fbf1d241bf15d21d5f10bc0ca18f69011e
