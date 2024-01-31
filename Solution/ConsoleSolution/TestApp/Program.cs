@@ -126,3 +126,28 @@ switch(num1){
     }
     break;
 }
+
+Manager man1 = new Manager();
+Manager man2 = new Manager();
+
+man1.Department="Sales";
+man2.Department="Markating";
+man2.BasicSalary=40000.00;
+
+Console.WriteLine("Enter Basic Salary For Sales Manager");
+man1.BasicSalary=double.Parse(Console.ReadLine());
+
+Console.WriteLine("Enter Given Target For Sales Manager");
+man1.Target=double.Parse(Console.ReadLine());
+
+Console.WriteLine("Enter Achived Target For Sales Manager");
+man1.Achieved=double.Parse(Console.ReadLine());
+Console.WriteLine("Total Salary With Incentive Is : "+man1.CalculateSalary());
+
+Console.WriteLine("Enter Given Target For Marketing Manager");
+man2.Target=double.Parse(Console.ReadLine());
+
+Console.WriteLine("Enter Achived Target For marketing Manager");
+man2.Achieved=double.Parse(Console.ReadLine());
+
+Console.WriteLine("Total Salary With Incentive Is : "+man2.CalculateSalary());
