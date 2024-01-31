@@ -4,5 +4,12 @@ public class Manager{
     private float target;
     private float achieved;
     private double incentive;
-    
+
+
+    public float CalculateSalary(){
+
+
+        
+    }
+
 }
