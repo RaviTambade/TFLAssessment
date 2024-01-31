@@ -11,8 +11,6 @@ public class Manager{
     }
 
 
-<<<<<<< HEAD
-=======
      public string Department
     {
         get { return department; } 
@@ -65,6 +63,5 @@ public class Manager{
 
         
     }
->>>>>>> 716900fbf1d241bf15d21d5f10bc0ca18f69011e
 
 }
