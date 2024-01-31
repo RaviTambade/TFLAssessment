@@ -2,6 +2,8 @@
 //Entry Point function
 
 // See https://aka.ms/new-console-template for more information
+using Assessment;
+
 Console.WriteLine("Hello, World!");
 
 
@@ -20,3 +22,6 @@ int b = 15;
 int sub = b - c;
 Console.WriteLine("subtraction from b and c ="+ sub);
 
+Employee emp1 = new Employee();
+//string Fname = emp1.SetFname();
+string Name = emp1.GetFname();
