@@ -20,3 +20,13 @@ int b = 15;
 int sub = b - c;
 Console.WriteLine("subtraction from b and c ="+ sub);
 
+int e = 10;
+int f = 15;
+int sub = b - c;
+Console.WriteLine("subtraction from b and c ="+ sub);
+
+int c = 10;
+int b = 15;
+int sub = b - c;
+Console.WriteLine("subtraction from b and c ="+ sub);
+
