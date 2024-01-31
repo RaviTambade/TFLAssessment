@@ -6,10 +6,5 @@ public class Manager{
     private double incentive;
 
 
-    public float CalculateSalary(){
-
-
-        
-    }
 
 }

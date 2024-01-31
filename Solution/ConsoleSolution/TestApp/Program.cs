@@ -5,6 +5,7 @@
 //Import 
 
 using Assessment;
+using assignment;
 using System.Collections.Generic; //Inbuilt namespace for collection
 Console.WriteLine("Hello, World!");
 
@@ -97,32 +98,14 @@ for(int i=0;i<numbers.Length;i++){
     Console.WriteLine(numbers[i]);
 }
 
-Console.WriteLine(" 1. Add \n 2: Subtract \n 3. Multiply");
+Calculator cl = new Calculator();
+Console.WriteLine("Enter number 1 : ");
+double number1=double.Parse(Console.ReadLine());
+Console.WriteLine("Enter number 2 : ");
+double number2=double.Parse(Console.ReadLine());
+Console.WriteLine(" 1. Add \n 2: Subtract \n 3. Multiply \n 4. Division");
 Console.WriteLine("Enter Option:");
 int num1=int.Parse(Console.ReadLine());
-
-Console.WriteLine("Enter Amount");
-double amount=double.Parse(Console.ReadLine());
-
-Console.WriteLine(" Number="+ num1);
-Console.WriteLine(" Amount="+ amount);
-
-switch(num1){
-    case 1:
-    {
-        Console.WriteLine(" You have selected add option");
-    }
-    break;
-    
-    case 2:
-    {
-        Console.WriteLine(" You have selected subtract option");
-    }
-    break;
-    
-    case 3:
-    {
-        Console.WriteLine(" You have selected Multiply option");
-    }
-    break;
-}
+cl.Calculate(num1,number1,number2);
+double answer= cl.Calculate(num1,number1,number2);
+Console.WriteLine("Answer : "+answer);
