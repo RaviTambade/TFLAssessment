@@ -21,7 +21,7 @@ public class Employee{
 
     public Employee(int empId,string firstName,string lastName,string contactNumber,string email){
         this.empId=empId;
-        this.firstName="Bhupendra";
+        this.firstName=firstName;
         this.lastName=lastName;
         this.contactNumber=contactNumber;
         this.email=email;

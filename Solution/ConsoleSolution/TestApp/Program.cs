@@ -5,9 +5,8 @@
 //Import 
 
 using Assessment;
-
+using System.Collections.Generic; //Inbuilt namespace for collection
 Console.WriteLine("Hello, World!");
-
 
 Console.WriteLine("Test App");
 int A = 5;
@@ -69,3 +68,31 @@ string n3=emp2.FirstName;
 Employee e5=new Employee(45, "Rajan",
                          "More", "9881734895",
                          "rajan.more@gmail.com");
+
+Employee e6=new Employee(49, "Chitrali",
+                         "Rege", "9881734986",
+                         "chaitrali.rege@gmail.com");
+
+Employee e8=new Employee(49, "Sameer",
+                         "Patil", "9887634986",
+                         "sameer.patil@gmail.com");
+
+//Create empty list object of Employee
+
+List<Employee> employees=new List<Employee>();
+
+employees.Add(e5);
+employees.Add(e6);
+employees.Add(e8);
+
+Console.WriteLine("Printing all employee objects ...");
+
+for(int i=0; i<employees.Count;i++){
+    Console.WriteLine(employees[i].FirstName + " "+ employees[i].LastName);
+}
+
+int [] numbers={56,87,45,65,45};
+
+for(int i=0;i<numbers.Length;i++){
+    Console.WriteLine(numbers[i]);
+}
