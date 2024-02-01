@@ -4,7 +4,9 @@
 // See https://aka.ms/new-console-template for more information
 //Import 
 
+
 using Assessment;
+using assignment;
 using System.Collections.Generic; //Inbuilt namespace for collection
 Console.WriteLine("Hello, World!");
 
@@ -97,32 +99,41 @@ for(int i=0;i<numbers.Length;i++){
     Console.WriteLine(numbers[i]);
 }
 
-Console.WriteLine(" 1. Add \n 2: Subtract \n 3. Multiply");
+Calculator cl = new Calculator();
+Console.WriteLine("Enter number 1 : ");
+double number1=double.Parse(Console.ReadLine());
+Console.WriteLine("Enter number 2 : ");
+double number2=double.Parse(Console.ReadLine());
+Console.WriteLine(" 1. Add \n 2: Subtract \n 3. Multiply \n 4. Division");
 Console.WriteLine("Enter Option:");
 int num1=int.Parse(Console.ReadLine());
+cl.Calculate(num1,number1,number2);
+double answer= cl.Calculate(num1,number1,number2);
+Console.WriteLine("Answer : "+answer);
 
-Console.WriteLine("Enter Amount");
-double amount=double.Parse(Console.ReadLine());
 
-Console.WriteLine(" Number="+ num1);
-Console.WriteLine(" Amount="+ amount);
 
-switch(num1){
-    case 1:
-    {
-        Console.WriteLine(" You have selected add option");
-    }
-    break;
-    
-    case 2:
-    {
-        Console.WriteLine(" You have selected subtract option");
-    }
-    break;
-    
-    case 3:
-    {
-        Console.WriteLine(" You have selected Multiply option");
-    }
-    break;
-}
+Manager man1 = new Manager();
+Manager man2 = new Manager();
+
+man1.Department="Sales";
+man2.Department="Markating";
+man2.BasicSalary=40000.00;
+
+Console.WriteLine("Enter Basic Salary For Sales Manager");
+man1.BasicSalary=double.Parse(Console.ReadLine());
+
+Console.WriteLine("Enter Given Target For Sales Manager");
+man1.Target=double.Parse(Console.ReadLine());
+
+Console.WriteLine("Enter Achived Target For Sales Manager");
+man1.Achieved=double.Parse(Console.ReadLine());
+Console.WriteLine("Total Salary With Incentive Is : "+man1.CalculateSalary());
+
+Console.WriteLine("Enter Given Target For Marketing Manager");
+man2.Target=double.Parse(Console.ReadLine());
+
+Console.WriteLine("Enter Achived Target For marketing Manager");
+man2.Achieved=double.Parse(Console.ReadLine());
+
+Console.WriteLine("Total Salary With Incentive Is : "+man2.CalculateSalary());
