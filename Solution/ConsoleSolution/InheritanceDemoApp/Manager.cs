@@ -15,7 +15,7 @@ public class Manager: Employee
     //override method CalculateSalary of Employee class here
     public override double CalculateSalary(){
         return base.CalculateSalary()+ incentive;
-    }
+    }git ag
 
     public override string ToString(){
         return base.ToString() + " Incentive="+incentive;
