@@ -2,6 +2,7 @@
 using HR.Repositories.Managers.Dbs;
 using HR.Services;
 using HR.Services.Interfaces;
+using MySql.Data.MySqlClient;
 
 //Main Entrypoint
 
@@ -20,6 +21,14 @@ foreach(Skill skill in skills){
     Console.WriteLine(skill.SkillId+ " "+ skill.Title);
 }
 
+Employee emp1 = new Employee();
+emp1.Fname= "Ram";
+bool status = dbManager.Update(emp1);
+if (status == true){
+    Console.WriteLine("employee is updated...");
+}else{
+    Console.WriteLine("no changes...");
+    }
 
 /*
 IFeedbackService iFvc = new FeedbackService();

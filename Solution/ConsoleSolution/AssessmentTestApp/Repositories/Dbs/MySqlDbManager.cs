@@ -71,8 +71,39 @@ public bool Insert(Employee emp){
 }
 
 public bool Update(Employee emp){
-//data base code for updating existing employee oject
-return false;
+
+   string updateSql = "update employee set fname = @newname where id=1";
+   bool status = false;
+   MySqlConnection connection = new MySqlConnection(connectionString);
+   MySqlCommand updateCommand = new MySqlCommand(updateSql, connection);
+   updateCommand.Parameters.AddWithValue("@newname", emp.Fname);
+   //updateCommand.Parameters.AddWithValue("@id", emp.Id);
+   
+   /* string updateSql = "UPDATE users SET email = @newEmail WHERE name = @name";
+    MySqlCommand updateCommand = new MySqlCommand(updateSql, connection);
+
+    // Parameters
+    updateCommand.Parameters.AddWithValue("@newEmail", "updated@tfl.com");
+    updateCommand.Parameters.AddWithValue("@name", "Shital Patil");*/
+
+    try
+    {
+        connection.Open();
+        int rowsAffected = updateCommand.ExecuteNonQuery();
+        if (rowsAffected > 0 ){
+         status= true;
+        }
+        Console.WriteLine($"Updated {rowsAffected} row(s)!");
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"Error: {ex.Message}");
+    }
+    finally
+    {
+        connection.Close();
+    } 
+    return status;
 }
 
 public bool Delete(int id){
