@@ -11,7 +11,7 @@ List<Employee> allEmployees=dbManager.GetAll();
 
 
 foreach( Employee emp in allEmployees){
-    Console.WriteLine(emp.Id + " "+ emp.Fname+ " "+ emp.Lname);
+    Console.WriteLine(emp.Id + " "+ emp.Fname+ " "+ emp.Lname+" "+emp.ContactNo+" "+emp.Email);
 }
 /*
 IFeedbackService iFvc = new FeedbackService();
