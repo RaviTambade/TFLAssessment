@@ -1,13 +1,16 @@
+using System.Security.Cryptography.X509Certificates;
 using HR.Entities;
 using HR.Repositories.Interfaces;
+using MySql.Data.MySqlClient;
 namespace HR.Repositories.Managers.Dbs;
 public class MySqlDbManager:IManager{
+public string connectionString="server=localhost;port=3306;user=root;password=root;database=assesmentdb";
 
 public List<Employee> GetAll(){
 //data base code for fetching all Employees
 
 List<Employee> employees=new List<Employee>();
-        Employee emp=new Employee();
+      /* Employee emp=new Employee();
         emp.id=45;
         emp.fname="Ravi";
         emp.lname="Tambade";
@@ -27,6 +30,37 @@ List<Employee> employees=new List<Employee>();
         //Create list of employees from fetched data
         //send list of employees.
 
+  */
+     MySqlConnection connection = new MySqlConnection(connectionString);
+     //connection.ConnectionString=connectionString;
+     try{
+        string query = "select * from employee";
+        MySqlCommand command = new MySqlCommand(query,connection);
+        connection.Open();
+        MySqlDataReader reader = command.ExecuteReader();
+        while(reader.Read()){
+              int id=int.Parse(reader["id"].ToString());
+              string fname = reader["fname"].ToString();
+              string lname = reader["lname"].ToString();
+              string contactno = reader["contactno"].ToString();
+              string email = reader["email"].ToString();
+              Employee emp = new Employee();
+              emp.Id=id;
+              emp.Fname=fname;
+              emp.Lname=lname;
+              emp.ContactNo=contactno;
+              emp.Email=email;
+              employees.Add(emp);
+        }
+        reader.Close();
+     }
+     catch(Exception e){
+       Console.WriteLine(e.Message);
+     }
+     finally{
+        connection.Close();
+     }
+        
         return employees;
 }
 
