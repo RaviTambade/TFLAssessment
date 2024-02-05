@@ -6,4 +6,5 @@ public interface IManager{
     public bool Insert(Employee emp);
     public bool Update(Employee emp);
     public bool Delete(int id);
+    
 }

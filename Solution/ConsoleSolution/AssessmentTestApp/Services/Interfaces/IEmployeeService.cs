@@ -7,4 +7,5 @@ public interface IEmployeeService{
     public bool Delete(int id);
     public bool Insert(Employee emp);
     public bool Update(Employee emp);
+    
 }
