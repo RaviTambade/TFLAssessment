@@ -4,7 +4,7 @@ using HR.Repositories.Interfaces;
 using MySql.Data.MySqlClient;
 namespace HR.Repositories.Managers.Dbs;
 public class MySqlDbManager:IManager{
-public string connectionString="server=localhost;port=3306;user=root;password=root;database=assesmentdb";
+public string connectionString="server=localhost;port=3306;user=root;password=Vaibhav@123;database=assesmentdb";
 
 public List<Employee> GetAll(){
 //data base code for fetching all Employees
