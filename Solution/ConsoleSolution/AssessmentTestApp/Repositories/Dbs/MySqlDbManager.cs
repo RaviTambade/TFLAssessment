@@ -72,12 +72,12 @@ public bool Insert(Employee emp){
 
 public bool Update(Employee emp){
 
-   string updateSql = "update employee set fname = @newname where id=1";
+   string updateSql = "update employee set fname = @newname where id=@id";
    bool status = false;
    MySqlConnection connection = new MySqlConnection(connectionString);
    MySqlCommand updateCommand = new MySqlCommand(updateSql, connection);
    updateCommand.Parameters.AddWithValue("@newname", emp.Fname);
-   //updateCommand.Parameters.AddWithValue("@id", emp.Id);
+   updateCommand.Parameters.AddWithValue("@id", emp.Id);
    
    /* string updateSql = "UPDATE users SET email = @newEmail WHERE name = @name";
     MySqlCommand updateCommand = new MySqlCommand(updateSql, connection);

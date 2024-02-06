@@ -21,9 +21,12 @@ foreach(Skill skill in skills){
     Console.WriteLine(skill.SkillId+ " "+ skill.Title);
 }
 
-Employee emp1 = new Employee();
-emp1.Fname= "Ram";
-bool status = dbManager.Update(emp1);
+Console.WriteLine();
+Console.WriteLine("Enter the Id of employee which you want to update : ");
+int ID = int.Parse(Console.ReadLine().ToString());
+Console.WriteLine("Enter the new name of employee which you want to update : ");
+allEmployees[ID-1].Fname = Console.ReadLine().ToString();
+bool status = dbManager.Update(allEmployees[ID-1]);
 if (status == true){
     Console.WriteLine("employee is updated...");
 }else{
