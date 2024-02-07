@@ -59,7 +59,7 @@ id	employeeid	technicalskillid	certifiedon
 
 
 evaluationCriterias
-id	 	title  									subjecctId
+id	 	title  									SkillId
 23		Object Oriented Programming				23
 24		Multithreading							23
 25		Web Programming							24
