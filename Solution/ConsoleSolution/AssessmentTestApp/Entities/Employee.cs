@@ -2,9 +2,9 @@ namespace HR.Entities;
 
 //Entity
 public class Employee{
-      public int  id;
-      public string  fname;
-      public string lname;
-	  public string email; 
-	  public string contactno;
+      public int  Id {get;set;}
+      public string  Fname {get;set;}
+      public string Lname {get;set;}
+	public string Email {get;set;}
+	public string ContactNo {get;set;}
 }
