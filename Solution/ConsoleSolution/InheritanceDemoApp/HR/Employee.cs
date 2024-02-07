@@ -2,9 +2,25 @@ namespace HR{
     public class Employee
     { 
         //Data Members  
-        public  double basic_sal;
-        public  double hra;
-        public  double da;
+        private  double basic_sal;
+        private  double hra;
+        private  double da;
+
+        public string BasicSalary{
+            get{return basic_sal;}
+            set{basic_sal=value;}
+        }
+
+        public double HRA{
+            get{return hra;}
+            set{hra=value;}
+        }
+
+        public double DA{
+            get{return da;}
+            set{da=value;}
+        }
+
 
         public Employee()
         {
