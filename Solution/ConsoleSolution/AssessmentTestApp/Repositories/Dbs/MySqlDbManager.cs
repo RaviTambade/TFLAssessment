@@ -66,7 +66,7 @@ List<Employee> employees=new List<Employee>();
 
 public bool Insert(Employee emp){
 // insert into employee(fname, lname, email, contactno)values("ram","tambe","rTambe@gmail.com","8547963254");
-string insertSql = "insert into employee(fname, lname, email, contactno)values(@fname, @lname, @email, @contactno)";
+   string insertSql = "insert into employee(fname, lname, email, contactno)values(@fname, @lname, @email, @contactno)";
    bool status = false;
    MySqlConnection connection = new MySqlConnection(connectionString);
    MySqlCommand insertCommand = new MySqlCommand(insertSql, connection);
