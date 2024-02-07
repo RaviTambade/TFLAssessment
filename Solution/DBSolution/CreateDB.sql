@@ -70,3 +70,45 @@ where employee.id=SkillSetRating.employeeid and Skill.Title="Java";
 
 CONSTRAINT EmployeeID FOREIGN KEY(EmployeeID) REFERENCES employee(id) 
 --Condition Query:
+
+
+
+CREATE TABLE
+TechnicalSkills(
+  TechSkId INT PRIMARY KEY AUTO_INCREMENT,
+  Title VARCHAR(20)
+);
+
+CREATE TABLE
+SubjectExperties(
+   SubExId INT PRIMARY KEY AUTO_INCREMENT,
+   EmployeeId INT,
+   TechnicalSkillId INT,
+   CertifiedOn DATE,
+   CONSTRAINT fk_employee_SubjectExperties_EmployeeId FOREIGN KEY(EmployeeId) REFERENCES employee(id) ON UPDATE CASCADE ON DELETE CASCADE,
+   CONSTRAINT fk_TechnicalSkills_SubjectExperties_TechnicalSkillId FOREIGN KEY(TechnicalSkillId) REFERENCES TechnicalSkills(TechSkId) ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+CREATE TABLE
+EvaluationCriterias(
+   EvaCriId INT PRIMARY KEY AUTO_INCREMENT,
+   Title VARCHAR(20),
+   SkillId INT,
+   CONSTRAINT fk_TechnicalSkills_EvaluationCriterias_SkillId FOREIGN KEY(SkillId) REFERENCES TechnicalSkills(TechSkId) ON UPDATE CASCADE ON DELETE CASCADE
+   
+);
+
+
+create table Questions (
+     QId INT PRIMARY KEY AUTO_INCREMENT,
+     SkillId INT,
+     Question VARCHAR(200),
+     A VARCHAR(100),
+	 B VARCHAR(100),
+	 C VARCHAR(100),
+	 D VARCHAR(100),
+	 Answer VARCHAR(100),
+	 EvaCriId INT,
+	 CONSTRAINT fk_TechnicalSkills_Qestions_SkillId FOREIGN KEY(SkillId) REFERENCES TechnicalSkills(TechSkId) ON UPDATE CASCADE ON DELETE CASCADE,
+     CONSTRAINT fk_EvaluationCriterias_Qestions_EvaCriId FOREIGN KEY(EvaCriId) REFERENCES EvaluationCriterias(EvaCriId) ON UPDATE CASCADE ON DELETE CASCADE
+);
