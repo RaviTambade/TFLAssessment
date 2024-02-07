@@ -98,3 +98,17 @@ EvaluationCriterias(
    
 );
 
+
+create table Questions (
+     QId INT PRIMARY KEY AUTO_INCREMENT,
+     SkillId INT,
+     Question VARCHAR(200),
+     A VARCHAR(100),
+	 B VARCHAR(100),
+	 C VARCHAR(100),
+	 D VARCHAR(100),
+	 Answer VARCHAR(100),
+	 EvaCriId INT,
+	 CONSTRAINT fk_TechnicalSkills_Qestions_SkillId FOREIGN KEY(SkillId) REFERENCES TechnicalSkills(TechSkId) ON UPDATE CASCADE ON DELETE CASCADE,
+     CONSTRAINT fk_EvaluationCriterias_Qestions_EvaCriId FOREIGN KEY(EvaCriId) REFERENCES EvaluationCriterias(EvaCriId) ON UPDATE CASCADE ON DELETE CASCADE
+);
