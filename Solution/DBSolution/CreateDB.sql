@@ -70,8 +70,8 @@ where employee.id=SkillSetRating.employeeid and Skill.Title="Java";
 
 CONSTRAINT EmployeeID FOREIGN KEY(EmployeeID) REFERENCES employee(id) 
 --Condition Query:
-
-
+use assesmentdb
+select * from TechnicalSkills;
 
 CREATE TABLE
 TechnicalSkills(
@@ -112,3 +112,39 @@ create table Questions (
 	 CONSTRAINT fk_TechnicalSkills_Qestions_SkillId FOREIGN KEY(SkillId) REFERENCES TechnicalSkills(TechSkId) ON UPDATE CASCADE ON DELETE CASCADE,
      CONSTRAINT fk_EvaluationCriterias_Qestions_EvaCriId FOREIGN KEY(EvaCriId) REFERENCES EvaluationCriterias(EvaCriId) ON UPDATE CASCADE ON DELETE CASCADE
 );
+
+
+create table Tests (
+Id INT PRIMARY KEY AUTO_INCREMENT,
+SkillId INT,
+Duration INT,
+SubExId INT ,
+CreatedOn DATE,
+Modifiedon DATE,
+sheduledOn DATE,
+ CONSTRAINT fk_TechnicalSkills_Tests_SkillId FOREIGN KEY(SkillId) REFERENCES TechnicalSkills(TechSkId) ON UPDATE CASCADE ON DELETE CASCADE,
+     CONSTRAINT fk_SubjectExperties_Tests_SubExId FOREIGN KEY(SubExId) REFERENCES SubjectExperties(SubExId) ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+create table TestAssCriteria(
+Id INT,
+TestId INT,
+EvaluationcriteriaId INT ,
+CONSTRAINT fk_Tests_TestAssCriteria_TestId FOREIGN KEY(TestId) REFERENCES Tests(Id) ON UPDATE CASCADE ON DELETE CASCADE,
+CONSTRAINT fk_EvaluationCriterias_TestAssCriteria_EvaluationcriteriaId FOREIGN KEY(EvaluationcriteriaId) REFERENCES EvaluationCriterias(EvaCriId) ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+create table TestQuestions(
+TestquestionId INT,
+Testid INT,
+Questionid INT,
+CONSTRAINT fk_Tests_Testquestions_Testid FOREIGN KEY(Testid) REFERENCES Tests(Id) ON UPDATE CASCADE ON DELETE CASCADE,
+CONSTRAINT fk_Questions_Testquestions_Questionid FOREIGN KEY(Questionid) REFERENCES Questions(QId) ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+
+
+
+
+
+
