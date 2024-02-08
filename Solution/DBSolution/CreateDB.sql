@@ -1,4 +1,5 @@
 create database assessmentdb;
+use assessmentdb;
 
 
 CREATE TABLE employee(
@@ -16,7 +17,7 @@ CREATE TABLE
   title VARCHAR(20)
 );
 
-select * from technicalskills;
+
 
 CREATE TABLE subjectexperties(
    subexid INT PRIMARY KEY AUTO_INCREMENT,
@@ -27,7 +28,7 @@ CREATE TABLE subjectexperties(
    CONSTRAINT fk_technicalskills_subjectexperties_technicalskillid FOREIGN KEY(technicalskillid) REFERENCES technicalskills(techskid) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
-select * from subjectexperties;
+
 
 
 CREATE TABLE evaluationcriterias(
@@ -46,21 +47,21 @@ create table questions (
 	 b VARCHAR(100),
 	 c VARCHAR(100),
 	 d VARCHAR(100),
-	 answer ENUM('a','b','c','d'),
+	 answerkey VARCHAR(100),
 	 evacriid INT,
 	 CONSTRAINT fk_technicalskills_qestions_skillid FOREIGN KEY(skillid) REFERENCES technicalskills(techskid) ON UPDATE CASCADE ON DELETE CASCADE,
      CONSTRAINT fk_evaluationcriterias_qestions_evacrid FOREIGN KEY(evacriid) REFERENCES evaluationcriterias(evacriid) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 
--- select * from Questions;
+
 
 
 
 create table tests (
 id INT PRIMARY KEY AUTO_INCREMENT,
 skillid INT,
-duration INT,
+duration TIME,
 subexid INT ,
 createdon DATE,
 modifiedon DATE,
@@ -90,7 +91,7 @@ create table candidateanswers(
 	questionsanswereid INT,
 	employeeid INT,
 	testquestionid INT,
- 	answer ENUM('A','B','C','D'),
+ 	answerkey VARCHAR(100),
 	CONSTRAINT fk_employee_candidateanswers_employeeid FOREIGN KEY(employeeid) REFERENCES employee(id) ON UPDATE CASCADE ON DELETE CASCADE,
 	CONSTRAINT fk_testquestions_candidateanswers_testquestionsid FOREIGN KEY(testquestionid) REFERENCES testquestions (testquestionid) ON UPDATE CASCADE ON DELETE CASCADE
 	
@@ -114,7 +115,7 @@ Create table interviews(
 	CONSTRAINT fk_subjectexperties_interviews_subexid FOREIGN KEY(subexid) REFERENCES subjectexperties(subexid) ON UPDATE CASCADE ON DELETE CASCADE,
 	CONSTRAINT fk_employee_interviews_employeeid FOREIGN KEY(employeeid) REFERENCES employee(id) ON UPDATE CASCADE ON DELETE CASCADE
 );
- select * from Interviews;
+ 
 
 Create table interviewcriterias(
 	techintacid INT PRIMARY KEY AUTO_INCREMENT,
@@ -123,7 +124,7 @@ Create table interviewcriterias(
 	CONSTRAINT fk_interviews_interviewcriterias_interviewid FOREIGN KEY(interviewid) REFERENCES interviews(interviewid) ON UPDATE CASCADE ON DELETE CASCADE,
 	CONSTRAINT fk_evaluationcriterias_interviewcriterias_evacriid FOREIGN KEY(evacriid) REFERENCES evaluationcriterias(evacriid) ON UPDATE CASCADE ON DELETE CASCADE
 );
-    select * from interviewcriterias;
+    
 
 
 Create table interviewresults(
@@ -133,7 +134,4 @@ Create table interviewresults(
 	comments VARCHAR(200),
 	CONSTRAINT fk_interviewcriterias_interviewresults_techintacid FOREIGN KEY(techintacid) REFERENCES interviewcriterias(techintacid) ON UPDATE CASCADE ON DELETE CASCADE
 	);
-    select * from interviewresults;
-
-    show tables;
     
