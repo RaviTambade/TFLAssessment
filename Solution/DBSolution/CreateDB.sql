@@ -1,150 +1,139 @@
- 
-
-CREATE DATABASE assesmentdb;
-
-use assesmentdb; 
-
----
+create database assessmentdb;
 
 
-
-
-
-
-
-----
+CREATE TABLE employee(
+      id INT AUTO_INCREMENT PRIMARY KEY,
+      fname VARCHAR(20) NOT NULL,
+      lname VARCHAR(20) NOT NULL,
+      email VARCHAR(50) NOT NULL,
+      contactno VARCHAR(10) NOT NULL
+);
 
 
 CREATE TABLE
-    employee(
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        fname VARCHAR(20) NOT NULL,
-	    lname VARCHAR(20) NOT NULL,
-	   email VARCHAR(50) NOT NULL,
-	   contactno VARCHAR(10) NOT NULL,
-       
-    );
+  technicalskills(
+  techskid INT PRIMARY KEY AUTO_INCREMENT,
+  title VARCHAR(20)
+);
 
-INSERT INTO employee(fname,lname,email,contactno) VALUES ('Shreedhar','Patil','spatil@gmail.com', '9876543210');
-INSERT INTO employee(fname,lname,email,contactno) VALUES ('Bhupendra','Walhekar','bwalhekar@gmail.com', '9876579210');
-INSERT INTO employee(fname,lname,email,contactno) VALUES ('Yash','Patil','ypatil@gmail.com', '9876543999');
-INSERT INTO employee(fname,lname,email,contactno) VALUES ('Yogesh','Pagar','ypagar@gmail.com', '9876547777');
+select * from technicalskills;
 
+CREATE TABLE subjectexperties(
+   subexid INT PRIMARY KEY AUTO_INCREMENT,
+   employeeid INT,
+   technicalskillid INT,
+   certifiedon DATE,
+   CONSTRAINT fk_employee_subjectexperties_employeeid FOREIGN KEY(employeeid) REFERENCES employee(id) ON UPDATE CASCADE ON DELETE CASCADE,
+   CONSTRAINT fk_technicalskills_subjectexperties_technicalskillid FOREIGN KEY(technicalskillid) REFERENCES technicalskills(techskid) ON UPDATE CASCADE ON DELETE CASCADE
+);
 
-CREATE TABLE
-    Skill(
-          SkillId INT PRIMARY KEY AUTO_INCREMENT,
-		  Title varchar(20)
-	    
-    );
-INSERT INTO Skill(Title) VALUES ("Java");
-INSERT INTO Skill(Title) VALUES ("DotNet");
-INSERT INTO Skill(Title) VALUES ("SQL");
-INSERT INTO Skill(Title) VALUES ("Python");	
+select * from subjectexperties;
 
 
-CREATE TABLE
-    SkillSetRating(
-          SkillRatingId int PRIMARY KEY AUTO_INCREMENT,
-		  EmployeeID int,
-		  SkillID int,
-		  Rating int check (Rating<=10),
-		  CONSTRAINT EmployeeID FOREIGN KEY(EmployeeID) REFERENCES employee(id),
-		  CONSTRAINT SkillID FOREIGN KEY(SkillID) REFERENCES Skill(SkillId)
-	      
-    );
+CREATE TABLE evaluationcriterias(
+   evacriid INT PRIMARY KEY AUTO_INCREMENT,
+   title VARCHAR(20),
+   skillid INT,
+   CONSTRAINT fk_technicalskills_evaluationcriterias_skillid FOREIGN KEY(skillid) REFERENCES technicalskills(techskid) ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+
+create table questions (
+     qid INT PRIMARY KEY AUTO_INCREMENT,
+     skillid INT,
+     question VARCHAR(200),
+     a VARCHAR(100),
+	 b VARCHAR(100),
+	 c VARCHAR(100),
+	 d VARCHAR(100),
+	 answer ENUM('a','b','c','d'),
+	 evacriid INT,
+	 CONSTRAINT fk_technicalskills_qestions_skillid FOREIGN KEY(skillid) REFERENCES technicalskills(techskid) ON UPDATE CASCADE ON DELETE CASCADE,
+     CONSTRAINT fk_evaluationcriterias_qestions_evacrid FOREIGN KEY(evacriid) REFERENCES evaluationcriterias(evacriid) ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+
+-- select * from Questions;
+
+
+
+create table tests (
+id INT PRIMARY KEY AUTO_INCREMENT,
+skillid INT,
+duration INT,
+subexid INT ,
+createdon DATE,
+modifiedon DATE,
+sheduledon DATE,
+ CONSTRAINT fk_technicalskills_tests_skillid FOREIGN KEY(skillid) REFERENCES technicalskills(techskid) ON UPDATE CASCADE ON DELETE CASCADE,
+     CONSTRAINT fk_subjectexperties_tests_subexid FOREIGN KEY(subexid) REFERENCES subjectexperties(subexid) ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+
+create table testasscriteria(
+id INT,
+testid INT,
+evaluationcriteriaid INT ,
+CONSTRAINT fk_tests_testasscriteria_testid FOREIGN KEY(testid) REFERENCES tests(id) ON UPDATE CASCADE ON DELETE CASCADE,
+CONSTRAINT fk_evaluationcriterias_testasscriteria_evaluationcriteriaid FOREIGN KEY(evaluationcriteriaid) REFERENCES evaluationcriterias(evacriid) ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+create table testquestions(
+testquestionid INT  PRIMARY KEY AUTO_INCREMENT,
+testid INT,
+questionid INT,
+CONSTRAINT fk_tests_testquestions_testid FOREIGN KEY(testid) REFERENCES tests(id) ON UPDATE CASCADE ON DELETE CASCADE,
+CONSTRAINT fk_questions_testquestions_questionid FOREIGN KEY(questionid) REFERENCES questions(qid) ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+create table candidateanswers(
+	questionsanswereid INT,
+	employeeid INT,
+	testquestionid INT,
+ 	answer ENUM('A','B','C','D'),
+	CONSTRAINT fk_employee_candidateanswers_employeeid FOREIGN KEY(employeeid) REFERENCES employee(id) ON UPDATE CASCADE ON DELETE CASCADE,
+	CONSTRAINT fk_testquestions_candidateanswers_testquestionsid FOREIGN KEY(testquestionid) REFERENCES testquestions (testquestionid) ON UPDATE CASCADE ON DELETE CASCADE
 	
-INSERT INTO SkillSetRating(EmployeeID,SkillID,Rating) VALUES (1,4,10);
-INSERT INTO SkillSetRating(EmployeeID,SkillID,Rating) VALUES (2,2,9);
-INSERT INTO SkillSetRating(EmployeeID,SkillID,Rating) VALUES (3,3,8);
-INSERT INTO SkillSetRating(EmployeeID,SkillID,Rating) VALUES (1,2,5);
-
-
-
-select employee.fname, Skill.Title, SkillSetRating.Rating
-from employee,Skill,SkillSetRating
-where employee.id=SkillSetRating.employeeid and Skill.Title="Java";
-
-	
-	
-
-CONSTRAINT EmployeeID FOREIGN KEY(EmployeeID) REFERENCES employee(id) 
---Condition Query:
-use assesmentdb
-select * from TechnicalSkills;
-
-CREATE TABLE
-TechnicalSkills(
-  TechSkId INT PRIMARY KEY AUTO_INCREMENT,
-  Title VARCHAR(20)
-);
-
-CREATE TABLE
-SubjectExperties(
-   SubExId INT PRIMARY KEY AUTO_INCREMENT,
-   EmployeeId INT,
-   TechnicalSkillId INT,
-   CertifiedOn DATE,
-   CONSTRAINT fk_employee_SubjectExperties_EmployeeId FOREIGN KEY(EmployeeId) REFERENCES employee(id) ON UPDATE CASCADE ON DELETE CASCADE,
-   CONSTRAINT fk_TechnicalSkills_SubjectExperties_TechnicalSkillId FOREIGN KEY(TechnicalSkillId) REFERENCES TechnicalSkills(TechSkId) ON UPDATE CASCADE ON DELETE CASCADE
-);
-
-CREATE TABLE
-EvaluationCriterias(
-   EvaCriId INT PRIMARY KEY AUTO_INCREMENT,
-   Title VARCHAR(20),
-   SkillId INT,
-   CONSTRAINT fk_TechnicalSkills_EvaluationCriterias_SkillId FOREIGN KEY(SkillId) REFERENCES TechnicalSkills(TechSkId) ON UPDATE CASCADE ON DELETE CASCADE
-   
 );
 
 
-create table Questions (
-     QId INT PRIMARY KEY AUTO_INCREMENT,
-     SkillId INT,
-     Question VARCHAR(200),
-     A VARCHAR(100),
-	 B VARCHAR(100),
-	 C VARCHAR(100),
-	 D VARCHAR(100),
-	 Answer VARCHAR(100),
-	 EvaCriId INT,
-	 CONSTRAINT fk_TechnicalSkills_Qestions_SkillId FOREIGN KEY(SkillId) REFERENCES TechnicalSkills(TechSkId) ON UPDATE CASCADE ON DELETE CASCADE,
-     CONSTRAINT fk_EvaluationCriterias_Qestions_EvaCriId FOREIGN KEY(EvaCriId) REFERENCES EvaluationCriterias(EvaCriId) ON UPDATE CASCADE ON DELETE CASCADE
-);
-
-
-create table Tests (
-Id INT PRIMARY KEY AUTO_INCREMENT,
-SkillId INT,
-Duration INT,
-SubExId INT ,
-CreatedOn DATE,
-Modifiedon DATE,
-sheduledOn DATE,
- CONSTRAINT fk_TechnicalSkills_Tests_SkillId FOREIGN KEY(SkillId) REFERENCES TechnicalSkills(TechSkId) ON UPDATE CASCADE ON DELETE CASCADE,
-     CONSTRAINT fk_SubjectExperties_Tests_SubExId FOREIGN KEY(SubExId) REFERENCES SubjectExperties(SubExId) ON UPDATE CASCADE ON DELETE CASCADE
-);
-
-create table TestAssCriteria(
-Id INT,
-TestId INT,
-EvaluationcriteriaId INT ,
-CONSTRAINT fk_Tests_TestAssCriteria_TestId FOREIGN KEY(TestId) REFERENCES Tests(Id) ON UPDATE CASCADE ON DELETE CASCADE,
-CONSTRAINT fk_EvaluationCriterias_TestAssCriteria_EvaluationcriteriaId FOREIGN KEY(EvaluationcriteriaId) REFERENCES EvaluationCriterias(EvaCriId) ON UPDATE CASCADE ON DELETE CASCADE
-);
-
-create table TestQuestions(
-TestquestionId INT,
-Testid INT,
-Questionid INT,
-CONSTRAINT fk_Tests_Testquestions_Testid FOREIGN KEY(Testid) REFERENCES Tests(Id) ON UPDATE CASCADE ON DELETE CASCADE,
-CONSTRAINT fk_Questions_Testquestions_Questionid FOREIGN KEY(Questionid) REFERENCES Questions(QId) ON UPDATE CASCADE ON DELETE CASCADE
+create table candidatetestresults(
+	candidateresultid INT,
+	testid INT,
+	marks INT,
+ 	CONSTRAINT fk_test_candidatetestresults FOREIGN KEY (testid) REFERENCES tests(id) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 
 
+Create table interviews(
+	interviewid INT PRIMARY KEY AUTO_INCREMENT,
+	dateofinterview DATE,
+	subexid INT,
+	employeeid INT,
+	CONSTRAINT fk_subjectexperties_interviews_subexid FOREIGN KEY(subexid) REFERENCES subjectexperties(subexid) ON UPDATE CASCADE ON DELETE CASCADE,
+	CONSTRAINT fk_employee_interviews_employeeid FOREIGN KEY(employeeid) REFERENCES employee(id) ON UPDATE CASCADE ON DELETE CASCADE
+);
+ select * from Interviews;
+
+Create table interviewcriterias(
+	techintacid INT PRIMARY KEY AUTO_INCREMENT,
+	interviewid INT,
+	evacriid INT,
+	CONSTRAINT fk_interviews_interviewcriterias_interviewid FOREIGN KEY(interviewid) REFERENCES interviews(interviewid) ON UPDATE CASCADE ON DELETE CASCADE,
+	CONSTRAINT fk_evaluationcriterias_interviewcriterias_evacriid FOREIGN KEY(evacriid) REFERENCES evaluationcriterias(evacriid) ON UPDATE CASCADE ON DELETE CASCADE
+);
+    select * from interviewcriterias;
 
 
+Create table interviewresults(
+	resultid INT PRIMARY KEY AUTO_INCREMENT,
+	techintacid INT,
+	rating INT,
+	comments VARCHAR(200),
+	CONSTRAINT fk_interviewcriterias_interviewresults_techintacid FOREIGN KEY(techintacid) REFERENCES interviewcriterias(techintacid) ON UPDATE CASCADE ON DELETE CASCADE
+	);
+    select * from interviewresults;
 
-
+    show tables;
+    

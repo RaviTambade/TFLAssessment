@@ -52,6 +52,38 @@ None of the above.','Using setter method and constructor argument both.','5');
 
 
 
+INSERT INTO Questions(SkillId, Question, A, B, C, D, Answer, EvaCriId) VALUES(1,
+'Number of primitive data types in Java are?','6','7','8','9','C','1');
+
+INSERT INTO Questions(SkillId, Question, A, B, C, D, Answer, EvaCriId) VALUES(1,'Which of the following language was developed as the first purely object programming language?','SmallTalk','C++','Kotlin','Java','A','1');
+
+INSERT INTO Questions(SkillId, Question, A, B, C, D, Answer, EvaCriId) VALUES(1,'Who developed object-oriented programming?','Adele Goldberg','Dennis Ritchie','Alan Kay','
+Andrea Ferro','C','1');
+
+INSERT INTO Questions(SkillId, Question, A, B, C, D, Answer, EvaCriId) VALUES(1,'Which of the following is not an OOPS concept?','Exception','Abstraction','Polymorphism','
+Encapsulation','A','1');
+
+
+INSERT INTO Questions(SkillId, Question, A, B, C, D, Answer, EvaCriId) VALUES(1,'Which of the following language supports polymorphism but not the classes?
+','C++ programming language
+','Java programming language','Ada programming language','
+C# programming language','C','1');
+
+INSERT INTO Questions(SkillId, Question, A, B, C, D, Answer, EvaCriId) VALUES(2,'Spring Boot is used for developing?','Web applications','Distributed applications (Restful web services)','Microservices','All of the above','D','5');
+
+INSERT INTO Questions(SkillId, Question, A, B, C, D, Answer, EvaCriId) VALUES(2,'How can a Spring Boot application be packaged and distributed?','As a JAR file ','As a WAR file','As a ZIP file','All of the above.','D','5');
+
+INSERT INTO Questions(SkillId, Question, A, B, C, D, Answer, EvaCriId) VALUES(2,'What AOP stands for?','Aspect Oriented Programming','Any Object Programming','Asset Oriented Programming','
+Asset Oriented Protocol','D','5');
+
+INSERT INTO Questions(SkillId, Question, A, B, C, D, Answer, EvaCriId) VALUES(2,'Which of the following is the correct name of React.js?',' React','React.js', 'ReactJs','All of the above','D','5');
+
+INSERT INTO Questions(SkillId, Question, A, B, C, D, Answer, EvaCriId) VALUES(2,'How to use ref keyword in beans.xml?','Using setter method only.','Using constructor argument only.','Using setter method and constructor argument both.','
+None of the above.','C','5');
+
+
+
+
 
 
 
