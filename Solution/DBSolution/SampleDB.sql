@@ -46,16 +46,16 @@ INSERT INTO evaluationcriterias(title,skillid) VALUES('Loops',7);
 
 select * from evaluationcriterias;
 
-INSERT INTO questions(skillid, question, a, b, c, d, answerkey, evacriid) VALUES(1,'Number of primitive data types in Java are?','6','7','8','9','8','1');
-INSERT INTO questions(skillid, question, a, b, c, d, answerkey, evacriid) VALUES(1,'Which of the following language was developed as the first purely object programming language?','SmallTalk','C++','Kotlin','Java','SmallTalk','1');
-INSERT INTO questions(skillid, question, a, b, c, d, answerkey, evacriid) VALUES(1,'Who developed object-oriented programming?','Adele Goldberg','Dennis Ritchie','Alan Kay','Andrea Ferro','Alan Kay','1');
-INSERT INTO questions(skillid, question, a, b, c, d, answerkey, evacriid) VALUES(1,'Which of the following is not an OOPS concept?','Exception','Abstraction','Polymorphism','Encapsulation','Exception','1');
-INSERT INTO questions(skillid, question, a, b, c, d, answerkey, evacriid) VALUES(1,'Which of the following language supports polymorphism but not the classes?','C++ programming language','Java programming language','Ada programming language','C# programming language','Ada programming language','1');
-INSERT INTO questions(skillid, question, a, b, c, d, answerkey, evacriid) VALUES(2,'Spring Boot is used for developing?','Web applications','Distributed applications (Restful web services)','Microservices','All of the above','All of the above','5');
-INSERT INTO questions(skillid, question, a, b, c, d, answerkey, evacriid) VALUES(2,'How can a Spring Boot application be packaged and distributed?','As a JAR file ','As a WAR file','As a ZIP file','All of the above.','All of the above.','5');
-INSERT INTO questions(skillid, question, a, b, c, d, answerkey, evacriid) VALUES(2,'What AOP stands for?','Aspect Oriented Programming','Any Object Programming','Asset Oriented Programming','Asset Oriented Protocol','Aspect Oriented Programming','5');
-INSERT INTO questions(skillid, question, a, b, c, d, answerkey, evacriid) VALUES(2,'Which of the following is the correct name of React.js?',' React','React.js', 'ReactJs','All of the above','All of the above','5');
-INSERT INTO questions(skillid, question, a, b, c, d, answerkey, evacriid) VALUES(2,'How to use ref keyword in beans.xml?','Using setter method only.','Using constructor argument only.','Using setter method and constructor argument both.','None of the above.','Using setter method and constructor argument both.','5');
+INSERT INTO questions(skillid, question, a, b, c, d, answerkey, evacriid) VALUES(1,'Number of primitive data types in Java are?','6','7','8','9','c','1');
+INSERT INTO questions(skillid, question, a, b, c, d, answerkey, evacriid) VALUES(1,'Which of the following language was developed as the first purely object programming language?','SmallTalk','C++','Kotlin','Java','a','1');
+INSERT INTO questions(skillid, question, a, b, c, d, answerkey, evacriid) VALUES(1,'Who developed object-oriented programming?','Adele Goldberg','Dennis Ritchie','Alan Kay','Andrea Ferro','c','1');
+INSERT INTO questions(skillid, question, a, b, c, d, answerkey, evacriid) VALUES(1,'Which of the following is not an OOPS concept?','Exception','Abstraction','Polymorphism','Encapsulation','a','1');
+INSERT INTO questions(skillid, question, a, b, c, d, answerkey, evacriid) VALUES(1,'Which of the following language supports polymorphism but not the classes?','C++ programming language','Java programming language','Ada programming language','C# programming language','c','1');
+INSERT INTO questions(skillid, question, a, b, c, d, answerkey, evacriid) VALUES(2,'Spring Boot is used for developing?','Web applications','Distributed applications (Restful web services)','Microservices','All of the above','d','5');
+INSERT INTO questions(skillid, question, a, b, c, d, answerkey, evacriid) VALUES(2,'How can a Spring Boot application be packaged and distributed?','As a JAR file ','As a WAR file','As a ZIP file','All of the above.','d','5');
+INSERT INTO questions(skillid, question, a, b, c, d, answerkey, evacriid) VALUES(2,'What AOP stands for?','Aspect Oriented Programming','Any Object Programming','Asset Oriented Programming','Asset Oriented Protocol','a','5');
+INSERT INTO questions(skillid, question, a, b, c, d, answerkey, evacriid) VALUES(2,'Which of the following is the correct name of React.js?',' React','React.js', 'ReactJs','All of the above','d','5');
+INSERT INTO questions(skillid, question, a, b, c, d, answerkey, evacriid) VALUES(2,'How to use ref keyword in beans.xml?','Using setter method only.','Using constructor argument only.','Using setter method and constructor argument both.','None of the above.','c','5');
 
 select * from questions;
 

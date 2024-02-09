@@ -20,7 +20,10 @@ select * from employee  where employee.id in(
 
 -- Show question titles of test conducted on specific DATE
 
+  select question from questions where questions.skillid in (
+  select techskid from technicalskills where techskid = (select skillid from tests where sheduledon="2024-01-05" )); 
 
+-- answer with date quetionId 
 
 
 
