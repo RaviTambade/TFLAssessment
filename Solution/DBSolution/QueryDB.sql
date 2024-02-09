@@ -28,3 +28,19 @@ select * from employee  where employee.id in(
 
 
 
+
+
+
+
+
+
+--- INNER JOIN WITH THREE TABLE
+select * from questions
+  INNER JOIN tests
+  ON questions.qid = tests.id
+  INNER JOIN candidateanswers
+  ON questions.qid = candidateanswers.questionsanswereid;
+
+
+
+
