@@ -82,6 +82,39 @@ INSERT INTO questions(skillid, question, a, b, c, d, answerkey, evacriid) VALUES
 INSERT INTO questions(skillid, question, a, b, c, d, answerkey, evacriid) VALUES(7,'Which interface must be implemented to provide querying facility in LINQ?','IEnumerator or IQueryable ','IEnumberable or Queryable','Enumberatble or Qurable','None of the above','b','8');
 INSERT INTO questions(skillid, question, a, b, c, d, answerkey, evacriid) VALUES(7,'What is the default injection type of Unit Container used in ASP.NET Core','Constructor Injection ','Property Injection','Method Injection','All of the Above','a','8');
 
+INSERT INTO questions(skillid, question, a, b, c, d, answerkey, evacriid) VALUES(7,'Which is the following .net cli command used to create and build Single Page Applicaion?','dotnet new console -o TestApp','dotnet new webapp -o TestApp','dotnet new react -o TestApp','dotnet new ng -o TestApp','c','8');
+INSERT INTO questions(skillid, question, a, b, c, d, answerkey, evacriid) VALUES(7,'Which of the following term define rules for .Net Languages?','Common Language Specification','Common Language Infrastructure ','Common Type System','Common Language Runtime','a','8');
+INSERT INTO questions(skillid, question, a, b, c, d, answerkey, evacriid) VALUES(7,'Which component of .net Architecture defines Events and Delegate?','CLR','CTS','CLS','DLR','b','8');
+INSERT INTO questions(skillid, question, a, b, c, d, answerkey, evacriid) VALUES(7,'What is the Assembly scope of an .net type defined in Code ?',' public ','protected','internal','private','c','8');
+INSERT INTO questions(skillid, question, a, b, c, d, answerkey, evacriid) VALUES(7,'Which is the incorrect syntax of array in C# ?',' int [ , ]  mtrx = new int [2, 3]; ','int [ , ] mtrx = new int [2, 3] { {10, 20, 30}, {40, 50, 60} }','int [ ]  [ ]  mtrxj = new  int [2] [];','int [ ]  [ ]  mtrxj = new  int [2] [3];','d','8');
+INSERT INTO questions(skillid, question, a, b, c, d, answerkey, evacriid) VALUES(7,'Which access specifier will you use to make base class members accessible in the derived class and not accessible for the rest of the program?',' public ',' private',' protected ','static','c','8');
+INSERT INTO questions(skillid, question, a, b, c, d, answerkey, evacriid) VALUES(7,'What is Nullable type?',' It allows assignment of null to reference type. ',' It allows assignment of null to value type. ','It allows assignment of null to static class. ','None of the above. ','b','8');
+INSERT INTO questions(skillid, question, a, b, c, d, answerkey, evacriid) VALUES(7,'Which type of inheritance is not supported in C# Programming?',' Multiple Interface Inheritance ','Mulitple Implementation Inheritance ','Multiple Level Inheritance.','Single base class Inheritance ','b','8');
+INSERT INTO questions(skillid, question, a, b, c, d, answerkey, evacriid) VALUES(7,'What is the type of structure (struct) in C# Programming Language?',' Reference type','Value type ','Class type','String type ','b','8');
+INSERT INTO questions(skillid, question, a, b, c, d, answerkey, evacriid) VALUES(7,'Missing Explicit Typecasting in code leads to following type of error.',' Runtime Error',' Linking Error',' Compile Time Error','Cyclic Dependency ','c','8');
+
+
+
+INSERT INTO questions(skillid, question, a, b, c, d, answerkey, evacriid) VALUES(7,'Which namespace provide a specialized form of reflection that enables you to build types at runtime?',' System.Reflection',' System.Type',' System.Reflection.Emit','System.RTTI','c','8');
+
+
+INSERT INTO questions(skillid, question, a, b, c, d, answerkey, evacriid) VALUES(7,'Which file extention define .net external dependencies needed for buliding .net core application?',' sln',' csproj','xml','appsettings.json','b','8');
+
+
+INSERT INTO questions(skillid, question, a, b, c, d, answerkey, evacriid) VALUES(7,'Which of the following statement is correct MySQL database connection string ?','Server=localhost;Port=3306;Database=mydatabase;User=myuser;Password=mypassword;',' Server=localhost;Port=3308;Database=mydatabase;User=myuser;Password=mypassword;','Server=localhost;Port=3306;Initial Catalog=mydatabase;User=myuser;Password=mypassword;','Server=localhost;Port=3306;Database=mydatabase;User=myuser;PWD=mypassword;','a','8');
+
+ 
+INSERT INTO questions(skillid, question, a, b, c, d, answerkey, evacriid) VALUES(7,'Which of the following class is used to send HTTP requires in .NET?
+',' MessageClient ',' HttpWebRequest','HttpClient','WebClient','c','8');
+ 
+
+INSERT INTO questions(skillid, question, a, b, c, d, answerkey, evacriid) VALUES(7,'What is the name of Default Application Pool in IIS?',' Assmblies are loaded into an application domain before executing the code it contains','  Application domain consist of domain specific logic of .net application.','Web application consist of pool of Application domain. ','Application domain maintains Thread pool for concurrency.','a','8');
+
+
+INSERT INTO questions(skillid, question, a, b, c, d, answerkey, evacriid) VALUES(7,'Which of the following object is used along with application object in order to ensure that only one process accesses a variable at a time?',' Synchronize',' Synchronize()','ThreadLock','Lock()','a','8');
+
+INSERT INTO questions(skillid, question, a, b, c, d, answerkey, evacriid) VALUES(7,'Which Class is used to make a thread instance explicitly?',' Thread',' ThreadStart','ThreadPool','Runnalble','a','8');
+
 INSERT INTO tests(skillid,duration,subexid,createdon,modifiedon,sheduledon) VALUES (1,"00:30:00",1,'2023-12-05','2024-02-05','2024-02-07');
 INSERT INTO tests(skillid,duration,subexid,createdon,modifiedon,sheduledon) VALUES (1,"00:40:00",1,'2023-11-05','2024-01-05','2024-02-07');
 INSERT INTO tests(skillid,duration,subexid,createdon,modifiedon,sheduledon) VALUES (1,"00:20:00",1,'2023-09-05','2024-01-05','2024-02-08');
