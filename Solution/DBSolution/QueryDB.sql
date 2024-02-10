@@ -1,4 +1,20 @@
- --Database Creation
+select * from questions;
+select * from technicalskills;
+select * from subjectexperties;
+select * from tests;
+select * from evaluationcriterias;
+select * from testquestions;
+select * from employee;
+select * from candidateanswers;
+select * from candidatetestresults;
+select * from evaluationcriterias;
+select * from interviewcriterias;
+select * from interviewresults;
+select * from interview;
+
+
+select * from testquestions where testid=8;
+select * from candidateanswers where employeeid=6;
 
 use assessmentdb;
 
