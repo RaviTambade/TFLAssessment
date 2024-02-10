@@ -66,6 +66,19 @@ INSERT INTO questions(skillid, question, a, b, c, d, answerkey, evacriid) VALUES
 INSERT INTO questions(skillid, question, a, b, c, d, answerkey, evacriid) VALUES(7,'Which component is essential for collecting data using Connected Data Access Mode?','DataSet ',DataReader','DataRow','DataAdapter','b','8');
 INSERT INTO questions(skillid, question, a, b, c, d, answerkey, evacriid) VALUES(7,'Which configuration file is used to change configuration setting that will affect only the current Web application?','web.xml ',appsettings.json','Machine.config','web.config','b','8');
 
+INSERT INTO questions(skillid, question, a, b, c, d, answerkey, evacriid) VALUES(7,'Which is the following .net cli command used to create and build Single Page Applicaion?','dotnet new console -o TestApp','dotnet new webapp -o TestApp','dotnet new react -o TestApp','dotnet new ng -o TestApp','c','8');
+INSERT INTO questions(skillid, question, a, b, c, d, answerkey, evacriid) VALUES(7,'Which of the following term define rules for .Net Languages?','Common Language Specification','Common Language Infrastructure ','Common Type System','Common Language Runtime','a','8');
+INSERT INTO questions(skillid, question, a, b, c, d, answerkey, evacriid) VALUES(7,'Which component of .net Architecture defines Events and Delegate?','CLR','CTS','CLS','DLR','b','8');
+INSERT INTO questions(skillid, question, a, b, c, d, answerkey, evacriid) VALUES(7,'What is the Assembly scope of an .net type defined in Code ?',' public ','protected','internal','private','c','8');
+INSERT INTO questions(skillid, question, a, b, c, d, answerkey, evacriid) VALUES(7,'Which is the incorrect syntax of array in C# ?',' int [ , ]  mtrx = new int [2, 3]; ','int [ , ] mtrx = new int [2, 3] { {10, 20, 30}, {40, 50, 60} }','int [ ]  [ ]  mtrxj = new  int [2] [];','int [ ]  [ ]  mtrxj = new  int [2] [3];','d','8');
+INSERT INTO questions(skillid, question, a, b, c, d, answerkey, evacriid) VALUES(7,'Which access specifier will you use to make base class members accessible in the derived class and not accessible for the rest of the program?',' public ',' private',' protected ','static','c','8');
+INSERT INTO questions(skillid, question, a, b, c, d, answerkey, evacriid) VALUES(7,'What is Nullable type?',' It allows assignment of null to reference type. ',' It allows assignment of null to value type. ','It allows assignment of null to static class. ','None of the above. ','b','8');
+INSERT INTO questions(skillid, question, a, b, c, d, answerkey, evacriid) VALUES(7,'Which type of inheritance is not supported in C# Programming?',' Multiple Interface Inheritance ','Mulitple Implementation Inheritance ','Multiple Level Inheritance.','Single base class Inheritance ','b','8');
+INSERT INTO questions(skillid, question, a, b, c, d, answerkey, evacriid) VALUES(7,'What is the type of structure (struct) in C# Programming Language?',' Reference type','Value type ','Class type','String type ','b','8');
+INSERT INTO questions(skillid, question, a, b, c, d, answerkey, evacriid) VALUES(7,'Missing Explicit Typecasting in code leads to following type of error.',' Runtime Error',' Linking Error',' Compile Time Error','Cyclic Dependency ','c','8');
+
+
+
 
 
 

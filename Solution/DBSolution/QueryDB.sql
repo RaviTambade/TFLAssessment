@@ -26,10 +26,9 @@ select * from employee  where employee.id in(
 -- answer with date quetionId 
 
 
-
-
-
-
+-- 10/02  1. Test table should have 2 test.
+	  2. According to specific skill we should get details of student in answer .
+	  3. write a query which gives output --- empid, testid, question, answer, candidate ans 	
 
 
 
