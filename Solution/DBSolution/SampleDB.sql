@@ -65,6 +65,7 @@ INSERT INTO questions(skillid, question, a, b, c, d, answerkey, evacriid) VALUES
 INSERT INTO questions(skillid, question, a, b, c, d, answerkey, evacriid) VALUES(7,'Which of the following is used to check the validity of the model in ASP.NET Web API?','Mode.Valid ',Model.IsValid','ModelState.IsValid','ModelState.Valid','c','8');
 INSERT INTO questions(skillid, question, a, b, c, d, answerkey, evacriid) VALUES(7,'Which component is essential for collecting data using Connected Data Access Mode?','DataSet ',DataReader','DataRow','DataAdapter','b','8');
 INSERT INTO questions(skillid, question, a, b, c, d, answerkey, evacriid) VALUES(7,'Which configuration file is used to change configuration setting that will affect only the current Web application?','web.xml ',appsettings.json','Machine.config','web.config','b','8');
+<<<<<<< HEAD
 
 INSERT INTO questions(skillid, question, a, b, c, d, answerkey, evacriid) VALUES(7,'Which is the following .net cli command used to create and build Single Page Applicaion?','dotnet new console -o TestApp','dotnet new webapp -o TestApp','dotnet new react -o TestApp','dotnet new ng -o TestApp','c','8');
 INSERT INTO questions(skillid, question, a, b, c, d, answerkey, evacriid) VALUES(7,'Which of the following term define rules for .Net Languages?','Common Language Specification','Common Language Infrastructure ','Common Type System','Common Language Runtime','a','8');
@@ -79,6 +80,14 @@ INSERT INTO questions(skillid, question, a, b, c, d, answerkey, evacriid) VALUES
 
 
 
+=======
+INSERT INTO questions(skillid, question, a, b, c, d, answerkey, evacriid) VALUES(7,'Customer is demanding to buid web solution using decoupled , reusable , stateless Application logic. Which type of attribute would help to define reusable, corss platfrom, stateless application logic.','Controller ',APIController','Service','WebAPI','b','8');
+INSERT INTO questions(skillid, question, a, b, c, d, answerkey, evacriid) VALUES(7,'Which is not the data object used for data transfer in ASP.NET MVC?','ViewBag ',ViewData','TempData','MetaData','d','8');
+INSERT INTO questions(skillid, question, a, b, c, d, answerkey, evacriid) VALUES(7,'.Which of these is an attribute that you can apply to a controller action or an entire controller that modifies the way in which the action is executed?','Action filter ',Result filter','Exception filter','Authorization filter','a','8');
+INSERT INTO questions(skillid, question, a, b, c, d, answerkey, evacriid) VALUES(7,'Which statement is correct about Response.Output.Write()?','HttpContext.Response.Output.Write() allows you to buffer output ',HttpContext.Response.Output.Write() allows you to write formatted output','HttpContext.Response.Output.Write() allows you to flush output',HttpContext.Response.Output.Write() allows you to stream output','b','8');
+INSERT INTO questions(skillid, question, a, b, c, d, answerkey, evacriid) VALUES(7,'Which of the following tool is used to manage the GAC in .NET Framework?','RegSvr.exe ','GacUtil.exe','GacSvr32.exe','GacMgr.exe','b','8');
+INSERT INTO questions(skillid, question, a, b, c, d, answerkey, evacriid) VALUES(7,'How could we add data into session in asp.net core?','HttpContext.Session.SetString("MyKey", "MyValue"); 'HttpContext.Session["MyKey"]= "MyValue";','HttpContext.Request.Session["MyKey"]="MyValue";','HttpContext.Response.Session["MyKey"]="MyValue";','b','8');
+>>>>>>> c0ad957ba94af33357e0b7f6b84ce61d1ee27948
 
 
 
