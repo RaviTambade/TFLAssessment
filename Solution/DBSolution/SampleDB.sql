@@ -7,7 +7,7 @@ insert into employee(fname, lname, email, contactno)values("Vaibhav","Walekar","
 insert into employee(fname, lname, email, contactno)values("Shree","pawer","spawar@gmail.com","8654653254");
 insert into employee(fname, lname, email, contactno)values("Aniket","Zarekar","Zarekar@gmail.com","9764263254");
 
-select * from employee;
+
 
 
 INSERT INTO technicalskills(title) VALUES('CORE JAVA');
@@ -19,7 +19,7 @@ INSERT INTO technicalskills(title) VALUES('ANGULAR');
 INSERT INTO technicalskills(title) VALUES('C#');
 INSERT INTO technicalskills(title) VALUES('JavaScriept');
 
-select * from technicalskills;
+
 
 
 INSERT INTO subjectexperties(employeeid,technicalskillid,certifiedon)VALUES(1,1,'2023-02-15');
@@ -31,7 +31,6 @@ INSERT INTO subjectexperties(employeeid,technicalskillid,certifiedon)VALUES(2,5,
 INSERT INTO subjectexperties(employeeid,technicalskillid,certifiedon)VALUES(3,7,'2023-01-25');
 INSERT INTO subjectexperties(employeeid,technicalskillid,certifiedon)VALUES(4,2,'2023-02-05');
 
-select * from subjectexperties;
 
 INSERT INTO evaluationcriterias(title,skillid) VALUES('OOPS',1);
 INSERT INTO evaluationcriterias(title,skillid) VALUES('Multithreading',1);
@@ -44,7 +43,6 @@ INSERT INTO evaluationcriterias(title,skillid) VALUES('OOPS',7);
 INSERT INTO evaluationcriterias(title,skillid) VALUES('Multithreading',7);
 INSERT INTO evaluationcriterias(title,skillid) VALUES('Loops',7);
 
-select * from evaluationcriterias;
 
 INSERT INTO questions(skillid, question, a, b, c, d, answerkey, evacriid) VALUES(1,'Number of primitive data types in Java are?','6','7','8','9','c','1');
 INSERT INTO questions(skillid, question, a, b, c, d, answerkey, evacriid) VALUES(1,'Which of the following language was developed as the first purely object programming language?','SmallTalk','C++','Kotlin','Java','a','1');
@@ -57,7 +55,19 @@ INSERT INTO questions(skillid, question, a, b, c, d, answerkey, evacriid) VALUES
 INSERT INTO questions(skillid, question, a, b, c, d, answerkey, evacriid) VALUES(2,'Which of the following is the correct name of React.js?',' React','React.js', 'ReactJs','All of the above','d','5');
 INSERT INTO questions(skillid, question, a, b, c, d, answerkey, evacriid) VALUES(2,'How to use ref keyword in beans.xml?','Using setter method only.','Using constructor argument only.','Using setter method and constructor argument both.','None of the above.','c','5');
 
-select * from questions;
+INSERT INTO questions(skillid, question, a, b, c, d, answerkey, evacriid) VALUES(7,'What is the role of HTML helper in ASP.NET MVC?','Generates html elements ','Generates html view','Generates html help file','Generates model data','a','8');
+INSERT INTO questions(skillid, question, a, b, c, d, answerkey, evacriid) VALUES(7,'Which ASP.NET MVC filter will be executed at last during request processing in ASP.NET MVC Pipeline?','Exception filters ','Action filters','Authorization filters','Response filters','a','8');
+INSERT INTO questions(skillid, question, a, b, c, d, answerkey, evacriid) VALUES(7,'Which server , we can not deploy asp.net core Application?','Kestral ','IIS','Tomcat','MySql','d','8');
+INSERT INTO questions(skillid, question, a, b, c, d, answerkey, evacriid) VALUES(7,'ECommerce Application is built using ASP.NET object Model. Which ASP.NET object would be used to maintain Shopping Cart across number of requests being received from users?','Application object ','Session object','Response object','Server object','b','8');
+INSERT INTO questions(skillid, question, a, b, c, d, answerkey, evacriid) VALUES(7,'Which namespace is used ASP.NET MVC for JSON serialization?','System.Text.Json ',JsonFormatter.NET','GetJson.NET','None of the above','a','8');
+INSERT INTO questions(skillid, question, a, b, c, d, answerkey, evacriid) VALUES(7,'Which of the following statement is TRUE?','Action method can be static method in a controller class. ',Action method can be private method in a controller class.','Action method can be protected method in a controller class.','Action method must be public method in a controller class.','d','8');
+INSERT INTO questions(skillid, question, a, b, c, d, answerkey, evacriid) VALUES(7,'Visual Studio .NET tool is used to build WCF Service Application project. The project contains web.config file. Which is the root element in configuration file for WCF Service declaration?','System.Service ',System.ServiceModel','Service.Contract','None','b','8');
+INSERT INTO questions(skillid, question, a, b, c, d, answerkey, evacriid) VALUES(7,'Which of the following is used to check the validity of the model in ASP.NET Web API?','Mode.Valid ',Model.IsValid','ModelState.IsValid','ModelState.Valid','c','8');
+INSERT INTO questions(skillid, question, a, b, c, d, answerkey, evacriid) VALUES(7,'Which component is essential for collecting data using Connected Data Access Mode?','DataSet ',DataReader','DataRow','DataAdapter','b','8');
+INSERT INTO questions(skillid, question, a, b, c, d, answerkey, evacriid) VALUES(7,'Which configuration file is used to change configuration setting that will affect only the current Web application?','web.xml ',appsettings.json','Machine.config','web.config','b','8');
+
+
+
 
 
 INSERT INTO tests(skillid,duration,subexid,createdon,modifiedon,sheduledon) VALUES (1,"00:30:00",1,'2023-12-05','2024-02-05','2024-02-07');
@@ -67,7 +77,7 @@ INSERT INTO tests(skillid,duration,subexid,createdon,modifiedon,sheduledon) VALU
 INSERT INTO tests(skillid,duration,subexid,createdon,modifiedon,sheduledon) VALUES (3,"01:00:00",1,'2023-11-05','2023-12-21','2024-01-24');
 INSERT INTO tests(skillid,duration,subexid,createdon,modifiedon,sheduledon) VALUES (4,"01:30:00",2,'2023-09-05','2023-10-10','2024-01-18');
 
-select * from tests;
+
 
 
 INSERT INTO testasscriteria(testid, evaluationcriteriaid)VALUES(1,4);
@@ -81,7 +91,7 @@ INSERT INTO testasscriteria(testid, evaluationcriteriaid)VALUES(1,5);
 INSERT INTO testasscriteria(testid, evaluationcriteriaid)VALUES(3,1);
 INSERT INTO testasscriteria(testid, evaluationcriteriaid)VALUES(4,5);
 
-select * from testasscriteria;
+
 
 
 INSERT INTO testquestions(testid, questionid)VALUES(1,4);
@@ -95,7 +105,7 @@ INSERT INTO testquestions(testid, questionid)VALUES(3,4);
 INSERT INTO testquestions(testid, questionid)VALUES(3,3);
 INSERT INTO testquestions(testid, questionid)VALUES(4,2);
 
-select * from testquestions;
+
 
 
 INSERT INTO candidateanswers(employeeid, testquestionid,answerkey)VALUES(1,4,'c');
@@ -109,7 +119,7 @@ INSERT INTO candidateanswers(employeeid, testquestionid,answerkey)VALUES(5,3,'c'
 INSERT INTO candidateanswers(employeeid, testquestionid,answerkey)VALUES(1,2,'b');
 INSERT INTO candidateanswers(employeeid, testquestionid,answerkey)VALUES(2,3,'c');
 
-select * from candidateanswers;
+
 
 
 INSERT INTO candidatetestresults(testid, marks)VALUES(2,1);
@@ -124,7 +134,6 @@ INSERT INTO candidatetestresults(testid, marks)VALUES(3,1);
 INSERT INTO candidatetestresults(testid, marks)VALUES(4,1);
 INSERT INTO candidatetestresults(testid, marks)VALUES(1,1);
 
-select * from candidatetestresults;
 
 
 INSERT INTO interviews(dateofinterview, subexid, employeeid)VALUES('2024-02-10',1,2);
@@ -138,7 +147,7 @@ INSERT INTO interviews(dateofinterview, subexid, employeeid)VALUES('2024-02-12',
 INSERT INTO interviews(dateofinterview, subexid, employeeid)VALUES('2024-03-11',1,5);
 INSERT INTO interviews(dateofinterview, subexid, employeeid)VALUES('2024-03-15',3,6);
 
-select * from interviews;
+
 
 INSERT INTO interviewcriterias(interviewid, evacriid)VALUES(1,6);
 INSERT INTO interviewcriterias(interviewid, evacriid)VALUES(1,5);
@@ -152,7 +161,7 @@ INSERT INTO interviewcriterias(interviewid, evacriid)VALUES(1,7);
 INSERT INTO interviewcriterias(interviewid, evacriid)VALUES(2,1);
 INSERT INTO interviewcriterias(interviewid, evacriid)VALUES(1,8);
 
-select * from interviewcriterias;
+
 
 
 INSERT INTO interviewresults(techintacid, rating, comments)VALUES(1,8,"good");
@@ -166,7 +175,7 @@ INSERT INTO interviewresults(techintacid, rating, comments)VALUES(6,7,"good");
 INSERT INTO interviewresults(techintacid, rating, comments)VALUES(7,8,"nice");
 INSERT INTO interviewresults(techintacid, rating, comments)VALUES(8,8,"good");
 
-select * from interviewresults;
+
 
 
 
