@@ -1,3 +1,4 @@
+-- Active: 1707123530557@@127.0.0.1@3306@assessmentdb
 insert into employee(fname, lname, email, contactno)values("ram","tambe","rTambe@gmail.com","8547963254");
 insert into employee(fname, lname, email, contactno)values("Vaibhav","Sathe","psathe@gmail.com","9658745635");
 insert into employee(fname, lname, email, contactno)values("Shreedhar","Kumar","pkumar@gmail.com","8654793254");
@@ -143,29 +144,50 @@ INSERT INTO testasscriteria(testid, evaluationcriteriaid)VALUES(7,8);
 INSERT INTO testasscriteria(testid, evaluationcriteriaid)VALUES(8,8);
 
 
+-- Create test1 with 10 questions
 
 
-INSERT INTO testquestions(testid, questionid)VALUES(1,4);
-INSERT INTO testquestions(testid, questionid)VALUES(2,1);
-INSERT INTO testquestions(testid, questionid)VALUES(3,2);
-INSERT INTO testquestions(testid, questionid)VALUES(1,3);
+INSERT INTO testquestions(testid, questionid)VALUES(1,1);
 INSERT INTO testquestions(testid, questionid)VALUES(1,2);
+INSERT INTO testquestions(testid, questionid)VALUES(1,3);
+INSERT INTO testquestions(testid, questionid)VALUES(1,4);
 INSERT INTO testquestions(testid, questionid)VALUES(1,5);
-INSERT INTO testquestions(testid, questionid)VALUES(2,4);
-INSERT INTO testquestions(testid, questionid)VALUES(3,4);
-INSERT INTO testquestions(testid, questionid)VALUES(3,3);
-INSERT INTO testquestions(testid, questionid)VALUES(4,2);
+INSERT INTO testquestions(testid, questionid)VALUES(1,6);
+INSERT INTO testquestions(testid, questionid)VALUES(1,7);
+INSERT INTO testquestions(testid, questionid)VALUES(1,8);
+INSERT INTO testquestions(testid, questionid)VALUES(1,9);
+INSERT INTO testquestions(testid, questionid)VALUES(1,10);
 
-INSERT INTO testquestions(testid, questionid)VALUES(7,11);
-INSERT INTO testquestions(testid, questionid)VALUES(7,12);
-INSERT INTO testquestions(testid, questionid)VALUES(7,13);
-INSERT INTO testquestions(testid, questionid)VALUES(7,14);
-INSERT INTO testquestions(testid, questionid)VALUES(7,15);
-INSERT INTO testquestions(testid, questionid)VALUES(7,16);
-INSERT INTO testquestions(testid, questionid)VALUES(7,17);
-INSERT INTO testquestions(testid, questionid)VALUES(7,18);
-INSERT INTO testquestions(testid, questionid)VALUES(7,19);
-INSERT INTO testquestions(testid, questionid)VALUES(7,20);
+-- Second Test
+-- Create test2 with 10 questions
+INSERT INTO testquestions(testid, questionid)VALUES(2,1);
+
+INSERT INTO testquestions(testid, questionid)VALUES(2,2);
+INSERT INTO testquestions(testid, questionid)VALUES(2,3);
+INSERT INTO testquestions(testid, questionid)VALUES(2,4);
+INSERT INTO testquestions(testid, questionid)VALUES(2,5);
+INSERT INTO testquestions(testid, questionid)VALUES(2,6);
+INSERT INTO testquestions(testid, questionid)VALUES(2,7);
+INSERT INTO testquestions(testid, questionid)VALUES(2,8);
+INSERT INTO testquestions(testid, questionid)VALUES(2,9);
+INSERT INTO testquestions(testid, questionid)VALUES(2,10);
+ 
+
+
+-- Create test3 with 10 questions
+INSERT INTO testquestions(testid, questionid)VALUES(3,1);
+INSERT INTO testquestions(testid, questionid)VALUES(3,2);
+INSERT INTO testquestions(testid, questionid)VALUES(3,3);
+INSERT INTO testquestions(testid, questionid)VALUES(3,4);
+INSERT INTO testquestions(testid, questionid)VALUES(3,5);
+INSERT INTO testquestions(testid, questionid)VALUES(3,6);
+INSERT INTO testquestions(testid, questionid)VALUES(3,7);
+INSERT INTO testquestions(testid, questionid)VALUES(3,8);
+INSERT INTO testquestions(testid, questionid)VALUES(3,9);
+INSERT INTO testquestions(testid, questionid)VALUES(3,10);
+
+
+-- Create test8 with 10 questions
 
 INSERT INTO testquestions(testid, questionid)VALUES(8,21);
 INSERT INTO testquestions(testid, questionid)VALUES(8,22);
@@ -179,54 +201,60 @@ INSERT INTO testquestions(testid, questionid)VALUES(8,29);
 INSERT INTO testquestions(testid, questionid)VALUES(8,30);
 
 
-
-
-INSERT INTO candidateanswers(employeeid, testquestionid,answerkey)VALUES(1,4,'c');
-INSERT INTO candidateanswers(employeeid, testquestionid,answerkey)VALUES(2,4,'a');
-INSERT INTO candidateanswers(employeeid, testquestionid,answerkey)VALUES(1,1,'c');
-INSERT INTO candidateanswers(employeeid, testquestionid,answerkey)VALUES(2,1,'d');
+-- First Candidate Answser sheet
+INSERT INTO candidateanswers(employeeid, testquestionid,answerkey)VALUES(1,1,'b');
 INSERT INTO candidateanswers(employeeid, testquestionid,answerkey)VALUES(1,2,'c');
+INSERT INTO candidateanswers(employeeid, testquestionid,answerkey)VALUES(1,3,'a');
+INSERT INTO candidateanswers(employeeid, testquestionid,answerkey)VALUES(1,4,'a');
+INSERT INTO candidateanswers(employeeid, testquestionid,answerkey)VALUES(1,5,'b');
+INSERT INTO candidateanswers(employeeid, testquestionid,answerkey)VALUES(1,6,'c');
+INSERT INTO candidateanswers(employeeid, testquestionid,answerkey)VALUES(1,7,'d');
+INSERT INTO candidateanswers(employeeid, testquestionid,answerkey)VALUES(1,8,'d');
+INSERT INTO candidateanswers(employeeid, testquestionid,answerkey)VALUES(1,9,'a');
+INSERT INTO candidateanswers(employeeid, testquestionid,answerkey)VALUES(1,10,'a');
+
+
+INSERT INTO candidateanswers(employeeid, testquestionid,answerkey)VALUES(1,11,'b');
+INSERT INTO candidateanswers(employeeid, testquestionid,answerkey)VALUES(1,12,'c');
+INSERT INTO candidateanswers(employeeid, testquestionid,answerkey)VALUES(1,13,'a');
+INSERT INTO candidateanswers(employeeid, testquestionid,answerkey)VALUES(1,14,'a');
+INSERT INTO candidateanswers(employeeid, testquestionid,answerkey)VALUES(1,15,'b');
+INSERT INTO candidateanswers(employeeid, testquestionid,answerkey)VALUES(1,16,'c');
+INSERT INTO candidateanswers(employeeid, testquestionid,answerkey)VALUES(1,17,'d');
+INSERT INTO candidateanswers(employeeid, testquestionid,answerkey)VALUES(1,18,'d');
+INSERT INTO candidateanswers(employeeid, testquestionid,answerkey)VALUES(1,19,'a');
+INSERT INTO candidateanswers(employeeid, testquestionid,answerkey)VALUES(1,20,'a');
+
+
+
+-- second Candidate Answser sheet
 INSERT INTO candidateanswers(employeeid, testquestionid,answerkey)VALUES(2,1,'a');
-INSERT INTO candidateanswers(employeeid, testquestionid,answerkey)VALUES(4,2,'b');
-INSERT INTO candidateanswers(employeeid, testquestionid,answerkey)VALUES(5,3,'c');
-INSERT INTO candidateanswers(employeeid, testquestionid,answerkey)VALUES(1,2,'b');
+INSERT INTO candidateanswers(employeeid, testquestionid,answerkey)VALUES(2,2,'b');
 INSERT INTO candidateanswers(employeeid, testquestionid,answerkey)VALUES(2,3,'c');
+INSERT INTO candidateanswers(employeeid, testquestionid,answerkey)VALUES(2,4,'d');
+INSERT INTO candidateanswers(employeeid, testquestionid,answerkey)VALUES(2,5,'a');
+INSERT INTO candidateanswers(employeeid, testquestionid,answerkey)VALUES(2,6,'b');
+INSERT INTO candidateanswers(employeeid, testquestionid,answerkey)VALUES(2,7,'a');
+INSERT INTO candidateanswers(employeeid, testquestionid,answerkey)VALUES(2,8,'a');
+INSERT INTO candidateanswers(employeeid, testquestionid,answerkey)VALUES(2,9,'b');
+INSERT INTO candidateanswers(employeeid, testquestionid,answerkey)VALUES(2,10,'b');
 
-INSERT INTO candidateanswers(employeeid, testquestionid,answerkey)VALUES(6,11,'a');
-INSERT INTO candidateanswers(employeeid, testquestionid,answerkey)VALUES(6,12,'a');
-INSERT INTO candidateanswers(employeeid, testquestionid,answerkey)VALUES(6,13,'d');
-INSERT INTO candidateanswers(employeeid, testquestionid,answerkey)VALUES(6,14,'b');
-INSERT INTO candidateanswers(employeeid, testquestionid,answerkey)VALUES(6,15,'c');
-INSERT INTO candidateanswers(employeeid, testquestionid,answerkey)VALUES(6,16,'a');
-INSERT INTO candidateanswers(employeeid, testquestionid,answerkey)VALUES(6,17,'b');
-INSERT INTO candidateanswers(employeeid, testquestionid,answerkey)VALUES(6,18,'c');
-INSERT INTO candidateanswers(employeeid, testquestionid,answerkey)VALUES(6,19,'b');
-INSERT INTO candidateanswers(employeeid, testquestionid,answerkey)VALUES(6,20,'c');
 
-INSERT INTO candidateanswers(employeeid, testquestionid,answerkey)VALUES(7,11,'a');
-INSERT INTO candidateanswers(employeeid, testquestionid,answerkey)VALUES(7,12,'a');
-INSERT INTO candidateanswers(employeeid, testquestionid,answerkey)VALUES(7,13,'a');
-INSERT INTO candidateanswers(employeeid, testquestionid,answerkey)VALUES(7,14,'a');
-INSERT INTO candidateanswers(employeeid, testquestionid,answerkey)VALUES(7,15,'b');
-INSERT INTO candidateanswers(employeeid, testquestionid,answerkey)VALUES(7,16,'b');
-INSERT INTO candidateanswers(employeeid, testquestionid,answerkey)VALUES(7,17,'b');
-INSERT INTO candidateanswers(employeeid, testquestionid,answerkey)VALUES(7,18,'c');
-INSERT INTO candidateanswers(employeeid, testquestionid,answerkey)VALUES(7,19,'c');
-INSERT INTO candidateanswers(employeeid, testquestionid,answerkey)VALUES(7,20,'c');
+-- second Candidate Answser sheet
+INSERT INTO candidateanswers(employeeid, testquestionid,answerkey)VALUES(3,1,'d');
+INSERT INTO candidateanswers(employeeid, testquestionid,answerkey)VALUES(3,2,'a');
+INSERT INTO candidateanswers(employeeid, testquestionid,answerkey)VALUES(3,3,'c');
+INSERT INTO candidateanswers(employeeid, testquestionid,answerkey)VALUES(3,4,'d');
+INSERT INTO candidateanswers(employeeid, testquestionid,answerkey)VALUES(3,5,'d');
+INSERT INTO candidateanswers(employeeid, testquestionid,answerkey)VALUES(3,6,'b');
+INSERT INTO candidateanswers(employeeid, testquestionid,answerkey)VALUES(3,7,'d');
+INSERT INTO candidateanswers(employeeid, testquestionid,answerkey)VALUES(3,8,'a');
+INSERT INTO candidateanswers(employeeid, testquestionid,answerkey)VALUES(3,9,'a');
+INSERT INTO candidateanswers(employeeid, testquestionid,answerkey)VALUES(3,10,'c');
 
 
 
-INSERT INTO candidatetestresults(testid, marks)VALUES(2,1);
-INSERT INTO candidatetestresults(testid, marks)VALUES(1,1);
-INSERT INTO candidatetestresults(testid, marks)VALUES(3,1);
-INSERT INTO candidatetestresults(testid, marks)VALUES(4,1);
-INSERT INTO candidatetestresults(testid, marks)VALUES(5,1);
-INSERT INTO candidatetestresults(testid, marks)VALUES(6,1);
-INSERT INTO candidatetestresults(testid, marks)VALUES(1,1);
-INSERT INTO candidatetestresults(testid, marks)VALUES(2,1);
-INSERT INTO candidatetestresults(testid, marks)VALUES(3,1);
-INSERT INTO candidatetestresults(testid, marks)VALUES(4,1);
-INSERT INTO candidatetestresults(testid, marks)VALUES(1,1);
+
 
 
 
@@ -268,15 +296,3 @@ INSERT INTO interviewresults(techintacid, rating, comments)VALUES(5,10,"very goo
 INSERT INTO interviewresults(techintacid, rating, comments)VALUES(6,7,"good");
 INSERT INTO interviewresults(techintacid, rating, comments)VALUES(7,8,"nice");
 INSERT INTO interviewresults(techintacid, rating, comments)VALUES(8,8,"good");
-
-
-
-
-
-
-
-
-
-
-
-
