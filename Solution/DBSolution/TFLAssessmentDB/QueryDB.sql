@@ -96,7 +96,7 @@ select * from employees
 
 select  candidateanswers.employeeid,questions.qid, questions.answerkey as CorrectAnswer, candidateanswers.answerkey as CandidatesAnswer  
 from questions
-  JOIN testquestions ON questions.qid=testquestions.questionid
+  JOIN testquestigit puons ON questions.qid=testquestions.questionid
   JOIN candidateanswers ON candidateanswers.testquestionid=testquestions.testquestionid 
 WHERE   candidateanswers.employeeid=1
 AND     testquestions.testid=1;
