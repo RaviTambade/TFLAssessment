@@ -1,0 +1,106 @@
+
+
+
+
+use mysqltutorial;
+
+select * from employee;
+
+select fname from employee;
+
+select fname, lname from employee;
+
+select 1-1;
+
+select now();
+
+select now() as 'date-time';
+
+SELECT CONCAT('shridhar',' ','patil');
+-- The CONCAT() function accepts one or more strings and concatenates them into a single string.
+
+SELECT CONCAT('shridhar',' ','patil') as Name;
+
+select lname as 'Last Name' from employee;
+select lname 'Last Name' from employee;
+select fname 'First Name', lname 'Last Name' from employee;
+
+select * from employee order by id desc;
+select * from employee order by fname desc;
+select * from employee order by fname;
+select * from employee order by fname desc, lname asc;
+
+SELECT FIELD('c', 'A','B','C');
+select * from employee where fname= 'vaibhav';
+select * from employee where fname= 'vaibhav' and lname = 'sathe';
+select * from employee where fname= 'vaibhav' or lname = 'sathe';
+select * from employee where id between 1 and 5;
+select * from employee where id between 1 and 5 order by fname;
+
+select * from employee where email like '%.com';
+insert into employee(fname, lname, email, contactno)value('Ritesh', 'Chopra', 'rChoprae@gmail.in', '8654866315');
+
+select * from employee where contactno like '%54';
+select * from employee where contactno like '9_______54';
+
+select * from employee where lname in ('sathe','tambe','chopra');
+
+select * from questions;
+select * from tests;
+
+select * from tests where createdon between '2023-10-01' and '2023-12-31';
+
+
+
+use mysqltutorial;
+
+
+select * from employee;
+
+insert into employee(fname, lname, email, contactno)value('prachant', 'sathe', 'psathe@gmail.com', '8654703315'),('chetan', 'sathe', 'csathe@gmail.com','9658703254');
+
+-- LIMIT - The LIMIT clause is used in the SELECT statement to constrain the number of rows to return. The LIMIT clause accepts one or two arguments. The values of both arguments must be zero or positive integers.
+
+select * from employee limit 3,4;
+select * from employee limit 4 offset 3;
+select * from employee order by id desc;
+select * from employee order by id desc limit 4 offset 2;
+
+select distinct lname from employee;
+
+select distinct lname from employee limit 2,1;
+select distinct lname from employee limit 2;
+
+SELECT * FROM employee ORDER BY fname LIMIT 5;
+
+/*
+Use the IS NULL operator to test if a value is NULL or not. The IS NOT NULL operator negates the result of the IS NULL operator.
+The value IS NULL returns true if the value is NULL or false if the value is not NULL.
+The value IS NOT NULL returns true if the value is not NULL or false if the value is NULL
+*/
+
+SELECT * FROM employee where fname is null;
+insert into employee(fname, lname, email, contactno)value(null, 'sathe', 'psathe@gmail.com', '8654703315');
+SELECT * FROM employee where fname is not null;
+
+select concat_ws(' ',fname, lname)  from employee;
+
+select concat_ws(' ',fname, lname) as 'Full Name' from employee;
+
+
+create database newDB;
+use newDB;
+CREATE TABLE tasks (
+    id INT PRIMARY KEY ,
+    title VARCHAR(255) NOT NULL,
+    start_date DATE,
+    due_date DATE
+);
+select * from tasks;
+insert into tasks(id,title, start_date, due_date)values(1,'Learning', '2024-01-15', '2024-02-20');
+
+insert into tasks(id,title, start_date, due_date)values(2,'teaching', '2024-01-15', '2024-02-20'),(3,'playing', '2024-01-15', '2024-02-20');
+
+ALTER TABLE tasks modify COLUMN  id int auto_increment;
+
+insert into tasks(title, start_date, due_date)values('Learning', '2023-01-15', '2023-02-20');
