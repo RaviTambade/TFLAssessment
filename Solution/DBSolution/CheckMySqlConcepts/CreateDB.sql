@@ -14,3 +14,10 @@ create table bills(
             billDate date,
             totalAmount double
 );
+
+create table taxes(
+             taxId int primary key auto_increment,
+			 prdId int,
+             tax double,
+             constraint fk_products_taxes_productId foreign key (prdId) references products(productId)
+             );
