@@ -1,3 +1,4 @@
+drop database if exists checkMySqlConcepts;
 create database checkMySqlConcepts;
 
 use checkMySqlConcepts;
@@ -21,3 +22,26 @@ create table taxes(
              tax double,
              constraint fk_products_taxes_productId foreign key (prdId) references products(productId)
              );
+             
+create table orders(
+             orderId int primary key auto_increment,
+             oProductId int,
+             orderDate date,
+             quantity int,
+             constraint fk_products_orders_productId foreign key (oProductId) references products(productId)
+             );             
+             
+             
+-- call trigger on inserinto order table---------------------------------------------------------------------------------------
+DROP TRIGGER IF EXISTS update_billAmount_trigger;
+DELIMITER //
+CREATE TRIGGER update_billAmount_trigger
+AFTER Insert 
+ON orders
+FOR EACH ROW
+BEGIN
+	IF new.oProductId and new.quantity then
+	   call spTaxableBill(new.oProductId,new.quantity);
+    END IF;
+END //
+DELIMITER ;
