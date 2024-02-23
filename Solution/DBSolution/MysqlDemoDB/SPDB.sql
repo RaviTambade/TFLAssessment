@@ -17,7 +17,7 @@ CREATE TABLE calendars(
 
 /*insert dates into the calendars table:*/
 
-
+DELIMITER //
 CREATE PROCEDURE spInsertCalendar(IN curerntDate DATE)
 BEGIN 
         -- insert date into the table
