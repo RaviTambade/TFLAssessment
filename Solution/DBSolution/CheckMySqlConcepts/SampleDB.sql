@@ -8,6 +8,9 @@ INSERT INTO products (title, unitPrice,stockInQuantity) VALUES ('Pen',10, 200);
 INSERT INTO products (title, unitPrice,stockInQuantity) VALUES ('Notebook',30, 300);
 INSERT INTO products (title, unitPrice,stockInQuantity) VALUES ('Oil',200, 1000);
 INSERT INTO products (title, unitPrice,stockInQuantity) VALUES ('Powder',110.17, 1000);
+-- INSERT INTO products (title, unitPrice,stockInQuantity) VALUES ('Brush',25, 4);
+
+
 
 INSERT INTO taxes (prdId,tax) VALUES (1,0.1);
 INSERT INTO taxes (prdId,tax) VALUES (2,0.2);

@@ -7,7 +7,8 @@ create table products(
 			productId int primary key auto_increment,
             title varchar(100),
             unitPrice double,
-            stockInQuantity int
+            stockInQuantity int 
+            CONSTRAINT Add_More_Then_5_Quantity CHECK(stockInQuantity > 5)
 );
 
 create table bills(
@@ -42,6 +43,20 @@ FOR EACH ROW
 BEGIN
 	IF new.oProductId and new.quantity then
 	   call spTaxableBill(new.oProductId,new.quantity);
+    END IF;
+END //
+DELIMITER ;
+-- TRIGGER with TRANSACTION ---------------------------------------------------------------------------------------------------
+
+DROP TRIGGER IF EXISTS update_billAmount_trigger_transaction;
+DELIMITER //
+CREATE TRIGGER update_billAmount_trigger_transaction
+AFTER Insert 
+ON orders
+FOR EACH ROW
+BEGIN
+	   IF new.oProductId and new.quantity then
+	   call sp_Trans_TaxableBill(new.oProductId,new.quantity);
     END IF;
 END //
 DELIMITER ;
