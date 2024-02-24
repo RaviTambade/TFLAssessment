@@ -60,3 +60,31 @@ BEGIN
     END IF;
 END //
 DELIMITER ;
+
+-- views -----------------------------------------------------------------------------------------------
+DROP VIEW IF EXISTS v_product_tax;
+create view v_product_tax as 
+select products.productId, products.title, taxes.tax 
+from products, taxes 
+where products.productId = taxes.prdId;
+
+SELECT * FROM v_product_tax;
+
+
+DROP VIEW IF EXISTS v_orderDetails;
+create view v_orderDetails as 
+select productId, title, tax, orderDate, quantity
+from products p
+inner join taxes t
+on p.productId = t.prdId
+inner join orders o
+on t.prdId = o.oProductId;
+
+SELECT * FROM v_orderDetails;
+
+
+
+
+
+
+
