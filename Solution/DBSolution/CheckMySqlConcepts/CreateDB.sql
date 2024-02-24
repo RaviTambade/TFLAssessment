@@ -8,7 +8,7 @@ create table products(
             title varchar(100),
             unitPrice double,
             stockInQuantity int 
-            CONSTRAINT Add_More_Then_5_Quantity CHECK(stockInQuantity > 5)
+            CONSTRAINT Add_More_Then_0_Quantity CHECK(stockInQuantity > 0)
 );
 
 create table bills(
@@ -46,7 +46,7 @@ BEGIN
     END IF;
 END //
 DELIMITER ;
-
+-- We cannot use triggers with Transaction
 
 -- Views -----------------------------------------------------------------------------------------------
 DROP VIEW IF EXISTS v_product_tax;
@@ -73,7 +73,7 @@ CREATE INDEX index_products
 ON products (unitPrice);
 
 show index from products;
-
+-- Index is used by search engine only
 
 
 
