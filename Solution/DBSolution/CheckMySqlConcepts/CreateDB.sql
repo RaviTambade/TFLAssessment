@@ -33,7 +33,7 @@ create table orders(
              );             
              
              
--- call trigger on inserinto order table---------------------------------------------------------------------------------------
+-- Trigger---------------------------------------------------------------------------------------
 DROP TRIGGER IF EXISTS update_billAmount_trigger;
 DELIMITER //
 CREATE TRIGGER update_billAmount_trigger
@@ -46,22 +46,9 @@ BEGIN
     END IF;
 END //
 DELIMITER ;
--- TRIGGER with TRANSACTION ---------------------------------------------------------------------------------------------------
 
-DROP TRIGGER IF EXISTS update_billAmount_trigger_transaction;
-DELIMITER //
-CREATE TRIGGER update_billAmount_trigger_transaction
-AFTER Insert 
-ON orders
-FOR EACH ROW
-BEGIN
-	   IF new.oProductId and new.quantity then
-	   call sp_Trans_TaxableBill(new.oProductId,new.quantity);
-    END IF;
-END //
-DELIMITER ;
 
--- views -----------------------------------------------------------------------------------------------
+-- Views -----------------------------------------------------------------------------------------------
 DROP VIEW IF EXISTS v_product_tax;
 create view v_product_tax as 
 select products.productId, products.title, taxes.tax 
@@ -69,7 +56,6 @@ from products, taxes
 where products.productId = taxes.prdId;
 
 SELECT * FROM v_product_tax;
-
 
 DROP VIEW IF EXISTS v_orderDetails;
 create view v_orderDetails as 
@@ -81,6 +67,12 @@ inner join orders o
 on t.prdId = o.oProductId;
 
 SELECT * FROM v_orderDetails;
+
+-- Index -------------------------------------------------------------------------------
+CREATE INDEX index_products 
+ON products (unitPrice);
+
+show index from products;
 
 
 
