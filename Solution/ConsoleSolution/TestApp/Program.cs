@@ -137,3 +137,22 @@ Console.WriteLine("Enter Achived Target For marketing Manager");
 man2.Achieved=double.Parse(Console.ReadLine());
 
 Console.WriteLine("Total Salary With Incentive Is : "+man2.CalculateSalary());
+
+
+Console.WriteLine("------------------------------------------------------");
+
+
+//What is e6: ?  reference to object
+//FirstName : member property
+
+
+string firstName=e6.FirstName;
+string lastName=e6.LastName;
+
+
+//class level function is always static (shared function)
+//object level function is always non-static (member function)
+
+Console.WriteLine("Total number of Objects of Employee="+ Employee.count);
+Console.WriteLine("Total number of Objects of Employee="+ Employee.GetCount());
+Console.WriteLine(" Total number of objects of Employee="+ Employee.Count);

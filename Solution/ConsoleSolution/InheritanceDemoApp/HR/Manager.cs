@@ -18,6 +18,9 @@ public class Manager: Employee
         return base.CalculateSalary()+ Incentive;
     }
 
+
+    //Any function which is overriable in parent class
+    //it is also overridable in their respective derived (child) classes
     public override string ToString(){
         return base.ToString() + " Incentive="+Incentive;
     }

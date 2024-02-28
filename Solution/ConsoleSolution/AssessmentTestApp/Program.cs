@@ -9,6 +9,7 @@ using Mysqlx.Crud;
 
 //IEmployeeService iSvc=new EmployeeService();
 MySqlDbManager dbManager = new MySqlDbManager();
+
 List<Employee> allEmployees=dbManager.GetAll();
 
 

@@ -52,3 +52,8 @@ foreach( IPrintable printer in priters){
     printer.Print();
 }
 
+
+
+Employee emp=new Employee();
+Employee emp2=new Employee(6000,12000,5400);
+

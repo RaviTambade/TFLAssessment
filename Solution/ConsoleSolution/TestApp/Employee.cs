@@ -3,10 +3,12 @@ namespace Assessment;
 public class Employee{
     //data members
     //Encapsulation: Data Hiding
+
+    
     private int empId;
-    private string firstName;
+
     private string lastName;
-    private string contactNumber;
+ 
     private string email;
 
     //Constructor Overloading
@@ -17,6 +19,8 @@ public class Employee{
         this.lastName="Joshi";
         this.contactNumber="99999999";
         this.email="bhupendera.joshi@transflower.in";
+        count++;
+
     }
 
     public Employee(int empId,string firstName,string lastName,string contactNumber,string email){
@@ -25,6 +29,9 @@ public class Employee{
         this.lastName=lastName;
         this.contactNumber=contactNumber;
         this.email=email;
+
+        count++;
+
     }
 
     public int GetEmployeeId(){
@@ -45,7 +52,8 @@ public class Employee{
     }
 
     //Property Syntax
-   public string FirstName
+    private string firstName;
+    public string FirstName
     {
         get { return firstName; }  //get Block
         set { firstName= value; }  //set Block
@@ -62,10 +70,33 @@ public class Employee{
         get { return this.email;}
         set {this.email=value;}
     }
-
-
+ 
+   
+    //member variable
+    //instance varialble
+    private string contactNumber;
+    
+    //instance property
     public string ContactNumber{
         get { return this.contactNumber;}
         set {this.contactNumber=value;}
     }
+
+    //default value of integer variable which is static always zero
+    //shared variable
+    //static variable
+    //class variable
+    public static int count;
+ 
+    public static  int GetCount(){
+        //static functions can access only static variables
+        return count;
+    }
+
+    //class property
+    public static int Count{
+        get{return count;}
+        set{count=value;}
+    }
+
 }

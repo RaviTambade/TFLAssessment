@@ -127,9 +127,6 @@ DELIMITER ;
 
 CALL spRepeatDemo();
 
-
-
-
 -------------------------------
 
  checks the credit of a given customer in the customers table from enterpriseDB
