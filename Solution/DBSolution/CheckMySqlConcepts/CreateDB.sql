@@ -75,6 +75,72 @@ ON products (unitPrice);
 show index from products;
 -- Index is used by search engine only
 
+-- Joins ---------------------------------------------------------------------------------
+CREATE TABLE members (
+    member_id INT AUTO_INCREMENT,
+    name VARCHAR(100),
+    PRIMARY KEY (member_id)
+);
+
+CREATE TABLE committees (
+    committee_id INT AUTO_INCREMENT,
+    name VARCHAR(100),
+    PRIMARY KEY (committee_id)
+);
+
+INSERT INTO members(name)
+VALUES('John'),('Jane'),('Mary'),('David'),('Amelia');
+
+INSERT INTO committees(name)
+VALUES('John'),('Mary'),('Amelia'),('Joe');
+
+SELECT * FROM members;
+SELECT * FROM committees;
+
+-- Inner join clause to find members who are also the committee members
+SELECT m.member_id, m.name, c.committee_id, c.name 
+FROM members m
+INNER JOIN committees c on m.name=c.name;
+
+-- Using claus
+SELECT m.member_id, m.name as member, c.committee_id, c.name as committee
+FROM members m
+INNER JOIN committees c USING(name);
+
+-- Left Join
+SELECT m.member_id,m.name AS Member,c.committee_id, c.name AS Committee
+from members m
+LEFT JOIN committees c USING(name);
+
+-- Left Join with where clause
+SELECT m.member_id,m.name AS Member,c.committee_id, c.name AS Committee
+from members m
+LEFT JOIN committees c USING(name)
+WHERE c.committee_id IS NULL; -- (Find rows in the left table that do not have corresponding rows in the right table)
+							  -- (Find members who are not present in committee table)
+-- Right Join
+SELECT m.member_id,m.name AS Member,c.committee_id, c.name AS Committee
+from members m
+RIGHT JOIN committees c USING(name);
+
+-- Right Join with WHERE clause
+SELECT m.member_id,m.name AS Member,c.committee_id, c.name AS Committee
+from members m
+RIGHT JOIN committees c USING(name)
+where m.member_id IS NULL; -- (Find rows in the right table that do not have corresponding rows in the left table) 
+                           -- (Find the committee members who are not in the members table)
+
+-- Cross Join
+SELECT m.member_id,m.name AS Member,c.committee_id, c.name AS Committee
+from members m
+CROSS JOIN committees c;  -- (Will give m*c number of rows)
+
+
+
+
+
+
+
 
 
 
