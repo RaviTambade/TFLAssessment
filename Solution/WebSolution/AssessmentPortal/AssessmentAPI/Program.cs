@@ -34,6 +34,7 @@ app.MapGet("/contact", ()=>"<ol>"
                                  +"<li>9881735802</li>"
                                 +"</ol>");
 app.MapGet("/services",()=>"Mentoring, Training,Consultancy");
+app.MapGet("/Aboutyou",()=>"Name : Bhupendra Walhekar\nAddress : Pune\nContact : 9175116616\nEmail : bhupendraw@transflowerlearning.com");
 app.MapGet("/number",()=>{
                             int count=90;
                             string result="";
@@ -67,7 +68,7 @@ app.MapGet("/employees",()=>{
 
 app.MapGet("/dbemployees",()=>{
     List<Employee> employees=new List<Employee>();
-    string connectionString="server=localhost;port=3306;user=root;password=password;database=assessmentdb";
+    string connectionString="server=localhost;port=3306;user=root;password=root;database=assessmentdb";
     MySqlConnection connection = new MySqlConnection(connectionString);
      try{
         string query = "select * from employee";
