@@ -1,3 +1,6 @@
+//Minimal Code Strategy
+
+
 //Entry Point file
 //Main function
 //Application Type:Web application
@@ -33,8 +36,14 @@ app.MapGet("/contact", ()=>"<ol>"
                                 +"<li>9881735801</li>"
                                  +"<li>9881735802</li>"
                                 +"</ol>");
+
+app.MapPost("/login",(req,res)=>{
+
+});
+
 app.MapGet("/services",()=>"Mentoring, Training,Consultancy");
 app.MapGet("/number",()=>{
+                            //Request Processing
                             int count=90;
                             string result="";
                             count ++;
