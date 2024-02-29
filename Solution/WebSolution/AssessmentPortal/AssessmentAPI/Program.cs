@@ -1,3 +1,6 @@
+//Minimal Code Strategy
+
+
 //Entry Point file
 //Main function
 //Application Type:Web application
@@ -36,7 +39,9 @@ app.MapGet("/contact", ()=>"<ol>"
 
 
 app.MapGet("/services",()=>"Mentoring, Training,Consultancy");
+app.MapGet("/Aboutyou",()=>"Name : Bhupendra Walhekar\nAddress : Pune\nContact : 9175116616\nEmail : bhupendraw@transflowerlearning.com");
 app.MapGet("/number",()=>{
+                            //Request Processing
                             int count=90;
                             string result="";
                             count ++;

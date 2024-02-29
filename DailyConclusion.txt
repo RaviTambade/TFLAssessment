@@ -1,12 +1,89 @@
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
 24 Feb 2024
 1)Procedure
 2)Triggers
 3)Views
 4)Transactions
 5)Index
---------------------
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
 26 Feb 2024
 1)Events
 2)Cursor
-3)Code Walk Throug
---------------------
+3)Code Walk Through
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+27 Feb 2024 
+(Revision)
+
+Database:
+       1)Tables
+       2)Constraints
+       3)Views
+       4)Trigger
+       5)Event
+       6)Stored procedure
+       7)Transactions
+       8)Curosr
+		 
+Object Oriented Programming
+	1)Entry Point function----Main ()--------Program.cs
+	2)User defined Class------Employe calss--Employee.cs
+	3)Namespace----collection of .net classes, interface, structure,events, delegate, enumeration
+	4)Class--------data members--->private, public, protected, internal---->scope of variable
+        5)Member function
+			    Constructors -----overloading
+			    Destructor
+			    Getter and setter function
+			    Property
+			    Auto property
+		            Static function
+	6)Inheritance:
+		   Base class ------super class
+		   Derived class----sub class
+		   Protected scope
+	           Constructor chaining
+		   Member initialized list
+		   Override function ToString()
+	7)Polmorphism
+		  virutal , override , base, this keyword
+		  sealed
+
+ -------------------------------Joins-------------------------
+	1)Why joins?
+	2)What are differnt types of joins ?
+	3)When to use which type of join ?	
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+28 Feb 2024
+(Introduction To Web Application)
+
+Structure of Web Application						Client-2,Server -Single
+
+Program.cs file
+(Main function)
+AssessmentAPI.dll 	---web app
+Kestrel / IIS 		--Web Server					
+Dotnet.exe------Dotnet runtime process------    			
+
+Server Machine--------------------------        connectivity----------------
+				                LAN (Local Area Network)
+					        WAN (Wide Aread Netowork)
+					        Ineternet
+					        Web
+
+
+Web Logic processing				internet----------<-----http://192.168.23.2:5238	HTTPWebRequest
+		                                Response---------->
+						Client Machine 1------------------End User 1
+                                                Chrome brwoser		
+									
+Web Logic processing				internet----------<-----http://192.168.23.2:5238	HTTPWebRequest
+		                                Response---------->
+						Client Machine 2------------------End User 2
+                                                Edge brwoser	
+Server running
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+	  
+
+
+ 
+ 
