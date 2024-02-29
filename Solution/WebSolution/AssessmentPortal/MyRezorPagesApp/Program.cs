@@ -22,4 +22,9 @@ app.UseAuthorization();
 
 app.MapRazorPages();
 
+app.MapPost("/SignIn", ()=>{
+    Console.WriteLine("Post request is received..");
+
+});
+
 app.Run();
