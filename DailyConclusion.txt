@@ -82,6 +82,49 @@ Web Logic processing				internet----------<-----http://192.168.23.2:5238	HTTPWeb
                                                 Edge brwoser	
 Server running
 --------------------------------------------------------------------------------------------------------------------------------------------------------------
+29 Feb 2024
+1)New WEB APP WITH HTML PAGES (dotnet new webapp -n "NAME")
+2)RAZORPAGES (.CSHTML)
+3)LAYOUT.CSHTML (Used to create a nav bar to link other pages)
+4)@page @model (To display .cshtml page in browser)
+5)To make pages dynamic using JAVASCRIPT (script tag)
+6)app.MapPost
+---------------------------------------------
+01 March 2024
+(Revision and Discussion)
+
+Dotnet CLI:
+	dotnet new sln
+	dotnet new console
+	dotnet new classlib
+	dotnet new web
+	dotnet new webapp
+	dotnet new mvc
+	dotnet build
+	dotnet run
+	dotnet add package
+
+ 
+	Console Application
+	Class library
+	Web application
+	Razor pages
+	Startup Code
+	App.Run
+	App.MapGet
+	App.MapPost
+	HTML pages
+	Div
+	basic boostratp
+	basic javascript
+	Event handling logic using click
+	document.getElementID
+	Arrow function
+	asp.net mvc
+
+1)HTML
+
+
 	  
 
 

@@ -14,6 +14,7 @@ public class TFLPortal : PageModel
 
     public void OnGet()
     {
+        ViewData["MSG"]="In TFLPORTAL CLASS";
     }
 }
 
