@@ -7,12 +7,37 @@
     <title>Document</title>
 </head>
 <body>
+    <nav class="navbar navbar-expand navbar-light">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#" style="color: black;">
+            <img src="../img/tfl.jpeg" alt="Company Logo" style="width: 100px; height: 100px;"> Transflower
+          </a>
+          <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+            <ul class="navbar-nav ms-auto" style="background-color: #E15A1F;">
+             
+              <li class="nav-item" style="margin-right: 10px;">
+                <a class="nav-link" href="./authentication/login.html" style="color: black;">Login</a>
+              </li>
+              <li class="nav-item" style="margin-left: 10px;">
+                <a class="nav-link" href="./change-password.html" style="color: black;">Change Password</a>
+              </li>
+              <li class="nav-item" style="margin-left: 10px;">
+                <a class="nav-link" href="new-user.html" style="color: black;">New User</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="user-list.html" style="color: black;">User List</a>
+              </li>
+              
+            </ul>
+          </div>
+        </div>
+      </nav>
     <div class="container mt-5">
     <div class="row justify-content-center">
     <div class="col-md-6">
       <h3>Registration Form</h3>
       <form>
-        <div class="col-md-6">
+        <div class="col-sm-8">
             <label>First Name : </label>
             <input type="text" id="fname" name="fname" placeholder="Entar First Name"/><br><br>
             <label>Last Name : </label>
@@ -31,6 +56,11 @@
                 <option value="jaipur">Jaipur</option>
                 <option value="kanpur">Kanpur</option>
             </select><br><br>
+            <label>Select Known Languages : </label>
+            <input type="checkbox" id="marathi" name="marathi" value="Marathi">Marathi
+            <input type="checkbox" id="hindi" name="hindi" value="Hindi">Hindi
+            <input type="checkbox" id="english" name="english" value="English">English<br><br>
+         
             <!-- <button>Submit</button> -->
             <input type="submit" value="Submit"/>
             
