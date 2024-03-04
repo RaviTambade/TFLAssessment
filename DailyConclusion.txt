@@ -89,7 +89,7 @@ Server running
 4)@page @model (To display .cshtml page in browser)
 5)To make pages dynamic using JAVASCRIPT (script tag)
 6)app.MapPost
----------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
 01 March 2024
 (Revision and Discussion)
 
@@ -123,6 +123,13 @@ Dotnet CLI:
 	asp.net mvc
 
 1)HTML & CSS basic
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+02 March 2024
+(HTML & CSS)
+1)Table,button,bootstrap,classes,
+2)GetElementById
+3)GetElementByName
+4).checked
 
 
 	  
