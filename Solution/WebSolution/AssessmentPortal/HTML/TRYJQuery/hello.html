@@ -3,6 +3,7 @@
     <head>
         <title>JQuery Implementation</title> 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+        
     </head>
     <body>
         <h2>Transflower</h2>
@@ -16,6 +17,8 @@
         <p id="para3">Solution Provider</p>
         <button id="btnStart">Start</button>
         <button id="btnRun">Run</button>
+        
+        
         <hr/>
 
         <div style="background: rgb(255, 0, 0); height: 200px; width:200px; position:absolute"></div>
@@ -50,9 +53,25 @@
                                             
                                             })
         });
+        
 
         //For traversing point of view , we need to learn differnt types of selectors
         
         </script>
+       <script> 
+        $(document).ready(function(){
+          $("button").click(function(){
+            $("div").animate({left: '250px'});
+          });
+        });
+        </script> 
+        <script> 
+            $(document).ready(function(){
+              $("button").click(function(){
+                $("div").animate({left: '250px'});
+              });
+            });
+            </script> 
+            
     </body>
 </html>

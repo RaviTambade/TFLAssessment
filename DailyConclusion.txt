@@ -133,6 +133,45 @@ Dotnet CLI:
 
 -----------------------------------------------------------------------------------
 4 March 2024
+
+jQuery Tutorial
+
+  ***jQuery Selectors
+following are type of the selector
+1)element Selector -- $("p")
+2)#id Selector -------$("#test")  --find specifice element
+3).class Selector-----for specifice class  $(".class")
+4)$("*")	Selects all elements
+
+       ***** Event
+	   Event Methods---$("p").click();
+	   
+	   ******Fading
+	  1) fadeIn()
+      2) fadeOut()
+      3) fadeToggle()
+      4) fadeTo()
+	
+	******Animation
+	
+	
+	***********Sliding
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
 	  
 
 
