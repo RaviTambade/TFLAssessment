@@ -23,7 +23,7 @@
                             <option value="India">India</option>
                             <option value="USA">USA</option>
                         </select>
-                          
+
                         </div>
                         <div class="form-group" style="background-color: rgb(111, 255, 0);">
                           <label for="city">City:</label>
@@ -49,11 +49,49 @@
     </div>
 
     <script>
-        //C# code is source code which is compiled into IL code by C# Compiler
+    //C# code is source code which is compiled into IL code by C# Compiler
     // java script code is Interpreted code
-        $(document).ready(() => {
-            $('#btnInsert').click(() => {
-            });
+        
+        $(document).ready(function () {
+        /* $("#ddcountries").on("change", function() {
+                                        var value = $(this).val();
+                                        $("#pResult").text(value);
+                            });*/ 
+
+
+        // $( "#ddcountries").change(function() {
+        //                             var value = $(this).val();
+        //                             $("#pResult").text(value);
+        //                         });
+
+        var cityIndia=["Mumbai", "Chennai", "Pune", "Delhi", "Nagpur", "Hydrabad", "Satara"];
+        var cityUSA=["Shikago", "Boston", "New Jersy","San Fransico"];
+
+        $( "#ddcountries").change(function() {
+            var value = $(this).val();
+            if(value =="USA"){
+                $("#pResult").text("America");
+                var ctrlDropDownListBox=$('#ddCities');
+                ctrlDropDownListBox.empty();
+                for (var i = 0; i < cityUSA.length; i++) {
+                    ctrlDropDownListBox.append( $('<option></option>').val( cityUSA[i]).html( cityUSA[i]));          
+                }
+            }
+            else if(value =="India"){
+                $("#pResult").text("Bharat");
+                var ctrlDropDownListBox=$('#ddCities')
+                ctrlDropDownListBox.empty();
+                //ctrlDropDownListBox.append( $('<option></option>').val("Mumbai").html("Mumba"));
+                //ctrlDropDownListBox.append( $('<option></option>').val("Chennai").html("Chennai"));
+                //ctrlDropDownListBox.append( $('<option></option>').val("Pune").html("Pune"));
+                //ctrlDropDownListBox.append( $('<option></option>').val("Delhi").html("Delhi"));
+                //
+                for (var i = 0; i < cityIndia.length; i++) {
+                    ctrlDropDownListBox.append( $('<option></option>').val( cityIndia[i]).html( cityIndia[i]));          
+                }
+
+        }
+        });
         });
     </script>
 </body>
