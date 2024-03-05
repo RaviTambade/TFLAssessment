@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <title>Document</title>
+</head>
+
+<body>
+   
+  <div class="container">
+      <div class="row">
+            <div class="col-sm-8">
+                <div class="row">
+                    <div class="col-md-4">
+                        <p id="pResult">Selected Gender</p>
+                        <input type="radio" id="rdmale" name="gender" checked="true" value="m"/> Male
+                        <input type="radio" id="rdmale" name="gender" value="f"/> FeMale
+                        <br>
+                        <input type="checkbox" id="chkGraduate"  checked="true"/> Graduate
+                    </div>
+                    <div class="col-md-8">
+                        <p>Students of Transflower</p>
+                        <select id=lstStudents name=students class='form-control' size="3">
+                            <option value=''>Ajinkya</option>
+                            <option value=''>Vaibhav</option>
+                            <option value=''>Akash</option>
+                            <option value=''>Rahul</option>
+                            <option value=''>Vedant</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div>
+                    <div class="container">
+                        <h2>Basic Table</h2>
+                        <p>The .table class adds basic styling (light padding and only horizontal dividers) to a table:</p>            
+                        <table class="table">
+                          <thead>
+                            <tr>
+                              <th>Firstname</th>
+                              <th>Year of Passing</th>
+                              <th>Score</th>
+                            </tr>
+                          </thead>
+                          <tbody id="tbody1">
+                            <tr>
+                              <td>SSC</td>
+                              <td>1991</td>
+                              <td>80</td>
+                            </tr>
+                            <tr>
+                              <td>HSC</td>
+                              <td>1993</td>
+                              <td>70</td>
+                            </tr>
+                            <tr>
+                              <td>BE Comp</td>
+                              <td>1997</td>
+                              <td>70</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                </div>
+            </div>    
+            <div class="col-md-4">
+                <img src="\Solution\WebSolution\AssessmentPortal\HTML\Images\TFL.jpg" width="100" height="100"/>  
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+    var malestudents=[ "Rajiv", "Sharan", "Chaitany", "Akash"];
+    var femaleStudents=[ "Nutan", "Pragati", "Shubhangi", "Sanika"];
+
+    var candidates=[
+        {"id":12, "name":"Nutan",
+                    "qualification":[{"certificate":"SSC","year":1987,"score":80},
+                                     {"certificate":"SSC","year":2001,"score":70},
+                                     {"certificate":"BE comp","year":2005,"score":67}
+                                    ]},
+        {"id":13, "name":"Shubhangi",
+                    "qualification":[{"certificate":"SSC","year":1991,"score":80},
+                                     {"certificate":"SSC","year":1993,"score":70},
+                                     {"certificate":"BSc Maths","year":1997,"score":67}
+                                    ]},
+        {"id":14, "name":"Sankia",
+                    "qualification":[{"certificate":"SSC","year":1987,"score":80},
+                                     {"certificate":"Diploma","year":2022,"score":70},
+                                     {"certificate":"BE comp","year":2025,"score":67}
+                                    ]},
+        {"id":15, "name":"Rajiv",
+                    "qualification":[{"certificate":"SSC","year":1987,"score":80},
+                                     {"certificate":"SSC","year":2001,"score":70},
+                                     {"certificate":"BE comp","year":2005,"score":67}
+                                    ]},
+        {"id":13, "name":"Pragati",
+                    "qualification":[{"certificate":"SSC","year":2014,"score":90},
+                                     {"certificate":"SSC","year":2018,"score":86},
+                                     {"certificate":"BE comp","year":2021,"score":78}
+        ]}
+    ]
+    var graduationStatus=true;
+        
+    
+    $(document).ready(function () {
+        
+            //Three event registrations 
+            //radio button change event handler
+            $('input[type=radio][name=gender]').change(function() {
+                                                            var lstStudents=$('#lstStudents');
+                                                            if (this.value =="m") {
+                                                                console.log("Select Male");
+                                                                lstStudents.empty();
+                                                                for (var i = 0; i < malestudents.length; i++) {
+                                                                    lstStudents.append( $('<option></option>').val( malestudents[i]).html( malestudents[i]));          
+                                                                }
+                                                            }
+                                                            else if (this.value =="f") {
+                                                                lstStudents.empty();
+                                                                for (var i = 0; i < femaleStudents.length; i++) {
+                                                                    lstStudents.append( $('<option></option>').val( femaleStudents[i]).html( femaleStudents[i]));          
+                                                                }
+                                                            }
+            });
+
+            //Listbox option change event handler
+            $("#lstStudents").change(function () {
+
+                $('#tbody1').empty();
+                var selectedValue = $(this).val();
+                console.log(selectedValue);
+
+                //search index in candidates whose name == selectedvalue
+                
+                var currentCandidateIndex= candidates.findIndex(std=> std.name === selectedValue);
+                for (var i = 0; i <candidates[currentCandidateIndex].qualification.length; i++) {
+                let dynamicRowHTML = "<tr> <td>"+candidates[currentCandidateIndex].qualification[i].certificate + " </td> <td>"+candidates[currentCandidateIndex].qualification[i].year+"</td> <td>"+ candidates[currentCandidateIndex].qualification[i].score+"</td></tr>";
+                $('#tbody1').append(dynamicRowHTML);
+            }
+
+            });
+
+            $("#chkGraduate").change(function () {
+                var graduationStatus = $(this).prop("checked") 
+                console.log(" Graduatation status:" +graduationStatus);
+            });
+        });
+    </script>
+</body>
+</html>
