@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <title>Document</title>
+</head>
+
+<body>
+  <nav class="navbar navbar-expand navbar-light">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#" style="color: black;">
+        <img src="../img/tfl.jpeg" alt="Company Logo" style="width: 100px; height: 100px;"> Transflower
+      </a>
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav ms-auto" style="background-color: #E15A1F;">
+
+          <li class="nav-item" style="margin-right: 10px;">
+            <a class="nav-link" href="./authentication/login.html" style="color: black;">Login</a>
+          </li>
+          <li class="nav-item" style="margin-left: 10px;">
+            <a class="nav-link" href="./change-password.html" style="color: black;">Change Password</a>
+          </li>
+          <li class="nav-item" style="margin-left: 10px;">
+            <a class="nav-link" href="new-user.html" style="color: black;">New User</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="user-list.html" style="color: black;">User List</a>
+          </li>
+
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <div class="container mt-5">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <h3>Registration Form</h3>
+
+        <div class="col-sm-8">
+          <label>First Name : </label>
+          <input type="text" id="txtName" name="name" placeholder="Enter First Name" /><br><br>
+         
+          <button  id="btnInsert">Insert Name</button>
+          <hr/>
+          <label>Names : </label>
+          <select name="Names" id="ddNames">
+            <option value="Kedar">Kedar</option>
+            <option value="Charan">Charan</option>
+            <option value="Manisha">Manisha</option>
+            <option value="Ganesh">Ganesh</option>
+          </select><br><br>
+
+          <hr/>
+          <p id="pResult">Here you can see result</p>
+        </div>
+
+
+        <script>
+         //C# code is source code which is compiled into IL code by C# Compiler
+        // java script code is Interpreted code
+          $(document).ready(() => {
+                $('#btnInsert').click(() => {
+                    console.log("button clicked");
+                    var name=$("#txtName").val();
+                    $('#pResult').text(name)
+
+                    //insert new option into dropdown list box
+                    var ctrlDropDownListBox=$('#ddNames');
+                    ctrlDropDownListBox.append( $('<option></option>').val(name).html(name));
+                });
+          });
+        </script>
+
+</body>
+
+</html>
+
+ 

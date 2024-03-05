@@ -69,76 +69,72 @@
 
           <!-- <button>Submit</button> -->
           <!-- <input type="submit" value="Submit"/> -->
-          <button>Display Data</button>
+          <button  id="btnDisplay">Display Data</button>
+          <button id="btnShow">Show Data</button>
+
+          <p id="pResult">Here you can see result</p>
         </div>
 
 
         <script>
+          //Using jquery function , we can access DOM tree
+          //we can manipulate attriburtes of any HTML element using jquery selector
+          //There is a collection of numbers
+
+          var numbers=[34,45,45,65];
+          // we will iterate collection one by one from zero index to length of collection
+          // (traversing collection)
+
+        //we use indexer to interate collection (array)
+          for (let index = 0; index < numbers.length; index++) {
+            const element = numbers[index];
+            console.log(element);
+          }
+          
+          //When HTML document is read and loaded by HTML rendering engine
+          //in Browswer memory DOM tree is created
+          //each element defined in HTML script is read and controls are added to DOM tree
+
+          //DOM tree
           $(document).ready(() => {
-            $('button').click(() => {
-              var fname = $("#txtfname").val();
-              var lname = $("#txtlname").val();
-              var contact = $("#txtcontact").val();
-              var dob = $("#dtdob").val();
-              var city = $("#ddcity").val();
+            $('#btnDisplay').click(() => {
 
-
-              var sex = "Male";
+            //get values from HTML controls
+            //DOM traversing and reading content
+             var fname = $("#txtfname").val();
+             var lname = $("#txtlname").val();
+             var contact = $("#txtcontact").val();
+             var dob = $("#dtdob").val();
+             var city = $("#ddcity").val();
+            
+             var sex = "Male";
 
               if ($('#rdfemale')[0].checked) {
                 sex = "Female"
               }
-
               let checkboxes = $("[name='language']");
               let result = "";
+
               for (var i = 0; i < checkboxes.length; i++) {
                 if (checkboxes[i].checked) {
                   result += checkboxes[i].value
                     + " ";
                 }
               }
-
               console.log(fname);
+              
+              //DOM manipulation
+              //Set value to HTML control
+              $("#pResult").text(fname);
+              $("#btnShow").hide();
+
               console.log("First Name :" + fname + "\nLast Name :" + lname + "\nContact :" + contact + "\nBirthdate :" + dob + "\nCity :" + city + "\nGender : " + sex + "\nLanguages : " + result);
-
             })
-
           });
-
-
-
         </script>
 
 </body>
 
 </html>
 
-<!--var gender_val = document.getElementsByName('gender');
-            // for (i = 0; i < gender_val.length; i++) {
-            //     if (gender_val[i].checked){
-            //         var gen=gender_val[i].value;
-            //     }
-                    
-
-                        
-            // }
-            
-            
-
-            
-
-
-            //var lang = "Marathi";
-            // var chkmarathi = document.getElementById("chkmarathi");
-            // var chkhindi = document.getElementById("chkhindi");
-            // var chkenglish = document.getElementById("chkenglish");
-            // if (chkmarathi.checked) {
-            //   lang = "Marathi";
-            //   if(chkhindi.checked){
-            //     lang="Marathi ,Hindi"
-            //     if(chkenglish.checked){
-            //       lang="Marathi, Hindi, English";
-            //     }
-            //   }
-              
-           // } -->
+ 
