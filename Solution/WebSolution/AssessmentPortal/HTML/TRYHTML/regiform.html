@@ -7,55 +7,76 @@
     <title>Document</title>
 </head>
 <body>
-    
+    <!--
+        Page
+            head
+                 title
+                 linkage for external css file, js file, 
+                 media query
+                 
+            body
+                layout
+                    Containers
+                        Main Container
+                                sub containers      sub container   sub container
+                                     container
+                                         row-- (container)
+
+                                            HTML element
+                                                      attribute----value (data)
+                                         row---(container)
+                                            HTML element(anchor, input, image, video, audio, 
+                                                         label, paragraph,
+                                                         header (h1, h2, h3),
+                                                         hr
+                                                         br
+
+                                                         )
+                                                      attribute---value    attribute ----value
+                                             table----------------contianer
+                                                  th
+                                                  tr
+                                                     td
+
+    -->
     <div class="container mt-5">
-    <div class="row justify-content-center">
-    <div class="col-md-6">
-      <h3>Registration Form</h3>
-      <form>
-    
-        <div class="col-sm-8">
-            
-            <label>First Name : </label>
-            <input type="text" id="fname" name="fname" placeholder="Entar First Name"/><br><br>
-            <label>Last Name : </label>
-            <input type="text" id="lname" name="lname" placeholder="Entar Last Name"/><br><br>
-            <label>Contact Number : </label>
-            <input type="text" id="contact" name="contact" placeholder="Entar Your Contact Number"/><br><br>
-            <label>Date Of Birth :</label>
-            <input type="date" id="dob" name="dob"/><br><br>
-            <label>Gender  :  </label>
-            <div id="rates">
-                <input type="radio" id="male" name="gender" value="Male" />Male
-                <input type="radio" id="female" name="gender" value="Female" />Female<br><br>
-            </div>
-            
-            <label>City : </label>
-            <select name="city" id="city">
-                <option value="Pune">Pune</option>
-                <option value="Mumbai">Mumbai</option>
-                <option value="Jaipur">Jaipur</option>
-                <option value="Kanpur">Kanpur</option>
-            </select><br><br>
-            <label>Select Known Languages : </label>
-            <input type="checkbox" id="marathi" name="language" value="Marathi">Marathi
-            <input type="checkbox" id="hindi" name="language" value="Hindi">Hindi
-            <input type="checkbox" id="english" name="language" value="English">English<br><br>
-         
-            <!-- <button>Submit</button> -->
-            <!-- <input type="submit" value="Submit"/> -->
-            <button onclick="display()" >Display Data</button>
-
-            
-
-           
-            
-
-        </div>
-
-    </form>
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <h3>Registration Form</h3>
+                <form>
+                    <div class="col-sm-8"> 
+                        <label>First Name : </label>
+                        <input type="text" id="fname" name="fname" placeholder="Enter First Name"/><br><br>
+                        <label>Last Name : </label>
+                        <input type="text" id="lname" name="lname" placeholder="Enter Last Name"/><br><br>
+                        <label>Contact Number : </label>
+                        <input type="text" id="contact" name="contact" placeholder="Enter Your Contact Number"/><br><br>
+                        <label>Date Of Birth :</label>
+                        <input type="date" id="dob" name="dob"/><br><br>
+                        <label>Gender  :  </label>
+                        <div id="rates">
+                            <input type="radio" id="male" name="gender" value="Male" />Male
+                            <input type="radio" id="female" name="gender" value="Female" />Female<br><br>
+                        </div>
+                        
+                        <label>City : </label>
+                        <select name="city" id="city">
+                            <option value="Pune">Pune</option>
+                            <option value="Mumbai">Mumbai</option>
+                            <option value="Jaipur">Jaipur</option>
+                            <option value="Kanpur">Kanpur</option>
+                        </select><br><br>
+                        <label>Select Known Languages : </label>
+                        <input type="checkbox" id="marathi" name="language" value="Marathi">Marathi
+                        <input type="checkbox" id="hindi" name="language" value="Hindi">Hindi
+                        <input type="checkbox" id="english" name="language" value="English">English<br><br>
+                    
+                        <!-- <button>Submit</button> -->
+                        <!-- <input type="submit" value="Submit"/> -->
+                        <button onclick="display()" >Display Data</button>
+                    </div>
+                </form>
       <script>
- 
         function display(){
             var fname = document.getElementById("fname").value;
             var lname = document.getElementById("lname").value;
@@ -66,10 +87,7 @@
             for (i = 0; i < gender_val.length; i++) {
                 if (gender_val[i].checked){
                     var gen=gender_val[i].value;
-                }
-                    
-
-                        
+                }          
             }
 
             let checkboxes = document.getElementsByName('language');
@@ -94,11 +112,7 @@
             console.log("First Name :"+fname+"\nLast Name :"+lname+"\nContact :"+contact+"\nBirthdate :"+dob+"\nCity :"+city+"\nGender :"+gen+"\nLanguages "+result);
            alert("First Name :"+fname+"\nLast Name :"+lname+"\nContact :"+contact+"\nBirthdate :"+dob+"\nCity :"+city+"\nGender :"+gen+"\nLanguages "+result);
            
-           
     }
-
-           
- 
      </script>
       
 </body>
