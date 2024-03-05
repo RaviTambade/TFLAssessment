@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <label>Select Role : </label>
+                <input type="radio" id="rdTester" name="emp" value="t" checked="true" />Tester
+                <input type="radio" id="rdDeveloper" name="emp" value="d" />Developer
+            </div>
+            <div class="col-md-4">
+                <p>Subject :</p>
+                <select id="lstSubject" name="sub" class='form-control' size="2">
+
+                </select>
+            </div>
+        </div>
+
+
+    </div>
+    <script>
+
+        var tSubject = ["Java ", "Dotnet "];
+        var dSubject = ["angular ", "react"];
+
+
+        $(document).ready(function () {
+            $('input[type=radio][name=emp]').change(function () {
+                var lstSubjects = $('#lstSubject');
+                if (this.value == "t") {
+                    console.log("tester");
+                    lstSubjects.empty();
+                    for (var i = 0; i < tSubject.length; i++) {
+                        lstSubjects.append($('<option></option>').val(tSubject[i]).html(tSubject[i]));
+                        console.log("tester for loop..")
+                    }
+
+                }
+                else if (this.value == "d") {
+                    console.log("developer");
+                    lstSubjects.empty();
+                    for (var i = 0; i < dSubject.length; i++) {
+                        lstSubjects.append($('<option></option>').val(dSubject[i]).html(dSubject[i]));
+                        console.log("developer for loop..")
+                    }
+
+                }
+
+            });
+
+
+        });
+
+
+    </script>
+
+
+</body>
+
+</html>
