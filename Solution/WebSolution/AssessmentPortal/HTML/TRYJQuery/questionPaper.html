@@ -14,24 +14,19 @@
         <div class="row">
             <div class="col-md-4">
                 <label>Select Role : </label>
-                <input type="radio" id="rdTester" name="emp" value="t" checked="true" />Tester
                 <input type="radio" id="rdDeveloper" name="emp" value="d" />Developer
+                <input type="radio" id="rdTester" name="emp" value="t" />Tester
             </div>
             <div class="col-md-4">
                 <p>Subject :</p>
-                <select id="lstSubject" name="sub" class='form-control' size="2">
-
-                </select>
+                <select id="lstSubject" name="sub" class='form-control' size="2"></select>
             </div>
         </div>
-
-
     </div>
     <script>
 
+        var dSubject = ["Angular ", "React"];
         var tSubject = ["Java ", "Dotnet "];
-        var dSubject = ["angular ", "react"];
-
 
         $(document).ready(function () {
             $('input[type=radio][name=emp]').change(function () {
