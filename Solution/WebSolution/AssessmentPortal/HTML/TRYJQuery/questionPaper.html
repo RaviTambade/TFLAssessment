@@ -7,6 +7,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <title>Document</title>
+
 </head>
 
 <body>
@@ -22,19 +23,45 @@
                 <select id="lstSubject" name="sub" class='form-control' size="2"></select>
             </div>
         </div>
-        
+
         <div>
             <p id="pResult">Subject wise Questions : </p>
         </div>
+
+
     </div>
     <script>
 
-        var dSubject = ["Angular ", "React"];
-        var tSubject = ["Java", "Dotnet "];
-        var dSubject = ["angular ", "react"];
+        var tSubject = ["Java", "Dotnet"];
+        var dSubject = ["Angular", "React"];
 
-        var questions = ["java1","java2","java3"];
+        var javaQuestions = ["java1", "java2", "java3"];
+        var dotNetQuestions = ["dotnet1", "dotnet2", "dotnet3"];
+        var reactQuestions = ["react1", "react2", "react3"];
+        var angularQuestions = ["angular1", "angular2", "angular3"];
 
+
+        const javaMcqQuestions = [
+            {
+                question: "1. What is the main purpose of Java programming language?",
+                options: ["a) Web Development", "b) Mobile Development", "c) General-purpose programming", "d) Game Development"],
+                correctAnswer: "c) General-purpose programming"
+            },
+            {
+                question: "2. Which keyword is used to define a constant in Java?",
+                options: ["a) var", "b) final", "c) const", "d) static"],
+                correctAnswer: "b) final"
+            },
+            {
+                question: "3. Which of the following data types is used to store a single character in Java?",
+                options: ["a) char", "b) String", "c) int", "d) float"],
+                correctAnswer: "a) char"
+            },
+            {
+                question: "4. What does JVM stand for?",
+                options: ["a) Java Virtual Machine", "b) Java Visual Model", "c) Java Virtual Model", "d) Java Visual Machine"],
+                correctAnswer: "a) Java Virtual Machine"
+            }]
 
         $(document).ready(function () {
             $('input[type=radio][name=emp]').change(function () {
@@ -69,13 +96,62 @@
             });
 
 
+            $("#lstSubject").change(function () {
+                var value1 = $(this).val();
+                console.log("this is subj...." + value1);
+                if (value1 == "Java") {
+                    console.log("insise if statement..");
+
+                    var pQuestions = $('#pResult');
+                    pQuestions.empty();
+
+                    // for (var i = 0; i < javaQuestions.length; i++) {
+                    //  // pQuestions.append(document.createTextNode(javaQuestions[i]+", ")); 
+                    //   pQuestions.append($('<p></p>').text(javaQuestions[i]));       
+                    // }
+                    for (var i = 0; i < javaMcqQuestions.length; i++) {
+                        let dynamicRowHTML = "<p>" + javaMcqQuestions[i].question + " </p>" + "<p>" + javaMcqQuestions[i].options + "</p>";
+                        $('#pResult').append(dynamicRowHTML);
+                    }
+                }
+                else if (value1 == "Dotnet") {
+                    console.log("insise if statement..");
+
+                    var pQuestions = $('#pResult');
+                    pQuestions.empty();
+
+                    for (var i = 0; i < dotNetQuestions.length; i++) {
+                        // pQuestions.append(document.createTextNode(dotNetQuestions[i]+", ")); 
+                        pQuestions.append($('<p></p>').text(dotNetQuestions[i]));
+                    }
+                }
+                else if (value1 == "Angular") {
+                    console.log("insise if statement..");
+
+                    var pQuestions = $('#pResult');
+                    pQuestions.empty();
+
+                    for (var i = 0; i < angularQuestions.length; i++) {
+                        // pQuestions.append(document.createTextNode(dotNetQuestions[i]+", ")); 
+                        pQuestions.append($('<p></p>').text(angularQuestions[i]));
+                    }
+                }
+                else if (value1 == "React") {
+                    console.log("insise if statement..");
+
+                    var pQuestions = $('#pResult');
+                    pQuestions.empty();
+
+                    for (var i = 0; i < reactQuestions.length; i++) {
+                        // pQuestions.append(document.createTextNode(dotNetQuestions[i]+", ")); 
+                        pQuestions.append($('<p></p>').text(reactQuestions[i]));
+                    }
+                }
+
             });
 
-           
 
-            
-        
-       
+
         });
 
     </script>
