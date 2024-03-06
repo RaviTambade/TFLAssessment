@@ -11,8 +11,16 @@
 //and sends response to remote user who sent request from remote machine
 using MySql.Data.MySqlClient;
 using Entities;
+
 var builder = WebApplication.CreateBuilder(args);
+//Add Cors services
+builder.Services.AddCors();
+
 var app = builder.Build();
+
+
+
+
 
 //register callback function for responding incomming HTTP Requests
 //lambda function
@@ -29,6 +37,11 @@ var app = builder.Build();
 //POST Request
 //PUT Request
 //DELETE Request
+
+//Set up Cors Middleware
+
+app.UseCors(options => options.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
+
 app.MapGet("/", () => "Hello World!");
 app.MapGet("/welcome",()=>"Welcome");
 app.MapGet("/aboutus", ()=>"Transflower Learning Pvt. Ltd.");
@@ -70,6 +83,21 @@ app.MapGet("/employees",()=>{
     allEmployees.Add(new Employee{ Id=14, FName="Vaibhav", LName="Sane"});
     return allEmployees;
 });
+
+
+
+//Changes added by Ravi Sir
+
+app.MapGet("/questions",()=>{
+    List<Question> allQuestions=new List<Question>();
+    allQuestions.Add(new Question{ Id=12, Title="What is the main purpose of Java programming language?", A="Web Development", B="Mobile Development",C="General-purpose programming",D="Game Development"});
+    allQuestions.Add(new Question{ Id=13, Title="Bhupendra", A="Patil", B="raj",C="dfsd",D="dfdfd"});
+    allQuestions.Add(new Question{ Id=14, Title="Bhupendra", A="Patil", B="raj",C="dfsd",D="dfdfd"});
+    allQuestions.Add(new Question{ Id=15, Title="Bhupendra", A="Patil", B="raj",C="dfsd",D="dfdfd"});
+    allQuestions.Add(new Question{ Id=16, Title="Bhupendra", A="Patil", B="raj",C="dfsd",D="dfdfd"});
+    return allQuestions;
+});
+
 
 
 app.MapGet("/dbemployees",()=>{
