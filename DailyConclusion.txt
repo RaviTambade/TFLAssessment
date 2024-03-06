@@ -1,6 +1,7 @@
 
 -------------------------------------------------------------------------------------------------------------------------------------------------------------
 24 Feb 2024
+(MySQL)
 1)Procedure
 2)Triggers
 3)Views
@@ -8,6 +9,7 @@
 5)Index
 --------------------------------------------------------------------------------------------------------------------------------------------------------------
 26 Feb 2024
+(MySQL)
 1)Events
 2)Cursor
 3)Code Walk Through
@@ -83,6 +85,7 @@ Web Logic processing				internet----------<-----http://192.168.23.2:5238	HTTPWeb
 Server running
 --------------------------------------------------------------------------------------------------------------------------------------------------------------
 29 Feb 2024
+(Wep Application)
 1)New WEB APP WITH HTML PAGES (dotnet new webapp -n "NAME")
 2)RAZORPAGES (.CSHTML)
 3)LAYOUT.CSHTML (Used to create a nav bar to link other pages)
@@ -131,32 +134,30 @@ Dotnet CLI:
 3)GetElementByName
 4).checked
 
------------------------------------------------------------------------------------
-4 March 2024
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+04 March 2024
+(JavaScriept)
+1)Client Side UI (ClientSideUI.img)
+2)Frontend App Development (FrontEndAppDev.img)
+3)DOM Tree (DOMTree.img)
+4)Javascriept
+4)jQuery selectors (id,element,attribute)
 
-jQuery Tutorial
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+05 March 2024
+(JQuery)
+1)DOM traversing
+2)DOM Manipulation
+3)jQuery events (.change)
+4)JQuery funcions (.append(),.empty())
+5)$(this).val() / this.value; (To check value of current selector)
+6) $(this).prop("checked")  (To check selected value of checkbox)
 
-  ***jQuery Selectors
-following are type of the selector
-1)element Selector -- $("p")
-2)#id Selector -------$("#test")  --find specifice element
-3).class Selector-----for specifice class  $(".class")
-4)$("*")	Selects all elements
 
-       ***** Event
-	   Event Methods---$("p").click();
-	   
-	   ******Fading
-	  1) fadeIn()
-      2) fadeOut()
-      3) fadeToggle()
-      4) fadeTo()
-	
-	******Animation
-	
-	
-	***********Sliding
-	
+
+
+
+
 	
 	
 	
