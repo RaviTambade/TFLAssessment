@@ -12,25 +12,29 @@
 <body>
     <div class="container">
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <label>Select Role : </label>
                 <input type="radio" id="rdTester" name="emp" value="t" checked="true" />Tester
                 <input type="radio" id="rdDeveloper" name="emp" value="d" />Developer
             </div>
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <p>Subject :</p>
                 <select id="lstSubject" name="sub" class='form-control' size="2">
 
                 </select>
             </div>
         </div>
-
-
+        
+        <div>
+            <p id="pResult">Subject wise Questions : </p>
+        </div>
     </div>
     <script>
 
         var tSubject = ["Java ", "Dotnet "];
         var dSubject = ["angular ", "react"];
+
+        var questions = ["java1","java2","java3"];
 
 
         $(document).ready(function () {
@@ -58,8 +62,47 @@
             });
 
 
+            $( "#lstSubject").change(function() {
+            var value1 = $(this).val();
+            console.log("this is subj...."+value1);
+            if(value1 == "Java"){
+                console.log("insise if statement..");
+                $("#pResult").text("Questions");
+                var pQuestions=$('#pResult');
+                pQuestions.empty();
+                pQuestions.text("java1");
+                for (var i = 0; i < pQuestions.length; i++) {
+                    pQuestions.append( $('<p></p>').val( pQuestions[i]).html( pQuestions[i]));          
+                    //pQuestions += pQuestions[i]+",";
+                }
+            }
+
         });
 
+        
+        //     if(value =="USA"){
+        //         $("#pResult").text("America");
+        //         var ctrlDropDownListBox=$('#ddCities');
+        //         ctrlDropDownListBox.empty();
+        //         for (var i = 0; i < cityUSA.length; i++) {
+        //             ctrlDropDownListBox.append( $('<option></option>').val( cityUSA[i]).html( cityUSA[i]));          
+        //         }
+        //     }
+        //     else if(value =="India"){
+        //         $("#pResult").text("Bharat");
+        //         var ctrlDropDownListBox=$('#ddCities')
+        //         ctrlDropDownListBox.empty();
+        //         //ctrlDropDownListBox.append( $('<option></option>').val("Mumbai").html("Mumba"));
+        //         //ctrlDropDownListBox.append( $('<option></option>').val("Chennai").html("Chennai"));
+        //         //ctrlDropDownListBox.append( $('<option></option>').val("Pune").html("Pune"));
+        //         //ctrlDropDownListBox.append( $('<option></option>').val("Delhi").html("Delhi"));
+        //         //
+        //         for (var i = 0; i < cityIndia.length; i++) {
+        //             ctrlDropDownListBox.append( $('<option></option>').val( cityIndia[i]).html( cityIndia[i]));          
+        //         }
+
+        // }
+        });
 
     </script>
 
