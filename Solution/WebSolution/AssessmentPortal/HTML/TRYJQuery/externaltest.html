@@ -95,11 +95,13 @@
            console.log(selectedValue);
             var lstSubjects=$("#lstSubject");
                 if (selectedValue == "t") {
+                  lstSubjects.empty();
                     for (var i = 0; i < tSubject.length; i++) {
                         lstSubjects.append($('<option></option>').val(tSubject[i]).html(tSubject[i]));
                     }
                 }
                 else if (selectedValue == "d") {
+                  lstSubjects.empty();
                     for (var i = 0; i < dSubject.length; i++) {
                         lstSubjects.append($('<option></option>').val(dSubject[i]).html(dSubject[i]));
                     }
