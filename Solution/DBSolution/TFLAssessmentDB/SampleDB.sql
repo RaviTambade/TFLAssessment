@@ -11,10 +11,10 @@ insert into employee(fname, lname, email, contactno)values("Aniket","Zarekar","Z
 
 
 
-INSERT INTO technicalskills(title) VALUES('CORE JAVA');
-INSERT INTO technicalskills(title) VALUES('ADV JAVA');
+INSERT INTO technicalskills(title) VALUES('COREJAVA');
+INSERT INTO technicalskills(title) VALUES('ADVJAVA');
 INSERT INTO technicalskills(title) VALUES('DOTNET');
-INSERT INTO technicalskills(title) VALUES('MICRO SERVICES');
+INSERT INTO technicalskills(title) VALUES('MICROSERVICES');
 INSERT INTO technicalskills(title) VALUES('REACT');
 INSERT INTO technicalskills(title) VALUES('ANGULAR');
 INSERT INTO technicalskills(title) VALUES('C#');
@@ -296,3 +296,8 @@ INSERT INTO interviewresults(techintacid, rating, comments)VALUES(5,10,"very goo
 INSERT INTO interviewresults(techintacid, rating, comments)VALUES(6,7,"good");
 INSERT INTO interviewresults(techintacid, rating, comments)VALUES(7,8,"nice");
 INSERT INTO interviewresults(techintacid, rating, comments)VALUES(8,8,"good");
+
+
+select questions.qid,questions.question,questions.a,questions.b,questions.c,questions.d from questions inner join technicalskills on technicalskills.techskid=questions.skillid
+ where technicalskills.title="ADVJAVA";
+  select * from questions;

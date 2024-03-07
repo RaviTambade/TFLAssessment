@@ -1,4 +1,4 @@
--- Active: 1707123530557@@127.0.0.1@3306@assessmentdb
+-- Active: 1709025691659@@127.0.0.1@3306@mydb
 DROP database assessmentdb;
 create database assessmentdb;
 use assessmentdb;
