@@ -55,16 +55,16 @@
     var javaMcqQuestions = [];
     var loadQuestion=function(index){
             let currentQuestion=javaMcqQuestions[index];
-            let title=javaMcqQuestions[index].title;
-            let option1=javaMcqQuestions[index].options[0].a;
-            let option2=javaMcqQuestions[index].options[1].b;
-            let option3=javaMcqQuestions[index].options[2].c;
-            let option4=javaMcqQuestions[index].options[3].d;
+            let Title=javaMcqQuestions[index].title;
+            let option1=javaMcqQuestions[index].a;
+            let option2=javaMcqQuestions[index].b;
+            let option3=javaMcqQuestions[index].c;
+            let option4=javaMcqQuestions[index].d;
 
             console.log(javaMcqQuestions);
-            console.log(title);
+            console.log(Title);
 
-            $("#pTitle").text(title);
+            $("#pTitle").text(Title);
             $("#lblOptionA").text(option1);
             $("#lblOptionB").text(option2);
             $("#lblOptionC").text(option3);
@@ -101,6 +101,11 @@
 
         $("#btnNext").click(function(){
             currentQuestionIndex++;
+            $("#btnPrevious").prop( "disabled", false );
+            if( currentQuestionIndex==javaMcqQuestions.length){
+              console.log(currentQuestionIndex);
+              $("#btnNext").prop( "disabled", true );
+            }
             loadQuestion(currentQuestionIndex);
         });
 

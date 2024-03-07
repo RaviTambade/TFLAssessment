@@ -91,10 +91,9 @@ app.MapGet("/employees",()=>{
 app.MapGet("/questions",()=>{
     List<Question> allQuestions=new List<Question>();
     allQuestions.Add(new Question{ Id=12, Title="What is the main purpose of Java programming language?", A="Web Development", B="Mobile Development",C="General-purpose programming",D="Game Development"});
-    allQuestions.Add(new Question{ Id=13, Title="Bhupendra", A="Patil", B="raj",C="dfsd",D="dfdfd"});
-    allQuestions.Add(new Question{ Id=14, Title="Bhupendra", A="Patil", B="raj",C="dfsd",D="dfdfd"});
-    allQuestions.Add(new Question{ Id=15, Title="Bhupendra", A="Patil", B="raj",C="dfsd",D="dfdfd"});
-    allQuestions.Add(new Question{ Id=16, Title="Bhupendra", A="Patil", B="raj",C="dfsd",D="dfdfd"});
+    allQuestions.Add(new Question{ Id=13, Title="Which keyword is used to define a constant in Java?", A="var", B="final",C="const",D="static"});
+    allQuestions.Add(new Question{ Id=14, Title="Which of the following data types is used to store a single character in Java?", A="char", B="string",C="int",D="float"});
+    allQuestions.Add(new Question{ Id=15, Title="What does JVM stand for?", A="Java Virtual Machine", B="Java Visual Model",C="Java Virtual Model",D="Java Visual Machine"});
     return allQuestions;
 });
 

@@ -32,7 +32,7 @@
                           </tr>
                          
                           <tr>    
-                            <td> <input type="radio" name="answer"  id="optionD" /<label id="lblOptionD">Transflower</label>  </td>
+                            <td> <input type="radio" name="answer"  id="optionD" /><label id="lblOptionD">Transflower</label>  </td>
                           </tr>
                           <tr>    
                             <td>
@@ -136,11 +136,13 @@
             $("#btnPrevious").click(function(){
                 currentQuestionIndex--;
                 loadQuestion(currentQuestionIndex);
+                
             });
 
             $("#btnNext").click(function(){
                 currentQuestionIndex++;
                 loadQuestion(currentQuestionIndex);
+                $("#btnPrevious").prop( "disabled", false);
             });
 
             $("#btnLast").click(function(){
