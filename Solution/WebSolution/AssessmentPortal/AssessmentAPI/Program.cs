@@ -88,12 +88,39 @@ app.MapGet("/employees",()=>{
 
 //Changes added by Ravi Sir
 
-app.MapGet("/questions",()=>{
+app.MapGet("/javaquestions",()=>{
     List<Question> allQuestions=new List<Question>();
     allQuestions.Add(new Question{ Id=12, Title="What is the main purpose of Java programming language?", A="Web Development", B="Mobile Development",C="General-purpose programming",D="Game Development"});
     allQuestions.Add(new Question{ Id=13, Title="Which keyword is used to define a constant in Java?", A="var", B="final",C="const",D="static"});
     allQuestions.Add(new Question{ Id=14, Title="Which of the following data types is used to store a single character in Java?", A="char", B="string",C="int",D="float"});
     allQuestions.Add(new Question{ Id=15, Title="What does JVM stand for?", A="Java Virtual Machine", B="Java Visual Model",C="Java Virtual Model",D="Java Visual Machine"});
+    return allQuestions;
+});
+
+app.MapGet("/dotnetquestions",()=>{
+    List<Question> allQuestions=new List<Question>();
+    allQuestions.Add(new Question{ Id=16, Title="What is the main purpose of Java programming language?", A="Web Development", B="Mobile Development",C="General-purpose programming",D="Game Development"});
+    allQuestions.Add(new Question{ Id=17, Title="Which keyword is used to define a constant in Java?", A="var", B="final",C="const",D="static"});
+    allQuestions.Add(new Question{ Id=18, Title="Which of the following data types is used to store a single character in Java?", A="char", B="string",C="int",D="float"});
+    allQuestions.Add(new Question{ Id=19, Title="What does JVM stand for?", A="Java Virtual Machine", B="Java Visual Model",C="Java Virtual Model",D="Java Visual Machine"});
+    return allQuestions;
+});
+
+app.MapGet("/angularquestions",()=>{
+    List<Question> allQuestions=new List<Question>();
+    allQuestions.Add(new Question{ Id=20, Title="What is the main purpose of Java programming language?", A="Web Development", B="Mobile Development",C="General-purpose programming",D="Game Development"});
+    allQuestions.Add(new Question{ Id=21, Title="Which keyword is used to define a constant in Java?", A="var", B="final",C="const",D="static"});
+    allQuestions.Add(new Question{ Id=22, Title="Which of the following data types is used to store a single character in Java?", A="char", B="string",C="int",D="float"});
+    allQuestions.Add(new Question{ Id=23, Title="What does JVM stand for?", A="Java Virtual Machine", B="Java Visual Model",C="Java Virtual Model",D="Java Visual Machine"});
+    return allQuestions;
+});
+
+app.MapGet("/reactquestions",()=>{
+    List<Question> allQuestions=new List<Question>();
+    allQuestions.Add(new Question{ Id=24, Title="What is the main purpose of Java programming language?", A="Web Development", B="Mobile Development",C="General-purpose programming",D="Game Development"});
+    allQuestions.Add(new Question{ Id=25, Title="Which keyword is used to define a constant in Java?", A="var", B="final",C="const",D="static"});
+    allQuestions.Add(new Question{ Id=26, Title="Which of the following data types is used to store a single character in Java?", A="char", B="string",C="int",D="float"});
+    allQuestions.Add(new Question{ Id=27, Title="What does JVM stand for?", A="Java Virtual Machine", B="Java Visual Model",C="Java Virtual Model",D="Java Visual Machine"});
     return allQuestions;
 });
 
