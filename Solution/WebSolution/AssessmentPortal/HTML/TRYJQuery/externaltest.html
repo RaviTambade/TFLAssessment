@@ -12,15 +12,6 @@
 
 <body>
    <h3>Transflower Learning Private Limited</h3>
-  <div >
-    <input type="radio" name="role" id="tester" value="t"/>Tester
-                             
-    <input type="radio" name="role" id="developer" value="d"/>Developer
-  </div>
-
-  <div>
-    <select id="lstSubject" name="sub" class='form-control' size="2"></select></td>
-  </div>
     <div  class="jumbotron" >
             <div  class="container" >
                 <div class="row">
@@ -62,10 +53,6 @@
 </div>
 
 <script>
-    
-    var tSubject = ["Java", "Dotnet"];
-    var dSubject = ["Angular", "React"];
-
     //global variable 
     var currentQuestionIndex=0;
     var javaMcqQuestions = [];
@@ -88,29 +75,6 @@
     }
 
     $(document).ready(function () {
-
-      $('input[type=radio][name=role]').change(function () {
-        console.log("inside change event");
-           var selectedValue=$(this).val();
-           console.log(selectedValue);
-            var lstSubjects=$("#lstSubject");
-                if (selectedValue == "t") {
-                    for (var i = 0; i < tSubject.length; i++) {
-                        lstSubjects.append($('<option></option>').val(tSubject[i]).html(tSubject[i]));
-                    }
-                }
-                else if (selectedValue == "d") {
-                    for (var i = 0; i < dSubject.length; i++) {
-                        lstSubjects.append($('<option></option>').val(dSubject[i]).html(dSubject[i]));
-                    }
-                }
-            });
-          })
-
-    $("#lstSubject").change(function(){
-              var selectedSubject=$(this).val();
-              console.log(selectedSubject);
-            if(selectedSubject=="Java"){
             let javaQuestionsUrl="http://localhost:5238/javaquestions";
             $.get(javaQuestionsUrl, function(data, status){
             console.log(data);
@@ -118,48 +82,9 @@
             console.log(javaMcqQuestions);
             loadQuestion(currentQuestionIndex);
         });
-      }
-
-
       
 
-
-        //loadExternalJSONData to collection
-        //Accessing external data from available REST API
-        //Invoke external rest API  with GET request
-        //Ajax function to get json data from mentioned REST API URL
-
-        
-
-        let dotnetQuestionsUrl="http://localhost:5238/dotnetquestions";
-        $.get(dotnetQuestionsUrl, function(data, status){
-            console.log(data);
-            javaMcqQuestions=(data);
-            console.log(javaMcqQuestions);
-            loadQuestion(currentQuestionIndex);
-        });
-
-        let angularQuestionsUrl="http://localhost:5238/angularquestions";
-        $.get(angularQuestionsUrl, function(data, status){
-            console.log(data);
-            javaMcqQuestions=(data);
-            console.log(javaMcqQuestions);
-            loadQuestion(currentQuestionIndex);
-        });
-
-        let reactQuestionsUrl="http://localhost:5238/reactquestions";
-        $.get(reactQuestionsUrl, function(data, status){
-            console.log(data);
-            javaMcqQuestions=(data);
-            console.log(javaMcqQuestions);
-            loadQuestion(currentQuestionIndex);
-        });
-
-
-        
-
-           
-        $("#btnFirst").click(function(){
+          $("#btnFirst").click(function(){
             currentQuestionIndex=0;
             loadQuestion(currentQuestionIndex);
             $("#btnPrevious").prop( "disabled", true );
