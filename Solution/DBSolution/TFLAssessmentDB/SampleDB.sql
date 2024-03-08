@@ -17,8 +17,10 @@ INSERT INTO technicalskills(title) VALUES('DOTNET');
 INSERT INTO technicalskills(title) VALUES('MICROSERVICES');
 INSERT INTO technicalskills(title) VALUES('REACT');
 INSERT INTO technicalskills(title) VALUES('ANGULAR');
-INSERT INTO technicalskills(title) VALUES('C#');
-INSERT INTO technicalskills(title) VALUES('JavaScriept');
+INSERT INTO technicalskills(title) VALUES('CSHARP');
+INSERT INTO technicalskills(title) VALUES('JAVASCRIPT');
+
+
 
 
 
@@ -115,6 +117,151 @@ INSERT INTO questions(skillid, question, a, b, c, d, answerkey, evacriid) VALUES
 INSERT INTO questions(skillid, question, a, b, c, d, answerkey, evacriid) VALUES(7,'Which of the following object is used along with application object in order to ensure that only one process accesses a variable at a time?',' Synchronize',' Synchronize()','ThreadLock','Lock()','a','8');
 
 INSERT INTO questions(skillid, question, a, b, c, d, answerkey, evacriid) VALUES(7,'Which Class is used to make a thread instance explicitly?',' Thread',' ThreadStart','ThreadPool','Runnalble','a','8');
+
+INSERT INTO questions(skillid, question, a, b, c, d, answerkey, evacriid) 
+VALUES (
+    8,
+    'Which of the following is not a valid data type in JavaScript?',
+    'Number',
+    'String',
+    'Boolean',
+    'Float',
+    'd',
+    '1'
+);
+
+INSERT INTO questions(skillid, question, a, b, c, d, answerkey, evacriid) 
+VALUES (
+    8,
+    'What does the ''this'' keyword refer to in JavaScript?',
+    'The current function being executed',
+    'The parent function of the current function',
+    'The global object',
+    'The object that invokes the current function',
+    'd',
+    '2'
+    );
+
+INSERT INTO questions(skillid, question, a, b, c, d, answerkey, evacriid) 
+VALUES (
+    1,
+    'How do you declare a variable in JavaScript that cannot be reassigned?',
+    'const',
+    'let',
+    'var',
+    'final',
+    'a',
+    '3'
+);
+
+INSERT INTO questions(skillid, question, a, b, c, d, answerkey, evacriid) 
+VALUES (
+    5,
+    'What function is used to change the state in React?',
+    'this.setState()',
+    'this.changeState()',
+    'this.modifyState()',
+    'this.alterState()',
+    'a',
+    '4'
+);
+
+INSERT INTO questions(skillid, question, a, b, c, d, answerkey, evacriid) 
+VALUES (
+    6,
+    'Which method is called immediately after a component is inserted into the DOM in React?',
+    'componentDidMount()',
+    'componentWillMount()',
+    'componentDidUpdate()',
+    'componentWillUnmount()',
+    'a',
+    '5'
+);
+
+INSERT INTO questions(skillid, question, a, b, c, d, answerkey, evacriid) 
+VALUES (
+    5,
+    'What is JSX in React?',
+    'JavaScript XML',
+    'JavaScript XMLS',
+    'JavaScript XLS',
+    'JavaScript JSX',
+    'a',
+    '6'
+);
+
+INSERT INTO questions(skillid, question, a, b, c, d, answerkey, evacriid) 
+VALUES (
+    6,
+    'In Angular, what does NgModule decorator do?',
+    'It defines a component',
+    'It defines a module',
+    'It defines a service',
+    'It defines a directive',
+    'b',
+    '7'
+);
+
+INSERT INTO questions(skillid, question, a, b, c, d, answerkey, evacriid) 
+VALUES (
+    6,
+    'Which Angular feature allows you to subscribe to changes in the router''s navigation events?',
+    'RouterLink',
+    'RouterOutlet',
+    'ActivatedRoute',
+    'RouterEvents',
+    'c',
+    '8'
+);
+
+INSERT INTO questions(skillid, question, a, b, c, d, answerkey, evacriid) 
+VALUES (
+    6,
+    'In Angular, what is the purpose of the ''ngOnInit'' lifecycle hook?',
+    'It is called once the component is initialized',
+    'It is called when the component is about to be destroyed',
+    'It is called when there''s an input change to the component',
+    'It is called when there''s an output change from the component',
+    'a',
+    '9'
+);
+
+INSERT INTO questions(skillid, question, a, b, c, d, answerkey, evacriid) 
+VALUES (
+    4,
+    'What is a characteristic of microservices architecture?',
+    'Monolithic',
+    'Tightly coupled components',
+    'Single, large codebase',
+    'Decentralized and independently deployable services',
+    'd',
+    '9'
+);
+
+INSERT INTO questions(skillid, question, a, b, c, d, answerkey, evacriid) 
+VALUES (
+    4,
+    'Which of the following is a benefit of using microservices?',
+    'Centralized management',
+    'High complexity',
+    'Rapid development and deployment',
+    'Tight integration',
+    'c',
+    '10'
+);
+
+INSERT INTO questions(skillid, question, a, b, c, d, answerkey, evacriid) 
+VALUES (
+    4,
+    'Which technology is commonly used for inter-service communication in microservices architecture?',
+    'HTTP',
+    'SMTP',
+    'FTP',
+    'SNMP',
+    'a',
+    '10'
+);
+
 
 INSERT INTO tests(skillid,duration,subexid,createdon,modifiedon,sheduledon) VALUES (1,"00:30:00",1,'2023-12-05','2024-02-05','2024-02-07');
 INSERT INTO tests(skillid,duration,subexid,createdon,modifiedon,sheduledon) VALUES (1,"00:40:00",1,'2023-11-05','2024-01-05','2024-02-07');
@@ -301,3 +448,6 @@ INSERT INTO interviewresults(techintacid, rating, comments)VALUES(8,8,"good");
 select questions.qid,questions.question,questions.a,questions.b,questions.c,questions.d from questions inner join technicalskills on technicalskills.techskid=questions.skillid
  where technicalskills.title="ADVJAVA";
   select * from questions;
+
+
+  
