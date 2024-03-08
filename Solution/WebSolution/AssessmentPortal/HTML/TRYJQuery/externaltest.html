@@ -24,16 +24,16 @@
               </td>
             </tr>
             <tr>
-              <td> <input type="radio" name="answer" id="optionA" /> <label id="lblOptionA"></label> </td>
+              <td> <input type="radio" name="answer" id="A" /> <label id="lblOptionA"></label> </td>
             </tr>
             <tr>
-              <td> <input type="radio" name="answer" id="optionB" /><label id="lblOptionB"></label> </td>
+              <td> <input type="radio" name="answer" id="B" /><label id="lblOptionB"></label> </td>
             </tr>
             <tr>
-              <td> <input type="radio" name="answer" id="optionC" /><label id="lblOptionC"></label> </td>
+              <td> <input type="radio" name="answer" id="C" /><label id="lblOptionC"></label> </td>
             </tr>
             <tr>
-              <td> <input type="radio" name="answer" id="optionD">/<label id="lblOptionD"></label> </td>
+              <td> <input type="radio" name="answer" id="D">/<label id="lblOptionD"></label> </td>
             </tr>
             <tr>
               <select id="lstSubject" name="sub" class='form-control' size="3"></select>
@@ -65,6 +65,7 @@
     //global variable 
     var current = 0;
     var questions = [];
+    var answers=["NO", "NO","NO","NO","NO"]
     
     var loadQuestion = function (index) {
           let currentQuestion = questions[index];
@@ -86,7 +87,8 @@
 
       var subjects = [];
       var questions = [];
-
+       
+      answers.map((data)=>{console.log(data)})
       let subjectUrl = "http://localhost:5238/subjects";
 
       //get  subjects to load into  List box
@@ -100,16 +102,59 @@
     })
 
    
+    $("input[type='radio']").click(function(){
+            var selectedOption = $("input[name='answer']:checked").attr("id");
+            
+            if(selectedOption){
+                console.log(current + "selection Option" +selectedOption);
+                //set the option selected int answers 
+                answers[current]=selectedOption;
+                //display each array after checked radio button
+                answers.map((data)=>{console.log(data)})
+            }
+    });
+
+
+    function resetCheckedRadio(){
+      var selectedOption = $("input[name='answer']:checked").attr("id");
+        if(selectedOption){
+          $("#"+selectedOption).prop("checked",false);
+        }
+    }
+
     $("#btnFirst").click(function () {
         current = 0;
+        resetCheckedRadio();
         loadQuestion(current);
+        let selectedAnswer=answers[current];
+        if(selectedAnswer!== "NO"){
+           let radiobutton="#"+ selectedAnswer;
+          $(radiobutton).prop("checked", true);
+        }
+        else
+        {
+          $("[name='answers']").prop("checked", false);
+        }
+
         $("#btnPrevious").prop("disabled", true);
         $("#btnNext").prop("disabled", false);
     });
 
     $("#btnPrevious").click(function () {
         current--;
+        
+        resetCheckedRadio();
+
         loadQuestion(current);
+        let selectedAnswer=answers[current];
+        if(selectedAnswer!== "NO"){
+           let radiobutton="#"+ selectedAnswer;
+          $(radiobutton).prop("checked", true);
+        }
+        else
+        {
+          $("[name='answers']").prop("checked", false);
+        }
     });
 
 
@@ -119,7 +164,18 @@
         if (current == questions.length) {
           $("#btnNext").prop("disabled", true);
         }
+        resetCheckedRadio();
         loadQuestion(current);
+        let selectedAnswer=answers[current];
+        if(selectedAnswer!== "NO"){
+           let radiobutton="#"+ selectedAnswer;
+          $(radiobutton).prop("checked", true);
+        }
+        else
+        {
+          $("[name='answers']").prop("checked", false);
+        }
+        
         let currentWidth= $("#progress1").width();         
         $("#progress1").width(currentWidth+100);
 
@@ -130,7 +186,17 @@
 
     $("#btnLast").click(function () {
         current = questions.length - 1;
+        resetCheckedRadio();
         loadQuestion(current);
+        let selectedAnswer=answers[current];
+        if(selectedAnswer!== "NO"){
+           let radiobutton="#"+ selectedAnswer;
+          $(radiobutton).prop("checked", true);
+        }
+        else
+        {
+          $("[name='answers']").prop("checked", false);
+        }
         $("#btnNext").prop("disabled", true);
         $("#btnPrevious").prop("disabled", false);
     });
