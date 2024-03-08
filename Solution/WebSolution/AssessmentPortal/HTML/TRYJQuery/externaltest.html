@@ -33,7 +33,7 @@
               <td> <input type="radio" name="answer" id="C" /><label id="lblOptionC"></label> </td>
             </tr>
             <tr>
-              <td> <input type="radio" name="answer" id="D">/<label id="lblOptionD"></label> </td>
+              <td> <input type="radio" name="answer" id="D"><label id="lblOptionD"></label> </td>
             </tr>
             <tr>
               <select id="lstSubject" name="sub" class='form-control' size="3"></select>
@@ -127,6 +127,10 @@
         resetCheckedRadio();
         loadQuestion(current);
         let selectedAnswer=answers[current];
+
+        // if(current==0){
+        //   $("#btnNext").prop("disabled", false);
+        // }
         if(selectedAnswer!== "NO"){
            let radiobutton="#"+ selectedAnswer;
           $(radiobutton).prop("checked", true);
@@ -143,6 +147,13 @@
     $("#btnPrevious").click(function () {
         current--;
         
+        if(current==0){
+        $("#btnPrevious").prop("disabled", true);
+        $("#btnNext").prop("disabled", false);
+        }
+        else if(current==questions.length-1 || current>0){
+          $("#btnNext").prop("disabled", false); 
+        }
         resetCheckedRadio();
 
         loadQuestion(current);
