@@ -6,12 +6,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-  <title>Test Questions</title>
+  <title>Objective Test</title>
 
 </head>
 
 <body>
   <h3>Transflower Learning Private Limited</h3>
+  <hr/>
   <div class="jumbotron">
     <div class="container">
       <div class="row">
@@ -31,14 +32,12 @@
             <tr>
               <td> <input type="radio" name="answer" id="optionC" /><label id="lblOptionC"></label> </td>
             </tr>
-
             <tr>
               <td> <input type="radio" name="answer" id="optionD">/<label id="lblOptionD"></label> </td>
             </tr>
             <tr>
               <select id="lstSubject" name="sub" class='form-control' size="3"></select>
             </tr>
-
             <tr>
               <td>
                 <button id="btnFirst">First</button>
@@ -57,143 +56,114 @@
 
   <script>
     //global variable 
-    var currentQuestionIndex = 0;
-    var javaMcqQuestions = [];
+    var current = 0;
+    var questions = [];
+
     var loadQuestion = function (index) {
-      let currentQuestion = questions[index];
-      let Title = questions[index].title;
-      let option1 = questions[index].a;
-      let option2 = questions[index].b;
-      let option3 = questions[index].c;
-      let option4 = questions[index].d;
+          let currentQuestion = questions[index];
+          let Title = questions[index].title;
+          let option1 = questions[index].a;
+          let option2 = questions[index].b;
+          let option3 = questions[index].c;
+          let option4 = questions[index].d;
 
-
-
-      $("#pTitle").text(Title);
-      $("#lblOptionA").text(option1);
-      $("#lblOptionB").text(option2);
-      $("#lblOptionC").text(option3);
-      $("#lblOptionD").text(option4);
+          //Bind question details to HTML controls 
+          $("#pTitle").text(Title);
+          $("#lblOptionA").text(option1);
+          $("#lblOptionB").text(option2);
+          $("#lblOptionC").text(option3);
+          $("#lblOptionD").text(option4);
     }
 
     $(document).ready(function () {
 
       var subjects = [];
+      var questions = [];
+
       let subjectUrl = "http://localhost:5238/subjects";
+
+      //get  subjects to load into  List box
       $.get(subjectUrl, function (data, status) {
-        subjects = (data);
-        var lstSubject = $("#lstSubject")
-        for (var i = 0; i < subjects.length; i++) {
-
-          lstSubject.append($('<option></option>').val(subjects[i].title).html(subjects[i].title));
-        }
-
+                                      subjects = (data);
+                                      var lstSubject = $("#lstSubject")
+                                      for(var i = 0; i < subjects.length; i++) {
+                                          lstSubject.append($('<option></option>').val(subjects[i].title).html(subjects[i].title));
+                                      }
       });
-
-      //   $('input[type=radio][name=role]').change(function () {
-      //     var selectedValue = $(this).val();
-      //     var lstSubjects = $("#lstSubject");
-      //     if (selectedValue == "t") {
-      //       lstSubjects.empty();
-      //       for (var i = 0; i < tSubject.length; i++) {
-      //         lstSubjects.append($('<option></option>').val(tSubject[i]).html(tSubject[i]));
-      //       }
-      //     }
-      //     else if (selectedValue == "d") {
-      //       lstSubjects.empty();
-      //       for (var i = 0; i < dSubject.length; i++) {
-      //         lstSubjects.append($('<option></option>').val(dSubject[i]).html(dSubject[i]));
-      //       }
-      //     }
-      //   });
     })
-    var questions = [];
-    $("#lstSubject").change(function () {
-      var selectedSubject = $(this).val();
-      console.log(selectedSubject);
-      let QuestionsUrl = "http://localhost:5238/questions/" + selectedSubject;
 
-      $.get(QuestionsUrl, function (data, status) {
-        console.log(data);
+   
+    $("#btnFirst").click(function () {
+        current = 0;
+        loadQuestion(current);
+        $("#btnPrevious").prop("disabled", true);
+        $("#btnNext").prop("disabled", false);
+    });
+
+    $("#btnPrevious").click(function () {
+        current--;
+        loadQuestion(current);
+    });
+
+
+    $("#btnNext").click(function () {
+        current++;
+        $("#btnPrevious").prop("disabled", false);
+        if (current == questions.length) {
+          $("#btnNext").prop("disabled", true);
+        }
+        loadQuestion(current);
+    });
+
+    $("#btnLast").click(function () {
+        current = questions.length - 1;
+        loadQuestion(current);
+        $("#btnNext").prop("disabled", true);
+        $("#btnPrevious").prop("disabled", false);
+    });
+
+    $("#lstSubject").change(function () {
+      //get subject selected from list box
+      var selectedSubject = $(this).val();
+      let questionsAPI = "http://localhost:5238/questions/" + selectedSubject;
+
+      $.get(questionsAPI, function (data, status) {
         questions = (data);
 
         switch (selectedSubject) {
-        case "ADVJAVA":
-          loadQuestion(currentQuestionIndex);
+          case "ADVJAVA":
+            loadQuestion(current);
           break;
       
-      case "COREJAVA":
-          loadQuestion(currentQuestionIndex);
+          case "COREJAVA":
+            loadQuestion(current);
           break;
 
           case "DOTNET":
-          loadQuestion(currentQuestionIndex);
+            loadQuestion(current);
           break;
 
           case "MICROSERVICES":
-          loadQuestion(currentQuestionIndex);
+            loadQuestion(current);
           break;
 
           case "REACT":
-          loadQuestion(currentQuestionIndex);
+            loadQuestion(current);
           break;
 
           case "CSHARP":
-          loadQuestion(currentQuestionIndex);
+            loadQuestion(current);
           break;
 
           case "JAVASCRIPT":
-          loadQuestion(currentQuestionIndex);
+            loadQuestion(current);
           break;
           case "ANGULAR":
-          loadQuestion(currentQuestionIndex);
+            loadQuestion(current);
           break;
         }
-      });
-      
-      // if (selectedSubject == "ADVJAVA") {
-      //   let javaQuestionsUrl = "http://localhost:5238/questions/"+ selectedSubject;
-      //   $.get(javaQuestionsUrl, function (data, status) {
-      //     console.log(data);
-      //     javaMcqQuestions = (data);
-      //     loadQuestion(currentQuestionIndex);
-      //   });
-      // }
-
-
-
-
-
-      $("#btnFirst").click(function () {
-        currentQuestionIndex = 0;
-        loadQuestion(currentQuestionIndex);
-        $("#btnPrevious").prop("disabled", true);
-        $("#btnNext").prop("disabled", false);
-      });
-
-      $("#btnPrevious").click(function () {
-        currentQuestionIndex--;
-        loadQuestion(currentQuestionIndex);
-      });
-
-
-      $("#btnNext").click(function () {
-        currentQuestionIndex++;
-        $("#btnPrevious").prop("disabled", false);
-        if (currentQuestionIndex == javaMcqQuestions.length) {
-          $("#btnNext").prop("disabled", true);
-        }
-        loadQuestion(currentQuestionIndex);
-      });
-
-      $("#btnLast").click(function () {
-        currentQuestionIndex = javaMcqQuestions.length - 1;
-        loadQuestion(currentQuestionIndex);
-        $("#btnNext").prop("disabled", true);
-        $("#btnPrevious").prop("disabled", false);
       });
     });
   </script>
 </body>
-
 </html>
