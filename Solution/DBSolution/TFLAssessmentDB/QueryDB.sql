@@ -120,3 +120,9 @@ where employeeid=1
 
 
 --get all emplyoees who  have been teseted for  object oriented (Criteria)
+
+
+-- get all questions of particular subject
+select questions.qid,questions.question,questions.a,questions.b,questions.c,questions.d 
+from questions inner join technicalskills on technicalskills.techskid=questions.skillid
+ where technicalskills.title="ADVJAVA";

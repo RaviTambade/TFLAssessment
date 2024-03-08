@@ -47,8 +47,6 @@
                 </div>
             </div>
         </div>
-        
-        
     </div>
 </div>
 
@@ -75,7 +73,6 @@
     }
 
     $(document).ready(function () {
-<<<<<<< HEAD
 
       $('input[type=radio][name=role]').change(function () {
         console.log("inside change event");
@@ -101,15 +98,14 @@
               var selectedSubject=$(this).val();
               console.log(selectedSubject);
             if(selectedSubject=="Java"){
-=======
->>>>>>> b573eb1d62ef8133f66a329cc91f3d8d13434649
-            let javaQuestionsUrl="http://localhost:5238/javaquestions";
+            let javaQuestionsUrl="http://localhost:5238/javaquestions/{selectedSubject}";
             $.get(javaQuestionsUrl, function(data, status){
             console.log(data);
             javaMcqQuestions=(data);
             console.log(javaMcqQuestions);
             loadQuestion(currentQuestionIndex);
         });
+      }
       
 
           $("#btnFirst").click(function(){

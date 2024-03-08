@@ -167,7 +167,8 @@ app.MapGet("/questions/{title}",(string title)=>{
     string connectionString="server=localhost;port=3306;user=root;password=password;database=assessmentdb";
     MySqlConnection connection = new MySqlConnection(connectionString);
      try{
-        string query = "select questions.qid,questions.question,questions.a,questions.b,questions.c,questions.d from questions inner join technicalskills on technicalskills.techskid=questions.skillid where technicalskills.title=@title";
+        string query = @"select questions.qid,questions.question,questions.a,questions.b,questions.c,questions.d from questions inner join technicalskills 
+                         on technicalskills.techskid=questions.skillid where technicalskills.title=@title";
         MySqlCommand command = new MySqlCommand(query,connection);
         command.Parameters.AddWithValue("@title",title);
         connection.Open();
