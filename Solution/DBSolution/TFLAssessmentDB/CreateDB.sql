@@ -1,8 +1,5 @@
-<<<<<<< HEAD
--- Active: 1709025691659@@127.0.0.1@3306@mydb
-=======
--- Active: 1694968636816@@127.0.0.1@3306@tflportal
->>>>>>> b573eb1d62ef8133f66a329cc91f3d8d13434649
+
+-- Active: 1694968636816@@127.0.0.1@3306@assessmentdb
 DROP database assessmentdb;
 create database assessmentdb;
 use assessmentdb;

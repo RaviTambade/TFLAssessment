@@ -162,6 +162,35 @@ app.MapGet("/dbemployees",()=>{
 });
 
 
+app.MapGet("/subjects",()=>{
+    List<Subject> subjects=new List<Subject>();
+    string connectionString="server=localhost;port=3306;user=root;password=password;database=assessmentdb";
+    MySqlConnection connection = new MySqlConnection(connectionString);
+     try{
+        string query = @"select * from technicalskills";
+        MySqlCommand command = new MySqlCommand(query,connection);
+        connection.Open();
+        MySqlDataReader reader = command.ExecuteReader();
+        while(reader.Read()){
+              int id=int.Parse(reader["techskid"].ToString());
+              string title=reader["title"].ToString();
+              Subject subject = new Subject();
+              subject.Id=id;
+              subject.Title=title;
+              subjects.Add(subject);
+        }
+        reader.Close();
+    }
+    catch(Exception e){
+       Console.WriteLine(e.Message);
+    }
+    finally{
+        connection.Close();
+    }
+    return subjects;
+});
+
+
 app.MapGet("/questions/{title}",(string title)=>{
     List<Question> questions=new List<Question>();
     string connectionString="server=localhost;port=3306;user=root;password=password;database=assessmentdb";
