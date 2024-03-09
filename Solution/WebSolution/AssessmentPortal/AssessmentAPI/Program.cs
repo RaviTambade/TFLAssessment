@@ -21,7 +21,6 @@ var app = builder.Build();
 
 
 
-
 //register callback function for responding incomming HTTP Requests
 //lambda function
 //arrow function
@@ -190,8 +189,32 @@ app.MapGet("/subjects",()=>{
     return subjects;
 });
 
-//
-//var testAPIUrl="/candidate/454/test/565/questions"
+
+var testAPIUrl="/candidate/questions";
+app.MapPost(testAPIUrl,(CandidateAnswer answer)=>{
+    bool status=false;
+    string connectionString="server=localhost;port=3306;user=root;password=password;database=assessmentdb";
+    MySqlConnection connection = new MySqlConnection(connectionString);
+     try{
+        string query = "insert into candidateanswers(employeeid,testquestionid,answerkey) values(@employeeId,@testQuestionId,@answerKey)";
+        MySqlCommand command = new MySqlCommand(query,connection);
+        command.Parameters.AddWithValue("@employeeId",answer.EmployeeId);
+        command.Parameters.AddWithValue("@testQuestionId",answer.TestQuestionId);
+        command.Parameters.AddWithValue("@answerKey",answer.Answer);
+        connection.Open();
+        int rowsAffected = command.ExecuteNonQuery();
+        if(rowsAffected>0){
+            status=true;
+        }     
+    }
+    catch(Exception e){
+       Console.WriteLine(e.Message);
+    }
+    finally{
+        connection.Close();
+    }
+    return status;
+});
 
 
 app.MapGet("/questions/{title}",(string title)=>{
@@ -236,10 +259,5 @@ app.MapGet("/questions/{title}",(string title)=>{
 
 //Now all of you need to work on this 
 
-
-app.MapPost("/evalute/{candidateId}",(CandateAnswers title)=>{
-
-
-});
 
 app.Run();
