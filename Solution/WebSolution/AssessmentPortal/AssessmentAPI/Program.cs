@@ -129,7 +129,7 @@ app.MapGet("/reactquestions",()=>{
 
 app.MapGet("/dbemployees",()=>{
     List<Employee> employees=new List<Employee>();
-    string connectionString="server=localhost;port=3306;user=root;password=root;database=assessmentdb";
+    string connectionString="server=localhost;port=3306;user=root;password=password;database=assessmentdb";
     MySqlConnection connection = new MySqlConnection(connectionString);
      try{
         string query = "select * from employee";
@@ -164,7 +164,7 @@ app.MapGet("/dbemployees",()=>{
 
 app.MapGet("/subjects",()=>{
     List<Subject> subjects=new List<Subject>();
-    string connectionString="server=localhost;port=3306;user=root;password=root;database=assessmentdb";
+    string connectionString="server=localhost;port=3306;user=root;password=password;database=assessmentdb";
     MySqlConnection connection = new MySqlConnection(connectionString);
      try{
         string query = @"select * from technicalskills";
@@ -193,7 +193,7 @@ app.MapGet("/subjects",()=>{
 
 app.MapGet("/questions/{title}",(string title)=>{
     List<Question> questions=new List<Question>();
-    string connectionString="server=localhost;port=3306;user=root;password=root;database=assessmentdb";
+    string connectionString="server=localhost;port=3306;user=root;password=password;database=assessmentdb";
     MySqlConnection connection = new MySqlConnection(connectionString);
      try{
         string query = @"select questions.qid,questions.question,questions.a,questions.b,questions.c,questions.d from questions inner join technicalskills 
