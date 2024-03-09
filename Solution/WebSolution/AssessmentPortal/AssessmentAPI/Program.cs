@@ -190,6 +190,9 @@ app.MapGet("/subjects",()=>{
     return subjects;
 });
 
+//
+//var testAPIUrl="/candidate/454/test/565/questions"
+
 
 app.MapGet("/questions/{title}",(string title)=>{
     List<Question> questions=new List<Question>();
@@ -227,6 +230,16 @@ app.MapGet("/questions/{title}",(string title)=>{
         connection.Close();
     }
     return questions;
+});
+
+
+
+//Now all of you need to work on this 
+
+
+app.MapPost("/evalute/{candidateId}",(CandateAnswers title)=>{
+
+
 });
 
 app.Run();
