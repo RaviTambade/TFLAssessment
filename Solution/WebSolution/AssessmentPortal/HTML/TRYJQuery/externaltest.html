@@ -51,7 +51,8 @@
         <div class="progress progress-md">
           <div class="progress-bar progress-bar-success" id="progress1" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:0%">
           </div>
-      </div>
+        </div>
+    
         </div>
         </div>
       </div>
@@ -115,22 +116,8 @@
                 answers.map((data)=>{console.log(data)})
             }
 
-        
-        var totalLength = answers.length;
-        var NotAnswers= answers.filter(ans=>ans=="NO");
-
-        var ans=(totalLength)-(NotAnswers.length);
-        var percentage=(ans*100)/(questions.length);
-        // let currentWidth= $("#progress1").width();         
-        // $("#progress1").width(percentage);
-        // $("#progress1").text(percentage+"%");
-
-
-        let progressBar = $("#progress1");
-        let progressBarWidth = percentage + "%";
-        progressBar.css("width", progressBarWidth);
-        progressBar.text(percentage + "%");
-
+            loadProgressBar();
+       
     });
 
 
@@ -191,7 +178,7 @@
     $("#btnNext").click(function () {
         current++;
         $("#btnPrevious").prop("disabled", false);
-        if (current == questions.length) {
+        if (current == questions.length-1) {
           $("#btnNext").prop("disabled", true);
         }
         resetCheckedRadio();
@@ -245,6 +232,7 @@
       
           case "COREJAVA":
             loadQuestion(current);
+            console.log("aaaaaqqq"+questions.length);
           break;
 
           case "DOTNET":
@@ -272,6 +260,20 @@
         }
       });
     });
+
+     var loadProgressBar = function(){
+      
+      var totalQuestions = questions.length;
+        var ans = answers.filter(ans => ans !== "NO").length;
+        var percentage=(ans*100)/(totalQuestions);
+
+        let progressBar = $("#progress1");
+        let progressBarWidth = percentage + "%";
+        progressBar.css("width", progressBarWidth);
+        progressBar.text(percentage + "%");
+
+
+    }
   </script>
 </body>
 </html>
