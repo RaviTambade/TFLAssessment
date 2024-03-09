@@ -140,7 +140,7 @@ Dotnet CLI:
 1)Client Side UI (ClientSideUI.img)
 2)Frontend App Development (FrontEndAppDev.img)
 3)DOM Tree (DOMTree.img)
-4)Javascriept
+4)Javascriept (getElementById(), getElementByName())
 4)jQuery selectors (id,element,attribute)
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -152,29 +152,38 @@ Dotnet CLI:
 4)JQuery funcions (.append(),.empty())
 5)$(this).val() / this.value; (To check value of current selector)
 6) $(this).prop("checked")  (To check selected value of checkbox)
-
-
-
-
-
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
-	  
-
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+06 March 2024
+(JQuery)
+1)DOM traversing
+2)Clean Code Strategy
+  Design Principle: SOLID
+  S:Single Responsiblity Principle
+  DRY:Don't repeat yourself
+  KISS:Keep it simple and stupid
+3)$(this).prop("")  (Is used to manipulate element properties)
+4).width() (Change width of bootstrap class)
+5).addClass() , .removeClass()  (Add or remove bootstrap class)
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+07 March 2024
+(JQuery)
+1)DOM Navigation (First,Next,Previous,Last)
+2)$.get("url",function(data,status){}   (Get method in Jquery)
+3)Extracting data using ($.get) and data manipulation.
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+08 March 2024
+(JQuery)
+1)Database connecitvity disscussion
+2)Database connecitivity coding (app.MapGet();)
+3)How to set ulr to MapGet function
+4)Use of parametarised query 
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+09 March 2024
+(JQuery)
+1)Overall working and discussion of (How to connect JQuery code to the C# code(API) and database)Frontend To Backend Implemention
+2)Progress bar code to the Test application
+3)How to generate Array of JSON Object and JSON manipulation.
+4)Use fo .filter(), .map() of array.
 
  
  
