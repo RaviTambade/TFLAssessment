@@ -1,4 +1,4 @@
--- Active: 1707123530557@@127.0.0.1@3306@assessmentdb
+-- Active: 1694968636816@@127.0.0.1@3306@assessmentdb
 insert into employee(fname, lname, email, contactno)values("ram","tambe","rTambe@gmail.com","8547963254");
 insert into employee(fname, lname, email, contactno)values("Vaibhav","Sathe","psathe@gmail.com","9658745635");
 insert into employee(fname, lname, email, contactno)values("Shreedhar","Kumar","pkumar@gmail.com","8654793254");

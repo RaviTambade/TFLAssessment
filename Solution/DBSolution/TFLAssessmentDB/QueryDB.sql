@@ -127,3 +127,21 @@ where employeeid=1
 select questions.qid,questions.question,questions.a,questions.b,questions.c,questions.d 
 from questions inner join technicalskills on technicalskills.techskid=questions.skillid
  where technicalskills.title="ADVJAVA";
+
+
+-- find the score of cadidate in the particualar test.
+SELECT 
+    testquestions.testid,
+    candidateanswers.employeeid,
+    COUNT(CASE WHEN candidateanswers.answerkey = questions.answerkey THEN 1 ELSE NULL END) AS score,
+    COUNT(*) AS total_questions
+    FROM 
+    candidateanswers 
+JOIN 
+    testquestions  ON candidateanswers.testquestionid = testquestions.testquestionid
+JOIN 
+    questions   ON testquestions.testquestionid = questions.qid
+WHERE 
+    candidateanswers.employeeid = 2 AND testquestions.testid = 1
+GROUP BY 
+    candidateanswers.employeeid;
