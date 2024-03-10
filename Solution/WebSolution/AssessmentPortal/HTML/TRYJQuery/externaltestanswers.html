@@ -51,9 +51,9 @@
             </tr>
           </tbody>
         </table>
-        <!-- <div class="progress">
+        <div class="progress">
           <div class="progress-bar bg-success" id="progress1" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:0%" ></div>
-        </div> -->
+        </div>
     
         </div>
         </div>
@@ -103,6 +103,21 @@
       });
     })
 
+
+    var loadProgressBar = function(){
+      
+      var totalQuestions = questions.length;
+      console.log(totalQuestions);
+        var ans = questions.filter(ans=>ans.answer!="No").length;
+        console.log(ans);
+        var percentage=(ans*100)/(totalQuestions);
+        console.log(percentage);
+
+        let progressBar = $("#progress1");
+        let progressBarWidth = percentage + "%";
+        progressBar.width(progressBarWidth)
+        progressBar.text(percentage + "%");
+      }
    
     $("input[type='radio']").click(function(){
             var selectedOption = $("input[name='answer']:checked").attr("id");
@@ -236,7 +251,7 @@
         })
     });
 
-
+    
 
     $("#lstSubject").change(function () {
       //get subject selected from list box

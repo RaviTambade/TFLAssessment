@@ -265,14 +265,14 @@ app.MapGet("/employee/{employeeId}/test/{testid}",(int employeeId,int testId)=>{
     TestScore testScore=new TestScore();
     string connectionString="server=localhost;port=3306;user=root;password=password;database=assessmentdb";
     MySqlConnection connection = new MySqlConnection(connectionString);
-     try{
+    try{
         string query = @"SELECT testquestions.testid,candidateanswers.employeeid,COUNT(CASE WHEN
-         candidateanswers.answerkey = questions.answerkey THEN 1 ELSE NULL END) AS score,
-         COUNT(*) AS totalquestions FROM candidateanswers JOIN testquestions  ON 
-         candidateanswers.testquestionid = testquestions.testquestionid
-         JOIN questions   ON testquestions.testquestionid = questions.qid
-         WHERE candidateanswers.employeeid = @employeeId AND testquestions.testid = @testId
-         GROUP BY candidateanswers.employeeid";
+                       candidateanswers.answerkey = questions.answerkey THEN 1 ELSE NULL END) AS score,
+                       COUNT(*) AS totalquestions FROM candidateanswers JOIN testquestions  ON 
+                       candidateanswers.testquestionid = testquestions.testquestionid
+                       JOIN questions ON testquestions.testquestionid = questions.qid
+                       WHERE candidateanswers.employeeid = @employeeId AND testquestions.testid = @testId
+                       GROUP BY candidateanswers.employeeid";
 
         MySqlCommand command = new MySqlCommand(query,connection);
         command.Parameters.AddWithValue("@employeeId",employeeId);
@@ -285,12 +285,12 @@ app.MapGet("/employee/{employeeId}/test/{testid}",(int employeeId,int testId)=>{
               int score = int.Parse(reader["score"].ToString());
               int totalQuestion = int.Parse(reader["totalquestions"].ToString());
               
-              testScore = new TestScore();
-              testScore.EmployeeId=empId;
-              testScore.TestId=tId;
-              testScore.Score=score;
-              testScore.TotalQuestion=totalQuestion;
-              
+              testScore = new TestScore(){
+              EmployeeId=empId,
+              TestId=tId,
+              Score=score,
+              TotalQuestion=totalQuestion
+            };    
         }
         reader.Close();
     }
