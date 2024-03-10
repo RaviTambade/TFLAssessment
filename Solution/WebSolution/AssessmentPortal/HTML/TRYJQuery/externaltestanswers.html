@@ -242,16 +242,20 @@
         questions.map((question)=>{
            let questionId= question.id;
            let answer=question.answer;
-           finalCandidateAnswers.push({"questionId":questionId,"answer":answer});
+           let employeeId=1;
+           let testId=1;
+           finalCandidateAnswers.push({"questionId":questionId,"answer":answer,"employeeId":employeeId,"testId":testId});
          })
-        console.log(finalCandidateAnswers);
+         console.log(questions);
+         
+         alert("test submitted successfully");
         //ajax call 
-        $.post(evaluateUrl,finalCandidateAnswers,function(){
+        let evaluateUrl="http://localhost:5238/candidate/questions"
+         $.post(evaluateUrl,finalCandidateAnswers,function(){
             //Show result
+            console.log(finalCandidateAnswers);
         })
     });
-
-    
 
     $("#lstSubject").change(function () {
       //get subject selected from list box
