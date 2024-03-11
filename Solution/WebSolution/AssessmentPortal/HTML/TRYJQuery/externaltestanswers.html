@@ -16,7 +16,9 @@
     <div class="container">
       <div class="row">
         <table class="table" id=status>
-         <h2> <div id="timeClock"></div></h2>
+          <h2>
+            <div id="timeClock"></div>
+          </h2>
           <tbody>
             <tr>
               <td>
@@ -239,106 +241,112 @@
     });
 
 
-    $("#btnStart").click(function(){
-       
-      
-       $("#btnNext").prop("disabled", false);
-       $("#btnPrevious").prop("disabled", false);
-       $("#btnFirst").prop("disabled", false);
-       $("#btnLast").prop("disabled", false);
+    $("#btnStart").click(function () {
 
 
-       $("#lstSubject").change(function () {
-      //get subject selected from list box
-      var selectedSubject = $(this).val();
-      let questionsAPI = "http://localhost:5238/questions/" + selectedSubject;
+      $("#btnNext").prop("disabled", false);
+      $("#btnPrevious").prop("disabled", false);
+      $("#btnFirst").prop("disabled", false);
+      $("#btnLast").prop("disabled", false);
 
-      $.get(questionsAPI, function (data, status) {
-        questions = (data);
-        questions.map((question) => { question["answer"] = "No" });
-        console.log(questions);
 
-        switch (selectedSubject) {
-          case "ADVJAVA":
-            showQuestion(current);
-            break;
+      $("#lstSubject").change(function () {
+        //get subject selected from list box
+        var selectedSubject = $(this).val();
+        let questionsAPI = "http://localhost:5238/questions/" + selectedSubject;
 
-          case "COREJAVA":
-            showQuestion(current);
-            console.log("aaaaaqqq" + questions.length);
-            break;
+        $.get(questionsAPI, function (data, status) {
+          questions = (data);
+          questions.map((question) => { question["answer"] = "No" });
+          console.log(questions);
 
-          case "DOTNET":
-            showQuestion(current);
-            break;
+          switch (selectedSubject) {
+            case "ADVJAVA":
+              showQuestion(current);
+              break;
 
-          case "MICROSERVICES":
-            showQuestion(current);
-            break;
+            case "COREJAVA":
+              showQuestion(current);
+              console.log("aaaaaqqq" + questions.length);
+              break;
 
-          case "REACT":
-            showQuestion(current);
-            break;
+            case "DOTNET":
+              showQuestion(current);
+              break;
 
-          case "CSHARP":
-            showQuestion(current);
-            break;
+            case "MICROSERVICES":
+              showQuestion(current);
+              break;
 
-          case "JAVASCRIPT":
-            showQuestion(current);
-            break;
-          case "ANGULAR":
-            loadQuestion(current);
-            break;
-        }
+            case "REACT":
+              showQuestion(current);
+              break;
+
+            case "CSHARP":
+              showQuestion(current);
+              break;
+
+            case "JAVASCRIPT":
+              showQuestion(current);
+              break;
+            case "ANGULAR":
+              loadQuestion(current);
+              break;
+          }
+        });
+
+
       });
 
-     
-    });
-
-       var myVar = setInterval(myTimer);
-       function myTimer() {
+      var myVar = setInterval(myTimer);
+      function myTimer() {
         var d = new Date();
         var t = d.toLocaleTimeString();
-       $("#timeClock").html(t);
-       }
-        
+        $("#timeClock").html(t);
+      }
+
     })
 
 
-    var finalCandidateAnswers=[];
+    var finalCandidateAnswers = [];
 
     $("#btnFinish").click(function () {
-        questions.map((question)=>{
-           let questionId= question.id;
-           let answer=question.answer;
-           let employeeId=1;
-           let testId=1;
-           finalCandidateAnswers.push({"Id":questionId,"Answer":answer,"EmployeeId":employeeId,"TestQuestionId":testId});
-         })
-         console.log(questions);
-         
-         alert("test submitted successfully");
-        //ajax call 
-        let evaluateUrl = "http://localhost:5238/candidate/questions";
- 
-        $.ajax({
+      questions.map((question) => {
+        let questionId = question.id;
+        let answer = question.answer;
+        let employeeId = 1;
+        let testId = 1;
+        finalCandidateAnswers.push({ "Id": questionId, "Answer": answer, "EmployeeId": employeeId, "TestQuestionId": testId });
+      })
+
+      console.log(questions);
+
+      alert("test submitted successfully");
+      $("#btnStart").prop("disabled", true);
+      $("#btnNext").prop("disabled", true);
+      $("#btnPrevious").prop("disabled", true);
+      $("#btnFirst").prop("disabled", true);
+      $("#btnLast").prop("disabled", true);
+      //ajax call 
+      let evaluateUrl = "http://localhost:5238/candidate/questions";
+
+      $.ajax({
         url: evaluateUrl,
         type: 'POST',
         contentType: 'application/json',
         data: JSON.stringify(finalCandidateAnswers),
-        success: function(response) {
-        // Show result
-        console.log(response);
+        success: function (response) {
+          // Show result
+          console.log(response);
         },
-        error: function(xhr, status, error) {
-        console.error(xhr.responseText);
+        error: function (xhr, status, error) {
+          console.error(xhr.responseText);
         }
-       });
+      });
     });
 
-    
-</script>
+
+  </script>
 </body>
 
 </html>
