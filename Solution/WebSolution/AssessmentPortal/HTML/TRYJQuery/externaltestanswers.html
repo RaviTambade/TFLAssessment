@@ -39,10 +39,10 @@
             </tr>
             <tr>
               <td>
-                <button id="btnFirst">First</button>
-                <button id="btnPrevious">Previous</button>
-                <button id="btnNext">Next</button>
-                <button id="btnLast">Last</button>
+                <button id="btnFirst" disabled >First</button>
+                <button id="btnPrevious" disabled >Previous</button>
+                <button id="btnNext" disabled >Next</button>
+                <button id="btnLast" disabled >Last</button>
               </td>
             </tr>
             <tr>
@@ -235,6 +235,18 @@
         $("#btnPrevious").prop("disabled", false);
     });
 
+ 
+
+    $("#btnStart").click(function(){
+       
+      
+       $("#btnNext").prop("disabled", false);
+       $("#btnPrevious").prop("disabled", false);
+       $("#btnFirst").prop("disabled", false);
+       $("#btnLast").prop("disabled", false);
+        
+    })
+
 
     var finalCandidateAnswers=[];
 
@@ -301,6 +313,10 @@
           break;
         }
       });
+
+       var setButtonAtStart=function(){
+       
+      }
     });
 </script>
 </body>
