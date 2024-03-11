@@ -53,7 +53,7 @@
             </tr>
             <tr>
               <td> <button id="btnStart">Start</button></td>
-              <td> <button id="btnFinish">Finish</button></td>
+              <td> <button id="btnFinish">Submit</button></td>
             </tr>
           </tbody>
         </table>
@@ -283,6 +283,7 @@
 
 
       });
+    })
 
       var myVar = setInterval(()=> {
                                       var d = new Date();
@@ -341,25 +342,34 @@
     }
 
     var enableNavigation=function(){
-      $("#btnNext").prop("disabled", true);
-      $("#btnPrevious").prop("disabled", true);
-      $("#btnFirst").prop("disabled", true);
-      $("#btnLast").prop("disabled", true);
+      $("#btnNext").prop("disabled", false);
+      $("#btnPrevious").prop("disabled", false);
+      $("#btnFirst").prop("disabled", false);
+      $("#btnLast").prop("disabled", false);
     }
 
 
     var testTimeLimit=function(){  
-      var remainingTime = 120;
+      var remainingTime = 10;
       var intervalId = setInterval(()=> {
-                                            $("#stopWatch").html(i);
-                                            if (remainingTime != 0){
-                                               enableNavigation();
-                                               remainingTime--;
+                                            $("#stopWatch").html(remainingTime);
+                                            if (remainingTime === 0){
+                                              $("#btnNext").prop("disabled", true);
+                                               $("#btnPrevious").prop("disabled", true);
+                                              $("#btnFirst").prop("disabled", true);
+                                              $("#btnLast").prop("disabled", true);
+                                              $("#btnStart").prop("disabled", true);
+                                              clearInterval(intervalId);
                                             }
-                                            $("#btnStart").prop("disabled", true);
-                                            disableNavigation();
-                                            clearInterval(intervalId);
-                                            alert(" Congratulations! your test is over .");
+                                            else{
+                                              $("#btnNext").prop("disabled", false);
+                                              $("#btnPrevious").prop("disabled", false);
+                                             $("#btnFirst").prop("disabled", false);
+                                              $("#btnLast").prop("disabled", false);
+                                            } 
+                                            remainingTime --;
+                                          
+                                         
                                           }  ,
                                           1000);
     }

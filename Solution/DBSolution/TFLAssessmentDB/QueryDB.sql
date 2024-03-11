@@ -13,10 +13,15 @@ select * from tests;
 select * from testquestions;
 
 select * from candidateanswers;
+
 select * from candidatetestresults;
+
+
 select * from interviewcriterias;
 select * from interviewresults;
 select * from interviews;
+
+show tables;
 
 select * from testquestions where testid=8;
 select * from candidateanswers where employeeid=6;
