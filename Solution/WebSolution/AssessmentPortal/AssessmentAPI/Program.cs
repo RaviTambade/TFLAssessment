@@ -223,19 +223,19 @@ app.MapPost(testAPIUrl,(CandidateAnswer[] answers)=>{
 });
 
 
-app.MapGet("/questions/{title}",(string title)=>{
+app.MapGet("/questions/{testId}",(int testId)=>{
     List<Question> questions=new List<Question>();
     string connectionString="server=localhost;port=3306;user=root;password=password;database=assessmentdb";
     MySqlConnection connection = new MySqlConnection(connectionString);
      try{
-        string query = @"select questions.qid,questions.question,questions.a,questions.b,questions.c,questions.d from questions inner join technicalskills 
-                         on technicalskills.techskid=questions.skillid where technicalskills.title=@title";
+        string query = @"select * from questions inner join testquestions on testquestions.questionid = questions.qid where testquestions.testid= @testId;";
         MySqlCommand command = new MySqlCommand(query,connection);
-        command.Parameters.AddWithValue("@title",title);
+        command.Parameters.AddWithValue("@testId",testId);
         connection.Open();
         MySqlDataReader reader = command.ExecuteReader();
         while(reader.Read()){
               int id=int.Parse(reader["qid"].ToString());
+            int tId=int.Parse(reader["testid"].ToString());
               string question=reader["question"].ToString();
               string a = reader["a"].ToString();
               string b = reader["b"].ToString();
@@ -248,6 +248,7 @@ app.MapGet("/questions/{title}",(string title)=>{
               ques.B=b;
               ques.C=c;
               ques.D=d;
+              ques.TestId= tId;
               questions.Add(ques);
         }
         reader.Close();
