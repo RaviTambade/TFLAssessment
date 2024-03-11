@@ -11,8 +11,8 @@
 
 <body>
   <h3>Transflower Learning Private Limited</h3>
-  <hr/>
-    <div class="jumbotron">
+  <hr />
+  <div class="jumbotron">
     <div class="container">
       <div class="row">
         <table class="table" id=status>
@@ -39,51 +39,52 @@
             </tr>
             <tr>
               <td>
-                <button id="btnFirst" disabled >First</button>
-                <button id="btnPrevious" disabled >Previous</button>
-                <button id="btnNext" disabled >Next</button>
-                <button id="btnLast" disabled >Last</button>
+                <button id="btnFirst" disabled>First</button>
+                <button id="btnPrevious" disabled>Previous</button>
+                <button id="btnNext" disabled>Next</button>
+                <button id="btnLast" disabled>Last</button>
               </td>
             </tr>
             <tr>
-                <td> <button id="btnStart">Start</button></td>
-                <td> <button id="btnFinish">Finish</button></td>
+              <td> <button id="btnStart">Start</button></td>
+              <td> <button id="btnFinish">Finish</button></td>
             </tr>
           </tbody>
         </table>
         <div class="progress">
-          <div class="progress-bar bg-success" id="progress1" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:0%" ></div>
+          <div class="progress-bar bg-success" id="progress1" role="progressbar" aria-valuenow="40" aria-valuemin="0"
+            aria-valuemax="100" style="width:0%"></div>
         </div>
-    
-        </div>
-        </div>
+
       </div>
     </div>
   </div>
   </div>
   </div>
+  </div>
+  </div>
 
- 
+
 
   <script>
     //global variable 
     var current = 0;
     var questions = [];
-    
-    var showQuestion = function (index) {
-          let currentQuestion = questions[index];
-          let Title = questions[index].title;
-          let option1 = questions[index].a;
-          let option2 = questions[index].b;
-          let option3 = questions[index].c;
-          let option4 = questions[index].d;
 
-          //Bind question details to HTML controls 
-          $("#pTitle").text(Title);
-          $("#lblOptionA").text(option1);
-          $("#lblOptionB").text(option2);
-          $("#lblOptionC").text(option3);
-          $("#lblOptionD").text(option4);
+    var showQuestion = function (index) {
+      let currentQuestion = questions[index];
+      let Title = questions[index].title;
+      let option1 = questions[index].a;
+      let option2 = questions[index].b;
+      let option3 = questions[index].c;
+      let option4 = questions[index].d;
+
+      //Bind question details to HTML controls 
+      $("#pTitle").text(Title);
+      $("#lblOptionA").text(option1);
+      $("#lblOptionB").text(option2);
+      $("#lblOptionC").text(option3);
+      $("#lblOptionD").text(option4);
     }
 
     $(document).ready(function () {
@@ -91,182 +92,205 @@
       var subjects = [];
       var questions = [];
       let subjectUrl = "http://localhost:5238/subjects";
-      let evaluateUrl="http://localhost:5238/candiate/564/test/4564/evaluate"
+      let evaluateUrl = "http://localhost:5238/candiate/564/test/4564/evaluate"
 
       //get  subjects to load into  List box
       $.get(subjectUrl, function (data, status) {
-                                      subjects = (data);
-                                      var lstSubject = $("#lstSubject")
-                                      for(var i = 0; i < subjects.length; i++) {
-                                          lstSubject.append($('<option></option>').val(subjects[i].title).html(subjects[i].title));
-                                      }
+        subjects = (data);
+        var lstSubject = $("#lstSubject")
+        for (var i = 0; i < subjects.length; i++) {
+          lstSubject.append($('<option></option>').val(subjects[i].title).html(subjects[i].title));
+        }
       });
     })
 
 
-    var loadProgressBar = function(){
-      
+    var loadProgressBar = function () {
+
       var totalQuestions = questions.length;
       console.log(totalQuestions);
-        var ans = questions.filter(ans=>ans.answer!="No").length;
-        console.log(ans);
-        var percentage=(ans*100)/(totalQuestions);
-        console.log(percentage);
+      var ans = questions.filter(ans => ans.answer != "No").length;
+      console.log(ans);
+      var percentage = (ans * 100) / (totalQuestions);
+      console.log(percentage);
 
-        let progressBar = $("#progress1");
-        let progressBarWidth = percentage + "%";
-        progressBar.width(progressBarWidth)
-        progressBar.text(percentage + "%");
+      let progressBar = $("#progress1");
+      let progressBarWidth = percentage + "%";
+      progressBar.width(progressBarWidth)
+      progressBar.text(percentage + "%");
+    }
+
+    $("input[type='radio']").click(function () {
+      var selectedOption = $("input[name='answer']:checked").attr("id");
+      if (selectedOption) {
+        questions[current].answer = selectedOption;
+        console.log(questions);
       }
-   
-    $("input[type='radio']").click(function(){
-            var selectedOption = $("input[name='answer']:checked").attr("id");
-            if(selectedOption){
-                questions[current].answer=selectedOption;
-                console.log(questions);
-            }
-            loadProgressBar();
+      loadProgressBar();
     });
 
 
-    function resetCheckedRadio(){
+    function resetCheckedRadio() {
       var selectedOption = $("input[name='answer']:checked").attr("id");
-        if(selectedOption){
-          $("#"+selectedOption).prop("checked",false);
-        }
+      if (selectedOption) {
+        $("#" + selectedOption).prop("checked", false);
+      }
     }
 
-    function setRadio(index){
-        let selectedAnswer=questions[index].answer;
-        if(selectedAnswer!== "NO"){
+    // function setRadio(index){
+    //     let selectedAnswer=questions[index].answer;
+    //     if(selectedAnswer!== "NO"){
 
-           let radiobutton="#"+ selectedAnswer;
-          $(radiobutton).prop("checked", true);
-        }
-        else
-        {
-          $("[name='answers']").prop("checked", false);
-        }
-    }
+    //        let radiobutton="#"+ selectedAnswer;
+    //       $(radiobutton).prop("checked", true);
+    //     }
+    //     else
+    //     {
+    //       $("[name='answers']").prop("checked", false);
+    //     }
+    // }
 
     $("#btnFirst").click(function () {
-        current = 0;
-        resetCheckedRadio();
-        showQuestion(current);
-        //setRadio(current);
-        let selectedAnswer=questions[current].answer;
-        if(selectedAnswer!== "NO"){  
-           let radiobutton="#"+ selectedAnswer;
-          $(radiobutton).prop("checked", true);
-          //set the selectedAnswer inside questions answer key
-        }
-        else
-        {
-          $("[name='answers']").prop("checked", false);
-        }
+      current = 0;
+      resetCheckedRadio();
+      showQuestion(current);
+      //setRadio(current);
+      let selectedAnswer = questions[current].answer;
+      if (selectedAnswer !== "NO") {
+        let radiobutton = "#" + selectedAnswer;
+        $(radiobutton).prop("checked", true);
+        //set the selectedAnswer inside questions answer key
+      }
+      else {
+        $("[name='answers']").prop("checked", false);
+      }
 
-        $("#btnPrevious").prop("disabled", true);
-        $("#btnNext").prop("disabled", false);
+      $("#btnPrevious").prop("disabled", true);
+      $("#btnNext").prop("disabled", false);
+      $("#btnFinish").prop("disabled", true);
+
     });
 
     $("#btnPrevious").click(function () {
-        current--;
-        
-        if(current==0){
+      current--;
+
+      if (current == 0) {
         $("#btnPrevious").prop("disabled", true);
         $("#btnNext").prop("disabled", false);
-        }
-        else if(current==questions.length-1 || current>0){
-          $("#btnNext").prop("disabled", false); 
-        }
-        resetCheckedRadio();
-        showQuestion(current);
-       // setRadio(current);
-        let selectedAnswer=questions[current].answer;
-        if(selectedAnswer!== "NO"){
-          
-           let radiobutton="#"+ selectedAnswer;
-          $(radiobutton).prop("checked", true);
-        }
-        else
-        {
-          $("[name='answers']").prop("checked", false);
-        }
+        $("#btnFinish").prop("disabled", true);
+      }
+      else if (current == questions.length - 1 || current > 0) {
+        $("#btnNext").prop("disabled", false);
+      }
+      resetCheckedRadio();
+      showQuestion(current);
+      // setRadio(current);
+      let selectedAnswer = questions[current].answer;
+      if (selectedAnswer !== "NO") {
+
+        let radiobutton = "#" + selectedAnswer;
+        $(radiobutton).prop("checked", true);
+      }
+      else {
+        $("[name='answers']").prop("checked", false);
+      }
     });
 
 
     $("#btnNext").click(function () {
-        current++;
-        $("#btnPrevious").prop("disabled", false);
-        if (current == questions.length-1) {
-          $("#btnNext").prop("disabled", true);
-        }
-        resetCheckedRadio();
-        showQuestion(current);
-       // setRadio(current);
-        let selectedAnswer=questions[current].answer;
-        if(selectedAnswer!== "NO"){
-         
-           let radiobutton="#"+ selectedAnswer;
-          $(radiobutton).prop("checked", true);
-        }
-        else
-        {
-          $("[name='answers']").prop("checked", false);
-        }
+      current++;
+      $("#btnPrevious").prop("disabled", false);
+      if (current == questions.length - 1) {
+        $("#btnNext").prop("disabled", true);
+        $("#btnFinish").prop("disabled", false);
+      }
+      resetCheckedRadio();
+      showQuestion(current);
+      // setRadio(current);
+      let selectedAnswer = questions[current].answer;
+      if (selectedAnswer !== "NO") {
+
+        let radiobutton = "#" + selectedAnswer;
+        $(radiobutton).prop("checked", true);
+      }
+      else {
+        $("[name='answers']").prop("checked", false);
+      }
     });
 
     $("#btnLast").click(function () {
-        current = questions.length - 1;
-        resetCheckedRadio();
-        showQuestion(current);
-       //setRadio(current);
-        let selectedAnswer=questions[current].answer;
-        if(selectedAnswer!== "NO"){
-         
-           let radiobutton="#"+ selectedAnswer;
-          $(radiobutton).prop("checked", true);
-        }
-        else
-        {
-          $("[name='answers']").prop("checked", false);
-        }
-        $("#btnNext").prop("disabled", true);
-        $("#btnPrevious").prop("disabled", false);
+      current = questions.length - 1;
+      resetCheckedRadio();
+      showQuestion(current);
+      //setRadio(current);
+      let selectedAnswer = questions[current].answer;
+      if (selectedAnswer !== "NO") {
+
+        let radiobutton = "#" + selectedAnswer;
+        $(radiobutton).prop("checked", true);
+      }
+      else {
+        $("[name='answers']").prop("checked", false);
+      }
+      $("#btnNext").prop("disabled", true);
+      $("#btnPrevious").prop("disabled", false);
+
     });
 
- 
 
-    $("#btnStart").click(function(){
-       
-      
-       $("#btnNext").prop("disabled", false);
-       $("#btnPrevious").prop("disabled", false);
-       $("#btnFirst").prop("disabled", false);
-       $("#btnLast").prop("disabled", false);
-        
+
+    $("#btnStart").click(function () {
+
+
+      $("#btnNext").prop("disabled", false);
+      $("#btnPrevious").prop("disabled", false);
+      $("#btnFirst").prop("disabled", false);
+      $("#btnLast").prop("disabled", false);
+      $("#btnFinish").prop("disabled", true);
+
     })
 
 
-    var finalCandidateAnswers=[];
+    var finalCandidateAnswers = [];
 
     $("#btnFinish").click(function () {
-        questions.map((question)=>{
-           let questionId= question.id;
-           let answer=question.answer;
-           let employeeId=1;
-           let testId=1;
-           finalCandidateAnswers.push({"questionId":questionId,"answer":answer,"employeeId":employeeId,"testId":testId});
-         })
-         console.log(questions);
-         
-         alert("test submitted successfully");
-        //ajax call 
-        let evaluateUrl="http://localhost:5238/candidate/questions"
-         $.post(evaluateUrl,finalCandidateAnswers,function(){
-            //Show result
-            console.log(finalCandidateAnswers);
-        })
+      $("#btnNext").prop("disabled", true);
+      $("#btnPrevious").prop("disabled", true);
+      $("#btnFirst").prop("disabled", true);
+      $("#btnLast").prop("disabled", true);
+      questions.map((question) => {
+        let questionId = question.id;
+        let answer = question.answer;
+        let employeeId = 1;
+        let testId = 1;
+        finalCandidateAnswers.push({ "Id": questionId, "answer": answer, "employeeId": employeeId, "TestQuestionId": testId });
+      })
+      console.log(questions);
+      console.log(finalCandidateAnswers);
+      alert("Test Submitted Successfully");
+      $("#btnStart").prop("disabled", true);
+      //ajax call 
+      let evaluateUrl="http://localhost:5238/candidate/questions"
+      //  $.post(evaluateUrl,JSON.stringify(finalCandidateAnswers),function(data,status){
+      //     //Show result
+      //     console.log(finalCandidateAnswers);
+      //     console.log(data);
+      // },"json")
+      
+
+      $.ajax({
+        url: evaluateUrl,
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify(finalCandidateAnswers),
+        success: function (response) {
+          // Show result
+          console.log(response);
+        },
+        error: function (xhr, status, error) {
+          console.error(xhr.responseText);
+        }
+      });
     });
 
     $("#lstSubject").change(function () {
@@ -276,48 +300,49 @@
 
       $.get(questionsAPI, function (data, status) {
         questions = (data);
-        questions.map((question)=>{question["answer"]="No"});
+        questions.map((question) => { question["answer"] = "No" });
         console.log(questions);
 
         switch (selectedSubject) {
           case "ADVJAVA":
-          showQuestion(current);
-          break;
-      
+            showQuestion(current);
+            break;
+
           case "COREJAVA":
-          showQuestion(current);
-            console.log("aaaaaqqq"+questions.length);
-          break;
+            showQuestion(current);
+            console.log("aaaaaqqq" + questions.length);
+            break;
 
           case "DOTNET":
-          showQuestion(current);
-          break;
+            showQuestion(current);
+            break;
 
           case "MICROSERVICES":
-          showQuestion(current);
-          break;
+            showQuestion(current);
+            break;
 
           case "REACT":
-          showQuestion(current);
-          break;
+            showQuestion(current);
+            break;
 
           case "CSHARP":
-          showQuestion(current);
-          break;
+            showQuestion(current);
+            break;
 
           case "JAVASCRIPT":
-          showQuestion(current);
-          break;
+            showQuestion(current);
+            break;
           case "ANGULAR":
             loadQuestion(current);
-          break;
+            break;
         }
       });
 
-       var setButtonAtStart=function(){
-       
+      var setButtonAtStart = function () {
+
       }
     });
-</script>
+  </script>
 </body>
+
 </html>
