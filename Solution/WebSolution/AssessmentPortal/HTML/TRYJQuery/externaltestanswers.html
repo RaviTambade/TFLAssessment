@@ -144,19 +144,6 @@
       }
     }
 
-    // function setRadio(index){
-    //     let selectedAnswer=questions[index].answer;
-    //     if(selectedAnswer!== "NO"){
-
-    //        let radiobutton="#"+ selectedAnswer;
-    //       $(radiobutton).prop("checked", true);
-    //     }
-    //     else
-    //     {
-    //       $("[name='answers']").prop("checked", false);
-    //     }
-    // }
-
     $("#btnFirst").click(function () {
       current = 0;
       resetCheckedRadio();
@@ -297,26 +284,18 @@
 
       });
 
+      var myVar = setInterval(()=> {
+                                      var d = new Date();
+                                      var t = d.toLocaleTimeString();
+                                      $("#timeClock").html(t);
+                                    },1000);
 
-
-
-      var myVar = setInterval(myTimer);
-      function myTimer() {
-        var d = new Date();
-        var t = d.toLocaleTimeString();
-        $("#timeClock").html(t);
-      }
-      
-      setTimeout(function(){
-        setInterval(myTimer)
-                    }, 500);
-
-    })
-
+    
 
     var finalCandidateAnswers = [];
 
     $("#btnFinish").click(function () {
+
       questions.map((question) => {
         let questionId = question.id;
         let answer = question.answer;
@@ -327,51 +306,62 @@
 
       console.log(questions);
 
-      alert("test submitted successfully");
       $("#btnStart").prop("disabled", true);
       $("#btnNext").prop("disabled", true);
       $("#btnPrevious").prop("disabled", true);
       $("#btnFirst").prop("disabled", true);
       $("#btnLast").prop("disabled", true);
+      
       //ajax call 
       let evaluateUrl = "http://localhost:5238/candidate/questions";
 
       $.ajax({
-        url: evaluateUrl,
-        type: 'POST',
-        contentType: 'application/json',
-        data: JSON.stringify(finalCandidateAnswers),
-        success: function (response) {
-          // Show result
-          console.log(response);
-        },
-        error: function (xhr, status, error) {
-          console.error(xhr.responseText);
-        }
+              url: evaluateUrl,
+              type: 'POST',
+              contentType: 'application/json',
+              data: JSON.stringify(finalCandidateAnswers),
+
+              success: function (response) {
+                // Show result
+                console.log(response);
+              },
+              error: function (xhr, status, error) {
+                console.error(xhr.responseText);
+              }
       });
     });
 
 
+    var disableNavigation=function(){
+      $("#btnNext").prop("disabled", true);
+      $("#btnPrevious").prop("disabled", true);
+      $("#btnFirst").prop("disabled", true);
+      $("#btnLast").prop("disabled", true);
+     
+    }
+
+    var enableNavigation=function(){
+      $("#btnNext").prop("disabled", true);
+      $("#btnPrevious").prop("disabled", true);
+      $("#btnFirst").prop("disabled", true);
+      $("#btnLast").prop("disabled", true);
+    }
+
+
     var testTimeLimit=function(){  
-      var i = 120;
-      var intervalId = setInterval(function () {
-        $("#stopWatch").html(i);
-        if (i === 0) {
-            $("#btnNext").prop("disabled", true);
-            $("#btnPrevious").prop("disabled", true);
-            $("#btnFirst").prop("disabled", true);
-            $("#btnLast").prop("disabled", true);
-            $("#btnStart").prop("disabled", true);
-            clearInterval(intervalId); // Stop the interval when i reaches 10
-            alert(" Congratulations! your test is over .");
-        } else {
-            $("#btnNext").prop("disabled", false);
-            $("#btnPrevious").prop("disabled", false);
-            $("#btnFirst").prop("disabled", false);
-            $("#btnLast").prop("disabled", false);
-        }
-        i--;
-    }, 1000);
+      var remainingTime = 120;
+      var intervalId = setInterval(()=> {
+                                            $("#stopWatch").html(i);
+                                            if (remainingTime != 0){
+                                               enableNavigation();
+                                               remainingTime--;
+                                            }
+                                            $("#btnStart").prop("disabled", true);
+                                            disableNavigation();
+                                            clearInterval(intervalId);
+                                            alert(" Congratulations! your test is over .");
+                                          }  ,
+                                          1000);
     }
 
   </script>
