@@ -19,6 +19,9 @@
           <h2>
             <div id="timeClock"></div>
           </h2>
+          <h3>
+          <div id="stopWatch">0</div>
+        </h3>
           <tbody>
             <tr>
               <td>
@@ -58,7 +61,6 @@
           <div class="progress-bar bg-success" id="progress1" role="progressbar" aria-valuenow="40" aria-valuemin="0"
             aria-valuemax="100" style="width:0%"></div>
         </div>
-
       </div>
     </div>
   </div>
@@ -97,6 +99,8 @@
       let subjectUrl = "http://localhost:5238/subjects";
       let evaluateUrl = "http://localhost:5238/candiate/564/test/4564/evaluate"
 
+
+     
       //get  subjects to load into  List box
       $.get(subjectUrl, function (data, status) {
         subjects = (data);
@@ -242,13 +246,8 @@
 
 
     $("#btnStart").click(function () {
-
-
-      $("#btnNext").prop("disabled", false);
-      $("#btnPrevious").prop("disabled", false);
-      $("#btnFirst").prop("disabled", false);
-      $("#btnLast").prop("disabled", false);
-
+     
+      testTimeLimit();
 
       $("#lstSubject").change(function () {
         //get subject selected from list box
@@ -298,12 +297,19 @@
 
       });
 
+
+
+
       var myVar = setInterval(myTimer);
       function myTimer() {
         var d = new Date();
         var t = d.toLocaleTimeString();
         $("#timeClock").html(t);
       }
+      
+      setTimeout(function(){
+        setInterval(myTimer)
+                    }, 500);
 
     })
 
@@ -345,6 +351,28 @@
       });
     });
 
+
+    var testTimeLimit=function(){  
+      var i = 120;
+      var intervalId = setInterval(function () {
+        $("#stopWatch").html(i);
+        if (i === 0) {
+            $("#btnNext").prop("disabled", true);
+            $("#btnPrevious").prop("disabled", true);
+            $("#btnFirst").prop("disabled", true);
+            $("#btnLast").prop("disabled", true);
+            $("#btnStart").prop("disabled", true);
+            clearInterval(intervalId); // Stop the interval when i reaches 10
+            alert(" Congratulations! your test is over .");
+        } else {
+            $("#btnNext").prop("disabled", false);
+            $("#btnPrevious").prop("disabled", false);
+            $("#btnFirst").prop("disabled", false);
+            $("#btnLast").prop("disabled", false);
+        }
+        i--;
+    }, 1000);
+    }
 
   </script>
 </body>
