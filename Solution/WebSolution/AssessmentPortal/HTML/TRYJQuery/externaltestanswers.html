@@ -233,8 +233,9 @@
          showQuestion(currentIndex);
           
         });
-   
-         testTimeLimit();
+      
+        enableNavigation();
+          testTimeLimit();
     })
 
       var myVar = setInterval(()=> {
@@ -249,11 +250,8 @@
     $("#btnSubmit").click(function () {
       clearInterval(intervalId);
       $("#btnStart").prop("disabled", true);
-      // $("#btnNext").prop("disabled", true);
-      // $("#btnPrevious").prop("disabled", true);
-      // $("#btnFirst").prop("disabled", true);
-      // $("#btnLast").prop("disabled", true);
-       disableNavigation();
+      $("#btnSubmit").prop("disabled", true);
+        disableNavigation();
 
       questions.map((question) => {
         let questionId = question.id;
@@ -303,7 +301,7 @@
 
 
     var testTimeLimit=function(){  
-      var remainingTime = 100;
+      var remainingTime = 50;
        intervalId = setInterval(()=> {
                                             $("#stopWatch").html(remainingTime);
                                             if (remainingTime === 0){
@@ -315,10 +313,7 @@
                                               clearInterval(intervalId);
                                             }
                                             else{
-                                              $("#btnNext").prop("disabled", false);
-                                              $("#btnPrevious").prop("disabled", false);
-                                             $("#btnFirst").prop("disabled", false);
-                                              $("#btnLast").prop("disabled", false);
+                                               $("#btnSubmit").prop("disabled", false);
                                             } 
                                             remainingTime --;
                                           
