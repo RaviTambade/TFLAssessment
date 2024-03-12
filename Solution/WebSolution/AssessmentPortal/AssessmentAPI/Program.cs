@@ -191,7 +191,7 @@ app.MapGet("/subjects",()=>{
 });
 
 
-var testAPIUrl="/candidate/questions";
+var testAPIUrl="/answers/candidates/{candidateid}/test/{testid}";
 app.MapPost(testAPIUrl,(CandidateAnswer[] answers)=>{
     bool status=false;
     string connectionString="server=localhost;port=3306;user=root;password=password;database=assessmentdb";
@@ -224,7 +224,7 @@ app.MapPost(testAPIUrl,(CandidateAnswer[] answers)=>{
 });
 
 
-app.MapGet("/questions/{testId}",(int testId)=>{
+app.MapGet("/questions/tests/{testId}",(int testId)=>{
     List<Question> questions=new List<Question>();
     string connectionString="server=localhost;port=3306;user=root;password=password;database=assessmentdb";
     MySqlConnection connection = new MySqlConnection(connectionString);
@@ -322,8 +322,8 @@ app.MapPost(url,(CandidateAnswer[] answers)=>{
 });
 
 
-var testAPIUrl="/candidatetestresult";
-app.MapPost(testAPIUrl,(CandidateTestResult testresult)=>{
+var testAnsAPIUrl="/candidatetestresult";
+app.MapPost(testAnsAPIUrl,(CandidateTestResult testresult)=>{
     bool status=false;
     string connectionString="server=localhost;port=3306;user=root;password=password;database=assessmentdb";
     MySqlConnection connection = new MySqlConnection(connectionString);
