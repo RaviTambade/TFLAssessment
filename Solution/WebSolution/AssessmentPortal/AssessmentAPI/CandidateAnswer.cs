@@ -2,7 +2,6 @@ namespace Entities;
 
 public class CandidateAnswer
 {
-    public int  Id{get;set;}
 
     public int  EmployeeId{get;set;}
 

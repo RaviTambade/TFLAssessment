@@ -155,3 +155,9 @@ GROUP BY
 -- call spcandidatetestresult procedure
 call spcandidatetestresult(1,1,@pscore);
 select @pscore;
+
+-- get correctanswer and candidateanswer
+select questions.answerkey,candidateanswers.answerkey,questions.qid  from questions 
+inner join testquestions on testquestions.questionid = questions.qid 
+inner join candidateanswers on candidateanswers.testquestionid=testquestions.questionid
+where testquestions.testid=1 and candidateanswers.employeeid=5;

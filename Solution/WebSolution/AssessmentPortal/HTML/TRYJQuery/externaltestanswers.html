@@ -60,9 +60,9 @@
             aria-valuemax="100" style="width:0%"></div>
         </div>
       </div>
-
-
-
+      <br>
+      <br>
+      <label id="lblresult"></label>
     </div>
   </div>
   </div>
@@ -78,6 +78,7 @@
     var questions = [];
     var intervalId ;
     var remainingTime;
+    var score;
 
     var showQuestion = function (index) {
       let currentQuestion = questions[index];
@@ -224,7 +225,7 @@
     $("#btnStart").click(function () {
      
 
-      let testId=8;
+      let testId=1;
       let currentIndex=0;
       let questionsAPI = "http://localhost:5238/questions/" + testId;
 
@@ -259,11 +260,11 @@
       questions.map((question) => {
         let questionId = question.id;
         let answer = question.answer;
-        let employeeId = 1;
+        let employeeId = 5;
         let testId = 1;
-        finalCandidateAnswers.push({ "Id": questionId, "Answer": answer, "EmployeeId": employeeId, "TestQuestionId": testId });
+        finalCandidateAnswers.push({ "Answer": answer, "EmployeeId": employeeId, "TestQuestionId": questionId });
+        console.log(finalCandidateAnswers);
       })
-
       console.log(questions);
 
       
@@ -286,6 +287,17 @@
       });
     });
 
+    $("#btnResult").click(function(){
+      let employeeId=5;
+      let testId=1;
+      let url = "http://localhost:5238/employee/"+employeeId+"/test/"+testId;
+
+      $.get(url, function (data, status) {
+        score = (data);
+        $("#lblresult").text("Your Score is:"+score);
+      });
+    })
+
 
     var disableNavigation=function(){
       $("#btnNext").prop("disabled", true);
@@ -304,7 +316,7 @@
 
 
     var testTimeLimit=function(){  
-      var remainingTime = 50;
+      var remainingTime = 60;
        intervalId = setInterval(()=> {
                                             $("#stopWatch").html(remainingTime);
                                             if (remainingTime === 0){

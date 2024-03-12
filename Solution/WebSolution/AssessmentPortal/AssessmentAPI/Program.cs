@@ -10,6 +10,7 @@
 //process incomming request with some logic
 //and sends response to remote user who sent request from remote machine
 using MySql.Data.MySqlClient;
+using System.Data;
 using Entities;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -228,7 +229,7 @@ app.MapGet("/questions/{testId}",(int testId)=>{
     string connectionString="server=localhost;port=3306;user=root;password=password;database=assessmentdb";
     MySqlConnection connection = new MySqlConnection(connectionString);
      try{
-        string query = @"select * from questions inner join testquestions on testquestions.questionid = questions.qid where testquestions.testid= @testId;";
+        string query = @"select * from questions inner join testquestions on testquestions.questionid = questions.qid where testquestions.testid= @testId";
         MySqlCommand command = new MySqlCommand(query,connection);
         command.Parameters.AddWithValue("@testId",testId);
         connection.Open();
@@ -267,19 +268,17 @@ app.MapGet("/employee/{employeeId}/test/{testid}",(int employeeId,int testId)=>{
     MySqlConnection connection = new MySqlConnection(connectionString);
     int score=0;
     try{
-        string query = @"call spcandidatetestresult(@pcandidateId,@ptestId,@pscore)";
-        MySqlCommand command = new MySqlCommand(query,connection);
+        connection.Open();
+        MySqlCommand command = new MySqlCommand("spcandidatetestresult",connection);
+        command.CommandType=CommandType.StoredProcedure;
         command.Parameters.AddWithValue("@pcandidateId",employeeId);
         command.Parameters.AddWithValue("@ptestId",testId);
+        command.Parameters.AddWithValue("@pscore", MySqlDbType.Int32);
 
-        connection.Open();
-        MySqlDataReader reader = command.ExecuteReader();
-        if(reader.Read()){
-              score=int.Parse(reader["@pscore"].ToString());
-              Console.WriteLine("inside if="+score);
-            };  
-            Console.WriteLine(score);  
-        reader.Close();
+        command.Parameters["@pscore"].Direction = ParameterDirection.Output;
+        int rowsAffected=command.ExecuteNonQuery();
+        score = Convert.ToInt32(command.Parameters["@pscore"].Value);
+        Console.WriteLine(score);
     }
     catch(Exception e){
        Console.WriteLine(e.Message);
@@ -290,10 +289,6 @@ app.MapGet("/employee/{employeeId}/test/{testid}",(int employeeId,int testId)=>{
     return score;
 });
 
-
-
-
 //Now all of you need to work on this 
-
 
 app.Run();
