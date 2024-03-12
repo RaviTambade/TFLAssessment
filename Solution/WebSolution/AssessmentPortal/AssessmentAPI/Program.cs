@@ -292,19 +292,16 @@ app.MapGet("/employee/{employeeId}/test/{testid}",(int employeeId,int testId)=>{
 
 
 
-var testAnsAPIUrl="/candidatetestresult";
-app.MapPost(testAnsAPIUrl,(CandidateTestResult testresult)=>{
+var testAnsAPIUrl="/result/candidateid/{candidateId}/test/{testId}";
+app.MapPost(testAnsAPIUrl,(CandidateTestResult testresult,int candidateId,int testId)=>{
     bool status=false;
     string connectionString="server=localhost;port=3306;user=root;password=password;database=assessmentdb";
     MySqlConnection connection = new MySqlConnection(connectionString);
      try{
-                string query = "insert into candidatetestresults(testid,marks,teststarttime,testendtime,candidateid) values (@testid,@marks,@teststarttime,@testendtime,@candidateid)";
+                string query = "insert into candidatetestresults(testid,candidateid) values (@testid,@candidateid)";
                 MySqlCommand command = new MySqlCommand(query, connection);
-                command.Parameters.AddWithValue("@testid", testresult.TestId);
-                command.Parameters.AddWithValue("@marks", testresult.Marks);
-                command.Parameters.AddWithValue("@teststarttime", testresult.TestStartTime);
-                command.Parameters.AddWithValue("@testendtime", testresult.TestEndTime);
-                command.Parameters.AddWithValue("@candidateid", testresult.CandidateId);
+                command.Parameters.AddWithValue("@testid", testId);
+                command.Parameters.AddWithValue("@candidateid", candidateId);
                 connection.Open();
                 int rowsAffected = command.ExecuteNonQuery();
                 if (rowsAffected > 0)
