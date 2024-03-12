@@ -322,7 +322,35 @@ app.MapPost(url,(CandidateAnswer[] answers)=>{
 });
 
 
-
+var testAPIUrl="/candidatetestresult";
+app.MapPost(testAPIUrl,(CandidateTestResult testresult)=>{
+    bool status=false;
+    string connectionString="server=localhost;port=3306;user=root;password=password;database=assessmentdb";
+    MySqlConnection connection = new MySqlConnection(connectionString);
+     try{
+                string query = "insert into candidatetestresults(testid,marks,teststarttime,testendtime,candidateid) values (@testid,@marks,@teststarttime,@testendtime,@candidateid)";
+                MySqlCommand command = new MySqlCommand(query, connection);
+                command.Parameters.AddWithValue("@testid", testresult.TestId);
+                command.Parameters.AddWithValue("@marks", testresult.Marks);
+                command.Parameters.AddWithValue("@teststarttime", testresult.TestStartTime);
+                command.Parameters.AddWithValue("@testendtime", testresult.TestEndTime);
+                command.Parameters.AddWithValue("@candidateid", testresult.CandidateId);
+                connection.Open();
+                int rowsAffected = command.ExecuteNonQuery();
+                if (rowsAffected > 0)
+                {
+                    status = true;
+                }
+            
+    }
+    catch(Exception e){
+       Console.WriteLine(e.Message);
+    }
+    finally{
+        connection.Close();
+    }
+    return status;
+});
 
 
 

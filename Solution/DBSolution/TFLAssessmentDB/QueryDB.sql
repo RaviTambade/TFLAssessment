@@ -161,3 +161,6 @@ select questions.answerkey,candidateanswers.answerkey,questions.qid  from questi
 inner join testquestions on testquestions.questionid = questions.qid 
 inner join candidateanswers on candidateanswers.testquestionid=testquestions.questionid
 where testquestions.testid=1 and candidateanswers.employeeid=5;
+
+
+insert into candidatetestresults(testid,marks,teststarttime,testendtime,candidateid) values (1,10,"12/03/2024 01:10:00","12/03/2024 01:40:00",2);
