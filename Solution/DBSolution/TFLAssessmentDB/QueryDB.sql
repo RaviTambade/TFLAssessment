@@ -147,6 +147,11 @@ JOIN
 JOIN 
     questions   ON testquestions.testquestionid = questions.qid
 WHERE 
-    candidateanswers.employeeid = 2 AND testquestions.testid = 1;
+    candidateanswers.employeeid = 1 AND testquestions.testid = 1;
 GROUP BY 
     candidateanswers.employeeid;
+
+
+-- call spcandidatetestresult procedure
+call spcandidatetestresult(1,1,@pscore);
+select @pscore;

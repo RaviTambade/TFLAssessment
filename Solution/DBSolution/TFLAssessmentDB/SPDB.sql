@@ -35,3 +35,18 @@ DELIMITER ;
 
 call `GetTestMarks`(1,2,@marks);
 select @marks
+
+
+-- get candidate test results
+DELIMITER $$
+create procedure spcandidatetestresult(IN pcandidateId INT,In ptestId INT,OUT pscore INT )
+BEGIN
+DECLARE totalMarks INT;
+SELECT COUNT(CASE WHEN candidateanswers.answerkey = questions.answerkey THEN 1 ELSE NULL END) AS score 
+INTO totalMarks FROM candidateanswers 
+JOIN testquestions  ON candidateanswers.testquestionid = testquestions.testquestionid
+JOIN questions ON testquestions.testquestionid = questions.qid
+WHERE candidateanswers.employeeid = pcandidateId AND testquestions.testid = ptestId;
+INSERT INTO candidatetestresults(testid,marks,teststarttime,testendtime,candidateid) VALUES(ptestId,totalMarks,"2024-06-03 12:00:34","2024-03-02 02:30:20",pcandidateId);
+set pscore=totalMarks;
+END $$

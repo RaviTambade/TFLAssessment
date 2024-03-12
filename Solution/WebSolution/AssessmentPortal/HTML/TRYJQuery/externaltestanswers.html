@@ -42,7 +42,7 @@
             </tr>
             <tr>
               <td>
-                <button id="btnFirst" disabled>First</button>
+                <button id="btnFirst" disabled >First</button>
                 <button id="btnPrevious" disabled>Previous</button>
                 <button id="btnNext" disabled>Next</button>
                 <button id="btnLast" disabled>Last</button>
@@ -73,6 +73,7 @@
     var current = 0;
     var questions = [];
     var intervalId ;
+    var remainingTime;
 
     var showQuestion = function (index) {
       let currentQuestion = questions[index];
@@ -95,18 +96,14 @@
       var subjects = [];
       var questions = [];
       let evaluateUrl = "http://localhost:5238/candiate/564/test/4564/evaluate"
-
      })
 
 
     var loadProgressBar = function () {
 
       var totalQuestions = questions.length;
-      console.log(totalQuestions);
       var ans = questions.filter(ans => ans.answer != "No").length;
-      console.log(ans);
       var percentage = (ans * 100) / (totalQuestions);
-      console.log(percentage);
 
       let progressBar = $("#progress1");
       let progressBarWidth = percentage + "%";
@@ -143,9 +140,9 @@
         //set the selectedAnswer inside questions answer key
       }
       else {
-        $("[name='answers']").prop("checked", false);
+        $("[name='answer']").prop("checked", false);
       }
-
+      
       $("#btnPrevious").prop("disabled", true);
       $("#btnNext").prop("disabled", false);
       $("#btnSubmit").prop("disabled", true);
@@ -160,7 +157,7 @@
         $("#btnNext").prop("disabled", false);
         $("#btnSubmit").prop("disabled", true);
       }
-      else if (current == questions.length - 1 || current > 0) {
+      else if (current == questions.length-1 || current > 0) {
         $("#btnNext").prop("disabled", false);
       }
       resetCheckedRadio();
@@ -173,7 +170,7 @@
         $(radiobutton).prop("checked", true);
       }
       else {
-        $("[name='answers']").prop("checked", false);
+        $("[name='answer']").prop("checked", false);
       }
     });
 
@@ -195,7 +192,7 @@
         $(radiobutton).prop("checked", true);
       }
       else {
-        $("[name='answers']").prop("checked", false);
+        $("[name='answer']").prop("checked", false);
       }
     });
 
@@ -209,18 +206,20 @@
 
         let radiobutton = "#" + selectedAnswer;
         $(radiobutton).prop("checked", true);
+      }  
+      else if(remainingTime>=0){
+        $("#btnNext").prop("disabled", true);
+        $("#btnPrevious").prop("disabled", false);
       }
       else {
-        $("[name='answers']").prop("checked", false);
+        $("[name='answer']").prop("checked", false);
       }
-      $("#btnNext").prop("disabled", true);
-      $("#btnPrevious").prop("disabled", false);
-
     });
 
 
     $("#btnStart").click(function () {
      
+
       let testId=8;
       let currentIndex=0;
       let questionsAPI = "http://localhost:5238/questions/" + testId;
@@ -253,7 +252,7 @@
       // $("#btnPrevious").prop("disabled", true);
       // $("#btnFirst").prop("disabled", true);
       // $("#btnLast").prop("disabled", true);
-       disableNavigation();
+      //  disableNavigation();
 
       questions.map((question) => {
         let questionId = question.id;
@@ -303,12 +302,12 @@
 
 
     var testTimeLimit=function(){  
-      var remainingTime = 100;
+       remainingTime = 100;
        intervalId = setInterval(()=> {
                                             $("#stopWatch").html(remainingTime);
                                             if (remainingTime === 0){
                                               $("#btnNext").prop("disabled", true);
-                                               $("#btnPrevious").prop("disabled", true);
+                                              $("#btnPrevious").prop("disabled", true);
                                               $("#btnFirst").prop("disabled", true);
                                               $("#btnLast").prop("disabled", true);
                                               $("#btnStart").prop("disabled", true);
@@ -317,12 +316,10 @@
                                             else{
                                               $("#btnNext").prop("disabled", false);
                                               $("#btnPrevious").prop("disabled", false);
-                                             $("#btnFirst").prop("disabled", false);
+                                              $("#btnFirst").prop("disabled", false);
                                               $("#btnLast").prop("disabled", false);
                                             } 
-                                            remainingTime --;
-                                          
-                                         
+                                            remainingTime --;         
                                           }  ,
                                           1000);
     }
