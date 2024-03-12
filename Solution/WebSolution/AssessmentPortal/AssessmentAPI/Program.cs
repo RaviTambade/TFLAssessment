@@ -289,6 +289,44 @@ app.MapGet("/employee/{employeeId}/test/{testid}",(int employeeId,int testId)=>{
     return score;
 });
 
+var url="/candidatetestresults";
+app.MapPost(url,(CandidateAnswer[] answers)=>{
+    bool status=false;
+    string connectionString="server=localhost;port=3306;user=root;password=password;database=assessmentdb";
+    MySqlConnection connection = new MySqlConnection(connectionString);
+     try{
+       connection.Open();
+
+            foreach (var answer in answers)
+            {
+                string query = "INSERT INTO candidatetestresults(testid,teststarttime,candidateid)VALUES(@testId,@testStartTime,@candidateId)";
+                MySqlCommand command = new MySqlCommand(query, connection);
+                command.Parameters.AddWithValue("@employeeId", answer.EmployeeId);
+                command.Parameters.AddWithValue("@testQuestionId", answer.TestQuestionId);
+                command.Parameters.AddWithValue("@Key", answer.Answer);
+
+                int rowsAffected = command.ExecuteNonQuery();
+                if (rowsAffected > 0)
+                {
+                    status = true;
+                }
+            }  
+    }
+    catch(Exception e){
+       Console.WriteLine(e.Message);
+    }
+    finally{
+        connection.Close();
+    }
+    return status;
+});
+
+
+
+
+
+
+
 //Now all of you need to work on this 
 
 app.Run();

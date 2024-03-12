@@ -12,12 +12,10 @@ CREATE TABLE employee(
       contactno VARCHAR(10) NOT NULL
 );
 
-
 CREATE TABLE technicalskills(
   techskid INT PRIMARY KEY AUTO_INCREMENT,
   title VARCHAR(20)
 );
-
 
 CREATE TABLE subjectexperties(
    subexid INT PRIMARY KEY AUTO_INCREMENT,
@@ -28,14 +26,12 @@ CREATE TABLE subjectexperties(
    CONSTRAINT fk_technicalskills_subjectexperties_technicalskillid FOREIGN KEY(technicalskillid) REFERENCES technicalskills(techskid) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
-
 CREATE TABLE evaluationcriterias(
    evacriid INT PRIMARY KEY AUTO_INCREMENT,
    title VARCHAR(20),
    skillid INT,
    CONSTRAINT fk_technicalskills_evaluationcriterias_skillid FOREIGN KEY(skillid) REFERENCES technicalskills(techskid) ON UPDATE CASCADE ON DELETE CASCADE
 );
-
 
 create table questions (
      qid INT PRIMARY KEY AUTO_INCREMENT,
