@@ -97,9 +97,9 @@ create table candidatetestresults(
 	candidateresultid INT PRIMARY KEY AUTO_INCREMENT,
 	testid INT,
 	marks INT,
-	testStarTime DATE,
-	testEndTime DATE,
-	candidateId INT,
+	teststarttime DATETIME,
+	testendtime DATETIME,
+	candidateid INT,
 	CONSTRAINT fk_test_candidateId FOREIGN KEY (candidateId) REFERENCES employee(id) ON UPDATE CASCADE ON DELETE CASCADE,
     CONSTRAINT fk_test_candidatetestresults FOREIGN KEY (testid) REFERENCES tests(id) ON UPDATE CASCADE ON DELETE CASCADE
 );
