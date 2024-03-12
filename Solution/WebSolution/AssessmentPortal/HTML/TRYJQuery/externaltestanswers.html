@@ -29,16 +29,16 @@
               </td>
             </tr>
             <tr>
-              <td> <input type="radio" name="answer" id="A" /> <label id="lblOptionA"></label> </td>
+              <td> <input type="radio" name="answer" id="a" /> <label id="lblOptionA"></label> </td>
             </tr>
             <tr>
-              <td> <input type="radio" name="answer" id="B" /><label id="lblOptionB"></label> </td>
+              <td> <input type="radio" name="answer" id="b" /><label id="lblOptionB"></label> </td>
             </tr>
             <tr>
-              <td> <input type="radio" name="answer" id="C" /><label id="lblOptionC"></label> </td>
+              <td> <input type="radio" name="answer" id="c" /><label id="lblOptionC"></label> </td>
             </tr>
             <tr>
-              <td> <input type="radio" name="answer" id="D"><label id="lblOptionD"></label> </td>
+              <td> <input type="radio" name="answer" id="d"><label id="lblOptionD"></label> </td>
             </tr>
             <tr>
               <td>
@@ -239,7 +239,7 @@
       let currentIndex=0;
       var startTime=getCurrentDateTime();
       console.log(startTime);
-      let questionsAPI = "http://localhost:5238/questions/" + testId;
+      let questionsAPI = "http://localhost:5238/questions/tests/" + testId;
       $.get(questionsAPI, function (data, status) {
          questions = (data);
          console.log(questions.length);
@@ -266,17 +266,17 @@
       questions.map((question) => {
         let questionId = question.id;
         let answer = question.answer;
-        let employeeId = 5;
+        let employeeId = 2;
         let testId = 1;
-        finalCandidateAnswers.push({ "Answer": answer, "EmployeeId": employeeId, "TestQuestionId": questionId });
+        finalCandidateAnswers.push({ "Answer": answer, "TestQuestionId": questionId });
         console.log(finalCandidateAnswers);
       })
       var endTime=getCurrentDateTime();
       console.log(endTime);
       console.log(questions);
-      
-      //ajax call 
-      let evaluateUrl = "http://localhost:5238/candidate/questions";
+
+      var candidateId=1;
+      let evaluateUrl = " http://localhost:5238/answers/candidates/"+ candidateId;
 
       $.ajax({
               url: evaluateUrl,
@@ -295,7 +295,7 @@
     });
 
     $("#btnResult").click(function(){
-      let employeeId=5;
+      let employeeId=2;
       let testId=1;
       let url = "http://localhost:5238/employee/"+employeeId+"/test/"+testId;
 
