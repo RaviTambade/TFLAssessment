@@ -13,6 +13,7 @@ using MySql.Data.MySqlClient;
 using System.Data;
 using Entities;
 
+
 var builder = WebApplication.CreateBuilder(args);
 //Add Cors services
 builder.Services.AddCors();
@@ -263,7 +264,7 @@ app.MapGet("/questions/tests/{testId}",(int testId)=>{
     return questions;
 });
 
-app.MapGet("/employee/{employeeId}/test/{testid}/starttime/{starttime}",(int employeeId,int testId,DateTime starttime )=>{
+app.MapGet("/employee/{employeeId}/test/{testid}",(int employeeId,int testId )=>{
     string connectionString="server=localhost;port=3306;user=root;password=password;database=assessmentdb";
     MySqlConnection connection = new MySqlConnection(connectionString);
     int score=0;
@@ -272,7 +273,6 @@ app.MapGet("/employee/{employeeId}/test/{testid}/starttime/{starttime}",(int emp
         MySqlCommand command = new MySqlCommand("spcandidatetestresult",connection);
         command.CommandType=CommandType.StoredProcedure;
         command.Parameters.AddWithValue("@pcandidateId",employeeId);
-         command.Parameters.AddWithValue("@pstarttime",starttime);
         command.Parameters.AddWithValue("@ptestId",testId);
         command.Parameters.AddWithValue("@pscore", MySqlDbType.Int32);
 
@@ -320,18 +320,20 @@ app.MapPost(testAnsAPIUrl,(int candidateId,int testId)=>{
     return status;
 });
 
-string startTimeUpdate="/test/starttime/{candidateresultid}";   //modify as per req
+string startTimeUrl="/test/setstartTime";   //modify as per req
 
-app.MapPut(startTimeUpdate,(int candidateresultid)=>{
+app.MapPut(startTimeUrl,(CandidateTestDetails testT)=>{
     bool status=false;
-    DateTime startDateTime= DateTime.Now;
+     var time = testT.CurrentT.year +"-"+testT.CurrentT.month+"-"+testT.CurrentT.day+"T"+testT.CurrentT.hour+":"+testT.CurrentT.minutes+":"+testT.CurrentT.seconds;
+      Console.WriteLine(time);
     string connectionString="server=localhost;port=3306;user=root;password=password;database=assessmentdb";
     MySqlConnection connection = new MySqlConnection(connectionString);
      try{
-                string query = "update candidatetestresults set teststarttime =@teststarttime where candidateresultid=@candidateresultid";
+                string query = "update candidatetestresults set teststarttime =@teststarttime where candidateid=@candidateid and testid=@testid";
                 MySqlCommand command = new MySqlCommand(query, connection);
-                command.Parameters.AddWithValue("@candidateresultid", candidateresultid);
-                command.Parameters.AddWithValue("@teststarttime", startDateTime);
+                command.Parameters.AddWithValue("@candidateid", testT.CandidateId);
+                command.Parameters.AddWithValue("@testid", testT.TestId);
+                command.Parameters.AddWithValue("@teststarttime", time);
                 connection.Open();
                 int rowsAffected = command.ExecuteNonQuery();
                 if (rowsAffected > 0)
@@ -350,18 +352,21 @@ app.MapPut(startTimeUpdate,(int candidateresultid)=>{
 });
 
 
-string endTimeUpdate="/test/endtime/{resultid}";   //modify as per req
+string setendtimeUrl="/test/setendtime";   //modify as per req
 
-app.MapPut(endTimeUpdate,(int resultid)=>{
+app.MapPut(setendtimeUrl,( CandidateTestDetails testT)=>{
     bool status=false;
-    DateTime endDateTime= DateTime.Now;
+
+     var time = testT.CurrentT.year +"-"+testT.CurrentT.month+"-"+testT.CurrentT.day+"T"+testT.CurrentT.hour+":"+testT.CurrentT.minutes+":"+testT.CurrentT.seconds;
+      Console.WriteLine(time);
     string connectionString="server=localhost;port=3306;user=root;password=password;database=assessmentdb";
     MySqlConnection connection = new MySqlConnection(connectionString);
      try{
-                string query = "update candidatetestresults set testendtime =@testendtime where candidateresultid=@candidateresultid";
+                string query = "update candidatetestresults set testendtime =@testendtime where candidateid=@candidateid and testid=@testid";
                 MySqlCommand command = new MySqlCommand(query, connection);
-                command.Parameters.AddWithValue("@candidateresultid", resultid);
-                command.Parameters.AddWithValue("@testendtime", endDateTime);
+                command.Parameters.AddWithValue("@candidateid", testT.CandidateId);
+                command.Parameters.AddWithValue("@testid", testT.TestId);
+                command.Parameters.AddWithValue("@testendtime", time);
                 connection.Open();
                 int rowsAffected = command.ExecuteNonQuery();
                 if (rowsAffected > 0)

@@ -26,7 +26,7 @@ select @marks
 select * from candidatetestresults;
 
 DELIMITER $$
-create procedure spcandidatetestresult(IN pcandidateId INT,In ptestId INT,IN  pstarttime DATETIME,OUT pscore INT )
+create procedure spcandidatetestresult(IN pcandidateId INT,In ptestId INT,OUT pscore INT )
 BEGIN
 DECLARE totalMarks INT;
 DECLARE resultId INT ; 
@@ -36,8 +36,7 @@ JOIN testquestions  ON candidateanswers.testquestionid = testquestions.testquest
 JOIN questions ON testquestions.testquestionid = questions.qid
 WHERE candidateanswers.employeeid = pcandidateId AND testquestions.testid = ptestId;
 set pscore=totalMarks;
-select candidateresultid INTO resultId from candidatetestresults where teststarttime=pstarttime and candidateid= pcandidateId and testid= ptestId;
-Update candidatetestresults  set marks =pscore where candidateresultid = resultId;
+Update candidatetestresults  set marks =pscore where candidatetestid= pcandidateId and testid= ptestId;
 
 END $$
 

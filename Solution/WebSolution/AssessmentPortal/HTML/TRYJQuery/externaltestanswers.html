@@ -79,7 +79,15 @@
     var intervalId ;
     var remainingTime;
     var score;
-    var startTime;
+    var time={};
+    var resultid=1;
+    var testId=1;
+    var candidateId = 7;
+
+
+    
+    
+    
 
     var showQuestion = function (index) {
       let currentQuestion = questions[index];
@@ -99,7 +107,7 @@
 
     $(document).ready(function () {
 
-
+      getCurrentDateTime();
 
       var subjects = [];
       var questions = [];
@@ -228,16 +236,20 @@
                         var d = new Date();
                         console.log(d);
                         var startTime = d.toLocaleTimeString();
-                        var localdate= (d.getMonth()+1) + '-' + d.getDate() + '-' + d.getFullYear() + ' ' 
-                        var startDateTime= localdate+" "+startTime;
-                        console.log(startDateTime);
-                        return startDateTime;
+                        var localdate= d.getFullYear() +d.getDate()+(d.getMonth()+1)
+                        time.month=d.getMonth()+1;
+                        time.year=d.getFullYear();
+                        time.day=d.getDate();
+                        time.hour=d.getHours();
+                        time.minutes=d.getMinutes();
+                        time.seconds=d.getSeconds();
+                        console.log(time);
+                        return time;
                       };
 
 
     $("#btnStart").click(function () {
       enableNavigation();
-      let testId=2;
       let currentIndex=0;
      startTime=getCurrentDateTime();
       console.log(startTime);
@@ -250,7 +262,7 @@
          showQuestion(currentIndex);
           
         });
-        let candidateId=2;
+       
         let url = "http://localhost:5238/result/candidateid/"+candidateId+"/test/"+testId;
         $.ajax({
               
@@ -268,13 +280,16 @@
                 console.log("inside post "+error);
               }
       });
-        let candidateResultId=1;
-      let startTimeURL = "http://localhost:5238/test/starttime/"+candidateResultId;
+        
+     
+      var testTime ={"CandidateId":candidateId,"TestId":testId,"Time":time}
+        console.log(" Our new testTime :",testTime);
+      let startTimeURL = "http://localhost:5238/test/setstartTime";
       $.ajax({
               url: startTimeURL,
               type: 'PUT',
               contentType: 'application/json',
-              data: JSON.stringify({candidateResultId:candidateResultId}),
+              data: JSON.stringify(testTime),
 
               success: function (response) {
                 // Show result
@@ -300,21 +315,20 @@
         disableNavigation();
 
 
-        let employeeId=1;
-      let testId=1;
+     
       
 
       questions.map((question) => {
         let questionId = question.id;
         let answer = question.answer;
-        let employeeId = 1;
-        let testId = 1;
+ 
+         
         finalCandidateAnswers.push({ "Answer": answer, "TestQuestionId": questionId });
         console.log(finalCandidateAnswers);
       })
       var endTime=getCurrentDateTime();
 
-      let evaluateUrl = "http://localhost:5238/answers/candidates/"+ employeeId;
+      let evaluateUrl = "http://localhost:5238/answers/candidates/"+ candidateId;
 
       $.ajax({
               url: evaluateUrl,
@@ -330,13 +344,13 @@
                 console.error(xhr.responseText);
               }
       });
-      let resultid=1;
-      let endTimeURL = "http://localhost:5238/test/endtime/"+resultid;
+       
+      let endTimeURL = "http://localhost:5238/test/setendtime";
       $.ajax({
               url: endTimeURL,
               type: 'PUT',
               contentType: 'application/json',
-              data: JSON.stringify({resultid:resultid}),
+              data: JSON.stringify(testTime),
 
               success: function (response) {
                 // Show result
@@ -347,7 +361,7 @@
               }
       });
 
-      let url = "http://localhost:5238/employee/"+employeeId+"/test/"+testId+"/starttime/"+startTime;
+      let url = "http://localhost:5238/employee/"+candidateId+"/test/"+testId;
 
       $.get(url, function (data, status) {
         score = (data);
