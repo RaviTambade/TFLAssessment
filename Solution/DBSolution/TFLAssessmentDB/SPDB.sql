@@ -25,9 +25,7 @@ BEGIN
     JOIN   questions on questions.qid=testquestions.questionid
     where employeeid=pemployeeId and testid=ptestId
     AND questions.answerkey=candidateanswers.answerkey;
-    
     SET pMarks=marks;
-
 END$$
 
 DELIMITER ;

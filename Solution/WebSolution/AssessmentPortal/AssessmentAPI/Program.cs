@@ -319,6 +319,65 @@ app.MapPost(testAnsAPIUrl,(CandidateTestResult testresult,int candidateId,int te
     return status;
 });
 
+string startTimeUpdate="/test/starttime/{candidateresultid}";   //modify as per req
+
+app.MapPut(startTimeUpdate,(int candidateresultid)=>{
+    bool status=false;
+    DateTime startDateTime= DateTime.Now;
+    string connectionString="server=localhost;port=3306;user=root;password=password;database=assessmentdb";
+    MySqlConnection connection = new MySqlConnection(connectionString);
+     try{
+                string query = "update candidatetestresults set teststarttime =@teststarttime where candidateresultid=@candidateresultid";
+                MySqlCommand command = new MySqlCommand(query, connection);
+                command.Parameters.AddWithValue("@candidateresultid", candidateresultid);
+                command.Parameters.AddWithValue("@teststarttime", startDateTime);
+                connection.Open();
+                int rowsAffected = command.ExecuteNonQuery();
+                if (rowsAffected > 0)
+                {
+                    status = true;
+                }
+            
+    }
+    catch(Exception e){
+       Console.WriteLine(e.Message);
+    }
+    finally{
+        connection.Close();
+    }
+    return status;
+});
+
+
+string endTimeUpdate="/test/endtime/{resultid}";   //modify as per req
+
+app.MapPut(endTimeUpdate,(int resultid)=>{
+    bool status=false;
+    DateTime endDateTime= DateTime.Now;
+    string connectionString="server=localhost;port=3306;user=root;password=password;database=assessmentdb";
+    MySqlConnection connection = new MySqlConnection(connectionString);
+     try{
+                string query = "update candidatetestresults set testendtime =@testendtime where candidateresultid=@candidateresultid";
+                MySqlCommand command = new MySqlCommand(query, connection);
+                command.Parameters.AddWithValue("@candidateresultid", resultid);
+                command.Parameters.AddWithValue("@testendtime", endDateTime);
+                connection.Open();
+                int rowsAffected = command.ExecuteNonQuery();
+                if (rowsAffected > 0)
+                {
+                    status = true;
+                }
+            
+    }
+    catch(Exception e){
+       Console.WriteLine(e.Message);
+    }
+    finally{
+        connection.Close();
+    }
+    return status;
+});
+
 
 
 
