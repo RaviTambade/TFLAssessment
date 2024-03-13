@@ -293,7 +293,7 @@ app.MapGet("/employee/{employeeId}/test/{testid}",(int employeeId,int testId)=>{
 
 
 var testAnsAPIUrl="/result/candidateid/{candidateId}/test/{testId}";
-app.MapPost(testAnsAPIUrl,(CandidateTestResult testresult,int candidateId,int testId)=>{
+app.MapPost(testAnsAPIUrl,(int candidateId,int testId)=>{
     bool status=false;
     string connectionString="server=localhost;port=3306;user=root;password=password;database=assessmentdb";
     MySqlConnection connection = new MySqlConnection(connectionString);
@@ -357,10 +357,11 @@ app.MapPut(endTimeUpdate,(int resultid)=>{
     string connectionString="server=localhost;port=3306;user=root;password=password;database=assessmentdb";
     MySqlConnection connection = new MySqlConnection(connectionString);
      try{
-                string query = "update candidatetestresults set testendtime =@testendtime where candidateresultid=@candidateresultid";
+                string query = "update candidatetestresults set testendtime =@testendtime, marks=@marks where candidateresultid=@candidateresultid";
                 MySqlCommand command = new MySqlCommand(query, connection);
                 command.Parameters.AddWithValue("@candidateresultid", resultid);
                 command.Parameters.AddWithValue("@testendtime", endDateTime);
+                command.Parameters.AddWithValue("@marks",score)
                 connection.Open();
                 int rowsAffected = command.ExecuteNonQuery();
                 if (rowsAffected > 0)

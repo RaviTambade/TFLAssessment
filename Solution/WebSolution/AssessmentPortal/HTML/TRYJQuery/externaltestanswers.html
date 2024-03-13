@@ -235,7 +235,8 @@
 
 
     $("#btnStart").click(function () {
-      let testId=1;
+      enableNavigation();
+      let testId=2;
       let currentIndex=0;
       var startTime=getCurrentDateTime();
       console.log(startTime);
@@ -248,6 +249,40 @@
          showQuestion(currentIndex);
           
         });
+        let candidateId=2;
+        let url = "http://localhost:5238/result/candidateid/"+candidateId+"/test/"+testId;
+        $.ajax({
+              
+              url: url,
+              type: 'POST',
+              contentType: 'application/json',
+              data: JSON.stringify({candidateId:candidateId, testId:testId}),
+
+              success: function (response) {
+                console.log("inside post "+response);
+                console.log(""+response);
+              },
+              error: function (xhr, status, error) {
+                console.error(xhr.responseText);
+                console.log("inside post "+error);
+              }
+      });
+        let candidateResultId=3;
+      let startTimeURL = "http://localhost:5238/test/starttime/"+candidateResultId;
+      $.ajax({
+              url: startTimeURL,
+              type: 'PUT',
+              contentType: 'application/json',
+              data: JSON.stringify({candidateResultId:candidateResultId}),
+
+              success: function (response) {
+                // Show result
+                console.log(response);
+              },
+              error: function (xhr, status, error) {
+                console.error(xhr.responseText);
+              }
+      });
       
         enableNavigation();
           testTimeLimit();
@@ -276,13 +311,29 @@
       console.log(questions);
 
       var candidateId=1;
-      let evaluateUrl = " http://localhost:5238/answers/candidates/"+ candidateId;
+      let evaluateUrl = "http://localhost:5238/answers/candidates/"+ candidateId;
 
       $.ajax({
               url: evaluateUrl,
               type: 'POST',
               contentType: 'application/json',
               data: JSON.stringify(finalCandidateAnswers),
+
+              success: function (response) {
+                // Show result
+                console.log(response);
+              },
+              error: function (xhr, status, error) {
+                console.error(xhr.responseText);
+              }
+      });
+      let resultid=3;
+      let endTimeURL = "http://localhost:5238/test/endtime/"+resultid;
+      $.ajax({
+              url: endTimeURL,
+              type: 'PUT',
+              contentType: 'application/json',
+              data: JSON.stringify({resultid:resultid}),
 
               success: function (response) {
                 // Show result
