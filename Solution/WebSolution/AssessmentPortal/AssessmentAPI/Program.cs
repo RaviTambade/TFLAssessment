@@ -263,7 +263,7 @@ app.MapGet("/questions/tests/{testId}",(int testId)=>{
     return questions;
 });
 
-app.MapGet("/employee/{employeeId}/test/{testid}",(int employeeId,int testId)=>{
+app.MapGet("/employee/{employeeId}/test/{testid}/starttime/{starttime}",(int employeeId,int testId,DateTime starttime )=>{
     string connectionString="server=localhost;port=3306;user=root;password=password;database=assessmentdb";
     MySqlConnection connection = new MySqlConnection(connectionString);
     int score=0;
@@ -272,6 +272,7 @@ app.MapGet("/employee/{employeeId}/test/{testid}",(int employeeId,int testId)=>{
         MySqlCommand command = new MySqlCommand("spcandidatetestresult",connection);
         command.CommandType=CommandType.StoredProcedure;
         command.Parameters.AddWithValue("@pcandidateId",employeeId);
+         command.Parameters.AddWithValue("@pstarttime",starttime);
         command.Parameters.AddWithValue("@ptestId",testId);
         command.Parameters.AddWithValue("@pscore", MySqlDbType.Int32);
 
@@ -357,11 +358,10 @@ app.MapPut(endTimeUpdate,(int resultid)=>{
     string connectionString="server=localhost;port=3306;user=root;password=password;database=assessmentdb";
     MySqlConnection connection = new MySqlConnection(connectionString);
      try{
-                string query = "update candidatetestresults set testendtime =@testendtime, marks=@marks where candidateresultid=@candidateresultid";
+                string query = "update candidatetestresults set testendtime =@testendtime where candidateresultid=@candidateresultid";
                 MySqlCommand command = new MySqlCommand(query, connection);
                 command.Parameters.AddWithValue("@candidateresultid", resultid);
                 command.Parameters.AddWithValue("@testendtime", endDateTime);
-                command.Parameters.AddWithValue("@marks",score)
                 connection.Open();
                 int rowsAffected = command.ExecuteNonQuery();
                 if (rowsAffected > 0)

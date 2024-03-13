@@ -51,7 +51,7 @@
             <tr>
               <td> <button id="btnStart">Start</button></td>
               <td> <button id="btnSubmit">Submit</button></td>
-              <td> <button id="btnResult">ShowResult</button></td>
+              <!-- <td> <button id="btnResult">ShowResult</button></td> -->
             </tr>
           </tbody>
         </table>
@@ -79,6 +79,7 @@
     var intervalId ;
     var remainingTime;
     var score;
+    var startTime;
 
     var showQuestion = function (index) {
       let currentQuestion = questions[index];
@@ -238,7 +239,7 @@
       enableNavigation();
       let testId=2;
       let currentIndex=0;
-      var startTime=getCurrentDateTime();
+     startTime=getCurrentDateTime();
       console.log(startTime);
       let questionsAPI = "http://localhost:5238/questions/tests/" + testId;
       $.get(questionsAPI, function (data, status) {
@@ -267,7 +268,7 @@
                 console.log("inside post "+error);
               }
       });
-        let candidateResultId=3;
+        let candidateResultId=1;
       let startTimeURL = "http://localhost:5238/test/starttime/"+candidateResultId;
       $.ajax({
               url: startTimeURL,
@@ -298,20 +299,22 @@
       $("#btnSubmit").prop("disabled", true);
         disableNavigation();
 
+
+        let employeeId=1;
+      let testId=1;
+      
+
       questions.map((question) => {
         let questionId = question.id;
         let answer = question.answer;
-        let employeeId = 2;
+        let employeeId = 1;
         let testId = 1;
         finalCandidateAnswers.push({ "Answer": answer, "TestQuestionId": questionId });
         console.log(finalCandidateAnswers);
       })
       var endTime=getCurrentDateTime();
-      console.log(endTime);
-      console.log(questions);
 
-      var candidateId=1;
-      let evaluateUrl = "http://localhost:5238/answers/candidates/"+ candidateId;
+      let evaluateUrl = "http://localhost:5238/answers/candidates/"+ employeeId;
 
       $.ajax({
               url: evaluateUrl,
@@ -327,7 +330,7 @@
                 console.error(xhr.responseText);
               }
       });
-      let resultid=3;
+      let resultid=1;
       let endTimeURL = "http://localhost:5238/test/endtime/"+resultid;
       $.ajax({
               url: endTimeURL,
@@ -343,18 +346,18 @@
                 console.error(xhr.responseText);
               }
       });
-    });
 
-    $("#btnResult").click(function(){
-      let employeeId=2;
-      let testId=1;
-      let url = "http://localhost:5238/employee/"+employeeId+"/test/"+testId;
+      let url = "http://localhost:5238/employee/"+employeeId+"/test/"+testId+"/starttime/"+startTime;
 
       $.get(url, function (data, status) {
         score = (data);
         $("#lblresult").text("Your Score is:"+score);
       });
-    })
+
+
+    });
+
+    
 
 
     var disableNavigation=function(){
