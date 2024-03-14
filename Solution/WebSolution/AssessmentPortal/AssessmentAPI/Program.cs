@@ -107,7 +107,8 @@ app.MapGet("/subjects",()=>{
     return subjects;
 });
 
-var testAPIUrl="/answers/candidates/{candidateId}";
+
+var testAPIUrl="/answersheet/candidates/{candidateId}/tests/{testId}";
 app.MapPost(testAPIUrl,(CandidateAnswer[] answers,int candidateId)=>{
     bool status=false;
     string connectionString="server=localhost;port=3306;user=root;password=password;database=assessmentdb";
@@ -139,7 +140,9 @@ app.MapPost(testAPIUrl,(CandidateAnswer[] answers,int candidateId)=>{
     return status;
 });
 
-app.MapGet("/questions/tests/{testId}",(int testId)=>{
+//get all questions of the test mentioned
+
+app.MapGet("/tests/{testId}",(int testId)=>{
     List<Question> questions=new List<Question>();
     string connectionString="server=localhost;port=3306;user=root;password=password;database=assessmentdb";
     MySqlConnection connection = new MySqlConnection(connectionString);
@@ -178,9 +181,10 @@ app.MapGet("/questions/tests/{testId}",(int testId)=>{
     return questions;
 });
 
-//string candidateTestResultUrl=@"/test/{testId}/candidates/{candidateId}/score/";
+string candidateTestResultUrl=@"/result/candidates/{candidateId}/test/{testId}/";
+///employee/{candidateId}/test/{testid}
 
-app.MapGet("/employee/{candidateId}/test/{testid}",(int candidateId,int testId )=>{
+app.MapGet("candidateTestResultUrl",(int candidateId,int testId )=>{
     string connectionString="server=localhost;port=3306;user=root;password=password;database=assessmentdb";
     MySqlConnection connection = new MySqlConnection(connectionString);
     int score=0;

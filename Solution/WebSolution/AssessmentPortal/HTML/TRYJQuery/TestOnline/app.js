@@ -19,7 +19,7 @@ $("#btnStart").click(()=>{
     activateNavigation(false);
     let currentIndex=0;
     startTime=getCurrentDateTime();
-    let questionsAPI = "http://localhost:5238/questions/tests/" + testId;
+    let questionsAPI = "http://localhost:5238/tests/" + testId;
     $.get(questionsAPI, function (data, status) {
        questions = (data);
        questions.map((question) => { question["answer"] = "No" });
@@ -47,6 +47,7 @@ $("#btnStart").click(()=>{
       testTimeLimit();
   })
   
+
   $("input[type='radio']").click(()=> {
     var selectedOption = $("input[name='answer']:checked").attr("id");
     if (selectedOption) {
@@ -140,6 +141,7 @@ $("#btnStart").click(()=>{
     }
   });
   
+
   $("#btnSubmit").click( ()=> {
     clearInterval(intervalId);
     $("#btnStart").prop("disabled", true);
@@ -190,7 +192,9 @@ $("#btnStart").click(()=>{
   }); 
   
   $("#btnResult").click(()=>{
-    let url = "http://localhost:5238/employee/"+candidateId+"/test/"+testId;
+    
+    //result/candidates/{candidateId}/test/{testId}/
+    let url = "http://localhost:5238/result/candidates/"+candidateId+"/test/"+testId;
     $.get(url, function (data, status) {
       score = (data);
       $("#lblresult").text("Your Score is:"+score);
