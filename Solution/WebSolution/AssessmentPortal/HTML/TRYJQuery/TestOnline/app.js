@@ -7,7 +7,7 @@ var remainingTime=60;
 var score;
 var time={};
 var testId=1;
-var candidateId = 5;
+var candidateId = 6;
 var subjects = [];
 var questions = [];
 

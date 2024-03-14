@@ -188,7 +188,7 @@ app.MapGet("/employee/{candidateId}/test/{testid}",(int candidateId,int testId )
         connection.Open();
         MySqlCommand command = new MySqlCommand("spcandidatetestresult",connection);
         command.CommandType=CommandType.StoredProcedure;
-        command.Parameters.AddWithValue("@pcandidateId",employeeId);
+        command.Parameters.AddWithValue("@pcandidateId",candidateId);
         command.Parameters.AddWithValue("@ptestId",testId);
         command.Parameters.AddWithValue("@pscore", MySqlDbType.Int32);
 
