@@ -51,7 +51,7 @@
             <tr>
               <td> <button id="btnStart">Start</button></td>
               <td> <button id="btnSubmit">Submit</button></td>
-              <!-- <td> <button id="btnResult">ShowResult</button></td> -->
+              <td> <button id="btnResult">ShowResult</button></td>
             </tr>
           </tbody>
         </table>
@@ -77,11 +77,13 @@
     var current = 0;
     var questions = [];
     var intervalId ;
-    var remainingTime;
+    var remainingTime=60;
     var score;
     var time={};
-    var testId=2;
+    var testId=1;
     var candidateId = 5;
+    var subjects = [];
+    var questions = [];
 
     var showQuestion = function (index) {
       let currentQuestion = questions[index];
@@ -99,17 +101,10 @@
       $("#lblOptionD").text(option4);
     }
 
-    $(document).ready(function () {
-
-      getCurrentDateTime();
-
-      var subjects = [];
-      var questions = [];
-      let evaluateUrl = "http://localhost:5238/candiate/564/test/4564/evaluate"
-     })
-
-
-    var loadProgressBar = function () {
+    $(document).ready(function () { 
+    }) 
+    
+    function loadProgressBar() {
 
       var totalQuestions = questions.length;
       var ans = questions.filter(ans => ans.answer != "No").length;
@@ -121,16 +116,6 @@
       progressBar.text(percentage + "%");
     }
 
-    $("input[type='radio']").click(function () {
-      var selectedOption = $("input[name='answer']:checked").attr("id");
-      if (selectedOption) {
-        questions[current].answer = selectedOption;
-        console.log(questions);
-      }
-      loadProgressBar();
-    });
-
-
     function resetCheckedRadio() {
       var selectedOption = $("input[name='answer']:checked").attr("id");
       if (selectedOption) {
@@ -138,16 +123,97 @@
       }
     }
 
-    $("#btnFirst").click(function () {
+    function getCurrentDateTime(){
+                        var d = new Date();
+                        time.month=(d.getMonth() + 1).toString().padStart(2, '0');
+                        time.year=d.getFullYear();
+                        time.day=d.getDate();
+                        time.hour=d.getHours();
+                        time.minutes=d.getMinutes();
+                        time.seconds=d.getSeconds();
+                      };
+
+    function disableNavigation(){
+      $("#btnNext").prop("disabled", true);
+      $("#btnPrevious").prop("disabled", true);
+      $("#btnFirst").prop("disabled", true);
+      $("#btnLast").prop("disabled", true);    
+    }
+
+    function enableNavigation(){
+      $("#btnNext").prop("disabled", false);
+      $("#btnPrevious").prop("disabled", false);
+      $("#btnFirst").prop("disabled", false);
+      $("#btnLast").prop("disabled", false);
+    }
+
+    function testTimeLimit(){  
+       intervalId = setInterval(()=> {
+                                            $("#stopWatch").html(remainingTime);
+                                            if (remainingTime === 0){
+                                              $("#btnNext").prop("disabled", true);
+                                              $("#btnPrevious").prop("disabled", true);
+                                              $("#btnFirst").prop("disabled", true);
+                                              $("#btnLast").prop("disabled", true);
+                                              $("#btnStart").prop("disabled", true);
+                                              clearInterval(intervalId);
+                                            }
+                                            else{
+                                               $("#btnSubmit").prop("disabled", false);
+                                            } 
+                                            remainingTime --;         
+                                          }  ,
+                                          1000);
+    }
+
+    $("#btnStart").click(()=>{
+      enableNavigation();
+      let currentIndex=0;
+      startTime=getCurrentDateTime();
+      let questionsAPI = "http://localhost:5238/questions/tests/" + testId;
+      $.get(questionsAPI, function (data, status) {
+         questions = (data);
+         questions.map((question) => { question["answer"] = "No" });
+         showQuestion(currentIndex);  
+      });
+       
+        let url = "http://localhost:5238/candidatetestdetails";
+        var testResult={"CandidateId":candidateId,"TestId":testId,"Time":time};
+        $.ajax({     
+              url: url,
+              type: 'POST',
+              contentType: 'application/json',
+              data: JSON.stringify(testResult),
+
+              success: function (response) {
+                console.log("inside post "+response);
+                console.log(""+response);
+              },
+              error: function (xhr, status, error) {
+                console.error(xhr.responseText);
+                console.log("inside post "+error);
+              }
+      });
+        enableNavigation();
+        testTimeLimit();
+    })
+   
+    $("input[type='radio']").click(()=> {
+      var selectedOption = $("input[name='answer']:checked").attr("id");
+      if (selectedOption) {
+        questions[current].answer = selectedOption;
+      }
+      loadProgressBar();
+    });
+
+    $("#btnFirst").click(()=> {
       current = 0;
       resetCheckedRadio();
       showQuestion(current);
-      //setRadio(current);
       let selectedAnswer = questions[current].answer;
       if (selectedAnswer !== "NO") {
         let radiobutton = "#" + selectedAnswer;
         $(radiobutton).prop("checked", true);
-        //set the selectedAnswer inside questions answer key
       }
       else {
         $("[name='answer']").prop("checked", false);
@@ -159,7 +225,7 @@
 
     });
 
-    $("#btnPrevious").click(function () {
+    $("#btnPrevious").click( ()=> {
       current--;
 
       if (current == 0) {
@@ -184,8 +250,7 @@
       }
     });
 
-
-    $("#btnNext").click(function () {
+    $("#btnNext").click( ()=> {
       current++;
       $("#btnPrevious").prop("disabled", false);
       if (current == questions.length - 1) {
@@ -206,7 +271,7 @@
       }
     });
 
-    $("#btnLast").click(function () {
+    $("#btnLast").click( ()=> {
       current = questions.length - 1;
       resetCheckedRadio();
       showQuestion(current);
@@ -226,101 +291,22 @@
       }
     });
 
-    var getCurrentDateTime = function (){
-                        var d = new Date();
-                        console.log(d);
-                        var startTime = d.toLocaleTimeString();
-                        var localdate= d.getFullYear() +d.getDate()+(d.getMonth()+1)
-                        time.month=(d.getMonth() + 1).toString().padStart(2, '0');
-                        time.year=d.getFullYear();
-                        time.day=d.getDate();
-                        time.hour=d.getHours();
-                        time.minutes=d.getMinutes();
-                        time.seconds=d.getSeconds();
-                        console.log(time);
-                        return time;
-                      };
-
-
-    $("#btnStart").click(function () {
-      enableNavigation();
-      let currentIndex=0;
-     startTime=getCurrentDateTime();
-      console.log(startTime);
-      let questionsAPI = "http://localhost:5238/questions/tests/" + testId;
-      $.get(questionsAPI, function (data, status) {
-         questions = (data);
-         console.log(questions.length);
-         questions.map((question) => { question["answer"] = "No" });
-         console.log(questions);
-         showQuestion(currentIndex);
-          
-        });
-       
-        let url = "http://localhost:5238/result/candidateid/"+candidateId+"/test/"+testId;
-        $.ajax({
-              
-              url: url,
-              type: 'POST',
-              contentType: 'application/json',
-              data: JSON.stringify({candidateId:candidateId, testId:testId}),
-
-              success: function (response) {
-                console.log("inside post "+response);
-                console.log(""+response);
-              },
-              error: function (xhr, status, error) {
-                console.error(xhr.responseText);
-                console.log("inside post "+error);
-              }
-      });
-        
-     
-      var testTime ={"CandidateId":candidateId,"TestId":testId,"Time":time}
-      console.log(" Our new testTime :",testTime);
-      let startTimeURL = "http://localhost:5238/test/setstartTime";
-      $.ajax({
-              url: startTimeURL,
-              type: 'PUT',
-              contentType: 'application/json',
-              data: JSON.stringify(testTime),
-
-              success: function (response) {
-                // Show result
-                console.log(response);
-              },
-              error: function (xhr, status, error) {
-                console.error(xhr.responseText);
-              }
-      });
-      
-        enableNavigation();
-          testTimeLimit();
-    })
-
-    var finalCandidateAnswers = [];
-    $("#btnSubmit").click(function () {
+    $("#btnSubmit").click( ()=> {
       clearInterval(intervalId);
       $("#btnStart").prop("disabled", true);
       $("#btnSubmit").prop("disabled", true);
-        disableNavigation();
-
-
-     
-      
+      disableNavigation();
+      var finalCandidateAnswers = [];
 
       questions.map((question) => {
         let questionId = question.id;
         let answer = question.answer;
- 
          
         finalCandidateAnswers.push({ "Answer": answer, "TestQuestionId": questionId });
-        console.log(finalCandidateAnswers);
       })
       var endTime=getCurrentDateTime();
 
       let evaluateUrl = "http://localhost:5238/answers/candidates/"+ candidateId;
-
       $.ajax({
               url: evaluateUrl,
               type: 'POST',
@@ -337,7 +323,6 @@
       });
        
       var testTime ={"CandidateId":candidateId,"TestId":testId,"Time":time}
-      console.log(" Our new testTime :",testTime);
       let endTimeURL = "http://localhost:5238/test/setendtime";
       $.ajax({
               url: endTimeURL,
@@ -352,59 +337,16 @@
               error: function (xhr, status, error) {
                 console.error(xhr.responseText);
               }
-      });
+      });   
+    }); 
 
+    $("#btnResult").click(()=>{
       let url = "http://localhost:5238/employee/"+candidateId+"/test/"+testId;
-
       $.get(url, function (data, status) {
         score = (data);
         $("#lblresult").text("Your Score is:"+score);
       });
-
-
-    });
-
-    
-
-
-    var disableNavigation=function(){
-      $("#btnNext").prop("disabled", true);
-      $("#btnPrevious").prop("disabled", true);
-      $("#btnFirst").prop("disabled", true);
-      $("#btnLast").prop("disabled", true);
-     
-    }
-
-    var enableNavigation=function(){
-      $("#btnNext").prop("disabled", false);
-      $("#btnPrevious").prop("disabled", false);
-      $("#btnFirst").prop("disabled", false);
-      $("#btnLast").prop("disabled", false);
-    }
-
-
-
-    var testTimeLimit=function(){  
-      var remainingTime = 60;
-       intervalId = setInterval(()=> {
-                                            $("#stopWatch").html(remainingTime);
-                                            if (remainingTime === 0){
-                                              $("#btnNext").prop("disabled", true);
-                                              $("#btnPrevious").prop("disabled", true);
-                                              $("#btnFirst").prop("disabled", true);
-                                              $("#btnLast").prop("disabled", true);
-                                              $("#btnStart").prop("disabled", true);
-                                              clearInterval(intervalId);
-                                            }
-                                            else{
-                                               $("#btnSubmit").prop("disabled", false);
-                                            } 
-                                            remainingTime --;         
-                                          }  ,
-                                          1000);
-    }
-
+    })
   </script>
 </body>
-
 </html>

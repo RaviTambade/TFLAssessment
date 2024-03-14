@@ -293,47 +293,18 @@ app.MapGet("/employee/{employeeId}/test/{testid}",(int employeeId,int testId )=>
 
 
 
-var testAnsAPIUrl="/result/candidateid/{candidateId}/test/{testId}";
-app.MapPost(testAnsAPIUrl,(int candidateId,int testId)=>{
+var testAnsAPIUrl="/candidatetestdetails";
+app.MapPost(testAnsAPIUrl,(CandidateTestDetails testDetails)=>{
     bool status=false;
-    string connectionString="server=localhost;port=3306;user=root;password=password;database=assessmentdb";
-    MySqlConnection connection = new MySqlConnection(connectionString);
-     try{
-                string query = "insert into candidatetestresults(testid,candidateid) values (@testid,@candidateid)";
-                MySqlCommand command = new MySqlCommand(query, connection);
-                command.Parameters.AddWithValue("@testid", testId);
-                command.Parameters.AddWithValue("@candidateid", candidateId);
-                connection.Open();
-                int rowsAffected = command.ExecuteNonQuery();
-                if (rowsAffected > 0)
-                {
-                    status = true;
-                }
-            
-    }
-    catch(Exception e){
-       Console.WriteLine(e.Message);
-    }
-    finally{
-        connection.Close();
-    }
-    return status;
-});
-
-string startTimeUrl="/test/setstartTime";   //modify as per req
-
-app.MapPut(startTimeUrl,(CandidateTestDetails testT)=>{
-    bool status=true;
-    var time = testT.Time.year +"-"+testT.Time.month+"-"+testT.Time.day+"T"+testT.Time.hour+":"+testT.Time.minutes+":"+testT.Time.seconds;
+    var time = testDetails.Time.year +"-"+testDetails.Time.month+"-"+testDetails.Time.day+"T"+testDetails.Time.hour+":"+testDetails.Time.minutes+":"+testDetails.Time.seconds;
     Console.WriteLine("starttime"+time);
-    
     string connectionString="server=localhost;port=3306;user=root;password=password;database=assessmentdb";
     MySqlConnection connection = new MySqlConnection(connectionString);
      try{
-                string query = "update candidatetestresults set teststarttime =@teststarttime where candidateid=@candidateid and testid=@testid";
+                string query = "insert into candidatetestresults(testid,teststarttime,candidateid) values (@testid,@teststarttime,@candidateid)";
                 MySqlCommand command = new MySqlCommand(query, connection);
-                command.Parameters.AddWithValue("@candidateid", testT.CandidateId);
-                command.Parameters.AddWithValue("@testid", testT.TestId);
+                command.Parameters.AddWithValue("@testid", testDetails.TestId);
+                command.Parameters.AddWithValue("@candidateid", testDetails.CandidateId);
                 command.Parameters.AddWithValue("@teststarttime", time);
                 connection.Open();
                 int rowsAffected = command.ExecuteNonQuery();
