@@ -36,7 +36,7 @@ JOIN testquestions  ON candidateanswers.testquestionid = testquestions.testquest
 JOIN questions ON testquestions.testquestionid = questions.qid
 WHERE candidateanswers.employeeid = pcandidateId AND testquestions.testid = ptestId;
 set pscore=totalMarks;
-Update candidatetestresults  set marks =pscore where candidatetestid= pcandidateId and testid= ptestId;
+Update candidatetestresults  set marks =pscore where candidateid= pcandidateId and testid= ptestId;
 
 END $$
 

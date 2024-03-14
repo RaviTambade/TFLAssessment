@@ -323,9 +323,10 @@ app.MapPost(testAnsAPIUrl,(int candidateId,int testId)=>{
 string startTimeUrl="/test/setstartTime";   //modify as per req
 
 app.MapPut(startTimeUrl,(CandidateTestDetails testT)=>{
-    bool status=false;
-     var time = testT.CurrentT.year +"-"+testT.CurrentT.month+"-"+testT.CurrentT.day+"T"+testT.CurrentT.hour+":"+testT.CurrentT.minutes+":"+testT.CurrentT.seconds;
-      Console.WriteLine(time);
+    bool status=true;
+    var time = testT.Time.year +"-"+testT.Time.month+"-"+testT.Time.day+"T"+testT.Time.hour+":"+testT.Time.minutes+":"+testT.Time.seconds;
+    Console.WriteLine("starttime"+time);
+    
     string connectionString="server=localhost;port=3306;user=root;password=password;database=assessmentdb";
     MySqlConnection connection = new MySqlConnection(connectionString);
      try{
@@ -356,9 +357,8 @@ string setendtimeUrl="/test/setendtime";   //modify as per req
 
 app.MapPut(setendtimeUrl,( CandidateTestDetails testT)=>{
     bool status=false;
-
-     var time = testT.CurrentT.year +"-"+testT.CurrentT.month+"-"+testT.CurrentT.day+"T"+testT.CurrentT.hour+":"+testT.CurrentT.minutes+":"+testT.CurrentT.seconds;
-      Console.WriteLine(time);
+    var time = testT.Time.year +"-"+testT.Time.month+"-"+testT.Time.day+"T"+testT.Time.hour+":"+testT.Time.minutes+":"+testT.Time.seconds;
+    Console.WriteLine("endtime"+time);
     string connectionString="server=localhost;port=3306;user=root;password=password;database=assessmentdb";
     MySqlConnection connection = new MySqlConnection(connectionString);
      try{

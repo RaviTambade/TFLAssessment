@@ -80,14 +80,8 @@
     var remainingTime;
     var score;
     var time={};
-    var resultid=1;
-    var testId=1;
-    var candidateId = 7;
-
-
-    
-    
-    
+    var testId=2;
+    var candidateId = 5;
 
     var showQuestion = function (index) {
       let currentQuestion = questions[index];
@@ -237,7 +231,7 @@
                         console.log(d);
                         var startTime = d.toLocaleTimeString();
                         var localdate= d.getFullYear() +d.getDate()+(d.getMonth()+1)
-                        time.month=d.getMonth()+1;
+                        time.month=(d.getMonth() + 1).toString().padStart(2, '0');
                         time.year=d.getFullYear();
                         time.day=d.getDate();
                         time.hour=d.getHours();
@@ -283,7 +277,7 @@
         
      
       var testTime ={"CandidateId":candidateId,"TestId":testId,"Time":time}
-        console.log(" Our new testTime :",testTime);
+      console.log(" Our new testTime :",testTime);
       let startTimeURL = "http://localhost:5238/test/setstartTime";
       $.ajax({
               url: startTimeURL,
@@ -303,9 +297,6 @@
         enableNavigation();
           testTimeLimit();
     })
-
-      
- 
 
     var finalCandidateAnswers = [];
     $("#btnSubmit").click(function () {
@@ -345,6 +336,8 @@
               }
       });
        
+      var testTime ={"CandidateId":candidateId,"TestId":testId,"Time":time}
+      console.log(" Our new testTime :",testTime);
       let endTimeURL = "http://localhost:5238/test/setendtime";
       $.ajax({
               url: endTimeURL,
