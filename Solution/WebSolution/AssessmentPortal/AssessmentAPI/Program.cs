@@ -42,91 +42,7 @@ var app = builder.Build();
 //Set up Cors Middleware
 
 app.UseCors(options => options.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
-
-app.MapGet("/", () => "Hello World!");
-app.MapGet("/welcome",()=>"Welcome");
-app.MapGet("/aboutus", ()=>"Transflower Learning Pvt. Ltd.");
-app.MapGet("/contact", ()=>"<ol>"
-                                +"<li>9881735801</li>"
-                                 +"<li>9881735802</li>"
-                                +"</ol>");
-
-
-app.MapGet("/services",()=>"Mentoring, Training,Consultancy");
-app.MapGet("/Aboutyou",()=>"Name : Bhupendra Walhekar\nAddress : Pune\nContact : 9175116616\nEmail : bhupendraw@transflowerlearning.com");
-app.MapGet("/number",()=>{
-                            //Request Processing
-                            int count=90;
-                            string result="";
-                            count ++;
-                            if(count <500){
-                                result=count.ToString();
-                            }
-                            return result;
-                        });
-
-app.MapGet("/products/12",()=>{
-                            Product p1=new Product { Id = 12, 
-                                                    Title = "Gerbera", 
-                                                    Description = "Wedding Flower", 
-                                                    UnitPrice = 6, 
-                                                    Category = "Flower", 
-                                                    Balance = 5000,
-                                                    PaymentTerm="Cash on Delivery",
-                                                    Delivery="24 hours shipment delay" };
-                            return p1;
-                        });
-
-app.MapGet("/employees",()=>{
-    List<Employee> allEmployees=new List<Employee>();
-    allEmployees.Add(new Employee{ Id=12, FName="Bhupendra", LName="Patil"});
-    allEmployees.Add(new Employee{ Id=13, FName="Akash", LName="Jadhav"});
-    allEmployees.Add(new Employee{ Id=14, FName="Vaibhav", LName="Sane"});
-    return allEmployees;
-});
-
-
-
-//Changes added by Ravi Sir
-
-app.MapGet("/javaquestions",()=>{
-    List<Question> allQuestions=new List<Question>();
-    allQuestions.Add(new Question{ Id=12, Title="What is the main purpose of Java programming language?", A="Web Development", B="Mobile Development",C="General-purpose programming",D="Game Development"});
-    allQuestions.Add(new Question{ Id=13, Title="Which keyword is used to define a constant in Java?", A="var", B="final",C="const",D="static"});
-    allQuestions.Add(new Question{ Id=14, Title="Which of the following data types is used to store a single character in Java?", A="char", B="string",C="int",D="float"});
-    allQuestions.Add(new Question{ Id=15, Title="What does JVM stand for?", A="Java Virtual Machine", B="Java Visual Model",C="Java Virtual Model",D="Java Visual Machine"});
-    return allQuestions;
-});
-
-app.MapGet("/dotnetquestions",()=>{
-    List<Question> allQuestions=new List<Question>();
-    allQuestions.Add(new Question{ Id=16, Title="What is the main purpose of Java programming language?", A="Web Development", B="Mobile Development",C="General-purpose programming",D="Game Development"});
-    allQuestions.Add(new Question{ Id=17, Title="Which keyword is used to define a constant in Java?", A="var", B="final",C="const",D="static"});
-    allQuestions.Add(new Question{ Id=18, Title="Which of the following data types is used to store a single character in Java?", A="char", B="string",C="int",D="float"});
-    allQuestions.Add(new Question{ Id=19, Title="What does JVM stand for?", A="Java Virtual Machine", B="Java Visual Model",C="Java Virtual Model",D="Java Visual Machine"});
-    return allQuestions;
-});
-
-app.MapGet("/angularquestions",()=>{
-    List<Question> allQuestions=new List<Question>();
-    allQuestions.Add(new Question{ Id=20, Title="What is the main purpose of Java programming language?", A="Web Development", B="Mobile Development",C="General-purpose programming",D="Game Development"});
-    allQuestions.Add(new Question{ Id=21, Title="Which keyword is used to define a constant in Java?", A="var", B="final",C="const",D="static"});
-    allQuestions.Add(new Question{ Id=22, Title="Which of the following data types is used to store a single character in Java?", A="char", B="string",C="int",D="float"});
-    allQuestions.Add(new Question{ Id=23, Title="What does JVM stand for?", A="Java Virtual Machine", B="Java Visual Model",C="Java Virtual Model",D="Java Visual Machine"});
-    return allQuestions;
-});
-
-app.MapGet("/reactquestions",()=>{
-    List<Question> allQuestions=new List<Question>();
-    allQuestions.Add(new Question{ Id=24, Title="What is the main purpose of Java programming language?", A="Web Development", B="Mobile Development",C="General-purpose programming",D="Game Development"});
-    allQuestions.Add(new Question{ Id=25, Title="Which keyword is used to define a constant in Java?", A="var", B="final",C="const",D="static"});
-    allQuestions.Add(new Question{ Id=26, Title="Which of the following data types is used to store a single character in Java?", A="char", B="string",C="int",D="float"});
-    allQuestions.Add(new Question{ Id=27, Title="What does JVM stand for?", A="Java Virtual Machine", B="Java Visual Model",C="Java Virtual Model",D="Java Visual Machine"});
-    return allQuestions;
-});
-
-
-
+  
 
 app.MapGet("/dbemployees",()=>{
     List<Employee> employees=new List<Employee>();
@@ -191,7 +107,6 @@ app.MapGet("/subjects",()=>{
     return subjects;
 });
 
-
 var testAPIUrl="/answers/candidates/{candidateId}";
 app.MapPost(testAPIUrl,(CandidateAnswer[] answers,int candidateId)=>{
     bool status=false;
@@ -223,7 +138,6 @@ app.MapPost(testAPIUrl,(CandidateAnswer[] answers,int candidateId)=>{
     }
     return status;
 });
-
 
 app.MapGet("/questions/tests/{testId}",(int testId)=>{
     List<Question> questions=new List<Question>();
@@ -264,7 +178,9 @@ app.MapGet("/questions/tests/{testId}",(int testId)=>{
     return questions;
 });
 
-app.MapGet("/employee/{employeeId}/test/{testid}",(int employeeId,int testId )=>{
+//string candidateTestResultUrl=@"/test/{testId}/candidates/{candidateId}/score/";
+
+app.MapGet("/employee/{candidateId}/test/{testid}",(int candidateId,int testId )=>{
     string connectionString="server=localhost;port=3306;user=root;password=password;database=assessmentdb";
     MySqlConnection connection = new MySqlConnection(connectionString);
     int score=0;
@@ -290,10 +206,7 @@ app.MapGet("/employee/{employeeId}/test/{testid}",(int employeeId,int testId )=>
     return score;
 });
 
-
-
-
-var testAnsAPIUrl="/candidatetestdetails";
+var testAnsAPIUrl="/test/setstarttime";
 app.MapPost(testAnsAPIUrl,(CandidateTestDetails testDetails)=>{
     bool status=false;
     var time = testDetails.Time.year +"-"+testDetails.Time.month+"-"+testDetails.Time.day+"T"+testDetails.Time.hour+":"+testDetails.Time.minutes+":"+testDetails.Time.seconds;
@@ -354,8 +267,6 @@ app.MapPut(setendtimeUrl,( CandidateTestDetails testT)=>{
     }
     return status;
 });
-
-
 
 
 //Now all of you need to work on this 
