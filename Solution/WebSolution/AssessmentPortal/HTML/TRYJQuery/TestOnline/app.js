@@ -156,8 +156,9 @@ $("#btnStart").click(()=>{
       finalCandidateAnswers.push({ "Answer": answer, "TestQuestionId": questionId });
     })
     var endTime=getCurrentDateTime();
-  
-    let evaluateUrl = "http://localhost:5238/answers/candidates/"+ candidateId;
+
+    
+    let evaluateUrl = "http://localhost:5238/answersheet/candidates/"+candidateId+"/tests/"+testId;
     $.ajax({
             url: evaluateUrl,
             type: 'POST',
