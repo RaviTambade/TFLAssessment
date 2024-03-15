@@ -1,5 +1,6 @@
+using Entities;
 
-namespace Entities;
+namespace Requests;
 
 public class CandidateTestDetails{
 

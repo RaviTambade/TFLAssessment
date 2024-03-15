@@ -12,6 +12,7 @@
 using MySql.Data.MySqlClient;
 using System.Data;
 using Entities;
+using Requests;
 using Repositories.Tests;
 
 
@@ -78,9 +79,9 @@ app.MapGet(candidateTestResultUrl,(int candidateId,int testId )=>{
 });
 
 var testAnsAPIUrl="/test/setstarttime";
-app.MapPost(testAnsAPIUrl,(CandidateTestDetails testDetails)=>{
 
-     bool status=manager.AddCandidateStartTime(testDetails);
+app.MapPost(testAnsAPIUrl,(CandidateTestDetails testDetails)=>{
+     bool status=manager.SetTestStartTime( testDetails.testId,testDetails.candidateId, testDetails.time);
      return status;
 
 });
@@ -89,7 +90,8 @@ app.MapPost(testAnsAPIUrl,(CandidateTestDetails testDetails)=>{
 string setendtimeUrl="/test/setendtime";   //modify as per req
 
 app.MapPut(setendtimeUrl,( CandidateTestDetails testDetails)=>{
-     bool status=manager.AddCandidateEndTime(testDetails);
+
+     bool status=manager.SetTestEndTime( testDetails.testId,testDetails.candidateId, testDetails.time);
      return status;
 
     // var time = testT.Time.year +"-"+testT.Time.month+"-"+testT.Time.day+"T"+testT.Time.hour+":"+testT.Time.minutes+":"+testT.Time.seconds;
