@@ -2,12 +2,9 @@ using MySql.Data.MySqlClient;
 using System.Data;
 using Entities;
 
-
 namespace Repositories.Tests;
 public class TestManager{
-
-
- public List<Employee> GetAllEmployees(){
+    public List<Employee> GetAllEmployees(){
   List<Employee> employees=new List<Employee>();
     string connectionString="server=localhost;port=3306;user=root;password=password;database=assessmentdb";
     MySqlConnection connection = new MySqlConnection(connectionString);
@@ -41,7 +38,7 @@ public class TestManager{
     return employees;
  }
 
-public List<Subject> GetAllSubjects(){
+    public List<Subject> GetAllSubjects(){
      List<Subject> subjects=new List<Subject>();
     string connectionString="server=localhost;port=3306;user=root;password=password;database=assessmentdb";
     MySqlConnection connection = new MySqlConnection(connectionString);
@@ -69,7 +66,7 @@ public List<Subject> GetAllSubjects(){
     return subjects;
 }
 
-public int GetCandidateScore(int candidateId,int testId ){
+    public int GetCandidateScore(int candidateId,int testId ){
 
      string connectionString="server=localhost;port=3306;user=root;password=password;database=assessmentdb";
     MySqlConnection connection = new MySqlConnection(connectionString);
@@ -95,9 +92,45 @@ public int GetCandidateScore(int candidateId,int testId ){
     }
     return score;
 }
-
-
-
+    
+    public List<Question> GetTestQuestions(int testId){
+    List<Question> questions=new List<Question>();
+    string connectionString="server=localhost;port=3306;user=root;password=password;database=assessmentdb";
+    MySqlConnection connection = new MySqlConnection(connectionString);
+     try{
+        string query = @"select * from questions inner join testquestions on testquestions.questionid = questions.qid where testquestions.testid= @testId";
+        MySqlCommand command = new MySqlCommand(query,connection);
+        command.Parameters.AddWithValue("@testId",testId);
+        connection.Open();
+        MySqlDataReader reader = command.ExecuteReader();
+        while(reader.Read()){
+              int id=int.Parse(reader["qid"].ToString());
+            int tId=int.Parse(reader["testid"].ToString());
+              string question=reader["question"].ToString();
+              string a = reader["a"].ToString();
+              string b = reader["b"].ToString();
+              string c = reader["c"].ToString();
+              string d = reader["d"].ToString();
+              Question ques = new Question();
+              ques.Id=id;
+              ques.Title=question;
+              ques.A=a;
+              ques.B=b;
+              ques.C=c;
+              ques.D=d;
+              ques.TestId= tId;
+              questions.Add(ques);
+        }
+        reader.Close();
+    }
+    catch(Exception e){
+       Console.WriteLine(e.Message);
+    }
+    finally{
+        connection.Close();
+    }
+    return questions;
+    }
 
 }
 

@@ -44,23 +44,18 @@ var app = builder.Build();
 
 app.UseCors(options => options.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
   
-
- TestManager  manager = new TestManager();
+TestManager  manager = new TestManager();
 
 
 app.MapGet("/employees",()=>{
     List<Employee> employees = manager.GetAllEmployees();
-
     return employees;
-
-  });
-
+});
 
 app.MapGet("/subjects",()=>{
    List<Subject> subjects = manager.GetAllSubjects();
    return subjects;
 });
-
 
 var testAPIUrl="/answersheet/candidates/{candidateId}/tests/{testId}";
 app.MapPost(testAPIUrl,(CandidateAnswer[] answers,int candidateId)=>{
@@ -93,45 +88,10 @@ app.MapPost(testAPIUrl,(CandidateAnswer[] answers,int candidateId)=>{
     }
     return status;
 });
-
 //get all questions of the test mentioned
 
 app.MapGet("/tests/{testId}",(int testId)=>{
-    List<Question> questions=new List<Question>();
-    string connectionString="server=localhost;port=3306;user=root;password=password;database=assessmentdb";
-    MySqlConnection connection = new MySqlConnection(connectionString);
-     try{
-        string query = @"select * from questions inner join testquestions on testquestions.questionid = questions.qid where testquestions.testid= @testId";
-        MySqlCommand command = new MySqlCommand(query,connection);
-        command.Parameters.AddWithValue("@testId",testId);
-        connection.Open();
-        MySqlDataReader reader = command.ExecuteReader();
-        while(reader.Read()){
-              int id=int.Parse(reader["qid"].ToString());
-            int tId=int.Parse(reader["testid"].ToString());
-              string question=reader["question"].ToString();
-              string a = reader["a"].ToString();
-              string b = reader["b"].ToString();
-              string c = reader["c"].ToString();
-              string d = reader["d"].ToString();
-              Question ques = new Question();
-              ques.Id=id;
-              ques.Title=question;
-              ques.A=a;
-              ques.B=b;
-              ques.C=c;
-              ques.D=d;
-              ques.TestId= tId;
-              questions.Add(ques);
-        }
-        reader.Close();
-    }
-    catch(Exception e){
-       Console.WriteLine(e.Message);
-    }
-    finally{
-        connection.Close();
-    }
+    List<Question> questions= manager.GetTestQuestions(testId);
     return questions;
 });
 

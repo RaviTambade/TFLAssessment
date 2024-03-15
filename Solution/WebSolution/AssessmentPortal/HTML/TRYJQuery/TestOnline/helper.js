@@ -1,7 +1,3 @@
-
-
-
-
 var showQuestion = (index)=> {
     let currentQuestion = questions[index];
     let Title = questions[index].title;
