@@ -45,7 +45,7 @@ var app = builder.Build();
 
 app.UseCors(options => options.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
   
-TestManager  manager = new TestManager();
+   TestManager manager = new TestManager();
 
 
 app.MapGet("/employees",()=>{
@@ -59,14 +59,14 @@ app.MapGet("/subjects",()=>{
 });
 
 var testAPIUrl="/answersheet/candidates/{candidateId}/tests/{testId}";
-app.MapPost(testAPIUrl,(List<CandidateAnswer> answers,int candidateId)=>{
-    bool status=manager.AddCandidateAnswers(answers,candidateId);
+app.MapPost(testAPIUrl,(int candidateId,List<CandidateAnswer> answers)=>{
+    bool status=manager.InsertCandidateAnswers(candidateId,answers);
     return status;
 });
 //get all questions of the test mentioned
 
 app.MapGet("/tests/{testId}",(int testId)=>{
-    List<Question> questions= manager.GetTestQuestions(testId);
+    List<Question> questions= manager.GetQuestions(testId);
     return questions;
 });
 
@@ -81,7 +81,7 @@ app.MapGet(candidateTestResultUrl,(int candidateId,int testId )=>{
 var testAnsAPIUrl="/test/setstarttime";
 
 app.MapPost(testAnsAPIUrl,(CandidateTestDetails testDetails)=>{
-     bool status=manager.SetTestStartTime( testDetails.testId,testDetails.candidateId, testDetails.time);
+     bool status=manager.SetTestStartTime( testDetails.TestId,testDetails.CandidateId, testDetails.Time);
      return status;
 
 });
@@ -91,34 +91,8 @@ string setendtimeUrl="/test/setendtime";   //modify as per req
 
 app.MapPut(setendtimeUrl,( CandidateTestDetails testDetails)=>{
 
-     bool status=manager.SetTestEndTime( testDetails.testId,testDetails.candidateId, testDetails.time);
+     bool status=manager.SetTestEndTime( testDetails.TestId,testDetails.CandidateId, testDetails.Time);
      return status;
-
-    // var time = testT.Time.year +"-"+testT.Time.month+"-"+testT.Time.day+"T"+testT.Time.hour+":"+testT.Time.minutes+":"+testT.Time.seconds;
-    // Console.WriteLine("endtime"+time);
-    // string connectionString="server=localhost;port=3306;user=root;password=password;database=assessmentdb";
-    // MySqlConnection connection = new MySqlConnection(connectionString);
-    //  try{
-    //             string query = "update candidatetestresults set testendtime =@testendtime where candidateid=@candidateid and testid=@testid";
-    //             MySqlCommand command = new MySqlCommand(query, connection);
-    //             command.Parameters.AddWithValue("@candidateid", testT.CandidateId);
-    //             command.Parameters.AddWithValue("@testid", testT.TestId);
-    //             command.Parameters.AddWithValue("@testendtime", time);
-    //             connection.Open();
-    //             int rowsAffected = command.ExecuteNonQuery();
-    //             if (rowsAffected > 0)
-    //             {
-    //                 status = true;
-    //             }
-            
-    // }
-    // catch(Exception e){
-    //    Console.WriteLine(e.Message);
-    // }
-    // finally{
-    //     connection.Close();
-    // }
-    // return status;
 });
 
 

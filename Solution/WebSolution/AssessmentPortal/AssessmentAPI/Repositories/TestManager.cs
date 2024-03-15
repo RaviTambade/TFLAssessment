@@ -87,19 +87,21 @@ public class TestManager
         string query="spcandidatetestresult";
 
         MySqlConnection connection = new MySqlConnection(connectionString);
-        MySqlCommand command = new MySqlCommand(query, connection);
-        command.CommandType = CommandType.StoredProcedure;
-        command.Parameters.AddWithValue("@pcandidateId", candidateId);
-        command.Parameters.AddWithValue("@ptestId", testId);
-        command.Parameters.AddWithValue("@pscore", MySqlDbType.Int32);
-        command.Parameters["@pscore"].Direction = ParameterDirection.Output;
+       
 
         int score = 0;
         try
         {
-            connection.Open();
+             MySqlCommand command = new MySqlCommand(query, connection);
+             command.CommandType = CommandType.StoredProcedure;
+             command.Parameters.AddWithValue("@pcandidateId", candidateId);
+             command.Parameters.AddWithValue("@ptestId", testId);
+             command.Parameters.AddWithValue("@pscore", MySqlDbType.Int32);
+             command.Parameters["@pscore"].Direction = ParameterDirection.Output;
+             connection.Open();
             int rowsAffected = command.ExecuteNonQuery();
             score = Convert.ToInt32(command.Parameters["@pscore"].Value);
+            Console.WriteLine(score);
         }
         catch (Exception e)
         {
@@ -158,7 +160,7 @@ public class TestManager
         return questions;
     }
 
-    public bool InsertCandidateAnswers(int candidateId,int testId,List<CandidateAnswer> answers)
+    public bool InsertCandidateAnswers(int candidateId,List<CandidateAnswer> answers)
     {
         bool status = false;
         string query = "INSERT INTO candidateanswers (employeeid, testquestionid, answerkey) VALUES (@employeeId, @testQuestionId, @answerKey)";
@@ -198,15 +200,15 @@ public class TestManager
 
     bool status=false;
     string query = "insert into candidatetestresults(testid,teststarttime,candidateid) values (@testid,@teststarttime,@candidateid)";
-              
+     MySqlConnection connection = new MySqlConnection(connectionString);         
 
-    var time = testDetails.Time.year +"-"+testDetails.Time.month+"-"+testDetails.Time.day+"T"+testDetails.Time.hour+":"+testDetails.Time.minutes+":"+testDetails.Time.seconds;
+    var testTime = time.year +"-"+time.month+"-"+time.day+"T"+time.hour+":"+time.minutes+":"+time.seconds;
     MySqlCommand command = new MySqlCommand(query, connection);
-    command.Parameters.AddWithValue("@testid", testId;
-    command.Parameters.AddWithValue("@candidateid", CandidateId);
-    command.Parameters.AddWithValue("@teststarttime", time);
+    command.Parameters.AddWithValue("@testid", testId);
+    command.Parameters.AddWithValue("@candidateid", candidateId);
+    command.Parameters.AddWithValue("@teststarttime", testTime);
 
-    MySqlConnection connection = new MySqlConnection(connectionString);
+    
     try{
         connection.Open();
         int rowsAffected = command.ExecuteNonQuery();
@@ -226,16 +228,15 @@ public class TestManager
 
     public bool SetTestEndTime( int candidateId,int testId, TestTime time ){
     bool status=false;
-    
+    MySqlConnection connection = new MySqlConnection(connectionString);
     string query = "update candidatetestresults set testendtime =@testendtime where candidateid=@candidateid and testid=@testid";
                
-    var time = testDetails.Time.year +"-"+testDetails.Time.month+"-"+testDetails.Time.day+"T"+testDetails.Time.hour+":"+testDetails.Time.minutes+":"+testDetails.Time.seconds;
+    var testTime = time.year +"-"+time.month+"-"+time.day+"T"+time.hour+":"+time.minutes+":"+time.seconds;
     MySqlCommand command = new MySqlCommand(query, connection);
     command.Parameters.AddWithValue("@candidateid", candidateId);
     command.Parameters.AddWithValue("@testid", testId);
-    command.Parameters.AddWithValue("@testendtime", time);
+    command.Parameters.AddWithValue("@testendtime", testTime);
 
-    MySqlConnection connection = new MySqlConnection(connectionString);
      try{ 
             connection.Open();
             int rowsAffected = command.ExecuteNonQuery();
