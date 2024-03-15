@@ -79,64 +79,44 @@ app.MapGet(candidateTestResultUrl,(int candidateId,int testId )=>{
 
 var testAnsAPIUrl="/test/setstarttime";
 app.MapPost(testAnsAPIUrl,(CandidateTestDetails testDetails)=>{
-    bool status=false;
-    var time = testDetails.Time.year +"-"+testDetails.Time.month+"-"+testDetails.Time.day+"T"+testDetails.Time.hour+":"+testDetails.Time.minutes+":"+testDetails.Time.seconds;
-    Console.WriteLine("starttime"+time);
-    string connectionString="server=localhost;port=3306;user=root;password=password;database=assessmentdb";
-    MySqlConnection connection = new MySqlConnection(connectionString);
-     try{
-                string query = "insert into candidatetestresults(testid,teststarttime,candidateid) values (@testid,@teststarttime,@candidateid)";
-                MySqlCommand command = new MySqlCommand(query, connection);
-                command.Parameters.AddWithValue("@testid", testDetails.TestId);
-                command.Parameters.AddWithValue("@candidateid", testDetails.CandidateId);
-                command.Parameters.AddWithValue("@teststarttime", time);
-                connection.Open();
-                int rowsAffected = command.ExecuteNonQuery();
-                if (rowsAffected > 0)
-                {
-                    status = true;
-                }
-            
-    }
-    catch(Exception e){
-       Console.WriteLine(e.Message);
-    }
-    finally{
-        connection.Close();
-    }
-    return status;
+
+     bool status=manager.AddCandidateStartTime(testDetails);
+     return status;
+
 });
 
 
 string setendtimeUrl="/test/setendtime";   //modify as per req
 
-app.MapPut(setendtimeUrl,( CandidateTestDetails testT)=>{
-    bool status=false;
-    var time = testT.Time.year +"-"+testT.Time.month+"-"+testT.Time.day+"T"+testT.Time.hour+":"+testT.Time.minutes+":"+testT.Time.seconds;
-    Console.WriteLine("endtime"+time);
-    string connectionString="server=localhost;port=3306;user=root;password=password;database=assessmentdb";
-    MySqlConnection connection = new MySqlConnection(connectionString);
-     try{
-                string query = "update candidatetestresults set testendtime =@testendtime where candidateid=@candidateid and testid=@testid";
-                MySqlCommand command = new MySqlCommand(query, connection);
-                command.Parameters.AddWithValue("@candidateid", testT.CandidateId);
-                command.Parameters.AddWithValue("@testid", testT.TestId);
-                command.Parameters.AddWithValue("@testendtime", time);
-                connection.Open();
-                int rowsAffected = command.ExecuteNonQuery();
-                if (rowsAffected > 0)
-                {
-                    status = true;
-                }
+app.MapPut(setendtimeUrl,( CandidateTestDetails testDetails)=>{
+     bool status=manager.AddCandidateEndTime(testDetails);
+     return status;
+
+    // var time = testT.Time.year +"-"+testT.Time.month+"-"+testT.Time.day+"T"+testT.Time.hour+":"+testT.Time.minutes+":"+testT.Time.seconds;
+    // Console.WriteLine("endtime"+time);
+    // string connectionString="server=localhost;port=3306;user=root;password=password;database=assessmentdb";
+    // MySqlConnection connection = new MySqlConnection(connectionString);
+    //  try{
+    //             string query = "update candidatetestresults set testendtime =@testendtime where candidateid=@candidateid and testid=@testid";
+    //             MySqlCommand command = new MySqlCommand(query, connection);
+    //             command.Parameters.AddWithValue("@candidateid", testT.CandidateId);
+    //             command.Parameters.AddWithValue("@testid", testT.TestId);
+    //             command.Parameters.AddWithValue("@testendtime", time);
+    //             connection.Open();
+    //             int rowsAffected = command.ExecuteNonQuery();
+    //             if (rowsAffected > 0)
+    //             {
+    //                 status = true;
+    //             }
             
-    }
-    catch(Exception e){
-       Console.WriteLine(e.Message);
-    }
-    finally{
-        connection.Close();
-    }
-    return status;
+    // }
+    // catch(Exception e){
+    //    Console.WriteLine(e.Message);
+    // }
+    // finally{
+    //     connection.Close();
+    // }
+    // return status;
 });
 
 

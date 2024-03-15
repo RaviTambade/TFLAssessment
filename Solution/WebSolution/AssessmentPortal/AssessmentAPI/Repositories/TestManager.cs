@@ -185,10 +185,67 @@ public class TestManager
             connection.Close();
         }
         return status;
-
-
     }
 
+public bool AddCandidateStartTime(CandidateTestDetails testDetails){
 
+    bool status=false;
+    var time = testDetails.Time.year +"-"+testDetails.Time.month+"-"+testDetails.Time.day+"T"+testDetails.Time.hour+":"+testDetails.Time.minutes+":"+testDetails.Time.seconds;
+    Console.WriteLine("starttime"+time);
+    string connectionString="server=localhost;port=3306;user=root;password=password;database=assessmentdb";
+    MySqlConnection connection = new MySqlConnection(connectionString);
+     try{
+                string query = "insert into candidatetestresults(testid,teststarttime,candidateid) values (@testid,@teststarttime,@candidateid)";
+                MySqlCommand command = new MySqlCommand(query, connection);
+                command.Parameters.AddWithValue("@testid", testDetails.TestId);
+                command.Parameters.AddWithValue("@candidateid", testDetails.CandidateId);
+                command.Parameters.AddWithValue("@teststarttime", time);
+                connection.Open();
+                int rowsAffected = command.ExecuteNonQuery();
+                if (rowsAffected > 0)
+                {
+                    status = true;
+                }
+            
+    }
+    catch(Exception e){
+       Console.WriteLine(e.Message);
+    }
+    finally{
+        connection.Close();
+    }
+    return status;
+
+
+}
+
+public bool AddCandidateEndTime( CandidateTestDetails testDetails){
+    bool status=false;
+    var time = testDetails.Time.year +"-"+testDetails.Time.month+"-"+testDetails.Time.day+"T"+testDetails.Time.hour+":"+testDetails.Time.minutes+":"+testDetails.Time.seconds;
+    Console.WriteLine("endtime"+time);
+    string connectionString="server=localhost;port=3306;user=root;password=password;database=assessmentdb";
+    MySqlConnection connection = new MySqlConnection(connectionString);
+     try{
+                string query = "update candidatetestresults set testendtime =@testendtime where candidateid=@candidateid and testid=@testid";
+                MySqlCommand command = new MySqlCommand(query, connection);
+                command.Parameters.AddWithValue("@candidateid", testDetails.CandidateId);
+                command.Parameters.AddWithValue("@testid", testDetails.TestId);
+                command.Parameters.AddWithValue("@testendtime", time);
+                connection.Open();
+                int rowsAffected = command.ExecuteNonQuery();
+                if (rowsAffected > 0)
+                {
+                    status = true;
+                }
+            
+    }
+    catch(Exception e){
+       Console.WriteLine(e.Message);
+    }
+    finally{
+        connection.Close();
+    }
+    return status;
+}
 }
 
