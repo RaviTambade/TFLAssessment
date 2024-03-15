@@ -81,7 +81,7 @@ app.MapGet(candidateTestResultUrl,(int candidateId,int testId )=>{
 var testAnsAPIUrl="/test/setstarttime";
 
 app.MapPost(testAnsAPIUrl,(CandidateTestDetails testDetails)=>{
-     bool status=manager.SetTestStartTime( testDetails.TestId,testDetails.CandidateId, testDetails.Time);
+     bool status=manager.SetTestStartTime( testDetails.CandidateId,testDetails.TestId, testDetails.Time);
      return status;
 
 });
@@ -91,7 +91,7 @@ string setendtimeUrl="/test/setendtime";   //modify as per req
 
 app.MapPut(setendtimeUrl,( CandidateTestDetails testDetails)=>{
 
-     bool status=manager.SetTestEndTime( testDetails.TestId,testDetails.CandidateId, testDetails.Time);
+     bool status=manager.SetTestEndTime( testDetails.CandidateId,testDetails.TestId, testDetails.Time);
      return status;
 });
 
