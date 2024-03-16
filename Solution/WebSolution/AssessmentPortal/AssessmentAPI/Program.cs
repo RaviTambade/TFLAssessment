@@ -28,6 +28,10 @@ string candidateTestResultUrl="/result/candidates/{candidateId}/test/{testId}";
 string testStartTimesettingUrl="/test/setstarttime";
 string testEndTimesettingUrl="/test/setendtime";
 
+string allQuestionsAPI="/questions/";
+string allQuestionsByCategoryAPI="/questions/categories/{id}";
+
+
 //API Listners
 app.MapGet(apiEmployeesUrl,()=>{
     List<Employee> employees = manager.GetAllEmployees();
@@ -65,4 +69,18 @@ app.MapPut(testEndTimesettingUrl,( CandidateTestDetails testDetails)=>{
      bool status=manager.SetTestEndTime( testDetails.CandidateId,testDetails.TestId, testDetails.Time);
      return status;
 });
+
+
+app.MagGet(allQuestionsAPI,()=>{
+
+
+    QuestionBank qBank=new Questionbank();
+
+     List<Question> allQuestions = qBank.GetAllQuestions();
+    return allQuestions;
+
+
+})
+
+
 app.Run();
