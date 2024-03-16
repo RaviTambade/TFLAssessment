@@ -3,7 +3,7 @@ using System.Data;
 using Entities;
 using Requests;
 
-namespace Repositories.Tests;
+namespace Repositories.Tests1;
 
 public class QuestionBank
 {

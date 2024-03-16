@@ -3,6 +3,7 @@ using System.Data;
 using Entities;
 using Requests;
 using Repositories.Tests;
+using Repositories.Tests1;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -71,16 +72,20 @@ app.MapPut(testEndTimesettingUrl,( CandidateTestDetails testDetails)=>{
 });
 
 
-app.MagGet(allQuestionsAPI,()=>{
+app.MapGet(allQuestionsAPI,()=>{
 
 
-    QuestionBank qBank=new Questionbank();
+    QuestionBank qBank=new QuestionBank();{
 
-     List<Question> allQuestions = qBank.GetAllQuestions();
-    return allQuestions;
+        List<QuestionO> allQuestions = qBank.GetAllQuestions();
+         return allQuestions;
 
 
-})
+    }
+
+     
+
+});
 
 
 app.Run();

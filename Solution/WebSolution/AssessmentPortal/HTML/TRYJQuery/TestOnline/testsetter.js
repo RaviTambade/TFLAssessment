@@ -16,8 +16,10 @@ var availableJavaQuestions=[
     {"title": "What is Spring Boot?", "id":37},
     {"title": "What is definition of Tomcat?", "id":38},
 ];
-
+var remoteWeb="http://localhost:5238"
+var questionsurl = remoteWeb+"/questions/"
 var questions;
+var questionsList;
 
 function getelementfromdropdown() {
     var value = $("#ddlCategory").val();
@@ -32,7 +34,31 @@ $(document).ready(function () {
 
     //use ajax call for accessing all questions from questionbanks
     //bind them to questions
+    $("#btnShowAllQuestions").click(()=>{
     
+        let url = questionsurl;
+        console.log(url);
+        $.get(url, function (data, status) {
+            questionsList = (data);
+
+            questionsList.map((question)=>{
+                $('#questions').append(
+                    $(document.createElement('input')).prop({
+                        id:question.id,
+                        name: 'interest',
+                        value: question.title,
+                        type: 'checkbox'
+                    })
+                ).append(
+                    $(document.createElement('h6')).prop({
+                        for: question.id
+                    }).html(question.id+" "+question.title)
+                    ).append(document.createElement('br'));
+                })
+          
+        });
+      })
+          
 
 
     $("#ddlCategory").change(function () {
