@@ -15,6 +15,10 @@ var questions = [];
 //rest api urls
 
 var testsapi= "http://localhost:5238/tests/";
+var starttimeurl = "http://localhost:5238/test/setstarttime";
+var candidateanswersurl = "http://localhost:5238/answersheet/candidates/";
+var endtimeurl = "http://localhost:5238/test/setendtime";
+var resulturl = "http://localhost:5238/result/candidates/"
 
 
 $(document).ready(function () { 
@@ -31,10 +35,10 @@ $("#btnStart").click(()=>{
        showQuestion(currentIndex);  
     });
      
-      let url = "http://localhost:5238/test/setstarttime";
+      //let url = "http://localhost:5238/test/setstarttime";
       var testStartTime={"CandidateId":candidateId,"TestId":testId,"Time":startTime};
       $.ajax({     
-            url: url,
+            url: starttimeurl,
             type: 'POST',
             contentType: 'application/json',
             data: JSON.stringify(testStartTime),
@@ -163,7 +167,7 @@ $("#btnStart").click(()=>{
     var endTime=getCurrentDateTime();
 
     
-    let evaluateUrl = "http://localhost:5238/answersheet/candidates/"+candidateId+"/tests/"+testId;
+    let evaluateUrl = candidateanswersurl+candidateId+"/tests/"+testId;
     $.ajax({
             url: evaluateUrl,
             type: 'POST',
@@ -180,9 +184,9 @@ $("#btnStart").click(()=>{
     });
      
     var testEndTime ={"CandidateId":candidateId,"TestId":testId,"Time":endTime}
-    let endTimeURL = "http://localhost:5238/test/setendtime";
+  
     $.ajax({
-            url: endTimeURL,
+            url: endtimeurl,
             type: 'PUT',
             contentType: 'application/json',
             data: JSON.stringify(testEndTime),
@@ -200,7 +204,7 @@ $("#btnStart").click(()=>{
   $("#btnResult").click(()=>{
     
     //result/candidates/{candidateId}/test/{testId}/
-    let url = "http://localhost:5238/result/candidates/"+candidateId+"/test/"+testId;
+    let url = resulturl+candidateId+"/test/"+testId;
     $.get(url, function (data, status) {
       score = (data);
       $("#lblresult").text("Your Score is:"+score);
