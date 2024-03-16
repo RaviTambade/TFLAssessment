@@ -4,7 +4,6 @@ using Entities;
 using Requests;
 using Repositories.Tests;
 
-
 var builder = WebApplication.CreateBuilder(args);
 
 //adding services to builder
@@ -24,7 +23,7 @@ TestManager manager = new TestManager();
 string apiEmployeesUrl="/employees";
 string apiSubjectsUrl="/subjects";
 string apiCandateTestAnswersUrl="/answersheet/candidates/{candidateId}/tests/{testId}";
-string apiQuestionsUrl="/tests/{testId}";
+string apiQuestionsUrl="/questions/tests/{testId}";
 string candidateTestResultUrl="/result/candidates/{candidateId}/test/{testId}";
 string testStartTimesettingUrl="/test/setstarttime";
 string testEndTimesettingUrl="/test/setendtime";
@@ -40,7 +39,6 @@ app.MapGet(apiSubjectsUrl,()=>{
    return subjects;
 });
 
-
 app.MapPost(apiCandateTestAnswersUrl,(int candidateId,List<CandidateAnswer> answers)=>{
     bool status=manager.InsertCandidateAnswers(candidateId,answers);
     return status;
@@ -51,17 +49,14 @@ app.MapGet(apiQuestionsUrl,(int testId)=>{
     return questions;
 });
 
-
 app.MapGet(candidateTestResultUrl,(int candidateId,int testId )=>{
  int score=  manager.GetCandidateScore(candidateId,testId);  
   return score;
 });
 
-
 app.MapPost(testStartTimesettingUrl,(CandidateTestDetails testDetails)=>{
      bool status=manager.SetTestStartTime( testDetails.CandidateId,testDetails.TestId, testDetails.Time);
      return status;
-
 });
 
 app.MapPut(testEndTimesettingUrl,( CandidateTestDetails testDetails)=>{

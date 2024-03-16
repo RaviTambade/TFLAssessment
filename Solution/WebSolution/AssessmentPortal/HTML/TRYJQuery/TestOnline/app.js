@@ -1,4 +1,3 @@
- 
 //global variable 
 var current = 0;
 
@@ -13,32 +12,33 @@ var score;
 var testId=1;
 var candidateId = 3;
 
-
-
 //rest api urls
+var remoteWeb="http://localhost:5238"
 
-var testsapi= "http://localhost:5238/tests/";
-var starttimeurl = "http://localhost:5238/test/setstarttime";
-var candidateanswersurl = "http://localhost:5238/answersheet/candidates/";
-var endtimeurl = "http://localhost:5238/test/setendtime";
-var resulturl = "http://localhost:5238/result/candidates/";
+var testsapi= remoteWeb+"/questions/tests/";
+var starttimeurl = remoteWeb+"/test/setstarttime";
+var candidateanswersurl = remoteWeb+"/answersheet/candidates/";
+var endtimeurl = remoteWeb+"/test/setendtime";
+var resulturl = remoteWeb+"/result/candidates/";
 
 
 $(document).ready(function () { 
 
   //Test start and submit handlers
   $("#btnStart").click(()=>{
-      activateNavigation(false);
-      let currentIndex=0;
-      startTime=getCurrentDateTime();
-      let questionsAPI = testsapi + testId;
-      $.get(questionsAPI, function (data, status) {
-        questions = (data);
-        questions.map((question) => { question["answer"] = "No" });
-        showQuestion(currentIndex);  
-      });
+
+        activateNavigation(false);
+    
+        let currentIndex=0;
+        startTime=getCurrentDateTime();
+        let questionsAPI = testsapi + testId;
+
+        $.get(questionsAPI, function (data, status) {
+          questions = (data);
+          questions.map((question) => { question["answer"] = "No" });
+          showQuestion(currentIndex);  
+        });
       
-        //let url = "http://localhost:5238/test/setstarttime";
         var testStartTime={"CandidateId":candidateId,"TestId":testId,"Time":startTime};
         $.ajax({     
               url: starttimeurl,
@@ -50,30 +50,33 @@ $(document).ready(function () {
                 console.log("inside post "+response);
                 console.log(""+response);
               },
+      
               error: function (xhr, status, error) {
                 console.error(xhr.responseText);
                 console.log("inside post "+error);
               }
       });
-        activateNavigation(false);
-        testTimeLimit();
+      activateNavigation(false);
+      testTimeLimit();
     })
   
   $("#btnSubmit").click( ()=> {
     clearInterval(intervalId);
+    
     $("#btnStart").prop("disabled", true);
     $("#btnSubmit").prop("disabled", true);
+    
     activateNavigation(true);
+    
     var finalCandidateAnswers = [];
   
     questions.map((question) => {
       let questionId = question.id;
       let answer = question.answer;
       
-      finalCandidateAnswers.push({ "Answer": answer, "TestQuestionId": questionId });
+      finalCandidateAnswers.push({"TestQuestionId": questionId , "Answer": answer, });
     })
     var endTime=getCurrentDateTime();
-
     
     let evaluateUrl = candidateanswersurl+candidateId+"/tests/"+testId;
     $.ajax({
@@ -83,7 +86,6 @@ $(document).ready(function () {
             data: JSON.stringify(finalCandidateAnswers),
   
             success: function (response) {
-              // Show result
               console.log(response);
             },
             error: function (xhr, status, error) {
@@ -112,8 +114,8 @@ $(document).ready(function () {
   //Show Result
   $("#btnResult").click(()=>{
     
-    //result/candidates/{candidateId}/test/{testId}/
     let url = resulturl+candidateId+"/test/"+testId;
+    console.log(url);
     $.get(url, function (data, status) {
       score = (data);
       $("#lblresult").text("Your Score is:"+score);
