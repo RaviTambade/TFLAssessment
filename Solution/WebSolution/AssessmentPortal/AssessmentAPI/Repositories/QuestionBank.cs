@@ -7,7 +7,7 @@ namespace Repositories.Tests;
 
 public class QuestionBank
 {
-    
+
     private string connectionString = "server=localhost;port=3306;user=root;password=password;database=assessmentdb";
  
     public List<QuestionO> GetAllQuestions(){
