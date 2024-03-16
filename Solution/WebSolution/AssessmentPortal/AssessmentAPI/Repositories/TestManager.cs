@@ -127,7 +127,6 @@ public class TestManager
         {
             connection.Open();
             MySqlDataReader reader = command.ExecuteReader();
-            
             while (reader.Read())
             {
                 int id = int.Parse(reader["qid"].ToString());
@@ -166,7 +165,6 @@ public class TestManager
         string query = "INSERT INTO candidateanswers (employeeid, testquestionid, answerkey) VALUES (@employeeId, @testQuestionId, @answerKey)";
         MySqlConnection connection = new MySqlConnection(connectionString);
 
-
         try
         {
             connection.Open();
@@ -202,7 +200,7 @@ public class TestManager
     string query = "insert into candidatetestresults(testid,teststarttime,candidateid) values (@testid,@teststarttime,@candidateid)";
      MySqlConnection connection = new MySqlConnection(connectionString);         
 
-    var testTime = time.year +"-"+time.month+"-"+time.day+"T"+time.hour+":"+time.minutes+":"+time.seconds;
+    var testTime = time.Year +"-"+time.Month+"-"+time.Day+"T"+time.Hour+":"+time.Minutes+":"+time.Seconds;
     MySqlCommand command = new MySqlCommand(query, connection);
     command.Parameters.AddWithValue("@testid", testId);
     command.Parameters.AddWithValue("@candidateid", candidateId);
@@ -231,7 +229,7 @@ public class TestManager
     MySqlConnection connection = new MySqlConnection(connectionString);
     string query = "update candidatetestresults set testendtime =@testendtime where candidateid=@candidateid and testid=@testid";
                
-    var testTime = time.year +"-"+time.month+"-"+time.day+"T"+time.hour+":"+time.minutes+":"+time.seconds;
+    var testTime = time.Year +"-"+time.Month+"-"+time.Day+"T"+time.Hour+":"+time.Minutes+":"+time.Seconds;
     MySqlCommand command = new MySqlCommand(query, connection);
     command.Parameters.AddWithValue("@candidateid", candidateId);
     command.Parameters.AddWithValue("@testid", testId);

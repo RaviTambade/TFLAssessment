@@ -2,11 +2,11 @@
 namespace Entities;
 
 public class TestTime{
-    public   int day{get;set;}
-    public  int hour{get;set;}
-    public int  minutes{get;set;}
-    public   int month{get;set;}
-    public  int seconds{get;set;}
-    public int  year{get;set;}
+    public   int Day{get;set;}
+    public  int Hour{get;set;}
+    public int  Minutes{get;set;}
+    public   int Month{get;set;}
+    public  int Seconds{get;set;}
+    public int  Year{get;set;}
    
 }

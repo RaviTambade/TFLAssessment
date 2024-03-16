@@ -12,6 +12,11 @@ var subjects = [];
 var questions = [];
 
 
+//rest api urls
+
+var testsapi= "http://localhost:5238/tests/";
+
+
 $(document).ready(function () { 
 
     
@@ -19,7 +24,7 @@ $("#btnStart").click(()=>{
     activateNavigation(false);
     let currentIndex=0;
     startTime=getCurrentDateTime();
-    let questionsAPI = "http://localhost:5238/tests/" + testId;
+    let questionsAPI = testsapi + testId;
     $.get(questionsAPI, function (data, status) {
        questions = (data);
        questions.map((question) => { question["answer"] = "No" });
