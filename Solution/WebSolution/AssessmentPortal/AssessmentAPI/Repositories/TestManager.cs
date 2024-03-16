@@ -116,6 +116,8 @@ public class TestManager
 
     public List<Question> GetQuestions(int testId)
     {
+        Console.WriteLine( "test Id="+ testId);
+        
         List<Question> questions = new List<Question>();
         string query = @"select * from questions inner join testquestions on testquestions.questionid = questions.qid where testquestions.testid= @testId";
          

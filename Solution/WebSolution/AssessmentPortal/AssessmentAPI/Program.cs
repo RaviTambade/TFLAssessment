@@ -45,6 +45,7 @@ app.MapPost(apiCandateTestAnswersUrl,(int candidateId,List<CandidateAnswer> answ
 });
 
 app.MapGet(apiQuestionsUrl,(int testId)=>{
+    Console.WriteLine("API URL Test ID="+ testId);
     List<Question> questions= manager.GetQuestions(testId);
     return questions;
 });

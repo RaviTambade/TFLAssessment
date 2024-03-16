@@ -32,6 +32,7 @@ $(document).ready(function () {
         let currentIndex=0;
         startTime=getCurrentDateTime();
         let questionsAPI = testsapi + testId;
+        console.log("quetionapiurl= "+ questionsAPI);
 
         $.get(questionsAPI, function (data, status) {
           questions = (data);
