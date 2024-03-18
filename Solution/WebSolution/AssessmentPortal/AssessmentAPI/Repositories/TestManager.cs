@@ -292,6 +292,30 @@ public class TestManager
                 test.LastName=lastName;   
                 tests.Add(test);
             }
+
+    public string GetCriteria(string subject ,int questionid){
+
+      string criteria="";
+        string query = @"select evaluationcriterias.title from evaluationcriterias INNER join questions on questions.evacriid=evaluationcriterias.evacriid
+           inner join technicalskills on questions.skillid= evaluationcriterias.skillid WHERE technicalskills.title=@subject and questions.qid=@questionid";
+
+        MySqlConnection connection = new MySqlConnection(connectionString);
+        try
+        { 
+            MySqlCommand command = new MySqlCommand(query, connection);
+            command.Parameters.AddWithValue("@subject",subject);
+            command.Parameters.AddWithValue("@questionid",questionid);
+
+
+            connection.Open();
+            MySqlDataReader reader = command.ExecuteReader();
+            if(reader.Read())
+            {
+               
+              string   title = reader["title"].ToString();
+               criteria=title;
+                }
+               
             reader.Close();
         }
         catch (Exception e)
@@ -330,4 +354,6 @@ public class TestManager
     }
     return status;
 }
+        return criteria;  
+    }
 }

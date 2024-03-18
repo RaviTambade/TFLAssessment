@@ -170,3 +170,10 @@ insert into candidatetestresults(testid,marks,teststarttime,testendtime,candidat
 select questions.qid, questions.question, technicalskills.title from questions, technicalskills where questions.skillid=technicalskills.techskid;
 select questions.qid, questions.question, technicalskills.title from questions, technicalskills where questions.skillid=technicalskills.techskid and technicalskills.title='CSHARP';
 
+
+
+SELECT * from evaluationcriterias;
+SELECT * from technicalskills;
+
+select evaluationcriterias.title from evaluationcriterias INNER join questions on questions.evacriid=evaluationcriterias.evacriid
+inner join technicalskills on questions.skillid= evaluationcriterias.skillid WHERE technicalskills.title="COREJAVA" and questions.qid=13;
