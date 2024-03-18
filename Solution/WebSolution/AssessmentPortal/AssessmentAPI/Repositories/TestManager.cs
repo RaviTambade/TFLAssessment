@@ -253,4 +253,81 @@ public class TestManager
     }
     return status;
 }
+   public List<Test> GetAllTests()
+    {
+        List<Test> tests = new List<Test>();
+        string query = @"select tests.*,technicalskills.title as skill,employee.fname,employee.lname from tests 
+                        inner join subjectexperties on subjectexperties.subexid=tests.subexid
+                        inner join technicalskills on technicalskills.techskid=subjectexperties.technicalskillid
+                        inner join employee on  employee.id=subjectexperties.employeeid;";
+
+        MySqlConnection connection = new MySqlConnection(connectionString);
+        MySqlCommand command = new MySqlCommand(query, connection);
+        try
+        {  
+            connection.Open();
+            MySqlDataReader reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                int id = int.Parse(reader["id"].ToString());
+                // TimeOnly duration=TimeOnly.Parse(reader["duration"]);
+                int skillId = int.Parse(reader["skillid"].ToString());
+                int subjectExpertId = int.Parse(reader["subexid"].ToString());
+                DateTime createdOn =DateTime.Parse(reader["createdon"].ToString());
+                DateTime modifiedOn =DateTime.Parse(reader["modifiedon"].ToString());
+                DateTime scheduledOn =DateTime.Parse(reader["scheduledon"].ToString());
+                string skillTitle=reader["skill"].ToString();
+                string firstName=reader["fname"].ToString();
+                string lastName=reader["lname"].ToString();
+
+                Test test = new Test();
+                test.Id = id;
+                test.SkillId = skillId;
+                test.SubjectExpertId = subjectExpertId;
+                test.CreatedOn = createdOn;
+                test.ModifiedOn = modifiedOn;
+                test.ScheduledOn = scheduledOn;
+                test.SkillTitle = skillTitle;
+                test.FirstName=firstName;
+                test.LastName=lastName;   
+                tests.Add(test);
+            }
+            reader.Close();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+        finally
+        {
+            connection.Close();
+        }
+        return tests;
+    }
+
+
+    public bool UpdateTest( int testId ,Test test){
+    bool status=false;
+    MySqlConnection connection = new MySqlConnection(connectionString);
+    string query = "update tests set scheduledon =@scheduledOn where id=@testId";
+    
+    MySqlCommand command = new MySqlCommand(query, connection);
+    command.Parameters.AddWithValue("@testId", testId);
+    command.Parameters.AddWithValue("@scheduledOn", test.ScheduledOn);
+     try{ 
+            connection.Open();
+            int rowsAffected = command.ExecuteNonQuery();
+            if (rowsAffected > 0)
+            {
+                status = true;
+            }
+    }
+    catch(Exception e){
+       Console.WriteLine(e.Message);
+    }
+    finally{
+        connection.Close();
+    }
+    return status;
+}
 }
