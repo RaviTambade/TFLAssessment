@@ -31,6 +31,7 @@ string testEndTimesettingUrl="/test/setendtime";
 
 string allQuestionsAPI="/questions";
 string allQuestionsByCategoryAPI="/{subject}/questions";
+ string critearia ="/subject/{subject}/question/{questionId}";
 
 
 //API Listners
@@ -80,6 +81,8 @@ app.MapGet(allQuestionsAPI,()=>{
     }
 });
 
+
+
 app.MapGet(allQuestionsByCategoryAPI,(string subject)=>{
          Console.WriteLine(subject);
         QuestionBank qBank=new QuestionBank();{
@@ -87,4 +90,13 @@ app.MapGet(allQuestionsByCategoryAPI,(string subject)=>{
         return subjectWiseQuestions;
     }
 });
+
+app.MapGet(critearia,(string subject , int questionId)=>{
+        
+        string criteria = manager.GetCriteria(subject ,questionId);
+       
+        return criteria;
+    
+});
+
 app.Run();
