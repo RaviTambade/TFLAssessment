@@ -82,6 +82,40 @@ public class TestManager
         return subjects;
     }
 
+    public List<EvaluationCriteria> GetEvalutionCriterias()
+    {
+        List<EvaluationCriteria> criterias = new List<EvaluationCriteria>();
+        string query = @"select * from evaluationcriterias";
+
+        MySqlConnection connection = new MySqlConnection(connectionString);
+        MySqlCommand command = new MySqlCommand(query, connection);
+        try
+        {  
+            connection.Open();
+            MySqlDataReader reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                int id = int.Parse(reader["evacriid"].ToString());
+                string title = reader["title"].ToString();
+                EvaluationCriteria evacri = new EvaluationCriteria();
+                evacri.Id = id;
+                evacri.Title = title;
+                criterias.Add(evacri);
+            }
+            reader.Close();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+        finally
+        {
+            connection.Close();
+        }
+        return criterias;
+    }
+
+
     public int GetCandidateScore(int candidateId, int testId)
     {
         string query="spcandidatetestresult";
