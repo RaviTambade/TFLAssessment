@@ -174,3 +174,10 @@ from questions, technicalskills,evaluationcriterias
 where questions.skillid=technicalskills.techskid and questions.evacriid=evaluationcriterias.evacriid
 and technicalskills.techskid='1' and evaluationcriterias.evacriid=1;
 
+
+
+SELECT * from evaluationcriterias;
+SELECT * from technicalskills;
+
+select evaluationcriterias.title from evaluationcriterias INNER join questions on questions.evacriid=evaluationcriterias.evacriid
+inner join technicalskills on questions.skillid= evaluationcriterias.skillid WHERE technicalskills.title="COREJAVA" and questions.qid=13;

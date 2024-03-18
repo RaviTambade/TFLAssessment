@@ -24,6 +24,7 @@ TestManager manager = new TestManager();
 string apiEmployeesUrl="/employees";
 string apiSubjectsUrl="/subjects";
 string apiCriteriaUrl="/criteria";
+string apiTestUrl="/tests";
 string apiCandateTestAnswersUrl="/answersheet/candidates/{candidateId}/tests/{testId}";
 string apiQuestionsUrl="/questions/tests/{testId}";
 string candidateTestResultUrl="/result/candidates/{candidateId}/test/{testId}";
@@ -48,6 +49,11 @@ app.MapGet(apiSubjectsUrl,()=>{
 app.MapGet(apiCriteriaUrl,()=>{
    List<EvaluationCriteria> evaluationcriteria = manager.GetEvalutionCriterias();
    return evaluationcriteria;
+});
+
+app.MapGet(apiTestUrl,()=>{
+   List<Test> tests = manager.GetAllTests();
+   return tests;
 });
 
 app.MapPost(apiCandateTestAnswersUrl,(int candidateId,List<CandidateAnswer> answers)=>{
