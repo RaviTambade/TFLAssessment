@@ -369,9 +369,10 @@ public class TestManager
 public bool Insertquestion(Question ques){
     bool status=false;
     MySqlConnection connection = new MySqlConnection(connectionString);
-    string query = "insert into questions(qid,question,a,b,c,d,answerkey)values(@qid,@title,@a,@b,@c,@d,@answerkey)";
+    string query = "insert into questions(qid, question, a, b, c, d, answerkey) values (@qid, @title, @a, @b, @c, @d, @answerkey)";
     
     MySqlCommand command = new MySqlCommand(query, connection);
+
     command.Parameters.AddWithValue("@qid",ques.Id);
     command.Parameters.AddWithValue("@title",ques.Title);
     command.Parameters.AddWithValue("@a",ques.A);
@@ -394,7 +395,6 @@ public bool Insertquestion(Question ques){
     finally{
         connection.Close();
     }
-    Console.WriteLine(status);
     return status;
 }
      

@@ -107,7 +107,6 @@ app.MapGet(critearia,(string subject , int questionId)=>{
 
 app.MapPost(insertnewquestionurl,(Question ques)=>{
     bool status=manager. Insertquestion(ques);
-    Console.WriteLine("inside map post "+status);
     return status;
 });
 
