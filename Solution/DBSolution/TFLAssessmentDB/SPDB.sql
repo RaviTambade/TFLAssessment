@@ -14,14 +14,6 @@
 
 use Assessmentdb;
 
-DELIMITER ;
-
-
-
-call `GetTestMarks`(1,2,@marks);
-select @marks
-
-
 -- get candidate test results
 select * from candidatetestresults;
 
@@ -44,3 +36,4 @@ END $$
 -- select(@pscore);
 
 -- Update candidatetestresults  set marks =5 where candidateresultid = 1;
+

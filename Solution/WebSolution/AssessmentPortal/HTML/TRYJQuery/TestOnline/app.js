@@ -20,10 +20,25 @@ var starttimeurl = remoteWeb+"/test/setstarttime";
 var candidateanswersurl = remoteWeb+"/answersheet/candidates/";
 var endtimeurl = remoteWeb+"/test/setendtime";
 var resulturl = remoteWeb+"/result/candidates/";
+var subjectsurl = remoteWeb+"/subjects";
 
 
 $(document).ready(function () { 
 
+  $.ajax({
+    url: subjectsurl,
+    type: 'GET',
+    contentType: 'application/json',
+    
+    success: function (response) {
+      // Show result
+      console.log(response);
+    },
+    error: function (xhr, status, error) {
+      console.error(xhr.responseText);
+    }
+});  
+  
   //Test start and submit handlers
   $("#btnStart").click(()=>{
 

@@ -9,6 +9,7 @@ select * from subjectexperties;
 select * from evaluationcriterias;
 select * from questions;
 
+
 select * from tests;
 select * from testquestions;
 
@@ -43,7 +44,7 @@ select * from employee  where employee.id in(
 
 -- Show question titles of test conducted on specific DATE
 
-select * from questions
+select * from questions;
 
 select * from tests;
 
@@ -69,31 +70,31 @@ where qid in (select questionid from  testquestions
 select testquestions.testid,questions.qid,questions.answerkey as correctanswer, candidateanswers.answerkey as candidateanswer from  candidateanswers
 JOIN   testquestions  on testquestions.testquestionid=candidateanswers.testquestionid
 JOIN   questions on questions.qid=testquestions.questionid
-where employeeid=1 and testid=2
+where employeeid=1 and testid=2;
 
 
 
---get count of correct answers  given by candidate(employee id) for test (test id )
+-- get count of correct answers  given by candidate(employee id) for test (test id )
 
 select count(*) from  candidateanswers
 JOIN   testquestions  on testquestions.testquestionid=candidateanswers.testquestionid
 JOIN   questions on questions.qid=testquestions.questionid
 where employeeid=1 and testid=2
-AND questions.answerkey=candidateanswers.answerkey
+AND questions.answerkey=candidateanswers.answerkey;
 
 
 -- answer with date quetionId 
 
 -- get all employees who have answered  question id=1;
 
-select * from employees
+select * from employees;
 
 
  
 --- INNER JOIN WITH THREE TABLE
---at given date show answers of quetions given by candidate IDENTIFIED
---test id, emp id
---expected output ADD
+-- at given date show answers of quetions given by candidate IDENTIFIED
+-- test id, emp id
+-- expected output ADD
 -- qestionid, correct Answer, candidate given answer
 
 
@@ -117,15 +118,15 @@ JOIn questions on questions.qid= testquestions.questionid
 Where questions.qid=1 and testid=1;
 
 
---get all tests and sheduled  date  the employee appeared
+-- get all tests and sheduled  date  the employee appeared
 select distinct(testquestions.testid), tests.sheduledon from candidateanswers
 Join testquestions on testquestions.testquestionid=candidateanswers.testquestionid
 Join tests on tests.id=testquestions.testid
-where employeeid=1
+where employeeid=1;
 
 
 
---get all emplyoees who  have been teseted for  object oriented (Criteria)
+-- get all emplyoees who  have been teseted for  object oriented (Criteria)
 
 
 -- get all questions of particular subject
@@ -147,7 +148,7 @@ JOIN
 JOIN 
     questions   ON testquestions.testquestionid = questions.qid
 WHERE 
-    candidateanswers.employeeid = 1 AND testquestions.testid = 1;
+    candidateanswers.employeeid = 1 AND testquestions.testid = 1
 GROUP BY 
     candidateanswers.employeeid;
 
@@ -164,3 +165,8 @@ where testquestions.testid=1 and candidateanswers.employeeid=5;
 
 
 insert into candidatetestresults(testid,marks,teststarttime,testendtime,candidateid) values (1,10,"12/03/2024 01:10:00","12/03/2024 01:40:00",2);
+
+-- get questions with subject
+select questions.qid, questions.question, technicalskills.title from questions, technicalskills where questions.skillid=technicalskills.techskid;
+select questions.qid, questions.question, technicalskills.title from questions, technicalskills where questions.skillid=technicalskills.techskid and technicalskills.title='CSHARP';
+
