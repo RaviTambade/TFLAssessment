@@ -292,6 +292,13 @@ public class TestManager
                 test.LastName=lastName;   
                 tests.Add(test);
             }
+        }
+       catch(Exception e){
+       Console.WriteLine(e.Message);
+       
+       }
+       return tests;
+    }
 
     public string GetCriteria(string subject ,int questionid){
 
@@ -326,7 +333,7 @@ public class TestManager
         {
             connection.Close();
         }
-        return tests;
+        return criteria;
     }
 
 
@@ -354,6 +361,41 @@ public class TestManager
     }
     return status;
 }
-        return criteria;  
+    //     return criteria;  
+    // }
+
+
+
+public bool Insertquestion(Question ques){
+    bool status=false;
+    MySqlConnection connection = new MySqlConnection(connectionString);
+    string query = "insert into questions(qid,question,a,b,c,d,answerkey)values(@qid,@title,@a,@b,@c,@d,@answerkey)";
+    
+    MySqlCommand command = new MySqlCommand(query, connection);
+    command.Parameters.AddWithValue("@qid",ques.Id);
+    command.Parameters.AddWithValue("@title",ques.Title);
+    command.Parameters.AddWithValue("@a",ques.A);
+    command.Parameters.AddWithValue("@b",ques.B);
+    command.Parameters.AddWithValue("@c",ques.C);
+    command.Parameters.AddWithValue("@d",ques.D);
+    command.Parameters.AddWithValue("@answerkey",ques.AnswerKey);
+    
+     try{ 
+            connection.Open();
+            int rowsAffected = command.ExecuteNonQuery();
+            if (rowsAffected > 0)
+            {
+                status = true;
+            }
     }
+    catch(Exception e){
+       Console.WriteLine(e.Message);
+    }
+    finally{
+        connection.Close();
+    }
+    Console.WriteLine(status);
+    return status;
 }
+     
+ }

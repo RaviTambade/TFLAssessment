@@ -32,8 +32,8 @@ string testEndTimesettingUrl="/test/setendtime";
 
 string allQuestionsAPI="/questions";
 string allQuestionsByCategoryAPI="/{subject}/questions";
- string critearia ="/subject/{subject}/question/{questionId}";
-
+string critearia ="/subject/{subject}/question/{questionId}";
+string insertnewquestionurl ="/question";
 
 //API Listners
 app.MapGet(apiEmployeesUrl,()=>{
@@ -103,6 +103,12 @@ app.MapGet(critearia,(string subject , int questionId)=>{
        
         return criteria;
     
+});
+
+app.MapPost(insertnewquestionurl,(Question ques)=>{
+    bool status=manager. Insertquestion(ques);
+    Console.WriteLine("inside map post "+status);
+    return status;
 });
 
 app.Run();

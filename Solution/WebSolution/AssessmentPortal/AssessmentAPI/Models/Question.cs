@@ -7,4 +7,5 @@ public class Question{
     public string C{get;set;}
     public string D{get;set;}
     public int TestId{get;set;}
+    public string AnswerKey{get;set;} 
 }
