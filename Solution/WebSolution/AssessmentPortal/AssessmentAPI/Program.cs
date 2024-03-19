@@ -83,14 +83,12 @@ app.MapPost(testStartTimesettingUrl,(CandidateTestDetails testDetails)=>{
 });
 
 app.MapPut(testEndTimesettingUrl,( CandidateTestDetails testDetails)=>{
-
      bool status=manager.SetTestEndTime( testDetails.CandidateId,testDetails.TestId, testDetails.Time);
      return status;
 });
 
 
-app.MapGet(allQuestionsAPI,()=>{
-        
+app.MapGet(allQuestionsAPI,()=>{     
         QuestionBank qBank=new QuestionBank();{
         List<QuestionO> allQuestions = qBank.GetAllQuestions();
         return allQuestions;

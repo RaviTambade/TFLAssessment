@@ -1,12 +1,11 @@
-
 var remoteWeb = "http://localhost:5238"
 var testUrl = remoteWeb + "/tests";
-tests=[];
+var tests=[];
+var testId;
+var scheduledOn;
 
-// http://localhost:5238/tests
 
 $(document).ready(function(){
-
     $.ajax({
         url: testUrl,
         type: 'GET',
@@ -18,11 +17,33 @@ $(document).ready(function(){
             console.log(tests);
             var tblTest = $("#tblTest")
             for (var i = 0; i < tests.length; i++) {
-                tblTest.append("<tr><td>"+tests[i].id+"</td><td>"+tests[i].scheduledOn +"</td><td>"+tests[i].skillTitle+"</td><td>"+tests[i].firstName+" "+tests[i].lastName+"</td></tr>");
+                tblTest.append("<tr><td>"+tests[i].id+"</td><td>"+tests[i].scheduledOn +"</td><td>"+tests[i].skillTitle+"</td><td>"+tests[i].firstName+" "+tests[i].lastName+"</td><td><button onClick=>Details</button></td></tr>" );
             }
         },
         error: function (xhr, status, error) {
             console.error(xhr.responseText);
         }
     });
+
+    $("#btnTime").click(function(){
+        var time=$("#scheduledon").val();
+        console.log(time);
+        testId=1;
+        scheduledOn=time;
+        var testScheduledTimesettingUrl= remoteWeb+"/test/"+testId+"/scheduledon/"+scheduledOn;
+        
+        $.ajax({
+        url: testScheduledTimesettingUrl,
+        type: 'PUT',
+        contentType: 'application/json',
+
+        success: function (response) {
+            console.log(response);
+        },
+        error: function (xhr, status, error) {
+            console.error(xhr.responseText);
+        }
+    });
+  })
 })
+
