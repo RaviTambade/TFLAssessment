@@ -400,20 +400,21 @@ public class TestManager
 
 
 
-public bool Insertquestion(Question ques){
+public bool Insertquestion(NewQuestion ques){
     bool status=false;
     MySqlConnection connection = new MySqlConnection(connectionString);
-    string query = "insert into questions(qid, question, a, b, c, d, answerkey) values (@qid, @title, @a, @b, @c, @d, @answerkey)";
+    string query = "insert into questions(skillid, question, a, b, c, d, answerkey,evacriid) values (@skillid, @title, @a, @b, @c, @d, @answerkey, @evacriid)";
     
     MySqlCommand command = new MySqlCommand(query, connection);
 
-    command.Parameters.AddWithValue("@qid",ques.Id);
+    command.Parameters.AddWithValue("@skillid",ques.SkillId);
     command.Parameters.AddWithValue("@title",ques.Title);
     command.Parameters.AddWithValue("@a",ques.A);
     command.Parameters.AddWithValue("@b",ques.B);
     command.Parameters.AddWithValue("@c",ques.C);
     command.Parameters.AddWithValue("@d",ques.D);
     command.Parameters.AddWithValue("@answerkey",ques.AnswerKey);
+    command.Parameters.AddWithValue("@evacriid",ques.EvaCriId);
     
      try{ 
             connection.Open();

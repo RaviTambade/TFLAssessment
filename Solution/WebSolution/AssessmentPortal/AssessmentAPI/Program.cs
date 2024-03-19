@@ -34,7 +34,7 @@ string testEndTimesettingUrl="/test/setendtime";
 string allQuestionsAPI="/questions";
 string allQuestionsByCategoryAPI="/questions/subjects/{subjectId}";
 string testSubjectCriteriaAPI = "/questions/subjects/{subjectId}/criterias/{criteriaId}";
-
+string  insertnewquestionurl="/question";
 
 //API Listners
 app.MapGet(apiEmployeesUrl,()=>{
@@ -100,23 +100,25 @@ app.MapGet(allQuestionsByCategoryAPI,(int subjectId)=>{
     }
 });
 
-app.MapGet(critearia,(string subject , int questionId)=>{
+// app.MapGet(criteria,(string subject , int questionId)=>{
         
-        string criteria = manager.GetCriteria(subject ,questionId);
+//         string criteria = manager.GetCriteria(subject ,questionId);
        
-        return criteria;
+//         return criteria;
     
-});
+// });
 
-app.MapPost(insertnewquestionurl,(Question ques)=>{
+app.MapPost(insertnewquestionurl,(NewQuestion ques)=>{
     bool status=manager. Insertquestion(ques);
     return status;
+    
+    });
+
+
 app.MapGet(testSubjectCriteriaAPI,(int subjectId,int criteriaId)=>{
-        QuestionBank qBank=new QuestionBank();{
+        QuestionBank qBank=new QuestionBank();
         List<SubjectQuestions> subjectCriteriaQuestions = qBank.GetSubjectCriteriaQuestions(subjectId,criteriaId);
         return subjectCriteriaQuestions;
-        }
-});
 });
 
 app.Run();
