@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authentication", "Authentic
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestApp", "TestApp\TestApp.csproj", "{E757A3B7-3AAC-4669-8EE4-A50E70157869}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProductCatalog", "ProductCatalog\ProductCatalog.csproj", "{DABF1AA6-EB7D-42A8-AD68-B6A6C891F83A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{E757A3B7-3AAC-4669-8EE4-A50E70157869}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E757A3B7-3AAC-4669-8EE4-A50E70157869}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E757A3B7-3AAC-4669-8EE4-A50E70157869}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DABF1AA6-EB7D-42A8-AD68-B6A6C891F83A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DABF1AA6-EB7D-42A8-AD68-B6A6C891F83A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DABF1AA6-EB7D-42A8-AD68-B6A6C891F83A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DABF1AA6-EB7D-42A8-AD68-B6A6C891F83A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
