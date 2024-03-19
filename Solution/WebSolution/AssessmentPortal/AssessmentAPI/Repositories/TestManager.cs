@@ -13,7 +13,7 @@ public class TestManager
     public List<Employee> GetAllEmployees()
     {
         List<Employee> employees = new List<Employee>();
-        string query = "select * from employee";
+        string query = "select * from employees";
 
         MySqlConnection connection = new MySqlConnection(connectionString);
         try
@@ -24,15 +24,15 @@ public class TestManager
             while (reader.Read())
             {
                 int id = int.Parse(reader["id"].ToString());
-                string fname = reader["fname"].ToString();
-                string lname = reader["lname"].ToString();
-                string contactno = reader["contactno"].ToString();
+                string firstName = reader["firstname"].ToString();
+                string lastName = reader["lastname"].ToString();
+                string contact = reader["contact"].ToString();
                 string email = reader["email"].ToString();
                 Employee emp = new Employee();
                 emp.Id = id;
-                emp.FName = fname;
-                emp.LName = lname;
-                emp.ContactNo = contactno;
+                emp.FirstName = firstName;
+                emp.LastName = lastName;
+                emp.Contact = contact;
                 emp.Email = email;
                 employees.Add(emp);
             }
@@ -52,7 +52,7 @@ public class TestManager
     public List<Subject> GetAllSubjects()
     {
         List<Subject> subjects = new List<Subject>();
-        string query = @"select * from technicalskills";
+        string query = @"select * from subjects";
 
         MySqlConnection connection = new MySqlConnection(connectionString);
         MySqlCommand command = new MySqlCommand(query, connection);
@@ -62,7 +62,7 @@ public class TestManager
             MySqlDataReader reader = command.ExecuteReader();
             while (reader.Read())
             {
-                int id = int.Parse(reader["techskid"].ToString());
+                int id = int.Parse(reader["id"].ToString());
                 string title = reader["title"].ToString();
                 Subject subject = new Subject();
                 subject.Id = id;
@@ -95,7 +95,7 @@ public class TestManager
             MySqlDataReader reader = command.ExecuteReader();
             while (reader.Read())
             {
-                int id = int.Parse(reader["evacriid"].ToString());
+                int id = int.Parse(reader["id"].ToString());
                 string title = reader["title"].ToString();
                 EvaluationCriteria evacri = new EvaluationCriteria();
                 evacri.Id = id;
@@ -150,10 +150,9 @@ public class TestManager
 
     public List<Question> GetQuestions(int testId)
     {
-        Console.WriteLine( "test Id="+ testId);
-        
+               
         List<Question> questions = new List<Question>();
-        string query = @"select * from questions inner join testquestions on testquestions.questionid = questions.qid where testquestions.testid= @testId";
+        string query = @"select * from questionbank inner join testquestions on testquestions.questionbankid = questionbank.id where testquestions.testid=@testId";
          
         MySqlConnection connection = new MySqlConnection(connectionString);
         MySqlCommand command = new MySqlCommand(query, connection);
@@ -165,9 +164,9 @@ public class TestManager
             MySqlDataReader reader = command.ExecuteReader();
             while (reader.Read())
             {
-                int id = int.Parse(reader["qid"].ToString());
+                int id = int.Parse(reader["id"].ToString());
                 int tId = int.Parse(reader["testid"].ToString());
-                string question = reader["question"].ToString();
+                string question = reader["title"].ToString();
                 string a = reader["a"].ToString();
                 string b = reader["b"].ToString();
                 string c = reader["c"].ToString();
@@ -198,7 +197,7 @@ public class TestManager
     public bool InsertCandidateAnswers(int candidateId,List<CandidateAnswer> answers)
     {
         bool status = false;
-        string query = "INSERT INTO candidateanswers (employeeid, testquestionid, answerkey) VALUES (@employeeId, @testQuestionId, @answerKey)";
+        string query = "INSERT INTO candidateanswers (candidateid, testquestionid, answerkey) VALUES (@candidateId, @testQuestionId, @answerKey)";
         MySqlConnection connection = new MySqlConnection(connectionString);
 
         try
@@ -208,7 +207,7 @@ public class TestManager
             foreach (var answer in answers)
             {
                 MySqlCommand command = new MySqlCommand(query, connection);
-                command.Parameters.AddWithValue("@employeeId", candidateId);
+                command.Parameters.AddWithValue("@candidateId", candidateId);
                 command.Parameters.AddWithValue("@testQuestionId", answer.TestQuestionId);
                 command.Parameters.AddWithValue("@answerKey", answer.Answer);
 
@@ -290,10 +289,10 @@ public class TestManager
    public List<Test> GetAllTests()
     {
         List<Test> tests = new List<Test>();
-        string query = @"select tests.*,technicalskills.title as skill,employee.fname,employee.lname from tests 
-                        inner join subjectexperties on subjectexperties.subexid=tests.subexid
-                        inner join technicalskills on technicalskills.techskid=subjectexperties.technicalskillid
-                        inner join employee on  employee.id=subjectexperties.employeeid;";
+        string query = @"select tests.*,subjects.title as skill,employees.firstname,employees.lastname from tests 
+                        inner join subjectmatterexperts on subjectmatterexperts.id=tests.smeid
+                        inner join subjects on subjects.id=subjectmatterexperts.subjectid
+                        inner join employees on  employees.id=subjectmatterexperts.employeeid";
 
         MySqlConnection connection = new MySqlConnection(connectionString);
         MySqlCommand command = new MySqlCommand(query, connection);
@@ -305,22 +304,22 @@ public class TestManager
             {
                 int id = int.Parse(reader["id"].ToString());
                 // TimeOnly duration=TimeOnly.Parse(reader["duration"]);
-                int skillId = int.Parse(reader["skillid"].ToString());
-                int subjectExpertId = int.Parse(reader["subexid"].ToString());
-                DateTime createdOn =DateTime.Parse(reader["createdon"].ToString());
-                DateTime modifiedOn =DateTime.Parse(reader["modifiedon"].ToString());
-                DateTime scheduledOn =DateTime.Parse(reader["scheduledon"].ToString());
+                int skillId = int.Parse(reader["subjectid"].ToString());
+                int subjectExpertId = int.Parse(reader["smeid"].ToString());
+                DateTime createdOn =DateTime.Parse(reader["creationdate"].ToString());
+                DateTime modifiedOn =DateTime.Parse(reader["modificationdate"].ToString());
+                DateTime scheduledOn =DateTime.Parse(reader["scheduleddate"].ToString());
                 string skillTitle=reader["skill"].ToString();
-                string firstName=reader["fname"].ToString();
-                string lastName=reader["lname"].ToString();
+                string firstName=reader["firstname"].ToString();
+                string lastName=reader["lastname"].ToString();
 
                 Test test = new Test();
                 test.Id = id;
-                test.SkillId = skillId;
-                test.SubjectExpertId = subjectExpertId;
-                test.CreatedOn = createdOn;
-                test.ModifiedOn = modifiedOn;
-                test.ScheduledOn = scheduledOn;
+                test.SubjectId = skillId;
+                test.SmeId = subjectExpertId;
+                test.CreationDate = createdOn;
+                test.ModificationDate = modifiedOn;
+                test.ScheduledDate = scheduledOn;
                 test.SkillTitle = skillTitle;
                 test.FirstName=firstName;
                 test.LastName=lastName;   
@@ -337,8 +336,8 @@ public class TestManager
     public string GetCriteria(string subject ,int questionid){
 
       string criteria="";
-        string query = @"select evaluationcriterias.title from evaluationcriterias INNER join questions on questions.evacriid=evaluationcriterias.evacriid
-           inner join technicalskills on questions.skillid= evaluationcriterias.skillid WHERE technicalskills.title=@subject and questions.qid=@questionid";
+        string query = @"select evaluationcriterias.title from evaluationcriterias INNER join questionbank on questionbank.evaluationcriteriaid=evaluationcriterias.id
+           inner join subjects on questionbank.subjectid= evaluationcriterias.subjectid WHERE subjects.title=@subject and questionbank.id=@questionid";
 
         MySqlConnection connection = new MySqlConnection(connectionString);
         try
@@ -370,11 +369,11 @@ public class TestManager
         return criteria;
     }
 
-<<<<<<< HEAD
+
     public Question GetQuestion(string subject,int questionid){
         Question question =new();
-        string query = @"select questions.*,evaluationcriterias.title from evaluationcriterias INNER join questions on questions.evacriid=evaluationcriterias.evacriid
-        inner join technicalskills on questions.skillid= evaluationcriterias.skillid WHERE technicalskills.title=@subject and questions.qid=@questionid";
+        string query = @" select questionbank.*,evaluationcriterias.title from evaluationcriterias INNER join questionbank on questionbank.evaluationcriteriaid=evaluationcriterias.id
+        inner join subjects on questionbank.subjectid= evaluationcriterias.subjectid  WHERE subjects.title=@subject and questionbank.id=@questionid";
          
         MySqlConnection connection = new MySqlConnection(connectionString);
         MySqlCommand command = new MySqlCommand(query, connection);
@@ -423,12 +422,12 @@ public class TestManager
         return question;
     }
 }
-=======
+
 
     public bool UpdateTest( int testId ,Test test){
     bool status=false;
     MySqlConnection connection = new MySqlConnection(connectionString);
-    string query = "update tests set scheduledon =@scheduledOn where id=@testId";
+    string query = "update tests set scheduleddate =@scheduledOn where id=@testId";
     
     MySqlCommand command = new MySqlCommand(query, connection);
     command.Parameters.AddWithValue("@testId", testId);
@@ -449,26 +448,22 @@ public class TestManager
     }
     return status;
 }
-    //     return criteria;  
-    // }
-
-
 
 public bool Insertquestion(NewQuestion ques){
     bool status=false;
     MySqlConnection connection = new MySqlConnection(connectionString);
-    string query = "insert into questions(skillid, question, a, b, c, d, answerkey,evacriid) values (@skillid, @title, @a, @b, @c, @d, @answerkey, @evacriid)";
+    string query = "insert into questionbank(subjectid, title, a, b, c, d, answerkey,evaluationcriteriaid) values (@skillid, @title, @a, @b, @c, @d, @answerkey, @evacriid)";
     
     MySqlCommand command = new MySqlCommand(query, connection);
 
-    command.Parameters.AddWithValue("@skillid",ques.SkillId);
+    command.Parameters.AddWithValue("@skillid",ques.SubjectId);
     command.Parameters.AddWithValue("@title",ques.Title);
     command.Parameters.AddWithValue("@a",ques.A);
     command.Parameters.AddWithValue("@b",ques.B);
     command.Parameters.AddWithValue("@c",ques.C);
     command.Parameters.AddWithValue("@d",ques.D);
     command.Parameters.AddWithValue("@answerkey",ques.AnswerKey);
-    command.Parameters.AddWithValue("@evacriid",ques.EvaCriId);
+    command.Parameters.AddWithValue("@evacriid",ques.EvaluationCriteriaId);
     
      try{ 
             connection.Open();
@@ -487,5 +482,4 @@ public bool Insertquestion(NewQuestion ques){
     return status;
 }
      
- }
->>>>>>> 05303380657fc2158d0599ea9c85c1de4a802f76
+ 

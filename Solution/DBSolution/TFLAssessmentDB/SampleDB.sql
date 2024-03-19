@@ -19,7 +19,7 @@ INSERT INTO subjects(title) VALUES('ANGULAR');
 INSERT INTO subjects(title) VALUES('CSHARP');
 INSERT INTO subjects(title) VALUES('JAVASCRIPT');
 
-
+select * from interviews;
 
 
 INSERT INTO subjectmatterexperts(employeeid,subjectid,certificationdate)VALUES(1,1,'2023-02-15');

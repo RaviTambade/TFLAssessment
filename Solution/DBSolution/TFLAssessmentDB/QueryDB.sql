@@ -136,8 +136,6 @@ inner join candidateanswers on candidateanswers.testquestionid=testquestions.que
 where testquestions.testid=1 and candidateanswers.employeeid=5;
 
 
-insert into candidatetestresults(testid,marks,teststarttime,testendtime,candidateid) values (1,10,"12/03/2024 01:10:00","12/03/2024 01:40:00",2);
-
 -- get questions with subject
 select questions.qid, questions.question, technicalskills.title from questions, technicalskills where questions.skillid=technicalskills.techskid;
 select questions.qid, questions.question, technicalskills.title from questions, technicalskills where questions.skillid=technicalskills.techskid and technicalskills.techskid=2;
@@ -151,3 +149,16 @@ and technicalskills.techskid='1' and evaluationcriterias.evacriid=1;
 
 select questions.*,evaluationcriterias.title from evaluationcriterias INNER join questions on questions.evacriid=evaluationcriterias.evacriid
 inner join technicalskills on questions.skillid= evaluationcriterias.skillid WHERE technicalskills.title="COREJAVA" and questions.qid=13;
+
+-- ________________________________________________________________________________________________________________________-
+
+select * from questionbank inner join testquestions on testquestions.questionbankid = questionbank.id where testquestions.testid=1;
+
+INSERT INTO candidateanswers (candidateid, testquestionid, answerkey) VALUES (@candidateId, @testQuestionId, @answerKey);
+
+insert into candidatetestresults(testid,teststarttime,candidateid) values (@testid,@teststarttime,@candidateid);
+
+insert into candidatetestresults(testid,teststarttime,candidateid) values (1,"2015-11-05 14:29:36",2);
+update candidatetestresults set testendtime =@testendtime where candidateid=@candidateid and testid=@testid;
+update candidatetestresults set testendtime ="2015-11-05 14:35:00" where candidateid=2 and testid=1;
+select * from candidatetestresults;
