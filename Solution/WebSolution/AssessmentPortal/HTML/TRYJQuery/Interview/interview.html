@@ -38,14 +38,18 @@
   <div class="container mt-5">
      <div>
             <h2>Candidate Interview Details</h2>
-        <form>
 
             <label for="fname">Candidate:</label><br>
-            <input type="text" id="Candidate" name="candidate" value="Ravi Tambade"><br>
+            <select id="Candidate" name="candidate" >
 
+            </select>
+            <br>
 
             <label for="fname">Interview Topic:</label><br>
-            <input type="text" id="topic" name="topic" value=""><br>
+            <select id="topic" name="topic" >
+
+            </select>
+             <br>
 
 
             <label for="rating">Rating:</label><br>
@@ -53,15 +57,24 @@
             <label for="comment">Comment:</label><br>
             <textarea  id="comment" name="comment"  rows="5" col="400"  ></textarea>
             <br><br>
-            <input type="submit"  id= "btnSubmit"value="Submit">
-        </form> 
-
+            <input type="button"  id= "btnSubmit"value="Submit">
 
      </div>
 
         <script>
         
           $(document).ready(() => {
+
+            
+
+
+
+
+
+
+
+
+
                 $('#btnSubmit').click(() => {
                     console.log("button clicked");
                    

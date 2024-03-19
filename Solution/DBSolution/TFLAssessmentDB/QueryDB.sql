@@ -2,6 +2,9 @@
 
 use assessmentdb;
 
+select * from interviews;
+select * from interviewcriterias;
+select * from interviewresults;
  select questionbank.id,questionbank.title,questionbank.a,questionbank.b,questionbank.c,questionbank.d from questionbank inner join subjects on subjects.id=questionbank.subjectid
  where subjects.title="ADVJAVA";
 
