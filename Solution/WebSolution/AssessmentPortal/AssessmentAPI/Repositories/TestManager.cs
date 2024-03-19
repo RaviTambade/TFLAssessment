@@ -289,4 +289,56 @@ public class TestManager
         }
         return criteria;  
     }
+
+    public Question GetQuestion(string subject,int questionid){
+        Question question =new();
+        string query = @"select questions.*,evaluationcriterias.title from evaluationcriterias INNER join questions on questions.evacriid=evaluationcriterias.evacriid
+        inner join technicalskills on questions.skillid= evaluationcriterias.skillid WHERE technicalskills.title=@subject and questions.qid=@questionid";
+         
+        MySqlConnection connection = new MySqlConnection(connectionString);
+        MySqlCommand command = new MySqlCommand(query, connection);
+        command.Parameters.AddWithValue("@subject", subject);
+        command.Parameters.AddWithValue("@questionid", questionid);
+
+
+        try
+        {
+            connection.Open();
+            MySqlDataReader reader = command.ExecuteReader();
+            if (reader.Read())
+            {
+                int id = int.Parse(reader["qid"].ToString());
+                string title = reader["question"].ToString();
+                string a = reader["a"].ToString();
+                string b = reader["b"].ToString();
+                string c = reader["c"].ToString();
+                string d = reader["d"].ToString();
+                int evaluationCriteriaId=int.Parse(reader["evacriid"].ToString());
+                string criteariaTitle = reader["title"].ToString();
+
+
+
+             question= new Question();
+                question.Id = id;
+                question.Title = title;
+                question.A = a;
+                question.B = b;
+                question.C = c;
+                question.D = d;
+                question.EvaluationCriteriaId = evaluationCriteriaId;
+                question.Criteria = criteariaTitle;
+            
+            }
+            reader.Close();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+        finally
+        {
+            connection.Close();
+        }
+        return question;
+    }
 }

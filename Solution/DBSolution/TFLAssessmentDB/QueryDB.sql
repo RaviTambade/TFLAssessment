@@ -174,6 +174,7 @@ select questions.qid, questions.question, technicalskills.title from questions, 
 
 SELECT * from evaluationcriterias;
 SELECT * from technicalskills;
+SELECT * from questions;
 
-select evaluationcriterias.title from evaluationcriterias INNER join questions on questions.evacriid=evaluationcriterias.evacriid
+select questions.*,evaluationcriterias.title from evaluationcriterias INNER join questions on questions.evacriid=evaluationcriterias.evacriid
 inner join technicalskills on questions.skillid= evaluationcriterias.skillid WHERE technicalskills.title="COREJAVA" and questions.qid=13;

@@ -31,7 +31,9 @@ string testEndTimesettingUrl="/test/setendtime";
 
 string allQuestionsAPI="/questions";
 string allQuestionsByCategoryAPI="/{subject}/questions";
- string critearia ="/subject/{subject}/question/{questionId}";
+string critearia ="/subject/{subject}/question/{qId}";
+string question ="questions/subjects/{subject}/questions/{questionid}";
+
 
 
 //API Listners
@@ -91,11 +93,19 @@ app.MapGet(allQuestionsByCategoryAPI,(string subject)=>{
     }
 });
 
-app.MapGet(critearia,(string subject , int questionId)=>{
+app.MapGet(critearia,(string subject , int questionid)=>{
         
-        string criteria = manager.GetCriteria(subject ,questionId);
+        string criteria = manager.GetCriteria(subject ,questionid);
        
         return criteria;
+    
+});
+
+app.MapGet(question,(string subject , int questionid)=>{
+        
+        Question question = manager.GetQuestion(subject ,questionid);
+       
+        return question;
     
 });
 
