@@ -23,7 +23,7 @@ CREATE TABLE subjectmatterexperts(
 	id INT PRIMARY KEY AUTO_INCREMENT,
 	employeeid INT,
 	subjectid INT,
-	certidicationdate DATE,
+	certificationdate DATE,
 	CONSTRAINT fk_sme_employees_employeeid FOREIGN KEY(employeeid) REFERENCES employees(id) ON UPDATE CASCADE ON DELETE CASCADE,
 	CONSTRAINT fk_sme_subjects_subjectid FOREIGN KEY(subjectid) REFERENCES subjects(id) ON UPDATE CASCADE ON DELETE CASCADE
 );
