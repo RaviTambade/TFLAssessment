@@ -23,6 +23,8 @@ TestManager manager = new TestManager();
 
 string apiEmployeesUrl="/employees";
 string apiSubjectsUrl="/subjects";
+string apiCriteriaUrl="/criteria";
+string apiTestUrl="/tests";
 string apiCandateTestAnswersUrl="/answersheet/candidates/{candidateId}/tests/{testId}";
 string apiQuestionsUrl="/questions/tests/{testId}";
 string candidateTestResultUrl="/result/candidates/{candidateId}/test/{testId}";
@@ -30,11 +32,17 @@ string testStartTimesettingUrl="/test/setstarttime";
 string testEndTimesettingUrl="/test/setendtime";
 
 string allQuestionsAPI="/questions";
+<<<<<<< HEAD
 string allQuestionsByCategoryAPI="/{subject}/questions";
 string critearia ="/subject/{subject}/question/{qId}";
 string question ="questions/subjects/{subject}/questions/{questionid}";
 
 
+=======
+string allQuestionsByCategoryAPI="/questions/subjects/{subjectId}";
+string testSubjectCriteriaAPI = "/questions/subjects/{subjectId}/criterias/{criteriaId}";
+string  insertnewquestionurl="/question";
+>>>>>>> 05303380657fc2158d0599ea9c85c1de4a802f76
 
 //API Listners
 app.MapGet(apiEmployeesUrl,()=>{
@@ -45,6 +53,15 @@ app.MapGet(apiEmployeesUrl,()=>{
 app.MapGet(apiSubjectsUrl,()=>{
    List<Subject> subjects = manager.GetAllSubjects();
    return subjects;
+});
+app.MapGet(apiCriteriaUrl,()=>{
+   List<EvaluationCriteria> evaluationcriteria = manager.GetEvalutionCriterias();
+   return evaluationcriteria;
+});
+
+app.MapGet(apiTestUrl,()=>{
+   List<Test> tests = manager.GetAllTests();
+   return tests;
 });
 
 app.MapPost(apiCandateTestAnswersUrl,(int candidateId,List<CandidateAnswer> answers)=>{
@@ -83,22 +100,39 @@ app.MapGet(allQuestionsAPI,()=>{
     }
 });
 
-
-
-app.MapGet(allQuestionsByCategoryAPI,(string subject)=>{
-         Console.WriteLine(subject);
+app.MapGet(allQuestionsByCategoryAPI,(int subjectId)=>{
+         
         QuestionBank qBank=new QuestionBank();{
-        List<SubjectQuestions> subjectWiseQuestions = qBank.GetSubjectWiseQuestions(subject);
+        List<SubjectQuestions> subjectWiseQuestions = qBank.GetSubjectWiseQuestions(subjectId);
         return subjectWiseQuestions;
     }
 });
 
+<<<<<<< HEAD
 app.MapGet(critearia,(string subject , int questionid)=>{
         
         string criteria = manager.GetCriteria(subject ,questionid);
+=======
+// app.MapGet(criteria,(string subject , int questionId)=>{
+        
+//         string criteria = manager.GetCriteria(subject ,questionId);
+>>>>>>> 05303380657fc2158d0599ea9c85c1de4a802f76
        
-        return criteria;
+//         return criteria;
     
+// });
+
+app.MapPost(insertnewquestionurl,(NewQuestion ques)=>{
+    bool status=manager. Insertquestion(ques);
+    return status;
+    
+    });
+
+
+app.MapGet(testSubjectCriteriaAPI,(int subjectId,int criteriaId)=>{
+        QuestionBank qBank=new QuestionBank();
+        List<SubjectQuestions> subjectCriteriaQuestions = qBank.GetSubjectCriteriaQuestions(subjectId,criteriaId);
+        return subjectCriteriaQuestions;
 });
 
 app.MapGet(question,(string subject , int questionid)=>{

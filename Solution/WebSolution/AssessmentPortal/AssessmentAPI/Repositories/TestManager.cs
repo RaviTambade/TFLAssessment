@@ -82,6 +82,40 @@ public class TestManager
         return subjects;
     }
 
+    public List<EvaluationCriteria> GetEvalutionCriterias()
+    {
+        List<EvaluationCriteria> criterias = new List<EvaluationCriteria>();
+        string query = @"select * from evaluationcriterias";
+
+        MySqlConnection connection = new MySqlConnection(connectionString);
+        MySqlCommand command = new MySqlCommand(query, connection);
+        try
+        {  
+            connection.Open();
+            MySqlDataReader reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                int id = int.Parse(reader["evacriid"].ToString());
+                string title = reader["title"].ToString();
+                EvaluationCriteria evacri = new EvaluationCriteria();
+                evacri.Id = id;
+                evacri.Title = title;
+                criterias.Add(evacri);
+            }
+            reader.Close();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+        finally
+        {
+            connection.Close();
+        }
+        return criterias;
+    }
+
+
     public int GetCandidateScore(int candidateId, int testId)
     {
         string query="spcandidatetestresult";
@@ -253,6 +287,52 @@ public class TestManager
     }
     return status;
 }
+   public List<Test> GetAllTests()
+    {
+        List<Test> tests = new List<Test>();
+        string query = @"select tests.*,technicalskills.title as skill,employee.fname,employee.lname from tests 
+                        inner join subjectexperties on subjectexperties.subexid=tests.subexid
+                        inner join technicalskills on technicalskills.techskid=subjectexperties.technicalskillid
+                        inner join employee on  employee.id=subjectexperties.employeeid;";
+
+        MySqlConnection connection = new MySqlConnection(connectionString);
+        MySqlCommand command = new MySqlCommand(query, connection);
+        try
+        {  
+            connection.Open();
+            MySqlDataReader reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                int id = int.Parse(reader["id"].ToString());
+                // TimeOnly duration=TimeOnly.Parse(reader["duration"]);
+                int skillId = int.Parse(reader["skillid"].ToString());
+                int subjectExpertId = int.Parse(reader["subexid"].ToString());
+                DateTime createdOn =DateTime.Parse(reader["createdon"].ToString());
+                DateTime modifiedOn =DateTime.Parse(reader["modifiedon"].ToString());
+                DateTime scheduledOn =DateTime.Parse(reader["scheduledon"].ToString());
+                string skillTitle=reader["skill"].ToString();
+                string firstName=reader["fname"].ToString();
+                string lastName=reader["lname"].ToString();
+
+                Test test = new Test();
+                test.Id = id;
+                test.SkillId = skillId;
+                test.SubjectExpertId = subjectExpertId;
+                test.CreatedOn = createdOn;
+                test.ModifiedOn = modifiedOn;
+                test.ScheduledOn = scheduledOn;
+                test.SkillTitle = skillTitle;
+                test.FirstName=firstName;
+                test.LastName=lastName;   
+                tests.Add(test);
+            }
+        }
+       catch(Exception e){
+       Console.WriteLine(e.Message);
+       
+       }
+       return tests;
+    }
 
     public string GetCriteria(string subject ,int questionid){
 
@@ -287,9 +367,10 @@ public class TestManager
         {
             connection.Close();
         }
-        return criteria;  
+        return criteria;
     }
 
+<<<<<<< HEAD
     public Question GetQuestion(string subject,int questionid){
         Question question =new();
         string query = @"select questions.*,evaluationcriterias.title from evaluationcriterias INNER join questions on questions.evacriid=evaluationcriterias.evacriid
@@ -342,3 +423,69 @@ public class TestManager
         return question;
     }
 }
+=======
+
+    public bool UpdateTest( int testId ,Test test){
+    bool status=false;
+    MySqlConnection connection = new MySqlConnection(connectionString);
+    string query = "update tests set scheduledon =@scheduledOn where id=@testId";
+    
+    MySqlCommand command = new MySqlCommand(query, connection);
+    command.Parameters.AddWithValue("@testId", testId);
+    command.Parameters.AddWithValue("@scheduledOn", test.ScheduledOn);
+     try{ 
+            connection.Open();
+            int rowsAffected = command.ExecuteNonQuery();
+            if (rowsAffected > 0)
+            {
+                status = true;
+            }
+    }
+    catch(Exception e){
+       Console.WriteLine(e.Message);
+    }
+    finally{
+        connection.Close();
+    }
+    return status;
+}
+    //     return criteria;  
+    // }
+
+
+
+public bool Insertquestion(NewQuestion ques){
+    bool status=false;
+    MySqlConnection connection = new MySqlConnection(connectionString);
+    string query = "insert into questions(skillid, question, a, b, c, d, answerkey,evacriid) values (@skillid, @title, @a, @b, @c, @d, @answerkey, @evacriid)";
+    
+    MySqlCommand command = new MySqlCommand(query, connection);
+
+    command.Parameters.AddWithValue("@skillid",ques.SkillId);
+    command.Parameters.AddWithValue("@title",ques.Title);
+    command.Parameters.AddWithValue("@a",ques.A);
+    command.Parameters.AddWithValue("@b",ques.B);
+    command.Parameters.AddWithValue("@c",ques.C);
+    command.Parameters.AddWithValue("@d",ques.D);
+    command.Parameters.AddWithValue("@answerkey",ques.AnswerKey);
+    command.Parameters.AddWithValue("@evacriid",ques.EvaCriId);
+    
+     try{ 
+            connection.Open();
+            int rowsAffected = command.ExecuteNonQuery();
+            if (rowsAffected > 0)
+            {
+                status = true;
+            }
+    }
+    catch(Exception e){
+       Console.WriteLine(e.Message);
+    }
+    finally{
+        connection.Close();
+    }
+    return status;
+}
+     
+ }
+>>>>>>> 05303380657fc2158d0599ea9c85c1de4a802f76

@@ -4,7 +4,6 @@ use assessmentdb;
 
 select * from technicalskills;
 select * from employee;
-
 select * from subjectexperties;
 select * from evaluationcriterias;
 select * from questions;
@@ -168,7 +167,12 @@ insert into candidatetestresults(testid,marks,teststarttime,testendtime,candidat
 
 -- get questions with subject
 select questions.qid, questions.question, technicalskills.title from questions, technicalskills where questions.skillid=technicalskills.techskid;
-select questions.qid, questions.question, technicalskills.title from questions, technicalskills where questions.skillid=technicalskills.techskid and technicalskills.title='CSHARP';
+select questions.qid, questions.question, technicalskills.title from questions, technicalskills where questions.skillid=technicalskills.techskid and technicalskills.techskid=2;
+
+select questions.qid, questions.question, technicalskills.title as subject ,evaluationcriterias.title as criteria
+from questions, technicalskills,evaluationcriterias
+where questions.skillid=technicalskills.techskid and questions.evacriid=evaluationcriterias.evacriid
+and technicalskills.techskid='1' and evaluationcriterias.evacriid=1;
 
 
 
