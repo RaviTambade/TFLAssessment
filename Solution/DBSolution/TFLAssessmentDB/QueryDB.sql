@@ -26,7 +26,9 @@ show tables;
 select * from testquestions where testid=8;
 select * from candidateanswers where employeeid=6;
 
- 
+ select questions.qid,questions.question,questions.a,questions.b,questions.c,questions.d from questions inner join technicalskills on technicalskills.techskid=questions.skillid
+ where technicalskills.title="ADVJAVA";
+  select * from questions;
 
 -- Select all questions  beong to ADV JAVA
 select * from questions where skillid=(select  techskid from technicalskills where title ="ADV JAVA");
