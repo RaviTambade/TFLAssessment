@@ -18,6 +18,7 @@ use Assessmentdb;
 select * from candidatetestresults;
 
 drop procedure spcandidatetestresult;
+
 DELIMITER $$
 create procedure spcandidatetestresult(IN pcandidateId INT,In ptestId INT,OUT pscore INT )
 BEGIN
@@ -33,7 +34,7 @@ Update candidatetestresults  set score =pscore where candidateid= pcandidateId a
 
 END $$
 
-call spcandidatetestresult(1,1,@pscore) ;
+//call spcandidatetestresult(1,1,@pscore) ;
 select(@pscore);
 
 -- Update candidatetestresults  set marks =5 where candidateresultid = 1;

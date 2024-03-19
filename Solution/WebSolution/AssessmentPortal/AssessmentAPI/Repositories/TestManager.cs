@@ -369,7 +369,6 @@ public class TestManager
         return criteria;
     }
 
-
     public Question GetQuestion(string subject,int questionid){
         Question question =new();
         string query = @" select questionbank.*,evaluationcriterias.title from evaluationcriterias INNER join questionbank on questionbank.evaluationcriteriaid=evaluationcriterias.id
