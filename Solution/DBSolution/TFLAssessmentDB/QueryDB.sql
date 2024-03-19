@@ -2,52 +2,23 @@
 
 use assessmentdb;
 
-select * from technicalskills;
-select * from employee;
-select * from subjectexperties;
-select * from evaluationcriterias;
-select * from questions;
-
-
-select * from tests;
-select * from testquestions;
-
-select * from candidateanswers;
-
-select * from candidatetestresults;
-
-
-select * from interviewcriterias;
-select * from interviewresults;
-select * from interviews;
-
-show tables;
-
-select * from testquestions where testid=8;
-select * from candidateanswers where employeeid=6;
-
- select questions.qid,questions.question,questions.a,questions.b,questions.c,questions.d from questions inner join technicalskills on technicalskills.techskid=questions.skillid
- where technicalskills.title="ADVJAVA";
-  select * from questions;
+ select questionbank.id,questionbank.title,questionbank.a,questionbank.b,questionbank.c,questionbank.d from questionbank inner join subjects on subjects.id=questionbank.subjectid
+ where subjects.title="ADVJAVA";
 
 -- Select all questions  beong to ADV JAVA
-select * from questions where skillid=(select  techskid from technicalskills where title ="ADV JAVA");
+select * from questionbank where subjectid=(select id from subjects where title ="ADVJAVA");
  
-
-select  subexid from subjectexperties where technicalskillid=(select  techskid from technicalskills where title ="ADV JAVA");
+select employeeid from subjectmatterexperts where subjectid=(select id from subjects where title ="ADVJAVA");
 
 -- Show all employee details who are experts in CORE JAVA
-select * from employee  where employee.id in(
-								select  employeeid from subjectexperties employee
-								where technicalskillid=( select  techskid from technicalskills 
-														 where title ="CORE JAVA")
+select * from employees  where employees.id in(
+								select  employeeid from subjectmatterexperts
+								where subjectid=( select  id from subjects 
+														 where title ="COREJAVA")
 								);
 
 -- Show question titles of test conducted on specific DATE
 
-select * from questions;
-
-select * from tests;
 
   select question 
   from questions 
@@ -177,10 +148,6 @@ where questions.skillid=technicalskills.techskid and questions.evacriid=evaluati
 and technicalskills.techskid='1' and evaluationcriterias.evacriid=1;
 
 
-
-SELECT * from evaluationcriterias;
-SELECT * from technicalskills;
-SELECT * from questions;
 
 select questions.*,evaluationcriterias.title from evaluationcriterias INNER join questions on questions.evacriid=evaluationcriterias.evacriid
 inner join technicalskills on questions.skillid= evaluationcriterias.skillid WHERE technicalskills.title="COREJAVA" and questions.qid=13;
