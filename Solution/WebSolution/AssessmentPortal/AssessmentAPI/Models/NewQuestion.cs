@@ -1,6 +1,6 @@
 namespace Entities;
 public class NewQuestion{
-    public int SkillId{get;set;}
+    public int SubjectId{get;set;}
     public int Id{get;set;}
     public string Title{get;set;}
     public string A{get;set;}
@@ -8,5 +8,5 @@ public class NewQuestion{
     public string C{get;set;}
     public string D{get;set;}
     public string AnswerKey{get;set;}
-    public int EvaCriId{get;set;}
+    public int EvaluationCriteriaId{get;set;}
 }

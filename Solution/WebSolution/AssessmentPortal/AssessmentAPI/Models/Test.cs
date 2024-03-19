@@ -3,12 +3,12 @@ namespace Entities;
 public class Test
 {
     public int Id {get;set;}
-    public int SkillId {get;set;}
+    public int SubjectId {get;set;}
     public TimeOnly Duration{get;set;}
-    public int SubjectExpertId {get;set;}
-    public DateTime CreatedOn {get;set;}
-    public DateTime ModifiedOn {get;set;}
-    public DateTime ScheduledOn {get;set;}
+    public int SmeId {get;set;}
+    public DateTime CreationDate {get;set;}
+    public DateTime ModificationDate {get;set;}
+    public DateTime ScheduledDate {get;set;}
 
     public string SkillTitle{get; set;}
 
