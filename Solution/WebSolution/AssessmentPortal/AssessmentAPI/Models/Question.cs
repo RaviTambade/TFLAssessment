@@ -1,5 +1,5 @@
 namespace Entities;
-public class Question{
+public class Questions{
     public int Id{get;set;}
     public string Title{get;set;}
     public string A{get;set;}
@@ -7,10 +7,7 @@ public class Question{
     public string C{get;set;}
     public string D{get;set;}
     public int TestId{get;set;}
-<<<<<<< HEAD
     public int EvaluationCriteriaId{get;set;}
     public string Criteria{get;set;}
-=======
     public string AnswerKey{get;set;} 
->>>>>>> 05303380657fc2158d0599ea9c85c1de4a802f76
 }

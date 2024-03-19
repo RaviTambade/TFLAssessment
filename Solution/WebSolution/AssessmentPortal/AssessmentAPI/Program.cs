@@ -36,7 +36,7 @@ string allQuestionsByCategoryAPI="/{subject}/questions";
 string critearia ="/subject/{subject}/question/{qId}";
 string question ="questions/subjects/{subject}/questions/{questionid}";
 
-string allQuestionsByCategoryAPI="/questions/subjects/{subjectId}";
+//string allQuestionsByCategoryAPI="/questions/subjects/{subjectId}";
 string testSubjectCriteriaAPI = "/questions/subjects/{subjectId}/criterias/{criteriaId}";
 string  insertnewquestionurl="/question";
 
@@ -68,7 +68,7 @@ app.MapPost(apiCandateTestAnswersUrl,(int candidateId,List<CandidateAnswer> answ
 
 app.MapGet(apiQuestionsUrl,(int testId)=>{
     Console.WriteLine("API URL Test ID="+ testId);
-    List<Question> questions= manager.GetQuestions(testId);
+    List<Questions> questions= manager.GetQuestions(testId);
     return questions;
 });
 
@@ -113,11 +113,11 @@ app.MapGet(critearia,(string subject , int questionid)=>{
     
 });
 
-app.MapPost(insertnewquestionurl,(NewQuestion ques)=>{
-    bool status=manager. Insertquestion(ques);
-    return status;
+// app.MapPost(insertnewquestionurl,(NewQuestion ques)=>{
+//     bool status=manager. Insertquestion(ques);
+//     return status;
     
-    });
+//     });
 
 
 app.MapGet(testSubjectCriteriaAPI,(int subjectId,int criteriaId)=>{
@@ -128,7 +128,7 @@ app.MapGet(testSubjectCriteriaAPI,(int subjectId,int criteriaId)=>{
 
 app.MapGet(question,(string subject , int questionid)=>{
         
-        Question question = manager.GetQuestion(subject ,questionid);
+        Questions question = manager.GetQuestion(subject ,questionid);
        
         return question;
     
