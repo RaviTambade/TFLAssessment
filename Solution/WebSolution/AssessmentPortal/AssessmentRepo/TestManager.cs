@@ -1,9 +1,7 @@
 using MySql.Data.MySqlClient;
 using System.Data;
 using Assessment.Entities;
-
 namespace Assessment.Repositories;
-
 public class TestManager
 {
     private string connectionString = "server=localhost;port=3306;user=root;password=password;database=assessmentdb";
@@ -299,23 +297,23 @@ public class TestManager
             {
                 int id = int.Parse(reader["id"].ToString());
                 // TimeOnly duration=TimeOnly.Parse(reader["duration"]);
-                int skillId = int.Parse(reader["subjectid"].ToString());
+                int subjectId = int.Parse(reader["subjectid"].ToString());
                 int subjectExpertId = int.Parse(reader["smeid"].ToString());
-                DateTime createdOn =DateTime.Parse(reader["creationdate"].ToString());
-                DateTime modifiedOn =DateTime.Parse(reader["modificationdate"].ToString());
-                DateTime scheduledOn =DateTime.Parse(reader["scheduleddate"].ToString());
-                string skillTitle=reader["skill"].ToString();
+                DateTime creationDate =DateTime.Parse(reader["creationdate"].ToString());
+                DateTime modificationDate =DateTime.Parse(reader["modificationdate"].ToString());
+                DateTime scheduledDate =DateTime.Parse(reader["scheduleddate"].ToString());
+                string subject=reader["skill"].ToString();
                 string firstName=reader["firstname"].ToString();
                 string lastName=reader["lastname"].ToString();
 
                 Test test = new Test();
                 test.Id = id;
-                test.SubjectId = skillId;
+                test.SubjectId = subjectId;
                 test.SmeId = subjectExpertId;
-                test.CreationDate = createdOn;
-                test.ModificationDate = modifiedOn;
-                test.ScheduledDate = scheduledOn;
-                test.SkillTitle = skillTitle;
+                test.CreationDate = creationDate;
+                test.ModificationDate = modificationDate;
+                test.ScheduledDate = scheduledDate;
+                test.SkillTitle = subject;
                 test.FirstName=firstName;
                 test.LastName=lastName;   
                 tests.Add(test);
