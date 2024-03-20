@@ -3,6 +3,7 @@ using System.Data;
 using Entities;
 using Requests;
 using Repositories.Tests;
+
 //using Repositories.Tests1;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -26,15 +27,17 @@ string apiSubjectsUrl="/subjects";
 string apiCriteriaUrl="/criteria";
 string apiTestUrl="/tests";
 string apiCandateTestAnswersUrl="/answersheet/candidates/{candidateId}";
+string question ="/questions/subjects/{subject}/questions/{questionid}";
+
+string allQuestionsByCategoryAPI="/{subjectid}/questions";
+string allQuestionsAPI="/questions";
 string apiQuestionsUrl="/questions/tests/{testId}";
 string candidateTestResultUrl="/result/candidates/{candidateId}/test/{testId}";
 string testStartTimesettingUrl="/test/setstarttime";
 string testEndTimesettingUrl="/test/setendtime";
 
-string allQuestionsAPI="/questions";
-string allQuestionsByCategoryAPI="/{subjectid}/questions";
 string critearia ="/subject/{subject}/question/{questionId}";
-string question ="/questions/subjects/{subject}/questions/{questionid}";
+
 
 //string allQuestionsByCategoryAPI="/questions/subjects/{subjectId}";
 string testSubjectCriteriaAPI = "/questions/subjects/{subjectId}/criterias/{criteriaId}";
