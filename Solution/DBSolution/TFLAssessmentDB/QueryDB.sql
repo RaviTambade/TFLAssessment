@@ -60,6 +60,8 @@ AND questions.answerkey=candidateanswers.answerkey;
 -- get all employees who have answered  question id=1;
 
 select * from employees;
+select * from candidateanswers;
+select * from candidatetestresults;
 
 
  
@@ -162,3 +164,7 @@ insert into candidatetestresults(testid,teststarttime,candidateid) values (1,"20
 update candidatetestresults set testendtime =@testendtime where candidateid=@candidateid and testid=@testid;
 update candidatetestresults set testendtime ="2015-11-05 14:35:00" where candidateid=2 and testid=1;
 select * from candidatetestresults;
+select questionbank.id, questionbank.title, subjects.title as subject ,evaluationcriterias.title as criteria
+                            from questionbank, subjects,evaluationcriterias
+                            where questionbank.subjectid=subjects.id and questionbank.evaluationcriteriaid=evaluationcriterias.id
+                            and subjects.id=1 and evaluationcriterias.id=1;

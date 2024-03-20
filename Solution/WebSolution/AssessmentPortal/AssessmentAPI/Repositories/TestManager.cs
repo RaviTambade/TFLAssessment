@@ -424,62 +424,37 @@ public class TestManager
 }
 
 
-//     public bool UpdateTest( int testId ,Test test){
-//     bool status=false;
-//     MySqlConnection connection = new MySqlConnection(connectionString);
-//     string query = "update tests set scheduleddate =@scheduledOn where id=@testId";
+public bool Insertquestion(NewQuestion question){
+    bool status=false;
+    MySqlConnection connection = new MySqlConnection(connectionString);
+    string query = "insert into questionbank(subjectid, title, a, b, c, d, answerkey,evaluationcriteriaid) values (@skillid, @title, @a, @b, @c, @d, @answerkey, @evaluationcriteriaid)";
     
-//     MySqlCommand command = new MySqlCommand(query, connection);
-//     command.Parameters.AddWithValue("@testId", testId);
-//     command.Parameters.AddWithValue("@scheduledOn", test.ScheduledOn);
-//      try{ 
-//             connection.Open();
-//             int rowsAffected = command.ExecuteNonQuery();
-//             if (rowsAffected > 0)
-//             {
-//                 status = true;
-//             }
-//     }
-//     catch(Exception e){
-//        Console.WriteLine(e.Message);
-//     }
-//     finally{
-//         connection.Close();
-//     }
-//     return status;
-// }
+    MySqlCommand command = new MySqlCommand(query, connection);
 
-// public bool Insertquestion(NewQuestion ques){
-//     bool status=false;
-//     MySqlConnection connection = new MySqlConnection(connectionString);
-//     string query = "insert into questionbank(subjectid, title, a, b, c, d, answerkey,evaluationcriteriaid) values (@skillid, @title, @a, @b, @c, @d, @answerkey, @evacriid)";
+    command.Parameters.AddWithValue("@skillid",question.SubjectId);
+    command.Parameters.AddWithValue("@title",question.Title);
+    command.Parameters.AddWithValue("@a",question.A);
+    command.Parameters.AddWithValue("@b",question.B);
+    command.Parameters.AddWithValue("@c",question.C);
+    command.Parameters.AddWithValue("@d",question.D);
+    command.Parameters.AddWithValue("@answerkey",question.AnswerKey);
+    command.Parameters.AddWithValue("@evaluationcriteriaid",question.EvaluationCriteriaId);
     
-//     MySqlCommand command = new MySqlCommand(query, connection);
-
-//     command.Parameters.AddWithValue("@skillid",ques.SubjectId);
-//     command.Parameters.AddWithValue("@title",ques.Title);
-//     command.Parameters.AddWithValue("@a",ques.A);
-//     command.Parameters.AddWithValue("@b",ques.B);
-//     command.Parameters.AddWithValue("@c",ques.C);
-//     command.Parameters.AddWithValue("@d",ques.D);
-//     command.Parameters.AddWithValue("@answerkey",ques.AnswerKey);
-//     command.Parameters.AddWithValue("@evacriid",ques.EvaluationCriteriaId);
-    
-//      try{ 
-//             connection.Open();
-//             int rowsAffected = command.ExecuteNonQuery();
-//             if (rowsAffected > 0)
-//             {
-//                 status = true;
-//             }
-//     }
-//     catch(Exception e){
-//        Console.WriteLine(e.Message);
-//     }
-//     finally{
-//         connection.Close();
-//     }
-//     return status;
-// }
+     try{ 
+            connection.Open();
+            int rowsAffected = command.ExecuteNonQuery();
+            if (rowsAffected > 0)
+            {
+                status = true;
+            }
+    }
+    catch(Exception e){
+       Console.WriteLine(e.Message);
+    }
+    finally{
+        connection.Close();
+    }
+    return status;
+}
      
  
