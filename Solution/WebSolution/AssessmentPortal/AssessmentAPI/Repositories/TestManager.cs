@@ -261,6 +261,7 @@ public class TestManager
 
     public bool SetTestEndTime( int candidateId,int testId, TestTime time ){
     bool status=false;
+    
     MySqlConnection connection = new MySqlConnection(connectionString);
     string query = "update candidatetestresults set testendtime =@testendtime where candidateid=@candidateid and testid=@testid";
                
@@ -269,7 +270,7 @@ public class TestManager
     command.Parameters.AddWithValue("@candidateid", candidateId);
     command.Parameters.AddWithValue("@testid", testId);
     command.Parameters.AddWithValue("@testendtime", testTime);
-
+    Console.WriteLine(candidateId+" "+testId+" "+testTime);
      try{ 
             connection.Open();
             int rowsAffected = command.ExecuteNonQuery();
@@ -334,7 +335,7 @@ public class TestManager
     }
 
     public string GetCriteria(string subject ,int questionid){
-
+    Console.WriteLine(subject+" "+questionid);
       string criteria="";
         string query = @"select evaluationcriterias.title from evaluationcriterias INNER join questionbank on questionbank.evaluationcriteriaid=evaluationcriterias.id
            inner join subjects on questionbank.subjectid= evaluationcriterias.subjectid WHERE subjects.title=@subject and questionbank.id=@questionid";
@@ -371,7 +372,7 @@ public class TestManager
 
     public Questions GetQuestion(string subject,int questionid){
         Questions question =new();
-        string query = @" select questionbank.*,evaluationcriterias.title from evaluationcriterias INNER join questionbank on questionbank.evaluationcriteriaid=evaluationcriterias.id
+        string query = @" select questionbank.*,evaluationcriterias.title as criteria from evaluationcriterias INNER join questionbank on questionbank.evaluationcriteriaid=evaluationcriterias.id
         inner join subjects on questionbank.subjectid= evaluationcriterias.subjectid  WHERE subjects.title=@subject and questionbank.id=@questionid";
          
         MySqlConnection connection = new MySqlConnection(connectionString);
@@ -386,14 +387,14 @@ public class TestManager
             MySqlDataReader reader = command.ExecuteReader();
             if (reader.Read())
             {
-                int id = int.Parse(reader["qid"].ToString());
-                string title = reader["question"].ToString();
+                int id = int.Parse(reader["id"].ToString());
+                string title = reader["title"].ToString();
                 string a = reader["a"].ToString();
                 string b = reader["b"].ToString();
                 string c = reader["c"].ToString();
                 string d = reader["d"].ToString();
-                int evaluationCriteriaId=int.Parse(reader["evacriid"].ToString());
-                string criteariaTitle = reader["title"].ToString();
+                int evaluationCriteriaId=int.Parse(reader["evaluationcriteriaid"].ToString());
+                string criteariaTitle = reader["criteria"].ToString();
 
 
 

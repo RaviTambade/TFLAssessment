@@ -25,16 +25,16 @@ string apiEmployeesUrl="/employees";
 string apiSubjectsUrl="/subjects";
 string apiCriteriaUrl="/criteria";
 string apiTestUrl="/tests";
-string apiCandateTestAnswersUrl="/answersheet/candidates/{candidateId}/tests/{testId}";
+string apiCandateTestAnswersUrl="/answersheet/candidates/{candidateId}";
 string apiQuestionsUrl="/questions/tests/{testId}";
 string candidateTestResultUrl="/result/candidates/{candidateId}/test/{testId}";
 string testStartTimesettingUrl="/test/setstarttime";
 string testEndTimesettingUrl="/test/setendtime";
 
 string allQuestionsAPI="/questions";
-string allQuestionsByCategoryAPI="/{subject}/questions";
-string critearia ="/subject/{subject}/question/{qId}";
-string question ="questions/subjects/{subject}/questions/{questionid}";
+string allQuestionsByCategoryAPI="/{subjectid}/questions";
+string critearia ="/subject/{subject}/question/{questionId}";
+string question ="/questions/subjects/{subject}/questions/{questionid}";
 
 //string allQuestionsByCategoryAPI="/questions/subjects/{subjectId}";
 string testSubjectCriteriaAPI = "/questions/subjects/{subjectId}/criterias/{criteriaId}";
@@ -89,18 +89,18 @@ app.MapPut(testEndTimesettingUrl,( CandidateTestDetails testDetails)=>{
 
 
 app.MapGet(allQuestionsAPI,()=>{     
-        QuestionBank qBank=new QuestionBank();{
+        QuestionBank qBank=new QuestionBank();
         List<QuestionO> allQuestions = qBank.GetAllQuestions();
         return allQuestions;
-    }
+    
 });
 
 app.MapGet(allQuestionsByCategoryAPI,(int subjectId)=>{
          
-        QuestionBank qBank=new QuestionBank();{
+        QuestionBank qBank=new QuestionBank();
         List<SubjectQuestions> subjectWiseQuestions = qBank.GetSubjectWiseQuestions(subjectId);
         return subjectWiseQuestions;
-    }
+    
 });
 
 
