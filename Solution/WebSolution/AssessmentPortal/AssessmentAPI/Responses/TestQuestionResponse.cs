@@ -1,5 +1,6 @@
-namespace Entities;
-public class TestQuestion{
+namespace Assessment.Responses;
+
+public class TestQuestionResponse{
     public int Id{get;set;}
     public string Title{get;set;}
     public string A{get;set;}

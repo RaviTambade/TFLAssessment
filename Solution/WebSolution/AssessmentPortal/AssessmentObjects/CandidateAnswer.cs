@@ -1,5 +1,4 @@
-namespace Entities;
-
+namespace Assessment.Entities;
 public class CandidateAnswer
 {
 

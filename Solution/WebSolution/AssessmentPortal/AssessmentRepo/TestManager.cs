@@ -1,9 +1,8 @@
 using MySql.Data.MySqlClient;
 using System.Data;
-using Entities;
-using Requests;
+using Assessment.Entities;
 
-namespace Repositories.Tests;
+namespace Assessment.Repositories;
 
 public class TestManager
 {
@@ -114,7 +113,6 @@ public class TestManager
         }
         return criterias;
     }
-
 
     public int GetCandidateScore(int candidateId, int testId)
     {
@@ -412,8 +410,8 @@ public class TestManager
         return question;
     }
 
-
     public bool Insertquestion(NewQuestion question){
+        
         bool status=false;
         MySqlConnection connection = new MySqlConnection(connectionString);
         string query = "insert into questionbank(subjectid, title, a, b, c, d, answerkey,evaluationcriteriaid) values (@skillid, @title, @a, @b, @c, @d, @answerkey, @evaluationcriteriaid)";
@@ -444,6 +442,5 @@ public class TestManager
             connection.Close();
         }
         return status;
-    }
-    
+    }  
 }

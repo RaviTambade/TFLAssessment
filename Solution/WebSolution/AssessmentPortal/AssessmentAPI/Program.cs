@@ -1,8 +1,9 @@
 using MySql.Data.MySqlClient;
 using System.Data;
-using Entities;
+using Assessment.Entities;
+using Assessment.Repositories;
+
 using Requests;
-using Repositories.Tests;
 
 //using Repositories.Tests1;
 
@@ -43,7 +44,6 @@ string critearia ="/subject/{subject}/question/{questionId}";
 string testSubjectCriteriaAPI = "/questions/subjects/{subjectId}/criterias/{criteriaId}";
 string  insertnewquestionurl="/question";
 
-
 //API Listners
 app.MapGet(apiEmployeesUrl,()=>{
     List<Employee> employees = manager.GetAllEmployees();
@@ -80,50 +80,45 @@ app.MapGet(candidateTestResultUrl,(int candidateId,int testId )=>{
   return score;
 });
 
-app.MapPost(testStartTimesettingUrl,(CandidateTestDetails testDetails)=>{
-     bool status=manager.SetTestStartTime( testDetails.CandidateId,testDetails.TestId, testDetails.Time);
+app.MapPost(testStartTimesettingUrl,(CandidateTestTime test)=>{
+     bool status=manager.SetTestStartTime(test.CandidateId,test.TestId, test.Time);
      return status;
 });
 
-app.MapPut(testEndTimesettingUrl,( CandidateTestDetails testDetails)=>{
-     bool status=manager.SetTestEndTime( testDetails.CandidateId,testDetails.TestId, testDetails.Time);
+app.MapPut(testEndTimesettingUrl,( CandidateTestTime test)=>{
+     bool status=manager.SetTestEndTime(test.CandidateId,test.TestId, test.Time);
      return status;
 });
 
 
 app.MapGet(allQuestionsAPI,()=>{     
         QuestionBank qBank=new QuestionBank();
-        List<QuestionO> allQuestions = qBank.GetAllQuestions();
+        List<QuestionTitle> allQuestions = qBank.GetAllQuestions();
         return allQuestions;
-    
 });
 
 app.MapGet(allQuestionsByCategoryAPI,(int subjectId)=>{
-         
         QuestionBank qBank=new QuestionBank();
         List<SubjectQuestion> subjectWiseQuestions = qBank.GetSubjectWiseQuestions(subjectId);
         return subjectWiseQuestions;
-    
 });
 
 
 app.MapGet(critearia,(string subject , int questionid)=>{
-        
         string criteria = manager.GetCriteria(subject ,questionid);
         return criteria;
-    
 });
 
 app.MapPost(insertnewquestionurl,(NewQuestion ques)=>{
     bool status=manager.Insertquestion(ques);
     return status;
     
-    });
+});
 
 
 app.MapGet(testSubjectCriteriaAPI,(int subjectId,int criteriaId)=>{
         QuestionBank qBank=new QuestionBank();
-        List<SubjectQuestion> questions = qBank.GetSubjectCriteriaQuestions(subjectId,criteriaId);
+        List<QuestionDetails> questions = qBank.GetSubjectCriteriaQuestions(subjectId,criteriaId);
         return questions;
 });
 

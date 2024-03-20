@@ -1,4 +1,4 @@
-namespace Entities;
+namespace Assessment.Entities;
 
 public class Test
 {

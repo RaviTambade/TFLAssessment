@@ -1,5 +1,5 @@
 namespace Entities;
-public class SubjectQuestion{
+public class QuestionDetailsResponse{
     public int Id{get;set;}
     public string QuestionTitle{get;set;}
     public string SubjectTitle{get;set;}
