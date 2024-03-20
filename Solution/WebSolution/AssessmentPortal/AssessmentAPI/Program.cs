@@ -114,11 +114,11 @@ app.MapGet(critearia,(string subject , int questionid)=>{
     
 });
 
-// app.MapPost(insertnewquestionurl,(NewQuestion ques)=>{
-//     bool status=manager. Insertquestion(ques);
-//     return status;
+app.MapPost(insertnewquestionurl,(NewQuestion ques)=>{
+    bool status=manager.Insertquestion(ques);
+    return status;
     
-//     });
+    });
 
 
 app.MapGet(testSubjectCriteriaAPI,(int subjectId,int criteriaId)=>{
