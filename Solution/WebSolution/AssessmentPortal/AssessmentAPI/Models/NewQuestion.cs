@@ -1,7 +1,7 @@
 namespace Entities;
 public class NewQuestion{
-    public int SubjectId{get;set;}
     public int Id{get;set;}
+    public int SubjectId{get;set;}
     public string Title{get;set;}
     public string A{get;set;}
     public string B{get;set;}
