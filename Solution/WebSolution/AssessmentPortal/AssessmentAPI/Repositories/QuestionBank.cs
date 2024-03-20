@@ -25,12 +25,13 @@ public class QuestionBank
             while (reader.Read())
             {
                 int id = int.Parse(reader["id"].ToString());
-                string question = reader["title"].ToString();
+                string title = reader["title"].ToString();
          
-                QuestionO ques = new QuestionO();
-                ques.Id = id;
-                ques.Title = question;
-                questions.Add(ques);
+                QuestionO question = new QuestionO();
+
+                question.Id = id;
+                question.Title = title;
+                questions.Add(question);
             }
             reader.Close();
         }
@@ -43,20 +44,18 @@ public class QuestionBank
             connection.Close();
         }
         return questions;
-        Console.WriteLine(questions);
     }
 
-    public List<SubjectQuestions> GetSubjectWiseQuestions(int subjectId)
+    public List<SubjectQuestion> GetSubjectWiseQuestions(int subjectId)
     {
         
-        List<SubjectQuestions> swq = new List<SubjectQuestions>();
+        List<SubjectQuestion> questions = new List<SubjectQuestion>();
         
         string query = @"select questionbank.id, questionbank.title, subjects.title from questionbank, subjects where questionbank.subjectid=subjects.id and subjects.id=@subjectId";
          
         MySqlConnection connection = new MySqlConnection(connectionString);
         MySqlCommand command = new MySqlCommand(query, connection);
         command.Parameters.AddWithValue("@subjectId", subjectId);
-
         try
         {
             connection.Open();
@@ -68,12 +67,11 @@ public class QuestionBank
                 string subjectTitle = reader["title"].ToString();
                 
 
-                SubjectQuestions subjectQuestions= new SubjectQuestions();
-                subjectQuestions.Id=id;
-                subjectQuestions.QuestionTitle=questionTitle;
-                subjectQuestions.SubjectTitle=subjectTitle;
-                swq.Add(subjectQuestions);
-                Console.WriteLine(swq);
+                SubjectQuestion question= new SubjectQuestion();
+                question.Id=id;
+                question.QuestionTitle=questionTitle;
+                question.SubjectTitle=subjectTitle;
+                questions.Add(question);
             }
             reader.Close();
         }
@@ -85,13 +83,13 @@ public class QuestionBank
         {
             connection.Close();
         }
-        return swq;
+        return questions;
     }
 
-    public List<SubjectQuestions> GetSubjectCriteriaQuestions(int subjectId,int criteriaId)
+    public List<SubjectQuestion> GetSubjectCriteriaQuestions(int subjectId,int criteriaId)
     {
         
-        List<SubjectQuestions> subcrique = new List<SubjectQuestions>();
+        List<SubjectQuestion> questions = new List<SubjectQuestion>();
         
         string query = @"select questionbank.id, questionbank.title, subjects.title as subject ,evaluationcriterias.title as criteria
                             from questionbank, subjects,evaluationcriterias
@@ -115,14 +113,14 @@ public class QuestionBank
                 string subjectTitle = reader["subject"].ToString();
                 string criteriaTitle = reader["criteria"].ToString();
                 
+                SubjectQuestion question= new SubjectQuestion();
+                
+                question.Id=id;
+                question.QuestionTitle=questionTitle;
+                question.SubjectTitle=subjectTitle;
+                question.CriteriaTitle=criteriaTitle;
 
-                SubjectQuestions subjectQuestions= new SubjectQuestions();
-                subjectQuestions.Id=id;
-                subjectQuestions.QuestionTitle=questionTitle;
-                subjectQuestions.SubjectTitle=subjectTitle;
-                subjectQuestions.CriteriaTitle=criteriaTitle;
-                subcrique.Add(subjectQuestions);
-                Console.WriteLine(subcrique);
+                questions.Add(question);
             }
             reader.Close();
         }
@@ -134,6 +132,7 @@ public class QuestionBank
         {
             connection.Close();
         }
-        return subcrique;
+        return questions;
     }
+
 }

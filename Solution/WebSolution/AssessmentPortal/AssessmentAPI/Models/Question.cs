@@ -1,5 +1,5 @@
 namespace Entities;
-public class Questions{
+public class TestQuestion{
     public int Id{get;set;}
     public string Title{get;set;}
     public string A{get;set;}

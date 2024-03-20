@@ -7,7 +7,6 @@ namespace Repositories.Tests;
 
 public class TestManager
 {
-
     private string connectionString = "server=localhost;port=3306;user=root;password=password;database=assessmentdb";
  
     public List<Employee> GetAllEmployees()
@@ -148,10 +147,10 @@ public class TestManager
         return score;
     }
 
-    public List<Questions> GetQuestions(int testId)
+    public List<TestQuestion> GetQuestions(int testId)
     {
                
-        List<Questions> questions = new List<Questions>();
+        List<TestQuestion> questions = new List<TestQuestion>();
         string query = @"select * from questionbank inner join testquestions on testquestions.questionbankid = questionbank.id where testquestions.testid=@testId";
          
         MySqlConnection connection = new MySqlConnection(connectionString);
@@ -171,7 +170,7 @@ public class TestManager
                 string b = reader["b"].ToString();
                 string c = reader["c"].ToString();
                 string d = reader["d"].ToString();
-                Questions ques = new Questions();
+                TestQuestion ques = new TestQuestion();
                 ques.Id = id;
                 ques.Title = question;
                 ques.A = a;
@@ -240,8 +239,6 @@ public class TestManager
     command.Parameters.AddWithValue("@testid", testId);
     command.Parameters.AddWithValue("@candidateid", candidateId);
     command.Parameters.AddWithValue("@teststarttime", testTime);
-
-    
     try{
         connection.Open();
         int rowsAffected = command.ExecuteNonQuery();
@@ -370,8 +367,9 @@ public class TestManager
         return criteria;
     }
 
-    public Questions GetQuestion(string subject,int questionid){
-        Questions question =new();
+    public TestQuestion GetQuestion(string subject,int questionid){
+
+        TestQuestion question =null;
         string query = @" select questionbank.*,evaluationcriterias.title as criteria from evaluationcriterias INNER join questionbank on questionbank.evaluationcriteriaid=evaluationcriterias.id
         inner join subjects on questionbank.subjectid= evaluationcriterias.subjectid  WHERE subjects.title=@subject and questionbank.id=@questionid";
          
@@ -379,7 +377,6 @@ public class TestManager
         MySqlCommand command = new MySqlCommand(query, connection);
         command.Parameters.AddWithValue("@subject", subject);
         command.Parameters.AddWithValue("@questionid", questionid);
-
 
         try
         {
@@ -394,11 +391,9 @@ public class TestManager
                 string c = reader["c"].ToString();
                 string d = reader["d"].ToString();
                 int evaluationCriteriaId=int.Parse(reader["evaluationcriteriaid"].ToString());
-                string criteariaTitle = reader["criteria"].ToString();
+                string critearia = reader["criteria"].ToString();
 
-
-
-             question= new Questions();
+                question= new TestQuestion();
                 question.Id = id;
                 question.Title = title;
                 question.A = a;
@@ -406,8 +401,7 @@ public class TestManager
                 question.C = c;
                 question.D = d;
                 question.EvaluationCriteriaId = evaluationCriteriaId;
-                question.Criteria = criteariaTitle;
-            
+                question.Criteria = critearia;
             }
             reader.Close();
         }
@@ -421,40 +415,39 @@ public class TestManager
         }
         return question;
     }
-}
 
 
-public bool Insertquestion(NewQuestion question){
-    bool status=false;
-    MySqlConnection connection = new MySqlConnection(connectionString);
-    string query = "insert into questionbank(subjectid, title, a, b, c, d, answerkey,evaluationcriteriaid) values (@skillid, @title, @a, @b, @c, @d, @answerkey, @evaluationcriteriaid)";
+    public bool Insertquestion(NewQuestion question){
+        bool status=false;
+        MySqlConnection connection = new MySqlConnection(connectionString);
+        string query = "insert into questionbank(subjectid, title, a, b, c, d, answerkey,evaluationcriteriaid) values (@skillid, @title, @a, @b, @c, @d, @answerkey, @evaluationcriteriaid)";
+        
+        MySqlCommand command = new MySqlCommand(query, connection);
+
+        command.Parameters.AddWithValue("@skillid",question.SubjectId);
+        command.Parameters.AddWithValue("@title",question.Title);
+        command.Parameters.AddWithValue("@a",question.A);
+        command.Parameters.AddWithValue("@b",question.B);
+        command.Parameters.AddWithValue("@c",question.C);
+        command.Parameters.AddWithValue("@d",question.D);
+        command.Parameters.AddWithValue("@answerkey",question.AnswerKey);
+        command.Parameters.AddWithValue("@evaluationcriteriaid",question.EvaluationCriteriaId);
+        
+        try{ 
+                connection.Open();
+                int rowsAffected = command.ExecuteNonQuery();
+                if (rowsAffected > 0)
+                {
+                    status = true;
+                }
+        }
+        catch(Exception e){
+        Console.WriteLine(e.Message);
+        }
+        finally{
+            connection.Close();
+        }
+        return status;
+    }
     
-    MySqlCommand command = new MySqlCommand(query, connection);
-
-    command.Parameters.AddWithValue("@skillid",question.SubjectId);
-    command.Parameters.AddWithValue("@title",question.Title);
-    command.Parameters.AddWithValue("@a",question.A);
-    command.Parameters.AddWithValue("@b",question.B);
-    command.Parameters.AddWithValue("@c",question.C);
-    command.Parameters.AddWithValue("@d",question.D);
-    command.Parameters.AddWithValue("@answerkey",question.AnswerKey);
-    command.Parameters.AddWithValue("@evaluationcriteriaid",question.EvaluationCriteriaId);
-    
-     try{ 
-            connection.Open();
-            int rowsAffected = command.ExecuteNonQuery();
-            if (rowsAffected > 0)
-            {
-                status = true;
-            }
-    }
-    catch(Exception e){
-       Console.WriteLine(e.Message);
-    }
-    finally{
-        connection.Close();
-    }
-    return status;
 }
-     
- 

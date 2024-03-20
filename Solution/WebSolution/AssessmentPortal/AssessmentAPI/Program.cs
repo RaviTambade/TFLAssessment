@@ -71,7 +71,7 @@ app.MapPost(apiCandateTestAnswersUrl,(int candidateId,List<CandidateAnswer> answ
 
 app.MapGet(apiQuestionsUrl,(int testId)=>{
     Console.WriteLine("API URL Test ID="+ testId);
-    List<Questions> questions= manager.GetQuestions(testId);
+    List<TestQuestion> questions= manager.GetQuestions(testId);
     return questions;
 });
 
@@ -101,7 +101,7 @@ app.MapGet(allQuestionsAPI,()=>{
 app.MapGet(allQuestionsByCategoryAPI,(int subjectId)=>{
          
         QuestionBank qBank=new QuestionBank();
-        List<SubjectQuestions> subjectWiseQuestions = qBank.GetSubjectWiseQuestions(subjectId);
+        List<SubjectQuestion> subjectWiseQuestions = qBank.GetSubjectWiseQuestions(subjectId);
         return subjectWiseQuestions;
     
 });
@@ -123,16 +123,13 @@ app.MapPost(insertnewquestionurl,(NewQuestion ques)=>{
 
 app.MapGet(testSubjectCriteriaAPI,(int subjectId,int criteriaId)=>{
         QuestionBank qBank=new QuestionBank();
-        List<SubjectQuestions> subjectCriteriaQuestions = qBank.GetSubjectCriteriaQuestions(subjectId,criteriaId);
-        return subjectCriteriaQuestions;
+        List<SubjectQuestion> questions = qBank.GetSubjectCriteriaQuestions(subjectId,criteriaId);
+        return questions;
 });
 
 app.MapGet(question,(string subject , int questionid)=>{
-        
-        Questions question = manager.GetQuestion(subject ,questionid);
-       
+        TestQuestion question = manager.GetQuestion(subject ,questionid);
         return question;
-    
 });
 
 app.Run();
