@@ -30,7 +30,7 @@ string apiTestUrl="/tests";
 string apiCandateTestAnswersUrl="/answersheet/candidates/{candidateId}";
 string question ="/questions/subjects/{subject}/questions/{questionid}";
 
-string allQuestionsByCategoryAPI="/{subjectid}/questions";
+string allQuestionsBySubjectUrl="/questions/subjects/{subjectid}";
 string allQuestionsAPI="/questions";
 string apiQuestionsUrl="/questions/tests/{testId}";
 string candidateTestResultUrl="/result/candidates/{candidateId}/test/{testId}";
@@ -97,10 +97,10 @@ app.MapGet(allQuestionsAPI,()=>{
         return allQuestions;
 });
 
-app.MapGet(allQuestionsByCategoryAPI,(int subjectId)=>{
-        QuestionBank qBank=new QuestionBank();
-        List<SubjectQuestion> subjectWiseQuestions = qBank.GetSubjectWiseQuestions(subjectId);
-        return subjectWiseQuestions;
+app.MapGet(allQuestionsBySubjectUrl,(int subjectId)=>{
+        QuestionBank questionBank=new QuestionBank();
+        List<SubjectQuestion> questions = questionBank.GetQuestionsBySubject(subjectId);
+        return questions;
 });
 
 
@@ -117,8 +117,8 @@ app.MapPost(insertnewquestionurl,(NewQuestion ques)=>{
 
 
 app.MapGet(testSubjectCriteriaAPI,(int subjectId,int criteriaId)=>{
-        QuestionBank qBank=new QuestionBank();
-        List<QuestionDetails> questions = qBank.GetSubjectCriteriaQuestions(subjectId,criteriaId);
+        QuestionBank question=new QuestionBank();
+        List<QuestionDetails> questions = question.GetQuestionsBySubjectAndCriteria(subjectId,criteriaId);
         return questions;
 });
 

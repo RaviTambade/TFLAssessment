@@ -44,7 +44,7 @@ public class QuestionBank
         return questions;
     }
 
-    public List<SubjectQuestion> GetSubjectWiseQuestions(int id)
+    public List<SubjectQuestion> GetQuestionsBySubject(int id)
     {
         
         List<SubjectQuestion> questions = new List<SubjectQuestion>();
@@ -86,7 +86,7 @@ public class QuestionBank
         return questions;
     }
 
-    public List<QuestionDetails> GetSubjectCriteriaQuestions(int subjectId,int criteriaId)
+    public List<QuestionDetails> GetQuestionsBySubjectAndCriteria(int subjectId,int criteriaId)
     {
         
         List<QuestionDetails> questions = new List<QuestionDetails>();
