@@ -7,6 +7,6 @@ public class NewQuestion{
     public string B{get;set;}
     public string C{get;set;}
     public string D{get;set;}
-    public string AnswerKey{get;set;}
+    public char AnswerKey{get;set;}
     public int EvaluationCriteriaId{get;set;}
 }

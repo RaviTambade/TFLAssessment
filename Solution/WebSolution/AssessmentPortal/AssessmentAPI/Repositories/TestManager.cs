@@ -15,9 +15,10 @@ public class TestManager
         string query = "select * from employees";
 
         MySqlConnection connection = new MySqlConnection(connectionString);
+        MySqlCommand command = new MySqlCommand(query, connection);
+
         try
         { 
-            MySqlCommand command = new MySqlCommand(query, connection);
             connection.Open();
             MySqlDataReader reader = command.ExecuteReader();
             while (reader.Read())
@@ -27,13 +28,13 @@ public class TestManager
                 string lastName = reader["lastname"].ToString();
                 string contact = reader["contact"].ToString();
                 string email = reader["email"].ToString();
-                Employee emp = new Employee();
-                emp.Id = id;
-                emp.FirstName = firstName;
-                emp.LastName = lastName;
-                emp.Contact = contact;
-                emp.Email = email;
-                employees.Add(emp);
+                Employee employee = new Employee();
+                employee.Id = id;
+                employee.FirstName = firstName;
+                employee.LastName = lastName;
+                employee.Contact = contact;
+                employee.Email = email;
+                employees.Add(employee);
             }
             reader.Close();
         }
@@ -96,10 +97,10 @@ public class TestManager
             {
                 int id = int.Parse(reader["id"].ToString());
                 string title = reader["title"].ToString();
-                EvaluationCriteria evacri = new EvaluationCriteria();
-                evacri.Id = id;
-                evacri.Title = title;
-                criterias.Add(evacri);
+                EvaluationCriteria criteria = new EvaluationCriteria();
+                criteria.Id = id;
+                criteria.Title = title;
+                criterias.Add(criteria);
             }
             reader.Close();
         }
@@ -120,8 +121,6 @@ public class TestManager
         string query="spcandidatetestresult";
 
         MySqlConnection connection = new MySqlConnection(connectionString);
-       
-
         int score = 0;
         try
         {
@@ -165,20 +164,20 @@ public class TestManager
             {
                 int id = int.Parse(reader["id"].ToString());
                 int tId = int.Parse(reader["testid"].ToString());
-                string question = reader["title"].ToString();
+                string title = reader["title"].ToString();
                 string a = reader["a"].ToString();
                 string b = reader["b"].ToString();
                 string c = reader["c"].ToString();
                 string d = reader["d"].ToString();
-                TestQuestion ques = new TestQuestion();
-                ques.Id = id;
-                ques.Title = question;
-                ques.A = a;
-                ques.B = b;
-                ques.C = c;
-                ques.D = d;
-                ques.TestId = tId;
-                questions.Add(ques);
+                TestQuestion question = new TestQuestion();
+                question.Id = id;
+                question.Title = title;
+                question.A = a;
+                question.B = b;
+                question.C = c;
+                question.D = d;
+                question.TestId = tId;
+                questions.Add(question);
             }
             reader.Close();
         }
@@ -332,7 +331,6 @@ public class TestManager
     }
 
     public string GetCriteria(string subject ,int questionid){
-    Console.WriteLine(subject+" "+questionid);
       string criteria="";
         string query = @"select evaluationcriterias.title from evaluationcriterias INNER join questionbank on questionbank.evaluationcriteriaid=evaluationcriterias.id
            inner join subjects on questionbank.subjectid= evaluationcriterias.subjectid WHERE subjects.title=@subject and questionbank.id=@questionid";
@@ -343,8 +341,6 @@ public class TestManager
             MySqlCommand command = new MySqlCommand(query, connection);
             command.Parameters.AddWithValue("@subject",subject);
             command.Parameters.AddWithValue("@questionid",questionid);
-
-
             connection.Open();
             MySqlDataReader reader = command.ExecuteReader();
             if(reader.Read())
