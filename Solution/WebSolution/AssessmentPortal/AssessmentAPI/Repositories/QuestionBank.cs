@@ -13,7 +13,7 @@ public class QuestionBank
     public List<QuestionO> GetAllQuestions(){
         
         List<QuestionO> questions = new List<QuestionO>();
-        string query = @"select * from questions";
+        string query = @"select * from questionbank";
          
         MySqlConnection connection = new MySqlConnection(connectionString);
         MySqlCommand command = new MySqlCommand(query, connection);
@@ -24,8 +24,8 @@ public class QuestionBank
             MySqlDataReader reader = command.ExecuteReader();
             while (reader.Read())
             {
-                int id = int.Parse(reader["qid"].ToString());
-                string question = reader["question"].ToString();
+                int id = int.Parse(reader["id"].ToString());
+                string question = reader["title"].ToString();
          
                 QuestionO ques = new QuestionO();
                 ques.Id = id;
@@ -51,7 +51,7 @@ public class QuestionBank
         
         List<SubjectQuestions> swq = new List<SubjectQuestions>();
         
-        string query = @"select questions.qid, questions.question, technicalskills.title from questions, technicalskills where questions.skillid=technicalskills.techskid and technicalskills.techskid=@subjectId";
+        string query = @"select questionbank.id, questionbank.title, subjects.title from questionbank, subjects where questionbank.subjectid=subjects.id and subjects.id=@subjectId";
          
         MySqlConnection connection = new MySqlConnection(connectionString);
         MySqlCommand command = new MySqlCommand(query, connection);
@@ -63,8 +63,8 @@ public class QuestionBank
             MySqlDataReader reader = command.ExecuteReader();
             while (reader.Read())
             {
-                int id = int.Parse(reader["qid"].ToString());
-                string questionTitle = reader["question"].ToString();
+                int id = int.Parse(reader["id"].ToString());
+                string questionTitle = reader["title"].ToString();
                 string subjectTitle = reader["title"].ToString();
                 
 
@@ -93,10 +93,10 @@ public class QuestionBank
         
         List<SubjectQuestions> subcrique = new List<SubjectQuestions>();
         
-        string query = @"select questions.qid, questions.question, technicalskills.title as subject ,evaluationcriterias.title as criteria
-                            from questions, technicalskills,evaluationcriterias
-                            where questions.skillid=technicalskills.techskid and questions.evacriid=evaluationcriterias.evacriid
-                            and technicalskills.techskid=@subjectId and evaluationcriterias.evacriid=@criteriaId";
+        string query = @"select questionbank.id, questionbank.title, subjects.title as subject ,evaluationcriterias.title as criteria
+                            from questionbank, subjects,evaluationcriterias
+                            where questionbank.subjectid=subjects.id and questionbank.evaluationcriteriaid=evaluationcriterias.id
+                            and subjects.id=@subjectId and evaluationcriterias.id=@criteriaId";
          
         MySqlConnection connection = new MySqlConnection(connectionString);
         MySqlCommand command = new MySqlCommand(query, connection);
@@ -110,8 +110,8 @@ public class QuestionBank
             MySqlDataReader reader = command.ExecuteReader();
             while (reader.Read())
             {
-                int id = int.Parse(reader["qid"].ToString());
-                string questionTitle = reader["question"].ToString();
+                int id = int.Parse(reader["id"].ToString());
+                string questionTitle = reader["title"].ToString();
                 string subjectTitle = reader["subject"].ToString();
                 string criteriaTitle = reader["criteria"].ToString();
                 
