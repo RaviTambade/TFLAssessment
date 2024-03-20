@@ -255,13 +255,13 @@ public class TestManager
     bool status=false;
     
     MySqlConnection connection = new MySqlConnection(connectionString);
-    string query = "update candidatetestresults set testendtime =@testendtime where candidateid=@candidateid and testid=@testid";
+    string query = "update candidatetestresults set testendtime =@testEndTime where candidateid=@candidateId and testid=@testId";
                
     var testTime = time.Year +"-"+time.Month+"-"+time.Day+"T"+time.Hour+":"+time.Minutes+":"+time.Seconds;
     MySqlCommand command = new MySqlCommand(query, connection);
-    command.Parameters.AddWithValue("@candidateid", candidateId);
-    command.Parameters.AddWithValue("@testid", testId);
-    command.Parameters.AddWithValue("@testendtime", testTime);
+    command.Parameters.AddWithValue("@candidateId", candidateId);
+    command.Parameters.AddWithValue("@testId", testId);
+    command.Parameters.AddWithValue("@testEndTime", testTime);
     Console.WriteLine(candidateId+" "+testId+" "+testTime);
      try{ 
             connection.Open();
@@ -309,43 +309,41 @@ public class TestManager
                 Test test = new Test();
                 test.Id = id;
                 test.SubjectId = subjectId;
-                test.SmeId = subjectExpertId;
+                test.SubjectExpertId = subjectExpertId;
                 test.CreationDate = creationDate;
                 test.ModificationDate = modificationDate;
                 test.ScheduledDate = scheduledDate;
-                test.SkillTitle = subject;
+                test.Subject = subject;
                 test.FirstName=firstName;
                 test.LastName=lastName;   
                 tests.Add(test);
             }
         }
        catch(Exception e){
-       Console.WriteLine(e.Message);
-       
+            throw e; 
        }
        return tests;
     }
 
-    public string GetCriteria(string subject ,int questionid){
+    public string GetCriteria(string subject ,int questionId){
       string criteria="";
         string query = @"select evaluationcriterias.title from evaluationcriterias INNER join questionbank on questionbank.evaluationcriteriaid=evaluationcriterias.id
-           inner join subjects on questionbank.subjectid= evaluationcriterias.subjectid WHERE subjects.title=@subject and questionbank.id=@questionid";
+                       inner join subjects on questionbank.subjectid= evaluationcriterias.subjectid WHERE subjects.title=@subject and questionbank.id=@questionId";
 
         MySqlConnection connection = new MySqlConnection(connectionString);
         try
         { 
             MySqlCommand command = new MySqlCommand(query, connection);
             command.Parameters.AddWithValue("@subject",subject);
-            command.Parameters.AddWithValue("@questionid",questionid);
+            command.Parameters.AddWithValue("@questionId",questionId);
             connection.Open();
             MySqlDataReader reader = command.ExecuteReader();
             if(reader.Read())
             {
                
-              string   title = reader["title"].ToString();
+               string   title = reader["title"].ToString();
                criteria=title;
-                }
-               
+            }             
             reader.Close();
         }
         catch (Exception e)
@@ -363,12 +361,12 @@ public class TestManager
 
         TestQuestion question =null;
         string query = @" select questionbank.*,evaluationcriterias.title as criteria from evaluationcriterias INNER join questionbank on questionbank.evaluationcriteriaid=evaluationcriterias.id
-        inner join subjects on questionbank.subjectid= evaluationcriterias.subjectid  WHERE subjects.title=@subject and questionbank.id=@questionid";
+        inner join subjects on questionbank.subjectid= evaluationcriterias.subjectid  WHERE subjects.title=@subject and questionbank.id=@questionId";
          
         MySqlConnection connection = new MySqlConnection(connectionString);
         MySqlCommand command = new MySqlCommand(query, connection);
         command.Parameters.AddWithValue("@subject", subject);
-        command.Parameters.AddWithValue("@questionid", questionid);
+        command.Parameters.AddWithValue("@questionId", questionid);
 
         try
         {
@@ -383,7 +381,7 @@ public class TestManager
                 string c = reader["c"].ToString();
                 string d = reader["d"].ToString();
                 int evaluationCriteriaId=int.Parse(reader["evaluationcriteriaid"].ToString());
-                string critearia = reader["criteria"].ToString();
+                string criteria = reader["criteria"].ToString();
 
                 question= new TestQuestion();
                 question.Id = id;
@@ -393,7 +391,7 @@ public class TestManager
                 question.C = c;
                 question.D = d;
                 question.EvaluationCriteriaId = evaluationCriteriaId;
-                question.Criteria = critearia;
+                question.Criteria = criteria;
             }
             reader.Close();
         }
@@ -412,18 +410,18 @@ public class TestManager
         
         bool status=false;
         MySqlConnection connection = new MySqlConnection(connectionString);
-        string query = "insert into questionbank(subjectid, title, a, b, c, d, answerkey,evaluationcriteriaid) values (@skillid, @title, @a, @b, @c, @d, @answerkey, @evaluationcriteriaid)";
+        string query = "insert into questionbank(subjectid, title, a, b, c, d, answerkey,evaluationcriteriaid) values (@subjectId, @title, @a, @b, @c, @d, @answerKey, @evaluationCriteriaId)";
         
         MySqlCommand command = new MySqlCommand(query, connection);
 
-        command.Parameters.AddWithValue("@skillid",question.SubjectId);
+        command.Parameters.AddWithValue("@subjectId",question.SubjectId);
         command.Parameters.AddWithValue("@title",question.Title);
         command.Parameters.AddWithValue("@a",question.A);
         command.Parameters.AddWithValue("@b",question.B);
         command.Parameters.AddWithValue("@c",question.C);
         command.Parameters.AddWithValue("@d",question.D);
-        command.Parameters.AddWithValue("@answerkey",question.AnswerKey);
-        command.Parameters.AddWithValue("@evaluationcriteriaid",question.EvaluationCriteriaId);
+        command.Parameters.AddWithValue("@answerKey",question.AnswerKey);
+        command.Parameters.AddWithValue("@evaluationCriteriaId",question.EvaluationCriteriaId);
         
         try{ 
                 connection.Open();
