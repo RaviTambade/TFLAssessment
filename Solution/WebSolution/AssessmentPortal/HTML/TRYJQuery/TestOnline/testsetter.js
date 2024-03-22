@@ -87,17 +87,17 @@ $(document).ready(function () {
             console.log(data);
 
             questionsList.map((question) => {
-                console.log(question.questionTitle);
+                console.log(question.question);
                 $('#questions').append(
                     $(document.createElement('input')).prop({
-                        id: question.id,
-                        value: question.questionTitle,
+                        id: question.questionId,
+                        value: question.question,
                         type: 'checkbox'
                     })
                 ).append(
                     $(document.createElement('h6')).prop({
-                        for: question.id
-                    }).html(question.id + " " + question.questionTitle + " " + question.subjectTitle)
+                        for: question.questionId
+                    }).html(question.questionId + " " + question.question + " " + question.subject)
                 ).append(document.createElement('br'));
 
             })
@@ -110,6 +110,8 @@ $(document).ready(function () {
         $('#questions').empty();
         var subjectId = $("#ddlSubjects").val();
         var criteriaId = $("#ddlTestCritiria").val();
+        console.log(subjectId);
+        console.log(criteriaId);
         var url = remoteWeb + "/questions/subjects/" + subjectId + "/criterias/"+criteriaId
         console.log(url);
         $.get(url, function (data, status) {
@@ -117,17 +119,17 @@ $(document).ready(function () {
             console.log(data);
 
             questionsList.map((question) => {
-                console.log(question.questionTitle);
+                console.log(question.question);
                 $('#questions').append(
                     $(document.createElement('input')).prop({
                         id: question.id,
-                        value: question.questionTitle,
+                        value: question.question,
                         type: 'checkbox'
                     })
                 ).append(
                     $(document.createElement('h6')).prop({
                         for: question.id
-                    }).html(question.id + " " + question.questionTitle + " " + question.subjectTitle)
+                    }).html(question.id + " " + question.question + " " + question.subject)
                 ).append(document.createElement('br'));
 
             })
@@ -142,13 +144,13 @@ $(document).ready(function () {
             $('#container').append(
                 $(document.createElement('input')).prop({
                     id: question.id,
-                    value: question.questionTitle,
+                    value: question.question,
                     type: 'checkbox'
                 })
             ).append(
                 $(document.createElement('label')).prop({
                     for: question.id
-                }).html(question.questionTitle)
+                }).html(question.question)
             ).append(document.createElement('br'));
         })
     })
