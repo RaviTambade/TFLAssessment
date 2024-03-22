@@ -16,14 +16,14 @@ $(document).ready(function(){
         var evaluationCriteriaId = $("#evaluationCriteriaId").val();
 
         var newQuestion = {
-                          "skillId":skillId,
+                          "subjectId":skillId,
                           "title": question,
                           "a": optionA,
                           "b": optionB,
                           "c": optionC,
                           "d": optionD,
                           "answerKey": correctOption,
-                          "evaCriId":evaluationCriteriaId
+                          "evaluationCriteriaId":evaluationCriteriaId
                       };
       
         console.log("skillid: " + skillId);

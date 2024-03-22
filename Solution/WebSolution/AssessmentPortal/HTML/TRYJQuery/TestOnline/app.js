@@ -9,8 +9,8 @@ var intervalId ;
 var remainingTime=60;
 var score;
 
-var testId=1;
-var candidateId = 3;
+var testId=3;
+var candidateId = 6;
 
 //rest api urls
 var remoteWeb="http://localhost:5238"
@@ -94,7 +94,7 @@ $(document).ready(function () {
     })
     var endTime=getCurrentDateTime();
     
-    let evaluateUrl = candidateanswersurl+candidateId+"/tests/"+testId;
+    let evaluateUrl = candidateanswersurl+candidateId;
     $.ajax({
             url: evaluateUrl,
             type: 'POST',
