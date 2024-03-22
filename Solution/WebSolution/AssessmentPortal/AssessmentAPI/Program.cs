@@ -3,9 +3,6 @@ using System.Data;
 using Assessment.Entities;
 using Assessment.Repositories;
 
-using Requests;
-
-//using Repositories.Tests1;
 
 var builder = WebApplication.CreateBuilder(args);
 
