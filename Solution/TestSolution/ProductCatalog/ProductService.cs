@@ -8,8 +8,14 @@ public class ProductService
 
     public Product CreateProduct(string name, double price)
     {
-        var product = new Product { Id = _nextId++, Name = name, Price = price };
+        var product = new Product { 
+            Id = _nextId++,
+            Name = name, 
+            Price = price 
+        };
+        
         _products.Add(product);
+        
         return product;
     }
 

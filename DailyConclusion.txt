@@ -185,5 +185,51 @@ Dotnet CLI:
 3)How to generate Array of JSON Object and JSON manipulation.
 4)Use fo .filter(), .map() of array.
 
- 
- 
+
+
+12/3/2024
+	Basic HTML for Test Navigation
+	Progress Bar
+
+13/3/2024
+	Setting timer
+	Score calculation
+	data base updation
+
+14/3/2024
+
+	Dabase Query+
+	Test Answser
+	Addition of extra fields to tables
+
+15/3/2024 
+	Subject , Test
+	HTML, jQuery  navigation
+	Bootstrap 
+	Complete working Test Appearing
+
+16/3/2024
+	HTML + jQuery
+	Criteria
+	Interview  functionality
+
+18/3/2024
+	Database Restructuring 
+
+19/3/3024
+	Repository Restructuing
+
+20/3/2024
+
+	Web API Restructuring
+
+21/3/2024
+	Software Testing
+	Unit testing
+	Nunit Framework
+
+22/3/2024
+	Testing all HTML pages with working
+	Interaction with Shrinivas Muzumdar
+	Cleaning unnecessary HTML files and folder
+	
