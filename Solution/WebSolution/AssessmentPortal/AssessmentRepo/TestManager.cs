@@ -439,4 +439,37 @@ public class TestManager
         }
         return status;
     }  
+
+
+    public bool UpdateCriteria(int evaluationCriteriaId,int questionId){
+        
+        bool status=false;
+        MySqlConnection connection = new MySqlConnection(connectionString);
+        string query = "update questionbank set evaluationcriteriaid=@evaluationCriteriaId where id=@questionId";
+        
+        MySqlCommand command = new MySqlCommand(query, connection);
+
+        command.Parameters.AddWithValue("@evaluationCriteriaId",evaluationCriteriaId);
+        command.Parameters.AddWithValue("@questionId",questionId);
+        
+        try{ 
+                connection.Open();
+                int rowsAffected = command.ExecuteNonQuery();
+                if (rowsAffected > 0)
+                {
+                    status = true;
+                }
+        }
+        catch(Exception e){
+        Console.WriteLine(e.Message);
+        }
+        finally{
+            connection.Close();
+        }
+        return status;
+    }  
 }
+
+
+
+

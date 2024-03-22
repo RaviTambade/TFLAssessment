@@ -37,7 +37,9 @@ string candidateTestResultUrl="/result/candidates/{candidateId}/test/{testId}";
 string testStartTimesettingUrl="/test/setstarttime";
 string testEndTimesettingUrl="/test/setendtime";
 
+
 string criteria ="/subject/{subject}/question/{questionId}";
+string UpdateCriteria="/";
 
 
 //string allQuestionsByCategoryAPI="/questions/subjects/{subjectId}";
@@ -125,6 +127,13 @@ app.MapGet(testSubjectCriteriaAPI,(int subjectId,int criteriaId)=>{
 app.MapGet(question,(string subject , int questionid)=>{
         TestQuestion question = manager.GetQuestion(subject ,questionid);
         return question;
+});
+
+
+app.MapPut(UpdateCriteria,(int evaluationCriteriaId,int questionId)=>{
+    bool status=manager.UpdateCriteria(evaluationCriteriaId,questionId);
+    return status;
+    
 });
 
 app.Run();
