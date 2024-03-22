@@ -17,7 +17,7 @@ $(document).ready(function(){
             console.log(tests);
             var tblTest = $("#tblTest")
             for (var i = 0; i < tests.length; i++) {
-                tblTest.append("<tr><td>"+tests[i].id+"</td><td>"+tests[i].scheduledOn +"</td><td>"+tests[i].skillTitle+"</td><td>"+tests[i].firstName+" "+tests[i].lastName+"</td><td><button onClick=>Details</button></td></tr>" );
+                tblTest.append("<tr><td>"+tests[i].id+"</td><td>"+tests[i].scheduledDate +"</td><td>"+tests[i].subject+"</td><td>"+tests[i].firstName+" "+tests[i].lastName+"</td><td><button onClick=>Details</button></td></tr>" );
             }
         },
         error: function (xhr, status, error) {
