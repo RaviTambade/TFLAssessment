@@ -1,13 +1,10 @@
 
-
 var remoteWeb = "http://localhost:5238"
 var questionsurl = remoteWeb + "/questions/"
 var subjectsurl = remoteWeb + "/subjects";
 var criteriaurl = remoteWeb+"/criteria";
 var questionsList;
 var subjects;
-
-
 
 $(document).ready(function () {
 
@@ -24,8 +21,7 @@ $(document).ready(function () {
             var lstSubject = $("#ddlSubjects")
             for (var i = 0; i < subjects.length; i++) {
                 lstSubject.append($('<option></option>').val(subjects[i].id).html(subjects[i].title));
-            }
-         
+            }       
         },
         error: function (xhr, status, error) {
             console.error(xhr.responseText);
