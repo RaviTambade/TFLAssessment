@@ -112,6 +112,46 @@ public class TestManager
         return criterias;
     }
 
+    
+    public List<EvaluationCriteria> GetEvalutionCriteriasBySubject(int subjectId)
+    {
+        List<EvaluationCriteria> criterias = new List<EvaluationCriteria>();
+        string query = @"select * from evaluationcriterias WHERE subjectid=@subjectId";
+
+        MySqlConnection connection = new MySqlConnection(connectionString);
+        MySqlCommand command = new MySqlCommand(query, connection);
+        command.Parameters.AddWithValue("@subjectId", subjectId);
+        try
+        {  
+            connection.Open();
+            MySqlDataReader reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                int id = int.Parse(reader["id"].ToString());
+                string title = reader["title"].ToString();
+
+                EvaluationCriteria criteria = new EvaluationCriteria();
+                criteria.Id = id;
+                criteria.Title = title;
+
+                Console.WriteLine(criteria.Id + "  "+ criteria.Title);
+
+                criterias.Add(criteria);
+            }
+            reader.Close();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+        finally
+        {
+            connection.Close();
+        }
+        return criterias;
+    }
+
+
     public int GetCandidateScore(int candidateId, int testId)
     {
         string query="spcandidatetestresult";

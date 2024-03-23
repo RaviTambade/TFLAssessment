@@ -43,6 +43,10 @@ string UpdateCriteria="/";
 string testSubjectCriteriaAPI = "/questions/subjects/{subjectId}/criterias/{criteriaId}";
 string  insertnewquestionurl="/question";
 
+
+string criteriaBySubjectUrl="/criterias/subjects/{subjectId}";
+
+
 //API Listners
 app.MapGet(apiEmployeesUrl,()=>{
     List<Employee> employees = manager.GetAllEmployees();
@@ -53,10 +57,17 @@ app.MapGet(apiSubjectsUrl,()=>{
    List<Subject> subjects = manager.GetAllSubjects();
    return subjects;
 });
+
 app.MapGet(apiCriteriaUrl,()=>{
-   List<EvaluationCriteria> evaluationcriteria = manager.GetEvalutionCriterias();
-   return evaluationcriteria;
+   List<EvaluationCriteria> evaluationCriterias = manager.GetEvalutionCriterias();
+   return evaluationCriterias;
 });
+
+app.MapGet(criteriaBySubjectUrl,(int subjectId)=>{
+   List<EvaluationCriteria> evaluationCriterias = manager.GetEvalutionCriteriasBySubject(subjectId);
+   return evaluationCriterias;
+});
+
 
 app.MapGet(apiTestUrl,()=>{
    List<Test> tests = manager.GetAllTests();
