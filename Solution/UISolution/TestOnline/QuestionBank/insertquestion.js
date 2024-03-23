@@ -4,6 +4,8 @@ var criteriaApi = api + "/criterias";
 var subjects = [];
 var criterias = [];
 var question = [];
+var subjectId;
+var criteriaId;
 $(document).ready(function () {
 
   var insertquestionurl = "http://localhost:5238/question";
@@ -51,9 +53,8 @@ $(document).ready(function () {
   $("#ddlSubjects").change(function () {
     $('#ddlCriterias').empty();
 
-    var subjectId = $("#ddlSubjects").val();
-    question["subjectId"]=subjectId;
-    console.log(question);
+    subjectId = $("#ddlSubjects").val();
+    console.log(subjectId);
 
     var apiCriteriasBySubject = criteriaApi + "/subjects/" + subjectId;
     $.ajax({
@@ -66,42 +67,26 @@ $(document).ready(function () {
         for (var i = 0; i < criterias.length; i++) {
           lstCriteria.append($('<option></option>').val(criterias[i].id).html(criterias[i].title));
         }
-        var criteriaId = $("#ddlCriterias").val();
-        question["criteriaId"]=criteriaId;
-        console.log(question);
+        criteriaId = $("#ddlCriterias").val();
+        console.log(criteriaId);
       },
       error: function (xhr, status, error) {
         console.error(xhr.responseText);
       }
-
     });
-    var title = $("#question").val();
-    var optionA = $("#A").val();
-    var optionB = $("#B").val();
-    var optionC = $("#C").val();
-    var optionD = $("#D").val();
-    var correctOption = $("#correctOption").val();
-    myArray.push({ key: "key1", value: "value1" });
-    question.push({key: "subjectId", value: subjectId},
-                  {key: "criteriaId", value: criteriaId},
-                  {key: "title", value: title},
-                  {key: "optionA", value: optionA},
-                  {key: "optionB", value: optionB},
-                  {key: "optionB", value: optionB}, );
-    console.log(question);
   });
 
 
 
   $("#insertButton").click(function () {
-    var skillId = $("#skillId").val();
+    var skillId = subjectId;
     var question = $("#question").val();
     var optionA = $("#A").val();
     var optionB = $("#B").val();
     var optionC = $("#C").val();
     var optionD = $("#D").val();
     var correctOption = $("#correctOption").val();
-    var evaluationCriteriaId = $("#evaluationCriteriaId").val();
+    var evaluationCriteriaId = criteriaId;
 
     var newQuestion = {
       "subjectId": skillId,
