@@ -1,8 +1,15 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using Assessment.Models;
 
 namespace Assessment.Controllers;
+public class Assessment
+{
+    public int Id { get; set; }
+    public string Title { get; set; }
+    public string Description { get; set; }
+    public DateTime Date { get; set; }
+}
+
 
 [ApiController]
 [Route("api/[controller]")]

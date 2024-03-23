@@ -21,7 +21,7 @@ namespace Asssessment.Tests
         public async Task Get_EndpointReturnsSuccessAndCorrectContentType()
         {
             // Act
-            var response = await _client.GetAsync("/api/assessment");
+            var response = await _client.GetAsync("/api/assessments");
 
             // Assert
             response.EnsureSuccessStatusCode(); // Status Code 200-299
