@@ -11,6 +11,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProductCatalog", "ProductCa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MathsAPI", "MathsAPI\MathsAPI.csproj", "{3E097155-1146-4064-AFE4-66615D4D19B3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TAPUnitTestApp", "TAPUnitTestApp\TAPUnitTestApp.csproj", "{6A2C92EB-F210-40E5-94B8-0F4465446E16}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalculatorLib", "CalculatorLib\CalculatorLib.csproj", "{5C9D6703-294E-441F-8D08-1C4C4D29481F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -40,5 +44,13 @@ Global
 		{3E097155-1146-4064-AFE4-66615D4D19B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3E097155-1146-4064-AFE4-66615D4D19B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3E097155-1146-4064-AFE4-66615D4D19B3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6A2C92EB-F210-40E5-94B8-0F4465446E16}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A2C92EB-F210-40E5-94B8-0F4465446E16}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A2C92EB-F210-40E5-94B8-0F4465446E16}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A2C92EB-F210-40E5-94B8-0F4465446E16}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5C9D6703-294E-441F-8D08-1C4C4D29481F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C9D6703-294E-441F-8D08-1C4C4D29481F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C9D6703-294E-441F-8D08-1C4C4D29481F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C9D6703-294E-441F-8D08-1C4C4D29481F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

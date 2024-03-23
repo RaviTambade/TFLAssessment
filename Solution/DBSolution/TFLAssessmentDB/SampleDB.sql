@@ -33,10 +33,27 @@ INSERT INTO subjectmatterexperts(employeeid,subjectid,certificationdate)VALUES(4
 
 
 INSERT INTO evaluationcriterias(title,subjectid) VALUES('OOPS',1);
+INSERT INTO evaluationcriterias(title,subjectid) VALUES('Collection',1);
+INSERT INTO evaluationcriterias(title,subjectid) VALUES('Reflection',1);
+INSERT INTO evaluationcriterias(title,subjectid) VALUES('IO',1);
+INSERT INTO evaluationcriterias(title,subjectid) VALUES('DataAccess',1);
 INSERT INTO evaluationcriterias(title,subjectid) VALUES('Multithreading',1);
-INSERT INTO evaluationcriterias(title,subjectid) VALUES('Loops',1);
+
 INSERT INTO evaluationcriterias(title,subjectid) VALUES('HyberNet',2);
 INSERT INTO evaluationcriterias(title,subjectid) VALUES('Spring Boot',2);
+
+INSERT INTO evaluationcriterias(title,subjectid) VALUES('JPA',2);
+INSERT INTO evaluationcriterias(title,subjectid) VALUES('Kafka',2);
+INSERT INTO evaluationcriterias(title,subjectid) VALUES('Messaging',2);
+INSERT INTO evaluationcriterias(title,subjectid) VALUES('OOPS',3);
+INSERT INTO evaluationcriterias(title,subjectid) VALUES('Collection',3);
+INSERT INTO evaluationcriterias(title,subjectid) VALUES('Reflection',3);
+INSERT INTO evaluationcriterias(title,subjectid) VALUES('IO',3);
+INSERT INTO evaluationcriterias(title,subjectid) VALUES('DataAccess',3);
+INSERT INTO evaluationcriterias(title,subjectid) VALUES('Multithreading',3);
+
+
+
 INSERT INTO evaluationcriterias(title,subjectid) VALUES('JSON',5);
 INSERT INTO evaluationcriterias(title,subjectid) VALUES('Components',6);
 INSERT INTO evaluationcriterias(title,subjectid) VALUES('OOPS',7);

@@ -3,46 +3,61 @@ using System.Data;
 using Assessment.Entities;
 using Assessment.Repositories;
 
-using Requests;
-
-//using Repositories.Tests1;
-
 var builder = WebApplication.CreateBuilder(args);
+//services configuration
 
-//adding services to builder
+
 builder.Services.AddCors();
+builder.Services.AddControllersWithViews();
+builder.Services.AddRazorPages();
 
-//Core Application
+builder.Services.AddControllers();
+
 var app = builder.Build();
-
-//asp.net core middleware
-//Setting CORS Policy 
 app.UseCors(options => options.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
-  
-TestManager manager = new TestManager();
+//app.UseHttpsRedirection();
+app.UseStaticFiles();
+app.UseRouting();
+app.UseAuthorization();
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllerRoute(
+        name: "default",
+        pattern: "{controller=Home}/{action=Index}/{id?}");
+    endpoints.MapRazorPages();
+
+    endpoints.MapControllers(); // Map Minimal Web API endpoints
+});
+
+
 
 //REST API URL;
-
 string apiEmployeesUrl="/employees";
-string apiSubjectsUrl="/subjects";
-string apiCriteriaUrl="/criteria";
-string apiTestUrl="/tests";
 string apiCandateTestAnswersUrl="/answersheet/candidates/{candidateId}";
-string question ="/questions/subjects/{subject}/questions/{questionid}";
-
-string allQuestionsBySubjectUrl="/questions/subjects/{subjectid}";
 string allQuestionsAPI="/questions";
 string apiQuestionsUrl="/questions/tests/{testId}";
-string candidateTestResultUrl="/result/candidates/{candidateId}/test/{testId}";
-string testStartTimesettingUrl="/test/setstarttime";
-string testEndTimesettingUrl="/test/setendtime";
+string question ="/questions/subjects/{subject}/questions/{questionid}";
+string allQuestionsBySubjectUrl="/questions/subjects/{subjectid}";
+string testSubjectCriteriaAPI = "/questions/subjects/{subjectId}/criterias/{criteriaId}";
+string  insertnewquestionurl="/question";
 
+string candidateTestResultUrl="/result/candidates/{candidateId}/test/{testId}";
+
+string apiSubjectsUrl="/subjects";
 string criteria ="/subject/{subject}/question/{questionId}";
 
 
 //string allQuestionsByCategoryAPI="/questions/subjects/{subjectId}";
-string testSubjectCriteriaAPI = "/questions/subjects/{subjectId}/criterias/{criteriaId}";
-string  insertnewquestionurl="/question";
+
+string apiTestUrl="/tests";
+string testStartTimesettingUrl="/test/setstarttime";
+string testEndTimesettingUrl="/test/setendtime";
+
+string apiCriteriaUrl="/criteria";
+string criteriaBySubjectUrl="/criterias/subjects/{subjectId}";
+string UpdateCriteria="/";
+
+TestManager manager = new TestManager();
 
 //API Listners
 app.MapGet(apiEmployeesUrl,()=>{
@@ -54,9 +69,15 @@ app.MapGet(apiSubjectsUrl,()=>{
    List<Subject> subjects = manager.GetAllSubjects();
    return subjects;
 });
+
 app.MapGet(apiCriteriaUrl,()=>{
-   List<EvaluationCriteria> evaluationcriteria = manager.GetEvalutionCriterias();
-   return evaluationcriteria;
+   List<EvaluationCriteria> evaluationCriterias = manager.GetEvalutionCriterias();
+   return evaluationCriterias;
+});
+
+app.MapGet(criteriaBySubjectUrl,(int subjectId)=>{
+   List<EvaluationCriteria> evaluationCriterias = manager.GetEvalutionCriteriasBySubject(subjectId);
+   return evaluationCriterias;
 });
 
 app.MapGet(apiTestUrl,()=>{
@@ -125,6 +146,13 @@ app.MapGet(testSubjectCriteriaAPI,(int subjectId,int criteriaId)=>{
 app.MapGet(question,(string subject , int questionid)=>{
         TestQuestion question = manager.GetQuestion(subject ,questionid);
         return question;
+});
+
+
+app.MapPut(UpdateCriteria,(int evaluationCriteriaId,int questionId)=>{
+    bool status=manager.UpdateCriteria(evaluationCriteriaId,questionId);
+    return status;
+    
 });
 
 app.Run();
