@@ -19,33 +19,18 @@
         <h5>Insert New Questions In Database</h5>
         <form>
             <div>
-                <label for="subject" class="form-label">Subject:</label>
-                <select>
-                    <option value="Math">COREJAVA</option>
-                    <option value="Science">ADVJAVA</option>
-                    <option value="History">DOTNET</option>
-                    <option value="English">REACT</option>
-                </select>
+                <label for="ddlsubject" class="form-label">Subject:</label>
+                <select id="ddlSubjects"></select>
             </div>
             <div>
                 <label for="criteria" class="form-label">Criteria:</label>
-                <select>
-                    <option>OOPS</option>
-                    <option>SpringBoot</option>
-                    <option>Json</option>
-                    <option>HyberNet</option>
-                    <option>Components</option>
-                    <option>Multithreading</option>
-
-                </select>
+                <select id="ddlCriterias"></select>
             </div>
             <div>
             <label for="question">New Question:</label>
             <input type="text" id="question">
             </div>
-            <br><br>
-            <label for="skillid">SkillId</label>
-            <input type="text" id="skillId">
+                      
             <br><br>
             <br><br>
             <label for="question">Options:</label>
@@ -65,11 +50,7 @@
             <label for="correctOption">Correct Option:</label>
             <input type="text" id="correctOption">
             <br><br>
-            <br><br>
-            <label for="evaluationcriteriaid">EvaluationCriteriaId</label>
-            <input type="text" id="evaluationCriteriaId">
-            <br><br>
-
+           
             <button type="button" id="insertButton">Insert Question</button>
 
         </form>
