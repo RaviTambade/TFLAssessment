@@ -46,7 +46,9 @@ string candidateTestResultUrl="/result/candidates/{candidateId}/test/{testId}";
 
 string apiSubjectsUrl="/subjects";
 string criteria ="/subject/{subject}/question/{questionId}";
-
+string updateAnswer="/questions/answers/{questionId}";
+string questionUrl="/questions/{questionId}";
+string updateQuestionOptions="/questions/options/{questionId}";
 
 //string allQuestionsByCategoryAPI="/questions/subjects/{subjectId}";
 
@@ -57,6 +59,7 @@ string testEndTimesettingUrl="/test/setendtime";
 string apiCriteriaUrl="/criteria";
 string criteriaBySubjectUrl="/criterias/subjects/{subjectId}";
 string UpdateCriteria="/";
+
 
 TestManager manager = new TestManager();
 
@@ -112,6 +115,12 @@ app.MapPut(testEndTimesettingUrl,( CandidateTestTime test)=>{
      return status;
 });
 
+app.MapPut(updateQuestionOptions,(int questionId, Question options)=>{
+     QuestionBank qBank=new QuestionBank();
+     bool status=qBank.UpdateQuestionOptions(questionId,options);
+     return status;
+});
+
 
 app.MapGet(allQuestionsAPI,()=>{     
         QuestionBank qBank=new QuestionBank();
@@ -156,10 +165,27 @@ app.MapGet(question,(string subject , int questionid)=>{
 });
 
 
+app.MapGet(questionUrl,(int questionId)=>{
+       QuestionBank questionBank=new QuestionBank();
+       Question question=questionBank.GetQuestion(questionId);
+       return question;
+});
+
+
 app.MapPut(UpdateCriteria,(int evaluationCriteriaId,int questionId)=>{
     bool status=manager.UpdateCriteria(evaluationCriteriaId,questionId);
     return status;
     
 });
+
+
+app.MapPut(updateAnswer,(Question answer,int questionId)=>{
+
+    QuestionBank question =new QuestionBank();
+    bool status=question.UpdateAnswer(answer,questionId);
+    return status;
+    
+});
+
 
 app.Run();

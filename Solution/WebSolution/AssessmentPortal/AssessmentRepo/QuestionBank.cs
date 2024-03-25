@@ -135,8 +135,108 @@ public class QuestionBank
         return questions;
     }
 
+    public bool UpdateAnswer(Question answer,int id){
+        bool status = false;
+        string query = "update questionbank set answerkey=@answerkey where id =@id";
+        MySqlConnection connection = new MySqlConnection(connectionString);
+        try
+        {
+            connection.Open();   
+            MySqlCommand command = new MySqlCommand(query, connection);
+            command.Parameters.AddWithValue("@answerkey", answer.AnswerKey);
+            command.Parameters.AddWithValue("@id", id);
+            int rowsAffected = command.ExecuteNonQuery();
+            if (rowsAffected > 0)
+            {
+                status = true;
+            }
+            
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+        finally
+        {
+            connection.Close();
+        }
+        return status;
+    }
 
-    
+    public Question GetQuestion(int questionId)
+    { 
+        Question question = null;
+        string query = @"select * from questionbank where id=@questionId";
+        MySqlConnection connection = new MySqlConnection(connectionString);
+        MySqlCommand command = new MySqlCommand(query, connection);
+        command.Parameters.AddWithValue("@questionId", questionId);
+        try
+        {
+            connection.Open();
+            MySqlDataReader reader = command.ExecuteReader();
+            if(reader.Read())
+            {
+                int subjectId = int.Parse(reader["subjectid"].ToString());
+                string strQuestion = reader["title"].ToString();
+                string optionA =  reader["a"].ToString();
+                string optionB = reader["b"].ToString();
+                string optionC = reader["c"].ToString();
+                string optionD = reader["d"].ToString();
+                string correctAnswer = reader["answerkey"].ToString();
+                int evaluationCriteriaId = int.Parse(reader["evaluationcriteriaid"].ToString());
 
+                question= new Question();
+                question.Id=questionId;
+                question.SkillId=subjectId;
+                question.Title=strQuestion;
+                question.A=optionA;
+                question.B=optionB;
+                question.C=optionC;
+                question.D=optionD;
+                question.AnswerKey=correctAnswer;
+                question.EvaluationCriteriaId=evaluationCriteriaId;
+            }
+            reader.Close();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+        finally
+        {
+            connection.Close();
+        }
+        return question;
+    }
 
+    public bool UpdateQuestionOptions(int id,Question options){
+        bool status = false;
+        string query = "update questionbank set a=@a,b=@b,c=@c,d=@d where id =@id";
+        MySqlConnection connection = new MySqlConnection(connectionString);
+        try
+        {
+            connection.Open();   
+            MySqlCommand command = new MySqlCommand(query, connection);
+            command.Parameters.AddWithValue("@a", options.A);
+            command.Parameters.AddWithValue("@b", options.B);
+            command.Parameters.AddWithValue("@c", options.C);
+            command.Parameters.AddWithValue("@d", options.D);
+            command.Parameters.AddWithValue("@id", id);
+            int rowsAffected = command.ExecuteNonQuery();
+            if (rowsAffected > 0)
+            {
+                status = true;
+            }
+            
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+        finally
+        {
+            connection.Close();
+        }
+        return status;
+    }
 }
