@@ -114,6 +114,12 @@ app.MapPut(testEndTimesettingUrl,( CandidateTestTime test)=>{
      return status;
 });
 
+app.MapPut(updateQuestionOptions,(int questionId, Question options)=>{
+     QuestionBank qBank=new QuestionBank();
+     bool status=qBank.UpdateQuestionOptions(questionId,options);
+     return status;
+});
+
 
 app.MapGet(allQuestionsAPI,()=>{     
         QuestionBank qBank=new QuestionBank();

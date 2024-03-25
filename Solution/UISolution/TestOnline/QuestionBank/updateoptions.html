@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <title>Objective Test</title>
+</head>
+
+<body>
+  <h3>Transflower Learning Private Limited</h3>
+  <hr />
+  <div class="jumbotron">
+    <div class="container">
+      <div class="row">
+        <table class="table" id=status>
+          <tbody>
+            <tr>
+              <td>
+                <p id="pTitle"></p>
+              </td>
+            </tr>
+            <tr>
+              <td> <input type="radio" name="answer" id="a" /> <input id="lblOptionA"/> </td>
+            </tr>
+            <tr>
+              <td> <input type="radio" name="answer" id="b" /><input id="lblOptionB"/> </td>
+            </tr>
+            <tr>
+              <td> <input type="radio" name="answer" id="c" /><input id="lblOptionC"/> </td>
+            </tr>
+            <tr>
+              <td> <input type="radio" name="answer" id="d"><input id="lblOptionD"/> </td>
+            </tr>
+            
+            <tr>
+              
+              <td> <button id="btnUpdate">Submit</button></td>    
+            </tr>
+          </tbody>
+        </table>   
+    </div>   
+  </div>
+
+  <script>
+
+    var questionId=2;
+    var selectedOption;
+    var questionUrl="http://localhost:5238/questions/"+questionId;
+    var updateOptions="http://localhost:5238/questions/options/"+questionId;
+
+    $(document).ready(()=>{
+
+        $.ajax({
+        url: questionUrl,
+        type: 'GET',
+        contentType: 'application/json',
+
+        success: function (data) {
+            var question = data;
+            console.log(question);
+            var title= $("#pTitle").text(question.title);
+            var a= $("#lblOptionA").val(question.a);
+            var b= $("#lblOptionB").val(question.b);
+            var c= $("#lblOptionC").val(question.c);
+            var d= $("#lblOptionD").val(question.d);
+            var correctAnswerId ="#"+question.answerKey;
+            $(correctAnswerId).prop('checked',true);
+
+        $("#btnUpdate").click(()=>{
+        var options={
+            "a":a,
+            "b":b,
+            "c":c,
+            "d":d
+        };
+
+        $.ajax({
+        url: updateOptions,
+        type: 'PUT',
+        contentType: 'application/json',
+        data: JSON.stringify(options),
+
+        success: function (data) {
+            console.log(data);
+        },
+        error: function (xhr, status, error) {
+            console.error(xhr.responseText);
+        }
+    });
+  })
+
+
+
+
+        },
+        error: function (xhr, status, error) {
+            console.error(xhr.responseText);
+        }
+    });
+
+    // $("input[type='radio']").click(() => {
+    //       selectedOption = $("input[name='answer']:checked").attr("id");
+    //       console.log(selectedOption);   
+    // });
+
+
+    
+})
+</script>
+</body>
+</html>
