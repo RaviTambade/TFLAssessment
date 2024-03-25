@@ -48,7 +48,7 @@
     var questionId=2;
     var selectedOption;
     var questionUrl="http://localhost:5238/questions/"+questionId;
-    var updateOptions="http://localhost:5238/questions/options/"+questionId;
+    var updateOptions=" http://localhost:5238/questions/options/"+questionId;
 
     $(document).ready(()=>{
 
@@ -70,10 +70,10 @@
 
         $("#btnUpdate").click(()=>{
         var options={
-            "a":a,
-            "b":b,
-            "c":c,
-            "d":d
+            "a":question.a,
+            "b":question.b,
+            "c":question.c,
+            "d":question.d
         };
 
         $.ajax({
