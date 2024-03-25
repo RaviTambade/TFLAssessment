@@ -39,7 +39,8 @@ string apiQuestionsUrl="/questions/tests/{testId}";
 string question ="/questions/subjects/{subject}/questions/{questionid}";
 string allQuestionsBySubjectUrl="/questions/subjects/{subjectid}";
 string testSubjectCriteriaAPI = "/questions/subjects/{subjectId}/criterias/{criteriaId}";
-string  insertnewquestionurl="/question";
+string insertnewquestionurl="/question";
+string insertnewcriteriaurl="/criteria";
 
 string candidateTestResultUrl="/result/candidates/{candidateId}/test/{testId}";
 
@@ -131,7 +132,13 @@ app.MapGet(criteria,(string subject , int questionid)=>{
 });
 
 app.MapPost(insertnewquestionurl,(NewQuestion ques)=>{
-    bool status=manager.Insertquestion(ques);
+    bool status=manager.InsertQuestion(ques);
+    return status;
+    
+});
+
+app.MapPost(insertnewcriteriaurl,(NewCriteria criteria)=>{
+    bool status=manager.InsertCriteria(criteria);
     return status;
     
 });

@@ -446,7 +446,7 @@ public class TestManager
         return question;
     }
 
-    public bool Insertquestion(NewQuestion question){
+    public bool InsertQuestion(NewQuestion question){
         
         bool status=false;
         MySqlConnection connection = new MySqlConnection(connectionString);
@@ -462,6 +462,35 @@ public class TestManager
         command.Parameters.AddWithValue("@d",question.D);
         command.Parameters.AddWithValue("@answerKey",question.AnswerKey);
         command.Parameters.AddWithValue("@evaluationCriteriaId",question.EvaluationCriteriaId);
+        
+        try{ 
+                connection.Open();
+                int rowsAffected = command.ExecuteNonQuery();
+                if (rowsAffected > 0)
+                {
+                    status = true;
+                }
+        }
+        catch(Exception e){
+        Console.WriteLine(e.Message);
+        }
+        finally{
+            connection.Close();
+        }
+        return status;
+    }  
+
+    public bool InsertCriteria(NewCriteria criteria){
+        Console.WriteLine(criteria.SubjectId+" "+criteria.Title);
+        bool status=false;
+        MySqlConnection connection = new MySqlConnection(connectionString);
+        string query = "insert into evaluationcriterias(title,subjectid) values ( @title, @subjectId)";
+        
+        MySqlCommand command = new MySqlCommand(query, connection);
+
+        command.Parameters.AddWithValue("@subjectId",criteria.SubjectId);
+        command.Parameters.AddWithValue("@title",criteria.Title);
+       
         
         try{ 
                 connection.Open();
