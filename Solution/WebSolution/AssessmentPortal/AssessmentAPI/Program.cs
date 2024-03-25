@@ -45,7 +45,7 @@ string candidateTestResultUrl="/result/candidates/{candidateId}/test/{testId}";
 
 string apiSubjectsUrl="/subjects";
 string criteria ="/subject/{subject}/question/{questionId}";
-
+string UpdateAnswer="/questions/answers/{questionId}";
 
 //string allQuestionsByCategoryAPI="/questions/subjects/{subjectId}";
 
@@ -154,5 +154,15 @@ app.MapPut(UpdateCriteria,(int evaluationCriteriaId,int questionId)=>{
     return status;
     
 });
+
+
+app.MapPut(UpdateAnswer,(Question answer,int questionId)=>{
+
+    QuestionBank question =new QuestionBank();
+    bool status=question.UpdateAnswer(answer,questionId);
+    return status;
+    
+});
+
 
 app.Run();

@@ -136,6 +136,38 @@ public class QuestionBank
     }
 
 
+    public bool UpdateAnswer(Question answer,int id){
+         bool status = false;
+        string query = "update questionbank set answerkey=@answerkey where id =@id";
+        MySqlConnection connection = new MySqlConnection(connectionString);
+
+        try
+        {
+            connection.Open();
+
+           
+            
+                MySqlCommand command = new MySqlCommand(query, connection);
+                command.Parameters.AddWithValue("@answerkey", answer.AnswerKey);
+                command.Parameters.AddWithValue("@id", id);
+
+                int rowsAffected = command.ExecuteNonQuery();
+                if (rowsAffected > 0)
+                {
+                    status = true;
+                }
+            
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+        finally
+        {
+            connection.Close();
+        }
+        return status;
+    }
     
 
 
