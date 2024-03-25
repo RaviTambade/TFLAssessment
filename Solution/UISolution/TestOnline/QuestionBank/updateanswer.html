@@ -46,7 +46,9 @@
   <script>
 
     var questionId=2;
+    var selectedOption;
     var questionUrl="http://localhost:5238/questions/"+questionId;
+    var updateAnswer="http://localhost:5238/questions/answers/"+questionId;
 
     $(document).ready(()=>{
 
@@ -65,21 +67,38 @@
             var d= $("#lblOptionD").html(question.d);
             var correctAnswerId ="#"+question.answerKey;
             $(correctAnswerId).prop('checked',true);
-
-
         },
         error: function (xhr, status, error) {
             console.error(xhr.responseText);
         }
     });
 
-    $("btnUpdate")
+    $("input[type='radio']").click(() => {
+          selectedOption = $("input[name='answer']:checked").attr("id");
+          console.log(selectedOption);   
+    });
 
 
+    $("#btnUpdate").click(()=>{
+        var answer={
+            "answerKey":selectedOption
+        };
 
+        $.ajax({
+        url: updateAnswer,
+        type: 'PUT',
+        contentType: 'application/json',
+        data: JSON.stringify(answer),
 
-
-    })
-  </script>
+        success: function (data) {
+            console.log(data);
+        },
+        error: function (xhr, status, error) {
+            console.error(xhr.responseText);
+        }
+    });
+  })
+})
+</script>
 </body>
 </html>
