@@ -49,7 +49,7 @@ string criteria ="/subject/{subject}/question/{questionId}";
 string updateAnswer="/questions/answers/{questionId}";
 string questionUrl="/questions/{questionId}";
 string updateQuestionOptions="/questions/options/{questionId}";
-
+string subjectCriteriaUrl="questions/subjectcriteria/{questionId}";
 //string allQuestionsByCategoryAPI="/questions/subjects/{subjectId}";
 
 string apiTestUrl="/tests";
@@ -116,6 +116,13 @@ app.MapPut(testEndTimesettingUrl,( CandidateTestTime test)=>{
      bool status=manager.SetTestEndTime(test.CandidateId,test.TestId, test.Time);
      return status;
 });
+
+app.MapPut(subjectCriteriaUrl,( int questionId,Question question)=>{
+     QuestionBank qBank=new QuestionBank();
+     bool status=qBank.UpdateSubjectCriteria(questionId,question);
+     return status;
+});
+
 
 app.MapPut(updateQuestionOptions,(int questionId, Question options)=>{
      QuestionBank qBank=new QuestionBank();

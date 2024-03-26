@@ -217,16 +217,49 @@ public class QuestionBank
         Console.WriteLine("C "+options.C);
         Console.WriteLine("D "+options.D);
         string query = "update questionbank set a=@a,b=@b,c=@c,d=@d where id =@id";
+        string query = "update questionbank set title=@title,a=@a,b=@b,c=@c,d=@d,answerkey=@answerKey where id =@id";
         MySqlConnection connection = new MySqlConnection(connectionString);
         try
         {
             connection.Open();   
             MySqlCommand command = new MySqlCommand(query, connection);
+            command.Parameters.AddWithValue("@title", options.Title);
             command.Parameters.AddWithValue("@a", options.A);
             command.Parameters.AddWithValue("@b", options.B);
             command.Parameters.AddWithValue("@c", options.C);
             command.Parameters.AddWithValue("@d", options.D);
+            command.Parameters.AddWithValue("@answerKey", options.AnswerKey);
             command.Parameters.AddWithValue("@id", id);
+            int rowsAffected = command.ExecuteNonQuery();
+            if (rowsAffected > 0)
+            {
+                status = true;
+            }
+            
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+        finally
+        {
+            connection.Close();
+        }
+        return status;
+    }
+
+    public bool UpdateSubjectCriteria(int questionId,Question question){
+        bool status = false;
+        string query = "update questionbank set subjectid=@subjectId,evaluationcriteriaid=@evaluationCriteriaId where id =@id";
+        MySqlConnection connection = new MySqlConnection(connectionString);
+        try
+        {
+            connection.Open();   
+            MySqlCommand command = new MySqlCommand(query, connection);
+            command.Parameters.AddWithValue("@subjectId", question.SkillId);
+            command.Parameters.AddWithValue("@evaluationCriteriaId", question.EvaluationCriteriaId);
+            
+            command.Parameters.AddWithValue("@id", questionId);
             int rowsAffected = command.ExecuteNonQuery();
             if (rowsAffected > 0)
             {
