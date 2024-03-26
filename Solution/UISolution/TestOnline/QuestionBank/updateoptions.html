@@ -22,16 +22,16 @@
               </td>
             </tr>
             <tr>
-              <td> <textarea type="text" name="answer" id="a" rows="2" cols="150" > </textarea> </td>
+              <td><input type="radio" id="a" name="answer"/> <textarea type="text" name="answer" id="txtA" rows="2" cols="150" > </textarea> </td>
             </tr>
             <tr>
-              <td> <textarea type="text" name="answer" id="b" rows="2" cols="150" ></textarea> </td>
+              <td><input type="radio" id="b" name="answer"/> <textarea type="text" name="answer" id="txtB" rows="2" cols="150" ></textarea> </td>
             </tr>
             <tr>
-              <td> <textarea type="text" name="answer" id="c" rows="2" cols="150"></textarea> </td>
+              <td><input type="radio" id="c" name="answer"/> <textarea type="text" name="answer" id="txtC" rows="2" cols="150"></textarea> </td>
             </tr>
             <tr>
-              <td> <textarea type="text" name="answer" id="d" rows="2" cols="150"></textarea> </td>
+              <td><input type="radio" id="d" name="answer"/> <textarea type="text" name="answer" id="txtD" rows="2" cols="150"></textarea> </td>
             </tr>    
             <tr>
               
@@ -47,10 +47,9 @@
     var questionId=2;
     var selectedOption;
     var questionUrl="http://localhost:5238/questions/"+questionId;
-    var updateOptions="http://localhost:5238/questions/options/"+questionId;
+    var updateOptions=" http://localhost:5238/questions/options/"+questionId;
 
     $(document).ready(()=>{
-
         $.ajax({
         url: questionUrl,
         type: 'GET',
@@ -60,26 +59,34 @@
             var question = data;
             console.log(question);
             var title= $("#pTitle").val(question.title);
-            var a= $("#a").val(question.a);
-            var b= $("#b").val(question.b);
-            var c= $("#c").val(question.c);
-            var d= $("#d").val(question.d);
+            var a= $("#txtA").val(question.a);
+            var b= $("#txtB").val(question.b);
+            var c= $("#txtC").val(question.c);
+            var d= $("#txtD").val(question.d);
             var correctAnswerId ="#"+question.answerKey;
             $(correctAnswerId).prop('checked',true);
+        },
+        error: function (xhr, status, error) {
+            console.error(xhr.responseText);
+        }
+    });
 
-        $("#btnUpdate").click(()=>{
-        var options={
-            "a":a,
-            "b":b,
-            "c":c,
-            "d":d
+    $("#btnUpdate").click(()=>{
+      var correctAnswer=$('input[type="radio"]:checked').attr("id");
+        var questionToUpdate={
+            "title":$("#pTitle").val(),
+            "a":$("#txtA").val(),
+            "b":$("#txtB").val(),
+            "c":$("#txtC").val(),
+            "d":$("#txtD").val(),
+            "answerKey":correctAnswer
         };
 
         $.ajax({
         url: updateOptions,
         type: 'PUT',
         contentType: 'application/json',
-        data: JSON.stringify(options),
+        data: JSON.stringify(questionToUpdate),
 
         success: function (data) {
             console.log(data);
@@ -87,25 +94,8 @@
         error: function (xhr, status, error) {
             console.error(xhr.responseText);
         }
-    });
-  })
-
-
-
-
-        },
-        error: function (xhr, status, error) {
-            console.error(xhr.responseText);
-        }
-    });
-
-    // $("input[type='radio']").click(() => {
-    //       selectedOption = $("input[name='answer']:checked").attr("id");
-    //       console.log(selectedOption);   
-    // });
-
-
-    
+      });
+    })
 })
 </script>
 </body>

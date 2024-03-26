@@ -40,6 +40,7 @@ string question ="/questions/subjects/{subject}/questions/{questionid}";
 string allQuestionsBySubjectUrl="/questions/subjects/{subjectid}";
 string testSubjectCriteriaAPI = "/questions/subjects/{subjectId}/criterias/{criteriaId}";
 string insertnewquestionurl="/question";
+string insertnewcriteriaurl="/criteria";
 
 string candidateTestResultUrl="/result/candidates/{candidateId}/test/{testId}";
 
@@ -48,7 +49,7 @@ string criteria ="/subject/{subject}/question/{questionId}";
 string updateAnswer="/questions/answers/{questionId}";
 string questionUrl="/questions/{questionId}";
 string updateQuestionOptions="/questions/options/{questionId}";
-
+string subjectCriteriaUrl="questions/subjectcriteria/{questionId}";
 //string allQuestionsByCategoryAPI="/questions/subjects/{subjectId}";
 
 string apiTestUrl="/tests";
@@ -114,6 +115,13 @@ app.MapPut(testEndTimesettingUrl,( CandidateTestTime test)=>{
      return status;
 });
 
+app.MapPut(subjectCriteriaUrl,( int questionId,Question question)=>{
+     QuestionBank qBank=new QuestionBank();
+     bool status=qBank.UpdateSubjectCriteria(questionId,question);
+     return status;
+});
+
+
 app.MapPut(updateQuestionOptions,(int questionId, Question options)=>{
      QuestionBank qBank=new QuestionBank();
      bool status=qBank.UpdateQuestionOptions(questionId,options);
@@ -140,7 +148,13 @@ app.MapGet(criteria,(string subject , int questionid)=>{
 });
 
 app.MapPost(insertnewquestionurl,(NewQuestion ques)=>{
-    bool status=manager.Insertquestion(ques);
+    bool status=manager.InsertQuestion(ques);
+    return status;
+    
+});
+
+app.MapPost(insertnewcriteriaurl,(NewCriteria criteria)=>{
+    bool status=manager.InsertCriteria(criteria);
     return status;
     
 });
