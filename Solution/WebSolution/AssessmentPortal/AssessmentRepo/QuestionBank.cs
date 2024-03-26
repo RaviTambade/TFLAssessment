@@ -239,4 +239,35 @@ public class QuestionBank
         }
         return status;
     }
+
+    // public bool DeleteQuestion(int d){
+    //     bool status = false;
+    //     string query = "update questionbank set a=@a,b=@b,c=@c,d=@d where id =@id";
+    //     MySqlConnection connection = new MySqlConnection(connectionString);
+    //     try
+    //     {
+    //         connection.Open();   
+    //         MySqlCommand command = new MySqlCommand(query, connection);
+    //         command.Parameters.AddWithValue("@a", options.A);
+    //         command.Parameters.AddWithValue("@b", options.B);
+    //         command.Parameters.AddWithValue("@c", options.C);
+    //         command.Parameters.AddWithValue("@d", options.D);
+    //         command.Parameters.AddWithValue("@id", id);
+    //         int rowsAffected = command.ExecuteNonQuery();
+    //         if (rowsAffected > 0)
+    //         {
+    //             status = true;
+    //         }
+            
+    //     }
+    //     catch (Exception e)
+    //     {
+    //         Console.WriteLine(e.Message);
+    //     }
+    //     finally
+    //     {
+    //         connection.Close();
+    //     }
+    //     return status;
+    // }
 }

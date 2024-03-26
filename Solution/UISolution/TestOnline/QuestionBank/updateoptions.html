@@ -18,22 +18,21 @@
           <tbody>
             <tr>
               <td>
-                <p id="pTitle"></p>
+                <textarea type="text" rows="3" cols="150" id="pTitle"></textarea>
               </td>
             </tr>
             <tr>
-              <td> <input type="radio" name="answer" id="a" /> <input id="lblOptionA"/> </td>
+              <td> <textarea type="text" name="answer" id="a" rows="2" cols="150" > </textarea> </td>
             </tr>
             <tr>
-              <td> <input type="radio" name="answer" id="b" /><input id="lblOptionB"/> </td>
+              <td> <textarea type="text" name="answer" id="b" rows="2" cols="150" ></textarea> </td>
             </tr>
             <tr>
-              <td> <input type="radio" name="answer" id="c" /><input id="lblOptionC"/> </td>
+              <td> <textarea type="text" name="answer" id="c" rows="2" cols="150"></textarea> </td>
             </tr>
             <tr>
-              <td> <input type="radio" name="answer" id="d"><input id="lblOptionD"/> </td>
-            </tr>
-            
+              <td> <textarea type="text" name="answer" id="d" rows="2" cols="150"></textarea> </td>
+            </tr>    
             <tr>
               
               <td> <button id="btnUpdate">Submit</button></td>    
@@ -60,11 +59,11 @@
         success: function (data) {
             var question = data;
             console.log(question);
-            var title= $("#pTitle").text(question.title);
-            var a= $("#lblOptionA").val(question.a);
-            var b= $("#lblOptionB").val(question.b);
-            var c= $("#lblOptionC").val(question.c);
-            var d= $("#lblOptionD").val(question.d);
+            var title= $("#pTitle").val(question.title);
+            var a= $("#a").val(question.a);
+            var b= $("#b").val(question.b);
+            var c= $("#c").val(question.c);
+            var d= $("#d").val(question.d);
             var correctAnswerId ="#"+question.answerKey;
             $(correctAnswerId).prop('checked',true);
 
