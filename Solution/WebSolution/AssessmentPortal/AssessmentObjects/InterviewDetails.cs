@@ -1,5 +1,3 @@
-
-
 namespace Assessment.Entities;
 public class InterviewDetails{
     public int Id{get;set;}
@@ -10,7 +8,6 @@ public class InterviewDetails{
     public string InterviewTitle{get;set;}
     public string Subject{get;set;}
     public string [] Criterias{get;set;}
-
 }
 
 
