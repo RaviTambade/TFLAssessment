@@ -40,7 +40,7 @@
             <h2>Candidate Interview Details</h2>
 
             <label for="fname">Candidate:</label><br>
-            <select id="Candidate" name="candidate" >
+            <select id="ddlCandidate" name="candidate" >
               
             </select>
             <br>
@@ -61,15 +61,34 @@
 
      </div>
 
-        <script>
+     <script>
+      var remoteWeb = "http://localhost:5238"
+      var interviewedCandidatesUrl = remoteWeb + "/interviewedcandidates"
+      var candidatesList;
+      var candidateId=0;
+  
+      $(document).ready(function ()
+      { 
+        $.get(interviewedCandidatesUrl, function (data) {
+                      candidatesList = (data);
+                      console.log(candidatesList);
+                      var lstCandidates = $("#ddlCandidate")
+                      for (var i = 0; i < candidatesList.length; i++) {
+                        console.log(candidateId);
+                        console.log(candidatesList[i].candidateId);
+                        if(candidatesList[i].candidateId !=candidateId)
+                           lstCandidates.append($('<option></option>').val(candidatesList[i].id).html(candidatesList[i].firstName+" "+candidatesList[i].lastName));
+                        candidateId = candidatesList[i].candidateId;
+                    }
+                  });
         
-          $(document).ready(() => {
-                $('#btnSubmit').click(() => {
-                    console.log("button clicked");
-                   
-                });
+                
+  
+                 
+  
           });
-        </script>
+      
+  </script>
 
 </body>
 </html>

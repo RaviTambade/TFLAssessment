@@ -59,6 +59,8 @@ string testEndTimesettingUrl="/test/setendtime";
 string apiCriteriaUrl="/criteria";
 string criteriaBySubjectUrl="/criterias/subjects/{subjectId}";
 string UpdateCriteria="/";
+string InterviewedCandidatesInfoUrl="/interviewedcandidates";
+string InterviewedCandidatesSubjectsUrl="/interviewedcandidatessubjects/{candidateId}";
 
 
 TestManager manager = new TestManager();
@@ -187,5 +189,15 @@ app.MapPut(updateAnswer,(Question answer,int questionId)=>{
     
 });
 
+app.MapGet(InterviewedCandidatesInfoUrl,()=>{
+   List<InterviewedCandidates> InterviewCandidates = manager.GetAllInterviewedCandidatesInfo();
+   return InterviewCandidates;
+});
+
+app.MapGet(InterviewedCandidatesSubjectsUrl,(int candidateId)=>{
+   List<InterviewedCandidates> InterviewCandidatesSubjects = manager.GetInterviewedCandidatesSubjects(candidateId);
+   Console.WriteLine(candidateId);
+   return InterviewCandidatesSubjects;
+});
 
 app.Run();

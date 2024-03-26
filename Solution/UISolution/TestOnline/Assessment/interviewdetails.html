@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div class="container"><h1>Interview Title</h1>
+        <div class="interview-details"><h2>Interview Details</h2>
+            <p><strong>Date:</strong> January 1, 2024</p>
+            <p><strong>Time:</strong> 10:00 AM - 11:00 AM</p>
+            <p><strong>Location:</strong> Virtual</p>
+            <p><strong>Interviewer:</strong> John Doe</p>
+            <p><strong>Interviewee:</strong> Jane Smith</p>
+            <p><strong>Agenda:</strong> Discuss qualifications and job expectations.</p>
+            <!-- Add more details as needed -->
+        </div>
+        <!-- <form action="#" method="post"><div class="form-group"><label for="criteria_name">Criteria Name:</label>
+            <input type="text" id="criteria_name" name="criteria_name" required></div>
+            <div class="form-group"><label for="weight">Weight:</label><input type="number" id="weight" name="weight" min="1" required></div>
+            <div class="form-group"><label for="description">Description:</label><textarea id="description" name="description" rows="4"></textarea></div>
+            <div class="form-group"><input type="submit" value="Submit Criteria"></div></form> -->
+            <table class="table" id="tblCrietrias">
+                <thead>
+                <tr>
+                <th>Crietria</th>
+                <th>Rating</th>
+                <th>Comment</th>
+                </tr>
+                </thead>
+                <tbody>
+               
+                
+                </tbody>
+                </table>
+    </div>`
+    <script>
+        $(document).ready(function(){
+            var crietriaresults = [
+                {
+                    "crietria":"OOPS",
+                    "Rating":"5",
+                    "Comment":"Need to improve"
+                },
+                {
+                    "crietria":"File IO",
+                    "Rating":"5",
+                    "Comment":"Need to improve"
+                },
+                {
+                    "crietria":"Multithreading",
+                    "Rating":"5",
+                    "Comment":"Need to improve"
+                },
+                {
+                    "crietria":"JDBC",
+                    "Rating":"5",
+                    "Comment":"Need to improve"
+                },
+            ]
+            var tblCrietrias = $("#tblCrietrias")
+
+            for (var i = 0; i < crietriaresults.length; i++) {
+                tblCrietrias.append("<tr><td>"+crietriaresults[i].crietria+"</td><td>"+crietriaresults[i].Rating +"</td><td>"+crietriaresults[i].Comment+"</td></tr>" );
+            }  
+    //     var interviewListUrl = "";
+    //     $.ajax({
+    //     url: interviewListUrl,
+    //     type: 'GET',
+    //     contentType: 'application/json',
+
+    //     success: function (response) {
+    //         console.log("inside ajax call block");
+    //         tests = response;
+    //         console.log(tests);
+    //         var tblTest = $("#tblTest")
+    //         for (var i = 0; i < tests.length; i++) {
+    //             tblTest.append("<tr><td>"+tests[i].id+"</td><td>"+tests[i].scheduledDate +"</td><td>"+tests[i].subject+"</td><td>"+tests[i].firstName+" "+tests[i].lastName+"</td><td><button onClick=>Details</button></td></tr>" );
+    //         }
+    //     },
+    //     error: function (xhr, status, error) {
+    //         console.error(xhr.responseText);
+    //     }
+    // });
+    });
+    </script>
+</body>
+</html>

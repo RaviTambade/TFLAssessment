@@ -211,6 +211,11 @@ public class QuestionBank
 
     public bool UpdateQuestionOptions(int id,Question options){
         bool status = false;
+        Console.WriteLine("ID "+id);
+        Console.WriteLine("A "+options.A);
+        Console.WriteLine("B "+options.B);
+        Console.WriteLine("C "+options.C);
+        Console.WriteLine("D "+options.D);
         string query = "update questionbank set a=@a,b=@b,c=@c,d=@d where id =@id";
         MySqlConnection connection = new MySqlConnection(connectionString);
         try
