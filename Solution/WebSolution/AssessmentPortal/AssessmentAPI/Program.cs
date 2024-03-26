@@ -207,4 +207,21 @@ app.MapGet(InterviewedCandidatesSubjectsUrl,(int candidateId)=>{
    return InterviewCandidatesSubjects;
 });
 
+
+
+app.MapGet("/interviewdetails",(int interviewId)=>{
+
+    
+        InterviewDetails details=new InterviewDetails{
+            Id=12,
+            InterviewDate="25/3/2024",
+            SMETitle="Sarika Patil",
+            InterviewTitle="Paragati Bangar",
+            Subject="Java" ,
+            InterviewTime="5:56"  ,
+            Criterias=[ "Object Oriented Programming", "Multithreading", "File IO", "Database Programming"]
+        };
+    return details;
+});
+
 app.Run();

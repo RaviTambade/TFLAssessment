@@ -9,12 +9,12 @@
 <body>
     <div class="container"><h1>Interview Title</h1>
         <div class="interview-details"><h2>Interview Details</h2>
-            <p><strong>Date:</strong> January 1, 2024</p>
-            <p><strong>Time:</strong> 10:00 AM - 11:00 AM</p>
-            <p><strong>Location:</strong> Virtual</p>
-            <p><strong>Interviewer:</strong> John Doe</p>
-            <p><strong>Interviewee:</strong> Jane Smith</p>
-            <p><strong>Agenda:</strong> Discuss qualifications and job expectations.</p>
+           <label>Date:</label> <p  id="interviewDate"></p>
+           <label>Time:</label> <p id="interviewTime"></p>
+           <p><strong>Location:</strong> Online</p>
+           <label>Interviewer:</label> <p id="interviewer"></p>
+           <label>Candidate:</label> <p id="candidate"></p>
+           <label>Subject:</label>  <p id="subject"></p>
             <!-- Add more details as needed -->
         </div>
         <!-- <form action="#" method="post"><div class="form-group"><label for="criteria_name">Criteria Name:</label>
@@ -31,40 +31,56 @@
                 </tr>
                 </thead>
                 <tbody>
-               
-                
+                    <!---- Dynamic data will be added on document ready-->   
                 </tbody>
                 </table>
-    </div>`
+    </div>
+
+
     <script>
         $(document).ready(function(){
-            var crietriaresults = [
-                {
-                    "crietria":"OOPS",
-                    "Rating":"5",
-                    "Comment":"Need to improve"
-                },
-                {
-                    "crietria":"File IO",
-                    "Rating":"5",
-                    "Comment":"Need to improve"
-                },
-                {
-                    "crietria":"Multithreading",
-                    "Rating":"5",
-                    "Comment":"Need to improve"
-                },
-                {
-                    "crietria":"JDBC",
-                    "Rating":"5",
-                    "Comment":"Need to improve"
-                },
-            ]
-            var tblCrietrias = $("#tblCrietrias")
 
+            var interviewListUrl = "http://localhost:5238/interviewdetails/1";
+            $.ajax({
+            url: interviewListUrl,
+            type: 'GET',
+            contentType: 'application/json',
+
+            success: function (data) {
+                console.log(data);
+                var interviewDetails=data.Id;
+              
+
+           var crietriaresults=[];
+            for (var i = 0; i < data.criterias.length; i++){
+                crietriaresults.push({
+                    "crietria":data.criterias[i],
+                    "rating":"0",
+                    "comment":"Type your comment"
+                });
+            }
+          
+            console.log(data.interviewDate);
+            $("#interviewDate").text(data.interviewDate);
+            $("#interviewTime").text(data.interviewTime);
+            $("#interviewer").text(data.smeTitle);
+            $("#subject").text(data.subject);
+            $("#candidate").text(data.interviewTitle);
+
+             
+          var tblCrietrias = $("#tblCrietrias");
             for (var i = 0; i < crietriaresults.length; i++) {
-                tblCrietrias.append("<tr><td>"+crietriaresults[i].crietria+"</td><td>"+crietriaresults[i].Rating +"</td><td>"+crietriaresults[i].Comment+"</td></tr>" );
-            }  
+                tblCrietrias.append("<tr><td>"+crietriaresults[i].crietria+"</td><td><input  type='number' value='"+crietriaresults[i].rating +"'/></td><td><input value='"+crietriaresults[i].comment+"'/></td></tr>" );
+            }      
+            },
+            error: function (xhr, status, error) {
+                console.error(xhr.responseText);
+            }
+        });
+
+
+
+  
     //     var interviewListUrl = "";
     //     $.ajax({
     //     url: interviewListUrl,
