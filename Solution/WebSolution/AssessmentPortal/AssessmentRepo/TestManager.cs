@@ -537,6 +537,72 @@ public class TestManager
         }
         return status;
     }  
+
+    public List<Question> GetTestQuestion(int testId)
+    {
+        List<Question> questions = new List<Question>();
+        string query = @"SELECT testquestions.id, questionbank.title FROM  questionbank
+                         inner join testquestions  on testquestions.questionbankid = questionbank.id
+                         inner join tests on tests.id=testquestions.testid
+                         where tests.id=@testId";
+
+        MySqlConnection connection = new MySqlConnection(connectionString);
+        MySqlCommand command = new MySqlCommand(query, connection);
+        command.Parameters.AddWithValue("@testId", testId);
+        try
+        {  
+            connection.Open();
+            MySqlDataReader reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                int id = int.Parse(reader["id"].ToString());
+                string title = reader["title"].ToString();
+
+                Question question = new Question();
+                question.Id = id;
+                question.Title = title;
+
+                questions.Add(question);
+            }
+            reader.Close();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+        finally
+        {
+            connection.Close();
+        }
+        return questions;
+    }
+
+    public bool DeleteQuestion(int[] testQuestions){
+        
+        bool status=false;
+        MySqlConnection connection = new MySqlConnection(connectionString);
+        try{
+
+            foreach(var testQuestionId in testQuestions){
+                string query = "delete from testquestions where id=@id";
+                MySqlCommand command = new MySqlCommand(query, connection);
+                command.Parameters.AddWithValue("@id",testQuestionId);
+                connection.Open();
+                int rowsAffected = command.ExecuteNonQuery();
+                if (rowsAffected > 0)
+                {
+                    status = true;
+                }
+            }
+        }
+        catch(Exception e){
+        Console.WriteLine(e.Message);
+        }
+        finally{
+            connection.Close();
+        }
+        return status;
+    }  
 }
 
 

@@ -41,6 +41,7 @@ string allQuestionsBySubjectUrl="/questions/subjects/{subjectid}";
 string testSubjectCriteriaAPI = "/questions/subjects/{subjectId}/criterias/{criteriaId}";
 string insertnewquestionurl="/question";
 string insertnewcriteriaurl="/criteria";
+string deleteTestQuestion="/testquestions/{testQuestions}";
 
 string candidateTestResultUrl="/result/candidates/{candidateId}/test/{testId}";
 
@@ -50,6 +51,7 @@ string updateAnswer="/questions/answers/{questionId}";
 string questionUrl="/questions/{questionId}";
 string updateQuestionOptions="/questions/options/{questionId}";
 string subjectCriteriaUrl="questions/subjectcriteria/{questionId}";
+string testQuestionsUrl="/testquestions/tests/{testId}";
 //string allQuestionsByCategoryAPI="/questions/subjects/{subjectId}";
 
 string apiTestUrl="/tests";
@@ -82,6 +84,11 @@ app.MapGet(apiCriteriaUrl,()=>{
 app.MapGet(criteriaBySubjectUrl,(int subjectId)=>{
    List<EvaluationCriteria> evaluationCriterias = manager.GetEvalutionCriteriasBySubject(subjectId);
    return evaluationCriterias;
+});
+
+app.MapGet(testQuestionsUrl,(int testId)=>{
+   List<Question> questions = manager.GetTestQuestion(testId);
+   return questions;
 });
 
 app.MapGet(apiTestUrl,()=>{
@@ -190,9 +197,13 @@ app.MapPut(updateAnswer,(Question answer,int questionId)=>{
 
     QuestionBank question =new QuestionBank();
     bool status=question.UpdateAnswer(answer,questionId);
-    return status;
-    
+    return status;   
 });
 
+app.MapDelete(deleteTestQuestion,(int[] testQuestions)=>{
+    Console.WriteLine(testQuestions);
+    bool status=manager.DeleteQuestion(testQuestions);
+    return status;
+});
 
 app.Run();

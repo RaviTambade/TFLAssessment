@@ -58,9 +58,6 @@
 
     <script>
         
-
-$(document).ready(()=>{
-
 var api = "http://localhost:5238";
 var subjectsApi = api + "/subjects";
 var criteriaApi = api + "/criterias";
@@ -74,6 +71,7 @@ var insertquestionurl = "http://localhost:5238/question";
 var questionUrl="http://localhost:5238/questions/"+questionId;
 var subjectCriteriaUrl="http://localhost:5238/questions/subjectcriteria/"+questionId;
 
+$(document).ready(()=>{
 $.ajax({
         url: questionUrl,
         type: 'GET',
