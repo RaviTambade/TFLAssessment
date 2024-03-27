@@ -208,7 +208,7 @@ app.MapGet(InterviewedCandidatesSubjectsUrl,(int candidateId)=>{
 });
 
 
-app.MapGet("/interviewdetails",(int interviewId)=>{
+app.MapGet("/interviewdetails",()=>{
         InterviewDetails details=new InterviewDetails{
             Id=12,
             InterviewDate="25/3/2024",
