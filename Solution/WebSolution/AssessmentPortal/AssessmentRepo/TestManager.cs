@@ -617,6 +617,7 @@ public class TestManager
 
     public InterviewDetails GetInterviewDetails(int interviewId)
     {
+        Console.WriteLine("In function");
         InterviewDetails interviewInfo = new InterviewDetails();
         string query="spinterviewdetails";
 
@@ -631,14 +632,13 @@ public class TestManager
             while (reader.Read())
             {
                 int id = int.Parse(reader["id"].ToString());
-                DateTime interviewdate =DateTime.Parse(reader["interviewdate"].ToString());
-                DateOnly formatinterviewDate = DateOnly.FromDateTime(interviewdate);
+                string interviewdate =reader["interviewdate"].ToString();
                 string interviewtime = reader["interviewtime"].ToString();
                 string smeName = reader["SmeName"].ToString();
               
                 
                 interviewInfo.Id = id;
-                interviewInfo.InterviewDate = formatinterviewDate;
+                interviewInfo.InterviewDate = interviewdate;
                 interviewInfo.InterviewTime = interviewtime;
                 interviewInfo.SMEName = smeName;
                 Console.WriteLine( interviewInfo.Id+" "+interviewInfo.InterviewDate+" "+interviewInfo.InterviewTime+" "+interviewInfo.SMEName);

@@ -61,7 +61,7 @@ string criteriaBySubjectUrl="/criterias/subjects/{subjectId}";
 string UpdateCriteria="/";
 string InterviewedCandidatesInfoUrl="/interviewedcandidates";
 string InterviewedCandidatesSubjectsUrl="/interviewedcandidatessubjects/{candidateId}";
-string InterviewDetailsUrl="/interviewdetails/{interviewId}"
+string InterviewDetailsUrl="/interviewdetails/{interviewId}";
 
 
 TestManager manager = new TestManager();
