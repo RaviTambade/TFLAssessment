@@ -49,10 +49,10 @@
                 <label for="criteria" class="form-label">Criteria:</label>
                 <select id="ddlCriterias"></select>
             </div>
-            <div>
-            <button id="btnUpdate">Submit</button> 
-        </div>
         </form>
+        <div>
+          <button id="btnUpdate">Submit</button> 
+      </div>
     </div>
 
 
@@ -64,7 +64,7 @@ var criteriaApi = api + "/criterias";
 var subjects = [];
 var criterias = [];
 var question = [];
-var subjectId;
+var skillId;
 var criteriaId;
 var questionId=2;
 var insertquestionurl = "http://localhost:5238/question";
@@ -161,14 +161,14 @@ $("#ddlSubjects").change(function () {
 });
 
 
-$("#btnUpdate").click(()=>{
-    var subjectId=$("#ddlSubjects").val();
-    console.log(subjectId);
-    var criteriaId=$("ddlCriterias").val();
+$("button").click(()=>{
+    var skillId=$("#ddlSubjects").val();
+    console.log(skillId);
+    var criteriaId=$("#ddlCriterias").val();
     console.log(criteriaId);
 
     var updateSubjectCriteria={
-        "subjectId":subjectId,
+        "skillId":skillId,
         "evaluationcriteriaid":criteriaId
         }
         

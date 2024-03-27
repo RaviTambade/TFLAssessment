@@ -211,6 +211,12 @@ public class QuestionBank
 
     public bool UpdateQuestionOptions(int id,Question options){
         bool status = false;
+        Console.WriteLine("ID "+id);
+        Console.WriteLine("A "+options.A);
+        Console.WriteLine("B "+options.B);
+        Console.WriteLine("C "+options.C);
+        Console.WriteLine("D "+options.D);
+     //   string query = "update questionbank set a=@a,b=@b,c=@c,d=@d where id =@id";
         string query = "update questionbank set title=@title,a=@a,b=@b,c=@c,d=@d,answerkey=@answerKey where id =@id";
         MySqlConnection connection = new MySqlConnection(connectionString);
         try
@@ -244,14 +250,15 @@ public class QuestionBank
 
     public bool UpdateSubjectCriteria(int questionId,Question question){
         bool status = false;
-        string query = "update questionbank set subjectid=@subjectId,evaluationcriteriaid=@evaluationCriteriaId where id =@id";
+        string query = "update questionbank set evaluationcriteriaid=@evaluationCriteriaId ,subjectid=@subjectId where id =@id";
         MySqlConnection connection = new MySqlConnection(connectionString);
         try
         {
             connection.Open();   
             MySqlCommand command = new MySqlCommand(query, connection);
-            command.Parameters.AddWithValue("@subjectId", question.SkillId);
             command.Parameters.AddWithValue("@evaluationCriteriaId", question.EvaluationCriteriaId);
+            command.Parameters.AddWithValue("@subjectId", question.SkillId);
+            Console.WriteLine(question.SkillId);
             
             command.Parameters.AddWithValue("@id", questionId);
             int rowsAffected = command.ExecuteNonQuery();

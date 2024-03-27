@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Assessment</title>
+    <title>Online Test</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -22,7 +22,7 @@
         h1, h2 {
             text-align: center;
         }
-        .assessment-form, .result {
+        .test-form, .result {
             margin-top: 20px;
         }
         .form-group {
@@ -60,25 +60,27 @@
         .result p {
             margin-bottom: 20px;
         }
-        .restart-button {
-            text-align: center;
+        .candidate-results {
+            margin-top: 30px;
         }
-        .restart-button a {
-            background-color: #007bff;
-            color: #fff;
-            padding: 10px 20px;
-            text-decoration: none;
-            border-radius: 4px;
+        .candidate-results table {
+            width: 100%;
+            border-collapse: collapse;
         }
-        .restart-button a:hover {
-            background-color: #0056b3;
+        .candidate-results th, .candidate-results td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        .candidate-results th {
+            background-color: #f2f2f2;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Assessment</h1>
-        <form class="assessment-form" id="assessmentForm" action="#" method="post">
+        <h1>Online Test</h1>
+        <form class="test-form" id="testForm" action="#" method="post">
             <div class="form-group">
                 <label for="name">Name:</label>
                 <input type="text" id="name" name="name" required>
@@ -88,50 +90,53 @@
                 <input type="email" id="email" name="email" required>
             </div>
             <div class="form-group">
-                <input type="submit" value="Start Assessment">
+                <input type="submit" value="Start Test">
             </div>
         </form>
         <div class="result" id="result">
-            <h2>Assessment Result</h2>
-            <p>Congratulations! You have completed the assessment.</p>
+            <h2>Test Result</h2>
+            <p>Congratulations! You have completed the test.</p>
             <p>Your score: <strong id="score"></strong></p>
-            <p>Here are the details of your performance:</p>
-            <ul>
-                <li>Correct Answers: <span id="correct"></span></li>
-                <li>Incorrect Answers: <span id="incorrect"></span></li>
-                <li>Skipped Questions: <span id="skipped"></span></li>
-            </ul>
-            <div class="restart-button">
-                <a href="#" onclick="restartAssessment()">Restart Assessment</a>
-            </div>
+            <!-- Other result details can be added here -->
+        </div>
+        <div class="candidate-results">
+            <h2>Candidate Results</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Score</th>
+                        <!-- Add more columns as needed -->
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>John Doe</td>
+                        <td>85%</td>
+                        <!-- Add more rows with candidate results -->
+                    </tr>
+                    <tr>
+                        <td>Jane Smith</td>
+                        <td>92%</td>
+                    </tr>
+                    <!-- Add more rows as needed -->
+                </tbody>
+            </table>
         </div>
     </div>
 
     <script>
-        document.getElementById("assessmentForm").addEventListener("submit", function(event) {
+        document.getElementById("testForm").addEventListener("submit", function(event) {
             event.preventDefault(); // Prevent form submission
             
-            // Simulate assessment completion (replace with actual scoring logic)
+            // Simulate test completion (replace with actual scoring logic)
             var score = Math.floor(Math.random() * 101); // Random score between 0 and 100
-            var correct = Math.floor(Math.random() * 21); // Random number of correct answers
-            var incorrect = Math.floor(Math.random() * 21); // Random number of incorrect answers
-            var skipped = Math.floor(Math.random() * 11); // Random number of skipped questions
             
             // Display result
             document.getElementById("score").textContent = score + "%";
-            document.getElementById("correct").textContent = correct;
-            document.getElementById("incorrect").textContent = incorrect;
-            document.getElementById("skipped").textContent = skipped;
-            
-            document.getElementById("assessmentForm").style.display = "none"; // Hide assessment form
+            document.getElementById("testForm").style.display = "none"; // Hide test form
             document.getElementById("result").style.display = "block"; // Show result
         });
-
-        function restartAssessment() {
-            document.getElementById("assessmentForm").reset(); // Reset form fields
-            document.getElementById("assessmentForm").style.display = "block"; // Show assessment form
-            document.getElementById("result").style.display = "none"; // Hide result
-        }
     </script>
 </body>
 </html>

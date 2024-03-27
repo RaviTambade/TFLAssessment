@@ -105,6 +105,7 @@ create table candidatetestresults(
 Create table interviews(
 	id INT PRIMARY KEY AUTO_INCREMENT,
 	interviewdate DATE,
+    interviewtime VARCHAR(20),
 	smeid INT,
 	candidateid INT,
 	CONSTRAINT fk_sme_smeid FOREIGN KEY(smeid) REFERENCES subjectmatterexperts(id) ON UPDATE CASCADE ON DELETE CASCADE,
