@@ -4,8 +4,8 @@ public class InterviewDetails{
     public string InterviewDate{get;set;}
     public string InterviewTime{get;set;}
     
-    public string SMETitle{get;set;}
-    public string InterviewTitle{get;set;}
+    public string SMEName{get;set;}
+    public string CandidateName{get;set;}
     public string Subject{get;set;}
     public string [] Criterias{get;set;}
 }

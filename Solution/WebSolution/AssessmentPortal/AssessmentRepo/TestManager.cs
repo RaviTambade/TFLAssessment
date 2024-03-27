@@ -614,6 +614,50 @@ public class TestManager
         }
         return interviewSubjectName;
     } 
+
+    public InterviewDetails GetInterviewDetails(int interviewId)
+    {
+        InterviewDetails interviewInfo = new InterviewDetails();
+        string query="spinterviewdetails";
+
+        MySqlConnection connection = new MySqlConnection(connectionString);
+        try
+        {
+             MySqlCommand command = new MySqlCommand(query, connection);
+             command.CommandType = CommandType.StoredProcedure;
+             command.Parameters.AddWithValue("@pinterviewId", interviewId);
+             connection.Open();
+             MySqlDataReader reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                int id = int.Parse(reader["id"].ToString());
+                DateTime interviewdate =DateTime.Parse(reader["interviewdate"].ToString());
+                DateOnly formatinterviewDate = DateOnly.FromDateTime(interviewdate);
+                string interviewtime = reader["interviewtime"].ToString();
+                string smeName = reader["SmeName"].ToString();
+              
+                
+                interviewInfo.Id = id;
+                interviewInfo.InterviewDate = formatinterviewDate;
+                interviewInfo.InterviewTime = interviewtime;
+                interviewInfo.SMEName = smeName;
+                Console.WriteLine( interviewInfo.Id+" "+interviewInfo.InterviewDate+" "+interviewInfo.InterviewTime+" "+interviewInfo.SMEName);
+
+            }
+            reader.Close();
+            
+            
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+        finally
+        {
+            connection.Close();
+        }
+        return interviewInfo;
+    }
 }
 
 

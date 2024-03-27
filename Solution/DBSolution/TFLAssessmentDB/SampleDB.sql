@@ -402,16 +402,16 @@ INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(3,10,'
 
 
 
-INSERT INTO interviews(interviewdate, smeid, candidateid)VALUES('2024-02-10',1,2);
-INSERT INTO interviews(interviewdate, smeid, candidateid)VALUES('2024-02-10',2,3);
-INSERT INTO interviews(interviewdate, smeid, candidateid)VALUES('2024-03-12',1,4);
-INSERT INTO interviews(interviewdate, smeid, candidateid)VALUES('2024-03-01',3,5);
-INSERT INTO interviews(interviewdate, smeid, candidateid)VALUES('2024-02-15',1,6);
-INSERT INTO interviews(interviewdate, smeid, candidateid)VALUES('2024-03-10',4,2);
-INSERT INTO interviews(interviewdate, smeid, candidateid)VALUES('2024-02-20',1,3);
-INSERT INTO interviews(interviewdate, smeid, candidateid)VALUES('2024-02-12',2,4);
-INSERT INTO interviews(interviewdate, smeid, candidateid)VALUES('2024-03-11',1,5);
-INSERT INTO interviews(interviewdate, smeid, candidateid)VALUES('2024-03-15',3,6);
+INSERT INTO interviews(interviewdate,interviewtime, smeid, candidateid)VALUES('2024-02-10',"10:00 AM",1,2);
+INSERT INTO interviews(interviewdate,interviewtime, smeid, candidateid)VALUES('2024-02-10',"10:30 AM",2,3);
+INSERT INTO interviews(interviewdate,interviewtime, smeid, candidateid)VALUES('2024-03-12',"11:00 AM",1,4);
+INSERT INTO interviews(interviewdate,interviewtime, smeid, candidateid)VALUES('2024-03-01',"11:30 AM",3,5);
+INSERT INTO interviews(interviewdate,interviewtime, smeid, candidateid)VALUES('2024-02-15',"12:00 PM",1,6);
+INSERT INTO interviews(interviewdate,interviewtime, smeid, candidateid)VALUES('2024-03-10',"12:30 PM",4,2);
+INSERT INTO interviews(interviewdate,interviewtime, smeid, candidateid)VALUES('2024-02-20',"01:00 PM",1,3);
+INSERT INTO interviews(interviewdate,interviewtime, smeid, candidateid)VALUES('2024-02-12',"01:30 PM",2,4);
+INSERT INTO interviews(interviewdate,interviewtime, smeid, candidateid)VALUES('2024-03-11',"02:00 PM",1,5);
+INSERT INTO interviews(interviewdate,interviewtime, smeid, candidateid)VALUES('2024-03-15',"02:30 PM",3,6);
 
 
 

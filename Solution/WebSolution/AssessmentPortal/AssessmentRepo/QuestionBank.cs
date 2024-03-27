@@ -250,14 +250,15 @@ public class QuestionBank
 
     public bool UpdateSubjectCriteria(int questionId,Question question){
         bool status = false;
-        string query = "update questionbank set subjectid=@subjectId,evaluationcriteriaid=@evaluationCriteriaId where id =@id";
+        string query = "update questionbank set evaluationcriteriaid=@evaluationCriteriaId ,subjectid=@subjectId where id =@id";
         MySqlConnection connection = new MySqlConnection(connectionString);
         try
         {
             connection.Open();   
             MySqlCommand command = new MySqlCommand(query, connection);
-            command.Parameters.AddWithValue("@subjectId", question.SkillId);
             command.Parameters.AddWithValue("@evaluationCriteriaId", question.EvaluationCriteriaId);
+            command.Parameters.AddWithValue("@subjectId", question.SkillId);
+            Console.WriteLine(question.SkillId);
             
             command.Parameters.AddWithValue("@id", questionId);
             int rowsAffected = command.ExecuteNonQuery();
