@@ -53,7 +53,7 @@ where interviews.candidateid=2;
             -- Criterias
             
  
-select interviews.id,interviews.interviewdate,interviews.interviewtime,
+select interviews.id,interviews.interviewdate,interviews.interviewtime,interviews.smeid,
 concat(employees.firstname," ",employees.lastname)as SmeName from interviews
 inner join subjectmatterexperts 
 on interviews.smeid=subjectmatterexperts.id 
@@ -61,19 +61,19 @@ inner join employees
 on subjectmatterexperts.employeeid= employees.id
 where interviews.id=2;
 
-select concat(employees.firstname," ",employees.lastname)as CandidateName from employees
+select interviews.candidateid, concat(employees.firstname," ",employees.lastname)as CandidateName from employees
 inner join interviews
 on interviews.candidateid = employees.id
 where interviews.id=2;
 
-select subjects.title from interviews
+select subjects.id, subjects.title from interviews
 inner join subjectmatterexperts
 on interviews.smeid = subjectmatterexperts.id
 inner join subjects
 on subjectmatterexperts.subjectid = subjects.id
 where interviews.id=2;
 
-select evaluationcriterias.title from interviews
+select evaluationcriterias.id, evaluationcriterias.title from interviews
 inner join interviewcriterias
 on interviews.id = interviewcriterias.interviewid
 inner join evaluationcriterias

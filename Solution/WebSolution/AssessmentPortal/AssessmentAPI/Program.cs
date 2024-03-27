@@ -61,6 +61,7 @@ string criteriaBySubjectUrl="/criterias/subjects/{subjectId}";
 string UpdateCriteria="/";
 string InterviewedCandidatesInfoUrl="/interviewedcandidates";
 string InterviewedCandidatesSubjectsUrl="/interviewedcandidatessubjects/{candidateId}";
+string InterviewDetailsUrl="/interviewdetails/{interviewId}"
 
 
 TestManager manager = new TestManager();
@@ -208,17 +209,23 @@ app.MapGet(InterviewedCandidatesSubjectsUrl,(int candidateId)=>{
 });
 
 
-app.MapGet("/interviewdetails",()=>{
-        InterviewDetails details=new InterviewDetails{
-            Id=12,
-            InterviewDate="25/3/2024",
-            SMETitle="Sarika Patil",
-            InterviewTitle="Paragati Bangar",
-            Subject="Java" ,
-            InterviewTime="5:56"  ,
-            Criterias=[ "Object Oriented Programming", "Multithreading", "File IO", "Database Programming"]
-        };
-    return details;
+// app.MapGet("/interviewdetails",()=>{
+//         InterviewDetails details=new InterviewDetails{
+//             Id=12,
+//             InterviewDate="25/3/2024",
+//             SMETitle="Sarika Patil",
+//             InterviewTitle="Paragati Bangar",
+//             Subject="Java" ,
+//             InterviewTime="5:56"  ,
+//             Criterias=[ "Object Oriented Programming", "Multithreading", "File IO", "Database Programming"]
+//         };
+//     return details;
+// });
+
+app.MapGet(InterviewDetailsUrl,(int interviewId)=>{
+   InterviewDetails interviewInfo = manager.GetInterviewDetails(interviewId);
+   Console.WriteLine(interviewId);
+   return interviewInfo;
 });
 
 app.Run();
