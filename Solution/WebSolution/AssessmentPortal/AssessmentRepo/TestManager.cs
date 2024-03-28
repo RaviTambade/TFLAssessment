@@ -618,34 +618,45 @@ public class TestManager
     }
 
 
-    public bool DeleteQuestion(int[] testQuestions)
-    {    
-        bool status=false;
-        MySqlConnection connection = new MySqlConnection(connectionString);
-        try{
+   public bool DeleteQuestion(int[] testQuestions)
+{    
 
-            foreach(var testQuestionId in testQuestions){
-                string query = "delete from testquestions where id=@id";
-                MySqlCommand command = new MySqlCommand(query, connection);
-                command.Parameters.AddWithValue("@id",testQuestionId);
-                connection.Open();
-                int rowsAffected = command.ExecuteNonQuery();
-                if (rowsAffected > 0)
-                {
-                    status = true;
-                }
+    
+    bool status = false;
+    MySqlConnection connection = new MySqlConnection(connectionString);
+
+    try
+    {
+        connection.Open(); // Open connection outside the loop
+
+        foreach (var testQuestionId in testQuestions) {
+            Console.WriteLine("DAl" +testQuestionId);
+
+            string query = "DELETE FROM testquestions WHERE id = @id";
+            MySqlCommand command = new MySqlCommand(query, connection);
+            command.Parameters.AddWithValue("@id", testQuestionId);
+
+            int rowsAffected = command.ExecuteNonQuery();
+            if (rowsAffected > 0)
+            {
+                status = true;
             }
         }
-        catch(Exception e)
+    }
+    catch (Exception e)
+    {
+        Console.WriteLine("Error occurred: " + e.Message);
+    }
+    finally
+    {
+        if (connection.State != ConnectionState.Closed)
         {
-        Console.WriteLine(e.Message);
+            connection.Close(); 
         }
-        finally
-        {
-            connection.Close();
-        }
-        return status;
-    }       
+    }
+    return status;
+}
+ 
 
     public List<InterviewedCandidates> GetInterviewedCandidatesSubjects(int candidateId)
     {

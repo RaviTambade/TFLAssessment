@@ -41,7 +41,7 @@ string allQuestionsBySubjectUrl="/questions/subjects/{subjectid}";
 string testSubjectCriteriaAPI = "/questions/subjects/{subjectId}/criterias/{criteriaId}";
 string insertnewquestionurl="/question";
 string insertnewcriteriaurl="/criteria";
-string deleteTestQuestion="/testquestions/{testQuestions}";
+string deleteTestQuestion="/testquestions";
 
 string candidateTestResultUrl="/result/candidates/{candidateId}/test/{testId}";
 
@@ -204,8 +204,8 @@ app.MapPut(updateAnswer,(Question answer,int questionId)=>{
 });
 
 
-app.MapDelete(deleteTestQuestion,(int[] testQuestions)=>{
-    Console.WriteLine(testQuestions);
+app.MapPost(deleteTestQuestion,(int[] testQuestions)=>{
+    Console.WriteLine("hii"+testQuestions);
     bool status=manager.DeleteQuestion(testQuestions);
     return status;
 });
