@@ -70,6 +70,7 @@ string InterviewDetailsUrl="/interviewdetails/{interviewId}";
 
 
 TestManager manager = new TestManager();
+QuestionBank questionBank=new QuestionBank();
 
 //API Listners
 app.MapGet(apiEmployeesUrl,()=>{
@@ -104,7 +105,6 @@ app.MapGet(apiTestUrl,()=>{
 
 app.MapGet(InterviewDetailsUrl,(int interviewId)=>{
    InterviewDetails interviewInfo = manager.GetInterviewDetails(interviewId);
-   Console.WriteLine(interviewId);
    return interviewInfo;
 });
 
@@ -115,12 +115,10 @@ app.MapGet(InterviewedCandidatesInfoUrl,()=>{
 
 app.MapGet(InterviewedCandidatesSubjectsUrl,(int candidateId)=>{
    List<InterviewedCandidates> InterviewCandidatesSubjects = manager.GetInterviewedCandidatesSubjects(candidateId);
-   Console.WriteLine(candidateId);
    return InterviewCandidatesSubjects;
 });
 
 app.MapGet(apiQuestionsUrl,(int testId)=>{
-    Console.WriteLine("API URL Test ID="+ testId);
     List<TestQuestion> questions= manager.GetQuestions(testId);
     return questions;
 });
@@ -130,14 +128,12 @@ app.MapGet(candidateTestResultUrl,(int candidateId,int testId )=>{
     return score;
 });
 
-app.MapGet(allQuestionsAPI,()=>{     
-        QuestionBank qBank=new QuestionBank();
-        List<QuestionTitle> allQuestions = qBank.GetAllQuestions();
-        return allQuestions;
+app.MapGet(allQuestionsAPI,()=>{         
+    List<QuestionTitle> allQuestions = questionBank.GetAllQuestions();
+    return allQuestions;
 });
 
 app.MapGet(allQuestionsBySubjectUrl,(int subjectId)=>{
-        QuestionBank questionBank=new QuestionBank();
         List<SubjectQuestion> questions = questionBank.GetQuestionsBySubject(subjectId);
         return questions;
 });
@@ -150,8 +146,7 @@ app.MapGet(criteria,(string subject , int questionid)=>{
 
 
 app.MapGet(testSubjectCriteriaAPI,(int subjectId,int criteriaId)=>{
-        QuestionBank question=new QuestionBank();
-        List<QuestionDetails> questions = question.GetQuestionsBySubjectAndCriteria(subjectId,criteriaId);
+        List<QuestionDetails> questions = questionBank.GetQuestionsBySubjectAndCriteria(subjectId,criteriaId);
         return questions;
 });
 
@@ -162,7 +157,6 @@ app.MapGet(question,(string subject , int questionid)=>{
 
 
 app.MapGet(questionUrl,(int questionId)=>{
-       QuestionBank questionBank=new QuestionBank();
        Question question=questionBank.GetQuestion(questionId);
        return question;
 });
@@ -202,15 +196,13 @@ app.MapPut(testEndTimesettingUrl,( CandidateTestTime test)=>{
 });
 
 app.MapPut(subjectCriteriaUrl,( int questionId,Question question)=>{
-     QuestionBank qBank=new QuestionBank();
-     bool status=qBank.UpdateSubjectCriteria(questionId,question);
+     bool status=questionBank.UpdateSubjectCriteria(questionId,question);
      return status;
 });
 
 
 app.MapPut(updateQuestionOptions,(int questionId, Question options)=>{
-     QuestionBank qBank=new QuestionBank();
-     bool status=qBank.UpdateQuestionOptions(questionId,options);
+     bool status=questionBank.UpdateQuestionOptions(questionId,options);
      return status;
 });
 
@@ -223,8 +215,7 @@ app.MapPut(UpdateCriteria,(int evaluationCriteriaId,int questionId)=>{
 
 
 app.MapPut(updateAnswer,(Question answer,int questionId)=>{
-    QuestionBank question =new QuestionBank();
-    bool status=question.UpdateAnswer(answer,questionId);
+    bool status=questionBank.UpdateAnswer(answer,questionId);
     return status;   
 });
 
