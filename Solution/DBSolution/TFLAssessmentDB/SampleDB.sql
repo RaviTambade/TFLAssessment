@@ -362,6 +362,30 @@ INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(1,9,'a
 INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(1,10,'a');
 
 
+INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(1,11,'c');
+INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(1,12,'b');
+INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(1,13,'b');
+INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(1,14,'b');
+INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(1,15,'a');
+INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(1,16,'a');
+INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(1,17,'a');
+INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(1,18,'d');
+INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(1,19,'b');
+INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(1,20,'b');
+
+
+
+INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(1,21,'a');
+INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(1,22,'b');
+INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(1,23,'c');
+INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(1,24,'c');
+INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(1,25,'b');
+INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(1,26,'d');
+INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(1,27,'a');
+INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(1,18,'d');
+INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(1,19,'b');
+INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(1,20,'b');
+
  INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(2,1,'b');
 INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(2,2,'a');
 INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(2,3,'b');
@@ -373,7 +397,31 @@ INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(2,8,'d
 INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(2,9,'c');
 INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(2,10,'d');
 
+
+
+ INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(2,11,'a');
+INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(2,12,'b');
+INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(2,13,'b');
+INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(2,14,'b');
+INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(2,15,'a');
+INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(2,16,'c');
+INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(2,17,'b');
+INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(2,18,'b');
+INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(2,19,'b');
+INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(2,20,'a');
+
+
  
+INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(3,1,'c');
+INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(3,2,'c');
+INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(3,3,'c');
+INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(3,4,'c');
+INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(3,5,'c');
+INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(3,6,'c');
+INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(3,7,'c');
+INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(3,8,'c');
+INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(2,9,'c');
+INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(3,10,'d');
 
 
 
