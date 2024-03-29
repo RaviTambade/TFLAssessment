@@ -5,7 +5,7 @@ namespace Assessment.Repositories;
 public class TestManager
 {
     private string connectionString = "server=localhost;port=3306;user=root;password=password;database=assessmentdb";
- 
+
     public List<Employee> GetAllEmployees()
     {
         List<Employee> employees = new List<Employee>();
@@ -15,7 +15,7 @@ public class TestManager
         MySqlCommand command = new MySqlCommand(query, connection);
 
         try
-        { 
+        {
             connection.Open();
             MySqlDataReader reader = command.ExecuteReader();
             while (reader.Read())
@@ -54,7 +54,7 @@ public class TestManager
         MySqlConnection connection = new MySqlConnection(connectionString);
         MySqlCommand command = new MySqlCommand(query, connection);
         try
-        {  
+        {
             connection.Open();
             MySqlDataReader reader = command.ExecuteReader();
             while (reader.Read())
@@ -87,7 +87,7 @@ public class TestManager
         MySqlConnection connection = new MySqlConnection(connectionString);
         MySqlCommand command = new MySqlCommand(query, connection);
         try
-        {  
+        {
             connection.Open();
             MySqlDataReader reader = command.ExecuteReader();
             while (reader.Read())
@@ -112,7 +112,7 @@ public class TestManager
         return criterias;
     }
 
-    
+
     public List<EvaluationCriteria> GetEvalutionCriteriasBySubject(int subjectId)
     {
         List<EvaluationCriteria> criterias = new List<EvaluationCriteria>();
@@ -122,7 +122,7 @@ public class TestManager
         MySqlCommand command = new MySqlCommand(query, connection);
         command.Parameters.AddWithValue("@subjectId", subjectId);
         try
-        {  
+        {
             connection.Open();
             MySqlDataReader reader = command.ExecuteReader();
             while (reader.Read())
@@ -134,7 +134,7 @@ public class TestManager
                 criteria.Id = id;
                 criteria.Title = title;
 
-                Console.WriteLine(criteria.Id + "  "+ criteria.Title);
+                Console.WriteLine(criteria.Id + "  " + criteria.Title);
 
                 criterias.Add(criteria);
             }
@@ -154,19 +154,19 @@ public class TestManager
 
     public int GetCandidateScore(int candidateId, int testId)
     {
-        string query="spcandidatetestresult";
+        string query = "spcandidatetestresult";
 
         MySqlConnection connection = new MySqlConnection(connectionString);
         int score = 0;
         try
         {
-             MySqlCommand command = new MySqlCommand(query, connection);
-             command.CommandType = CommandType.StoredProcedure;
-             command.Parameters.AddWithValue("@pcandidateId", candidateId);
-             command.Parameters.AddWithValue("@ptestId", testId);
-             command.Parameters.AddWithValue("@pscore", MySqlDbType.Int32);
-             command.Parameters["@pscore"].Direction = ParameterDirection.Output;
-             connection.Open();
+            MySqlCommand command = new MySqlCommand(query, connection);
+            command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.AddWithValue("@pcandidateId", candidateId);
+            command.Parameters.AddWithValue("@ptestId", testId);
+            command.Parameters.AddWithValue("@pscore", MySqlDbType.Int32);
+            command.Parameters["@pscore"].Direction = ParameterDirection.Output;
+            connection.Open();
             int rowsAffected = command.ExecuteNonQuery();
             score = Convert.ToInt32(command.Parameters["@pscore"].Value);
             Console.WriteLine(score);
@@ -184,10 +184,10 @@ public class TestManager
 
     public List<TestQuestion> GetQuestions(int testId)
     {
-               
+
         List<TestQuestion> questions = new List<TestQuestion>();
         string query = @"select * from questionbank inner join testquestions on testquestions.questionbankid = questionbank.id where testquestions.testid=@testId";
-         
+
         MySqlConnection connection = new MySqlConnection(connectionString);
         MySqlCommand command = new MySqlCommand(query, connection);
         command.Parameters.AddWithValue("@testId", testId);
@@ -228,7 +228,7 @@ public class TestManager
         return questions;
     }
 
-    public bool InsertCandidateAnswers(int candidateId,List<CandidateAnswer> answers)
+    public bool InsertCandidateAnswers(int candidateId, List<CandidateAnswer> answers)
     {
         bool status = false;
         string query = "INSERT INTO candidateanswers (candidateid, testquestionid, answerkey) VALUES (@candidateId, @testQuestionId, @answerKey)";
@@ -262,64 +262,72 @@ public class TestManager
         }
         return status;
     }
- 
-    public bool SetTestStartTime(int candidateId,int testId,  TestTime time ){
 
-    bool status=false;
-    string query = "insert into candidatetestresults(testid,teststarttime,candidateid) values (@testid,@teststarttime,@candidateid)";
-     MySqlConnection connection = new MySqlConnection(connectionString);         
+    public bool SetTestStartTime(int candidateId, int testId, TestTime time)
+    {
 
-    var testTime = time.Year +"-"+time.Month+"-"+time.Day+"T"+time.Hour+":"+time.Minutes+":"+time.Seconds;
-    MySqlCommand command = new MySqlCommand(query, connection);
-    command.Parameters.AddWithValue("@testid", testId);
-    command.Parameters.AddWithValue("@candidateid", candidateId);
-    command.Parameters.AddWithValue("@teststarttime", testTime);
-    try{
-        connection.Open();
-        int rowsAffected = command.ExecuteNonQuery();
-        if (rowsAffected > 0)
+        bool status = false;
+        string query = "insert into candidatetestresults(testid,teststarttime,candidateid) values (@testid,@teststarttime,@candidateid)";
+        MySqlConnection connection = new MySqlConnection(connectionString);
+
+        var testTime = time.Year + "-" + time.Month + "-" + time.Day + "T" + time.Hour + ":" + time.Minutes + ":" + time.Seconds;
+        MySqlCommand command = new MySqlCommand(query, connection);
+        command.Parameters.AddWithValue("@testid", testId);
+        command.Parameters.AddWithValue("@candidateid", candidateId);
+        command.Parameters.AddWithValue("@teststarttime", testTime);
+        try
         {
-            status = true;
-        }   
-    }
-    catch(Exception e){
-       Console.WriteLine(e.Message);
-    }
-    finally{
-        connection.Close();
-    }
-    return status;
-}
-
-    public bool SetTestEndTime( int candidateId,int testId, TestTime time ){
-    bool status=false;
-    
-    MySqlConnection connection = new MySqlConnection(connectionString);
-    string query = "update candidatetestresults set testendtime =@testEndTime where candidateid=@candidateId and testid=@testId";
-               
-    var testTime = time.Year +"-"+time.Month+"-"+time.Day+"T"+time.Hour+":"+time.Minutes+":"+time.Seconds;
-    MySqlCommand command = new MySqlCommand(query, connection);
-    command.Parameters.AddWithValue("@candidateId", candidateId);
-    command.Parameters.AddWithValue("@testId", testId);
-    command.Parameters.AddWithValue("@testEndTime", testTime);
-    Console.WriteLine(candidateId+" "+testId+" "+testTime);
-     try{ 
             connection.Open();
             int rowsAffected = command.ExecuteNonQuery();
             if (rowsAffected > 0)
             {
                 status = true;
             }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+        finally
+        {
+            connection.Close();
+        }
+        return status;
     }
-    catch(Exception e){
-       Console.WriteLine(e.Message);
+
+    public bool SetTestEndTime(int candidateId, int testId, TestTime time)
+    {
+        bool status = false;
+
+        MySqlConnection connection = new MySqlConnection(connectionString);
+        string query = "update candidatetestresults set testendtime =@testEndTime where candidateid=@candidateId and testid=@testId";
+
+        var testTime = time.Year + "-" + time.Month + "-" + time.Day + "T" + time.Hour + ":" + time.Minutes + ":" + time.Seconds;
+        MySqlCommand command = new MySqlCommand(query, connection);
+        command.Parameters.AddWithValue("@candidateId", candidateId);
+        command.Parameters.AddWithValue("@testId", testId);
+        command.Parameters.AddWithValue("@testEndTime", testTime);
+        Console.WriteLine(candidateId + " " + testId + " " + testTime);
+        try
+        {
+            connection.Open();
+            int rowsAffected = command.ExecuteNonQuery();
+            if (rowsAffected > 0)
+            {
+                status = true;
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+        finally
+        {
+            connection.Close();
+        }
+        return status;
     }
-    finally{
-        connection.Close();
-    }
-    return status;
-}
-   public List<Test> GetAllTests()
+    public List<Test> GetAllTests()
     {
         List<Test> tests = new List<Test>();
         string query = @"select tests.*,subjects.title as skill,employees.firstname,employees.lastname from tests 
@@ -330,7 +338,7 @@ public class TestManager
         MySqlConnection connection = new MySqlConnection(connectionString);
         MySqlCommand command = new MySqlCommand(query, connection);
         try
-        {  
+        {
             connection.Open();
             MySqlDataReader reader = command.ExecuteReader();
             while (reader.Read())
@@ -339,12 +347,12 @@ public class TestManager
                 // TimeOnly duration=TimeOnly.Parse(reader["duration"]);
                 int subjectId = int.Parse(reader["subjectid"].ToString());
                 int subjectExpertId = int.Parse(reader["smeid"].ToString());
-                DateTime creationDate =DateTime.Parse(reader["creationdate"].ToString());
-                DateTime modificationDate =DateTime.Parse(reader["modificationdate"].ToString());
-                DateTime scheduledDate =DateTime.Parse(reader["scheduleddate"].ToString());
-                string subject=reader["skill"].ToString();
-                string firstName=reader["firstname"].ToString();
-                string lastName=reader["lastname"].ToString();
+                DateTime creationDate = DateTime.Parse(reader["creationdate"].ToString());
+                DateTime modificationDate = DateTime.Parse(reader["modificationdate"].ToString());
+                DateTime scheduledDate = DateTime.Parse(reader["scheduleddate"].ToString());
+                string subject = reader["skill"].ToString();
+                string firstName = reader["firstname"].ToString();
+                string lastName = reader["lastname"].ToString();
 
                 Test test = new Test();
                 test.Id = id;
@@ -354,36 +362,38 @@ public class TestManager
                 test.ModificationDate = modificationDate;
                 test.ScheduledDate = scheduledDate;
                 test.Subject = subject;
-                test.FirstName=firstName;
-                test.LastName=lastName;   
+                test.FirstName = firstName;
+                test.LastName = lastName;
                 tests.Add(test);
             }
         }
-       catch(Exception e){
-            throw e; 
-       }
-       return tests;
+        catch (Exception e)
+        {
+            throw e;
+        }
+        return tests;
     }
 
-    public string GetCriteria(string subject ,int questionId){
-      string criteria="";
+    public string GetCriteria(string subject, int questionId)
+    {
+        string criteria = "";
         string query = @"select evaluationcriterias.title from evaluationcriterias INNER join questionbank on questionbank.evaluationcriteriaid=evaluationcriterias.id
                        inner join subjects on questionbank.subjectid= evaluationcriterias.subjectid WHERE subjects.title=@subject and questionbank.id=@questionId";
 
         MySqlConnection connection = new MySqlConnection(connectionString);
         try
-        { 
+        {
             MySqlCommand command = new MySqlCommand(query, connection);
-            command.Parameters.AddWithValue("@subject",subject);
-            command.Parameters.AddWithValue("@questionId",questionId);
+            command.Parameters.AddWithValue("@subject", subject);
+            command.Parameters.AddWithValue("@questionId", questionId);
             connection.Open();
             MySqlDataReader reader = command.ExecuteReader();
-            if(reader.Read())
+            if (reader.Read())
             {
-               
-               string   title = reader["title"].ToString();
-               criteria=title;
-            }             
+
+                string title = reader["title"].ToString();
+                criteria = title;
+            }
             reader.Close();
         }
         catch (Exception e)
@@ -397,12 +407,13 @@ public class TestManager
         return criteria;
     }
 
-    public TestQuestion GetQuestion(string subject,int questionid){
+    public TestQuestion GetQuestion(string subject, int questionid)
+    {
 
-        TestQuestion question =null;
+        TestQuestion question = null;
         string query = @" select questionbank.*,evaluationcriterias.title as criteria from evaluationcriterias INNER join questionbank on questionbank.evaluationcriteriaid=evaluationcriterias.id
         inner join subjects on questionbank.subjectid= evaluationcriterias.subjectid  WHERE subjects.title=@subject and questionbank.id=@questionId";
-         
+
         MySqlConnection connection = new MySqlConnection(connectionString);
         MySqlCommand command = new MySqlCommand(query, connection);
         command.Parameters.AddWithValue("@subject", subject);
@@ -420,10 +431,10 @@ public class TestManager
                 string b = reader["b"].ToString();
                 string c = reader["c"].ToString();
                 string d = reader["d"].ToString();
-                int evaluationCriteriaId=int.Parse(reader["evaluationcriteriaid"].ToString());
+                int evaluationCriteriaId = int.Parse(reader["evaluationcriteriaid"].ToString());
                 string criteria = reader["criteria"].ToString();
 
-                question= new TestQuestion();
+                question = new TestQuestion();
                 question.Id = id;
                 question.Title = title;
                 question.A = a;
@@ -446,97 +457,109 @@ public class TestManager
         return question;
     }
 
-    public bool InsertQuestion(NewQuestion question){
-        
-        bool status=false;
+    public bool InsertQuestion(NewQuestion question)
+    {
+
+        bool status = false;
         MySqlConnection connection = new MySqlConnection(connectionString);
         string query = "insert into questionbank(subjectid, title, a, b, c, d, answerkey,evaluationcriteriaid) values (@subjectId, @title, @a, @b, @c, @d, @answerKey, @evaluationCriteriaId)";
-        
+
         MySqlCommand command = new MySqlCommand(query, connection);
 
-        command.Parameters.AddWithValue("@subjectId",question.SubjectId);
-        command.Parameters.AddWithValue("@title",question.Title);
-        command.Parameters.AddWithValue("@a",question.A);
-        command.Parameters.AddWithValue("@b",question.B);
-        command.Parameters.AddWithValue("@c",question.C);
-        command.Parameters.AddWithValue("@d",question.D);
-        command.Parameters.AddWithValue("@answerKey",question.AnswerKey);
-        command.Parameters.AddWithValue("@evaluationCriteriaId",question.EvaluationCriteriaId);
-        
-        try{ 
-                connection.Open();
-                int rowsAffected = command.ExecuteNonQuery();
-                if (rowsAffected > 0)
-                {
-                    status = true;
-                }
+        command.Parameters.AddWithValue("@subjectId", question.SubjectId);
+        command.Parameters.AddWithValue("@title", question.Title);
+        command.Parameters.AddWithValue("@a", question.A);
+        command.Parameters.AddWithValue("@b", question.B);
+        command.Parameters.AddWithValue("@c", question.C);
+        command.Parameters.AddWithValue("@d", question.D);
+        command.Parameters.AddWithValue("@answerKey", question.AnswerKey);
+        command.Parameters.AddWithValue("@evaluationCriteriaId", question.EvaluationCriteriaId);
+
+        try
+        {
+            connection.Open();
+            int rowsAffected = command.ExecuteNonQuery();
+            if (rowsAffected > 0)
+            {
+                status = true;
+            }
         }
-        catch(Exception e){
-        Console.WriteLine(e.Message);
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
         }
-        finally{
+        finally
+        {
             connection.Close();
         }
         return status;
-    }  
+    }
 
-    public bool InsertCriteria(NewCriteria criteria){
-        Console.WriteLine(criteria.SubjectId+" "+criteria.Title);
-        bool status=false;
+    public bool InsertCriteria(NewCriteria criteria)
+    {
+        Console.WriteLine(criteria.SubjectId + " " + criteria.Title);
+        bool status = false;
         MySqlConnection connection = new MySqlConnection(connectionString);
         string query = "insert into evaluationcriterias(title,subjectid) values ( @title, @subjectId)";
-        
+
         MySqlCommand command = new MySqlCommand(query, connection);
 
-        command.Parameters.AddWithValue("@subjectId",criteria.SubjectId);
-        command.Parameters.AddWithValue("@title",criteria.Title);
-       
-        
-        try{ 
-                connection.Open();
-                int rowsAffected = command.ExecuteNonQuery();
-                if (rowsAffected > 0)
-                {
-                    status = true;
-                }
+        command.Parameters.AddWithValue("@subjectId", criteria.SubjectId);
+        command.Parameters.AddWithValue("@title", criteria.Title);
+
+
+        try
+        {
+            connection.Open();
+            int rowsAffected = command.ExecuteNonQuery();
+            if (rowsAffected > 0)
+            {
+                status = true;
+            }
         }
-        catch(Exception e){
-        Console.WriteLine(e.Message);
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
         }
-        finally{
+        finally
+        {
             connection.Close();
         }
         return status;
-    }  
+    }
 
 
-    public bool UpdateCriteria(int evaluationCriteriaId,int questionId){
-        
-        bool status=false;
+    public bool UpdateCriteria(int evaluationCriteriaId, int questionId)
+    {
+
+        bool status = false;
         MySqlConnection connection = new MySqlConnection(connectionString);
         string query = "update questionbank set evaluationcriteriaid=@evaluationCriteriaId where id=@questionId";
-        
+
         MySqlCommand command = new MySqlCommand(query, connection);
 
-        command.Parameters.AddWithValue("@evaluationCriteriaId",evaluationCriteriaId);
-        command.Parameters.AddWithValue("@questionId",questionId);
-        
-        try{ 
-                connection.Open();
-                int rowsAffected = command.ExecuteNonQuery();
-                if (rowsAffected > 0)
-                {
-                    status = true;
-                }
+        command.Parameters.AddWithValue("@evaluationCriteriaId", evaluationCriteriaId);
+        command.Parameters.AddWithValue("@questionId", questionId);
+
+        try
+        {
+            connection.Open();
+            int rowsAffected = command.ExecuteNonQuery();
+            if (rowsAffected > 0)
+            {
+                status = true;
+            }
         }
-        catch(Exception e){
-        Console.WriteLine(e.Message);
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
         }
-        finally{
+        finally
+        {
             connection.Close();
         }
         return status;
-    }  
+    }
 
     public List<Question> GetTestQuestion(int testId)
     {
@@ -550,7 +573,7 @@ public class TestManager
         MySqlCommand command = new MySqlCommand(query, connection);
         command.Parameters.AddWithValue("@testId", testId);
         try
-        {  
+        {
             connection.Open();
             MySqlDataReader reader = command.ExecuteReader();
             while (reader.Read())
@@ -577,7 +600,7 @@ public class TestManager
         return questions;
     }
 
-     public List<InterviewedCandidates> GetAllInterviewedCandidatesInfo()
+    public List<InterviewedCandidates> GetAllInterviewedCandidatesInfo()
     {
         List<InterviewedCandidates> CandidatesInfo = new List<InterviewedCandidates>();
         string query = @"select employees.firstname,employees.lastname,interviews.candidateid from employees
@@ -588,8 +611,9 @@ public class TestManager
         MySqlConnection connection = new MySqlConnection(connectionString);
         MySqlCommand command = new MySqlCommand(query, connection);
         connection.Open();
-        try{
-        MySqlDataReader reader = command.ExecuteReader();
+        try
+        {
+            MySqlDataReader reader = command.ExecuteReader();
 
 
             while (reader.Read())
@@ -604,7 +628,7 @@ public class TestManager
                 CandidatesInfo.Add(CandidateInfo);
 
             }
-             reader.Close();
+            reader.Close();
         }
         catch (Exception e)
         {
@@ -618,45 +642,46 @@ public class TestManager
     }
 
 
-   public bool DeleteQuestion(int[] testQuestions)
-{    
-
-    
-    bool status = false;
-    MySqlConnection connection = new MySqlConnection(connectionString);
-
-    try
+    public bool DeleteQuestion(int[] testQuestions)
     {
-        connection.Open(); // Open connection outside the loop
 
-        foreach (var testQuestionId in testQuestions) {
-            Console.WriteLine("DAl" +testQuestionId);
 
-            string query = "DELETE FROM testquestions WHERE id = @id";
-            MySqlCommand command = new MySqlCommand(query, connection);
-            command.Parameters.AddWithValue("@id", testQuestionId);
+        bool status = false;
+        MySqlConnection connection = new MySqlConnection(connectionString);
 
-            int rowsAffected = command.ExecuteNonQuery();
-            if (rowsAffected > 0)
+        try
+        {
+            connection.Open(); // Open connection outside the loop
+
+            foreach (var testQuestionId in testQuestions)
             {
-                status = true;
+                Console.WriteLine("DAl" + testQuestionId);
+
+                string query = "DELETE FROM testquestions WHERE id = @id";
+                MySqlCommand command = new MySqlCommand(query, connection);
+                command.Parameters.AddWithValue("@id", testQuestionId);
+
+                int rowsAffected = command.ExecuteNonQuery();
+                if (rowsAffected > 0)
+                {
+                    status = true;
+                }
             }
         }
-    }
-    catch (Exception e)
-    {
-        Console.WriteLine("Error occurred: " + e.Message);
-    }
-    finally
-    {
-        if (connection.State != ConnectionState.Closed)
+        catch (Exception e)
         {
-            connection.Close(); 
+            Console.WriteLine("Error occurred: " + e.Message);
         }
+        finally
+        {
+            if (connection.State != ConnectionState.Closed)
+            {
+                connection.Close();
+            }
+        }
+        return status;
     }
-    return status;
-}
- 
+
 
     public List<InterviewedCandidates> GetInterviewedCandidatesSubjects(int candidateId)
     {
@@ -667,12 +692,12 @@ public class TestManager
                          on interviews.smeid = subjectmatterexperts.id
                          inner join subjects on subjectmatterexperts.subjectid=subjects.id
                          where interviews.candidateid=@CandidateId;";
-                       
+
         MySqlConnection connection = new MySqlConnection(connectionString);
         MySqlCommand command = new MySqlCommand(query, connection);
-        command.Parameters.AddWithValue("@CandidateId",candidateId);   
+        command.Parameters.AddWithValue("@CandidateId", candidateId);
         try
-        {  
+        {
             connection.Open();
             MySqlDataReader reader = command.ExecuteReader();
             while (reader.Read())
@@ -695,40 +720,40 @@ public class TestManager
             connection.Close();
         }
         return interviewSubjectName;
-    } 
+    }
 
     public InterviewDetails GetInterviewDetails(int interviewId)
     {
         Console.WriteLine("In function");
         InterviewDetails interviewInfo = new InterviewDetails();
-        string query="spinterviewdetails";
+        string query = "spinterviewdetails";
 
         MySqlConnection connection = new MySqlConnection(connectionString);
         try
         {
-             MySqlCommand command = new MySqlCommand(query, connection);
-             command.CommandType = CommandType.StoredProcedure;
-             command.Parameters.AddWithValue("@pinterviewId", interviewId);
-             connection.Open();
-             MySqlDataReader reader = command.ExecuteReader();
+            MySqlCommand command = new MySqlCommand(query, connection);
+            command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.AddWithValue("@pinterviewId", interviewId);
+            connection.Open();
+            MySqlDataReader reader = command.ExecuteReader();
             while (reader.Read())
             {
                 int id = int.Parse(reader["id"].ToString());
-                string interviewdate =reader["interviewdate"].ToString();
+                string interviewdate = reader["interviewdate"].ToString();
                 string interviewtime = reader["interviewtime"].ToString();
                 string smeName = reader["SmeName"].ToString();
-              
-                
+
+
                 interviewInfo.Id = id;
                 interviewInfo.InterviewDate = interviewdate;
                 interviewInfo.InterviewTime = interviewtime;
                 interviewInfo.SMEName = smeName;
-                Console.WriteLine( interviewInfo.Id+" "+interviewInfo.InterviewDate+" "+interviewInfo.InterviewTime+" "+interviewInfo.SMEName);
+                Console.WriteLine(interviewInfo.Id + " " + interviewInfo.InterviewDate + " " + interviewInfo.InterviewTime + " " + interviewInfo.SMEName);
 
             }
             reader.Close();
-            
-            
+
+
         }
         catch (Exception e)
         {
@@ -740,6 +765,44 @@ public class TestManager
         }
         return interviewInfo;
     }
+
+    public int GetCandidateTestScore(int candidateId, int testId)
+    {
+        int score=0;
+
+        MySqlConnection connection = new MySqlConnection(connectionString);
+        string query = @"select score from candidatetestresults where candidateid=@candidateId AND testid=@testId";
+        try
+        {
+            MySqlCommand command = new MySqlCommand(query, connection);
+            command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.AddWithValue("@candidateId", candidateId);
+            command.Parameters.AddWithValue("@testId", testId);
+            connection.Open();
+            MySqlDataReader reader = command.ExecuteReader();
+            if (reader.Read())
+            {
+                 score = int.Parse(reader["score"].ToString());
+
+
+            }
+            reader.Close();
+
+
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+        finally
+        {
+            connection.Close();
+        }
+        return score;
+    }
+
+
+
 }
 
 

@@ -47,6 +47,8 @@ string insertnewquestionurl="/question";
 string insertnewcriteriaurl="/criteria";
 string deleteTestQuestion="/testquestions";
 
+string candidateTestScoreUrl="candidates/{candidateId}/tests/{testId}/score";
+
 string candidateTestResultUrl="/result/candidates/{candidateId}/test/{testId}";
 
 string criteriaBySubjectUrl="/criterias/subjects/{subjectId}";
@@ -155,10 +157,14 @@ app.MapGet(question,(string subject , int questionid)=>{
         return question;
 });
 
-
 app.MapGet(questionUrl,(int questionId)=>{
        Question question=questionBank.GetQuestion(questionId);
        return question;
+});
+
+app.MapGet(candidateTestScoreUrl,(int candidateId , int testId)=>{
+        int score = manager.GetCandidateTestScore(candidateId ,testId);
+        return score;
 });
 
 app.MapPost(testStartTimesettingUrl,(CandidateTestTime test)=>{

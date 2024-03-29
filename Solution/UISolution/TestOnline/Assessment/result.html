@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <title>Assessment</title>
     <style>
         body {
@@ -11,6 +13,7 @@
             padding: 0;
             background-color: #f4f4f4;
         }
+
         .container {
             max-width: 800px;
             margin: 20px auto;
@@ -19,20 +22,27 @@
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
-        h1, h2 {
+
+        h1,
+        h2 {
             text-align: center;
         }
-        .assessment-form, .result {
+
+        .assessment-form,
+        .result {
             margin-top: 20px;
         }
+
         .form-group {
             margin-bottom: 20px;
         }
+
         .form-group label {
             display: block;
             font-weight: bold;
         }
-        .form-group input[type="text"], 
+
+        .form-group input[type="text"],
         .form-group input[type="email"] {
             width: 100%;
             padding: 10px;
@@ -40,6 +50,7 @@
             border-radius: 4px;
             box-sizing: border-box;
         }
+
         .form-group input[type="submit"] {
             background-color: #007bff;
             color: #fff;
@@ -48,21 +59,28 @@
             border-radius: 4px;
             cursor: pointer;
         }
+
         .form-group input[type="submit"]:hover {
             background-color: #0056b3;
         }
+
         .result {
-            display: none; /* Initially hidden */
+            display: none;
+            /* Initially hidden */
         }
+
         .result h2 {
             margin-bottom: 10px;
         }
+
         .result p {
             margin-bottom: 20px;
         }
+
         .restart-button {
             text-align: center;
         }
+
         .restart-button a {
             background-color: #007bff;
             color: #fff;
@@ -70,48 +88,72 @@
             text-decoration: none;
             border-radius: 4px;
         }
+
         .restart-button a:hover {
             background-color: #0056b3;
         }
     </style>
 </head>
-<body>
+
+<>
     <div class="container">
         <h1>Assessment</h1>
 
         <form class="test-form" id="testForm" action="#" method="post">
             <div class="form-group">
                 <label for="name">Candidate Id:</label>
-                <input type="text" id="name" name="name" required>
+                <input id="id" required>
             </div>
             <div class="form-group">
                 <label for="email">Test Id:</label>
-                <input type="email" id="email" name="email" required>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Start Test">
+                <input id="id" required>
             </div>
         </form>
 
-      
-         
-            <h2>Assessment Result</h2>
-            <p>Congratulations! You have completed the assessment.</p>
-            <p>Your score: <strong id="score"></strong></p>
-            <p>Here are the details of your performance:</p>
-            <ul>
-                <li>Correct Answers: <span id="correct"></span></li>
-                <li>Incorrect Answers: <span id="incorrect"></span></li>
-                <li>Skipped Questions: <span id="skipped"></span></li>
-            </ul>
-            <div class="restart-button">
-              <!--  <a href="#" onclick="restartAssessment()">Restart Assessment</a>-->
-            </div>
+        <button id="btnsubmit">Submit</button>
+        
+        <h2>Assessment Result</h2>
+        <p>Congratulations! You have completed the assessment.</p>
+        <p>Your score: <strong id="score"></strong></p>
+        <p>Here are the details of your performance:</p>
+        <ul>
+            <li>Correct Answers: <span id="correct"></span></li>
+            <li>Incorrect Answers: <span id="incorrect"></span></li>
+            <li>Skipped Questions: <span id="skipped"></span></li>
+        </ul>
+        <div class="restart-button">
+            <!--  <a href="#" onclick="restartAssessment()">Restart Assessment</a>-->
         </div>
-  
+    </div>
+
 
     <script>
-    
+        var CandidateTestScore;
+        var candidateId = 6, testId = 3;
+        var CandidateTestScoreUrl = "http://localhost:5238/candidates/" + candidateId + "/tests/" + testId + "/score";
+
+        $(document).ready(function () {
+            // Event handler for checkboxes
+            $.ajax({
+                url: CandidateTestScoreUrl,
+                type: 'GET',
+                contentType: 'application/json',
+
+                success: function (data) {
+                    CandidateTestScore = data;
+                    console.log(CandidateTestScore);
+
+                },
+                error: function (xhr, status, error) {
+                    console.error(xhr.responseText);
+                }
+            })
+
+            $("#btnsubmit").click(() => {
+                $("#score").text(CandidateTestScore);
+            });
+        });
     </script>
-</body>
+    </body>
+
 </html>
