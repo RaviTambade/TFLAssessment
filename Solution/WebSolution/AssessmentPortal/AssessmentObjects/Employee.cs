@@ -1,4 +1,4 @@
-namespace Assessment.Entities;
+ namespace Assessment.Entities;
 
 public class Employee
 {

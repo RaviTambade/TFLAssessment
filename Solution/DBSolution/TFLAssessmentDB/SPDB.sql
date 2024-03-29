@@ -68,9 +68,9 @@ select(@pscore);
 -- inner join interviews
 -- on interviews.candidateid = employees.id
 -- where interviews.id=pinterviewId;
-
+ 
 -- select subjects.title into subjectName from interviews
--- inner join subjectmatterexperts
+-- inner join subjectmatterexperts 
 -- on interviews.smeid = subjectmatterexperts.id
 -- inner join subjects
 -- on subjectmatterexperts.subjectid = subjects.id
