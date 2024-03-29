@@ -362,43 +362,18 @@ INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(1,9,'a
 INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(1,10,'a');
 
 
-INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(1,11,'b');
-INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(1,12,'c');
-INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(1,13,'a');
-INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(1,14,'a');
-INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(1,15,'b');
-INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(1,16,'c');
-INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(1,17,'d');
-INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(1,18,'d');
-INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(1,19,'a');
-INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(1,20,'a');
-
-
-
--- second Candidate Answser sheet
-INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(2,1,'a');
-INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(2,2,'b');
-INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(2,3,'c');
-INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(2,4,'d');
+ INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(2,1,'b');
+INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(2,2,'a');
+INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(2,3,'b');
+INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(2,4,'a');
 INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(2,5,'a');
-INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(2,6,'b');
+INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(2,6,'c');
 INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(2,7,'a');
-INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(2,8,'a');
-INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(2,9,'b');
-INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(2,10,'b');
+INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(2,8,'d');
+INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(2,9,'c');
+INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(2,10,'d');
 
-
--- second Candidate Answser sheet
-INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(3,1,'d');
-INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(3,2,'a');
-INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(3,3,'c');
-INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(3,4,'d');
-INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(3,5,'d');
-INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(3,6,'b');
-INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(3,7,'d');
-INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(3,8,'a');
-INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(3,9,'a');
-INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(3,10,'c');
+ 
 
 
 
