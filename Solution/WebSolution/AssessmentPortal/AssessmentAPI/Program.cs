@@ -14,6 +14,9 @@ builder.Services.AddRazorPages();
 builder.Services.AddControllers();
 
 var app = builder.Build();
+
+//ASP.NET middleware configuration
+
 app.UseCors(options => options.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
 //app.UseHttpsRedirection();
 app.UseStaticFiles();
