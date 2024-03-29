@@ -41,58 +41,6 @@ END $$
 -- where candidateid=6 and testid=1;
 call spcandidatetestresult(1,1,@pscore) ;
 select(@pscore);
-
--- Update candidatetestresults  set marks =5 where candidateresultid = 1;
-
--- DELIMITER $$
--- create procedure spinterviewdetails(IN pinterviewId INT,OUT pinterviewdate DATE,OUT pinterviewtime VARCHAR(20),OUT psmename VARCHAR(40),OUT pcandidatename VARCHAR(40),OUT psubjectname VARCHAR(20),OUT pcriterias VARCHAR(100) )
--- BEGIN
--- DECLARE interviewDate DATE;
--- DECLARE interviewTime VARCHAR(20); 
--- DECLARE smeName VARCHAR(40); 
--- DECLARE candidateName VARCHAR(40); 
--- DECLARE subjectName VARCHAR(20); 
-
--- -- DECLARE criterias VARCHAR(100); 
-
-
--- select interviews.interviewdate,interviews.interviewtime,
--- concat(employees.firstname," ",employees.lastname)as SubjectMattrExpName into interviewDate,interviewTime,smeName  from interviews
--- inner join subjectmatterexperts 
--- on interviews.smeid=subjectmatterexperts.id 
--- inner join employees
--- on subjectmatterexperts.employeeid= employees.id
--- where interviews.id=pinterviewId;
-
--- select concat(employees.firstname," ",employees.lastname)as InterviewCandidateName into candidateName  from employees
--- inner join interviews
--- on interviews.candidateid = employees.id
--- where interviews.id=pinterviewId;
- 
--- select subjects.title into subjectName from interviews
--- inner join subjectmatterexperts 
--- on interviews.smeid = subjectmatterexperts.id
--- inner join subjects
--- on subjectmatterexperts.subjectid = subjects.id
--- where interviews.id=pinterviewId;
-
--- select evaluationcriterias.title into criterias from interviews
--- inner join interviewcriterias
--- on interviews.id = interviewcriterias.interviewid
--- inner join evaluationcriterias
--- on interviewcriterias.evaluationcriteriaid = evaluationcriterias.id
--- where interviews.id=pinterviewId;
-
--- set pinterviewdate = interviewDate;
--- set pinterviewtime = interviewTime;
--- set psmename = smeName;
--- set pcandidatename = candidateName;
--- set psubjectname = subjectName;
--- set pcriterias = criterias;
-
--- END $$
--- call spinterviewdetails(2,@pinterviewdate,@pinterviewtime,@psmename,@pcandidatename,@psubjectname,@pcriterias) ;
--- select(@pinterviewdate,@pinterviewtime,@psmename,@pcandidatename,@psubjectname,@pcriterias);
 DROP PROCEDURE IF Exists spinterviewdetails;
 DELIMITER $$
 create procedure spinterviewdetails(IN pinterviewId INT)
