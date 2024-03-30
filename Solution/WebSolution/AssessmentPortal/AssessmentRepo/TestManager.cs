@@ -775,20 +775,12 @@ public class TestManager
         try
         {
             MySqlCommand command = new MySqlCommand(query, connection);
-            command.CommandType = CommandType.StoredProcedure;
             command.Parameters.AddWithValue("@candidateId", candidateId);
             command.Parameters.AddWithValue("@testId", testId);
             connection.Open();
-            MySqlDataReader reader = command.ExecuteReader();
-            if (reader.Read())
-            {
-                 score = int.Parse(reader["score"].ToString());
+             score= (int)command.ExecuteScalar();
 
-
-            }
-            reader.Close();
-
-
+   
         }
         catch (Exception e)
         {
@@ -801,8 +793,48 @@ public class TestManager
         return score;
     }
 
+    public CandidateResultDetails CandidateTestResultDetails(int candidateId, int testId)
+    {
+        string query = "spcandidatetestresultdetails";
+         CandidateResultDetails candidateResultDetails=null;
+        MySqlConnection connection = new MySqlConnection(connectionString);
+        try
+        {
+            MySqlCommand command = new MySqlCommand(query, connection);
+            command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.AddWithValue("@pcandidateId", candidateId);
+            command.Parameters.AddWithValue("@ptestId", testId);
+            command.Parameters.AddWithValue("@pcorrectAnswers", MySqlDbType.Int32);
+            command.Parameters.AddWithValue("@pincorrectAnswers", MySqlDbType.Int32);
+            command.Parameters.AddWithValue("@pskippedQuestions", MySqlDbType.Int32);
+            command.Parameters["@pcorrectAnswers"].Direction = ParameterDirection.Output;
+            command.Parameters["@pincorrectAnswers"].Direction = ParameterDirection.Output;
+            command.Parameters["@pskippedQuestions"].Direction = ParameterDirection.Output;
 
+            connection.Open();
+            int rowsAffected = command.ExecuteNonQuery();
+            int correctAnswers = Convert.ToInt32(command.Parameters["@pcorrectAnswers"].Value);
+            int incorrectAnswers = Convert.ToInt32(command.Parameters["@pincorrectAnswers"].Value);
+            int skippedQuestions = Convert.ToInt32(command.Parameters["@pskippedQuestions"].Value);
+        
+         candidateResultDetails=new CandidateResultDetails(){
+                CorrectAnswers=correctAnswers,
+                IncorrectAnswers=incorrectAnswers,
+                SkippedQuestions=skippedQuestions
 
+            };
+        
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+        finally
+        {
+            connection.Close();
+        }
+        return candidateResultDetails;
+    }
 }
 
 

@@ -73,6 +73,8 @@ string InterviewedCandidatesInfoUrl="/interviewedcandidates";
 string InterviewedCandidatesSubjectsUrl="/interviewedcandidatessubjects/{candidateId}";
 string InterviewDetailsUrl="/interviewdetails/{interviewId}";
 
+string candidateTestResultDetailsUrl="/candidates/{candidateId}/test/{testId}";
+
 
 TestManager manager = new TestManager();
 QuestionBank questionBank=new QuestionBank();
@@ -225,6 +227,11 @@ app.MapPut(UpdateCriteria,(int evaluationCriteriaId,int questionId)=>{
 app.MapPut(updateAnswer,(Question answer,int questionId)=>{
     bool status=questionBank.UpdateAnswer(answer,questionId);
     return status;   
+});
+
+app.MapGet(candidateTestResultDetailsUrl,(int candidateId , int testId )=>{
+         CandidateResultDetails candidateResult= manager.CandidateTestResultDetails(candidateId ,testId);
+        return candidateResult;
 });
 
 

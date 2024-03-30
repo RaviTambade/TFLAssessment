@@ -128,7 +128,7 @@
 
     <script>
         var CandidateTestScore;
-        var candidateId = 6, testId = 3;
+        var candidateId = 5, testId = 3;
         var CandidateTestScoreUrl = "http://localhost:5238/candidates/" + candidateId + "/tests/" + testId + "/score";
 
         $(document).ready(function () {
@@ -140,6 +140,7 @@
 
                 success: function (data) {
                     CandidateTestScore = data;
+                    console.log(data);
                     console.log(CandidateTestScore);
 
                 },
