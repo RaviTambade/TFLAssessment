@@ -219,7 +219,6 @@ app.MapPut(updateQuestionOptions,(int questionId, Question options)=>{
 app.MapPut(UpdateCriteria,(int evaluationCriteriaId,int questionId)=>{
     bool status=manager.UpdateCriteria(evaluationCriteriaId,questionId);
     return status;
-    
 });
 
 

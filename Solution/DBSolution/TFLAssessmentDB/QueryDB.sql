@@ -80,16 +80,10 @@ inner join evaluationcriterias
 on interviewcriterias.evaluationcriteriaid = evaluationcriterias.id
 where interviews.id=2;
             
-            
---Show  Candidate Answers, Correct Answer, Question Id
---For candidateid=1 and testid=45
 
-
-select testquestions.testid AS TEST,
-questionbank.id AS QUESTION,
-questionbank.answerkey AS correctanswer, 
-candidateanswers.answerkey as candidateanswer 
+select candidateanswers.testquestionid,testquestions.testid,
+candidateanswers.answerkey as candidateanswer ,questionbank.answerkey
 from  candidateanswers
-INNER JOIN   testquestions  on testquestions.id=candidateanswers.testquestionid
+INNER JOIN   testquestions  on testquestions.questionbankid=candidateanswers.testquestionid
 INNER JOIN   questionbank on questionbank.id=testquestions.questionbankid
-where candidateanswers.candidateid=1 and testquestions.testid=3;
+where candidateanswers.candidateid=4 and testquestions.testid=1;

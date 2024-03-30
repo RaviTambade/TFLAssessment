@@ -79,7 +79,7 @@
       var remainingTime = 60;
       var score;
 
-      var testId = 2;
+      var testId = 1;
       var candidateId = 4;
 
       //rest api urls
@@ -162,6 +162,8 @@
 
             finalCandidateAnswers.push({ "TestQuestionId": questionId, "Answer": answer, });
           })
+          console.log(finalCandidateAnswers);
+
           var endTime = getCurrentDateTime();
 
           let evaluateUrl = candidateanswersurl + candidateId;
