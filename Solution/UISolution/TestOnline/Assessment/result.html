@@ -133,30 +133,21 @@
         var CandidateResultTestDetails= "http://localhost:5238/candidates/" + candidateId + "/test/" + testId;
         $(document).ready(function () {
             // Event handler for checkboxes
-           
-
-        
-          
-
-            $("#btnsubmit").click(() => {
-               
-
-                $.ajax({
+           $("#btnsubmit").click(() => {
+               $.ajax({
                 url: CandidateTestScoreUrl,
                 type: 'GET',
                 contentType: 'application/json',
-
+                
                 success: function (data) {
                     CandidateTestScore = data;
                     console.log(CandidateTestScore)
                 $("#score").text(CandidateTestScore);
-
-
-                },
+                 },
                 error: function (xhr, status, error) {
                     console.error(xhr.responseText);
                 }
-            })
+               })
                 
 
                 $.ajax({

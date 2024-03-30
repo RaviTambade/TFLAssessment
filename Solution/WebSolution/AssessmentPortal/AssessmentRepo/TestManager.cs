@@ -820,8 +820,9 @@ public class TestManager
          candidateResultDetails=new CandidateResultDetails(){
                 CorrectAnswers=correctAnswers,
                 IncorrectAnswers=incorrectAnswers,
-                SkippedQuestions=skippedQuestions
-
+                SkippedQuestions=skippedQuestions,
+                CandidateId=candidateId,
+                TestId=testId
             };
         
         }
