@@ -308,32 +308,31 @@ INSERT INTO testquestions(testid, questionbankid)VALUES(1,10);
 
 -- Second Test
 -- Create test2 with 10 questions
-INSERT INTO testquestions(testid, questionbankid)VALUES(2,1);
-
-INSERT INTO testquestions(testid, questionbankid)VALUES(2,2);
-INSERT INTO testquestions(testid, questionbankid)VALUES(2,3);
-INSERT INTO testquestions(testid, questionbankid)VALUES(2,4);
 INSERT INTO testquestions(testid, questionbankid)VALUES(2,5);
+
 INSERT INTO testquestions(testid, questionbankid)VALUES(2,6);
-INSERT INTO testquestions(testid, questionbankid)VALUES(2,7);
 INSERT INTO testquestions(testid, questionbankid)VALUES(2,8);
+INSERT INTO testquestions(testid, questionbankid)VALUES(2,7);
 INSERT INTO testquestions(testid, questionbankid)VALUES(2,9);
-INSERT INTO testquestions(testid, questionbankid)VALUES(2,10);
+INSERT INTO testquestions(testid, questionbankid)VALUES(2,16);
+INSERT INTO testquestions(testid, questionbankid)VALUES(2,17);
+INSERT INTO testquestions(testid, questionbankid)VALUES(2,18);
+INSERT INTO testquestions(testid, questionbankid)VALUES(2,19);
+INSERT INTO testquestions(testid, questionbankid)VALUES(2,20);
  
 
 
 -- Create test3 with 10 questions
-INSERT INTO testquestions(testid, questionbankid)VALUES(3,1);
-INSERT INTO testquestions(testid, questionbankid)VALUES(3,2);
-INSERT INTO testquestions(testid, questionbankid)VALUES(3,3);
-INSERT INTO testquestions(testid, questionbankid)VALUES(3,4);
+INSERT INTO testquestions(testid, questionbankid)VALUES(3,15);
+INSERT INTO testquestions(testid, questionbankid)VALUES(3,16);
+INSERT INTO testquestions(testid, questionbankid)VALUES(3,23);
 INSERT INTO testquestions(testid, questionbankid)VALUES(3,5);
 INSERT INTO testquestions(testid, questionbankid)VALUES(3,6);
-INSERT INTO testquestions(testid, questionbankid)VALUES(3,7);
-INSERT INTO testquestions(testid, questionbankid)VALUES(3,8);
-INSERT INTO testquestions(testid, questionbankid)VALUES(3,9);
-INSERT INTO testquestions(testid, questionbankid)VALUES(3,10);
-
+INSERT INTO testquestions(testid, questionbankid)VALUES(3,20);
+INSERT INTO testquestions(testid, questionbankid)VALUES(3,27);
+INSERT INTO testquestions(testid, questionbankid)VALUES(3,28);
+INSERT INTO testquestions(testid, questionbankid)VALUES(3,29);
+INSERT INTO testquestions(testid, questionbankid)VALUES(3,30);
 
 -- Create test8 with 10 questions
 
