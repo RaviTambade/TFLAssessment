@@ -128,30 +128,56 @@
 
     <script>
         var CandidateTestScore;
-        var candidateId = 5, testId = 3;
+        var candidateId = 5, testId = 2;
         var CandidateTestScoreUrl = "http://localhost:5238/candidates/" + candidateId + "/tests/" + testId + "/score";
-
+        var CandidateResultTestDetails= "http://localhost:5238/candidates/" + candidateId + "/test/" + testId;
         $(document).ready(function () {
             // Event handler for checkboxes
-            $.ajax({
+           
+
+        
+          
+
+            $("#btnsubmit").click(() => {
+               
+
+                $.ajax({
                 url: CandidateTestScoreUrl,
                 type: 'GET',
                 contentType: 'application/json',
 
                 success: function (data) {
                     CandidateTestScore = data;
-                    console.log(data);
-                    console.log(CandidateTestScore);
+                    console.log(CandidateTestScore)
+                $("#score").text(CandidateTestScore);
+
 
                 },
                 error: function (xhr, status, error) {
                     console.error(xhr.responseText);
                 }
             })
+                
 
-            $("#btnsubmit").click(() => {
-                $("#score").text(CandidateTestScore);
+                $.ajax({
+                url: CandidateResultTestDetails,
+                type: 'GET',
+                contentType: 'application/json',
+
+                success: function (data) {
+                 var  CandidateTestDetails = data;
+                 console.log(data);
+                    $("#correct").text(CandidateTestDetails.correctAnswers);
+                    $("#incorrect").text(CandidateTestDetails.incorrectAnswers);
+                    $("#skipped").text(CandidateTestDetails.skippedQuestions);
+
+                },
+                error: function (xhr, status, error) {
+                    console.error(xhr.responseText);
+                }
+            })
             });
+
         });
     </script>
     </body>
