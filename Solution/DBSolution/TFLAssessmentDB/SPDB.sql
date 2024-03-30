@@ -54,4 +54,27 @@ where interviews.id=2;
 END $$
 call spinterviewdetails(2);
 
+DROP PROCEDURE IF Exists spcandidatetestresultdetails;
+DELIMITER $$
+create procedure spcandidatetestresultdetails(IN pcandidateId INT, IN ptestId INT, OUT pcorrectAnswers INT, OUT pincorrectAnswers INT, OUT pskippedQuestions INT)
+BEGIN
+DECLARE totalQuestions INT;
+DECLARE correctCandidateAnswers INT;
+
+select count(*) INTO totalQuestions from testquestions where testid=1;
+
+SELECT COUNT(CASE WHEN candidateanswers.answerkey = questionbank.answerkey THEN 1 ELSE NULL END) AS score 
+INTO correctCandidateAnswers FROM candidateanswers 
+INNER JOIN   testquestions  on testquestions.questionbankid=candidateanswers.testquestionid
+INNER JOIN   questionbank on questionbank.id=testquestions.questionbankid
+WHERE candidateanswers.candidateid = pcandidateId AND testquestions.testid = ptestId;
+SET pincorrectAnswers = totalQuestions-correctCandidateAnswers;
+SELECT COUNT(*) INTO pskippedQuestions FROM CandidateAnswers INNER JOIN testQuestions ON testquestions.id = candidateanswers.testquestionid 
+WHERE candidateanswers.answerkey="NO" AND candidateanswers.candidateId = pcandidateId AND testquestions.testId = ptestId;
+
+SET pcorrectAnswers=correctCandidateAnswers;
+END $$
+CALL spcandidatetestresultdetails(3,2, @pcorrectAnswers, @pincorrectAnswers,@pskippedQuestions);
+select @pcorrectAnswers,@pincorrectAnswers,@pskippedQuestions;
+
 
