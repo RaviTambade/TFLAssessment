@@ -41,6 +41,7 @@
     $(document).ready(function() {
         var api = "http://localhost:5238"
         var subjectsApi = api + "/subjects";
+        var designTest =api+"/designtest";
         var subjects = [];
      
         $(document).ready(function () {
@@ -65,6 +66,42 @@
             });
         });
     });
+
+    $("#insertButton").click(function () {
+    var subjectId = $("#ddlSubjects").val();
+    var duration = $("#duration").val();
+    var subjectExpertId = $("#subjectExpertId").val();
+    var creationDate = $("#creationDate").val();
+ 
+
+    var newTest = {
+      "subjectId": subjectId,
+      "duration": duration,
+      "subjectExpertId": subjectExpertId,
+      "creationDate": creationDate
+    };
+
+    console.log("subjectId: " + subjectId);
+    console.log("duration: " + duration);
+    console.log("subjectExpertId: " + subjectExpertId);
+    console.log("creationDate: " + creationDate);
+  
+
+    $.ajax({
+      url: designTest,
+      type: 'POST',
+      contentType: 'application/json',
+      data: JSON.stringify(newTest),
+
+      success: function (response) {
+        // Show result
+        console.log(response);
+      },
+      error: function (xhr, status, error) {
+        console.error(xhr.responseText);
+      }
+    });
+  });
     </script>
     
    
