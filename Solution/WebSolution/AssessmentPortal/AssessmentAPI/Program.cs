@@ -75,6 +75,7 @@ string InterviewDetailsUrl="/interviewdetails/{interviewId}";
 
 string candidateTestResultDetailsUrl="/candidates/{candidateId}/test/{testId}";
 
+string designTest ="/designtest";
 
 TestManager manager = new TestManager();
 QuestionBank questionBank=new QuestionBank();
@@ -234,6 +235,12 @@ app.MapGet(candidateTestResultDetailsUrl,(int candidateId , int testId )=>{
         return candidateResult;
 });
 
+
+app.MapPost(designTest,(Test newTest)=>{
+    bool status=manager.DesignTest(newTest);
+    return status;
+    
+});
 
 // app.MapGet("/interviewdetails",()=>{
 //         InterviewDetails details=new InterviewDetails{
