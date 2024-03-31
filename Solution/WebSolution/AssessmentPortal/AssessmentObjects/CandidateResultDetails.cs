@@ -2,7 +2,7 @@ namespace Assessment.Entities;
 public class CandidateResultDetails
 {
 
-    public int CandidateIdId { get; set; }
+    public int CandidateId { get; set; }
 
     public int TestId { get; set; }
     

@@ -836,6 +836,39 @@ public class TestManager
         }
         return candidateResultDetails;
     }
+
+
+    public bool DesignTest(Test newTest){
+
+      bool status =false;
+      MySqlConnection connection = new MySqlConnection(connectionString);
+      string query=@"INSERT INTO tests(subjectid,duration,smeid,creationdate,modificationdate,scheduleddate) VALUES (@subjectid,@duration,@smeid,@creationdate,@modificationdate,@scheduleddate)";
+      MySqlCommand command = new MySqlCommand(query,connection);
+      TimeOnly time = newTest.Duration;
+      command.Parameters.AddWithValue("@subjectid",newTest.SubjectId);
+      command.Parameters.AddWithValue("@duration",time.ToString("HH:mm:ss"));
+      command.Parameters.AddWithValue("@smeid",newTest.SubjectExpertId);
+      command.Parameters.AddWithValue("@creationdate",newTest.CreationDate);
+      command.Parameters.AddWithValue("@modificationdate",newTest.ModificationDate);
+      command.Parameters.AddWithValue("@scheduleddate",newTest.ScheduledDate);
+    
+      try{
+        connection.Open();
+        int rowsAffected = command.ExecuteNonQuery();
+        if(rowsAffected>0){
+            status=true;
+        }
+
+      }
+      catch(Exception ee){
+         Console.WriteLine(ee.Message);
+      }
+      finally{
+         connection.Close();
+      }
+      return status;
+    }
+
 }
 
 
