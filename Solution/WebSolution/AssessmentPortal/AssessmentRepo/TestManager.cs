@@ -769,9 +769,8 @@ public class TestManager
     public int GetCandidateTestScore(int candidateId, int testId)
     {
         int score=0;
-
         MySqlConnection connection = new MySqlConnection(connectionString);
-        string query = @"select score from candidatetestresults where candidateid=@candidateId AND testid=@testId";
+        string query = @"select score from candidatetestresults where candidateid=@candidateId and testid=@testId";
         try
         {
             MySqlCommand command = new MySqlCommand(query, connection);
@@ -779,16 +778,8 @@ public class TestManager
             command.Parameters.AddWithValue("@candidateId", candidateId);
             command.Parameters.AddWithValue("@testId", testId);
             connection.Open();
-            MySqlDataReader reader = command.ExecuteReader();
-            if (reader.Read())
-            {
-                 score = int.Parse(reader["score"].ToString());
-
-
-            }
-            reader.Close();
-
-
+            score = (int)command.ExecuteScalar();
+            Console.WriteLine(score);
         }
         catch (Exception e)
         {

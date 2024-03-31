@@ -23,26 +23,49 @@
                 <select id="ddlSubjects"></select>
             </div>        
             <br><br>
-            <label for="optionA">Duration:</label>
-            <input type="text" id="A">
+            <label for="duration">Duration:</label>
+            <input type="text" id="duration">
             <br><br>
-            <label for="optionB">Subject Matter Expert:</label>
-            <input type="text" id="B">
+            <label for="subjectExpertId">Subject Matter Expert:</label>
+            <input type="text" id="subjectExpertId">
             <br><br>
-            <label for="optionC">Creation Date:</label>
-            <input type="text" id="C">
-            <br><br>
-            <label for="optionD">Modification Date:</label>
-            <input type="text" id="D">
-            <br><br>
-            <label for="correctOption">Correct Option:</label>
-            <input type="text" id="correctOption">
-            <br><br>
+            <label for="creationDate">Creation Date:</label>
+            <input type="text" id="creationDate">
            
             <button type="button" id="insertButton">Insert Question</button>
 
         </form>
     </div>
+
+    <script>
+    $(document).ready(function() {
+        var api = "http://localhost:5238"
+        var subjectsApi = api + "/subjects";
+        var subjects = [];
+     
+        $(document).ready(function () {
+
+            $.ajax({
+                url: subjectsApi,
+                type: 'GET',
+                contentType: 'application/json',
+
+                success: function (response) {
+                    subjects = response;
+                    console.log(subjects);
+                    var lstSubject = $("#ddlSubjects")
+                    for (var i = 0; i < subjects.length; i++) {
+                        lstSubject.append($('<option></option>').val(subjects[i].id).html(subjects[i].title));
+
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error(xhr.responseText);
+                }
+            });
+        });
+    });
+    </script>
     
    
 </body>

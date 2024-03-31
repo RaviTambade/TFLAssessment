@@ -50,7 +50,7 @@ string insertnewquestionurl="/question";
 string insertnewcriteriaurl="/criteria";
 string deleteTestQuestion="/testquestions";
 
-string candidateTestScoreUrl="candidates/{candidateId}/tests/{testId}/score";
+string candidateTestScoreUrl="candidates/{candidateId}/tests/{testId}";
 
 string candidateTestResultUrl="/result/candidates/{candidateId}/test/{testId}";
 
