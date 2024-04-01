@@ -78,12 +78,16 @@ string candidateTestResultDetailsUrl="/candidates/{candidateId}/test/{testId}";
 
 string createTestUrl ="/designtest";
 
+string resheduleInterviewUrl ="/resheduleinterview/interviewId/{interviewid}/date/{date}";
+string ChangeInterviewerUrl ="/changeInterviewer/interviewId/{interviewid}/smeId/{smeid}";
+string CancelInterviewUrl ="/cancelInterview/interviewid/{interviewid}";
+
 
 //Using interfaces , Provider objects are  Cohesively coupled
 
 IManager  manager = new TestManager();
 IQuestionBank questionBank=new QuestionBank();
-
+IInterviewManager interviewManager = new InterviewManager();
 
 //API Listners
 app.MapGet(apiEmployeesUrl,()=>{
@@ -117,17 +121,17 @@ app.MapGet(apiTestUrl,()=>{
 });
 
 app.MapGet(InterviewDetailsUrl,(int interviewId)=>{
-   InterviewDetails interviewInfo = manager.GetInterviewDetails(interviewId);
+   InterviewDetails interviewInfo = interviewManager.GetInterviewDetails(interviewId);
    return interviewInfo;
 });
 
 app.MapGet(InterviewedCandidatesInfoUrl,()=>{
-   List<InterviewedCandidates> InterviewCandidates = manager.GetAllInterviewedCandidatesInfo();
+   List<InterviewedCandidates> InterviewCandidates = interviewManager.GetAllInterviewedCandidatesInfo();
    return InterviewCandidates;
 });
 
 app.MapGet(InterviewedCandidatesSubjectsUrl,(int candidateId)=>{
-   List<InterviewedCandidates> InterviewCandidatesSubjects = manager.GetInterviewedCandidatesSubjects(candidateId);
+   List<InterviewedCandidates> InterviewCandidatesSubjects = interviewManager.GetInterviewedCandidatesSubjects(candidateId);
    return InterviewCandidatesSubjects;
 });
 
@@ -244,6 +248,24 @@ app.MapGet(candidateTestResultDetailsUrl,(int candidateId , int testId )=>{
 app.MapPost(createTestUrl,(Test newTest)=>{
     bool status=manager.CreateTest(newTest);
     return status;
+});
+
+
+
+
+app.MapPut(resheduleInterviewUrl,( int interviewId,DateTime date,InterviewCandidateDetails details)=>{
+     bool status=interviewManager.ReschduleInterview(interviewId,date, details);
+     return status;
+});
+
+app.MapPut(ChangeInterviewerUrl,( int interviewId, int smeId)=>{
+     bool status=interviewManager.ChangeInterviewer(interviewId,smeId);
+     return status;
+});
+
+app.MapDelete(CancelInterviewUrl,( int interviewId)=>{
+     bool status=interviewManager.CancelInterview(interviewId);
+     return status;
 });
 
 // app.MapGet("/interviewdetails",()=>{

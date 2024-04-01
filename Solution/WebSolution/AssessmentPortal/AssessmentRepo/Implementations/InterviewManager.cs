@@ -3,8 +3,6 @@ using System.Data;
 using Assessment.Entities;
 using Assessment.Repositories.Interfaces;
 namespace Assessment.Repositories.Implementations;
-
-//Providers
 public class InterviewManager :IInterViewManager
 {
     private string connectionString = "server=localhost;port=3306;user=root;password=password;database=assessmentdb";
@@ -49,7 +47,7 @@ public class InterviewManager :IInterViewManager
         }
         return CandidatesInfo;
     }
-    public List<InterviewedCandidates> GetInterviewedCandidatesSubjects(int candidateId)
+    public List<InterviewCandidateDetails> GetInterviewedCandidatesSubjects(int candidateId)
     {
         List<InterviewedCandidates> interviewSubjectName = new List<InterviewedCandidates>();
         string query = @"select interviews.candidateid,subjects.title
@@ -88,7 +86,7 @@ public class InterviewManager :IInterViewManager
         return interviewSubjectName;
     }
 
-    public InterviewDetails GetInterviewDetails(int interviewId)
+   public InterviewDetails GetInterviewDetails(int interviewId)
     {
         Console.WriteLine("In function");
         InterviewDetails interviewInfo = new InterviewDetails();
@@ -132,6 +130,94 @@ public class InterviewManager :IInterViewManager
         return interviewInfo;
     }
 
- 
+    public bool ReschduleInterview(int interviewId,DateTime date,InterviewCandidateDetails details){
+       bool status = false;
+        string query = "update interviews set interviewdate =@interviewdate ,interviewtime=@interviewtime where  id =@interviewId  and interviewdate = @date ";
+        MySqlConnection connection = new MySqlConnection(connectionString);
+       MySqlCommand command = new MySqlCommand(query, connection);
+        command.Parameters.AddWithValue("@interviewdate", details.InterviewDate);
+        command.Parameters.AddWithValue("@interviewtime", details.InterviewTime);
+        command.Parameters.AddWithValue("@interviewId", interviewId);
+         command.Parameters.AddWithValue("@date", date);
+        try
+        {
+            connection.Open();
+            int rowsAffected = command.ExecuteNonQuery();
+            if (rowsAffected > 0)
+            {
+                status = true;
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+        finally
+        {
+            connection.Close();
+        }
+        return status;
+    
+   }
 
+
+
+     public bool ChangeInterviewer(int interviewId, int smeId){
+       bool status = false;
+        string query = "update interviews set smeid =@smeid  where  id =@interviewId ";
+        MySqlConnection connection = new MySqlConnection(connectionString);
+       MySqlCommand command = new MySqlCommand(query, connection);
+       command.Parameters.AddWithValue("@smeid", smeId);
+        command.Parameters.AddWithValue("@interviewId", interviewId);
+         
+        try
+        {
+            connection.Open();
+            int rowsAffected = command.ExecuteNonQuery();
+            if (rowsAffected > 0)
+            {
+                status = true;
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+        finally
+        {
+            connection.Close();
+        }
+        return status;
+    
+   }
+
+
+
+     public  bool CancelInterview(int interviewId){
+       bool status = false;
+        string query = "delete from interview where id =@id";
+        MySqlConnection connection = new MySqlConnection(connectionString);
+       MySqlCommand command = new MySqlCommand(query, connection);
+        command.Parameters.AddWithValue("@id", interviewId);
+         
+        try
+        {
+            connection.Open();
+            int rowsAffected = command.ExecuteNonQuery();
+            if (rowsAffected > 0)
+            {
+                status = true;
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+        finally
+        {
+            connection.Close();
+        }
+        return status;
+    
+   }
 }

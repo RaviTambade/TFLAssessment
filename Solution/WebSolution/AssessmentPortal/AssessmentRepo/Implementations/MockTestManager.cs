@@ -1,176 +1,176 @@
-using Assessment.Entities;
-using Assessment.Repositories.Interfaces;
-namespace Assessment.Repositories.Implementations;
-public class MockTestManager :IManager
-{
+// using Assessment.Entities;
+// using Assessment.Repositories.Interfaces;
+// namespace Assessment.Repositories.Implementations;
+// public class MockTestManager :IManager
+// {
 
 
-    public List<Employee> GetAllEmployees()
-    {
-        List<Employee> employees = new List<Employee>();
+//     public List<Employee> GetAllEmployees()
+//     {
+//         List<Employee> employees = new List<Employee>();
          
-        return employees;
-    }
+//         return employees;
+//     }
 
-    public List<Subject> GetAllSubjects()
-    {
-        List<Subject> subjects = new List<Subject>();
+//     public List<Subject> GetAllSubjects()
+//     {
+//         List<Subject> subjects = new List<Subject>();
         
-        return subjects;
-    }
+//         return subjects;
+//     }
 
-    public List<EvaluationCriteria> GetEvalutionCriterias()
-    {
-        List<EvaluationCriteria> criterias = new List<EvaluationCriteria>();
+//     public List<EvaluationCriteria> GetEvalutionCriterias()
+//     {
+//         List<EvaluationCriteria> criterias = new List<EvaluationCriteria>();
         
-        return criterias;
-    }
+//         return criterias;
+//     }
 
 
-    public List<EvaluationCriteria> GetEvalutionCriteriasBySubject(int subjectId)
-    {
-        List<EvaluationCriteria> criterias = new List<EvaluationCriteria>();
+//     public List<EvaluationCriteria> GetEvalutionCriteriasBySubject(int subjectId)
+//     {
+//         List<EvaluationCriteria> criterias = new List<EvaluationCriteria>();
           
-        return criterias;
-    }
+//         return criterias;
+//     }
 
 
-    public int GetCandidateScore(int candidateId, int testId)
-    {
-        int score=56;
-        return score;
-    }
+//     public int GetCandidateScore(int candidateId, int testId)
+//     {
+//         int score=56;
+//         return score;
+//     }
 
-    public List<TestQuestion> GetQuestions(int testId)
-    {
+//     public List<TestQuestion> GetQuestions(int testId)
+//     {
 
-        List<TestQuestion> questions = new List<TestQuestion>();
-       return questions;
-    }
+//         List<TestQuestion> questions = new List<TestQuestion>();
+//        return questions;
+//     }
 
-    public bool InsertCandidateAnswers(int candidateId, List<CandidateAnswer> answers)
-    {
-        bool status = false;
+//     public bool InsertCandidateAnswers(int candidateId, List<CandidateAnswer> answers)
+//     {
+//         bool status = false;
         
-        return status;
-    }
+//         return status;
+//     }
 
-    public bool SetTestStartTime(int candidateId, int testId, TestTime time)
-    {
+//     public bool SetTestStartTime(int candidateId, int testId, TestTime time)
+//     {
 
-        bool status = false;
+//         bool status = false;
 
-        return status;
+//         return status;
        
-    }
+//     }
 
-    public bool SetTestEndTime(int candidateId, int testId, TestTime time)
-    {
-        bool status = false;
+//     public bool SetTestEndTime(int candidateId, int testId, TestTime time)
+//     {
+//         bool status = false;
   
-        return status;
-    }
-    public List<Test> GetAllTests()
-    {
-        List<Test> tests = new List<Test>();
+//         return status;
+//     }
+//     public List<Test> GetAllTests()
+//     {
+//         List<Test> tests = new List<Test>();
         
-        return tests;
-    }
+//         return tests;
+//     }
 
-    public string GetCriteria(string subject, int questionId)
-    {
-        string criteria = "";
+//     public string GetCriteria(string subject, int questionId)
+//     {
+//         string criteria = "";
           
-        return criteria;
-    }
+//         return criteria;
+//     }
 
-    public TestQuestion GetQuestion(string subject, int questionid)
-    {
+//     public TestQuestion GetQuestion(string subject, int questionid)
+//     {
 
-        TestQuestion question = null;
+//         TestQuestion question = null;
        
-        return question;
-    }
+//         return question;
+//     }
 
-    public bool InsertQuestion(NewQuestion question)
-    {
+//     public bool InsertQuestion(NewQuestion question)
+//     {
 
-        bool status = false;
+//         bool status = false;
         
         
-        return status;
-    }
+//         return status;
+//     }
 
-    public bool InsertCriteria(NewCriteria criteria)
-    {
-        bool status=false;
-        return status;
-    }
+//     public bool InsertCriteria(NewCriteria criteria)
+//     {
+//         bool status=false;
+//         return status;
+//     }
 
 
-    public bool UpdateCriteria(int evaluationCriteriaId, int questionId)
-    {
+//     public bool UpdateCriteria(int evaluationCriteriaId, int questionId)
+//     {
 
-        bool status = false;
+//         bool status = false;
     
-        return status;
-    }
+//         return status;
+//     }
 
-    public List<Question> GetTestQuestion(int testId)
-    {
-        List<Question> questions = new List<Question>();
-        return questions;
-    }
+//     public List<Question> GetTestQuestion(int testId)
+//     {
+//         List<Question> questions = new List<Question>();
+//         return questions;
+//     }
 
-    public List<InterviewedCandidates> GetAllInterviewedCandidatesInfo()
-    {
-        List<InterviewedCandidates> CandidatesInfo = new List<InterviewedCandidates>();
-        return CandidatesInfo;
-    }
-
-
-    public bool DeleteQuestion(int[] testQuestions)
-    {
-        bool status = false;
-        return status;
-    }
+//     public List<InterviewedCandidates> GetAllInterviewedCandidatesInfo()
+//     {
+//         List<InterviewedCandidates> CandidatesInfo = new List<InterviewedCandidates>();
+//         return CandidatesInfo;
+//     }
 
 
-    public List<InterviewedCandidates> GetInterviewedCandidatesSubjects(int candidateId)
-    {
-        List<InterviewedCandidates> interviewSubjectName = new List<InterviewedCandidates>();
+//     public bool DeleteQuestion(int[] testQuestions)
+//     {
+//         bool status = false;
+//         return status;
+//     }
+
+
+//     public List<InterviewedCandidates> GetInterviewedCandidatesSubjects(int candidateId)
+//     {
+//         List<InterviewedCandidates> interviewSubjectName = new List<InterviewedCandidates>();
          
-        return interviewSubjectName;
-    }
+//         return interviewSubjectName;
+//     }
 
-    public InterviewDetails GetInterviewDetails(int interviewId)
-    {
-        InterviewDetails interviewInfo=new InterviewDetails();
+//     public InterviewDetails GetInterviewDetails(int interviewId)
+//     {
+//         InterviewDetails interviewInfo=new InterviewDetails();
 
-        return interviewInfo;
-    }
+//         return interviewInfo;
+//     }
 
-    public int GetCandidateTestScore(int candidateId, int testId)
-    {
-        int score=0;
+//     public int GetCandidateTestScore(int candidateId, int testId)
+//     {
+//         int score=0;
       
-        return score;
-    }
+//         return score;
+//     }
 
-    public CandidateResultDetails CandidateTestResultDetails(int candidateId, int testId)
-    {
+//     public CandidateResultDetails CandidateTestResultDetails(int candidateId, int testId)
+//     {
  
-        CandidateResultDetails candidateResultDetails=null;
+//         CandidateResultDetails candidateResultDetails=null;
        
-        return candidateResultDetails;
-    }
+//         return candidateResultDetails;
+//     }
 
 
-    public bool DesignTest(Test newTest){
+//     public bool DesignTest(Test newTest){
 
-      bool status =false;
+//       bool status =false;
       
-      return status;
-    }
+//       return status;
+//     }
 
-}
+// }
