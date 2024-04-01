@@ -84,9 +84,10 @@ string CancelInterviewUrl ="/cancelInterview/interviewid/{interviewid}";
 
   ITestManager  manager = new TestManager();
   IQuestionBankManager questionBank=new QuestionBankManager();
-
+  IInterviewManager interviewManager=new InterviewManager();
   IEvaluationCriteriaManager  criteriaManager=new EvaluationCriteriaManager();
 
+  IMockTestManager  mockTestManager = new MockTestManager();
 
  
    app.MapGet(apiEmployeesUrl,()=>{
@@ -109,10 +110,10 @@ app.MapGet(criteriaBySubjectUrl,(int subjectId)=>{
    return evaluationCriterias;
 });
 
-app.MapGet(testQuestionsUrl,(int testId)=>{
-   List<Question> questions = manager.GetTestQuestion(testId);
-   return questions;
-});
+// app.MapGet(testQuestionsUrl,(int testId)=>{
+//    List<Question> questions = manager.GetTestQuestion(testId);
+//    return questions;
+// });
 
 app.MapGet(apiTestUrl,()=>{
    List<Test> tests = manager.GetAllTests();
@@ -125,7 +126,7 @@ app.MapGet(InterviewDetailsUrl,(int interviewId)=>{
 });
 
 app.MapGet(InterviewedCandidatesInfoUrl,()=>{
-   List<InterviewCandidateDetails> InterviewCandidates = interviewManager.GetAllInterviewedCandidatesInfo();
+   List<InterviewCandidateDetails> InterviewCandidates = mockTestManager.GetAllInterviewedCandidatesInfo();
    return InterviewCandidates;
 });
 

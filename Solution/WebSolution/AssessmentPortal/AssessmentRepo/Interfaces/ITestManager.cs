@@ -33,7 +33,7 @@ public interface ITestManager{
     public TestQuestion GetQuestion(string subject, int questionid);
     public bool InsertQuestion(NewQuestion question);
     public bool DeleteQuestion(int[] testQuestions);
-
-
+ 
+    //  public List<TestQuestion> GetTestQuestions(int testId);
     public CandidateResultDetails CandidateTestResultDetails(int candidateId, int testId);
 }
