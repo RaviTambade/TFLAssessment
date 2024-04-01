@@ -266,7 +266,7 @@ public class TestManager :IManager
         return status;
     }
 
-    public bool SetTestStartTime(int candidateId, int testId, TestTime time)
+    public bool SetCandidateTestStartTime(int candidateId, int testId, TestTime time)
     {
 
         bool status = false;
@@ -298,7 +298,7 @@ public class TestManager :IManager
         return status;
     }
 
-    public bool SetTestEndTime(int candidateId, int testId, TestTime time)
+    public bool SetCandidateTestEndTime(int candidateId, int testId, TestTime time)
     {
         bool status = false;
 
@@ -564,7 +564,7 @@ public class TestManager :IManager
         return status;
     }
 
-    public List<Question> GetTestQuestion(int testId)
+    public List<Question> GetTestQuestions(int testId)
     {
         List<Question> questions = new List<Question>();
         string query = @"SELECT testquestions.id, questionbank.title FROM  questionbank
@@ -603,9 +603,9 @@ public class TestManager :IManager
         return questions;
     }
 
-    public List<InterviewedCandidates> GetAllInterviewedCandidatesInfo()
+    public List<InterviewCandidateDetails> GetAllInterviewCandidates()
     {
-        List<InterviewedCandidates> CandidatesInfo = new List<InterviewedCandidates>();
+        List<InterviewCandidateDetails> CandidatesInfo = new List<InterviewCandidateDetails>();
         string query = @"select employees.firstname,employees.lastname,interviews.candidateid from employees
                        inner join interviews
                        where employees.id=interviews.candidateid
@@ -840,7 +840,7 @@ public class TestManager :IManager
     }
 
 
-    public bool DesignTest(Test newTest){
+    public bool CreateTest(Test newTest){
 
       bool status =false;
       MySqlConnection connection = new MySqlConnection(connectionString);

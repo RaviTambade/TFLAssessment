@@ -76,7 +76,7 @@ string InterviewDetailsUrl="/interviewdetails/{interviewId}";
 
 string candidateTestResultDetailsUrl="/candidates/{candidateId}/test/{testId}";
 
-string designTest ="/designtest";
+string createTestUrl ="/designtest";
 
 
 //Using interfaces , Provider objects are  Cohesively coupled
@@ -241,8 +241,8 @@ app.MapGet(candidateTestResultDetailsUrl,(int candidateId , int testId )=>{
 });
 
 
-app.MapPost(designTest,(Test newTest)=>{
-    bool status=manager.DesignTest(newTest);
+app.MapPost(createTestUrl,(Test newTest)=>{
+    bool status=manager.CreateTest(newTest);
     return status;
 });
 

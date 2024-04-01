@@ -2,7 +2,7 @@
 
 namespace Assessment.Repositories.Interfaces;
 
- public interface IQuestionBank{
+ public interface IQuestionBankManager{
     public List<QuestionTitle> GetAllQuestions();
     public List<SubjectQuestion> GetQuestionsBySubject(int id);
     public List<QuestionDetails> GetQuestionsBySubjectAndCriteria(int subjectId,int criteriaId);

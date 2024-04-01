@@ -7,7 +7,7 @@ using Assessment.Repositories.Interfaces;
 
 namespace Assessment.Repositories.Implementations;
 
-public class QuestionBank:IQuestionBank
+public class QuestionBankManager:IQuestionBankManager
 {
     private string connectionString = "server=localhost;port=3306;user=root;password=password;database=assessmentdb";
  
