@@ -7,7 +7,7 @@ public interface IMockTestManager
 
 
 
-    public List<InterviewCandidateDetails> GetAllInterviewedCandidatesInfo();
+    // public List<InterviewCandidateDetails> GetAllInterviewedCandidatesInfo();
     public List<Employee> GetAllEmployees();
     public List<Subject> GetAllSubjects();
     public List<EvaluationCriteria> GetEvalutionCriterias();
@@ -17,9 +17,9 @@ public interface IMockTestManager
     public List<TestQuestion> GetQuestions(int testId);
     public bool InsertCandidateAnswers(int candidateId, List<CandidateAnswer> answers);
 
-    public bool SetTestStartTime(int candidateId, int testId, TestTime time);
+    public bool SetCandidateTestStartTime(int candidateId, int testId, TestTime time);
 
-    public bool SetTestEndTime(int candidateId, int testId, TestTime time);
+    public bool SetCandidateTestEndTime(int candidateId, int testId, TestTime time);
 
     public List<Test> GetAllTests();
 
@@ -31,15 +31,14 @@ public interface IMockTestManager
 
     public bool InsertCriteria(NewCriteria criteria);
     public bool UpdateCriteria(int evaluationCriteriaId, int questionId);
-    public List<Question> GetTestQuestion(int testId);
+    public  List<Question> GetTestQuestions(int testId);
 
     public bool DeleteQuestion(int[] testQuestions);
-    public List<InterviewCandidateDetails> GetInterviewedCandidatesSubjects(int candidateId);
+   public List<InterviewCandidateDetails> GetInterviewCandidateDetailsSubjects(int candidateId);
 
     public InterviewDetails GetInterviewDetails(int interviewId);
     public int GetCandidateTestScore(int candidateId, int testId);
     public CandidateResultDetails CandidateTestResultDetails(int candidateId, int testId);
 
-    public bool DesignTest(Test newTest);
-
+    public bool CreateTest(Test newTest);
 }

@@ -91,12 +91,12 @@ string CancelInterviewUrl ="/cancelInterview/interviewid/{interviewid}";
   IResultManager resultManager = new ResultManager();
  
    app.MapGet(apiEmployeesUrl,()=>{
-      List<Employee> employees = manager.GetAllEmployees();
+      List<Employee> employees = mockTestManager.GetAllEmployees();
       return employees;
    });
 
    app.MapGet(apiSubjectsUrl,()=>{
-      List<Subject> subjects = manager.GetAllSubjects();
+      List<Subject> subjects = mockTestManager.GetAllSubjects();
       return subjects;
    });
 
@@ -110,13 +110,13 @@ app.MapGet(criteriaBySubjectUrl,(int subjectId)=>{
    return evaluationCriterias;
 });
 
-// app.MapGet(testQuestionsUrl,(int testId)=>{
-//    List<Question> questions = manager.GetTestQuestion(testId);
-//    return questions;
-// });
+app.MapGet(testQuestionsUrl,(int testId)=>{
+   List<Question> questions = mockTestManager.GetTestQuestions(testId);
+   return questions;
+});
 
 app.MapGet(apiTestUrl,()=>{
-   List<Test> tests = manager.GetAllTests();
+   List<Test> tests = mockTestManager.GetAllTests();
    return tests;
 });
 
@@ -125,10 +125,10 @@ app.MapGet(InterviewDetailsUrl,(int interviewId)=>{
    return interviewInfo;
 });
 
-app.MapGet(InterviewedCandidatesInfoUrl,()=>{
-   List<InterviewCandidateDetails> InterviewCandidates = mockTestManager.GetAllInterviewedCandidatesInfo();
-   return InterviewCandidates;
-});
+// app.MapGet(InterviewedCandidatesInfoUrl,()=>{
+//    List<InterviewCandidateDetails> InterviewCandidates = mockTestManager.GetAllInterviewedCandidatesInfo();
+//    return InterviewCandidates;
+// });
 
 app.MapGet(InterviewedCandidatesSubjectsUrl,(int candidateId)=>{
    List<InterviewCandidateDetails> InterviewCandidatesSubjects = interviewManager.GetInterviewedCandidatesSubjects(candidateId);
@@ -136,12 +136,12 @@ app.MapGet(InterviewedCandidatesSubjectsUrl,(int candidateId)=>{
 });
 
    app.MapGet(apiQuestionsUrl,(int testId)=>{
-      List<TestQuestion> questions= manager.GetQuestions(testId);
+      List<TestQuestion> questions= mockTestManager.GetQuestions(testId);
       return questions;
    });
 
    app.MapGet(candidateTestResultUrl,(int candidateId,int testId )=>{
-      int score=  manager.GetCandidateScore(candidateId,testId);  
+      int score=  mockTestManager.GetCandidateScore(candidateId,testId);  
       return score;
    });
 
@@ -168,7 +168,7 @@ app.MapGet(testSubjectCriteriaAPI,(int subjectId,int criteriaId)=>{
 });
 
 app.MapGet(question,(string subject , int questionid)=>{
-        TestQuestion question = manager.GetQuestion(subject ,questionid);
+        TestQuestion question = mockTestManager.GetQuestion(subject ,questionid);
         return question;
 });
 
@@ -183,7 +183,7 @@ app.MapGet(candidateTestScoreUrl,(int candidateId , int testId)=>{
 });
 
 app.MapPost(testStartTimesettingUrl,(CandidateTestTime test)=>{
-     bool status=mockTestManager.SetTestStartTime(test.CandidateId,test.TestId, test.Time);
+     bool status=mockTestManager.SetCandidateTestStartTime(test.CandidateId,test.TestId, test.Time);
      return status;
 });
 
@@ -194,13 +194,13 @@ app.MapPost(apiCandidateTestAnswersUrl,(int candidateId,List<CandidateAnswer> an
 
 
 app.MapPost(deleteTestQuestion,(int[] testQuestions)=>{
-    bool status=manager.DeleteQuestion(testQuestions);
+    bool status=mockTestManager.DeleteQuestion(testQuestions);
     return status;
 });
 
 
 app.MapPost(insertnewquestionurl,(NewQuestion ques)=>{
-    bool status=manager.InsertQuestion(ques);
+    bool status=mockTestManager.InsertQuestion(ques);
     return status;
     
 });
@@ -212,7 +212,7 @@ app.MapPost(insertnewcriteriaurl,(NewCriteria criteria)=>{
 });
 
 app.MapPut(testEndTimesettingUrl,( CandidateTestTime test)=>{
-     bool status=mockTestManager.SetTestEndTime(test.CandidateId,test.TestId, test.Time);
+     bool status=mockTestManager.SetCandidateTestEndTime(test.CandidateId,test.TestId, test.Time);
      return status;
 });
 
@@ -240,13 +240,13 @@ app.MapPut(updateAnswer,(Question answer,int questionId)=>{
 });
 
 app.MapGet(candidateTestResultDetailsUrl,(int candidateId , int testId )=>{
-         CandidateResultDetails candidateResult= manager.CandidateTestResultDetails(candidateId ,testId);
+         CandidateResultDetails candidateResult= mockTestManager.CandidateTestResultDetails(candidateId ,testId);
         return candidateResult;
 });
 
 
 app.MapPost(createTestUrl,(Test newTest)=>{
-    bool status=manager.CreateTest(newTest);
+    bool status=mockTestManager.CreateTest(newTest);
     return status;
 });
 
@@ -268,17 +268,6 @@ app.MapDelete(CancelInterviewUrl,( int interviewId)=>{
      return status;
 });
 
-// app.MapGet("/interviewdetails",()=>{
-//         InterviewDetails details=new InterviewDetails{
-//             Id=12,
-//             InterviewDate="25/3/2024",
-//             SMETitle="Sarika Patil",
-//             InterviewTitle="Paragati Bangar",
-//             Subject="Java" ,
-//             InterviewTime="5:56"  ,
-//             Criterias=[ "Object Oriented Programming", "Multithreading", "File IO", "Database Programming"]
-//         };
-//     return details;
-// });
+
 
 app.Run();
