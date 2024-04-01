@@ -9,6 +9,7 @@ public class ResultManager :IResultManager
 { 
     public int GetCandidateScore(int candidateId, int testId)
     {
+        
         string query = "spcandidatetestresult";
 
         MySqlConnection connection = new MySqlConnection(connectionString);
@@ -85,7 +86,7 @@ public class ResultManager :IResultManager
             int incorrectAnswers = Convert.ToInt32(command.Parameters["@pincorrectAnswers"].Value);
             int skippedQuestions = Convert.ToInt32(command.Parameters["@pskippedQuestions"].Value);
         
-         candidateResultDetails=new CandidateResultDetails(){
+                CandidateResultDetails  candidateResultDetails=new CandidateResultDetails(){
                 CorrectAnswers=correctAnswers,
                 IncorrectAnswers=incorrectAnswers,
                 SkippedQuestions=skippedQuestions,
