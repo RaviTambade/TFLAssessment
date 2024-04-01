@@ -79,13 +79,13 @@ string candidateTestResultDetailsUrl="/candidates/{candidateId}/test/{testId}";
 string createTestUrl ="/designtest";
 
 
-//Using interfaces , Provider objects are  Cohesively coupled
+Using interfaces , Provider objects are  Cohesively coupled
 
 IManager  manager = new TestManager();
 IQuestionBank questionBank=new QuestionBank();
 
-
-//API Listners
+IResultManager resultManager= new ResultManager();
+API Listners
 app.MapGet(apiEmployeesUrl,()=>{
     List<Employee> employees = manager.GetAllEmployees();
     return employees;
@@ -137,7 +137,7 @@ app.MapGet(apiQuestionsUrl,(int testId)=>{
 });
 
 app.MapGet(candidateTestResultUrl,(int candidateId,int testId )=>{
-    int score=  manager.GetCandidateScore(candidateId,testId);  
+    int score=  resultManager.GetCandidateScore(candidateId,testId);  
     return score;
 });
 
@@ -174,7 +174,7 @@ app.MapGet(questionUrl,(int questionId)=>{
 });
 
 app.MapGet(candidateTestScoreUrl,(int candidateId , int testId)=>{
-        int score = manager.GetCandidateTestScore(candidateId ,testId);
+        int score = resultManager.GetCandidateTestScore(candidateId ,testId);
         return score;
 });
 
@@ -236,7 +236,7 @@ app.MapPut(updateAnswer,(Question answer,int questionId)=>{
 });
 
 app.MapGet(candidateTestResultDetailsUrl,(int candidateId , int testId )=>{
-         CandidateResultDetails candidateResult= manager.CandidateTestResultDetails(candidateId ,testId);
+         CandidateResultDetails candidateResult= resultManager.CandidateTestResultDetails(candidateId ,testId);
         return candidateResult;
 });
 
@@ -246,17 +246,17 @@ app.MapPost(createTestUrl,(Test newTest)=>{
     return status;
 });
 
-// app.MapGet("/interviewdetails",()=>{
-//         InterviewDetails details=new InterviewDetails{
-//             Id=12,
-//             InterviewDate="25/3/2024",
-//             SMETitle="Sarika Patil",
-//             InterviewTitle="Paragati Bangar",
-//             Subject="Java" ,
-//             InterviewTime="5:56"  ,
-//             Criterias=[ "Object Oriented Programming", "Multithreading", "File IO", "Database Programming"]
-//         };
-//     return details;
-// });
+app.MapGet("/interviewdetails",()=>{
+        InterviewDetails details=new InterviewDetails{
+            Id=12,
+            InterviewDate="25/3/2024",
+            SMETitle="Sarika Patil",
+            InterviewTitle="Paragati Bangar",
+            Subject="Java" ,
+            InterviewTime="5:56"  ,
+            Criterias=[ "Object Oriented Programming", "Multithreading", "File IO", "Database Programming"]
+        };
+    return details;
+});
 
 app.Run();
