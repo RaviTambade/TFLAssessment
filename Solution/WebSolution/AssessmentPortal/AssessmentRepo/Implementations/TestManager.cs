@@ -1,8 +1,11 @@
 using MySql.Data.MySqlClient;
 using System.Data;
 using Assessment.Entities;
-namespace Assessment.Repositories;
-public class TestManager
+using Assessment.Repositories.Interfaces;
+namespace Assessment.Repositories.Implementations;
+
+//Providers
+public class TestManager :IManager
 {
     private string connectionString = "server=localhost;port=3306;user=root;password=password;database=assessmentdb";
 
@@ -869,9 +872,3 @@ public class TestManager
     }
 
 }
-
-
-
-
-
-

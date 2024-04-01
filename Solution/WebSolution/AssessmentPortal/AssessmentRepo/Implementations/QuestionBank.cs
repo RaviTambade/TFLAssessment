@@ -2,9 +2,12 @@ using MySql.Data.MySqlClient;
 using System.Data;
 using Assessment.Entities;
 
-namespace Assessment.Repositories;
+using Assessment.Repositories.Interfaces;
+//Providers
 
-public class QuestionBank
+namespace Assessment.Repositories.Implementations;
+
+public class QuestionBank:IQuestionBank
 {
     private string connectionString = "server=localhost;port=3306;user=root;password=password;database=assessmentdb";
  

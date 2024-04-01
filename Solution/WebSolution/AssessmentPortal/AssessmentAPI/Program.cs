@@ -1,7 +1,8 @@
 using MySql.Data.MySqlClient;
 using System.Data;
 using Assessment.Entities;
-using Assessment.Repositories;
+using Assessment.Repositories.Interfaces;
+using Assessment.Repositories.Implementations;
 
 var builder = WebApplication.CreateBuilder(args);
 //services configuration
@@ -77,8 +78,12 @@ string candidateTestResultDetailsUrl="/candidates/{candidateId}/test/{testId}";
 
 string designTest ="/designtest";
 
-TestManager manager = new TestManager();
-QuestionBank questionBank=new QuestionBank();
+
+//Using interfaces , Provider objects are  Cohesively coupled
+
+IManager  manager = new TestManager();
+IQuestionBank questionBank=new QuestionBank();
+
 
 //API Listners
 app.MapGet(apiEmployeesUrl,()=>{

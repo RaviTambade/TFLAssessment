@@ -87,3 +87,7 @@ from  candidateanswers
 INNER JOIN   testquestions  on testquestions.questionbankid=candidateanswers.testquestionid
 INNER JOIN   questionbank on questionbank.id=testquestions.questionbankid
 where candidateanswers.candidateid=4 and testquestions.testid=1;
+
+
+
+
