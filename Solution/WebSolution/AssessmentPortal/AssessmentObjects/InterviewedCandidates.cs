@@ -5,4 +5,6 @@ public class InterviewedCandidates{
     public int CandidateId {get;set;}
     public string InterviewSubjectName {get;set;}
 
+    //My changes :Ravi Tambade
+
 }
