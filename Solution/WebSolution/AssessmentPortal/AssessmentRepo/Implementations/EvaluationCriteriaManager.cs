@@ -177,5 +177,53 @@ public class EvaluationCriteriaManager :IEvaluationCriteriaManager
         }
         return status;
     }
-   
+
+   public   List<QuestionDetails> GetQuestionsBySubjectAndCriteria(int subjectId,int criteriaId)
+    {
+        
+        List<QuestionDetails> questions = new List<QuestionDetails>();
+        
+        string query = @"select questionbank.id, questionbank.title, subjects.title as subject ,evaluationcriterias.title as criteria
+                            from questionbank, subjects,evaluationcriterias
+                            where questionbank.subjectid=subjects.id and questionbank.evaluationcriteriaid=evaluationcriterias.id
+                            and subjects.id=@subjectId and evaluationcriterias.id=@criteriaId";
+         
+        MySqlConnection connection = new MySqlConnection(connectionString);
+        MySqlCommand command = new MySqlCommand(query, connection);
+        command.Parameters.AddWithValue("@subjectId", subjectId);
+        command.Parameters.AddWithValue("@criteriaId", criteriaId);
+
+
+        try
+        {
+            connection.Open();
+            MySqlDataReader reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                int id = int.Parse(reader["id"].ToString());
+                string strQuestion = reader["title"].ToString();
+                string subject = reader["subject"].ToString();
+                string criteria = reader["criteria"].ToString();
+                
+                QuestionDetails question= new QuestionDetails();
+                
+                question.Id=id;
+                question.Question=strQuestion;
+                question.Subject=subject;
+                question.Criteria=criteria;
+
+                questions.Add(question);
+            }
+            reader.Close();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+        finally
+        {
+            connection.Close();
+        }
+        return questions;
+    }   
 }

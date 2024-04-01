@@ -85,10 +85,10 @@ string CancelInterviewUrl ="/cancelInterview/interviewid/{interviewid}";
   ITestManager  manager = new TestManager();
   IQuestionBankManager questionBank=new QuestionBankManager();
   IInterviewManager interviewManager=new InterviewManager();
-  IEvaluationCriteriaManager  criteriaManager=new EvaluationCriteriaManager();
+  IEvaluationCriteriaManager criteriaManager=new EvaluationCriteriaManager();
 
   IMockTestManager  mockTestManager = new MockTestManager();
-
+  IResultManager resultManager = new ResultManager();
  
    app.MapGet(apiEmployeesUrl,()=>{
       List<Employee> employees = manager.GetAllEmployees();
@@ -163,8 +163,8 @@ app.MapGet(criteria,(string subject , int questionid)=>{
 
 
 app.MapGet(testSubjectCriteriaAPI,(int subjectId,int criteriaId)=>{
-        List<QuestionDetails> criteriaManager = criteriaManager.GetQuestionsBySubjectAndCriteria(subjectId,criteriaId);
-        return questions;
+        List<QuestionDetails> criterias = criteriaManager.GetQuestionsBySubjectAndCriteria(subjectId,criteriaId);
+        return criterias;
 });
 
 app.MapGet(question,(string subject , int questionid)=>{
@@ -178,17 +178,17 @@ app.MapGet(questionUrl,(int questionId)=>{
 });
 
 app.MapGet(candidateTestScoreUrl,(int candidateId , int testId)=>{
-        int score = manager.GetCandidateTestScore(candidateId ,testId);
+        int score = resultManager.GetCandidateTestScore(candidateId ,testId);
         return score;
 });
 
 app.MapPost(testStartTimesettingUrl,(CandidateTestTime test)=>{
-     bool status=manager.SetTestStartTime(test.CandidateId,test.TestId, test.Time);
+     bool status=mockTestManager.SetTestStartTime(test.CandidateId,test.TestId, test.Time);
      return status;
 });
 
 app.MapPost(apiCandidateTestAnswersUrl,(int candidateId,List<CandidateAnswer> answers)=>{
-    bool status=manager.InsertCandidateAnswers(candidateId,answers);
+    bool status=mockTestManager.InsertCandidateAnswers(candidateId,answers);
     return status;
 });
 
@@ -212,7 +212,7 @@ app.MapPost(insertnewcriteriaurl,(NewCriteria criteria)=>{
 });
 
 app.MapPut(testEndTimesettingUrl,( CandidateTestTime test)=>{
-     bool status=manager.SetTestEndTime(test.CandidateId,test.TestId, test.Time);
+     bool status=mockTestManager.SetTestEndTime(test.CandidateId,test.TestId, test.Time);
      return status;
 });
 
@@ -229,7 +229,7 @@ app.MapPut(updateQuestionOptions,(int questionId, Question options)=>{
 
 
 app.MapPut(UpdateCriteria,(int evaluationCriteriaId,int questionId)=>{
-    bool status=manager.UpdateCriteria(evaluationCriteriaId,questionId);
+    bool status=criteriaManager.UpdateCriteria(evaluationCriteriaId,questionId);
     return status;
 });
 
@@ -268,17 +268,17 @@ app.MapDelete(CancelInterviewUrl,( int interviewId)=>{
      return status;
 });
 
-app.MapGet("/interviewdetails",()=>{
-        InterviewDetails details=new InterviewDetails{
-            Id=12,
-            InterviewDate="25/3/2024",
-            SMETitle="Sarika Patil",
-            InterviewTitle="Paragati Bangar",
-            Subject="Java" ,
-            InterviewTime="5:56"  ,
-            Criterias=[ "Object Oriented Programming", "Multithreading", "File IO", "Database Programming"]
-        };
-    return details;
-});
+// app.MapGet("/interviewdetails",()=>{
+//         InterviewDetails details=new InterviewDetails{
+//             Id=12,
+//             InterviewDate="25/3/2024",
+//             SMETitle="Sarika Patil",
+//             InterviewTitle="Paragati Bangar",
+//             Subject="Java" ,
+//             InterviewTime="5:56"  ,
+//             Criterias=[ "Object Oriented Programming", "Multithreading", "File IO", "Database Programming"]
+//         };
+//     return details;
+// });
 
 app.Run();
