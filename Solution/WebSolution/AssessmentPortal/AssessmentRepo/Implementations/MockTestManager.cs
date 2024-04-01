@@ -132,6 +132,8 @@ public class MockTestManager :IManager
     public bool DeleteQuestion(int[] testQuestions)
     {
         bool status = false;
+
+        
         return status;
     }
 
