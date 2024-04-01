@@ -82,28 +82,22 @@ string CancelInterviewUrl ="/cancelInterview/interviewid/{interviewid}";
 
 //Using interfaces , Provider objects are  Cohesively coupled
 
-<<<<<<< HEAD
-IManager  manager = new TestManager();
-IQuestionBank questionBank=new QuestionBank();
-IInterviewManager interviewManager = new InterviewManager();
-=======
-// IManager  manager = new TestManager();
-// IQuestionBank questionBank=new QuestionBank();
+  ITestManager  manager = new TestManager();
+  IQuestionBankManager questionBank=new QuestionBankManager();
 
-IEvaluationCriteriaManager  criteriaManager=new EvaluationCriteriaManager();
+  IEvaluationCriteriaManager  criteriaManager=new EvaluationCriteriaManager();
 
->>>>>>> 675daabca40145dab6b255cd9d84d4e90f278887
 
-//API Listners
-// app.MapGet(apiEmployeesUrl,()=>{
-//     List<Employee> employees = manager.GetAllEmployees();
-//     return employees;
-// });
+ 
+   app.MapGet(apiEmployeesUrl,()=>{
+      List<Employee> employees = manager.GetAllEmployees();
+      return employees;
+   });
 
-// app.MapGet(apiSubjectsUrl,()=>{
-//    List<Subject> subjects = manager.GetAllSubjects();
-//    return subjects;
-// });
+   app.MapGet(apiSubjectsUrl,()=>{
+      List<Subject> subjects = manager.GetAllSubjects();
+      return subjects;
+   });
 
 app.MapGet(apiCriteriaUrl,()=>{
    List<EvaluationCriteria> evaluationCriterias = criteriaManager.GetEvalutionCriterias();
@@ -115,67 +109,50 @@ app.MapGet(criteriaBySubjectUrl,(int subjectId)=>{
    return evaluationCriterias;
 });
 
-// app.MapGet(testQuestionsUrl,(int testId)=>{
-//    List<Question> questions = manager.GetTestQuestion(testId);
-//    return questions;
-// });
+app.MapGet(testQuestionsUrl,(int testId)=>{
+   List<Question> questions = manager.GetTestQuestion(testId);
+   return questions;
+});
 
-// app.MapGet(apiTestUrl,()=>{
-//    List<Test> tests = manager.GetAllTests();
-//    return tests;
-// });
+app.MapGet(apiTestUrl,()=>{
+   List<Test> tests = manager.GetAllTests();
+   return tests;
+});
 
-<<<<<<< HEAD
 app.MapGet(InterviewDetailsUrl,(int interviewId)=>{
    InterviewDetails interviewInfo = interviewManager.GetInterviewDetails(interviewId);
    return interviewInfo;
 });
 
 app.MapGet(InterviewedCandidatesInfoUrl,()=>{
-   List<InterviewedCandidates> InterviewCandidates = interviewManager.GetAllInterviewedCandidatesInfo();
+   List<InterviewCandidateDetails> InterviewCandidates = interviewManager.GetAllInterviewedCandidatesInfo();
    return InterviewCandidates;
 });
 
 app.MapGet(InterviewedCandidatesSubjectsUrl,(int candidateId)=>{
-   List<InterviewedCandidates> InterviewCandidatesSubjects = interviewManager.GetInterviewedCandidatesSubjects(candidateId);
+   List<InterviewCandidateDetails> InterviewCandidatesSubjects = interviewManager.GetInterviewedCandidatesSubjects(candidateId);
    return InterviewCandidatesSubjects;
 });
-=======
-// app.MapGet(InterviewDetailsUrl,(int interviewId)=>{
-//    InterviewDetails interviewInfo = manager.GetInterviewDetails(interviewId);
-//    return interviewInfo;
-// });
 
-// app.MapGet(InterviewedCandidatesInfoUrl,()=>{
-//    List<InterviewedCandidates> InterviewCandidates = manager.GetAllInterviewedCandidatesInfo();
-//    return InterviewCandidates;
-// });
+   app.MapGet(apiQuestionsUrl,(int testId)=>{
+      List<TestQuestion> questions= manager.GetQuestions(testId);
+      return questions;
+   });
 
-// app.MapGet(InterviewedCandidatesSubjectsUrl,(int candidateId)=>{
-//    List<InterviewedCandidates> InterviewCandidatesSubjects = manager.GetInterviewedCandidatesSubjects(candidateId);
-//    return InterviewCandidatesSubjects;
-// });
->>>>>>> 675daabca40145dab6b255cd9d84d4e90f278887
+   app.MapGet(candidateTestResultUrl,(int candidateId,int testId )=>{
+      int score=  manager.GetCandidateScore(candidateId,testId);  
+      return score;
+   });
 
-// app.MapGet(apiQuestionsUrl,(int testId)=>{
-//     List<TestQuestion> questions= manager.GetQuestions(testId);
-//     return questions;
-// });
+   app.MapGet(allQuestionsAPI,()=>{         
+      List<QuestionTitle> allQuestions = questionBank.GetAllQuestions();
+      return allQuestions;
+   });
 
-// app.MapGet(candidateTestResultUrl,(int candidateId,int testId )=>{
-//     int score=  manager.GetCandidateScore(candidateId,testId);  
-//     return score;
-// });
-
-// app.MapGet(allQuestionsAPI,()=>{         
-//     List<QuestionTitle> allQuestions = questionBank.GetAllQuestions();
-//     return allQuestions;
-// });
-
-// app.MapGet(allQuestionsBySubjectUrl,(int subjectId)=>{
-//         List<SubjectQuestion> questions = questionBank.GetQuestionsBySubject(subjectId);
-//         return questions;
-// });
+   app.MapGet(allQuestionsBySubjectUrl,(int subjectId)=>{
+         List<SubjectQuestion> questions = questionBank.GetQuestionsBySubject(subjectId);
+         return questions;
+   });
 
 
 app.MapGet(criteria,(string subject , int questionid)=>{
@@ -184,48 +161,48 @@ app.MapGet(criteria,(string subject , int questionid)=>{
 });
 
 
-// app.MapGet(testSubjectCriteriaAPI,(int subjectId,int criteriaId)=>{
-//         List<QuestionDetails> criteriaManager = criteriaManager.GetQuestionsBySubjectAndCriteria(subjectId,criteriaId);
-//         return questions;
-// });
+app.MapGet(testSubjectCriteriaAPI,(int subjectId,int criteriaId)=>{
+        List<QuestionDetails> criteriaManager = criteriaManager.GetQuestionsBySubjectAndCriteria(subjectId,criteriaId);
+        return questions;
+});
 
-// app.MapGet(question,(string subject , int questionid)=>{
-//         TestQuestion question = manager.GetQuestion(subject ,questionid);
-//         return question;
-// });
+app.MapGet(question,(string subject , int questionid)=>{
+        TestQuestion question = manager.GetQuestion(subject ,questionid);
+        return question;
+});
 
-// app.MapGet(questionUrl,(int questionId)=>{
-//        Question question=questionBank.GetQuestion(questionId);
-//        return question;
-// });
+app.MapGet(questionUrl,(int questionId)=>{
+       Question question=questionBank.GetQuestion(questionId);
+       return question;
+});
 
-// app.MapGet(candidateTestScoreUrl,(int candidateId , int testId)=>{
-//         int score = manager.GetCandidateTestScore(candidateId ,testId);
-//         return score;
-// });
+app.MapGet(candidateTestScoreUrl,(int candidateId , int testId)=>{
+        int score = manager.GetCandidateTestScore(candidateId ,testId);
+        return score;
+});
 
-// app.MapPost(testStartTimesettingUrl,(CandidateTestTime test)=>{
-//      bool status=manager.SetTestStartTime(test.CandidateId,test.TestId, test.Time);
-//      return status;
-// });
+app.MapPost(testStartTimesettingUrl,(CandidateTestTime test)=>{
+     bool status=manager.SetTestStartTime(test.CandidateId,test.TestId, test.Time);
+     return status;
+});
 
-// app.MapPost(apiCandidateTestAnswersUrl,(int candidateId,List<CandidateAnswer> answers)=>{
-//     bool status=manager.InsertCandidateAnswers(candidateId,answers);
-//     return status;
-// });
-
-
-// app.MapPost(deleteTestQuestion,(int[] testQuestions)=>{
-//     bool status=manager.DeleteQuestion(testQuestions);
-//     return status;
-// });
+app.MapPost(apiCandidateTestAnswersUrl,(int candidateId,List<CandidateAnswer> answers)=>{
+    bool status=manager.InsertCandidateAnswers(candidateId,answers);
+    return status;
+});
 
 
-// app.MapPost(insertnewquestionurl,(NewQuestion ques)=>{
-//     bool status=manager.InsertQuestion(ques);
-//     return status;
+app.MapPost(deleteTestQuestion,(int[] testQuestions)=>{
+    bool status=manager.DeleteQuestion(testQuestions);
+    return status;
+});
+
+
+app.MapPost(insertnewquestionurl,(NewQuestion ques)=>{
+    bool status=manager.InsertQuestion(ques);
+    return status;
     
-// });
+});
 
 app.MapPost(insertnewcriteriaurl,(NewCriteria criteria)=>{
     bool status=criteriaManager.InsertCriteria(criteria);
@@ -233,10 +210,10 @@ app.MapPost(insertnewcriteriaurl,(NewCriteria criteria)=>{
     
 });
 
-// app.MapPut(testEndTimesettingUrl,( CandidateTestTime test)=>{
-//      bool status=manager.SetTestEndTime(test.CandidateId,test.TestId, test.Time);
-//      return status;
-// });
+app.MapPut(testEndTimesettingUrl,( CandidateTestTime test)=>{
+     bool status=manager.SetTestEndTime(test.CandidateId,test.TestId, test.Time);
+     return status;
+});
 
 app.MapPut(subjectCriteriaUrl,( int criteriaId,int questionId)=>{
      bool status=criteriaManager.UpdateCriteria(criteriaId,questionId);
@@ -244,33 +221,33 @@ app.MapPut(subjectCriteriaUrl,( int criteriaId,int questionId)=>{
 });
 
 
-// app.MapPut(updateQuestionOptions,(int questionId, Question options)=>{
-//      bool status=questionBank.UpdateQuestionOptions(questionId,options);
-//      return status;
-// });
+app.MapPut(updateQuestionOptions,(int questionId, Question options)=>{
+     bool status=questionBank.UpdateQuestionOptions(questionId,options);
+     return status;
+});
 
 
-// app.MapPut(UpdateCriteria,(int evaluationCriteriaId,int questionId)=>{
-//     bool status=manager.UpdateCriteria(evaluationCriteriaId,questionId);
-//     return status;
-// });
+app.MapPut(UpdateCriteria,(int evaluationCriteriaId,int questionId)=>{
+    bool status=manager.UpdateCriteria(evaluationCriteriaId,questionId);
+    return status;
+});
 
 
-// app.MapPut(updateAnswer,(Question answer,int questionId)=>{
-//     bool status=questionBank.UpdateAnswer(answer,questionId);
-//     return status;   
-// });
+app.MapPut(updateAnswer,(Question answer,int questionId)=>{
+    bool status=questionBank.UpdateAnswer(answer,questionId);
+    return status;   
+});
 
-// app.MapGet(candidateTestResultDetailsUrl,(int candidateId , int testId )=>{
-//          CandidateResultDetails candidateResult= manager.CandidateTestResultDetails(candidateId ,testId);
-//         return candidateResult;
-// });
+app.MapGet(candidateTestResultDetailsUrl,(int candidateId , int testId )=>{
+         CandidateResultDetails candidateResult= manager.CandidateTestResultDetails(candidateId ,testId);
+        return candidateResult;
+});
 
 
-// app.MapPost(createTestUrl,(Test newTest)=>{
-//     bool status=manager.CreateTest(newTest);
-//     return status;
-// });
+app.MapPost(createTestUrl,(Test newTest)=>{
+    bool status=manager.CreateTest(newTest);
+    return status;
+});
 
 
 
@@ -290,17 +267,17 @@ app.MapDelete(CancelInterviewUrl,( int interviewId)=>{
      return status;
 });
 
-// app.MapGet("/interviewdetails",()=>{
-//         InterviewDetails details=new InterviewDetails{
-//             Id=12,
-//             InterviewDate="25/3/2024",
-//             SMETitle="Sarika Patil",
-//             InterviewTitle="Paragati Bangar",
-//             Subject="Java" ,
-//             InterviewTime="5:56"  ,
-//             Criterias=[ "Object Oriented Programming", "Multithreading", "File IO", "Database Programming"]
-//         };
-//     return details;
-// });
+app.MapGet("/interviewdetails",()=>{
+        InterviewDetails details=new InterviewDetails{
+            Id=12,
+            InterviewDate="25/3/2024",
+            SMETitle="Sarika Patil",
+            InterviewTitle="Paragati Bangar",
+            Subject="Java" ,
+            InterviewTime="5:56"  ,
+            Criterias=[ "Object Oriented Programming", "Multithreading", "File IO", "Database Programming"]
+        };
+    return details;
+});
 
 app.Run();
