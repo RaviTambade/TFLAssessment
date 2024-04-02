@@ -1,4 +1,4 @@
- using Assessment.Entities;
+using Assessment.Entities;
 
 namespace Assessment.Repositories.Interfaces;
 

@@ -1,0 +1,8 @@
+namespace QuestionBankRepo.Entities;
+public class QuestionSubjectCriteria{
+    public int Id{get;set;}
+    public string Question{get;set;}
+    public string Subject{get;set;}
+    public string Criteria{get;set;}
+
+}

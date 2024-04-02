@@ -75,11 +75,7 @@
             $('#feedbackForm').submit(function(event) {
                 // Prevent default form submission
                 event.preventDefault();
-                
-                // Serialize form data
                 var formData = $(this).serialize();
-
-                console.log(formData);
                 
                 // Submit form data using AJAX
                 $.ajax({
