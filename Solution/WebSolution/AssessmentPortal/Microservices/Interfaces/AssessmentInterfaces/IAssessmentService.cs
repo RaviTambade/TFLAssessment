@@ -1,5 +1,6 @@
-﻿namespace AssessmentInterfaces;
+﻿
 using  AssessmentEntities;
+namespace AssessmentInterfaces;
 public interface IAssessmentService
 {
   public Assessment GetDetails(int AssessmentId);
