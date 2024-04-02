@@ -1,3 +1,8 @@
+using QuestionBankEntity; //-----------------------dll
+using QuestionBankInterfaces;//-----------------------dll
+using QuestionBankServices;//------------------------dll
+
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.

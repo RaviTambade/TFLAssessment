@@ -1,7 +1,7 @@
 //WebApp Builder Infrastrcture
 using AssessmentEntities; //-----------------------dll
 using AssessmentInterfaces;//-----------------------dll
-using AssessmentSerivces;//------------------------dll
+using AssessmentServices;//------------------------dll
 
 var builder = WebApplication.CreateBuilder(args);
 
