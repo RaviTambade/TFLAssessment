@@ -6,6 +6,7 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+<<<<<<< HEAD
   <ItemGroup>
     <PackageReference Include="MySql.Data" Version="8.3.0" />
   </ItemGroup>
@@ -16,4 +17,12 @@
     <ProjectReference Include="..\..\Interfaces\QuestionBankInterfaces\QuestionBankInterfaces.csproj" />
   
   </ItemGroup>
+=======
+   <ItemGroup>
+    <ProjectReference Include="..\..\Entities\QuestionBankEntity\QuestionBankEntity.csproj" />
+    <ProjectReference Include="..\..\Interfaces\QuestionBankInterfaces\QuestionBankInterfaces.csproj" />
+    <PackageReference Include="MySql.Data" Version="8.3.0" />
+  </ItemGroup>
+
+>>>>>>> fbcef57c99024e81eb481cf2f7332d67f984628e
 </Project>
