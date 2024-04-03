@@ -78,3 +78,32 @@ CALL spcandidatetestresultdetails(3,2, @pcorrectAnswers, @pincorrectAnswers,@psk
 select @pcorrectAnswers,@pincorrectAnswers,@pskippedQuestions;
 
 
+
+DROP PROCEDURE IF Exists sppasscandidatetest;
+DELIMITER $$
+create procedure sppasscandidatetest(IN ptestId INT  )
+BEGIN
+DECLARE totalQuestions INT;
+
+DECLARE percentage DOUBLE;
+
+
+select count(*) INTO totalQuestions from testquestions where testid=@ptestId;
+
+
+select tests.passinglevel,candidatetestresults.candidateid,(score/totalQuestions)*100 INTO percentage
+ from candidatetestresults 
+ inner join tests
+ on tests.id=candidatetestresults.testid
+where testid=@testid AND percentage>= tests.passinglevel ;
+END $$
+
+select * from candidatetestresults;
+
+
+CALL sppasscandidatetest(1);
+select @pcorrectAnswers,@pincorrectAnswers,@pskippedQuestions;
+
+
+
+

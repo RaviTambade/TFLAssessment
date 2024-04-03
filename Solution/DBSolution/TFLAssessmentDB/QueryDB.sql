@@ -106,6 +106,10 @@ inner join employees
 on employees.id= candidatetestresults.candidateid
 where candidatetestresults.testid=1;
 
+select score,candidateid,(score/10)*100 as percentage 
+ from candidatetestresults
+where testid=1;
+
 
 
 
