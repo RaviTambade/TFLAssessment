@@ -1,7 +1,4 @@
--- Active: 1707123530557@@127.0.0.1@3306@assessmentdb
--- Assessment Database for Online Examination Transflower
 
--- Active: 1707123530557@@127.0.0.1@3306@assessmentdb
 DROP database assessmentdb;
 create database assessmentdb;
 

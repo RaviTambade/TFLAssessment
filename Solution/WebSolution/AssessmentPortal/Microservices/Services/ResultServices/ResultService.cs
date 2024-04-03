@@ -4,10 +4,10 @@ using ResultEntity;
 using ResultInterfaces;
 namespace ResultServices;
 
-public class ResultService :IResultService
-{ 
+public class ResultService : IResultService
+{
 
-     private string connectionString = "server=localhost;port=3306;user=root;password=password;database=assessmentdb";
+    private string connectionString = "server=localhost;port=3306;user=root;password=password;database=assessmentdb";
     public int GetCandidateScore(int candidateId, int testId)
     {
         string query = "spcandidatetestresult";
@@ -39,7 +39,7 @@ public class ResultService :IResultService
     }
     public int GetCandidateTestScore(int candidateId, int testId)
     {
-        int score=0;
+        int score = 0;
         MySqlConnection connection = new MySqlConnection(connectionString);
         string query = @"select score from candidatetestresults where candidateid=@candidateId and testid=@testId";
         try
@@ -48,9 +48,9 @@ public class ResultService :IResultService
             command.Parameters.AddWithValue("@candidateId", candidateId);
             command.Parameters.AddWithValue("@testId", testId);
             connection.Open();
-             score= (int)command.ExecuteScalar();
+            score = (int)command.ExecuteScalar();
 
-   
+
         }
         catch (Exception e)
         {
@@ -65,7 +65,7 @@ public class ResultService :IResultService
     public CandidateResultDetails CandidateTestResultDetails(int candidateId, int testId)
     {
         string query = "spcandidatetestresultdetails";
-         CandidateResultDetails candidateResultDetails=null;
+        CandidateResultDetails candidateResultDetails = null;
         MySqlConnection connection = new MySqlConnection(connectionString);
         try
         {
@@ -85,15 +85,16 @@ public class ResultService :IResultService
             int correctAnswers = Convert.ToInt32(command.Parameters["@pcorrectAnswers"].Value);
             int incorrectAnswers = Convert.ToInt32(command.Parameters["@pincorrectAnswers"].Value);
             int skippedQuestions = Convert.ToInt32(command.Parameters["@pskippedQuestions"].Value);
-        
-         candidateResultDetails=new CandidateResultDetails(){
-                CorrectAnswers=correctAnswers,
-                IncorrectAnswers=incorrectAnswers,
-                SkippedQuestions=skippedQuestions,
-                CandidateId=candidateId,
-                TestId=testId
+
+            candidateResultDetails = new CandidateResultDetails()
+            {
+                CorrectAnswers = correctAnswers,
+                IncorrectAnswers = incorrectAnswers,
+                SkippedQuestions = skippedQuestions,
+                CandidateId = candidateId,
+                TestId = testId
             };
-        
+
         }
         catch (Exception e)
         {
@@ -106,7 +107,7 @@ public class ResultService :IResultService
         return candidateResultDetails;
     }
 
-     public List<TestResultDetails> GetTestResultDetails(int testId)
+    public List<TestResultDetails> GetTestResultDetails(int testId)
     {
         List<TestResultDetails> resultdetails = new List<TestResultDetails>();
         MySqlConnection connection = new MySqlConnection(connectionString);
@@ -137,17 +138,17 @@ public class ResultService :IResultService
 
                 TestResultDetails results = new TestResultDetails();
 
-                results.TestId=testid;
-                results.CandidateId=candidateid;
-                results.FirstName=fname;
-                results.LastName=lname;
-                results.Subject=subject;
-                results.Score=score;
+                results.TestId = testid;
+                results.CandidateId = candidateid;
+                results.FirstName = fname;
+                results.LastName = lname;
+                results.Subject = subject;
+                results.Score = score;
                 resultdetails.Add(results);
             }
             reader.Close();
 
-   
+
         }
         catch (Exception e)
         {
@@ -160,6 +161,48 @@ public class ResultService :IResultService
         return resultdetails;
     }
 
+    public List<AppearedCandidate> GetAppearedCandidates(int testId)
+    {
+        List<AppearedCandidate> appearedCandidates = new List<AppearedCandidate>();
+        MySqlConnection connection = new MySqlConnection(connectionString);
+        string query = @"select candidatetestresults.testid, candidatetestresults.candidateid, employees.firstname, employees.lastname
+                            from candidatetestresults 
+                            inner join employees 
+                            on employees.id= candidatetestresults.candidateid
+                            where candidatetestresults.testid=@TestId;";
+        try
+        {
+            MySqlCommand command = new MySqlCommand(query, connection);
+            command.Parameters.AddWithValue("@TestId", testId);
+            connection.Open();
+            MySqlDataReader reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                int testid = int.Parse(reader["testid"].ToString());
+                int candidateid = int.Parse(reader["candidateid"].ToString());
+                string fname = reader["firstname"].ToString();
+                string lname = reader["lastname"].ToString();
+                
+                AppearedCandidate candidate = new AppearedCandidate();
+
+                candidate.TestId = testid;
+                candidate.CandidateId = candidateid;
+                candidate.FirstName = fname;
+                candidate.LastName = lname;
+                appearedCandidates.Add(candidate);
+            }
+            reader.Close();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+        finally
+        {
+            connection.Close();
+        }
+        return appearedCandidates;
+    }
 
 
 }

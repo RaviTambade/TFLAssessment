@@ -7,4 +7,5 @@ public interface IResultService{
     public CandidateResultDetails CandidateTestResultDetails(int candidateId, int testId);
 
     public List<TestResultDetails> GetTestResultDetails(int testId);
+    public List<AppearedCandidate> GetAppearedCandidates(int testId);
 }

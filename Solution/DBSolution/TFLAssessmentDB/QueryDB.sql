@@ -100,5 +100,12 @@ on tests.subjectid=subjects.id
 where candidatetestresults.testid=1;
 
 
+select candidatetestresults.testid, candidatetestresults.candidateid, employees.firstname, employees.lastname
+from candidatetestresults 
+inner join employees 
+on employees.id= candidatetestresults.candidateid
+where candidatetestresults.testid=1;
+
+
 
 

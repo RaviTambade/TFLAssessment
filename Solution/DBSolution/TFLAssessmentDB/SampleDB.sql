@@ -462,10 +462,14 @@ INSERT INTO interviewresults(interviewcriteriaid, ratings, comments)VALUES(7,8,"
 INSERT INTO interviewresults(interviewcriteriaid, ratings, comments)VALUES(8,8,"good");
 
 INSERT INTO candidatetestresults(testid,score,teststarttime,testendtime,candidateid) values (1,5,"2015-11-05 14:29:36","2015-11-05 16:29:36",2);
-INSERT INTO candidatetestresults(testid,score,teststarttime,testendtime,candidateid) values (2,10,"2015-11-06 14:29:36","2015-11-06 16:29:36",5);
-INSERT INTO candidatetestresults(testid,score,teststarttime,testendtime,candidateid) values (1,9,"2015-11-05 14:29:36","2015-11-05 16:29:36",2);
-INSERT INTO candidatetestresults(testid,score,teststarttime,testendtime,candidateid) values (3,8,"2015-11-07 14:29:36","2015-11-07 16:29:36",2);
-INSERT INTO candidatetestresults(testid,score,teststarttime,testendtime,candidateid) values (4,10,"2015-11-08 14:29:36","2015-11-08 16:29:36",2);
+INSERT INTO candidatetestresults(testid,score,teststarttime,testendtime,candidateid) values (1,5,"2015-11-05 14:29:36","2015-11-05 16:29:36",1);
+INSERT INTO candidatetestresults(testid,score,teststarttime,testendtime,candidateid) values (1,10,"2015-11-06 14:29:36","2015-11-06 16:29:36",5);
+INSERT INTO candidatetestresults(testid,score,teststarttime,testendtime,candidateid) values (1,9,"2015-11-05 14:29:36","2015-11-05 16:29:36",3);
+INSERT INTO candidatetestresults(testid,score,teststarttime,testendtime,candidateid) values (3,8,"2015-11-07 14:29:36","2015-11-07 16:29:36",4);
+INSERT INTO candidatetestresults(testid,score,teststarttime,testendtime,candidateid) values (4,10,"2015-11-08 14:29:36","2015-11-08 16:29:36",6);
+INSERT INTO candidatetestresults(testid,score,teststarttime,testendtime,candidateid) values (2,8,"2015-11-07 14:29:36","2015-11-07 16:29:36",7);
+INSERT INTO candidatetestresults(testid,score,teststarttime,testendtime,candidateid) values (5,10,"2015-11-08 14:29:36","2015-11-08 16:29:36",8);
+
 
 
 

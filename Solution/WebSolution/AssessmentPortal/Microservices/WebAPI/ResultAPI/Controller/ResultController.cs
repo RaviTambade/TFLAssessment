@@ -46,8 +46,15 @@ public class ResultController : ControllerBase
         {   
             IResultService _svc = new ResultService();
             List<TestResultDetails> result = _svc.GetTestResultDetails(testId);
-            Console.WriteLine(result);
             return Ok(result);
+        }
+
+         [HttpGet("/candidates/tests/{testid}")]
+         public IActionResult GetAppearedCandidates(int testId)
+        {   
+            IResultService _svc = new ResultService();
+            List<AppearedCandidate> candidates = _svc.GetAppearedCandidates(testId);
+            return Ok(candidates);
         }
 
         // public IActionResult GetPassedCandidate(int testId)
@@ -66,13 +73,7 @@ public class ResultController : ControllerBase
         //     return Ok(result);
         // }
 
-        // public IActionResult GetAppreadCandidate(int testId)
-        // {   
-        //     IResultService _svc = new ResultService();
-        //     CandidateResultDetails result = _svc.GetAppreadCandidate(candidateId,testId);
-        //     Console.WriteLine(result);
-        //     return Ok(result);
-        // }
+       
 
         // public IActionResult SetPassingLevel(int testId,int passingLevel)
         // {   
