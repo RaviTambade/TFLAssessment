@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>JQuery Implementation</title> 
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+        
+    </head>
+    <body>
+        <h2>Transflower</h2>
+        <hr/>
+        <!-- This block act like HTML Template-->
+        <label id="lblTfl">Transflower Learning Pvt. Ltd.</label>
+        <br>
+        <label id="lblSeed">Seed Infotech Ltd.</label>
+        <p id="para1">Mentor as a Service</p>
+        <p id="para2">Transflower Acceleration Program</p>
+        <p id="para3">Solution Provider</p>
+        <button id="btnStart">Start</button>
+        <button id="btnRun">Run</button>
+        
+        
+        <hr/>
+
+        <div style="background: rgb(255, 0, 0); height: 200px; width:200px; position:absolute"></div>
+
+        <!-- <button onclick="clickMe()">Start</button> -->
+        <script>
+            /*
+            function clickMe(){
+                    console.log("Button Click");
+                    var pElement1=document.getElementById("para1");
+                    var pElement2=document.getElementById("para2");
+                    pElement1.innerHTML ="<button onclick="clickMe()">Start</button>";
+                    pElement2.innerHTML ="Dotnet FullStack Project based Collaborative Learning"
+            }
+            */
+
+        //$ is used to access selector
+
+        //we are attaching event handler with event belond to HTML DOM tree
+
+        $(document).ready(()=>{
+                                //button click event Binding
+                                $("#btnStart").click(()=>{
+                                            console.log("button is clicked");
+                                            //data Bind
+                                            // $("*").text("Doing ordinary things extraordinarily");  //star selector
+                                             $("p").text("Welcome to Transflower Software pvt.lmt");   //element selector
+                                             // $("label").text("Microsoft India Pvt. Ltd."); //element selector
+                                            // $("#lblTfl").text("Microsoft India Pvt. Ltd."); //id selector
+                                            //$("#para1").text("Welcome to Transflower"); //id selector
+                                             $("div").animate({right:'100px'});
+                                            
+                                            })
+        });
+        
+
+        //For traversing point of view , we need to learn differnt types of selectors
+        </script>
+
+       <script> 
+        $(document).ready(function(){
+          $("button").click(function(){
+            $("div").animate({left: '250px'});
+          });
+        });
+        </script> 
+        <script> 
+            $(document).ready(function(){
+              $("button").click(function(){
+                $("div").animate({left: '250px'});
+              });
+            });
+            </script>
+    </body>
+</html>

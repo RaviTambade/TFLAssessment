@@ -7,7 +7,7 @@ select * from interviewcriterias;
 select * from interviewresults;
  select questionbank.id,questionbank.title,questionbank.a,questionbank.b,questionbank.c,questionbank.d from questionbank inner join subjects on subjects.id=questionbank.subjectid
  where subjects.title="ADVJAVA";
-
+select * from test;
 -- Select all questions  beong to ADV JAVA
 select * from questionbank where subjectid=(select id from subjects where title ="ADVJAVA");
  
@@ -15,12 +15,12 @@ select * from questionbank inner join testquestions on testquestions.questionban
 
 INSERT INTO candidateanswers (candidateid, testquestionid, answerkey) VALUES (@candidateId, @testQuestionId, @answerKey);
 
-insert into candidatetestresults(testid,teststarttime,candidateid) values (@testid,@teststarttime,@candidateid);
 
-insert into candidatetestresults(testid,teststarttime,candidateid) values (1,"2015-11-05 14:29:36",2);
 update candidatetestresults set testendtime =@testendtime where candidateid=@candidateid and testid=@testid;
 update candidatetestresults set testendtime ="2015-11-05 14:35:00" where candidateid=2 and testid=1;
-select * from candidatetestresults;
+
+
+
 select questionbank.id, questionbank.title, subjects.title as subject ,evaluationcriterias.title as criteria
                             from questionbank, subjects,evaluationcriterias
                             where questionbank.subjectid=subjects.id and questionbank.evaluationcriteriaid=evaluationcriterias.id
@@ -87,6 +87,17 @@ from  candidateanswers
 INNER JOIN   testquestions  on testquestions.questionbankid=candidateanswers.testquestionid
 INNER JOIN   questionbank on questionbank.id=testquestions.questionbankid
 where candidateanswers.candidateid=4 and testquestions.testid=1;
+
+select candidatetestresults.testid,candidatetestresults.score,candidatetestresults.candidateid
+,employees.firstname,employees.lastname,subjects.title as subject
+from candidatetestresults
+inner join employees
+on employees.id=candidatetestresults.candidateid
+inner join tests
+on candidatetestresults.testid=tests.id
+inner join subjects
+on tests.subjectid=subjects.id
+where candidatetestresults.testid=1;
 
 
 

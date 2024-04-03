@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h2>Login</h2>
+    <form id="loginForm">
+        <div>
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+        </div>
+        <div>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+        <div>
+            <button type="submit">Login</button>
+        </div>
+    </form>
+
+    <div id="responseMessage"></div>
+
+    <script>
+        $(document).ready(function () {
+            $('#loginForm').submit(function (event) {
+                event.preventDefault(); // Prevent the default form submission
+
+                // Get form data
+                var formData = {
+                    username: $('#username').val(),
+                    password: $('#password').val()
+                };
+
+                // Send form data to the server using AJAX
+                $.ajax({
+                    type: 'POST',
+                    url: 'login.php', // Change to your server-side login script URL
+                    data: formData,
+                    dataType: 'json',
+                    encode: true,
+                    success: function (response) {
+                        // Display response message
+                        $('#responseMessage').html(response.message);
+                    },
+                    error: function () {
+                        // Display error message if AJAX request fails
+                        $('#responseMessage').html('An error occurred. Please try again.');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
