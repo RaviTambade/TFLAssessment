@@ -264,15 +264,14 @@ VALUES (
 
 
 
-INSERT INTO tests(subjectid,duration,smeid,creationdate,modificationdate,scheduleddate) VALUES (1,"00:30:00",1,'2023-12-05','2024-02-05','2024-02-07');
-INSERT INTO tests(subjectid,duration,smeid,creationdate,modificationdate,scheduleddate) VALUES (1,"00:40:00",1,'2023-11-05','2024-01-05','2024-02-07');
-INSERT INTO tests(subjectid,duration,smeid,creationdate,modificationdate,scheduleddate) VALUES (1,"00:20:00",1,'2023-09-05','2024-01-05','2024-02-08');
-INSERT INTO tests(subjectid,duration,smeid,creationdate,modificationdate,scheduleddate) VALUES (2,"00:30:00",2,'2023-09-21','2023-12-05','2024-01-05');
-INSERT INTO tests(subjectid,duration,smeid,creationdate,modificationdate,scheduleddate) VALUES (3,"01:00:00",1,'2023-11-05','2023-12-21','2024-01-24');
-INSERT INTO tests(subjectid,duration,smeid,creationdate,modificationdate,scheduleddate) VALUES (4,"01:30:00",2,'2023-09-05','2023-10-10','2024-01-18');
-
-INSERT INTO tests(subjectid,duration,smeid,creationdate,modificationdate,scheduleddate) VALUES (7,"00:30:00",7,'2024-01-01','2024-01-01','2024-01-10');
-INSERT INTO tests(subjectid,duration,smeid,creationdate,modificationdate,scheduleddate) VALUES (7,"00:30:00",7,'2024-01-01','2024-01-01','2024-01-10');
+INSERT INTO tests(subjectid,duration,smeid,creationdate,modificationdate,scheduleddate,passinglevel) VALUES (1,"00:30:00",1,'2023-12-05','2024-02-05','2024-02-07',35);
+INSERT INTO tests(subjectid,duration,smeid,creationdate,modificationdate,scheduleddate,passinglevel) VALUES (1,"00:40:00",1,'2023-11-05','2024-01-05','2024-02-07',35);
+INSERT INTO tests(subjectid,duration,smeid,creationdate,modificationdate,scheduleddate,passinglevel) VALUES (1,"00:20:00",1,'2023-09-05','2024-01-05','2024-02-08',35);
+INSERT INTO tests(subjectid,duration,smeid,creationdate,modificationdate,scheduleddate,passinglevel) VALUES (2,"00:30:00",2,'2023-09-21','2023-12-05','2024-01-05',35);
+INSERT INTO tests(subjectid,duration,smeid,creationdate,modificationdate,scheduleddate,passinglevel) VALUES (3,"01:00:00",1,'2023-11-05','2023-12-21','2024-01-24',35);
+INSERT INTO tests(subjectid,duration,smeid,creationdate,modificationdate,scheduleddate,passinglevel) VALUES (4,"01:30:00",2,'2023-09-05','2023-10-10','2024-01-18',35);
+INSERT INTO tests(subjectid,duration,smeid,creationdate,modificationdate,scheduleddate,passinglevel) VALUES (7,"00:30:00",7,'2024-01-01','2024-01-01','2024-01-10',35);
+INSERT INTO tests(subjectid,duration,smeid,creationdate,modificationdate,scheduleddate,passinglevel) VALUES (7,"00:30:00",7,'2024-01-01','2024-01-01','2024-01-10',35);
 
 
 
@@ -461,6 +460,12 @@ INSERT INTO interviewresults(interviewcriteriaid, ratings, comments)VALUES(5,10,
 INSERT INTO interviewresults(interviewcriteriaid, ratings, comments)VALUES(6,7,"good");
 INSERT INTO interviewresults(interviewcriteriaid, ratings, comments)VALUES(7,8,"nice");
 INSERT INTO interviewresults(interviewcriteriaid, ratings, comments)VALUES(8,8,"good");
+
+INSERT INTO candidatetestresults(testid,score,teststarttime,testendtime,candidateid) values (1,5,"2015-11-05 14:29:36","2015-11-05 16:29:36",2);
+INSERT INTO candidatetestresults(testid,score,teststarttime,testendtime,candidateid) values (2,10,"2015-11-06 14:29:36","2015-11-06 16:29:36",5);
+INSERT INTO candidatetestresults(testid,score,teststarttime,testendtime,candidateid) values (1,9,"2015-11-05 14:29:36","2015-11-05 16:29:36",2);
+INSERT INTO candidatetestresults(testid,score,teststarttime,testendtime,candidateid) values (3,8,"2015-11-07 14:29:36","2015-11-07 16:29:36",2);
+INSERT INTO candidatetestresults(testid,score,teststarttime,testendtime,candidateid) values (4,10,"2015-11-08 14:29:36","2015-11-08 16:29:36",2);
 
 
 

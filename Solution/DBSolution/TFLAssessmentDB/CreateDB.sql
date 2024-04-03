@@ -58,10 +58,12 @@ create table tests (
 	creationdate DATETIME,
 	modificationdate DATETIME,
 	scheduleddate DATETIME,
+    passinglevel INT,
 	status ENUM("created","scheduled", "cancelled","conducted")  DEFAULT "created",
 	CONSTRAINT fk_tests_subjects_subjectid FOREIGN KEY(subjectid) REFERENCES subjects(id) ON UPDATE CASCADE ON DELETE CASCADE,
 	CONSTRAINT fk_tests_sme_smeid FOREIGN KEY(smeid) REFERENCES subjectmatterexperts(id) ON UPDATE CASCADE ON DELETE CASCADE
 );
+
 
 
 create table testassessmentcriterias(

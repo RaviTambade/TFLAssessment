@@ -16,7 +16,7 @@ set pscore=totalMarks;
 Update candidatetestresults  set score =pscore where candidateid= pcandidateId and testid= ptestId;
 END $$
 
-call spcandidatetestresult(1,1,@pscore) ;
+call spcandidatetestresult(2,1,@pscore) ;
 select(@pscore);
 
 
