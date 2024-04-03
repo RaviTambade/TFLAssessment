@@ -106,4 +106,60 @@ public class ResultService :IResultService
         return candidateResultDetails;
     }
 
+     public List<TestResultDetails> GetTestResultDetails(int testId)
+    {
+        List<TestResultDetails> resultdetails = new List<TestResultDetails>();
+        MySqlConnection connection = new MySqlConnection(connectionString);
+        string query = @"select candidatetestresults.testid,candidatetestresults.score,candidatetestresults.candidateid
+                         ,employees.firstname,employees.lastname,subjects.title as subject
+                         from candidatetestresults
+                         inner join employees
+                         on employees.id=candidatetestresults.candidateid
+                         inner join tests
+                         on candidatetestresults.testid=tests.id
+                         inner join subjects
+                         on tests.subjectid=subjects.id
+                         where candidatetestresults.testid=@TestId;";
+        try
+        {
+            MySqlCommand command = new MySqlCommand(query, connection);
+            command.Parameters.AddWithValue("@TestId", testId);
+            connection.Open();
+            MySqlDataReader reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                int testid = int.Parse(reader["testid"].ToString());
+                int candidateid = int.Parse(reader["candidateid"].ToString());
+                string fname = reader["firstname"].ToString();
+                string lname = reader["lastname"].ToString();
+                string subject = reader["subject"].ToString();
+                int score = int.Parse(reader["score"].ToString());
+
+                TestResultDetails results = new TestResultDetails();
+
+                results.TestId=testid;
+                results.CandidateId=candidateid;
+                results.FirstName=fname;
+                results.LastName=lname;
+                results.Subject=subject;
+                results.Score=score;
+                resultdetails.Add(results);
+            }
+            reader.Close();
+
+   
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+        finally
+        {
+            connection.Close();
+        }
+        return resultdetails;
+    }
+
+
+
 }
