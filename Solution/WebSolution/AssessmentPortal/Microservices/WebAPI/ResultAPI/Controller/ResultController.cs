@@ -57,13 +57,13 @@ public class ResultController : ControllerBase
             return Ok(candidates);
         }
 
-        // public IActionResult GetPassedCandidate(int testId)
-        // {   
-        //     IResultService _svc = new ResultService();
-        //     CandidateResultDetails result = _svc.GetPassedCandidate(candidateId,testId);
-        //     Console.WriteLine(result);
-        //     return Ok(result);
-        // }
+         [HttpGet("/passedcandidates/tests/{testId}")]
+        public IActionResult GetPassedCandidate(int testId)
+        {   
+            IResultService _svc = new ResultService();
+            List<PassedCandidateDetails> candidates = _svc.GetPassedCandidateResults(testId);
+            return Ok(candidates);
+        }
 
         // public IActionResult GetFailedCandidate(int testId)
         // {   

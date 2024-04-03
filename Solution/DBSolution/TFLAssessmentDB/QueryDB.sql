@@ -110,6 +110,14 @@ select score,candidateid,(score/10)*100 as percentage
  from candidatetestresults
 where testid=1;
 
+select tests.id,candidatetestresults.candidateid,candidatetestresults.score,tests.passinglevel,employees.firstname,employees.lastname
+from tests
+inner join candidatetestresults
+on tests.id=candidatetestresults.testid
+inner join employees
+on candidatetestresults.candidateid=employees.id
+where candidatetestresults.score >= tests.passinglevel AND tests.id=1;
+
 
 
 

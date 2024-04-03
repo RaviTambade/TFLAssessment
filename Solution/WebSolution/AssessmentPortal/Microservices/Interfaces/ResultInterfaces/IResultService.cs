@@ -8,4 +8,6 @@ public interface IResultService{
 
     public List<TestResultDetails> GetTestResultDetails(int testId);
     public List<AppearedCandidate> GetAppearedCandidates(int testId);
+
+    public List<PassedCandidateDetails> GetPassedCandidateResults(int testId);
 }
