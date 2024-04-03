@@ -24,7 +24,7 @@ public class QuestionBankController : ControllerBase
         [HttpGet]
         public IActionResult GetQuestion(int questionId)
         {
-            Question question = _svc.GetQuestion(id);
+            Question question = _svc.GetQuestion(questionId);
             return Ok(question);
 
             return Ok( );
@@ -34,8 +34,7 @@ public class QuestionBankController : ControllerBase
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {   
-           
-            QuestionTitle question = _svc.GetQuestion(id);
+            Question question = _svc.GetQuestion(id);
             return Ok(question);
         }
 
@@ -44,27 +43,25 @@ public class QuestionBankController : ControllerBase
         public IActionResult GetQuestionsBySubjects(int id)
         {   
            
-            SubjectQuestion question = _svc.GetQuestionsBySubjects(id);
-            return Ok(question);
+           List<SubjectQuestion> questions = _svc.GetQuestionsBySubject(id);
+            return Ok(questions);
         }
 
 
          [HttpGet("questions/subjects/{id}")]
-        public IActionResult GetQuestionsBySubjectAndCriteria(int id)
+        public IActionResult GetQuestionsBySubjectAndCriteria(int subjectId,int criteriaId)
         {   
-           
-            QuestionDetails question = _svc.GetQuestionsBySubjectAndCriteria(id);
-            return Ok(question);
+            List<QuestionDetails> questions = _svc.GetQuestionsBySubjectAndCriteria(subjectId,criteriaId);
+            return Ok(questions);
         }
 
         // PUT: api/assessments
         [HttpPut]
         public IActionResult UpdateAnswer(Question answer,int id)
         {
-
-          bool  status = _svc.UpdateAnswer(answer,id);
-
-          return status;
+             bool status = false;
+            status = _svc.UpdateAnswer(answer,id);
+           return Ok(status);
         }
 
 
@@ -74,7 +71,7 @@ public class QuestionBankController : ControllerBase
 
           bool  status = _svc.UpdateQuestionOptions(id,options);
 
-          return status;
+          return Ok(status);
         }
 
 
@@ -85,7 +82,7 @@ public class QuestionBankController : ControllerBase
 
           bool  status = _svc.UpdateSubjectCriteria(questionId,question);
 
-          return status;
+          return Ok(status);
         }
 
        

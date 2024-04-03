@@ -187,8 +187,6 @@ public class QuestionBankService:IQuestionBankService
 
                 question= new Question();
                 question.Id=questionId;
-
-                question.SkillId=subjectId;
                 question.SubjectId=subjectId;
                 question.Title=strQuestion;
                 question.A=optionA;
@@ -259,8 +257,7 @@ public class QuestionBankService:IQuestionBankService
             connection.Open();   
             MySqlCommand command = new MySqlCommand(query, connection);
             command.Parameters.AddWithValue("@evaluationCriteriaId", question.EvaluationCriteriaId);
-            command.Parameters.AddWithValue("@subjectId", question.SkillId);
-            Console.WriteLine(question.SkillId);
+            command.Parameters.AddWithValue("@subjectId", question.SubjectId);
             
             command.Parameters.AddWithValue("@id", questionId);
             int rowsAffected = command.ExecuteNonQuery();
