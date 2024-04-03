@@ -34,24 +34,24 @@ public class AssessmentController : ControllerBase
             return Ok(theAssessment);
         }
 
-        [HttpGet("{smeId}")]
+        [HttpGet("subjectexperts/{smeId}")]
         public IActionResult GetAllBySubjectMatterExpert(int smeId)
         {
             List<Assessment> assessments=_svc.GetAllBySubjectMatterExpert(smeId);
             return Ok(assessments);
         }
 
-        [HttpPost("{assessmentId}/{questionId}")]
+        [HttpPost("addquestion/assessment/{assessmentId}/question/{questionId}")]
         public IActionResult AddQuestion(int assessmentId,int questionId)
         {
             bool status=_svc.AddQuestion(assessmentId,questionId);
             return Ok(status);
         }
 
-        [HttpPost("{assessmentId}/{questions}")]
-        public IActionResult AddQuestions(int assessmentId,List<int> questions)
+        [HttpPost("addmultiplequestions/assessment/{assessmentId}")]
+        public IActionResult AddQuestions(int assessmentId,List<TestQuestion> questions)
         {
-            bool status=_svc.AddQuestions(assessmentId,questions);
+            bool status=_svc.AddQuestions(assessmentId, questions);
             return Ok(status);
         }
 
@@ -63,13 +63,13 @@ public class AssessmentController : ControllerBase
         }
 
         [HttpPut("{assessmentId}/{duration}")]
-        public IActionResult ChangeDuration(int assessmentId,int duration)
+        public IActionResult ChangeDuration(int assessmentId,string duration)
         {
             bool status=_svc.ChangeDuration(assessmentId,duration);
             return Ok(status);
         }
 
-        [HttpPut("{assessmentId}/{date}")]
+        [HttpPut("reschedule/{assessmentId}/{date}")]
         public IActionResult Reschedule(int assessmentId,DateTime date)
         {
             bool status=_svc.Reschedule(assessmentId,date);

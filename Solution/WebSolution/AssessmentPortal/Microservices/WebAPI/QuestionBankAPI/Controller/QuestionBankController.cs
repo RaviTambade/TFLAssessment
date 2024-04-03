@@ -18,10 +18,14 @@ public class QuestionBankController : ControllerBase
         }
         
         // GET: api/assessment
+         IQuestionBankService _svc = new QuestionBankService();
+      
+      
         [HttpGet]
-        public IActionResult Get()
+        public IActionResult GetQuestion(int questionId)
         {
-           
+            Question question = _svc.GetQuestion(id);
+            return Ok(question);
 
             return Ok( );
         }
@@ -30,39 +34,59 @@ public class QuestionBankController : ControllerBase
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {   
-            IQuestionBankService _svc = new QuestionBankService();
-            Question question = _svc.GetQuestion(id);
+           
+            QuestionTitle question = _svc.GetQuestion(id);
             return Ok(question);
         }
 
-        // POST: api/assessments
-        // [HttpPost]
-        // public IActionResult Post([FromBody] Assessment assessment)
-        // {
-        //     if (assessment == null)
-        //         return BadRequest();
-        //     // Generate a unique ID for the new assessment
-        //     return CreatedAtAction(nameof(Get), new { id = assessment.Id }, assessment);
-        // }
 
-        // PUT: api/assessments/{id}
-        // [HttpPut("{id}")]
-        // public IActionResult Put(int id, [FromBody] Assessment assessment)
-        // {
-        
-        //     return NoContent();
-        // }
+        [HttpGet("questions/subjects/{id}")]
+        public IActionResult GetQuestionsBySubjects(int id)
+        {   
+           
+            SubjectQuestion question = _svc.GetQuestionsBySubjects(id);
+            return Ok(question);
+        }
 
-        // DELETE: api/assessments/{id}
-        // [HttpDelete("{id}")]
-        // public IActionResult Delete(int id)
-        // {
-        //     /*var assessment =  null;
 
-        //     if (assessment == null)
-        //         return NotFound();
-        //     */
-        //     return NoContent();
-        // }
+         [HttpGet("questions/subjects/{id}")]
+        public IActionResult GetQuestionsBySubjectAndCriteria(int id)
+        {   
+           
+            QuestionDetails question = _svc.GetQuestionsBySubjectAndCriteria(id);
+            return Ok(question);
+        }
 
+        // PUT: api/assessments
+        [HttpPut]
+        public IActionResult UpdateAnswer(Question answer,int id)
+        {
+
+          bool  status = _svc.UpdateAnswer(answer,id);
+
+          return status;
+        }
+
+
+        [HttpPut]
+        public IActionResult UpdateQuestionOptions(int id,Question options)
+        {
+
+          bool  status = _svc.UpdateQuestionOptions(id,options);
+
+          return status;
+        }
+
+
+
+       [HttpPut]
+        public IActionResult UpdateSubjectCriteria(int questionId,Question question)
+        {
+
+          bool  status = _svc.UpdateSubjectCriteria(questionId,question);
+
+          return status;
+        }
+
+       
 }

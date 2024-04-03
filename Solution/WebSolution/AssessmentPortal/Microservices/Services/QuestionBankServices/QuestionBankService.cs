@@ -1,11 +1,7 @@
-﻿
 using MySql.Data.MySqlClient;
 using System.Data;
 using QuestionBankEntity;
-
 using QuestionBankInterfaces;
-//Providers
-
 namespace QuestionBankServices;
 
 public class QuestionBankService:IQuestionBankService
@@ -191,11 +187,9 @@ public class QuestionBankService:IQuestionBankService
 
                 question= new Question();
                 question.Id=questionId;
-<<<<<<< HEAD
+
                 question.SkillId=subjectId;
-=======
                 question.SubjectId=subjectId;
->>>>>>> fbcef57c99024e81eb481cf2f7332d67f984628e
                 question.Title=strQuestion;
                 question.A=optionA;
                 question.B=optionB;
@@ -217,7 +211,6 @@ public class QuestionBankService:IQuestionBankService
         return question;
     }
 
-<<<<<<< HEAD
     public bool UpdateQuestionOptions(int id,Question options){
         bool status = false;
         Console.WriteLine("ID "+id);
@@ -287,76 +280,8 @@ public class QuestionBankService:IQuestionBankService
         }
         return status;
     }
-}
-=======
-    // public bool UpdateQuestionOptions(int id,Question options){
-    //     bool status = false;
-    //     Console.WriteLine("ID "+id);
-    //     Console.WriteLine("A "+options.A);
-    //     Console.WriteLine("B "+options.B);
-    //     Console.WriteLine("C "+options.C);
-    //     Console.WriteLine("D "+options.D);
-    //  //   string query = "update questionbank set a=@a,b=@b,c=@c,d=@d where id =@id";
-    //     string query = "update questionbank set title=@title,a=@a,b=@b,c=@c,d=@d,answerkey=@answerKey where id =@id";
-    //     MySqlConnection connection = new MySqlConnection(connectionString);
-    //     try
-    //     {
-    //         connection.Open();   
-    //         MySqlCommand command = new MySqlCommand(query, connection);
-    //         command.Parameters.AddWithValue("@title", options.Title);
-    //         command.Parameters.AddWithValue("@a", options.A);
-    //         command.Parameters.AddWithValue("@b", options.B);
-    //         command.Parameters.AddWithValue("@c", options.C);
-    //         command.Parameters.AddWithValue("@d", options.D);
-    //         command.Parameters.AddWithValue("@answerKey", options.AnswerKey);
-    //         command.Parameters.AddWithValue("@id", id);
-    //         int rowsAffected = command.ExecuteNonQuery();
-    //         if (rowsAffected > 0)
-    //         {
-    //             status = true;
-    //         }
-            
-    //     }
-    //     catch (Exception e)
-    //     {
-    //         Console.WriteLine(e.Message);
-    //     }
-    //     finally
-    //     {
-    //         connection.Close();
-    //     }
-    //     return status;
-    // }
 
-    // public bool UpdateSubjectCriteria(int questionId,Question question){
-    //     bool status = false;
-    //     string query = "update questionbank set evaluationcriteriaid=@evaluationCriteriaId ,subjectid=@subjectId where id =@id";
-    //     MySqlConnection connection = new MySqlConnection(connectionString);
-    //     try
-    //     {
-    //         connection.Open();   
-    //         MySqlCommand command = new MySqlCommand(query, connection);
-    //         command.Parameters.AddWithValue("@evaluationCriteriaId", question.EvaluationCriteriaId);
-    //         command.Parameters.AddWithValue("@subjectId", question.SkillId);
-    //         Console.WriteLine(question.SkillId);
-            
-    //         command.Parameters.AddWithValue("@id", questionId);
-    //         int rowsAffected = command.ExecuteNonQuery();
-    //         if (rowsAffected > 0)
-    //         {
-    //             status = true;
-    //         }
-            
-    //     }
-    //     catch (Exception e)
-    //     {
-    //         Console.WriteLine(e.Message);
-    //     }
-    //     finally
-    //     {
-    //         connection.Close();
-    //     }
-    //     return status;
-    // }
+    
+
+  
 }
->>>>>>> fbcef57c99024e81eb481cf2f7332d67f984628e

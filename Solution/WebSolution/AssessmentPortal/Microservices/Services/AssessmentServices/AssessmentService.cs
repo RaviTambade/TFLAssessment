@@ -113,7 +113,7 @@ public class AssessmentService :IAssessmentService
                     int id = int.Parse(reader["id"].ToString());
                     int  smeid = int.Parse(reader["smeid"].ToString());
                     int  subjectId = int.Parse(reader["subjectid"].ToString());
-                    // TimeOnly duration =TimeSpan.TryParse(reader["duration"]);
+                    TimeOnly duration =TimeOnly.Parse(reader["duration"].ToString());
                     DateTime modificationDate=DateTime.Parse(reader["modificationdate"].ToString());
                     DateTime scheduledDate=DateTime.Parse(reader["scheduleddate"].ToString());
                     string status = reader["subjectid"].ToString();
@@ -142,7 +142,7 @@ public class AssessmentService :IAssessmentService
     {
         bool status = false;
         MySqlConnection connection = new MySqlConnection(connectionString);
-        string query = "insert into testquestions(testid,testquestionid) values ( @testId, @questionBankId)";
+        string query = "insert into testquestions(testid,questionBankid) values ( @testId, @questionBankId)";
         MySqlCommand command = new MySqlCommand(query, connection);
         command.Parameters.AddWithValue("@testId", assessmentId);
         command.Parameters.AddWithValue("@questionBankId", questionId);
@@ -165,7 +165,7 @@ public class AssessmentService :IAssessmentService
         }
         return status;
     }
-    public bool AddQuestions(int assessmentId, List<int> questions) //****
+    public bool AddQuestions(int assessmentId, List<TestQuestion> questions) //****
     {
         bool status = false;
         MySqlConnection connection = new MySqlConnection(connectionString); 
@@ -175,7 +175,7 @@ public class AssessmentService :IAssessmentService
                 string query = "insert into testquestions(testid,questionbankid) values (@testId, @questionBankId)";
                 MySqlCommand command = new MySqlCommand(query, connection);
                 command.Parameters.AddWithValue("@testId", assessmentId);
-                command.Parameters.AddWithValue("@questionBankId", question);
+                command.Parameters.AddWithValue("@questionBankId", question.QuestionBankId);
                 connection.Open();
                 int rowsAffected = command.ExecuteNonQuery();
                 if (rowsAffected > 0)
@@ -222,7 +222,7 @@ public class AssessmentService :IAssessmentService
             }
         return status;
     }
-    public bool ChangeDuration(int assessmentId, int duration){
+    public bool ChangeDuration(int assessmentId, string duration){
         bool status = false;
         MySqlConnection connection = new MySqlConnection(connectionString);
         string query = "update tests set duration=@duration where id=@assessmentId";
