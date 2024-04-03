@@ -21,7 +21,7 @@ public class QuestionBankController : ControllerBase
          IQuestionBankService _svc = new QuestionBankService();
       
       
-        [HttpGet]
+        [HttpGet("/questions/{questionId}")]
         public IActionResult GetQuestion(int questionId)
         {
             Question question = _svc.GetQuestion(questionId);
@@ -30,16 +30,8 @@ public class QuestionBankController : ControllerBase
             return Ok( );
         }
 
-       // GET: api/questionbank/{id}
-        [HttpGet("{id}")]
-        public IActionResult Get(int id)
-        {   
-            Question question = _svc.GetQuestion(id);
-            return Ok(question);
-        }
 
-
-        [HttpGet("questions/subjects/{id}")]
+        [HttpGet("/questions/subjects/{id}")]
         public IActionResult GetQuestionsBySubjects(int id)
         {   
            
@@ -48,7 +40,7 @@ public class QuestionBankController : ControllerBase
         }
 
 
-         [HttpGet("questions/subjects/{id}")]
+         [HttpGet("/questions/subjects/{id}")]
         public IActionResult GetQuestionsBySubjectAndCriteria(int subjectId,int criteriaId)
         {   
             List<QuestionDetails> questions = _svc.GetQuestionsBySubjectAndCriteria(subjectId,criteriaId);
@@ -56,7 +48,7 @@ public class QuestionBankController : ControllerBase
         }
 
         // PUT: api/assessments
-        [HttpPut]
+        [HttpPut("/answer/question/{id}")]
         public IActionResult UpdateAnswer(Question answer,int id)
         {
              bool status = false;
@@ -65,7 +57,7 @@ public class QuestionBankController : ControllerBase
         }
 
 
-        [HttpPut]
+        [HttpPut("update/options/question/{id}")]
         public IActionResult UpdateQuestionOptions(int id,Question options)
         {
 
@@ -76,7 +68,7 @@ public class QuestionBankController : ControllerBase
 
 
 
-       [HttpPut]
+       [HttpPut("/update/subjectcriteria/question/{questionId}")]
         public IActionResult UpdateSubjectCriteria(int questionId,Question question)
         {
 
