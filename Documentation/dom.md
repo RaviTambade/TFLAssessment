@@ -177,7 +177,7 @@ Sure, let's break down what an asynchronous web application means in a simple wa
 In simple terms, asynchronous web applications allow you to interact with the webpage without waiting for every action to complete, making the user experience smoother and more responsive.
 
 
-What is Ajax ?
+## What is Ajax ?
 AJAX (Asynchronous JavaScript and XML) is a technique used in web development to create asynchronous web applications. It allows web pages to send and receive data from a server asynchronously without interfering with the current page's behavior. AJAX enables dynamic and interactive user experiences by allowing parts of a web page to be updated without requiring a full page reload.
 
 Here are some common uses of AJAX:
