@@ -255,5 +255,57 @@ public class ResultService : IResultService
     }
 
 
+    public List<FailedCandidateDetails> GetPassedCandidateResults(int testId)
+    {
+        List<FailedCandidateDetails> passedCandidates = new List<FailedCandidateDetails>();
+        MySqlConnection connection = new MySqlConnection(connectionString);
+        string query = @"select tests.id,candidatetestresults.candidateid,candidatetestresults.score,tests.passinglevel,employees.firstname,employees.lastname
+                            from tests
+                            inner join candidatetestresults
+                            on tests.id=candidatetestresults.testid
+                            inner join employees
+                            on candidatetestresults.candidateid=employees.id
+                            where candidatetestresults.score <= tests.passinglevel AND tests.id=@TestId";
+        try
+        {
+            MySqlCommand command = new MySqlCommand(query, connection);
+            command.Parameters.AddWithValue("@TestId", testId);
+            connection.Open();
+            MySqlDataReader reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                int testid = int.Parse(reader["id"].ToString());
+                int candidateid = int.Parse(reader["candidateid"].ToString());
+                string fname = reader["firstname"].ToString();
+                string lname = reader["lastname"].ToString();
+                int passinglevel = int.Parse(reader["passinglevel"].ToString());
+                int score = int.Parse(reader["score"].ToString());
+                
+                FailedCandidateDetails candidate = new FailedCandidateDetails();
+
+                candidate.TestId = testid;
+                candidate.CandidateId = candidateid;
+                candidate.FirstName = fname;
+                candidate.LastName = lname;
+                candidate.PassingLevel=passinglevel;
+                candidate.Score= score;
+
+                passedCandidates.Add(candidate);
+            }
+            reader.Close();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+        finally
+        {
+            connection.Close();
+        }
+        return passedCandidates;
+    }
+
+
+
     }
 
