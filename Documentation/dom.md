@@ -350,6 +350,27 @@ Here's how you can use `$.ajax()` with observables using RxJS:
 Using observables with `$.ajax()` allows you to handle asynchronous operations in a more flexible and composable manner, leveraging the functional programming paradigm provided by RxJS. This approach can lead to cleaner and more maintainable code, especially in applications with complex asynchronous data flows.
 
 
+## What is Rxjs?
+
+RxJS (Reactive Extensions for JavaScript) is a library for reactive programming using Observables, which makes it easier to compose asynchronous or callback-based code. It is based on the principles of functional and reactive programming and is heavily influenced by the ReactiveX project.
+
+Here's a breakdown of key concepts in RxJS:
+
+1. **Observable**: An Observable represents a stream of data or events that can be observed over time. It can emit multiple values asynchronously and notify observers whenever new values are available. Observables can represent data sources such as HTTP requests, user input, or timer intervals.
+
+2. **Observer**: An Observer is an object that listens to the emissions from an Observable. It defines callbacks to handle three types of events: `next` (handling each emitted value), `error` (handling errors), and `complete` (handling the completion of the Observable).
+
+3. **Subscription**: A Subscription represents the execution of an Observable. It allows for canceling the execution to release resources and prevent memory leaks. Subscriptions are returned when an Observer subscribes to an Observable.
+
+4. **Operators**: Operators are functions that allow you to transform, filter, combine, or otherwise manipulate the data emitted by Observables. RxJS provides a rich set of operators for various use cases, such as `map`, `filter`, `mergeMap`, `switchMap`, `debounceTime`, `scan`, and many more.
+
+5. **Subject**: A Subject is a special type of Observable that allows values to be multicasted to multiple Observers. It serves as both an Observable and an Observer, meaning you can subscribe to it like any other Observable, but you can also manually push new values into it.
+
+6. **Schedulers**: Schedulers control the concurrency and execution context of operations in RxJS. They determine when and where the code associated with Observables will be executed. RxJS provides several predefined schedulers, such as `async`, `queue`, and `animationFrame`, as well as the ability to create custom schedulers.
+
+RxJS is widely used in modern JavaScript applications, particularly in frameworks like Angular, which relies heavily on reactive programming paradigms. It offers a powerful way to manage asynchronous operations, handle events, and compose complex data flows in a more declarative and concise manner.
+
+
 ## Browser Client side  State Management
 
 Browsers support various client-side storage mechanisms that allow web applications to store data locally on the user's device. These storage mechanisms play a crucial role in enhancing the functionality and usability of web applications. Here are some of the commonly used client-side storage mechanisms supported by modern browsers:
