@@ -255,9 +255,9 @@ public class ResultService : IResultService
     }
 
 
-    public List<FailedCandidateDetails> GetPassedCandidateResults(int testId)
+    public List<FailedCandidateDetails> GetFailedCandidateResults(int testId)
     {
-        List<FailedCandidateDetails> passedCandidates = new List<FailedCandidateDetails>();
+        List<FailedCandidateDetails> failedCandidates = new List<FailedCandidateDetails>();
         MySqlConnection connection = new MySqlConnection(connectionString);
         string query = @"select tests.id,candidatetestresults.candidateid,candidatetestresults.score,tests.passinglevel,employees.firstname,employees.lastname
                             from tests
@@ -290,7 +290,7 @@ public class ResultService : IResultService
                 candidate.PassingLevel=passinglevel;
                 candidate.Score= score;
 
-                passedCandidates.Add(candidate);
+                failedCandidates.Add(candidate);
             }
             reader.Close();
         }
@@ -302,7 +302,7 @@ public class ResultService : IResultService
         {
             connection.Close();
         }
-        return passedCandidates;
+        return failedCandidates;
     }
 
 
