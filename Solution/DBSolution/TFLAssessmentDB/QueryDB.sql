@@ -44,14 +44,7 @@ on interviews.smeid = subjectmatterexperts.id
 inner join subjects on subjectmatterexperts.subjectid=subjects.id
 where interviews.candidateid=2;
 
-            -- Id=12,
-            -- InterviewDate="25/3/2024",
-            -- InterviewTime="5:56"  ,
-            -- SMETitle ="Sarika Patil",
-            -- Candidate ="Paragati Bangar",
-            -- Subject="Java" ,
-            -- Criterias
-            
+
  
 select interviews.id,interviews.interviewdate,interviews.interviewtime,interviews.smeid,
 concat(employees.firstname," ",employees.lastname)as SmeName from interviews
@@ -106,9 +99,6 @@ inner join employees
 on employees.id= candidatetestresults.candidateid
 where candidatetestresults.testid=1;
 
-select score,candidateid,(score/10)*100 as percentage 
- from candidatetestresults
-where testid=1;
 
 select tests.id,candidatetestresults.candidateid,candidatetestresults.score,tests.passinglevel,employees.firstname,employees.lastname
 from tests
@@ -117,6 +107,109 @@ on tests.id=candidatetestresults.testid
 inner join employees
 on candidatetestresults.candidateid=employees.id
 where candidatetestresults.score >= tests.passinglevel AND tests.id=1;
+
+
+
+
+----------------------------------------------------------------------------------------------------------------
+
+
+
+
+-- this query gives the testdetails where testid=1
+select * from tests where id=1;
+
+-- this query gives the tests createddate between "2023-11-05" and "2023-12-05"
+select * from tests where creationDate  between "2023-11-05" and "2023-12-05";
+
+-- this query gives the tests created by particular subjectmatterexperts
+select * from tests where smeid=1;
+
+select * from testquestions;
+
+-- this query is for add questions into tests
+insert into testquestions(testid,questionBankid) values( 1,1);
+
+-- this query is for delete particular questions from tests
+Delete from testquestions where testid=1 and questionbankid=3;
+
+-- this query is for changing the duration of particular tests
+update tests set duration=@duration where id=@assessmentId;
+
+-- this query is for changing the scheduleddate of particular tests
+update tests set scheduleddate=@scheduledDate where id=@assessmentId;
+
+-- get all questions from questionbank
+select * from questionbank;
+
+-- this query gives the question where subjectid=1
+select questionbank.id as questionid, questionbank.title as question, subjects.title as subject,
+ subjects.id as subjectid from questionbank, subjects 
+ where questionbank.subjectid=subjects.id and subjects.id=1;
+ 
+--  this query gives the questions where subjectid=1 and criteriaid=1;
+select questionbank.id, questionbank.title, subjects.title as subject ,evaluationcriterias.title as criteria
+from questionbank, subjects,evaluationcriterias
+where questionbank.subjectid=subjects.id and questionbank.evaluationcriteriaid=evaluationcriterias.id
+and subjects.id=1 and evaluationcriterias.id=1;
+
+-- this query is for changing the answerkey of particular question
+update questionbank set answerkey="a" where id =1;
+
+-- this query gives the question where questionid=1
+select * from questionbank where id=1;
+
+-- this query is for updating a question
+update questionbank set title=@title,a=@a,b=@b,c=@c,d=@d,answerkey=@answerKey where id =1;
+
+-- this query is for changing evaluationcriteriaid and subjectid where questionid=1
+update questionbank set evaluationcriteriaid=1 ,subjectid=1 where id =1;
+
+-- this query give the score of candidate where candidateid=1 and testid=3;
+select score from candidatetestresults where candidateid=1 and testid=3;
+
+-- get the candidatetestresultdetails
+select candidatetestresults.testid,candidatetestresults.score,candidatetestresults.candidateid
+,employees.firstname,employees.lastname,subjects.title as subject
+from candidatetestresults
+inner join employees
+on employees.id=candidatetestresults.candidateid
+inner join tests
+on candidatetestresults.testid=tests.id
+inner join subjects
+on tests.subjectid=subjects.id
+where candidatetestresults.testid=1;
+
+-- get the appearedcandidates for testid=1
+select candidatetestresults.testid, candidatetestresults.candidateid, employees.firstname, 
+employees.lastname from candidatetestresults 
+inner join employees on employees.id= candidatetestresults.candidateid
+where candidatetestresults.testid=1;
+
+-- get the passedcandidates for testid=1
+select tests.id,candidatetestresults.candidateid,candidatetestresults.score,tests.passinglevel,employees.firstname,employees.lastname
+from tests
+inner join candidatetestresults on tests.id=candidatetestresults.testid
+inner join employees on candidatetestresults.candidateid=employees.id
+where candidatetestresults.score >= tests.passinglevel AND tests.id=1;
+
+-- get the failedcandidates for testid=1
+select tests.id,candidatetestresults.candidateid,candidatetestresults.score,tests.passinglevel,employees.firstname,employees.lastname
+from tests
+inner join candidatetestresults on tests.id=candidatetestresults.testid
+inner join employees on candidatetestresults.candidateid=employees.id
+where candidatetestresults.score < tests.passinglevel AND tests.id=1;
+
+-- to calculate score of given candidateid and testid;
+call spcandidatetestresult(2,1,@pscore) ;
+select(@pscore);
+
+-- give the candidatetestresultdetails
+CALL spcandidatetestresultdetails(3,2, @pcorrectAnswers, @pincorrectAnswers,@pskippedQuestions);
+select @pcorrectAnswers,@pincorrectAnswers,@pskippedQuestions;
+
+-- get interviewdetails where interviewid=2
+call spinterviewdetails(2);
 
 
 

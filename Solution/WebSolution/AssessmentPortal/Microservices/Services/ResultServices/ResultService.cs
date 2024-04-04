@@ -120,7 +120,7 @@ public class ResultService : IResultService
                          on candidatetestresults.testid=tests.id
                          inner join subjects
                          on tests.subjectid=subjects.id
-                         where candidatetestresults.testid=@TestId;";
+                         where candidatetestresults.testid=@TestId";
         try
         {
             MySqlCommand command = new MySqlCommand(query, connection);
@@ -169,7 +169,7 @@ public class ResultService : IResultService
                             from candidatetestresults 
                             inner join employees 
                             on employees.id= candidatetestresults.candidateid
-                            where candidatetestresults.testid=@TestId;";
+                            where candidatetestresults.testid=@TestId";
         try
         {
             MySqlCommand command = new MySqlCommand(query, connection);
