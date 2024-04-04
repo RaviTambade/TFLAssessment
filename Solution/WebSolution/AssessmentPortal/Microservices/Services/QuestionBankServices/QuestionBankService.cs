@@ -135,7 +135,7 @@ public class QuestionBankService:IQuestionBankService
         return questions;
     }
 
-    public bool UpdateAnswer(Question answer,int id){
+    public bool UpdateAnswer(int id, char answerKey){
         bool status = false;
         string query = "update questionbank set answerkey=@answerkey where id =@id";
         MySqlConnection connection = new MySqlConnection(connectionString);
@@ -143,7 +143,7 @@ public class QuestionBankService:IQuestionBankService
         {
             connection.Open();   
             MySqlCommand command = new MySqlCommand(query, connection);
-            command.Parameters.AddWithValue("@answerkey", answer.AnswerKey);
+            command.Parameters.AddWithValue("@answerkey", answerKey);
             command.Parameters.AddWithValue("@id", id);
             int rowsAffected = command.ExecuteNonQuery();
             if (rowsAffected > 0)
@@ -187,8 +187,6 @@ public class QuestionBankService:IQuestionBankService
 
                 question= new Question();
                 question.Id=questionId;
-
-                question.SkillId=subjectId;
                 question.SubjectId=subjectId;
                 question.Title=strQuestion;
                 question.A=optionA;
@@ -259,8 +257,7 @@ public class QuestionBankService:IQuestionBankService
             connection.Open();   
             MySqlCommand command = new MySqlCommand(query, connection);
             command.Parameters.AddWithValue("@evaluationCriteriaId", question.EvaluationCriteriaId);
-            command.Parameters.AddWithValue("@subjectId", question.SkillId);
-            Console.WriteLine(question.SkillId);
+            command.Parameters.AddWithValue("@subjectId", question.SubjectId);
             
             command.Parameters.AddWithValue("@id", questionId);
             int rowsAffected = command.ExecuteNonQuery();

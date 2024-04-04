@@ -1,15 +1,7 @@
-<<<<<<< HEAD
-=======
-//WebApp Builder Infrastrcture
->>>>>>> fbcef57c99024e81eb481cf2f7332d67f984628e
 using QuestionBankEntity; //-----------------------dll
 using QuestionBankInterfaces;//-----------------------dll
 using QuestionBankServices;//------------------------dll
 
-<<<<<<< HEAD
-
-=======
->>>>>>> fbcef57c99024e81eb481cf2f7332d67f984628e
 var builder = WebApplication.CreateBuilder(args);
 
 
