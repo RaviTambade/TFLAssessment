@@ -87,8 +87,7 @@ create procedure spupdatemarks(in ptestid int, in markstoraise int)
 begin 
 declare candId int;
 declare marks int;
-declare candidateMarks int;
-declare id int;
+
 declare candidate_result_cursor cursor for
 select  score,candidateid from candidatetestresults where testid= ptestid;
  OPEN  candidate_result_cursor;
@@ -106,7 +105,7 @@ call spupdatemarks(1, 13);
 
 
 
- DROP PROCEDURE IF Exists spcandidate_performance;
+DROP PROCEDURE IF Exists spcandidate_performance;
 DELIMITER $$
 create procedure spcandidate_performance(in ptestid INT )
 begin 
@@ -142,3 +141,29 @@ end $$
 
 
 call spcandidate_performance(1);
+
+DELIMITER $$
+create procedure spcandidateinterviewperformance(IN pcandidateId INT)
+BEGIN 
+DECLARE candidateratings INT;
+DECLARE performanceLevel VARCHAR(20);
+
+select interviewresults.ratings INTO candidateratings from interviewresults
+inner join interviewcriterias on interviewresults.interviewcriteriaid=interviewcriterias.id
+inner join  interviews on interviewcriterias.interviewid=interviews.id 
+where interviews.candidateid=pcandidateId
+order by interviews.interviewdate DESC LIMIT 1;
+
+CASE 
+WHEN candidateratings >= 9 THEN SET performanceLevel = 'excellent';
+WHEN candidateratings >= 7 THEN SET performanceLevel = 'very good';
+WHEN candidateratings >= 5 THEN SET performanceLevel = 'good';
+WHEN candidateratings <= 4 THEN SET performanceLevel = 'poor';
+END CASE;
+
+UPDATE employeeperformance SET interview = performanceLevel
+WHERE employeeid = pcandidateId;
+
+END $$
+
+call spcandidateinterviewperformance(2);
