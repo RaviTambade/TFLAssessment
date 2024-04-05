@@ -12,19 +12,10 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
 
-<<<<<<< HEAD
 
 <ItemGroup>
     <ProjectReference Include="..\..\Entities\QuestionBankEntity\QuestionBankEntity.csproj" />
     <ProjectReference Include="..\..\Interfaces\QuestionBankInterfaces\QuestionBankInterfaces.csproj" />
     <ProjectReference Include="..\..\Services\QuestionBankServices\QuestionBankServices.csproj" />
 </ItemGroup>
-=======
-   <ItemGroup>
-    <ProjectReference Include="..\..\Entities\QuestionBankEntity\QuestionBankEntity.csproj" />
-    <ProjectReference Include="..\..\Interfaces\QuestionBankInterfaces\QuestionBankInterfaces.csproj" />
-    <ProjectReference Include="..\..\Services\QuestionBankServices\QuestionBankServices.csproj" />
-  </ItemGroup>
-
->>>>>>> fbcef57c99024e81eb481cf2f7332d67f984628e
 </Project>

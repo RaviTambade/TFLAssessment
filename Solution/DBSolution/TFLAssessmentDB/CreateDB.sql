@@ -128,3 +128,4 @@ Create table interviewresults(
 	comments VARCHAR(200),
 	CONSTRAINT fk_intresults_intcrite_intcriteid FOREIGN KEY(interviewcriteriaid) REFERENCES interviewcriterias(id) ON UPDATE CASCADE ON DELETE CASCADE
 );
+

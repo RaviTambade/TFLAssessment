@@ -8,7 +8,7 @@ using QuestionBankServices;//------------------------dll
 //Controller is now responsible to handle HTTP Requests
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/questionbank")]
 public class QuestionBankController : ControllerBase
 { 
         public QuestionBankController()
@@ -17,76 +17,72 @@ public class QuestionBankController : ControllerBase
             
         }
         
-        // GET: api/assessment
+        
          IQuestionBankService _svc = new QuestionBankService();
       
-      
-        [HttpGet]
+      //http://localhost:5172/api/questionbank/questions/2
+        [HttpGet("questions/{questionId}")]
         public IActionResult GetQuestion(int questionId)
         {
-            Question question = _svc.GetQuestion(id);
+            Question question = _svc.GetQuestion(questionId);
             return Ok(question);
 
             return Ok( );
         }
 
-       // GET: api/questionbank/{id}
-        [HttpGet("{id}")]
-        public IActionResult Get(int id)
-        {   
-           
-            QuestionTitle question = _svc.GetQuestion(id);
-            return Ok(question);
-        }
 
 
+       //http://localhost:5172/api/questionbank/questions/subjects/2
         [HttpGet("questions/subjects/{id}")]
         public IActionResult GetQuestionsBySubjects(int id)
         {   
            
-            SubjectQuestion question = _svc.GetQuestionsBySubjects(id);
-            return Ok(question);
+           List<SubjectQuestion> questions = _svc.GetQuestionsBySubject(id);
+            return Ok(questions);
         }
 
 
-         [HttpGet("questions/subjects/{id}")]
-        public IActionResult GetQuestionsBySubjectAndCriteria(int id)
+        
+
+        //http://localhost:5172/api/questionbank/questions/subjects/4/criterias/1
+         [HttpGet("questions/subjects/{subjectId}/criterias/{criteriaId}")]
+        public IActionResult GetQuestionsBySubjectAndCriteria(int subjectId,int criteriaId)
         {   
-           
-            QuestionDetails question = _svc.GetQuestionsBySubjectAndCriteria(id);
-            return Ok(question);
+            List<QuestionDetails> questions = _svc.GetQuestionsBySubjectAndCriteria(subjectId,criteriaId);
+            return Ok(questions);
         }
 
-        // PUT: api/assessments
-        [HttpPut]
-        public IActionResult UpdateAnswer(Question answer,int id)
+        // http://localhost:5172/api/questionbank/answer/question/1
+        [HttpPut("answer/question/{id}")]
+        public IActionResult UpdateAnswer(int id ,char answerKey)
         {
-
-          bool  status = _svc.UpdateAnswer(answer,id);
-
-          return status;
+             bool status = false;
+            status = _svc.UpdateAnswer(id,answerKey);
+           return Ok(status);
         }
 
+        
+       //http://localhost:5172/api/questionbank/update/options/question/1
 
-        [HttpPut]
+        [HttpPut("update/options/question/{id}")]
         public IActionResult UpdateQuestionOptions(int id,Question options)
         {
 
           bool  status = _svc.UpdateQuestionOptions(id,options);
 
-          return status;
+          return Ok(status);
         }
 
 
 
-       [HttpPut]
-        public IActionResult UpdateSubjectCriteria(int questionId,Question question)
-        {
+      //  [HttpPut("update/subjectcriteria/question/{questionId}")]
+      //   public IActionResult UpdateSubjectCriteria(int questionId,Question question)
+      //   {
 
-          bool  status = _svc.UpdateSubjectCriteria(questionId,question);
+      //     bool  status = _svc.UpdateSubjectCriteria(questionId,question);
 
-          return status;
-        }
+      //     return Ok(status);
+      //   }
 
        
 }

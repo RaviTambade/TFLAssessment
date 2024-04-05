@@ -6,14 +6,7 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-<<<<<<< HEAD
  <ItemGroup>
     <ProjectReference Include="..\..\Entities\QuestionBankEntity\QuestionBankEntity.csproj" />
   </ItemGroup>
-=======
-  <ItemGroup>
-    <ProjectReference Include="..\..\Entities\QuestionBankEntity\QuestionBankEntity.csproj" />
-  </ItemGroup>
-
->>>>>>> fbcef57c99024e81eb481cf2f7332d67f984628e
 </Project>
