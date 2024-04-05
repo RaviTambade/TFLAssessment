@@ -76,9 +76,11 @@ create table testquestions(
 	id INT  PRIMARY KEY AUTO_INCREMENT,
 	testid INT,
 	questionbankid INT,
+    CONSTRAINT unique_tests_testquestions UNIQUE KEY(testid,questionbankid), 
 	CONSTRAINT fk_tests_testid FOREIGN KEY(testid) REFERENCES tests(id) ON UPDATE CASCADE ON DELETE CASCADE,
 	CONSTRAINT fk_testqt_qbank_questionbankid FOREIGN KEY(questionbankid) REFERENCES questionbank(id) ON UPDATE CASCADE ON DELETE CASCADE
 );
+
 
 create table candidateanswers(
 	id INT PRIMARY KEY AUTO_INCREMENT,
