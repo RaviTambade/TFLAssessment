@@ -1,3 +1,4 @@
+-- Active: 1707123530557@@127.0.0.1@3306@assessmentdb
 
 DROP database assessmentdb;
 create database assessmentdb;
@@ -10,6 +11,18 @@ CREATE TABLE employees(
 	email VARCHAR(50) NOT NULL,
 	contact VARCHAR(10) NOT NULL
 );
+
+
+create table employeeperformance(
+	id INT PRIMARY KEY AUTO_INCREMENT,
+	employeeid INT,
+	test VARCHAR(20),
+	communication VARCHAR(20),
+	congition VARCHAR(20),
+	interview VARCHAR(20),
+	CONSTRAINT fk_emp_performance FOREIGN KEY(employeeid) REFERENCES employees(id) ON UPDATE CASCADE ON DELETE CASCADE
+);
+
 
 CREATE TABLE subjects(
 	id INT PRIMARY KEY AUTO_INCREMENT,

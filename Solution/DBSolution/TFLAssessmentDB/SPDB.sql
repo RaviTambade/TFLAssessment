@@ -1,3 +1,4 @@
+-- Active: 1707123530557@@127.0.0.1@3306@assessmentdb
 
 -- get candidate test results
 
@@ -104,3 +105,40 @@ call spupdatemarks(1, 13);
 
 
 
+
+ DROP PROCEDURE IF Exists spcandidate_performance;
+DELIMITER $$
+create procedure spcandidate_performance(in ptestid INT )
+begin 
+
+    DECLARE marks int;
+    DECLARE candId int;
+  
+    DECLARE performance_level VARCHAR(20);
+    DECLARE candidate_testresult_cursor  cursor for
+    select score,candidateid  from candidatetestresults where testid=ptestid;
+    open  candidate_testresult_cursor;
+	LOOP
+		FETCH NEXT FROM  candidate_testresult_cursor INTO marks, candId;
+		BEGIN
+             IF marks >= 9 THEN
+              set performance_level="excellent";
+				   ELSE  IF marks >= 7 THEN
+					set performance_level="very good";
+						else IF marks >= 5 THEN
+								set performance_level="good";
+								else IF  marks >= 4 THEN
+										set performance_level="poor";
+								END IF;    
+						End If;
+				   End If;
+            End IF;
+        END;
+		UPDATE employeeperformance    SET test = performance_level
+        WHERE employeeid = candId;
+     End LOOP;
+    close candidate_testresult_cursor;
+end $$
+
+
+call spcandidate_performance(1);
