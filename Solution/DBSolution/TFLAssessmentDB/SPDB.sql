@@ -92,6 +92,8 @@ declare candidate_result_cursor cursor for
 select  score,candidateid from candidatetestresults where testid= ptestid;
  OPEN  candidate_result_cursor;
  loop
+     -- Forward only recordset
+     
     FETCH NEXT FROM  candidate_result_cursor INTO marks, candId;
         SET marks = marks + markstoraise;
         UPDATE candidatetestresults 
