@@ -254,7 +254,6 @@ public class ResultService : IResultService
         return passedCandidates;
     }
 
-
     public List<FailedCandidateDetails> GetFailedCandidateResults(int testId)
     {
         List<FailedCandidateDetails> failedCandidates = new List<FailedCandidateDetails>();
@@ -304,8 +303,11 @@ public class ResultService : IResultService
         }
         return failedCandidates;
     }
+    
+    
+    
 
-
+      
 
     }
 

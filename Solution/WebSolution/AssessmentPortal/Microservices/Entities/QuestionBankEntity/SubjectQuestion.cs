@@ -1,4 +1,4 @@
-namespace QuestionBankEntity;
+namespace QuestionBankEntities;
 
 public class SubjectQuestion{
     public  int QuestionId{get;set;}

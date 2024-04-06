@@ -1,4 +1,4 @@
-namespace QuestionBankEntity;
+namespace QuestionBankEntities;
 public class QuestionDetails{
     public int Id{get;set;}
     public string Question{get;set;}

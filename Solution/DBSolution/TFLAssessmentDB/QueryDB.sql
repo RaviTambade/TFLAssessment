@@ -218,7 +218,3 @@ select @pcorrectAnswers,@pincorrectAnswers,@pskippedQuestions;
 
 -- get interviewdetails where interviewid=2
 call spinterviewdetails(2);
-
-
-
-

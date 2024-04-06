@@ -93,7 +93,7 @@ select  score,candidateid from candidatetestresults where testid= ptestid;
  OPEN  candidate_result_cursor;
  loop
      -- Forward only recordset
-     
+
     FETCH NEXT FROM  candidate_result_cursor INTO marks, candId;
         SET marks = marks + markstoraise;
         UPDATE candidatetestresults 
@@ -147,25 +147,24 @@ call spcandidate_performance(1);
 DELIMITER $$
 create procedure spcandidateinterviewperformance(IN pcandidateId INT)
 BEGIN 
-DECLARE candidateratings INT;
-DECLARE performanceLevel VARCHAR(20);
+    DECLARE candidateratings INT;
+    DECLARE performanceLevel VARCHAR(20);
 
-select interviewresults.ratings INTO candidateratings from interviewresults
-inner join interviewcriterias on interviewresults.interviewcriteriaid=interviewcriterias.id
-inner join  interviews on interviewcriterias.interviewid=interviews.id 
-where interviews.candidateid=pcandidateId
-order by interviews.interviewdate DESC LIMIT 1;
+    select interviewresults.ratings INTO candidateratings from interviewresults
+    inner join interviewcriterias on interviewresults.interviewcriteriaid=interviewcriterias.id
+    inner join  interviews on interviewcriterias.interviewid=interviews.id 
+    where interviews.candidateid=pcandidateId
+    order by interviews.interviewdate DESC LIMIT 1;
 
-CASE 
-WHEN candidateratings >= 9 THEN SET performanceLevel = 'excellent';
-WHEN candidateratings >= 7 THEN SET performanceLevel = 'very good';
-WHEN candidateratings >= 5 THEN SET performanceLevel = 'good';
-WHEN candidateratings <= 4 THEN SET performanceLevel = 'poor';
-END CASE;
+        CASE 
+            WHEN candidateratings >= 9 THEN SET performanceLevel = 'excellent';
+            WHEN candidateratings >= 7 THEN SET performanceLevel = 'very good';
+            WHEN candidateratings >= 5 THEN SET performanceLevel = 'good';
+            WHEN candidateratings <= 4 THEN SET performanceLevel = 'poor';
+        END CASE;
 
-UPDATE employeeperformance SET interview = performanceLevel
-WHERE employeeid = pcandidateId;
-
+    UPDATE employeeperformance SET interview = performanceLevel
+    WHERE employeeid = pcandidateId;
 END $$
 
 call spcandidateinterviewperformance(2);

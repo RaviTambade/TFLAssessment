@@ -1,5 +1,5 @@
 ﻿
-using QuestionBankEntity;
+using QuestionBankEntities;
 
 namespace QuestionBankInterfaces;
 
