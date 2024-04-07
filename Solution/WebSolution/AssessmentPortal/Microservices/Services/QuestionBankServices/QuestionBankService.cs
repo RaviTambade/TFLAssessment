@@ -1,6 +1,6 @@
 using MySql.Data.MySqlClient;
 using System.Data;
-using QuestionBankEntity;
+using QuestionBankEntities;
 using QuestionBankInterfaces;
 namespace QuestionBankServices;
 
@@ -8,38 +8,40 @@ public class QuestionBankService:IQuestionBankService
 {
     private string connectionString = "server=localhost;port=3306;user=root;password=password;database=assessmentdb";
  
+    //Disconnected Data Access
+    //No 
+
     public List<QuestionTitle> GetAllQuestions(){
-        
         List<QuestionTitle> questions = new List<QuestionTitle>();
         string query = @"select * from questionbank";
          
         MySqlConnection connection = new MySqlConnection(connectionString);
         MySqlCommand command = new MySqlCommand(query, connection);
- 
+
         try
         {
-            connection.Open();
-            MySqlDataReader reader = command.ExecuteReader();
-            while (reader.Read())
-            {
-                int id = int.Parse(reader["id"].ToString());
-                string title = reader["title"].ToString();
-         
-                QuestionTitle question = new QuestionTitle();
+         DataSet ds=new DataSet();
+         MySqlDataAdapter da=new MySqlDataAdapter(command);
+         da.Fill(ds);
 
+         //Disconnected Data (Offline data fetched from backend database)
+         DataTable dtQuestionBank=ds.Tables[0];
+         DataRowCollection rows=dtQuestionBank.Rows;
+            foreach( DataRow row in rows)
+            {
+                int id = int.Parse(row["id"].ToString());
+                string title = row["title"].ToString();
+                
+                QuestionTitle question = new QuestionTitle();
                 question.Id = id;
                 question.Title = title;
+
                 questions.Add(question);
             }
-            reader.Close();
         }
         catch (Exception e)
         {
             Console.WriteLine(e.Message);
-        }
-        finally
-        {
-            connection.Close();
         }
         return questions;
     }
