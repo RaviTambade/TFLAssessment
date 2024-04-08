@@ -18,8 +18,9 @@ public class CandidateAnswerController : ControllerBase
         } 
          ICandidateAnswerService _svc = new CandidateAnswerService();
       
+       
+       // Insert candidate answers of the test .
         [HttpPost("assessmentanswers/candidates/{candidateId}")]
-
         public IActionResult InsertCandidateAnswers(int candidateId, List<CandidateAnswer> answers)
         {
             bool status = _svc.InsertCandidateAnswers(candidateId,answers);
