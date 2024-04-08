@@ -22,7 +22,7 @@ public class ResultController : ControllerBase
             return Ok( );
         }
 
-      
+        //get candidate score with storedprocedure .
         [HttpGet("candidates/{candidateId}/tests/{testId}/score")]
         public IActionResult GetCandidateScore(int candidateId, int testId)
         {   
@@ -31,7 +31,10 @@ public class ResultController : ControllerBase
             Console.WriteLine(result);
             return Ok(result);
         }
+        
 
+ 
+        //set starttime in the test .
         [HttpPost("setstarttime/{candidateId}/tests/{testId}")]
         public IActionResult SetCandidateTestStartTime(int candidateId, int testId, TestTime time)
          {   
@@ -40,6 +43,9 @@ public class ResultController : ControllerBase
             return Ok(status);
         }
 
+
+
+        //set endtime in the test .
         [HttpPut("setendtime/{candidateId}/tests/{testId}")]
         public IActionResult SetCandidateTestEndTime(int candidateId, int testId, TestTime time)
          {   
@@ -48,7 +54,9 @@ public class ResultController : ControllerBase
             return Ok(status);
         }
 
+        
 
+        //get candidate details of test.
         [HttpGet("candidates/{candidateId}/tests/{testId}/details")]
         public IActionResult GetCandidatetResultDetails(int candidateId, int testId)
         {   
@@ -58,6 +66,9 @@ public class ResultController : ControllerBase
             return Ok(result);
         }
 
+
+
+        //get test result details .
          [HttpGet("/tests/{testid}/details")]
         public IActionResult GetTestResultDetails(int testId)
         {   
@@ -66,6 +77,9 @@ public class ResultController : ControllerBase
             return Ok(result);
         }
 
+
+
+        //get appeared candidates of the test .
          [HttpGet("/candidates/tests/{testid}")]
          public IActionResult GetAppearedCandidates(int testId)
         {   
@@ -74,6 +88,8 @@ public class ResultController : ControllerBase
             return Ok(candidates);
         }
 
+
+        //get passed candidates of the test .
         [HttpGet("/passedcandidates/tests/{testId}")]
         public IActionResult GetPassedCandidate(int testId)
         {   
@@ -83,6 +99,9 @@ public class ResultController : ControllerBase
             return Ok(results);
         }
          
+
+         
+       //get  failedcandidates of the test .
          [HttpGet("/failedcandidates/tests/{testId}")]
         public IActionResult GetFailedCandidate(int testId)
         {   
