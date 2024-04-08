@@ -37,6 +37,74 @@ public class ResultService : IResultService
         }
         return score;
     }
+
+    public bool SetCandidateTestStartTime(int candidateId, int testId, TestTime time)
+    {
+
+        bool status = false;
+        string query = "insert into candidatetestresults(testid,teststarttime,candidateid) values (@testid,@teststarttime,@candidateid)";
+        MySqlConnection connection = new MySqlConnection(connectionString);
+
+        var testTime = time.Year + "-" + time.Month + "-" + time.Day + "T" + time.Hour + ":" + time.Minutes + ":" + time.Seconds;
+        Console.WriteLine(testTime);
+        MySqlCommand command = new MySqlCommand(query, connection);
+        command.Parameters.AddWithValue("@testid", testId);
+        command.Parameters.AddWithValue("@candidateid", candidateId);
+        command.Parameters.AddWithValue("@teststarttime", testTime);
+        try
+        {
+            connection.Open();
+            int rowsAffected = command.ExecuteNonQuery();
+            if (rowsAffected > 0)
+            {
+                status = true;
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+        finally
+        {
+            connection.Close();
+        }
+        return status;
+    }
+
+
+    public bool SetCandidateTestEndTime(int candidateId, int testId, TestTime time)
+    {
+        bool status = false;
+
+        MySqlConnection connection = new MySqlConnection(connectionString);
+        string query = "update candidatetestresults set testendtime =@testEndTime where candidateid=@candidateId and testid=@testId";
+
+        var testTime = time.Year + "-" + time.Month + "-" + time.Day + "T" + time.Hour + ":" + time.Minutes + ":" + time.Seconds;
+        MySqlCommand command = new MySqlCommand(query, connection);
+        command.Parameters.AddWithValue("@candidateId", candidateId);
+        command.Parameters.AddWithValue("@testId", testId);
+        command.Parameters.AddWithValue("@testEndTime", testTime);
+        Console.WriteLine(candidateId + " " + testId + " " + testTime);
+        try
+        {
+            connection.Open();
+            int rowsAffected = command.ExecuteNonQuery();
+            if (rowsAffected > 0)
+            {
+                status = true;
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+        finally
+        {
+            connection.Close();
+        }
+        return status;
+    }
+
     public int GetCandidateTestScore(int candidateId, int testId)
     {
         int score = 0;

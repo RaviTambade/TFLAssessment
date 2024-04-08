@@ -211,6 +211,54 @@ public class QuestionBankService:IQuestionBankService
         return question;
     }
 
+    public List<Question> GetQuestions(int testId)
+    { 
+        List<Question> questions = new List<Question>();
+        string query = @"select * from questionbank inner join testquestions on questionbank.id=testquestions.questionbankid
+                         where testquestions.testid=@testID";
+        MySqlConnection connection = new MySqlConnection(connectionString);
+        MySqlCommand command = new MySqlCommand(query, connection);
+        command.Parameters.AddWithValue("@testID", testId);
+        try
+        {
+            connection.Open();
+            MySqlDataReader reader = command.ExecuteReader();
+            while(reader.Read())
+            {
+                int subjectId = int.Parse(reader["subjectid"].ToString());
+                string strQuestion = reader["title"].ToString();
+                string optionA =  reader["a"].ToString();
+                string optionB = reader["b"].ToString();
+                string optionC = reader["c"].ToString();
+                string optionD = reader["d"].ToString();
+                string correctAnswer = reader["answerkey"].ToString();
+                int evaluationCriteriaId = int.Parse(reader["evaluationcriteriaid"].ToString());
+                
+                Question question =new Question();
+                question.Id=testId;
+                question.SubjectId=subjectId;
+                question.Title=strQuestion;
+                question.A=optionA;
+                question.B=optionB;
+                question.C=optionC;
+                question.D=optionD;
+                question.AnswerKey=correctAnswer;
+                question.EvaluationCriteriaId=evaluationCriteriaId;
+                questions.Add(question);
+            }
+            reader.Close();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+        finally
+        {
+            connection.Close();
+        }
+        return questions;
+    }
+
     public bool UpdateQuestionOptions(int id,Question options){
         bool status = false;
         Console.WriteLine("ID "+id);

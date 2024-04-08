@@ -32,6 +32,23 @@ public class ResultController : ControllerBase
             return Ok(result);
         }
 
+        [HttpPost("setstarttime/{candidateId}/tests/{testId}")]
+        public IActionResult SetCandidateTestStartTime(int candidateId, int testId, TestTime time)
+         {   
+            IResultService _svc = new ResultService();
+            bool status = _svc.SetCandidateTestStartTime(candidateId,testId,time);
+            return Ok(status);
+        }
+
+        [HttpPut("setendtime/{candidateId}/tests/{testId}")]
+        public IActionResult SetCandidateTestEndTime(int candidateId, int testId, TestTime time)
+         {   
+            IResultService _svc = new ResultService();
+            bool status = _svc.SetCandidateTestEndTime(candidateId,testId,time);
+            return Ok(status);
+        }
+
+
         [HttpGet("/candidates/{candidateid}/tests/{testid}/details")]
         public IActionResult GetCandidatetResultDetails(int candidateId, int testId)
         {   

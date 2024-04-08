@@ -85,54 +85,43 @@
       //rest api urls
       var remoteWeb = "http://localhost:5238"
 
-      var testsapi = remoteWeb + "/questions/tests/";
-      var starttimeurl = remoteWeb + "/test/setstarttime";
+      var questionUrl = "http://localhost:5172/api/questionbank/questions/tests/"+testId;
+      var startTimeUrl = "http://localhost:5235/api/result/setstarttime/"+candidateId+"/tests/"+testId;
       var candidateanswersurl = remoteWeb + "/answersheet/candidates/";
-      var endtimeurl = remoteWeb + "/test/setendtime";
+      var endTimeUrl = "http://localhost:5235/api/result/setendtime/"+candidateId+"/tests/"+testId;
       var resulturl = remoteWeb + "/result/candidates/";
-      var subjectsurl = remoteWeb + "/subjects";
+     
 
 
       $(document).ready(function () {
 
-        $.ajax({
-          url: subjectsurl,
-          type: 'GET',
-          contentType: 'application/json',
-
-          success: function (response) {
-            // Show result
-            console.log(response);
-          },
-          error: function (xhr, status, error) {
-            console.error(xhr.responseText);
-          }
-        });
 
         //Test start and submit handlers
         $("#btnStart").click(() => {
-
           activateNavigation(false);
 
           let currentIndex = 0;
           startTime = getCurrentDateTime();
-          let questionsAPI = testsapi + testId;
-          console.log("quetionapiurl= " + questionsAPI);
+          
+          console.log("quetionapiurl= " + questionUrl);
 
-          $.get(questionsAPI, function (data, status) {
+          $.get(questionUrl, function (data, status) {
             questions = (data);
             questions.map((question) => { question["answer"] = "No" });
             showQuestion(currentIndex);
           });
 
           var testStartTime = { "CandidateId": candidateId, "TestId": testId, "Time": startTime };
+          console.log(testStartTime);
           $.ajax({
-            url: starttimeurl,
+            url: startTimeUrl,
             type: 'POST',
             contentType: 'application/json',
             data: JSON.stringify(testStartTime),
+            
 
             success: function (response) {
+              console.log(testStartTime);
               console.log("inside post " + response);
               console.log("" + response);
             },
@@ -184,7 +173,7 @@
           var testEndTime = { "CandidateId": candidateId, "TestId": testId, "Time": endTime }
 
           $.ajax({
-            url: endtimeurl,
+            url: endTimeUrl,
             type: 'PUT',
             contentType: 'application/json',
             data: JSON.stringify(testEndTime),
@@ -350,7 +339,7 @@
 
       var getCurrentDateTime = () => {
         let d = new Date();
-        time.month = (d.getMonth() + 1).toString().padStart(2, '0');
+        time.month = d.getMonth() ;
         time.year = d.getFullYear();
         time.day = d.getDate();
         time.hour = d.getHours();
