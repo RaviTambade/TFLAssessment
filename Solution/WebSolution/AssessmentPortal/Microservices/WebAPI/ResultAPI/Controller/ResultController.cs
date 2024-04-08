@@ -23,7 +23,7 @@ public class ResultController : ControllerBase
         }
 
       
-        [HttpGet("/candidates/{candidateid}/tests/{testid}/score")]
+        [HttpGet("candidates/{candidateId}/tests/{testId}/score")]
         public IActionResult GetCandidateScore(int candidateId, int testId)
         {   
             IResultService _svc = new ResultService();

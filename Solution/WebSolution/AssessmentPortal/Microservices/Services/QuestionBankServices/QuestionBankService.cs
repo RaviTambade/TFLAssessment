@@ -327,8 +327,4 @@ public class QuestionBankService:IQuestionBankService
         }
         return status;
     }
-
-    
-
-  
 }

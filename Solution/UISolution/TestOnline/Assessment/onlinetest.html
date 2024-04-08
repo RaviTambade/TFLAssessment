@@ -79,8 +79,8 @@
       var remainingTime = 60;
       var score;
 
-      var testId = 2;
-      var candidateId = 5;
+      var testId = 3;
+      var candidateId = 4;
 
       //rest api urls
       var remoteWeb = "http://localhost:5238"
@@ -103,6 +103,8 @@
           let currentIndex = 0;
           startTime = getCurrentDateTime();
           
+          console.log(startTime);
+          
           console.log("quetionapiurl= " + questionUrl);
 
           $.get(questionUrl, function (data, status) {
@@ -111,17 +113,17 @@
             showQuestion(currentIndex);
           });
 
-          var testStartTime = { "CandidateId": candidateId, "TestId": testId, "Time": startTime };
-          console.log(testStartTime);
+          
+          console.log(startTime);
+         
           $.ajax({
             url: startTimeUrl,
             type: 'POST',
             contentType: 'application/json',
-            data: JSON.stringify(testStartTime),
+            data: JSON.stringify(startTime),
             
 
             success: function (response) {
-              console.log(testStartTime);
               console.log("inside post " + response);
               console.log("" + response);
             },
@@ -153,11 +155,10 @@
           })
           console.log(finalCandidateAnswers);
 
-          var endTime = getCurrentDateTime();
-
-          let evaluateUrl = candidateanswersurl + candidateId;
+        
+          let assessmentAnswersUrl = "http://localhost:5299/api/candidateanswer/assessmentanswers/candidates/"+candidateId;
           $.ajax({
-            url: evaluateUrl,
+            url: assessmentAnswersUrl,
             type: 'POST',
             contentType: 'application/json',
             data: JSON.stringify(finalCandidateAnswers),
@@ -170,13 +171,13 @@
             }
           });
 
-          var testEndTime = { "CandidateId": candidateId, "TestId": testId, "Time": endTime }
-
+         
+          var endTime = getCurrentDateTime();
           $.ajax({
             url: endTimeUrl,
             type: 'PUT',
             contentType: 'application/json',
-            data: JSON.stringify(testEndTime),
+            data: JSON.stringify(endTime),
 
             success: function (response) {
               // Show result
@@ -190,8 +191,7 @@
 
         //Show Result
         $("#btnResult").click(() => {
-
-          let url = resulturl + candidateId + "/test/" + testId;
+          let url = "http://localhost:5235/api/result/candidates/"+candidateId+"/tests/"+testId+"/score";
           console.log(url);
           $.get(url, function (data, status) {
             score = (data);
@@ -345,7 +345,6 @@
         time.hour = d.getHours();
         time.minutes = d.getMinutes();
         time.seconds = d.getSeconds();
-
         return time;
       };
 

@@ -40,13 +40,11 @@ public class ResultService : IResultService
 
     public bool SetCandidateTestStartTime(int candidateId, int testId, TestTime time)
     {
-
         bool status = false;
         string query = "insert into candidatetestresults(testid,teststarttime,candidateid) values (@testid,@teststarttime,@candidateid)";
         MySqlConnection connection = new MySqlConnection(connectionString);
 
         var testTime = time.Year + "-" + time.Month + "-" + time.Day + "T" + time.Hour + ":" + time.Minutes + ":" + time.Seconds;
-        Console.WriteLine(testTime);
         MySqlCommand command = new MySqlCommand(query, connection);
         command.Parameters.AddWithValue("@testid", testId);
         command.Parameters.AddWithValue("@candidateid", candidateId);
@@ -68,6 +66,7 @@ public class ResultService : IResultService
         {
             connection.Close();
         }
+        Console.WriteLine(status);
         return status;
     }
 
