@@ -35,6 +35,7 @@ public class ResultService : IResultService
         {
             connection.Close();
         }
+        Console.WriteLine(score);
         return score;
     }
 

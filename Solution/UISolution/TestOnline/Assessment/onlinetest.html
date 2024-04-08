@@ -79,7 +79,7 @@
       var remainingTime = 60;
       var score;
 
-      var testId = 3;
+      var testId =1;
       var candidateId = 4;
 
       //rest api urls
@@ -89,10 +89,7 @@
       var startTimeUrl = "http://localhost:5235/api/result/setstarttime/"+candidateId+"/tests/"+testId;
       var candidateanswersurl = remoteWeb + "/answersheet/candidates/";
       var endTimeUrl = "http://localhost:5235/api/result/setendtime/"+candidateId+"/tests/"+testId;
-      var resulturl = remoteWeb + "/result/candidates/";
-     
-
-
+      
       $(document).ready(function () {
 
 
@@ -109,6 +106,7 @@
 
           $.get(questionUrl, function (data, status) {
             questions = (data);
+            console.log(questions);
             questions.map((question) => { question["answer"] = "No" });
             showQuestion(currentIndex);
           });
@@ -150,8 +148,9 @@
           questions.map((question) => {
             let questionId = question.id;
             let answer = question.answer;
+            console.log(questions);
 
-            finalCandidateAnswers.push({ "TestQuestionId": questionId, "Answer": answer, });
+            finalCandidateAnswers.push({ "TestQuestionId": questionId, "Answer": answer });
           })
           console.log(finalCandidateAnswers);
 
@@ -171,7 +170,6 @@
             }
           });
 
-         
           var endTime = getCurrentDateTime();
           $.ajax({
             url: endTimeUrl,
@@ -191,13 +189,30 @@
 
         //Show Result
         $("#btnResult").click(() => {
-          let url = "http://localhost:5235/api/result/candidates/"+candidateId+"/tests/"+testId+"/score";
-          console.log(url);
-          $.get(url, function (data, status) {
+          let scoreUrl = "http://localhost:5235/api/result/candidates/"+candidateId+"/tests/"+testId+"/score";
+          // console.log(scoreUrl);
+          // $.get(scoreUrl, function (data, status) {
+          //   console.log(data);
+          //   score = (data);
+          //   $("#lblresult").text("Your Score is:" + score);
+          // });
+
+        $.ajax({
+        url: scoreUrl,
+        type: 'GET',
+        contentType: 'application/json',
+
+        success: function (data) {
             score = (data);
+            console.log(score);
             $("#lblresult").text("Your Score is:" + score);
-          });
-        })
+            
+        },
+        error: function (xhr, status, error) {
+            console.error(xhr.responseText);
+        }
+    });
+  })
 
 
         //refersh progress bar on answer  selection
@@ -372,8 +387,6 @@
         },
           1000);
       }
-
-
     </script>
 </body>
 

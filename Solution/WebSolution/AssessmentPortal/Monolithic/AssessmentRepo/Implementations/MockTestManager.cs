@@ -649,8 +649,6 @@ public class MockTestManager : IMockTestManager
 
     public bool DeleteQuestion(int[] testQuestions)
     {
-
-
         bool status = false;
         MySqlConnection connection = new MySqlConnection(connectionString);
 

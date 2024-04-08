@@ -17,8 +17,8 @@
 var testId=1;
 var questions;
 var selectedQuestions;
-var testQuestionUrl="http://localhost:5238/testquestions/tests/"+testId;
-var deleteTestQuestions="http://localhost:5238/testquestions";
+var testQuestionUrl="http://localhost:5172/api/questionbank/questions/tests/"+testId;;
+var deleteTestQuestions="http://localhost:5151/api/assessment/deletequestions";
 
 $(document).ready(function() {
   // Event handler for checkboxes
@@ -51,7 +51,7 @@ $(document).ready(function() {
             
             $.ajax({
             url: deleteTestQuestions,
-            type: 'Post',
+            type: 'DELETE',
             contentType: 'application/json',
             data: JSON.stringify(selectedQuestions),
 

@@ -76,7 +76,13 @@ public class AssessmentController : ControllerBase
             return Ok(status);
         }
 
-     
+        [HttpDelete("deletequestions")]
+        public IActionResult DeleteQuestions(int[] testQuestions)
+        {
+            bool status=_svc.DeleteQuestions(testQuestions);
+            return Ok(status);
+        }
+
 
         // POST: api/assessments
         [HttpPost]
