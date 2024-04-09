@@ -2,7 +2,7 @@ using MySql.Data.MySqlClient;
 using System.Data;
 using QuestionBankEntities;
 using QuestionBankInterfaces;
-using AssessmentEntities;
+
 
 namespace QuestionBankServices;
 
@@ -399,7 +399,6 @@ public class QuestionBankService:IQuestionBankService
         return status;
     }
 
-
     public string GetCriteria(string subject, int questionId)
     {
         string criteria = "";
@@ -432,4 +431,6 @@ public class QuestionBankService:IQuestionBankService
         }
         return criteria;
     }
+
+    
 }

@@ -40,6 +40,13 @@ public class QuestionBankController : ControllerBase
             return Ok(question);
         }
 
+      [HttpGet("questions/subjects/{subject}/questions/{questionId}")]
+        public IActionResult GetCriteria(string subject, int questionId)
+        {
+            string criteria = _svc.GetCriteria(subject,questionId);
+            return Ok(criteria);
+        }
+
 
        //get questions by subject .
        //http://localhost:5172/api/questionbank/questions/subjects/2
@@ -75,12 +82,7 @@ public class QuestionBankController : ControllerBase
         }
 
 
-        [HttpGet("questions/subjects/{subjectId}/questions/{questionid}")]
-        public IActionResult GetQuestion(string subject, int questionid)
-        {   
-            string question = _svc.GetQuestion(subject, questionid);
-            return Ok(question);
-        }
+        
        
         //Update  answer of the question. 
         // http://localhost:5172/api/questionbank/answer/question/1

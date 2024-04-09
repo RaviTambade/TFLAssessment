@@ -1,4 +1,4 @@
-﻿using AssessmentEntities;
+﻿
 using QuestionBankEntities;
 
 namespace QuestionBankInterfaces;
@@ -17,5 +17,5 @@ namespace QuestionBankInterfaces;
 
     public bool InsertCriteria(NewCriteria criteria);
 
-    public string GetQuestion(string subject, int questionId);
+    public string GetCriteria(string subject, int questionId);
 }
