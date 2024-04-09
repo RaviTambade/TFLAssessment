@@ -55,16 +55,15 @@ string question ="/questions/subjects/{subject}/questions/{questionid}";
 
 //string candidateTestResultUrl="/result/candidates/{candidateId}/test/{testId}";
 
-<<<<<<< HEAD
+
 string criteriaBySubjectUrl="/criterias/subjects/{subjectId}";
-=======
+
 //string criteriaBySubjectUrl="/criterias/subjects/{subjectId}";
 
 
 
 string UpdateCriteria="criteria/{evaluationCriteriaId}/question/{questionId}";
 string criteria ="/subject/{subject}/question/{questionId}";
->>>>>>> 398fb2d1ebf923fe3b6272593c11f283cd68556d
 
 
 
@@ -78,27 +77,25 @@ string criteria ="/subject/{subject}/question/{questionId}";
 
 
 
-string UpdateCriteria="/";     // pending
+
+
 string criteria ="/subject/{subject}/question/{questionId}"; //question controller reurn only criteria title
 string questionUrl="/questions/{questionId}";
 string updateQuestionOptions="/update/options/question/{questionId}";  //check returntype
-string subjectCriteriaUrl="questions/subjectcriteria/{criteriaId}/questions/{questionId}";   //pending
 string testQuestionsUrl="/questions/tests/{testId}";
 string testStartTimesettingUrl="/setstarttime/{candidateId}/tests/{testId}";
 string testEndTimesettingUrl="setendtime/{candidateId}/tests/{testId}";
-string InterviewedCandidatesInfoUrl="/interviewedcandidates";   //pending
-
-string InterviewedCandidatesSubjectsUrl="/interviewedcandidatessubjects/{candidateId}";  //pending
-string InterviewDetailsUrl="/interviewdetails/{interviewId}";    //pending   
-
 string candidateTestResultDetailsUrl="/candidates/{candidateId}/test/{testId}";
-
-string createTestUrl ="/designtest";   //pending
-
 string resheduleInterviewUrl ="/resheduleinterview/interviewId/{interviewid}/date/{date}";
 
 
 
+string UpdateCriteria="/";     // pending
+string InterviewedCandidatesInfoUrl="/interviewedcandidates";   //pending
+string subjectCriteriaUrl="questions/subjectcriteria/{criteriaId}/questions/{questionId}";   //pending
+string InterviewedCandidatesSubjectsUrl="/interviewedcandidatessubjects/{candidateId}";  //pending
+string InterviewDetailsUrl="/interviewdetails/{interviewId}";    //pending   
+string createTestUrl ="/designtest";   //pending
 string ChangeInterviewerUrl ="/changeInterviewer/interviewId/{interviewid}/smeId/{smeid}";  //pending
 string CancelInterviewUrl ="/cancelInterview/interviewid/{interviewid}";  //pending
 

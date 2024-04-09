@@ -1,5 +1,4 @@
-﻿
-using  AssessmentEntities;
+﻿using  AssessmentEntities;
 namespace AssessmentInterfaces;
 public interface IAssessmentService
 {
@@ -19,5 +18,5 @@ public interface IAssessmentService
 
   public List<EvaluationCriteria> GetEvalutionCriterias();
 
-  public List<EvaluationCriteria> GetEvalutionCriteriasBySubject(int subjectId)
+  public List<EvaluationCriteria> GetEvalutionCriteriasBySubject(int subjectId);
 }
