@@ -67,10 +67,6 @@ public class AssessmentController : ControllerBase
             return Ok(criterias);
         }
 
-
-
-
-
         // GET: api/assessments/{id}
         [HttpGet("{id}")]
         public IActionResult Get(int id)
@@ -79,14 +75,19 @@ public class AssessmentController : ControllerBase
             return Ok(theAssessment);
         }
 
-
-
-
         [HttpGet("subjectexperts/{smeId}")]
         public IActionResult GetAllBySubjectMatterExpert(int smeId)
         {
             List<Assessment> assessments=_svc.GetAllBySubjectMatterExpert(smeId);
             return Ok(assessments);
+
+        }
+
+         [HttpPost("createtest")]
+        public IActionResult CreateTest( Assessment assessment)
+        {
+            bool status=_svc.CreateTest(assessment);
+            return Ok(status);
         }
 
         [HttpPost("addquestion/assessments/{assessmentId}/questions/{questionId}")]

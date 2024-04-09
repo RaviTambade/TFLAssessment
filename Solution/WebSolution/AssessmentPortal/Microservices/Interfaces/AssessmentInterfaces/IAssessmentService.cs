@@ -19,4 +19,6 @@ public interface IAssessmentService
   public List<EvaluationCriteria> GetEvalutionCriterias();
 
   public List<EvaluationCriteria> GetEvalutionCriteriasBySubject(int subjectId);
+
+  public bool CreateTest(Assessment newTest);
 }
