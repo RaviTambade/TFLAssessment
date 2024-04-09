@@ -1,5 +1,4 @@
-﻿
-using  AssessmentEntities;
+﻿using  AssessmentEntities;
 namespace AssessmentInterfaces;
 public interface IAssessmentService
 {

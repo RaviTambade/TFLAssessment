@@ -78,7 +78,7 @@ public class QuestionBankController : ControllerBase
         [HttpGet("questions/subjects/{subjectId}/questions/{questionid}")]
         public IActionResult GetQuestion(string subject, int questionid)
         {   
-            TestQuestion question = _svc.GetQuestion(subject, questionid);
+            string question = _svc.GetQuestion(subject, questionid);
             return Ok(question);
         }
        

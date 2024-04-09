@@ -20,7 +20,7 @@ public class EvaluationCriteriaController : ControllerBase
       
        
        // Insert candidate answers of the test .
-        [HttpPut("/{evaluationCriteriaId}/questions/{questionId}")]
+        [HttpPut("{evaluationCriteriaId}/questions/{questionId}")]
         public IActionResult UpdateCriteria(int evaluationCriteriaId, int questionId)
         {
             bool status = _svc.UpdateCriteria(evaluationCriteriaId,questionId);

@@ -2,6 +2,8 @@ using MySql.Data.MySqlClient;
 using System.Data;
 using QuestionBankEntities;
 using QuestionBankInterfaces;
+using AssessmentEntities;
+
 namespace QuestionBankServices;
 
 public class QuestionBankService:IQuestionBankService
@@ -398,42 +400,25 @@ public class QuestionBankService:IQuestionBankService
     }
 
 
-    public TestQuestion GetQuestion(string subject, int questionid)
+    public string GetCriteria(string subject, int questionId)
     {
-
-        TestQuestion question = null;
-        string query = @" select questionbank.*,evaluationcriterias.title as criteria from evaluationcriterias INNER join questionbank on questionbank.evaluationcriteriaid=evaluationcriterias.id
-        inner join subjects on questionbank.subjectid= evaluationcriterias.subjectid  WHERE subjects.title=@subject and questionbank.id=@questionId";
+        string criteria = "";
+        string query = @"select evaluationcriterias.title from evaluationcriterias INNER join questionbank on questionbank.evaluationcriteriaid=evaluationcriterias.id
+                       inner join subjects on questionbank.subjectid= evaluationcriterias.subjectid WHERE subjects.title=@subject and questionbank.id=@questionId";
 
         MySqlConnection connection = new MySqlConnection(connectionString);
-        MySqlCommand command = new MySqlCommand(query, connection);
-        command.Parameters.AddWithValue("@subject", subject);
-        command.Parameters.AddWithValue("@questionId", questionid);
-
         try
         {
+            MySqlCommand command = new MySqlCommand(query, connection);
+            command.Parameters.AddWithValue("@subject", subject);
+            command.Parameters.AddWithValue("@questionId", questionId);
             connection.Open();
             MySqlDataReader reader = command.ExecuteReader();
             if (reader.Read())
             {
-                int id = int.Parse(reader["id"].ToString());
-                string title = reader["title"].ToString();
-                string a = reader["a"].ToString();
-                string b = reader["b"].ToString();
-                string c = reader["c"].ToString();
-                string d = reader["d"].ToString();
-                int evaluationCriteriaId = int.Parse(reader["evaluationcriteriaid"].ToString());
-                string criteria = reader["criteria"].ToString();
 
-                question = new TestQuestion();
-                question.Id = id;
-                question.Title = title;
-                question.A = a;
-                question.B = b;
-                question.C = c;
-                question.D = d;
-                question.EvaluationCriteriaId = evaluationCriteriaId;
-                question.Criteria = criteria;
+                string title = reader["title"].ToString();
+                criteria = title;
             }
             reader.Close();
         }
@@ -445,6 +430,6 @@ public class QuestionBankService:IQuestionBankService
         {
             connection.Close();
         }
-        return question;
+        return criteria;
     }
 }
