@@ -310,4 +310,202 @@ public class AssessmentService :IAssessmentService
         }
         return status;
     }  
+
+
+     public List<Test> GetAllTests()
+    {
+        List<Test> tests = new List<Test>();
+        string query = @"select tests.*,subjects.title as skill,employees.firstname,employees.lastname from tests 
+                        inner join subjectmatterexperts on subjectmatterexperts.id=tests.smeid
+                        inner join subjects on subjects.id=subjectmatterexperts.subjectid
+                        inner join employees on  employees.id=subjectmatterexperts.employeeid";
+
+        MySqlConnection connection = new MySqlConnection(connectionString);
+        MySqlCommand command = new MySqlCommand(query, connection);
+        try
+        {
+            connection.Open();
+            MySqlDataReader reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                int id = int.Parse(reader["id"].ToString());
+                // TimeOnly duration=TimeOnly.Parse(reader["duration"]);
+                int subjectId = int.Parse(reader["subjectid"].ToString());
+                int subjectExpertId = int.Parse(reader["smeid"].ToString());
+                DateTime creationDate = DateTime.Parse(reader["creationdate"].ToString());
+                DateTime modificationDate = DateTime.Parse(reader["modificationdate"].ToString());
+                DateTime scheduledDate = DateTime.Parse(reader["scheduleddate"].ToString());
+                string subject = reader["skill"].ToString();
+                string firstName = reader["firstname"].ToString();
+                string lastName = reader["lastname"].ToString();
+
+                Test test = new Test();
+                test.Id = id;
+                test.SubjectId = subjectId;
+                test.SubjectExpertId = subjectExpertId;
+                test.CreationDate = creationDate;
+                test.ModificationDate = modificationDate;
+                test.ScheduledDate = scheduledDate;
+                test.Subject = subject;
+                test.FirstName = firstName;
+                test.LastName = lastName;
+                tests.Add(test);
+            }
+        }
+        catch (Exception e)
+        {
+            throw e;
+        }
+        return tests;
+    }
+
+
+
+      public List<Employee> GetAllEmployees()
+    {
+        List<Employee> employees = new List<Employee>();
+        string query = "select * from employees";
+
+        MySqlConnection connection = new MySqlConnection(connectionString);
+        MySqlCommand command = new MySqlCommand(query, connection);
+
+        try
+        {
+            connection.Open();
+            MySqlDataReader reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                int id = int.Parse(reader["id"].ToString());
+                string firstName = reader["firstname"].ToString();
+                string lastName = reader["lastname"].ToString();
+                string contact = reader["contact"].ToString();
+                string email = reader["email"].ToString();
+                Employee employee = new Employee();
+                employee.Id = id;
+                employee.FirstName = firstName;
+                employee.LastName = lastName;
+                employee.Contact = contact;
+                employee.Email = email;
+                employees.Add(employee);
+            }
+            reader.Close();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+        finally
+        {
+            connection.Close();
+        }
+        return employees;
+    }
+    public List<Subject> GetAllSubjects()
+    {
+        List<Subject> subjects = new List<Subject>();
+        string query = @"select * from subjects";
+
+        MySqlConnection connection = new MySqlConnection(connectionString);
+        MySqlCommand command = new MySqlCommand(query, connection);
+        try
+        {
+            connection.Open();
+            MySqlDataReader reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                int id = int.Parse(reader["id"].ToString());
+                string title = reader["title"].ToString();
+                Subject subject = new Subject();
+                subject.Id = id;
+                subject.Title = title;
+                subjects.Add(subject);
+            }
+            reader.Close();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+        finally
+        {
+            connection.Close();
+        }
+        return subjects;
+    }
+
+
+
+    public List<EvaluationCriteria> GetEvalutionCriterias()
+    {
+        List<EvaluationCriteria> criterias = new List<EvaluationCriteria>();
+        string query = @"select * from evaluationcriterias";
+
+        MySqlConnection connection = new MySqlConnection(connectionString);
+        MySqlCommand command = new MySqlCommand(query, connection);
+        try
+        {
+            connection.Open();
+            MySqlDataReader reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                int id = int.Parse(reader["id"].ToString());
+                string title = reader["title"].ToString();
+                EvaluationCriteria criteria = new EvaluationCriteria();
+                criteria.Id = id;
+                criteria.Title = title;
+                criterias.Add(criteria);
+            }
+            reader.Close();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+        finally
+        {
+            connection.Close();
+        }
+        return criterias;
+    }
+
+
+
+    public List<EvaluationCriteria> GetEvalutionCriteriasBySubject(int subjectId)
+    {
+        List<EvaluationCriteria> criterias = new List<EvaluationCriteria>();
+        string query = @"select * from evaluationcriterias WHERE subjectid=@subjectId";
+
+        MySqlConnection connection = new MySqlConnection(connectionString);
+        MySqlCommand command = new MySqlCommand(query, connection);
+        command.Parameters.AddWithValue("@subjectId", subjectId);
+        try
+        {
+            connection.Open();
+            MySqlDataReader reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                int id = int.Parse(reader["id"].ToString());
+                string title = reader["title"].ToString();
+
+                EvaluationCriteria criteria = new EvaluationCriteria();
+                criteria.Id = id;
+                criteria.Title = title;
+
+                Console.WriteLine(criteria.Id + "  " + criteria.Title);
+
+                criterias.Add(criteria);
+            }
+            reader.Close();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+        finally
+        {
+            connection.Close();
+        }
+        return criterias;
+    }
+
 }

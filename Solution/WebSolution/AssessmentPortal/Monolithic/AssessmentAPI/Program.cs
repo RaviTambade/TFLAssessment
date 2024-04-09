@@ -36,26 +36,35 @@ app.UseEndpoints(endpoints =>
 
 
 //REST API URL;
-string apiEmployeesUrl="/employees";
-string allQuestionsAPI="/questions";
-string apiSubjectsUrl="/subjects";
-string apiTestUrl="/tests";
-string apiCriteriaUrl="/criteria";
-string updateAnswer="/questions/answers/{questionId}";
-string apiCandidateTestAnswersUrl="/answersheet/candidates/{candidateId}";
-string apiQuestionsUrl="/questions/tests/{testId}";
+//string apiEmployeesUrl="/employees";
+//string allQuestionsAPI="/questions";
+//string apiSubjectsUrl="/subjects";
+//string apiTestUrl="/tests";
+//string apiCriteriaUrl="/criteria";
+//string updateAnswer="/questions/answers/{questionId}";
+//string apiCandidateTestAnswersUrl="/answersheet/candidates/{candidateId}";
+//string apiQuestionsUrl="/questions/tests/{testId}";
 string question ="/questions/subjects/{subject}/questions/{questionid}";
-string allQuestionsBySubjectUrl="/questions/subjects/{subjectid}";
-string testSubjectCriteriaAPI = "/questions/subjects/{subjectId}/criterias/{criteriaId}";
-string insertnewquestionurl="/question";
-string insertnewcriteriaurl="/criteria";
-string deleteTestQuestion="/testquestions";
+//string allQuestionsBySubjectUrl="/questions/subjects/{subjectid}";
+//string testSubjectCriteriaAPI = "/questions/subjects/{subjectId}/criterias/{criteriaId}";
+//string insertnewquestionurl="/question";
+//string insertnewcriteriaurl="/criteria";
+//string deleteTestQuestion="/testquestions";
 
-string candidateTestScoreUrl="candidates/{candidateId}/tests/{testId}";
+//string candidateTestScoreUrl="candidates/{candidateId}/tests/{testId}";
 
-string candidateTestResultUrl="/result/candidates/{candidateId}/test/{testId}";
+//string candidateTestResultUrl="/result/candidates/{candidateId}/test/{testId}";
 
+<<<<<<< HEAD
 string criteriaBySubjectUrl="/criterias/subjects/{subjectId}";
+=======
+//string criteriaBySubjectUrl="/criterias/subjects/{subjectId}";
+
+
+
+string UpdateCriteria="criteria/{evaluationCriteriaId}/question/{questionId}";
+string criteria ="/subject/{subject}/question/{questionId}";
+>>>>>>> 398fb2d1ebf923fe3b6272593c11f283cd68556d
 
 
 
@@ -89,11 +98,13 @@ string createTestUrl ="/designtest";   //pending
 string resheduleInterviewUrl ="/resheduleinterview/interviewId/{interviewid}/date/{date}";
 
 
+
 string ChangeInterviewerUrl ="/changeInterviewer/interviewId/{interviewid}/smeId/{smeid}";  //pending
 string CancelInterviewUrl ="/cancelInterview/interviewid/{interviewid}";  //pending
 
 
 // Using interfaces , Provider objects are  Cohesively coupled
+
 
   ITestManager  manager = new TestManager();
   IQuestionBankManager questionBank=new QuestionBankManager();
