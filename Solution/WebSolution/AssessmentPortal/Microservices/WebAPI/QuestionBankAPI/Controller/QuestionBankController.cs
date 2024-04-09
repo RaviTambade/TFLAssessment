@@ -26,8 +26,6 @@ public class QuestionBankController : ControllerBase
         {
             Question question = _svc.GetQuestion(questionId);
             return Ok(question);
-
-            return Ok( );
         }
 
 

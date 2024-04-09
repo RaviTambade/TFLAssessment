@@ -56,31 +56,44 @@ string candidateTestScoreUrl="candidates/{candidateId}/tests/{testId}";
 string candidateTestResultUrl="/result/candidates/{candidateId}/test/{testId}";
 
 string criteriaBySubjectUrl="/criterias/subjects/{subjectId}";
-string UpdateCriteria="/";
-string criteria ="/subject/{subject}/question/{questionId}";
 
+
+
+
+
+
+
+
+
+
+
+
+
+string UpdateCriteria="/";     // pending
+string criteria ="/subject/{subject}/question/{questionId}"; //question controller reurn only criteria title
 string questionUrl="/questions/{questionId}";
-string updateQuestionOptions="/questions/options/{questionId}";
-string subjectCriteriaUrl="questions/subjectcriteria/{questionId}";
-string testQuestionsUrl="/testquestions/tests/{testId}";
+string updateQuestionOptions="/update/options/question/{questionId}";  //check returntype
+string subjectCriteriaUrl="questions/subjectcriteria/{criteriaId}/questions/{questionId}";   //pending
+string testQuestionsUrl="/questions/tests/{testId}";
+string testStartTimesettingUrl="/setstarttime/{candidateId}/tests/{testId}";
+string testEndTimesettingUrl="setendtime/{candidateId}/tests/{testId}";
+string InterviewedCandidatesInfoUrl="/interviewedcandidates";   //pending
 
-string testStartTimesettingUrl="/test/setstarttime";
-string testEndTimesettingUrl="/test/setendtime";
-
-string InterviewedCandidatesInfoUrl="/interviewedcandidates";
-string InterviewedCandidatesSubjectsUrl="/interviewedcandidatessubjects/{candidateId}";
-string InterviewDetailsUrl="/interviewdetails/{interviewId}";
+string InterviewedCandidatesSubjectsUrl="/interviewedcandidatessubjects/{candidateId}";  //pending
+string InterviewDetailsUrl="/interviewdetails/{interviewId}";    //pending   
 
 string candidateTestResultDetailsUrl="/candidates/{candidateId}/test/{testId}";
 
-string createTestUrl ="/designtest";
+string createTestUrl ="/designtest";   //pending
 
 string resheduleInterviewUrl ="/resheduleinterview/interviewId/{interviewid}/date/{date}";
-string ChangeInterviewerUrl ="/changeInterviewer/interviewId/{interviewid}/smeId/{smeid}";
-string CancelInterviewUrl ="/cancelInterview/interviewid/{interviewid}";
 
 
-Using interfaces , Provider objects are  Cohesively coupled
+string ChangeInterviewerUrl ="/changeInterviewer/interviewId/{interviewid}/smeId/{smeid}";  //pending
+string CancelInterviewUrl ="/cancelInterview/interviewid/{interviewid}";  //pending
+
+
+// Using interfaces , Provider objects are  Cohesively coupled
 
   ITestManager  manager = new TestManager();
   IQuestionBankManager questionBank=new QuestionBankManager();
