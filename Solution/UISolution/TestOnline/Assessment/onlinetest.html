@@ -79,58 +79,47 @@
       var remainingTime = 60;
       var score;
 
-      var testId = 2;
-      var candidateId = 5;
+      var testId =1;
+      var candidateId = 4;
 
       //rest api urls
       var remoteWeb = "http://localhost:5238"
 
-      var testsapi = remoteWeb + "/questions/tests/";
-      var starttimeurl = remoteWeb + "/test/setstarttime";
+      var questionUrl = "http://localhost:5172/api/questionbank/questions/tests/"+testId;
+      var startTimeUrl = "http://localhost:5235/api/result/setstarttime/"+candidateId+"/tests/"+testId;
       var candidateanswersurl = remoteWeb + "/answersheet/candidates/";
-      var endtimeurl = remoteWeb + "/test/setendtime";
-      var resulturl = remoteWeb + "/result/candidates/";
-      var subjectsurl = remoteWeb + "/subjects";
-
-
+      var endTimeUrl = "http://localhost:5235/api/result/setendtime/"+candidateId+"/tests/"+testId;
+      
       $(document).ready(function () {
 
-        $.ajax({
-          url: subjectsurl,
-          type: 'GET',
-          contentType: 'application/json',
-
-          success: function (response) {
-            // Show result
-            console.log(response);
-          },
-          error: function (xhr, status, error) {
-            console.error(xhr.responseText);
-          }
-        });
 
         //Test start and submit handlers
         $("#btnStart").click(() => {
-
           activateNavigation(false);
 
           let currentIndex = 0;
           startTime = getCurrentDateTime();
-          let questionsAPI = testsapi + testId;
-          console.log("quetionapiurl= " + questionsAPI);
+          
+          console.log(startTime);
+          
+          console.log("quetionapiurl= " + questionUrl);
 
-          $.get(questionsAPI, function (data, status) {
+          $.get(questionUrl, function (data, status) {
             questions = (data);
+            console.log(questions);
             questions.map((question) => { question["answer"] = "No" });
             showQuestion(currentIndex);
           });
 
-          var testStartTime = { "CandidateId": candidateId, "TestId": testId, "Time": startTime };
+          
+          console.log(startTime);
+         
           $.ajax({
-            url: starttimeurl,
+            url: startTimeUrl,
             type: 'POST',
             contentType: 'application/json',
-            data: JSON.stringify(testStartTime),
+            data: JSON.stringify(startTime),
+            
 
             success: function (response) {
               console.log("inside post " + response);
@@ -159,16 +148,16 @@
           questions.map((question) => {
             let questionId = question.id;
             let answer = question.answer;
+            console.log(questions);
 
-            finalCandidateAnswers.push({ "TestQuestionId": questionId, "Answer": answer, });
+            finalCandidateAnswers.push({ "TestQuestionId": questionId, "Answer": answer });
           })
           console.log(finalCandidateAnswers);
 
-          var endTime = getCurrentDateTime();
-
-          let evaluateUrl = candidateanswersurl + candidateId;
+        
+          let assessmentAnswersUrl = "http://localhost:5299/api/candidateanswer/assessmentanswers/candidates/"+candidateId;
           $.ajax({
-            url: evaluateUrl,
+            url: assessmentAnswersUrl,
             type: 'POST',
             contentType: 'application/json',
             data: JSON.stringify(finalCandidateAnswers),
@@ -181,13 +170,12 @@
             }
           });
 
-          var testEndTime = { "CandidateId": candidateId, "TestId": testId, "Time": endTime }
-
+          var endTime = getCurrentDateTime();
           $.ajax({
-            url: endtimeurl,
+            url: endTimeUrl,
             type: 'PUT',
             contentType: 'application/json',
-            data: JSON.stringify(testEndTime),
+            data: JSON.stringify(endTime),
 
             success: function (response) {
               // Show result
@@ -201,14 +189,30 @@
 
         //Show Result
         $("#btnResult").click(() => {
+          let scoreUrl = "http://localhost:5235/api/result/candidates/"+candidateId+"/tests/"+testId+"/score";
+          // console.log(scoreUrl);
+          // $.get(scoreUrl, function (data, status) {
+          //   console.log(data);
+          //   score = (data);
+          //   $("#lblresult").text("Your Score is:" + score);
+          // });
 
-          let url = resulturl + candidateId + "/test/" + testId;
-          console.log(url);
-          $.get(url, function (data, status) {
+        $.ajax({
+        url: scoreUrl,
+        type: 'GET',
+        contentType: 'application/json',
+
+        success: function (data) {
             score = (data);
+            console.log(score);
             $("#lblresult").text("Your Score is:" + score);
-          });
-        })
+            
+        },
+        error: function (xhr, status, error) {
+            console.error(xhr.responseText);
+        }
+    });
+  })
 
 
         //refersh progress bar on answer  selection
@@ -350,13 +354,12 @@
 
       var getCurrentDateTime = () => {
         let d = new Date();
-        time.month = (d.getMonth() + 1).toString().padStart(2, '0');
+        time.month = d.getMonth() ;
         time.year = d.getFullYear();
         time.day = d.getDate();
         time.hour = d.getHours();
         time.minutes = d.getMinutes();
         time.seconds = d.getSeconds();
-
         return time;
       };
 
@@ -384,8 +387,6 @@
         },
           1000);
       }
-
-
     </script>
 </body>
 

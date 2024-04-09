@@ -43,7 +43,7 @@ public class QuestionBankController : ControllerBase
         }
 
 
-
+       //get questions by subject .
        //http://localhost:5172/api/questionbank/questions/subjects/2
         [HttpGet("questions/subjects/{id}")]
         public IActionResult GetQuestionsBySubjects(int id)
@@ -54,8 +54,20 @@ public class QuestionBankController : ControllerBase
         }
 
 
-        
+         
 
+        //Get questions by testid .
+        [HttpGet("questions/tests/{testId}")]
+        public IActionResult GetQuestions(int testId)
+        {   
+           
+           List<Question> questions = _svc.GetQuestions(testId);
+            return Ok(questions);
+        }
+
+        
+        
+        //Get questions by subject criteria .
         //http://localhost:5172/api/questionbank/questions/subjects/4/criterias/1
          [HttpGet("questions/subjects/{subjectId}/criterias/{criteriaId}")]
         public IActionResult GetQuestionsBySubjectAndCriteria(int subjectId,int criteriaId)
@@ -64,6 +76,8 @@ public class QuestionBankController : ControllerBase
             return Ok(questions);
         }
 
+       
+        //Update  answer of the question. 
         // http://localhost:5172/api/questionbank/answer/question/1
         [HttpPut("answer/question/{id}")]
         public IActionResult UpdateAnswer(int id ,char answerKey)
@@ -74,9 +88,10 @@ public class QuestionBankController : ControllerBase
         }
 
         
-       //http://localhost:5172/api/questionbank/update/options/question/1
 
-        [HttpPut("update/options/question/{id}")]
+        //Update question options .
+       //http://localhost:5172/api/questionbank/update/options/question/1
+       [HttpPut("update/options/question/{id}")]
         public IActionResult UpdateQuestionOptions(int id,Question options)
         {
 

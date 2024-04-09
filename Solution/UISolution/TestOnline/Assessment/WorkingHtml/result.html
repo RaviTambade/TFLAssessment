@@ -129,8 +129,8 @@
     <script>
         var CandidateTestScore;
         var candidateId = 5, testId = 2;
-        var CandidateTestScoreUrl = "http://localhost:5238/candidates/" + candidateId + "/tests/" + testId + "/score";
-        var CandidateResultTestDetails= "http://localhost:5238/candidates/" + candidateId + "/test/" + testId;
+        var CandidateTestScoreUrl = "http://localhost:5235/api/result/candidates/" + candidateId + "/tests/" + testId + "/score";
+        var CandidateResultTestDetails= "http://localhost:5235/api/result/candidates/" + candidateId + "/tests/" + testId+"/details";
         $(document).ready(function () {
             // Event handler for checkboxes
            $("#btnsubmit").click(() => {

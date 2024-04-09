@@ -222,6 +222,42 @@ public class AssessmentService :IAssessmentService
             }
         return status;
     }
+
+    public bool DeleteQuestions(int[] testQuestions)
+    {
+        bool status = false;
+        MySqlConnection connection = new MySqlConnection(connectionString);
+
+        try
+        {
+            connection.Open(); // Open connection outside the loop
+
+            foreach (var testQuestionId in testQuestions)
+            {
+                Console.WriteLine("DAl" + testQuestionId);
+
+                string query = "DELETE FROM testquestions WHERE id = @id";
+                MySqlCommand command = new MySqlCommand(query, connection);
+                command.Parameters.AddWithValue("@id", testQuestionId);
+
+                int rowsAffected = command.ExecuteNonQuery();
+                if (rowsAffected > 0)
+                {
+                    status = true;
+                }
+            }
+        }
+        catch (Exception e)
+        {
+          throw e;
+        }
+        finally
+        {
+                connection.Close();
+        }
+        return status;
+    }
+    
     public bool ChangeDuration(int assessmentId, string duration){
         bool status = false;
         MySqlConnection connection = new MySqlConnection(connectionString);

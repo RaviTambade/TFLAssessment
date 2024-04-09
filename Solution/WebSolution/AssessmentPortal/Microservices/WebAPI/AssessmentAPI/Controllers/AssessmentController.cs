@@ -19,7 +19,7 @@ public class AssessmentController : ControllerBase
         IAssessmentService _svc=new AssessmentService();
 
         // GET: api/assessment
-        [HttpGet("creationdate/{fromDate}/{toDate}")]
+        [HttpGet("creationdate/fromDate/{fromDate}/toDate/{toDate}")]
         public IActionResult GetAll(DateTime fromDate, DateTime toDate)
         {
             List<Assessment> assessments =_svc.GetAll( fromDate,  toDate);
@@ -34,6 +34,9 @@ public class AssessmentController : ControllerBase
             return Ok(theAssessment);
         }
 
+
+
+
         [HttpGet("subjectexperts/{smeId}")]
         public IActionResult GetAllBySubjectMatterExpert(int smeId)
         {
@@ -41,42 +44,48 @@ public class AssessmentController : ControllerBase
             return Ok(assessments);
         }
 
-        [HttpPost("addquestion/assessment/{assessmentId}/question/{questionId}")]
+        [HttpPost("addquestion/assessments/{assessmentId}/questions/{questionId}")]
         public IActionResult AddQuestion(int assessmentId,int questionId)
         {
             bool status=_svc.AddQuestion(assessmentId,questionId);
             return Ok(status);
         }
 
-        [HttpPost("addmultiplequestions/assessment/{assessmentId}")]
+        [HttpPost("addmultiplequestions/assessments/{assessmentId}")]
         public IActionResult AddQuestions(int assessmentId,List<TestQuestion> questions)
         {
             bool status=_svc.AddQuestions(assessmentId, questions);
             return Ok(status);
         }
 
-        [HttpDelete("{assessmentId}/{questionId}")]
+        [HttpDelete("{assessmentId}/questions/{questionId}")]
         public IActionResult RemoveQuestion(int assessmentId,int questionId)
         {
             bool status=_svc.RemoveQuestion(assessmentId,questionId);
             return Ok(status);
         }
 
-        [HttpPut("{assessmentId}/{duration}")]
+        [HttpPut("{assessmentId}/duration/{duration}")]
         public IActionResult ChangeDuration(int assessmentId,string duration)
         {
             bool status=_svc.ChangeDuration(assessmentId,duration);
             return Ok(status);
         }
 
-        [HttpPut("reschedule/{assessmentId}/{date}")]
+        [HttpPut("{assessmentId}/reschedule/{date}")]
         public IActionResult Reschedule(int assessmentId,DateTime date)
         {
             bool status=_svc.Reschedule(assessmentId,date);
             return Ok(status);
         }
 
-     
+        [HttpDelete("deletequestions")]
+        public IActionResult DeleteQuestions(int[] testQuestions)
+        {
+            bool status=_svc.DeleteQuestions(testQuestions);
+            return Ok(status);
+        }
+
 
         // POST: api/assessments
         [HttpPost]
