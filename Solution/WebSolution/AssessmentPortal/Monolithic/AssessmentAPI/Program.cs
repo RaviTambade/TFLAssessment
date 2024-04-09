@@ -36,26 +36,26 @@ app.UseEndpoints(endpoints =>
 
 
 //REST API URL;
-string apiEmployeesUrl="/employees";
-string allQuestionsAPI="/questions";
-string apiSubjectsUrl="/subjects";
-string apiTestUrl="/tests";
-string apiCriteriaUrl="/criteria";
-string updateAnswer="/questions/answers/{questionId}";
-string apiCandidateTestAnswersUrl="/answersheet/candidates/{candidateId}";
-string apiQuestionsUrl="/questions/tests/{testId}";
-string question ="/questions/subjects/{subject}/questions/{questionid}";
-string allQuestionsBySubjectUrl="/questions/subjects/{subjectid}";
-string testSubjectCriteriaAPI = "/questions/subjects/{subjectId}/criterias/{criteriaId}";
+//string apiEmployeesUrl="/employees";
+//string allQuestionsAPI="/questions";
+//string apiSubjectsUrl="/subjects";
+//string apiTestUrl="/tests";
+//string apiCriteriaUrl="/criteria";
+//string updateAnswer="/questions/answers/{questionId}";
+//string apiCandidateTestAnswersUrl="/answersheet/candidates/{candidateId}";
+//string apiQuestionsUrl="/questions/tests/{testId}";
+/string question ="/questions/subjects/{subject}/questions/{questionid}";
+//string allQuestionsBySubjectUrl="/questions/subjects/{subjectid}";
+//string testSubjectCriteriaAPI = "/questions/subjects/{subjectId}/criterias/{criteriaId}";
 string insertnewquestionurl="/question";
 string insertnewcriteriaurl="/criteria";
-string deleteTestQuestion="/testquestions";
+//string deleteTestQuestion="/testquestions";
 
-string candidateTestScoreUrl="candidates/{candidateId}/tests/{testId}";
+//string candidateTestScoreUrl="candidates/{candidateId}/tests/{testId}";
 
-string candidateTestResultUrl="/result/candidates/{candidateId}/test/{testId}";
+//string candidateTestResultUrl="/result/candidates/{candidateId}/test/{testId}";
 
-string criteriaBySubjectUrl="/criterias/subjects/{subjectId}";
+//string criteriaBySubjectUrl="/criterias/subjects/{subjectId}";
 string UpdateCriteria="/";
 string criteria ="/subject/{subject}/question/{questionId}";
 

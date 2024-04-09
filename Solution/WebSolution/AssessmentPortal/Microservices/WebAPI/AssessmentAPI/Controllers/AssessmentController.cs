@@ -26,6 +26,51 @@ public class AssessmentController : ControllerBase
             return Ok(assessments);
         }
 
+
+
+        // GET: get all assessments
+        [HttpGet("assessments")]
+        public IActionResult GetAllAssesment()
+        {
+            List<Assessment> assessments =_svc.GetAllTests();
+            return Ok(assessments);
+        }
+
+
+           [HttpGet("employees")]
+        public IActionResult GetAllEmployees()
+        {
+            List<Employees> employees =_svc.GetAllEmployees();
+            return Ok(employees);
+        }
+
+           [HttpGet("subjects")]
+        public IActionResult GetAllSubjects()
+        {
+            List<Subject> subjects =_svc.GetAllSubjects();
+            return Ok(subjects);
+        }
+
+
+       [HttpGet("criterias")]
+        public IActionResult GetEvalutionCriterias()
+        {
+            List<EvaluationCriteria> criterias =_svc.GetEvalutionCriterias();
+            return Ok(criterias);
+        }
+
+
+       [HttpGet("criterias/subjects/{subjectId}")]
+        public IActionResult GetEvalutionCriteriasBySubject(int subjectId)
+        {
+            List<EvaluationCriteria> criterias =_svc.GetEvalutionCriteriasBySubject(subjectId);
+            return Ok(criterias);
+        }
+
+
+
+
+
         // GET: api/assessments/{id}
         [HttpGet("{id}")]
         public IActionResult Get(int id)
