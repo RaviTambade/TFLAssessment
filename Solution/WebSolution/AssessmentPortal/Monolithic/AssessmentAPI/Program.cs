@@ -56,7 +56,10 @@ string insertnewcriteriaurl="/criteria";
 //string candidateTestResultUrl="/result/candidates/{candidateId}/test/{testId}";
 
 //string criteriaBySubjectUrl="/criterias/subjects/{subjectId}";
-string UpdateCriteria="/";
+
+
+
+string UpdateCriteria="criteria/{evaluationCriteriaId}/question/{questionId}";
 string criteria ="/subject/{subject}/question/{questionId}";
 
 string questionUrl="/questions/{questionId}";
@@ -80,7 +83,7 @@ string ChangeInterviewerUrl ="/changeInterviewer/interviewId/{interviewid}/smeId
 string CancelInterviewUrl ="/cancelInterview/interviewid/{interviewid}";
 
 
-Using interfaces , Provider objects are  Cohesively coupled
+Using interfaces,Provider objects are  Cohesively coupled
 
   ITestManager  manager = new TestManager();
   IQuestionBankManager questionBank=new QuestionBankManager();
