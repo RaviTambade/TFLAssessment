@@ -346,9 +346,9 @@ public class AssessmentService :IAssessmentService
                 test.CreationDate = creationDate;
                 test.ModificationDate = modificationDate;
                 test.ScheduledDate = scheduledDate;
-                test.Subject = subject;
-                test.FirstName = firstName;
-                test.LastName = lastName;
+                // test.Subject = subject;
+                // test.FirstName = firstName;
+                // test.LastName = lastName;
                 tests.Add(test);
             }
         }

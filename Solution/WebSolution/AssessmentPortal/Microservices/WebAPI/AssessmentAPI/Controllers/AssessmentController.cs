@@ -40,7 +40,7 @@ public class AssessmentController : ControllerBase
            [HttpGet("employees")]
         public IActionResult GetAllEmployees()
         {
-            List<Employees> employees =_svc.GetAllEmployees();
+            List<Employee> employees =_svc.GetAllEmployees();
             return Ok(employees);
         }
 
