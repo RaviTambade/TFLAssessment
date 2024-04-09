@@ -325,4 +325,126 @@ public class QuestionBankService:IQuestionBankService
         }
         return status;
     }
+
+     public bool InsertQuestion(NewQuestion question)
+    {
+
+        bool status = false;
+        MySqlConnection connection = new MySqlConnection(connectionString);
+        string query = "insert into questionbank(subjectid, title, a, b, c, d, answerkey,evaluationcriteriaid) values (@subjectId, @title, @a, @b, @c, @d, @answerKey, @evaluationCriteriaId)";
+
+        MySqlCommand command = new MySqlCommand(query, connection);
+
+        command.Parameters.AddWithValue("@subjectId", question.SubjectId);
+        command.Parameters.AddWithValue("@title", question.Title);
+        command.Parameters.AddWithValue("@a", question.A);
+        command.Parameters.AddWithValue("@b", question.B);
+        command.Parameters.AddWithValue("@c", question.C);
+        command.Parameters.AddWithValue("@d", question.D);
+        command.Parameters.AddWithValue("@answerKey", question.AnswerKey);
+        command.Parameters.AddWithValue("@evaluationCriteriaId", question.EvaluationCriteriaId);
+
+        try
+        {
+            connection.Open();
+            int rowsAffected = command.ExecuteNonQuery();
+            if (rowsAffected > 0)
+            {
+                status = true;
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+        finally
+        {
+            connection.Close();
+        }
+        return status;
+    }
+
+    public bool InsertCriteria(NewCriteria criteria)
+    {
+        Console.WriteLine(criteria.SubjectId + " " + criteria.Title);
+        bool status = false;
+        MySqlConnection connection = new MySqlConnection(connectionString);
+        string query = "insert into evaluationcriterias(title,subjectid) values ( @title, @subjectId)";
+
+        MySqlCommand command = new MySqlCommand(query, connection);
+
+        command.Parameters.AddWithValue("@subjectId", criteria.SubjectId);
+        command.Parameters.AddWithValue("@title", criteria.Title);
+
+
+        try
+        {
+            connection.Open();
+            int rowsAffected = command.ExecuteNonQuery();
+            if (rowsAffected > 0)
+            {
+                status = true;
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+        finally
+        {
+            connection.Close();
+        }
+        return status;
+    }
+
+
+    public TestQuestion GetQuestion(string subject, int questionid)
+    {
+
+        TestQuestion question = null;
+        string query = @" select questionbank.*,evaluationcriterias.title as criteria from evaluationcriterias INNER join questionbank on questionbank.evaluationcriteriaid=evaluationcriterias.id
+        inner join subjects on questionbank.subjectid= evaluationcriterias.subjectid  WHERE subjects.title=@subject and questionbank.id=@questionId";
+
+        MySqlConnection connection = new MySqlConnection(connectionString);
+        MySqlCommand command = new MySqlCommand(query, connection);
+        command.Parameters.AddWithValue("@subject", subject);
+        command.Parameters.AddWithValue("@questionId", questionid);
+
+        try
+        {
+            connection.Open();
+            MySqlDataReader reader = command.ExecuteReader();
+            if (reader.Read())
+            {
+                int id = int.Parse(reader["id"].ToString());
+                string title = reader["title"].ToString();
+                string a = reader["a"].ToString();
+                string b = reader["b"].ToString();
+                string c = reader["c"].ToString();
+                string d = reader["d"].ToString();
+                int evaluationCriteriaId = int.Parse(reader["evaluationcriteriaid"].ToString());
+                string criteria = reader["criteria"].ToString();
+
+                question = new TestQuestion();
+                question.Id = id;
+                question.Title = title;
+                question.A = a;
+                question.B = b;
+                question.C = c;
+                question.D = d;
+                question.EvaluationCriteriaId = evaluationCriteriaId;
+                question.Criteria = criteria;
+            }
+            reader.Close();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+        finally
+        {
+            connection.Close();
+        }
+        return question;
+    }
 }

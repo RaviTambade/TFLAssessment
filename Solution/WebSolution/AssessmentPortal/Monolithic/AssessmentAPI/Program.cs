@@ -44,11 +44,11 @@ app.UseEndpoints(endpoints =>
 //string updateAnswer="/questions/answers/{questionId}";
 //string apiCandidateTestAnswersUrl="/answersheet/candidates/{candidateId}";
 //string apiQuestionsUrl="/questions/tests/{testId}";
-/string question ="/questions/subjects/{subject}/questions/{questionid}";
+string question ="/questions/subjects/{subject}/questions/{questionid}";
 //string allQuestionsBySubjectUrl="/questions/subjects/{subjectid}";
 //string testSubjectCriteriaAPI = "/questions/subjects/{subjectId}/criterias/{criteriaId}";
-string insertnewquestionurl="/question";
-string insertnewcriteriaurl="/criteria";
+//string insertnewquestionurl="/question";
+//string insertnewcriteriaurl="/criteria";
 //string deleteTestQuestion="/testquestions";
 
 //string candidateTestScoreUrl="candidates/{candidateId}/tests/{testId}";

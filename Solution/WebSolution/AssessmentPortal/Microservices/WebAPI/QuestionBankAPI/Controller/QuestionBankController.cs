@@ -76,6 +76,13 @@ public class QuestionBankController : ControllerBase
             return Ok(questions);
         }
 
+
+        [HttpGet("questions/subjects/{subjectId}/questions/{questionid}")]
+        public IActionResult GetQuestion(string subject, int questionid)
+        {   
+            TestQuestion question = _svc.GetQuestion(subject, questionid);
+            return Ok(question);
+        }
        
         //Update  answer of the question. 
         // http://localhost:5172/api/questionbank/answer/question/1
@@ -111,5 +118,22 @@ public class QuestionBankController : ControllerBase
       //     return Ok(status);
       //   }
 
+
+       [HttpPost("question")]
+        public IActionResult InsertQuestion(NewQuestion question)
+        {
+             bool status = false;
+            status = _svc.InsertQuestion(question);
+           return Ok(status);
+        }
+
+
+         [HttpPost("criteria")]
+        public IActionResult InsertCriteria(NewCriteria criteria)
+        {
+             bool status = false;
+            status = _svc.InsertCriteria(criteria);
+           return Ok(status);
+        }
        
 }
