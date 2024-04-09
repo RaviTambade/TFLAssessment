@@ -312,9 +312,9 @@ public class AssessmentService :IAssessmentService
     }  
 
 
-     public List<Test> GetAllTests()
+     public List<Assessment> GetAllTests()
     {
-        List<Test> tests = new List<Test>();
+        List<Assessment> tests = new List<Assessment>();
         string query = @"select tests.*,subjects.title as skill,employees.firstname,employees.lastname from tests 
                         inner join subjectmatterexperts on subjectmatterexperts.id=tests.smeid
                         inner join subjects on subjects.id=subjectmatterexperts.subjectid
@@ -339,7 +339,7 @@ public class AssessmentService :IAssessmentService
                 string firstName = reader["firstname"].ToString();
                 string lastName = reader["lastname"].ToString();
 
-                Test test = new Test();
+                Assessment test = new Assessment();
                 test.Id = id;
                 test.SubjectId = subjectId;
                 test.SubjectExpertId = subjectExpertId;

@@ -1,6 +1,5 @@
 
-
-namespace Assessment.Entities;
+namespace AssessmentEntities;
 public class TestQuestion{
     public int Id{get;set;}
     public string Title{get;set;}

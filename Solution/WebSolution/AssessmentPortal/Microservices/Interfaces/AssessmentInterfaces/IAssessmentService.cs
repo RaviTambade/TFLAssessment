@@ -12,12 +12,12 @@ public interface IAssessmentService
   public bool RemoveQuestion(int Assessmentid, int questionId);
   public bool ChangeDuration(int AssessmentId, string duration);
   public bool Reschedule(int AssessmentId, DateTime date);
-  public List<Test> GetAllTests();
+  public List<Assessment> GetAllTests();
   public List<Employee> GetAllEmployees();
 
   public List<Subject> GetAllSubjects();
 
   public List<EvaluationCriteria> GetEvalutionCriterias();
 
-  public List<EvaluationCriteria> GetEvalutionCriteriasBySubject(int subjectId)
+  public List<EvaluationCriteria> GetEvalutionCriteriasBySubject(int subjectId);
 }
