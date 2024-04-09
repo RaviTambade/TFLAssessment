@@ -1,7 +1,7 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 
-using QuestionBankEntity; //-----------------------dll
+using QuestionBankEntities; //-----------------------dll
 using QuestionBankInterfaces;//-----------------------dll
 using QuestionBankServices;//------------------------dll
 
@@ -19,9 +19,21 @@ public class QuestionBankController : ControllerBase
         
         
          IQuestionBankService _svc = new QuestionBankService();
-      
-      //http://localhost:5172/api/questionbank/questions/2
-        [HttpGet("questions/{questionId}")]
+
+
+    //http://localhost:5172/api/questionbank/questions/2
+    [HttpGet("questions")]
+    public IActionResult GetAllQuestions()
+    {
+        List<QuestionTitle> questions = _svc.GetAllQuestions();
+        return Ok(questions);
+    }
+
+
+
+
+    //http://localhost:5172/api/questionbank/questions/2
+    [HttpGet("questions/{questionId}")]
         public IActionResult GetQuestion(int questionId)
         {
             Question question = _svc.GetQuestion(questionId);

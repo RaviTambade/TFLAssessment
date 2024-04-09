@@ -1,4 +1,4 @@
-using QuestionBankEntity; //-----------------------dll
+using QuestionBankEntities; //-----------------------dll
 using QuestionBankInterfaces;//-----------------------dll
 using QuestionBankServices;//------------------------dll
 
