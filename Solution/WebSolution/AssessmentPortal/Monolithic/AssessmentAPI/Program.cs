@@ -91,6 +91,7 @@ string resheduleInterviewUrl ="/resheduleinterview/interviewId/{interviewid}/dat
 
 
 string UpdateCriteria="/";     // pending
+
 string InterviewedCandidatesInfoUrl="/interviewedcandidates";   //pending
 string subjectCriteriaUrl="questions/subjectcriteria/{criteriaId}/questions/{questionId}";   //pending
 string InterviewedCandidatesSubjectsUrl="/interviewedcandidatessubjects/{candidateId}";  //pending
