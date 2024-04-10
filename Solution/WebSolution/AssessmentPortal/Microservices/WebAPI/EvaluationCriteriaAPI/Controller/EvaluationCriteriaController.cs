@@ -26,4 +26,14 @@ public class EvaluationCriteriaController : ControllerBase
             bool status = _svc.UpdateCriteria(evaluationCriteriaId,questionId);
             return Ok(status);
         }
+
+        [HttpPost]
+        public IActionResult InsertCriteria(EvaluationCriteria criteria)
+        {
+             bool status = false;
+            status = _svc.InsertCriteria(criteria);
+           return Ok(status);
+        }
+
+        
 }

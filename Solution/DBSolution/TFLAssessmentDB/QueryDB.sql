@@ -72,7 +72,7 @@ inner join evaluationcriterias
 on interviewcriterias.evaluationcriteriaid = evaluationcriterias.id
 where interviews.id=2;
             
-
+update questionbank set answerkey="c" where id = 1;
 
 
 

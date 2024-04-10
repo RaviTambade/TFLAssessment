@@ -40,4 +40,38 @@ namespace EvaluationCriteriaServices;
         }
         return status;
     }
+
+
+    public bool InsertCriteria(EvaluationCriteria criteria)
+    {
+        Console.WriteLine(criteria.SubjectId + " " + criteria.Title);
+        bool status = false;
+        MySqlConnection connection = new MySqlConnection(connectionString);
+        string query = "insert into evaluationcriterias(title,subjectid) values ( @title, @subjectId)";
+
+        MySqlCommand command = new MySqlCommand(query, connection);
+
+        command.Parameters.AddWithValue("@subjectId", criteria.SubjectId);
+        command.Parameters.AddWithValue("@title", criteria.Title);
+
+        try
+        {
+            connection.Open();
+            int rowsAffected = command.ExecuteNonQuery();
+            if (rowsAffected > 0)
+            {
+                status = true;
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+        finally
+        {
+            connection.Close();
+        }
+        return status;
+    }
+
 }

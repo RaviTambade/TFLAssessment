@@ -147,8 +147,10 @@ public class QuestionBankService:IQuestionBankService
         {
             connection.Open();   
             MySqlCommand command = new MySqlCommand(query, connection);
-            command.Parameters.AddWithValue("@answerkey", answerKey);
             command.Parameters.AddWithValue("@id", id);
+            command.Parameters.AddWithValue("@answerkey", answerKey);
+           Console.WriteLine("Id : "+id);
+           Console.WriteLine("Answerkey : "+answerKey);
             int rowsAffected = command.ExecuteNonQuery();
             if (rowsAffected > 0)
             {
@@ -366,39 +368,7 @@ public class QuestionBankService:IQuestionBankService
         return status;
     }
 
-    public bool InsertCriteria(NewCriteria criteria)
-    {
-        Console.WriteLine(criteria.SubjectId + " " + criteria.Title);
-        bool status = false;
-        MySqlConnection connection = new MySqlConnection(connectionString);
-        string query = "insert into evaluationcriterias(title,subjectid) values ( @title, @subjectId)";
-
-        MySqlCommand command = new MySqlCommand(query, connection);
-
-        command.Parameters.AddWithValue("@subjectId", criteria.SubjectId);
-        command.Parameters.AddWithValue("@title", criteria.Title);
-
-
-        try
-        {
-            connection.Open();
-            int rowsAffected = command.ExecuteNonQuery();
-            if (rowsAffected > 0)
-            {
-                status = true;
-            }
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e.Message);
-        }
-        finally
-        {
-            connection.Close();
-        }
-        return status;
-    }
-
+    
     public string GetCriteria(string subject, int questionId)
     {
         string criteria = "";
