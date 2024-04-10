@@ -118,7 +118,7 @@ public class QuestionBankController : ControllerBase
       //     return Ok(status);
       //   }
 
-
+       //http://localhost:5172/api/questionbank/question
        [HttpPost("question")]
         public IActionResult InsertQuestion(NewQuestion question)
         {

@@ -16,13 +16,9 @@ public class ResultController : ControllerBase
         }
         
      
-        [HttpGet]
-        public IActionResult Get()
-        {
-            return Ok( );
-        }
 
         //get candidate score with storedprocedure .
+        //http://localhost:5235/api/Result/candidates/1/tests/1/score
         [HttpGet("candidates/{candidateId}/tests/{testId}/score")]
         public IActionResult GetCandidateScore(int candidateId, int testId)
         {   
@@ -35,6 +31,7 @@ public class ResultController : ControllerBase
 
  
         //set starttime in the test .
+
         [HttpPost("setstarttime/{candidateId}/tests/{testId}")]
         public IActionResult SetCandidateTestStartTime(int candidateId, int testId, TestTime time)
          {   
@@ -57,6 +54,7 @@ public class ResultController : ControllerBase
         
 
         //get candidate details of test.
+        //http://localhost:5235/api/Result/candidates/1/tests/1/details
         [HttpGet("candidates/{candidateId}/tests/{testId}/details")]
         public IActionResult GetCandidatetResultDetails(int candidateId, int testId)
         {   
@@ -69,7 +67,8 @@ public class ResultController : ControllerBase
 
 
         //get test result details .
-         [HttpGet("/tests/{testid}/details")]
+        //http://localhost:5235/tests/1/details
+         [HttpGet("/tests/{testId}/details")]
         public IActionResult GetTestResultDetails(int testId)
         {   
             IResultService _svc = new ResultService();
@@ -80,7 +79,7 @@ public class ResultController : ControllerBase
 
 
         //get appeared candidates of the test .
-         [HttpGet("/candidates/tests/{testid}")]
+         [HttpGet("/candidates/tests/{testId}")]
          public IActionResult GetAppearedCandidates(int testId)
         {   
             IResultService _svc = new ResultService();
@@ -121,7 +120,7 @@ public class ResultController : ControllerBase
         }
 
 
-          [HttpGet("/results/subjectresults/{subjectid}")]
+          [HttpGet("/results/subjectresults/{subjectId}")]
         public IActionResult GetSubjectResultDetails(int subjectId)
         {   
             IResultService _svc = new ResultService();

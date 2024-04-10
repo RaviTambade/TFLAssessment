@@ -328,43 +328,80 @@ public class QuestionBankService:IQuestionBankService
         return status;
     }
 
-     public bool InsertQuestion(NewQuestion question)
+    //  public bool InsertQuestion(NewQuestion question)
+    // {
+
+    //     bool status = false;
+    //     MySqlConnection connection = new MySqlConnection(connectionString);
+    //     string query = "insert into questionbank(subjectid, title, a, b, c, d, answerkey,evaluationcriteriaid) values (@subjectId, @title, @a, @b, @c, @d, @answerKey, @evaluationCriteriaId)";
+
+    //     MySqlCommand command = new MySqlCommand(query, connection);
+
+    //     command.Parameters.AddWithValue("@subjectId", question.SubjectId);
+    //     command.Parameters.AddWithValue("@title", question.Title);
+    //     command.Parameters.AddWithValue("@a", question.A);
+    //     command.Parameters.AddWithValue("@b", question.B);
+    //     command.Parameters.AddWithValue("@c", question.C);
+    //     command.Parameters.AddWithValue("@d", question.D);
+    //     command.Parameters.AddWithValue("@answerKey", question.AnswerKey);
+    //     command.Parameters.AddWithValue("@evaluationCriteriaId", question.EvaluationCriteriaId);
+
+    //     try
+    //     {
+    //         connection.Open();
+    //         int rowsAffected = command.ExecuteNonQuery();
+    //         if (rowsAffected > 0)
+    //         {
+    //             status = true;
+    //         }
+    //     }
+    //     catch (Exception e)
+    //     {
+    //         Console.WriteLine(e.Message);
+    //     }
+    //     finally
+    //     {
+    //         connection.Close();
+    //     }
+    //     return status;
+    // }
+
+    public bool InsertQuestion(NewQuestion question)
+  {
+
+    bool status = true;
+    MySqlConnection connection = new MySqlConnection(connectionString);
+    try
     {
+      string query = "select * from questionbank";
+      MySqlCommand command = new MySqlCommand(query, connection);
+      MySqlDataAdapter dataAdapter = new MySqlDataAdapter(command);
+      DataSet dataSet = new DataSet();
+      MySqlCommandBuilder commandBuilder = new MySqlCommandBuilder(dataAdapter);
+      dataAdapter.Fill(dataSet);
+      DataTable dataTable = dataSet.Tables[0];
 
-        bool status = false;
-        MySqlConnection connection = new MySqlConnection(connectionString);
-        string query = "insert into questionbank(subjectid, title, a, b, c, d, answerkey,evaluationcriteriaid) values (@subjectId, @title, @a, @b, @c, @d, @answerKey, @evaluationCriteriaId)";
+      DataRow row = dataTable.NewRow();
+      row["subjectid"] = question.SubjectId;
+      row["title"] = question.Title;
+      row["a"] = question.A;
+      row["b"] = question.B;
+      row["c"] = question.C;
+      row["d"] = question.D;
+      row["answerKey"] = question.AnswerKey;
+      row["evaluationCriteriaId"] = question.EvaluationCriteriaId;
+      dataTable.Rows.Add(row);
+      dataAdapter.Update(dataSet);
+      status = true;
 
-        MySqlCommand command = new MySqlCommand(query, connection);
-
-        command.Parameters.AddWithValue("@subjectId", question.SubjectId);
-        command.Parameters.AddWithValue("@title", question.Title);
-        command.Parameters.AddWithValue("@a", question.A);
-        command.Parameters.AddWithValue("@b", question.B);
-        command.Parameters.AddWithValue("@c", question.C);
-        command.Parameters.AddWithValue("@d", question.D);
-        command.Parameters.AddWithValue("@answerKey", question.AnswerKey);
-        command.Parameters.AddWithValue("@evaluationCriteriaId", question.EvaluationCriteriaId);
-
-        try
-        {
-            connection.Open();
-            int rowsAffected = command.ExecuteNonQuery();
-            if (rowsAffected > 0)
-            {
-                status = true;
-            }
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e.Message);
-        }
-        finally
-        {
-            connection.Close();
-        }
-        return status;
     }
+    catch (Exception e)
+    {
+      throw e;
+    }
+
+    return status;
+  }
 
     public bool InsertCriteria(NewCriteria criteria)
     {

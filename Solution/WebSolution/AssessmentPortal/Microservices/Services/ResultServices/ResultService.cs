@@ -372,35 +372,69 @@ public class ResultService : IResultService
         return failedCandidates;
     }
 
-    public bool SetPassingLevel(int testId, int passingLevel)
+    // public bool SetPassingLevel(int testId, int passingLevel)
+    // {
+    //     bool status = false;
+    //     MySqlConnection connection = new MySqlConnection(connectionString);
+    //     string query = "update tests set passinglevel=@passingLevel where id =@testId;";
+
+    //    MySqlCommand command = new MySqlCommand(query, connection);
+    //     command.Parameters.AddWithValue("@testId", testId);
+    //     command.Parameters.AddWithValue("@passingLevel", passingLevel);
+
+    //     try
+    //     {
+    //         connection.Open();
+    //         int rowsAffected = command.ExecuteNonQuery();
+    //         if (rowsAffected > 0)
+    //             status = true;
+    //     }
+
+    //     catch (Exception e)
+    //     {
+    //         Console.WriteLine(e.Message);
+    //     }
+    //     finally
+    //     {
+    //         connection.Close();
+    //     }
+    //     return status;
+
+    // }
+
+    public bool SetPassingLevel(int testId, int passingLevel)//Using Dissconnected 
+  {
+    bool status = false;
+    MySqlConnection connection = new MySqlConnection(connectionString);
+    try
     {
-        bool status = false;
-        MySqlConnection connection = new MySqlConnection(connectionString);
-        string query = "update tests set passinglevel=@passingLevel where id =@testId;";
 
-       MySqlCommand command = new MySqlCommand(query, connection);
-        command.Parameters.AddWithValue("@testId", testId);
-        command.Parameters.AddWithValue("@passingLevel", passingLevel);
+      string query = "select * from tests";
+      MySqlCommand command = new MySqlCommand(query, connection);
+      MySqlDataAdapter adapter = new MySqlDataAdapter(command);
+      DataSet dataSet = new DataSet();
+      MySqlCommandBuilder builder = new MySqlCommandBuilder(adapter);
+      adapter.Fill(dataSet);
+      DataTable dataTable = dataSet.Tables[0];
 
-        try
-        {
-            connection.Open();
-            int rowsAffected = command.ExecuteNonQuery();
-            if (rowsAffected > 0)
-                status = true;
-        }
+      DataColumn[] keyColumn = new DataColumn[1];
+      keyColumn[0] = dataTable.Columns["id"];
+      dataTable.PrimaryKey = keyColumn;
 
-        catch (Exception e)
-        {
-            Console.WriteLine(e.Message);
-        }
-        finally
-        {
-            connection.Close();
-        }
-        return status;
+      DataRow row = dataTable.Rows.Find(testId);
+      row["passinglevel"] = passingLevel;
+      adapter.Update(dataSet);
+      status = true;
+
 
     }
+    catch (Exception e)
+    {
+      Console.WriteLine(e.Message);
+      throw e;
+    }
+    return status;
+  }
     public List<CandidateSubjectResults> GetSubjectResultDetails(int subjectId)
     {
         List<CandidateSubjectResults> resultdetails = new List<CandidateSubjectResults>();
