@@ -15,7 +15,5 @@ namespace QuestionBankInterfaces;
 
     public bool InsertQuestion(NewQuestion question);
 
-    public bool InsertCriteria(NewCriteria criteria);
-
     public string GetCriteria(string subject, int questionId);
 }

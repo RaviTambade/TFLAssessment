@@ -21,7 +21,7 @@ public class QuestionBankController : ControllerBase
          IQuestionBankService _svc = new QuestionBankService();
 
 
-    //http://localhost:5172/api/questionbank/questions/2
+    //http://localhost:5172/api/questionbank/questions
     [HttpGet("questions")]
     public IActionResult GetAllQuestions()
     {
@@ -89,6 +89,7 @@ public class QuestionBankController : ControllerBase
         [HttpPut("answer/question/{id}")]
         public IActionResult UpdateAnswer(int id ,char answerKey)
         {
+            Console.WriteLine("Id and answerkey:"+id+answerKey);
              bool status = false;
             status = _svc.UpdateAnswer(id,answerKey);
            return Ok(status);
@@ -126,14 +127,5 @@ public class QuestionBankController : ControllerBase
             status = _svc.InsertQuestion(question);
            return Ok(status);
         }
-
-
-         [HttpPost("criteria")]
-        public IActionResult InsertCriteria(NewCriteria criteria)
-        {
-             bool status = false;
-            status = _svc.InsertCriteria(criteria);
-           return Ok(status);
-        }
-       
+      
 }
