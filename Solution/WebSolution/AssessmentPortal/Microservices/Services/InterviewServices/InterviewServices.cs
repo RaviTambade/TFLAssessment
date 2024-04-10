@@ -77,7 +77,7 @@ public class InterviewService :IInterviewService
                 string subName = reader["title"].ToString();
                 InterviewCandidateDetails InterviewSubjects = new InterviewCandidateDetails();
                 InterviewSubjects.CandidateId = candidateid;
-               // InterviewSubjects.InterviewSubjectName = subName;
+        
                 candidateDetails.Add(InterviewSubjects);
             }
             reader.Close();
@@ -90,8 +90,7 @@ public class InterviewService :IInterviewService
         {
             connection.Close();
         }
-        return       candidateDetails;
-;
+        return candidateDetails;
     }
 
     
@@ -112,13 +111,13 @@ public class InterviewService :IInterviewService
             MySqlDataReader reader = command.ExecuteReader();
             while (reader.Read())
             {
-                int id = int.Parse(reader["id"].ToString());
+   
                 string interviewdate = reader["interviewdate"].ToString();
                 string interviewtime = reader["interviewtime"].ToString();
                 string smeName = reader["SmeName"].ToString();
 
 
-                interviewInfo.Id = id;
+                interviewInfo.Id = interviewId;
                 interviewInfo.InterviewDate = interviewdate;
                 interviewInfo.InterviewTime = interviewtime;
                 interviewInfo.SMEName = smeName;
@@ -143,10 +142,10 @@ public class InterviewService :IInterviewService
     public bool RescheduleInterview(int interviewId,DateTime date)
     {
         bool status = false;
-        string query = "update interviews set interviewdate =@interviewdate  where  id =@interviewId  ";
+        string query = "update interviews set interviewdate =@interviewdate  where  id =@interviewId ";
         MySqlConnection connection = new MySqlConnection(connectionString);
         MySqlCommand command = new MySqlCommand(query, connection);
-        command.Parameters.AddWithValue("@date", date);
+        command.Parameters.AddWithValue("@interviewdate", date);
         command.Parameters.AddWithValue("@interviewId", interviewId);
         try
         {
@@ -202,9 +201,10 @@ public class InterviewService :IInterviewService
 
 
 
-     public  bool CancelInterview(int interviewId){
+     public  bool CancelInterview(int interviewId)
+     {
        bool status = false;
-        string query = "delete from interview where id =@id";
+        string query = "delete from interviews where id =@id";
         MySqlConnection connection = new MySqlConnection(connectionString);
        MySqlCommand command = new MySqlCommand(query, connection);
         command.Parameters.AddWithValue("@id", interviewId);
