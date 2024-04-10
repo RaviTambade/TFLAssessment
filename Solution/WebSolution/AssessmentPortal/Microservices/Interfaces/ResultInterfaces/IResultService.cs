@@ -18,4 +18,6 @@ public interface IResultService{
     public List<FailedCandidateDetails> GetFailedCandidateResults(int testId);
 
     public bool SetPassingLevel (int testId,int passingLevel);
+
+    public List<CandidateSubjectResults> GetSubjectResultDetails(int subjectId);
 }

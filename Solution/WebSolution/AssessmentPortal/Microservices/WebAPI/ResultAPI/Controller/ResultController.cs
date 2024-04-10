@@ -120,6 +120,15 @@ public class ResultController : ControllerBase
             return Ok(status);
         }
 
+
+          [HttpGet("/results/subjectresults/{subjectid}")]
+        public IActionResult GetSubjectResultDetails(int subjectId)
+        {   
+            IResultService _svc = new ResultService();
+            List<CandidateSubjectResults> results = _svc.GetSubjectResultDetails(subjectId);
+            return Ok(results);
+        }
+
         
 
 }
