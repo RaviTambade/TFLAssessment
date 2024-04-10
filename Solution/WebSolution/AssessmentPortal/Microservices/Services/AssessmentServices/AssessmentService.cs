@@ -22,7 +22,7 @@ public class AssessmentService :IAssessmentService
         
         bool status = false;
         MySqlConnection connection = new MySqlConnection(connectionString);
-        string query = @"INSERT INTO tests(subjectid,duration,smeid,creationdate,modificationdate,scheduleddate) VALUES (@subjectid,@duration,@smeid,@creationdate,@modificationdate,@scheduleddate)";
+        string query = @"INSERT INTO tests(subjectid,duration,smeid,creationdate,modificationdate,scheduleddate,passinglevel) VALUES (@subjectid,@duration,@smeid,@creationdate,@modificationdate,@scheduleddate,@passinglevel)";
         MySqlCommand command = new MySqlCommand(query, connection);
         TimeOnly time = newTest.Duration;
         command.Parameters.AddWithValue("@subjectid", newTest.SubjectId);
@@ -31,6 +31,7 @@ public class AssessmentService :IAssessmentService
         command.Parameters.AddWithValue("@creationdate", newTest.CreationDate);
         command.Parameters.AddWithValue("@modificationdate", newTest.ModificationDate);
         command.Parameters.AddWithValue("@scheduleddate", newTest.ScheduledDate);
+        command.Parameters.AddWithValue("@passinglevel", newTest.PassingLevel);
 
         try
         {

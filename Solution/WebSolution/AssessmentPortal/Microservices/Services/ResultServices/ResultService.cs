@@ -250,7 +250,7 @@ public class ResultService : IResultService
                 int candidateid = int.Parse(reader["candidateid"].ToString());
                 string fname = reader["firstname"].ToString();
                 string lname = reader["lastname"].ToString();
-                
+
                 AppearedCandidate candidate = new AppearedCandidate();
 
                 candidate.TestId = testid;
@@ -272,7 +272,7 @@ public class ResultService : IResultService
         return appearedCandidates;
     }
 
-     public List<PassedCandidateDetails> GetPassedCandidateResults(int testId)
+    public List<PassedCandidateDetails> GetPassedCandidateResults(int testId)
     {
         List<PassedCandidateDetails> passedCandidates = new List<PassedCandidateDetails>();
         MySqlConnection connection = new MySqlConnection(connectionString);
@@ -297,15 +297,15 @@ public class ResultService : IResultService
                 string lname = reader["lastname"].ToString();
                 int passinglevel = int.Parse(reader["passinglevel"].ToString());
                 int score = int.Parse(reader["score"].ToString());
-                
+
                 PassedCandidateDetails candidate = new PassedCandidateDetails();
 
                 candidate.TestId = testid;
                 candidate.CandidateId = candidateid;
                 candidate.FirstName = fname;
                 candidate.LastName = lname;
-                candidate.PassingLevel=passinglevel;
-                candidate.Score= score;
+                candidate.PassingLevel = passinglevel;
+                candidate.Score = score;
 
                 passedCandidates.Add(candidate);
             }
@@ -347,15 +347,15 @@ public class ResultService : IResultService
                 string lname = reader["lastname"].ToString();
                 int passinglevel = int.Parse(reader["passinglevel"].ToString());
                 int score = int.Parse(reader["score"].ToString());
-                
+
                 FailedCandidateDetails candidate = new FailedCandidateDetails();
 
                 candidate.TestId = testid;
                 candidate.CandidateId = candidateid;
                 candidate.FirstName = fname;
                 candidate.LastName = lname;
-                candidate.PassingLevel=passinglevel;
-                candidate.Score= score;
+                candidate.PassingLevel = passinglevel;
+                candidate.Score = score;
 
                 failedCandidates.Add(candidate);
             }
@@ -371,11 +371,93 @@ public class ResultService : IResultService
         }
         return failedCandidates;
     }
-    
-    
-    
 
-      
+    public bool SetPassingLevel(int testId, int passingLevel)
+    {
+        bool status = false;
+        MySqlConnection connection = new MySqlConnection(connectionString);
+        string query = "update tests set passinglevel=@passingLevel where id =@testId;";
+
+       MySqlCommand command = new MySqlCommand(query, connection);
+        command.Parameters.AddWithValue("@testId", testId);
+        command.Parameters.AddWithValue("@passingLevel", passingLevel);
+
+        try
+        {
+            connection.Open();
+            int rowsAffected = command.ExecuteNonQuery();
+            if (rowsAffected > 0)
+                status = true;
+        }
+
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+        finally
+        {
+            connection.Close();
+        }
+        return status;
 
     }
+    public List<CandidateSubjectResults> GetSubjectResultDetails(int subjectId)
+    {
+        List<CandidateSubjectResults> resultdetails = new List<CandidateSubjectResults>();
+        MySqlConnection connection = new MySqlConnection(connectionString);
+        string query=@"select tests.id,tests.subjectid,candidatetestresults.candidateid,employees.firstname,employees.lastname,candidatetestresults.score,subjects.title
+                        from tests
+                        inner join candidatetestresults
+                        on tests.id=candidatetestresults.testid
+                        inner join employees
+                        on candidatetestresults.candidateid=employees.id
+                        inner join subjects
+                        on tests.subjectid=subjects.id
+                        where tests.subjectid=@SubjectId";
+         try
+        {
+            MySqlCommand command = new MySqlCommand(query, connection);
+            command.Parameters.AddWithValue("@SubjectId", subjectId);
+            connection.Open();
+            MySqlDataReader reader = command.ExecuteReader();
+
+             while (reader.Read())
+            {
+                int testid = int.Parse(reader["id"].ToString());
+                int candidateid = int.Parse(reader["candidateid"].ToString());
+                int subjectid = int.Parse(reader["subjectId"].ToString());
+                string fname = reader["firstname"].ToString();
+                string lname = reader["lastname"].ToString();
+                string subject = reader["title"].ToString();
+                int score = int.Parse(reader["score"].ToString());
+
+                CandidateSubjectResults subjectresults = new CandidateSubjectResults();
+
+                subjectresults.TestId = testid;
+                subjectresults.CandidateId = candidateid;
+                subjectresults.SubjectId = subjectid;
+                subjectresults.FirstName = fname;
+                subjectresults.LastName = lname;
+                subjectresults.Subject = subject;
+                subjectresults.Score = score;
+                resultdetails.Add(subjectresults);
+            }
+              reader.Close();
+         }
+
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+        finally
+        {
+            connection.Close();
+        }
+        return resultdetails;
+    }
+
+   
+
+
+}
 

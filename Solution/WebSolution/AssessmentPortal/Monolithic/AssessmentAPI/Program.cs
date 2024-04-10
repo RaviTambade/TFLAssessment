@@ -265,12 +265,6 @@ app.MapPut(updateQuestionOptions,(int questionId, Question options)=>{
 });
 
 
-app.MapPut(UpdateCriteria,(int evaluationCriteriaId,int questionId)=>{
-    bool status=criteriaManager.UpdateCriteria(evaluationCriteriaId,questionId);
-    return status;
-});
-
-
 app.MapPut(updateAnswer,(Question answer,int questionId)=>{
     bool status=questionBank.UpdateAnswer(answer,questionId);
     return status;   

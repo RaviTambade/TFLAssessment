@@ -30,11 +30,11 @@ app.UseAuthorization();
 
 app.UseEndpoints(endpoints =>
 {
-    endpoints.MapControllerRoute(
+        endpoints.MapControllerRoute(
         name: "default",
         pattern: "{controller=Home}/{action=Index}/{id?}");
-    endpoints.MapRazorPages();
-    endpoints.MapControllers(); // Map Minimal Web API endpoints
+        endpoints.MapRazorPages();
+        endpoints.MapControllers(); // Map Minimal Web API endpoints
 });
 
 

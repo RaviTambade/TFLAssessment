@@ -10,5 +10,6 @@ public class Assessment
     public DateTime ModificationDate {get;set;}
     public DateTime ScheduledDate {get;set;}
     public string Status {get;set;}
+    public int PassingLevel{get;set;}
     
 }

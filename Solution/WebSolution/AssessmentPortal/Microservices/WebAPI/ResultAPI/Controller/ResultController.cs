@@ -112,14 +112,22 @@ public class ResultController : ControllerBase
         }
 
        
+        [HttpPut("/setpassinglevel/{testId}/passingLevel/{passingLevel}")]
+        public IActionResult SetPassingLevel(int testId,int passingLevel)
+        {   
+            IResultService _svc = new ResultService();
+            bool status = _svc.SetPassingLevel(testId,passingLevel);
+            return Ok(status);
+        }
 
-        // public IActionResult SetPassingLevel(int testId,int passingLevel)
-        // {   
-        //     IResultService _svc = new ResultService();
-        //     CandidateResultDetails result = _svc.SetPassingLevel(candidateId,testId);
-        //     Console.WriteLine(result);
-        //     return Ok(result);
-        // }
+
+          [HttpGet("/results/subjectresults/{subjectid}")]
+        public IActionResult GetSubjectResultDetails(int subjectId)
+        {   
+            IResultService _svc = new ResultService();
+            List<CandidateSubjectResults> results = _svc.GetSubjectResultDetails(subjectId);
+            return Ok(results);
+        }
 
         
 
