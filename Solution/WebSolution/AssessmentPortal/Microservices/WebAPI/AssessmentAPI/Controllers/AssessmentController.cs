@@ -98,6 +98,9 @@ public class AssessmentController : ControllerBase
 
         }
 
+         
+         
+         //http://localhost:5151/api/Assessment/createtest
          [HttpPost("createtest")]
         public IActionResult CreateTest( Assessment assessment)
         {
@@ -105,6 +108,8 @@ public class AssessmentController : ControllerBase
             return Ok(status);
         }
 
+        
+        //http://localhost:5151/api/Assessment/addquestion/assessments/1/questions/10
         [HttpPost("addquestion/assessments/{assessmentId}/questions/{questionId}")]
         public IActionResult AddQuestion(int assessmentId,int questionId)
         {
@@ -112,6 +117,8 @@ public class AssessmentController : ControllerBase
             return Ok(status);
         }
 
+        
+       // http://localhost:5151/api/Assessment/addmultiplequestions/assessments/1
         [HttpPost("addmultiplequestions/assessments/{assessmentId}")]
         public IActionResult AddQuestions(int assessmentId,List<TestQuestion> questions)
         {
@@ -119,6 +126,9 @@ public class AssessmentController : ControllerBase
             return Ok(status);
         }
 
+        
+        
+        //http://localhost:5151/api/Assessment/1/questions/9
         [HttpDelete("{assessmentId}/questions/{questionId}")]
         public IActionResult RemoveQuestion(int assessmentId,int questionId)
         {
@@ -126,6 +136,8 @@ public class AssessmentController : ControllerBase
             return Ok(status);
         }
 
+        
+        //http://localhost:5151/api/Assessment/1/duration/40
         [HttpPut("{assessmentId}/duration/{duration}")]
         public IActionResult ChangeDuration(int assessmentId,string duration)
         {
@@ -133,6 +145,9 @@ public class AssessmentController : ControllerBase
             return Ok(status);
         }
 
+
+
+        //http://localhost:5151/api/Assessment/1/reschedule/2024-01-01
         [HttpPut("{assessmentId}/reschedule/{date}")]
         public IActionResult Reschedule(int assessmentId,DateTime date)
         {
@@ -140,6 +155,9 @@ public class AssessmentController : ControllerBase
             return Ok(status);
         }
 
+
+
+        //http://localhost:5151/api/Assessment/deletequestions
         [HttpDelete("deletequestions")]
         public IActionResult DeleteQuestions(int[] testQuestions)
         {
