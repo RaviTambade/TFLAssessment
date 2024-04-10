@@ -56,12 +56,11 @@ public class InterviewService :IInterviewService
     public List<InterviewCandidateDetails> GetInterviewedCandidatesSubjects(int candidateId)
     {
         List<InterviewCandidateDetails> candidateDetails = new List<InterviewCandidateDetails>();
-        string query = @"select interviews.candidateid,subjects.title
-                         from interviews
-                         inner join subjectmatterexperts
-                         on interviews.smeid = subjectmatterexperts.id
-                         inner join subjects on subjectmatterexperts.subjectid=subjects.id
-                         where interviews.candidateid=@CandidateId;";
+        string query = @"select interviews.candidateid,employees.firstname,employees.lastname,subjects.title
+                        from interviews inner join employees on  interviews.candidateid= employees.id
+                        inner join subjectmatterexperts on interviews.smeid = subjectmatterexperts.id
+                        inner join subjects on subjectmatterexperts.subjectid=subjects.id
+                        where interviews.candidateid=3;";
 
 
         MySqlConnection connection = new MySqlConnection(connectionString);
@@ -75,10 +74,18 @@ public class InterviewService :IInterviewService
             {
                 int candidateid = int.Parse(reader["candidateid"].ToString());
                 string subName = reader["title"].ToString();
-                InterviewCandidateDetails InterviewSubjects = new InterviewCandidateDetails();
-                InterviewSubjects.CandidateId = candidateid;
+                string firstName = reader["firstname"].ToString();
+                string lastName = reader["lastname"].ToString();
+
+                InterviewCandidateDetails InterviewSubject = new InterviewCandidateDetails();
+                InterviewSubject.CandidateId = candidateid;
+                InterviewSubject.FirstName = firstName;
+                InterviewSubject.LastName = lastName;
+                InterviewSubject.Subject = subName;
+                
+                
         
-                candidateDetails.Add(InterviewSubjects);
+                candidateDetails.Add(InterviewSubject);
             }
             reader.Close();
         }
