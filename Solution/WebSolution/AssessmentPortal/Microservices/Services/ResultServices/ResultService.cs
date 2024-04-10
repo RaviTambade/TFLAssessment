@@ -401,39 +401,37 @@ public class ResultService : IResultService
         return status;
 
     }
-    public List<CandidateSubjectResult> GetSubjectResultDetails(int subjectId)
+    public List<CandidateSubjectResults> GetSubjectResultDetails(int subjectId)
     {
-        List<CandidateSubjectResultils> resultdetails = new List<CandidateSubjectResult>();
+        List<CandidateSubjectResults> resultdetails = new List<CandidateSubjectResults>();
         MySqlConnection connection = new MySqlConnection(connectionString);
         string query=@"select tests.id,tests.subjectid,candidatetestresults.candidateid,employees.firstname,employees.lastname,candidatetestresults.score,subjects.title
-            from tests
-            inner join candidatetestresults
-            on tests.id=candidatetestresults.testid
-            inner join employees
-            on candidatetestresults.candidateid=employees.id
-            inner join subjects
-            on tests.subjectid=subjects.id
-            where tests.subjectid=@SubjectId";
-
-           
+                        from tests
+                        inner join candidatetestresults
+                        on tests.id=candidatetestresults.testid
+                        inner join employees
+                        on candidatetestresults.candidateid=employees.id
+                        inner join subjects
+                        on tests.subjectid=subjects.id
+                        where tests.subjectid=@SubjectId";
          try
         {
             MySqlCommand command = new MySqlCommand(query, connection);
             command.Parameters.AddWithValue("@SubjectId", subjectId);
             connection.Open();
             MySqlDataReader reader = command.ExecuteReader();
-            }
+
              while (reader.Read())
             {
-                int testid = int.Parse(reader["testid"].ToString());
+                int testid = int.Parse(reader["id"].ToString());
                 int candidateid = int.Parse(reader["candidateid"].ToString());
-                int subjectId = int.Parse(reader["subjectId"].ToString());
+                int subjectid = int.Parse(reader["subjectId"].ToString());
                 string fname = reader["firstname"].ToString();
                 string lname = reader["lastname"].ToString();
-                string subject = reader["subject"].ToString();
+                string subject = reader["title"].ToString();
                 int score = int.Parse(reader["score"].ToString());
 
-                CandidateSubjectResultils subjectresults = new CandidateSubjectResultils();
+                CandidateSubjectResults subjectresults = new CandidateSubjectResults();
 
                 subjectresults.TestId = testid;
                 subjectresults.CandidateId = candidateid;
@@ -444,10 +442,9 @@ public class ResultService : IResultService
                 subjectresults.Score = score;
                 resultdetails.Add(subjectresults);
             }
-            reader.Close();
+              reader.Close();
+         }
 
-
-        }
         catch (Exception e)
         {
             Console.WriteLine(e.Message);
@@ -460,8 +457,6 @@ public class ResultService : IResultService
     }
 
    
-
-
 
 
 }
