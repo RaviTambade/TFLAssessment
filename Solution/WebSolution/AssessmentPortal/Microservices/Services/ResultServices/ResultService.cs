@@ -250,7 +250,7 @@ public class ResultService : IResultService
                 int candidateid = int.Parse(reader["candidateid"].ToString());
                 string fname = reader["firstname"].ToString();
                 string lname = reader["lastname"].ToString();
-                
+
                 AppearedCandidate candidate = new AppearedCandidate();
 
                 candidate.TestId = testid;
@@ -272,7 +272,7 @@ public class ResultService : IResultService
         return appearedCandidates;
     }
 
-     public List<PassedCandidateDetails> GetPassedCandidateResults(int testId)
+    public List<PassedCandidateDetails> GetPassedCandidateResults(int testId)
     {
         List<PassedCandidateDetails> passedCandidates = new List<PassedCandidateDetails>();
         MySqlConnection connection = new MySqlConnection(connectionString);
@@ -297,15 +297,15 @@ public class ResultService : IResultService
                 string lname = reader["lastname"].ToString();
                 int passinglevel = int.Parse(reader["passinglevel"].ToString());
                 int score = int.Parse(reader["score"].ToString());
-                
+
                 PassedCandidateDetails candidate = new PassedCandidateDetails();
 
                 candidate.TestId = testid;
                 candidate.CandidateId = candidateid;
                 candidate.FirstName = fname;
                 candidate.LastName = lname;
-                candidate.PassingLevel=passinglevel;
-                candidate.Score= score;
+                candidate.PassingLevel = passinglevel;
+                candidate.Score = score;
 
                 passedCandidates.Add(candidate);
             }
@@ -347,15 +347,15 @@ public class ResultService : IResultService
                 string lname = reader["lastname"].ToString();
                 int passinglevel = int.Parse(reader["passinglevel"].ToString());
                 int score = int.Parse(reader["score"].ToString());
-                
+
                 FailedCandidateDetails candidate = new FailedCandidateDetails();
 
                 candidate.TestId = testid;
                 candidate.CandidateId = candidateid;
                 candidate.FirstName = fname;
                 candidate.LastName = lname;
-                candidate.PassingLevel=passinglevel;
-                candidate.Score= score;
+                candidate.PassingLevel = passinglevel;
+                candidate.Score = score;
 
                 failedCandidates.Add(candidate);
             }
@@ -371,11 +371,39 @@ public class ResultService : IResultService
         }
         return failedCandidates;
     }
-    
-    
-    
 
-      
+    public bool SetPassingLevel(int testId, int passingLevel)
+    {
+        bool status = false;
+        MySqlConnection connection = new MySqlConnection(connectionString);
+        string query = "update tests set passinglevel=@passingLevel where id =@testId;";
+
+       MySqlCommand command = new MySqlCommand(query, connection);
+        command.Parameters.AddWithValue("@testId", testId);
+        command.Parameters.AddWithValue("@passingLevel", passingLevel);
+
+        try
+        {
+            connection.Open();
+            int rowsAffected = command.ExecuteNonQuery();
+            if (rowsAffected > 0)
+                status = true;
+        }
+
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+        finally
+        {
+            connection.Close();
+        }
+        return status;
 
     }
+
+
+
+
+}
 

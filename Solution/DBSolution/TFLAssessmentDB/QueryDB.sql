@@ -208,6 +208,19 @@ select @pcorrectAnswers,@pincorrectAnswers,@pskippedQuestions;
 -- get interviewdetails where interviewid=2
 call spinterviewdetails(2);
 
+-- Update passing level by testid
+update tests set passinglevel = 5 where id=1;
+update tests set passinglevel=@passinglevel where id =@id;
+
+-- get test results by passing subjectid=1
+select tests.id,tests.subjectid,candidatetestresults.candidateid,employees.firstname,employees.lastname,candidatetestresults.score
+from tests
+inner join candidatetestresults
+on tests.id=candidatetestresults.testid
+inner join employees
+on candidatetestresults.candidateid=employees.id
+where tests.subjectid=1;
+
 
 
 
