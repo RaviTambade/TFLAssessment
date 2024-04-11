@@ -61,13 +61,9 @@ public class TestManager :ITestManager
     }  //********
     public  List<CandidateResultDetails>  GetTestResult(int testId){
         List<CandidateResultDetails>   results=new List<CandidateResultDetails>();
-
-
         return results;
+    } 
 
-
-
-    } //********
     public CandidateResultDetails  GetCandidateTestResult(int testId, int candidateId){
             CandidateResultDetails result=new CandidateResultDetails();
 
@@ -80,6 +76,14 @@ public class TestManager :ITestManager
         return allCandidatesScore;
 
     }
+   public  List<Employee>  GetAllEmployees(){
+        List<Employee>   employees=new List<Employee>();
+        return employees;
+    } 
 
+     public  List<Subject>  GetAllSubjects(){
+        List<Subject>   subjects=new List<Subject>();
+        return subjects;
+    } 
 
 }

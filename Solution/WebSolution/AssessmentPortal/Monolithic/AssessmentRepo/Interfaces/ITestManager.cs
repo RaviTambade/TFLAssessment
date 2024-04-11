@@ -5,6 +5,8 @@ namespace Assessment.Repositories.Interfaces;
 public interface ITestManager
 {
 
+   public List<Employee> GetAllEmployees();
+   public List<Subject> GetAllSubjects();
   public Test GetTestDetails(int testId);
   public List<Test> GetAllTests(DateTime fromDate, DateTime toDate);
   public List<Test> GetAllTestsDesignedBy(int smeId);
@@ -17,4 +19,6 @@ public interface ITestManager
   public CandidateResultDetails GetCandidateTestResult(int testId, int candidateId);
 
   public List<CandidateResultDetails> GetAllCandidatesScore(int testId);
+
+  
 }
