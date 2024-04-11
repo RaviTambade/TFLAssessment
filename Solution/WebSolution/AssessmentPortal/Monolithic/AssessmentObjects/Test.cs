@@ -10,9 +10,6 @@ public class Test
     public DateTime ModificationDate {get;set;}
     public DateTime ScheduledDate {get;set;}
 
-    public string Subject{get; set;}
-
-     public string FirstName{get; set;}
-
-     public string LastName{get; set;}
+    public string Status {get;set;}
+    public int PassingLevel{get;set;}
 }
