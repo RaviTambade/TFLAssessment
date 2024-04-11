@@ -9,8 +9,7 @@ public interface IMockTestManager
 
 
     // public List<InterviewCandidateDetails> GetAllInterviewedCandidatesInfo();
-    public List<Employee> GetAllEmployees();
-    public List<Subject> GetAllSubjects();
+    
     public List<EvaluationCriteria> GetEvalutionCriterias();
     public List<EvaluationCriteria> GetEvalutionCriteriasBySubject(int subjectId);
     public int GetCandidateScore(int candidateId, int testId);

@@ -118,7 +118,34 @@ public class TestManager :ITestManager
     } 
 
      public  List<Subject>  GetAllSubjects(){
-        List<Subject>   subjects=new List<Subject>();
+        List<Subject> subjects = new List<Subject>();
+        string query = @"select * from subjects";
+
+        MySqlConnection connection = new MySqlConnection(connectionString);
+        MySqlCommand command = new MySqlCommand(query, connection);
+        try
+        {
+            connection.Open();
+            MySqlDataReader reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                int id = int.Parse(reader["id"].ToString());
+                string title = reader["title"].ToString();
+                Subject subject = new Subject();
+                subject.Id = id;
+                subject.Title = title;
+                subjects.Add(subject);
+            }
+            reader.Close();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+        finally
+        {
+            connection.Close();
+        }
         return subjects;
     } 
 

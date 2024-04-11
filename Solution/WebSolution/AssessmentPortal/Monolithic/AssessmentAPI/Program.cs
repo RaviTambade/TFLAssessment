@@ -38,30 +38,43 @@ app.UseEndpoints(endpoints =>
 // REST API URL;
 string apiEmployeesUrl = "/employees"; 
 string allQuestionsAPI = "/questions";
-string apiSubjectsUrl = "/subjects";      //pending
+string apiSubjectsUrl = "/subjects";      
 string apiTestUrl = "/tests";
 string apiCriteriaUrl = "/criteria";
-string updateAnswer = "/questions/answers/{questionId}";   //pending
-string apiCandidateTestAnswersUrl = "/answersheet/candidates/{candidateId}";
-string apiQuestionsUrl = "/questions/tests/{testId}";
+//
+string updateAnswer = "/question/{id}/updateanswer/{answerKey}"; 
+string apiCandidateTestAnswersUrl = "/answersheet/candidates/{candidateId}";   
+// string apiQuestionsUrl = "/questions/tests/{testId}";
+
+
 string question = "/questions/subjects/{subject}/questions/{questionid}";
+
 string allQuestionsBySubjectUrl = "/questions/subjects/{subjectid}";
 string testSubjectCriteriaAPI = "/questions/subjects/{subjectId}/criterias/{criteriaId}";
-string insertnewquestionurl = "/question";
+string insertnewquestionurl = "/insert/question";
 string insertnewcriteriaurl = "/criteria";
+
+//pending
 string deleteTestQuestion = "/testquestions";
-string candidateTestScoreUrl = "candidates/{candidateId}/tests/{testId}";
-string candidateTestResultUrl = "/result/candidates/{candidateId}/test/{testId}";
+
+string candidateTestScoreUrl = "/score/candidates/{candidateId}/tests/{testId}";
+
 string criteriaBySubjectUrl = "/criterias/subjects/{subjectId}";
-string UpdateCriteria = "criteria/{evaluationCriteriaId}/question/{questionId}";
-string criteria = "/subject/{subject}/question/{questionId}";//question controller reurn only criteria title
+
+
+string UpdateCriteria = "criteria/{evaluationCriteriaId}/question/{questionId}"; //pending
+
+
+string criteria = "/criteria/subject/{subject}/question/{questionId}";//question controller reurn only criteria title
 string questionUrl = "/questions/{questionId}";
 string updateQuestionOptions = "/update/options/question/{questionId}";  //check returntype
-string testQuestionsUrl = "/questions/tests/{testId}";
+
 string testStartTimesettingUrl = "/setstarttime/{candidateId}/tests/{testId}";
 string testEndTimesettingUrl = "setendtime/{candidateId}/tests/{testId}";
+
 string candidateTestResultDetailsUrl = "/candidates/{candidateId}/test/{testId}";
 string resheduleInterviewUrl = "/resheduleinterview/interviewId/{interviewid}/date/{date}";
+
 string InterviewedCandidatesInfoUrl = "/interviewedcandidates";   //pending
 string subjectCriteriaUrl = "questions/subjectcriteria/{criteriaId}/questions/{questionId}";   //pending
 string InterviewedCandidatesSubjectsUrl = "/interviewedcandidatessubjects/{candidateId}";  //pending
@@ -95,14 +108,6 @@ app.MapGet(apiSubjectsUrl, () =>
 });
 
 
-
-
-app.MapGet(apiSubjectsUrl, () =>
-{
-   List<Subject> subjects = mockTestManager.GetAllSubjects();
-   return subjects;
-});
-
 app.MapGet(apiCriteriaUrl, () =>
 {
    List<EvaluationCriteria> evaluationCriterias = criteriaManager.GetEvalutionCriterias();
@@ -113,12 +118,6 @@ app.MapGet(criteriaBySubjectUrl, (int subjectId) =>
 {
    List<EvaluationCriteria> evaluationCriterias = criteriaManager.GetEvalutionCriteriasBySubject(subjectId);
    return evaluationCriterias;
-});
-
-app.MapGet(testQuestionsUrl, (int testId) =>
-{
-   List<Question> questions = mockTestManager.GetTestQuestions(testId);
-   return questions;
 });
 
 app.MapGet(apiTestUrl, () =>
@@ -144,22 +143,14 @@ app.MapGet(InterviewedCandidatesSubjectsUrl, (int candidateId) =>
    return InterviewCandidatesSubjects;
 });
 
-app.MapGet(apiQuestionsUrl, (int testId) =>
-{
-   List<TestQuestion> questions = mockTestManager.GetQuestions(testId);
-   return questions;
-});
+// app.MapGet(apiQuestionsUrl, (int testId) =>
+// {
+//    List<TestQuestion> questions = mockTestManager.GetQuestions(testId);
+//    return questions;
+// });
 
-app.MapGet(candidateTestResultUrl, (int candidateId, int testId) =>
-{
-   int score = resultManager.GetCandidateScore(candidateId, testId);
-   return score;
-});
-app.MapGet(candidateTestResultUrl, (int candidateId, int testId) =>
-{
-   int score = mockTestManager.GetCandidateScore(candidateId, testId);
-   return score;
-});
+
+
 
 app.MapGet(allQuestionsAPI, () =>
 {
@@ -187,11 +178,11 @@ app.MapGet(testSubjectCriteriaAPI, (int subjectId, int criteriaId) =>
    return criterias;
 });
 
-app.MapGet(question, (string subject, int questionid) =>
-{
-   TestQuestion question = mockTestManager.GetQuestion(subject, questionid);
-   return question;
-});
+// app.MapGet(question, (string subject, int questionid) =>
+// {
+//    TestQuestion question = mockTestManager.GetQuestion(subject, questionid);
+//    return question;
+// });
 
 app.MapGet(questionUrl, (int questionId) =>
 {
@@ -259,11 +250,12 @@ app.MapPut(updateQuestionOptions, (int questionId, Question options) =>
 });
 
 
-app.MapPut(updateAnswer, (Question answer, int questionId) =>
+app.MapPut(updateAnswer, (int id,char answerKey) =>
 {
-   bool status = questionBank.UpdateAnswer(answer, questionId);
+   bool status = questionBank.UpdateAnswer(id,answerKey);
    return status;
 });
+
 
 app.MapGet(candidateTestResultDetailsUrl, (int candidateId, int testId) =>
 {
@@ -278,9 +270,9 @@ app.MapPost(createTestUrl, (Test newTest) =>
    return status;
 });
 
-app.MapPut(resheduleInterviewUrl, (int interviewId, DateTime date, InterviewCandidateDetails details) =>
+app.MapPut(resheduleInterviewUrl, (int interviewId, DateTime date) =>
 {
-   bool status = interviewManager.ReschduleInterview(interviewId, date, details);
+   bool status = interviewManager.ReschduleInterview(interviewId, date);
    return status;
 });
 

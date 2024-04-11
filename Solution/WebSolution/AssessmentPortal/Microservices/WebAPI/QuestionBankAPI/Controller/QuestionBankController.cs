@@ -86,7 +86,7 @@ public class QuestionBankController : ControllerBase
        
         //Update  answer of the question. 
         // http://localhost:5172/api/questionbank/answer/question/1
-        [HttpPut("answer/question/{id}")]
+        [HttpPut("/question/{id}/updateanswer/{answerKey}")]
         public IActionResult UpdateAnswer(int id ,char answerKey)
         {
             Console.WriteLine("Id and answerkey:"+id+answerKey);
