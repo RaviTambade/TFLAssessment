@@ -36,12 +36,12 @@ app.UseEndpoints(endpoints =>
 
 
 // REST API URL;
-string apiEmployeesUrl = "/employees";
+string apiEmployeesUrl = "/employees"; 
 string allQuestionsAPI = "/questions";
-string apiSubjectsUrl = "/subjects";
+string apiSubjectsUrl = "/subjects";      //pending
 string apiTestUrl = "/tests";
 string apiCriteriaUrl = "/criteria";
-string updateAnswer = "/questions/answers/{questionId}";
+string updateAnswer = "/questions/answers/{questionId}";   //pending
 string apiCandidateTestAnswersUrl = "/answersheet/candidates/{candidateId}";
 string apiQuestionsUrl = "/questions/tests/{testId}";
 string question = "/questions/subjects/{subject}/questions/{questionid}";
@@ -78,6 +78,7 @@ ITestManager manager = new TestManager();
 IQuestionBankManager questionBank = new QuestionBankManager();
 IInterviewManager interviewManager = new InterviewManager();
 IEvaluationCriteriaManager criteriaManager = new EvaluationCriteriaManager();
+IMockTestManager mockTestManager = new MockTestManager();
 
 IResultManager resultManager = new ResultManager();
 //API Listners
@@ -92,13 +93,9 @@ app.MapGet(apiSubjectsUrl, () =>
    List<Subject> subjects = manager.GetAllSubjects();
    return subjects;
 });
-IMockTestManager mockTestManager = new MockTestManager();
 
-app.MapGet(apiEmployeesUrl, () =>
-{
-   List<Employee> employees = mockTestManager.GetAllEmployees();
-   return employees;
-});
+
+
 
 app.MapGet(apiSubjectsUrl, () =>
 {

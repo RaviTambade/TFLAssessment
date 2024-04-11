@@ -78,6 +78,42 @@ public class TestManager :ITestManager
     }
    public  List<Employee>  GetAllEmployees(){
         List<Employee>   employees=new List<Employee>();
+        
+        string query = "select * from employees";
+
+        MySqlConnection connection = new MySqlConnection(connectionString);
+        MySqlCommand command = new MySqlCommand(query, connection);
+
+        try
+        {
+            connection.Open();
+            MySqlDataReader reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                int id = int.Parse(reader["id"].ToString());
+                string firstName = reader["firstname"].ToString();
+                string lastName = reader["lastname"].ToString();
+                string contact = reader["contact"].ToString();
+                string email = reader["email"].ToString();
+                Employee employee = new Employee();
+                employee.Id = id;
+                employee.FirstName = firstName;
+                employee.LastName = lastName;
+                employee.Contact = contact;
+                employee.Email = email;
+                employees.Add(employee);
+            }
+            reader.Close();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+        finally
+        {
+            connection.Close();
+        }
+        
         return employees;
     } 
 
