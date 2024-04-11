@@ -25,7 +25,7 @@ public class InterviewsController : ControllerBase
             return Ok(details);
         }
 
-        [HttpGet("candidates/{candidateId}")]
+        [HttpGet("candidate/{candidateId}")]
         public IActionResult GetInterviewedCandidatesSubjects(int candidateId)
         {
             List<InterviewCandidateDetails> details =_svc.GetInterviewedCandidatesSubjects(candidateId);
