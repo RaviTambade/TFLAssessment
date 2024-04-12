@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <h2>User Form</h2>
+    <div>
+        <label for="firstName">FirstName:</label>
+        <input type="text" id="firstName" name="firstName"/><br><br>
+        <label for="lastName">LastName:</label>
+        <input type="text" id="lastName" name="lastName"/><br><br>
+        <button id="btnsubmit" type="submit">Submit</button> 
+    </div>
+
+  <script>
+
+    
+
+ $(document).ready(function () {
+
+    $("#btnsubmit").click(function(){
+         var firstName= $("#firstName").val();
+         var lastName=$("#lastName").val();
+         if(firstName==="pragati" && lastName==="bangar"){
+         console.log("firstName "+firstName);
+         console.log("lastName "+lastName);
+         alert("login successfully");
+         }
+         else{
+            alert("user is undefined");
+         }
+    })
+   })
+
+  </script>
+    
+</body>
+</html>
