@@ -61,7 +61,6 @@
 
         $("#ddlSubjects").change(function () {
             subjectId = $("#ddlSubjects").val();
-            console.log(subjectId);
         });
 
         $("#insertButton").click(function () {
@@ -73,10 +72,6 @@
       "subjectId": sId,
       "title": cTitle,
     };
-
-    console.log("skillid: " + sId);
-    console.log("criteria: " + cTitle);
-    
 
     $.ajax({
       url: insertcriteriaApi,

@@ -2,7 +2,9 @@
 namespace ResultInterfaces;
 
 public interface IResultService{
-   
+
+     public int GetCandidateScore(int candidateId, int testId);
+    
     public int GetCandidateTestScore(int candidateId, int testId);
 
     public bool SetCandidateTestStartTime(int candidateId, int testId, TestTime time);
@@ -20,6 +22,8 @@ public interface IResultService{
     public bool SetPassingLevel (int testId,int passingLevel);
 
     public List<CandidateSubjectResults> GetSubjectResultDetails(int subjectId);
+
+   
 
     
 }
