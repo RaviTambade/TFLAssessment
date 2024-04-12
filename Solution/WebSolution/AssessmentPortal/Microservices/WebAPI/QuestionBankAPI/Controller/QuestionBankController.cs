@@ -16,8 +16,6 @@ public class QuestionBankController : ControllerBase
             // Initialize with some sample data
             
         }
-        
-        
          IQuestionBankService _svc = new QuestionBankService();
 
 
