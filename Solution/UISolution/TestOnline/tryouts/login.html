@@ -20,21 +20,24 @@
 
     
 
- $(document).ready(function () {
+$(document).ready(function () {
 
-    $("#btnsubmit").click(function(){
-         var firstName= $("#firstName").val();
-         var lastName=$("#lastName").val();
-         if(firstName==="pragati" && lastName==="bangar"){
-         console.log("firstName "+firstName);
-         console.log("lastName "+lastName);
-         alert("login successfully");
+var candidates = [{firstName :"Akash",lastName:"Ajab"},{firstName :"Pragati",lastName:"Bangar"}];
+
+$("#btnsubmit").click(function(){
+     var fName= $("#firstName").val();
+     console.log(fName);
+     var lName=$("#lastName").val();
+
+     for(var i = 0; i < candidates.length; i++){
+         if(fName === candidates[i].firstName && lName === candidates[i].lastName){
+             alert("Login successful");
+             return; 
          }
-         else{
-            alert("user is undefined");
-         }
-    })
-   })
+     }
+     alert("User is undefined");
+});
+});
 
   </script>
     
