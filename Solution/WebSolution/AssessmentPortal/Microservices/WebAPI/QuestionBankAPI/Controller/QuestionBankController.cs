@@ -28,8 +28,6 @@ public class QuestionBankController : ControllerBase
     }
 
 
-
-
     //http://localhost:5172/api/questionbank/questions/2
     [HttpGet("questions/{questionId}")]
         public IActionResult GetQuestion(int questionId)
@@ -58,7 +56,6 @@ public class QuestionBankController : ControllerBase
 
 
          
-
         //Get questions by testid .
         [HttpGet("questions/tests/{testId}")]
         public IActionResult GetQuestions(int testId)
