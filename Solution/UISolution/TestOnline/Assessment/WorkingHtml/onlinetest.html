@@ -79,7 +79,7 @@
       var remainingTime = 60;
       var score;
 
-      var testId =1;
+      var testId =2;
       var candidateId = 4;
 
       //rest api urls
@@ -190,13 +190,6 @@
         //Show Result
         $("#btnResult").click(() => {
           let scoreUrl = "http://localhost:5235/api/result/candidates/"+candidateId+"/tests/"+testId+"/score";
-          // console.log(scoreUrl);
-          // $.get(scoreUrl, function (data, status) {
-          //   console.log(data);
-          //   score = (data);
-          //   $("#lblresult").text("Your Score is:" + score);
-          // });
-
         $.ajax({
         url: scoreUrl,
         type: 'GET',

@@ -23,7 +23,7 @@ public class ResultController : ControllerBase
         public IActionResult GetCandidateScore(int candidateId, int testId)
         {   
             IResultService _svc = new ResultService();
-            int result = _svc.GetCandidateTestScore(candidateId,testId);
+            int result = _svc.GetCandidateScore(candidateId,testId);
             Console.WriteLine(result);
             return Ok(result);
         }

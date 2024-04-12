@@ -279,15 +279,15 @@ public class MockTestManager : IMockTestManager
             while (reader.Read())
             {
                 int id = int.Parse(reader["id"].ToString());
-                // TimeOnly duration=TimeOnly.Parse(reader["duration"]);
+                TimeOnly duration=TimeOnly.Parse(reader["duration"].ToString());
                 int subjectId = int.Parse(reader["subjectid"].ToString());
                 int subjectExpertId = int.Parse(reader["smeid"].ToString());
                 DateTime creationDate = DateTime.Parse(reader["creationdate"].ToString());
                 DateTime modificationDate = DateTime.Parse(reader["modificationdate"].ToString());
                 DateTime scheduledDate = DateTime.Parse(reader["scheduleddate"].ToString());
-                string subject = reader["skill"].ToString();
-                string firstName = reader["firstname"].ToString();
-                string lastName = reader["lastname"].ToString();
+                // string subject = reader["skill"].ToString();
+                // string firstName = reader["firstname"].ToString();
+                // string lastName = reader["lastname"].ToString();
 
                 Test test = new Test();
                 test.Id = id;
@@ -296,9 +296,9 @@ public class MockTestManager : IMockTestManager
                 test.CreationDate = creationDate;
                 test.ModificationDate = modificationDate;
                 test.ScheduledDate = scheduledDate;
-                test.Subject = subject;
-                test.FirstName = firstName;
-                test.LastName = lastName;
+                // test.Subject = subject;
+                // test.FirstName = firstName;
+                // test.LastName = lastName;
                 tests.Add(test);
             }
         }
@@ -775,16 +775,15 @@ public class MockTestManager : IMockTestManager
 
         bool status = false;
         MySqlConnection connection = new MySqlConnection(connectionString);
-        string query = @"INSERT INTO tests(subjectid,duration,smeid,creationdate,modificationdate,scheduleddate) VALUES (@subjectid,@duration,@smeid,@creationdate,@modificationdate,@scheduleddate)";
+        string query = @"INSERT INTO tests(subjectid,duration,smeid,creationdate,modificationdate,scheduleddate,passinglevel) VALUES (@subjectid,@duration,@smeid,@creationdate,@modificationdate,@scheduleddate,@passinglevel)";
         MySqlCommand command = new MySqlCommand(query, connection);
-        TimeOnly time = newTest.Duration;
         command.Parameters.AddWithValue("@subjectid", newTest.SubjectId);
-        command.Parameters.AddWithValue("@duration", time.ToString("HH:mm:ss"));
+        command.Parameters.AddWithValue("@duration", newTest.Duration.ToString("HH:mm:ss"));
         command.Parameters.AddWithValue("@smeid", newTest.SubjectExpertId);
         command.Parameters.AddWithValue("@creationdate", newTest.CreationDate);
         command.Parameters.AddWithValue("@modificationdate", newTest.ModificationDate);
         command.Parameters.AddWithValue("@scheduleddate", newTest.ScheduledDate);
-
+        command.Parameters.AddWithValue("@passinglevel", newTest.PassingLevel);
         try
         {
             connection.Open();

@@ -16,8 +16,6 @@ public class QuestionBankController : ControllerBase
             // Initialize with some sample data
             
         }
-        
-        
          IQuestionBankService _svc = new QuestionBankService();
 
 
@@ -28,8 +26,6 @@ public class QuestionBankController : ControllerBase
         List<QuestionTitle> questions = _svc.GetAllQuestions();
         return Ok(questions);
     }
-
-
 
 
     //http://localhost:5172/api/questionbank/questions/2
@@ -60,7 +56,6 @@ public class QuestionBankController : ControllerBase
 
 
          
-
         //Get questions by testid .
         [HttpGet("questions/tests/{testId}")]
         public IActionResult GetQuestions(int testId)

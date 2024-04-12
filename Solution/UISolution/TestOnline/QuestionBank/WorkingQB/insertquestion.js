@@ -1,6 +1,6 @@
-var api = "http://localhost:5238"
-var subjectsApi = api + "/subjects";
-var criteriaApi = api + "/criterias";
+
+var subjectsApi = "http://localhost:5151/api/assessment/subjects";
+var criteriaApi = "http://localhost:5151/api/assessment/criterias";
 var subjects = [];
 var criterias = [];
 var question = [];
@@ -8,7 +8,7 @@ var subjectId;
 var criteriaId;
 $(document).ready(function () {
 
-  var insertquestionurl = "http://localhost:5238/question";
+  var insertquestionurl = "http://localhost:5172/api/questionbank/question";
 
   $.ajax({
     url: subjectsApi,
