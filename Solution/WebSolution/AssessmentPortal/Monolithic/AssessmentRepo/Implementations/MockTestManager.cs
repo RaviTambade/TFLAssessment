@@ -775,17 +775,15 @@ public class MockTestManager : IMockTestManager
 
         bool status = false;
         MySqlConnection connection = new MySqlConnection(connectionString);
-        string query = @"INSERT INTO tests(subjectid,duration,smeid,creationdate,modificationdate,scheduleddate,passinglevel,) VALUES (@subjectid,@duration,@smeid,@creationdate,@modificationdate,@scheduleddate,@passinglevel)";
+        string query = @"INSERT INTO tests(subjectid,duration,smeid,creationdate,modificationdate,scheduleddate,passinglevel) VALUES (@subjectid,@duration,@smeid,@creationdate,@modificationdate,@scheduleddate,@passinglevel)";
         MySqlCommand command = new MySqlCommand(query, connection);
-        TimeOnly time = newTest.Duration;
         command.Parameters.AddWithValue("@subjectid", newTest.SubjectId);
-        command.Parameters.AddWithValue("@duration", time.ToString("HH:mm:ss"));
+        command.Parameters.AddWithValue("@duration", newTest.Duration.ToString("HH:mm:ss"));
         command.Parameters.AddWithValue("@smeid", newTest.SubjectExpertId);
         command.Parameters.AddWithValue("@creationdate", newTest.CreationDate);
         command.Parameters.AddWithValue("@modificationdate", newTest.ModificationDate);
         command.Parameters.AddWithValue("@scheduleddate", newTest.ScheduledDate);
         command.Parameters.AddWithValue("@passinglevel", newTest.PassingLevel);
-
         try
         {
             connection.Open();
