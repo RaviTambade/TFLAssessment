@@ -46,8 +46,8 @@
 
     var questionId=10;
     var selectedOption;
-    var questionUrl="http://localhost:5238/questions/"+questionId;
-    var updateOptions=" http://localhost:5238/questions/options/"+questionId;
+    var questionUrl="http://localhost:5172/api/questionbank/questions/"+questionId;
+    var updateOptions=" http://localhost:5172/api/questionbank/update/options/question/"+questionId;
 
     $(document).ready(()=>{
         $.ajax({
