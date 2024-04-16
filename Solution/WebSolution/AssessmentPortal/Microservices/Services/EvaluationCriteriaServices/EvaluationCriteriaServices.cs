@@ -41,6 +41,38 @@ namespace EvaluationCriteriaServices;
         return status;
     }
 
+    public bool UpdateSubject(int id, int subjectId)
+    {
+
+        bool status = false;
+        MySqlConnection connection = new MySqlConnection(connectionString);
+        string query = "update evaluationcriterias set subjectid= @subjectId where id= @id;";
+
+        MySqlCommand command = new MySqlCommand(query, connection);
+
+        command.Parameters.AddWithValue("@id", id);
+        command.Parameters.AddWithValue("@subjectId", subjectId);
+
+        try
+        {
+            connection.Open();
+            int rowsAffected = command.ExecuteNonQuery();
+            if (rowsAffected > 0)
+            {
+                status = true;
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+        finally
+        {
+            connection.Close();
+        }
+        return status;
+    }
+
 
     public bool InsertCriteria(EvaluationCriteria criteria)
     {
