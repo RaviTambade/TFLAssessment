@@ -6,4 +6,13 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="MySql.Data" Version="8.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Entities\AssessmentIntelligenceEntity\AssessmentIntelligenceEntity.csproj" />
+    <ProjectReference Include="..\..\Interfaces\AssessmentIntelligenceInterfaces\AssessmentIntelligenceInterfaces.csproj" />
+  </ItemGroup>
+
 </Project>
