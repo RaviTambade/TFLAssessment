@@ -102,9 +102,9 @@ public class AssessmentController : ControllerBase
          
          //http://localhost:5151/api/Assessment/createtest
          [HttpPost("createtest")]
-        public IActionResult CreateTest( Assessment assessment)
+        public async Task<IActionResult> CreateTest( Assessment assessment)
         {
-            bool status=_svc.CreateTest(assessment);
+            bool status=  await _svc.CreateTest(assessment);
             return Ok(status);
         }
 

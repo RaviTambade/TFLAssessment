@@ -17,7 +17,7 @@ public class AssessmentService :IAssessmentService
     private string connectionString = "server=localhost;port=3306;user=root;password=password;database=assessmentdb";
 
 
-    public bool CreateTest(Assessment newTest)
+    public async Task<bool> CreateTest(Assessment newTest)
     {
         
         bool status = false;
@@ -35,8 +35,8 @@ public class AssessmentService :IAssessmentService
 
         try
         {
-            connection.Open();
-            int rowsAffected = command.ExecuteNonQuery();
+            connection.OpenAsync();
+            int rowsAffected = await command.ExecuteNonQueryAsync();
             if (rowsAffected > 0)
             {
                 status = true;
@@ -49,7 +49,7 @@ public class AssessmentService :IAssessmentService
         }
         finally
         {
-            connection.Close();
+            connection.CloseAsync();
         }
         return status;
     }
