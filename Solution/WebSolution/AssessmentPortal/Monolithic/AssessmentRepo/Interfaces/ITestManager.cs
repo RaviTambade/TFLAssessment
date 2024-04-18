@@ -19,6 +19,7 @@ public interface ITestManager
   public CandidateResultDetails GetCandidateTestResult(int testId, int candidateId);
 
   public List<CandidateResultDetails> GetAllCandidatesScore(int testId);
-
+  public bool SetPassingLevel(int testId, int passingLevel);
+    
   
 }
