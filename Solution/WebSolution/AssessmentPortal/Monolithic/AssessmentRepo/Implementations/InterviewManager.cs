@@ -140,15 +140,13 @@ public class InterviewManager :IInterviewManager
         return interviewInfo;
     }
 
-    public bool ReschduleInterview(int interviewId,DateTime date,InterviewCandidateDetails details){
+    public bool ReschduleInterview(int interviewId,DateTime date){
        bool status = false;
-        string query = "update interviews set interviewdate =@interviewdate ,interviewtime=@interviewtime where  id =@interviewId  and interviewdate = @date ";
+        string query = "update interviews set interviewdate =@interviewdate  where  id =@interviewId ";
         MySqlConnection connection = new MySqlConnection(connectionString);
        MySqlCommand command = new MySqlCommand(query, connection);
-        //command.Parameters.AddWithValue("@interviewdate", details.InterviewDate);
-       // command.Parameters.AddWithValue("@interviewtime", details.InterviewTime);
-       // command.Parameters.AddWithValue("@interviewId", interviewId);
-         command.Parameters.AddWithValue("@date", date);
+         command.Parameters.AddWithValue("@interviewdate", date);
+          command.Parameters.AddWithValue("@interviewId", interviewId);
         try
         {
             connection.Open();

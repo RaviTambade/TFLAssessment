@@ -47,8 +47,7 @@
 
     var questionId=2;
     var selectedOption;
-    var questionUrl="http://localhost:5238/questions/"+questionId;
-    var updateAnswer="http://localhost:5238/questions/answers/"+questionId;
+    var questionUrl="http://localhost:5172/api/questionbank/questions/"+questionId;
 
     $(document).ready(()=>{
 
@@ -66,6 +65,7 @@
             var c= $("#lblOptionC").html(question.c);
             var d= $("#lblOptionD").html(question.d);
             var correctAnswerId ="#"+question.answerKey;
+            console.log(correctAnswerId);
             $(correctAnswerId).prop('checked',true);
         },
         error: function (xhr, status, error) {
@@ -80,15 +80,12 @@
 
 
     $("#btnUpdate").click(()=>{
-        var answer={
-            "answerKey":selectedOption
-        };
-
+        var updateAnswer="http://localhost:5172/api/questionbank/question/"+questionId+ "/updateanswer/" +selectedOption;
         $.ajax({
         url: updateAnswer,
         type: 'PUT',
         contentType: 'application/json',
-        data: JSON.stringify(answer),
+        data: JSON.stringify({questionId, selectedOption}),
 
         success: function (data) {
             console.log(data);

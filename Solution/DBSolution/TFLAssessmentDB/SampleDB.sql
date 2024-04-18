@@ -10,10 +10,7 @@ insert into employees(firstname, lastname, email, contact)values("Shree","pawer"
 insert into employees(firstname, lastname, email, contact)values("Aniket","Zarekar","Zarekar@gmail.com","9764263254");
 
 
-
-
 insert into employeeperformance(employeeid, test, communication, congition, interview)values(1,"poor", "good","good","poor");
-
 insert into employeeperformance(employeeid, test, communication, congition, interview)values(2,"poor", "good","good","poor");
 insert into employeeperformance(employeeid, test, communication, congition, interview)values(3,"poor", "good","good","poor");
 insert into employeeperformance(employeeid, test, communication, congition, interview)values(4,"poor", "good","good","poor");
@@ -21,9 +18,6 @@ insert into employeeperformance(employeeid, test, communication, congition, inte
 insert into employeeperformance(employeeid, test, communication, congition, interview)values(6,"poor", "good","good","poor");
 insert into employeeperformance(employeeid, test, communication, congition, interview)values(7,"poor", "good","good","poor");
 insert into employeeperformance(employeeid, test, communication, congition, interview)values(8,"poor", "good","good","poor");
-
-
-
 
 
 INSERT INTO subjects(title) VALUES('COREJAVA');
@@ -34,8 +28,6 @@ INSERT INTO subjects(title) VALUES('REACT');
 INSERT INTO subjects(title) VALUES('ANGULAR');
 INSERT INTO subjects(title) VALUES('CSHARP');
 INSERT INTO subjects(title) VALUES('JAVASCRIPT');
-
-select * from interviews;
 
 
 INSERT INTO subjectmatterexperts(employeeid,subjectid,certificationdate)VALUES(1,1,'2023-02-15');
@@ -424,7 +416,6 @@ INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(2,18,'
 INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(2,19,'b');
 INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(2,20,'a');
 
-
  
 INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(3,1,'c');
 INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(3,2,'c');
@@ -436,7 +427,6 @@ INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(3,7,'c
 INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(3,8,'c');
 INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(2,9,'c');
 INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(3,10,'d');
-
 
 
 INSERT INTO interviews(interviewdate,interviewtime, smeid, candidateid)VALUES('2024-02-10',"10:00 AM",1,2);
@@ -465,7 +455,6 @@ INSERT INTO interviewcriterias(interviewid, evaluationcriteriaid)VALUES(2,1);
 INSERT INTO interviewcriterias(interviewid, evaluationcriteriaid)VALUES(1,8);
 
 
-
 INSERT INTO interviewresults(interviewcriteriaid, ratings, comments)VALUES(1,8,"good");
 INSERT INTO interviewresults(interviewcriteriaid, ratings, comments)VALUES(2,6,"avarage");
 INSERT INTO interviewresults(interviewcriteriaid, ratings, comments)VALUES(1,9,"very good");
@@ -476,8 +465,6 @@ INSERT INTO interviewresults(interviewcriteriaid, ratings, comments)VALUES(5,10,
 INSERT INTO interviewresults(interviewcriteriaid, ratings, comments)VALUES(6,7,"good");
 INSERT INTO interviewresults(interviewcriteriaid, ratings, comments)VALUES(7,8,"nice");
 INSERT INTO interviewresults(interviewcriteriaid, ratings, comments)VALUES(8,8,"good");
-
-delete from candidatetestresults;
 
 INSERT INTO candidatetestresults(testid,score,teststarttime,testendtime,candidateid) values (1,5,"2015-11-05 14:29:36","2015-11-05 16:29:36",2);
 INSERT INTO candidatetestresults(testid,score,teststarttime,testendtime,candidateid) values (1,5,"2015-11-05 14:29:36","2015-11-05 16:29:36",1);

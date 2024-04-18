@@ -16,12 +16,10 @@ public class QuestionBankController : ControllerBase
             // Initialize with some sample data
             
         }
-        
-        
          IQuestionBankService _svc = new QuestionBankService();
 
 
-    //http://localhost:5172/api/questionbank/questions/2
+    //http://localhost:5172/api/questionbank/questions
     [HttpGet("questions")]
     public IActionResult GetAllQuestions()
     {
@@ -30,16 +28,19 @@ public class QuestionBankController : ControllerBase
     }
 
 
-
-
     //http://localhost:5172/api/questionbank/questions/2
     [HttpGet("questions/{questionId}")]
         public IActionResult GetQuestion(int questionId)
         {
             Question question = _svc.GetQuestion(questionId);
             return Ok(question);
+        }
 
-            return Ok( );
+      [HttpGet("questions/subjects/{subject}/questions/{questionId}")]
+        public IActionResult GetCriteria(string subject, int questionId)
+        {
+            string criteria = _svc.GetCriteria(subject,questionId);
+            return Ok(criteria);
         }
 
 
@@ -55,7 +56,6 @@ public class QuestionBankController : ControllerBase
 
 
          
-
         //Get questions by testid .
         [HttpGet("questions/tests/{testId}")]
         public IActionResult GetQuestions(int testId)
@@ -76,12 +76,14 @@ public class QuestionBankController : ControllerBase
             return Ok(questions);
         }
 
+
+        
        
         //Update  answer of the question. 
-        // http://localhost:5172/api/questionbank/answer/question/1
-        [HttpPut("answer/question/{id}")]
+        [HttpPut("question/{id}/updateanswer/{answerKey}")]
         public IActionResult UpdateAnswer(int id ,char answerKey)
         {
+            Console.WriteLine("Id and answerkey:"+id+answerKey);
              bool status = false;
             status = _svc.UpdateAnswer(id,answerKey);
            return Ok(status);
@@ -111,5 +113,13 @@ public class QuestionBankController : ControllerBase
       //     return Ok(status);
       //   }
 
-       
+       //http://localhost:5172/api/questionbank/question
+       [HttpPost("question")]
+        public IActionResult InsertQuestion(NewQuestion question)
+        {
+             bool status = false;
+            status = _svc.InsertQuestion(question);
+           return Ok(status);
+        }
+      
 }

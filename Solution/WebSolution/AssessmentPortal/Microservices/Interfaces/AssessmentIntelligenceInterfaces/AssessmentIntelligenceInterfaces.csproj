@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\Entities\AssessmentIntelligenceEntity\AssessmentIntelligenceEntity.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -24,7 +24,7 @@
                         <td>
                           <label type="text" rows="3" cols="150" id="pTitle"></label>
                         </td>
-                      </tr>
+                      </tr
                       <tr>
                         <td> <label type="text" name="answer" id="txtA" rows="2" cols="150" > </label> </td>
                       </tr>
@@ -36,15 +36,21 @@
                       </tr>
                       <tr>
                         <td> <label type="text" name="answer" id="txtD" rows="2" cols="150"></label> </td>
-                      </tr>    
+                      </tr> 
+                      <tr>
+                        <td>
+                          <label type="text" rows="3" cols="150" id="psubject"></label>
+                        </td>
+                      </tr>   
                     </tbody>
                   </table>   
               </div>   
             </div>
-            <div>
+            <!-- <div>
                 <label for="ddlsubject" class="form-label">Subject:</label>
                 <select id="ddlSubjects"></select>
-            </div>
+            </div> -->
+
             <div>
                 <label for="criteria" class="form-label">Criteria:</label>
                 <select id="ddlCriterias"></select>
@@ -54,22 +60,19 @@
           <button id="btnUpdate">Submit</button> 
       </div>
     </div>
-
-
+    
     <script>
-        
-var api = "http://localhost:5238";
-var subjectsApi = api + "/subjects";
-var criteriaApi = api + "/criterias";
+var subjectsApi = "http://localhost:5151/api/assessment/subjects";
+var criteriaApi =  "http://localhost:5151/api/assessment/criterias";
 var subjects = [];
 var criterias = [];
 var question = [];
 var skillId;
-var criteriaId;
 var questionId=2;
-var insertquestionurl = "http://localhost:5238/question";
-var questionUrl="http://localhost:5238/questions/"+questionId;
-var subjectCriteriaUrl="http://localhost:5238/questions/subjectcriteria/"+questionId;
+var evaluationCriteriaId;
+var insertquestionurl = "http://localhost:5172/api/questionbank/question";
+var questionUrl="http://localhost:5172/api/questionbank/questions/"+questionId;
+
 
 $(document).ready(()=>{
 $.ajax({
@@ -85,6 +88,7 @@ $.ajax({
             var b= $("#txtB").html(question.b);
             var c= $("#txtC").html(question.c);
             var d= $("#txtD").html(question.d);
+            var subject=$("#psubject").html(question.subjectId);
             var correctAnswerId ="#"+question.answerKey;
             $(correctAnswerId).prop('checked',true);
         },
@@ -107,6 +111,7 @@ $.ajax({
       lstSubject.append($('<option></option>').val(subjects[i].id).html(subjects[i].title));
       
     }
+
     var apiCriteriasBySubject = criteriaApi + "/subjects/" + subjects[0].id;
     console.log(apiCriteriasBySubject);
 
@@ -162,23 +167,25 @@ $("#ddlSubjects").change(function () {
 
 
 $("button").click(()=>{
-    var skillId=$("#ddlSubjects").val();
-    console.log(skillId);
-    var criteriaId=$("#ddlCriterias").val();
-    console.log(criteriaId);
+    // var skillId=$("#ddlSubjects").val();
+    // console.log(skillId);
 
-    var updateSubjectCriteria={
-        "skillId":skillId,
-        "evaluationcriteriaid":criteriaId
-        }
+    var evaluationCriteriaId=$("#ddlCriterias").val();
+    console.log(evaluationCriteriaId);
+    var subjectCriteriaUrl="http://localhost:5195/api/criteria/"+evaluationCriteriaId+"/questions/"+questionId;
+
+    // var updateSubjectCriteria={
+    //     "skillId":skillId,
+    //     "evaluationcriteriaid":criteriaId
+    //     }
         
-        console.log(updateSubjectCriteria);
+        // console.log(updateSubjectCriteria);
       
         $.ajax({
         url: subjectCriteriaUrl,
         type: 'PUT',
         contentType: 'application/json',
-        data: JSON.stringify(updateSubjectCriteria),
+        data: JSON.stringify({evaluationCriteriaId,questionId}),  
 
         success: function (response) {
             console.log(response);

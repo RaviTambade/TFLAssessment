@@ -95,69 +95,74 @@
     </style>
 </head>
 
-    <div class="container">
-        <h1>Assessment</h1>
+<div class="container">
+    <h1>Assessment</h1>
 
-        <form class="test-form" id="testForm" action="#" method="post">
-            <div class="form-group">
-                <label for="name">Candidate Id:</label>
-                <input id="id" required>
-            </div>
-            <div class="form-group">
-                <label for="email">Test Id:</label>
-                <input id="id" required>
-            </div>
-        </form>
-
-        <button id="btnsubmit">Submit</button>
-        
-        <h2>Assessment Result</h2>
-        <p>Congratulations! You have completed the assessment.</p>
-        <p>Your score: <strong id="score"></strong></p>
-        <p>Here are the details of your performance:</p>
-        <ul>
-            <li>Correct Answers: <span id="correct"></span></li>
-            <li>Incorrect Answers: <span id="incorrect"></span></li>
-            <li>Skipped Questions: <span id="skipped"></span></li>
-        </ul>
-        <div class="restart-button">
-            <!--  <a href="#" onclick="restartAssessment()">Restart Assessment</a>-->
+    <form class="test-form" id="testForm" action="#" method="post">
+        <div class="form-group">
+            <label for="name">Candidate Id:</label>
+            <input type="text" id="candidateId" required>
         </div>
+        <div class="form-group">
+            <label for="email">Test Id:</label>
+            <input type="text" id="testId" required>
+        </div>
+    </form>
+
+    <button id="btnsubmit">Submit</button>
+
+    <h2>Assessment Result</h2>
+    <p>Congratulations! You have completed the assessment.</p>
+    <p>Your score: <strong id="score"></strong></p>
+    <p>Here are the details of your performance:</p>
+    <ul>
+        <li>Correct Answers: <span id="correct"></span></li>
+        <li>Incorrect Answers: <span id="incorrect"></span></li>
+        <li>Skipped Questions: <span id="skipped"></span></li>
+    </ul>
+    <div class="restart-button">
+        <!--  <a href="#" onclick="restartAssessment()">Restart Assessment</a>-->
     </div>
+</div>
 
 
-    <script>
-        var CandidateTestScore;
-        var candidateId = 5, testId = 2;
-        var CandidateTestScoreUrl = "http://localhost:5235/api/result/candidates/" + candidateId + "/tests/" + testId + "/score";
-        var CandidateResultTestDetails= "http://localhost:5235/api/result/candidates/" + candidateId + "/tests/" + testId+"/details";
-        $(document).ready(function () {
-            // Event handler for checkboxes
-           $("#btnsubmit").click(() => {
-               $.ajax({
+<script>
+
+    $(document).ready(function () {
+    
+        // Event handler for checkboxes
+        $("#btnsubmit").click(() => {
+            var CandidateTestScore;
+            var candidateId = $('#candidateId').val();
+            var testId = $('#testId').val();
+            console.log(candidateId);
+            console.log(testId);
+            var CandidateTestScoreUrl = "http://localhost:5235/api/result/candidates/" + candidateId + "/tests/" + testId + "/score";
+            var CandidateResultTestDetails = "http://localhost:5235/api/result/candidates/" + candidateId + "/tests/" + testId + "/details";
+            $.ajax({
                 url: CandidateTestScoreUrl,
                 type: 'GET',
                 contentType: 'application/json',
-                
+
                 success: function (data) {
                     CandidateTestScore = data;
                     console.log(CandidateTestScore)
-                $("#score").text(CandidateTestScore);
-                 },
+                    $("#score").text(CandidateTestScore);
+                },
                 error: function (xhr, status, error) {
                     console.error(xhr.responseText);
                 }
-               })
-                
+            })
 
-                $.ajax({
+
+            $.ajax({
                 url: CandidateResultTestDetails,
                 type: 'GET',
                 contentType: 'application/json',
 
                 success: function (data) {
-                 var  CandidateTestDetails = data;
-                 console.log(data);
+                    var CandidateTestDetails = data;
+                    console.log(data);
                     $("#correct").text(CandidateTestDetails.correctAnswers);
                     $("#incorrect").text(CandidateTestDetails.incorrectAnswers);
                     $("#skipped").text(CandidateTestDetails.skippedQuestions);
@@ -167,10 +172,10 @@
                     console.error(xhr.responseText);
                 }
             })
-            });
-
         });
-    </script>
-    </body>
+
+    });
+</script>
+</body>
 
 </html>

@@ -138,7 +138,7 @@ public class QuestionBankManager:IQuestionBankManager
         return questions;
     }
 
-    public bool UpdateAnswer(Question answer,int id){
+    public bool UpdateAnswer(int id,char answer){
         bool status = false;
         string query = "update questionbank set answerkey=@answerkey where id =@id";
         MySqlConnection connection = new MySqlConnection(connectionString);
@@ -146,7 +146,7 @@ public class QuestionBankManager:IQuestionBankManager
         {
             connection.Open();   
             MySqlCommand command = new MySqlCommand(query, connection);
-            command.Parameters.AddWithValue("@answerkey", answer.AnswerKey);
+            command.Parameters.AddWithValue("@answerkey", answer);
             command.Parameters.AddWithValue("@id", id);
             int rowsAffected = command.ExecuteNonQuery();
             if (rowsAffected > 0)

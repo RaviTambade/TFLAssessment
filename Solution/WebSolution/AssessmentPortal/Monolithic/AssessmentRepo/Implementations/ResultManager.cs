@@ -88,7 +88,7 @@ public class ResultManager :IResultManager
             int incorrectAnswers = Convert.ToInt32(command.Parameters["@pincorrectAnswers"].Value);
             int skippedQuestions = Convert.ToInt32(command.Parameters["@pskippedQuestions"].Value);
         
-                CandidateResultDetails  candidateResultDetails=new CandidateResultDetails(){
+                candidateResultDetails=new CandidateResultDetails(){
                 CorrectAnswers=correctAnswers,
                 IncorrectAnswers=incorrectAnswers,
                 SkippedQuestions=skippedQuestions,

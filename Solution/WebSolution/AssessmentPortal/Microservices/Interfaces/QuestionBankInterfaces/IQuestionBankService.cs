@@ -12,4 +12,8 @@ namespace QuestionBankInterfaces;
     public Question GetQuestion(int questionId);
     public bool UpdateQuestionOptions(int id,Question options);
     public bool UpdateSubjectCriteria(int questionId,Question question);
+
+    public bool InsertQuestion(NewQuestion question);
+
+    public string GetCriteria(string subject, int questionId);
 }
