@@ -7,17 +7,12 @@ using Assessment.Repositories.Implementations;
 var builder = WebApplication.CreateBuilder(args);
 //services configuration
 
-
 builder.Services.AddCors();
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
-
 builder.Services.AddControllers();
-
 var app = builder.Build();
-
 //ASP.NET middleware configuration
-
 app.UseCors(options => options.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
 //app.UseHttpsRedirection();
 app.UseStaticFiles();
@@ -29,10 +24,8 @@ app.UseEndpoints(endpoints =>
        name: "default",
        pattern: "{controller=Home}/{action=Index}/{id?}");
    endpoints.MapRazorPages();
-
    endpoints.MapControllers(); // Map Minimal Web API endpoints
 });
-
 
 
 // REST API URL;
@@ -41,14 +34,12 @@ string allQuestionsAPI = "/questions";
 string apiSubjectsUrl = "/subjects";      
 string apiTestUrl = "/tests";
 string apiCriteriaUrl = "/criteria";
-//
 string updateAnswer = "/question/{id}/updateanswer/{answerKey}"; 
 string apiCandidateTestAnswersUrl = "/answersheet/candidates/{candidateId}";   
+
 // string apiQuestionsUrl = "/questions/tests/{testId}";
 
-
 string question = "/questions/subjects/{subject}/questions/{questionid}";
-
 string allQuestionsBySubjectUrl = "/questions/subjects/{subjectid}";
 string testSubjectCriteriaAPI = "/questions/subjects/{subjectId}/criterias/{criteriaId}";
 string insertnewquestionurl = "/insert/question";
@@ -56,29 +47,15 @@ string insertnewcriteriaurl = "/criteria";
 
 //pending
 string deleteTestQuestion = "/testquestions";
-
 string candidateTestScoreUrl = "/score/candidates/{candidateId}/tests/{testId}";
-
 string criteriaBySubjectUrl = "/criterias/subjects/{subjectId}";
-
-
-<<<<<<< HEAD
-   //Using interfaces , Provider objects are  Cohesively coupled
-=======
-string UpdateCriteria = "criteria/{evaluationCriteriaId}/question/{questionId}"; //pending
->>>>>>> a26935c5a13767e73e8c5cf014802d1520c8bc92
-
-
 string criteria = "/criteria/subject/{subject}/question/{questionId}";//question controller reurn only criteria title
 string questionUrl = "/questions/{questionId}";
 string updateQuestionOptions = "/update/options/question/{questionId}";  //check returntype
-
 string testStartTimesettingUrl = "/setstarttime/{candidateId}/tests/{testId}";
 string testEndTimesettingUrl = "setendtime/{candidateId}/tests/{testId}";
-
 string candidateTestResultDetailsUrl = "/candidates/{candidateId}/test/{testId}";
 string resheduleInterviewUrl = "/resheduleinterview/interviewId/{interviewid}/date/{date}";
-
 string InterviewedCandidatesInfoUrl = "/interviewedcandidates";   //pending
 string subjectCriteriaUrl = "questions/subjectcriteria/{criteriaId}/questions/{questionId}";   //pending
 string InterviewedCandidatesSubjectsUrl = "/interviewedcandidatessubjects/{candidateId}";  //pending
@@ -87,17 +64,15 @@ string createTestUrl = "/designtest";   //pending
 string ChangeInterviewerUrl = "/changeInterviewer/interviewId/{interviewid}/smeId/{smeid}";  //pending
 string CancelInterviewUrl = "/cancelInterview/interviewid/{interviewid}";  //pending
 
-
 // Using interfaces , Provider objects are  Cohesively coupledcreate test
-
 
 ITestManager manager = new TestManager();
 IQuestionBankManager questionBank = new QuestionBankManager();
 IInterviewManager interviewManager = new InterviewManager();
 IEvaluationCriteriaManager criteriaManager = new EvaluationCriteriaManager();
 IMockTestManager mockTestManager = new MockTestManager();
-
 IResultManager resultManager = new ResultManager();
+
 //API Listners
 app.MapGet(apiEmployeesUrl, () =>
 {
@@ -152,8 +127,6 @@ app.MapGet(InterviewedCandidatesSubjectsUrl, (int candidateId) =>
 //    List<TestQuestion> questions = mockTestManager.GetQuestions(testId);
 //    return questions;
 // });
-
-
 
 
 app.MapGet(allQuestionsAPI, () =>
