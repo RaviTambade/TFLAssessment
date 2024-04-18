@@ -80,7 +80,7 @@ string ChangeInterviewerUrl ="/changeInterviewer/interviewId/{interviewid}/smeId
 string CancelInterviewUrl ="/cancelInterview/interviewid/{interviewid}";
 
 
-Using interfaces , Provider objects are  Cohesively coupled
+   //Using interfaces , Provider objects are  Cohesively coupled
 
   ITestManager  manager = new TestManager();
   IQuestionBankManager questionBank=new QuestionBankManager();
