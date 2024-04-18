@@ -12,4 +12,11 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\Entities\AssessmentIntelligenceEntity\AssessmentIntelligenceEntity.csproj" />
+    <ProjectReference Include="..\..\Interfaces\AssessmentIntelligenceInterfaces\AssessmentIntelligenceInterfaces.csproj" />
+    <ProjectReference Include="..\..\Services\AssessmentIntelligenceServices\AssessmentIntelligenceServices.csproj" />
+  </ItemGroup>
+
+
 </Project>

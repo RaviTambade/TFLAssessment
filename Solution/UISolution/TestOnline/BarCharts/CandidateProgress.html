@@ -16,25 +16,47 @@
         <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
         <ul class="navbar-nav px-3">
             <li class="nav-item text-nowrap">
-                <a class="nav-link" href="#" style= "color: white;">Sign out</a>
+                <a class="nav-link" href="#" style="color: white;">Sign out</a>
             </li>
         </ul>
     </nav>
     <div><canvas id="myChart"></canvas></div>
     <!-- Graphs -->
     <script>
-        $(document).ready(function() {
+        var AnnualCandidateAnswersurl = "http://localhost:5294/api/assessmentintelligence/Candidates/2/Year/2024"
+
+        $(document).ready(function () {
             var ctx = $('#myChart');
+            var candidateResults;
+            var scores = [];
+            var subjects = [];
+
+            $.ajax({
+                url: AnnualCandidateAnswersurl,
+                type: 'GET',
+                contentType: 'application/json',
+                success: function (data) {
+                    candidateResults = data;
+                    candidateResults.forEach(element => {
+                        scores.push(element.score)
+                        subjects.push(element.subjectTitle)
+                    });
+                },
+                error: function (xhr, status, error) {
+                    console.error(xhr.responseText);
+                }
+            });
+
             var myChart = new Chart(ctx, {
                 type: 'line',
                 data: {
-                    labels: ['COREJAVA', 'ADVJAVA', 'DOTNET', 'REACT', 'ANGULAR', 'CSHARP', 'JAVASCRIPT'],
+                    labels: subjects,
                     datasets: [{
                         label: 'Candidates Progress In Each Subject',
-                        data: [10,9, 5, 3, 4, 8, 2, 1],
-                        backgroundColor: 'rgba(0, 0, 0, 0.2)', 
-                        borderColor: 'rgba(0, 0, 0, 1)', 
-                        borderWidth: 1
+                        data: scores,
+                        backgroundColor: 'rgba(0, 0, 0, 0.2)',
+                        borderColor: 'rgba(0, 0, 0, 1)',
+                        borderWidth: 0.5
                     }]
                 },
                 options: {
