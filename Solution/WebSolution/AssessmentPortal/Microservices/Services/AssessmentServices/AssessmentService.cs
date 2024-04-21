@@ -266,7 +266,7 @@ public class AssessmentService :IAssessmentService
         return status;
     }
 
-    public bool DeleteQuestions(int[] testQuestions)
+    public bool RemoveQuestions(int[] testQuestions)
     {
         bool status = false;
         MySqlConnection connection = new MySqlConnection(connectionString);
