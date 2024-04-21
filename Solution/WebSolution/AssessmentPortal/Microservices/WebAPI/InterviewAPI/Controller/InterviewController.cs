@@ -52,6 +52,13 @@ public class InterviewsController : ControllerBase
         return Ok(status);
     }
 
+    [HttpPut("{interviewId}/time/{time}/date/{date}")]
+    public IActionResult RescheduleInterview(int interviewId,string time,DateTime date)
+    {
+        bool status=_svc.RescheduleInterview(interviewId,time,date);
+        return Ok(status);
+    }
+
     [HttpPut("{interviewId}/subjectexperts/{smeId}")]
     public IActionResult ChangeInterviewer(int interviewId, int smeId)
     {
