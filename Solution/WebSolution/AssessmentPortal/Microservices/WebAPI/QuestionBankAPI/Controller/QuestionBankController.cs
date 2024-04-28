@@ -9,12 +9,15 @@ using QuestionBankServices;
 [ApiController]
 [Route("api/questionbank")]
 public class QuestionBankController : ControllerBase
-{ 
+{
+    private readonly ILogger<QuestionBankController> _logger;
+
     IQuestionBankService _svc = new QuestionBankService();
-    public QuestionBankController()
+    public QuestionBankController(ILogger<QuestionBankController> logger)
     {
+        _logger = logger;
         // Initialize with some sample data
-            
+
     }
 
     //http://localhost:5172/api/questionbank/questions
@@ -22,6 +25,7 @@ public class QuestionBankController : ControllerBase
     public IActionResult GetAllQuestions()
     {
         List<QuestionTitle> questions = _svc.GetAllQuestions();
+        _logger.LogInformation("Get all products method invoked at  {DT}", DateTime.UtcNow.ToLongTimeString());
         return Ok(questions);
     }
 

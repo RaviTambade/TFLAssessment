@@ -71,6 +71,5 @@ public class InterviewsController : ControllerBase
     {
         bool status=_svc.CancelInterview(interviewId);
         return Ok(status);
-
     }
 }
