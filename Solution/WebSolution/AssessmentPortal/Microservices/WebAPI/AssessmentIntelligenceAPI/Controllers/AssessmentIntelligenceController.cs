@@ -1,9 +1,9 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 
-using AssessmentIntelligenceEntities; //-----------------------dll
-using AssessmentIntelligenceInterfaces;//-----------------------dll
-using AssessmentIntelligenceServices;//------------------------dll
+using AssessmentIntelligenceEntities; 
+using AssessmentIntelligenceInterfaces;
+using AssessmentIntelligenceServices;
 
 //Controller is now responsible to handle HTTP Requests
 
@@ -11,20 +11,17 @@ using AssessmentIntelligenceServices;//------------------------dll
 [Route("api/[controller]")]
 public class AssessmentIntelligenceController : ControllerBase
 { 
-        public AssessmentIntelligenceController()
-        {
-            // Initialize with some sample data
-            
-        }
-      IAssessmentIntelligenceService _svc=new AssessmentIntelligenceService ();
+    IAssessmentIntelligenceService _svc=new AssessmentIntelligenceService ();
+    public AssessmentIntelligenceController()
+    {
+        // Initialize with some sample data    
+    }
 
-        // GET: api/assessment
-        [HttpGet("Candidates/{candidateId}/Year/{year}")]
-        
-      
-        public IActionResult GetCandidateResults(  int candidateId,int year)
-        {
-            List<AnnualCandidateResult> assessments =_svc.GetCandidateResults( candidateId, year);
-            return Ok(assessments);
-        }
+    // GET: api/assessment
+    [HttpGet("Candidates/{candidateId}/Year/{year}")]
+    public IActionResult GetCandidateResults(  int candidateId,int year)
+    {
+        List<AnnualCandidateResult> assessments =_svc.GetCandidateResults( candidateId, year);
+        return Ok(assessments);
+    }
 }

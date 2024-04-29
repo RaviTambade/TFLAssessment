@@ -1,8 +1,18 @@
+using Microsoft.Extensions.Logging;
 using QuestionBankEntities; //-----------------------dll
 using QuestionBankInterfaces;//-----------------------dll
-using QuestionBankServices;//------------------------dll
+using QuestionBankServices;
+//using Serilog;
+//using System.Security.Policy;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Host.ConfigureLogging(logging =>
+{
+    logging.ClearProviders();
+    logging.AddConsole();
+    //logging.AddFile("logs/catalog-{Date}.json", isJson: true);
+});
 
 
 //Service configuration

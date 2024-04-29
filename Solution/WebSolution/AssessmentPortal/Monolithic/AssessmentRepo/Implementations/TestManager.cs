@@ -149,4 +149,34 @@ public class TestManager :ITestManager
         return subjects;
     } 
 
+    public bool SetPassingLevel(int testId, int passingLevel)
+    {
+        bool status = false;
+        MySqlConnection connection = new MySqlConnection(connectionString);
+        string query = "update tests set passinglevel=@passingLevel where id =@testId;";
+
+       MySqlCommand command = new MySqlCommand(query, connection);
+        command.Parameters.AddWithValue("@testId", testId);
+        command.Parameters.AddWithValue("@passingLevel", passingLevel);
+
+        try
+        {
+            connection.Open();
+            int rowsAffected = command.ExecuteNonQuery();
+            if (rowsAffected > 0)
+                status = true;
+        }
+
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+        finally
+        {
+            connection.Close();
+        }
+        return status;
+
+    }
+
 }

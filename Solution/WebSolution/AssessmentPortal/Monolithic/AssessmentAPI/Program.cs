@@ -34,6 +34,8 @@ string allQuestionsAPI = "/questions";
 string apiSubjectsUrl = "/subjects";      
 string apiTestUrl = "/tests";
 string apiCriteriaUrl = "/criteria";
+string setPassingLevel="/tests/{testId}/passinglevel/{passingLevel}";
+//
 string updateAnswer = "/question/{id}/updateanswer/{answerKey}"; 
 string apiCandidateTestAnswersUrl = "/answersheet/candidates/{candidateId}";   
 
@@ -218,6 +220,13 @@ app.MapPut(subjectCriteriaUrl, (int criteriaId, int questionId) =>
    bool status = criteriaManager.UpdateCriteria(criteriaId, questionId);
    return status;
 });
+
+app.MapPut(setPassingLevel, (int testId, int passingLevel) =>
+{
+   bool status = manager.SetPassingLevel(testId, passingLevel);
+   return status;
+});
+
 
 
 app.MapPut(updateQuestionOptions, (int questionId, Question options) =>

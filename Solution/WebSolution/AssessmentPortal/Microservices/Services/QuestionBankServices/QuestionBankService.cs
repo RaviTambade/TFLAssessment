@@ -261,14 +261,9 @@ public class QuestionBankService:IQuestionBankService
         return questions;
     }
 
-    public bool UpdateQuestionOptions(int id,Question options){
+    public bool UpdateQuestionOptions(int id,Question options)
+    {
         bool status = false;
-        Console.WriteLine("ID "+id);
-        Console.WriteLine("A "+options.A);
-        Console.WriteLine("B "+options.B);
-        Console.WriteLine("C "+options.C);
-        Console.WriteLine("D "+options.D);
-     //   string query = "update questionbank set a=@a,b=@b,c=@c,d=@d where id =@id";
         string query = "update questionbank set title=@title,a=@a,b=@b,c=@c,d=@d,answerkey=@answerKey where id =@id";
         MySqlConnection connection = new MySqlConnection(connectionString);
         try
@@ -300,7 +295,10 @@ public class QuestionBankService:IQuestionBankService
         return status;
     }
 
-    public bool UpdateSubjectCriteria(int questionId,Question question){
+
+    //update only evaluationcriteriaid
+    public bool UpdateSubjectCriteria(int questionId,Question question)
+    {
         bool status = false;
         string query = "update questionbank set evaluationcriteriaid=@evaluationCriteriaId ,subjectid=@subjectId where id =@id";
         MySqlConnection connection = new MySqlConnection(connectionString);
@@ -330,46 +328,9 @@ public class QuestionBankService:IQuestionBankService
         return status;
     }
 
-    //  public bool InsertQuestion(NewQuestion question)
-    // {
-
-    //     bool status = false;
-    //     MySqlConnection connection = new MySqlConnection(connectionString);
-    //     string query = "insert into questionbank(subjectid, title, a, b, c, d, answerkey,evaluationcriteriaid) values (@subjectId, @title, @a, @b, @c, @d, @answerKey, @evaluationCriteriaId)";
-
-    //     MySqlCommand command = new MySqlCommand(query, connection);
-
-    //     command.Parameters.AddWithValue("@subjectId", question.SubjectId);
-    //     command.Parameters.AddWithValue("@title", question.Title);
-    //     command.Parameters.AddWithValue("@a", question.A);
-    //     command.Parameters.AddWithValue("@b", question.B);
-    //     command.Parameters.AddWithValue("@c", question.C);
-    //     command.Parameters.AddWithValue("@d", question.D);
-    //     command.Parameters.AddWithValue("@answerKey", question.AnswerKey);
-    //     command.Parameters.AddWithValue("@evaluationCriteriaId", question.EvaluationCriteriaId);
-
-    //     try
-    //     {
-    //         connection.Open();
-    //         int rowsAffected = command.ExecuteNonQuery();
-    //         if (rowsAffected > 0)
-    //         {
-    //             status = true;
-    //         }
-    //     }
-    //     catch (Exception e)
-    //     {
-    //         Console.WriteLine(e.Message);
-    //     }
-    //     finally
-    //     {
-    //         connection.Close();
-    //     }
-    //     return status;
-    // }
 
     public bool InsertQuestion(NewQuestion question)
-  {
+    {
 
     bool status = true;
     MySqlConnection connection = new MySqlConnection(connectionString);

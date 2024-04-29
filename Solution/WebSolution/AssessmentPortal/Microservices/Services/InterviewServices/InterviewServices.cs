@@ -179,6 +179,62 @@ public class InterviewService :IInterviewService
     
    }
 
+   public bool RescheduleInterview(int interviewId,string time)
+    {
+        bool status = false;
+        string query = "update interviews set interviewtime =@interviewTime  where  id =@interviewId ";
+        MySqlConnection connection = new MySqlConnection(connectionString);
+        MySqlCommand command = new MySqlCommand(query, connection);
+        command.Parameters.AddWithValue("@interviewTime", time);
+        command.Parameters.AddWithValue("@interviewId", interviewId);
+        try
+        {
+            connection.Open();
+            int rowsAffected = command.ExecuteNonQuery();
+            if (rowsAffected > 0)
+            {
+                status = true;
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+        finally
+        {
+            connection.Close();
+        }
+        return status;
+    }
+
+    public bool RescheduleInterview(int interviewId,string time,DateTime date)
+    {
+        bool status = false;
+        string query = "update interviews set interviewdate =@interviewdate,interviewtime =@interviewTime  where  id =@interviewId ";
+        MySqlConnection connection = new MySqlConnection(connectionString);
+        MySqlCommand command = new MySqlCommand(query, connection);
+        command.Parameters.AddWithValue("@interviewTime", time);
+        command.Parameters.AddWithValue("@interviewdate", date);
+        command.Parameters.AddWithValue("@interviewId", interviewId);
+        try
+        {
+            connection.Open();
+            int rowsAffected = command.ExecuteNonQuery();
+            if (rowsAffected > 0)
+            {
+                status = true;
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+        finally
+        {
+            connection.Close();
+        }
+        return status;
+    }
 
  
      public bool ChangeInterviewer(int interviewId, int smeId){
