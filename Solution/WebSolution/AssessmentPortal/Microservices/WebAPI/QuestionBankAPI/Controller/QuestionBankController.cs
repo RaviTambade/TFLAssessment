@@ -5,6 +5,7 @@ using QuestionBankInterfaces;
 using QuestionBankServices;
 
 //Controller is now responsible to handle HTTP Requests
+namespace Transflower.Assessment.WebAPI.QuestionBankAPI.Controllers;
 
 [ApiController]
 [Route("api/questionbank")]
