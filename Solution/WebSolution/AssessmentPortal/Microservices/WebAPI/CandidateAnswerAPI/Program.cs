@@ -1,6 +1,9 @@
-using CandidateAnswerEntities; //-----------------------dll
-using CandidateAnswerInterfaces;//-----------------------dll
-using CandidateAnswerServices;//------------------------dll
+
+using Transflower.Assessment.WebAPI.CandidateAnswerAPI.Repositories.Interfaces;
+using  Transflower.Assessment.WebAPI.CandidateAnswerAPI.Repositories;
+using Transflower.Assessment.WebAPI.CandidateAnswerAPI.Services.Interfaces;
+using   Transflower.Assessment.WebAPI.CandidateAnswerAPI.Services;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +17,9 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
 builder.Services.AddControllers();
+builder.Services.AddScoped<ICandidateAnswerRepository, CandidateAnswerRepository>();
+builder.Services.AddScoped<ICandidateAnswerService, CandidateAnswerService>();
+
 
 var app = builder.Build();
 
