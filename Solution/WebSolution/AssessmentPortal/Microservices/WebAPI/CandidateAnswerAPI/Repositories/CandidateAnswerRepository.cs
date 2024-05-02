@@ -18,7 +18,6 @@ public class CandidateAnswerRepository:ICandidateAnswerRepository
         try
         {
            await connection.OpenAsync();
-
                 foreach (var answer in answers)
             {
                 MySqlCommand command = new MySqlCommand(query, connection);
@@ -43,7 +42,4 @@ public class CandidateAnswerRepository:ICandidateAnswerRepository
         }
         return status;
     }
-
-
-
 }
