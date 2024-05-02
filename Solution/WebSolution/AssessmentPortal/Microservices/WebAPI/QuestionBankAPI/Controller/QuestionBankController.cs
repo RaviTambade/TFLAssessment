@@ -1,8 +1,8 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using QuestionBankEntities; 
-using QuestionBankInterfaces;
-using QuestionBankServices;
+using Transflower.Assessment.WebAPI.QuestionBankAPI.Entities;
+using Transflower.Assessment.WebAPI.QuestionBankAPI.Services.Interfaces;
+
 
 //Controller is now responsible to handle HTTP Requests
 namespace Transflower.Assessment.WebAPI.QuestionBankAPI.Controllers;
@@ -11,7 +11,6 @@ namespace Transflower.Assessment.WebAPI.QuestionBankAPI.Controllers;
 [Route("api/questionbank")]
 public class QuestionBankController : ControllerBase
 {
-
     private readonly ILogger<QuestionBankController> _logger;
     private readonly IQuestionBankService _svc;
 
@@ -33,9 +32,9 @@ public class QuestionBankController : ControllerBase
 
     //http://localhost:5172/api/questionbank/questions/2
     [HttpGet("questions/{questionId}")]
-    public IActionResult GetQuestion(int questionId)
+    public async Task<IActionResult> GetQuestion(int questionId)
     {
-        Question question =  _svc.GetQuestion(questionId);
+        Question question = await _svc.GetQuestion(questionId);
         return Ok(question);
     }
 

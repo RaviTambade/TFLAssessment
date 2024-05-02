@@ -1,4 +1,5 @@
-namespace  Transflower.Assessment.WebAPI.QuestionBankAPI.Entities;
+namespace Transflower.Assessment.WebAPI.QuestionBankAPI.Entities;
+
 public class NewQuestion{
     public int Id{get;set;}
     public int SubjectId{get;set;}

@@ -57,7 +57,7 @@ public class QuestionBankRepository:IQuestionBankRepository
         try
         {
             await connection.OpenAsync();
-            MySqlDataReader reader = await command.ExecuteReaderAsync();
+            MySqlDataReader reader = command.ExecuteReader();
             while (await reader.ReadAsync())
             {
                 int questionId = int.Parse(reader["questionid"].ToString());
@@ -104,7 +104,7 @@ public class QuestionBankRepository:IQuestionBankRepository
         try
         {
             await connection.OpenAsync();
-            MySqlDataReader reader = await command.ExecuteReaderAsync();
+            MySqlDataReader reader = command.ExecuteReader();
             while (await reader.ReadAsync())
             {
                 int id = int.Parse(reader["id"].ToString());
@@ -174,7 +174,7 @@ public class QuestionBankRepository:IQuestionBankRepository
         try
         {
             await connection.OpenAsync();
-            MySqlDataReader reader = await command.ExecuteReaderAsync();
+            MySqlDataReader reader = command.ExecuteReader();
             if(await reader.ReadAsync())
             {
                 int subjectId = int.Parse(reader["subjectid"].ToString());
@@ -220,7 +220,7 @@ public class QuestionBankRepository:IQuestionBankRepository
         try
         {
             await connection.OpenAsync();
-            MySqlDataReader reader = await command.ExecuteReaderAsync();
+            MySqlDataReader reader =command.ExecuteReader();
             while(await reader.ReadAsync())
             {
                 int id=int.Parse(reader["id"].ToString());
@@ -373,7 +373,7 @@ public class QuestionBankRepository:IQuestionBankRepository
             command.Parameters.AddWithValue("@subject", subject);
             command.Parameters.AddWithValue("@questionId", questionId);
             await connection.OpenAsync();
-            MySqlDataReader reader = await command.ExecuteReaderAsync();
+            MySqlDataReader reader = command.ExecuteReader();
             if (await reader.ReadAsync())
             {
 
