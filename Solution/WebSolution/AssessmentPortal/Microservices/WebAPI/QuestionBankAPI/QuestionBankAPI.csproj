@@ -9,13 +9,14 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.1" />
+    <PackageReference Include="mysql.data" Version="8.4.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
 
 
-<ItemGroup>
+<!-- <ItemGroup>
     <ProjectReference Include="..\..\Entities\QuestionBankEntity\QuestionBankEntity.csproj" />
     <ProjectReference Include="..\..\Interfaces\QuestionBankInterfaces\QuestionBankInterfaces.csproj" />
     <ProjectReference Include="..\..\Services\QuestionBankServices\QuestionBankServices.csproj" />
-</ItemGroup>
+</ItemGroup> -->
 </Project>

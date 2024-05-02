@@ -11,14 +11,14 @@ namespace Transflower.Assessment.WebAPI.QuestionBankAPI.Controllers;
 [Route("api/questionbank")]
 public class QuestionBankController : ControllerBase
 {
-    private readonly ILogger<QuestionBankController> _logger;
 
-    IQuestionBankService _svc = new QuestionBankService();
-    public QuestionBankController(ILogger<QuestionBankController> logger)
+    private readonly ILogger<QuestionBankController> _logger;
+    private readonly IQuestionBankService _svc;
+
+    public QuestionBankController(ILogger<QuestionBankController> logger,IQuestionBankService service)
     {
         _logger = logger;
-        // Initialize with some sample data
-
+        _svc=service;
     }
 
     //http://localhost:5172/api/questionbank/questions
@@ -35,14 +35,14 @@ public class QuestionBankController : ControllerBase
     [HttpGet("questions/{questionId}")]
     public IActionResult GetQuestion(int questionId)
     {
-        Question question = _svc.GetQuestion(questionId);
+        Question question =  _svc.GetQuestion(questionId);
         return Ok(question);
     }
 
     [HttpGet("questions/subjects/{subject}/questions/{questionId}")]
-    public IActionResult GetCriteria(string subject, int questionId)
+    public async Task<IActionResult> GetCriteria(string subject, int questionId)
     {
-        string criteria = _svc.GetCriteria(subject,questionId);
+        string criteria = await _svc.GetCriteria(subject,questionId);
         return Ok(criteria);
     }
 
@@ -50,10 +50,9 @@ public class QuestionBankController : ControllerBase
     //get questions by subject .
     //http://localhost:5172/api/questionbank/questions/subjects/2
     [HttpGet("questions/subjects/{id}")]
-    public IActionResult GetQuestionsBySubjects(int id)
-    {   
-        
-        List<SubjectQuestion> questions = _svc.GetQuestionsBySubject(id);
+    public async Task<IActionResult> GetQuestionsBySubjects(int id)
+    {    
+        List<SubjectQuestion> questions =await _svc.GetQuestionsBySubject(id);
         return Ok(questions);
     }
 
@@ -61,10 +60,10 @@ public class QuestionBankController : ControllerBase
          
     //Get questions by testid .
     [HttpGet("questions/tests/{testId}")]
-    public IActionResult GetQuestions(int testId)
+    public async Task<IActionResult> GetQuestions(int testId)
     {   
         
-        List<Question> questions = _svc.GetQuestions(testId);
+        List<Question> questions =await _svc.GetQuestions(testId);
         return Ok(questions);
     }
 
@@ -73,9 +72,9 @@ public class QuestionBankController : ControllerBase
     //Get questions by subject criteria .
     //http://localhost:5172/api/questionbank/questions/subjects/4/criterias/1
     [HttpGet("questions/subjects/{subjectId}/criterias/{criteriaId}")]
-    public IActionResult GetQuestionsBySubjectAndCriteria(int subjectId,int criteriaId)
+    public async Task<IActionResult> GetQuestionsBySubjectAndCriteria(int subjectId,int criteriaId)
     {   
-        List<QuestionDetails> questions = _svc.GetQuestionsBySubjectAndCriteria(subjectId,criteriaId);
+        List<QuestionDetails> questions =await _svc.GetQuestionsBySubjectAndCriteria(subjectId,criteriaId);
         return Ok(questions);
     }
 
@@ -84,9 +83,9 @@ public class QuestionBankController : ControllerBase
        
     //Update  answer of the question. 
     [HttpPut("question/{id}/updateanswer/{answerKey}")]
-    public IActionResult UpdateAnswer(int id ,char answerKey)
+    public async Task<IActionResult> UpdateAnswer(int id ,char answerKey)
     {   
-        bool status = _svc.UpdateAnswer(id,answerKey);
+        bool status = await _svc.UpdateAnswer(id,answerKey);
         return Ok(status);
     }
 
@@ -95,10 +94,10 @@ public class QuestionBankController : ControllerBase
     //Update question options .
     //http://localhost:5172/api/questionbank/update/options/question/1
     [HttpPut("update/options/question/{id}")]
-    public IActionResult UpdateQuestionOptions(int id,Question options)
+    public async Task<IActionResult> UpdateQuestionOptions(int id,Question options)
     {
 
-        bool  status = _svc.UpdateQuestionOptions(id,options);
+        bool  status = await _svc.UpdateQuestionOptions(id,options);
 
         return Ok(status);
     }
@@ -116,8 +115,8 @@ public class QuestionBankController : ControllerBase
     [HttpPost("question")]
     public IActionResult InsertQuestion(NewQuestion question)
     {
-            bool status = false;
-        status = _svc.InsertQuestion(question);
+        bool status = false;
+        status =  _svc.InsertQuestion(question);
         return Ok(status);
     }
       

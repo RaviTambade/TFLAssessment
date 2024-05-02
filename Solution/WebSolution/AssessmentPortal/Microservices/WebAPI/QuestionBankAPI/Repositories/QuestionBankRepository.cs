@@ -1,7 +1,9 @@
-namespace  Transflower.Assessment.WebAPI.QuestionBankAPI.Services;
+
 using MySql.Data.MySqlClient;
 using System.Data;
-
+using Transflower.Assessment.WebAPI.QuestionBankAPI.Entities;
+using Transflower.Assessment.WebAPI.QuestionBankAPI.Repositories.Interfaces;
+namespace  Transflower.Assessment.WebAPI.QuestionBankAPI.Repositories;
 public class QuestionBankRepository:IQuestionBankRepository
 {
     private string connectionString = "server=localhost;port=3306;user=root;password=password;database=assessmentdb";
@@ -44,21 +46,19 @@ public class QuestionBankRepository:IQuestionBankRepository
         return questions;
     }
 
-    public List<SubjectQuestion> GetQuestionsBySubject(int id)
+    public async Task<List<SubjectQuestion>> GetQuestionsBySubject(int id)
     {
         
-        List<SubjectQuestion> questions = new List<SubjectQuestion>();
-        
-        string query = @"select questionbank.id as questionid, questionbank.title as question, subjects.title as subject, subjects.id as subjectid from questionbank, subjects where questionbank.subjectid=subjects.id and subjects.id=@subjectId";
-         
+        List<SubjectQuestion> questions = new List<SubjectQuestion>(); 
+        string query = @"select questionbank.id as questionid, questionbank.title as question, subjects.title as subject, subjects.id as subjectid from questionbank, subjects where questionbank.subjectid=subjects.id and subjects.id=@subjectId";  
         MySqlConnection connection = new MySqlConnection(connectionString);
         MySqlCommand command = new MySqlCommand(query, connection);
         command.Parameters.AddWithValue("@subjectId", id);
         try
         {
-            connection.Open();
-            MySqlDataReader reader = command.ExecuteReader();
-            while (reader.Read())
+            await connection.OpenAsync();
+            MySqlDataReader reader = await command.ExecuteReaderAsync();
+            while (await reader.ReadAsync())
             {
                 int questionId = int.Parse(reader["questionid"].ToString());
                 string strQuestion = reader["question"].ToString();
@@ -69,11 +69,11 @@ public class QuestionBankRepository:IQuestionBankRepository
                 SubjectQuestion question= new SubjectQuestion();
                 question.QuestionId=questionId;
                 question.Question=strQuestion;
-                 question.SubjectId=subjectId;
+                question.SubjectId=subjectId;
                 question.Subject=subject;
                 questions.Add(question);
             }
-            reader.Close();
+            await reader.CloseAsync();
         }
         catch (Exception e)
         {
@@ -81,16 +81,15 @@ public class QuestionBankRepository:IQuestionBankRepository
         }
         finally
         {
-            connection.Close();
+            await connection.CloseAsync();
         }
         return questions;
     }
 
-    public List<QuestionDetails> GetQuestionsBySubjectAndCriteria(int subjectId,int criteriaId)
+    public async Task<List<QuestionDetails>> GetQuestionsBySubjectAndCriteria(int subjectId,int criteriaId)
     {
         
-        List<QuestionDetails> questions = new List<QuestionDetails>();
-        
+        List<QuestionDetails> questions = new List<QuestionDetails>();  
         string query = @"select questionbank.id, questionbank.title, subjects.title as subject ,evaluationcriterias.title as criteria
                             from questionbank, subjects,evaluationcriterias
                             where questionbank.subjectid=subjects.id and questionbank.evaluationcriteriaid=evaluationcriterias.id
@@ -104,9 +103,9 @@ public class QuestionBankRepository:IQuestionBankRepository
 
         try
         {
-            connection.Open();
-            MySqlDataReader reader = command.ExecuteReader();
-            while (reader.Read())
+            await connection.OpenAsync();
+            MySqlDataReader reader = await command.ExecuteReaderAsync();
+            while (await reader.ReadAsync())
             {
                 int id = int.Parse(reader["id"].ToString());
                 string strQuestion = reader["title"].ToString();
@@ -122,7 +121,7 @@ public class QuestionBankRepository:IQuestionBankRepository
 
                 questions.Add(question);
             }
-            reader.Close();
+            await reader.CloseAsync();
         }
         catch (Exception e)
         {
@@ -130,24 +129,24 @@ public class QuestionBankRepository:IQuestionBankRepository
         }
         finally
         {
-            connection.Close();
+            await connection.CloseAsync();
         }
         return questions;
     }
 
-    public bool UpdateAnswer(int id, char answerKey){
+    public async Task<bool> UpdateAnswer(int id, char answerKey){
         bool status = false;
         string query = "update questionbank set answerkey=@answerkey where id =@id";
         MySqlConnection connection = new MySqlConnection(connectionString);
         try
         {
-            connection.Open();   
+            await connection.OpenAsync();   
             MySqlCommand command = new MySqlCommand(query, connection);
             command.Parameters.AddWithValue("@id", id);
             command.Parameters.AddWithValue("@answerkey", answerKey);
            Console.WriteLine("Id : "+id);
            Console.WriteLine("Answerkey : "+answerKey);
-            int rowsAffected = command.ExecuteNonQuery();
+            int rowsAffected = await command.ExecuteNonQueryAsync();
             if (rowsAffected > 0)
             {
                 status = true;
@@ -160,12 +159,12 @@ public class QuestionBankRepository:IQuestionBankRepository
         }
         finally
         {
-            connection.Close();
+            await connection.CloseAsync();
         }
         return status;
     }
 
-    public Question GetQuestion(int questionId)
+    public async Task<Question> GetQuestion(int questionId)
     { 
         Question question = null;
         string query = @"select * from questionbank where id=@questionId";
@@ -174,9 +173,9 @@ public class QuestionBankRepository:IQuestionBankRepository
         command.Parameters.AddWithValue("@questionId", questionId);
         try
         {
-            connection.Open();
-            MySqlDataReader reader = command.ExecuteReader();
-            if(reader.Read())
+            await connection.OpenAsync();
+            MySqlDataReader reader = await command.ExecuteReaderAsync();
+            if(await reader.ReadAsync())
             {
                 int subjectId = int.Parse(reader["subjectid"].ToString());
                 string strQuestion = reader["title"].ToString();
@@ -198,7 +197,7 @@ public class QuestionBankRepository:IQuestionBankRepository
                 question.AnswerKey=correctAnswer;
                 question.EvaluationCriteriaId=evaluationCriteriaId;
             }
-            reader.Close();
+            await reader.CloseAsync();
         }
         catch (Exception e)
         {
@@ -206,12 +205,12 @@ public class QuestionBankRepository:IQuestionBankRepository
         }
         finally
         {
-            connection.Close();
+            await connection.CloseAsync();
         }
         return question;
     }
 
-    public List<Question> GetQuestions(int testId)
+    public async Task<List<Question>> GetQuestions(int testId)
     { 
         List<Question> questions = new List<Question>();
         string query = @"select * from questionbank inner join testquestions on testquestions.questionbankid = questionbank.id where testquestions.testid=@testId";
@@ -220,9 +219,9 @@ public class QuestionBankRepository:IQuestionBankRepository
         command.Parameters.AddWithValue("@testID", testId);
         try
         {
-            connection.Open();
-            MySqlDataReader reader = command.ExecuteReader();
-            while(reader.Read())
+            await connection.OpenAsync();
+            MySqlDataReader reader = await command.ExecuteReaderAsync();
+            while(await reader.ReadAsync())
             {
                 int id=int.Parse(reader["id"].ToString());
                 int subjectId = int.Parse(reader["subjectid"].ToString());
@@ -244,7 +243,7 @@ public class QuestionBankRepository:IQuestionBankRepository
                 question.EvaluationCriteriaId=evaluationCriteriaId;
                 questions.Add(question);
             }
-            reader.Close();
+            await reader.CloseAsync();
         }
         catch (Exception e)
         {
@@ -252,19 +251,19 @@ public class QuestionBankRepository:IQuestionBankRepository
         }
         finally
         {
-            connection.Close();
+            await connection.CloseAsync();
         }
         return questions;
     }
 
-    public bool UpdateQuestionOptions(int id,Question options)
+    public async Task<bool> UpdateQuestionOptions(int id,Question options)
     {
         bool status = false;
         string query = "update questionbank set title=@title,a=@a,b=@b,c=@c,d=@d,answerkey=@answerKey where id =@id";
         MySqlConnection connection = new MySqlConnection(connectionString);
         try
         {
-            connection.Open();   
+            await connection.OpenAsync();   
             MySqlCommand command = new MySqlCommand(query, connection);
             command.Parameters.AddWithValue("@title", options.Title);
             command.Parameters.AddWithValue("@a", options.A);
@@ -273,7 +272,7 @@ public class QuestionBankRepository:IQuestionBankRepository
             command.Parameters.AddWithValue("@d", options.D);
             command.Parameters.AddWithValue("@answerKey", options.AnswerKey);
             command.Parameters.AddWithValue("@id", id);
-            int rowsAffected = command.ExecuteNonQuery();
+            int rowsAffected =await command.ExecuteNonQueryAsync();
             if (rowsAffected > 0)
             {
                 status = true;
@@ -286,27 +285,27 @@ public class QuestionBankRepository:IQuestionBankRepository
         }
         finally
         {
-            connection.Close();
+            await connection.CloseAsync();
         }
         return status;
     }
 
 
     //update only evaluationcriteriaid
-    public bool UpdateSubjectCriteria(int questionId,Question question)
+    public async Task<bool> UpdateSubjectCriteria(int questionId,Question question)
     {
         bool status = false;
         string query = "update questionbank set evaluationcriteriaid=@evaluationCriteriaId ,subjectid=@subjectId where id =@id";
         MySqlConnection connection = new MySqlConnection(connectionString);
         try
         {
-            connection.Open();   
+            await connection.OpenAsync();   
             MySqlCommand command = new MySqlCommand(query, connection);
             command.Parameters.AddWithValue("@evaluationCriteriaId", question.EvaluationCriteriaId);
             command.Parameters.AddWithValue("@subjectId", question.SubjectId);
             
             command.Parameters.AddWithValue("@id", questionId);
-            int rowsAffected = command.ExecuteNonQuery();
+            int rowsAffected = await command.ExecuteNonQueryAsync();
             if (rowsAffected > 0)
             {
                 status = true;
@@ -319,7 +318,7 @@ public class QuestionBankRepository:IQuestionBankRepository
         }
         finally
         {
-            connection.Close();
+           await connection.CloseAsync();
         }
         return status;
     }
@@ -327,7 +326,6 @@ public class QuestionBankRepository:IQuestionBankRepository
 
     public bool InsertQuestion(NewQuestion question)
     {
-
     bool status = true;
     MySqlConnection connection = new MySqlConnection(connectionString);
     try
@@ -362,8 +360,7 @@ public class QuestionBankRepository:IQuestionBankRepository
     return status;
   }
 
-    
-    public string GetCriteria(string subject, int questionId)
+    public async Task<string> GetCriteria(string subject, int questionId)
     {
         string criteria = "";
         string query = @"select evaluationcriterias.title from evaluationcriterias INNER join questionbank on questionbank.evaluationcriteriaid=evaluationcriterias.id
@@ -375,15 +372,15 @@ public class QuestionBankRepository:IQuestionBankRepository
             MySqlCommand command = new MySqlCommand(query, connection);
             command.Parameters.AddWithValue("@subject", subject);
             command.Parameters.AddWithValue("@questionId", questionId);
-            connection.Open();
-            MySqlDataReader reader = command.ExecuteReader();
-            if (reader.Read())
+            await connection.OpenAsync();
+            MySqlDataReader reader = await command.ExecuteReaderAsync();
+            if (await reader.ReadAsync())
             {
 
                 string title = reader["title"].ToString();
                 criteria = title;
             }
-            reader.Close();
+            await reader.CloseAsync();
         }
         catch (Exception e)
         {
@@ -391,10 +388,10 @@ public class QuestionBankRepository:IQuestionBankRepository
         }
         finally
         {
-            connection.Close();
+            await connection.CloseAsync();
         }
         return criteria;
+        
     }
-
-    
 }
+

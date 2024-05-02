@@ -1,7 +1,8 @@
 using Microsoft.Extensions.Logging;
-using QuestionBankEntities; //-----------------------dll
-using QuestionBankInterfaces;//-----------------------dll
-using QuestionBankServices;
+using Transflower.Assessment.WebAPI.QuestionBankAPI.Repositories.Interfaces;
+using  Transflower.Assessment.WebAPI.QuestionBankAPI.Repositories;
+using Transflower.Assessment.WebAPI.QuestionBankAPI.Services.Interfaces;
+using   Transflower.Assessment.WebAPI.QuestionBankAPI.Services;
 //using Serilog;
 //using System.Security.Policy;
 
@@ -24,6 +25,8 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
 builder.Services.AddControllers();
+builder.Services.AddScoped<IQuestionBankRepository, QuestionBankRepository>();
+builder.Services.AddScoped<IQuestionBankService, QuestionBankService>();
 
 var app = builder.Build();
 
