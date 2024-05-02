@@ -11,7 +11,8 @@ public class QuestionBankRepository:IQuestionBankRepository
     //Disconnected Data Access
     //No 
 
-    public List<QuestionTitle> GetAllQuestions(){
+    public async Task<List<QuestionTitle>> GetAllQuestions(){
+        await Task.Delay(2000);
         List<QuestionTitle> questions = new List<QuestionTitle>();
         string query = @"select * from questionbank";
          
@@ -324,8 +325,9 @@ public class QuestionBankRepository:IQuestionBankRepository
     }
 
 
-    public bool InsertQuestion(NewQuestion question)
+    public async  Task<bool> InsertQuestion(NewQuestion question)
     {
+        await Task.Delay(2000);
     bool status = true;
     MySqlConnection connection = new MySqlConnection(connectionString);
     try

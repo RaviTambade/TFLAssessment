@@ -22,9 +22,9 @@ public class QuestionBankController : ControllerBase
 
     //http://localhost:5172/api/questionbank/questions
     [HttpGet("questions")]
-    public IActionResult GetAllQuestions()
+    public async Task<IActionResult> GetAllQuestions()
     {
-        List<QuestionTitle> questions = _svc.GetAllQuestions();
+        List<QuestionTitle> questions =await _svc.GetAllQuestions();
         _logger.LogInformation("Get all products method invoked at  {DT}", DateTime.UtcNow.ToLongTimeString());
         return Ok(questions);
     }
@@ -112,10 +112,9 @@ public class QuestionBankController : ControllerBase
 
     //http://localhost:5172/api/questionbank/question
     [HttpPost("question")]
-    public IActionResult InsertQuestion(NewQuestion question)
+    public async Task<IActionResult> InsertQuestion(NewQuestion question)
     {
-        bool status = false;
-        status =  _svc.InsertQuestion(question);
+        bool status =await  _svc.InsertQuestion(question);
         return Ok(status);
     }
       

@@ -11,8 +11,8 @@ public class QuestionBankService:IQuestionBankService
         _repository = repository;
     }
 
-    public List<QuestionTitle> GetAllQuestions(){
-      return _repository.GetAllQuestions();
+    public async Task<List<QuestionTitle>> GetAllQuestions(){
+      return await _repository.GetAllQuestions();
     }
 
     public async Task<List<SubjectQuestion>> GetQuestionsBySubject(int id)
@@ -57,10 +57,10 @@ public class QuestionBankService:IQuestionBankService
     }
 
 
-    public bool InsertQuestion(NewQuestion question)
+    public async Task<bool> InsertQuestion(NewQuestion question)
     {
 
-       return _repository.InsertQuestion(question);
+       return await _repository.InsertQuestion(question);
     }
 
     
