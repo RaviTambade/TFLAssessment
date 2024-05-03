@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.1" />
+    <PackageReference Include="Serilog.Extensions.Logging.File" Version="3.0.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
 
@@ -16,6 +17,7 @@
     <ProjectReference Include="..\..\Entities\ResultEntity\ResultEntity.csproj" />
     <ProjectReference Include="..\..\Interfaces\ResultInterfaces\ResultInterface.csproj" />
     <ProjectReference Include="..\..\Services\ResultServices\ResultServices.csproj" />
+    
   </ItemGroup>
 
 
