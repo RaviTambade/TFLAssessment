@@ -1,8 +1,8 @@
 //WebApp Builder Infrastrcture
-using Transflower.Assessment.WebAPI.ResultAPI.Repositories.Interfaces;
-using  Transflower.Assessment.WebAPI.ResultAPI.Repositories;
-using Transflower.Assessment.WebAPI.ResultAPI.Services.Interfaces;
-using   Transflower.Assessment.WebAPI.ResultAPI.Services;
+using Transflower.TFLAssessment.Repositories.Interfaces;
+using  Transflower.TFLAssessment.Repositories;
+using Transflower.TFLAssessment.Services.Interfaces;
+using   Transflower.TFLAssessment.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 

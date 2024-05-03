@@ -1,5 +1,4 @@
-namespace Transflower.Assessment.WebAPI.ResultAPI.Entities;
-
+namespace Transflower.TFLAssessment.Entities;
 public class TestTime{
     public   int Day{get;set;}
     public  int Hour{get;set;}

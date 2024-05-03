@@ -1,11 +1,16 @@
-using Transflower.Assessment.WebAPI.ResultAPI.Entities;
-using Transflower.Assessment.WebAPI.ResultAPI.Services.Interfaces;
-using Transflower.Assessment.WebAPI.ResultAPI.Repositories.Interfaces;
-namespace  Transflower.Assessment.WebAPI.ResultAPI.Services;
+using Transflower.TFLAssessment.Entities;
+using Transflower.TFLAssessment.Services.Interfaces;
+using Transflower.TFLAssessment.Repositories.Interfaces;
+namespace  Transflower.TFLAssessment.Services;
 
 public class ResultService:IResultService
 {
     private readonly IResultRepository _repository;
+
+    public ResultService ()
+    {
+
+    }
     public ResultService(IResultRepository repository)
     {
         _repository = repository;

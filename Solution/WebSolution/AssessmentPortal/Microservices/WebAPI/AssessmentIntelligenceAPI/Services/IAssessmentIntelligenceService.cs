@@ -1,7 +1,7 @@
 
-using Transflower.Assessment.WebAPI.AssessmentIntelligenceAPI.Repositories.Interfaces;
+using Transflower.AssessmentIntelligenceAPI.Repositories.Interfaces;
 
-namespace Transflower.Assessment.WebAPI.AssessmentIntelligenceAPI.Services.Interfaces{
+namespace Transflower.AssessmentIntelligenceAPI.Services.Interfaces{
  public interface IAssessmentIntelligenceService:IAssessmentIntelligenceRepository{
     
  }

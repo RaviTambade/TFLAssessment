@@ -1,8 +1,8 @@
 using MySql.Data.MySqlClient;
 using System.Data;
-using Transflower.Assessment.WebAPI.ResultAPI.Entities;
-using Transflower.Assessment.WebAPI.ResultAPI.Repositories.Interfaces;
-namespace  Transflower.Assessment.WebAPI.ResultAPI.Repositories;
+using Transflower.TFLAssessment.Entities;
+using Transflower.TFLAssessment.Repositories.Interfaces;
+namespace  Transflower.TFLAssessment.Repositories;
 
 public class ResultRepository : IResultRepository
 {
