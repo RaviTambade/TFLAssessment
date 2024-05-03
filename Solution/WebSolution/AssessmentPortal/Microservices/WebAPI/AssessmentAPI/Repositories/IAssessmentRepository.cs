@@ -1,27 +1,27 @@
-﻿using  Transflower.Assessment.WebAPI.AssessmentAPI.Entities;
-namespace Transflower.Assessment.WebAPI.AssessmentAPI.Repositories.Interfaces;
+﻿using  Transflower.TFLAssessment.Entities;
+namespace Transflower.TFLAssessment.Repositories.Interfaces;
 
-public interface IAssessmentService
+public interface IAssessmentRepository
 {
-  public Assessment GetDetails(int AssessmentId);
-  public List<Assessment> GetAll(DateTime fromDate, DateTime toDate);
-  public List<Assessment> GetAllTests();
-  public List<Assessment> GetAllBySubjectMatterExpert(int smeId);
+  public Task <Assessment> GetDetails(int AssessmentId);
+  public Task <List<Assessment>> GetAll(DateTime fromDate, DateTime toDate);
+  public Task <List<Assessment>> GetAllTests();
+  public Task <List<Assessment>> GetAllBySubjectMatterExpert(int smeId);
   
-  public List<Employee> GetAllEmployees();
+  public Task <List<Employee>> GetAllEmployees();
 
-  public List<Subject> GetAllSubjects();
+  public Task <List<Subject>> GetAllSubjects();
 
-  public List<EvaluationCriteria> GetEvalutionCriterias();
+  public Task <List<EvaluationCriteria>> GetEvalutionCriterias();
 
-  public List<EvaluationCriteria> GetEvalutionCriteriasBySubject(int subjectId);
+  public Task <List<EvaluationCriteria>> GetEvalutionCriteriasBySubject(int subjectId);
 
-  public Task<bool> CreateTest(Assessment newTest);
-  public bool AddQuestion(int AssessmentId, int questionId);
-  public bool AddQuestions(int AssessmentId, List<TestQuestion> questions);
-  public bool ChangeDuration(int AssessmentId, string duration);
-  public bool Reschedule(int AssessmentId, DateTime date);
-  public bool RemoveQuestion(int Assessmentid, int questionId);
-  public bool RemoveQuestions(int[] testQuestions);
+  public Task <bool> CreateTest(Assessment newTest);
+  public Task <bool> AddQuestion(int AssessmentId, int questionId);
+  public Task <bool> AddQuestions(int AssessmentId, List<TestQuestion> questions);
+  public Task <bool> ChangeDuration(int AssessmentId, string duration);
+  public Task <bool> Reschedule(int AssessmentId, DateTime date);
+  public Task <bool> RemoveQuestion(int Assessmentid, int questionId);
+  public Task <bool> RemoveQuestions(int[] testQuestions);
 
 }
