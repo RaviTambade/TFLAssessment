@@ -1,8 +1,8 @@
-using Transflower.Assessment.WebAPI.EvaluationCriteriaAPI.Entities;
-using Transflower.Assessment.WebAPI.EvaluationCriteriaAPI.Services.Interfaces;
-using Transflower.Assessment.WebAPI.EvaluationCriteriaAPI.Repositories.Interfaces;
+using Transflower.TFLAssessment.Entities;
+using Transflower.TFLAssessment.Services.Interfaces;
+using Transflower.TFLAssessment.Repositories.Interfaces;
 
-namespace Transflower.Assessment.WebAPI.EvaluationCriteriaAPI.Services
+namespace Transflower.TFLAssessment.Services
 {
     public class EvaluationCriteriaService : IEvaluationCriteriaService
     {

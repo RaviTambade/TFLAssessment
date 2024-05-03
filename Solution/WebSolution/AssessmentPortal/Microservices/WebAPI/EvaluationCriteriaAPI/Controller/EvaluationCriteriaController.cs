@@ -1,7 +1,7 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using Transflower.Assessment.WebAPI.EvaluationCriteriaAPI.Entities;
-using Transflower.Assessment.WebAPI.EvaluationCriteriaAPI.Services.Interfaces;
+using Transflower.TFLAssessment.Entities;
+using Transflower.TFLAssessment.Services.Interfaces;
 
 [ApiController]
 [Route("api/criteria")]
