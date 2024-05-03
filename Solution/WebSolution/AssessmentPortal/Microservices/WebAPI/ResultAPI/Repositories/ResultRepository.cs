@@ -4,7 +4,7 @@ using Transflower.Assessment.WebAPI.ResultAPI.Entities;
 using Transflower.Assessment.WebAPI.ResultAPI.Repositories.Interfaces;
 namespace  Transflower.Assessment.WebAPI.ResultAPI.Repositories;
 
-public class ResultService : IResultRepository
+public class ResultRepository : IResultRepository
 {
 
     private string connectionString = "server=localhost;port=3306;user=root;password=password;database=assessmentdb";

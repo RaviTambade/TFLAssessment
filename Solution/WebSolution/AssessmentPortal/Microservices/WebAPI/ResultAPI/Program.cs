@@ -1,7 +1,8 @@
 //WebApp Builder Infrastrcture
-using ResultEntity; //-----------------------dll
-using ResultInterfaces;//-----------------------dll
-using ResultServices;//------------------------dll
+using Transflower.Assessment.WebAPI.ResultAPI.Repositories.Interfaces;
+using  Transflower.Assessment.WebAPI.ResultAPI.Repositories;
+using Transflower.Assessment.WebAPI.ResultAPI.Services.Interfaces;
+using   Transflower.Assessment.WebAPI.ResultAPI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +16,8 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
 builder.Services.AddControllers();
+builder.Services.AddScoped<IResultRepository, ResultRepository>();
+builder.Services.AddScoped<IResultService, ResultService>();
 
 var app = builder.Build();
 
