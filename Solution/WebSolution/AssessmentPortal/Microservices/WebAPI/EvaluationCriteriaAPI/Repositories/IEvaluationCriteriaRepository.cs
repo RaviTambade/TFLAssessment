@@ -5,10 +5,10 @@ namespace Transflower.Assessment.WebAPI.EvaluationCriteriaAPI.Repositories.Inter
 public interface IEvaluationCriteriaRepository
 
 {
-    public bool UpdateSubject(int id, int subjectId);
+    public Task <bool> UpdateSubject(int id, int subjectId);
 
-    public bool InsertCriteria(EvaluationCriteria criteria);
+    public Task <bool> InsertCriteria(EvaluationCriteria criteria);
 
-    public bool UpdateCriteria(int evaluationCriteriaId, int questionId);
+    public Task <bool> UpdateCriteria(int evaluationCriteriaId, int questionId);
 
 }
