@@ -1,7 +1,7 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using Transflower.Assessment.WebAPI.CandidateAnswerAPI.Entities;
-using Transflower.Assessment.WebAPI.CandidateAnswerAPI.Services.Interfaces;
+using Transflower.TFLAssessment.Entities;
+using Transflower.TFLAssessment.Services.Interfaces;
 
 
 //Controller is now responsible to handle HTTP Requests
