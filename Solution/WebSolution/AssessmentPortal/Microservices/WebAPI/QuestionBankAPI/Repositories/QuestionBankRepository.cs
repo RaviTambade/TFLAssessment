@@ -1,9 +1,9 @@
 
 using MySql.Data.MySqlClient;
 using System.Data;
-using Transflower.Assessment.WebAPI.QuestionBankAPI.Entities;
-using Transflower.Assessment.WebAPI.QuestionBankAPI.Repositories.Interfaces;
-namespace Transflower.Assessment.WebAPI.QuestionBankAPI.Repositories;
+using Transflower.TFLAssessment.Entities;
+using Transflower.TFLAssessment.Repositories.Interfaces;
+namespace Transflower.TFLAssessment.Repositories;
 public class QuestionBankRepository : IQuestionBankRepository
 {
     private string connectionString = "server=localhost;port=3306;user=root;password=password;database=assessmentdb";
