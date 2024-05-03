@@ -1,8 +1,8 @@
 using MySql.Data.MySqlClient;
 using System.Data;
-using Transflower.Assessment.WebAPI.CandidateAnswerAPI.Entities;
-using Transflower.Assessment.WebAPI.CandidateAnswerAPI.Repositories.Interfaces;
-namespace Transflower.Assessment.WebAPI.CandidateAnswerAPI.Repositories;
+using Transflower.TFLAssessment.Entities;
+using Transflower.TFLAssessment.Repositories.Interfaces;
+namespace Transflower.TFLAssessment.Repositories;
 
 
 public class CandidateAnswerRepository:ICandidateAnswerRepository

@@ -1,7 +1,7 @@
-using Transflower.Assessment.WebAPI.QuestionBankAPI.Entities;
-using Transflower.Assessment.WebAPI.QuestionBankAPI.Services.Interfaces;
-using Transflower.Assessment.WebAPI.QuestionBankAPI.Repositories.Interfaces;
-namespace  Transflower.Assessment.WebAPI.QuestionBankAPI.Services;
+using Transflower.TFLAssessment.Entities;
+using Transflower.TFLAssessment.Services.Interfaces;
+using  Transflower.TFLAssessment.Repositories.Interfaces;
+namespace Transflower.TFLAssessment.Services;
 
 public class QuestionBankService:IQuestionBankService
 {

@@ -1,5 +1,5 @@
-using Transflower.Assessment.WebAPI.QuestionBankAPI.Entities;
-namespace Transflower.Assessment.WebAPI.QuestionBankAPI.Repositories.Interfaces;
+using Transflower.TFLAssessment.Entities;
+namespace Transflower.TFLAssessment.Repositories.Interfaces;
 
 public interface IQuestionBankRepository{
     public Task<List<QuestionTitle>> GetAllQuestions();
