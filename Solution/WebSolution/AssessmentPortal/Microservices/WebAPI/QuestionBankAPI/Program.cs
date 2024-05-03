@@ -12,7 +12,7 @@ builder.Host.ConfigureLogging(logging =>
 {
     logging.ClearProviders();
     logging.AddConsole();
-    //logging.AddFile("logs/catalog-{Date}.json", isJson: true);
+    logging.AddFile("logs/catalog-{Date}.json", isJson: true);
 });
 
 
