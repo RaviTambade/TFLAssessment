@@ -1,5 +1,4 @@
-namespace Transflower.Assessment.WebAPI.ResultAPI.Entities;
-
+namespace Transflower.TFLAssessment.Entities;
 public class TestResultDetails {
    
    public int TestId {get;set;}

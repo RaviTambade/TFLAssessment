@@ -1,5 +1,4 @@
-namespace Transflower.Assessment.WebAPI.ResultAPI.Entities;
-
+namespace Transflower.TFLAssessment.Entities;
 public class FailedCandidateDetails {
     public int TestId {get;set;}
     public int CandidateId {get;set;}

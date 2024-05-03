@@ -1,9 +1,8 @@
-
-using Transflower.Assessment.WebAPI.CandidateAnswerAPI.Repositories.Interfaces;
-using  Transflower.Assessment.WebAPI.CandidateAnswerAPI.Repositories;
-using Transflower.Assessment.WebAPI.CandidateAnswerAPI.Services.Interfaces;
-using   Transflower.Assessment.WebAPI.CandidateAnswerAPI.Services;
-
+using Microsoft.Extensions.Logging;
+using Transflower.TFLAssessment.Repositories.Interfaces;
+using  Transflower.TFLAssessment.Repositories;
+using Transflower.TFLAssessment.Services.Interfaces;
+using   Transflower.TFLAssessment.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +14,12 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddCors();
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
+builder.Host.ConfigureLogging(logging =>
+{
+    logging.ClearProviders();
+    logging.AddConsole();
+    logging.AddFile("logs/catalog-{Date}.json", isJson: true);
+});
 
 builder.Services.AddControllers();
 builder.Services.AddScoped<ICandidateAnswerRepository, CandidateAnswerRepository>();
@@ -22,7 +27,6 @@ builder.Services.AddScoped<ICandidateAnswerService, CandidateAnswerService>();
 
 
 var app = builder.Build();
-
 
 //ASP.NET middleware configuration
 

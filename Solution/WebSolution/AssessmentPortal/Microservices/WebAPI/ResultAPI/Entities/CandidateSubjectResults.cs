@@ -1,4 +1,4 @@
-namespace Transflower.Assessment.WebAPI.ResultAPI.Entities;
+namespace Transflower.TFLAssessment.Entities;
 public class CandidateSubjectResults{
     public int TestId {get;set;}
     public int   SubjectId {get;set;}

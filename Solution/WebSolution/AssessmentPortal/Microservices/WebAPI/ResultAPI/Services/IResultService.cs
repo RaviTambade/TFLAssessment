@@ -1,6 +1,6 @@
-using Transflower.Assessment.WebAPI.ResultAPI.Repositories.Interfaces;
+using Transflower.TFLAssessment.Repositories.Interfaces;
 
-namespace Transflower.Assessment.WebAPI.ResultAPI.Services.Interfaces{
+namespace Transflower.TFLAssessment.Services.Interfaces{
  public interface IResultService:IResultRepository{
     
  }
