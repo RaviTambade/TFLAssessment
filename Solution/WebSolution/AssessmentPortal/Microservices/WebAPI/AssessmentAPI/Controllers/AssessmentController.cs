@@ -11,10 +11,12 @@ namespace Transflower.TFLAssessment.Controllers;
 public class AssessmentController : ControllerBase
 { 
    private readonly IAssessmentService _svc;
-    public AssessmentController(IAssessmentService service)
+   private readonly ILogger<AssessmentController> _logger;
+    public AssessmentController(IAssessmentService service, ILogger<AssessmentController> logger)
     {
         // Initialize with some sample data
        _svc = service;  
+       _logger = logger;
 
     }
     
@@ -24,6 +26,7 @@ public class AssessmentController : ControllerBase
     public async Task<IActionResult> GetAll(DateTime fromDate, DateTime toDate)
     {
         List<Assessment> assessments =await _svc.GetAll( fromDate,  toDate);
+        _logger.LogInformation("Get all Assessments method invoked at  {DT}", DateTime.UtcNow.ToLongTimeString());
         return Ok(assessments);
     }
 
@@ -33,6 +36,7 @@ public class AssessmentController : ControllerBase
     public async Task<IActionResult>  GetAllAssesment()
     {
         List<Assessment> assessments =await _svc.GetAllTests();
+        _logger.LogInformation("Get all tests method invoked at  {DT}", DateTime.UtcNow.ToLongTimeString());
         return Ok(assessments);
     }
   
@@ -42,6 +46,7 @@ public class AssessmentController : ControllerBase
     public async Task<IActionResult>  GetAllEmployees()
     {
         List<Employee> employees =await _svc.GetAllEmployees();
+        _logger.LogInformation("Get all employee method invoked at  {DT}", DateTime.UtcNow.ToLongTimeString());
         return Ok(employees);
     }
   
@@ -50,6 +55,7 @@ public class AssessmentController : ControllerBase
     public async Task<IActionResult>  GetAllSubjects()
     {
         List<Subject> subjects =await _svc.GetAllSubjects();
+        _logger.LogInformation("Get all subject method invoked at  {DT}", DateTime.UtcNow.ToLongTimeString());
         return Ok(subjects);
     }
 
@@ -59,6 +65,7 @@ public class AssessmentController : ControllerBase
     public async Task<IActionResult>  GetEvalutionCriterias()
     {
         List<EvaluationCriteria> criterias =await _svc.GetEvalutionCriterias();
+         _logger.LogInformation("Get evaluation criteria method invoked at  {DT}", DateTime.UtcNow.ToLongTimeString());
         return Ok(criterias);
     }
 
@@ -67,14 +74,16 @@ public class AssessmentController : ControllerBase
     public async Task<IActionResult>  GetEvalutionCriteriasBySubject(int subjectId)
     {
         List<EvaluationCriteria> criterias =await _svc.GetEvalutionCriteriasBySubject(subjectId);
+         _logger.LogInformation("Get  evaluation criteria by subject method invoked at  {DT}", DateTime.UtcNow.ToLongTimeString());
         return Ok(criterias);
     }
 
     //http://localhost:5151/api/assessment/1
     [HttpGet("{id}")]
-    public async Task<IActionResult>  Get(int id)
+    public async Task<IActionResult>  GetDetails(int id)
     {
         Assessment theAssessment=await _svc.GetDetails(id);
+         _logger.LogInformation("Get details method invoked at  {DT}", DateTime.UtcNow.ToLongTimeString());
         return Ok(theAssessment);
     }
 
@@ -83,6 +92,7 @@ public class AssessmentController : ControllerBase
     public async Task<IActionResult>  GetAllBySubjectMatterExpert(int smeId)
     {
         List<Assessment> assessments=await _svc.GetAllBySubjectMatterExpert(smeId);
+        _logger.LogInformation("Get all subject matter experties method invoked at  {DT}", DateTime.UtcNow.ToLongTimeString());
         return Ok(assessments);
     }
 
@@ -91,6 +101,7 @@ public class AssessmentController : ControllerBase
     public async Task<IActionResult> CreateTest( Assessment assessment)
     {
         bool status= await _svc.CreateTest(assessment);
+        _logger.LogInformation("Create test method invoked at  {DT}", DateTime.UtcNow.ToLongTimeString());
         return Ok(status);
     }
 
@@ -100,6 +111,7 @@ public class AssessmentController : ControllerBase
     public async Task<IActionResult>  AddQuestion(int assessmentId,int questionId)
     {
         bool status=await _svc.AddQuestion(assessmentId,questionId);
+        _logger.LogInformation("Add question method invoked at  {DT}", DateTime.UtcNow.ToLongTimeString());
         return Ok(status);
     }
 
@@ -109,6 +121,7 @@ public class AssessmentController : ControllerBase
     public async Task<IActionResult>  AddQuestions(int assessmentId,List<TestQuestion> questions)
     {
         bool status=await _svc.AddQuestions(assessmentId, questions);
+        _logger.LogInformation("Add multiple questions method invoked at  {DT}", DateTime.UtcNow.ToLongTimeString());
         return Ok(status);
     }
 
@@ -117,6 +130,7 @@ public class AssessmentController : ControllerBase
     public async Task<IActionResult>  RemoveQuestion(int assessmentId,int questionId)
     {
         bool status=await _svc.RemoveQuestion(assessmentId,questionId);
+        _logger.LogInformation("Remove question method invoked at  {DT}", DateTime.UtcNow.ToLongTimeString());
         return Ok(status);
     }
 
@@ -125,6 +139,7 @@ public class AssessmentController : ControllerBase
     public async Task<IActionResult>  ChangeDuration(int assessmentId,string duration)
     {
         bool status=await _svc.ChangeDuration(assessmentId,duration);
+        _logger.LogInformation("Change duration method invoked at  {DT}", DateTime.UtcNow.ToLongTimeString());
         return Ok(status);
     }
 
@@ -133,6 +148,7 @@ public class AssessmentController : ControllerBase
     public async Task<IActionResult>  Reschedule(int assessmentId,DateTime date)
     {
         bool status=await _svc.Reschedule(assessmentId,date);
+        _logger.LogInformation("Reschedule method invoked at  {DT}", DateTime.UtcNow.ToLongTimeString());
         return Ok(status);
     }
 
@@ -141,6 +157,7 @@ public class AssessmentController : ControllerBase
     public async Task<IActionResult>  RemoveQuestions(int[] testQuestions)
     {
         bool status= await _svc.RemoveQuestions(testQuestions);
+        _logger.LogInformation("Remove questions method invoked at  {DT}", DateTime.UtcNow.ToLongTimeString());
         return Ok(status);
     }
 }
