@@ -1,6 +1,6 @@
 
-using Transflower.Assessment.WebAPI.EvaluationCriteriaAPI.Entities;
-namespace Transflower.Assessment.WebAPI.EvaluationCriteriaAPI.Repositories.Interfaces;
+using Transflower.TFLAssessment.Entities;
+namespace Transflower.TFLAssessment.Repositories.Interfaces;
 
 public interface IEvaluationCriteriaRepository
 

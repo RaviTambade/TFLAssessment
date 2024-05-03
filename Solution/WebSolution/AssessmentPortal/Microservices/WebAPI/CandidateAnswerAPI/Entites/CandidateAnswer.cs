@@ -1,4 +1,4 @@
-﻿namespace Transflower.Assessment.WebAPI.CandidateAnswerAPI.Entities;
+﻿namespace Transflower.TFLAssessment.Entities;
 
 public class CandidateAnswer
 {

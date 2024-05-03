@@ -1,7 +1,7 @@
 
-using Transflower.Assessment.WebAPI.CandidateAnswerAPI.Repositories.Interfaces;
+using Transflower.TFLAssessment.Repositories.Interfaces;
 
-namespace Transflower.Assessment.WebAPI.CandidateAnswerAPI.Services.Interfaces{
+namespace Transflower.TFLAssessment.Services.Interfaces{
  public interface ICandidateAnswerService:ICandidateAnswerRepository{
     
  }
