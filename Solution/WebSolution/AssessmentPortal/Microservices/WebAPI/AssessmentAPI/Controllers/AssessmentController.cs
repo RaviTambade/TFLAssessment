@@ -1,8 +1,10 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using AssessmentEntities;
-using AssessmentInterfaces;
-using AssessmentServices;
+
+using Transflower.Assessment.WebAPI.AssessmentAPI.Entities;
+
+using  Transflower.Assessment.WebAPI.AssessmentAPI.Services.Interfaces;
+namespace Transflower.Assessment.WebAPI.AssessmentController.Controllers;
 
 //Controller is now responsible to handle HTTP Requests
 
@@ -10,11 +12,11 @@ using AssessmentServices;
 [Route("api/[controller]")]
 public class AssessmentController : ControllerBase
 { 
-    IAssessmentService _svc=new AssessmentService();
-    public AssessmentController()
+   private readonly IAssessmentService _svc;
+    public AssessmentController(IAssessmentService service)
     {
         // Initialize with some sample data
-        
+     -svc = service;   
     }
     
 

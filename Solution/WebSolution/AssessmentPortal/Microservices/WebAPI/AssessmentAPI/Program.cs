@@ -1,7 +1,8 @@
 //WebApp Builder Infrastrcture
-using AssessmentEntities; //-----------------------dll
-using AssessmentInterfaces;//-----------------------dll
-using AssessmentServices;//------------------------dll
+using Transflower.Assessment.WebAPI.AssessmentAPI.Repositories.Interfaces;
+using Transflower.Assessment.WebAPI.AssessmentAPI.Services.Interfaces;
+using Transflower.Assessment.WebAPI.AssessmentAPI.Services;
+using Transflower.Assessment.WebAPI.AssessmentAPI.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +16,8 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
 builder.Services.AddControllers();
+builder.Services.AddScoped<IAssessmentRepository,AssessmentRepository>();
+builder.Services.AddScoped<IAssessmentService,AssessmentService>();
 
 var app = builder.Build();
 
