@@ -1,9 +1,12 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 
-using AssessmentIntelligenceEntities; 
-using AssessmentIntelligenceInterfaces;
-using AssessmentIntelligenceServices;
+using Transflower.Assessment.WebAPI.AssessmentIntelligenceAPI.Entities;
+
+using Transflower.Assessment.WebAPI.AssessmentIntelligenceAPI.Services.Interfaces;
+
+namespace Transflower.Assessment.WebAPI.AssessmentIntelligenceAPI.Controllers;
+
 
 //Controller is now responsible to handle HTTP Requests
 
@@ -11,17 +14,17 @@ using AssessmentIntelligenceServices;
 [Route("api/[controller]")]
 public class AssessmentIntelligenceController : ControllerBase
 { 
-    IAssessmentIntelligenceService _svc=new AssessmentIntelligenceService ();
-    public AssessmentIntelligenceController()
+    private readonly IAssessmentIntelligenceService _svc;
+    public AssessmentIntelligenceController(IAssessmentIntelligenceService service)
     {
-        // Initialize with some sample data    
+        _svc=service;  
     }
 
     // GET: api/assessment
     [HttpGet("Candidates/{candidateId}/Year/{year}")]
-    public IActionResult GetCandidateResults(  int candidateId,int year)
+    public async Task<IActionResult> GetCandidateResults(  int candidateId,int year)
     {
-        List<AnnualCandidateResult> assessments =_svc.GetCandidateResults( candidateId, year);
+        List<AnnualCandidateResult> assessments =await _svc.GetCandidateResults( candidateId, year);
         return Ok(assessments);
     }
 }
