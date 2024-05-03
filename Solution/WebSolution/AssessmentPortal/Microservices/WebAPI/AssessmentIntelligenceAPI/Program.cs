@@ -1,7 +1,7 @@
-using Transflower.Assessment.WebAPI.AssessmentIntelligenceAPI.Repositories.Interfaces;
-using Transflower.Assessment.WebAPI.AssessmentIntelligenceAPI.Repositories;
-using Transflower.Assessment.WebAPI.AssessmentIntelligenceAPI.Services.Interfaces;
-using Transflower.Assessment.WebAPI.AssessmentIntelligenceAPI.Services;
+using Transflower.AssessmentIntelligenceAPI.Repositories.Interfaces;
+using Transflower.AssessmentIntelligenceAPI.Repositories;
+using Transflower.AssessmentIntelligenceAPI.Services.Interfaces;
+using Transflower.AssessmentIntelligenceAPI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 

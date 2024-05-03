@@ -1,11 +1,11 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 
-using Transflower.Assessment.WebAPI.AssessmentIntelligenceAPI.Entities;
+using Transflower.AssessmentIntelligenceAPI.Entities;
 
-using Transflower.Assessment.WebAPI.AssessmentIntelligenceAPI.Services.Interfaces;
+using Transflower.AssessmentIntelligenceAPI.Services.Interfaces;
 
-namespace Transflower.Assessment.WebAPI.AssessmentIntelligenceAPI.Controllers;
+namespace Transflower.AssessmentIntelligenceAPI.Controllers;
 
 
 //Controller is now responsible to handle HTTP Requests
@@ -21,6 +21,7 @@ public class AssessmentIntelligenceController : ControllerBase
     }
 
     // GET: api/assessment
+    //http://localhost:5294/api/AssessmentIntelligence/candidates/1/year/2015
     [HttpGet("Candidates/{candidateId}/Year/{year}")]
     public async Task<IActionResult> GetCandidateResults(  int candidateId,int year)
     {

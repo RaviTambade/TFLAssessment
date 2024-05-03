@@ -1,8 +1,8 @@
-using Transflower.Assessment.WebAPI.AssessmentIntelligenceAPI.Entities;
-using Transflower.Assessment.WebAPI.AssessmentIntelligenceAPI.Repositories.Interfaces;
-using Transflower.Assessment.WebAPI.AssessmentIntelligenceAPI.Services.Interfaces;
+using Transflower.AssessmentIntelligenceAPI.Entities;
+using Transflower.AssessmentIntelligenceAPI.Repositories.Interfaces;
+using Transflower.AssessmentIntelligenceAPI.Services.Interfaces;
 
-namespace Transflower.Assessment.WebAPI.AssessmentIntelligenceAPI.Services{
+namespace Transflower.AssessmentIntelligenceAPI.Services{
 public class AssessmentIntelligenceService:IAssessmentIntelligenceService
 {
     private readonly IAssessmentIntelligenceRepository _repo;
