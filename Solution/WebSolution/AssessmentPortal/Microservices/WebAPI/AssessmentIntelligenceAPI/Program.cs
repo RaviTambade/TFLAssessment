@@ -1,6 +1,7 @@
-using AssessmentIntelligenceEntities; //-----------------------dll
-using AssessmentIntelligenceInterfaces;//-----------------------dll
-using AssessmentIntelligenceServices;//------------------------dll
+using Transflower.Assessment.WebAPI.AssessmentIntelligenceAPI.Repositories.Interfaces;
+using Transflower.Assessment.WebAPI.AssessmentIntelligenceAPI.Repositories;
+using Transflower.Assessment.WebAPI.AssessmentIntelligenceAPI.Services.Interfaces;
+using Transflower.Assessment.WebAPI.AssessmentIntelligenceAPI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,7 +15,8 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
 builder.Services.AddControllers();
-
+builder.Services.AddScoped<IAssessmentIntelligenceRepository, AssessmentIntelligenceRepository>();
+builder.Services.AddScoped<IAssessmentIntelligenceService, AssessmentIntelligenceService>();
 var app = builder.Build();
 
 
