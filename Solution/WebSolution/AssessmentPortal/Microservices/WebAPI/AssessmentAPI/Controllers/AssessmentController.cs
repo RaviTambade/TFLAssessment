@@ -18,7 +18,6 @@ public class AssessmentController : ControllerBase
 
     }
     
-
     // GET: api/assessment
     [HttpGet("creationdate/fromDate/{fromDate}/toDate/{toDate}")]
     public async Task<IActionResult> GetAll(DateTime fromDate, DateTime toDate)
