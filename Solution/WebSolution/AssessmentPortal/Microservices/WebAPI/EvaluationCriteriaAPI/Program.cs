@@ -1,6 +1,7 @@
-using EvaluationCriteriaEntities; //-----------------------dll
-using EvaluationCriteriaInterfaces;//-----------------------dll
-using EvaluationCriteriaServices;//------------------------dll
+using Transflower.Assessment.WebAPI.EvaluationCriteriaAPI.Repositories.Interfaces;
+using  Transflower.Assessment.WebAPI.EvaluationCriteriaAPI.Repositories;
+using Transflower.Assessment.WebAPI.EvaluationCriteriaAPI.Services.Interfaces;
+using   Transflower.Assessment.WebAPI.EvaluationCriteriaAPI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +15,8 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
 builder.Services.AddControllers();
+builder.Services.AddScoped<IEvaluationCriteriaRepository, EvaluationCriteriaRepository>();
+builder.Services.AddScoped<IEvaluationCriteriaService, EvaluationCriteriaService>();
 
 var app = builder.Build();
 
