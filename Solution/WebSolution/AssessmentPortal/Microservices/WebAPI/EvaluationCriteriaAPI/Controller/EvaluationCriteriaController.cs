@@ -1,42 +1,38 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-
-using EvaluationCriteriaEntities; 
-using EvaluationCriteriaInterfaces;
-using EvaluationCriteriaServices;
-
-//Controller is now responsible to handle HTTP Requests
+using Transflower.Assessment.WebAPI.EvaluationCriteriaAPI.Entities;
+using Transflower.Assessment.WebAPI.EvaluationCriteriaAPI.Services.Interfaces;
 
 [ApiController]
 [Route("api/criteria")]
 public class EvaluationCriteriaController : ControllerBase
 { 
-    IEvaluationCriteriaService _svc = new EvaluationCriteriaService();
-    public EvaluationCriteriaController()
+    private readonly IEvaluationCriteriaService _svc;
+    
+    public EvaluationCriteriaController(IEvaluationCriteriaService service)
     {
-        // Initialize with some sample data
-        
+        _svc = service;
     } 
     
-    // Insert candidate answers of the test .
+    // Insert candidate answers of the test.
     [HttpPut("{evaluationCriteriaId}/questions/{questionId}")]
-    public IActionResult UpdateCriteria(int evaluationCriteriaId, int questionId)
+    public async Task<IActionResult> UpdateCriteria(int evaluationCriteriaId, int questionId)
     {
-        bool status = _svc.UpdateCriteria(evaluationCriteriaId,questionId);
+        bool status = await _svc.UpdateCriteria(evaluationCriteriaId, questionId);
         return Ok(status);
     }
     
     [HttpPut("{id}/subjects/{subjectId}")]
-    public IActionResult UpdateSubject(int id, int subjectId)
+    public async Task<IActionResult> UpdateSubject(int id, int subjectId)
     {
-        bool status = _svc.UpdateSubject(id, subjectId);
+        bool status = await _svc.UpdateSubject(id, subjectId);
         return Ok(status);
     }
 
     [HttpPost]
-    public IActionResult InsertCriteria(EvaluationCriteria criteria)
+    public async Task<IActionResult> InsertCriteria(EvaluationCriteria criteria)
     {  
-        bool status = _svc.InsertCriteria(criteria);
+        bool status = await _svc.InsertCriteria(criteria);
         return Ok(status);
     }    
 }
