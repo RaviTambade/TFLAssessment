@@ -6,8 +6,14 @@ using Transflower.TFLAssessment.Repositories.Interfaces;
 namespace Transflower.TFLAssessment.Repositories;
 public class QuestionBankRepository : IQuestionBankRepository
 {
-    private string connectionString = "server=localhost;port=3306;user=root;password=password;database=assessmentdb";
+    private readonly IConfiguration _configuration;
+    private readonly string _connectionString;
 
+    public QuestionBankRepository(IConfiguration configuration)
+    {
+        _configuration = configuration;
+        _connectionString = _configuration.GetConnectionString("DefaultConnection")  ?? throw new ArgumentNullException("connectionString");
+    }
     //Disconnected Data Access
     //No 
 
@@ -17,7 +23,7 @@ public class QuestionBankRepository : IQuestionBankRepository
         List<QuestionTitle> questions = new List<QuestionTitle>();
         string query = @"select * from questionbank";
 
-        MySqlConnection connection = new MySqlConnection(connectionString);
+        MySqlConnection connection = new MySqlConnection(_connectionString);
         MySqlCommand command = new MySqlCommand(query, connection);
 
         try
@@ -53,7 +59,7 @@ public class QuestionBankRepository : IQuestionBankRepository
 
         List<SubjectQuestion> questions = new List<SubjectQuestion>();
         string query = @"select questionbank.id as questionid, questionbank.title as question, subjects.title as subject, subjects.id as subjectid from questionbank, subjects where questionbank.subjectid=subjects.id and subjects.id=@subjectId";
-        MySqlConnection connection = new MySqlConnection(connectionString);
+        MySqlConnection connection = new MySqlConnection(_connectionString);
         MySqlCommand command = new MySqlCommand(query, connection);
         command.Parameters.AddWithValue("@subjectId", id);
         try
@@ -97,7 +103,7 @@ public class QuestionBankRepository : IQuestionBankRepository
                             where questionbank.subjectid=subjects.id and questionbank.evaluationcriteriaid=evaluationcriterias.id
                             and subjects.id=@subjectId and evaluationcriterias.id=@criteriaId";
 
-        MySqlConnection connection = new MySqlConnection(connectionString);
+        MySqlConnection connection = new MySqlConnection(_connectionString);
         MySqlCommand command = new MySqlCommand(query, connection);
         command.Parameters.AddWithValue("@subjectId", subjectId);
         command.Parameters.AddWithValue("@criteriaId", criteriaId);
@@ -140,7 +146,7 @@ public class QuestionBankRepository : IQuestionBankRepository
     {
         bool status = false;
         string query = "update questionbank set answerkey=@answerkey where id =@id";
-        MySqlConnection connection = new MySqlConnection(connectionString);
+        MySqlConnection connection = new MySqlConnection(_connectionString);
         try
         {
             await connection.OpenAsync();
@@ -171,7 +177,7 @@ public class QuestionBankRepository : IQuestionBankRepository
     {
         Question question = null;
         string query = @"select * from questionbank where id=@questionId";
-        MySqlConnection connection = new MySqlConnection(connectionString);
+        MySqlConnection connection = new MySqlConnection(_connectionString);
         MySqlCommand command = new MySqlCommand(query, connection);
         command.Parameters.AddWithValue("@questionId", questionId);
         try
@@ -217,7 +223,7 @@ public class QuestionBankRepository : IQuestionBankRepository
     {
         List<Question> questions = new List<Question>();
         string query = @"select * from questionbank inner join testquestions on testquestions.questionbankid = questionbank.id where testquestions.testid=@testId";
-        MySqlConnection connection = new MySqlConnection(connectionString);
+        MySqlConnection connection = new MySqlConnection(_connectionString);
         MySqlCommand command = new MySqlCommand(query, connection);
         command.Parameters.AddWithValue("@testID", testId);
         try
@@ -263,7 +269,7 @@ public class QuestionBankRepository : IQuestionBankRepository
     {
         bool status = false;
         string query = "update questionbank set title=@title,a=@a,b=@b,c=@c,d=@d,answerkey=@answerKey where id =@id";
-        MySqlConnection connection = new MySqlConnection(connectionString);
+        MySqlConnection connection = new MySqlConnection(_connectionString);
         try
         {
             await connection.OpenAsync();
@@ -299,7 +305,7 @@ public class QuestionBankRepository : IQuestionBankRepository
     {
         bool status = false;
         string query = "update questionbank set evaluationcriteriaid=@evaluationCriteriaId ,subjectid=@subjectId where id =@id";
-        MySqlConnection connection = new MySqlConnection(connectionString);
+        MySqlConnection connection = new MySqlConnection(_connectionString);
         try
         {
             await connection.OpenAsync();
@@ -331,7 +337,7 @@ public class QuestionBankRepository : IQuestionBankRepository
     {
         await Task.Delay(2000);
         bool status = true;
-        MySqlConnection connection = new MySqlConnection(connectionString);
+        MySqlConnection connection = new MySqlConnection(_connectionString);
         try
         {
             string query = "select * from questionbank";
@@ -370,7 +376,7 @@ public class QuestionBankRepository : IQuestionBankRepository
         string query = @"select evaluationcriterias.title from evaluationcriterias INNER join questionbank on questionbank.evaluationcriteriaid=evaluationcriterias.id
                        inner join subjects on questionbank.subjectid= evaluationcriterias.subjectid WHERE subjects.title=@subject and questionbank.id=@questionId";
 
-        MySqlConnection connection = new MySqlConnection(connectionString);
+        MySqlConnection connection = new MySqlConnection(_connectionString);
         try
         {
             MySqlCommand command = new MySqlCommand(query, connection);
