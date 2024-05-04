@@ -1,7 +1,7 @@
 using MySql.Data.MySqlClient;
 using System.Data;
 using Transflower.TFLAssessment.Entities;
-using Transflower.TFLAssessment.Interfaces;
+using Transflower.TFLAssessment.Repositories.Interfaces;
 namespace Transflower.TFLAssessment.Repositories;
 
 

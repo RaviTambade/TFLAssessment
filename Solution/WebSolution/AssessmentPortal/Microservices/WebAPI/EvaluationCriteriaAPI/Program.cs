@@ -1,7 +1,7 @@
-using Transflower.Assessment.WebAPI.EvaluationCriteriaAPI.Repositories.Interfaces;
-using  Transflower.Assessment.WebAPI.EvaluationCriteriaAPI.Repositories;
-using Transflower.Assessment.WebAPI.EvaluationCriteriaAPI.Services.Interfaces;
-using   Transflower.Assessment.WebAPI.EvaluationCriteriaAPI.Services;
+using Transflower.TFLAssessment.Repositories.Interfaces;
+using Transflower.TFLAssessment.Repositories;
+using Transflower.TFLAssessment.Services.Interfaces;
+using Transflower.TFLAssessment.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +13,12 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddCors();
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
+builder.Host.ConfigureLogging(logging =>
+{
+    logging.ClearProviders();
+    logging.AddConsole();
+    logging.AddFile("Logs/catalog-{Date}.json", isJson: true);
+});
 
 builder.Services.AddControllers();
 builder.Services.AddScoped<IEvaluationCriteriaRepository, EvaluationCriteriaRepository>();
@@ -48,5 +54,5 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
- 
+
 app.Run();
