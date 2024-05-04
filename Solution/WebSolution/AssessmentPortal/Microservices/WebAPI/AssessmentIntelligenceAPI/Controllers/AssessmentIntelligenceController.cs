@@ -16,8 +16,6 @@ public class AssessmentIntelligenceController : ControllerBase
 { 
     private readonly ILogger <AssessmentIntelligenceController> _logger;
     
-    
-    
     private readonly IAssessmentIntelligenceService _service;
     public AssessmentIntelligenceController(IAssessmentIntelligenceService service, ILogger <AssessmentIntelligenceController> logger)
     {

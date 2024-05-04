@@ -1,20 +1,21 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using InterviewEntities; 
-using InterviewInterfaces;
-using InterviewServices;
+using Transflower.TFLAssessment.Entities;
+using  Transflower.TFLAssessment.Services.Interfaces;
+namespace Transflower.TFLAssessment.Controllers;
 
 //Controller is now responsible to handle HTTP Requests
 
 [ApiController]
 [Route("api/interviews")]
-public class InterviewsController : ControllerBase
+public class InterviewController : ControllerBase
 { 
-    IInterviewService _svc = new InterviewService();
-    public InterviewsController()
+
+    private readonly IInterviewService _svc;
+    public InterviewController(IInterviewService service)
     {
-        // Initialize with some sample data   
-    } 
+        _svc = service;
+    }
     
     [HttpGet("details")]
     public IActionResult GetAllInterviewCandidates()
