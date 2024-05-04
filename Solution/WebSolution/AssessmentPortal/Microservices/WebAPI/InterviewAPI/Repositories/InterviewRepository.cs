@@ -1,8 +1,8 @@
- 
 using MySql.Data.MySqlClient;
 using System.Data;
 using Transflower.TFLAssessment.Entities;
 using Transflower.TFLAssessment.Repositories.Interfaces;
+
 namespace Transflower.TFLAssessment.Repositories;
 
 //Providers
@@ -10,7 +10,7 @@ public class InterviewRepository : IInterviewRepository
 {
     private string connectionString = "server=localhost;port=3306;user=root;password=password;database=assessmentdb";
 
- 
+
     public async Task<List<InterviewCandidateDetails>> GetAllInterviewCandidates()
     {
         List<InterviewCandidateDetails> CandidatesInfo = new List<InterviewCandidateDetails>();
@@ -49,7 +49,7 @@ public class InterviewRepository : IInterviewRepository
         }
         finally
         {
-           await connection.CloseAsync();
+            await connection.CloseAsync();
         }
         return CandidatesInfo;
     }
@@ -85,9 +85,9 @@ public class InterviewRepository : IInterviewRepository
                 InterviewSubject.FirstName = firstName;
                 InterviewSubject.LastName = lastName;
                 InterviewSubject.Subject = subName;
-                
-                
-        
+
+
+
                 candidateDetails.Add(InterviewSubject);
             }
             reader.Close();
@@ -98,13 +98,13 @@ public class InterviewRepository : IInterviewRepository
         }
         finally
         {
-           await connection.CloseAsync();
+            await connection.CloseAsync();
         }
         return candidateDetails;
     }
 
 
-    
+
     public async Task<InterviewDetails> GetInterviewDetails(int interviewId)
     {
         Console.WriteLine("In function");
@@ -122,7 +122,7 @@ public class InterviewRepository : IInterviewRepository
             MySqlDataReader reader = command.ExecuteReader();
             while (reader.Read())
             {
-   
+
                 string interviewdate = reader["interviewdate"].ToString();
                 string interviewtime = reader["interviewtime"].ToString();
                 string smeName = reader["SmeName"].ToString();
@@ -145,13 +145,13 @@ public class InterviewRepository : IInterviewRepository
         }
         finally
         {
-           await connection.CloseAsync();
+            await connection.CloseAsync();
         }
         return interviewInfo;
     }
 
 
-    public async Task<bool> RescheduleInterview(int interviewId,DateTime date)
+    public async Task<bool> RescheduleInterview(int interviewId, DateTime date)
     {
         bool status = false;
         string query = "update interviews set interviewdate =@interviewdate  where  id =@interviewId ";
@@ -161,7 +161,7 @@ public class InterviewRepository : IInterviewRepository
         command.Parameters.AddWithValue("@interviewId", interviewId);
         try
         {
-           await connection.OpenAsync();
+            await connection.OpenAsync();
             int rowsAffected = command.ExecuteNonQuery();
             if (rowsAffected > 0)
             {
@@ -174,13 +174,13 @@ public class InterviewRepository : IInterviewRepository
         }
         finally
         {
-           await connection.CloseAsync();
+            await connection.CloseAsync();
         }
         return status;
-    
-   }
 
-   public async Task<bool> RescheduleInterview(int interviewId,string time)
+    }
+
+    public async Task<bool> RescheduleInterview(int interviewId, string time)
     {
         bool status = false;
         string query = "update interviews set interviewtime =@interviewTime  where  id =@interviewId ";
@@ -203,12 +203,12 @@ public class InterviewRepository : IInterviewRepository
         }
         finally
         {
-           await connection.CloseAsync();
+            await connection.CloseAsync();
         }
         return status;
     }
 
-    public async Task<bool> RescheduleInterview(int interviewId,string time,DateTime date)
+    public async Task<bool> RescheduleInterview(int interviewId, string time, DateTime date)
     {
         bool status = false;
         string query = "update interviews set interviewdate =@interviewdate,interviewtime =@interviewTime  where  id =@interviewId ";
@@ -237,15 +237,16 @@ public class InterviewRepository : IInterviewRepository
         return status;
     }
 
- 
-     public async Task<bool> ChangeInterviewer(int interviewId, int smeId){
-       bool status = false;
+
+    public async Task<bool> ChangeInterviewer(int interviewId, int smeId)
+    {
+        bool status = false;
         string query = "update interviews set smeid =@smeid  where  id =@interviewId ";
         MySqlConnection connection = new MySqlConnection(connectionString);
-       MySqlCommand command = new MySqlCommand(query, connection);
-       command.Parameters.AddWithValue("@smeid", smeId);
+        MySqlCommand command = new MySqlCommand(query, connection);
+        command.Parameters.AddWithValue("@smeid", smeId);
         command.Parameters.AddWithValue("@interviewId", interviewId);
-         
+
         try
         {
             await connection.OpenAsync();
@@ -264,18 +265,18 @@ public class InterviewRepository : IInterviewRepository
             await connection.CloseAsync();
         }
         return status;
-    
-   }
+
+    }
 
 
-     public async Task< bool> CancelInterview(int interviewId)
-     {
-       bool status = false;
+    public async Task<bool> CancelInterview(int interviewId)
+    {
+        bool status = false;
         string query = "delete from interviews where id =@id";
         MySqlConnection connection = new MySqlConnection(connectionString);
-       MySqlCommand command = new MySqlCommand(query, connection);
+        MySqlCommand command = new MySqlCommand(query, connection);
         command.Parameters.AddWithValue("@id", interviewId);
-         
+
         try
         {
             await connection.OpenAsync();
@@ -294,7 +295,7 @@ public class InterviewRepository : IInterviewRepository
             await connection.CloseAsync();
         }
         return status;
-    
-   }
+
+    }
 
 }

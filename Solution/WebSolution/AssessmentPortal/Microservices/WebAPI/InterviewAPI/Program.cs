@@ -13,6 +13,12 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddCors();
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
+builder.Host.ConfigureLogging(logging =>
+{
+    logging.ClearProviders();
+    logging.AddConsole();
+    logging.AddFile("logs/catalog-{Date}.json", isJson: true);
+});
 
 builder.Services.AddControllers();
 builder.Services.AddScoped<IInterviewRepository, InterviewRepository>();

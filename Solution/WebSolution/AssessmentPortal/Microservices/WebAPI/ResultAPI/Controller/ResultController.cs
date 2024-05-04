@@ -118,7 +118,7 @@ public class ResultController : ControllerBase
     {   
         
         bool status = await _svc.SetPassingLevel(testId,passingLevel);
-                 _logger.LogInformation("Log Generated For Set Passing Level of the test ");
+        _logger.LogInformation("Log Generated For Set Passing Level of the test ");
         return Ok(status);
     }
 
