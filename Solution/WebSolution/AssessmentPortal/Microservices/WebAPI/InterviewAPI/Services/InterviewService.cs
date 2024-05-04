@@ -11,37 +11,37 @@ public class InterviewService : IInterviewService
     {
         _repository = repository;
     }
-    public List<InterviewCandidateDetails> GetAllInterviewCandidates()
+    public async Task<List<InterviewCandidateDetails>> GetAllInterviewCandidates()
     {
-        return _repository.GetAllInterviewCandidates();
+        return await _repository.GetAllInterviewCandidates();
     }
-    public List<InterviewCandidateDetails> GetInterviewedCandidatesSubjects(int candidateId)
+    public async Task<List<InterviewCandidateDetails>> GetInterviewedCandidatesSubjects(int candidateId)
     {
-        return _repository.GetInterviewedCandidatesSubjects(candidateId);
+        return await _repository.GetInterviewedCandidatesSubjects(candidateId);
     }
 
-    public InterviewDetails GetInterviewDetails(int interviewId)
+    public async Task<InterviewDetails> GetInterviewDetails(int interviewId)
     {
-        return _repository.GetInterviewDetails(interviewId);
+        return await _repository.GetInterviewDetails(interviewId);
     }
-    public bool RescheduleInterview(int interviewId, DateTime date)
+    public async Task<bool> RescheduleInterview(int interviewId, DateTime date)
     {
-        return _repository.RescheduleInterview(interviewId, date);
+        return await _repository.RescheduleInterview(interviewId, date);
     }
-    public bool RescheduleInterview(int interviewId, string time)
+    public async Task< bool> RescheduleInterview(int interviewId, string time)
     {
-        return _repository.RescheduleInterview(interviewId, time);
+        return await _repository.RescheduleInterview(interviewId, time);
     }
-    public bool RescheduleInterview(int interviewId, string time, DateTime date)
+    public async Task<bool> RescheduleInterview(int interviewId, string time, DateTime date)
     {
-        return _repository.RescheduleInterview(interviewId, time, date);
+        return await _repository.RescheduleInterview(interviewId, time, date);
     }
-    public bool ChangeInterviewer(int interviewId, int smeId)
+    public async Task<bool> ChangeInterviewer(int interviewId, int smeId)
     {
-        return _repository.ChangeInterviewer(interviewId, smeId);
+        return await _repository.ChangeInterviewer(interviewId, smeId);
     }
-    public bool CancelInterview(int interviewId)
+    public async  Task<bool> CancelInterview(int interviewId)
     {
-        return _repository.CancelInterview(interviewId);
+        return await _repository.CancelInterview(interviewId);
     }
 }

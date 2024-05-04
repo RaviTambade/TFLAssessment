@@ -18,59 +18,59 @@ public class InterviewController : ControllerBase
     }
     
     [HttpGet("details")]
-    public IActionResult GetAllInterviewCandidates()
+    public async Task<IActionResult> GetAllInterviewCandidates()
     {
-        List<InterviewCandidateDetails> details =_svc.GetAllInterviewCandidates();
+        List<InterviewCandidateDetails> details =await _svc.GetAllInterviewCandidates();
         return Ok(details);
     }
 
     [HttpGet("candidate/{candidateId}")]
-    public IActionResult GetInterviewedCandidatesSubjects(int candidateId)
+    public async Task<IActionResult> GetInterviewedCandidatesSubjects(int candidateId)
     {
-        List<InterviewCandidateDetails> details =_svc.GetInterviewedCandidatesSubjects(candidateId);
+        List<InterviewCandidateDetails> details = await _svc.GetInterviewedCandidatesSubjects(candidateId);
         return Ok(details);
     }
 
     [HttpGet("{interviewId}")]
-    public IActionResult GetInterviewDetails(int interviewId)
+    public async Task<IActionResult> GetInterviewDetails(int interviewId)
     {
-        InterviewDetails details =_svc.GetInterviewDetails(interviewId);
+        InterviewDetails details =await _svc.GetInterviewDetails(interviewId);
         return Ok(details); 
     }
 
     //3 seperate functions for updating date, time 
     [HttpPut("{interviewId}/date/{date}")]
-    public IActionResult RescheduleInterview(int interviewId,DateTime date)
+    public async Task<IActionResult> RescheduleInterview(int interviewId,DateTime date)
     {
-        bool status=_svc.RescheduleInterview(interviewId,date);
+        bool status=await _svc.RescheduleInterview(interviewId,date);
         return Ok(status);
     }
 
     [HttpPut("{interviewId}/time/{time}")]
-    public IActionResult RescheduleInterview(int interviewId,string time)
+    public async Task<IActionResult> RescheduleInterview(int interviewId,string time)
     {
-        bool status=_svc.RescheduleInterview(interviewId,time);
+        bool status=await _svc.RescheduleInterview(interviewId,time);
         return Ok(status);
     }
 
     [HttpPut("{interviewId}/time/{time}/date/{date}")]
-    public IActionResult RescheduleInterview(int interviewId,string time,DateTime date)
+    public async Task<IActionResult> RescheduleInterview(int interviewId,string time,DateTime date)
     {
-        bool status=_svc.RescheduleInterview(interviewId,time,date);
+        bool status=await _svc.RescheduleInterview(interviewId,time,date);
         return Ok(status);
     }
 
     [HttpPut("{interviewId}/subjectexperts/{smeId}")]
-    public IActionResult ChangeInterviewer(int interviewId, int smeId)
+    public async Task<IActionResult> ChangeInterviewer(int interviewId, int smeId)
     {
-        bool status=_svc.ChangeInterviewer(interviewId,smeId);
+        bool status=await _svc.ChangeInterviewer(interviewId,smeId);
         return Ok(status);
     }
 
     [HttpDelete("{interviewId}")]
-    public  IActionResult CancelInterview(int interviewId)
+    public  async Task<IActionResult> CancelInterview(int interviewId)
     {
-        bool status=_svc.CancelInterview(interviewId);
+        bool status=await _svc.CancelInterview(interviewId);
         return Ok(status);
     }
 }
