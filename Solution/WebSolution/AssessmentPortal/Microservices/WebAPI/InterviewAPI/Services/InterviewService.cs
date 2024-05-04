@@ -42,6 +42,6 @@ public class InterviewService : IInterviewService
     }
     public bool CancelInterview(int interviewId)
     {
-        return _repository.InterviewDetails.CancelInterview(interviewId);
+        return _repository.CancelInterview(interviewId);
     }
 }
