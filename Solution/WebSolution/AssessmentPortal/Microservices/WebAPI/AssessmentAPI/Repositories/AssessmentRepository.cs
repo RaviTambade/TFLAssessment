@@ -2,12 +2,12 @@ using MySql.Data.MySqlClient;
 using System.Data;
 using  Transflower.TFLAssessment.Entities;
 using Transflower.TFLAssessment.Repositories.Interfaces;
+
 namespace Transflower.TFLAssessment.Repositories;
 
 public class AssessmentRepository :IAssessmentRepository
 {
     private string connectionString = "server=localhost;port=3306;user=root;password=password;database=assessmentdb";
-
 
     public async Task<bool> CreateTest(Assessment newTest)
     {
