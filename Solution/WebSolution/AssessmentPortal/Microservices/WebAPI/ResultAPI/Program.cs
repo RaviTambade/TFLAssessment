@@ -1,7 +1,9 @@
 //WebApp Builder Infrastrcture
-using ResultEntity; //-----------------------dll
-using ResultInterfaces;//-----------------------dll
-using ResultServices;//------------------------dll
+using Microsoft.Extensions.Logging;
+using Transflower.TFLAssessment.Repositories.Interfaces;
+using  Transflower.TFLAssessment.Repositories;
+using Transflower.TFLAssessment.Services.Interfaces;
+using   Transflower.TFLAssessment.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,8 +15,16 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddCors();
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
+builder.Host.ConfigureLogging(logging =>
+{
+    logging.ClearProviders();
+    logging.AddConsole();
+    logging.AddFile("Logs/catalog-{Date}.json", isJson: true);
+});
 
 builder.Services.AddControllers();
+builder.Services.AddScoped<IResultRepository, ResultRepository>();
+builder.Services.AddScoped<IResultService, ResultService>();
 
 var app = builder.Build();
 

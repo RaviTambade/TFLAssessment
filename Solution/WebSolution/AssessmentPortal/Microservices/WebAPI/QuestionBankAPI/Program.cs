@@ -1,8 +1,8 @@
 using Microsoft.Extensions.Logging;
-using Transflower.Assessment.WebAPI.QuestionBankAPI.Repositories.Interfaces;
-using  Transflower.Assessment.WebAPI.QuestionBankAPI.Repositories;
-using Transflower.Assessment.WebAPI.QuestionBankAPI.Services.Interfaces;
-using   Transflower.Assessment.WebAPI.QuestionBankAPI.Services;
+using Transflower.TFLAssessment.Repositories.Interfaces;
+using Transflower.TFLAssessment.Repositories;
+using Transflower.TFLAssessment.Services.Interfaces;
+using Transflower.TFLAssessment.Services;
 //using Serilog;
 //using System.Security.Policy;
 
@@ -12,7 +12,7 @@ builder.Host.ConfigureLogging(logging =>
 {
     logging.ClearProviders();
     logging.AddConsole();
-    //logging.AddFile("logs/catalog-{Date}.json", isJson: true);
+    logging.AddFile("logs/catalog-{Date}.json", isJson: true);
 });
 
 

@@ -1,10 +1,17 @@
-//WebApp Builder Infrastrcture
-using Transflower.Assessment.WebAPI.AssessmentAPI.Repositories.Interfaces;
-using Transflower.Assessment.WebAPI.AssessmentAPI.Services.Interfaces;
-using Transflower.Assessment.WebAPI.AssessmentAPI.Services;
-using Transflower.Assessment.WebAPI.AssessmentAPI.Repositories;
+using Microsoft.Extensions.Logging;
+using Transflower.TFLAssessment.Repositories.Interfaces;
+using  Transflower.TFLAssessment.Repositories;
+using Transflower.TFLAssessment.Services.Interfaces;
+using   Transflower.TFLAssessment.Services;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Host.ConfigureLogging(logging =>
+{
+    logging.ClearProviders();
+    logging.AddConsole();
+    logging.AddFile("logs/catalog-{Date}.json", isJson: true);
+});
 
 
 //Service configuration
@@ -16,8 +23,8 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
 builder.Services.AddControllers();
-builder.Services.AddScoped<IAssessmentRepository,AssessmentRepository>();
-builder.Services.AddScoped<IAssessmentService,AssessmentService>();
+builder.Services.AddScoped<IAssessmentRepository, AssessmentRepository>();
+builder.Services.AddScoped<IAssessmentService, AssessmentService>();
 
 var app = builder.Build();
 

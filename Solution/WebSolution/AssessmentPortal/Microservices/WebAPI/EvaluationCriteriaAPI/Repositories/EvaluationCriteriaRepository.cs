@@ -1,8 +1,8 @@
 using MySql.Data.MySqlClient;
 using System.Data;
-using Transflower.Assessment.WebAPI.EvaluationCriteriaAPI.Entities;
-using Transflower.Assessment.WebAPI.EvaluationCriteriaAPI.Repositories.Interfaces;
-namespace Transflower.Assessment.WebAPI.EvaluationCriteriaAPI.Repositories;
+using Transflower.TFLAssessment.Entities;
+using Transflower.TFLAssessment.Repositories.Interfaces;
+namespace Transflower.TFLAssessment.Repositories;
 
 
  

@@ -1,6 +1,5 @@
-
-using Transflower.Assessment.WebAPI.CandidateAnswerAPI.Entities;
-namespace Transflower.Assessment.WebAPI.CandidateAnswerAPI.Repositories.Interfaces;
+using Transflower.TFLAssessment.Entities;
+namespace Transflower.TFLAssessment.Repositories.Interfaces;
 
 public interface ICandidateAnswerRepository
 {

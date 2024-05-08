@@ -1,4 +1,4 @@
-﻿namespace Transflower.Assessment.WebAPI.EvaluationCriteriaAPI.Entities;
+﻿namespace Transflower.TFLAssessment.Entities;
 
 public class EvaluationCriteria
 {

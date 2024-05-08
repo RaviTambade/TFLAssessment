@@ -1,4 +1,4 @@
-namespace Transflower.Assessment.WebAPI.QuestionBankAPI.Entities;
+namespace Transflower.TFLAssessment.Entities;
 
 public class Question{
  

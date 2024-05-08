@@ -1,7 +1,8 @@
-using InterviewEntities; //-----------------------dll
-using InterviewInterfaces;//-----------------------dll
-using InterviewServices;//------------------------dll
-
+using Microsoft.Extensions.Logging;
+using Transflower.TFLAssessment.Repositories.Interfaces;
+using  Transflower.TFLAssessment.Repositories;
+using Transflower.TFLAssessment.Services.Interfaces;
+using   Transflower.TFLAssessment.Services;
 var builder = WebApplication.CreateBuilder(args);
 
 
@@ -12,8 +13,16 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddCors();
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
+builder.Host.ConfigureLogging(logging =>
+{
+    logging.ClearProviders();
+    logging.AddConsole();
+    logging.AddFile("logs/catalog-{Date}.json", isJson: true);
+});
 
 builder.Services.AddControllers();
+builder.Services.AddScoped<IInterviewRepository, InterviewRepository>();
+builder.Services.AddScoped<IInterviewService, InterviewService>();
 
 var app = builder.Build();
 

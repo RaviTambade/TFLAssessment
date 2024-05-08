@@ -1,19 +1,13 @@
-using  Transflower.Assessment.WebAPI.AssessmentAPI.Entities;
-using Transflower.Assessment.WebAPI.AssessmentAPI.Repositories.Interfaces;
-
-
 using MySql.Data.MySqlClient;
 using System.Data;
+using  Transflower.TFLAssessment.Entities;
+using Transflower.TFLAssessment.Repositories.Interfaces;
 
+namespace Transflower.TFLAssessment.Repositories;
 
-
-
-
-
-public class AssessmentService :IAssessmentService
+public class AssessmentRepository :IAssessmentRepository
 {
     private string connectionString = "server=localhost;port=3306;user=root;password=password;database=assessmentdb";
-
 
     public async Task<bool> CreateTest(Assessment newTest)
     {
@@ -33,7 +27,7 @@ public class AssessmentService :IAssessmentService
 
         try
         {
-            connection.OpenAsync();
+            await connection.OpenAsync();
             int rowsAffected = await command.ExecuteNonQueryAsync();
             if (rowsAffected > 0)
             {
@@ -47,12 +41,12 @@ public class AssessmentService :IAssessmentService
         }
         finally
         {
-            connection.CloseAsync();
+            await connection.CloseAsync();
         }
         return status;
     }
 
-    public Assessment GetDetails(int assessmentId) //*******
+    public async Task <Assessment> GetDetails(int assessmentId) //*******
     {
             Assessment assessment=new Assessment();   
             string query = @"select * from tests where id=@assessmentId";
@@ -62,7 +56,7 @@ public class AssessmentService :IAssessmentService
             command.Parameters.AddWithValue("@assessmentId",assessmentId);
             try
             {
-                connection.Open();
+                await connection.OpenAsync();
                 MySqlDataReader reader = command.ExecuteReader();
                 while (reader.Read())
                 {
@@ -81,7 +75,7 @@ public class AssessmentService :IAssessmentService
                     assessment.Status=status;
                     
                 }
-                reader.Close();
+                await reader.CloseAsync();
             }
             catch (Exception e)
             {
@@ -89,11 +83,11 @@ public class AssessmentService :IAssessmentService
             }
             finally
             {
-                connection.Close();
+                await connection.CloseAsync();
             }
             return assessment;
     }
-    public List<Assessment> GetAll(DateTime fromDate, DateTime toDate)  //******
+    public async Task<List<Assessment>> GetAll(DateTime fromDate, DateTime toDate)  //******
     {
         List<Assessment> assessments=new List<Assessment>();
          string query = @"select * from tests where creationDate  between @fromDate and @toDate";
@@ -104,7 +98,7 @@ public class AssessmentService :IAssessmentService
             command.Parameters.AddWithValue("@toDate",toDate);
             try
             {
-                connection.Open();
+                await connection.OpenAsync();
                 MySqlDataReader reader = command.ExecuteReader();
                 if (reader.Read())
                 {
@@ -124,7 +118,7 @@ public class AssessmentService :IAssessmentService
                     assessment.Status=status;
                     assessments.Add(assessment);
                 }
-                reader.Close();
+               await reader.CloseAsync();
             }
             catch (Exception e)
             {
@@ -132,11 +126,11 @@ public class AssessmentService :IAssessmentService
             }
             finally
             {
-                connection.Close();
+                await connection.CloseAsync();
             }
             return assessments;
     }
-    public List<Assessment> GetAllBySubjectMatterExpert(int smeId)   //********
+    public async Task <List<Assessment>> GetAllBySubjectMatterExpert(int smeId)   //********
     {
         List<Assessment> assessments=new List<Assessment>();   
             string query = @"select * from tests where smeid=@smeId";
@@ -147,7 +141,7 @@ public class AssessmentService :IAssessmentService
 
             try
             {
-                connection.Open();
+                await connection.OpenAsync();
                 MySqlDataReader reader = command.ExecuteReader();
                 if (reader.Read())
                 {
@@ -167,7 +161,7 @@ public class AssessmentService :IAssessmentService
                     assessment.Status=status;
                     assessments.Add(assessment);
                 }
-                reader.Close();
+                await reader.CloseAsync();
             }
             catch (Exception e)
             {
@@ -175,11 +169,11 @@ public class AssessmentService :IAssessmentService
             }
             finally
             {
-                connection.Close();
+                await connection.CloseAsync();
             }
             return assessments;
     }
-    public bool AddQuestion(int assessmentId, int questionId)  //*******
+    public async Task<bool> AddQuestion(int assessmentId, int questionId)  //*******
     {
         bool status = false;
         MySqlConnection connection = new MySqlConnection(connectionString);
@@ -189,8 +183,8 @@ public class AssessmentService :IAssessmentService
         command.Parameters.AddWithValue("@questionBankId", questionId);
         try
         {
-            connection.Open();
-            int rowsAffected = command.ExecuteNonQuery();
+            await connection.OpenAsync();
+            int rowsAffected = await command.ExecuteNonQueryAsync();
             if (rowsAffected > 0)
             {
                 status = true;
@@ -202,11 +196,11 @@ public class AssessmentService :IAssessmentService
         }
         finally
         {
-            connection.Close();
+            await connection.CloseAsync();
         }
         return status;
     }
-    public bool AddQuestions(int assessmentId, List<TestQuestion> questions) //****
+    public async Task<bool> AddQuestions(int assessmentId, List<TestQuestion> questions) //****
     {
         bool status = false;
         MySqlConnection connection = new MySqlConnection(connectionString); 
@@ -217,8 +211,8 @@ public class AssessmentService :IAssessmentService
                 MySqlCommand command = new MySqlCommand(query, connection);
                 command.Parameters.AddWithValue("@testId", assessmentId);
                 command.Parameters.AddWithValue("@questionBankId", question.QuestionBankId);
-                connection.Open();
-                int rowsAffected = command.ExecuteNonQuery();
+                await connection.OpenAsync();
+                int rowsAffected = await command.ExecuteNonQueryAsync();
                 if (rowsAffected > 0)
                 {
                     status = true;
@@ -231,11 +225,11 @@ public class AssessmentService :IAssessmentService
         }
         finally
         {
-            connection.Close();
+            await connection.CloseAsync();
         }
         return status;
     }
-    public bool RemoveQuestion(int assessmentId, int questionId)
+    public async Task<bool> RemoveQuestion(int assessmentId, int questionId)
     {
             bool status =false;  
             string query = @"Delete from testquestions where testid=@testId and questionbankid=@questionBankId";
@@ -245,8 +239,8 @@ public class AssessmentService :IAssessmentService
             command.Parameters.AddWithValue("@questionBankId", questionId);
             try
             {
-                connection.Open();
-                int rowsAffected = command.ExecuteNonQuery();
+                await connection.OpenAsync();
+                int rowsAffected = await command.ExecuteNonQueryAsync();
                 if (rowsAffected>0)
                 {
                     status=true;
@@ -259,19 +253,19 @@ public class AssessmentService :IAssessmentService
             }
             finally
             {
-                connection.Close();
+                await connection.CloseAsync();
             }
         return status;
     }
 
-    public bool RemoveQuestions(int[] testQuestions)
+    public async Task<bool> RemoveQuestions(int[] testQuestions)
     {
         bool status = false;
         MySqlConnection connection = new MySqlConnection(connectionString);
 
         try
         {
-            connection.Open(); // Open connection outside the loop
+            await connection.OpenAsync(); // Open connection outside the loop
 
             foreach (var testQuestionId in testQuestions)
             {
@@ -281,7 +275,7 @@ public class AssessmentService :IAssessmentService
                 MySqlCommand command = new MySqlCommand(query, connection);
                 command.Parameters.AddWithValue("@id", testQuestionId);
 
-                int rowsAffected = command.ExecuteNonQuery();
+                int rowsAffected = await command.ExecuteNonQueryAsync();
                 if (rowsAffected > 0)
                 {
                     status = true;
@@ -294,12 +288,12 @@ public class AssessmentService :IAssessmentService
         }
         finally
         {
-                connection.Close();
+                await connection.CloseAsync();
         }
         return status;
     }
     
-    public bool ChangeDuration(int assessmentId, string duration){
+    public async Task <bool> ChangeDuration(int assessmentId, string duration){
         bool status = false;
         MySqlConnection connection = new MySqlConnection(connectionString);
         string query = "update tests set duration=@duration where id=@assessmentId";
@@ -308,8 +302,8 @@ public class AssessmentService :IAssessmentService
         command.Parameters.AddWithValue("@duration", duration);
         try
         {
-            connection.Open();
-            int rowsAffected = command.ExecuteNonQuery();
+           await connection.OpenAsync();
+            int rowsAffected = await command.ExecuteNonQueryAsync();
             if (rowsAffected > 0)
             {
                 status = true;
@@ -321,11 +315,11 @@ public class AssessmentService :IAssessmentService
         }
         finally
         {
-            connection.Close();
+            await connection.CloseAsync();
         }
         return status;
     } 
-    public bool Reschedule(int assessmentId, DateTime date){
+    public async Task<bool> Reschedule(int assessmentId, DateTime date){
         bool status = false;
         MySqlConnection connection = new MySqlConnection(connectionString);
         string query = "update tests set scheduleddate=@scheduledDate where id=@assessmentId";
@@ -334,8 +328,8 @@ public class AssessmentService :IAssessmentService
         command.Parameters.AddWithValue("@scheduledDate", date);
         try
         {
-            connection.Open();
-            int rowsAffected = command.ExecuteNonQuery();
+            await connection.OpenAsync();
+            int rowsAffected = await command.ExecuteNonQueryAsync();
             if (rowsAffected > 0)
             {
                 status = true;
@@ -347,13 +341,13 @@ public class AssessmentService :IAssessmentService
         }
         finally
         {
-            connection.Close();
+            await connection.CloseAsync();
         }
         return status;
     }  
 
 
-     public List<Assessment> GetAllTests()
+     public async Task <List<Assessment>> GetAllTests()
     {
         List<Assessment> tests = new List<Assessment>();
         string query = @"select tests.*,subjects.title as skill,employees.firstname,employees.lastname from tests 
@@ -365,7 +359,7 @@ public class AssessmentService :IAssessmentService
         MySqlCommand command = new MySqlCommand(query, connection);
         try
         {
-            connection.Open();
+            await connection.OpenAsync();
             MySqlDataReader reader = command.ExecuteReader();
             while (reader.Read())
             {
@@ -397,12 +391,15 @@ public class AssessmentService :IAssessmentService
         {
             throw e;
         }
+        finally{
+            await connection.CloseAsync();
+        }
         return tests;
     }
 
 
 
-      public List<Employee> GetAllEmployees()
+      public async Task <List<Employee>> GetAllEmployees()
     {
         List<Employee> employees = new List<Employee>();
         string query = "select * from employees";
@@ -412,7 +409,7 @@ public class AssessmentService :IAssessmentService
 
         try
         {
-            connection.Open();
+           await connection.OpenAsync();
             MySqlDataReader reader = command.ExecuteReader();
             while (reader.Read())
             {
@@ -437,11 +434,11 @@ public class AssessmentService :IAssessmentService
         }
         finally
         {
-            connection.Close();
+            await connection.CloseAsync();
         }
         return employees;
     }
-    public List<Subject> GetAllSubjects()
+    public async Task <List<Subject>> GetAllSubjects()
     {
         List<Subject> subjects = new List<Subject>();
         string query = @"select * from subjects";
@@ -450,7 +447,7 @@ public class AssessmentService :IAssessmentService
         MySqlCommand command = new MySqlCommand(query, connection);
         try
         {
-            connection.Open();
+            await connection.OpenAsync();
             MySqlDataReader reader = command.ExecuteReader();
             while (reader.Read())
             {
@@ -469,14 +466,14 @@ public class AssessmentService :IAssessmentService
         }
         finally
         {
-            connection.Close();
+             await connection.CloseAsync();
         }
         return subjects;
     }
 
 
 
-    public List<EvaluationCriteria> GetEvalutionCriterias()
+    public async Task<List<EvaluationCriteria>> GetEvalutionCriterias()
     {
         List<EvaluationCriteria> criterias = new List<EvaluationCriteria>();
         string query = @"select * from evaluationcriterias";
@@ -485,7 +482,7 @@ public class AssessmentService :IAssessmentService
         MySqlCommand command = new MySqlCommand(query, connection);
         try
         {
-            connection.Open();
+            await connection.OpenAsync();
             MySqlDataReader reader = command.ExecuteReader();
             while (reader.Read())
             {
@@ -504,14 +501,14 @@ public class AssessmentService :IAssessmentService
         }
         finally
         {
-            connection.Close();
+            await connection.CloseAsync();
         }
         return criterias;
     }
 
 
 
-    public List<EvaluationCriteria> GetEvalutionCriteriasBySubject(int subjectId)
+    public async Task <List<EvaluationCriteria>> GetEvalutionCriteriasBySubject(int subjectId)
     {
         List<EvaluationCriteria> criterias = new List<EvaluationCriteria>();
         string query = @"select * from evaluationcriterias WHERE subjectid=@subjectId";
@@ -521,7 +518,7 @@ public class AssessmentService :IAssessmentService
         command.Parameters.AddWithValue("@subjectId", subjectId);
         try
         {
-            connection.Open();
+            await connection.OpenAsync();
             MySqlDataReader reader = command.ExecuteReader();
             while (reader.Read())
             {
@@ -544,7 +541,7 @@ public class AssessmentService :IAssessmentService
         }
         finally
         {
-            connection.Close();
+            await connection.CloseAsync();
         }
         return criterias;
     }

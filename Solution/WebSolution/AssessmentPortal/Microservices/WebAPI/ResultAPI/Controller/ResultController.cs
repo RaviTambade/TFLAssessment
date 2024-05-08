@@ -1,36 +1,41 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using ResultEntity;
-using ResultInterfaces;
-using ResultServices;
+using Transflower.TFLAssessment.Entities;
+using Transflower.TFLAssessment.Services.Interfaces;
+using Transflower.TFLAssessment.Services;
+using MySqlX.XDevAPI.Common;
 
 
 [ApiController]
 [Route("api/[controller]")]
 public class ResultController : ControllerBase
 { 
-    IResultService _svc = new ResultService();
-    public ResultController()
-    {   
-        
+    private readonly ILogger<ResultController> _logger;
+    private readonly IResultService _svc;
+
+    public ResultController (IResultService service, ILogger<ResultController > logger)
+    {
+        _svc=service;
+        _logger= logger;
     }
-    
+
 
     //get candidate score with storedprocedure .
     //http://localhost:5235/api/Result/candidates/1/tests/1/score
     [HttpGet("candidates/{candidateId}/tests/{testId}/score")]
-    public IActionResult GetCandidateScore(int candidateId, int testId)
+    public async Task<IActionResult> GetCandidateScore(int candidateId, int testId)
     {      
-        int result = _svc.GetCandidateScore(candidateId,testId);
+        int result = await _svc.GetCandidateScore(candidateId,testId);
+        _logger.LogInformation("Log Generated For get candidate score with storedprocedure");
         return Ok(result);
     }
 
     //set starttime in the test .
-
     [HttpPost("setstarttime/{candidateId}/tests/{testId}")]
-    public IActionResult SetCandidateTestStartTime(int candidateId, int testId, TestTime time)
+    public async Task<IActionResult> SetCandidateTestStartTime(int candidateId, int testId, TestTime time)
     {      
-        bool status = _svc.SetCandidateTestStartTime(candidateId,testId,time);
+        bool status = await _svc.SetCandidateTestStartTime(candidateId,testId,time);
+        _logger.LogInformation("Log Generated For set starttime in the test");
         return Ok(status);
     }
 
@@ -38,9 +43,10 @@ public class ResultController : ControllerBase
 
     //set endtime in the test .
     [HttpPut("setendtime/{candidateId}/tests/{testId}")]
-    public IActionResult SetCandidateTestEndTime(int candidateId, int testId, TestTime time)
+    public async Task<IActionResult> SetCandidateTestEndTime(int candidateId, int testId, TestTime time)
     {   
-        bool status = _svc.SetCandidateTestEndTime(candidateId,testId,time);
+        bool status =await _svc.SetCandidateTestEndTime(candidateId,testId,time);
+       _logger.LogInformation("Log Generated For set endtime in the test");
         return Ok(status);
     }
 
@@ -49,10 +55,11 @@ public class ResultController : ControllerBase
     //get candidate details of test.
     //http://localhost:5235/api/Result/candidates/1/tests/1/details
     [HttpGet("candidates/{candidateId}/tests/{testId}/details")]
-    public IActionResult GetCandidatetResultDetails(int candidateId, int testId)
+    public async Task<IActionResult> GetCandidatetResultDetails(int candidateId, int testId)
     {   
         
-        CandidateResultDetails result = _svc.CandidateTestResultDetails(candidateId,testId);
+        CandidateResultDetails result = await _svc.CandidateTestResultDetails(candidateId,testId);
+       _logger.LogInformation("Log Generated For get candidate details of test");
         return Ok(result);
     }
 
@@ -61,10 +68,12 @@ public class ResultController : ControllerBase
     //get test result details .
     //http://localhost:5235/tests/1/details
     [HttpGet("/tests/{testId}/details")]
-    public IActionResult GetTestResultDetails(int testId)
+    public async Task<IActionResult> GetTestResultDetails(int testId)
     {   
         
-        List<TestResultDetails> result = _svc.GetTestResultDetails(testId);
+        List<TestResultDetails> result =await _svc.GetTestResultDetails(testId);
+        _logger.LogInformation("Log Generated For get test result details");
+       
         return Ok(result);
     }
 
@@ -72,20 +81,22 @@ public class ResultController : ControllerBase
 
     //get appeared candidates of the test .
     [HttpGet("/candidates/tests/{testId}")]
-    public IActionResult GetAppearedCandidates(int testId)
+    public async Task<IActionResult> GetAppearedCandidates(int testId)
     {   
         
-        List<AppearedCandidate> candidates = _svc.GetAppearedCandidates(testId);
+        List<AppearedCandidate> candidates =await _svc.GetAppearedCandidates(testId);
+        _logger.LogInformation("Log Generated For get appeared candidates of the test");
         return Ok(candidates);
     }
 
 
     //get passed candidates of the test .
     [HttpGet("/passedcandidates/tests/{testId}")]
-    public IActionResult GetPassedCandidate(int testId)
+    public async Task<IActionResult> GetPassedCandidate(int testId)
     {   
         
-        List<PassedCandidateDetails> results = _svc.GetPassedCandidateResults(testId);
+        List<PassedCandidateDetails> results =await _svc.GetPassedCandidateResults(testId);
+        _logger.LogInformation("Log Generated For get passed candidates of the test");
         return Ok(results);
     }
         
@@ -93,28 +104,30 @@ public class ResultController : ControllerBase
         
     //get  failedcandidates of the test .
     [HttpGet("/failedcandidates/tests/{testId}")]
-    public IActionResult GetFailedCandidate(int testId)
+    public async Task<IActionResult> GetFailedCandidate(int testId)
     {   
         
-        List<FailedCandidateDetails> results = _svc.GetFailedCandidateResults(testId);
+        List<FailedCandidateDetails> results =await _svc.GetFailedCandidateResults(testId);
+         _logger.LogInformation("Log Generated For get  failedcandidates of the test ");
         return Ok(results);
     }
 
     
     [HttpPut("/setpassinglevel/{testId}/passingLevel/{passingLevel}")]
-    public IActionResult SetPassingLevel(int testId,int passingLevel)
+    public async Task<IActionResult> SetPassingLevel(int testId,int passingLevel)
     {   
         
-        bool status = _svc.SetPassingLevel(testId,passingLevel);
+        bool status = await _svc.SetPassingLevel(testId,passingLevel);
+        _logger.LogInformation("Log Generated For Set Passing Level of the test ");
         return Ok(status);
     }
 
 
     [HttpGet("/results/subjectresults/{subjectId}")]
-    public IActionResult GetSubjectResultDetails(int subjectId)
+    public async Task<IActionResult> GetSubjectResultDetails(int subjectId)
     {   
-        
-        List<CandidateSubjectResults> results = _svc.GetSubjectResultDetails(subjectId);
+        List<CandidateSubjectResults> results =await _svc.GetSubjectResultDetails(subjectId);
+       _logger.LogInformation("Log Generated For get  Get Subject Result Details");
         return Ok(results);
     }
 }

@@ -1,5 +1,5 @@
 
-namespace Transflower.Assessment.WebAPI.AssessmentAPI.Entities;
+namespace Transflower.TFLAssessment.Entities;
 
 public class TestQuestion{
 
