@@ -17,7 +17,7 @@ create table employeeperformance(
 	employeeid INT,
 	test VARCHAR(20),
 	communication VARCHAR(20),
-	congition VARCHAR(20),
+	cognition VARCHAR(20),
 	interview VARCHAR(20),
 	CONSTRAINT fk_emp_performance FOREIGN KEY(employeeid) REFERENCES employees(id) ON UPDATE CASCADE ON DELETE CASCADE
 );
