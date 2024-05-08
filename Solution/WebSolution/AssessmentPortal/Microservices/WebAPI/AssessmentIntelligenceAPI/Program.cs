@@ -7,18 +7,21 @@ var builder = WebApplication.CreateBuilder(args);
 
 
 //Service configuration
+//Essential Web Compoenents needed to run asp.net web api application
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddCors();
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
-
 builder.Services.AddControllers();
+
+//Essential custom serviceds needed at runtime by Controllers
+
 builder.Services.AddScoped<IAssessmentIntelligenceRepository, AssessmentIntelligenceRepository>();
 builder.Services.AddScoped<IAssessmentIntelligenceService, AssessmentIntelligenceService>();
-var app = builder.Build();
 
+var app = builder.Build();
 
 //ASP.NET middleware configuration
 

@@ -14,6 +14,8 @@ namespace Transflower.Assessment.WebAPI.AssessmentIntelligenceAPI.Controllers;
 [Route("api/[controller]")]
 public class AssessmentIntelligenceController : ControllerBase
 { 
+    //Dependency Injection
+    
     private readonly IAssessmentIntelligenceService _svc;
     public AssessmentIntelligenceController(IAssessmentIntelligenceService service)
     {
