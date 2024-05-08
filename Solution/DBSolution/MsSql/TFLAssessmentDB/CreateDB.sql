@@ -125,3 +125,23 @@ CREATE TABLE interviews (
    CONSTRAINT fk_sme_smeid FOREIGN KEY(smeid) REFERENCES subjectmatterexperts(id) ,
     CONSTRAINT fk_emp_candtid FOREIGN KEY(candidateid) REFERENCES employees(id) 
 );
+
+
+
+
+CREATE TABLE interviewcriterias (
+    id INT PRIMARY KEY IDENTITY(1,1),
+    interviewid INT,
+    evaluationcriteriaid INT,
+    CONSTRAINT fk_interviews_interviewid FOREIGN KEY (interviewid) REFERENCES interviews(id) ON UPDATE CASCADE ON DELETE CASCADE,
+    CONSTRAINT fk_evalriterias_evalcriteaid FOREIGN KEY (evaluationcriteriaid) REFERENCES evaluationcriterias(id) ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+
+CREATE TABLE interviewresults (
+    id INT PRIMARY KEY IDENTITY(1,1),
+    interviewcriteriaid INT,
+    ratings INT,
+    comments VARCHAR(200),
+    CONSTRAINT fk_intresults_intcrite_intcriteid FOREIGN KEY (interviewcriteriaid) REFERENCES interviewcriterias(id) ON UPDATE CASCADE ON DELETE CASCADE
+);

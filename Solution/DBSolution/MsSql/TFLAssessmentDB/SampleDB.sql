@@ -501,3 +501,52 @@ VALUES ('2024-03-11', '14:00:00', 1, 5);
 
 INSERT INTO interviews (interviewdate, interviewtime, smeid, candidateid)
 VALUES ('2024-03-15', '14:30:00', 3, 6);
+
+
+
+
+
+INSERT INTO interviewcriterias(interviewid, evaluationcriteriaid)VALUES(1,6);
+INSERT INTO interviewcriterias(interviewid, evaluationcriteriaid)VALUES(1,5);
+INSERT INTO interviewcriterias(interviewid, evaluationcriteriaid)VALUES(2,3);
+INSERT INTO interviewcriterias(interviewid, evaluationcriteriaid)VALUES(1,2);
+INSERT INTO interviewcriterias(interviewid, evaluationcriteriaid)VALUES(3,4);
+INSERT INTO interviewcriterias(interviewid, evaluationcriteriaid)VALUES(2,4);
+INSERT INTO interviewcriterias(interviewid, evaluationcriteriaid)VALUES(3,6);
+INSERT INTO interviewcriterias(interviewid, evaluationcriteriaid)VALUES(2,5);
+INSERT INTO interviewcriterias(interviewid, evaluationcriteriaid)VALUES(1,7);
+INSERT INTO interviewcriterias(interviewid, evaluationcriteriaid)VALUES(2,1);
+INSERT INTO interviewcriterias(interviewid, evaluationcriteriaid)VALUES(1,8);
+
+
+
+
+INSERT INTO interviewresults (interviewcriteriaid, ratings, comments)
+VALUES (1, 8, 'good');
+
+INSERT INTO interviewresults (interviewcriteriaid, ratings, comments)
+VALUES (2, 6, 'average');
+
+INSERT INTO interviewresults (interviewcriteriaid, ratings, comments)
+VALUES (1, 9, 'very good');
+
+INSERT INTO interviewresults (interviewcriteriaid, ratings, comments)
+VALUES (2, 7, 'nice');
+
+INSERT INTO interviewresults (interviewcriteriaid, ratings, comments)
+VALUES (3, 9, 'very good');
+
+INSERT INTO interviewresults (interviewcriteriaid, ratings, comments)
+VALUES (4, 8, 'good');
+
+INSERT INTO interviewresults (interviewcriteriaid, ratings, comments)
+VALUES (5, 10, 'very good');
+
+INSERT INTO interviewresults (interviewcriteriaid, ratings, comments)
+VALUES (6, 7, 'good');
+
+INSERT INTO interviewresults (interviewcriteriaid, ratings, comments)
+VALUES (7, 8, 'nice');
+
+INSERT INTO interviewresults (interviewcriteriaid, ratings, comments)
+VALUES (8, 8, 'good');
