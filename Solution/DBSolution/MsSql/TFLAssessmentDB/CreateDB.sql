@@ -81,3 +81,47 @@ CREATE TABLE testassessmentcriterias (
     CONSTRAINT fk_as_evalcriteria_evalcaritid FOREIGN KEY (evaluationcriteriaid) REFERENCES evaluationcriterias(id) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
+
+CREATE TABLE testquestions (
+    id INT PRIMARY KEY IDENTITY(1,1),
+    testid INT,
+    questionbankid INT,
+    CONSTRAINT unique_tests_testquestions UNIQUE (testid, questionbankid),
+    CONSTRAINT fk_tests_testid FOREIGN KEY (testid) REFERENCES tests(id) ON UPDATE CASCADE ON DELETE CASCADE,
+    CONSTRAINT fk_testqt_qbank_questionbankid FOREIGN KEY (questionbankid) REFERENCES questionbank(id) ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+
+
+CREATE TABLE candidateanswers (
+    id INT PRIMARY KEY IDENTITY(1,1),
+    candidateid INT,
+    testquestionid INT,
+    answerkey CHAR,
+    CONSTRAINT fk_emp_candidateid FOREIGN KEY (candidateid) REFERENCES employees(id) ON UPDATE CASCADE ON DELETE CASCADE,
+    CONSTRAINT fk_tstqt_testquestionid FOREIGN KEY (testquestionid) REFERENCES testquestions(id) ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+
+
+CREATE TABLE candidatetestresults (
+    id INT PRIMARY KEY IDENTITY(1,1),
+    testid INT,
+    score INT,
+    teststarttime DATETIME,
+    testendtime DATETIME,
+    candidateid INT,
+    CONSTRAINT fk_employees_candid FOREIGN KEY (candidateid) REFERENCES employees(id) ON UPDATE CASCADE ON DELETE CASCADE,
+    CONSTRAINT fk_test_testid FOREIGN KEY (testid) REFERENCES tests(id) ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+
+CREATE TABLE interviews (
+    id INT PRIMARY KEY IDENTITY,
+    interviewdate DATE,
+    interviewtime VARCHAR(20),
+    smeid INT,
+    candidateid INT,
+   CONSTRAINT fk_sme_smeid FOREIGN KEY(smeid) REFERENCES subjectmatterexperts(id) ,
+    CONSTRAINT fk_emp_candtid FOREIGN KEY(candidateid) REFERENCES employees(id) 
+);
