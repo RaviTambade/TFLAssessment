@@ -58,11 +58,26 @@ create table questionbank (
 );
 
 
+CREATE TABLE tests (
+    id INT PRIMARY KEY IDENTITY,
+    subjectid INT,
+    duration TIME,
+    smeid INT,
+    creationdate DATETIME,
+    modificationdate DATETIME,
+    scheduleddate DATETIME,
+    passinglevel INT,
+    status VARCHAR(20) CHECK (status IN ('created', 'scheduled', 'cancelled', 'conducted')) DEFAULT 'created'
+);
+
+select * from tests;
 
 
-
-
-
-
-
+CREATE TABLE testassessmentcriterias (
+    id INT PRIMARY KEY IDENTITY(1,1),
+    testid INT,
+    evaluationcriteriaid INT,
+    CONSTRAINT fk_as_tests_testid FOREIGN KEY (testid) REFERENCES tests(id) ON UPDATE CASCADE ON DELETE CASCADE,
+    CONSTRAINT fk_as_evalcriteria_evalcaritid FOREIGN KEY (evaluationcriteriaid) REFERENCES evaluationcriterias(id) ON UPDATE CASCADE ON DELETE CASCADE
+);
 

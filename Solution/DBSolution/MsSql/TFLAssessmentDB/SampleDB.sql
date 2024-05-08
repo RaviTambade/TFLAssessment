@@ -1,4 +1,6 @@
 
+
+
 INSERT INTO employees (firstname, lastname, email, contact) VALUES ('ram', 'tambe', 'rTambe@gmail.com', '8547963254');
 INSERT INTO employees (firstname, lastname, email, contact) VALUES ('Vaibhav', 'Sathe', 'psathe@gmail.com', '9658745635');
 INSERT INTO employees (firstname, lastname, email, contact) VALUES ('Shreedhar', 'Kumar', 'pkumar@gmail.com', '8654793254');
@@ -269,3 +271,43 @@ VALUES (
 );
 
 
+
+
+INSERT INTO tests (subjectid, duration, smeid, creationdate, modificationdate, scheduleddate, passinglevel) 
+VALUES (1, '00:30:00', 1, '2023-12-05', '2024-02-05', '2024-02-07', 6);
+
+INSERT INTO tests (subjectid, duration, smeid, creationdate, modificationdate, scheduleddate, passinglevel) 
+VALUES (1, '00:40:00', 1, '2023-11-05', '2024-01-05', '2024-02-07', 7);
+
+INSERT INTO tests (subjectid, duration, smeid, creationdate, modificationdate, scheduleddate, passinglevel) 
+VALUES (1, '00:20:00', 1, '2023-09-05', '2024-01-05', '2024-02-08', 7);
+
+INSERT INTO tests (subjectid, duration, smeid, creationdate, modificationdate, scheduleddate, passinglevel) 
+VALUES (2, '00:30:00', 2, '2023-09-21', '2023-12-05', '2024-01-05', 6);
+
+INSERT INTO tests (subjectid, duration, smeid, creationdate, modificationdate, scheduleddate, passinglevel) 
+VALUES (3, '01:00:00', 1, '2023-11-05', '2023-12-21', '2024-01-24', 8);
+
+INSERT INTO tests (subjectid, duration, smeid, creationdate, modificationdate, scheduleddate, passinglevel) 
+VALUES (4, '01:30:00', 2, '2023-09-05', '2023-10-10', '2024-01-18', 5);
+
+INSERT INTO tests (subjectid, duration, smeid, creationdate, modificationdate, scheduleddate, passinglevel) 
+VALUES (7, '00:30:00', 7, '2024-01-01', '2024-01-01', '2024-01-10', 6);
+
+INSERT INTO tests (subjectid, duration, smeid, creationdate, modificationdate, scheduleddate, passinglevel) 
+VALUES (7, '00:30:00', 7, '2024-01-01', '2024-01-01', '2024-01-10', 7);
+
+
+
+INSERT INTO testassessmentcriterias(testid, evaluationcriteriaid)VALUES(1,4);
+INSERT INTO testassessmentcriterias(testid, evaluationcriteriaid)VALUES(1,2);
+INSERT INTO testassessmentcriterias(testid, evaluationcriteriaid)VALUES(2,2);
+INSERT INTO testassessmentcriterias(testid, evaluationcriteriaid)VALUES(2,4);
+INSERT INTO testassessmentcriterias(testid, evaluationcriteriaid)VALUES(1,3);
+INSERT INTO testassessmentcriterias(testid, evaluationcriteriaid)VALUES(5,4);
+INSERT INTO testassessmentcriterias(testid, evaluationcriteriaid)VALUES(2,3);
+INSERT INTO testassessmentcriterias(testid, evaluationcriteriaid)VALUES(1,5);
+INSERT INTO testassessmentcriterias(testid, evaluationcriteriaid)VALUES(3,1);
+INSERT INTO testassessmentcriterias(testid, evaluationcriteriaid)VALUES(4,5);
+INSERT INTO testassessmentcriterias(testid, evaluationcriteriaid)VALUES(7,8);
+INSERT INTO testassessmentcriterias(testid, evaluationcriteriaid)VALUES(8,8);
