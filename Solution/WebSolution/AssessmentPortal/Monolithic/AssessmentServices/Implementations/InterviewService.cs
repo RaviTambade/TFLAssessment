@@ -6,11 +6,11 @@ using Transflower.TFLAssessment.Repositories.Interfaces;
 namespace Transflower.TFLAssessment.Repositories.Implementations;
 
 //Providers
-public class InterviewManager : IInterviewManager
+public class InterviewService : IInterviewService
 {
-    private readonly IInterviewManager _repository;
+    private readonly IInterviewService _repository;
 
-    public InterviewManager(IInterviewManager repository)
+    public InterviewService(IInterviewService repository)
     {
         _repository = repository;
 
