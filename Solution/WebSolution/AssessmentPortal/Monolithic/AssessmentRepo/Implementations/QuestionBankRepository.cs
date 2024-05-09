@@ -7,7 +7,7 @@ using Transflower.TFLAssessment.Repositories.Interfaces;
 
 namespace Transflower.TFLAssessment.Repositories.Implementations;
 
-public class QuestionBankManager:IQuestionBankManager
+public class QuestionBankRepository:IQuestionBankRepository
 {
     private string connectionString = "server=localhost;port=3306;user=root;password=password;database=assessmentdb";
  

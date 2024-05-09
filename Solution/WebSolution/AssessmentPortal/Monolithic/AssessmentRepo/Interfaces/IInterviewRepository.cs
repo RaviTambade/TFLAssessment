@@ -2,7 +2,7 @@
 using Transflower.TFLAssessment.Entities;
 
 namespace Transflower.TFLAssessment.Repositories.Interfaces;
-public interface IInterviewManager{
+public interface IInterviewRepository{
 
     public List<InterviewCandidateDetails> GetAllInterviewCandidates();
     public List<InterviewCandidateDetails> GetInterviewedCandidatesSubjects(int candidateId);
