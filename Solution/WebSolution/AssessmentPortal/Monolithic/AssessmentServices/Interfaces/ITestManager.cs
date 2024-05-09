@@ -1,7 +1,7 @@
 
-using Assessment.Entities;
+using Transflower.TFLAssessment.Entities;
 
-namespace Assessment.Repositories.Interfaces;
+namespace Transflower.TFLAssessment.Repositories.Interfaces;
 public interface ITestManager
 {
 
