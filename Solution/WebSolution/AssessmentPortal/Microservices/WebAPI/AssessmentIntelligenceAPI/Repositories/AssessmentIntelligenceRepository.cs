@@ -1,9 +1,9 @@
-using Transflower.AssessmentIntelligenceAPI.Entities;
-using Transflower.AssessmentIntelligenceAPI.Repositories.Interfaces;
+using Transflower.TFLAssessment.Entities;
+using Transflower.TFLAssessment.Repositories.Interfaces;
 using MySql.Data.MySqlClient;
 using System.Data;
 
-namespace Transflower.AssessmentIntelligenceAPI.Repositories;
+namespace Transflower.TFLAssessment.Repositories;
 
 public class AssessmentIntelligenceRepository: IAssessmentIntelligenceRepository
 {

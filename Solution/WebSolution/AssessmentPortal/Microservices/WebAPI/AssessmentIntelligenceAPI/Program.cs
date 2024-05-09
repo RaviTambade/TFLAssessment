@@ -1,8 +1,8 @@
 using Microsoft.Extensions.Logging;
-using Transflower.AssessmentIntelligenceAPI.Repositories.Interfaces;
-using Transflower.AssessmentIntelligenceAPI.Repositories;
-using Transflower.AssessmentIntelligenceAPI.Services.Interfaces;
-using Transflower.AssessmentIntelligenceAPI.Services;
+using Transflower.TFLAssessment.Repositories.Interfaces;
+using Transflower.TFLAssessment.Repositories;
+using Transflower.TFLAssessment.Services.Interfaces;
+using Transflower.TFLAssessment.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,17 +15,14 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddCors();
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
-<<<<<<< HEAD
-=======
 builder.Host.ConfigureLogging(logging =>
-
 {
     logging.ClearProviders();
     logging.AddConsole();
     logging.AddFile("logs/catalog-{Date}.json", isJson: true);
 });
 
->>>>>>> e153a0f3f4b2496cbb7125de6eb49e02ae32bc2f
+
 builder.Services.AddControllers();
 
 //Essential custom serviceds needed at runtime by Controllers

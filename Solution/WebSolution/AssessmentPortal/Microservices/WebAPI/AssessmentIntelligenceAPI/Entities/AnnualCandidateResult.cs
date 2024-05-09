@@ -1,4 +1,4 @@
-﻿namespace Transflower.AssessmentIntelligenceAPI.Entities;
+﻿namespace Transflower.TFLAssessment.Entities;
 
 public class AnnualCandidateResult
 {

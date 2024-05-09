@@ -1,6 +1,6 @@
-using Transflower.AssessmentIntelligenceAPI.Entities;
+using Transflower.TFLAssessment.Entities;
 
-namespace Transflower.AssessmentIntelligenceAPI.Repositories.Interfaces;
+namespace Transflower.TFLAssessment.Repositories.Interfaces;
 
 public interface IAssessmentIntelligenceRepository{
 
