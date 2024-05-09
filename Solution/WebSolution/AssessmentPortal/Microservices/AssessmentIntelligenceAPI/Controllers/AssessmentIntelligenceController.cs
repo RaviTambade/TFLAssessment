@@ -17,10 +17,6 @@ public class AssessmentIntelligenceController : ControllerBase
     private readonly ILogger <AssessmentIntelligenceController> _logger;
     private readonly IAssessmentIntelligenceService _service;
     public AssessmentIntelligenceController(IAssessmentIntelligenceService service, ILogger <AssessmentIntelligenceController> logger)
-<<<<<<< HEAD:Solution/WebSolution/AssessmentPortal/Microservices/WebAPI/AssessmentIntelligenceAPI/Controllers/AssessmentIntelligenceController.cs
-
-=======
->>>>>>> 3455c5a0bdf2a1237ed46348ed5e5b5893b2936a:Solution/WebSolution/AssessmentPortal/Microservices/AssessmentIntelligenceAPI/Controllers/AssessmentIntelligenceController.cs
     {
         _service = service;
         _logger = logger;  

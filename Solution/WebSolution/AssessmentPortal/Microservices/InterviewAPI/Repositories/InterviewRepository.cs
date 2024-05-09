@@ -8,7 +8,14 @@ namespace Transflower.TFLAssessment.Repositories;
 //Providers
 public class InterviewRepository : IInterviewRepository
 {
-    private string connectionString = "server=localhost;port=3306;user=root;password=password;database=assessmentdb";
+    private readonly IConfiguration _configuration;
+    private readonly string _connectionString;
+
+    public InterviewRepository(IConfiguration configuration)
+    {
+        _configuration = configuration;
+        _connectionString = _configuration.GetConnectionString("DefaultConnection")  ?? throw new ArgumentNullException("connectionString");
+    }
 
 
     public async Task<List<InterviewCandidateDetails>> GetAllInterviewCandidates()
@@ -19,7 +26,7 @@ public class InterviewRepository : IInterviewRepository
                        where employees.id=interviews.candidateid
                        order by interviews.candidateid asc;";
 
-        MySqlConnection connection = new MySqlConnection(connectionString);
+        MySqlConnection connection = new MySqlConnection(_connectionString);
         MySqlCommand command = new MySqlCommand(query, connection);
         connection.Open();
         try
@@ -66,7 +73,7 @@ public class InterviewRepository : IInterviewRepository
                         where interviews.candidateid=@CandidateId;";
 
 
-        MySqlConnection connection = new MySqlConnection(connectionString);
+        MySqlConnection connection = new MySqlConnection(_connectionString);
         MySqlCommand command = new MySqlCommand(query, connection);
         command.Parameters.AddWithValue("@CandidateId", candidateId);
         try
@@ -112,7 +119,7 @@ public class InterviewRepository : IInterviewRepository
         string query = "spinterviewdetails";
 
 
-        MySqlConnection connection = new MySqlConnection(connectionString);
+        MySqlConnection connection = new MySqlConnection(_connectionString);
         try
         {
             MySqlCommand command = new MySqlCommand(query, connection);
@@ -155,7 +162,7 @@ public class InterviewRepository : IInterviewRepository
     {
         bool status = false;
         string query = "update interviews set interviewdate =@interviewdate  where  id =@interviewId ";
-        MySqlConnection connection = new MySqlConnection(connectionString);
+        MySqlConnection connection = new MySqlConnection(_connectionString);
         MySqlCommand command = new MySqlCommand(query, connection);
         command.Parameters.AddWithValue("@interviewdate", date);
         command.Parameters.AddWithValue("@interviewId", interviewId);
@@ -184,7 +191,7 @@ public class InterviewRepository : IInterviewRepository
     {
         bool status = false;
         string query = "update interviews set interviewtime =@interviewTime  where  id =@interviewId ";
-        MySqlConnection connection = new MySqlConnection(connectionString);
+        MySqlConnection connection = new MySqlConnection(_connectionString);
         MySqlCommand command = new MySqlCommand(query, connection);
         command.Parameters.AddWithValue("@interviewTime", time);
         command.Parameters.AddWithValue("@interviewId", interviewId);
@@ -212,7 +219,7 @@ public class InterviewRepository : IInterviewRepository
     {
         bool status = false;
         string query = "update interviews set interviewdate =@interviewdate,interviewtime =@interviewTime  where  id =@interviewId ";
-        MySqlConnection connection = new MySqlConnection(connectionString);
+        MySqlConnection connection = new MySqlConnection(_connectionString);
         MySqlCommand command = new MySqlCommand(query, connection);
         command.Parameters.AddWithValue("@interviewTime", time);
         command.Parameters.AddWithValue("@interviewdate", date);
@@ -242,7 +249,7 @@ public class InterviewRepository : IInterviewRepository
     {
         bool status = false;
         string query = "update interviews set smeid =@smeid  where  id =@interviewId ";
-        MySqlConnection connection = new MySqlConnection(connectionString);
+        MySqlConnection connection = new MySqlConnection(_connectionString);
         MySqlCommand command = new MySqlCommand(query, connection);
         command.Parameters.AddWithValue("@smeid", smeId);
         command.Parameters.AddWithValue("@interviewId", interviewId);
@@ -273,7 +280,7 @@ public class InterviewRepository : IInterviewRepository
     {
         bool status = false;
         string query = "delete from interviews where id =@id";
-        MySqlConnection connection = new MySqlConnection(connectionString);
+        MySqlConnection connection = new MySqlConnection(_connectionString);
         MySqlCommand command = new MySqlCommand(query, connection);
         command.Parameters.AddWithValue("@id", interviewId);
 
