@@ -1,4 +1,4 @@
-using Assessment.Entities;
+using Transflower.TFLAssessment.Entities;
 using MySql.Data.MySqlClient;
 using System.Data;
 using Transflower.TFLAssessment.Repositories.Interfaces;
