@@ -7,14 +7,20 @@ namespace Transflower.TFLAssessment.Repositories;
 
  
  public class EvaluationCriteriaRepository:IEvaluationCriteriaRepository
-{
-    private string connectionString = "server=localhost;port=3306;user=root;password=password;database=assessmentdb";
- 
+{ 
+    private readonly IConfiguration _configuration;
+    private readonly string _connectionString;
+
+    public EvaluationCriteriaRepository(IConfiguration configuration)
+    {
+        _configuration = configuration;
+        _connectionString = _configuration.GetConnectionString("DefaultConnection")  ?? throw new ArgumentNullException("connectionString");
+    }
  public async Task <bool> UpdateCriteria(int evaluationCriteriaId, int questionId)
     {
 
         bool status = false;
-        MySqlConnection connection = new MySqlConnection(connectionString);
+        MySqlConnection connection = new MySqlConnection(_connectionString );
         string query = "update questionbank set evaluationcriteriaid=@evaluationCriteriaId where id=@questionId";
         MySqlCommand command = new MySqlCommand(query, connection);
         command.Parameters.AddWithValue("@evaluationCriteriaId", evaluationCriteriaId);
@@ -44,7 +50,7 @@ namespace Transflower.TFLAssessment.Repositories;
     {
 
         bool status = false;
-        MySqlConnection connection = new MySqlConnection(connectionString);
+        MySqlConnection connection = new MySqlConnection(_connectionString );
         string query = "update evaluationcriterias set subjectid= @subjectId where id= @id;";
         MySqlCommand command = new MySqlCommand(query, connection);
         command.Parameters.AddWithValue("@id", id);
@@ -74,7 +80,7 @@ namespace Transflower.TFLAssessment.Repositories;
     {
         Console.WriteLine(criteria.SubjectId + " " + criteria.Title);
         bool status = false;
-        MySqlConnection connection = new MySqlConnection(connectionString);
+        MySqlConnection connection = new MySqlConnection(_connectionString );
         string query = "insert into evaluationcriterias(title,subjectid) values ( @title, @subjectId)";
         MySqlCommand command = new MySqlCommand(query, connection);
         command.Parameters.AddWithValue("@subjectId", criteria.SubjectId);
