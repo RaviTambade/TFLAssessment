@@ -1,0 +1,30 @@
+using MySql.Data.MySqlClient;
+using System.Data;
+using Transflower.TFLAssessment.Entities;
+using Transflower.TFLAssessment.Repositories.Interfaces;
+namespace Transflower.TFLAssessment.Repositories.Implementations;
+
+//Providers
+public class ResultService :IResultService
+{ 
+     private readonly IResultRepository _repository;
+
+    public ResultService(IResultRepository repository)
+    {
+        _repository = repository;
+
+    }
+        public int GetCandidateScore(int candidateId, int testId)
+    { 
+        return _repository.GetAllCandidatesScore(candidateId,testId);
+    }
+    public int GetCandidateTestScore(int candidateId, int testId)
+    {
+        return _repository.GetCandidateTestScore(candidateId,testId);
+    }
+    public CandidateResultDetails CandidateTestResultDetails(int candidateId, int testId)
+    {
+        return _repository.CandidateTestResultDetails(candidateId,testId);
+    }
+
+}

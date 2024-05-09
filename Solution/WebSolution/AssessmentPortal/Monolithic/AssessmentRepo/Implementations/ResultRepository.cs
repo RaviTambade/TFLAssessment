@@ -3,9 +3,8 @@ using System.Data;
 using Transflower.TFLAssessment.Entities;
 using Transflower.TFLAssessment.Repositories.Interfaces;
 namespace Transflower.TFLAssessment.Repositories.Implementations;
-
 //Providers
-public class ResultManager :IResultManager
+public class ResultRepository :IResultRepository
 { 
 
      private string connectionString = "server=localhost;port=3306;user=root;password=password;database=assessmentdb";

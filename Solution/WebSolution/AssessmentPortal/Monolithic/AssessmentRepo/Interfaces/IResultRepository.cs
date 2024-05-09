@@ -2,7 +2,8 @@
 using Transflower.TFLAssessment.Entities;
 
 namespace Transflower.TFLAssessment.Repositories.Interfaces;
-public interface IResultManager{
+public interface IResultRepository
+{
    
     public int GetCandidateScore(int candidateId, int testId);
     public int GetCandidateTestScore(int candidateId, int testId);

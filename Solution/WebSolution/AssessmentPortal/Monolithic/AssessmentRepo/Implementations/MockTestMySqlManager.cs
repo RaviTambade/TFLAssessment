@@ -5,7 +5,7 @@ using System.Data;
 
 using Transflower.TFLAssessment.Repositories.Interfaces;
 
-namespace Assessment.Repositories.Implementations;
+namespace Transflower.TFLAssessment.Repositories.Implementations;
 public class MockTestManager : IMockTestManager
 {
 
