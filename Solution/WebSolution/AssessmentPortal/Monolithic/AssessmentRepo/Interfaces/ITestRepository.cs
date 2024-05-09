@@ -1,8 +1,7 @@
-
 using Transflower.TFLAssessment.Entities;
-
 namespace Transflower.TFLAssessment.Repositories.Interfaces;
-public interface ITestManager
+
+public interface ITestRepository
 {
 
    public List<Employee> GetAllEmployees();

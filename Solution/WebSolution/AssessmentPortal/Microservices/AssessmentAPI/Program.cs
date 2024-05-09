@@ -1,8 +1,8 @@
 using Microsoft.Extensions.Logging;
 using Transflower.TFLAssessment.Repositories.Interfaces;
-using  Transflower.TFLAssessment.Repositories;
+using Transflower.TFLAssessment.Repositories;
 using Transflower.TFLAssessment.Services.Interfaces;
-using   Transflower.TFLAssessment.Services;
+using Transflower.TFLAssessment.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,16 +28,13 @@ builder.Services.AddScoped<IAssessmentService, AssessmentService>();
 
 var app = builder.Build();
 
-
 //ASP.NET middleware configuration
-
 app.UseCors(options => options.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
 app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthorization();
 
 //Controller Route mapping
-
 app.UseEndpoints(endpoints =>
 {
         endpoints.MapControllerRoute(
@@ -46,7 +43,6 @@ app.UseEndpoints(endpoints =>
         endpoints.MapRazorPages();
         endpoints.MapControllers(); // Map Minimal Web API endpoints
 });
-
 
 //Middleware Pipeline
 if (app.Environment.IsDevelopment())

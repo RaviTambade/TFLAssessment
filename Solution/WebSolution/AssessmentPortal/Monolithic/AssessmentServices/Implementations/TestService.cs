@@ -2,14 +2,15 @@ using MySql.Data.MySqlClient;
 using System.Data;
 using Transflower.TFLAssessment.Entities;
 using Transflower.TFLAssessment.Repositories.Interfaces;
+using Transflower.TFLAssessment.Services.Interfaces;
 namespace Transflower.TFLAssessment.Repositories.Implementations;
 
  
-public class TestService :ITestManager
+public class TestService :ITestService
 {
     private readonly ITestRepository _repository;
 
-    public EvaluationCriteriaService(ITestRepository repository)
+    public TestService(ITestRepository repository)
     {
         _repository = repository;
 
@@ -31,7 +32,7 @@ public class TestService :ITestManager
     }
     public bool AddQuestionToTest(int testId, int questionId)  //*******
     {
-        return _repository.AddQuestionsToTest(testId, questionId);
+        return _repository.AddQuestionToTest(testId, questionId);
     }
     public bool AddQuestionsToTest(int testId, List<int> questions) //****
     {

@@ -70,14 +70,13 @@ string CancelInterviewUrl = "/cancelInterview/interviewid/{interviewid}";  //pen
 
 // Using interfaces , Provider objects are  Cohesively coupledcreate test
 
-ITestManager manager = new TestManager();
-IQuestionBankManager questionBank = new QuestionBankManager();
-IInterviewManager interviewManager = new InterviewManager();
-IEvaluationCriteriaManager criteriaManager = new EvaluationCriteriaManager();
-IMockTestManager mockTestManager = new MockTestManager();
-IResultManager resultManager = new ResultManager();
+ITestRepository manager = new TestRepository();
+IQuestionBankRepository questionBank = new QuestionBankRepository();
+IInterviewRepository interviewManager = new InterviewRepository();
+IEvaluationCriteriaRepository criteriaManager = new EvaluationCriteriaRepository();
 
-IEvaluationCriteriaRepository criteria = new EvaluationCriteriaRepository()
+IResultRepository resultManager = new ResultRepository();
+
 //API Listners
 app.MapGet(apiEmployeesUrl, () =>
 {
@@ -104,11 +103,11 @@ app.MapGet(criteriaBySubjectUrl, (int subjectId) =>
    return evaluationCriterias;
 });
 
-app.MapGet(apiTestUrl, () =>
-{
-   List<Test> tests = mockTestManager.GetAllTests();
-   return tests;
-});
+// app.MapGet(apiTestUrl, () =>
+// {
+//    List<Test> tests = manager.GetAllTests();
+//    return tests;
+// });
 
 app.MapGet(InterviewDetailsUrl, (int interviewId) =>
 {
@@ -178,32 +177,32 @@ app.MapGet(candidateTestScoreUrl, (int candidateId, int testId) =>
    return score;
 });
 
-app.MapPost(testStartTimesettingUrl, (CandidateTestTime test) =>
-{
-   bool status = mockTestManager.SetCandidateTestStartTime(test.CandidateId, test.TestId, test.Time);
-   return status;
-});
+// app.MapPost(testStartTimesettingUrl, (CandidateTestTime test) =>
+// {
+//    bool status = mockTestManager.SetCandidateTestStartTime(test.CandidateId, test.TestId, test.Time);
+//    return status;
+// });
 
-app.MapPost(apiCandidateTestAnswersUrl, (int candidateId, List<CandidateAnswer> answers) =>
-{
-   bool status = mockTestManager.InsertCandidateAnswers(candidateId, answers);
-   return status;
-});
-
-
-app.MapPost(deleteTestQuestion, (int[] testQuestions) =>
-{
-   bool status = mockTestManager.DeleteQuestion(testQuestions);
-   return status;
-});
+// app.MapPost(apiCandidateTestAnswersUrl, (int candidateId, List<CandidateAnswer> answers) =>
+// {
+//    bool status = mockTestManager.InsertCandidateAnswers(candidateId, answers);
+//    return status;
+// });
 
 
-app.MapPost(insertnewquestionurl, (NewQuestion ques) =>
-{
-   bool status = mockTestManager.InsertQuestion(ques);
-   return status;
+// app.MapPost(deleteTestQuestion, (int[] testQuestions) =>
+// {
+//    bool status = mockTestManager.DeleteQuestion(testQuestions);
+//    return status;
+// });
 
-});
+
+// app.MapPost(insertnewquestionurl, (NewQuestion ques) =>
+// {
+//    bool status = mockTestManager.InsertQuestion(ques);
+//    return status;
+
+// });
 
 app.MapPost(insertnewcriteriaurl, (NewCriteria criteria) =>
 {
@@ -212,11 +211,11 @@ app.MapPost(insertnewcriteriaurl, (NewCriteria criteria) =>
 
 });
 
-app.MapPut(testEndTimesettingUrl, (CandidateTestTime test) =>
-{
-   bool status = mockTestManager.SetCandidateTestEndTime(test.CandidateId, test.TestId, test.Time);
-   return status;
-});
+// app.MapPut(testEndTimesettingUrl, (CandidateTestTime test) =>
+// {
+//    bool status = mockTestManager.SetCandidateTestEndTime(test.CandidateId, test.TestId, test.Time);
+//    return status;
+// });
 
 app.MapPut(subjectCriteriaUrl, (int criteriaId, int questionId) =>
 {
@@ -253,11 +252,11 @@ app.MapGet(candidateTestResultDetailsUrl, (int candidateId, int testId) =>
 });
 
 
-app.MapPost(createTestUrl, (Test newTest) =>
-{
-   bool status = mockTestManager.CreateTest(newTest);
-   return status;
-});
+// app.MapPost(createTestUrl, (Test newTest) =>
+// {
+//    bool status = mockTestManager.CreateTest(newTest);
+//    return status;
+// });
 
 app.MapPut(resheduleInterviewUrl, (int interviewId, DateTime date) =>
 {

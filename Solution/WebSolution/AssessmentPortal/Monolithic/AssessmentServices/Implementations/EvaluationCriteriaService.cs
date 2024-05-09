@@ -2,7 +2,7 @@ using MySql.Data.MySqlClient;
 using System.Data;
 using Transflower.TFLAssessment.Entities;
 using Transflower.TFLAssessment.Services.Interfaces;
-
+using Transflower.TFLAssessment.Repositories.Interfaces;
 namespace Transflower.TFLAssessment.Services.Implementations;
 
 //Providers
@@ -17,7 +17,7 @@ public class EvaluationCriteriaService : IEvaluationCriteriaService
     }
     public List<EvaluationCriteria> GetEvalutionCriterias()
     {
-        return _repository.GetEvalutionCriterias;
+        return _repository.GetEvalutionCriterias();
 
     }
 
@@ -39,5 +39,10 @@ public class EvaluationCriteriaService : IEvaluationCriteriaService
     public bool UpdateCriteria(int evaluationCriteriaId, int questionId)
     {
         return _repository.UpdateCriteria(evaluationCriteriaId, questionId);
+    }
+
+    public   List<QuestionDetails> GetQuestionsBySubjectAndCriteria(int subjectId,int criteriaId)
+    {
+        return _repository.GetQuestionsBySubjectAndCriteria(subjectId, criteriaId);
     }
 }

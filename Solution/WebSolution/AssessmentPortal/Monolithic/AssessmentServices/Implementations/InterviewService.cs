@@ -1,16 +1,16 @@
-
 using MySql.Data.MySqlClient;
 using System.Data;
 using Transflower.TFLAssessment.Entities;
+using Transflower.TFLAssessment.Services.Interfaces;
 using Transflower.TFLAssessment.Repositories.Interfaces;
 namespace Transflower.TFLAssessment.Repositories.Implementations;
 
 //Providers
 public class InterviewService : IInterviewService
 {
-    private readonly IInterviewService _repository;
+    private readonly IInterviewRepository _repository;
 
-    public InterviewService(IInterviewService repository)
+    public InterviewService(IInterviewRepository repository)
     {
         _repository = repository;
 
@@ -18,7 +18,7 @@ public class InterviewService : IInterviewService
 
     public List<InterviewCandidateDetails> GetAllInterviewCandidates()
     {
-        return _repository.GetAllInterviewCandidates;
+        return _repository.GetAllInterviewCandidates();
     }
 
     public List<InterviewCandidateDetails> GetInterviewedCandidatesSubjects(int candidateId)

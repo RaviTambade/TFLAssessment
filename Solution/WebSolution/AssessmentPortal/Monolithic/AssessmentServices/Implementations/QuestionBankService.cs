@@ -1,17 +1,16 @@
 using MySql.Data.MySqlClient;
 using System.Data;
 using Transflower.TFLAssessment.Entities;
-
 using Transflower.TFLAssessment.Repositories.Interfaces;
+using Transflower.TFLAssessment.Services.Interfaces;
 //Providers
 
-namespace Transflower.TFLAssessment.Repositories.Implementations;
+namespace Transflower.TFLAssessment.Services.Implementations;
 
 public class QuestionBankService : IQuestionBankService
 {
-    private readonly IQuestionBankService _repository;
-
-    public QuestionBankService(IQuestionBankService repository)
+    private readonly IQuestionBankRepository _repository;
+    public QuestionBankService(IQuestionBankRepository repository)
     {
         _repository = repository;
 
@@ -19,7 +18,7 @@ public class QuestionBankService : IQuestionBankService
 
     public List<QuestionTitle> GetAllQuestions()
     {
-        return _repository.GetAllQuestions;
+        return _repository.GetAllQuestions();
     }
 
 

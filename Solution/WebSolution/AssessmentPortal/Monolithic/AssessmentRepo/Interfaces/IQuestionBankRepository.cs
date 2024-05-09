@@ -2,7 +2,7 @@ using Transflower.TFLAssessment.Entities;
 
 namespace Transflower.TFLAssessment.Repositories.Interfaces;
 
- public interface IQuestionBankManager{
+ public interface IQuestionBankRepository{
     public List<QuestionTitle> GetAllQuestions();
     public List<SubjectQuestion> GetQuestionsBySubject(int id);
     public List<QuestionDetails> GetQuestionsBySubjectAndCriteria(int subjectId,int criteriaId);

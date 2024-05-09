@@ -14,9 +14,10 @@ public class ResultService :IResultService
         _repository = repository;
 
     }
+
         public int GetCandidateScore(int candidateId, int testId)
     { 
-        return _repository.GetAllCandidatesScore(candidateId,testId);
+        return _repository.GetCandidateScore(candidateId,testId);
     }
     public int GetCandidateTestScore(int candidateId, int testId)
     {
