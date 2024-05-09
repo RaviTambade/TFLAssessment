@@ -1,4 +1,4 @@
-namespace Assessment.Entities;
+namespace Transflower.TFLAssessment.Entities;
 public class QuestionDetails{
     public int Id{get;set;}
     public string Question{get;set;}

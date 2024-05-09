@@ -1,9 +1,9 @@
  
 using MySql.Data.MySqlClient;
 using System.Data;
-using Transflower.TFLAssessment.Entities;
-using Transflower.TFLAssessment.Repositories.Interfaces;
-namespace Transflower.TFLAssessment.Repositories.Implementations;
+using Assessment.Entities;
+using Assessment.Repositories.Interfaces;
+namespace Assessment.Repositories.Implementations;
 
 //Providers
 public class InterviewManager :IInterviewManager

@@ -1,4 +1,4 @@
-namespace Assessment.Entities;
+namespace Transflower.TFLAssessment.Entities;
 
 public class TestTime{
     public   int Day{get;set;}

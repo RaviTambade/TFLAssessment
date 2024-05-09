@@ -1,6 +1,6 @@
  
 
-namespace Assessment.Entities;
+namespace Transflower.TFLAssessment.Entities;
 public class CandidateTestTime{
 
     public int CandidateId{get;set;}

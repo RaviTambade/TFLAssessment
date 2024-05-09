@@ -1,5 +1,5 @@
 
-namespace Assessment.Entities;
+namespace Transflower.TFLAssessment.Entities;
 
 public class SubjectQuestion{
     public  int QuestionId{get;set;}

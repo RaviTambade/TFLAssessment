@@ -1,8 +1,7 @@
 
-using Transflower.TFLAssessment.Entities;
+using Assessment.Entities;
 
-
-namespace Transflower.TFLAssessment.Repositories.Interfaces;
+namespace Assessment.Repositories.Interfaces;
 
 public interface IMockTestManager
 {

@@ -1,11 +1,12 @@
 using MySql.Data.MySqlClient;
 using System.Data;
-using Assessment.Entities;
-using Assessment.Repositories.Interfaces;
-namespace Assessment.Repositories.Implementations;
+using Transflower.TFLAssessment.Entities;
+using Transflower.TFLAssessment.Repositories.Interfaces;
+
+namespace Transflower.TFLAssessment.Repositories.Implementations;
 
 //Providers
-public class EvaluationCriteriaManager :IEvaluationCriteriaManager
+public class EvaluationCriteriaRepository :IEvaluationCriteriaRepository
 {
     private string connectionString = "server=localhost;port=3306;user=root;password=password;database=assessmentdb";
  

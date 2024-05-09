@@ -1,8 +1,13 @@
 using MySql.Data.MySqlClient;
 using System.Data;
 using Assessment.Entities;
+using Transflower.TFLAssessment.Entities;
 using Assessment.Repositories.Interfaces;
 using Assessment.Repositories.Implementations;
+using Transflower.TFLAssessment.Repositories.Interfaces;
+using Transflower.TFLAssessment.Repositories.Implementations;
+using Transflower.TFLAssessment.Services.Interfaces;
+using Transflower.TFLAssessment.Services.Implementations;
 
 var builder = WebApplication.CreateBuilder(args);
 //services configuration
@@ -75,6 +80,7 @@ IEvaluationCriteriaManager criteriaManager = new EvaluationCriteriaManager();
 IMockTestManager mockTestManager = new MockTestManager();
 IResultManager resultManager = new ResultManager();
 
+IEvaluationCriteriaRepository criteria = new EvaluationCriteriaRepository()
 //API Listners
 app.MapGet(apiEmployeesUrl, () =>
 {

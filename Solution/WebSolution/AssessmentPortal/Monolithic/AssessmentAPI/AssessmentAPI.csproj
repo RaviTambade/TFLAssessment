@@ -22,6 +22,7 @@
   <ItemGroup>
     <ProjectReference Include="..\AssessmentObjects\AssessmentObjects.csproj" />
     <ProjectReference Include="..\AssessmentRepo\AssessmentRepo.csproj" />
+    <ProjectReference Include="..\AssessmentServices\AssessmentServices.csproj" />
   </ItemGroup>
 
 </Project>

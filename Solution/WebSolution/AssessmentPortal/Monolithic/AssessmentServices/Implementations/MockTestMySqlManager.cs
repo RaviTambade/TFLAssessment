@@ -1,10 +1,7 @@
 using Assessment.Entities;
-using Transflower.TFLAssessment.Entities;
 using MySql.Data.MySqlClient;
 using System.Data;
 using Assessment.Repositories.Interfaces;
-using Transflower.TFLAssessment.Repositories.Interfaces;
-
 namespace Assessment.Repositories.Implementations;
 public class MockTestManager : IMockTestManager
 {
