@@ -4,7 +4,6 @@ using Transflower.TFLAssessment.Entities;
 using Transflower.TFLAssessment.Repositories.Interfaces;
 namespace Transflower.TFLAssessment.Repositories;
 
-
 public class CandidateAnswerRepository:ICandidateAnswerRepository
 {
     private readonly IConfiguration _configuration;
