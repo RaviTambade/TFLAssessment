@@ -7,13 +7,20 @@ namespace  Transflower.TFLAssessment.Repositories;
 public class ResultRepository : IResultRepository
 {
 
-    private string connectionString = "server=localhost;port=3306;user=root;password=password;database=assessmentdb";
+    private readonly IConfiguration _configuration;
+    private readonly string _connectionString;
+
+    public ResultRepository(IConfiguration configuration)
+    {
+        _configuration = configuration;
+        _connectionString = _configuration.GetConnectionString("DefaultConnection")  ?? throw new ArgumentNullException("connectionString");
+    }
     public async Task<int> GetCandidateScore(int candidateId, int testId)
     {
         string query = "spcandidatetestresult";
       
 
-        MySqlConnection connection = new MySqlConnection(connectionString);
+        MySqlConnection connection = new MySqlConnection(_connectionString);
         int score = 0;
         try
         {
@@ -44,7 +51,7 @@ public class ResultRepository : IResultRepository
     {
         bool status = false;
         string query = "insert into candidatetestresults(testid,teststarttime,candidateid) values (@testid,@teststarttime,@candidateid)";
-        MySqlConnection connection = new MySqlConnection(connectionString);
+        MySqlConnection connection = new MySqlConnection(_connectionString);
 
         var testTime = time.Year + "-" + time.Month + "-" + time.Day + "T" + time.Hour + ":" + time.Minutes + ":" + time.Seconds;
         MySqlCommand command = new MySqlCommand(query, connection);
@@ -77,7 +84,7 @@ public class ResultRepository : IResultRepository
     {
         bool status = false;
 
-        MySqlConnection connection = new MySqlConnection(connectionString);
+        MySqlConnection connection = new MySqlConnection(_connectionString);
         string query = "update candidatetestresults set testendtime =@testEndTime where candidateid=@candidateId and testid=@testId";
 
         var testTime = time.Year + "-" + time.Month + "-" + time.Day + "T" + time.Hour + ":" + time.Minutes + ":" + time.Seconds;
@@ -109,7 +116,7 @@ public class ResultRepository : IResultRepository
     public async Task<int> GetCandidateTestScore(int candidateId, int testId)
     {
         int score = 0;
-        MySqlConnection connection = new MySqlConnection(connectionString);
+        MySqlConnection connection = new MySqlConnection(_connectionString);
         string query = @"select score from candidatetestresults where candidateid=@candidateId and testid=@testId";
         try
         {
@@ -135,7 +142,7 @@ public class ResultRepository : IResultRepository
     {
         string query = "spcandidatetestresultdetails";
         CandidateResultDetails candidateResultDetails = null;
-        MySqlConnection connection = new MySqlConnection(connectionString);
+        MySqlConnection connection = new MySqlConnection(_connectionString);
         try
         {
             MySqlCommand command = new MySqlCommand(query, connection);
@@ -179,7 +186,7 @@ public class ResultRepository : IResultRepository
     public async Task<List<TestResultDetails>> GetTestResultDetails(int testId)
     {
         List<TestResultDetails> resultdetails = new List<TestResultDetails>();
-        MySqlConnection connection = new MySqlConnection(connectionString);
+        MySqlConnection connection = new MySqlConnection(_connectionString);
         string query = @"select candidatetestresults.testid,candidatetestresults.score,candidatetestresults.candidateid
                          ,employees.firstname,employees.lastname,subjects.title as subject
                          from candidatetestresults
@@ -233,7 +240,7 @@ public class ResultRepository : IResultRepository
     public async Task<List<AppearedCandidate>> GetAppearedCandidates(int testId)
     {
         List<AppearedCandidate> appearedCandidates = new List<AppearedCandidate>();
-        MySqlConnection connection = new MySqlConnection(connectionString);
+        MySqlConnection connection = new MySqlConnection(_connectionString);
         string query = @"select candidatetestresults.testid, candidatetestresults.candidateid, employees.firstname, employees.lastname
                             from candidatetestresults 
                             inner join employees 
@@ -276,7 +283,7 @@ public class ResultRepository : IResultRepository
     public async Task<List<PassedCandidateDetails>> GetPassedCandidateResults(int testId)
     {
         List<PassedCandidateDetails> passedCandidates = new List<PassedCandidateDetails>();
-        MySqlConnection connection = new MySqlConnection(connectionString);
+        MySqlConnection connection = new MySqlConnection(_connectionString);
         string query = @"select tests.id,candidatetestresults.candidateid,candidatetestresults.score,tests.passinglevel,employees.firstname,employees.lastname
                             from tests
                             inner join candidatetestresults
@@ -326,7 +333,7 @@ public class ResultRepository : IResultRepository
     public async Task<List<FailedCandidateDetails>> GetFailedCandidateResults(int testId)
     {
         List<FailedCandidateDetails> failedCandidates = new List<FailedCandidateDetails>();
-        MySqlConnection connection = new MySqlConnection(connectionString);
+        MySqlConnection connection = new MySqlConnection(_connectionString);
         string query = @"select tests.id,candidatetestresults.candidateid,candidatetestresults.score,tests.passinglevel,employees.firstname,employees.lastname
                             from tests
                             inner join candidatetestresults
@@ -376,7 +383,7 @@ public class ResultRepository : IResultRepository
     // public bool SetPassingLevel(int testId, int passingLevel)
     // {
     //     bool status = false;
-    //     MySqlConnection connection = new MySqlConnection(connectionString);
+    //     MySqlConnection connection = new MySqlConnection(_connectionString);
     //     string query = "update tests set passinglevel=@passingLevel where id =@testId;";
 
     //    MySqlCommand command = new MySqlCommand(query, connection);
@@ -406,7 +413,7 @@ public class ResultRepository : IResultRepository
     public async Task<bool>SetPassingLevel(int testId, int passingLevel)//Using Dissconnected 
   {
     bool status = false;
-    MySqlConnection connection = new MySqlConnection(connectionString);
+    MySqlConnection connection = new MySqlConnection(_connectionString);
     await Task.Delay(5000);
     try
     {
@@ -440,7 +447,7 @@ public class ResultRepository : IResultRepository
     public async Task<List<CandidateSubjectResults>> GetSubjectResultDetails(int subjectId)
     {
         List<CandidateSubjectResults> resultdetails = new List<CandidateSubjectResults>();
-        MySqlConnection connection = new MySqlConnection(connectionString);
+        MySqlConnection connection = new MySqlConnection(_connectionString);
         string query=@"select tests.id,tests.subjectid,candidatetestresults.candidateid,employees.firstname,employees.lastname,candidatetestresults.score,subjects.title
                         from tests
                         inner join candidatetestresults
