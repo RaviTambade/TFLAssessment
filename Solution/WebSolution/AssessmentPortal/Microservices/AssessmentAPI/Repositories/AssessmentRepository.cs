@@ -7,13 +7,20 @@ namespace Transflower.TFLAssessment.Repositories;
 
 public class AssessmentRepository :IAssessmentRepository
 {
-    private string connectionString = "server=localhost;port=3306;user=root;password=password;database=assessmentdb";
+   private readonly IConfiguration _configuration;
+    private readonly string _connectionString;
+
+    public AssessmentRepository(IConfiguration configuration)
+    {
+        _configuration = configuration;
+        _connectionString = _configuration.GetConnectionString("DefaultConnection")  ?? throw new ArgumentNullException("connectionString");
+    }
 
     public async Task<bool> CreateTest(Assessment newTest)
     {
         
         bool status = false;
-        MySqlConnection connection = new MySqlConnection(connectionString);
+        MySqlConnection connection = new MySqlConnection(_connectionString);
         string query = @"INSERT INTO tests(subjectid,duration,smeid,creationdate,modificationdate,scheduleddate,passinglevel) VALUES (@subjectid,@duration,@smeid,@creationdate,@modificationdate,@scheduleddate,@passinglevel)";
         MySqlCommand command = new MySqlCommand(query, connection);
         TimeOnly time = newTest.Duration;
@@ -51,7 +58,7 @@ public class AssessmentRepository :IAssessmentRepository
             Assessment assessment=new Assessment();   
             string query = @"select * from tests where id=@assessmentId";
 
-            MySqlConnection connection = new MySqlConnection(connectionString);
+            MySqlConnection connection = new MySqlConnection(_connectionString);
             MySqlCommand command = new MySqlCommand(query, connection);
             command.Parameters.AddWithValue("@assessmentId",assessmentId);
             try
@@ -92,7 +99,7 @@ public class AssessmentRepository :IAssessmentRepository
         List<Assessment> assessments=new List<Assessment>();
          string query = @"select * from tests where creationDate  between @fromDate and @toDate";
 
-            MySqlConnection connection = new MySqlConnection(connectionString);
+            MySqlConnection connection = new MySqlConnection(_connectionString);
             MySqlCommand command = new MySqlCommand(query, connection);
             command.Parameters.AddWithValue("@fromDate",fromDate);
             command.Parameters.AddWithValue("@toDate",toDate);
@@ -135,7 +142,7 @@ public class AssessmentRepository :IAssessmentRepository
         List<Assessment> assessments=new List<Assessment>();   
             string query = @"select * from tests where smeid=@smeId";
 
-            MySqlConnection connection = new MySqlConnection(connectionString);
+            MySqlConnection connection = new MySqlConnection(_connectionString);
             MySqlCommand command = new MySqlCommand(query, connection);
             command.Parameters.AddWithValue("@smeId",smeId);
 
@@ -176,7 +183,7 @@ public class AssessmentRepository :IAssessmentRepository
     public async Task<bool> AddQuestion(int assessmentId, int questionId)  //*******
     {
         bool status = false;
-        MySqlConnection connection = new MySqlConnection(connectionString);
+        MySqlConnection connection = new MySqlConnection(_connectionString);
         string query = "insert into testquestions(testid,questionBankid) values ( @testId, @questionBankId)";
         MySqlCommand command = new MySqlCommand(query, connection);
         command.Parameters.AddWithValue("@testId", assessmentId);
@@ -203,7 +210,7 @@ public class AssessmentRepository :IAssessmentRepository
     public async Task<bool> AddQuestions(int assessmentId, List<TestQuestion> questions) //****
     {
         bool status = false;
-        MySqlConnection connection = new MySqlConnection(connectionString); 
+        MySqlConnection connection = new MySqlConnection(_connectionString); 
         try
         {
             foreach(var question in questions){
@@ -233,7 +240,7 @@ public class AssessmentRepository :IAssessmentRepository
     {
             bool status =false;  
             string query = @"Delete from testquestions where testid=@testId and questionbankid=@questionBankId";
-            MySqlConnection connection = new MySqlConnection(connectionString);
+            MySqlConnection connection = new MySqlConnection(_connectionString);
             MySqlCommand command = new MySqlCommand(query, connection);
             command.Parameters.AddWithValue("@testId", assessmentId);
             command.Parameters.AddWithValue("@questionBankId", questionId);
@@ -261,7 +268,7 @@ public class AssessmentRepository :IAssessmentRepository
     public async Task<bool> RemoveQuestions(int[] testQuestions)
     {
         bool status = false;
-        MySqlConnection connection = new MySqlConnection(connectionString);
+        MySqlConnection connection = new MySqlConnection(_connectionString);
 
         try
         {
@@ -295,7 +302,7 @@ public class AssessmentRepository :IAssessmentRepository
     
     public async Task <bool> ChangeDuration(int assessmentId, string duration){
         bool status = false;
-        MySqlConnection connection = new MySqlConnection(connectionString);
+        MySqlConnection connection = new MySqlConnection(_connectionString);
         string query = "update tests set duration=@duration where id=@assessmentId";
         MySqlCommand command = new MySqlCommand(query, connection);
         command.Parameters.AddWithValue("@assessmentId", assessmentId);
@@ -321,7 +328,7 @@ public class AssessmentRepository :IAssessmentRepository
     } 
     public async Task<bool> Reschedule(int assessmentId, DateTime date){
         bool status = false;
-        MySqlConnection connection = new MySqlConnection(connectionString);
+        MySqlConnection connection = new MySqlConnection(_connectionString);
         string query = "update tests set scheduleddate=@scheduledDate where id=@assessmentId";
         MySqlCommand command = new MySqlCommand(query, connection);
         command.Parameters.AddWithValue("@assessmentId", assessmentId);
@@ -355,7 +362,7 @@ public class AssessmentRepository :IAssessmentRepository
                         inner join subjects on subjects.id=subjectmatterexperts.subjectid
                         inner join employees on  employees.id=subjectmatterexperts.employeeid";
 
-        MySqlConnection connection = new MySqlConnection(connectionString);
+        MySqlConnection connection = new MySqlConnection(_connectionString);
         MySqlCommand command = new MySqlCommand(query, connection);
         try
         {
@@ -404,7 +411,7 @@ public class AssessmentRepository :IAssessmentRepository
         List<Employee> employees = new List<Employee>();
         string query = "select * from employees";
 
-        MySqlConnection connection = new MySqlConnection(connectionString);
+        MySqlConnection connection = new MySqlConnection(_connectionString);
         MySqlCommand command = new MySqlCommand(query, connection);
 
         try
@@ -443,7 +450,7 @@ public class AssessmentRepository :IAssessmentRepository
         List<Subject> subjects = new List<Subject>();
         string query = @"select * from subjects";
 
-        MySqlConnection connection = new MySqlConnection(connectionString);
+        MySqlConnection connection = new MySqlConnection(_connectionString);
         MySqlCommand command = new MySqlCommand(query, connection);
         try
         {
@@ -478,7 +485,7 @@ public class AssessmentRepository :IAssessmentRepository
         List<EvaluationCriteria> criterias = new List<EvaluationCriteria>();
         string query = @"select * from evaluationcriterias";
 
-        MySqlConnection connection = new MySqlConnection(connectionString);
+        MySqlConnection connection = new MySqlConnection(_connectionString);
         MySqlCommand command = new MySqlCommand(query, connection);
         try
         {
@@ -513,7 +520,7 @@ public class AssessmentRepository :IAssessmentRepository
         List<EvaluationCriteria> criterias = new List<EvaluationCriteria>();
         string query = @"select * from evaluationcriterias WHERE subjectid=@subjectId";
 
-        MySqlConnection connection = new MySqlConnection(connectionString);
+        MySqlConnection connection = new MySqlConnection(_connectionString);
         MySqlCommand command = new MySqlCommand(query, connection);
         command.Parameters.AddWithValue("@subjectId", subjectId);
         try
