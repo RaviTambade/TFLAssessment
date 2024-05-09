@@ -1,5 +1,4 @@
-
-namespace TFLAssessment
+namespace Transflower.TFLAssessment.Entities;
 public class Assessment
 {
     public int Id { get; set; }

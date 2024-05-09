@@ -1,8 +1,8 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using Assessment.Models;
+using Transflower.TFLAssessment.Entities;
 
-namespace Assessment.Controllers;
+namespace Transflower.TFLAssessment.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
