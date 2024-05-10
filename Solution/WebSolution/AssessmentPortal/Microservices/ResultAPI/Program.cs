@@ -24,6 +24,7 @@ builder.Host.ConfigureLogging(logging =>
 
 builder.Services.AddControllers();
 builder.Services.AddScoped<IResultRepository, ResultRepository>();
+builder.Services.AddScoped<IResultRepository, ResultDapperRepository>();
 builder.Services.AddScoped<IResultService, ResultService>();
 
 var app = builder.Build();
