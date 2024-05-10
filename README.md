@@ -7,7 +7,7 @@
  - <a href="./Documentation/assessmenttestcases.md">Test cases </a>
  - <a href="./Documentation/assessmentendpoints.md">Application EndPoints </a>
 
-## key aspects Transflower Online Assessment Platform:
+## key aspects:
 
 1. **Types of Assessments:**
 2. **Assessment Creation:**
