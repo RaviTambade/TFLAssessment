@@ -197,110 +197,93 @@ public class ResultDapperRepository : IResultRepository
         
     //     return status;
     // }
+
     public async Task<List<TestResultDetails>> GetTestResultDetails(int testId)
     {
         await Task.Delay(100);
         List<TestResultDetails> candidateResultDetails = new List<TestResultDetails>();
         using (IDbConnection con = new MySqlConnection(_connectionString))
         {
-            var details = con.Query<TestResultDetails>("select candidatetestresults.testid,candidatetestresults.score,candidatetestresults.candidateid,employees.firstname, employees.lastname, subjects.title as subject from candidatetestresults inner join employees on employees.id = candidatetestresults.candidateid inner join tests on candidatetestresults.testid = tests.id  inner join subjects  on tests.subjectid = subjects.id where candidatetestresults.testid = @TestId",new {testId});
+            var details = con.Query<TestResultDetails>("select candidatetestresults.testid,candidatetestresults.score,candidatetestresults.candidateid,employees.firstname, employees.lastname, subjects.title as subject from candidatetestresults inner join employees on employees.id = candidatetestresults.candidateid inner join tests on candidatetestresults.testid = tests.id  inner join subjects  on tests.subjectid = subjects.id where candidatetestresults.testid = @TestId", new {testId});
             candidateResultDetails= details as List<TestResultDetails>;
         }
         return candidateResultDetails ;
     }
 
-    public async Task<List<AppearedCandidate>> GetAppearedCandidates(int testId)
+     public async Task<List<AppearedCandidate>> GetAppearedCandidates(int testId)
     {
-        List<AppearedCandidate> appearedCandidates = new List<AppearedCandidate>();
-        MySqlConnection connection = new MySqlConnection(_connectionString);
-        string query = @"select candidatetestresults.testid, candidatetestresults.candidateid, employees.firstname, employees.lastname
-                            from candidatetestresults 
-                            inner join employees 
-                            on employees.id= candidatetestresults.candidateid
-                            where candidatetestresults.testid=@TestId";
-        try
+        await Task.Delay(100);
+        List<AppearedCandidate> AppearedCandidates = new List<AppearedCandidate>();
+        using (IDbConnection con = new MySqlConnection(_connectionString))
         {
-            MySqlCommand command = new MySqlCommand(query, connection);
-            command.Parameters.AddWithValue("@TestId", testId);
-            await connection.OpenAsync();
-            MySqlDataReader reader = command.ExecuteReader();
-            while (await reader.ReadAsync())
-            {
-                int testid = int.Parse(reader["testid"].ToString());
-                int candidateid = int.Parse(reader["candidateid"].ToString());
-                string fname = reader["firstname"].ToString();
-                string lname = reader["lastname"].ToString();
-
-                AppearedCandidate candidate = new AppearedCandidate();
-
-                candidate.TestId = testid;
-                candidate.CandidateId = candidateid;
-                candidate.FirstName = fname;
-                candidate.LastName = lname;
-                appearedCandidates.Add(candidate);
-            }
-            reader.Close();
+            var details = con.Query<AppearedCandidate>("select candidatetestresults.testid, candidatetestresults.candidateid, employees.firstname, employees.lastname from candidatetestresults inner join employees on employees.id= candidatetestresults.candidateid where candidatetestresults.testid=@TestId", new {testId});
+            AppearedCandidates = details as List <AppearedCandidate>;
         }
-        catch (Exception e)
-        {
-            Console.WriteLine(e.Message);
-        }
-        finally
-        {
-            await connection.CloseAsync();
-        }
-        return appearedCandidates;
+        return AppearedCandidates ;
     }
 
-    public async Task<List<PassedCandidateDetails>> GetPassedCandidateResults(int testId)
+
+  public async Task<List<PassedCandidateDetails>> GetAppearedCandidates(int testId)
     {
-        List<PassedCandidateDetails> passedCandidates = new List<PassedCandidateDetails>();
-        MySqlConnection connection = new MySqlConnection(_connectionString);
-        string query = @"select tests.id,candidatetestresults.candidateid,candidatetestresults.score,tests.passinglevel,employees.firstname,employees.lastname
-                            from tests
-                            inner join candidatetestresults
-                            on tests.id=candidatetestresults.testid
-                            inner join employees
-                            on candidatetestresults.candidateid=employees.id
-                            where candidatetestresults.score >= tests.passinglevel AND tests.id=@TestId";
-        try
+        await Task.Delay(100);
+        List<AppearedCandidate> AppearedCandidates = new List<AppearedCandidate>();
+        using (IDbConnection con = new MySqlConnection(_connectionString))
         {
-            MySqlCommand command = new MySqlCommand(query, connection);
-            command.Parameters.AddWithValue("@TestId", testId);
-            await connection.OpenAsync();
-            MySqlDataReader reader = command.ExecuteReader();
-            while (await reader.ReadAsync())
-            {
-                int testid = int.Parse(reader["id"].ToString());
-                int candidateid = int.Parse(reader["candidateid"].ToString());
-                string fname = reader["firstname"].ToString();
-                string lname = reader["lastname"].ToString();
-                int passinglevel = int.Parse(reader["passinglevel"].ToString());
-                int score = int.Parse(reader["score"].ToString());
-
-                PassedCandidateDetails candidate = new PassedCandidateDetails();
-
-                candidate.TestId = testid;
-                candidate.CandidateId = candidateid;
-                candidate.FirstName = fname;
-                candidate.LastName = lname;
-                candidate.PassingLevel = passinglevel;
-                candidate.Score = score;
-
-                passedCandidates.Add(candidate);
-            }
-            reader.Close();
+            var details = con.Query<AppearedCandidate>("select candidatetestresults.testid, candidatetestresults.candidateid, employees.firstname, employees.lastname from candidatetestresults inner join employees on employees.id= candidatetestresults.candidateid where candidatetestresults.testid=@TestId", new {testId});
+            AppearedCandidates = details as List <AppearedCandidate>;
         }
-        catch (Exception e)
-        {
-            Console.WriteLine(e.Message);
-        }
-        finally
-        {
-            await connection.CloseAsync();
-        }
-        return passedCandidates;
+        return AppearedCandidates ;
     }
+
+    // public async Task<List<PassedCandidateDetails>> GetPassedCandidateResults(int testId)
+    // {
+    //     List<PassedCandidateDetails> passedCandidates = new List<PassedCandidateDetails>();
+    //     MySqlConnection connection = new MySqlConnection(_connectionString);
+    //     string query = @"select tests.id,candidatetestresults.candidateid,candidatetestresults.score,tests.passinglevel,employees.firstname,employees.lastname
+    //                         from tests
+    //                         inner join candidatetestresults
+    //                         on tests.id=candidatetestresults.testid
+    //                         inner join employees
+    //                         on candidatetestresults.candidateid=employees.id
+    //                         where candidatetestresults.score >= tests.passinglevel AND tests.id=@TestId";
+    //     try
+    //     {
+    //         MySqlCommand command = new MySqlCommand(query, connection);
+    //         command.Parameters.AddWithValue("@TestId", testId);
+    //         await connection.OpenAsync();
+    //         MySqlDataReader reader = command.ExecuteReader();
+    //         while (await reader.ReadAsync())
+    //         {
+    //             int testid = int.Parse(reader["id"].ToString());
+    //             int candidateid = int.Parse(reader["candidateid"].ToString());
+    //             string fname = reader["firstname"].ToString();
+    //             string lname = reader["lastname"].ToString();
+    //             int passinglevel = int.Parse(reader["passinglevel"].ToString());
+    //             int score = int.Parse(reader["score"].ToString());
+
+    //             PassedCandidateDetails candidate = new PassedCandidateDetails();
+
+    //             candidate.TestId = testid;
+    //             candidate.CandidateId = candidateid;
+    //             candidate.FirstName = fname;
+    //             candidate.LastName = lname;
+    //             candidate.PassingLevel = passinglevel;
+    //             candidate.Score = score;
+
+    //             passedCandidates.Add(candidate);
+    //         }
+    //         reader.Close();
+    //     }
+    //     catch (Exception e)
+    //     {
+    //         Console.WriteLine(e.Message);
+    //     }
+    //     finally
+    //     {
+    //         await connection.CloseAsync();
+    //     }
+    //     return passedCandidates;
+    // }
 
     public async Task<List<FailedCandidateDetails>> GetFailedCandidateResults(int testId)
     {
