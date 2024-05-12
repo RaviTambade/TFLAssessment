@@ -11,8 +11,8 @@ public class CandidateAnswerService : ICandidateAnswerService
     {
         _repository = repository;
     }
-    public Task<bool> InsertCandidateAnswers(int candidateId, List<CandidateAnswer> answers)
+    public Task<bool> InsertCandidateAnswers(int candidateId, int testQuestionId)
     {
-      return _repository.InsertCandidateAnswers(candidateId,answers);
+      return _repository.InsertCandidateAnswers(candidateId,testQuestionId);
     }
 }

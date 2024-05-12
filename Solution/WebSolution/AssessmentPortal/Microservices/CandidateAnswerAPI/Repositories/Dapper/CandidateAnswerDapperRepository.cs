@@ -18,10 +18,10 @@ public class CandidateAnswerDapperRepository:ICandidateAnswerRepository
  
     public async Task<bool> InsertCandidateAnswers(int candidateId, int testQuestionId)
     {
-        await Task.Delay(100);
+        //await Task.Delay(100);
         bool status = false;
         { 
-            var query = "insert into testquestions(testid,questionBankid) values ( "+candidateId+","+testQuestionId+")"; 
+            var query = "insert into testquestions(candidateid, testquestionid) values ( "+candidateId+","+testQuestionId+")"; 
             if(con.Execute(query) > 0)
             status = true;
         }
