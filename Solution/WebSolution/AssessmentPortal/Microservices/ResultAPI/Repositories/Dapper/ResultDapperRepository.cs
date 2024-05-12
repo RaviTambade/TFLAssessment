@@ -49,37 +49,37 @@ public class ResultDapperRepository : IResultRepository
         return score;
     }
 
-    public async Task<bool> SetCandidateTestStartTime(int candidateId, int testId, TestTime time)
-    {
-        bool status = false;
-        string query = "insert into candidatetestresults(testid,teststarttime,candidateid) values (@testid,@teststarttime,@candidateid)";
-        MySqlConnection connection = new MySqlConnection(_connectionString);
+    // public async Task<bool> SetCandidateTestStartTime(int candidateId, int testId, TestTime time)
+    // {
+    //     bool status = false;
+    //     string query = "insert into candidatetestresults(testid,teststarttime,candidateid) values (@testid,@teststarttime,@candidateid)";
+    //     MySqlConnection connection = new MySqlConnection(_connectionString);
 
-        var testTime = time.Year + "-" + time.Month + "-" + time.Day + "T" + time.Hour + ":" + time.Minutes + ":" + time.Seconds;
-        MySqlCommand command = new MySqlCommand(query, connection);
-        command.Parameters.AddWithValue("@testid", testId);
-        command.Parameters.AddWithValue("@candidateid", candidateId);
-        command.Parameters.AddWithValue("@teststarttime", testTime);
-        try
-        {
-            await connection.OpenAsync();
-            int rowsAffected = await command.ExecuteNonQueryAsync();
-            if (rowsAffected > 0)
-            {
-                status = true;
-            }
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e.Message);
-        }
-        finally
-        {
-            await connection.CloseAsync();
-        }
-        Console.WriteLine(status);
-        return status;
-    }
+    //     var testTime = time.Year + "-" + time.Month + "-" + time.Day + "T" + time.Hour + ":" + time.Minutes + ":" + time.Seconds;
+    //     MySqlCommand command = new MySqlCommand(query, connection);
+    //     command.Parameters.AddWithValue("@testid", testId);
+    //     command.Parameters.AddWithValue("@candidateid", candidateId);
+    //     command.Parameters.AddWithValue("@teststarttime", testTime);
+    //     try
+    //     {
+    //         await connection.OpenAsync();
+    //         int rowsAffected = await command.ExecuteNonQueryAsync();
+    //         if (rowsAffected > 0)
+    //         {
+    //             status = true;
+    //         }
+    //     }
+    //     catch (Exception e)
+    //     {
+    //         Console.WriteLine(e.Message);
+    //     }
+    //     finally
+    //     {
+    //         await connection.CloseAsync();
+    //     }
+    //     Console.WriteLine(status);
+    //     return status;
+    // }
 
 
     public async Task<bool> SetCandidateTestEndTime(int candidateId, int testId, TestTime time)
@@ -129,45 +129,13 @@ public class ResultDapperRepository : IResultRepository
 
     public async Task<CandidateResultDetails> CandidateTestResultDetails(int candidateId, int testId)
     {
-        string query = "spcandidatetestresultdetails";
-        CandidateResultDetails candidateResultDetails = null;
-        MySqlConnection connection = new MySqlConnection(_connectionString);
-        try
+         await Task.Delay(100);
+        int score = 0;
+        using (IDbConnection con = new MySqlConnection(_connectionString))
         {
-            MySqlCommand command = new MySqlCommand(query, connection);
-            command.CommandType = CommandType.StoredProcedure;
-            command.Parameters.AddWithValue("@pcandidateId", candidateId);
-            command.Parameters.AddWithValue("@ptestId", testId);
-            command.Parameters.AddWithValue("@pcorrectAnswers", MySqlDbType.Int32);
-            command.Parameters.AddWithValue("@pincorrectAnswers", MySqlDbType.Int32);
-            command.Parameters.AddWithValue("@pskippedQuestions", MySqlDbType.Int32);
-            command.Parameters["@pcorrectAnswers"].Direction = ParameterDirection.Output;
-            command.Parameters["@pincorrectAnswers"].Direction = ParameterDirection.Output;
-            command.Parameters["@pskippedQuestions"].Direction = ParameterDirection.Output;
-
-            await connection.OpenAsync();
-            int rowsAffected = await command.ExecuteNonQueryAsync();
-            int correctAnswers = Convert.ToInt32(command.Parameters["@pcorrectAnswers"].Value);
-            int incorrectAnswers = Convert.ToInt32(command.Parameters["@pincorrectAnswers"].Value);
-            int skippedQuestions = Convert.ToInt32(command.Parameters["@pskippedQuestions"].Value);
-
-            candidateResultDetails = new CandidateResultDetails()
-            {
-                CorrectAnswers = correctAnswers,
-                IncorrectAnswers = incorrectAnswers,
-                SkippedQuestions = skippedQuestions,
-                CandidateId = candidateId,
-                TestId = testId
-            };
-
+            score = con.QueryFirstOrDefault<int>("select score from candidatetestresults where candidateid=@candidateId and testid=@testId", new { candidateId, testId });
         }
-        catch (Exception e)
-        {
-            Console.WriteLine(e.Message);
-        }
-        finally
-        {
-            await connection.CloseAsync();
+        
         }
         return candidateResultDetails;
     }

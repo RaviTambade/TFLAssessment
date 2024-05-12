@@ -81,49 +81,49 @@ public class QuestionBankDapperRepository : IQuestionBankRepository
 
     public async Task<List<QuestionDetails>> GetQuestionsBySubjectAndCriteria(int subjectId, int criteriaId)
     {
-        // List<QuestionDetails> questions = new List<QuestionDetails>();
-        // string query = @"select questionbank.id, questionbank.title, subjects.title as subject ,evaluationcriterias.title as criteria
-        //                     from questionbank, subjects,evaluationcriterias
-        //                     where questionbank.subjectid=subjects.id and questionbank.evaluationcriteriaid=evaluationcriterias.id
-        //                     and subjects.id=@subjectId and evaluationcriterias.id=@criteriaId";
+        List<QuestionDetails> questions = new List<QuestionDetails>();
+        string query = @"select questionbank.id, questionbank.title, subjects.title as subject ,evaluationcriterias.title as criteria
+                            from questionbank, subjects,evaluationcriterias
+                            where questionbank.subjectid=subjects.id and questionbank.evaluationcriteriaid=evaluationcriterias.id
+                            and subjects.id=@subjectId and evaluationcriterias.id=@criteriaId";
 
-        // MySqlConnection connection = new MySqlConnection(_connectionString);
-        // MySqlCommand command = new MySqlCommand(query, connection);
-        // command.Parameters.AddWithValue("@subjectId", subjectId);
-        // command.Parameters.AddWithValue("@criteriaId", criteriaId);
+        MySqlConnection connection = new MySqlConnection(_connectionString);
+        MySqlCommand command = new MySqlCommand(query, connection);
+        command.Parameters.AddWithValue("@subjectId", subjectId);
+        command.Parameters.AddWithValue("@criteriaId", criteriaId);
 
 
-        // try
-        // {
-        //     await connection.OpenAsync();
-        //     MySqlDataReader reader = command.ExecuteReader();
-        //     while (await reader.ReadAsync())
-        //     {
-        //         int id = int.Parse(reader["id"].ToString());
-        //         string strQuestion = reader["title"].ToString();
-        //         string subject = reader["subject"].ToString();
-        //         string criteria = reader["criteria"].ToString();
+        try
+        {
+            await connection.OpenAsync();
+            MySqlDataReader reader = command.ExecuteReader();
+            while (await reader.ReadAsync())
+            {
+                int id = int.Parse(reader["id"].ToString());
+                string strQuestion = reader["title"].ToString();
+                string subject = reader["subject"].ToString();
+                string criteria = reader["criteria"].ToString();
 
-        //         QuestionDetails question = new QuestionDetails();
+                QuestionDetails question = new QuestionDetails();
 
-        //         question.Id = id;
-        //         question.Question = strQuestion;
-        //         question.Subject = subject;
-        //         question.Criteria = criteria;
+                question.Id = id;
+                question.Question = strQuestion;
+                question.Subject = subject;
+                question.Criteria = criteria;
 
-        //         questions.Add(question);
-        //     }
-        //     await reader.CloseAsync();
-        // }
-        // catch (Exception e)
-        // {
-        //     Console.WriteLine(e.Message);
-        // }
-        // finally
-        // {
-        //     await connection.CloseAsync();
-        // }
-        // return questions;
+                questions.Add(question);
+            }
+            await reader.CloseAsync();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+        finally
+        {
+            await connection.CloseAsync();
+        }
+        return questions;
         
 
 
@@ -391,4 +391,6 @@ public class QuestionBankDapperRepository : IQuestionBankRepository
 
     }
 }
+
+
 
