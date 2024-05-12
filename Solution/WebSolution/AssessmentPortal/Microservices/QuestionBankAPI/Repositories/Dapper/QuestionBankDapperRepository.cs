@@ -85,46 +85,13 @@ public class QuestionBankDapperRepository : IQuestionBankRepository
 
     public async Task<List<Question>> GetQuestions(int testId)
     {
-        List<Question> questions = new List<Question>();
-        string query = @"select * from questionbank inner join testquestions on testquestions.questionbankid = questionbank.id where testquestions.testid=@testId";
-        MySqlConnection connection = new MySqlConnection(_connectionString);
-        MySqlCommand command = new MySqlCommand(query, connection);
-        command.Parameters.AddWithValue("@testID", testId);
-        try
+        await Task.Delay(100);
+        List<Question> questions=new List<Question>();   
+        
+        using (IDbConnection con = new MySqlConnection(_connectionString))
         {
-            await connection.OpenAsync();
-            MySqlDataReader reader = command.ExecuteReader();
-            while (await reader.ReadAsync())
-            {
-                int id = int.Parse(reader["id"].ToString());
-                int subjectId = int.Parse(reader["subjectid"].ToString());
-                string strQuestion = reader["title"].ToString();
-                string optionA = reader["a"].ToString();
-                string optionB = reader["b"].ToString();
-                string optionC = reader["c"].ToString();
-                string optionD = reader["d"].ToString();
-                int evaluationCriteriaId = int.Parse(reader["evaluationcriteriaid"].ToString());
-
-                Question question = new Question();
-                question.Id = id;
-                question.SubjectId = subjectId;
-                question.Title = strQuestion;
-                question.A = optionA;
-                question.B = optionB;
-                question.C = optionC;
-                question.D = optionD;
-                question.EvaluationCriteriaId = evaluationCriteriaId;
-                questions.Add(question);
-            }
-            await reader.CloseAsync();
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e.Message);
-        }
-        finally
-        {
-            await connection.CloseAsync();
+            var ques = con.Query<Question>("select * from questionbank inner join testquestions on testquestions.questionbankid = questionbank.id where testquestions.testid=@testId", new{testId});
+            questions = ques as List<Question>;
         }
         return questions;
     }
