@@ -297,3 +297,4 @@ public class ResultDapperRepository : IResultRepository
         }
         return SubjectResultDetails;
     }
+}

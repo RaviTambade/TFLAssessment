@@ -14,10 +14,10 @@
     <PackageReference Include="Serilog.Extensions.Logging.File" Version="3.0.0" />
   </ItemGroup>
 
-  <!-- <ItemGroup>
+   <ItemGroup>
     <ProjectReference Include="..\..\Entities\CandidateAnswerEntity\CandidateAnswerEntity.csproj" />
     <ProjectReference Include="..\..\Interfaces\CandidateAnswerInterfaces\CandidateAnswerInterfaces.csproj" />
     <ProjectReference Include="..\..\Services\CandidateAnswerServices\CandidateAnswerServices.csproj" />
-</ItemGroup> -->
+</ItemGroup> 
 
 </Project>

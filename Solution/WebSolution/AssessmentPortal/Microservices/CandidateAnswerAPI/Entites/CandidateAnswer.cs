@@ -2,8 +2,9 @@
 
 public class CandidateAnswer
 {
-    public int  TestQuestionId{get;set;}
+    public int  candidateId{get;set;}
+    public string answer{get;set;}
 
-    public string  Answer{get;set;}
+  
     
 }
