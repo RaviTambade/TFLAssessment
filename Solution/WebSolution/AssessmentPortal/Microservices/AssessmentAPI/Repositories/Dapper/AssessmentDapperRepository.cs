@@ -165,29 +165,15 @@ public class AssessmentDapperRepository :IAssessmentRepository
     }
     public async Task<bool> AddQuestion(int assessmentId, int questionId)  //*******
     {
+        await Task.Delay(100);
         bool status = false;
-        MySqlConnection connection = new MySqlConnection(_connectionString);
-        string query = "insert into testquestions(testid,questionBankid) values ( @testId, @questionBankId)";
-        MySqlCommand command = new MySqlCommand(query, connection);
-        command.Parameters.AddWithValue("@testId", assessmentId);
-        command.Parameters.AddWithValue("@questionBankId", questionId);
-        try
-        {
-            await connection.OpenAsync();
-            int rowsAffected = await command.ExecuteNonQueryAsync();
-            if (rowsAffected > 0)
-            {
-                status = true;
-            }
+        using (MySqlConnection con = new MySqlConnection(_connectionString))
+        { 
+            var query = "insert into testquestions(testid,questionBankid) values ( "+assessmentId+","+questionId+")"; 
+            if(con.Execute(query) > 0)
+            status = true;
         }
-        catch (Exception e)
-        {
-            Console.WriteLine(e.Message);
-        }
-        finally
-        {
-            await connection.CloseAsync();
-        }
+        
         return status;
     }
     public async Task<bool> AddQuestions(int assessmentId, List<TestQuestion> questions) //****
@@ -222,29 +208,12 @@ public class AssessmentDapperRepository :IAssessmentRepository
     public async Task<bool> RemoveQuestion(int assessmentId, int questionId)
     {
             bool status =false;  
-            string query = @"Delete from testquestions where testid=@testId and questionbankid=@questionBankId";
-            MySqlConnection connection = new MySqlConnection(_connectionString);
-            MySqlCommand command = new MySqlCommand(query, connection);
-            command.Parameters.AddWithValue("@testId", assessmentId);
-            command.Parameters.AddWithValue("@questionBankId", questionId);
-            try
+            string query = "Delete from testquestions where testid="+assessmentId+" and questionbankid="+questionId+"";
+            using (MySqlConnection con = new MySqlConnection(_connectionString))
             {
-                await connection.OpenAsync();
-                int rowsAffected = await command.ExecuteNonQueryAsync();
-                if (rowsAffected>0)
-                {
-                    status=true;
-                    
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }
-            finally
-            {
-                await connection.CloseAsync();
-            }
+                if(con.Execute(query)> 0)
+                status =true;
+            } 
         return status;
     }
 
