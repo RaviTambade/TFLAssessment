@@ -3,6 +3,7 @@ using Transflower.TFLAssessment.Repositories.Interfaces;
 using Transflower.TFLAssessment.Repositories;
 using Transflower.TFLAssessment.Services.Interfaces;
 using Transflower.TFLAssessment.Services;
+using Transflower.TFLAssessment.dapper.Repositories;
 //using Serilog;
 //using System.Security.Policy;
 
@@ -25,7 +26,8 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
 builder.Services.AddControllers();
-builder.Services.AddScoped<IQuestionBankRepository, QuestionBankRepository>();
+// builder.Services.AddScoped<IQuestionBankRepository, QuestionBankRepository>();
+builder.Services.AddScoped<IQuestionBankRepository, QuestionBankDapperRepository>();
 builder.Services.AddScoped<IQuestionBankService, QuestionBankService>();
 
 var app = builder.Build();

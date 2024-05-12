@@ -7,7 +7,8 @@ using Dapper;
 namespace Transflower.TFLAssessment.Repositories;
 
 public class AssessmentDapperRepository :IAssessmentRepository
-{private readonly IConfiguration _configuration;
+{
+    private readonly IConfiguration _configuration;
     private readonly string _connectionString;
 
     public AssessmentDapperRepository(IConfiguration configuration)
