@@ -33,41 +33,6 @@ public class QuestionBankDapperRepository : IQuestionBankRepository
 
     public async Task<List<SubjectQuestion>> GetQuestionsBySubject(int id)
     {
-        // List<SubjectQuestion> questions = new List<SubjectQuestion>();
-        // string query = @"select questionbank.id as questionid, questionbank.title as question, subjects.title as subject, subjects.id as subjectid from questionbank, subjects where questionbank.subjectid=subjects.id and subjects.id=@subjectId";
-        // MySqlConnection connection = new MySqlConnection(_connectionString);
-        // MySqlCommand command = new MySqlCommand(query, connection);
-        // command.Parameters.AddWithValue("@subjectId", id);
-        // try
-        // {
-        //     await connection.OpenAsync();
-        //     MySqlDataReader reader = command.ExecuteReader();
-        //     while (await reader.ReadAsync())
-        //     {
-        //         int questionId = int.Parse(reader["questionid"].ToString());
-        //         string strQuestion = reader["question"].ToString();
-        //         int subjectId = int.Parse(reader["subjectid"].ToString());
-        //         string subject = reader["subject"].ToString();
-
-
-        //         SubjectQuestion question = new SubjectQuestion();
-        //         question.QuestionId = questionId;
-        //         question.Question = strQuestion;
-        //         question.SubjectId = subjectId;
-        //         question.Subject = subject;
-        //         questions.Add(question);
-        //     }
-        //     await reader.CloseAsync();
-        // }
-        // catch (Exception e)
-        // {
-        //     Console.WriteLine(e.Message);
-        // }
-        // finally
-        // {
-        //     await connection.CloseAsync();
-        // }
-        // return questions;
         await Task.Delay(100);
         List<SubjectQuestion> questions=new List<SubjectQuestion>();   
         
@@ -81,127 +46,39 @@ public class QuestionBankDapperRepository : IQuestionBankRepository
 
     public async Task<List<QuestionDetails>> GetQuestionsBySubjectAndCriteria(int subjectId, int criteriaId)
     {
-        // List<QuestionDetails> questions = new List<QuestionDetails>();
-        // string query = @"select questionbank.id, questionbank.title, subjects.title as subject ,evaluationcriterias.title as criteria
-        //                     from questionbank, subjects,evaluationcriterias
-        //                     where questionbank.subjectid=subjects.id and questionbank.evaluationcriteriaid=evaluationcriterias.id
-        //                     and subjects.id=@subjectId and evaluationcriterias.id=@criteriaId";
-
-        // MySqlConnection connection = new MySqlConnection(_connectionString);
-        // MySqlCommand command = new MySqlCommand(query, connection);
-        // command.Parameters.AddWithValue("@subjectId", subjectId);
-        // command.Parameters.AddWithValue("@criteriaId", criteriaId);
-
-
-        // try
-        // {
-        //     await connection.OpenAsync();
-        //     MySqlDataReader reader = command.ExecuteReader();
-        //     while (await reader.ReadAsync())
-        //     {
-        //         int id = int.Parse(reader["id"].ToString());
-        //         string strQuestion = reader["title"].ToString();
-        //         string subject = reader["subject"].ToString();
-        //         string criteria = reader["criteria"].ToString();
-
-        //         QuestionDetails question = new QuestionDetails();
-
-        //         question.Id = id;
-        //         question.Question = strQuestion;
-        //         question.Subject = subject;
-        //         question.Criteria = criteria;
-
-        //         questions.Add(question);
-        //     }
-        //     await reader.CloseAsync();
-        // }
-        // catch (Exception e)
-        // {
-        //     Console.WriteLine(e.Message);
-        // }
-        // finally
-        // {
-        //     await connection.CloseAsync();
-        // }
-        // return questions;
+        await Task.Delay(100);
+        List<QuestionDetails> questions=new List<QuestionDetails>();   
         
-
-
+        using (IDbConnection con = new MySqlConnection(_connectionString))
+        {
+            var ques = con.Query<QuestionDetails>("select questionbank.id, questionbank.title, subjects.title as subject ,evaluationcriterias.title as criteria from questionbank, subjects,evaluationcriterias where questionbank.subjectid=subjects.id and questionbank.evaluationcriteriaid=evaluationcriterias.id and subjects.id=@subjectId and evaluationcriterias.id=@criteriaId", new{subjectId,criteriaId});
+            questions = ques as List<QuestionDetails>;
+        }
+        return questions;
     }
 
     public async Task<bool> UpdateAnswer(int id, char answerKey)
     {
+        await Task.Delay(100);
         bool status = false;
-        string query = "update questionbank set answerkey=@answerkey where id =@id";
-        MySqlConnection connection = new MySqlConnection(_connectionString);
-        try
-        {
-            await connection.OpenAsync();
-            MySqlCommand command = new MySqlCommand(query, connection);
-            command.Parameters.AddWithValue("@id", id);
-            command.Parameters.AddWithValue("@answerkey", answerKey);
-            Console.WriteLine("Id : " + id);
-            Console.WriteLine("Answerkey : " + answerKey);
-            int rowsAffected = await command.ExecuteNonQueryAsync();
-            if (rowsAffected > 0)
-            {
-                status = true;
-            }
-
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e.Message);
-        }
-        finally
-        {
-            await connection.CloseAsync();
+        using (MySqlConnection con = new MySqlConnection(_connectionString))
+        { 
+            var query = "update questionbank set answerkey="+answerKey+" where id="+id+""; 
+            if(con.Execute(query) > 0)
+            status = true;
         }
         return status;
     }
 
     public async Task<Question> GetQuestion(int questionId)
     {
-        Question question = null;
-        string query = @"select * from questionbank where id=@questionId";
-        MySqlConnection connection = new MySqlConnection(_connectionString);
-        MySqlCommand command = new MySqlCommand(query, connection);
-        command.Parameters.AddWithValue("@questionId", questionId);
-        try
+        await Task.Delay(100);
+        Question question=null;   
+        
+        using (IDbConnection con = new MySqlConnection(_connectionString))
         {
-            await connection.OpenAsync();
-            MySqlDataReader reader = command.ExecuteReader();
-            if (await reader.ReadAsync())
-            {
-                int subjectId = int.Parse(reader["subjectid"].ToString());
-                string strQuestion = reader["title"].ToString();
-                string optionA = reader["a"].ToString();
-                string optionB = reader["b"].ToString();
-                string optionC = reader["c"].ToString();
-                string optionD = reader["d"].ToString();
-                string correctAnswer = reader["answerkey"].ToString();
-                int evaluationCriteriaId = int.Parse(reader["evaluationcriteriaid"].ToString());
-
-                question = new Question();
-                question.Id = questionId;
-                question.SubjectId = subjectId;
-                question.Title = strQuestion;
-                question.A = optionA;
-                question.B = optionB;
-                question.C = optionC;
-                question.D = optionD;
-                question.AnswerKey = correctAnswer;
-                question.EvaluationCriteriaId = evaluationCriteriaId;
-            }
-            await reader.CloseAsync();
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e.Message);
-        }
-        finally
-        {
-            await connection.CloseAsync();
+            var ques = con.Query<Question>("select * from questionbank where id=@questionId", new{questionId});
+            question = ques as Question;
         }
         return question;
     }
