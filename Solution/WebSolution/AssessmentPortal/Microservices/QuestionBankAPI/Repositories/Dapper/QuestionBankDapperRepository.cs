@@ -99,36 +99,46 @@ public class QuestionBankDapperRepository : IQuestionBankRepository
 
     public async Task<bool> UpdateQuestionOptions(int id, Question options)
     {
+        // bool status = false;
+        // string query = "update questionbank set title=@title,a=@a,b=@b,c=@c,d=@d,answerkey=@answerKey where id =@id";
+        // MySqlConnection connection = new MySqlConnection(_connectionString);
+        // try
+        // {
+        //     await connection.OpenAsync();
+        //     MySqlCommand command = new MySqlCommand(query, connection);
+        //     command.Parameters.AddWithValue("@title", options.Title);
+        //     command.Parameters.AddWithValue("@a", options.A);
+        //     command.Parameters.AddWithValue("@b", options.B);
+        //     command.Parameters.AddWithValue("@c", options.C);
+        //     command.Parameters.AddWithValue("@d", options.D);
+        //     command.Parameters.AddWithValue("@answerKey", options.AnswerKey);
+        //     command.Parameters.AddWithValue("@id", id);
+        //     int rowsAffected = await command.ExecuteNonQueryAsync();
+        //     if (rowsAffected > 0)
+        //     {
+        //         status = true;
+        //     }
+
+        // }
+        // catch (Exception e)
+        // {
+        //     Console.WriteLine(e.Message);
+        // }
+        // finally
+        // {
+        //     await connection.CloseAsync();
+        // }
+        // return status;
+
+        await Task.Delay(100);
         bool status = false;
-        string query = "update questionbank set title=@title,a=@a,b=@b,c=@c,d=@d,answerkey=@answerKey where id =@id";
-        MySqlConnection connection = new MySqlConnection(_connectionString);
-        try
-        {
-            await connection.OpenAsync();
-            MySqlCommand command = new MySqlCommand(query, connection);
-            command.Parameters.AddWithValue("@title", options.Title);
-            command.Parameters.AddWithValue("@a", options.A);
-            command.Parameters.AddWithValue("@b", options.B);
-            command.Parameters.AddWithValue("@c", options.C);
-            command.Parameters.AddWithValue("@d", options.D);
-            command.Parameters.AddWithValue("@answerKey", options.AnswerKey);
-            command.Parameters.AddWithValue("@id", id);
-            int rowsAffected = await command.ExecuteNonQueryAsync();
-            if (rowsAffected > 0)
+            string query = "update questionbank set title=@title,a=@a,b=@b,c=@c,d=@d,answerkey=@answerKey where id =@id";
+            using (IDbConnection con = new MySqlConnection(_connectionString))
             {
+                if (con.Execute(query, new {id=id, title = options.Title, a = options.A, b = options.B, c = options.C, d = options.D,answerKey=options.AnswerKey}) > 0)
                 status = true;
             }
-
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e.Message);
-        }
-        finally
-        {
-            await connection.CloseAsync();
-        }
-        return status;
+            return status;
     }
 
 
