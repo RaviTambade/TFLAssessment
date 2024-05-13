@@ -99,37 +99,6 @@ public class QuestionBankDapperRepository : IQuestionBankRepository
 
     public async Task<bool> UpdateQuestionOptions(int id, Question options)
     {
-        // bool status = false;
-        // string query = "update questionbank set title=@title,a=@a,b=@b,c=@c,d=@d,answerkey=@answerKey where id =@id";
-        // MySqlConnection connection = new MySqlConnection(_connectionString);
-        // try
-        // {
-        //     await connection.OpenAsync();
-        //     MySqlCommand command = new MySqlCommand(query, connection);
-        //     command.Parameters.AddWithValue("@title", options.Title);
-        //     command.Parameters.AddWithValue("@a", options.A);
-        //     command.Parameters.AddWithValue("@b", options.B);
-        //     command.Parameters.AddWithValue("@c", options.C);
-        //     command.Parameters.AddWithValue("@d", options.D);
-        //     command.Parameters.AddWithValue("@answerKey", options.AnswerKey);
-        //     command.Parameters.AddWithValue("@id", id);
-        //     int rowsAffected = await command.ExecuteNonQueryAsync();
-        //     if (rowsAffected > 0)
-        //     {
-        //         status = true;
-        //     }
-
-        // }
-        // catch (Exception e)
-        // {
-        //     Console.WriteLine(e.Message);
-        // }
-        // finally
-        // {
-        //     await connection.CloseAsync();
-        // }
-        // return status;
-
         await Task.Delay(100);
         bool status = false;
             string query = "update questionbank set title=@title,a=@a,b=@b,c=@c,d=@d,answerkey=@answerKey where id =@id";
@@ -138,39 +107,21 @@ public class QuestionBankDapperRepository : IQuestionBankRepository
                 if (con.Execute(query, new {id=id, title = options.Title, a = options.A, b = options.B, c = options.C, d = options.D,answerKey=options.AnswerKey}) > 0)
                 status = true;
             }
-            return status;
+        return status;
     }
 
 
     //update only evaluationcriteriaid
     public async Task<bool> UpdateSubjectCriteria(int questionId, Question question)
     {
+        await Task.Delay(100);
         bool status = false;
-        string query = "update questionbank set evaluationcriteriaid=@evaluationCriteriaId ,subjectid=@subjectId where id =@id";
-        MySqlConnection connection = new MySqlConnection(_connectionString);
-        try
-        {
-            await connection.OpenAsync();
-            MySqlCommand command = new MySqlCommand(query, connection);
-            command.Parameters.AddWithValue("@evaluationCriteriaId", question.EvaluationCriteriaId);
-            command.Parameters.AddWithValue("@subjectId", question.SubjectId);
-
-            command.Parameters.AddWithValue("@id", questionId);
-            int rowsAffected = await command.ExecuteNonQueryAsync();
-            if (rowsAffected > 0)
+            string query = "update questionbank set evaluationcriteriaid=@evaluationCriteriaId ,subjectid=@subjectId where id =@id";
+            using (IDbConnection con = new MySqlConnection(_connectionString))
             {
+                if (con.Execute(query, new {id=questionId, subjectId = question.SubjectId, evaluationCriteriaId = question.EvaluationCriteriaId}) > 0)
                 status = true;
             }
-
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e.Message);
-        }
-        finally
-        {
-            await connection.CloseAsync();
-        }
         return status;
     }
 
@@ -214,36 +165,14 @@ public class QuestionBankDapperRepository : IQuestionBankRepository
 
     public async Task<string> GetCriteria(string subject, int questionId)
     {
+        await Task.Delay(2000);
         string criteria = "";
-        string query = @"select evaluationcriterias.title from evaluationcriterias INNER join questionbank on questionbank.evaluationcriteriaid=evaluationcriterias.id
-                       inner join subjects on questionbank.subjectid= evaluationcriterias.subjectid WHERE subjects.title=@subject and questionbank.id=@questionId";
-
-        MySqlConnection connection = new MySqlConnection(_connectionString);
-        try
+        string query="select evaluationcriterias.title from evaluationcriterias INNER join questionbank on questionbank.evaluationcriteriaid=evaluationcriterias.id inner join subjects on questionbank.subjectid= evaluationcriterias.subjectid WHERE subjects.title=@subject and questionbank.id=@questionId";
+        using(IDbConnection con =new MySqlConnection(_connectionString))
         {
-            MySqlCommand command = new MySqlCommand(query, connection);
-            command.Parameters.AddWithValue("@subject", subject);
-            command.Parameters.AddWithValue("@questionId", questionId);
-            await connection.OpenAsync();
-            MySqlDataReader reader = command.ExecuteReader();
-            if (await reader.ReadAsync())
-            {
-
-                string title = reader["title"].ToString();
-                criteria = title;
-            }
-            await reader.CloseAsync();
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e.Message);
-        }
-        finally
-        {
-            await connection.CloseAsync();
+            criteria=await con.QueryFirstOrDefaultAsync<string>(query,new{subject,questionId});
         }
         return criteria;
-
     }
 }
 
