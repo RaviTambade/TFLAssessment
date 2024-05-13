@@ -212,40 +212,21 @@ public class QuestionBankDapperRepository : IQuestionBankRepository
         return status;
     }
 
-    public async Task<string> GetCriteria(string subject, int questionId)
+    public async Task<List<SubjectCriteria>> GetCriteria(string subject, int questionId)
     {
-        string criteria = "";
-        string query = @"select evaluationcriterias.title from evaluationcriterias INNER join questionbank on questionbank.evaluationcriteriaid=evaluationcriterias.id
-                       inner join subjects on questionbank.subjectid= evaluationcriterias.subjectid WHERE subjects.title=@subject and questionbank.id=@questionId";
-
-        MySqlConnection connection = new MySqlConnection(_connectionString);
-        try
+        //string SubjectCriteria=" ";
+        await Task.Delay(100);
+        List<SubjectCriteria> criteria=new List<SubjectCriteria>();   
+        
+        using (IDbConnection con = new MySqlConnection(_connectionString))
         {
-            MySqlCommand command = new MySqlCommand(query, connection);
-            command.Parameters.AddWithValue("@subject", subject);
-            command.Parameters.AddWithValue("@questionId", questionId);
-            await connection.OpenAsync();
-            MySqlDataReader reader = command.ExecuteReader();
-            if (await reader.ReadAsync())
-            {
-
-                string title = reader["title"].ToString();
-                criteria = title;
-            }
-            await reader.CloseAsync();
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e.Message);
-        }
-        finally
-        {
-            await connection.CloseAsync();
+            var ques = con.Query<SubjectCriteria>("select questionbank.id as questionid, questionbank.title as question, subjects.title as subject, subjects.id as subjectid from questionbank, subjects where questionbank.subjectid=subjects.id and subjects.id=@id", new{id});
+            criteria = ques as List<SubjectCriteria>;
         }
         return criteria;
-
     }
-}
+    }
+
 
 
 
