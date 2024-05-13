@@ -163,7 +163,7 @@ public class QuestionBankDapperRepository : IQuestionBankRepository
         return status;
     }
 
-    public async Task<string> GetCriteria(string subject, int questionId)
+    public async Task<List<SubjectCriteria>> GetCriteria(string subject, int questionId)
     {
         await Task.Delay(2000);
         string criteria = "";
@@ -175,6 +175,7 @@ public class QuestionBankDapperRepository : IQuestionBankRepository
         return criteria;
     }
 }
+
 
 
 
