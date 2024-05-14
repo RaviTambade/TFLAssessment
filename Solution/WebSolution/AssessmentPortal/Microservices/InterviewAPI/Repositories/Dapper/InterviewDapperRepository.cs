@@ -69,7 +69,7 @@ public class InterviewDapperRepository : IInterviewRepository
         {
             var parameters = new DynamicParameters();
             parameters.Add("@pinterviewId", interviewId);
-            interviewInfo = con.Query<InterviewDetails>(query, parameters, commandType: CommandType.StoredProcedure);
+            interviewInfo = con.QueryMultiple<InterviewDetails>(query, parameters, commandType: CommandType.StoredProcedure);
         }
         return interviewInfo;
     }
