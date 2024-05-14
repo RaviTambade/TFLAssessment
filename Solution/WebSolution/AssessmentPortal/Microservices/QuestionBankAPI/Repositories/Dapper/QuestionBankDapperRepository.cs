@@ -76,7 +76,7 @@ public class QuestionBankDapperRepository : IQuestionBankRepository
         
         using (IDbConnection con = new MySqlConnection(_connectionString))
         {
-            var ques = con.Query<Question>("select * from questionbank where id=@questionId", new{questionId});
+            var ques = con.QueryFirstOrDefault<Question>("select * from questionbank where id=@questionId", new{questionId});
             question = ques as Question;
         }
         return question;
@@ -99,10 +99,10 @@ public class QuestionBankDapperRepository : IQuestionBankRepository
     {
         await Task.Delay(100);
         bool status = false;
-            string query = "update questionbank set title=@title,a=@a,b=@b,c=@c,d=@d,answerkey=@answerKey where id =@id";
+            string query = "update questionbank set title=@title,a=@a,b=@b,c=@c,d=@d,answerkey=@answerKey where id =@questionId";
             using (IDbConnection con = new MySqlConnection(_connectionString))
             {
-                if (con.Execute(query, new {id=id, title = options.Title, a = options.A, b = options.B, c = options.C, d = options.D,answerKey=options.AnswerKey}) > 0)
+                if (con.Execute(query, new { questionId=id,title = options.Title, a = options.A, b = options.B, c = options.C, d = options.D,answerKey=options.AnswerKey}) > 0)
                 status = true;
             }
         return status;
