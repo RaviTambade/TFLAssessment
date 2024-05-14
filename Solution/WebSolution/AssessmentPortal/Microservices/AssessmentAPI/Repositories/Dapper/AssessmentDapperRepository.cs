@@ -2,6 +2,7 @@ using MySql.Data.MySqlClient;
 using System.Data;
 using Transflower.TFLAssessment.Entities;
 using Transflower.TFLAssessment.Repositories.Interfaces;
+using Transflower.TFLAssessment.Handler;
 using Dapper;
 
 namespace Transflower.TFLAssessment.Repositories;
@@ -15,6 +16,7 @@ public class AssessmentDapperRepository :IAssessmentRepository
     {
         _configuration = configuration;
         _connectionString = _configuration.GetConnectionString("DefaultConnection")  ?? throw new ArgumentNullException("connectionString");
+         SqlMapper.AddTypeHandler(new SqlTimeOnlyTypeHandler());
     }
 
     public async Task<bool> CreateTest(Assessment newTest)
@@ -37,48 +39,21 @@ public class AssessmentDapperRepository :IAssessmentRepository
         return status;
     }
 
-    public async Task <Assessment> GetDetails(int assessmentId) //*******
+    public async Task <Assessment> GetDetails(int assessmentId) 
     {
+            await Task.Delay(100);
             Assessment assessment=new Assessment();   
             string query = @"select * from tests where id=@assessmentId";
-
-            MySqlConnection connection = new MySqlConnection(_connectionString);
-            MySqlCommand command = new MySqlCommand(query, connection);
-            command.Parameters.AddWithValue("@assessmentId",assessmentId);
-            try
+            using (IDbConnection con = new MySqlConnection(_connectionString))
             {
-                await connection.OpenAsync();
-                MySqlDataReader reader = command.ExecuteReader();
-                while (reader.Read())
-                {
-                    int id = int.Parse(reader["id"].ToString());
-                    int  smeid = int.Parse(reader["smeid"].ToString());
-                    int  subjectId = int.Parse(reader["subjectid"].ToString());
-                    // TimeOnly duration =TimeSpan.TryParse(reader["duration"]);
-                    DateTime modificationDate=DateTime.Parse(reader["modificationdate"].ToString());
-                    DateTime scheduledDate=DateTime.Parse(reader["scheduleddate"].ToString());
-                    string status = reader["subjectid"].ToString(); 
-                    assessment.Id = id;
-                    assessment.ModificationDate=modificationDate;
-                    assessment.ScheduledDate=scheduledDate;
-                    assessment.SubjectId = subjectId;
-                    assessment.SubjectExpertId=smeid;
-                    assessment.Status=status;
-                    
-                }
-                await reader.CloseAsync();
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }
-            finally
-            {
-                await connection.CloseAsync();
+                assessment= con.QuerySingleOrDefault<Assessment>(query, new {assessmentId}) ;
+                TimeOnly time  = assessment.Duration;
+                Console.WriteLine(time);
+                               
             }
             return assessment;
     }
-    public async Task<List<Assessment>> GetAll(DateTime fromDate, DateTime toDate)  //******
+    public async Task<List<Assessment>> GetAll(DateTime fromDate, DateTime toDate) 
     {
         List<Assessment> assessments=new List<Assessment>();
          string query = @"select * from tests where creationDate  between @fromDate and @toDate";
@@ -121,19 +96,9 @@ public class AssessmentDapperRepository :IAssessmentRepository
             }
             return assessments;
     }
-    public async Task <List<Assessment>> GetAllBySubjectMatterExpert(int smeId)   //********
+    public async Task <List<Assessment>> GetAllBySubjectMatterExpert(int smeId)  
     {
 
-        /*await Task.Delay(100);
-        List<Employee> employees = new List<Employee>();
-        using (IDbConnection con = new MySqlConnection(_connectionString))
-        {
-            var emp = con.Query<Employee>("SELECT * FROM employees");
- 
-            employees = emp as List<Employee>;
- 
-        }
-        return employees;*/
         await Task.Delay(100);
         List<Assessment> assessments=new List<Assessment>();   
         
@@ -146,7 +111,7 @@ public class AssessmentDapperRepository :IAssessmentRepository
         }
         return assessments;
     }
-    public async Task<bool> AddQuestion(int assessmentId, int questionId)  //*******
+    public async Task<bool> AddQuestion(int assessmentId, int questionId)  
     {
         await Task.Delay(100);
         bool status = false;
@@ -159,7 +124,7 @@ public class AssessmentDapperRepository :IAssessmentRepository
         
         return status;
     }
-    public async Task<bool> AddQuestions(int assessmentId, List<TestQuestion> questions) //****
+    public async Task<bool> AddQuestions(int assessmentId, List<TestQuestion> questions) 
     {
         bool status = false;
         MySqlConnection connection = new MySqlConnection(_connectionString); 
