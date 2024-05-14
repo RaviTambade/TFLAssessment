@@ -74,31 +74,45 @@ public class EvaluationCriteriaDapperRepository:IEvaluationCriteriaRepository
     public async Task <bool> InsertCriteria(EvaluationCriteria criteria)
     {
         Console.WriteLine(criteria.SubjectId + " " + criteria.Title);
-        bool status = false;
-        MySqlConnection connection = new MySqlConnection(_connectionString );
-        string query = "insert into evaluationcriterias(title,subjectid) values ( @title, @subjectId)";
-        MySqlCommand command = new MySqlCommand(query, connection);
-        command.Parameters.AddWithValue("@subjectId", criteria.SubjectId);
-        command.Parameters.AddWithValue("@title", criteria.Title);
+        // bool status = false;
+        // MySqlConnection connection = new MySqlConnection(_connectionString );
+        // string query = "insert into evaluationcriterias(title,subjectid) values ( @title, @subjectId)";
+        // MySqlCommand command = new MySqlCommand(query, connection);
+        // command.Parameters.AddWithValue("@subjectId", criteria.SubjectId);
+        // command.Parameters.AddWithValue("@title", criteria.Title);
 
-        try
+        // try
+        // {
+        //     await connection.OpenAsync();
+        //     int rowsAffected = command.ExecuteNonQuery();
+        //     if (rowsAffected > 0)
+        //     {
+        //         status = true;
+        //     }
+        // }
+        // catch (Exception e)
+        // {
+        //     Console.WriteLine(e.Message);
+        // }
+        // finally
+        // {
+        //    await connection.CloseAsync();
+        // }
+        await Task.Delay(100);
+        bool status = false;
+        string query = "INSERT INTO evaluationcriterias(subjectid,title) VALUES (@subjectid,@title)";
+       
+        
+        
+
+        using (IDbConnection con = new MySqlConnection(_connectionString))
         {
-            await connection.OpenAsync();
-            int rowsAffected = command.ExecuteNonQuery();
-            if (rowsAffected > 0)
-            {
-                status = true;
-            }
+            if(con.Execute(query,new {subjectid= criteria.SubjectId,title=criteria.Title})  > 0)
+            status=true;
         }
-        catch (Exception e)
-        {
-            Console.WriteLine(e.Message);
-        }
-        finally
-        {
-           await connection.CloseAsync();
-        }
-        return status;
+
+
+         return status;
     }
 
 }
