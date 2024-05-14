@@ -17,104 +17,55 @@ public class ResultDapperRepository : IResultRepository
         _configuration = configuration;
         _connectionString = _configuration.GetConnectionString("DefaultConnection") ?? throw new ArgumentNullException("connectionString");
     }
+
+
     public async Task<int> GetCandidateScore(int candidateId, int testId)
     {
-        string query = "spcandidatetestresult";
+        await Task.Delay(100);
 
-
-        MySqlConnection connection = new MySqlConnection(_connectionString);
         int score = 0;
-        try
+        using (IDbConnection con = new MySqlConnection(_connectionString))
         {
-            MySqlCommand command = new MySqlCommand(query, connection);
-            command.CommandType = CommandType.StoredProcedure;
-            command.Parameters.AddWithValue("@pcandidateId", candidateId);
-            command.Parameters.AddWithValue("@ptestId", testId);
-            command.Parameters.AddWithValue("@pscore", MySqlDbType.Int32);
-            command.Parameters["@pscore"].Direction = ParameterDirection.Output;
-            await connection.OpenAsync();
-            int rowsAffected = await command.ExecuteNonQueryAsync();
-            score = Convert.ToInt32(command.Parameters["@pscore"].Value);
-            Console.WriteLine(score);
+            var parameters = new DynamicParameters();
+            parameters.Add("@pcandidateId", candidateId);
+            parameters.Add("@ptestId", testId);
+            parameters.Add("@pscore", dbType: DbType.Int32, direction: ParameterDirection.Output);
+
+            con.Execute("spcandidatetestresult", parameters, commandType: CommandType.StoredProcedure);
+            score = parameters.Get<int>("@pscore");
         }
-        catch (Exception e)
-        {
-            Console.WriteLine(e.Message);
-        }
-        finally
-        {
-            await connection.CloseAsync();
-        }
-        Console.WriteLine(score);
         return score;
     }
 
-    // public async Task<bool> SetCandidateTestStartTime(int candidateId, int testId, TestTime time)
-    // {
-    //     bool status = false;
-    //     string query = "insert into candidatetestresults(testid,teststarttime,candidateid) values (@testid,@teststarttime,@candidateid)";
-    //     MySqlConnection connection = new MySqlConnection(_connectionString);
-
-    //     var testTime = time.Year + "-" + time.Month + "-" + time.Day + "T" + time.Hour + ":" + time.Minutes + ":" + time.Seconds;
-    //     MySqlCommand command = new MySqlCommand(query, connection);
-    //     command.Parameters.AddWithValue("@testid", testId);
-    //     command.Parameters.AddWithValue("@candidateid", candidateId);
-    //     command.Parameters.AddWithValue("@teststarttime", testTime);
-    //     try
-    //     {
-    //         await connection.OpenAsync();
-    //         int rowsAffected = await command.ExecuteNonQueryAsync();
-    //         if (rowsAffected > 0)
-    //         {
-    //             status = true;
-    //         }
-    //     }
-    //     catch (Exception e)
-    //     {
-    //         Console.WriteLine(e.Message);
-    //     }
-    //     finally
-    //     {
-    //         await connection.CloseAsync();
-    //     }
-    //     Console.WriteLine(status);
-    //     return status;
-    // }
-
-
-    public async Task<bool> SetCandidateTestEndTime(int candidateId, int testId, TestTime time)
+    public async Task<bool> SetCandidateTestStartTime(int candidateId, int testId, TestTime time)
     {
+        await Task.Delay(100);
         bool status = false;
+        using (MySqlConnection con = new MySqlConnection(_connectionString))
+        {
+            string query = "INSERT INTO candidatetestresults (testid, teststarttime, candidateid) VALUES (@TestID, @TestStartTime, @CandidateID)";
+            var testTime = new DateTime(time.Year, time.Month, time.Day, time.Hour, time.Minutes, time.Seconds);
+            con.Execute(query, new { TestID = testId, TestStartTime = testTime, CandidateID = candidateId });
+            status = true;
 
-        MySqlConnection connection = new MySqlConnection(_connectionString);
-        string query = "update candidatetestresults set testendtime =@testEndTime where candidateid=@candidateId and testid=@testId";
-
-        var testTime = time.Year + "-" + time.Month + "-" + time.Day + "T" + time.Hour + ":" + time.Minutes + ":" + time.Seconds;
-        MySqlCommand command = new MySqlCommand(query, connection);
-        command.Parameters.AddWithValue("@candidateId", candidateId);
-        command.Parameters.AddWithValue("@testId", testId);
-        command.Parameters.AddWithValue("@testEndTime", testTime);
-        Console.WriteLine(candidateId + " " + testId + " " + testTime);
-        try
-        {
-            await connection.OpenAsync();
-            int rowsAffected = await command.ExecuteNonQueryAsync();
-            if (rowsAffected > 0)
-            {
-                status = true;
-            }
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e.Message);
-        }
-        finally
-        {
-            await connection.CloseAsync();
         }
         return status;
     }
 
+     public async Task<bool> SetCandidateTestEndTime(int candidateId, int testId, TestTime time)
+    {
+        await Task.Delay(100);
+        bool status = false;
+        using (MySqlConnection con = new MySqlConnection(_connectionString))
+        {
+            string query = "UPDATE candidatetestresults SET testendtime = @TestEndTime WHERE candidateid = @CandidateId AND testid = @TestId";
+            var testTime = new DateTime(time.Year, time.Month, time.Day, time.Hour, time.Minutes, time.Seconds);
+            con.Execute(query, new { TestID = testId, TestEndTime = testTime, CandidateID = candidateId });
+            status = true;
+
+        }
+        return status;
+    }
 
     public async Task<int> GetCandidateTestScore(int candidateId, int testId)
     {
@@ -129,42 +80,16 @@ public class ResultDapperRepository : IResultRepository
 
     public async Task<CandidateResultDetails> CandidateTestResultDetails(int candidateId, int testId)
     {
-         await Task.Delay(100);
-        int score = 0;
+        await Task.Delay(100);
+
+        CandidateResultDetails score = null;
         using (IDbConnection con = new MySqlConnection(_connectionString))
         {
-            score = con.QueryFirstOrDefault<int>("select score from candidatetestresults where candidateid=@candidateId and testid=@testId", new { candidateId, testId });
+            score = con.QueryFirstOrDefault<CandidateResultDetails>("select score from candidatetestresults where candidateid=@candidateId and testid=@testId", new { candidateId, testId });
         }
-        
-        }
-        return candidateResultDetails;
+        return score;
     }
-    //   public async Task <List<Assessment>> GetAllBySubjectMatterExpert(int smeId)  
-    //    await Task.Delay(100);
-    //         List<Assessment> assessments=new List<Assessment>();   
 
-    //         using (IDbConnection con = new MySqlConnection(_connectionString))
-    //         {
-    //             var test = con.Query<Assessment>("select * from tests where smeid=@smeId", new{smeId});
-
-    //             assessments = test as List<Assessment>;
-
-    //         }
-    //         return assessments;
-    //     }
-    // public async Task<bool> AddQuestion(int assessmentId, int questionId)  //*******
-    // {
-    //     await Task.Delay(100);
-    //     bool status = false;
-    //     using (MySqlConnection con = new MySqlConnection(_connectionString))
-    //     { 
-    //         var query = "insert into testquestions(testid,questionBankid) values ( "+assessmentId+","+questionId+")"; 
-    //         if(con.Execute(query) > 0)
-    //         status = true;
-    //     }
-
-    //     return status;
-    // }
 
     public async Task<List<TestResultDetails>> GetTestResultDetails(int testId)
     {
@@ -217,44 +142,22 @@ public class ResultDapperRepository : IResultRepository
     }
 
 
-
-    public async Task<bool> SetPassingLevel(int testId, int passingLevel)//Using Dissconnected 
+    public async Task<bool> SetPassingLevel(int testId, int passingLevel)
     {
+        await Task.Delay(100);
         bool status = false;
-        MySqlConnection connection = new MySqlConnection(_connectionString);
-        await Task.Delay(5000);
-        try
+        using (MySqlConnection con = new MySqlConnection(_connectionString))
         {
-
-            string query = "select * from tests";
-            MySqlCommand command = new MySqlCommand(query, connection);
-            MySqlDataAdapter adapter = new MySqlDataAdapter(command);
-            DataSet dataSet = new DataSet();
-            MySqlCommandBuilder builder = new MySqlCommandBuilder(adapter);
-            adapter.Fill(dataSet);
-            DataTable dataTable = dataSet.Tables[0];
-
-            DataColumn[] keyColumn = new DataColumn[1];
-            keyColumn[0] = dataTable.Columns["id"];
-            dataTable.PrimaryKey = keyColumn;
-
-            DataRow row = dataTable.Rows.Find(testId);
-            row["passinglevel"] = passingLevel;
-            adapter.Update(dataSet);
-            status = true;
-
-
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e.Message);
-            throw e;
+            string query = "UPDATE tests SET passingLevel = @PassingLevel WHERE id = @TestId";
+            if (con.Execute(query, new { PassingLevel = passingLevel, TestId = testId }) > 0)
+            {
+                status = true;
+            }
         }
         return status;
     }
 
-
-       public async Task<List<CandidateSubjectResults>> GetSubjectResultDetails(int subjectId)
+    public async Task<List<CandidateSubjectResults>> GetSubjectResultDetails(int subjectId)
     {
         await Task.Delay(100);
         List<CandidateSubjectResults> SubjectResultDetails = new List<CandidateSubjectResults>();
