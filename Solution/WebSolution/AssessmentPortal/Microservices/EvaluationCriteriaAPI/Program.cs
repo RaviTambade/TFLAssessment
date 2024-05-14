@@ -22,6 +22,7 @@ builder.Host.ConfigureLogging(logging =>
 
 builder.Services.AddControllers();
 builder.Services.AddScoped<IEvaluationCriteriaRepository, EvaluationCriteriaRepository>();
+builder.Services.AddScoped<IEvaluationCriteriaRepository, EvaluationCriteriaDapperRepository>();
 builder.Services.AddScoped<IEvaluationCriteriaService, EvaluationCriteriaService>();
 
 var app = builder.Build();
@@ -29,7 +30,7 @@ var app = builder.Build();
 
 //ASP.NET middleware configuration
 
-app.UseCors(options => options.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
+app.UseCors(options => options.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin()); 
 app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthorization();
