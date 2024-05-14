@@ -21,7 +21,8 @@ builder.Host.ConfigureLogging(logging =>
 });
 
 builder.Services.AddControllers();
-builder.Services.AddScoped<IInterviewRepository, InterviewRepository>();
+//builder.Services.AddScoped<IInterviewRepository, InterviewRepository>();
+builder.Services.AddScoped<IInterviewRepository, InterviewDapperRepository>();
 builder.Services.AddScoped<IInterviewService, InterviewService>();
 
 var app = builder.Build();

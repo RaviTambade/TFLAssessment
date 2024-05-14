@@ -40,10 +40,12 @@ public class InterviewRepository : IInterviewRepository
                 int candidateid = int.Parse(reader["candidateid"].ToString());
                 string fname = reader["firstname"].ToString();
                 string lname = reader["lastname"].ToString();
+                string title = reader["title"].ToString();
                 InterviewCandidateDetails CandidateInfo = new InterviewCandidateDetails();
                 CandidateInfo.CandidateId = candidateid;
                 CandidateInfo.FirstName = fname;
                 CandidateInfo.LastName = lname;
+                CandidateInfo.Title = title;
                 CandidatesInfo.Add(CandidateInfo);
 
 
@@ -91,7 +93,7 @@ public class InterviewRepository : IInterviewRepository
                 InterviewSubject.CandidateId = candidateid;
                 InterviewSubject.FirstName = firstName;
                 InterviewSubject.LastName = lastName;
-                InterviewSubject.Subject = subName;
+                InterviewSubject.Title = subName;
 
 
 
