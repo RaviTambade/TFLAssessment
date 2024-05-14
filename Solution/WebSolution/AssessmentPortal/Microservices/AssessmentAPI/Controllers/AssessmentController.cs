@@ -99,6 +99,7 @@ public class AssessmentController : ControllerBase
     [HttpPost("createtest")]
     public async Task<IActionResult> CreateTest( Assessment assessment)
     {
+        Console.WriteLine("Inside Create Test Controller");
         bool status= await _svc.CreateTest(assessment);
         _logger.LogInformation("Create test method invoked at  {DT}", DateTime.UtcNow.ToLongTimeString());
         return Ok(status);
