@@ -19,38 +19,21 @@ public class AssessmentDapperRepository :IAssessmentRepository
 
     public async Task<bool> CreateTest(Assessment newTest)
     {
-        
+        await Task.Delay(100);
         bool status = false;
-        MySqlConnection connection = new MySqlConnection(_connectionString);
-        string query = @"INSERT INTO tests(subjectid,duration,smeid,creationdate,modificationdate,scheduleddate,passinglevel) VALUES (@subjectid,@duration,@smeid,@creationdate,@modificationdate,@scheduleddate,@passinglevel)";
-        MySqlCommand command = new MySqlCommand(query, connection);
+        string query = "INSERT INTO tests(subjectid,duration,smeid,creationdate,modificationdate,scheduleddate,passinglevel) VALUES (@subjectid,@duration,@smeid,@creationdate,@modificationdate,@scheduleddate,@passinglevel)";
+       
         TimeOnly time = newTest.Duration;
-        command.Parameters.AddWithValue("@subjectid", newTest.SubjectId);
-        command.Parameters.AddWithValue("@duration", time.ToString("HH:mm:ss"));
-        command.Parameters.AddWithValue("@smeid", newTest.SubjectExpertId);
-        command.Parameters.AddWithValue("@creationdate", newTest.CreationDate);
-        command.Parameters.AddWithValue("@modificationdate", newTest.ModificationDate);
-        command.Parameters.AddWithValue("@scheduleddate", newTest.ScheduledDate);
-        command.Parameters.AddWithValue("@passinglevel", newTest.PassingLevel);
+        string time2 = time.ToString("HH:mm:ss");
 
-        try
+        using (IDbConnection con = new MySqlConnection(_connectionString))
         {
-            await connection.OpenAsync();
-            int rowsAffected = await command.ExecuteNonQueryAsync();
-            if (rowsAffected > 0)
-            {
-                status = true;
-            }
+            if(con.Execute(query,new {subjectid= newTest.SubjectId,duration=time2,smeid=newTest.SubjectExpertId,
+                                      creationdate=newTest.CreationDate,modificationdate=newTest.ModificationDate,
+                                      scheduleddate=newTest.ScheduledDate,passinglevel=newTest.PassingLevel})  > 0)
+            status=true;
+        }
 
-        }
-        catch (Exception ee)
-        {
-            Console.WriteLine(ee.Message);
-        }
-        finally
-        {
-            await connection.CloseAsync();
-        }
         return status;
     }
 
