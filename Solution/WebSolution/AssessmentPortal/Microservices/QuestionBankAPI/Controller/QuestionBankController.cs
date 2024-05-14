@@ -41,7 +41,7 @@ public class QuestionBankController : ControllerBase
     [HttpGet("questions/subjects/{subject}/questions/{questionId}")]
     public async Task<IActionResult> GetCriteria(string subject, int questionId)
     {
-        SubjectCriteria criteria = await _svc.GetCriteria(subject,questionId);
+        string criteria = await _svc.GetCriteria(subject,questionId);
         return Ok(criteria);
     }
 

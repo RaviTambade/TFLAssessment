@@ -48,8 +48,6 @@ public class QuestionBankDapperRepository : IQuestionBankRepository
     {
         await Task.Delay(100);
         List<QuestionDetails> questions=new List<QuestionDetails>();   
-
-        
         using (IDbConnection con = new MySqlConnection(_connectionString))
         {
             var ques = con.Query<QuestionDetails>("select questionbank.id, questionbank.title, subjects.title as subject ,evaluationcriterias.title as criteria from questionbank, subjects,evaluationcriterias where questionbank.subjectid=subjects.id and questionbank.evaluationcriteriaid=evaluationcriterias.id and subjects.id=@subjectId and evaluationcriterias.id=@criteriaId", new{subjectId,criteriaId});
@@ -64,8 +62,8 @@ public class QuestionBankDapperRepository : IQuestionBankRepository
         bool status = false;
         using (MySqlConnection con = new MySqlConnection(_connectionString))
         { 
-            var query = "update questionbank set answerkey="+answerKey+" where id="+id+""; 
-            if(con.Execute(query) > 0)
+            var query = "update questionbank set answerkey=@answerKey where id=@id"; 
+            if(con.Execute(query,new{id=id,answerKey=answerKey}) > 0)
             status = true;
         }
         return status;
@@ -130,40 +128,16 @@ public class QuestionBankDapperRepository : IQuestionBankRepository
     {
         await Task.Delay(2000);
         bool status = true;
-        // MySqlConnection connection = new MySqlConnection(_connectionString);
-        // try
-        // {
-        //     string query = "select * from questionbank";
-        //     MySqlCommand command = new MySqlCommand(query, connection);
-        //     MySqlDataAdapter dataAdapter = new MySqlDataAdapter(command);
-        //     DataSet dataSet = new DataSet();
-        //     MySqlCommandBuilder commandBuilder = new MySqlCommandBuilder(dataAdapter);
-        //     dataAdapter.Fill(dataSet);
-        //     DataTable dataTable = dataSet.Tables[0];
-
-        //     DataRow row = dataTable.NewRow();
-        //     row["subjectid"] = question.SubjectId;
-        //     row["title"] = question.Title;
-        //     row["a"] = question.A;
-        //     row["b"] = question.B;
-        //     row["c"] = question.C;
-        //     row["d"] = question.D;
-        //     row["answerKey"] = question.AnswerKey;
-        //     row["evaluationCriteriaId"] = question.EvaluationCriteriaId;
-        //     dataTable.Rows.Add(row);
-        //     dataAdapter.Update(dataSet);
-        //     status = true;
-
-        // }
-        // catch (Exception e)
-        // {
-        //     throw e;
-        // }
-
+        string query ="insert into questionbank(subjectid,title,a,b,c,d,answerkey,evaluationcriteriaid) values(@subjectId,@title,@a,@b,@c,@d,@answerKey,@evaluationCriteriaId)";
+        using(IDbConnection con =new MySqlConnection(_connectionString))
+        {
+            if (con.Execute(query, new {title=question.Title, a = question.A, b = question.B, c = question.C, d = question.D,answerKey=question.AnswerKey, subjectId = question.SubjectId, evaluationCriteriaId = question.EvaluationCriteriaId}) > 0)
+                status = true;
+        }
         return status;
     }
 
-    public async Task<List<SubjectCriteria>> GetCriteria(string subject, int questionId)
+    public async Task<string> GetCriteria(string subject, int questionId)
     {
         await Task.Delay(2000);
         string criteria = "";
