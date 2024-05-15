@@ -2,6 +2,7 @@ using MySql.Data.MySqlClient;
 using System.Data;
 using Transflower.TFLAssessment.Entities;
 using Transflower.TFLAssessment.Repositories.Interfaces;
+using Transflower.TFLAssessment.Handler;
 using Dapper;
 
 namespace Transflower.TFLAssessment.Repositories;
@@ -15,13 +16,14 @@ public class AssessmentDapperRepository :IAssessmentRepository
     {
         _configuration = configuration;
         _connectionString = _configuration.GetConnectionString("DefaultConnection")  ?? throw new ArgumentNullException("connectionString");
+         SqlMapper.AddTypeHandler(new SqlTimeOnlyTypeHandler());
     }
 
     public async Task<bool> CreateTest(Assessment newTest)
     {
         await Task.Delay(100);
         bool status = false;
-        string query = "INSERT INTO tests(subjectid,duration,smeid,creationdate,modificationdate,scheduleddate,passinglevel) VALUES (@subjectid,@duration,@smeid,@creationdate,@modificationdate,@scheduleddate,@passinglevel)";
+        string query = "INSERT INTO tests(subjectid,duration,smeid,creationdate,modificationdate,scheduleddate,passinglevel) VALUES (@SubjectId,@Duration,@SmeId,@CreationDate,@ModificationDate,@ScheduledDate,@PassingLevel)";
        
         TimeOnly time = newTest.Duration;
         string time2 = time.ToString("HH:mm:ss");
@@ -37,56 +39,29 @@ public class AssessmentDapperRepository :IAssessmentRepository
         return status;
     }
 
-    public async Task <Assessment> GetDetails(int assessmentId) //*******
+    public async Task <Assessment> GetDetails(int assessmentId) 
     {
+            await Task.Delay(100);
             Assessment assessment=new Assessment();   
-            string query = @"select * from tests where id=@assessmentId";
-
-            MySqlConnection connection = new MySqlConnection(_connectionString);
-            MySqlCommand command = new MySqlCommand(query, connection);
-            command.Parameters.AddWithValue("@assessmentId",assessmentId);
-            try
+            string query = @"select * from tests where id=@AssessmentId";
+            using (IDbConnection con = new MySqlConnection(_connectionString))
             {
-                await connection.OpenAsync();
-                MySqlDataReader reader = command.ExecuteReader();
-                while (reader.Read())
-                {
-                    int id = int.Parse(reader["id"].ToString());
-                    int  smeid = int.Parse(reader["smeid"].ToString());
-                    int  subjectId = int.Parse(reader["subjectid"].ToString());
-                    // TimeOnly duration =TimeSpan.TryParse(reader["duration"]);
-                    DateTime modificationDate=DateTime.Parse(reader["modificationdate"].ToString());
-                    DateTime scheduledDate=DateTime.Parse(reader["scheduleddate"].ToString());
-                    string status = reader["subjectid"].ToString(); 
-                    assessment.Id = id;
-                    assessment.ModificationDate=modificationDate;
-                    assessment.ScheduledDate=scheduledDate;
-                    assessment.SubjectId = subjectId;
-                    assessment.SubjectExpertId=smeid;
-                    assessment.Status=status;
-                    
-                }
-                await reader.CloseAsync();
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }
-            finally
-            {
-                await connection.CloseAsync();
+                assessment= con.QuerySingleOrDefault<Assessment>(query, new {assessmentId}) ;
+                TimeOnly time  = assessment.Duration;
+                Console.WriteLine(time);
+                               
             }
             return assessment;
     }
-    public async Task<List<Assessment>> GetAll(DateTime fromDate, DateTime toDate)  //******
+    public async Task<List<Assessment>> GetAll(DateTime fromDate, DateTime toDate) 
     {
         List<Assessment> assessments=new List<Assessment>();
-         string query = @"select * from tests where creationDate  between @fromDate and @toDate";
+         string query = @"select * from tests where creationDate  between @FromDate and @ToDate";
 
             MySqlConnection connection = new MySqlConnection(_connectionString);
             MySqlCommand command = new MySqlCommand(query, connection);
-            command.Parameters.AddWithValue("@fromDate",fromDate);
-            command.Parameters.AddWithValue("@toDate",toDate);
+            command.Parameters.AddWithValue("@FromDate",fromDate);
+            command.Parameters.AddWithValue("@ToDate",toDate);
             try
             {
                 await connection.OpenAsync();
@@ -121,32 +96,22 @@ public class AssessmentDapperRepository :IAssessmentRepository
             }
             return assessments;
     }
-    public async Task <List<Assessment>> GetAllBySubjectMatterExpert(int smeId)   //********
+    public async Task <List<Assessment>> GetAllBySubjectMatterExpert(int smeId)  
     {
 
-        /*await Task.Delay(100);
-        List<Employee> employees = new List<Employee>();
-        using (IDbConnection con = new MySqlConnection(_connectionString))
-        {
-            var emp = con.Query<Employee>("SELECT * FROM employees");
- 
-            employees = emp as List<Employee>;
- 
-        }
-        return employees;*/
         await Task.Delay(100);
         List<Assessment> assessments=new List<Assessment>();   
         
         using (IDbConnection con = new MySqlConnection(_connectionString))
         {
-            var test = con.Query<Assessment>("select * from tests where smeid=@smeId", new{smeId});
+            var test = con.Query<Assessment>("select * from tests where smeid=@SmeId", new{smeId});
  
             assessments = test as List<Assessment>;
  
         }
         return assessments;
     }
-    public async Task<bool> AddQuestion(int assessmentId, int questionId)  //*******
+    public async Task<bool> AddQuestion(int assessmentId, int questionId)  
     {
         await Task.Delay(100);
         bool status = false;
@@ -159,17 +124,17 @@ public class AssessmentDapperRepository :IAssessmentRepository
         
         return status;
     }
-    public async Task<bool> AddQuestions(int assessmentId, List<TestQuestion> questions) //****
+    public async Task<bool> AddQuestions(int assessmentId, List<TestQuestion> questions) 
     {
         bool status = false;
         MySqlConnection connection = new MySqlConnection(_connectionString); 
         try
         {
             foreach(var question in questions){
-                string query = "insert into testquestions(testid,questionbankid) values (@testId, @questionBankId)";
+                string query = "insert into testquestions(testid,questionbankid) values (@TestId, @QuestionBankId)";
                 MySqlCommand command = new MySqlCommand(query, connection);
-                command.Parameters.AddWithValue("@testId", assessmentId);
-                command.Parameters.AddWithValue("@questionBankId", question.QuestionBankId);
+                command.Parameters.AddWithValue("@TestId", assessmentId);
+                command.Parameters.AddWithValue("@QuestionBankId", question.QuestionBankId);
                 await connection.OpenAsync();
                 int rowsAffected = await command.ExecuteNonQueryAsync();
                 if (rowsAffected > 0)
@@ -213,9 +178,9 @@ public class AssessmentDapperRepository :IAssessmentRepository
             {
                 Console.WriteLine("DAl" + testQuestionId);
 
-                string query = "DELETE FROM testquestions WHERE id = @id";
+                string query = "DELETE FROM testquestions WHERE id = @Id";
                 MySqlCommand command = new MySqlCommand(query, connection);
-                command.Parameters.AddWithValue("@id", testQuestionId);
+                command.Parameters.AddWithValue("@Id", testQuestionId);
 
                 int rowsAffected = await command.ExecuteNonQueryAsync();
                 if (rowsAffected > 0)
@@ -238,10 +203,10 @@ public class AssessmentDapperRepository :IAssessmentRepository
     public async Task <bool> ChangeDuration(int assessmentId, string duration){
         bool status = false;
         MySqlConnection connection = new MySqlConnection(_connectionString);
-        string query = "update tests set duration=@duration where id=@assessmentId";
+        string query = "update tests set duration=@Duration where id=@AssessmentId";
         MySqlCommand command = new MySqlCommand(query, connection);
-        command.Parameters.AddWithValue("@assessmentId", assessmentId);
-        command.Parameters.AddWithValue("@duration", duration);
+        command.Parameters.AddWithValue("@AssessmentId", assessmentId);
+        command.Parameters.AddWithValue("@Duration", duration);
         try
         {
            await connection.OpenAsync();
@@ -264,10 +229,10 @@ public class AssessmentDapperRepository :IAssessmentRepository
     public async Task<bool> Reschedule(int assessmentId, DateTime date){
         bool status = false;
         MySqlConnection connection = new MySqlConnection(_connectionString);
-        string query = "update tests set scheduleddate=@scheduledDate where id=@assessmentId";
+        string query = "update tests set scheduleddate=@ScheduledDate where id=@AssessmentId";
         MySqlCommand command = new MySqlCommand(query, connection);
-        command.Parameters.AddWithValue("@assessmentId", assessmentId);
-        command.Parameters.AddWithValue("@scheduledDate", date);
+        command.Parameters.AddWithValue("@AssessmentId", assessmentId);
+        command.Parameters.AddWithValue("@ScheduledDate", date);
         try
         {
             await connection.OpenAsync();
@@ -394,7 +359,7 @@ public class AssessmentDapperRepository :IAssessmentRepository
         List<EvaluationCriteria> criterias = new List<EvaluationCriteria>();
         using (IDbConnection con = new MySqlConnection(_connectionString))
         {
-            var criteriaList = con.Query<EvaluationCriteria>("select * from evaluationcriterias WHERE subjectid=@subjectId", new {subjectId});
+            var criteriaList = con.Query<EvaluationCriteria>("select * from evaluationcriterias WHERE subjectid=@SubjectId", new {subjectId});
  
             criterias = criteriaList as List<EvaluationCriteria>;
  

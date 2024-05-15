@@ -15,25 +15,25 @@ public class InterviewDapperRepository : IInterviewRepository
     public InterviewDapperRepository(IConfiguration configuration)
     {
         _configuration = configuration;
-        _connectionString = _configuration.GetConnectionString("DefaultConnection")  ?? throw new ArgumentNullException("connectionString");
+        _connectionString = _configuration.GetConnectionString("DefaultConnection") ?? throw new ArgumentNullException("connectionString");
     }
 
 
     public async Task<List<InterviewCandidateDetails>> GetAllInterviewCandidates()
     {
-        
-       await Task.Delay(100);
-       List<InterviewCandidateDetails> CandidatesInfo = new List<InterviewCandidateDetails>();
-       string query = @"select interviews.candidateid,employees.firstname,employees.lastname,subjects.title
+
+        await Task.Delay(100);
+        List<InterviewCandidateDetails> CandidatesInfo = new List<InterviewCandidateDetails>();
+        string query = @"select interviews.candidateid,employees.firstname,employees.lastname,subjects.title
                         from interviews inner join employees on  interviews.candidateid= employees.id
                         inner join subjectmatterexperts on interviews.smeid = subjectmatterexperts.id
                         inner join subjects on subjectmatterexperts.subjectid=subjects.id;";
-        
+
         using (IDbConnection con = new MySqlConnection(_connectionString))
         {
             var allCandidates = con.Query<InterviewCandidateDetails>(query);
             CandidatesInfo = allCandidates as List<InterviewCandidateDetails>;
- 
+
         }
 
         return CandidatesInfo;
@@ -49,106 +49,57 @@ public class InterviewDapperRepository : IInterviewRepository
                         from interviews inner join employees on  interviews.candidateid= employees.id
                         inner join subjectmatterexperts on interviews.smeid = subjectmatterexperts.id
                         inner join subjects on subjectmatterexperts.subjectid=subjects.id
-                        where interviews.candidateid=@CandidateId";
-        
+                        where interviews.candidateid=@CandidateId;";
+
         using (IDbConnection con = new MySqlConnection(_connectionString))
         {
-            var candidateSubjects = con.Query<InterviewCandidateDetails>(query, new {candidateId});
+            var candidateSubjects = con.Query<InterviewCandidateDetails>(query, new { candidateId });
             candidateSubjectDetails = candidateSubjects as List<InterviewCandidateDetails>;
         }
 
         return candidateSubjectDetails;
     }
 
-
-
     public async Task<InterviewDetails> GetInterviewDetails(int interviewId)
     {
-        
-        // InterviewDetails interviewInfo = new InterviewDetails();
-        // string query = "spinterviewdetails";
-
-
-        // MySqlConnection connection = new MySqlConnection(_connectionString);
-        // try
-        // {
-        //     MySqlCommand command = new MySqlCommand(query, connection);
-        //     command.CommandType = CommandType.StoredProcedure;
-        //     command.Parameters.AddWithValue("@pinterviewId", interviewId);
-        //     await connection.OpenAsync();
-        //     MySqlDataReader reader = command.ExecuteReader();
-        //     while (reader.Read())
-        //     {
-
-        //         string interviewdate = reader["interviewdate"].ToString();
-        //         string interviewtime = reader["interviewtime"].ToString();
-        //         string smeName = reader["SmeName"].ToString();
-
-
-        //         interviewInfo.Id = interviewId;
-        //         interviewInfo.InterviewDate = interviewdate;
-        //         interviewInfo.InterviewTime = interviewtime;
-        //         interviewInfo.SMEName = smeName;
-        //         Console.WriteLine(interviewInfo.Id + " " + interviewInfo.InterviewDate + " " + interviewInfo.InterviewTime + " " + interviewInfo.SMEName);
-
-        //     }
-        //     reader.Close();
-
-
-        // }
-        // catch (Exception e)
-        // {
-        //     Console.WriteLine(e.Message);
-        // }
-        // finally
-        // {
-        //     await connection.CloseAsync();
-        // }
-        // return interviewInfo;
-
-
-       await Task.Delay(100);
-
-        InterviewDetails interviewDetails  = new InterviewDetails();
+        await Task.Delay(100);
+        InterviewDetails interviewInfo = null;
+        string query = "spinterviewdetails";
         using (IDbConnection con = new MySqlConnection(_connectionString))
         {
             var parameters = new DynamicParameters();
             parameters.Add("@pinterviewId", interviewId);
-            interviewDetails = con.QueryFirstOrDefault("spinterviewdetails", parameters, commandType: CommandType.StoredProcedure);
-            Console.WriteLine(interviewDetails.InterviewDate);
-             Console.WriteLine(interviewDetails.InterviewTime);
-             Console.WriteLine(interviewDetails.SMEName);
+            interviewInfo = con.QueryMultiple<InterviewDetails>(query, parameters, commandType: CommandType.StoredProcedure);
         }
-        return interviewDetails;
-
-
+        return interviewInfo;
     }
 
 
     public async Task<bool> RescheduleInterview(int interviewId, DateTime date)
-    {    
+    {
+
         await Task.Delay(100);
         bool status = false;
         using (MySqlConnection con = new MySqlConnection(_connectionString))
-        { 
-            var query = "update interviews set interviewdate =@interviewdate  where  id =@interviewId"; 
-            if(con.Execute(query,new {interviewId = interviewId,interviewdate=date}) > 0)
-            status = true;
+        {
+            var query = "update interviews set interviewdate =@Interviewdate  where  id =@InterviewId";
+            if (con.Execute(query, new { interviewId = interviewId, interviewdate = date }) > 0)
+                status = true;
         }
         return status;
     }
 
     public async Task<bool> RescheduleInterview(int interviewId, string time)
-    {   
+    {
         await Task.Delay(100);
         bool status = false;
         using (MySqlConnection con = new MySqlConnection(_connectionString))
-        { 
-            var query = "update interviews set interviewtime =@interviewTime  where  id =@interviewId"; 
-            if(con.Execute(query,new {interviewId = interviewId,interviewTime=time}) > 0)
-            status = true;
+        {
+            var query = "update interviews set interviewtime =@InterviewTime  where  id =@InterviewId";
+            if (con.Execute(query, new { interviewId = interviewId, interviewTime = time }) > 0)
+                status = true;
         }
-        
+
         return status;
     }
 
@@ -157,30 +108,30 @@ public class InterviewDapperRepository : IInterviewRepository
         await Task.Delay(100);
         bool status = false;
         using (MySqlConnection con = new MySqlConnection(_connectionString))
-        { 
-            var query = "update interviews set interviewdate =@interviewdate,interviewtime =@interviewTime  where  id =@interviewId"; 
-            if(con.Execute(query,new {interviewId = interviewId,interviewTime=time,interviewdate =date}) > 0)
-            status = true;
+        {
+            var query = "update interviews set interviewdate =@Interviewdate,interviewtime =@InterviewTime  where  id =@InterviewId";
+            if (con.Execute(query, new { interviewId = interviewId, interviewTime = time, interviewdate = date }) > 0)
+                status = true;
         }
-        
+
         return status;
     }
 
 
     public async Task<bool> ChangeInterviewer(int interviewId, int smeId)
     {
-       
+
         await Task.Delay(100);
         bool status = false;
         using (MySqlConnection con = new MySqlConnection(_connectionString))
-        { 
-            var query = "update interviews set smeid =@smeid  where  id =@interviewId"; 
-            if(con.Execute(query,new {smeid= smeId, interviewId = interviewId}) > 0)
-            status = true;
+        {
+            var query = "update interviews set smeid =@Smeid  where  id =@InterviewId";
+            if (con.Execute(query, new { smeid = smeId, interviewId = interviewId }) > 0)
+                status = true;
         }
-        
+
         return status;
-       
+
     }
 
 
@@ -189,12 +140,12 @@ public class InterviewDapperRepository : IInterviewRepository
         await Task.Delay(100);
         bool status = false;
         using (MySqlConnection con = new MySqlConnection(_connectionString))
-        { 
-            var query = "delete from interviews where id =@id"; 
-            if(con.Execute(query,new {id = interviewId}) > 0)
-            status = true;
+        {
+            var query = "delete from interviews where id =@Id";
+            if (con.Execute(query, new { id = interviewId }) > 0)
+                status = true;
         }
-        
+
         return status;
 
     }

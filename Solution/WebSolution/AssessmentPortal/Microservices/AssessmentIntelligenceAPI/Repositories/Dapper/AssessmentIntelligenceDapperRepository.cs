@@ -27,7 +27,7 @@ public class AssessmentIntelligenceDapperRepository: IAssessmentIntelligenceRepo
         List<AnnualCandidateResult> CandidateResults = new List<AnnualCandidateResult>();
         using (IDbConnection con = new MySqlConnection(_connectionString))
         {
-            var details = con.Query<AnnualCandidateResult>("select candidatetestresults.score,subjects.title,tests.id from candidatetestresults inner join tests on tests.id=candidatetestresults.testid inner join subjects on subjects.id=tests.subjectid where candidatetestresults.candidateid=@candidateId and year(teststarttime)=@year", new { candidateId, year });
+            var details = con.Query<AnnualCandidateResult>("select candidatetestresults.score,subjects.title,tests.id from candidatetestresults inner join tests on tests.id=candidatetestresults.testid inner join subjects on subjects.id=tests.subjectid where candidatetestresults.candidateid=@CandidateId and year(teststarttime)=@Year", new { candidateId, year });
             CandidateResults = details as List<AnnualCandidateResult>;
         }
         return CandidateResults;
