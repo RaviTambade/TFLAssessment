@@ -58,10 +58,10 @@ public class QuestionBankRepository : IQuestionBankRepository
     {
 
         List<SubjectQuestion> questions = new List<SubjectQuestion>();
-        string query = @"select questionbank.id as questionid, questionbank.title as question, subjects.title as subject, subjects.id as subjectid from questionbank, subjects where questionbank.subjectid=subjects.id and subjects.id=@subjectId";
+        string query = @"select questionbank.id as questionid, questionbank.title as question, subjects.title as subject, subjects.id as subjectid from questionbank, subjects where questionbank.subjectid=subjects.id and subjects.id=@SubjectId";
         MySqlConnection connection = new MySqlConnection(_connectionString);
         MySqlCommand command = new MySqlCommand(query, connection);
-        command.Parameters.AddWithValue("@subjectId", id);
+        command.Parameters.AddWithValue("@SubjectId", id);
         try
         {
             await connection.OpenAsync();
@@ -101,12 +101,12 @@ public class QuestionBankRepository : IQuestionBankRepository
         string query = @"select questionbank.id, questionbank.title, subjects.title as subject ,evaluationcriterias.title as criteria
                             from questionbank, subjects,evaluationcriterias
                             where questionbank.subjectid=subjects.id and questionbank.evaluationcriteriaid=evaluationcriterias.id
-                            and subjects.id=@subjectId and evaluationcriterias.id=@criteriaId";
+                            and subjects.id=@SubjectId and evaluationcriterias.id=@CriteriaId";
 
         MySqlConnection connection = new MySqlConnection(_connectionString);
         MySqlCommand command = new MySqlCommand(query, connection);
-        command.Parameters.AddWithValue("@subjectId", subjectId);
-        command.Parameters.AddWithValue("@criteriaId", criteriaId);
+        command.Parameters.AddWithValue("@SubjectId", subjectId);
+        command.Parameters.AddWithValue("@CriteriaId", criteriaId);
 
 
         try
@@ -145,16 +145,14 @@ public class QuestionBankRepository : IQuestionBankRepository
     public async Task<bool> UpdateAnswer(int id, char answerKey)
     {
         bool status = false;
-        string query = "update questionbank set answerkey=@answerkey where id =@id";
+        string query = "update questionbank set answerkey=@AnswerKey where id =@Id";
         MySqlConnection connection = new MySqlConnection(_connectionString);
         try
         {
             await connection.OpenAsync();
             MySqlCommand command = new MySqlCommand(query, connection);
-            command.Parameters.AddWithValue("@id", id);
-            command.Parameters.AddWithValue("@answerkey", answerKey);
-            Console.WriteLine("Id : " + id);
-            Console.WriteLine("Answerkey : " + answerKey);
+            command.Parameters.AddWithValue("@Id", id);
+            command.Parameters.AddWithValue("@AnswerKey", answerKey);
             int rowsAffected = await command.ExecuteNonQueryAsync();
             if (rowsAffected > 0)
             {
@@ -176,10 +174,10 @@ public class QuestionBankRepository : IQuestionBankRepository
     public async Task<Question> GetQuestion(int questionId)
     {
         Question question = null;
-        string query = @"select * from questionbank where id=@questionId";
+        string query = @"select * from questionbank where id=@QuestionId";
         MySqlConnection connection = new MySqlConnection(_connectionString);
         MySqlCommand command = new MySqlCommand(query, connection);
-        command.Parameters.AddWithValue("@questionId", questionId);
+        command.Parameters.AddWithValue("@QuestionId", questionId);
         try
         {
             await connection.OpenAsync();
@@ -222,10 +220,10 @@ public class QuestionBankRepository : IQuestionBankRepository
     public async Task<List<Question>> GetQuestions(int testId)
     {
         List<Question> questions = new List<Question>();
-        string query = @"select * from questionbank inner join testquestions on testquestions.questionbankid = questionbank.id where testquestions.testid=@testId";
+        string query = @"select * from questionbank inner join testquestions on testquestions.questionbankid = questionbank.id where testquestions.testid=@TestId";
         MySqlConnection connection = new MySqlConnection(_connectionString);
         MySqlCommand command = new MySqlCommand(query, connection);
-        command.Parameters.AddWithValue("@testID", testId);
+        command.Parameters.AddWithValue("@TestId", testId);
         try
         {
             await connection.OpenAsync();
@@ -268,25 +266,24 @@ public class QuestionBankRepository : IQuestionBankRepository
     public async Task<bool> UpdateQuestionOptions(int id, Question options)
     {
         bool status = false;
-        string query = "update questionbank set title=@title,a=@a,b=@b,c=@c,d=@d,answerkey=@answerKey where id =@id";
+        string query = "update questionbank set title=@Title,a=@A,b=@B,c=@C,d=@D,answerkey=@AnswerKey where id =@Id";
         MySqlConnection connection = new MySqlConnection(_connectionString);
         try
         {
             await connection.OpenAsync();
             MySqlCommand command = new MySqlCommand(query, connection);
-            command.Parameters.AddWithValue("@title", options.Title);
-            command.Parameters.AddWithValue("@a", options.A);
-            command.Parameters.AddWithValue("@b", options.B);
-            command.Parameters.AddWithValue("@c", options.C);
-            command.Parameters.AddWithValue("@d", options.D);
-            command.Parameters.AddWithValue("@answerKey", options.AnswerKey);
-            command.Parameters.AddWithValue("@id", id);
+            command.Parameters.AddWithValue("@Title", options.Title);
+            command.Parameters.AddWithValue("@A", options.A);
+            command.Parameters.AddWithValue("@B", options.B);
+            command.Parameters.AddWithValue("@C", options.C);
+            command.Parameters.AddWithValue("@D", options.D);
+            command.Parameters.AddWithValue("@AnswerKey", options.AnswerKey);
+            command.Parameters.AddWithValue("@Id", id);
             int rowsAffected = await command.ExecuteNonQueryAsync();
             if (rowsAffected > 0)
             {
                 status = true;
             }
-
         }
         catch (Exception e)
         {
@@ -304,16 +301,15 @@ public class QuestionBankRepository : IQuestionBankRepository
     public async Task<bool> UpdateSubjectCriteria(int questionId, Question question)
     {
         bool status = false;
-        string query = "update questionbank set evaluationcriteriaid=@evaluationCriteriaId ,subjectid=@subjectId where id =@id";
+        string query = "update questionbank set evaluationcriteriaid=@EvaluationCriteriaId ,subjectid=@SubjectId where id =@Id";
         MySqlConnection connection = new MySqlConnection(_connectionString);
         try
         {
             await connection.OpenAsync();
             MySqlCommand command = new MySqlCommand(query, connection);
-            command.Parameters.AddWithValue("@evaluationCriteriaId", question.EvaluationCriteriaId);
-            command.Parameters.AddWithValue("@subjectId", question.SubjectId);
-
-            command.Parameters.AddWithValue("@id", questionId);
+            command.Parameters.AddWithValue("@EvaluationCriteriaId", question.EvaluationCriteriaId);
+            command.Parameters.AddWithValue("@SubjectId", question.SubjectId);
+            command.Parameters.AddWithValue("@Id", questionId);
             int rowsAffected = await command.ExecuteNonQueryAsync();
             if (rowsAffected > 0)
             {
@@ -374,19 +370,18 @@ public class QuestionBankRepository : IQuestionBankRepository
     {
         string criteria = "";
         string query = @"select evaluationcriterias.title from evaluationcriterias INNER join questionbank on questionbank.evaluationcriteriaid=evaluationcriterias.id
-                       inner join subjects on questionbank.subjectid= evaluationcriterias.subjectid WHERE subjects.title=@subject and questionbank.id=@questionId";
+                       inner join subjects on questionbank.subjectid= evaluationcriterias.subjectid WHERE subjects.title=@Subject and questionbank.id=@QuestionId";
 
         MySqlConnection connection = new MySqlConnection(_connectionString);
         try
         {
             MySqlCommand command = new MySqlCommand(query, connection);
-            command.Parameters.AddWithValue("@subject", subject);
-            command.Parameters.AddWithValue("@questionId", questionId);
+            command.Parameters.AddWithValue("@Subject", subject);
+            command.Parameters.AddWithValue("@QuestionId", questionId);
             await connection.OpenAsync();
             MySqlDataReader reader = command.ExecuteReader();
             if (await reader.ReadAsync())
             {
-
                 string title = reader["title"].ToString();
                 criteria = title;
             }

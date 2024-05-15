@@ -49,7 +49,7 @@ public class InterviewDapperRepository : IInterviewRepository
                         from interviews inner join employees on  interviews.candidateid= employees.id
                         inner join subjectmatterexperts on interviews.smeid = subjectmatterexperts.id
                         inner join subjects on subjectmatterexperts.subjectid=subjects.id
-                        where interviews.candidateid=@CandidateId;";
+                        where interviews.candidateid=@CandidateId";
         
         using (IDbConnection con = new MySqlConnection(_connectionString))
         {
@@ -115,6 +115,9 @@ public class InterviewDapperRepository : IInterviewRepository
             var parameters = new DynamicParameters();
             parameters.Add("@pinterviewId", interviewId);
             interviewDetails = con.QueryFirstOrDefault("spinterviewdetails", parameters, commandType: CommandType.StoredProcedure);
+            Console.WriteLine(interviewDetails.InterviewDate);
+             Console.WriteLine(interviewDetails.InterviewTime);
+             Console.WriteLine(interviewDetails.SMEName);
         }
         return interviewDetails;
 
@@ -123,8 +126,7 @@ public class InterviewDapperRepository : IInterviewRepository
 
 
     public async Task<bool> RescheduleInterview(int interviewId, DateTime date)
-    {
-        
+    {    
         await Task.Delay(100);
         bool status = false;
         using (MySqlConnection con = new MySqlConnection(_connectionString))
@@ -133,9 +135,7 @@ public class InterviewDapperRepository : IInterviewRepository
             if(con.Execute(query,new {interviewId = interviewId,interviewdate=date}) > 0)
             status = true;
         }
-        
         return status;
-
     }
 
     public async Task<bool> RescheduleInterview(int interviewId, string time)
