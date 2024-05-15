@@ -15,10 +15,4 @@
     <PackageReference Include="Serilog.Extensions.Logging.File" Version="3.0.0" />
   </ItemGroup>
 
- <ItemGroup>
-    <ProjectReference Include="..\..\Entities\AssessmentEntity\AssessmentEntity.csproj" />
-    <ProjectReference Include="..\..\Interfaces\AssessmentInterfaces\AssessmentInterfaces.csproj" />
-    <ProjectReference Include="..\..\Services\AssessmentServices\AssessmentServices.csproj" />
-  </ItemGroup>
-
 </Project>

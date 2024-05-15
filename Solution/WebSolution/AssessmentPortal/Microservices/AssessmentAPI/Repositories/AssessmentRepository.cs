@@ -380,6 +380,7 @@ public class AssessmentRepository :IAssessmentRepository
                 string subject = reader["skill"].ToString();
                 string firstName = reader["firstname"].ToString();
                 string lastName = reader["lastname"].ToString();
+                string status = reader["status"].ToString();
 
                 Assessment test = new Assessment();
                 test.Id = id;
@@ -388,6 +389,7 @@ public class AssessmentRepository :IAssessmentRepository
                 test.CreationDate = creationDate;
                 test.ModificationDate = modificationDate;
                 test.ScheduledDate = scheduledDate;
+                test.Status = status;
                 // test.Subject = subject;
                 // test.FirstName = firstName;
                 // test.LastName = lastName;
