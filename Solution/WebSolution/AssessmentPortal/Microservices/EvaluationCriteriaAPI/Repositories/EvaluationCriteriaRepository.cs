@@ -26,10 +26,10 @@ namespace Transflower.TFLAssessment.Repositories;
 
         bool status = false;
         MySqlConnection connection = new MySqlConnection(_connectionString );
-        string query = "update questionbank set evaluationcriteriaid=@evaluationCriteriaId where id=@questionId";
+        string query = "update questionbank set evaluationcriteriaid=@EvaluationCriteriaId where id=@QuestionId";
         MySqlCommand command = new MySqlCommand(query, connection);
-        command.Parameters.AddWithValue("@evaluationCriteriaId", evaluationCriteriaId);
-        command.Parameters.AddWithValue("@questionId", questionId);
+        command.Parameters.AddWithValue("@EvaluationCriteriaId", evaluationCriteriaId);
+        command.Parameters.AddWithValue("@QuestionId", questionId);
 
         try
         {
@@ -56,10 +56,10 @@ namespace Transflower.TFLAssessment.Repositories;
 
         bool status = false;
         MySqlConnection connection = new MySqlConnection(_connectionString );
-        string query = "update evaluationcriterias set subjectid= @subjectId where id= @id;";
+        string query = "update evaluationcriterias set subjectid= @SubjectId where id= @Id;";
         MySqlCommand command = new MySqlCommand(query, connection);
-        command.Parameters.AddWithValue("@id", id);
-        command.Parameters.AddWithValue("@subjectId", subjectId);
+        command.Parameters.AddWithValue("@Id", id);
+        command.Parameters.AddWithValue("@SubjectId", subjectId);
         try
         {
             await connection.OpenAsync();
@@ -86,10 +86,10 @@ namespace Transflower.TFLAssessment.Repositories;
         Console.WriteLine(criteria.SubjectId + " " + criteria.Title);
         bool status = false;
         MySqlConnection connection = new MySqlConnection(_connectionString );
-        string query = "insert into evaluationcriterias(title,subjectid) values ( @title, @subjectId)";
+        string query = "insert into evaluationcriterias(title,subjectid) values ( @Title, @SubjectId)";
         MySqlCommand command = new MySqlCommand(query, connection);
-        command.Parameters.AddWithValue("@subjectId", criteria.SubjectId);
-        command.Parameters.AddWithValue("@title", criteria.Title);
+        command.Parameters.AddWithValue("@SubjectId", criteria.SubjectId);
+        command.Parameters.AddWithValue("@Title", criteria.Title);
 
         try
         {

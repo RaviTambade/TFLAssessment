@@ -100,7 +100,7 @@ public class EvaluationCriteriaDapperRepository:IEvaluationCriteriaRepository
         // }
         await Task.Delay(100);
         bool status = false;
-        string query = "INSERT INTO evaluationcriterias(subjectid,title) VALUES (@subjectid,@title)";
+        string query = "INSERT INTO evaluationcriterias(subjectid,title) VALUES (@SubjectId,@Title)";
        
         
         
