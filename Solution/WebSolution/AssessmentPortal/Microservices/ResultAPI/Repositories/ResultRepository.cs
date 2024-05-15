@@ -50,14 +50,14 @@ public class ResultRepository : IResultRepository
     public async Task<bool> SetCandidateTestStartTime(int candidateId, int testId, TestTime time)
     {
         bool status = false;
-        string query = "insert into candidatetestresults(testid,teststarttime,candidateid) values (@testid,@teststarttime,@candidateid)";
+        string query = "insert into candidatetestresults(testid,teststarttime,candidateid) values (@Testid,@Teststarttime,@Candidateid)";
         MySqlConnection connection = new MySqlConnection(_connectionString);
 
         var testTime = time.Year + "-" + time.Month + "-" + time.Day + "T" + time.Hour + ":" + time.Minutes + ":" + time.Seconds;
         MySqlCommand command = new MySqlCommand(query, connection);
-        command.Parameters.AddWithValue("@testid", testId);
-        command.Parameters.AddWithValue("@candidateid", candidateId);
-        command.Parameters.AddWithValue("@teststarttime", testTime);
+        command.Parameters.AddWithValue("@Testid", testId);
+        command.Parameters.AddWithValue("@Candidateid", candidateId);
+        command.Parameters.AddWithValue("@Teststarttime", testTime);
         try
         {
             await connection.OpenAsync();
@@ -85,13 +85,13 @@ public class ResultRepository : IResultRepository
         bool status = false;
 
         MySqlConnection connection = new MySqlConnection(_connectionString);
-        string query = "update candidatetestresults set testendtime =@testEndTime where candidateid=@candidateId and testid=@testId";
+        string query = "update candidatetestresults set testendtime =@TestEndTime where candidateid=@CandidateId and testid=@TestId";
 
         var testTime = time.Year + "-" + time.Month + "-" + time.Day + "T" + time.Hour + ":" + time.Minutes + ":" + time.Seconds;
         MySqlCommand command = new MySqlCommand(query, connection);
-        command.Parameters.AddWithValue("@candidateId", candidateId);
-        command.Parameters.AddWithValue("@testId", testId);
-        command.Parameters.AddWithValue("@testEndTime", testTime);
+        command.Parameters.AddWithValue("@CandidateId", candidateId);
+        command.Parameters.AddWithValue("@TestId", testId);
+        command.Parameters.AddWithValue("@TestEndTime", testTime);
         Console.WriteLine(candidateId + " " + testId + " " + testTime);
         try
         {
@@ -117,12 +117,12 @@ public class ResultRepository : IResultRepository
     {
         int score = 0;
         MySqlConnection connection = new MySqlConnection(_connectionString);
-        string query = @"select score from candidatetestresults where candidateid=@candidateId and testid=@testId";
+        string query = @"select score from candidatetestresults where candidateid=@CandidateId and testid=@TestId";
         try
         {
             MySqlCommand command = new MySqlCommand(query, connection);
-            command.Parameters.AddWithValue("@candidateId", candidateId);
-            command.Parameters.AddWithValue("@testId", testId);
+            command.Parameters.AddWithValue("@CandidateId", candidateId);
+            command.Parameters.AddWithValue("@TestId", testId);
             await connection.OpenAsync();
             score = (int)command.ExecuteScalar();
 
@@ -379,36 +379,6 @@ public class ResultRepository : IResultRepository
         }
         return failedCandidates;
     }
-
-    // public bool SetPassingLevel(int testId, int passingLevel)
-    // {
-    //     bool status = false;
-    //     MySqlConnection connection = new MySqlConnection(_connectionString);
-    //     string query = "update tests set passinglevel=@passingLevel where id =@testId;";
-
-    //    MySqlCommand command = new MySqlCommand(query, connection);
-    //     command.Parameters.AddWithValue("@testId", testId);
-    //     command.Parameters.AddWithValue("@passingLevel", passingLevel);
-
-    //     try
-    //     {
-    //         connection.Open();
-    //         int rowsAffected = command.ExecuteNonQuery();
-    //         if (rowsAffected > 0)
-    //             status = true;
-    //     }
-
-    //     catch (Exception e)
-    //     {
-    //         Console.WriteLine(e.Message);
-    //     }
-    //     finally
-    //     {
-    //         connection.Close();
-    //     }
-    //     return status;
-
-    // }
 
     public async Task<bool>SetPassingLevel(int testId, int passingLevel)//Using Dissconnected 
   {
