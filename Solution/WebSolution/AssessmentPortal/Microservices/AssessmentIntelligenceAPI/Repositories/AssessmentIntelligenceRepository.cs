@@ -21,11 +21,11 @@ public class AssessmentIntelligenceRepository: IAssessmentIntelligenceRepository
         List<AnnualCandidateResult> results = new List<AnnualCandidateResult>();
         string query = @"select candidatetestresults.score,subjects.title,tests.id from candidatetestresults inner join tests on tests.id=candidatetestresults.testid
                          inner join subjects on subjects.id=tests.subjectid
-                         where candidatetestresults.candidateid=@candidateId and year(teststarttime)=@year";
+                         where candidatetestresults.candidateid=@CandidateId and year(teststarttime)=@Year";
         MySqlConnection connection = new MySqlConnection(_connectionString);
         MySqlCommand command = new MySqlCommand(query, connection);
-        command.Parameters.AddWithValue("@candidateId", candidateId);
-        command.Parameters.AddWithValue("@year", year);
+        command.Parameters.AddWithValue("@CandidateId", candidateId);
+        command.Parameters.AddWithValue("@Year", year);
         try
         {
             await connection.OpenAsync();
