@@ -82,7 +82,7 @@ public class InterviewDapperRepository : IInterviewRepository
         bool status = false;
         using (MySqlConnection con = new MySqlConnection(_connectionString))
         {
-            var query = "update interviews set interviewdate =@interviewdate  where  id =@interviewId";
+            var query = "update interviews set interviewdate =@Interviewdate  where  id =@InterviewId";
             if (con.Execute(query, new { interviewId = interviewId, interviewdate = date }) > 0)
                 status = true;
         }
@@ -97,7 +97,7 @@ public class InterviewDapperRepository : IInterviewRepository
         bool status = false;
         using (MySqlConnection con = new MySqlConnection(_connectionString))
         {
-            var query = "update interviews set interviewtime =@interviewTime  where  id =@interviewId";
+            var query = "update interviews set interviewtime =@InterviewTime  where  id =@InterviewId";
             if (con.Execute(query, new { interviewId = interviewId, interviewTime = time }) > 0)
                 status = true;
         }
@@ -111,7 +111,7 @@ public class InterviewDapperRepository : IInterviewRepository
         bool status = false;
         using (MySqlConnection con = new MySqlConnection(_connectionString))
         {
-            var query = "update interviews set interviewdate =@interviewdate,interviewtime =@interviewTime  where  id =@interviewId";
+            var query = "update interviews set interviewdate =@Interviewdate,interviewtime =@InterviewTime  where  id =@InterviewId";
             if (con.Execute(query, new { interviewId = interviewId, interviewTime = time, interviewdate = date }) > 0)
                 status = true;
         }
@@ -127,7 +127,7 @@ public class InterviewDapperRepository : IInterviewRepository
         bool status = false;
         using (MySqlConnection con = new MySqlConnection(_connectionString))
         {
-            var query = "update interviews set smeid =@smeid  where  id =@interviewId";
+            var query = "update interviews set smeid =@Smeid  where  id =@InterviewId";
             if (con.Execute(query, new { smeid = smeId, interviewId = interviewId }) > 0)
                 status = true;
         }
@@ -143,7 +143,7 @@ public class InterviewDapperRepository : IInterviewRepository
         bool status = false;
         using (MySqlConnection con = new MySqlConnection(_connectionString))
         {
-            var query = "delete from interviews where id =@id";
+            var query = "delete from interviews where id =@Id";
             if (con.Execute(query, new { id = interviewId }) > 0)
                 status = true;
         }

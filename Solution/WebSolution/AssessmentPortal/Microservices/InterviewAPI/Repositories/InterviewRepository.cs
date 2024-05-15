@@ -163,11 +163,11 @@ public class InterviewRepository : IInterviewRepository
     public async Task<bool> RescheduleInterview(int interviewId, DateTime date)
     {
         bool status = false;
-        string query = "update interviews set interviewdate =@interviewdate  where  id =@interviewId ";
+        string query = "update interviews set interviewdate =@Interviewdate  where  id =@InterviewId ";
         MySqlConnection connection = new MySqlConnection(_connectionString);
         MySqlCommand command = new MySqlCommand(query, connection);
-        command.Parameters.AddWithValue("@interviewdate", date);
-        command.Parameters.AddWithValue("@interviewId", interviewId);
+        command.Parameters.AddWithValue("@Interviewdate", date);
+        command.Parameters.AddWithValue("@InterviewId", interviewId);
         try
         {
             await connection.OpenAsync();
@@ -192,11 +192,11 @@ public class InterviewRepository : IInterviewRepository
     public async Task<bool> RescheduleInterview(int interviewId, string time)
     {
         bool status = false;
-        string query = "update interviews set interviewtime =@interviewTime  where  id =@interviewId ";
+        string query = "update interviews set interviewtime =@InterviewTime  where  id =@InterviewId ";
         MySqlConnection connection = new MySqlConnection(_connectionString);
         MySqlCommand command = new MySqlCommand(query, connection);
-        command.Parameters.AddWithValue("@interviewTime", time);
-        command.Parameters.AddWithValue("@interviewId", interviewId);
+        command.Parameters.AddWithValue("@InterviewTime", time);
+        command.Parameters.AddWithValue("@InterviewId", interviewId);
         try
         {
             await connection.OpenAsync();
@@ -220,12 +220,12 @@ public class InterviewRepository : IInterviewRepository
     public async Task<bool> RescheduleInterview(int interviewId, string time, DateTime date)
     {
         bool status = false;
-        string query = "update interviews set interviewdate =@interviewdate,interviewtime =@interviewTime  where  id =@interviewId ";
+        string query = "update interviews set interviewdate =@Interviewdate,interviewtime =@InterviewTime  where  id =@InterviewId ";
         MySqlConnection connection = new MySqlConnection(_connectionString);
         MySqlCommand command = new MySqlCommand(query, connection);
-        command.Parameters.AddWithValue("@interviewTime", time);
-        command.Parameters.AddWithValue("@interviewdate", date);
-        command.Parameters.AddWithValue("@interviewId", interviewId);
+        command.Parameters.AddWithValue("@InterviewTime", time);
+        command.Parameters.AddWithValue("@Interviewdate", date);
+        command.Parameters.AddWithValue("@InterviewId", interviewId);
         try
         {
             await connection.OpenAsync();
@@ -250,11 +250,11 @@ public class InterviewRepository : IInterviewRepository
     public async Task<bool> ChangeInterviewer(int interviewId, int smeId)
     {
         bool status = false;
-        string query = "update interviews set smeid =@smeid  where  id =@interviewId ";
+        string query = "update interviews set smeid =@Smeid  where  id =@InterviewId ";
         MySqlConnection connection = new MySqlConnection(_connectionString);
         MySqlCommand command = new MySqlCommand(query, connection);
-        command.Parameters.AddWithValue("@smeid", smeId);
-        command.Parameters.AddWithValue("@interviewId", interviewId);
+        command.Parameters.AddWithValue("@Smeid", smeId);
+        command.Parameters.AddWithValue("@InterviewId", interviewId);
 
         try
         {
@@ -281,10 +281,10 @@ public class InterviewRepository : IInterviewRepository
     public async Task<bool> CancelInterview(int interviewId)
     {
         bool status = false;
-        string query = "delete from interviews where id =@id";
+        string query = "delete from interviews where id =@Id";
         MySqlConnection connection = new MySqlConnection(_connectionString);
         MySqlCommand command = new MySqlCommand(query, connection);
-        command.Parameters.AddWithValue("@id", interviewId);
+        command.Parameters.AddWithValue("@Id", interviewId);
 
         try
         {
