@@ -86,9 +86,7 @@ public class InterviewDapperRepository : IInterviewRepository
             if (con.Execute(query, new { interviewId = interviewId, interviewdate = date }) > 0)
                 status = true;
         }
-
         return status;
-
     }
 
     public async Task<bool> RescheduleInterview(int interviewId, string time)
