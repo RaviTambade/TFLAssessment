@@ -68,10 +68,13 @@ string InterviewDetailsUrl = "/interviewdetails/{interviewId}";    //pending
 string createTestUrl = "/designtest";   //pending
 string ChangeInterviewerUrl = "/changeInterviewer/interviewId/{interviewid}/smeId/{smeid}";  //pending
 string CancelInterviewUrl = "/cancelInterview/interviewid/{interviewid}";  //pending
+string apiAssessmentUrl="/{assessmentId}";
+
 
 // Using interfaces , Provider objects are  Cohesively coupledcreate test
-IAssessmentService manager = new AssessmentService();
-IQuestionBankService questionBank = new QuestionBankService();
+IAssessmentRepository repo = new AssessmentRepository();
+IAssessmentService service = new AssessmentService(repo);
+// IQuestionBankService questionBank = new QuestionBankService();
 
 //IAssessmentRepository manager = new AssessmentRepository();
 // IQuestionBankRepository questionBank = new QuestionBankRepository();
@@ -81,11 +84,11 @@ IQuestionBankService questionBank = new QuestionBankService();
 // IResultRepository resultManager = new ResultRepository();
 
 // //API Listners
-// app.MapGet(apiEmployeesUrl, () =>
-// {
-//    List<Employee> employees = manager.GetAllEmployees();
-//    return employees;
-// });
+app.MapGet(apiAssessmentUrl, async (int assessmentId) =>
+{
+   var assessment = await service.GetDetails(assessmentId);
+   return assessment;
+});
 
 // app.MapGet(apiSubjectsUrl, () =>
 // {
