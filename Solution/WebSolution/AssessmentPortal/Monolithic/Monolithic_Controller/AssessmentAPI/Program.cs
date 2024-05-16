@@ -72,8 +72,7 @@ string apiAssessmentUrl="/{assessmentId}";
 
 
 // Using interfaces , Provider objects are  Cohesively coupledcreate test
-IAssessmentRepository repo = new AssessmentRepository();
-IAssessmentService service = new AssessmentService(repo);
+
 // IQuestionBankService questionBank = new QuestionBankService();
 
 //IAssessmentRepository manager = new AssessmentRepository();
@@ -86,6 +85,8 @@ IAssessmentService service = new AssessmentService(repo);
 // //API Listners
 app.MapGet(apiAssessmentUrl, async (int assessmentId) =>
 {
+   IAssessmentRepository repo = new AssessmentRepository();
+   IAssessmentService service = new AssessmentService(repo);
    var assessment = await service.GetDetails(assessmentId);
    return assessment;
 });
