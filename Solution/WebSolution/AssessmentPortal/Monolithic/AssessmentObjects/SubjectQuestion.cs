@@ -1,4 +1,3 @@
-
 namespace Transflower.TFLAssessment.Entities;
 
 public class SubjectQuestion{

@@ -18,7 +18,7 @@ public interface IAssessmentRepository
 
   public Task <bool> CreateTest(Assessment newTest);
   public Task <bool> AddQuestion(int AssessmentId, int questionId);
-  public Task <bool> AddQuestions(int AssessmentId, List<TestQuestion> questions);
+  public Task <bool> AddQuestions(int AssessmentId, List<TestQuestionBank> questions);
   public Task <bool> ChangeDuration(int AssessmentId, string duration);
   public Task <bool> Reschedule(int AssessmentId, DateTime date);
   public Task <bool> RemoveQuestion(int Assessmentid, int questionId);

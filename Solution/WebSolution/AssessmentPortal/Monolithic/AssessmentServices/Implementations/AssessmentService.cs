@@ -1,7 +1,8 @@
 using Transflower.TFLAssessment.Entities;
 using Transflower.TFLAssessment.Repositories.Interfaces;
-namespace Transflower.TFLAssessment.Services;
 using Transflower.TFLAssessment.Services.Interfaces;
+
+namespace Transflower.TFLAssessment.Services.Implementations;
 
 public class AssessmentService : IAssessmentService
 {
@@ -57,7 +58,7 @@ public class AssessmentService : IAssessmentService
    {
       return await _repository.AddQuestion(AssessmentId, questionId);
    }
-   public async Task<bool> AddQuestions(int AssessmentId, List<TestQuestion> questions)
+   public async Task<bool> AddQuestions(int AssessmentId, List<TestQuestionBank> questions)
    {
       return await _repository.AddQuestions(AssessmentId, questions);
    }

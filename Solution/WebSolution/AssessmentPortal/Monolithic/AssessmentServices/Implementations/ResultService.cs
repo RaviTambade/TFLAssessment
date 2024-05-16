@@ -2,7 +2,8 @@ using MySql.Data.MySqlClient;
 using System.Data;
 using Transflower.TFLAssessment.Entities;
 using Transflower.TFLAssessment.Repositories.Interfaces;
-namespace Transflower.TFLAssessment.Repositories.Implementations;
+using Transflower.TFLAssessment.Services.Interfaces;
+namespace Transflower.TFLAssessment.Services.Implementations;
 
 //Providers
 public class ResultService :IResultService

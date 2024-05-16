@@ -1,5 +1,3 @@
- 
-
 namespace Transflower.TFLAssessment.Entities;
 public class CandidateTestTime{
 

@@ -3,19 +3,19 @@ using System.Data;
 using Transflower.TFLAssessment.Entities;
 using Transflower.TFLAssessment.Repositories.Interfaces;
 
-namespace Transflower.TFLAssessment.Repositories;
+namespace Transflower.TFLAssessment.Repositories.Implementations;
 
 public class AssessmentRepository : IAssessmentRepository
 {
-    private readonly IConfiguration _configuration;
-    private readonly string _connectionString;
+    // private readonly IConfiguration _configuration;
+    // private readonly string _connectionString;
 
-    public AssessmentRepository(IConfiguration configuration)
-    {
-        _configuration = configuration;
-        _connectionString = _configuration.GetConnectionString("DefaultConnection") ?? throw new ArgumentNullException("connectionString");
-    }
-
+    // public AssessmentRepository(IConfiguration configuration)
+    // {
+    //     _configuration = configuration;
+    //     _connectionString = _configuration.GetConnectionString("DefaultConnection") ?? throw new ArgumentNullException("connectionString");
+    // }
+    public string _connectionString = "server=localhost;port=3306;user=root;password=password;database=assessmentdb";
     public async Task<bool> CreateTest(Assessment newTest)
     {
 
@@ -207,7 +207,7 @@ public class AssessmentRepository : IAssessmentRepository
         }
         return status;
     }
-    public async Task<bool> AddQuestions(int assessmentId, List<TestQuestion> questions) //****
+    public async Task<bool> AddQuestions(int assessmentId, List<TestQuestionBank> questions) //****
     {
         bool status = false;
         MySqlConnection connection = new MySqlConnection(_connectionString);
