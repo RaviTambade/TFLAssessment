@@ -15,34 +15,34 @@ public class EvaluationCriteriaService : IEvaluationCriteriaService
         _repository = repository;
 
     }
-    public List<EvaluationCriteria> GetEvalutionCriterias()
+    public async Task<List<EvaluationCriteria>> GetEvalutionCriterias()
     {
-        return _repository.GetEvalutionCriterias();
+        return await _repository.GetEvalutionCriterias();
 
     }
 
-    public List<EvaluationCriteria> GetEvalutionCriteriasBySubject(int subjectId)
+    public async Task<List<EvaluationCriteria>> GetEvalutionCriteriasBySubject(int subjectId)
     {
-        return _repository.GetEvalutionCriteriasBySubject(subjectId);
+        return await _repository.GetEvalutionCriteriasBySubject(subjectId);
     }
 
-    public string GetCriteria(string subject, int questionId)
+    public async Task<string> GetCriteria(string subject, int questionId)
     {
-        return _repository.GetCriteria(subject, questionId);
+        return await _repository.GetCriteria(subject, questionId);
     }
 
-    public bool InsertCriteria(NewCriteria criteria)
+    public async Task<bool> InsertCriteria(NewCriteria criteria)
     {
-        return _repository.InsertCriteria(criteria);
+        return await _repository.InsertCriteria(criteria);
     }
 
-    public bool UpdateCriteria(int evaluationCriteriaId, int questionId)
+    public async Task<bool> UpdateCriteria(int evaluationCriteriaId, int questionId)
     {
-        return _repository.UpdateCriteria(evaluationCriteriaId, questionId);
+        return await _repository.UpdateCriteria(evaluationCriteriaId, questionId);
     }
 
-    public   List<QuestionDetails> GetQuestionsBySubjectAndCriteria(int subjectId,int criteriaId)
+    public async Task<List<QuestionDetails>> GetQuestionsBySubjectAndCriteria(int subjectId,int criteriaId)
     {
-        return _repository.GetQuestionsBySubjectAndCriteria(subjectId, criteriaId);
+        return await _repository.GetQuestionsBySubjectAndCriteria(subjectId, criteriaId);
     }
 }
