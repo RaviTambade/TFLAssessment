@@ -1,8 +1,7 @@
 using Transflower.TFLAssessment.Entities;
 using Transflower.TFLAssessment.Repositories.Interfaces;
+namespace Transflower.TFLAssessment.Services;
 using Transflower.TFLAssessment.Services.Interfaces;
-
-namespace Transflower.TFLAssessment.Services.Implementations;
 
 public class AssessmentService : IAssessmentService
 {

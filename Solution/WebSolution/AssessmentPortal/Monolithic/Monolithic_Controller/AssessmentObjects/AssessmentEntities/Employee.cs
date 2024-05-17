@@ -1,4 +1,4 @@
-namespace Transflower.TFLAssessment.Entities;
+ namespace Transflower.TFLAssessment.Entities;
 
 public class Employee
 {

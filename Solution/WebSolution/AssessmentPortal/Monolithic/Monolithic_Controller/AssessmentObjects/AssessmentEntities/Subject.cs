@@ -1,3 +1,4 @@
+
 namespace Transflower.TFLAssessment.Entities;
 public class Subject{
     public int Id{get;set;}
