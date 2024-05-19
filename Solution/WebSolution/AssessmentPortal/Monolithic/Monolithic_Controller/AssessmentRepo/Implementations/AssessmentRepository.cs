@@ -7,7 +7,7 @@ namespace Transflower.TFLAssessment.Repositories;
 public class AssessmentRepository :IAssessmentRepository
 {
     private string _connectionString = "server=localhost;port=3306;user=root;password=password;database=assessmentdb";
-//    private readonly IConfiguration _configuration;
+    //private readonly IConfiguration _configuration;
     // private readonly string _connectionString;
 
     // public AssessmentRepository(IConfiguration configuration)

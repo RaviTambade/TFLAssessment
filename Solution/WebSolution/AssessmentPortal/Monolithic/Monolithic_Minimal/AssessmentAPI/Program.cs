@@ -68,6 +68,8 @@ string InterviewDetailsUrl = "/interviewdetails/{interviewId}";    //pending
 string createTestUrl = "/designtest";   //pending
 string ChangeInterviewerUrl = "/changeInterviewer/interviewId/{interviewid}/smeId/{smeid}";  //pending
 string CancelInterviewUrl = "/cancelInterview/interviewid/{interviewid}";  //pending
+
+
 string apiAssessmentUrl="/{assessmentId}";
 
 
@@ -85,24 +87,28 @@ string apiAssessmentUrl="/{assessmentId}";
 // //API Listners
 app.MapGet(apiAssessmentUrl, async (int assessmentId) =>
 {
-   IAssessmentRepository repo = new AssessmentRepository();
-   IAssessmentService service = new AssessmentService(repo);
-   var assessment = await service.GetDetails(assessmentId);
-   return assessment;
+      IAssessmentRepository repo = new AssessmentRepository();
+      IAssessmentService service = new AssessmentService(repo);
+      var assessment = await service.GetDetails(assessmentId);
+      return assessment;
 });
 
-// app.MapGet(apiSubjectsUrl, () =>
-// {
-//    List<Subject> subjects = manager.GetAllSubjects();
-//    return subjects;
-// });
+ app.MapGet(apiSubjectsUrl,async () =>
+{  
+      IAssessmentRepository repo = new AssessmentRepository();
+      IAssessmentService service = new AssessmentService(repo);
+      List<Subject> subjects = await service.GetAllSubjects();
+      return subjects;
+});
 
 
-// app.MapGet(apiCriteriaUrl, () =>
-// {
-//    List<EvaluationCriteria> evaluationCriterias = criteriaManager.GetEvalutionCriterias();
-//    return evaluationCriterias;
-// });
+ app.MapGet(apiCriteriaUrl,async () =>
+ {
+      IEvaluationCriteriaRepository repo = new EvaluationCriteriaRepository();
+      IEvaluationCriteriaService service = new EvaluationCriteriaService(repo);
+      List<EvaluationCriteria> evaluationCriterias = await service.GetEvalutionCriterias();
+      return evaluationCriterias;
+ });
 
 // app.MapGet(criteriaBySubjectUrl, (int subjectId) =>
 // {

@@ -3,12 +3,12 @@ namespace Transflower.TFLAssessment.Repositories.Interfaces;
 public interface IEvaluationCriteriaRepository
 {
 
-    string GetCriteria(string subject, int questionId);
-    List<EvaluationCriteria> GetEvalutionCriterias();
-    List<EvaluationCriteria> GetEvalutionCriteriasBySubject(int subjectId);
-    bool InsertCriteria(NewCriteria criteria);
-    bool UpdateCriteria(int evaluationCriteriaId, int questionId);
-    List<QuestionDetails> GetQuestionsBySubjectAndCriteria(int subjectId, int criteriaId);
+    public Task<string> GetCriteria(string subject, int questionId);
+    public Task <List<EvaluationCriteria>> GetEvalutionCriterias();
+    public Task<List<EvaluationCriteria>> GetEvalutionCriteriasBySubject(int subjectId);
+    public Task<bool> InsertCriteria(NewCriteria criteria);
+    public Task<bool> UpdateCriteria(int evaluationCriteriaId, int questionId);
+    public Task<List<QuestionDetails>> GetQuestionsBySubjectAndCriteria(int subjectId, int criteriaId);
 
 
 }

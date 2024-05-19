@@ -10,7 +10,7 @@ public class EvaluationCriteriaRepository :IEvaluationCriteriaRepository
 {
     private string connectionString = "server=localhost;port=3306;user=root;password=password;database=assessmentdb";
  
-    public List<EvaluationCriteria> GetEvalutionCriterias()
+    public async Task<List<EvaluationCriteria>> GetEvalutionCriterias()
     {
         List<EvaluationCriteria> criterias = new List<EvaluationCriteria>();
         string query = @"select * from evaluationcriterias";
@@ -19,9 +19,9 @@ public class EvaluationCriteriaRepository :IEvaluationCriteriaRepository
         MySqlCommand command = new MySqlCommand(query, connection);
         try
         {
-            connection.Open();
+            connection.OpenAsync();
             MySqlDataReader reader = command.ExecuteReader();
-            while (reader.Read())
+            while (await reader.ReadAsync())
             {
                 int id = int.Parse(reader["id"].ToString());
                 string title = reader["title"].ToString();
@@ -38,12 +38,12 @@ public class EvaluationCriteriaRepository :IEvaluationCriteriaRepository
         }
         finally
         {
-            connection.Close();
+            connection.CloseAsync();
         }
         return criterias;
     }
 
-    public List<EvaluationCriteria> GetEvalutionCriteriasBySubject(int subjectId)
+    public async Task<List<EvaluationCriteria>> GetEvalutionCriteriasBySubject(int subjectId)
     {
         List<EvaluationCriteria> criterias = new List<EvaluationCriteria>();
         string query = @"select * from evaluationcriterias WHERE subjectid=@subjectId";
@@ -53,9 +53,9 @@ public class EvaluationCriteriaRepository :IEvaluationCriteriaRepository
         command.Parameters.AddWithValue("@subjectId", subjectId);
         try
         {
-            connection.Open();
+            connection.OpenAsync();
             MySqlDataReader reader = command.ExecuteReader();
-            while (reader.Read())
+            while (await reader.ReadAsync())
             {
                 int id = int.Parse(reader["id"].ToString());
                 string title = reader["title"].ToString();
@@ -76,12 +76,12 @@ public class EvaluationCriteriaRepository :IEvaluationCriteriaRepository
         }
         finally
         {
-            connection.Close();
+            connection.CloseAsync();
         }
         return criterias;
     }
 
-     public string GetCriteria(string subject, int questionId)
+     public async Task<string> GetCriteria(string subject, int questionId)
     {
         string criteria = "";
         string query = @"select evaluationcriterias.title from evaluationcriterias INNER join questionbank on questionbank.evaluationcriteriaid=evaluationcriterias.id
@@ -93,9 +93,9 @@ public class EvaluationCriteriaRepository :IEvaluationCriteriaRepository
             MySqlCommand command = new MySqlCommand(query, connection);
             command.Parameters.AddWithValue("@subject", subject);
             command.Parameters.AddWithValue("@questionId", questionId);
-            connection.Open();
+            connection.OpenAsync();
             MySqlDataReader reader = command.ExecuteReader();
-            if (reader.Read())
+            if (await reader.ReadAsync())
             {
 
                 string title = reader["title"].ToString();
@@ -109,12 +109,12 @@ public class EvaluationCriteriaRepository :IEvaluationCriteriaRepository
         }
         finally
         {
-            connection.Close();
+            connection.CloseAsync();
         }
         return criteria;
     }
  
-    public bool InsertCriteria(NewCriteria criteria)
+    public async Task<bool> InsertCriteria(NewCriteria criteria)
     {
         Console.WriteLine(criteria.SubjectId + " " + criteria.Title);
         bool status = false;
@@ -129,8 +129,8 @@ public class EvaluationCriteriaRepository :IEvaluationCriteriaRepository
 
         try
         {
-            connection.Open();
-            int rowsAffected = command.ExecuteNonQuery();
+            connection.OpenAsync();
+            int rowsAffected = await command.ExecuteNonQueryAsync();
             if (rowsAffected > 0)
             {
                 status = true;
@@ -142,12 +142,12 @@ public class EvaluationCriteriaRepository :IEvaluationCriteriaRepository
         }
         finally
         {
-            connection.Close();
+            connection.CloseAsync();
         }
         return status;
     }
 
-    public bool UpdateCriteria(int evaluationCriteriaId, int questionId)
+    public async Task<bool> UpdateCriteria(int evaluationCriteriaId, int questionId)
     {
 
         bool status = false;
@@ -161,8 +161,8 @@ public class EvaluationCriteriaRepository :IEvaluationCriteriaRepository
 
         try
         {
-            connection.Open();
-            int rowsAffected = command.ExecuteNonQuery();
+            connection.OpenAsync();
+            int rowsAffected = await command.ExecuteNonQueryAsync();
             if (rowsAffected > 0)
             {
                 status = true;
@@ -174,12 +174,12 @@ public class EvaluationCriteriaRepository :IEvaluationCriteriaRepository
         }
         finally
         {
-            connection.Close();
+            connection.CloseAsync();
         }
         return status;
     }
 
-   public   List<QuestionDetails> GetQuestionsBySubjectAndCriteria(int subjectId,int criteriaId)
+   public  async Task<List<QuestionDetails>> GetQuestionsBySubjectAndCriteria(int subjectId,int criteriaId)
     {
         
         List<QuestionDetails> questions = new List<QuestionDetails>();
@@ -197,9 +197,9 @@ public class EvaluationCriteriaRepository :IEvaluationCriteriaRepository
 
         try
         {
-            connection.Open();
+            connection.OpenAsync();
             MySqlDataReader reader = command.ExecuteReader();
-            while (reader.Read())
+            while (await reader.ReadAsync())
             {
                 int id = int.Parse(reader["id"].ToString());
                 string strQuestion = reader["title"].ToString();
@@ -223,7 +223,7 @@ public class EvaluationCriteriaRepository :IEvaluationCriteriaRepository
         }
         finally
         {
-            connection.Close();
+            connection.CloseAsync();
         }
         return questions;
     }   
