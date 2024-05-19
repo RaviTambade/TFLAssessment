@@ -1,20 +1,13 @@
 using MySql.Data.MySqlClient;
 using System.Data;
-using  Transflower.TFLAssessment.Entities;
+using Transflower.TFLAssessment.Entities;
 using Transflower.TFLAssessment.Repositories.Interfaces;
+
 namespace Transflower.TFLAssessment.Repositories;
 
 public class AssessmentRepository :IAssessmentRepository
 {
-    private string _connectionString = "server=localhost;port=3306;user=root;password=password;database=assessmentdb";
-    //private readonly IConfiguration _configuration;
-    // private readonly string _connectionString;
-
-    // public AssessmentRepository(IConfiguration configuration)
-    // {
-    //     _configuration = configuration;
-    //     _connectionString = _configuration.GetConnectionString("DefaultConnection")  ?? throw new ArgumentNullException("connectionString");
-    // }
+   private static string _connectionString="server=localhost;port=3306;user=root;password=password;database=assessmentdb";
 
     public async Task<bool> CreateTest(Assessment newTest)
     {
@@ -554,4 +547,5 @@ public class AssessmentRepository :IAssessmentRepository
         }
         return criterias;
     }
+
 }

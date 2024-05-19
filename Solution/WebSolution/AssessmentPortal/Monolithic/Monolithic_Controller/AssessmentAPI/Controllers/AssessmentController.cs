@@ -97,7 +97,7 @@ public class AssessmentController : ControllerBase
 
     //http://localhost:5151/api/Assessment/createtest
     [HttpPost("createtest")]
-    public async Task<IActionResult> CreateTest( Assessment assessment)
+    public async Task<IActionResult> CreateTest(Assessment assessment)
     {
         Console.WriteLine("Inside Create Test Controller");
         bool status= await _svc.CreateTest(assessment);
@@ -118,7 +118,7 @@ public class AssessmentController : ControllerBase
     
     // http://localhost:5151/api/Assessment/addmultiplequestions/assessments/1
     [HttpPost("addmultiplequestions/assessments/{assessmentId}")]
-    public async Task<IActionResult>  AddQuestions(int assessmentId,List<TestQuestion> questions)
+    public async Task<IActionResult>  AddQuestions(int assessmentId,List<TestQuestionBank> questions)
     {
         bool status=await _svc.AddQuestions(assessmentId, questions);
         _logger.LogInformation("Add multiple questions method invoked at  {DT}", DateTime.UtcNow.ToLongTimeString());
