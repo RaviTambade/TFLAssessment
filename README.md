@@ -53,14 +53,4 @@ Building an online assessment application requires collaboration between develop
  - <a href="./Documentation/assessmenttestcases.md">Test cases </a>
  - <a href="./Documentation/assessmentendpoints.md">Application EndPoints </a>
 
-## key aspects:
-
-1. **Types of Assessments:**
-2. **Assessment Creation:**
-3. **Assessment Delivery:**
-4. **Assessment Administration:**
-5. **Scoring and Grading:**
-6. **Feedback and Reporting:**
-7. **Integration and Customization:**
-
-Overall, an online assessment platform provides a flexible and scalable solution for conducting assessments efficiently, securely, and accurately, whether in educational settings, certification programs, or employment evaluations.
+An online assessment platform provides a flexible and scalable solution for conducting assessments efficiently, securely, and accurately, whether in educational settings, certification programs, or employment evaluations.
