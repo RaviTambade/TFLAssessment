@@ -60,19 +60,29 @@ public class InterviewDapperRepository : IInterviewRepository
         return candidateSubjectDetails;
     }
 
-    public async Task<InterviewDetails> GetInterviewDetails(int interviewId)
+public async Task<InterviewDetails> GetInterviewDetails(int interviewId)
+{
+    await Task.Delay(100);
+    InterviewDetails interviewInfo = null;
+    string query = "spinterviewdetails"; // Assuming this is a stored procedure name
+
+    using (IDbConnection con = new MySqlConnection(_connectionString))
     {
-        await Task.Delay(100);
-        InterviewDetails interviewInfo = null;
-        string query = "spinterviewdetails";
-        using (IDbConnection con = new MySqlConnection(_connectionString))
+        var parameters = new DynamicParameters();
+        parameters.Add("@pinterviewId", interviewId);
+
+        using (var result = con.QueryMultiple(query, parameters, commandType: CommandType.StoredProcedure))
         {
-            var parameters = new DynamicParameters();
-            parameters.Add("@pinterviewId", interviewId);
-            interviewInfo = con.QueryMultiple<InterviewDetails>(query, parameters, commandType: CommandType.StoredProcedure);
+            if (!result.IsConsumed)
+            {
+                // Assuming your stored procedure returns only one result set
+                interviewInfo = result.ReadFirstOrDefault<InterviewDetails>();
+            }
         }
-        return interviewInfo;
     }
+    return interviewInfo;
+}
+
 
 
     public async Task<bool> RescheduleInterview(int interviewId, DateTime date)

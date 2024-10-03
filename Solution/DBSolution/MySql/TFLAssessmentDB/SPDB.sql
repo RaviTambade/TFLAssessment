@@ -33,10 +33,12 @@ inner join employees
 on subjectmatterexperts.employeeid= employees.id
 where interviews.id=2;
 
+
 select interviews.candidateid, concat(employees.firstname," ",employees.lastname)as CandidateName from employees
 inner join interviews
 on interviews.candidateid = employees.id
 where interviews.id=2;
+
 
 select subjects.id, subjects.title from interviews
 inner join subjectmatterexperts
@@ -45,12 +47,14 @@ inner join subjects
 on subjectmatterexperts.subjectid = subjects.id
 where interviews.id=2;
 
+
 select evaluationcriterias.id, evaluationcriterias.title from interviews
 inner join interviewcriterias
 on interviews.id = interviewcriterias.interviewid
 inner join evaluationcriterias
 on interviewcriterias.evaluationcriteriaid = evaluationcriterias.id
 where interviews.id=2;
+
 
 END $$
 call spinterviewdetails(2);
