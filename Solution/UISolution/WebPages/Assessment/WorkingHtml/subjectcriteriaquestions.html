@@ -59,7 +59,7 @@ $(document).ready(function () {
             subjects = data;
             var lstSubject = $("#ddlSubjects")
             for (var i = 0; i < subjects.length; i++) {
-                lstSubject.append($('<option></option>').val(subjects[i].id).html(subjects[i].title));
+                lstSubject.append($('<option></option>').val(subjects[i].id).html(subjects[i].lob));
             }
 
             var apiCriteriasBySubject=criteriaApi+"/subjects/"+subjects[0].id;
@@ -90,7 +90,7 @@ $(document).ready(function () {
 
 
     //EventHandler for Dropdown Listbox change event
-    $("#ddlSubjects").change(function () {
+     $("#ddlSubjects").change(function () {
         $('#questions').empty();
         $('#ddlCriteria').empty();
 
@@ -128,9 +128,7 @@ $(document).ready(function () {
             });
         });
     });
-
-
-    $("#ddlCriteria").change(function () {
+  $("#ddlCriteria").change(function () {
 
         $('#questions').empty();
         
@@ -154,7 +152,7 @@ $(document).ready(function () {
                 )
             })
         });
-    });
+    }); 
 });
 </script>
 </body>
