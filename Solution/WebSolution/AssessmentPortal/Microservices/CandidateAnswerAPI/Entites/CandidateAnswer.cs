@@ -1,10 +1,10 @@
-﻿namespace Transflower.TFLAssessment.Entities;
-
-public class CandidateAnswer
+﻿namespace Transflower.TFLAssessment.Entities
 {
-    public int  candidateId{get;set;}
-    public string answer{get;set;}
-
-  
-    
+    public class CandidateAnswer
+    {
+        public int Id { get; set; }          // Primary Key (not needed for insert, but good for completeness)
+        public int CandidateId { get; set; } // Foreign Key
+        public int TestQuestionId { get; set; } // Foreign Key
+        public string AnswerKey { get; set; } // Answer
+    }
 }

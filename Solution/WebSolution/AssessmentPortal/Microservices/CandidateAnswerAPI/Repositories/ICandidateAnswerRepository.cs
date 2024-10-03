@@ -1,8 +1,11 @@
 using Transflower.TFLAssessment.Entities;
-namespace Transflower.TFLAssessment.Repositories.Interfaces;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
-public interface ICandidateAnswerRepository
+namespace Transflower.TFLAssessment.Repositories.Interfaces
 {
-    public Task<bool> InsertCandidateAnswers(int candidateId, int  testQuestionId);
-
+    public interface ICandidateAnswerRepository
+    {
+        Task<bool> InsertCandidateAnswers(int candidateId, List<CandidateAnswer> answers);
+    }
 }

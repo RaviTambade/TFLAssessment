@@ -52,14 +52,6 @@ public class EvaluationCriteriaDapperRepository : IEvaluationCriteriaRepository
     {
         await Task.Delay(100);
         bool status = false;
-<<<<<<< HEAD
-        string query = "INSERT INTO evaluationcriterias(subjectid,title) VALUES (@SubjectId,@Title)";
-       
-        
-        
-
-=======
->>>>>>> ed142c535cc10662aa8bdef99093a8c8e58ef2ff
         using (IDbConnection con = new MySqlConnection(_connectionString))
         {
             string query = "INSERT INTO evaluationcriterias(subjectid,title) VALUES (@subjectid,@title)";

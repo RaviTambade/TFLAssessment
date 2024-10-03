@@ -2,50 +2,51 @@ using MySql.Data.MySqlClient;
 using System.Data;
 using Transflower.TFLAssessment.Entities;
 using Transflower.TFLAssessment.Repositories.Interfaces;
-namespace Transflower.TFLAssessment.Repositories;
 
-public class CandidateAnswerRepository:ICandidateAnswerRepository
+namespace Transflower.TFLAssessment.Repositories
 {
-    private readonly IConfiguration _configuration;
-    private readonly string _connectionString;
-
-    public CandidateAnswerRepository(IConfiguration configuration)
+    public class CandidateAnswerRepository : ICandidateAnswerRepository
     {
-        _configuration = configuration;
-        _connectionString = _configuration.GetConnectionString("DefaultConnection")  ?? throw new ArgumentNullException("connectionString");
-    }
- 
-    public async Task<bool> InsertCandidateAnswers(int candidateId, List<CandidateAnswer> answers)
-    {
-        bool status = false;
-        string query = "INSERT INTO candidateanswers (candidateid, testquestionid, answerkey) VALUES (@CandidateId, @TestQuestionId, @AnswerKey)";
-        MySqlConnection connection = new MySqlConnection(_connectionString);
+        private readonly IConfiguration _configuration;
+        private readonly string _connectionString;
 
-        try
+        public CandidateAnswerRepository(IConfiguration configuration)
         {
-           await connection.OpenAsync();
-                foreach (var answer in answers)
-            {
-                MySqlCommand command = new MySqlCommand(query, connection);
-                command.Parameters.AddWithValue("@CandidateId", candidateId);
-                command.Parameters.AddWithValue("@TestQuestionId", answer.TestQuestionId);
-                command.Parameters.AddWithValue("@AnswerKey", answer.Answer);
+            _configuration = configuration;
+            _connectionString = _configuration.GetConnectionString("DefaultConnection") ?? throw new ArgumentNullException("connectionString");
+        }
 
-                int rowsAffected =  await command.ExecuteNonQueryAsync();
-                if (rowsAffected > 0)
+        public async Task<bool> InsertCandidateAnswers(int candidateId, List<CandidateAnswer> answers)
+        {
+            bool status = false;
+            string query = "INSERT INTO candidateanswers (candidateid, testquestionid, answerkey) VALUES (@CandidateId, @TestQuestionId, @AnswerKey)";
+            using (MySqlConnection connection = new MySqlConnection(_connectionString))
+            {
+                try
                 {
-                    status = true;
+                    await connection.OpenAsync();
+                    foreach (var answer in answers)
+                    {
+                        using (MySqlCommand command = new MySqlCommand(query, connection))
+                        {
+                            command.Parameters.AddWithValue("@CandidateId", candidateId);
+                            command.Parameters.AddWithValue("@TestQuestionId", answer.TestQuestionId);
+                            command.Parameters.AddWithValue("@AnswerKey", answer.AnswerKey);
+
+                            int rowsAffected = await command.ExecuteNonQueryAsync();
+                            if (rowsAffected > 0)
+                            {
+                                status = true;
+                            }
+                        }
+                    }
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
                 }
             }
+            return status;
         }
-        catch (Exception e)
-        {
-            Console.WriteLine(e.Message);
-        }
-        finally
-        {
-            await connection.CloseAsync();
-        }
-        return status;
     }
 }
