@@ -1,13 +1,16 @@
 
 import './App.css'
-import AssessmentList from './components/TflAssessment/GetAllAssessment'
+import AssessmentDetails from './Assessment/Components/GetAssessmentDetails';
+import EvaluationCriteriaComponent from './Assessment/Components/GetEvaluationCreteriaBySubject';
+import EvaluationCriteria from './Assessment/Components/GetEvaluationCriteria';
+
 
 function App() {
   
 
   return (
     <>
-      <AssessmentList/>
+      <AssessmentDetails/>
     </>
   )
 }

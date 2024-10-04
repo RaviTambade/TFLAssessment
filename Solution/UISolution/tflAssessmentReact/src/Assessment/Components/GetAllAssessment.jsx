@@ -1,6 +1,6 @@
 
 import { useEffect, useState } from "react";
-import TflAssessmentServiceFetch from "../../services/TflAssessmentServiceFetch";
+import AssessmentService from "../Service/AssessmentService";
 
 const AssessmentList=()=>{
 
@@ -10,8 +10,7 @@ const AssessmentList=()=>{
     useEffect(()=>{
         const fetchAssessments = async () => {
             try {
-                const data = await TflAssessmentServiceFetch.getAllAssessments();
-                console.log(data);
+                const data = await AssessmentService.getAllAssessments();
                 setAssessment(data);
             } catch (err) {
                 setError('Failed to fetch assessments');
