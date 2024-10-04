@@ -1,18 +1,25 @@
-
+import React from 'react';
 import './App.css'
-import AssessmentDetails from './Assessment/Components/GetAssessmentDetails';
-import EvaluationCriteriaComponent from './Assessment/Components/GetEvaluationCreteriaBySubject';
-import EvaluationCriteria from './Assessment/Components/GetEvaluationCriteria';
-
-
+//import InterviewSubjects from './InterviewDetails/components/GetInterviewedCandidatesSubjects';
+//import InterviewList from './InterviewDetails/components/GetAllInterviewCandidates';
+//import InterviewDeatils from './InterviewDetails/components/GetInterviewDetails';
+//import GetCandidateResults from './AssementIntellegence/Components/GetCandidateResult';
+import InsertCriteria from './EvaluationCriteria/Component/Crud/InsertCriteria';
 function App() {
   
 
   return (
     <>
-      <AssessmentDetails/>
+      {/* <AssessmentList/> */}
+    {/* <InterviewList/> */}
+    {/* <InterviewSubjects/> */}
+    {/* <InterviewDeatils/> */}
+    {/*<GetCandidateResults/>*/}
+
+    <InsertCriteria/>
     </>
   )
 }
 
 export default App;
+//<AssessmentList/>
