@@ -10,14 +10,6 @@ insert into employees(firstname, lastname, email, contact)values("Shree","pawer"
 insert into employees(firstname, lastname, email, contact)values("Aniket","Zarekar","Zarekar@gmail.com","9764263254");
 
 
-insert into employeeperformance(employeeid, test, communication, congition, interview)values(1,"poor", "good","good","poor");
-insert into employeeperformance(employeeid, test, communication, congition, interview)values(2,"poor", "good","good","poor");
-insert into employeeperformance(employeeid, test, communication, congition, interview)values(3,"poor", "good","good","poor");
-insert into employeeperformance(employeeid, test, communication, congition, interview)values(4,"poor", "good","good","poor");
-insert into employeeperformance(employeeid, test, communication, congition, interview)values(5,"poor", "good","good","poor");
-insert into employeeperformance(employeeid, test, communication, congition, interview)values(6,"poor", "good","good","poor");
-insert into employeeperformance(employeeid, test, communication, congition, interview)values(7,"poor", "good","good","poor");
-insert into employeeperformance(employeeid, test, communication, congition, interview)values(8,"poor", "good","good","poor");
 
 
 INSERT INTO subjects(title) VALUES('COREJAVA');
@@ -28,6 +20,18 @@ INSERT INTO subjects(title) VALUES('REACT');
 INSERT INTO subjects(title) VALUES('ANGULAR');
 INSERT INTO subjects(title) VALUES('CSHARP');
 INSERT INTO subjects(title) VALUES('JAVASCRIPT');
+
+
+
+insert into employeeperformance(employeeid, test, communication, congition, interview)values(1,"poor", "good","good","poor");
+insert into employeeperformance(employeeid, test, communication, congition, interview)values(2,"poor", "good","good","poor");
+insert into employeeperformance(employeeid, test, communication, congition, interview)values(3,"poor", "good","good","poor");
+insert into employeeperformance(employeeid, test, communication, congition, interview)values(4,"poor", "good","good","poor");
+insert into employeeperformance(employeeid, test, communication, congition, interview)values(5,"poor", "good","good","poor");
+insert into employeeperformance(employeeid, test, communication, congition, interview)values(6,"poor", "good","good","poor");
+insert into employeeperformance(employeeid, test, communication, congition, interview)values(7,"poor", "good","good","poor");
+insert into employeeperformance(employeeid, test, communication, congition, interview)values(8,"poor", "good","good","poor");
+
 
 
 INSERT INTO subjectmatterexperts(employeeid,subjectid,certificationdate)VALUES(1,1,'2023-02-15');
