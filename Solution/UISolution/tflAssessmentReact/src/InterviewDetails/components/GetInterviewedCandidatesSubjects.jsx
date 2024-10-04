@@ -4,12 +4,13 @@ import InterviewService from "../services/InterviewService";
 const InterviewSubjects = () => {
     const [interviews, setInterviews] = useState([]);
     const [error, setError] = useState(null);
-    const [candidateId, setCandidateId] = useState(''); // State to store candidate ID
-    const [submittedCandidateId, setSubmittedCandidateId] = useState(null); // State for submitted candidate ID
+    const [candidateId, setCandidateId] = useState('');
+    const [submittedCandidateId, setSubmittedCandidateId] = useState(null);
 
     useEffect(() => {
         const fetchInterviews = async () => {
-            if (!submittedCandidateId) return; // Only fetch when a candidate ID is submitted
+            // Only fetch when a candidate ID is submitted
+            if (!submittedCandidateId) return; 
             try {
                 const data = await InterviewService.GetInterviewedCandidatesSubjects(submittedCandidateId);
                 console.log(data);
@@ -20,10 +21,12 @@ const InterviewSubjects = () => {
         };
 
         fetchInterviews();
-    }, [submittedCandidateId]); // Re-run effect when submitted candidate ID changes
+        // Re-run effect when submitted candidate ID changes
+    }, [submittedCandidateId]); 
 
     const handleInputChange = (e) => {
-        setCandidateId(e.target.value); // Update candidate ID as the user types
+         // Update candidate ID as the user types
+        setCandidateId(e.target.value);
     };
 
     const handleSubmit = (e) => {
