@@ -1,39 +1,39 @@
 
-import { useEffect, useState } from "react";
-import TflAssessmentServiceFetch from "../../services/TflAssessmentServiceFetch";
+// import { useEffect, useState } from "react";
+// import TflAssessmentServiceFetch from "../../services/TflAssessmentServiceFetch";
 
-const AssessmentList=()=>{
+// const AssessmentList=()=>{
 
-    const [assessments, setAssessment] = useState([]);
-    const [error, setError] = useState(null);
+//     const [assessments, setAssessment] = useState([]);
+//     const [error, setError] = useState(null);
 
-    useEffect(()=>{
-        const fetchAssessments = async () => {
-            try {
-                const data = await TflAssessmentServiceFetch.getAllAssessments();
-                console.log(data);
-                setAssessment(data);
-            } catch (err) {
-                setError('Failed to fetch assessments');
-            }
-        };
+//     useEffect(()=>{
+//         const fetchAssessments = async () => {
+//             try {
+//                 const data = await TflAssessmentServiceFetch.getAllAssessments();
+//                 console.log(data);
+//                 setAssessment(data);
+//             } catch (err) {
+//                 setError('Failed to fetch assessments');
+//             }
+//         };
 
-        fetchAssessments();
-    },[]);
+//         fetchAssessments();
+//     },[]);
 
-    if (error) return <p>{error}</p>;
+//     if (error) return <p>{error}</p>;
 
-    return(
-        <>
-             <h1>Assessments</h1>
-        <ul>
-            {
-                assessments.map(assessment => (
-                <li key={assessment.id}>{assessment.subjectId} | {assessment.status} | {assessment.subjectExpertId} | {assessment.creationDate} | {assessment.scheduledDate}</li>
-            ))}
-        </ul>
-        </>
-    );
-}
+//     return(
+//         <>
+//              <h1>Assessments</h1>
+//         <ul>
+//             {
+//                 assessments.map(assessment => (
+//                 <li key={assessment.id}>{assessment.subjectId} | {assessment.status} | {assessment.subjectExpertId} | {assessment.creationDate} | {assessment.scheduledDate}</li>
+//             ))}
+//         </ul>
+//         </>
+//     );
+// }
 
-export default AssessmentList;
+// export default AssessmentList;

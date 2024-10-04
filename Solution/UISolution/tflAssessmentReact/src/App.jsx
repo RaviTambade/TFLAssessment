@@ -1,13 +1,16 @@
 
 import './App.css'
-import AssessmentList from './components/TflAssessment/GetAllAssessment'
+import InterviewSubjects from './InterviewDetails/components/GetInterviewedCandidatesSubjects';
+//import InterviewList from './InterviewDetails/components/GetAllInterviewCandidates'
 
 function App() {
   
 
   return (
     <>
-      <AssessmentList/>
+      {/* <AssessmentList/> */}
+    {/* <InterviewList/> */}
+    <InterviewSubjects/>
     </>
   )
 }
