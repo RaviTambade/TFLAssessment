@@ -60,28 +60,35 @@ public class InterviewDapperRepository : IInterviewRepository
         return candidateSubjectDetails;
     }
 
-public async Task<InterviewDetails> GetInterviewDetails(int interviewId)
-{
-    await Task.Delay(100);
-    InterviewDetails interviewInfo = null;
-    string query = "spinterviewdetails"; // Assuming this is a stored procedure name
-
-    using (IDbConnection con = new MySqlConnection(_connectionString))
+    public async Task<InterviewDetails> GetInterviewDetails(int interviewId)
     {
-        var parameters = new DynamicParameters();
-        parameters.Add("@pinterviewId", interviewId);
+        await Task.Delay(100);  // Simulate async delay
+        InterviewDetails interviewInfo = null;
+        string query = "spinterviewdetails";  // Stored procedure name
 
-        using (var result = con.QueryMultiple(query, parameters, commandType: CommandType.StoredProcedure))
+        using (IDbConnection con = new MySqlConnection(_connectionString))
         {
-            if (!result.IsConsumed)
+            var parameters = new DynamicParameters();
+            parameters.Add("@pinterviewId", interviewId);
+
+            using (var result = con.QueryMultiple(query, parameters, commandType: CommandType.StoredProcedure))
             {
-                // Assuming your stored procedure returns only one result set
-                interviewInfo = result.ReadFirstOrDefault<InterviewDetails>();
+                if (!result.IsConsumed)
+                {
+                    // Reading first result (general interview details)
+                    interviewInfo = result.ReadFirstOrDefault<InterviewDetails>();
+
+                    // Reading the criterias result (expected as a list of dynamic objects)
+                    var criteriasResult = result.Read<string>().ToList();
+                    if (criteriasResult != null && criteriasResult.Any())
+                    {
+                        interviewInfo.Criterias = criteriasResult.ToArray(); // Convert to string[]
+                    }
+                }
             }
         }
+        return interviewInfo;
     }
-    return interviewInfo;
-}
 
 
 

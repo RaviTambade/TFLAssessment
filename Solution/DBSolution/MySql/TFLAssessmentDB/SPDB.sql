@@ -1,4 +1,4 @@
--- Active: 1707123530557@@127.0.0.1@3306@assessmentdb
+ -- Active: 1707123530557@@127.0.0.1@3306@assessmentdb
 
 -- get candidate test results
 
@@ -20,44 +20,51 @@ END $$
 call spcandidatetestresult(2,1,@pscore) ;
 select(@pscore);
 
+DROP PROCEDURE IF EXISTS spinterviewdetails;
 
-DROP PROCEDURE IF Exists spinterviewdetails;
 DELIMITER $$
-create procedure spinterviewdetails(IN pinterviewId INT)
+CREATE PROCEDURE spinterviewdetails(IN pinterviewId INT)
 BEGIN
-select interviews.id,interviews.interviewdate,interviews.interviewtime,interviews.smeid,
-concat(employees.firstname," ",employees.lastname)as SmeName from interviews
-inner join subjectmatterexperts 
-on interviews.smeid=subjectmatterexperts.id 
-inner join employees
-on subjectmatterexperts.employeeid= employees.id
-where interviews.id=2;
+    SELECT 
+        interviews.id,
+        interviews.interviewdate,
+        interviews.interviewtime,
+        interviews.smeid,
+        CONCAT(employees.firstname, " ", employees.lastname) AS SmeName,
+        CONCAT(candidates.firstname, " ", candidates.lastname) AS CandidateName,
+        subjects.title AS Subject
+    FROM 
+        interviews
+    INNER JOIN 
+        subjectmatterexperts ON interviews.smeid = subjectmatterexperts.id
+    INNER JOIN 
+        employees ON subjectmatterexperts.employeeid = employees.id
+    LEFT JOIN 
+        employees AS candidates ON interviews.candidateid = candidates.id
+    LEFT JOIN 
+        subjects ON subjectmatterexperts.subjectid = subjects.id
+    WHERE 
+        interviews.id = pinterviewId;
 
-
-select interviews.candidateid, concat(employees.firstname," ",employees.lastname)as CandidateName from employees
-inner join interviews
-on interviews.candidateid = employees.id
-where interviews.id=2;
-
-
-select subjects.id, subjects.title from interviews
-inner join subjectmatterexperts
-on interviews.smeid = subjectmatterexperts.id
-inner join subjects
-on subjectmatterexperts.subjectid = subjects.id
-where interviews.id=2;
-
-
-select evaluationcriterias.id, evaluationcriterias.title from interviews
-inner join interviewcriterias
-on interviews.id = interviewcriterias.interviewid
-inner join evaluationcriterias
-on interviewcriterias.evaluationcriteriaid = evaluationcriterias.id
-where interviews.id=2;
-
+    SELECT 
+        evaluationcriterias.id, 
+        evaluationcriterias.title 
+    FROM 
+        interviews
+    INNER JOIN 
+        interviewcriterias ON interviews.id = interviewcriterias.interviewid
+    INNER JOIN 
+        evaluationcriterias ON interviewcriterias.evaluationcriteriaid = evaluationcriterias.id
+    WHERE 
+        interviews.id = pinterviewId;
 
 END $$
-call spinterviewdetails(2);
+
+DELIMITER ;
+
+-- Call the procedure by passing a dynamic interview ID
+CALL spinterviewdetails(5);
+
 
 DROP PROCEDURE IF Exists spcandidatetestresultdetails;
 DELIMITER $$
