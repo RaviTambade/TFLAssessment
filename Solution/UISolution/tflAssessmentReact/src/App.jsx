@@ -2,7 +2,8 @@
 import './App.css'
 //import InterviewSubjects from './InterviewDetails/components/GetInterviewedCandidatesSubjects';
 //import InterviewList from './InterviewDetails/components/GetAllInterviewCandidates';
-import InterviewDeatils from './InterviewDetails/components/GetInterviewDetails';
+//import InterviewDeatils from './InterviewDetails/components/GetInterviewDetails';
+import RescheduleInterview from './InterviewDetails/components/RescheduleInterview';
 
 function App() {
   
@@ -12,7 +13,8 @@ function App() {
       {/* <AssessmentList/> */}
     {/* <InterviewList/> */}
     {/* <InterviewSubjects/> */}
-    <InterviewDeatils/>
+    {/* <InterviewDeatils/> */}
+    <RescheduleInterview/>
     </>
   )
 }
