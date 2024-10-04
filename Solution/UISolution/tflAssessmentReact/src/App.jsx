@@ -1,14 +1,22 @@
-
+import React from 'react';
 import './App.css'
-import AssessmentList from './components/TflAssessment/GetAllAssessment';
-import InsertCriteria from './components/EvaluationCriteria/InsertCriteria';
-
+//import InterviewSubjects from './InterviewDetails/components/GetInterviewedCandidatesSubjects';
+//import InterviewList from './InterviewDetails/components/GetAllInterviewCandidates';
+//import InterviewDeatils from './InterviewDetails/components/GetInterviewDetails';
+//import GetCandidateResults from './AssementIntellegence/Components/GetCandidateResult';
+import InsertCriteria from './EvaluationCriteria/Component/Crud/InsertCriteria';
 function App() {
   
 
   return (
     <>
-      <InsertCriteria/>
+      {/* <AssessmentList/> */}
+    {/* <InterviewList/> */}
+    {/* <InterviewSubjects/> */}
+    {/* <InterviewDeatils/> */}
+    {/*<GetCandidateResults/>*/}
+
+    <InsertCriteria/>
     </>
   )
 }
