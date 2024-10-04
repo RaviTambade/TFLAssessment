@@ -1,13 +1,15 @@
-
+import React from 'react';
 import './App.css'
-import AssessmentList from './components/TflAssessment/GetAllAssessment'
+
+import GetCandidateResults from './AssementIntellegence/Components/GetCandidateResult';
 
 function App() {
   
 
   return (
     <>
-      <AssessmentList/>
+    {/* <AssessmentList/> */}
+      <GetCandidateResults/>
     </>
   )
 }
