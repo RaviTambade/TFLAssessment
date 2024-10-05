@@ -4,7 +4,9 @@ import './App.css'
 //import InterviewList from './InterviewDetails/components/GetAllInterviewCandidates';
 //import InterviewDeatils from './InterviewDetails/components/GetInterviewDetails';
 //import GetCandidateResults from './AssementIntellegence/Components/GetCandidateResult';
-import InsertCriteria from './EvaluationCriteria/Component/Crud/InsertCriteria';
+//import InsertCriteria from './EvaluationCriteria/Component/Crud/InsertCriteria';
+//import ChangeInterviewerComponent from './InterviewDetails/components/ChangeInterviewer';
+import CancelInterviewComponent from './InterviewDetails/components/CancelInterview';
 function App() {
   
 
@@ -15,8 +17,9 @@ function App() {
     {/* <InterviewSubjects/> */}
     {/* <InterviewDeatils/> */}
     {/*<GetCandidateResults/>*/}
-
-    <InsertCriteria/>
+     {/* <InsertCriteria/> */}
+     {/* <ChangeInterviewerComponent/> */}
+     <CancelInterviewComponent/>
     </>
   )
 }

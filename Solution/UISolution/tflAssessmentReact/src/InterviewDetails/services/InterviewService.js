@@ -76,7 +76,7 @@ class InterviewService {
     
     async ChangeInterviewer(interviewId, smeId) {
         try {
-            const response = await fetch(`${this.apiBaseUrl}/${interviewId}/subjectexperts/${smeId}' , {
+            const response = await fetch(`${this.apiBaseUrl}/${interviewId}/subjectexperts/${smeId}`,{
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
@@ -91,11 +91,32 @@ class InterviewService {
     
             return await response.json(); 
         } catch (error) {
-            console.error('Error rescheduling interview:', error);
+            console.error('Error changing interviewer:', error);
+            throw error;
+        }
+    }  
+
+    async CancelInterview(interviewId) {
+        try {
+            const response = await fetch(`${this.apiBaseUrl}/${interviewId}`, { 
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+    
+            if (!response.ok) {
+                const errorDetails = await response.text();
+                console.error('Error details:', errorDetails);
+                throw new Error(`Network response was not ok. Status: ${response.status}`);
+            }
+    
+            return await response.json(); 
+        } catch (error) {
+            console.error('Error cancelling interviewer:', error);
             throw error;
         }
     }
-    
 }
 
 export default new InterviewService();
