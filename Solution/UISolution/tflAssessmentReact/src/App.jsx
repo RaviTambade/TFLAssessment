@@ -10,7 +10,7 @@ function App() {
 
   return (
     <>
-      {/* <AssessmentList/> */}
+    {/* <AssessmentList/> */}
     {/* <InterviewList/> */}
     {/* <InterviewSubjects/> */}
     {/* <InterviewDeatils/> */}
