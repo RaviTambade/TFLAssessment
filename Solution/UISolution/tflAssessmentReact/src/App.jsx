@@ -9,7 +9,6 @@ import './App.css'
 import CancelInterviewComponent from './InterviewDetails/components/CancelInterview';
 function App() {
   
-
   return (
     <>
     {/* <AssessmentList/> */}
@@ -17,8 +16,8 @@ function App() {
     {/* <InterviewSubjects/> */}
     {/* <InterviewDeatils/> */}
     {/*<GetCandidateResults/>*/}
-     {/* <InsertCriteria/> */}
-     {/* <ChangeInterviewerComponent/> */}
+    {/* <InsertCriteria/> */}
+    {/* <ChangeInterviewerComponent/> */}
      <CancelInterviewComponent/>
     </>
   )
