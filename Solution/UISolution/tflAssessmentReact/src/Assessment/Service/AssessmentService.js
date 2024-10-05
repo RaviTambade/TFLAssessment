@@ -53,7 +53,15 @@ class AssessmentService {
     }
     return await response.json();
 }
+//http://localhost:5151/api/assessment/subjectexperts/2
 
+async getAllBySubjectMatterExpert(id) {
+    const response = await fetch(`${this.apiBaseUrl}/subjectexperts/${id}`);
+     if (!response.ok) {
+        throw new Error('Network response was not ok')
+    }
+    return await response.json();
+}
     // Fetch a single product by ID
     /*  async getProductById(id) {
          const response = await fetch(${this.apiBaseUrl}/${id});

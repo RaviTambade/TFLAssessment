@@ -5,6 +5,7 @@ import './App.css'
 //import InterviewDeatils from './InterviewDetails/components/GetInterviewDetails';
 //import GetCandidateResults from './AssementIntellegence/Components/GetCandidateResult';
 import InsertCriteria from './EvaluationCriteria/Component/Crud/InsertCriteria';
+import SubjectMatterExpertDetails from './Assessment/Components/GetAllBySME';
 function App() {
   
 
@@ -16,7 +17,7 @@ function App() {
     {/* <InterviewDeatils/> */}
     {/*<GetCandidateResults/>*/}
 
-    <InsertCriteria/>
+    <SubjectMatterExpertDetails/>
     </>
   )
 }
