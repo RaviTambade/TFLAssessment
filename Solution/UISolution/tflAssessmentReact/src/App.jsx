@@ -1,6 +1,9 @@
 import React from 'react';
-import './App.css'
-import QuestionList from './QuestionBank/components/GetQuestions';
+import './App.css';
+import { Provider } from 'react-redux';
+import store from './store/store';
+import QuestionComponent from './components/QuestionComponent';
+//import QuestionList from './QuestionBank/components/GetQuestions';
 //import InterviewSubjects from './InterviewDetails/components/GetInterviewedCandidatesSubjects';
 //import InterviewList from './InterviewDetails/components/GetAllInterviewCandidates';
 //import InterviewDeatils from './InterviewDetails/components/GetInterviewDetails';
@@ -13,6 +16,11 @@ function App() {
   
   return (
     <>
+    <Provider store={store}>
+      <div className="App">
+        <QuestionComponent />
+      </div>
+    </Provider>
     {/* <AssessmentList/> */}
     {/* <InterviewList/> */}
     {/* <InterviewSubjects/> */}
@@ -21,7 +29,7 @@ function App() {
     {/* <InsertCriteria/> */}
     {/* <ChangeInterviewerComponent/> */}
      {/* <CancelInterviewComponent/> */}
-     <QuestionList/>
+     {/* <QuestionList/> */}
     </>
   )
 }
