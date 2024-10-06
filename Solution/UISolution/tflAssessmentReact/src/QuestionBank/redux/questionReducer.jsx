@@ -1,19 +1,19 @@
-// src/store/questionReducer.js
 import { createReducer } from '@reduxjs/toolkit';
 import {
   fetchQuestionById,
   fetchQuestionsByTestId,
-  fetchAllQuestions
+  fetchAllQuestions,
+  fetchCriteria
 } from './questionsActions';
 
 const initialState = {
   questionList: [],
   questionDetails: {},
+  criteriaList: [],  
   loading: false,
   error: null,
 };
 
-// Reducer handling the async action states
 const questionReducer = createReducer(initialState, (builder) => {
   builder
     // For fetching questions by ID
@@ -28,6 +28,7 @@ const questionReducer = createReducer(initialState, (builder) => {
       state.loading = false;
       state.error = action.error.message;
     })
+
     // For fetching questions by test ID
     .addCase(fetchQuestionsByTestId.pending, (state) => {
       state.loading = true;
@@ -40,6 +41,7 @@ const questionReducer = createReducer(initialState, (builder) => {
       state.loading = false;
       state.error = action.error.message;
     })
+
     // For fetching all questions
     .addCase(fetchAllQuestions.pending, (state) => {
       state.loading = true;
@@ -51,6 +53,21 @@ const questionReducer = createReducer(initialState, (builder) => {
     .addCase(fetchAllQuestions.rejected, (state, action) => {
       state.loading = false;
       state.error = action.error.message;
+    })
+
+    // For fetching criteria
+    .addCase(fetchCriteria.pending, (state) => {
+      state.loading = true;
+      state.error = null;
+    })
+    .addCase(fetchCriteria.fulfilled, (state, action) => {
+      //console.log('Criteria List:', action.payload);
+      state.loading = false;
+      state.criteriaList = action.payload; 
+    })
+    .addCase(fetchCriteria.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
     });
 });
 

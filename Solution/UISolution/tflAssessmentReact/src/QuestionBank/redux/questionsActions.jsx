@@ -1,4 +1,4 @@
-// src/store/questionActions.js
+
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import QuestionService from '../services/questionbankservice';
 
@@ -26,3 +26,12 @@ export const fetchAllQuestions = createAsyncThunk(
     return response;
   }
 );
+
+export const fetchCriteria = createAsyncThunk(
+  'criteria/fetchAll',
+  async ({ subject, questionId }) => {
+    const response = await QuestionService.getCriteria(subject, questionId);
+    return response;
+  }
+);
+

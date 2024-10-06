@@ -130,15 +130,14 @@ const QuestionBankService = {
   },
 
   // Fetch evaluation criteria
-  getCriteria: async () => {
-    try {
-      const response = await fetch(`${API_URL}/criteria`);
-      return await handleResponse(response);
-    } catch (error) {
-      console.error('Error fetching criteria:', error);
-      throw error;
-    }
-  },
+  getCriteria: async (subject, questionId) => {
+    const response = await fetch(`${API_URL}/questions/subjects/${subject}/questions/${questionId}`);
+    const data = await response.json();
+    console.log('Data from API:', data); 
+    return data;
+  }
+  
 };
+
 
 export default QuestionBankService;

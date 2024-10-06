@@ -2,7 +2,10 @@ import React from 'react';
 import './App.css';
 import { Provider } from 'react-redux';
 import store from './QuestionBank/redux/store';
-import QuestionComponent from './QuestionBank/components/QuestionComponent';
+import GetCriteria from './QuestionBank/components/GetCriteria';
+// import GetQuestionById from './QuestionBank/components/GetQuestionById';
+// import GetAllQuestions from './QuestionBank/components/GetAllQuestions';
+// import GetQuestionsByTestId from './QuestionBank/components/GetQuestionsByTestId';
 //import QuestionList from './QuestionBank/components/GetQuestions';
 //import InterviewSubjects from './InterviewDetails/components/GetInterviewedCandidatesSubjects';
 //import InterviewList from './InterviewDetails/components/GetAllInterviewCandidates';
@@ -18,7 +21,10 @@ function App() {
     <>
     <Provider store={store}>
       <div className="App">
-        <QuestionComponent />
+        {/* {/* <GetQuestionById /> */}
+         {/* <GetAllQuestions/>  */}
+        {/* <GetQuestionsByTestId/>  */}
+        <GetCriteria/>
       </div>
     </Provider>
     {/* <AssessmentList/> */}
