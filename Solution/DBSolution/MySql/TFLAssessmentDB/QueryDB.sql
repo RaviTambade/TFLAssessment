@@ -2,8 +2,10 @@
 
 use assessmentdb;
 
+select * from subjects;
+select * from QUESTIONBANK;
 select * from interviews;
-select * from interviewcriterias;
+select * from evaluationcriterias;
 select * from interviewresults;
 select questionbank.id,questionbank.title,questionbank.a,questionbank.b,questionbank.c,questionbank.d from questionbank inner join subjects on subjects.id=questionbank.subjectid
 where subjects.title="ADVJAVA";
@@ -18,7 +20,10 @@ INSERT INTO candidateanswers (candidateid, testquestionid, answerkey) VALUES (@c
 update candidatetestresults set testendtime =@testendtime where candidateid=@candidateid and testid=@testid;
 update candidatetestresults set testendtime ="2015-11-05 14:35:00" where candidateid=2 and testid=1;
 
-
+SELECT s.title AS subject_title, qb.id AS question_bank_id, qb.title AS question_title, ec.title AS criteria_title
+FROM questionbank qb
+INNER JOIN evaluationcriterias ec ON qb.evaluationcriteriaid = ec.id
+INNER JOIN subjects s ON qb.subjectid = s.id;
 
 select questionbank.id, questionbank.title, subjects.title as subject ,evaluationcriterias.title as criteria
 from questionbank, subjects,evaluationcriterias

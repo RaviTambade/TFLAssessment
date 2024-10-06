@@ -22,7 +22,7 @@ const RescheduleInterview = () => {
         const interviewDate = new Date(date);
 
         try {
-            const result = await InterviewService.RescheduleInterview(interviewId, time, interviewDate);
+            const result = await InterviewService.rescheduleInterview(interviewId, time, interviewDate);
             if (result) {
                 setSuccess(true);
             } else {

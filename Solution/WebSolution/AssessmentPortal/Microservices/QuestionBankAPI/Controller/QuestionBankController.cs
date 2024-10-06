@@ -101,14 +101,6 @@ public class QuestionBankController : ControllerBase
         return Ok(status);
     }
 
-    //  [HttpPut("update/subjectcriteria/question/{questionId}")]
-    //   public IActionResult UpdateSubjectCriteria(int questionId,Question question)
-    //   {
-
-    //     bool  status = _svc.UpdateSubjectCriteria(questionId,question);
-
-    //     return Ok(status);
-    //   }
 
     //http://localhost:5172/api/questionbank/question
     [HttpPost("question")]

@@ -8,7 +8,7 @@ const InterviewList = () => {
     useEffect(() => {
         const fetchInterviews = async () => {
             try {
-                const data = await InterviewService.GetAllInterviewCandidates();
+                const data = await InterviewService.getAllInterviewCandidates();
                 console.log(data);
                 setInterviews(data);  
             } catch (err) {

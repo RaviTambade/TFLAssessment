@@ -8,7 +8,7 @@ const ChangeInterviewerComponent = () => {
 
     const handleChangeInterviewer = async () => {
         try {
-            const result = await InterviewService.ChangeInterviewer(interviewId, smeId); 
+            const result = await InterviewService.changeInterviewer(interviewId, smeId); 
             
             if (result) {
                 setStatusMessage('Interviewer changed successfully!');
