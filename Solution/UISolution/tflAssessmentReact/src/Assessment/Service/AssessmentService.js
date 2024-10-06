@@ -45,7 +45,7 @@ class AssessmentService {
         }
         return await response.json();
     }
- //http://localhost:5151/api/assessment/1
+
  async getAssessmentDetails(id) {
     const response = await fetch(`${this.apiBaseUrl}/${id}`);
      if (!response.ok) {
@@ -53,7 +53,6 @@ class AssessmentService {
     }
     return await response.json();
 }
-//http://localhost:5151/api/assessment/subjectexperts/2
 
 async getAllBySubjectMatterExpert(id) {
     const response = await fetch(`${this.apiBaseUrl}/subjectexperts/${id}`);
@@ -62,15 +61,26 @@ async getAllBySubjectMatterExpert(id) {
     }
     return await response.json();
 }
-    // Fetch a single product by ID
-    /*  async getProductById(id) {
-         const response = await fetch(${this.apiBaseUrl}/${id});
-         if (!response.ok) {
-             throw new Error('Network response was not ok');
-         }
-         return await response.json();
-     }
- 
+//http://localhost:5151/api/Assessment/createtest
+async createTest(newTest){
+    const response = await fetch(`${this.apiBaseUrl}/createtest`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(newTest)
+    });
+  
+    if (response.ok) {
+      const result = await response.json();
+      return result;
+    } else {
+      console.error("Failed to create test");
+      return null;
+    }
+  };
+   
+    /*   
      // Create a new product
      async createProduct(product) {
          const response = await fetch(this.apiBaseUrl, {

@@ -6,18 +6,19 @@ import './App.css'
 //import GetCandidateResults from './AssementIntellegence/Components/GetCandidateResult';
 import InsertCriteria from './EvaluationCriteria/Component/Crud/InsertCriteria';
 import SubjectMatterExpertDetails from './Assessment/Components/GetAllBySME';
+import CreateTestComponent from './Assessment/Components/CreateNewTest';
 function App() {
   
 
   return (
     <>
-      {/* <AssessmentList/> */}
+    {/* <AssessmentList/> */}
     {/* <InterviewList/> */}
     {/* <InterviewSubjects/> */}
     {/* <InterviewDeatils/> */}
     {/*<GetCandidateResults/>*/}
 
-    <SubjectMatterExpertDetails/>
+    <CreateTestComponent/>
     </>
   )
 }

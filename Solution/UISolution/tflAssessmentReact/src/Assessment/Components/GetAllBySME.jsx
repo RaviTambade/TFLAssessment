@@ -27,7 +27,7 @@ const SubjectMatterExpertDetails = () => {
                 type="text"
                 value={id}
                 onChange={(e) => setId(e.target.value)}
-                placeholder="Enter Subject Matter Expert ID"
+                placeholder="Enter SME ID"
             />
             
             {/* Button to fetch details */}
@@ -36,10 +36,24 @@ const SubjectMatterExpertDetails = () => {
             {/* Displaying details */}
             {error && <p style={{ color: 'red' }}>{error}</p>}
             {details && (
-                <div>
-                    <h2>Details</h2>
-                    <pre>{JSON.stringify(details, null, 2)}</pre>
-                </div>
+              <table>
+              <thead>
+                <tr>
+                  <th>Subject ID</th>
+                  <th>Status</th>
+                  <th>Duration</th>
+                </tr>
+              </thead>
+              <tbody>
+                {details.map(d => (
+                  <tr key={d.id}>
+                    <td>{d.subjectId}</td>
+                    <td>{d.status}</td>
+                    <td>{d.duration}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
             )}
         </div>
     );

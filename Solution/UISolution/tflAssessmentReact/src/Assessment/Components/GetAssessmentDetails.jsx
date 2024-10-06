@@ -16,7 +16,7 @@ const AssessmentDetails = () => {
         try {
             const data = await AssessmentService.getAssessmentDetails(assessmentId);
             setDetails(data);
-            console.log(data);
+            
             setError(null); 
         } catch (error) {
             setError('Failed to fetch assessment details.');
