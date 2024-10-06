@@ -127,7 +127,8 @@ public class QuestionBankDapperRepository : IQuestionBankRepository
     public async Task<string> GetCriteria(string subject, int questionId)
     {
         string criteria = "";
-        string query="select evaluationcriterias.title from evaluationcriterias INNER join questionbank on questionbank.evaluationcriteriaid=evaluationcriterias.id inner join subjects on questionbank.subjectid= evaluationcriterias.subjectid WHERE subjects.title=@subject and questionbank.id=@questionId";
+        string query="SELECT ec.title FROM evaluationcriterias ec INNER JOIN questionbank qb ON qb.evaluationcriteriaid = ec.id INNER JOIN subjects s ON qb.subjectid = s.id WHERE s.title = @subject AND qb.id = @questionId";
+                        
         using(IDbConnection con =new MySqlConnection(_connectionString))
         {
             criteria=await con.QueryFirstOrDefaultAsync<string>(query,new{subject,questionId});

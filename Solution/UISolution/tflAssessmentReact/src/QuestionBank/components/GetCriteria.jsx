@@ -5,7 +5,7 @@ import { fetchCriteria } from '../redux/questionsActions';
 const GetCriteria = () => {
   const dispatch = useDispatch();
   const { criteriaList, loading, error } = useSelector((state) => state.questions);
-
+  
   const [subject, setSubject] = useState('');
   const [questionId, setQuestionId] = useState('');
 
@@ -14,27 +14,24 @@ const GetCriteria = () => {
       dispatch(fetchCriteria({ subject, questionId: Number(questionId) }));
     }
   };
- // console.log('Criteria List:', criteriaList);
 
   return (
     <div>
       <h3>Get Criteria for Subject and Question ID</h3>
-      <input type="text" value={subject} onChange={(e) => setSubject(e.target.value)} placeholder="Enter Subject" />
-      <input type="number" value={questionId} onChange={(e) => setQuestionId(e.target.value)} placeholder="Enter Question ID" />
+      <input type="text" value={subject} onChange={(e) => setSubject(e.target.value)} placeholder="Enter Subject"/>
+      <input type="number" value={questionId} onChange={(e) => setQuestionId(e.target.value)} placeholder="Enter Question ID"/>
       <button onClick={handleGetCriteria}>Get Criteria</button>
 
       {loading && <p>Loading...</p>}
       {error && <p>Error: {error}</p>}
 
-      {criteriaList.length > 0 && (
+      {criteriaList && criteriaList.criteria ? (
         <div>
           <h4>Criteria</h4>
-          <ul>
-            {criteriaList.map((criteria, index) => (
-              <li key={index}>{criteria}</li>
-            ))}
-          </ul>
+          <p>{criteriaList.criteria}</p>
         </div>
+      ) : (
+        !loading && <p>No criteria available.</p>
       )}
     </div>
   );

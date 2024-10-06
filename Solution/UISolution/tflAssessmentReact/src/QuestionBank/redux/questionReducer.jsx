@@ -67,7 +67,7 @@ const questionReducer = createReducer(initialState, (builder) => {
     })
     .addCase(fetchCriteria.rejected, (state, action) => {
       state.loading = false;
-      state.error = action.payload;
+      state.error = action.error.message || 'Something went wrong';
     });
 });
 
