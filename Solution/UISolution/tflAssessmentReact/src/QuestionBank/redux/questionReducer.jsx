@@ -4,7 +4,7 @@ import {
   fetchQuestionsByTestId,
   fetchAllQuestions,
   fetchCriteria
-} from './questionsActions';
+} from './questionActions';
 
 const initialState = {
   questionList: [],

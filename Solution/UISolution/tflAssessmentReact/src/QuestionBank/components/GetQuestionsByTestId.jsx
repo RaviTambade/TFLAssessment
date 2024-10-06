@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchQuestionsByTestId } from '../redux/questionsActions';
+import { fetchQuestionsByTestId } from '../redux/questionActions';
 
 const GetQuestionsByTestId = () => {
   const dispatch = useDispatch();

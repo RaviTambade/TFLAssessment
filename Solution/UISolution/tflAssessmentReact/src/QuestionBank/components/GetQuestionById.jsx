@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchQuestionById } from '../redux/questionsActions';
+import { fetchQuestionById } from '../redux/questionActions';
 
 const GetQuestionById = () => {
   const dispatch = useDispatch();
@@ -17,12 +17,7 @@ const GetQuestionById = () => {
   return (
     <div>
       <h3>Get Question by ID</h3>
-      <input
-        type="number"
-        value={questionId}
-        onChange={(e) => setQuestionId(e.target.value)}
-        placeholder="Enter Question ID"
-      />
+      <input type="number"value={questionId} onChange={(e) => setQuestionId(e.target.value)} placeholder="Enter Question ID"/>
       <button onClick={handleGetQuestionById}>Get Question</button>
 
       {loading && <p>Loading...</p>}

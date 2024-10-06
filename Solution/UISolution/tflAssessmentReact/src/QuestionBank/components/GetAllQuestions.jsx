@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchAllQuestions } from '../redux/questionsActions';
+import { fetchAllQuestions } from '../redux/questionActions';
 
 const GetAllQuestions = () => {
   const dispatch = useDispatch();

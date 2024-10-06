@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchCriteria } from '../redux/questionsActions';
+import { fetchCriteria } from '../redux/questionActions';
 
 const GetCriteria = () => {
   const dispatch = useDispatch();
