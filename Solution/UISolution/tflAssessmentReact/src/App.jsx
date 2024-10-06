@@ -1,8 +1,8 @@
 import React from 'react';
 import './App.css';
 import { Provider } from 'react-redux';
-import store from './store/store';
-import QuestionComponent from './components/QuestionComponent';
+import store from './QuestionBank/redux/store';
+import QuestionComponent from './QuestionBank/components/QuestionComponent';
 //import QuestionList from './QuestionBank/components/GetQuestions';
 //import InterviewSubjects from './InterviewDetails/components/GetInterviewedCandidatesSubjects';
 //import InterviewList from './InterviewDetails/components/GetAllInterviewCandidates';

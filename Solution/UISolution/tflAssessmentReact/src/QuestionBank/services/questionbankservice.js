@@ -35,7 +35,7 @@ const QuestionBankService = {
   // Fetch questions by test ID
   getQuestionsByTestId: async (testId) => {
     try {
-      const response = await fetch(`${API_URL}/questions/tests/${testId}`); // Updated endpoint
+      const response = await fetch(`${API_URL}/questions/tests/${testId}`);
       return await handleResponse(response);
     } catch (error) {
       console.error(`Error fetching questions by test ID ${testId}:`, error);
