@@ -12,7 +12,7 @@ const InterviewSubjects = () => {
             // Only fetch when a candidate ID is submitted
             if (!submittedCandidateId) return; 
             try {
-                const data = await InterviewService.GetInterviewedCandidatesSubjects(submittedCandidateId);
+                const data = await InterviewService.getInterviewedCandidatesSubjects(submittedCandidateId);
                 console.log(data);
                 setInterviews(data);
             } catch (err) {

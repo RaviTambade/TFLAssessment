@@ -1,14 +1,15 @@
 const API_URL = "http://localhost:5172/api/questionbank";
 
+// Centralized response handler
 const handleResponse = async (response) => {
   if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.message || "Something went wrong");
+    const errorDetails = await response.json();
+    throw new Error(errorDetails.message || "Something went wrong");
   }
   return await response.json();
 };
 
-const QuestionService = {
+const QuestionBankService = {
   // Fetch all questions
   getAllQuestions: async () => {
     try {
@@ -16,28 +17,6 @@ const QuestionService = {
       return await handleResponse(response);
     } catch (error) {
       console.error('Error fetching all questions:', error);
-      throw error;
-    }
-  },
-
-  // Fetch questions by subject ID
-  getQuestionsBySubject: async (subjectId) => {
-    try {
-      const response = await fetch(`${API_URL}/questions/subject/${subjectId}`);
-      return await handleResponse(response);
-    } catch (error) {
-      console.error(`Error fetching questions by subject ${subjectId}:`, error);
-      throw error;
-    }
-  },
-
-  // Fetch questions by subject and criteria
-  getQuestionsBySubjectAndCriteria: async (subjectId, criteriaId) => {
-    try {
-      const response = await fetch(`${API_URL}/questions/subject/${subjectId}/criteria/${criteriaId}`);
-      return await handleResponse(response);
-    } catch (error) {
-      console.error(`Error fetching questions by subject ${subjectId} and criteria ${criteriaId}:`, error);
       throw error;
     }
   },
@@ -53,13 +32,35 @@ const QuestionService = {
     }
   },
 
-  // Fetch multiple questions (general API)
-  getQuestions: async () => {
+  // Fetch questions by test ID
+  getQuestionsByTestId: async (testId) => {
     try {
-      const response = await fetch(`${API_URL}/questions`);
+      const response = await fetch(`${API_URL}/questions/tests/${testId}`); // Updated endpoint
       return await handleResponse(response);
     } catch (error) {
-      console.error('Error fetching questions:', error);
+      console.error(`Error fetching questions by test ID ${testId}:`, error);
+      throw error;
+    }
+  },
+
+  // Fetch questions by subject ID
+  getQuestionsBySubjectId: async (subjectId) => {
+    try {
+      const response = await fetch(`${API_URL}/questions/subjects/${subjectId}`);
+      return await handleResponse(response);
+    } catch (error) {
+      console.error(`Error fetching questions by subject ID ${subjectId}:`, error);
+      throw error;
+    }
+  },
+
+  // Fetch questions by subject and criteria
+  getQuestionsBySubjectAndCriteria: async (subjectId, criteriaId) => {
+    try {
+      const response = await fetch(`${API_URL}/questions/subjects/${subjectId}/criterias/${criteriaId}`);
+      return await handleResponse(response);
+    } catch (error) {
+      console.error(`Error fetching questions by subject ID ${subjectId} and criteria ID ${criteriaId}:`, error);
       throw error;
     }
   },
@@ -97,7 +98,7 @@ const QuestionService = {
   // Update question options
   updateQuestionOptions: async (questionId, updatedOptions) => {
     try {
-      const response = await fetch(`${API_URL}/question/${questionId}/updateoptions`, {
+      const response = await fetch(`${API_URL}/update/options/question/${questionId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -140,4 +141,4 @@ const QuestionService = {
   },
 };
 
-export default QuestionService;
+export default QuestionBankService;

@@ -12,7 +12,7 @@ const InterviewDeatils = () => {
             // Only fetch when a interview ID is submitted
             if (!submittedInterviewId) return; 
             try {
-                const data = await InterviewService.GetIntervieweDetails(submittedInterviewId);
+                const data = await InterviewService.getInterviewDetails(submittedInterviewId);
                 console.log(data);
                 setInterviewDetails(data); // Store the details of the single interview
             } catch (err) {

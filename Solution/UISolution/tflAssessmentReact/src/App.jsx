@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css'
-import QuestionList from './QuestionBank/components/GetAllQuestions';
+import QuestionList from './QuestionBank/components/GetQuestions';
 //import InterviewSubjects from './InterviewDetails/components/GetInterviewedCandidatesSubjects';
 //import InterviewList from './InterviewDetails/components/GetAllInterviewCandidates';
 //import InterviewDeatils from './InterviewDetails/components/GetInterviewDetails';

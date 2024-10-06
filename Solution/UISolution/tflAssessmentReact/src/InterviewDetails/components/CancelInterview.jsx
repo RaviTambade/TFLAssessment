@@ -7,7 +7,7 @@ const CancelInterviewComponent = () => {
 
     const handleCancelInterview = async () => {
         try {
-            const result = await InterviewService.CancelInterview(interviewId); 
+            const result = await InterviewService.cancelInterview(interviewId); 
             
             if (result) {
                 setStatusMessage('Interviewer cancel successfully!');
