@@ -1,192 +1,134 @@
-// src/components/ObjectiveTest.js
-
-import React, { useState, useEffect } from 'react';
-import TestService from '../Service/TestService';
+import React, { useState, useEffect } from "react";
+import TestService from "../Service/TestService"; 
 
 const TestAppear = () => {
-  // State Variables
+  const testId = "1"; 
+  const candidateId = "2";
+
   const [questions, setQuestions] = useState([]);
   const [current, setCurrent] = useState(0);
   const [score, setScore] = useState(null);
-  const [isTestStarted, setIsTestStarted] = useState(false);
-  const [isTestSubmitted, setIsTestSubmitted] = useState(false);
 
-  const testId = 2;
-  const candidateId = 4;
-
-  // Initialize Questions (Fetch from Service)
   useEffect(() => {
     const fetchQuestions = async () => {
-      const fetchedQuestions = await TestService.getQuestions();
-      setQuestions(fetchedQuestions);
+      try {
+        const fetchedQuestions = await TestService.fetchQuestions(testId);
+        const updatedQuestions = fetchedQuestions.map((question) => ({
+          ...question,
+          answer: "No", // Initialize each question with no answer selected
+        }));
+        setQuestions(updatedQuestions);
+      } catch (error) {
+        console.error("Error fetching questions:", error);
+      }
     };
+
     fetchQuestions();
-  }, []);
+  }, [testId]);
 
-  
-  // Handlers
-  const handleStart = () => {
-    setIsTestStarted(true);
-  };
 
-  const handleOptionChange = (e) => {
-    const selectedOption = e.target.value;
-    setQuestions((prevQuestions) =>
-      prevQuestions.map((q, index) =>
-        index === current ? { ...q, answer: selectedOption } : q
-      )
-    );
+  const handleAnswerSelection = (selectedOption) => {
+    const updatedQuestions = [...questions];
+    updatedQuestions[current].answer = selectedOption;
+    setQuestions(updatedQuestions);
   };
 
   const handleFirst = () => setCurrent(0);
-
-  const handlePrevious = () => {
-    setCurrent((prev) => (prev > 0 ? prev - 1 : prev));
-  };
-
-  const handleNext = () => {
-    setCurrent((prev) => (prev < questions.length - 1 ? prev + 1 : prev));
-  };
-
+  const handlePrevious = () => setCurrent((prev) => (prev > 0 ? prev - 1 : prev));
+  const handleNext = () => setCurrent((prev) => (prev < questions.length - 1 ? prev + 1 : prev));
   const handleLast = () => setCurrent(questions.length - 1);
 
   const handleSubmit = async () => {
-    setIsTestStarted(false);
-    setIsTestSubmitted(true);
-
-
-    // Submit Answers via Service
-    const submissionResponse = await TestService.submitAnswers(
-      candidateId,
-      testId,
-      questions.map((q) => ({
-        TestQuestionId: q.id,
-        Answer: q.answer,
-      }))
-    );
-
-    if (submissionResponse.success) {
-      console.log('Answers successfully submitted.');
-    }
-
-    // Calculate Score via Service
-    const calculatedScore = await TestService.getScore(
-      candidateId,
-      testId,
-      questions
-    );
-    setScore(calculatedScore);
-  };
-
-  const handleShowResult = () => {
-    if (isTestSubmitted) {
-      alert(`Your Score is: ${score}/${questions.length}`);
-    } else {
-      alert('Please submit the test first.');
+    try {
+      const finalCandidateAnswers = questions.map((question) => ({
+        TestQuestionId: question.id,
+        AnswerKey: question.answer,
+      }));
+      await TestService.submitAnswers(candidateId, finalCandidateAnswers);
+      alert("Answers submitted successfully");
+    } catch (error) {
+      console.error("Error submitting answers:", error);
     }
   };
 
-  // Helper Functions
-  const showQuestion = (index) => {
-    if (questions.length === 0) return null;
-    const q = questions[index];
-    return (
-      <div>
-        <h5>{`${index + 1}. ${q.title}`}</h5>
-        <div className="form-check">
-          <input
-            className="form-check-input"
-            type="radio"
-            name="answer"
-            id={`a-${q.id}`}
-            value="a"
-            checked={q.answer === 'a'}
-            onChange={handleOptionChange}
-            disabled={!isTestStarted || isTestSubmitted}
-          />
-          <label className="form-check-label" htmlFor={`a-${q.id}`}>
-            {q.a}
-          </label>
-        </div>
-        <div className="form-check">
-          <input
-            className="form-check-input"
-            type="radio"
-            name="answer"
-            id={`b-${q.id}`}
-            value="b"
-            checked={q.answer === 'b'}
-            onChange={handleOptionChange}
-            disabled={!isTestStarted || isTestSubmitted}
-          />
-          <label className="form-check-label" htmlFor={`b-${q.id}`}>
-            {q.b}
-          </label>
-        </div>
-        <div className="form-check">
-          <input
-            className="form-check-input"
-            type="radio"
-            name="answer"
-            id={`c-${q.id}`}
-            value="c"
-            checked={q.answer === 'c'}
-            onChange={handleOptionChange}
-            disabled={!isTestStarted || isTestSubmitted}
-          />
-          <label className="form-check-label" htmlFor={`c-${q.id}`}>
-            {q.c}
-          </label>
-        </div>
-        <div className="form-check">
-          <input
-            className="form-check-input"
-            type="radio"
-            name="answer"
-            id={`d-${q.id}`}
-            value="d"
-            checked={q.answer === 'd'}
-            onChange={handleOptionChange}
-            disabled={!isTestStarted || isTestSubmitted}
-          />
-          <label className="form-check-label" htmlFor={`d-${q.id}`}>
-            {q.d}
-          </label>
-        </div>
-      </div>
-    );
+  // Function to fetch and display the result
+  const handleResult = async () => {
+    try {
+      const result = await TestService.fetchResult(candidateId, testId);
+      setScore(result);
+    } catch (error) {
+      console.error("Error fetching result:", error);
+    }
   };
 
+  if (!questions.length) return <div>Loading questions...</div>;
 
   return (
-    <div className="container mt-5">
+    <div>
       <h3>Transflower Learning Private Limited</h3>
       <hr />
-      <div className="jumbotron p-4">
-        {showQuestion(current)}
-        <div className="mt-4 d-flex justify-content-between">
-          <div>
-            <button className="btn btn-primary me-2" onClick={handleFirst} disabled={!isTestStarted || isTestSubmitted}> First</button>
-            <button className="btn btn-primary me-2" onClick={handlePrevious} disabled={ !isTestStarted || isTestSubmitted || current === 0}> Previous</button>
-            <button className="btn btn-primary me-2" onClick={handleNext} disabled={ !isTestStarted || isTestSubmitted || current === questions.length - 1}>Next</button>
-            <button className="btn btn-primary me-2" onClick={handleLast} disabled={!isTestStarted || isTestSubmitted}> Last</button>
-          </div>
-          
-          <div>
-            {!isTestStarted && !isTestSubmitted && (
-              <button className="btn btn-success me-2"onClick={handleStart} disabled={isTestStarted}> Start</button>
-            )}
-            {isTestStarted && !isTestSubmitted && (
-              <button className="btn btn-danger me-2" onClick={handleSubmit}>Submit</button>
-            )}
-            <button className="btn btn-info"onClick={handleShowResult}>Show Result </button>
+      <div className="container">
+        <div className="row">
+          <div className="col-md-12">
+            <h5>{questions[current].title}</h5>
+            <form>
+              <div>
+                <input
+                  type="radio"
+                  name="answer"
+                  id="a"
+                  checked={questions[current].answer === "a"}
+                  onChange={() => handleAnswerSelection("a")}
+                />
+                <label>{questions[current].a}</label>
+              </div>
+              <div>
+                <input
+                  type="radio"
+                  name="answer"
+                  id="b"
+                  checked={questions[current].answer === "b"}
+                  onChange={() => handleAnswerSelection("b")}
+                />
+                <label>{questions[current].b}</label>
+              </div>
+              <div>
+                <input
+                  type="radio"
+                  name="answer"
+                  id="c"
+                  checked={questions[current].answer === "c"}
+                  onChange={() => handleAnswerSelection("c")}
+                />
+                <label>{questions[current].c}</label>
+              </div>
+              <div>
+                <input
+                  type="radio"
+                  name="answer"
+                  id="d"
+                  checked={questions[current].answer === "d"}
+                  onChange={() => handleAnswerSelection("d")}
+                />
+                <label>{questions[current].d}</label>
+              </div>
+            </form>
+
+            <div className="btn-group">
+              <button onClick={handleFirst} disabled={current === 0}>First</button>
+              <button onClick={handlePrevious} disabled={current === 0}>Previous</button>
+              <button onClick={handleNext} disabled={current === questions.length - 1}>Next</button>
+              <button onClick={handleLast} disabled={current === questions.length - 1}>Last</button>
+            </div>
+
+            <div className="mt-3">
+              <button onClick={handleSubmit}>Submit</button>
+              <button onClick={handleResult}>Show Result</button>
+            </div>
+
+            {score !== null && <div>Your Score is: {score}</div>}
           </div>
         </div>
-        {score !== null && (
-          <div className="mt-4">
-            <h5>Your Score is: {score}/{questions.length}</h5>
-          </div>
-        )}
       </div>
     </div>
   );
