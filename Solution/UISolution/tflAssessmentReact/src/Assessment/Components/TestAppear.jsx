@@ -86,73 +86,30 @@ const TestAppear = () => {
     }
   };
 
-  // Helper Functions
+
   const showQuestion = (index) => {
     if (questions.length === 0) return null;
     const q = questions[index];
     return (
       <div>
         <h5>{`${index + 1}. ${q.title}`}</h5>
-        <div className="form-check">
-          <input
-            className="form-check-input"
-            type="radio"
-            name="answer"
-            id={`a-${q.id}`}
-            value="a"
-            checked={q.answer === 'a'}
-            onChange={handleOptionChange}
-            disabled={!isTestStarted || isTestSubmitted}
-          />
-          <label className="form-check-label" htmlFor={`a-${q.id}`}>
-            {q.a}
-          </label>
-        </div>
-        <div className="form-check">
-          <input
-            className="form-check-input"
-            type="radio"
-            name="answer"
-            id={`b-${q.id}`}
-            value="b"
-            checked={q.answer === 'b'}
-            onChange={handleOptionChange}
-            disabled={!isTestStarted || isTestSubmitted}
-          />
-          <label className="form-check-label" htmlFor={`b-${q.id}`}>
-            {q.b}
-          </label>
-        </div>
-        <div className="form-check">
-          <input
-            className="form-check-input"
-            type="radio"
-            name="answer"
-            id={`c-${q.id}`}
-            value="c"
-            checked={q.answer === 'c'}
-            onChange={handleOptionChange}
-            disabled={!isTestStarted || isTestSubmitted}
-          />
-          <label className="form-check-label" htmlFor={`c-${q.id}`}>
-            {q.c}
-          </label>
-        </div>
-        <div className="form-check">
-          <input
-            className="form-check-input"
-            type="radio"
-            name="answer"
-            id={`d-${q.id}`}
-            value="d"
-            checked={q.answer === 'd'}
-            onChange={handleOptionChange}
-            disabled={!isTestStarted || isTestSubmitted}
-          />
-          <label className="form-check-label" htmlFor={`d-${q.id}`}>
-            {q.d}
-          </label>
-        </div>
+        {['a', 'b', 'c', 'd'].map((option) => (
+          <div className="form-check" key={option}>
+            <input
+              className="form-check-input"
+              type="radio"
+              name="answer"
+              id={`${option}-${q.id}`}
+              value={option}
+              checked={q.answer === option}
+              onChange={handleOptionChange}
+              disabled={!isTestStarted || isTestSubmitted}
+            />
+            <label className="form-check-label" htmlFor={`${option}-${q.id}`}>
+              {q[option]} 
+            </label>
+          </div>
+        ))}
       </div>
     );
   };
