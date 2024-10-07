@@ -73,40 +73,28 @@ const TestAppear = () => {
             <h5>{questions[current].title}</h5>
             <form>
               <div>
-                <input
-                  type="radio"
-                  name="answer"
-                  id="a"
+                <input type="radio" name="answer"id="a"
                   checked={questions[current].answer === "a"}
                   onChange={() => handleAnswerSelection("a")}
                 />
                 <label>{questions[current].a}</label>
               </div>
               <div>
-                <input
-                  type="radio"
-                  name="answer"
-                  id="b"
+                <input type="radio" name="answer" id="b"
                   checked={questions[current].answer === "b"}
                   onChange={() => handleAnswerSelection("b")}
                 />
                 <label>{questions[current].b}</label>
               </div>
               <div>
-                <input
-                  type="radio"
-                  name="answer"
-                  id="c"
+                <input type="radio" name="answer" id="c"
                   checked={questions[current].answer === "c"}
                   onChange={() => handleAnswerSelection("c")}
                 />
                 <label>{questions[current].c}</label>
               </div>
               <div>
-                <input
-                  type="radio"
-                  name="answer"
-                  id="d"
+                <input type="radio" name="answer" id="d"
                   checked={questions[current].answer === "d"}
                   onChange={() => handleAnswerSelection("d")}
                 />
