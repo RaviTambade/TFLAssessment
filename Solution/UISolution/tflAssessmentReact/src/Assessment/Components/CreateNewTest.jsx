@@ -4,7 +4,7 @@ import AssessmentService from '../Service/AssessmentService';
 const CreateTestComponent = ({ createTest }) => {
   const [testDetails, setTestDetails] = useState({
     SubjectId: '',
-    Duration: '',  // Duration in 'HH:mm:ss' format
+    Duration: '',
     SubjectExpertId: '',
     CreationDate: '',
     ModificationDate: '',
@@ -12,7 +12,10 @@ const CreateTestComponent = ({ createTest }) => {
     PassingLevel: ''
   });
 
-  // Function to handle input change
+  const [errorMessage, setErrorMessage] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setTestDetails({
@@ -21,14 +24,23 @@ const CreateTestComponent = ({ createTest }) => {
     });
   };
 
-  // Function to handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setErrorMessage('');
+    setSuccessMessage('');
+    setIsSubmitting(true);
+
+    // Basic validation for dates
+    if (new Date(testDetails.ScheduledDate) < new Date(testDetails.CreationDate)) {
+      setErrorMessage("Scheduled date cannot be before creation date.");
+      setIsSubmitting(false);
+      return;
+    }
+
     try {
       const result = await AssessmentService.createTest(testDetails);
       if (result) {
-        console.log("Test created successfully:", result);
-        // Reset form fields after successful submission
+        setSuccessMessage("Test created successfully!");
         setTestDetails({
           SubjectId: '',
           Duration: '',
@@ -39,10 +51,12 @@ const CreateTestComponent = ({ createTest }) => {
           PassingLevel: ''
         });
       } else {
-        console.error("Test creation failed");
+        setErrorMessage("Test creation failed.");
       }
     } catch (error) {
-      console.error("Error creating test:", error);
+      setErrorMessage("Error creating test: " + error.message);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -126,7 +140,12 @@ const CreateTestComponent = ({ createTest }) => {
         />
       </div>
 
-      <button type="submit">Create Test</button>
+      {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
+      {successMessage && <p style={{ color: 'green' }}>{successMessage}</p>}
+
+      <button type="submit" disabled={isSubmitting}>
+        {isSubmitting ? 'Submitting...' : 'Create Test'}
+      </button>
     </form>
   );
 };

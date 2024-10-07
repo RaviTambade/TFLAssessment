@@ -59,7 +59,7 @@ $(document).ready(function () {
             subjects = data;
             var lstSubject = $("#ddlSubjects")
             for (var i = 0; i < subjects.length; i++) {
-                lstSubject.append($('<option></option>').val(subjects[i].id).html(subjects[i].lob));
+                lstSubject.append($('<option></option>').val(subjects[i].id).html(subjects[i].title));
             }
 
             var apiCriteriasBySubject=criteriaApi+"/subjects/"+subjects[0].id;
