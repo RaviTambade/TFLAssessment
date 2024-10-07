@@ -4,7 +4,7 @@ import { fetchCriteria } from '../redux/questionActions';
 
 const GetCriteria = () => {
   const dispatch = useDispatch();
-  const { criteriaList, loading, error } = useSelector((state) => state.questions);
+  const { criterianame, loading, error } = useSelector((state) => state.questions);
   
   const [subject, setSubject] = useState('');
   const [questionId, setQuestionId] = useState('');
@@ -25,10 +25,10 @@ const GetCriteria = () => {
       {loading && <p>Loading...</p>}
       {error && <p>Error: {error}</p>}
 
-      {criteriaList && criteriaList.criteria ? (
+      {criterianame && criterianame.criteria ? (
         <div>
           <h4>Criteria</h4>
-          <p>{criteriaList.criteria}</p>
+          <p>{criterianame}</p>
         </div>
       ) : (
         !loading && <p>No criteria available.</p>
