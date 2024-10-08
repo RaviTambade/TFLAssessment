@@ -1,162 +1,125 @@
-import { useEffect, useState } from "react"
-import TestApperService from "../Service/TestAppearService";
-import TestAppearService from "../Service/TestAppearService";
+import React, { useState, useEffect } from "react";
+import TestService from "../Service/TestService"; 
 
 const TestAppear = () => {
-  const [assessmentId, setAssessmentId] = useState('');
+  const testId = "1"; 
+  const candidateId = "6";
+
   const [questions, setQuestions] = useState([]);
-  const [error, setError] = useState(null);
   const [current, setCurrent] = useState(0);
   const [score, setScore] = useState(null);
-  const [isTestStarted, setIsTestStarted] = useState(false);
-  const [isTestSubmitted, setIsTestSubmitted] = useState(false);
 
-  const handleInputChange = (event) => {
-    setAssessmentId(event.target.value);
-  };
+  useEffect(() => {
+    const fetchQuestions = async () => {
+      try {
+        const fetchedQuestions = await TestService.fetchQuestions(testId);
+        const updatedQuestions = fetchedQuestions.map((question) => ({
+          ...question,
+          answer: "No", // Initialize each question with no answer selected
+        }));
+        setQuestions(updatedQuestions);
+      } catch (error) {
+        console.error("Error fetching questions:", error);
+      }
+    };
 
-  const fetchAssessmentDetails = async () => {
-    try {
-      const data = await TestApperService.getTestQuetions(assessmentId);
-      setQuestions(data);
-      console.log(data);
-      setError(null);
-    } catch (error) {
-      setError('Failed to fetch assessment details.');
-      setDetails(null);
-    }
-  };
+    fetchQuestions();
+  }, [testId]);
 
-  const handleFormSubmit = (event) => {
-    event.preventDefault();
-    fetchAssessmentDetails();
-  };
-  const handleStart = () => {
-    setIsTestStarted(true);
-  };
 
-  const handleOptionChange = (e) => {
-    const selectedOption = e.target.value;
-    setQuestions((prevQuestions) =>
-      prevQuestions.map((q, index) =>
-        index === current ? { ...q, answer: selectedOption } : q
-      )
-    );
+  const handleAnswerSelection = (selectedOption) => {
+    const updatedQuestions = [...questions];
+    updatedQuestions[current].answer = selectedOption;
+    setQuestions(updatedQuestions);
   };
 
   const handleFirst = () => setCurrent(0);
-
-  const handlePrevious = () => {
-    setCurrent((prev) => (prev > 0 ? prev - 1 : prev));
-  };
-
-  const handleNext = () => {
-    setCurrent((prev) => (prev < questions.length - 1 ? prev + 1 : prev));
-  };
-
+  const handlePrevious = () => setCurrent((prev) => (prev > 0 ? prev - 1 : prev));
+  const handleNext = () => setCurrent((prev) => (prev < questions.length - 1 ? prev + 1 : prev));
   const handleLast = () => setCurrent(questions.length - 1);
 
-  const candidateId = 4;
   const handleSubmit = async () => {
     try {
       const finalCandidateAnswers = questions.map((question) => ({
         TestQuestionId: question.id,
         AnswerKey: question.answer,
       }));
-      await TestAppearService.submitAnswers(candidateId, finalCandidateAnswers);
+      await TestService.submitAnswers(candidateId, finalCandidateAnswers);
       alert("Answers submitted successfully");
-      setIsTestSubmitted(true);
     } catch (error) {
       console.error("Error submitting answers:", error);
     }
   };
 
-  const testId = assessmentId;
-  const handleShowResult = async () => {
+  // Function to fetch and display the result
+  const handleResult = async () => {
     try {
-      const result = await TestAppearService.fetchResult(candidateId, testId);
+      const result = await TestService.fetchResult(candidateId, testId);
       setScore(result);
     } catch (error) {
       console.error("Error fetching result:", error);
     }
   };
 
-
-  const showQuestion = (index) => {
-    if (questions.length === 0) return null;
-    const q = questions[index];
-    return (
-      <div>
-        <h5>{`${index + 1}. ${q.title}`}</h5>
-        {['a', 'b', 'c', 'd'].map((option) => (
-          <div className="form-check" key={option}>
-            <input
-              className="form-check-input"
-              type="radio"
-              name="answer"
-              id={`${option}-${q.id}`}
-              value={option}
-              checked={q.answer === option}
-              onChange={handleOptionChange}
-              disabled={!isTestStarted || isTestSubmitted}
-            />
-            <label className="form-check-label" htmlFor={`${option}-${q.id}`}>
-              {q[option]}
-            </label>
-          </div>
-        ))}
-      </div>
-    );
-  };
-
-
+  if (!questions.length) return <div>Loading questions...</div>;
 
   return (
-    <>
-      <form onSubmit={handleFormSubmit}>
-        <label htmlFor="assessmentIdInput">Assessment ID:</label>
-        <input
-          id="assessmentIdInput"
-          type="text"
-          value={assessmentId}
-          onChange={handleInputChange}
-          placeholder="Enter Assessment ID"
-        /><br />
-        <button type="submit">Get Test</button>
-      </form>
-      {error && <p>{error}</p>}
-      {questions && (
-        <div>
-          {showQuestion(current)}
-          <div className="mt-4 d-flex justify-content-between">
-            <div>
-              <button className="btn btn-primary me-2" onClick={handleFirst} disabled={!isTestStarted || isTestSubmitted}> First</button>
-              <button className="btn btn-primary me-2" onClick={handlePrevious} disabled={!isTestStarted || isTestSubmitted || current === 0}> Previous</button>
-              <button className="btn btn-primary me-2" onClick={handleNext} disabled={!isTestStarted || isTestSubmitted || current === questions.length - 1}>Next</button>
-              <button className="btn btn-primary me-2" onClick={handleLast} disabled={!isTestStarted || isTestSubmitted}> Last</button>
+    <div>
+      <h3>Transflower Learning Private Limited</h3>
+      <hr />
+      <div className="container">
+        <div className="row">
+          <div className="col-md-12">
+            <h5>{questions[current].title}</h5>
+            <form>
+              <div>
+                <input type="radio" name="answer"id="a"
+                  checked={questions[current].answer === "a"}
+                  onChange={() => handleAnswerSelection("a")}
+                />
+                <label>{questions[current].a}</label>
+              </div>
+              <div>
+                <input type="radio" name="answer" id="b"
+                  checked={questions[current].answer === "b"}
+                  onChange={() => handleAnswerSelection("b")}
+                />
+                <label>{questions[current].b}</label>
+              </div>
+              <div>
+                <input type="radio" name="answer" id="c"
+                  checked={questions[current].answer === "c"}
+                  onChange={() => handleAnswerSelection("c")}
+                />
+                <label>{questions[current].c}</label>
+              </div>
+              <div>
+                <input type="radio" name="answer" id="d"
+                  checked={questions[current].answer === "d"}
+                  onChange={() => handleAnswerSelection("d")}
+                />
+                <label>{questions[current].d}</label>
+              </div>
+            </form>
+
+            <div className="btn-group">
+              <button onClick={handleFirst} disabled={current === 0}>First</button>
+              <button onClick={handlePrevious} disabled={current === 0}>Previous</button>
+              <button onClick={handleNext} disabled={current === questions.length - 1}>Next</button>
+              <button onClick={handleLast} disabled={current === questions.length - 1}>Last</button>
             </div>
 
-            <div>
-              {!isTestStarted && !isTestSubmitted && (
-                <button className="btn btn-success me-2" onClick={handleStart} disabled={isTestStarted}> Start</button>
-              )}
-              {isTestStarted && !isTestSubmitted && (
-                <button className="btn btn-danger me-2" onClick={handleSubmit}>Submit</button>
-              )}
-              <button className="btn btn-info" onClick={handleShowResult}>Show Result </button>
+            <div className="mt-3">
+              <button onClick={handleSubmit}>Submit</button>
+              <button onClick={handleResult}>Show Result</button>
             </div>
+
+            {score !== null && <div>Your Score is: {score}</div>}
           </div>
-          {score !== null && (
-            <div className="mt-4">
-              <h5>Your Score is: {score}/{questions.length}</h5>
-            </div>
-          )}
-
         </div>
-      )}
-    </>
-  )
-
-}
+      </div>
+    </div>
+  );
+};
 
 export default TestAppear;
