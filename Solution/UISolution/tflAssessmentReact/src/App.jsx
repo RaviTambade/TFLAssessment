@@ -17,7 +17,8 @@ import './App.css';
 // import SubjectMatterExpertDetails from './Assessment/Components/GetAllBySME';
 // import CreateTestComponent from './Assessment/Components/CreateNewTest';
 //import TestAppear from './Assessment/Components/TestAppear';
-import CandidateDetails from './CandidateDetails/components/CandidateDetails';
+//import CandidateDetails from './CandidateResultDetails/components/CandidateDetails';
+import CandidateListByTestIdService from './CandidateResultDetails/components/CandidatesByTest';
 function App() {
   
   return (
@@ -30,7 +31,8 @@ function App() {
     {/* <InsertCriteria/> */} 
     {/* <QuestionBankList/> */}
      {/* <TestAppear/> */}
-     <CandidateDetails/>
+     {/*<CandidateDetails/> */}
+     <CandidateListByTestIdService/>
     </>
   )
 }

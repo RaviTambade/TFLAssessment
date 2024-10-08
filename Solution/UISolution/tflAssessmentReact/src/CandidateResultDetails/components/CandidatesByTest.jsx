@@ -7,7 +7,7 @@ const CandidatesList = () => {
     useEffect(()=>{
         const fetchCandidates = async () => {
             try{
-                const data = await CandidateListByTestIdService.getCandidates();
+                const data = await CandidateListByTestIdService.getCandidates(2);
                 setCandidates(data);
             }catch(error){
                 setError('failed to fetch employees')
@@ -33,4 +33,4 @@ const CandidatesList = () => {
     )
 }
 
-export default EmployeesList;
+export default CandidatesList;

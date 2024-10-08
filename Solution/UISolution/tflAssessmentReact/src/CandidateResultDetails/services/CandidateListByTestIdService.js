@@ -1,6 +1,6 @@
 class CandidateListByTestIdService {
     constructor() {
-      this.apiBaseUrl = 'http://localhost:5235/api/Result';
+      this.apiBaseUrl = 'http://localhost:5235';
       
     }
     async getCandidates(testId) {
