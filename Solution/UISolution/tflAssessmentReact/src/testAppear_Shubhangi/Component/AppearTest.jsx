@@ -14,7 +14,7 @@
      useEffect(()=>{
          const fetchQuestions = async () => {
              try {
-                const data = await GetQuestionBankServiceFetch.getAllQuestions(testId);
+                const data = await GetQuestionBankServiceFetch.getAllQuestions(2);
                 console.log(data);
                 setQuestions(data);
              } catch (err) {

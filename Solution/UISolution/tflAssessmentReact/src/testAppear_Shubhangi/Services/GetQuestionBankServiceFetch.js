@@ -11,8 +11,8 @@ class GetQuestionBankServiceFetch {
         // Fetch all Questions
         //await fetch(`${this.questionUrl}/${id}`
          async getAllQuestions(id) {
-       
-         const response = await fetch(`${this.questionUrl}/${id}`,{
+            
+         const response = await fetch(`http://localhost:5172/api/questionbank/questions/tests/${id}`,{
             method: "GET",
             headers: {
                 'Content-Type': 'application/json',
