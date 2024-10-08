@@ -1,40 +1,35 @@
 import React, { useState } from 'react';
 import InterviewService from '../services/InterviewService'; 
 
-const ChangeInterviewerComponent = () => {
+const CancelInterviewComponent = () => {
     const [interviewId, setInterviewId] = useState('');
-    const [smeId, setSmeId] = useState('');
     const [statusMessage, setStatusMessage] = useState('');
 
-    const handleChangeInterviewer = async () => {
+    const handleCancelInterview = async () => {
         try {
-            const result = await InterviewService.changeInterviewer(interviewId, smeId); 
+            const result = await InterviewService.cancelInterview(interviewId); 
             
             if (result) {
-                setStatusMessage('Interviewer changed successfully!');
+                setStatusMessage('Interviewer cancel successfully!');
             } else {
                 setStatusMessage('Failed to change interviewer.');
             }
         } catch (error) {
             console.error('Error:', error);
-            setStatusMessage('An error occurred while changing the interviewer.');
+            setStatusMessage('An error occurred while cancelling the interviewer.');
         }
     };
     return (
         <div>
-            <h2>Change Interviewer</h2>
+            <h2>Cancel Interview</h2>
             <label>Interview ID:
                 <input type="text" value={interviewId} onChange={(e) => setInterviewId(e.target.value)} />
             </label>
             <br />
-            <label>SME ID:
-                <input type="text" value={smeId} onChange={(e) => setSmeId(e.target.value)} />
-            </label>
-            <br />
-            <button onClick={handleChangeInterviewer}>Change Interviewer</button>
+            <button onClick={handleCancelInterview}>Cancel Interview</button>
             <p>{statusMessage}</p>
         </div>
     );
 };
 
-export default ChangeInterviewerComponent;
+export default CancelInterviewComponent;
