@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import TestService from "../Service/TestService";
 
 const TestAppear = () => {
@@ -8,6 +8,7 @@ const TestAppear = () => {
   const [current, setCurrent] = useState(0);
   const [score, setScore] = useState(null);
   const [testStarted, setTestStarted] = useState(false);
+  var time = {};
 
   const fetchQuestions = async () => {
     try {
@@ -33,6 +34,16 @@ const TestAppear = () => {
   const handleNext = () => setCurrent((prev) => (prev < questions.length - 1 ? prev + 1 : prev));
   const handleLast = () => setCurrent(questions.length - 1);
 
+  var getCurrentDateTime = () => {
+    let d = new Date();
+    time.month = d.getMonth() ;
+    time.year = d.getFullYear();
+    time.day = d.getDate();
+    time.hour = d.getHours();
+    time.minutes = d.getMinutes();
+    time.seconds = d.getSeconds();
+    return time;
+  };
   const handleSubmit = async () => {
     try {
       const finalCandidateAnswers = questions.map((question) => ({
@@ -40,6 +51,8 @@ const TestAppear = () => {
         AnswerKey: question.answer,
       }));
       await TestService.submitAnswers(candidateId, finalCandidateAnswers);
+      var endTime= getCurrentDateTime();
+      await TestService.endTime(candidateId,testId, endTime);
       alert("Answers submitted successfully");
     } catch (error) {
       console.error("Error submitting answers:", error);
@@ -55,9 +68,11 @@ const TestAppear = () => {
     }
   };
 
-  const handleStartTest = () => {
+  const handleStartTest = async () => {
     if (candidateId && testId) {
       setTestStarted(true);
+      var startTime= getCurrentDateTime();
+      await TestService.startTime(candidateId,testId, startTime);
       fetchQuestions();
     } else {
       alert("Please enter both Candidate ID and Test ID to start the test.");

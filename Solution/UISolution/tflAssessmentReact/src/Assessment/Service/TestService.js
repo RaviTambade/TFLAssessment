@@ -33,6 +33,36 @@ const TestService = {
         throw new Error("Error fetching result");
       }
       return response.json();
+    },
+    startTime: async (candidateId, testId, time) => {
+      const startTimeUrl = `http://localhost:5235/api/result/setstarttime/${candidateId}/tests/${testId}`;
+      const response = await fetch(startTimeUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(time),
+      });
+  
+      if (!response.ok) {
+        throw new Error("Error submitting time");
+      }
+      return response.json();
+    },
+    endTime: async (candidateId, testId, time) => {
+      const endTimeUrl = `http://localhost:5235/api/result/setendtime/${candidateId}/tests/${testId}`;
+      const response = await fetch(endTimeUrl, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(time),
+      });
+  
+      if (!response.ok) {
+        throw new Error("Error submitting time");
+      }
+      return response.json();
     }
   };
   
