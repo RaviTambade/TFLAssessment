@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState,useEffect} from "react";
 //import { useNavigate } from "react-router-dom";
 
 import EvaluationCriteriaService from "../../Services/EvaluationCriteriaServiceFetch"
@@ -11,7 +11,7 @@ const InsertCriteria = () => {
     const [subjects, setSubjects] = useState([]);
     const [selectedSubject, setSelectedSubject] = useState(null);
     const [criteria, setCriteria] = useState(crite);
-
+    const [error, setError] = useState(null);
 
     useEffect(() => {
         const fetchSubjects = async () => {

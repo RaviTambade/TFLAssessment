@@ -80,7 +80,7 @@
       var score;
 
       var testId =2;
-      var candidateId = 4;
+      var candidateId = 3;
 
       //rest api urls
       var remoteWeb = "http://localhost:5238"
@@ -91,7 +91,6 @@
       var endTimeUrl = "http://localhost:5235/api/result/setendtime/"+candidateId+"/tests/"+testId;
       
       $(document).ready(function () {
-
 
         //Test start and submit handlers
         $("#btnStart").click(() => {
@@ -362,8 +361,6 @@
         $("#btnFirst").prop("disabled", status);
         $("#btnLast").prop("disabled", status);
       }
-
-
 
       var testTimeLimit = () => {
         intervalId = setInterval(() => {

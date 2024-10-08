@@ -1,18 +1,19 @@
 //  services/EvaluationCriteriaServiceFetch.js
- class EvaluationCriteriaServiceFetch {
+class GetQuestionBankServiceFetch {
 
     constructor() {   
-        this.apiBaseUrl = 'http://localhost:5195/api/criteria'; 
+
+        var questionUrl = 'http://localhost:5172/api/questionbank/questions/tests';
+        console.log("questionUrl : "+ questionUrl);
         // Replace with your API base URL
     }
 
-        // Fetch all Subject
-        
-         async getAllSubjectTitles() {
+        // Fetch all Questions
+        //await fetch(`${this.questionUrl}/${id}`
+         async getAllQuestions(id) {
        
-         const response = await fetch('http://localhost:5264/api/subject/subjects',{
+         const response = await fetch(`${this.questionUrl}/${id}`,{
             method: "GET",
-            mode: "cors",  // Change the mode to CORS 
             headers: {
                 'Content-Type': 'application/json',
             }
@@ -33,20 +34,7 @@
 //         return await response.json();
 //     }
 
-     // Create a new Criteria
-        async createCriteria(criteria) {
-         const response = await fetch(this.apiBaseUrl, {
-             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-             body: JSON.stringify(criteria),
-        });
-        if (!response.ok) {
-            throw new Error('Network response was not ok');         }
-         return await response.json();
-    }
-
+    
 //     // Update an existing product
 //     async updateProduct(id, product) {
 //         const response = await fetch(${this.apiBaseUrl}/${id}, {
@@ -74,4 +62,4 @@
 //     } */
  }
 
- export default new EvaluationCriteriaServiceFetch();
+ export default new GetQuestionBankServiceFetch();

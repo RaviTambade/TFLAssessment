@@ -4,10 +4,10 @@ import './App.css'
 //import InterviewList from './InterviewDetails/components/GetAllInterviewCandidates';
 //import InterviewDeatils from './InterviewDetails/components/GetInterviewDetails';
 //import GetCandidateResults from './AssementIntellegence/Components/GetCandidateResult';
-import InsertCriteria from './EvaluationCriteria/Component/Crud/InsertCriteria';
+//import InsertCriteria from './EvaluationCriteria/Component/Crud/InsertCriteria';
+import QuestionBankList from './testAppear_Shubhangi/Component/AppearTest';
 function App() {
   
-
   return (
     <>
       {/* <AssessmentList/> */}
@@ -16,7 +16,9 @@ function App() {
     {/* <InterviewDeatils/> */}
     {/*<GetCandidateResults/>*/}
 
-    <InsertCriteria/>
+     {/* <InsertCriteria/> */} 
+
+     <QuestionBankList/>
     </>
   )
 }

@@ -39,7 +39,7 @@ var questionsList;
 
 
 
-var subjectsApi =" http://localhost:5151/api/assessment/subjects";
+var subjectsApi ="http://localhost:5151/api/assessment/subjects";
 var criteriaApi = "http://localhost:5151/api/assessment/criterias";
 
 var questionsApi = "http://localhost:5172/api/questionbank/questions";
@@ -56,10 +56,12 @@ $(document).ready(function () {
 
         success: function (data) {
            // lstSubject.empty();
+            //JSON.stringify(data);
             subjects = data;
+            console.log("Subjects : " + subjects);
             var lstSubject = $("#ddlSubjects")
             for (var i = 0; i < subjects.length; i++) {
-                lstSubject.append($('<option></option>').val(subjects[i].id).html(subjects[i].lob));
+                lstSubject.append($('<option></option>').val(subjects[i].id).html(subjects[i].title));
             }
 
             var apiCriteriasBySubject=criteriaApi+"/subjects/"+subjects[0].id;
