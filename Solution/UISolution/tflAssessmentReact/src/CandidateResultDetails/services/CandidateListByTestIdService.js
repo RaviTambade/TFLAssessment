@@ -1,13 +1,14 @@
-class CandidateService {
+class CandidateListByTestIdService {
     constructor() {
       this.apiBaseUrl = 'http://localhost:5235/api/Result';
+      
     }
-    async getCandidateDetails(candidateId, testId) {
+    async getCandidates(testId) {
       try {
-        const response = await fetch(`${this.apiBaseUrl}/Candidates/${candidateId}/tests/${testId}/details`);
+        const response = await fetch(`${this.apiBaseUrl}/Candidates/tests/${testId}`);
         return await this.handleResponse(response);
       } catch (error) {
-        console.error('Error fetching candidate details:', error);
+        console.error('Error fetching candidates :', error);
         throw error;
       }
     }
@@ -19,5 +20,5 @@ class CandidateService {
     }
   }
   
-  export default new CandidateService();
+  export default new CandidateListByTestIdService();
   
