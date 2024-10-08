@@ -1,29 +1,12 @@
 
-<<<<<<< HEAD
-// import { useEffect, useState } from "react";
-// import TflAssessmentServiceFetch from "../../services/TflAssessmentServiceFetch";
-=======
 import { useEffect, useState } from "react";
 import AssessmentService from "../Service/AssessmentService";
->>>>>>> 2b27a7d3aebdf4cf4ea523bacc7b20e30153db5e
 
 const AssessmentList = () => {
 
     const [assessments, setAssessment] = useState([]);
     const [error, setError] = useState(null);
 
-<<<<<<< HEAD
-//     useEffect(()=>{
-//         const fetchAssessments = async () => {
-//             try {
-//                 const data = await TflAssessmentServiceFetch.getAllAssessments();
-//                 console.log(data);
-//                 setAssessment(data);
-//             } catch (err) {
-//                 setError('Failed to fetch assessments');
-//             }
-//         };
-=======
     useEffect(() => {
         const fetchAssessments = async () => {
             try {
@@ -33,7 +16,6 @@ const AssessmentList = () => {
                 setError('Failed to fetch assessments');
             }
         };
->>>>>>> 2b27a7d3aebdf4cf4ea523bacc7b20e30153db5e
 
         fetchAssessments();
     }, []);

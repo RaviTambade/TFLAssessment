@@ -16,7 +16,8 @@ import './App.css';
 // import InsertCriteria from './EvaluationCriteria/Component/Crud/InsertCriteria';
 // import SubjectMatterExpertDetails from './Assessment/Components/GetAllBySME';
 // import CreateTestComponent from './Assessment/Components/CreateNewTest';
-import TestAppear from './Assessment/Components/TestAppear';
+//import TestAppear from './Assessment/Components/TestAppear';
+import CandidateDetails from './CandidateDetails/components/CandidateDetails';
 function App() {
   
   return (
@@ -28,8 +29,8 @@ function App() {
     {/*<GetCandidateResults/>*/}
     {/* <InsertCriteria/> */} 
     {/* <QuestionBankList/> */}
-   
-     <TestAppear/>
+     {/* <TestAppear/> */}
+     <CandidateDetails/>
     </>
   )
 }
