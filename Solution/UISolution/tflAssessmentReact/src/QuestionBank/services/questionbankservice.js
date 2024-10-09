@@ -1,4 +1,5 @@
-const API_URL = "http://localhost:5172/api/questionbank";
+import { endpoints } from "../config/appConfig";
+
 
 // Centralized response handler
 const handleResponse = async (response) => {
@@ -10,10 +11,9 @@ const handleResponse = async (response) => {
 };
 
 const QuestionBankService = {
-  // Fetch all questions
   getAllQuestions: async () => {
     try {
-      const response = await fetch(`${API_URL}/questions`);
+      const response = await fetch(endpoints.getAllQuestions);
       return await handleResponse(response);
     } catch (error) {
       console.error('Error fetching all questions:', error);
@@ -21,10 +21,9 @@ const QuestionBankService = {
     }
   },
 
-  // Fetch a specific question by ID
   getQuestionById: async (questionId) => {
     try {
-      const response = await fetch(`${API_URL}/questions/${questionId}`);
+      const response = await fetch(endpoints.getQuestionById(questionId));
       return await handleResponse(response);
     } catch (error) {
       console.error(`Error fetching question by ID ${questionId}:`, error);
@@ -32,10 +31,10 @@ const QuestionBankService = {
     }
   },
 
-  // Fetch questions by test ID
+
   getQuestionsByTestId: async (testId) => {
     try {
-      const response = await fetch(`${API_URL}/questions/tests/${testId}`);
+      const response = await fetch(endpoints.getQuestionsByTestId(testId));
       return await handleResponse(response);
     } catch (error) {
       console.error(`Error fetching questions by test ID ${testId}:`, error);
@@ -43,19 +42,47 @@ const QuestionBankService = {
     }
   },
 
-  // Fetch evaluation criteria
   getCriteria: async (subject, questionId) => {
-    const response = await fetch(`${API_URL}/questions/subjects/${subject}/questions/${questionId}`);
+    const response = await fetch(endpoints.getCriteria(subject, questionId));
     if (!response.ok) {
       throw new Error('Failed to fetch criteria');
     }
     const data = await response.json();
     console.log('Data from API:', data); 
     return data;
-  }
+  },
   
-  
-};
+  getSubjects: async () => {
+    const response = await fetch(endpoints.getSubjects);
+    if (!response.ok) {
+      throw new Error('Failed to fetch subjects');
+    }
+    return await response.json();
+  },
 
+  getCriteriaBySubject: async (subjectId) => {
+    const response = await fetch(endpoints.getCriteriaBySubject(subjectId));
+    if (!response.ok) {
+      throw new Error('Failed to fetch criteria');
+    }
+    return await response.json();
+  },
+
+  getQuestionsBySubject: async (subjectId) => {
+    const response = await fetch(endpoints.getQuestionsBySubject(subjectId));
+    if (!response.ok) {
+      throw new Error('Failed to fetch questions');
+    }
+    return await response.json();
+  },
+
+  getQuestionsBySubjectAndCriteria: async (subjectId, criteriaId) => {
+    const response = await fetch(endpoints.getQuestionsBySubjectAndCriteria(subjectId, criteriaId));
+    if (!response.ok) {
+      throw new Error('Failed to fetch questions by criteria');
+    }
+    return await response.json();
+  },
+};
 
 export default QuestionBankService;

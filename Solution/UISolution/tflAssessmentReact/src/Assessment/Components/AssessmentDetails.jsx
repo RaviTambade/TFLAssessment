@@ -2,7 +2,6 @@ import { useEffect, useState } from "react"
 import AssessmentService from "../Service/AssessmentService";
 
 
-
 const AssessmentDetails = () => {
     const [assessmentId, setAssessmentId] = useState('');
     const [details, setDetails] = useState([]);
