@@ -19,9 +19,9 @@ class CandidateService {
     }
 
 
-  async getCandidatesByTestId(testId) {
+  async getTestResultDetails(testId) {
     try {
-      const response = await fetch(endpoints.getCandidatesByTestId(testId));
+      const response = await fetch(endpoints.getTestResultDetails(testId));
       return await this.handleResponse(response);
     } catch (error) {
       console.error('Error fetching candidates:', error);
@@ -36,7 +36,5 @@ class CandidateService {
   }
 
   }
-
-
   export default new CandidateService();
   

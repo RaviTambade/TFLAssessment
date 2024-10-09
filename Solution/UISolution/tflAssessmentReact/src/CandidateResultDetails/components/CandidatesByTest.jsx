@@ -9,7 +9,7 @@ const CandidatesList = () => {
   const fetchCandidates = async () => {
     if (testId) { 
       try {
-        const data = await CandidateDetailsService.getCandidatesByTestId(testId);
+        const data = await CandidateDetailsService.getTestResultDetails(testId);
         setCandidates(data);
         setError(null); 
       } catch (error) {
@@ -40,7 +40,7 @@ const CandidatesList = () => {
         <ol>
           {candidates.map((candidate) => (
             <li key={candidate.id}>
-              {candidate.firstName} {candidate.lastName}
+              {candidate.firstName} {candidate.lastName} {candidate.subject} {candidate.score}
             </li>
           ))}
         </ol>
