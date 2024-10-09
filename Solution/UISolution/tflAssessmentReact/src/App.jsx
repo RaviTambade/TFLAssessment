@@ -20,52 +20,28 @@
 // import InsertCriteria from './EvaluationCriteria/Component/Crud/InsertCriteria';
 // import SubjectMatterExpertDetails from './Assessment/Components/GetAllBySME';
 // import CreateTestComponent from './Assessment/Components/CreateNewTest';
-// import TestAppear from './Assessment/Components/TestAppear';
-// import CandidateDetails from './CandidateResultDetails/components/CandidateDetails';
-// import CandidatesList from './CandidateResultDetails/components/CandidatesByTest';
-// function App() {
-  
-//   return (
-//     <>
-//     {/* <AssessmentList/> */}
-//     {/* <InterviewList/> 
-//     <InterviewSubjects/> */}
-//     {/* <InterviewDeatils/> */}
-//     {/*<GetCandidateResults/>*/}
-//     {/* <InsertCriteria/> */} 
-//     {/* <QuestionBankList/> */}
-//      {/* <TestAppear/> */}
-//      {/*<CandidateDetails/> */}
-//      {/* <CandidatesList/> */}
-//       {/* <CreateTestComponent/>  */}
-//       {/* <EmployeesList/> */}
-//       {/* <AssessmentDetails/> */}
-
-//       <Provider store={store}>
-//       <GetAllQuestions/>
-//     </Provider>
-    
-//     </>
-//   )
-// }
-
-// export default App;
-// //<AssessmentList/>
-
-import React from 'react';
-import { Provider } from 'react-redux';
-import store from './QuestionBank/redux/store';
-//import GetAllQuestions from './QuestionBank/components/AllQuestions';
-import SubjectCriteriaQuestions from './QuestionBank/components/SubjectCriteriaQuestions';
-
+import TestAppear from './Assessment/Components/TestAppear';
+//import CandidateDetails from './CandidateResultDetails/components/CandidateDetails';
+//import CandidatesList from './CandidateResultDetails/components/CandidatesByTest';
 function App() {
+  
   return (
     <>
-      <Provider store={store}>
-        <SubjectCriteriaQuestions/>
-      </Provider>
+    {/* <AssessmentList/> */}
+    {/* <InterviewList/> 
+    <InterviewSubjects/> */}
+    {/* <InterviewDeatils/> */}
+    {/*<GetCandidateResults/>*/}
+    {/* <InsertCriteria/> */} 
+    {/* <QuestionBankList/> */}
+      <TestAppear/> 
+     {/*<CandidateDetails/> */}
+     {/* <CandidatesList/> */}
+      {/* <CreateTestComponent/>  */}
+      {/* <EmployeesList/> */}
+      {/* <AssessmentDetails/> */}
     </>
-  );
+  )
 }
 
 export default App;
