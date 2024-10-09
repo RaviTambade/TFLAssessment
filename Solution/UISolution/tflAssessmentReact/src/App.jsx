@@ -1,6 +1,9 @@
 import React from 'react';
 import './App.css';
-
+//import AssessmentList from './Assessment/Components/AssessmentList';
+import CreateTestComponent from './Assessment/Components/CreateNewTest';
+import EmployeesList from './Assessment/Components/EmployeesList';
+import AssessmentDetails from './Assessment/Components/AssessmentDetails';
 // import GetQuestionById from './QuestionBank/components/GetQuestionById';
 // import GetAllQuestions from './QuestionBank/components/GetAllQuestions';
 // import GetQuestionsByTestId from './QuestionBank/components/GetQuestionsByTestId';
@@ -18,21 +21,24 @@ import './App.css';
 // import CreateTestComponent from './Assessment/Components/CreateNewTest';
 //import TestAppear from './Assessment/Components/TestAppear';
 //import CandidateDetails from './CandidateResultDetails/components/CandidateDetails';
-import CandidatesList from './CandidateResultDetails/components/CandidatesByTest';
+//import CandidatesList from './CandidateResultDetails/components/CandidatesByTest';
 function App() {
   
   return (
     <>
-      {/* <AssessmentList/> */}
-    {/* <InterviewList/> */}
-    {/* <InterviewSubjects/> */}
+    {/* <AssessmentList/> */}
+    {/* <InterviewList/> 
+    <InterviewSubjects/> */}
     {/* <InterviewDeatils/> */}
     {/*<GetCandidateResults/>*/}
     {/* <InsertCriteria/> */} 
     {/* <QuestionBankList/> */}
      {/* <TestAppear/> */}
      {/*<CandidateDetails/> */}
-     <CandidatesList/>
+     {/* <CandidatesList/> */}
+      {/* <CreateTestComponent/>  */}
+      {/* <EmployeesList/> */}
+      <AssessmentDetails/>
     </>
   )
 }
