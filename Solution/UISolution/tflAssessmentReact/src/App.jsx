@@ -18,7 +18,7 @@ import './App.css';
 // import CreateTestComponent from './Assessment/Components/CreateNewTest';
 //import TestAppear from './Assessment/Components/TestAppear';
 //import CandidateDetails from './CandidateResultDetails/components/CandidateDetails';
-import CandidateListByTestIdService from './CandidateResultDetails/components/CandidatesByTest';
+import CandidatesList from './CandidateResultDetails/components/CandidatesByTest';
 function App() {
   
   return (
@@ -32,7 +32,7 @@ function App() {
     {/* <QuestionBankList/> */}
      {/* <TestAppear/> */}
      {/*<CandidateDetails/> */}
-     <CandidateListByTestIdService/>
+     <CandidatesList/>
     </>
   )
 }
