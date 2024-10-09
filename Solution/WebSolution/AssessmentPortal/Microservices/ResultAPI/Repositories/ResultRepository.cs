@@ -125,8 +125,6 @@ public class ResultRepository : IResultRepository
             command.Parameters.AddWithValue("@TestId", testId);
             await connection.OpenAsync();
             score = (int)command.ExecuteScalar();
-
-
         }
         catch (Exception e)
         {
