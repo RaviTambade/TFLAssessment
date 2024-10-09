@@ -1,4 +1,4 @@
-// import React from 'react';
+import React from 'react';
 // import './App.css';
 // mport AssessmentList from './Assessment/Components/AssessmentList';
 // import CreateTestComponent from './Assessment/Components/CreateNewTest';
@@ -20,48 +20,48 @@
 // import InsertCriteria from './EvaluationCriteria/Component/Crud/InsertCriteria';
 // import SubjectMatterExpertDetails from './Assessment/Components/GetAllBySME';
 // import CreateTestComponent from './Assessment/Components/CreateNewTest';
-//import TestAppear from './Assessment/Components/TestAppear';
+import TestAppear from './Assessment/Components/TestAppear';
 //import CandidateDetails from './CandidateResultDetails/components/CandidateDetails';
 //import CandidatesList from './CandidateResultDetails/components/CandidatesByTest';
-// function App() {
-  
-//   return (
-//     <>
-//     {/* <AssessmentList/> */}
-//     {/* <InterviewList/> 
-//     <InterviewSubjects/> */}
-//     {/* <InterviewDeatils/> */}
-//     {/*<GetCandidateResults/>*/}
-//     {/* <InsertCriteria/> */} 
-//     {/* <QuestionBankList/> */}
-//       {/* <TestAppear/>  */}
-//      {/*<CandidateDetails/> */}
-//      {/* <CandidatesList/> */}
-//       {/* <CreateTestComponent/>  */}
-//       {/* <EmployeesList/> */}
-//       {/* <AssessmentDetails/> */}
-//     </>
-//   )
-// }
-
-// export default App;
-
-import React from 'react';
-import { Provider } from 'react-redux';
-import store from './QuestionBank/redux/store'; 
-import './App.css';
-import SubjectCriteriaQuestions from './QuestionBank/components/SubjectCriteriaQuestions';
-//import GetAllQuestions from './QuestionBank/services/questionbankservice';
-
 function App() {
+
   return (
     <>
-      <Provider store={store}>
-        {/* <GetAllQuestions /> */}
-          <SubjectCriteriaQuestions/>
-      </Provider>
+
+      <TestAppear />
+      {/* <AssessmentList/> */}
+      {/* <InterviewList/> 
+      {/* <InterviewDeatils/> */}
+      {/*<GetCandidateResults/>*/}
+      {/* <InsertCriteria/> */}
+      {/* <QuestionBankList/> */}
+      {/*<CandidateDetails/> */}
+      {/* <CandidatesList/> */}
+      {/* <CreateTestComponent/>  */}
+      {/* <EmployeesList/> */}
+      {/* <AssessmentDetails /> */}
     </>
-  );
+  )
 }
 
 export default App;
+
+// import React from 'react';
+// import { Provider } from 'react-redux';
+// import store from './QuestionBank/redux/store';
+// import './App.css';
+// import SubjectCriteriaQuestions from './QuestionBank/components/SubjectCriteriaQuestions';
+// //import GetAllQuestions from './QuestionBank/services/questionbankservice';
+
+// function App() {
+//   return (
+//     <>
+//       <Provider store={store}>
+//         {/* <GetAllQuestions /> */}
+//           <SubjectCriteriaQuestions/>
+//       </Provider>
+//     </>
+//   );
+// }
+
+// export default App;
