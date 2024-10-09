@@ -1,15 +1,24 @@
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+const API_BASE_URL_QUESTIONBANK = import.meta.env.VITE_API_BASE_URL2; // Question Bank API base URL
+const API_BASE_URL_ASSESSMENT = import.meta.env.VITE_API_BASE_URL3;   // Assessment API base URL
 
 const endpoints = {
-  getAllQuestions: `${API_BASE_URL}/questionbank/questions`,
-  getSubjects: `${API_BASE_URL}/assessment/subjects`,
-  getQuestionById: (questionId) => `${API_BASE_URL}/questionbank/questions/${questionId}`,
-  getQuestionsByTestId: (testId) => `${API_BASE_URL}/questionbank/questions/tests/${testId}`,
-  getCriteria: (subject, questionId) => `${API_BASE_URL}/questionbank/questions/subjects/${subject}/questions/${questionId}`,
-  getCriteriaBySubject: (subjectId) => `${API_BASE_URL}/assessment/criterias/subjects/${subjectId}`,
-  getQuestionsBySubject: (subjectId) => `${API_BASE_URL}/questionbank/questions/subjects/${subjectId}`,
-  getQuestionsBySubjectAndCriteria: (subjectId, criteriaId) => `${API_BASE_URL}/questionbank/questions/subjects/${subjectId}/criterias/${criteriaId}`,
+  // Question Bank endpoints
+  questionBank: {
+    getAllQuestions: `${API_BASE_URL_QUESTIONBANK}/questionbank/questions`,
+    getQuestionById: (questionId) => `${API_BASE_URL_QUESTIONBANK}/questionbank/questions/${questionId}`,
+    getQuestionsByTestId: (testId) => `${API_BASE_URL_QUESTIONBANK}/questionbank/questions/tests/${testId}`,
+    getQuestionsBySubject: (subjectId) => `${API_BASE_URL_QUESTIONBANK}/questionbank/questions/subjects/${subjectId}`,
+    getQuestionsBySubjectAndCriteria: (subjectId, criteriaId) => 
+      `${API_BASE_URL_QUESTIONBANK}/questionbank/questions/subjects/${subjectId}/criterias/${criteriaId}`,
+    getCriteria: (subjectId, questionId) => 
+      `${API_BASE_URL_QUESTIONBANK}/questionbank/questions/subjects/${subjectId}/questions/${questionId}`,
+  },
+
+  // Assessment endpoints
+  assessment: {
+    getSubjects: `${API_BASE_URL_ASSESSMENT}/assessment/subjects`,
+    getCriteriaBySubject: (subjectId) => `${API_BASE_URL_ASSESSMENT}/assessment/criterias/subjects/${subjectId}`,
+  }
 };
 
-export { API_BASE_URL, endpoints };
-
+export { API_BASE_URL_QUESTIONBANK, API_BASE_URL_ASSESSMENT, endpoints };
