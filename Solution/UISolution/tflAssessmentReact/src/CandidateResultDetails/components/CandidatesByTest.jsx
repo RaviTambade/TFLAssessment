@@ -7,7 +7,7 @@ const CandidatesList = () => {
   const [error, setError] = useState(null);
 
   const fetchCandidates = async () => {
-    if (testId) { // Ensure testId is provided
+    if (testId) { 
       try {
         const data = await CandidateDetailsService.getCandidatesByTestId(testId);
         setCandidates(data);
@@ -19,8 +19,8 @@ const CandidatesList = () => {
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault(); // Prevent page reload
-    fetchCandidates();  // Fetch candidates on submit
+    e.preventDefault(); 
+    fetchCandidates(); 
   };
 
   if (error) return <p>{error}</p>;
@@ -31,15 +31,9 @@ const CandidatesList = () => {
       <form onSubmit={handleSubmit}>
         <div>
           <label>Test ID: </label>
-          <input 
-            type="text" 
-            value={testId} 
-            onChange={(e) => setTestId(e.target.value)}  
-            placeholder="Enter Test ID"  
-            required 
-          />
+          <input type="text" value={testId} onChange={(e) => setTestId(e.target.value)} placeholder="Enter Test ID"required />
         </div>
-        <button type="submit">Submit</button> {/* Submit button */}
+        <button type="submit">Submit</button> 
       </form>
 
       {candidates.length > 0 ? (
