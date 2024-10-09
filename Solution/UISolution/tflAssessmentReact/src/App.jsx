@@ -19,7 +19,7 @@ import AssessmentDetails from './Assessment/Components/AssessmentDetails';
 // import InsertCriteria from './EvaluationCriteria/Component/Crud/InsertCriteria';
 // import SubjectMatterExpertDetails from './Assessment/Components/GetAllBySME';
 // import CreateTestComponent from './Assessment/Components/CreateNewTest';
-//import TestAppear from './Assessment/Components/TestAppear';
+import TestAppear from './Assessment/Components/TestAppear';
 //import CandidateDetails from './CandidateResultDetails/components/CandidateDetails';
 //import CandidatesList from './CandidateResultDetails/components/CandidatesByTest';
 function App() {
@@ -33,12 +33,12 @@ function App() {
     {/*<GetCandidateResults/>*/}
     {/* <InsertCriteria/> */} 
     {/* <QuestionBankList/> */}
-     {/* <TestAppear/> */}
+      <TestAppear/> 
      {/*<CandidateDetails/> */}
      {/* <CandidatesList/> */}
       {/* <CreateTestComponent/>  */}
       {/* <EmployeesList/> */}
-      <AssessmentDetails/>
+      {/* <AssessmentDetails/> */}
     </>
   )
 }
