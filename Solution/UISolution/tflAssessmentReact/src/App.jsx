@@ -1,19 +1,19 @@
 import React from 'react';
 // import './App.css';
-  import AssessmentList from './Assessment/Components/AssessmentList';
+  // import AssessmentList from './Assessment/Components/AssessmentList';
 // import CreateTestComponent from './Assessment/Components/CreateNewTest';
 // import EmployeesList from './Assessment/Components/EmployeesList';
- import AssessmentDetails from './Assessment/Components/AssessmentDetails';
-import TestAppear from './Assessment/Components/TestAppear';
-import CandidateDetails from './CandidateResultDetails/components/CandidateDetails';
+//  import AssessmentDetails from './Assessment/Components/AssessmentDetails';
+// import TestAppear from './Assessment/Components/TestAppear';
+// import CandidateDetails from './CandidateResultDetails/components/CandidateDetails';
 // import GetAllQuestions from './QuestionBank/components/AllQuestions';
 // import GetQuestionById from './QuestionBank/components/GetQuestionById';
 // import GetAllQuestions from './QuestionBank/components/GetAllQuestions';
 // import GetQuestionsByTestId from './QuestionBank/components/GetQuestionsByTestId';
 // import QuestionList from './QuestionBank/components/GetQuestions';
 // import InterviewSubjects from './InterviewDetails/components/GetInterviewedCandidatesSubjects';
-// import InterviewList from './InterviewDetails/components/GetAllInterviewCandidates';
-// import InterviewDeatils from './InterviewDetails/components/GetInterviewDetails';
+//  import InterviewList from './InterviewDetails/components/AllInterviewCandidates';
+import InterviewDeatils from './InterviewDetails/components/InterviewDetails';
 // import GetCandidateResults from './AssementIntellegence/Components/GetCandidateResult';
 // import InsertCriteria from './EvaluationCriteria/Component/Crud/InsertCriteria';
 // import QuestionBankList from './testAppear_Shubhangi/Component/AppearTest';
@@ -34,7 +34,11 @@ function App() {
       {/* <AssessmentList /> */}
      {/* <AssessmentDetails />  */}/
      {/* <TestAppear/> */}
-     <CandidateDetails/>
+     {/* <CandidateDetails/> */}
+     <InterviewDeatils/> 
+            {/* <InterviewList/>  */}
+
+
       
     </>
   )
@@ -68,8 +72,6 @@ function App() {
 
 
 {/* <AssessmentList/> */}
-      {/* <InterviewList/> 
-      {/* <InterviewDeatils/> */}
       {/*<GetCandidateResults/>*/}
       {/* <InsertCriteria/> */}
       {/* <QuestionBankList/> */}

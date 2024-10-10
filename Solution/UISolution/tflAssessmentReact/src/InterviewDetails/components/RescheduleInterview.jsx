@@ -18,7 +18,7 @@ const RescheduleInterview = () => {
             setError('Please fill in all fields');
             return;
         }
-        // Create a date object from the input value
+        
         const interviewDate = new Date(date);
 
         try {
