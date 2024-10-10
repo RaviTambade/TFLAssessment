@@ -1,4 +1,4 @@
-import React from 'react';
+//import React from 'react';
 //import SubjectsList from './Assessment/Components/SubjectsList';
 //import AssessmentList from './Assessment/Components/AssessmentList';
 // import CreateTestComponent from './Assessment/Components/CreateNewTest';
@@ -27,10 +27,10 @@ import React from 'react';
 //import CandidatesList from './CandidateResultDetails/components/CandidatesByTest';
 //import EvaluationCriteriaComponent from './Assessment/Components/GetEvaluationCreteriaBySubject';
 
-function App() {
+//function App() {
 
-  return (
-    <>
+//  return (
+//    <>
       {/* <AssessmentList />  */}
       {/* <AssessmentDetails />  */}
       {/* <TestAppear/> */}
@@ -39,35 +39,34 @@ function App() {
       {/* <EmployeesList/> */}
       {/* <SubjectsList /> */}
 
-    </>
-  )
-}
+//    </>
+//  )
+//}
 
-export default App;
+//export default App;
 
-// import React from 'react';
-// import { Provider } from 'react-redux';
-// import store from './QuestionBank/redux/store';
-// import './App.css';
-// //import SubjectCriteriaQuestions from './QuestionBank/components/SubjectCriteriaQuestions';
-// import GetAllQuestions from './QuestionBank/components/AllQuestions';
+import React from 'react';
+import { Provider } from 'react-redux';
+import store from './QuestionBank/redux/store';
+//import SubjectCriteriaQuestions from './QuestionBank/components/SubjectCriteriaQuestions';
+import GetAllQuestions from './QuestionBank/components/AllQuestions';
 // import GetQuestionById from './QuestionBank/components/QuestionById';
 // import GetQuestionsByTestId from './QuestionBank/components/QuestionsByTestId';
 
-// function App() {
-//   return (
-//     <>
-//       <Provider store={store}>
-//         {/* <GetAllQuestions />  */}
-//           {/* <SubjectCriteriaQuestions/> */}
-//           {/* <GetQuestionById/> */}
-//           <GetQuestionsByTestId/>
-//       </Provider>
-//     </>
-//   );
-// }
+function App() {
+  return (
+    <>
+      <Provider store={store}>
+        <GetAllQuestions /> 
+          {/* <SubjectCriteriaQuestions/> */}
+          {/* <GetQuestionById/> */}
+          {/* <GetQuestionsByTestId/> */}
+      </Provider>
+    </>
+  );
+}
 
-// export default App;
+export default App;
 
 
 {/* <AssessmentList/> */ }

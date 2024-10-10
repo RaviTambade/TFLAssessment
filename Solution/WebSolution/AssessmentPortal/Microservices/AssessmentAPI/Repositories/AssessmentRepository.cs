@@ -80,7 +80,6 @@ public class AssessmentRepository :IAssessmentRepository
                     assessment.SubjectId = subjectId;
                     assessment.SubjectExpertId=smeid;
                     assessment.Status=status;
-                    
                 }
                 await reader.CloseAsync();
             }
@@ -94,7 +93,7 @@ public class AssessmentRepository :IAssessmentRepository
             }
             return assessment;
     }
-    
+
     public async Task<List<Assessment>> GetAll(DateTime fromDate, DateTime toDate)  //******
     {
         List<Assessment> assessments=new List<Assessment>();
@@ -239,6 +238,7 @@ public class AssessmentRepository :IAssessmentRepository
         }
         return status;
     }
+    
     public async Task<bool> RemoveQuestion(int assessmentId, int questionId)
     {
             bool status =false;  
