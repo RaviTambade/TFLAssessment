@@ -1,9 +1,11 @@
-// import React from 'react';
+import React from 'react';
 // import './App.css';
-// mport AssessmentList from './Assessment/Components/AssessmentList';
+  import AssessmentList from './Assessment/Components/AssessmentList';
 // import CreateTestComponent from './Assessment/Components/CreateNewTest';
 // import EmployeesList from './Assessment/Components/EmployeesList';
-// import AssessmentDetails from './Assessment/Components/AssessmentDetails';
+ import AssessmentDetails from './Assessment/Components/AssessmentDetails';
+import TestAppear from './Assessment/Components/TestAppear';
+import CandidateDetails from './CandidateResultDetails/components/CandidateDetails';
 // import GetAllQuestions from './QuestionBank/components/AllQuestions';
 // import GetQuestionById from './QuestionBank/components/GetQuestionById';
 // import GetAllQuestions from './QuestionBank/components/GetAllQuestions';
@@ -20,28 +22,59 @@
 // import InsertCriteria from './EvaluationCriteria/Component/Crud/InsertCriteria';
 // import SubjectMatterExpertDetails from './Assessment/Components/GetAllBySME';
 // import CreateTestComponent from './Assessment/Components/CreateNewTest';
-import TestAppear from './Assessment/Components/TestAppear';
+//import TestAppear from './Assessment/Components/TestAppear';
 //import CandidateDetails from './CandidateResultDetails/components/CandidateDetails';
 //import CandidatesList from './CandidateResultDetails/components/CandidatesByTest';
+
+
 function App() {
-  
+
   return (
     <>
-    {/* <AssessmentList/> */}
-    {/* <InterviewList/> 
-    <InterviewSubjects/> */}
-    {/* <InterviewDeatils/> */}
-    {/*<GetCandidateResults/>*/}
-    {/* <InsertCriteria/> */} 
-    {/* <QuestionBankList/> */}
-      <TestAppear/> 
-     {/*<CandidateDetails/> */}
-     {/* <CandidatesList/> */}
-      {/* <CreateTestComponent/>  */}
-      {/* <EmployeesList/> */}
-      {/* <AssessmentDetails/> */}
+      {/* <AssessmentList /> */}
+     {/* <AssessmentDetails />  */}/
+     {/* <TestAppear/> */}
+     <CandidateDetails/>
+      
     </>
   )
 }
 
-export default App;
+ export default App;
+
+// import React from 'react';
+// import { Provider } from 'react-redux';
+// import store from './QuestionBank/redux/store';
+// import './App.css';
+// //import SubjectCriteriaQuestions from './QuestionBank/components/SubjectCriteriaQuestions';
+// import GetAllQuestions from './QuestionBank/components/AllQuestions';
+// import GetQuestionById from './QuestionBank/components/QuestionById';
+// import GetQuestionsByTestId from './QuestionBank/components/QuestionsByTestId';
+
+// function App() {
+//   return (
+//     <>
+//       <Provider store={store}>
+//         {/* <GetAllQuestions />  */}
+//           {/* <SubjectCriteriaQuestions/> */}
+//           {/* <GetQuestionById/> */}
+//           <GetQuestionsByTestId/>
+//       </Provider>
+//     </>
+//   );
+// }
+
+// export default App;
+
+
+{/* <AssessmentList/> */}
+      {/* <InterviewList/> 
+      {/* <InterviewDeatils/> */}
+      {/*<GetCandidateResults/>*/}
+      {/* <InsertCriteria/> */}
+      {/* <QuestionBankList/> */}
+      {/*<CandidateDetails/> */}
+      {/* <CandidatesList/> */}
+      {/* <CreateTestComponent/>  */}
+      {/* <EmployeesList/> */}
+      {/* <AssessmentDetails /> */}
