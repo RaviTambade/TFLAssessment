@@ -43,7 +43,9 @@ public class AssessmentDapperRepository :IAssessmentRepository
     {
             await Task.Delay(100);
             Assessment assessment=new Assessment();   
-            string query = @"select * from tests where id=@AssessmentId";
+            string query = @"SELECT t.id, t.smeid AS subjectExpertId, t.subjectid AS subjectId, t.creationdate AS creationDate,
+                           t.modificationdate AS modificationDate,t.scheduleddate AS scheduledDate,t.status,t.passinglevel,
+                           e.firstName, e.lastName FROM  tests t LEFT JOIN employees e ON t.smeid = e.id WHERE t.id = @AssessmentId;";
             using (IDbConnection con = new MySqlConnection(_connectionString))
             {
                 assessment= con.QuerySingleOrDefault<Assessment>(query, new {assessmentId}) ;
@@ -53,6 +55,7 @@ public class AssessmentDapperRepository :IAssessmentRepository
             }
             return assessment;
     }
+
     public async Task<List<Assessment>> GetAll(DateTime fromDate, DateTime toDate) 
     {
         List<Assessment> assessments=new List<Assessment>();
@@ -290,9 +293,9 @@ public class AssessmentDapperRepository :IAssessmentRepository
                 test.ModificationDate = modificationDate;
                 test.ScheduledDate = scheduledDate;
                 test.Status = status;
-                // test.Subject = subject;
-                // test.FirstName = firstName;
-                // test.LastName = lastName;
+                test.Subject = subject;
+                test.FirstName = firstName;
+                test.LastName = lastName;
                 tests.Add(test);
             }
         }

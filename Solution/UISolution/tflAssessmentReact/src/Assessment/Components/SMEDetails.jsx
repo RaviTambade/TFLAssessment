@@ -21,19 +21,10 @@ const SubjectMatterExpertDetails = () => {
     return (
         <div>
             <h1>Subject Matter Expert Details</h1>
+            <input type="text" value={id} onChange={(e) => setId(e.target.value)} placeholder="Enter SME ID"/>
             
-            {/* Input field to enter ID */}
-            <input
-                type="text"
-                value={id}
-                onChange={(e) => setId(e.target.value)}
-                placeholder="Enter SME ID"
-            />
-            
-            {/* Button to fetch details */}
             <button onClick={handleFetchDetails}>Get Details</button>
             
-            {/* Displaying details */}
             {error && <p style={{ color: 'red' }}>{error}</p>}
             {details && (
               <table>

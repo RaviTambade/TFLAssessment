@@ -94,6 +94,7 @@ public class AssessmentRepository :IAssessmentRepository
             }
             return assessment;
     }
+    
     public async Task<List<Assessment>> GetAll(DateTime fromDate, DateTime toDate)  //******
     {
         List<Assessment> assessments=new List<Assessment>();
@@ -137,7 +138,8 @@ public class AssessmentRepository :IAssessmentRepository
             }
             return assessments;
     }
-    public async Task <List<Assessment>> GetAllBySubjectMatterExpert(int smeId)   //********
+    
+    public async Task <List<Assessment>> GetAllBySubjectMatterExpert(int smeId)  
     {
         List<Assessment> assessments=new List<Assessment>();   
             string query = @"select * from tests where smeid=@SmeId";
@@ -180,6 +182,7 @@ public class AssessmentRepository :IAssessmentRepository
             }
             return assessments;
     }
+
     public async Task<bool> AddQuestion(int assessmentId, int questionId)  //*******
     {
         bool status = false;
@@ -390,9 +393,9 @@ public class AssessmentRepository :IAssessmentRepository
                 test.ModificationDate = modificationDate;
                 test.ScheduledDate = scheduledDate;
                 test.Status = status;
-                // test.Subject = subject;
-                // test.FirstName = firstName;
-                // test.LastName = lastName;
+                test.Subject = subject;
+                test.FirstName = firstName;
+                test.LastName = lastName;
                 tests.Add(test);
             }
         }

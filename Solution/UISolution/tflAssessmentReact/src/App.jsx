@@ -6,6 +6,13 @@ import React from 'react';
 //  import AssessmentDetails from './Assessment/Components/AssessmentDetails';
 // import TestAppear from './Assessment/Components/TestAppear';
 // import CandidateDetails from './CandidateResultDetails/components/CandidateDetails';
+//import SubjectsList from './Assessment/Components/SubjectsList';
+//import AssessmentList from './Assessment/Components/AssessmentList';
+// import CreateTestComponent from './Assessment/Components/CreateNewTest';
+//import EmployeesList from './Assessment/Components/EmployeesList';
+//import AssessmentDetails from './Assessment/Components/AssessmentDetails';
+//import TestAppear from './Assessment/Components/TestAppear';
+//import CandidateDetails from './CandidateResultDetails/components/CandidateDetails';
 // import GetAllQuestions from './QuestionBank/components/AllQuestions';
 // import GetQuestionById from './QuestionBank/components/GetQuestionById';
 // import GetAllQuestions from './QuestionBank/components/GetAllQuestions';
@@ -25,7 +32,7 @@ import InterviewDeatils from './InterviewDetails/components/InterviewDetails';
 //import TestAppear from './Assessment/Components/TestAppear';
 //import CandidateDetails from './CandidateResultDetails/components/CandidateDetails';
 //import CandidatesList from './CandidateResultDetails/components/CandidatesByTest';
-
+//import EvaluationCriteriaComponent from './Assessment/Components/GetEvaluationCreteriaBySubject';
 
 function App() {
 
@@ -40,11 +47,19 @@ function App() {
 
 
       
+      {/* <AssessmentList />  */}
+      {/* <AssessmentDetails />  */}
+      {/* <TestAppear/> */}
+      {/* <CandidateDetails/> */}
+      {/* <EvaluationCriteriaComponent /> */}
+      {/* <EmployeesList/> */}
+      {/* <SubjectsList /> */}
+
     </>
   )
 }
 
- export default App;
+export default App;
 
 // import React from 'react';
 // import { Provider } from 'react-redux';
@@ -80,3 +95,14 @@ function App() {
       {/* <CreateTestComponent/>  */}
       {/* <EmployeesList/> */}
       {/* <AssessmentDetails /> */}
+{/* <AssessmentList/> */ }
+{/* <InterviewList/> 
+      {/* <InterviewDeatils/> */}
+{/*<GetCandidateResults/>*/ }
+{/* <InsertCriteria/> */ }
+{/* <QuestionBankList/> */ }
+{/*<CandidateDetails/> */ }
+{/* <CandidatesList/> */ }
+{/* <CreateTestComponent/>  */ }
+{/* <EmployeesList/> */ }
+{/* <AssessmentDetails /> */ }
