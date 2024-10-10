@@ -1,4 +1,4 @@
-import { endpoints } from "../config/appConfig";
+import { endpoints } from "../config/apiEndpoints";
 
 
 const handleResponse = async (response) => {

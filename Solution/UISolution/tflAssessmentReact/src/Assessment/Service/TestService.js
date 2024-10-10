@@ -1,14 +1,19 @@
 
 const TestService = {
    
-    fetchQuestions: async (testId) => {
+  fetchQuestions: async (testId) => {
+    try {
       const questionUrl = `http://localhost:5172/api/questionbank/questions/tests/${testId}`;
       const response = await fetch(questionUrl);
       if (!response.ok) {
         throw new Error("Error fetching questions");
       }
       return response.json();
-    },
+    } catch (error) {
+      console.error("Error:", error); 
+      throw error; 
+    }
+  },
 
     submitAnswers: async (candidateId, finalCandidateAnswers) => {
       const candidateAnswersUrl = `http://localhost:5299/api/candidateanswer/assessmentanswers/candidates/${candidateId}`;

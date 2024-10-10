@@ -1,7 +1,11 @@
 import React, { useState } from "react";
 
-const NavigationComponent = ({ questions }) => {
+const NavigationComponent = ({ questions = [] }) => {
   const [current, setCurrent] = useState(0);
+
+  if (!questions.length) {
+    return <div>No questions available for navigation.</div>;
+  }
 
   const handleFirst = () => setCurrent(0);
   const handlePrevious = () => setCurrent((prev) => (prev > 0 ? prev - 1 : prev));

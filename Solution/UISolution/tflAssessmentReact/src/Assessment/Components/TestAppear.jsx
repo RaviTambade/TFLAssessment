@@ -15,6 +15,7 @@ const TestAppear = () => {
   const fetchQuestions = async () => {
     try {
       const fetchedQuestions = await TestService.fetchQuestions(testId);
+      console.log("Fetched Questions:", fetchedQuestions);
       const updatedQuestions = fetchedQuestions.map((question) => ({
         ...question,
         answer: "No",
@@ -24,6 +25,7 @@ const TestAppear = () => {
       console.error("Error fetching questions:", error);
     }
   };
+  
 
   const handleStartTest = async () => {
     if (candidateId && testId) {
@@ -63,7 +65,7 @@ const TestAppear = () => {
   const getCurrentDateTime = () => {
     const d = new Date();
     return {
-      month: d.getMonth(),
+      month: d.getMonth() + 1, 
       year: d.getFullYear(),
       day: d.getDate(),
       hour: d.getHours(),
@@ -71,7 +73,6 @@ const TestAppear = () => {
       seconds: d.getSeconds(),
     };
   };
-
   if (!testStarted) {
     return (
       <div>
@@ -94,12 +95,9 @@ const TestAppear = () => {
     <div>
       <h3>Transflower Learning Private Limited</h3>
       <hr />
-      <Question
-        questions={questions}
-        currentval={currentval}
-        setQuestions={setQuestions}
-      />
-      <Navigation/>
+      <Question questions={questions} currentval={currentval} setQuestions={setQuestions}/>
+      <Navigation questions={questions}/>
+
       <div>
         <button onClick={handleSubmit}>Submit</button>
         <button onClick={handleResult}>Show Result</button>

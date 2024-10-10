@@ -1,8 +1,9 @@
-const API_BASE_URL_QUESTIONBANK = import.meta.env.VITE_API_BASE_URL2; // Question Bank API base URL
-const API_BASE_URL_ASSESSMENT = import.meta.env.VITE_API_BASE_URL3;   // Assessment API base URL
+const API_BASE_URL_QUESTIONBANK = import.meta.env.VITE_API_BASE_URL2;
+const API_BASE_URL_ASSESSMENT = import.meta.env.VITE_API_BASE_URL3;  
 
 const endpoints = {
-  // Question Bank endpoints
+  
+   // questionBank endpoints
   questionBank: {
     getAllQuestions: `${API_BASE_URL_QUESTIONBANK}/questionbank/questions`,
     getQuestionById: (questionId) => `${API_BASE_URL_QUESTIONBANK}/questionbank/questions/${questionId}`,
