@@ -28,10 +28,14 @@ const AssessmentList = () => {
                 <thead>
                     <tr>
                         <th>Subject ID</th>
+                        <th>Subject Name</th>
                         <th>Status</th>
-                        <th>Subject Expert ID</th>
+                        <th>SME ID</th>
+                        <th>FirstName</th>
+                        <th>LastName </th>
                         <th>Creation Date</th>
                         <th>Scheduled Date</th>
+
                     </tr>
                 </thead>
                 <tbody>
@@ -39,10 +43,14 @@ const AssessmentList = () => {
                         assessments.map(assessment => (
                             <tr key={assessment.id}>
                                 <td>{assessment.subjectId}</td>
+                                <td>{assessment.subject}</td>
                                 <td>{assessment.status}</td>
                                 <td>{assessment.subjectExpertId}</td>
+                                <td>{assessment.firstName}</td>
+                                <td>{assessment.lastName}</td>
                                 <td>{new Date(assessment.creationDate).toLocaleDateString()}</td>
                                 <td>{new Date(assessment.scheduledDate).toLocaleDateString()}</td>
+
                             </tr>
                         ))
                     }
