@@ -1,6 +1,5 @@
  const API_URL = "http://localhost:5129/api/interviews";
 
- // Centralized response handler
  const handleResponse = async (response) => {
    if (!response.ok) {
      const errorDetails = await response.json();
@@ -14,7 +13,7 @@
      this.apiBaseUrl = API_URL;
    }
  
-   // Fetch all interview candidates
+   
    async getAllInterviewCandidates() {
      try {
        const response = await fetch(`${this.apiBaseUrl}/details`);
@@ -25,7 +24,7 @@
      }
    }
  
-   // Fetch interviewed candidates by candidateId
+   
    async getInterviewedCandidatesSubjects(candidateId) {
      try {
        const response = await fetch(`${this.apiBaseUrl}/candidate/${candidateId}`);
@@ -35,8 +34,17 @@
        throw error;
      }
    }
- 
-   // Fetch interview details by interviewId
+   async getCandidateDetails(candidateId) {
+    try {
+        const response = await fetch(`${this.apiBaseUrl}/candidate/${candidateId}`);
+        return await handleResponse(response);
+    } catch (error) {
+        console.error(`Error fetching candidate details for ${candidateId}:`, error);
+        throw error;
+    }
+}
+
+   
    async getInterviewDetails(interviewId) {
      try {
        const response = await fetch(`${this.apiBaseUrl}/${interviewId}`);
@@ -47,7 +55,7 @@
      }
    }
  
-   // Reschedule interview (PUT request)
+   
    async rescheduleInterview(interviewId, time, date) {
      try {
        const response = await fetch(
@@ -64,7 +72,7 @@
      }
    }
  
-   // Change interviewer (PUT request)
+   
    async changeInterviewer(interviewId, smeId) {
      try {
        const response = await fetch(
@@ -81,7 +89,7 @@
      }
    }
  
-   // Cancel interview (DELETE request)
+   
    async cancelInterview(interviewId) {
      try {
        const response = await fetch(`${this.apiBaseUrl}/${interviewId}`, {

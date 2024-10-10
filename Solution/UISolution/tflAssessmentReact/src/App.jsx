@@ -12,8 +12,8 @@
 // import GetQuestionsByTestId from './QuestionBank/components/GetQuestionsByTestId';
 // import QuestionList from './QuestionBank/components/GetQuestions';
 // import InterviewSubjects from './InterviewDetails/components/GetInterviewedCandidatesSubjects';
-// import InterviewList from './InterviewDetails/components/GetAllInterviewCandidates';
-// import InterviewDeatils from './InterviewDetails/components/GetInterviewDetails';
+//  import InterviewList from './InterviewDetails/components/AllInterviewCandidates';
+import InterviewDeatils from './InterviewDetails/components/InterviewDetails';
 // import GetCandidateResults from './AssementIntellegence/Components/GetCandidateResult';
 // import InsertCriteria from './EvaluationCriteria/Component/Crud/InsertCriteria';
 // import QuestionBankList from './testAppear_Shubhangi/Component/AppearTest';
@@ -31,6 +31,15 @@
 
 //  return (
 //    <>
+    {/* <AssessmentList /> */}
+     {/* <AssessmentDetails />  */}
+     {/* <TestAppear/> */}
+     {/* <CandidateDetails/> */}
+     <InterviewDeatils/> 
+            {/* <InterviewList/>  */}
+
+
+      
       {/* <AssessmentList />  */}
       {/* <AssessmentDetails />  */}
       {/* <TestAppear/> */}
@@ -69,6 +78,15 @@ function App() {
 export default App;
 
 
+{/* <AssessmentList/> */}
+      {/*<GetCandidateResults/>*/}
+      {/* <InsertCriteria/> */}
+      {/* <QuestionBankList/> */}
+      {/*<CandidateDetails/> */}
+      {/* <CandidatesList/> */}
+      {/* <CreateTestComponent/>  */}
+      {/* <EmployeesList/> */}
+      {/* <AssessmentDetails /> */}
 {/* <AssessmentList/> */ }
 {/* <InterviewList/> 
       {/* <InterviewDeatils/> */}
