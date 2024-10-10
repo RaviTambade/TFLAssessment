@@ -7,15 +7,23 @@ select * from QUESTIONBANK;
 select * from interviews;
 select * from evaluationcriterias;
 select * from interviewresults;
+select * from employees;
+select * from candidateanswers;
+select * from candidatetestresults;
+
+
 select questionbank.id,questionbank.title,questionbank.a,questionbank.b,questionbank.c,questionbank.d from questionbank inner join subjects on subjects.id=questionbank.subjectid
 where subjects.title="ADVJAVA";
+
 select * from test;
--- Select all questions  beong to ADV JAVA
+
 select * from questionbank where subjectid=(select id from subjects where title ="ADVJAVA");
  
 select * from questionbank inner join testquestions on testquestions.questionbankid = questionbank.id where testquestions.testid=1;
 
 INSERT INTO candidateanswers (candidateid, testquestionid, answerkey) VALUES (@candidateId, @testQuestionId, @answerKey);
+
+select * from candidateanswers;
 
 update candidatetestresults set testendtime =@testendtime where candidateid=@candidateid and testid=@testid;
 update candidatetestresults set testendtime ="2015-11-05 14:35:00" where candidateid=2 and testid=1;
@@ -49,7 +57,6 @@ inner join subjects on subjectmatterexperts.subjectid=subjects.id
 where interviews.candidateid=2;
 
 
- 
 select interviews.id,interviews.interviewdate,interviews.interviewtime,interviews.smeid,
 concat(employees.firstname," ",employees.lastname)as SmeName from interviews
 inner join subjectmatterexperts 
@@ -81,21 +88,12 @@ update questionbank set answerkey="c" where id = 1;
 
 
 
-
-
-
-
-
-
-
-
 ----------------------------------------------------------------------------------------------------------------
 
 
 
-
 -- this query gives the testdetails where testid=1
-select * from tests where id=1;
+select * from tests where id=3;
 
 -- this query gives the tests createddate between "2023-11-05" and "2023-12-05"
 select * from tests where creationDate  between "2023-11-05" and "2023-12-05";
@@ -147,22 +145,18 @@ update questionbank set evaluationcriteriaid=1 ,subjectid=1 where id =1;
 select score from candidatetestresults where candidateid=1 and testid=3;
 
 -- get the candidatetestresultdetails
-select candidatetestresults.testid,candidatetestresults.score,candidatetestresults.candidateid
-,employees.firstname,employees.lastname,subjects.title as subject
-from candidatetestresults
-inner join employees
-on employees.id=candidatetestresults.candidateid
-inner join tests
-on candidatetestresults.testid=tests.id
-inner join subjects
-on tests.subjectid=subjects.id
-where candidatetestresults.testid=1;
+select candidatetestresults.testid,candidatetestresults.score,candidatetestresults.candidateid,
+employees.firstname,employees.lastname,subjects.title as subject
+from candidatetestresults inner join employees
+on employees.id=candidatetestresults.candidateid inner join tests
+on candidatetestresults.testid=tests.id inner join subjects
+on tests.subjectid=subjects.id where candidatetestresults.testid=3;
 
 -- get the appearedcandidates for testid=1
 select candidatetestresults.testid, candidatetestresults.candidateid, employees.firstname, 
 employees.lastname from candidatetestresults 
 inner join employees on employees.id= candidatetestresults.candidateid
-where candidatetestresults.testid=1;
+where candidatetestresults.testid=3;
 
 -- get the passedcandidates for testid=1
 select tests.id,candidatetestresults.candidateid,candidatetestresults.score,tests.passinglevel,employees.firstname,employees.lastname
@@ -184,11 +178,11 @@ candidateanswers.answerkey as candidateanswer,questionbank.answerkey
 from  candidateanswers
 INNER JOIN   testquestions  on testquestions.questionbankid=candidateanswers.testquestionid
 INNER JOIN   questionbank on questionbank.id=testquestions.questionbankid
-where candidateanswers.candidateid=1 and testquestions.testid=1;
+where candidateanswers.candidateid=6 and testquestions.testid=1;
 
 -- get candidatestresultdetails
-select candidatetestresults.testid,candidatetestresults.score,candidatetestresults.candidateid
-,employees.firstname,employees.lastname,subjects.title as subject
+select candidatetestresults.testid,candidatetestresults.score,candidatetestresults.candidateid,
+employees.firstname,employees.lastname,subjects.title as subject
 from candidatetestresults inner join employees on employees.id=candidatetestresults.candidateid
 inner join tests on candidatetestresults.testid=tests.id
 inner join subjects on tests.subjectid=subjects.id
@@ -207,7 +201,7 @@ call spcandidatetestresult(2,1,@pscore) ;
 select(@pscore);
 
 -- give the candidatetestresultdetails
-CALL spcandidatetestresultdetails(3,2, @pcorrectAnswers, @pincorrectAnswers,@pskippedQuestions);
+CALL spcandidatetestresultdetails(3,5, @pcorrectAnswers, @pincorrectAnswers,@pskippedQuestions);
 select @pcorrectAnswers,@pincorrectAnswers,@pskippedQuestions;
 
 -- get interviewdetails where interviewid=2
@@ -227,7 +221,15 @@ on candidatetestresults.candidateid=employees.id
 where tests.subjectid=1;
 
 
+SELECT t.id, t.smeid AS subjectExpertId, t.subjectid AS subjectId, t.creationdate AS creationDate,t.modificationdate AS modificationDate,
+t.scheduleddate AS scheduledDate,t.status,t.passinglevel,e.firstName, e.lastName
+FROM   tests t
+LEFT JOIN employees e ON t.smeid = e.id 
+WHERE t.id = @AssessmentId;
 
+select score from candidatetestresults where candidateid=@candidateId and testid=@testId;
+
+select * from tests;
 
 
 

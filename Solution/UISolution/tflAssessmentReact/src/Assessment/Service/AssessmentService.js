@@ -16,17 +16,17 @@ const AssessmentService = {
     },
 
     async getAllEmployees() {
-        const response = await fetch(`${this.apiBaseUrl}/employees`);
+        const response = await fetch(endpoints.assessment.getAllEmployees);
         return handleResponse(response);
     },
 
     async getAllSubjects() {
-        const response = await fetch(`${this.apiBaseUrl}/subjects`);
+        const response = await fetch(endpoints.assessment.getAllSubjects);
         return handleResponse(response);
     },
 
     async getEvaluationCriteria() {
-        const response = await fetch(`${this.apiBaseUrl}/criterias`);
+        const response = await fetch(endpoints.assessment.getEvaluationCriteria);
         return handleResponse(response);
     },
 
@@ -36,7 +36,7 @@ const AssessmentService = {
     },
 
     async getAssessmentDetails(id) {
-        const response = await fetch(`${this.apiBaseUrl}/assessments/${id}`); // Updated URL
+        const response = await fetch(endpoints.assessment.getAssessmentDetails(id));
         return handleResponse(response);
     },
 

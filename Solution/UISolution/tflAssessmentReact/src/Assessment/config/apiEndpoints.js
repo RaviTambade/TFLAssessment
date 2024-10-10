@@ -8,7 +8,8 @@ const endpoints = {
   assessment: {
     getAllSubjects: `${API_BASE_URL_ASSESSMENT}/assessment/subjects`,
     getAllAssessments: `${API_BASE_URL_ASSESSMENT}/assessment/assessments`,
-   // getAllBySubjectMatterExpert: `${API_BASE_URL_ASSESSMENT}/assessment/subjectexperts/${id}`,
+    getAllEmployees: `${API_BASE_URL_ASSESSMENT}/assessment/employees`,
+    getAssessmentDetails:(id) => `${API_BASE_URL_ASSESSMENT}/assessment/${id}`,
     getCriteriaBySubject: (subjectId) => `${API_BASE_URL_ASSESSMENT}/assessment/criterias/subjects/${subjectId}`,
   }
 };

@@ -1,8 +1,8 @@
 import React from 'react';
-// import './App.css';
-import AssessmentList from './Assessment/Components/AssessmentList';
+//import SubjectsList from './Assessment/Components/SubjectsList';
+//import AssessmentList from './Assessment/Components/AssessmentList';
 // import CreateTestComponent from './Assessment/Components/CreateNewTest';
-// import EmployeesList from './Assessment/Components/EmployeesList';
+//import EmployeesList from './Assessment/Components/EmployeesList';
 //import AssessmentDetails from './Assessment/Components/AssessmentDetails';
 //import TestAppear from './Assessment/Components/TestAppear';
 //import CandidateDetails from './CandidateResultDetails/components/CandidateDetails';
@@ -31,11 +31,13 @@ function App() {
 
   return (
     <>
-      <AssessmentList /> 
-      {/* <AssessmentDetails />  */}/
+      {/* <AssessmentList />  */}
+      {/* <AssessmentDetails />  */}
       {/* <TestAppear/> */}
       {/* <CandidateDetails/> */}
       {/* <EvaluationCriteriaComponent /> */}
+      {/* <EmployeesList/> */}
+      {/* <SubjectsList /> */}
 
     </>
   )

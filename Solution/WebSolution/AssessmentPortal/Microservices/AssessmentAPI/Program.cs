@@ -25,8 +25,8 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
 builder.Services.AddControllers();
-builder.Services.AddScoped<IAssessmentRepository, AssessmentRepository>();
-//builder.Services.AddScoped<IAssessmentRepository, AssessmentDapperRepository>();
+//builder.Services.AddScoped<IAssessmentRepository, AssessmentRepository>();
+builder.Services.AddScoped<IAssessmentRepository, AssessmentDapperRepository>();
 builder.Services.AddScoped<IAssessmentService, AssessmentService>();
 
 var app = builder.Build();

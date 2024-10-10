@@ -11,7 +11,7 @@ public class Assessment
     public DateTime ScheduledDate {get;set;}
     public string Status {get;set;}
     public int PassingLevel{get;set;}
-     public string Subject { get; set; }
+    public string Subject { get; set; }
     public string FirstName { get; set; }
     public string LastName { get; set; }
 }
