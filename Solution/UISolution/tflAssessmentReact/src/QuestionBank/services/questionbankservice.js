@@ -39,6 +39,10 @@ const QuestionBankService = {
     const response = await fetch(endpoints.questionBank.getQuestionsBySubjectAndCriteria(subjectId, criteriaId));
     return await handleResponse(response);
   },
+  getQuestionsWithSubjectAndCriteria: async () => {
+    const response = await fetch(endpoints.questionBank.getQuestionsWithSubjectAndCriteria);
+    return await handleResponse(response);
+  }
 };
 
 export default QuestionBankService;
