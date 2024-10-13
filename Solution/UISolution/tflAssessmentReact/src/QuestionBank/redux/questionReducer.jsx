@@ -3,6 +3,7 @@ import {
   fetchQuestionById,
   fetchQuestionsByTestId,
   fetchAllQuestions,
+  fetchAllQuestionsWithSubjectAndCriteria,
 } from './questionActions';
 
 // Initial state
