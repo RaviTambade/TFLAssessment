@@ -21,6 +21,16 @@ public class SubjectService : ISubjectService
    {
       return await _repository.GetAllSubject();
    }
+   
+   public async Task<int> AddSubject(SubjectModel subject)
+   {
+      return await _repository.AddSubject(subject);
+   }
+
+   public async Task<int> DeleteSubject(int subjectId)
+   {
+      return await _repository.DeleteSubject(subjectId);
+   }
 
    
 }
