@@ -77,6 +77,12 @@ public class QuestionBankController : ControllerBase
         return Ok(questions);
     }
 
+    [HttpGet("questions/subjects/criterias")]
+    public async Task<IActionResult> GetQuestionsWithSubjectAndCriteria()
+    {   
+        List<QuestionDetails> questions =await _svc.GetQuestionsWithSubjectAndCriteria();
+        return Ok(questions);
+    }
 
         
        

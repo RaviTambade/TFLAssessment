@@ -142,6 +142,50 @@ public class QuestionBankRepository : IQuestionBankRepository
         return questions;
     }
 
+    public async Task<List<QuestionDetails>> GetQuestionsWithSubjectAndCriteria()
+    {
+
+        List<QuestionDetails> questions = new List<QuestionDetails>();
+        string query = @"select questionbank.id, questionbank.title, subjects.title as subject ,evaluationcriterias.title as criteria
+                            from questionbank, subjects,evaluationcriterias
+                            where questionbank.subjectid=subjects.id and questionbank.evaluationcriteriaid=evaluationcriterias.id";
+
+        MySqlConnection connection = new MySqlConnection(_connectionString);
+        MySqlCommand command = new MySqlCommand(query, connection);
+        
+        try
+        {
+            await connection.OpenAsync();
+            MySqlDataReader reader = command.ExecuteReader();
+            while (await reader.ReadAsync())
+            {
+                int id = int.Parse(reader["id"].ToString());
+                string strQuestion = reader["title"].ToString();
+                string subject = reader["subject"].ToString();
+                string criteria = reader["criteria"].ToString();
+
+                QuestionDetails question = new QuestionDetails();
+
+                question.Id = id;
+                question.Question = strQuestion;
+                question.Subject = subject;
+                question.Criteria = criteria;
+
+                questions.Add(question);
+            }
+            await reader.CloseAsync();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+        finally
+        {
+            await connection.CloseAsync();
+        }
+        return questions;
+    }
+
     public async Task<bool> UpdateAnswer(int id, char answerKey)
     {
         bool status = false;

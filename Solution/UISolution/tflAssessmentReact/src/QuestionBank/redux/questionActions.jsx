@@ -27,5 +27,11 @@ export const fetchAllQuestions = createAsyncThunk(
   }
 );
 
-
+export const fetchAllQuestionsWithSubjectAndCriteria = createAsyncThunk(
+  'questions/fetchQuestionsWithSubjectAndCriteria',
+  async () => {
+    const response = await QuestionService.getQuestionsWithSubjectAndCriteria();
+    return response;
+  }
+);
 

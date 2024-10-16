@@ -11,6 +11,7 @@ const endpoints = {
     getQuestionsBySubject: (subjectId) => `${API_BASE_URL_QUESTIONBANK}/questionbank/questions/subjects/${subjectId}`,
     getQuestionsBySubjectAndCriteria: (subjectId, criteriaId) => 
       `${API_BASE_URL_QUESTIONBANK}/questionbank/questions/subjects/${subjectId}/criterias/${criteriaId}`,
+    getQuestionsWithSubjectAndCriteria: `${API_BASE_URL_QUESTIONBANK}/questionbank/questions/subjects/criterias`,
     getCriteria: (subjectId, questionId) => 
       `${API_BASE_URL_QUESTIONBANK}/questionbank/questions/subjects/${subjectId}/questions/${questionId}`,
   },

@@ -3,6 +3,7 @@ import {
   fetchQuestionById,
   fetchQuestionsByTestId,
   fetchAllQuestions,
+  fetchAllQuestionsWithSubjectAndCriteria,
 } from './questionActions';
 
 // Initial state
@@ -59,7 +60,22 @@ const questionReducer = createReducer(initialState, (builder) => {
       state.loading = false;
       state.error = action.error.message;
       state.questionList = []; 
-    });
+    })
+
+     // For fetching all questions with subject and criteria
+     .addCase(fetchAllQuestionsWithSubjectAndCriteria.pending, (state) => {
+      state.loading = true;
+    })
+    .addCase(fetchAllQuestionsWithSubjectAndCriteria.fulfilled, (state, action) => {
+      state.loading = false;
+      state.questionList = action.payload;
+    })
+    .addCase(fetchAllQuestionsWithSubjectAndCriteria.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.error.message;
+    })
+
+
 });
 
 export default questionReducer;
