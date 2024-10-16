@@ -66,4 +66,11 @@ public class ResultService:IResultService
         return await _repository.GetSubjectResultDetails(subjectId);
     }
 
+    
+    public async Task<List<Subject>> GeAllSubjects()
+    {
+        return await _repository.GeAllSubjects();
+    }
+     
+
 }

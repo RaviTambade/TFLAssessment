@@ -18,6 +18,17 @@ namespace Transflower.TFLAssessment.Controllers
             _logger = logger;
         }
 
+        // Get All subjects .
+        // URL: http://localhost:5235/api/Result/subjects 
+
+        [HttpGet("subjects")]
+        public async Task<IActionResult> GetAllSubjects()
+        {   
+            List<Subject> subjects = await _svc.GeAllSubjects();
+            _logger.LogInformation("Log Generated For get Subject Result Details");
+            return Ok(subjects);
+        }
+        
         // Get candidate score with stored procedure.
         // URL: http://localhost:5235/api/Result/candidates/1/tests/1/score
         [HttpGet("candidates/{candidateId}/tests/{testId}/score")]

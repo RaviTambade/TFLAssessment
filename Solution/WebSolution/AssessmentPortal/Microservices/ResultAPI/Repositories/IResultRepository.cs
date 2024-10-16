@@ -23,7 +23,8 @@ public interface IResultRepository{
 
     public Task<List<CandidateSubjectResults>> GetSubjectResultDetails(int subjectId);
 
-   
+    //public Task<int[]> GetAllTestIds();
+    public Task<List<Subject>> GeAllSubjects();
 
     
 }

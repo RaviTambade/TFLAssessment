@@ -467,8 +467,82 @@ public class ResultRepository : IResultRepository
         return resultdetails;
     }
 
-    
-    
 
+    public async Task<List<Subject>> GeAllSubjects()
+    {
+    
+        List<Subject> subjects = new List<Subject>();
+
+        List<CandidateSubjectResults> resultdetails = new List<CandidateSubjectResults>();
+        MySqlConnection connection = new MySqlConnection(_connectionString);
+        string query=@"select * from subjects";
+         try
+        {
+            MySqlCommand command = new MySqlCommand(query, connection);
+         
+            await connection.OpenAsync();
+            MySqlDataReader reader = command.ExecuteReader();
+
+             while (await reader.ReadAsync())
+            {
+                int subjectid = int.Parse(reader["id"].ToString());
+                
+                string title = reader["title"].ToString();
+                
+
+                Subject sub = new Subject();
+
+                sub.Id = subjectid;
+                sub.Title = title;
+                
+                subjects.Add(sub);
+            }
+              reader.Close();
+         }
+
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+        finally
+        {
+            await connection.CloseAsync();
+        }
+        return subjects;
+
+    }
+    /*public Task<int[]> GetAllTestIds()
+    {
+            int[] testIds = new []int();
+        MySqlConnection connection = new MySqlConnection(_connectionString);
+        string query=@"select * from tests";
+         try
+        {
+            MySqlCommand command = new MySqlCommand(query, connection);
+           
+            await connection.OpenAsync();
+            MySqlDataReader reader = command.ExecuteReader();
+
+             while (await reader.ReadAsync())
+            {
+                int testid = int.Parse(reader["id"].ToString());
+                
+                testIds.Add(testid);
+            }
+              reader.Close();
+         }
+
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+        finally
+        {
+            await connection.CloseAsync();
+        }
+        return testIds;
+
+    }*/
+    
 }
 
