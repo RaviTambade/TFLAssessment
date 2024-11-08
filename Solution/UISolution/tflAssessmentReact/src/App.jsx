@@ -1,4 +1,4 @@
-//import React from 'react';
+// import React from 'react';
 //import SubjectsList from './Assessment/Components/SubjectsList';
 //import AssessmentList from './Assessment/Components/AssessmentList';
 // import CreateTestComponent from './Assessment/Components/CreateNewTest';
@@ -13,7 +13,7 @@
 // import QuestionList from './QuestionBank/components/GetQuestions';
 // import InterviewSubjects from './InterviewDetails/components/GetInterviewedCandidatesSubjects';
 //  import InterviewList from './InterviewDetails/components/AllInterviewCandidates';
-import InterviewDeatils from './InterviewDetails/components/InterviewDetails';
+// import InterviewDeatils from './InterviewDetails/components/InterviewDetails';
 // import GetCandidateResults from './AssementIntellegence/Components/GetCandidateResult';
 // import InsertCriteria from './EvaluationCriteria/Component/Crud/InsertCriteria';
 // import QuestionBankList from './testAppear_Shubhangi/Component/AppearTest';
@@ -27,49 +27,37 @@ import InterviewDeatils from './InterviewDetails/components/InterviewDetails';
 //import CandidatesList from './CandidateResultDetails/components/CandidatesByTest';
 //import EvaluationCriteriaComponent from './Assessment/Components/GetEvaluationCreteriaBySubject';
 
-//function App() {
+// function App() {
 
-//  return (
+//   return (
 //    <>
-    {/* <AssessmentList /> */}
-     {/* <AssessmentDetails />  */}
-     {/* <TestAppear/> */}
-     {/* <CandidateDetails/> */}
-     <InterviewDeatils/> 
-            {/* <InterviewList/>  */}
+   
+
+//     </>
+//   )
+// }
+
+// export default App;
 
 
-      
-      {/* <AssessmentList />  */}
-      {/* <AssessmentDetails />  */}
-      {/* <TestAppear/> */}
-      {/* <CandidateDetails/> */}
-      {/* <EvaluationCriteriaComponent /> */}
-      {/* <EmployeesList/> */}
-      {/* <SubjectsList /> */}
 
-//    </>
-//  )
-//}
-
-//export default App;
 
 import React from 'react';
 import { Provider } from 'react-redux';
 import store from './QuestionBank/redux/store';
-//import SubjectCriteriaQuestions from './QuestionBank/components/SubjectCriteriaQuestions';
-import GetAllQuestions from './QuestionBank/components/AllQuestions';
-// import GetQuestionById from './QuestionBank/components/QuestionById';
+import SubjectCriteriaQuestions from './QuestionBank/components/SubjectCriteriaQuestions';
+//import GetAllQuestions from './QuestionBank/components/AllQuestions';
 // import GetQuestionsByTestId from './QuestionBank/components/QuestionsByTestId';
+// import UpdateCriteriaSubject from './QuestionBank/components/UpdateCriteriaSubject';
 
 function App() {
   return (
     <>
       <Provider store={store}>
-        <GetAllQuestions /> 
-          {/* <SubjectCriteriaQuestions/> */}
-          {/* <GetQuestionById/> */}
+        {/* <GetAllQuestions />  */}
+          <SubjectCriteriaQuestions/>
           {/* <GetQuestionsByTestId/> */}
+          {/* <UpdateCriteriaSubject/> */}
       </Provider>
     </>
   );
@@ -98,3 +86,16 @@ export default App;
 {/* <CreateTestComponent/>  */ }
 {/* <EmployeesList/> */ }
 {/* <AssessmentDetails /> */ }
+ {/* <AssessmentList /> */}
+     {/* <AssessmentDetails />  */}
+     {/* <TestAppear/> */}
+     {/* <CandidateDetails/> */}
+     {/* <InterviewDeatils/>  */}
+    {/* <InterviewList/>  */}
+      {/* <AssessmentList />  */}
+      {/* <AssessmentDetails />  */}
+      {/* <TestAppear/> */}
+      {/* <CandidateDetails/> */}
+      {/* <EvaluationCriteriaComponent /> */}
+      {/* <EmployeesList/> */}
+      {/* <SubjectsList /> */}
