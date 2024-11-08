@@ -1,12 +1,13 @@
 
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import QuestionService from '../services/questionbankservice';
+//import QuestionService from '../services/questionbankservice';
+import QuestionBankService from '../services/questionbankservice';
 
 // Thunks for asynchronous API calls
 export const fetchQuestionById = createAsyncThunk(
   'questions/fetchById',
   async (questionId) => {
-    const response = await QuestionService.getQuestionById(questionId);
+    const response = await QuestionBankService.getQuestionById(questionId);
     return response;
   }
 );
@@ -14,7 +15,7 @@ export const fetchQuestionById = createAsyncThunk(
 export const fetchQuestionsByTestId = createAsyncThunk(
   'questions/fetchByTestId',
   async (testId) => {
-    const response = await QuestionService.getQuestionsByTestId(testId);
+    const response = await QuestionBankService.getQuestionsByTestId(testId);
     return response;
   }
 );
@@ -22,7 +23,7 @@ export const fetchQuestionsByTestId = createAsyncThunk(
 export const fetchAllQuestions = createAsyncThunk(
   'questions/fetchAll',
   async () => {
-    const response = await QuestionService.getAllQuestions();
+    const response = await QuestionBankService.getAllQuestions();
     return response;
   }
 );
@@ -30,7 +31,7 @@ export const fetchAllQuestions = createAsyncThunk(
 export const fetchAllQuestionsWithSubjectAndCriteria = createAsyncThunk(
   'questions/fetchQuestionsWithSubjectAndCriteria',
   async () => {
-    const response = await QuestionService.getQuestionsWithSubjectAndCriteria();
+    const response = await QuestionBankService.getQuestionsWithSubjectAndCriteria();
     return response;
   }
 );
