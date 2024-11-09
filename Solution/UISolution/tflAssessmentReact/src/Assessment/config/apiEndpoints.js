@@ -11,6 +11,7 @@ const endpoints = {
     getAllEmployees: `${API_BASE_URL_ASSESSMENT}/assessment/employees`,
     getAssessmentDetails:(id) => `${API_BASE_URL_ASSESSMENT}/assessment/${id}`,
     getCriteriaBySubject: (subjectId) => `${API_BASE_URL_ASSESSMENT}/assessment/criterias/subjects/${subjectId}`,
+    CreateTestComponent: `${API_BASE_URL_ASSESSMENT}/assessment/createtest`,
   }
 };
 

@@ -1,8 +1,8 @@
  import React from 'react';
-import AssessmentDetails from './Assessment/Components/AssessmentDetails';
+//import AssessmentDetails from './Assessment/Components/AssessmentDetails';
 // import SubjectsList from './Assessment/Components/SubjectsList';
 // import AssessmentList from './Assessment/Components/AssessmentList';
-// import CreateTestComponent from './Assessment/Components/CreateNewTest';
+ import CreateTestComponent from './Assessment/Components/CreateNewAssesment';
 // import EmployeesList from './Assessment/Components/EmployeesList';
 // import TestAppear from './Assessment/Components/TestAppear';
 // import CandidateDetails from './CandidateResultDetails/components/CandidateDetails';
@@ -31,7 +31,7 @@ function App() {
 
   return (
    <>
-  <AssessmentDetails/>
+ <CreateTestComponent/>
 
     </>
   )

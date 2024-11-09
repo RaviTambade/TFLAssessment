@@ -46,7 +46,7 @@ const AssessmentService = {
     },
 
     async createTest(newTest) {
-        const response = await fetch(`${this.apiBaseUrl}/createtest`, {
+        const response = await fetch(endpoints.assessment.createtest, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
