@@ -324,6 +324,32 @@ public class AssessmentDapperRepository :IAssessmentRepository
         }
         return employees;
     }
+
+
+    
+
+    //   public async <Employee> GetAllEmployee(int userId)
+    // {
+    //     await Task.Delay(100);
+    //     using (IDbConnection con = new MySqlConnection(_connectionString))
+    //     {
+    //         var emp = con.Query<Employee>("SELECT * FROM employees where userId=@userId"); 
+    //     }
+    //     return employee;
+    // }
+
+    public async Task<Employee> GetEmployeeById(int userId)
+    {
+        await Task.Delay(100); // Optional delay; you can remove this if not needed.
+        using (IDbConnection con = new MySqlConnection(_connectionString))
+        {
+            string query = "SELECT * FROM employees WHERE userId=@userId";
+            var employee = await con.QueryFirstOrDefaultAsync<Employee>(query, new { userId });
+            return employee; 
+        }
+    }
+
+
     public async Task <List<Subject>> GetAllSubjects()
     {
         await Task.Delay(100);

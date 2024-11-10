@@ -33,6 +33,11 @@ public class AssessmentService : IAssessmentService
    {
       return await _repository.GetAllEmployees();
    }
+   
+  public async Task<Employee> GetEmployeeById(int userId)
+  {
+      return await _repository.GetEmployeeById(userId);
+   }
 
    public async Task<List<Subject>> GetAllSubjects()
    {
