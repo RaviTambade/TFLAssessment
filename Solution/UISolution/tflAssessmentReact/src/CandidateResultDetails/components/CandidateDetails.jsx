@@ -57,3 +57,4 @@ const CandidateDetails = () => {
 };
 
 export default CandidateDetails;
+

@@ -48,7 +48,7 @@ public class AssessmentController : ControllerBase
         return Ok(employees);
     }
 
-     //http://localhost:5151/api/assessment/employee/{useId}
+     //http://localhost:5151/api/assessment/employee/{userId}
     [HttpGet("employee/{userId}")]
     public async Task<IActionResult>  GetEmployeeById(int userId)
     {

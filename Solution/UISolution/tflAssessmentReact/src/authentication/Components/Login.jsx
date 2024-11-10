@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { Outlet, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 function Login() {
     const [contact, setContact] = useState('');
     const [password, setPassword] = useState('');
+    const navigate = useNavigate();
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -46,7 +48,12 @@ function Login() {
                 const assessmentData = await assessmentResponse.json();
                 console.log('Assessment Data:', assessmentData);
 
-                alert('Login is Valid');
+                // Assuming employee ID is retrieved in the third API call
+                const employeeId = assessmentData.employeeId || assessmentData.id;
+
+                // Redirect to the UserProfile page, passing employeeId as state
+                navigate('/profile', { state: { employeeId } });
+
             } else {
                 alert('Login is not Valid');
             }
