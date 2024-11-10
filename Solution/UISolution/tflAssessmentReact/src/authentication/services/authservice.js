@@ -37,19 +37,3 @@ export const changePassword = async (credential) => {
   }
 };
 
-// UpdateContactNumber function to update the user's contact number
-export const updateContactNumber = async (credential) => {
-  const url = `${authAPIUrl}/updatecontactnumber`;
-
-  try {
-    const response = await fetch(url, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(credential),
-    });
-    return response.ok; // Return true if the response was successful
-  } catch (error) {
-    console.error('Error in updateContactNumber:', error);
-    throw error;
-  }
-};
