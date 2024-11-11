@@ -51,6 +51,17 @@ public class QuestionBankDapperRepository : IQuestionBankRepository
         return questions;
     }
 
+      public async Task<List<QuestionDetails>> GetQuestionsWithSubjectAndCriteria()
+    {
+        List<QuestionDetails> questions=new List<QuestionDetails>();   
+        using (IDbConnection con = new MySqlConnection(_connectionString))
+        {
+            var ques = await con.QueryAsync<QuestionDetails>("select questionbank.id, questionbank.title, subjects.title as subject ,evaluationcriterias.title as criteria from questionbank, subjects,evaluationcriterias where questionbank.subjectid=subjects.id and questionbank.evaluationcriteriaid=evaluationcriterias.id");
+            questions = ques as List<QuestionDetails>;
+        }
+        return questions;
+    }
+
     public async Task<bool> UpdateAnswer(int id, char answerKey)
     {
         bool status = false;

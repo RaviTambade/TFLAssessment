@@ -40,13 +40,21 @@ public class AssessmentController : ControllerBase
     }
   
     //http://localhost:5151/api/assessment/employees
-    
     [HttpGet("employees")]
     public async Task<IActionResult>  GetAllEmployees()
     {
         List<Employee> employees =await _svc.GetAllEmployees();
         _logger.LogInformation("Get all employee method invoked at  {DT}", DateTime.UtcNow.ToLongTimeString());
         return Ok(employees);
+    }
+
+     //http://localhost:5151/api/assessment/employee/{userId}
+    [HttpGet("employee/{userId}")]
+    public async Task<IActionResult>  GetEmployeeById(int userId)
+    {
+        Employee employee =await _svc.GetEmployeeById(userId);
+        _logger.LogInformation("Get all employee method invoked at  {DT}", DateTime.UtcNow.ToLongTimeString());
+        return Ok(employee);
     }
   
     //http://localhost:5151/api/assessment/subjects

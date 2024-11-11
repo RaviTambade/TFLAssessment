@@ -15,8 +15,8 @@ const AssessmentDetails = () => {
         try {
             const data = await AssessmentService.getAssessmentDetails(assessmentId);
             setDetails(data);
-            
-            setError(null); 
+
+            setError(null);
         } catch (error) {
             setError('Failed to fetch assessment details.');
             setDetails(null);
@@ -29,9 +29,9 @@ const AssessmentDetails = () => {
     };
 
     return (
-    <>
-        <h3>Assessment Details ...</h3>
-        <form onSubmit={handleFormSubmit}>
+        <>
+            <h3>Assessment Details ...</h3>
+            <form onSubmit={handleFormSubmit}>
                 <label htmlFor="assessmentIdInput">Assessment ID:</label>
                 <input
                     id="assessmentIdInput"
@@ -48,11 +48,13 @@ const AssessmentDetails = () => {
                     <h4>Assessment Details:</h4>
                     <p><strong>ID:</strong> {details.id}</p>
                     <p><strong>Subject Id:</strong> {details.subjectId}</p>
+                    <p><strong>First Name:</strong> {details.firstName}</p>
+                    <p><strong>Last Name:</strong> {details.lastName}</p>
                     <p><strong>Passing marks:</strong> {details.passingLevel}</p>
-                    
+
                 </div>
             )}
-    </>
+        </>
     )
 
 }

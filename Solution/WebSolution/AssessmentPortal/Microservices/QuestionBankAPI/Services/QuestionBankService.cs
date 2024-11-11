@@ -27,6 +27,12 @@ public class QuestionBankService:IQuestionBankService
        
     }
 
+      public async Task<List<QuestionDetails>> GetQuestionsWithSubjectAndCriteria()
+    {
+        return await _repository.GetQuestionsWithSubjectAndCriteria();
+       
+    }
+
     public async Task<bool> UpdateAnswer(int id, char answerKey){
        return await _repository.UpdateAnswer(id,answerKey);
     }

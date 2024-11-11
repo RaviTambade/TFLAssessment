@@ -1,10 +1,16 @@
 using Transflower.Entities;
-namespace Transflower.SubjectAPI.Repositories.Interfaces;
 
-public interface ISubjectRepository
+namespace Transflower.SubjectAPI.Repositories.Interfaces
 {
-    public Task <List<SubjectModel>> GetAllSubject();
+    public interface ISubjectRepository
+    {
+        // Get all subjects
+        Task<List<SubjectModel>> GetAllSubject();
 
-    //public Task <string> GetSubjectById(int id);
+        // Add a new subject
+        Task<int> AddSubject(SubjectModel subject);
 
+        // Delete a subject by ID
+        Task<int> DeleteSubject(int subjectId);
+    }
 }

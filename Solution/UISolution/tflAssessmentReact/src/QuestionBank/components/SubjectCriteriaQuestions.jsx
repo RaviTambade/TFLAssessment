@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import QuestionService from '../services/questionbankservice';
+import QuestionBankService from '../services/questionbankservice';
 
 const SubjectCriteriaQuestions = () => {
   const [subjects, setSubjects] = useState([]);
@@ -15,7 +15,7 @@ const SubjectCriteriaQuestions = () => {
       setLoading(true);
       setError(null);
       try {
-        const data = await QuestionService.getSubjects();
+        const data = await QuestionBankService.getSubjects();
         setSubjects(data);
         if (data.length > 0) {
           setSelectedSubject(data[0].id); 
@@ -36,7 +36,7 @@ const SubjectCriteriaQuestions = () => {
       setLoading(true);
       setError(null);
       try {
-        const data = await QuestionService.getCriteriaBySubject(selectedSubject);
+        const data = await QuestionBankService.getCriteriaBySubject(selectedSubject);
         setCriterias(data);
         if (data.length > 0) {
           setSelectedCriteria(data[0].id); 
@@ -57,7 +57,7 @@ const SubjectCriteriaQuestions = () => {
       setLoading(true);
       setError(null);
       try {
-        const data = await QuestionService.getQuestionsBySubjectAndCriteria(selectedSubject, selectedCriteria);
+        const data = await QuestionBankService.getQuestionsBySubjectAndCriteria(selectedSubject, selectedCriteria);
         setQuestionsList(data);
       } catch (error) {
         setError('Error fetching questions.');

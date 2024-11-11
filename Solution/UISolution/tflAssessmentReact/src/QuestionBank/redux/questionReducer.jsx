@@ -3,8 +3,10 @@ import {
   fetchQuestionById,
   fetchQuestionsByTestId,
   fetchAllQuestions,
+  fetchAllQuestionsWithSubjectAndCriteria,
 } from './questionActions';
 
+// Initial state
 const initialState = {
   questionList: [],
   questionDetails: {},
@@ -12,11 +14,13 @@ const initialState = {
   error: null,
 };
 
+// Reducer
 const questionReducer = createReducer(initialState, (builder) => {
   builder
-    // For fetching questions by ID
+    // For fetching question by ID
     .addCase(fetchQuestionById.pending, (state) => {
       state.loading = true;
+      state.error = null;
     })
     .addCase(fetchQuestionById.fulfilled, (state, action) => {
       state.loading = false;
@@ -25,11 +29,13 @@ const questionReducer = createReducer(initialState, (builder) => {
     .addCase(fetchQuestionById.rejected, (state, action) => {
       state.loading = false;
       state.error = action.error.message;
+      state.questionDetails = {};
     })
 
     // For fetching questions by test ID
     .addCase(fetchQuestionsByTestId.pending, (state) => {
       state.loading = true;
+      state.error = null;
     })
     .addCase(fetchQuestionsByTestId.fulfilled, (state, action) => {
       state.loading = false;
@@ -38,11 +44,13 @@ const questionReducer = createReducer(initialState, (builder) => {
     .addCase(fetchQuestionsByTestId.rejected, (state, action) => {
       state.loading = false;
       state.error = action.error.message;
+      state.questionList = []; 
     })
 
     // For fetching all questions
     .addCase(fetchAllQuestions.pending, (state) => {
       state.loading = true;
+      state.error = null;
     })
     .addCase(fetchAllQuestions.fulfilled, (state, action) => {
       state.loading = false;
@@ -51,9 +59,23 @@ const questionReducer = createReducer(initialState, (builder) => {
     .addCase(fetchAllQuestions.rejected, (state, action) => {
       state.loading = false;
       state.error = action.error.message;
+      state.questionList = []; 
     })
 
-  
+     // For fetching all questions with subject and criteria
+     .addCase(fetchAllQuestionsWithSubjectAndCriteria.pending, (state) => {
+      state.loading = true;
+    })
+    .addCase(fetchAllQuestionsWithSubjectAndCriteria.fulfilled, (state, action) => {
+      state.loading = false;
+      state.questionList = action.payload;
+    })
+    .addCase(fetchAllQuestionsWithSubjectAndCriteria.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.error.message;
+    })
+
+
 });
 
 export default questionReducer;

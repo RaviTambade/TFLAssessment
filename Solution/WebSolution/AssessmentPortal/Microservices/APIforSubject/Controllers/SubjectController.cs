@@ -31,6 +31,43 @@ public class SubjectController : ControllerBase
        
         return Ok(subjects);
     }
+
+    // POST: add a new subject
+// http://localhost:5264/api/subject/add
+[HttpPost("add")]
+public async Task<IActionResult> AddSubject([FromBody] SubjectModel subject)
+{
+    if (subject == null || string.IsNullOrEmpty(subject.Title))
+    {
+        return BadRequest("Invalid subject data.");
+    }
+    int result = await _svc.AddSubject(subject);
+    if (result > 0)
+    {
+        return Ok("Subject added successfully.");
+    }
+    return StatusCode(500, "An error occurred while adding the subject.");
+}
+
+// DELETE: delete a subject by ID
+// http://localhost:5264/api/subject/delete/{id}
+[HttpDelete("delete/{id}")]
+public async Task<IActionResult> DeleteSubject(int id)
+{
+    if (id <= 0)
+    {
+        return BadRequest("Invalid subject ID.");
+    }
+
+    int result = await _svc.DeleteSubject(id);
+
+    if (result > 0)
+    {
+        return Ok("Subject deleted successfully.");
+    }
+    return StatusCode(500, "An error occurred while deleting the subject.");
+}
+
   
     //http://localhost:5151/api/assessment/1
    /* [HttpGet("{id}")]
