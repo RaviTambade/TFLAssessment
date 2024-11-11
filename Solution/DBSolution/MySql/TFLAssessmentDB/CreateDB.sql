@@ -1,11 +1,13 @@
 -- Active: 1712217931410@@127.0.0.1@3306@assessmentdb
 
-DROP database assessmentdb;
+-- DROP database assessmentdb;
 create database assessmentdb;
 
 use assessmentdb;
+
 CREATE TABLE employees(
 	id INT AUTO_INCREMENT PRIMARY KEY,
+    userId INT,
 	firstname VARCHAR(20) NOT NULL,
 	lastname VARCHAR(20) NOT NULL,
 	email VARCHAR(50) NOT NULL,

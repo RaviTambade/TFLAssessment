@@ -35,7 +35,8 @@ function Login() {
                 // Second API call to get user info
                 const userResponse = await fetch(url1);
                 const userData = await userResponse.json();
-                const userId = userData.id;
+                const userId = userData.id;  // This is the correct userId
+
                 console.log('User Data:', userData);
 
                 // Third API call to get assessment details
@@ -48,12 +49,7 @@ function Login() {
                 const assessmentData = await assessmentResponse.json();
                 console.log('Assessment Data:', assessmentData);
 
-                // Assuming employee ID is retrieved in the third API call
-                const employeeId = assessmentData.employeeId || assessmentData.id;
-
-                // Redirect to the UserProfile page, passing employeeId as state
-                navigate('/profile', { state: { employeeId } });
-
+                navigate('/profile', { state: { userId } }); 
             } else {
                 alert('Login is not Valid');
             }
