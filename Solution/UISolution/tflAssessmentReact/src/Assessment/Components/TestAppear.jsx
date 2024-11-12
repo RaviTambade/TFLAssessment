@@ -1,13 +1,17 @@
 import React, { useState } from "react";
 import TestService from "../Service/TestService";
+import { useLocation } from "react-router-dom";
 
 const TestAppear = () => {
   const [testId, setTestId] = useState("");
-  const [candidateId, setCandidateId] = useState("");
+  const location=useLocation();
+  const {userId}=location.state ||{}
+  const [candidateId, setCandidateId] = useState(userId || "");
   const [questions, setQuestions] = useState([]);
   const [current, setCurrent] = useState(0);
   const [score, setScore] = useState(null);
   const [testStarted, setTestStarted] = useState(false);
+  
   var time = {};
 
   const fetchQuestions = async () => {

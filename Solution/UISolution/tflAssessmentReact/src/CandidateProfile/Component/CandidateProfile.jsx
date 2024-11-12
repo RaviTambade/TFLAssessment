@@ -32,7 +32,7 @@ function CandidateProfile() {
   let navigate = useNavigate(); 
   const routeChange = () =>{ 
     let path = `testAppear`; 
-    navigate(path);
+    navigate(path,{state:{userId}});
   }
 
   if (!employeeDetails) {
