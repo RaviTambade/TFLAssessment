@@ -33,11 +33,16 @@ function CandidateProfile() {
   return (
     <div>
       <h2>{employeeDetails.firstName} {employeeDetails.lastName}</h2>
+      <p>Id: {employeeDetails.userId}</p>
       <p>Email: {employeeDetails.email}</p>
       <p>Contact: {employeeDetails.contact}</p>
-      {employeeDetails.department && <p>Department: {employeeDetails.department}</p>}
+      <button onClick={}>Start Test</button>
     </div>
+
+   
   );
 }
 
 export default CandidateProfile;
+
+
