@@ -1,9 +1,34 @@
- // import React from 'react';
- //import Login from './authentication/Components/Login';
+// import React from 'react';
+// import TestAppear from './Assessment/Components/TestAppear';
+
+
+// function App() {
+
+//   return (
+//     <>
+//       <TestAppear/>
+
+//     </>
+//   )
+// }
+
+// export default App;
+
+
+
+
+// // import React from 'react';
+// // import { Provider } from 'react-redux';
+// // import store from './QuestionBank/redux/store';
+// // //import SubjectCriteriaQuestions from './QuestionBank/components/SubjectCriteriaQuestions';
+// // import GetAllQuestions from './QuestionBank/components/AllQuestions';
+//  import GetQuestionsByTestId from './QuestionBank/components/QuestionsByTestId';
+// import UpdateCriteriaSubject from './QuestionBank/components/UpdateCriteriaSubject';
+//  import Login from './authentication/Components/Login';
 //import AssessmentDetails from './Assessment/Components/AssessmentDetails';
 // import SubjectsList from './Assessment/Components/SubjectsList';
 // import AssessmentList from './Assessment/Components/AssessmentList';
- //import CreateTestComponent from './Assessment/Components/CreateNewAssesment';
+//import CreateTestComponent from './Assessment/Components/CreateNewAssesment';
 // import EmployeesList from './Assessment/Components/EmployeesList';
 // import TestAppear from './Assessment/Components/TestAppear';
 // import CandidateDetails from './CandidateResultDetails/components/CandidateDetails';
@@ -28,34 +53,12 @@
 // import CandidatesList from './CandidateResultDetails/components/CandidatesByTest';
 // import EvaluationCriteriaComponent from './Assessment/Components/GetEvaluationCreteriaBySubject';
 
-/*function App() {
-
-  return (
-   <>
- <Login/>
-
-    </>
-  )
-}
-
-export default App;*/
-
-
-
-
-// // import React from 'react';
-// // import { Provider } from 'react-redux';
-// // import store from './QuestionBank/redux/store';
-// // //import SubjectCriteriaQuestions from './QuestionBank/components/SubjectCriteriaQuestions';
-// // import GetAllQuestions from './QuestionBank/components/AllQuestions';
-// // // import GetQuestionsByTestId from './QuestionBank/components/QuestionsByTestId';
-// // // import UpdateCriteriaSubject from './QuestionBank/components/UpdateCriteriaSubject';
 
 // // function App() {
 // //   return (
 // //     <>
 // //       <Provider store={store}>
-// //         <GetAllQuestions /> 
+// //         <GetAllQuestions />
 // //         {/* <SubjectCriteriaQuestions/> */}
 // //         {/* <GetQuestionsByTestId/> */}
 // //         {/* <UpdateCriteriaSubject/> */}
@@ -77,7 +80,7 @@ export default App;*/
 //       {/* <EmployeesList/> */}
 //       {/* <AssessmentDetails /> */}
 // {/* <AssessmentList/> */ }
-// {/* <InterviewList/> 
+// {/* <InterviewList/>
 //       {/* <InterviewDeatils/> */}
 // {/*<GetCandidateResults/>*/ }
 // {/* <InsertCriteria/> */ }
@@ -106,13 +109,15 @@ export default App;*/
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Login from './authentication/Components/Login';
-import CandidateProfile from './CandidateResultDetails/components/CandidateProfile';
+import CandidateProfile from './CandidateProfile/Component/CandidateProfile';
+import TestAppear from './Assessment/Components/TestAppear';
 
 function App() {
   return (
     <Routes>
       <Route path="/" element={<Login />} />
       <Route path="/profile" element={<CandidateProfile />} />
+      <Route path="/profile/testAppear" element={<TestAppear />}/>
     </Routes>
   );
 }
