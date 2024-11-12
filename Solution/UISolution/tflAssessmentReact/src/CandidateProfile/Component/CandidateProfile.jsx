@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation,useNavigate } from 'react-router-dom';
+import TestAppear from '../../Assessment/Components/TestAppear';
+
+
 
 function CandidateProfile() {
   const location = useLocation();
@@ -26,6 +29,12 @@ function CandidateProfile() {
     }
   }, [userId]);
 
+  let navigate = useNavigate(); 
+  const routeChange = () =>{ 
+    let path = `testAppear`; 
+    navigate(path);
+  }
+
   if (!employeeDetails) {
     return <p>Loading...</p>; 
   }
@@ -36,7 +45,7 @@ function CandidateProfile() {
       <p>Id: {employeeDetails.userId}</p>
       <p>Email: {employeeDetails.email}</p>
       <p>Contact: {employeeDetails.contact}</p>
-      <button onClick={}>Start Test</button>
+      <button onClick={routeChange}>Start Test</button>
     </div>
 
    
