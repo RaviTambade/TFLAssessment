@@ -1,6 +1,5 @@
- import React from 'react';
- import NewUserForm from './authentication/Components/NewUser'
-import Login from './authentication/Components/Login';
+ // import React from 'react';
+ //import Login from './authentication/Components/Login';
 //import AssessmentDetails from './Assessment/Components/AssessmentDetails';
 // import SubjectsList from './Assessment/Components/SubjectsList';
 // import AssessmentList from './Assessment/Components/AssessmentList';
@@ -29,7 +28,7 @@ import Login from './authentication/Components/Login';
 // import CandidatesList from './CandidateResultDetails/components/CandidatesByTest';
 // import EvaluationCriteriaComponent from './Assessment/Components/GetEvaluationCreteriaBySubject';
 
-function App() {
+/*function App() {
 
   return (
    <>
@@ -39,7 +38,7 @@ function App() {
   )
 }
 
-export default App;
+export default App;*/
 
 
 
@@ -104,7 +103,7 @@ export default App;
 
 // App.js
 
-/*import React from 'react';
+import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Login from './authentication/Components/Login';
 import CandidateProfile from './CandidateResultDetails/components/CandidateProfile';
@@ -118,5 +117,5 @@ function App() {
   );
 }
 
-export default App;*/
+export default App;
 

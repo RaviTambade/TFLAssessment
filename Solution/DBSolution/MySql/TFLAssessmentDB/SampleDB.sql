@@ -1,13 +1,13 @@
 -- Active: 1707123530557@@127.0.0.1@3306@assessmentdb
 
-insert into employees(firstname, lastname, email, contact)values("ram","tambe","rTambe@gmail.com","8547963254");
-insert into employees(firstname, lastname, email, contact)values("Vaibhav","Sathe","psathe@gmail.com","9658745635");
-insert into employees(firstname, lastname, email, contact)values("Shreedhar","Kumar","pkumar@gmail.com","8654793254");
-insert into employees(firstname, lastname, email, contact)values("Prajakta","Powar","rTambe@gmail.com","8547963254");
-insert into employees(firstname, lastname, email, contact)values("Ganesh","ghodake","gghodake@gmail.com","9022923254");
-insert into employees(firstname, lastname, email, contact)values("Vaibhav","Walekar","psathe@gmail.com","7058745635");
-insert into employees(firstname, lastname, email, contact)values("Shree","pawer","spawar@gmail.com","8654653254");
-insert into employees(firstname, lastname, email, contact)values("Aniket","Zarekar","Zarekar@gmail.com","9764263254");
+insert into employees(userId,firstname, lastname, email, contact)values(1,"ram","tambe","rTambe@gmail.com","8547963254");
+insert into employees(userId,firstname, lastname, email, contact)values(2,"Vaibhav","Sathe","psathe@gmail.com","9658745635");
+insert into employees(userId,firstname, lastname, email, contact)values(3,"Shreedhar","Kumar","pkumar@gmail.com","8654793254");
+insert into employees(userId,firstname, lastname, email, contact)values(4,"Prajakta","Powar","rTambe@gmail.com","8547963254");
+insert into employees(userId,firstname, lastname, email, contact)values(5,"Ganesh","ghodake","gghodake@gmail.com","9022923254");
+insert into employees(userId,firstname, lastname, email, contact)values(6,"Vaibhav","Walekar","psathe@gmail.com","7058745635");
+insert into employees(userId,firstname, lastname, email, contact)values(7,"Shree","pawer","spawar@gmail.com","8654653254");
+insert into employees(userId,firstname, lastname, email, contact)values(8,"Aniket","Zarekar","Zarekar@gmail.com","9764263254");
 
 
 
