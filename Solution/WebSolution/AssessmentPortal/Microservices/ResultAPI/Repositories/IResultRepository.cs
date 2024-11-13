@@ -15,6 +15,8 @@ public interface IResultRepository{
 
     public Task<List<TestResultDetails>> GetTestResultDetails(int testId);
     public Task<List<AppearedCandidate>> GetAppearedCandidates(int testId);
+    public Task<List<TestResultDetails>> GetTestList(int candidateId);
+
 
     public Task<List<PassedCandidateDetails>> GetPassedCandidateResults(int testId);
     public Task<List<FailedCandidateDetails>> GetFailedCandidateResults(int testId);
