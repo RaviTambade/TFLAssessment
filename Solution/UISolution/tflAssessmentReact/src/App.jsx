@@ -1,18 +1,19 @@
-// import React from 'react';
-// import TestAppear from './Assessment/Components/TestAppear';
+import React from 'react';
+import InsertQuestion from './QuestionBank/Components/InsertQuestion';
 
 
-// function App() {
 
-//   return (
-//     <>
-//       <TestAppear/>
+function App() {
 
-//     </>
-//   )
-// }
+  return (
+    <>
+      <InsertQuestion/>
 
-// export default App;
+    </>
+  )
+}
+
+export default App;
 
 
 
@@ -20,6 +21,7 @@
 // // import React from 'react';
 // // import { Provider } from 'react-redux';
 // // import store from './QuestionBank/redux/store';
+//import TestAppear from './Assessment/Components/TestAppear';
 // // //import SubjectCriteriaQuestions from './QuestionBank/components/SubjectCriteriaQuestions';
 // // import GetAllQuestions from './QuestionBank/components/AllQuestions';
 //  import GetQuestionsByTestId from './QuestionBank/components/QuestionsByTestId';
@@ -106,21 +108,20 @@
 
 // App.js
 
-import React from 'react';
-import { Routes, Route } from 'react-router-dom';
-import Login from './authentication/Components/Login';
-import CandidateProfile from './CandidateProfile/Component/CandidateProfile';
-import TestAppear from './Assessment/Components/TestAppear';
+// import React from 'react';
+// import { Routes, Route } from 'react-router-dom';
+// import CandidateProfile from './CandidateProfile/Component/CandidateProfile';
+// import TestAppear from './Assessment/Components/TestAppear';
 
-function App() {
-  return (
-    <Routes>
-      <Route path="/" element={<Login />} />
-      <Route path="/profile" element={<CandidateProfile />} />
-      <Route path="/profile/testAppear" element={<TestAppear />}/>
-    </Routes>
-  );
-}
+// function App() {
+//   return (
+//     <Routes>
+//       <Route path="/" element={<Login />} />
+//       <Route path="/profile" element={<CandidateProfile />} />
+//       <Route path="/profile/testAppear" element={<TestAppear />}/>
+//     </Routes>
+//   );
+// }
 
-export default App;
+// export default App;
 

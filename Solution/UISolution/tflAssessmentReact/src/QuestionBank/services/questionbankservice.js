@@ -1,6 +1,5 @@
 import { endpoints } from "../config/apiEndpoints";
 
-
 const handleResponse = async (response) => {
   if (!response.ok) {
     const errorDetails = await response.json();
@@ -39,8 +38,20 @@ const QuestionBankService = {
     const response = await fetch(endpoints.questionBank.getQuestionsBySubjectAndCriteria(subjectId, criteriaId));
     return await handleResponse(response);
   },
+
   getQuestionsWithSubjectAndCriteria: async () => {
     const response = await fetch(endpoints.questionBank.getQuestionsWithSubjectAndCriteria);
+    return await handleResponse(response);
+  },
+
+  insertQuestion: async (newQuestion) => {
+    const response = await fetch(endpoints.questionBank.insertQuestion, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(newQuestion),
+    });
     return await handleResponse(response);
   }
 };
