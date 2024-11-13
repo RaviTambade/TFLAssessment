@@ -6,12 +6,20 @@ const endpoints = {
   // questionBank endpoints
   questionBank: {
     getAllQuestions: `${API_BASE_URL_QUESTIONBANK}/questionbank/questions`,
+
     getQuestionById: (questionId) => `${API_BASE_URL_QUESTIONBANK}/questionbank/questions/${questionId}`,
+
+    insertQuestion: `${API_BASE_URL_QUESTIONBANK}/questionbank/question`,
+
     getQuestionsByTestId: (testId) => `${API_BASE_URL_QUESTIONBANK}/questionbank/questions/tests/${testId}`,
+
     getQuestionsBySubject: (subjectId) => `${API_BASE_URL_QUESTIONBANK}/questionbank/questions/subjects/${subjectId}`,
+
     getQuestionsBySubjectAndCriteria: (subjectId, criteriaId) =>
    `${API_BASE_URL_QUESTIONBANK}/questionbank/questions/subjects/${subjectId}/criterias/${criteriaId}`,
+
     getQuestionsWithSubjectAndCriteria: `${API_BASE_URL_QUESTIONBANK}/questionbank/questions/subjects/criterias`,
+
     getCriteria: (subjectId, questionId) =>
     `${API_BASE_URL_QUESTIONBANK}/questionbank/questions/subjects/${subjectId}/questions/${questionId}`,
   },

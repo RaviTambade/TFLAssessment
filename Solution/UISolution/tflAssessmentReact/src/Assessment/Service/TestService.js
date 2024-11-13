@@ -72,6 +72,5 @@ const TestService = {
     }
   };
   
-
-  export default TestService;
+export default TestService;
   
