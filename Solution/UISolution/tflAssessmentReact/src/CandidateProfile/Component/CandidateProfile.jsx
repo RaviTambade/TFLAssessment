@@ -30,11 +30,14 @@ function CandidateProfile() {
   }, [userId]);
 
   let navigate = useNavigate(); 
-  const routeChange = () =>{ 
+  const routeTest = () =>{ 
     let path = `testAppear`; 
     navigate(path,{state:{userId}});
   }
-
+  const routeScore = () =>{ 
+    let path = `scorebytestid`; 
+    navigate(path,{state:{userId}});
+  }
   if (!employeeDetails) {
     return <p>Loading...</p>; 
   }
@@ -45,7 +48,8 @@ function CandidateProfile() {
       <p>Id: {employeeDetails.userId}</p>
       <p>Email: {employeeDetails.email}</p>
       <p>Contact: {employeeDetails.contact}</p>
-      <button onClick={routeChange}>Start Test</button>
+      <button onClick={routeTest}>Start Test</button>
+      <button onClick={routeScore}>Show Score</button>
     </div>
 
    

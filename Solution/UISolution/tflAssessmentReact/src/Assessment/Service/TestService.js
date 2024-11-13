@@ -32,6 +32,7 @@ const TestService = {
     },
   
     fetchResult: async (candidateId, testId) => {
+      console.log(candidateId, testId);
       const scoreUrl = `http://localhost:5235/api/result/candidates/${candidateId}/tests/${testId}/score`;
       const response = await fetch(scoreUrl);
       if (!response.ok) {

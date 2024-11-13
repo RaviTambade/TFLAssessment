@@ -35,7 +35,7 @@ function Login() {
                 // Second API call to get user info
                 const userResponse = await fetch(url1);
                 const userData = await userResponse.json();
-                const userId = userData.id;  // This is the correct userId
+                const userId = userData.id;  
 
                 console.log('User Data:', userData);
 
