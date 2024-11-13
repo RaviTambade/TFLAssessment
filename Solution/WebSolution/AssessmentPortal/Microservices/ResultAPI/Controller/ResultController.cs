@@ -119,6 +119,13 @@ namespace Transflower.TFLAssessment.Controllers
             return Ok(status);
         }
 
+        [HttpGet("testlist/{candidateId}")]
+        public async Task<IActionResult> GetTestList(int candidateId)
+        {
+            List<TestResultDetails> results = await _svc.GetTestList(candidateId);
+            return Ok(results);
+        }
+
         // Get subject result details.
         // URL: http://localhost:5235/api/Result/results/subjectresults/1
         [HttpGet("results/subjectresults/{subjectId}")]

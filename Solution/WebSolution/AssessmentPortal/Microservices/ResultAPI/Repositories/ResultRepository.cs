@@ -278,6 +278,44 @@ public class ResultRepository : IResultRepository
         return appearedCandidates;
     }
 
+    public async Task<List<TestResultDetails>> GetTestList(int candidateId)
+    {
+        List<TestResultDetails> testResultDetails = new List<TestResultDetails>();
+        MySqlConnection connection = new MySqlConnection(_connectionString);
+        string query = @"select *from candidatetestresults where candidateid=@candidateId";
+        try
+        {
+            MySqlCommand command = new MySqlCommand(query, connection);
+            command.Parameters.AddWithValue("@candidateId", candidateId);
+            await connection.OpenAsync();
+            MySqlDataReader reader = command.ExecuteReader();
+            while (await reader.ReadAsync())
+            {
+                int testid = int.Parse(reader["testid"].ToString());
+                string fname = reader["firstname"].ToString();
+                string lname = reader["lastname"].ToString();
+
+                TestResultDetails details = new TestResultDetails();
+
+                details.TestId = testid;
+                details.FirstName = fname;
+                details.LastName = lname;
+                testResultDetails.Add(details);
+            }
+            reader.Close();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+        finally
+        {
+           await connection.CloseAsync();
+        }
+        return testResultDetails;
+    }
+
+
     public async Task<List<PassedCandidateDetails>> GetPassedCandidateResults(int testId)
     {
         List<PassedCandidateDetails> passedCandidates = new List<PassedCandidateDetails>();
