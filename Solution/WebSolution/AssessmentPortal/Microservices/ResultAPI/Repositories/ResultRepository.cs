@@ -292,14 +292,10 @@ public class ResultRepository : IResultRepository
             while (await reader.ReadAsync())
             {
                 int testid = int.Parse(reader["testid"].ToString());
-                string fname = reader["firstname"].ToString();
-                string lname = reader["lastname"].ToString();
 
                 TestResultDetails details = new TestResultDetails();
 
                 details.TestId = testid;
-                details.FirstName = fname;
-                details.LastName = lname;
                 testResultDetails.Add(details);
             }
             reader.Close();

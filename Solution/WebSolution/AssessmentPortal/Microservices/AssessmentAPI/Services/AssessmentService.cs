@@ -54,10 +54,11 @@ public class AssessmentService : IAssessmentService
       return await _repository.GetEvalutionCriteriasBySubject(subjectId);
    }
 
-   public async Task<bool> CreateTest(Assessment newTest)
+   public async Task<bool> CreateTest(CreateTestRequest request)
    {
-      return await _repository.CreateTest(newTest);
+      return await _repository.CreateTest(request);
    }
+
    public async Task<bool> AddQuestion(int AssessmentId, int questionId)
    {
       return await _repository.AddQuestion(AssessmentId, questionId);

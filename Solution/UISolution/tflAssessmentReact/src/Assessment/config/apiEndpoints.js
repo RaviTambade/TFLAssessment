@@ -1,6 +1,6 @@
 const API_BASE_URL_ASSESSMENT = import.meta.env.VITE_API_BASE_URL3;  
 
-//http://localhost:5151/api
+
 
 const endpoints = {
 

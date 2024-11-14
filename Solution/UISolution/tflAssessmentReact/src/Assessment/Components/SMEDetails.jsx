@@ -20,7 +20,7 @@ const SubjectMatterExpertDetails = () => {
 
     return (
         <div>
-            <h1>Subject Matter Expert Details</h1>
+            <h3>Subject Matter Expert Details</h3>
             <input type="text" value={id} onChange={(e) => setId(e.target.value)} placeholder="Enter SME ID"/>
             
             <button onClick={handleFetchDetails}>Get Details</button>

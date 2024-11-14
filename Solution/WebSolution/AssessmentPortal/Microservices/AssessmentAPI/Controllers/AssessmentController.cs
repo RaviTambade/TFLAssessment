@@ -104,14 +104,22 @@ public class AssessmentController : ControllerBase
     }
 
     //http://localhost:5151/api/Assessment/createtest
-    [HttpPost("createtest")]
-    public async Task<IActionResult> CreateTest( Assessment assessment)
+   [HttpPost("createtest")]
+    public async Task<IActionResult> CreateTest([FromBody] CreateTestRequest request)
     {
-        Console.WriteLine("Inside Create Test Controller");
-        bool status= await _svc.CreateTest(assessment);
-        _logger.LogInformation("Create test method invoked at  {DT}", DateTime.UtcNow.ToLongTimeString());
-        return Ok(status);
+    Console.WriteLine("Inside Create Test Controller");
+    bool status = await _svc.CreateTest(request);
+    _logger.LogInformation("Create test method invoked at  {DT}", DateTime.UtcNow.ToLongTimeString());
+    if (status)
+    {
+        return Ok(new { message = "Test created successfully" });
     }
+    else
+    {
+        return BadRequest(new { message = "Failed to create test" });
+    }
+ }
+
 
     
     //http://localhost:5151/api/Assessment/addquestion/assessments/1/questions/10

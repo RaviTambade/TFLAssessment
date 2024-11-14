@@ -1,15 +1,15 @@
 import React from 'react';
-import InsertQuestion from './QuestionBank/Components/InsertQuestion';
-
-
+import CreateTestComponent from './Assessment/Components/CreateNewAssesment';
+//import InsertQuestion from './QuestionBank/Components/InsertQuestion';
+//import SubjectList from './Assessment/Components/SubjectsList';
+//import SubjectMatterExpertDetails from './Assessment/Components/SMEDetails';
 
 function App() {
 
   return (
     <>
-      <InsertQuestion/>
-
-    </>
+      <CreateTestComponent/>
+      </>
   )
 }
 

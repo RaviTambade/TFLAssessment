@@ -18,7 +18,7 @@ public interface IAssessmentRepository
 
   public Task <List<EvaluationCriteria>> GetEvalutionCriteriasBySubject(int subjectId);
 
-  public Task <bool> CreateTest(Assessment newTest);
+  public Task <bool> CreateTest(CreateTestRequest request);
   public Task <bool> AddQuestion(int AssessmentId, int questionId);
   public Task <bool> AddQuestions(int AssessmentId, List<TestQuestion> questions);
   public Task <bool> ChangeDuration(int AssessmentId, string duration);

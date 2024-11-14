@@ -19,25 +19,35 @@ public class AssessmentDapperRepository :IAssessmentRepository
          SqlMapper.AddTypeHandler(new SqlTimeOnlyTypeHandler());
     }
 
-    public async Task<bool> CreateTest(Assessment newTest)
+   public async Task<bool> CreateTest(CreateTestRequest request)
+{
+    await Task.Delay(100);
+    bool status = false;
+    string query = "INSERT INTO tests(subjectid, duration, smeid, creationdate, modificationdate, scheduleddate, passinglevel) " +
+                   "VALUES (@SubjectId, @Duration, @SmeId, @CreationDate, @ModificationDate, @ScheduledDate, @PassingLevel)";
+
+    string time2 = request.Duration; // Duration is passed as a string
+    using (IDbConnection con = new MySqlConnection(_connectionString))
     {
-        await Task.Delay(100);
-        bool status = false;
-        string query = "INSERT INTO tests(subjectid,duration,smeid,creationdate,modificationdate,scheduleddate,passinglevel) VALUES (@SubjectId,@Duration,@SmeId,@CreationDate,@ModificationDate,@ScheduledDate,@PassingLevel)";
-       
-        TimeOnly time = newTest.Duration;
-        string time2 = time.ToString("HH:mm:ss");
-
-        using (IDbConnection con = new MySqlConnection(_connectionString))
+        // Execute the query with the mapped parameters from the request DTO
+        if (con.Execute(query, new
         {
-            if(con.Execute(query,new {subjectid= newTest.SubjectId,duration=time2,smeid=newTest.SubjectExpertId,
-                                      creationdate=newTest.CreationDate,modificationdate=newTest.ModificationDate,
-                                      scheduleddate=newTest.ScheduledDate,passinglevel=newTest.PassingLevel})  > 0)
-            status=true;
+            subjectid = request.SubjectId,
+            duration = time2,             
+            smeid = request.SubjectExpertId,
+            creationdate = request.CreationDate,
+            modificationdate = request.ModificationDate,
+            scheduleddate = request.ScheduledDate,
+            passinglevel = request.PassingLevel
+        }) > 0)
+        {
+            status = true;
         }
-
-        return status;
     }
+
+    return status;
+}
+
 
     public async Task <Assessment> GetDetails(int assessmentId) 
     {
