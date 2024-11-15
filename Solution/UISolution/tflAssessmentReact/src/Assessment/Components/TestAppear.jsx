@@ -4,14 +4,14 @@ import { useLocation } from "react-router-dom";
 
 const TestAppear = () => {
   const [testId, setTestId] = useState("");
-  const location=useLocation();
-  const {userId}=location.state ||{}
+  const location = useLocation();
+  const { userId } = location.state || {};
   const [candidateId, setCandidateId] = useState(userId || "");
   const [questions, setQuestions] = useState([]);
   const [current, setCurrent] = useState(0);
   const [score, setScore] = useState(null);
   const [testStarted, setTestStarted] = useState(false);
-  
+
   var time = {};
 
   const fetchQuestions = async () => {
@@ -40,7 +40,7 @@ const TestAppear = () => {
 
   var getCurrentDateTime = () => {
     let d = new Date();
-    time.month = d.getMonth() ;
+    time.month = d.getMonth();
     time.year = d.getFullYear();
     time.day = d.getDate();
     time.hour = d.getHours();
@@ -48,6 +48,7 @@ const TestAppear = () => {
     time.seconds = d.getSeconds();
     return time;
   };
+
   const handleSubmit = async () => {
     try {
       const finalCandidateAnswers = questions.map((question) => ({
@@ -55,8 +56,8 @@ const TestAppear = () => {
         AnswerKey: question.answer,
       }));
       await TestService.submitAnswers(candidateId, finalCandidateAnswers);
-      var endTime= getCurrentDateTime();
-      await TestService.endTime(candidateId,testId, endTime);
+      var endTime = getCurrentDateTime();
+      await TestService.endTime(candidateId, testId, endTime);
       alert("Answers submitted successfully");
     } catch (error) {
       console.error("Error submitting answers:", error);
@@ -75,8 +76,8 @@ const TestAppear = () => {
   const handleStartTest = async () => {
     if (candidateId && testId) {
       setTestStarted(true);
-      var startTime= getCurrentDateTime();
-      await TestService.startTime(candidateId,testId, startTime);
+      var startTime = getCurrentDateTime();
+      await TestService.startTime(candidateId, testId, startTime);
       fetchQuestions();
     } else {
       alert("Please enter both Candidate ID and Test ID to start the test.");
@@ -85,97 +86,146 @@ const TestAppear = () => {
 
   if (!testStarted) {
     return (
-      <div>
-        <h3>Transflower Learning Private Limited</h3>
-        <div>
-          <label>Candidate ID:</label>
-          <input
-            type="text"
-            value={candidateId}
-            onChange={(e) => setCandidateId(e.target.value)}
-          />
+      <div className="flex items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-900">
+        <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-lg dark:bg-gray-800">
+          <h3 className="text-3xl font-semibold text-center text-gray-900 dark:text-white">
+            Transflower Learning Private Limited
+          </h3>
+          <div>
+            <label className="block text-gray-700 dark:text-gray-300">Candidate ID:</label>
+            <input
+              type="text"
+              value={candidateId}
+              onChange={(e) => setCandidateId(e.target.value)}
+              className="w-full px-4 py-2 mt-2 text-gray-700 bg-gray-100 border rounded-lg dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+            />
+          </div>
+          <div>
+            <label className="block text-gray-700 dark:text-gray-300">Test ID:</label>
+            <input
+              type="text"
+              value={testId}
+              onChange={(e) => setTestId(e.target.value)}
+              className="w-full px-4 py-2 mt-2 text-gray-700 bg-gray-100 border rounded-lg dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+            />
+          </div>
+          <button
+            onClick={handleStartTest}
+            className="w-full px-4 py-2 mt-4 font-semibold text-white bg-indigo-600 rounded-lg hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-opacity-75"
+          >
+            Start Test
+          </button>
         </div>
-        <div>
-          <label>Test ID:</label>
-          <input
-            type="text"
-            value={testId}
-            onChange={(e) => setTestId(e.target.value)}
-          />
-        </div><br/>
-        <button onClick={handleStartTest}>Start Test</button>
       </div>
     );
   }
 
-  if (!questions.length) return <div>Loading questions...</div>;
+  if (!questions.length) return <div className="text-center">Loading questions...</div>;
 
   return (
-    <div>
-      <h3>Transflower Learning Private Limited</h3>
-      <hr />
-      <div>
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-900 p-4">
+      <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-lg dark:bg-gray-800">
+        <h3 className="text-3xl font-semibold text-center text-gray-900 dark:text-white">
+          Transflower Learning Private Limited
+        </h3>
+        <hr className="my-4" />
         <div>
-          <div>
-            <h5>{questions[current].title}</h5>
-            <form>
-              <div>
-                <input
-                  type="radio"
-                  name="answer"
-                  id="a"
-                  checked={questions[current].answer === "a"}
-                  onChange={() => handleAnswerSelection("a")}
-                />
-                <label>{questions[current].a}</label>
-              </div>
-              <div>
-                <input
-                  type="radio"
-                  name="answer"
-                  id="b"
-                  checked={questions[current].answer === "b"}
-                  onChange={() => handleAnswerSelection("b")}
-                />
-                <label>{questions[current].b}</label>
-              </div>
-              <div>
-                <input
-                  type="radio"
-                  name="answer"
-                  id="c"
-                  checked={questions[current].answer === "c"}
-                  onChange={() => handleAnswerSelection("c")}
-                />
-                <label>{questions[current].c}</label>
-              </div>
-              <div>
-                <input
-                  type="radio"
-                  name="answer"
-                  id="d"
-                  checked={questions[current].answer === "d"}
-                  onChange={() => handleAnswerSelection("d")}
-                />
-                <label>{questions[current].d}</label>
-              </div>
-            </form>
-
+          <h5 className="text-xl font-semibold text-gray-900 dark:text-white">{questions[current].title}</h5>
+          <form>
             <div>
-              <button onClick={handleFirst} disabled={current === 0}>First</button>
-              <button onClick={handlePrevious} disabled={current === 0}>Previous</button>
-              <button onClick={handleNext} disabled={current === questions.length - 1}>Next</button>
-              <button onClick={handleLast} disabled={current === questions.length - 1}>Last</button>
+              <input
+                type="radio"
+                name="answer"
+                id="a"
+                checked={questions[current].answer === "a"}
+                onChange={() => handleAnswerSelection("a")}
+                className="mr-2"
+              />
+              <label className="text-gray-700 dark:text-gray-300">{questions[current].a}</label>
             </div>
-
             <div>
-              <button onClick={handleSubmit}>Submit</button>
-              <button onClick={handleResult}>Show Result</button>
+              <input
+                type="radio"
+                name="answer"
+                id="b"
+                checked={questions[current].answer === "b"}
+                onChange={() => handleAnswerSelection("b")}
+                className="mr-2"
+              />
+              <label className="text-gray-700 dark:text-gray-300">{questions[current].b}</label>
             </div>
-
-            {score !== null && <div>Your Score is: {score}</div>}
-          </div>
+            <div>
+              <input
+                type="radio"
+                name="answer"
+                id="c"
+                checked={questions[current].answer === "c"}
+                onChange={() => handleAnswerSelection("c")}
+                className="mr-2"
+              />
+              <label className="text-gray-700 dark:text-gray-300">{questions[current].c}</label>
+            </div>
+            <div>
+              <input
+                type="radio"
+                name="answer"
+                id="d"
+                checked={questions[current].answer === "d"}
+                onChange={() => handleAnswerSelection("d")}
+                className="mr-2"
+              />
+              <label className="text-gray-700 dark:text-gray-300">{questions[current].d}</label>
+            </div>
+          </form>
         </div>
+
+        <div className="flex justify-between space-x-2 mt-4">
+          <button
+            onClick={handleFirst}
+            disabled={current === 0}
+            className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-500 disabled:bg-gray-400"
+          >
+            First
+          </button>
+          <button
+            onClick={handlePrevious}
+            disabled={current === 0}
+            className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-500 disabled:bg-gray-400"
+          >
+            Previous
+          </button>
+          <button
+            onClick={handleNext}
+            disabled={current === questions.length - 1}
+            className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-500 disabled:bg-gray-400"
+          >
+            Next
+          </button>
+          <button
+            onClick={handleLast}
+            disabled={current === questions.length - 1}
+            className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-500 disabled:bg-gray-400"
+          >
+            Last
+          </button>
+        </div>
+
+        <div className="flex justify-between space-x-2 mt-4">
+          <button
+            onClick={handleSubmit}
+            className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-500"
+          >
+            Submit
+          </button>
+          <button
+            onClick={handleResult}
+            className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-500"
+          >
+            Show Result
+          </button>
+        </div>
+
+        {score !== null && <div className="mt-4 text-center text-xl font-semibold">Your Score is: {score}</div>}
       </div>
     </div>
   );

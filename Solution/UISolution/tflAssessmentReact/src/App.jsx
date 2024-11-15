@@ -1,19 +1,19 @@
-import React from 'react';
-import CreateTestComponent from './Assessment/Components/CreateNewAssesment';
-//import InsertQuestion from './QuestionBank/Components/InsertQuestion';
-//import SubjectList from './Assessment/Components/SubjectsList';
-//import SubjectMatterExpertDetails from './Assessment/Components/SMEDetails';
+// import React from 'react';
+// import CreateTestComponent from './Assessment/Components/CreateNewAssesment';
+// //import InsertQuestion from './QuestionBank/Components/InsertQuestion';
+// //import SubjectList from './Assessment/Components/SubjectsList';
+// //import SubjectMatterExpertDetails from './Assessment/Components/SMEDetails';
 
-function App() {
+// function App() {
 
-  return (
-    <>
-      <CreateTestComponent/>
-      </>
-  )
-}
+//   return (
+//     <>
+//       <CreateTestComponent/>
+//       </>
+//   )
+// }
 
-export default App;
+// export default App;
 
 
 
@@ -26,7 +26,6 @@ export default App;
 // // import GetAllQuestions from './QuestionBank/components/AllQuestions';
 //  import GetQuestionsByTestId from './QuestionBank/components/QuestionsByTestId';
 // import UpdateCriteriaSubject from './QuestionBank/components/UpdateCriteriaSubject';
-//  import Login from './authentication/Components/Login';
 //import AssessmentDetails from './Assessment/Components/AssessmentDetails';
 // import SubjectsList from './Assessment/Components/SubjectsList';
 // import AssessmentList from './Assessment/Components/AssessmentList';
@@ -108,20 +107,22 @@ export default App;
 
 // App.js
 
-// import React from 'react';
-// import { Routes, Route } from 'react-router-dom';
-// import CandidateProfile from './CandidateProfile/Component/CandidateProfile';
-// import TestAppear from './Assessment/Components/TestAppear';
+import React from 'react';
+import { Routes, Route } from 'react-router-dom';
 
-// function App() {
-//   return (
-//     <Routes>
-//       <Route path="/" element={<Login />} />
-//       <Route path="/profile" element={<CandidateProfile />} />
-//       <Route path="/profile/testAppear" element={<TestAppear />}/>
-//     </Routes>
-//   );
-// }
+import CandidateProfile from './CandidateProfile/Component/CandidateProfile';
+import Login from './authentication/Components/Login';
+import TestAppear from './Assessment/Components/TestAppear';
 
-// export default App;
+function App() {
+  return (
+    <Routes>
+      <Route path="/" element={<Login />} />
+      <Route path="/profile" element={<CandidateProfile />} />
+      <Route path="/profile/testAppear" element={<TestAppear />}/>
+    </Routes>
+  );
+}
+
+export default App;
 
