@@ -55,6 +55,7 @@ const TestService = {
       }
       return response.json();
     },
+
     endTime: async (candidateId, testId, time) => {
       const endTimeUrl = `http://localhost:5235/api/result/setendtime/${candidateId}/tests/${testId}`;
       const response = await fetch(endTimeUrl, {
@@ -69,7 +70,21 @@ const TestService = {
         throw new Error("Error submitting time");
       }
       return response.json();
-    }
+    },
+
+    fetchAssessments: async () => {
+      try {
+        const assessmentsUrl = `http://localhost:5151/api/Assessment/assessments`;
+        const response = await fetch(assessmentsUrl);
+        if (!response.ok) {
+          throw new Error("Error fetching assessments");
+        }
+        return response.json();
+      } catch (error) {
+        console.error("Error:", error);
+        throw error;
+      }
+    },
   };
   
 export default TestService;

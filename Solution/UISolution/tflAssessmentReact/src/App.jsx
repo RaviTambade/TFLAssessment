@@ -105,22 +105,25 @@
 
 // App.js
 
-// import React from 'react';
-// import { Routes, Route } from 'react-router-dom';
 
-// import CandidateProfile from './CandidateProfile/Component/CandidateProfile';
-// import Login from './authentication/Components/Login';
-// import TestAppear from './Assessment/Components/TestAppear';
 
-// function App() {
-//   return (
-//     <Routes>
-//       <Route path="/" element={<Login />} />
-//       <Route path="/profile" element={<CandidateProfile />} />
-//       <Route path="/profile/testAppear" element={<TestAppear />}/>
-//     </Routes>
-//   );
-// }
 
-// export default App;
+import React from 'react';
+import { Routes, Route } from 'react-router-dom';
+
+import CandidateProfile from './CandidateProfile/Component/CandidateProfile';
+import Login from './authentication/Components/Login';
+import TestAppear from './Assessment/Components/TestAppear';
+
+function App() {
+  return (
+    <Routes>
+      <Route path="/" element={<Login />} />
+      <Route path="/profile" element={<CandidateProfile />} />
+      <Route path="/profile/testAppear" element={<TestAppear />}/>
+    </Routes>
+  );
+}
+
+export default App;
 

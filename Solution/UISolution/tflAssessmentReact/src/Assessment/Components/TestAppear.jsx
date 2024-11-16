@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import TestService from "../Service/TestService";
 import { useLocation } from "react-router-dom";
 
@@ -7,6 +7,7 @@ const TestAppear = () => {
   const location = useLocation();
   const { userId } = location.state || {};
   const [candidateId, setCandidateId] = useState(userId || "");
+  const [assessments, setAssessments] = useState([]);
   const [questions, setQuestions] = useState([]);
   const [current, setCurrent] = useState(0);
   const [score, setScore] = useState(null);
@@ -14,12 +15,27 @@ const TestAppear = () => {
 
   var time = {};
 
+  // Fetch assessments for the dropdown
+  const fetchAssessments = async () => {
+    try {
+      const fetchedAssessments = await TestService.fetchAssessments();
+      console.log("Fetched Assessments:", fetchedAssessments);
+      setAssessments(fetchedAssessments);
+    } catch (error) {
+      console.error("Error fetching assessments:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchAssessments();
+  }, []);
+
   const fetchQuestions = async () => {
     try {
       const fetchedQuestions = await TestService.fetchQuestions(testId);
       const updatedQuestions = fetchedQuestions.map((question) => ({
         ...question,
-        answer: "No", 
+        answer: "No",
       }));
       setQuestions(updatedQuestions);
     } catch (error) {
@@ -80,7 +96,7 @@ const TestAppear = () => {
       await TestService.startTime(candidateId, testId, startTime);
       fetchQuestions();
     } else {
-      alert("Please enter both Candidate ID and Test ID to start the test.");
+      alert("Please enter both Candidate ID and select a Test to start the test.");
     }
   };
 
@@ -101,13 +117,22 @@ const TestAppear = () => {
             />
           </div>
           <div>
-            <label className="block text-gray-700 dark:text-gray-300">Test ID:</label>
-            <input
-              type="text"
+            <label className="block text-gray-700 dark:text-gray-300">Select Test:</label>
+            <select
               value={testId}
               onChange={(e) => setTestId(e.target.value)}
-              className="w-full px-4 py-2 mt-2 text-gray-700 bg-gray-100 border rounded-lg dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-            />
+              className="w-full px-4 py-2 mt-2 text-gray-700 bg-gray-100 border rounded-lg dark:bg-gray-700 dark:text-gray-200"
+            >
+              <option value="" disabled>
+              {assessments.length ? "Select a Test" : "Loading..."}
+              </option>
+              {assessments.map((assessment) => (
+                <option value={assessment.id} key={assessment.id}>
+                  {assessment.testName}
+                </option>
+              ))}
+            </select>
+
           </div>
           <button
             onClick={handleStartTest}
