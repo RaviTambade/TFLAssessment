@@ -23,8 +23,8 @@ public class AssessmentDapperRepository :IAssessmentRepository
 {
     await Task.Delay(100);
     bool status = false;
-    string query = "INSERT INTO tests(subjectid, duration, smeid, creationdate, modificationdate, scheduleddate, passinglevel) " +
-                   "VALUES (@SubjectId, @Duration, @SmeId, @CreationDate, @ModificationDate, @ScheduledDate, @PassingLevel)";
+    string query = "INSERT INTO tests(Name,subjectid, duration, smeid, creationdate, modificationdate, scheduleddate, passinglevel) " +
+                   "VALUES (@Name,@SubjectId, @Duration, @SmeId, @CreationDate, @ModificationDate, @ScheduledDate, @PassingLevel)";
 
     string time2 = request.Duration; // Duration is passed as a string
     using (IDbConnection con = new MySqlConnection(_connectionString))
@@ -53,9 +53,12 @@ public class AssessmentDapperRepository :IAssessmentRepository
     {
             await Task.Delay(100);
             Assessment assessment=new Assessment();   
-            string query = @"SELECT t.id, t.smeid AS subjectExpertId, t.subjectid AS subjectId, t.creationdate AS creationDate,
-                           t.modificationdate AS modificationDate,t.scheduleddate AS scheduledDate,t.status,t.passinglevel,
-                           e.firstName, e.lastName FROM  tests t LEFT JOIN employees e ON t.smeid = e.id WHERE t.id = @AssessmentId;";
+            string query = 
+                @"SELECT t.id,t.name AS TestName, t.smeid AS subjectExpertId, t.subjectid AS subjectId, t.creationdate AS creationDate,t.modificationdate AS modificationDate,
+                t.scheduleddate AS scheduledDate,t.status,t.passinglevel,e.firstName, e.lastName
+                FROM   tests t
+                LEFT JOIN employees e ON t.smeid = e.id 
+                WHERE t.id = @AssessmentId;";
             using (IDbConnection con = new MySqlConnection(_connectionString))
             {
                 assessment= con.QuerySingleOrDefault<Assessment>(query, new {assessmentId}) ;
@@ -239,6 +242,7 @@ public class AssessmentDapperRepository :IAssessmentRepository
         }
         return status;
     } 
+
     public async Task<bool> Reschedule(int assessmentId, DateTime date){
         bool status = false;
         MySqlConnection connection = new MySqlConnection(_connectionString);
@@ -284,6 +288,7 @@ public class AssessmentDapperRepository :IAssessmentRepository
             while (reader.Read())
             {
                 int id = int.Parse(reader["id"].ToString());
+                string TestName = reader["Name"].ToString();
                 // TimeOnly duration=TimeOnly.Parse(reader["duration"]);
                 int subjectId = int.Parse(reader["subjectid"].ToString());
                 int subjectExpertId = int.Parse(reader["smeid"].ToString());
@@ -297,6 +302,7 @@ public class AssessmentDapperRepository :IAssessmentRepository
 
                 Assessment test = new Assessment();
                 test.Id = id;
+                test.TestName = TestName;
                 test.SubjectId = subjectId;
                 test.SubjectExpertId = subjectExpertId;
                 test.CreationDate = creationDate;

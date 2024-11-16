@@ -28,6 +28,7 @@ const AssessmentList = () => {
                 <thead>
                     <tr>
                         <th>Subject ID</th>
+                        <th>Test Name</th>
                         <th>Subject Name</th>
                         <th>Status</th>
                         <th>SME ID</th>
@@ -43,6 +44,7 @@ const AssessmentList = () => {
                         assessments.map(assessment => (
                             <tr key={assessment.id}>
                                 <td>{assessment.subjectId}</td>
+                                <td>{assessment.testName}</td>
                                 <td>{assessment.subject}</td>
                                 <td>{assessment.status}</td>
                                 <td>{assessment.subjectExpertId}</td>

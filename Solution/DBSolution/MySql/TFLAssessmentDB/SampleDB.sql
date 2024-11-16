@@ -276,15 +276,17 @@ VALUES (
 
 
 
-INSERT INTO tests(subjectid,duration,smeid,creationdate,modificationdate,scheduleddate,passinglevel) VALUES (1,"00:30:00",1,'2023-12-05','2024-02-05','2024-02-07',6);
-INSERT INTO tests(subjectid,duration,smeid,creationdate,modificationdate,scheduleddate,passinglevel) VALUES (1,"00:40:00",1,'2023-11-05','2024-01-05','2024-02-07',7);
-INSERT INTO tests(subjectid,duration,smeid,creationdate,modificationdate,scheduleddate,passinglevel) VALUES (1,"00:20:00",1,'2023-09-05','2024-01-05','2024-02-08',7);
-INSERT INTO tests(subjectid,duration,smeid,creationdate,modificationdate,scheduleddate,passinglevel) VALUES (2,"00:30:00",2,'2023-09-21','2023-12-05','2024-01-05',6);
-INSERT INTO tests(subjectid,duration,smeid,creationdate,modificationdate,scheduleddate,passinglevel) VALUES (3,"01:00:00",1,'2023-11-05','2023-12-21','2024-01-24',8);
-INSERT INTO tests(subjectid,duration,smeid,creationdate,modificationdate,scheduleddate,passinglevel) VALUES (4,"01:30:00",2,'2023-09-05','2023-10-10','2024-01-18',5);
-INSERT INTO tests(subjectid,duration,smeid,creationdate,modificationdate,scheduleddate,passinglevel) VALUES (7,"00:30:00",7,'2024-01-01','2024-01-01','2024-01-10',6);
-INSERT INTO tests(subjectid,duration,smeid,creationdate,modificationdate,scheduleddate,passinglevel) VALUES (7,"00:30:00",7,'2024-01-01','2024-01-01','2024-01-10',7);
 
+INSERT INTO tests(Name, subjectid, duration, smeid, creationdate, modificationdate, scheduleddate, passinglevel, status) 
+VALUES 
+('Basic MCQ Test', 1, "00:30:00", 1, '2023-12-05', '2024-02-05', '2024-02-07', 6, 'scheduled'),
+('Advanced MCQ Test', 1, "00:40:00", 1, '2023-11-05', '2024-01-05', '2024-02-07', 7, 'scheduled'),
+('Short Quiz on Basics', 1, "00:20:00", 1, '2023-09-05', '2024-01-05', '2024-02-08', 7, 'created'),
+('Data Structures Test', 2, "00:30:00", 2, '2023-09-21', '2023-12-05', '2024-01-05', 6, 'conducted'),
+('Algorithm Design Assessment', 3, "01:00:00", 1, '2023-11-05', '2023-12-21', '2024-01-24', 8, 'cancelled'),
+('Full-Length Programming Test', 4, "01:30:00", 2, '2023-09-05', '2023-10-10', '2024-01-18', 5, 'scheduled'),
+('Quick Aptitude Test', 7, "00:30:00", 7, '2024-01-01', '2024-01-01', '2024-01-10', 6, 'scheduled'),
+('Logical Reasoning Test', 7, "00:30:00", 7, '2024-01-01', '2024-01-01', '2024-01-10', 7, 'created');
 
 
 

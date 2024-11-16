@@ -3,6 +3,7 @@
 public class Assessment
 {
     public int Id {get;set;}
+    public string TestName {get;set;}
     public int SubjectId {get;set;}
     public TimeOnly Duration{get;set;}
     public int SubjectExpertId {get;set;}

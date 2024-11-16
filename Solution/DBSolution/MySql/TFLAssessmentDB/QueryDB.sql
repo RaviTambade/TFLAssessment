@@ -16,7 +16,8 @@ select*from employees;
 select questionbank.id,questionbank.title,questionbank.a,questionbank.b,questionbank.c,questionbank.d from questionbank inner join subjects on subjects.id=questionbank.subjectid
 where subjects.title="ADVJAVA";
 
-select * from test;
+select * from tests ;
+
 
 select * from questionbank where subjectid=(select id from subjects where title ="ADVJAVA");
  
@@ -219,7 +220,7 @@ inner join candidatetestresults
 on tests.id=candidatetestresults.testid
 inner join employees
 on candidatetestresults.candidateid=employees.id
-where tests.subjectid=1;
+where tests.subjectid=2;
 
 
 SELECT t.id, t.smeid AS subjectExpertId, t.subjectid AS subjectId, t.creationdate AS creationDate,t.modificationdate AS modificationDate,
