@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import AssessmentService from "../Service/AssessmentService";
+import AssessmentService from "../Assessment/Service/AssessmentService";
 
 
 const AssessmentDetails = () => {
@@ -48,6 +48,7 @@ const AssessmentDetails = () => {
                     <h4>Assessment Details:</h4>
                     <p><strong>ID:</strong> {details.id}</p>
                     <p><strong>Subject Id:</strong> {details.subjectId}</p>
+                    <p><strong>Test Name:</strong> {details.testName}</p>
                     <p><strong>First Name:</strong> {details.firstName}</p>
                     <p><strong>Last Name:</strong> {details.lastName}</p>
                     <p><strong>Passing marks:</strong> {details.passingLevel}</p>

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import AssessmentService from "../Service/AssessmentService";
+import AssessmentService from "../Assessment/Service/AssessmentService";
 
 const EmployeesList = () => {
     const [employees, setEmployees] = useState([]);
