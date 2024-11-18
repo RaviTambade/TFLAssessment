@@ -64,7 +64,7 @@ create table questionbank (
 
 create table tests (
 	id INT PRIMARY KEY AUTO_INCREMENT,
-   Name VARCHAR(100),
+    Name VARCHAR(255),
 	subjectid INT,
 	duration TIME,
 	smeid INT ,

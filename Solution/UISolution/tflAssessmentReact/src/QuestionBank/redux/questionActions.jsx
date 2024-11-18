@@ -1,7 +1,7 @@
 
 import { createAsyncThunk } from '@reduxjs/toolkit';
 //import QuestionService from '../services/questionbankservice';
-import QuestionBankService from '../services/questionbankservice';
+import QuestionBankService from '../services/QuestionBankService';
 
 // Thunks for asynchronous API calls
 export const fetchQuestionById = createAsyncThunk(

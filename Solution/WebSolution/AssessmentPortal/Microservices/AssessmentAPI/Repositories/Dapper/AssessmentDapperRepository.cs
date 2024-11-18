@@ -19,34 +19,47 @@ public class AssessmentDapperRepository :IAssessmentRepository
          SqlMapper.AddTypeHandler(new SqlTimeOnlyTypeHandler());
     }
 
-   public async Task<bool> CreateTest(CreateTestRequest request)
+public async Task<bool> CreateTest(CreateTestRequest request)
 {
+    // Simulate async delay for demo purposes
     await Task.Delay(100);
     bool status = false;
-    string query = "INSERT INTO tests(Name,subjectid, duration, smeid, creationdate, modificationdate, scheduleddate, passinglevel) " +
-                   "VALUES (@Name,@SubjectId, @Duration, @SmeId, @CreationDate, @ModificationDate, @ScheduledDate, @PassingLevel)";
 
-    string time2 = request.Duration; // Duration is passed as a string
+    string query = @"
+        INSERT INTO tests 
+        (Name, subjectid, duration, smeid, creationdate, modificationdate, scheduleddate, passinglevel)
+        VALUES 
+        (@Name, @SubjectId, @Duration, @SmeId, @CreationDate, @ModificationDate, @ScheduledDate, @PassingLevel)";
+
     using (IDbConnection con = new MySqlConnection(_connectionString))
     {
-        // Execute the query with the mapped parameters from the request DTO
-        if (con.Execute(query, new
+        try
         {
-            subjectid = request.SubjectId,
-            duration = time2,             
-            smeid = request.SubjectExpertId,
-            creationdate = request.CreationDate,
-            modificationdate = request.ModificationDate,
-            scheduleddate = request.ScheduledDate,
-            passinglevel = request.PassingLevel
-        }) > 0)
+            // Execute the query with the parameters mapped from the request DTO
+            int rowsAffected = con.Execute(query, new
+            {
+                Name = request.Name,
+                SubjectId = request.SubjectId,
+                Duration = request.Duration, 
+                SmeId = request.SubjectExpertId,
+                CreationDate = request.CreationDate,
+                ModificationDate = request.ModificationDate,
+                ScheduledDate = request.ScheduledDate,
+                PassingLevel = request.PassingLevel
+            });
+
+            status = rowsAffected > 0; // Determine success based on rows affected
+        }
+        catch (Exception ex)
         {
-            status = true;
+            // Log or handle the exception
+            Console.WriteLine($"Error while creating test: {ex.Message}");
         }
     }
 
     return status;
 }
+
 
 
     public async Task <Assessment> GetDetails(int assessmentId) 
@@ -140,35 +153,46 @@ public class AssessmentDapperRepository :IAssessmentRepository
         
         return status;
     }
-    public async Task<bool> AddQuestions(int assessmentId, List<TestQuestion> questions) 
+
+    
+   public async Task<bool> AddQuestions(int assessmentId, List<TestQuestion> questions) 
+{
+    bool status = true;
+    MySqlConnection connection = new MySqlConnection(_connectionString); 
+    try
     {
-        bool status = false;
-        MySqlConnection connection = new MySqlConnection(_connectionString); 
-        try
+        // Open the connection once before the loop
+        await connection.OpenAsync();
+
+        foreach(var question in questions)
         {
-            foreach(var question in questions){
-                string query = "insert into testquestions(testid,questionbankid) values (@TestId, @QuestionBankId)";
-                MySqlCommand command = new MySqlCommand(query, connection);
-                command.Parameters.AddWithValue("@TestId", assessmentId);
-                command.Parameters.AddWithValue("@QuestionBankId", question.QuestionBankId);
-                await connection.OpenAsync();
-                int rowsAffected = await command.ExecuteNonQueryAsync();
-                if (rowsAffected > 0)
-                {
-                    status = true;
-                }
+            string query = "INSERT INTO testquestions(testid, questionbankid) VALUES (@TestId, @QuestionBankId)";
+            MySqlCommand command = new MySqlCommand(query, connection);
+            command.Parameters.AddWithValue("@TestId", assessmentId);
+            command.Parameters.AddWithValue("@QuestionBankId", question.QuestionBankId);
+            
+            int rowsAffected = await command.ExecuteNonQueryAsync();
+            if (rowsAffected == 0)
+            {
+                status = false; // If one of the questions fails to insert, set status to false
+                break; // Exit the loop if any insertion fails
             }
         }
-        catch (Exception e)
-        {
-            Console.WriteLine(e.Message);
-        }
-        finally
-        {
-            await connection.CloseAsync();
-        }
-        return status;
     }
+    catch (Exception e)
+    {
+        Console.WriteLine(e.Message);
+        status = false;
+    }
+    finally
+    {
+        await connection.CloseAsync();
+    }
+    return status;
+}
+
+
+
     public async Task<bool> RemoveQuestion(int assessmentId, int questionId)
     {
             bool status =false;  

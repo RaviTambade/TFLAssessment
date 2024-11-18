@@ -276,7 +276,6 @@ VALUES (
 
 
 
-
 INSERT INTO tests(Name, subjectid, duration, smeid, creationdate, modificationdate, scheduleddate, passinglevel, status) 
 VALUES 
 ('Basic MCQ Test', 1, "00:30:00", 1, '2023-12-05', '2024-02-05', '2024-02-07', 6, 'scheduled'),
