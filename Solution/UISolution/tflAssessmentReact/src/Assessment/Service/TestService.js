@@ -147,11 +147,11 @@ const TestService = {
     try {
       const insertUrl = `http://localhost:5151/api/Assessment/addmultiplequestions/assessments/${assessmentId}`;
       
-      const requestBody = {
-        questions: questionIds.map((id) => ({
-          QuestionBankId: id,
-        })),
-      };
+      // Prepare the request body as a flat array
+      const requestBody = questionIds.map((id) => ({
+        QuestionBankId: typeof id === "object" ? id.QuestionBankId : id,
+      }));
+      
   
       console.log(`Sending data to backend: ${JSON.stringify(requestBody)}`);
       
@@ -160,7 +160,7 @@ const TestService = {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(requestBody),
+        body: JSON.stringify(requestBody), // Serialize the flat array
       });
   
       if (!response.ok) {
@@ -176,7 +176,8 @@ const TestService = {
       console.error("Error in insertQuestionsForTest:", error);
       throw error;
     }
-  }, 
+  },
+  
 };
 
 export default TestService;

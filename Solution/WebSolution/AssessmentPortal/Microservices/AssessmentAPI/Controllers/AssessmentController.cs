@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using Transflower.TFLAssessment.Entities;
 using  Transflower.TFLAssessment.Services.Interfaces;
 namespace Transflower.TFLAssessment.Controllers;
@@ -133,13 +134,17 @@ public class AssessmentController : ControllerBase
 
     
     // http://localhost:5151/api/Assessment/addmultiplequestions/assessments/1
-    [HttpPost("addmultiplequestions/assessments/{assessmentId}")]
-    public async Task<IActionResult>  AddQuestions(int assessmentId,List<TestQuestion> questions)
-    {
-        bool status=await _svc.AddQuestions(assessmentId, questions);
-        _logger.LogInformation("Add multiple questions method invoked at  {DT}", DateTime.UtcNow.ToLongTimeString());
-        return Ok(status);
-    }
+   [HttpPost("addmultiplequestions/assessments/{assessmentId}")]
+   public async Task<IActionResult> AddQuestions(int assessmentId, List<TestQuestion> questions)
+   {
+    // Log the incoming data for debugging
+    _logger.LogInformation("Received Questions: {questions}", JsonConvert.SerializeObject(questions));
+    
+    bool status = await _svc.AddQuestions(assessmentId, questions);
+    _logger.LogInformation("Add multiple questions method invoked at {DT}", DateTime.UtcNow.ToLongTimeString());
+
+    return Ok(status);
+}
 
     //http://localhost:5151/api/Assessment/1/questions/9
     [HttpDelete("{assessmentId}/questions/{questionId}")]

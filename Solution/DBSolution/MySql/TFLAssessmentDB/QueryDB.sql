@@ -18,6 +18,14 @@ where subjects.title="ADVJAVA";
 
 select * from tests ;
 
+select * from testquestions;
+
+SELECT qb.*
+FROM questionbank qb
+INNER JOIN testquestions tq ON qb.id = tq.questionbankid
+WHERE tq.testid = 7;
+
+
 
 select * from questionbank where subjectid=(select id from subjects where title ="ADVJAVA");
  
