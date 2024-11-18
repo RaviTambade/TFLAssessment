@@ -149,7 +149,7 @@ const TestService = {
       
       const requestBody = {
         questions: questionIds.map((id) => ({
-          QuestionBankId: id, // This assumes that the backend needs the QuestionBankId for each question
+          QuestionBankId: id,
         })),
       };
   
