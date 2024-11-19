@@ -34,7 +34,15 @@ class CandidateService {
     }
     return response.json();
   }
-
+  async getTestList(candidateId) {
+    try {
+      const response = await fetch(endpoints.getTestList(candidateId));
+      return await this.handleResponse(response);
+    } catch (error) {
+      console.error('Error fetching candidates:', error);
+      throw error;
+    }
+  }
   }
   export default new CandidateService();
   

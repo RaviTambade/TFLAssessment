@@ -49,7 +49,6 @@ function CandidateProfile() {
       <p>Email: {employeeDetails.email}</p>
       <p>Contact: {employeeDetails.contact}</p>
       <button onClick={routeTest}>Start Test</button>
-      <button onClick={routeScore}>Show Score</button>
     </div>
 
    

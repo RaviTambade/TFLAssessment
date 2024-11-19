@@ -9,7 +9,8 @@ const endpoints = {
   setCandidateTestEndTime: (candidateId, testId) => `${API_BASE_URL}/Result/setendtime/${candidateId}/tests/${testId}`,
   getCandidateResultDetails: (candidateId, testId) => `${API_BASE_URL}/Result/candidates/${candidateId}/tests/${testId}/details`,
   getTestResultDetails: (testId) => `${API_BASE_URL}/Result/tests/${testId}/details`,
-  getAppearedCandidates: (testId) => `${API_BASE_URL}/Result/candidates/tests/${testId}`
+  getAppearedCandidates: (testId) => `${API_BASE_URL}/Result/candidates/tests/${testId}`,
+  getTestList:(candidateId)=>`${API_BASE_URL}/Result/testlist/${candidateId}`
 };
 
 export { API_BASE_URL, endpoints };
