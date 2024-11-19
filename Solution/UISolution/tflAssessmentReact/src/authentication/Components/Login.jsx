@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { Outlet, Link } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 function Login() {
     const [contact, setContact] = useState('');
@@ -19,7 +18,6 @@ function Login() {
         const url1 = `http://localhost:5142/api/users/contact/${contact}`;
 
         try {
-            // First API call to authenticate
             const response = await fetch(url, {
                 method: 'POST',
                 headers: {
@@ -32,14 +30,12 @@ function Login() {
             if (result.token) {
                 localStorage.setItem('jwt_token', result.token);
 
-                // Second API call to get user info
                 const userResponse = await fetch(url1);
                 const userData = await userResponse.json();
                 const userId = userData.id;  
 
                 console.log('User Data:', userData);
 
-                // Third API call to get assessment details
                 const url2 = `http://localhost:5151/api/assessment/employee/${userId}`;
                 const assessmentResponse = await fetch(url2, {
                     headers: {
@@ -51,7 +47,7 @@ function Login() {
 
                 navigate('/profile', { state: { userId } }); 
             } else {
-                alert('Login is not Valid');
+                alert('Login is not valid');
             }
         } catch (error) {
             console.log(error);
@@ -60,34 +56,46 @@ function Login() {
     };
 
     return (
-        <div>
-            <form onSubmit={handleSubmit}>
-                <div><h1>Login Here..</h1></div>
-                <hr />
-                <br />
-                <label>Contact Number: </label>
-                <input
-                    type="text"
-                    id="contactnumber"
-                    name="contactnumber"
-                    placeholder="Enter the Contact Number"
-                    onChange={(e) => setContact(e.target.value)}
-                />
-                <br /><br />
-                <label>Password: </label>
-                <input
-                    type="password"
-                    id="password"
-                    name="password"
-                    placeholder="Enter Password"
-                    onChange={(e) => setPassword(e.target.value)}
-                />
-                <br /><br />
-                <input type="submit" value="Login" />
-                <br />
-                <label>If you are a new user, click on Register Link</label>
-                <br />
-                <Link to="/register">Register</Link>
+        <div className="flex items-center justify-center h-screen bg-gray-100 dark:bg-gray-900">
+            <form onSubmit={handleSubmit} className="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-lg dark:bg-gray-800">
+                <h1 className="text-3xl font-semibold text-center text-gray-900 dark:text-white">Login Here</h1>
+                <hr className="my-4" />
+
+                <div>
+                    <label className="block text-gray-700 dark:text-gray-300">Contact Number:</label>
+                    <input
+                        type="text"
+                        id="contactnumber"
+                        name="contactnumber"
+                        placeholder="Enter the Contact Number"
+                        onChange={(e) => setContact(e.target.value)}
+                        className="w-full px-4 py-2 mt-2 text-gray-700 bg-gray-100 border rounded-lg dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                    />
+                </div>
+
+                <div>
+                    <label className="block text-gray-700 dark:text-gray-300">Password:</label>
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        placeholder="Enter Password"
+                        onChange={(e) => setPassword(e.target.value)}
+                        className="w-full px-4 py-2 mt-2 text-gray-700 bg-gray-100 border rounded-lg dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                    />
+                </div>
+
+                <button
+                    type="submit"
+                    className="w-full px-4 py-2 font-semibold text-white bg-indigo-600 rounded-lg hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-opacity-75"
+                >
+                    Login
+                </button>
+
+                <div className="text-center">
+                    <p className="text-gray-600 dark:text-gray-400">If you are a new user, click on Register Link</p>
+                    <Link to="/register" className="text-indigo-600 hover:underline dark:text-indigo-400">Register</Link>
+                </div>
             </form>
         </div>
     );

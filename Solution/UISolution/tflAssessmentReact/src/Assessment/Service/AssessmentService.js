@@ -46,7 +46,7 @@ const AssessmentService = {
     },
 
     async createTest(newTest) {
-        const response = await fetch(endpoints.assessment.createtest, {
+        const response = await fetch(endpoints.assessment.CreateTestComponent, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

@@ -119,6 +119,7 @@ namespace Transflower.TFLAssessment.Controllers
             return Ok(status);
         }
 
+         // URL: http://localhost:5235/api/Result/testlist/1
         [HttpGet("testlist/{candidateId}")]
         public async Task<IActionResult>GetTestList(int candidateId)
         {

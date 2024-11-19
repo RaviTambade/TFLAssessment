@@ -16,7 +16,16 @@ select*from employees;
 select questionbank.id,questionbank.title,questionbank.a,questionbank.b,questionbank.c,questionbank.d from questionbank inner join subjects on subjects.id=questionbank.subjectid
 where subjects.title="ADVJAVA";
 
-select * from test;
+select * from tests ;
+
+select * from testquestions;
+
+SELECT qb.*
+FROM questionbank qb
+INNER JOIN testquestions tq ON qb.id = tq.questionbankid
+WHERE tq.testid = 7;
+
+
 
 select * from questionbank where subjectid=(select id from subjects where title ="ADVJAVA");
  
@@ -219,10 +228,10 @@ inner join candidatetestresults
 on tests.id=candidatetestresults.testid
 inner join employees
 on candidatetestresults.candidateid=employees.id
-where tests.subjectid=1;
+where tests.subjectid=2;
 
 
-SELECT t.id, t.smeid AS subjectExpertId, t.subjectid AS subjectId, t.creationdate AS creationDate,t.modificationdate AS modificationDate,
+SELECT t.id,t.name AS TestName, t.smeid AS subjectExpertId, t.subjectid AS subjectId, t.creationdate AS creationDate,t.modificationdate AS modificationDate,
 t.scheduleddate AS scheduledDate,t.status,t.passinglevel,e.firstName, e.lastName
 FROM   tests t
 LEFT JOIN employees e ON t.smeid = e.id 
@@ -232,6 +241,11 @@ select score from candidatetestresults where candidateid=@candidateId and testid
 
 select * from tests;
 
+INSERT INTO tests(Name,subjectid, duration, smeid, creationdate, modificationdate, scheduleddate, passinglevel) 
+                   VALUES (@Name,@SubjectId, @Duration, @SmeId, @CreationDate, @ModificationDate, @ScheduledDate, @PassingLevel);
 
-
+select tests.*,subjects.title as skill,employees.firstname,employees.lastname from tests 
+                        inner join subjectmatterexperts on subjectmatterexperts.id=tests.smeid
+                        inner join subjects on subjects.id=subjectmatterexperts.subjectid
+                        inner join employees on  employees.id=subjectmatterexperts.employeeid;
 

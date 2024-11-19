@@ -1,6 +1,6 @@
 -- Active: 1712217931410@@127.0.0.1@3306@assessmentdb
 
--- DROP database assessmentdb;
+DROP database assessmentdb;
 create database assessmentdb;
 
 use assessmentdb;
@@ -64,6 +64,7 @@ create table questionbank (
 
 create table tests (
 	id INT PRIMARY KEY AUTO_INCREMENT,
+    Name VARCHAR(255),
 	subjectid INT,
 	duration TIME,
 	smeid INT ,

@@ -5,6 +5,7 @@
 drop procedure if exists spcandidatetestresult;
 
 DELIMITER $$
+ 
 create procedure spcandidatetestresult(IN pcandidateId INT,In ptestId INT,OUT pscore INT )
 BEGIN
 DECLARE totalMarks INT;
@@ -65,8 +66,8 @@ DELIMITER ;
 -- Call the procedure by passing a dynamic interview ID
 CALL spinterviewdetails(5);
 
-
 DROP PROCEDURE IF Exists spcandidatetestresultdetails;
+
 DELIMITER $$
 create procedure spcandidatetestresultdetails(IN pcandidateId INT, IN ptestId INT, OUT pcorrectAnswers INT, OUT pincorrectAnswers INT, OUT pskippedQuestions INT)
 BEGIN
@@ -86,13 +87,16 @@ WHERE candidateanswers.answerkey="NO" AND candidateanswers.candidateId = pcandid
 
 SET pcorrectAnswers=correctCandidateAnswers;
 END $$
+
 CALL spcandidatetestresultdetails(3,2, @pcorrectAnswers, @pincorrectAnswers,@pskippedQuestions);
+
 select @pcorrectAnswers,@pincorrectAnswers,@pskippedQuestions;
 
 
 
 
 DROP PROCEDURE IF Exists spupdatemarks;
+
 DELIMITER $$
 create procedure spupdatemarks(in ptestid int, in markstoraise int)
 begin 
@@ -113,12 +117,14 @@ select  score,candidateid from candidatetestresults where testid= ptestid;
 	end loop;
 close candidate_result_cursor;
 end $$
+
 call spupdatemarks(1, 13);
 
 
 
 
 DROP PROCEDURE IF Exists spcandidate_performance;
+
 DELIMITER $$
 create procedure spcandidate_performance(in ptestid INT )
 begin 
