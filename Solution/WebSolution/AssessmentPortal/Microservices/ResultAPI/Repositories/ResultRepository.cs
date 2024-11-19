@@ -278,9 +278,9 @@ public class ResultRepository : IResultRepository
         return appearedCandidates;
     }
 
-    public async Task<List<TestResultDetails>> GetTestList(int candidateId)
+    public async Task<List<TestList>> GetTestList(int candidateId)
     {
-        List<TestResultDetails> testResultDetails = new List<TestResultDetails>();
+        List<TestList> testResultDetails = new List<TestList>();
         MySqlConnection connection = new MySqlConnection(_connectionString);
         string query = @"select *from candidatetestresults where candidateid=@candidateId";
         try
@@ -294,7 +294,7 @@ public class ResultRepository : IResultRepository
                 int testid = int.Parse(reader["testid"].ToString());
                 int score=int.Parse(reader["score"].ToString());
 
-                TestResultDetails details = new TestResultDetails();
+                TestList details = new TestList();
 
                 details.TestId = testid;
                 details.Score = score;
@@ -502,7 +502,7 @@ public class ResultRepository : IResultRepository
         }
         return resultdetails;
     }
-
+   
 
     public async Task<List<Subject>> GeAllSubjects()
     {

@@ -120,9 +120,9 @@ namespace Transflower.TFLAssessment.Controllers
         }
 
         [HttpGet("testlist/{candidateId}")]
-        public async Task<IActionResult> GetTestList(int candidateId)
+        public async Task<IActionResult>GetTestList(int candidateId)
         {
-            List<TestResultDetails> results = await _svc.GetTestList(candidateId);
+            List<TestList> results = await _svc.GetTestList(candidateId);
             return Ok(results);
         }
 

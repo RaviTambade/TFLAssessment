@@ -66,7 +66,7 @@ public class ResultService:IResultService
         return await _repository.GetSubjectResultDetails(subjectId);
     }
 
-    public async Task<List<TestResultDetails>> GetTestList(int candidateId)
+    public async Task<List<TestList>> GetTestList(int candidateId)
     {
         return await _repository.GetTestList(candidateId);
     }
