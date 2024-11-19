@@ -1,6 +1,7 @@
 import { endpoints } from '../config/apiEndpoitnts';
 
 class CandidateService {
+  
     
     async getCandidateDetails(candidateId, testId) {
       try {
@@ -11,6 +12,22 @@ class CandidateService {
         throw error;
       }
     }
+
+    async getTestList(candidateId) {
+      if (!candidateId) {
+        throw new Error("Candidate ID is required.");
+      }
+      const url = endpoints.getTestList(candidateId);
+      try {
+        const response = await fetch(url);
+        return await this.handleResponse(response);
+      } catch (error) {
+        console.error(`Error fetching test list from ${url}:`, error);
+        throw error;
+      }
+    }
+  
+
     async handleResponse(response) {
       if (!response.ok) {
         throw new Error(`Error: ${response.statusText}`);

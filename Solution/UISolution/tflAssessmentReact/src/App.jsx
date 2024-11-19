@@ -1,16 +1,16 @@
-import React from 'react';
-import ManageQuestionsWithTest from './Assessment/Components/ManageQuestionsWithTest';
+// import React from 'react';
+// import ManageQuestionsWithTest from './Assessment/Components/ManageQuestionsWithTest';
 
-function App() {
+// function App() {
 
-  return (
-    <>
-      <ManageQuestionsWithTest/>
-      </>
-  )
-}
+//   return (
+//     <>
+//       <ManageQuestionsWithTest/>
+//       </>
+//   )
+// }
 
-export default App;
+// export default App;
 
 
 
@@ -78,25 +78,27 @@ export default App;
 
 
 
-// import React from 'react';
-// import { Routes, Route } from 'react-router-dom';
+import React from 'react';
+import { Routes, Route } from 'react-router-dom';
 
 
-// import CandidateProfile from './CandidateProfile/Component/CandidateProfile';
-// import Login from './authentication/Components/Login';
-// import TestAppear from './Assessment/Components/TestAppear';
+import CandidateProfile from './CandidateProfile/Component/CandidateProfile';
+import Login from './authentication/Components/Login';
+import TestAppear from './Assessment/Components/TestAppear';
+import CandidateTestList from './CandidateResultDetails/components/CandidateTestList';
 
-// function App() {
-//   return (
-//     <Routes>
-//       <Route path="/" element={<Login />} />
-//       <Route path="/profile" element={<CandidateProfile />} />
-//       <Route path="/profile/testAppear" element={<TestAppear />}/>
-//     </Routes>
-//   );
-// }
+function App() {
+  return (
+    <Routes>
+      <Route path="/" element={<Login />} />
+      <Route path="/profile" element={<CandidateProfile />} />
+      <Route path="/profile/testAppear" element={<TestAppear />}/>
+      <Route path="/profile/testList" element={<CandidateTestList/>}/>
+    </Routes>
+  );
+}
 
-// export default App;
+export default App;
 
 //import TestAppear from './Assessment/Components/TestAppear';
 // // //import SubjectCriteriaQuestions from './QuestionBank/components/SubjectCriteriaQuestions';
