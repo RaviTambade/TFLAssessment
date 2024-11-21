@@ -1,13 +1,13 @@
 import React from 'react';
-import ManageQuestionsWithTest from './Assessment/Components/ManageQuestionsWithTest';
+import { BrowserRouter as Router } from 'react-router-dom';
+import AppRoutes from './AppRoutes/AppRoutes';
 
 function App() {
-
   return (
     <>
-      <ManageQuestionsWithTest/>
-      </>
-  )
+      <AppRoutes />
+    </>
+  );
 }
 
 export default App;
@@ -15,10 +15,30 @@ export default App;
 
 
 
+// ----------------------------------------------------------------------------------------------------------------------------
+
+// import React from 'react';
+// import ManageQuestionsWithTest from './Assessment/Components/InsertQuestionsByTest';
+// import InsertQuestion from './QuestionBank/components/InsertQuestion';
+
+// function App() {
+
+//   return (
+//     <>
+//       <InsertQuestion/>
+//       </>
+//   )
+// }
+
+// export default App;
+
+
+
+
 // import React from 'react';
 // import { Provider } from 'react-redux';
 // import store from './QuestionBank/redux/store';
-// import GetQuestionsByTestId from './QuestionBank/components/QuestionsByTestId';
+// //import GetQuestionsByTestId from './QuestionBank/components/QuestionsByTestId';
 // import GetAllQuestions from './QuestionBank/components/AllQuestions';
 
 
@@ -27,11 +47,7 @@ export default App;
 //   return (
 //     <>
 //       <Provider store={store}>
-
-//              {/* <SubjectCriteriaQuestions/> */}
-//              {/* <GetQuestionsByTestId/>  */}
-//              {/* <UpdateCriteriaSubject/> */}
-//              <GetAllQuestions/>
+//        </></>
 //        </Provider>
 //      </>
 //   );
