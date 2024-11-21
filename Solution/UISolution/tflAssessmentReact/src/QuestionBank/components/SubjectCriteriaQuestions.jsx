@@ -1,128 +1,59 @@
-import React, { useEffect, useState } from 'react';
-import QuestionBankService from '../services/questionbankservice';
+import React, { useState, useEffect } from 'react';
+import QuestionBankService from '../services/QuestionBankService';
 
-const SubjectCriteriaQuestions = () => {
+const FetchQuestions = () => {
   const [subjects, setSubjects] = useState([]);
   const [criterias, setCriterias] = useState([]);
-  const [questionsList, setQuestionsList] = useState([]);
+  const [questions, setQuestions] = useState([]);
   const [selectedSubject, setSelectedSubject] = useState('');
   const [selectedCriteria, setSelectedCriteria] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchSubjects = async () => {
-      setLoading(true);
-      setError(null);
-      try {
-        const data = await QuestionBankService.getSubjects();
-        setSubjects(data);
-        if (data.length > 0) {
-          setSelectedSubject(data[0].id); 
-        }
-      } catch (error) {
-        setError('Error fetching subjects.');
-      } finally {
-        setLoading(false);
-      }
+      const data = await QuestionBankService.getSubjects();
+      setSubjects(data);
     };
     fetchSubjects();
   }, []);
 
-  useEffect(() => {
-    if (!selectedSubject) return; 
-
-    const fetchCriteria = async () => {
-      setLoading(true);
-      setError(null);
-      try {
-        const data = await QuestionBankService.getCriteriaBySubject(selectedSubject);
-        setCriterias(data);
-        if (data.length > 0) {
-          setSelectedCriteria(data[0].id); 
-        }
-      } catch (error) {
-        setError('Error fetching criteria.');
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchCriteria();
-  }, [selectedSubject]);
-
-  useEffect(() => {
-    if (!selectedSubject || !selectedCriteria) return;
-
-    const fetchQuestions = async () => {
-      setLoading(true);
-      setError(null);
-      try {
-        const data = await QuestionBankService.getQuestionsBySubjectAndCriteria(selectedSubject, selectedCriteria);
-        setQuestionsList(data);
-      } catch (error) {
-        setError('Error fetching questions.');
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchQuestions();
-  }, [selectedSubject, selectedCriteria]);
-
-  const handleSubjectChange = (e) => {
-    setSelectedSubject(e.target.value);
-    setCriterias([]); 
-    setQuestionsList([]); 
-    setSelectedCriteria(''); 
+  const handleSubjectChange = async (subjectId) => {
+    setSelectedSubject(subjectId);
+    const data = await QuestionBankService.getCriteriaBySubject(subjectId);
+    setCriterias(data);
   };
 
-  const handleCriteriaChange = (e) => {
-    setSelectedCriteria(e.target.value);
+  const fetchQuestions = async () => {
+    const data = await QuestionBankService.getQuestionsBySubjectAndCriteria(selectedSubject, selectedCriteria);
+    setQuestions(data);
   };
 
   return (
-    <div className="container">
-      <h3>Transflower Learning Private Limited</h3>
-      <hr />
-      {loading && <p>Loading...</p>}
-      {error && <p className="error">{error}</p>}
-
-      <label>Select Subject: </label>
-      <select id="ddlSubjects" value={selectedSubject} onChange={handleSubjectChange}>
+    <div>
+      <h3>Fetch Questions</h3>
+      <select onChange={(e) => handleSubjectChange(e.target.value)}>
+        <option value="">Select Subject</option>
         {subjects.map((subject) => (
           <option key={subject.id} value={subject.id}>
             {subject.title}
           </option>
         ))}
       </select>
-
-      <br />
-
-      <label>Select Evaluation Criteria: </label>
-      <select id="ddlCriteria" value={selectedCriteria} onChange={handleCriteriaChange}>
+      <select onChange={(e) => setSelectedCriteria(e.target.value)}>
+        <option value="">Select Criteria</option>
         {criterias.map((criteria) => (
           <option key={criteria.id} value={criteria.id}>
             {criteria.title}
           </option>
         ))}
       </select>
-
-      <hr />
-
-      <div className="jumbotron">
-        <div className="questions" id="questions">
-          {questionsList.length === 0 ? (
-            <p>No questions found.</p>
-          ) : (
-            questionsList.map((question) => (
-              <h6 key={question.id}>
-                {question.id}. {question.question} ({question.subject})
-              </h6>
-            ))
-          )}
-        </div>
-      </div>
+      <button onClick={fetchQuestions}>Fetch</button>
+      <ul>
+        {questions.map((question) => (
+          <li key={question.id}>{question.title}</li>
+        ))}
+      </ul>
     </div>
   );
 };
 
-export default SubjectCriteriaQuestions;
+export default FetchQuestions;
