@@ -1,4 +1,4 @@
-// Importing the API base URL from environment configurations
+import { endpoints } from "../Config/apiEndpoints";
 const authAPIUrl = process.env.REACT_APP_AUTHENTICATION_API;
 
 // SignIn function for user authentication
@@ -21,19 +21,19 @@ export const signIn = async (credential) => {
 };
 
 // ChangePassword function to update user password
-export const changePassword = async (credential) => {
-  const url = `${authAPIUrl}/updatepassword`;
-
-  try {
-    const response = await fetch(url, {
+export const authSvc = {
+  changePassword: async (credential) => {
+    try {
+    const response = await fetch(endpoints.Authentication.changePassword, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(credential),
     });
-    return response.ok; // Return true if the response was successful
+    return response.ok; 
   } catch (error) {
     console.error('Error in changePassword:', error);
     throw error;
   }
+ },
 };
 

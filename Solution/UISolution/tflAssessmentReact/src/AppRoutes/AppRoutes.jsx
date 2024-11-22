@@ -4,6 +4,7 @@ import Home from '../Navigation/Home';
 import Login from '../authentication/Components/Login';
 import CandidateProfile from '../CandidateProfile/Component/CandidateProfile';
 import TestAppear from '../Assessment/Components/TestAppear';
+import ChangePassword from '../authentication/Components/ChangePassword';
 
 function AppRoutes() {
   return (
@@ -12,6 +13,8 @@ function AppRoutes() {
       <Route path="/login" element={<Login />} />
       <Route path="/profile" element={<CandidateProfile />} />
       <Route path="/profile/testAppear" element={<TestAppear />} />
+      <Route path="/changepassword" element={<ChangePassword />} />
+
     </Routes>
   );
 }
