@@ -1,16 +1,17 @@
 import React from 'react';
+import Navbar from './Navigation/Navbar';
 import AppRoutes from './AppRoutes/AppRoutes';
 
 function App() {
   return (
     <>
+      <Navbar />
       <AppRoutes />
     </>
   );
 }
 
 export default App;
-
 
 
 
