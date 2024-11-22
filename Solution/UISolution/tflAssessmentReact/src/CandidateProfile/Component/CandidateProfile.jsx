@@ -1,26 +1,23 @@
-import React, { useState, useEffect } from 'react';
-import { useLocation, useNavigate, Link } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import { useLocation, useNavigate, Link } from "react-router-dom";
 
 function CandidateProfile() {
   const location = useLocation();
-  const { userId } = location.state || {}; // Extract userId from location state
-  const { candidateId } = location.state || {}; // Extract candidateId from location state
+  const { userId, candidateId } = location.state || {};
 
-  const [employeeDetails, setEmployeeDetails] = useState(null); 
-  const [score, setScore] = useState(null); // Add state for storing candidate's score
-
+  const [employeeDetails, setEmployeeDetails] = useState(null);
+  const [score, setScore] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
     if (userId) {
-      // Fetch employee details
       fetch(`http://localhost:5151/api/assessment/employee/${userId}`, {
-        headers: { Authorization: `Bearer ${localStorage.getItem('jwt_token')}` },
+        headers: { Authorization: `Bearer ${localStorage.getItem("jwt_token")}` },
       })
         .then((response) => response.json())
         .then((data) => {
           if (data) {
-            setEmployeeDetails(data); 
+            setEmployeeDetails(data);
           } else {
             console.error("No employee data found");
           }
@@ -32,7 +29,7 @@ function CandidateProfile() {
       // Fetch candidate's test score (if candidateId is available)
       if (candidateId) {
         fetch(`http://localhost:5151/api/assessment/testscore/${candidateId}`, {
-          headers: { Authorization: `Bearer ${localStorage.getItem('jwt_token')}` },
+          headers: { Authorization: `Bearer ${localStorage.getItem("jwt_token")}` },
         })
           .then((response) => response.json())
           .then((data) => {
@@ -47,21 +44,15 @@ function CandidateProfile() {
           });
       }
     }
-  }, [userId, candidateId]); // Run effect when userId or candidateId changes
-
+  }, [userId, candidateId]);
   const routeTest = () => {
     let path = `testAppear`;
     navigate(path, { state: { userId } });
   };
 
-  const routeList = () => {
-    let path = `testList`;
-    navigate(path, { state: { candidateId } });
-  };
-
   const handleLogout = () => {
-    localStorage.removeItem('jwt_token'); // Clear token
-    navigate('/login'); // Redirect to login page
+    localStorage.removeItem("jwt_token");
+    navigate("/login");
   };
 
   if (!employeeDetails) {
@@ -80,6 +71,14 @@ function CandidateProfile() {
           >
             Change Password
           </Link>
+          <Link
+            to="/candidatetestlist"
+            state={{ userId: employeeDetails.userId, candidateId: employeeDetails.id }} // Dynamically include candidateId
+            className="text-gray-700 dark:text-gray-300 hover:underline"
+          >
+            Test List
+          </Link>
+
           <button
             onClick={handleLogout}
             className="text-gray-700 dark:text-gray-300 hover:underline"
@@ -111,13 +110,6 @@ function CandidateProfile() {
             className="w-full px-4 py-2 font-semibold text-white bg-indigo-600 rounded-lg hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-opacity-75"
           >
             Start Test
-          </button>
-
-          <button
-            onClick={routeList}
-            className="w-full px-4 py-2 font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75"
-          >
-            Show Test List
           </button>
         </div>
       </div>

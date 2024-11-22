@@ -282,22 +282,26 @@ public class ResultRepository : IResultRepository
     {
         List<TestList> testResultDetails = new List<TestList>();
         MySqlConnection connection = new MySqlConnection(_connectionString);
-        string query = @"select *from candidatetestresults where candidateid=@candidateId";
+        string query =  @"SELECT cr.testid AS Id, cr.score AS Score, t.name AS TestName
+                        FROM candidatetestresults cr
+                        JOIN tests t ON cr.testid = t.id where candidateid=@candidateId";
         try
         {
             MySqlCommand command = new MySqlCommand(query, connection);
             command.Parameters.AddWithValue("@candidateId", candidateId);
             await connection.OpenAsync();
             MySqlDataReader reader = command.ExecuteReader();
-            while (await reader.ReadAsync())
-            {
-                int testid = int.Parse(reader["testid"].ToString());
+         while (await reader.ReadAsync())
+        {
+            TestList details = new TestList
+        {
+            TestId = int.Parse(reader["Id"].ToString()), 
+            Score = int.Parse(reader["Score"].ToString()),   
+            TestName = reader["TestName"].ToString()       
+        };
 
-                TestList details = new TestList();
-
-                details.TestId = testid;
-                testResultDetails.Add(details);
-            }
+            testResultDetails.Add(details);
+        }
             reader.Close();
         }
         catch (Exception e)

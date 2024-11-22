@@ -5,6 +5,7 @@ import Login from '../authentication/Components/Login';
 import CandidateProfile from '../CandidateProfile/Component/CandidateProfile';
 import TestAppear from '../Assessment/Components/TestAppear';
 import ChangePassword from '../authentication/Components/ChangePassword';
+import CandidateTestList from '../CandidateResultDetails/Components/CandidateTestList';
 
 function AppRoutes() {
   return (
@@ -14,6 +15,7 @@ function AppRoutes() {
       <Route path="/profile" element={<CandidateProfile />} />
       <Route path="/profile/testAppear" element={<TestAppear />} />
       <Route path="/changepassword" element={<ChangePassword />} />
+      <Route path="/candidatetestlist" element={<CandidateTestList />} />
 
     </Routes>
   );

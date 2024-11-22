@@ -87,10 +87,7 @@ function Login() {
 
                 <button
                     type="submit"
-                    className="w-full px-4 py-2 font-semibold text-white bg-indigo-600 rounded-lg hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-opacity-75"
-                >
-                    Login
-                </button>
+                    className="w-full px-4 py-2 font-semibold text-white bg-indigo-600 rounded-lg hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-opacity-75">Login</button>
 
                 <div className="text-center">
                     <p className="text-gray-600 dark:text-gray-400">If you are a new user, click on Register Link</p>
