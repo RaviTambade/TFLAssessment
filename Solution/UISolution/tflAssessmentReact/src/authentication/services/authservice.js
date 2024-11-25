@@ -1,5 +1,5 @@
 import { endpoints } from "../Config/apiEndpoints";
-const authAPIUrl = process.env.REACT_APP_AUTHENTICATION_API;
+
 
 // SignIn function for user authentication
 export const signIn = async (credential) => {

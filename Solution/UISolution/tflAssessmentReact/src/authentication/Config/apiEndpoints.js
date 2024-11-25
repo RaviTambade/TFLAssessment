@@ -8,4 +8,6 @@ const endpoints = {
     Authentication: {
       changePassword: `${API_BASE_URL_AUTH}/auth/updatepassword`,
     }
-}
+  };
+
+  export { API_BASE_URL_AUTH, endpoints };

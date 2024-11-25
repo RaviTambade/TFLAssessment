@@ -30,7 +30,7 @@ const NewUserForm = () => {
     };
 
     try {
-      const response = await fetch("YOUR_API_URL", { // Replace 'YOUR_API_URL' with the actual endpoint
+      const response = await fetch("YOUR_API_URL", { //  http://localhost:5142/api/users/add
         method: "POST",
         headers: {
           "Content-Type": "application/json",

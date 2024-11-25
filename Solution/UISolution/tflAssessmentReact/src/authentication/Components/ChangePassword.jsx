@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { authSvc } from '../services/authservice';
 
 function ChangePassword({ authSvc }) {
   const [showOldPassword, setShowOldPassword] = useState(false);
