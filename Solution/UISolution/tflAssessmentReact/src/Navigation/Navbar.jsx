@@ -13,7 +13,7 @@ function Navbar() {
         <ul className="flex space-x-6">
           <li><Link to="/" className="text-white hover:text-blue-200">Home</Link></li>
           <li><Link to="/login" className="text-white hover:text-blue-200">Login</Link></li>
-          <li><Link to="/logout" className="text-white hover:text-blue-200">Logout</Link></li>
+          <li><Link to="/login" className="text-white hover:text-blue-200">Logout</Link></li>
         </ul>
       </div>
     </nav>
