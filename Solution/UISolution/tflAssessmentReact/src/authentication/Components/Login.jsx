@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useNavbar } from '../../Navigation/NavbarContext';
 
 function Login() {
     const [contact, setContact] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
+    const { updateNavLinks } = useNavbar();
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -12,40 +14,66 @@ function Login() {
         const data = {
             ContactNumber: contact,
             Password: password,
-            Lob: 'banking'
+            Lob: 'banking',
         };
+        console.log('Request Payload:', data);
+
         const url = 'http://localhost:5142/api/auth/signin';
         const url1 = `http://localhost:5142/api/users/contact/${contact}`;
 
         try {
+            // Sending login request
             const response = await fetch(url, {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(data)
+                body: JSON.stringify(data),
             });
             const result = await response.json();
 
             if (result.token) {
                 localStorage.setItem('jwt_token', result.token);
 
+                // Fetch user data based on contact number
                 const userResponse = await fetch(url1);
                 const userData = await userResponse.json();
-                const userId = userData.id;  
+                const userId = userData.id;
 
                 console.log('User Data:', userData);
 
+                // Fetch assessment data based on user ID
                 const url2 = `http://localhost:5151/api/assessment/employee/${userId}`;
                 const assessmentResponse = await fetch(url2, {
                     headers: {
-                        'Authorization': `Bearer ${result.token}`
-                    }
+                        'Authorization': `Bearer ${result.token}`,
+                    },
                 });
                 const assessmentData = await assessmentResponse.json();
                 console.log('Assessment Data:', assessmentData);
 
-                navigate('/profile', { state: { userId } }); 
+                // Extract the role from assessmentData instead of userData
+                const role = assessmentData.role ? assessmentData.role.trim() : 'Student'; // Default to 'Student' if no role
+                console.log('Trimmed Role:', role);
+
+                // Navigate based on the role extracted from assessment data
+                if (role === 'Teacher') {
+                    console.log('Navigating to Teacher Dashboard');
+                    updateNavLinks([
+                        { name: 'Home', path: '/' },
+                        { name: 'Teacher Dashboard', path: '/teacher-dashboard' },
+                        { name: 'Logout', path: '/login' },
+                    ]);
+                    navigate('/teacher-dashboard');
+                } else {
+                    console.log('Navigating to Student Dashboard');
+                    updateNavLinks([
+                        { name: 'Home', path: '/' },
+                        { name: 'Student Dashboard', path: '/student-dashboard' },
+                        { name: 'Logout', path: '/login' },
+                    ]);
+                    navigate('/student-dashboard');
+                }
             } else {
                 alert('Login is not valid');
             }
@@ -87,7 +115,9 @@ function Login() {
 
                 <button
                     type="submit"
-                    className="w-full px-4 py-2 font-semibold text-white bg-indigo-600 rounded-lg hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-opacity-75">Login</button>
+                    className="w-full px-4 py-2 font-semibold text-white bg-indigo-600 rounded-lg hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-opacity-75">
+                    Login
+                </button>
 
                 <div className="text-center">
                     <p className="text-gray-600 dark:text-gray-400">If you are a new user, click on Register Link</p>

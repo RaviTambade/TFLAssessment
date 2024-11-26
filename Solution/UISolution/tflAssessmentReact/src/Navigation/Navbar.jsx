@@ -1,7 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useNavbar } from './NavbarContext';
 
 function Navbar() {
+  const context = useNavbar();
+  console.log(context); // Ensure this logs the expected context value
+  const { navLinks } = context;
+
   return (
     <nav className="bg-blue-500 p-4">
       <div className="container mx-auto flex justify-between items-center">
@@ -9,15 +14,19 @@ function Navbar() {
           Transflower
         </Link>
 
-        {/* Navigation Links */}
         <ul className="flex space-x-6">
-          <li><Link to="/" className="text-white hover:text-blue-200">Home</Link></li>
-          <li><Link to="/login" className="text-white hover:text-blue-200">Login</Link></li>
-          <li><Link to="/login" className="text-white hover:text-blue-200">Logout</Link></li>
+          {navLinks.map((link) => (
+            <li key={link.name}>
+              <Link to={link.path} className="text-white hover:text-blue-200">
+                {link.name}
+              </Link>
+            </li>
+          ))}
         </ul>
       </div>
     </nav>
   );
 }
+
 
 export default Navbar;

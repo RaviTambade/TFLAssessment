@@ -21,4 +21,12 @@ export const NavbarProvider = ({ children }) => {
 };
 
 // Hook for consuming context
-export const useNavbar = () => useContext(NavbarContext);
+export const useNavbar = () => {
+  const context = useContext(NavbarContext);
+
+  if (!context) {
+    throw new Error('useNavbar must be used within a NavbarProvider');
+  }
+
+  return context;
+};

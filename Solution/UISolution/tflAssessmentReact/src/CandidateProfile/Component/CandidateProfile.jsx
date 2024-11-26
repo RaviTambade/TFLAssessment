@@ -73,7 +73,7 @@ function CandidateProfile() {
           </Link>
           <Link
             to="/candidatetestlist"
-            state={{ userId: employeeDetails.userId, candidateId: employeeDetails.id }} // Dynamically include candidateId
+            state={{ userId: employeeDetails.userId, candidateId: employeeDetails.id }} 
             className="text-gray-700 dark:text-gray-300 hover:underline"
           >
             Test List
@@ -100,6 +100,8 @@ function CandidateProfile() {
             <p className="text-gray-700 dark:text-gray-300">ID: {employeeDetails.userId}</p>
             <p className="text-gray-700 dark:text-gray-300">Email: {employeeDetails.email}</p>
             <p className="text-gray-700 dark:text-gray-300">Contact: {employeeDetails.contact}</p>
+            <p className="text-gray-700 dark:text-gray-300">Contact: {employeeDetails.role}</p>
+
             {score !== null && (
               <p className="text-gray-700 dark:text-gray-300">Score: {score}</p>
             )}
