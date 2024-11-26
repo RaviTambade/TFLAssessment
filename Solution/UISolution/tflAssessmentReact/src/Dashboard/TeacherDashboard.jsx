@@ -1,7 +1,10 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 function TeacherDashboard() {
+    const location = useLocation();
+    const { employeeName } = location.state || {};
+
     return (
         <div className="h-screen flex">
             {/* Sidebar */}
@@ -16,7 +19,7 @@ function TeacherDashboard() {
 
             {/* Main Content */}
             <main className="flex-1 p-6 bg-gray-100">
-                <h1 className="text-3xl font-semibold">Welcome, Teacher!</h1>
+                <h1 className="text-3xl font-semibold">{employeeName || 'Teacher'}!</h1>
                 <p className="mt-4 text-gray-700">
                     Use the menu to navigate through the available teacher tools and options.
                 </p>

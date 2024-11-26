@@ -16,7 +16,6 @@ function Login() {
             Password: password,
             Lob: 'banking',
         };
-        console.log('Request Payload:', data);
 
         const url = 'http://localhost:5142/api/auth/signin';
         const url1 = `http://localhost:5142/api/users/contact/${contact}`;
@@ -39,6 +38,10 @@ function Login() {
                 const userResponse = await fetch(url1);
                 const userData = await userResponse.json();
                 const userId = userData.id;
+                
+
+                // const firstName = userData.firstName;
+                // const lastName = userData.lastName;
 
                 console.log('User Data:', userData);
 
@@ -50,29 +53,29 @@ function Login() {
                     },
                 });
                 const assessmentData = await assessmentResponse.json();
+                const employeeName = `${assessmentData.firstName} ${assessmentData.lastName}`; 
+                console.log('Name:',employeeName);
                 console.log('Assessment Data:', assessmentData);
 
-                // Extract the role from assessmentData instead of userData
-                const role = assessmentData.role ? assessmentData.role.trim() : 'Student'; // Default to 'Student' if no role
+                const role = assessmentData.role ? assessmentData.role.trim() : 'Student'; 
+                const candidateId = assessmentData.id;
                 console.log('Trimmed Role:', role);
+                console.log('Candidate ID:', candidateId);
 
-                // Navigate based on the role extracted from assessment data
                 if (role === 'Teacher') {
                     console.log('Navigating to Teacher Dashboard');
                     updateNavLinks([
                         { name: 'Home', path: '/' },
-                        { name: 'Teacher Dashboard', path: '/teacher-dashboard' },
                         { name: 'Logout', path: '/login' },
                     ]);
-                    navigate('/teacher-dashboard');
+                    navigate('/teacher-dashboard',{ state: { employeeName,candidateId } });
                 } else {
                     console.log('Navigating to Student Dashboard');
                     updateNavLinks([
                         { name: 'Home', path: '/' },
-                        { name: 'Student Dashboard', path: '/student-dashboard' },
                         { name: 'Logout', path: '/login' },
                     ]);
-                    navigate('/student-dashboard');
+                    navigate('/student-dashboard', { state: { employeeName,candidateId } }); 
                 }
             } else {
                 alert('Login is not valid');
@@ -121,7 +124,7 @@ function Login() {
 
                 <div className="text-center">
                     <p className="text-gray-600 dark:text-gray-400">If you are a new user, click on Register Link</p>
-                    <Link to="/register" className="text-indigo-600 hover:underline dark:text-indigo-400">Register</Link>
+                    <Link to="/newuser" className="text-indigo-600 hover:underline dark:text-indigo-400">Register</Link>
                 </div>
             </form>
         </div>

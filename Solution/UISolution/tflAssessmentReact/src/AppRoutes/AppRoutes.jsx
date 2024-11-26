@@ -2,6 +2,7 @@ import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Home from '../Dashboard/Home';
 import Login from '../authentication/Components/Login';
+import NewUserForm from '../authentication/Components/NewUser';
 import CandidateProfile from '../CandidateProfile/Component/CandidateProfile';
 import TestAppear from '../Assessment/Components/TestAppear';
 import ChangePassword from '../authentication/Components/ChangePassword';
@@ -16,6 +17,7 @@ function AppRoutes() {
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/login" element={<Login />} />
+      <Route path="/newuser" element={<NewUserForm />} />
       <Route path="/profile" element={<CandidateProfile />} />
       <Route path="/profile/testAppear" element={<TestAppear />} />
       <Route path="/changepassword" element={<ChangePassword />} />

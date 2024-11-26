@@ -4,7 +4,7 @@ import { useNavbar } from './NavbarContext';
 
 function Navbar() {
   const context = useNavbar();
-  console.log(context); // Ensure this logs the expected context value
+  console.log(context); 
   const { navLinks } = context;
 
   return (
