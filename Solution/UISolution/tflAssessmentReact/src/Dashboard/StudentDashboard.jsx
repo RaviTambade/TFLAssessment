@@ -15,7 +15,7 @@ function StudentDashboard() {
                 <nav className="space-y-4">
                 <Link to="/profile" state={{ candidateId }} className="block py-2 px-4 rounded hover:bg-blue-700">Candidate Profile</Link>
                 <Link to="/profile/testAppear" className="block py-2 px-4 rounded hover:bg-blue-700">Take Assessments</Link>
-                    <Link to="/candidatetestlist" className="block py-2 px-4 rounded hover:bg-blue-700">View Assesment List</Link>
+                <Link to="/candidatetestlist" className="block py-2 px-4 rounded hover:bg-blue-700">View Assesment List</Link>
                 </nav>
             </aside>
 
