@@ -4,7 +4,7 @@ import { Link,useLocation } from 'react-router-dom';
 function StudentDashboard() {
         const location = useLocation();
         const { employeeName,candidateId  } = location.state || {};
-        console.log( candidateId)
+        console.log("Candidate ID:", candidateId);
         
     
     return (
@@ -14,7 +14,7 @@ function StudentDashboard() {
                 <h2 className="text-2xl font-bold mb-4">Student Dashboard</h2>
                 <nav className="space-y-4">
                 <Link to="/profile" state={{ candidateId }} className="block py-2 px-4 rounded hover:bg-blue-700">Candidate Profile</Link>
-                <Link to="/profile/testAppear" className="block py-2 px-4 rounded hover:bg-blue-700">Take Assessments</Link>
+                <Link to="/profile/testAppear" state={{ candidateId }}  className="block py-2 px-4 rounded hover:bg-blue-700">Take Assessments</Link>
                 <Link to="/candidatetestlist" className="block py-2 px-4 rounded hover:bg-blue-700">View Assesment List</Link>
                 </nav>
             </aside>
