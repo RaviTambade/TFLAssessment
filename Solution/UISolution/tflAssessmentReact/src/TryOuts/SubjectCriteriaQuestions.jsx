@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import QuestionBankService from '../services/QuestionBankService';
+import QuestionBankService from '../QuestionBank/services/QuestionBankService';
 
 const FetchQuestions = () => {
   const [subjects, setSubjects] = useState([]);

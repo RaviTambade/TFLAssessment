@@ -66,14 +66,14 @@ function Login() {
                     console.log('Navigating to Teacher Dashboard');
                     updateNavLinks([
                         { name: 'Home', path: '/' },
-                        { name: 'Logout', path: '/login' },
+                        { name: 'Logout', path: '/' },
                     ]);
                     navigate('/teacher-dashboard',{ state: { employeeName,candidateId } });
                 } else {
                     console.log('Navigating to Student Dashboard');
                     updateNavLinks([
                         { name: 'Home', path: '/' },
-                        { name: 'Logout', path: '/login' },
+                        { name: 'Logout', path: '/' },
                     ]);
                     navigate('/student-dashboard', { state: { employeeName,candidateId } }); 
                 }

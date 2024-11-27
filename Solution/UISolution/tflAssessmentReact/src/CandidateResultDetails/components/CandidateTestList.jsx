@@ -3,29 +3,23 @@ import { useLocation } from "react-router-dom";
 import CandidateService from "../services/CandidateDetailsService";
 
 const CandidateTestList = () => {
-  const [testId, setTestId] = useState("");
+  const location = useLocation();
+  const { candidateId } = location.state || {}; // Fetch candidateId from navigation state
   const [testDetails, setTestDetails] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
-  const location = useLocation();
-  const { userId, candidateId } = location.state || {}; 
-  const [currentCandidateId, setCurrentCandidateId] = useState(candidateId || ""); 
 
+  // Fetch test details when the component mounts or candidateId changes
   useEffect(() => {
-    
     if (candidateId) {
-      fetchDetails(candidateId);
+      fetchTestDetails(candidateId);
+    } else {
+      setErrorMessage("Candidate ID not provided. Please try again.");
     }
   }, [candidateId]);
 
-  const fetchDetails = async (idToFetch) => {
+  const fetchTestDetails = async (id) => {
     try {
-      const id = idToFetch || currentCandidateId || testId;
-      if (!id) {
-        setErrorMessage("Please provide a candidate ID.");
-        return;
-      }
-
-      setErrorMessage("");
+      setErrorMessage(""); // Clear previous errors
       const response = await CandidateService.getTestList(id);
 
       if (Array.isArray(response) && response.length > 0) {
@@ -38,8 +32,8 @@ const CandidateTestList = () => {
           setErrorMessage("No valid test details found for this candidate.");
         }
       } else {
-        setErrorMessage("No test details found for this candidate.");
         setTestDetails([]);
+        setErrorMessage("No test details found for this candidate.");
       }
     } catch (error) {
       console.error("Error fetching test details:", error);
@@ -50,6 +44,9 @@ const CandidateTestList = () => {
   return (
     <div className="max-w-lg mx-auto p-6 bg-white rounded-lg shadow-md">
       <h1 className="text-2xl font-bold text-center text-gray-800 mb-6">Candidate Test Results</h1>
+      {errorMessage && (
+        <p className="text-center text-red-500 mb-4">{errorMessage}</p>
+      )}
       {testDetails.length > 0 && (
         <div className="mt-6">
           <h2 className="text-lg font-semibold text-gray-700 mb-4">Test Results</h2>

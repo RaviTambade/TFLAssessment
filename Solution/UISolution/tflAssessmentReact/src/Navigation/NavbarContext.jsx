@@ -8,6 +8,7 @@ export const NavbarProvider = ({ children }) => {
   const [navLinks, setNavLinks] = useState([
     { name: 'Home', path: '/' },
     { name: 'Login', path: '/login' },
+    { name: 'Register', path: '/newuser' },
   ]);
 
   // Function to update navbar links (e.g., after login)
