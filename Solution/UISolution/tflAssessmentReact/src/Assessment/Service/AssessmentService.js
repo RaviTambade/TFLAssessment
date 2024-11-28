@@ -53,9 +53,55 @@ const AssessmentService = {
             },
             body: JSON.stringify(newTest),
         });
+
         return handleResponse(response);
     },
 
+    async rescheduleAssessment(assessmentId, date) {
+        const formattedDate = date.split("T")[0];
+        const url = endpoints.assessment.RescheduleAssessment
+            .replace("{assessmentId}", assessmentId)
+            .replace("{date}", formattedDate);
+        const response = await fetch(url, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+        if (!response.ok) {
+            const errorMessage = await response.text(); 
+            throw new Error(errorMessage || "Failed to reschedule assessment");
+        }
+        try {
+            return await response.json(); 
+        } catch {
+            return null; 
+        }
+    },
+
+    async changeDuration(assessmentId, duration) {
+        const url = endpoints.assessment.ChangeDuration
+        .replace("{assessmentId}", assessmentId)
+        .replace("{duration}", duration); // Replacing the placeholders in the URL
+    
+      const response = await fetch(url, {
+        method: "PUT", // Using PUT method as per backend configuration
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+    
+      if (!response.ok) {
+        const errorMessage = await response.text();
+        throw new Error(errorMessage || "Failed to change duration");
+      }
+    
+      try {
+        return await response.json();
+      } catch {
+        return null;
+      }
+    },
 };
 
 export default AssessmentService;

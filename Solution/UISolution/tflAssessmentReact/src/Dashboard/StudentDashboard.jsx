@@ -21,7 +21,7 @@ function StudentDashboard() {
 
             {/* Main Content */}
             <main className="flex-1 p-6 bg-gray-100">
-                <h1 className="text-3xl font-semibold">{employeeName || 'Student'}!</h1>
+                <h1 className="text-3xl font-semibold">Welcome {employeeName || 'Student'}!</h1>
                 <p className="mt-4 text-gray-700">
                     Use the menu to access your courses, assessments, and grades.
                 </p>

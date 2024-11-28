@@ -11,6 +11,8 @@ import TeacherDashboard from '../Dashboard/TeacherDashboard';
 import StudentDashboard from '../Dashboard/StudentDashboard';
 import CreateTestComponent from '../Assessment/Components/CreateNewAssesment';
 import ManageQuestionsWithTest from '../Assessment/Components/InsertQuestionsByTest';
+import RescheduleAssessment from '../Assessment/Components/RescheduleAssesment';
+import ChangeDuration from '../Assessment/Components/ChangeDuration';
 
 function AppRoutes() {
   return (
@@ -26,6 +28,9 @@ function AppRoutes() {
       <Route path="/candidatetestlist" element={<CandidateTestList />} />
       <Route path="/teacher-dashboard" element={<TeacherDashboard />} />
       <Route path="/student-dashboard" element={<StudentDashboard />} />
+      <Route path="/rescheduleassessment" element={<RescheduleAssessment />} />
+      <Route path="/changeduration" element={<ChangeDuration />} />
+
     </Routes>
   );
 }
