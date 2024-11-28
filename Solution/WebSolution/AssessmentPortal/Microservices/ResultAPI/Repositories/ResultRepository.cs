@@ -207,7 +207,7 @@ public class ResultRepository : IResultRepository
             while (await reader.ReadAsync())
             {
                 int testid = int.Parse(reader["testid"].ToString());
-                string TestName = reader["testname"].ToString() 
+                string testname = reader["testname"].ToString() ;
                 int candidateid = int.Parse(reader["candidateid"].ToString());
                 string fname = reader["firstname"].ToString();
                 string lname = reader["lastname"].ToString();
@@ -217,6 +217,7 @@ public class ResultRepository : IResultRepository
                 TestResultDetails results = new TestResultDetails();
 
                 results.TestId = testid;
+                results.TestName =testname;
                 results.CandidateId = candidateid;
                 results.FirstName = fname;
                 results.LastName = lname;
