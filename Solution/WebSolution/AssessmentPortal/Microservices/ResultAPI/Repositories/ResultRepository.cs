@@ -185,16 +185,19 @@ public class ResultRepository : IResultRepository
     {
         List<TestResultDetails> resultdetails = new List<TestResultDetails>();
         MySqlConnection connection = new MySqlConnection(_connectionString);
-        string query = @"select candidatetestresults.testid,candidatetestresults.score,candidatetestresults.candidateid
-                         ,employees.firstname,employees.lastname,subjects.title as subject
-                         from candidatetestresults
-                         inner join employees
-                         on employees.id=candidatetestresults.candidateid
-                         inner join tests
-                         on candidatetestresults.testid=tests.id
-                         inner join subjects
-                         on tests.subjectid=subjects.id
-                         where candidatetestresults.testid=@TestId";
+        string query = @"SELECT 
+                        candidatetestresults.testid, 
+                        candidatetestresults.score, 
+                        candidatetestresults.candidateid,
+                        employees.firstname, 
+                        employees.lastname, 
+                        subjects.title AS subject, 
+                        tests.name AS testname
+                        FROM candidatetestresults
+                        INNER JOIN employees ON employees.id = candidatetestresults.candidateid
+                        INNER JOIN tests ON candidatetestresults.testid = tests.id
+                        INNER JOIN subjects ON tests.subjectid = subjects.id
+                        WHERE candidatetestresults.testid=@TestId";
         try
         {
             MySqlCommand command = new MySqlCommand(query, connection);
@@ -204,6 +207,7 @@ public class ResultRepository : IResultRepository
             while (await reader.ReadAsync())
             {
                 int testid = int.Parse(reader["testid"].ToString());
+                string TestName = reader["testname"].ToString() 
                 int candidateid = int.Parse(reader["candidateid"].ToString());
                 string fname = reader["firstname"].ToString();
                 string lname = reader["lastname"].ToString();
