@@ -82,10 +82,10 @@ const AssessmentService = {
     async changeDuration(assessmentId, duration) {
         const url = endpoints.assessment.ChangeDuration
         .replace("{assessmentId}", assessmentId)
-        .replace("{duration}", duration); // Replacing the placeholders in the URL
+        .replace("{duration}", duration); 
     
       const response = await fetch(url, {
-        method: "PUT", // Using PUT method as per backend configuration
+        method: "PUT", 
         headers: {
           "Content-Type": "application/json",
         },
