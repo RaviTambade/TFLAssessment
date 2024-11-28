@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import QuestionBankService from '../QuestionBank/services/QuestionBankService';
+import QuestionBankService from '../QuestionBank/Services/QuestionBankService';
 
 const GetAllQuestions = () => {
   const [questionList, setQuestionList] = useState([]);

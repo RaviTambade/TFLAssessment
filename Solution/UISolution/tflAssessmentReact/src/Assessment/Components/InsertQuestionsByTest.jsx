@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import AssessmentService from '../Service/AssessmentService';
-import QuestionBankService from '../../QuestionBank/services/QuestionBankService';
+import QuestionBankService from '../../QuestionBank/Services/QuestionBankService';
 import TestService from '../Service/TestService';
 
 const ManageQuestionsWithTest = () => {

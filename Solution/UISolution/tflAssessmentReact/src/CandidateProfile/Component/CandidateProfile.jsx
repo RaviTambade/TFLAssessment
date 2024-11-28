@@ -8,14 +8,14 @@ function CandidateProfile() {
   const [employeeDetails, setEmployeeDetails] = useState(null);
 
   useEffect(() => {
-    if (candidateId) { // Use candidateId instead of userId
+    if (candidateId) { 
       fetch(`http://localhost:5151/api/assessment/employee/${candidateId}`, {
         headers: { Authorization: `Bearer ${localStorage.getItem("jwt_token")}` },
       })
         .then((response) => response.json())
         .then((data) => {
           if (data) {
-            setEmployeeDetails(data);  // Set the fetched employee data
+            setEmployeeDetails(data);  
           } else {
             console.error("No employee data found");
           }
@@ -24,8 +24,8 @@ function CandidateProfile() {
           console.error("Error fetching employee details:", error);
         });
     }
-  }, [candidateId]);  // Dependency array updated to reflect candidateId
-
+  }, [candidateId]);  
+  
   if (!employeeDetails) {
     return <p className="text-center text-gray-700 dark:text-gray-300">Loading...</p>;
   }
