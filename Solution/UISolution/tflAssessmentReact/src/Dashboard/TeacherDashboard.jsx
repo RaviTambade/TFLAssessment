@@ -12,7 +12,6 @@ function TeacherDashboard() {
 
     return (
         <div className="h-screen flex">
-            {/* Sidebar */}
             <aside className="w-1/4 bg-gray-800 text-white p-4">
                 <h2 className="text-2xl font-bold mb-4">Teacher Dashboard</h2>
                 <nav className="space-y-4">
