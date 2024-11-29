@@ -24,7 +24,7 @@ function TeacherDashboard() {
                                 <Link to="/rescheduleAssessment"className="block py-2 px-4 rounded hover:bg-gray-700">Reschedule Assessment</Link>
                                 <Link to="/insertQuestionsByTest" className="block py-2 px-4 rounded hover:bg-gray-700">Insert Questions By Assessment</Link>
                                 <Link to="/changeDuration"className="block py-2 px-4 rounded hover:bg-gray-700">Change Duration</Link>
-                                <Link to="/cancelAssessment" className="block py-2 px-4 rounded hover:bg-gray-700"> Cancel Assessment</Link>
+                                <Link to="/testresultdetails" className="block py-2 px-4 rounded hover:bg-gray-700"> Assessment Details</Link>
                             </div>
                         )}
                     </div>

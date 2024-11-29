@@ -1,4 +1,4 @@
-import { endpoints } from '../config/apiEndpoints';
+import { endpoints } from '../Config/apiEndpoints';
 
 class CandidateDetailsService {
   
@@ -14,9 +14,9 @@ class CandidateDetailsService {
     }
 
 
-  async getTestResultDetails(testId) {
+  async TestResultDetails(testId) {
     try {
-      const response = await fetch(endpoints.getTestResultDetails(testId));
+      const response = await fetch(endpoints.TestResultDetails(testId));
       return await this.handleResponse(response);
     } catch (error) {
       console.error('Error fetching candidates:', error);
