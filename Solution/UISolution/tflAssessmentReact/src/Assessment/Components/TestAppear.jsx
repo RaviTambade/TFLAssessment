@@ -254,7 +254,7 @@ const TestAppear = () => {
         <div className="flex justify-between space-x-2 mt-4">
           <button
             onClick={handleSubmit}
-            disabled={isSubmitted} // Disable Submit button after submission
+            disabled={isSubmitted} 
             className={`px-4 py-2 ${isSubmitted ? "bg-gray-400" : "bg-green-600 hover:bg-green-500"
               } text-white rounded-lg`}
           >

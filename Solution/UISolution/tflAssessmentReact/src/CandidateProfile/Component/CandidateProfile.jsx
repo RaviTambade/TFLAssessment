@@ -3,7 +3,7 @@ import { useLocation } from "react-router-dom";
 
 function CandidateProfile() {
   const location = useLocation();
-  const { candidateId } = location.state || {};  // Get candidateId from the state
+  const { candidateId } = location.state || {}; 
 
   const [employeeDetails, setEmployeeDetails] = useState(null);
 
@@ -25,7 +25,7 @@ function CandidateProfile() {
         });
     }
   }, [candidateId]);  
-  
+
   if (!employeeDetails) {
     return <p className="text-center text-gray-700 dark:text-gray-300">Loading...</p>;
   }
