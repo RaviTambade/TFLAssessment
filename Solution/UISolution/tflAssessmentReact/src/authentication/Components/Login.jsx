@@ -68,14 +68,14 @@ function Login() {
                         { name: 'Home', path: '/' },
                         { name: 'Logout', path: '/login' },
                     ]);
-                    navigate('/teacher-dashboard',{ state: { employeeName,candidateId } });
+                    navigate('/teacher',{ state: { employeeName,candidateId } });
                 } else {
                     console.log('Navigating to Student Dashboard');
                     updateNavLinks([
                         { name: 'Home', path: '/' },
                         { name: 'Logout', path: '/login' },
                     ]);
-                    navigate('/student-dashboard', { state: { employeeName,candidateId } }); 
+                    navigate('/student', { state: { employeeName,candidateId } }); 
                 }
             } else {
                 alert('Login is not valid');

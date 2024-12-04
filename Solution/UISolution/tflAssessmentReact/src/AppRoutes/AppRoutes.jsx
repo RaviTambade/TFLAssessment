@@ -31,6 +31,7 @@ function AppRoutes() {
       <Route path="/login" element={<Login />} />
       <Route path="/newuser" element={<NewUserForm />} />
       <Route path="/changepassword" element={<ChangePassword />} />
+      
 
       {/* Student Layout and Nested Routes */}
       <Route path="/student" element={<StudentLayout />}>

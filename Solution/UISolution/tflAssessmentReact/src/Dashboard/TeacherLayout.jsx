@@ -31,8 +31,19 @@ function TeacherLayout() {
                 <h1 className="text-3xl font-semibold">
                     Welcome {employeeName || 'Teacher'}!
                 </h1>
+
+                {/* Default Dashboard Content */}
+                {!location.pathname.includes("createTestComponent") &&
+                    !location.pathname.includes("manageAssessments") && (
+                        <div className="mt-4 text-gray-700">
+                            <p>
+                                Use the menu to manage your courses, assessments, and grades.
+                            </p>
+                        </div>
+                    )}
+
+                {/* Dynamic Content via Outlet */}
                 <div className="mt-4">
-                    {/* Render child components dynamically */}
                     <Outlet />
                 </div>
             </main>
