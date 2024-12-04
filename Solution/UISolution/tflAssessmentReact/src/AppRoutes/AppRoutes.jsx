@@ -8,7 +8,7 @@ import TestAppear from '../Assessment/Components/TestAppear';
 import ChangePassword from '../authentication/Components/ChangePassword';
 import CandidateTestList from '../CandidateResultDetails/Components/CandidateTestList';
 import TeacherDashboard from '../Dashboard/TeacherDashboard';
-import StudentDashboard from '../Dashboard/StudentDashboard';
+import StudentLayout from '../Dashboard/StudentLayout';
 import CreateTestComponent from '../Assessment/Components/CreateNewAssesment';
 import ManageQuestionsWithTest from '../Assessment/Components/InsertQuestionsByTest';
 import RescheduleAssessment from '../Assessment/Components/RescheduleAssesment';
@@ -18,22 +18,24 @@ import CandidatesList from '../CandidateResultDetails/Components/CandidatesByTes
 function AppRoutes() {
   return (
     <Routes>
+      {/* Non-nested routes */}
       <Route path="/" element={<Home />} />
       <Route path="/login" element={<Login />} />
       <Route path="/newuser" element={<NewUserForm />} />
-      <Route path="/profile" element={<CandidateProfile />} />
-      <Route path="/profile/testAppear" element={<TestAppear />} />
       <Route path="/changepassword" element={<ChangePassword />} />
       <Route path="/createTestComponent" element={<CreateTestComponent />} />
       <Route path="/insertQuestionsByTest" element={<ManageQuestionsWithTest />} />
-      <Route path="/candidatetestlist" element={<CandidateTestList />} />
-      <Route path="/teacher-dashboard" element={<TeacherDashboard />} />
-      <Route path="/student-dashboard" element={<StudentDashboard />} />
       <Route path="/rescheduleassessment" element={<RescheduleAssessment />} />
       <Route path="/changeduration" element={<ChangeDuration />} />
       <Route path="/testresultdetails" element={<CandidatesList />} />
 
+      <Route path="/teacher-dashboard" element={<TeacherDashboard />} />
 
+      <Route path="/student-dashboard" element={<StudentLayout />}>
+        <Route path="profile" element={<CandidateProfile />} />
+        <Route path="profile/testAppear" element={<TestAppear />} />
+        <Route path="candidatetestlist" element={<CandidateTestList />} />
+      </Route>
     </Routes>
   );
 }
