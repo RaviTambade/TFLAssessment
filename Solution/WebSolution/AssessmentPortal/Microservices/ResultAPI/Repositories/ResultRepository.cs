@@ -15,6 +15,7 @@ public class ResultRepository : IResultRepository
         _configuration = configuration;
         _connectionString = _configuration.GetConnectionString("DefaultConnection")  ?? throw new ArgumentNullException("connectionString");
     }
+    
     public async Task<int> GetCandidateScore(int candidateId, int testId)
     {
         string query = "spcandidatetestresult";
@@ -136,6 +137,7 @@ public class ResultRepository : IResultRepository
         }
         return score;
     }
+
      public async Task<CandidateResultDetails> CandidateTestResultDetails(int candidateId, int testId)
     {
         string query = "spcandidatetestresultdetails";
