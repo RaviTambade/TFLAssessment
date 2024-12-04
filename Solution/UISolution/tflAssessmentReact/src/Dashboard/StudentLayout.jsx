@@ -12,19 +12,19 @@ function StudentLayout() {
                 <h2 className="text-2xl font-bold mb-4">Student Dashboard</h2>
                 <nav className="space-y-4">
                     <Link 
-                        to="/profile" 
+                        to="profile" 
                         state={{ candidateId }} 
                         className="block py-2 px-4 rounded hover:bg-blue-700">
                         Candidate Profile
                     </Link>
                     <Link 
-                        to="/profile/testAppear" 
+                        to="profile/testAppear" 
                         state={{ candidateId }} 
                         className="block py-2 px-4 rounded hover:bg-blue-700">
                         Take Assessments
                     </Link>
                     <Link 
-                        to="/candidatetestlist" 
+                        to="candidatetestlist" 
                         state={{ candidateId }} 
                         className="block py-2 px-4 rounded hover:bg-blue-700">
                         View Assessment List
