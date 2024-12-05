@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import CandidateDetailsService from "../services/CandidateDetailsService";
 
-const CandidatesList = () => {
+const CandidatesByTest = () => {
   const { testId } = useParams(); // Fetch testId from the route
   const [candidates, setCandidates] = useState([]);
   const [error, setError] = useState(null);
@@ -55,4 +55,4 @@ const CandidatesList = () => {
   );
 };
 
-export default CandidatesList;
+export default CandidatesByTest;

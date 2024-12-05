@@ -21,17 +21,17 @@ import CreateTestComponent from '../Assessment/Components/CreateNewAssesment';
 import ManageQuestionsWithTest from '../Assessment/Components/InsertQuestionsByTest';
 import RescheduleAssessment from '../Assessment/Components/RescheduleAssesment';
 import ChangeDuration from '../Assessment/Components/ChangeDuration';
-// import CandidatesList from '../CandidateResultDetails/Components/CandidatesByTest';
 import AssessmentList from '../Assessment/Components/AssessmentList';
+import CandidatesByTest from '../CandidateResultDetails/Components/CandidatesByTest';
 
 function AppRoutes() {
   return (
     <Routes>
+      {/* Public Routes */}
       <Route path="/" element={<Home />} />
       <Route path="/login" element={<Login />} />
       <Route path="/newuser" element={<NewUserForm />} />
       <Route path="/changepassword" element={<ChangePassword />} />
-      
 
       {/* Student Layout and Nested Routes */}
       <Route path="/student" element={<StudentLayout />}>
@@ -48,7 +48,8 @@ function AppRoutes() {
         <Route path="changeDuration" element={<ChangeDuration />} />
         <Route path="assessmentlist" element={<AssessmentList />} />
 
-        {/* <Route path="testresultdetails" element={<CandidatesList />} /> */}
+        {/* New Route for CandidatesList */}
+        <Route path="assessmentlist/candidates/:testId" element={<CandidatesByTest />} />
       </Route>
     </Routes>
   );
