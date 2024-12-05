@@ -21,12 +21,12 @@ import CreateTestComponent from '../Assessment/Components/CreateNewAssesment';
 import ManageQuestionsWithTest from '../Assessment/Components/InsertQuestionsByTest';
 import RescheduleAssessment from '../Assessment/Components/RescheduleAssesment';
 import ChangeDuration from '../Assessment/Components/ChangeDuration';
-import CandidatesList from '../CandidateResultDetails/Components/CandidatesByTest';
+// import CandidatesList from '../CandidateResultDetails/Components/CandidatesByTest';
+import AssessmentList from '../Assessment/Components/AssessmentList';
 
 function AppRoutes() {
   return (
     <Routes>
-      {/* Non-nested routes */}
       <Route path="/" element={<Home />} />
       <Route path="/login" element={<Login />} />
       <Route path="/newuser" element={<NewUserForm />} />
@@ -46,7 +46,9 @@ function AppRoutes() {
         <Route path="insertQuestionsByTest" element={<ManageQuestionsWithTest />} />
         <Route path="rescheduleAssessment" element={<RescheduleAssessment />} />
         <Route path="changeDuration" element={<ChangeDuration />} />
-        <Route path="testresultdetails" element={<CandidatesList />} />
+        <Route path="assessmentlist" element={<AssessmentList />} />
+
+        {/* <Route path="testresultdetails" element={<CandidatesList />} /> */}
       </Route>
     </Routes>
   );

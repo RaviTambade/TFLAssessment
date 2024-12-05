@@ -50,7 +50,7 @@ function TeacherLayout() {
                   Change Duration
                 </Link>
                 <Link
-                  to="testresultdetails"
+                  to="assessmentlist"
                   className="block py-2 px-4 rounded hover:bg-gray-700"
                 >
                   Assessment List
