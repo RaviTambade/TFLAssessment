@@ -14,4 +14,5 @@ root.render(
       </NavbarProvider>
     </BrowserRouter>
   </React.StrictMode>
+  
 );
