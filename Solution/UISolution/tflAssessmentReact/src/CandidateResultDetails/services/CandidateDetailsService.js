@@ -1,4 +1,4 @@
-import { endpoints } from '../config/apiEndpoints';
+import { endpoints } from '../Config/apiEndpoints';
 
 class CandidateDetailsService {
   

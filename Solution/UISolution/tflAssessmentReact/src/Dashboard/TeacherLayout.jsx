@@ -53,7 +53,7 @@ function TeacherLayout() {
                   to="testresultdetails"
                   className="block py-2 px-4 rounded hover:bg-gray-700"
                 >
-                  View Candidates
+                  Assessment List
                 </Link>
               </div>
             )}
