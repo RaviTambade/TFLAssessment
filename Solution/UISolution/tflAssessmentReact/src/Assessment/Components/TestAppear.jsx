@@ -16,8 +16,6 @@ const TestAppear = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [timerId, setTimerId] = useState(null);
 
-  var time = {};
-
   // Timer logic
   useEffect(() => {
     if (testStarted && timeRemaining > 0) {
@@ -78,7 +76,8 @@ const TestAppear = () => {
   const handleNext = () => setCurrent((prev) => (prev < questions.length - 1 ? prev + 1 : prev));
   const handleLast = () => setCurrent(questions.length - 1);
 
-  var getCurrentDateTime = () => {
+  const getCurrentDateTime = () => {
+    let time = {}; // Define the 'time' object
     let d = new Date();
     time.month = d.getMonth();
     time.year = d.getFullYear();
@@ -88,8 +87,6 @@ const TestAppear = () => {
     time.seconds = d.getSeconds();
     return time;
   };
-
-
 
   const handleSubmit = async () => {
     try {
@@ -103,13 +100,11 @@ const TestAppear = () => {
       await TestService.submitAnswers(candidateId, finalCandidateAnswers);
       var endTime = getCurrentDateTime();
       await TestService.endTime(candidateId, testId, endTime);
-      setIsSubmitted(true); 
+      setIsSubmitted(true);
     } catch (error) {
       console.error("Error submitting answers:", error);
     }
   };
-
-
 
   const handleResult = async () => {
     try {
@@ -133,20 +128,11 @@ const TestAppear = () => {
 
   if (!testStarted) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-900">
+      <div className="flex items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-900 pt-10">
         <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-lg dark:bg-gray-800">
           <h3 className="text-3xl font-semibold text-center text-gray-900 dark:text-white">
             Transflower Learning Private Limited
           </h3>
-          {/* <div>
-            <label className="block text-gray-700 dark:text-gray-300">Candidate ID:</label>
-            <input
-              type="text"
-              value={candidateId}
-              onChange={(e) => setCandidateId(e.target.value)}
-              className="w-full px-4 py-2 mt-2 text-gray-700 bg-gray-100 border rounded-lg dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600 focus:outline-none"
-            />
-          </div> */}
           <div>
             <label className="block text-gray-700 dark:text-gray-300">Select Test:</label>
             <select
@@ -166,7 +152,7 @@ const TestAppear = () => {
           </div>
           <button
             onClick={handleStartTest}
-            className="w-full px-4 py-2 mt-4 font-semibold text-white bg-indigo-600 rounded-lg hover:bg-indigo-500 focus:outline-none"
+            className="w-full px-4 py-2 mt-4 font-semibold text-white bg-indigo-600 rounded-lg hover:bg-indigo-500 focus:outline-none transition duration-200 ease-in-out"
           >
             Start Test
           </button>
@@ -178,8 +164,8 @@ const TestAppear = () => {
   if (!questions.length) return <div className="text-center">Loading questions...</div>;
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-900 p-4">
-      <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-lg dark:bg-gray-800">
+    <div className="flex flex-col items-center justify-start min-h-screen bg-gray-100 dark:bg-gray-900 p-4 pt-6">
+      <div className="w-full max-w-4xl p-8 space-y-6 bg-white rounded-lg shadow-lg dark:bg-gray-800">
         <h3 className="text-3xl font-semibold text-center text-gray-900 dark:text-white">
           Transflower Learning Private Limited
         </h3>
@@ -222,56 +208,65 @@ const TestAppear = () => {
               <button
                 onClick={handleFirst}
                 disabled={current === 0}
-                className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-500 disabled:bg-gray-400"
+                className="px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-400 disabled:bg-gray-300 transition duration-200"
               >
                 First
               </button>
               <button
                 onClick={handlePrevious}
                 disabled={current === 0}
-                className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-500 disabled:bg-gray-400"
+                className="px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-400 disabled:bg-gray-300 transition duration-200"
               >
                 Previous
               </button>
               <button
                 onClick={handleNext}
                 disabled={current === questions.length - 1}
-                className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-500 disabled:bg-gray-400"
+                className="px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-400 disabled:bg-gray-300 transition duration-200"
               >
                 Next
               </button>
               <button
                 onClick={handleLast}
                 disabled={current === questions.length - 1}
-                className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-500 disabled:bg-gray-400"
+                className="px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-400 disabled:bg-gray-300 transition duration-200"
               >
                 Last
               </button>
             </>
           )}
         </div>
-        <div className="flex justify-between space-x-2 mt-4">
-          <button
-            onClick={handleSubmit}
-            disabled={isSubmitted} 
-            className={`px-4 py-2 ${isSubmitted ? "bg-gray-400" : "bg-green-600 hover:bg-green-500"
-              } text-white rounded-lg`}
-          >
-            Submit
-          </button>
-          <button
-            onClick={handleResult}
-            className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-500"
-          >
-            Show Result
-          </button>
+
+        <div className="mt-4 text-center">
+          {!isSubmitted ? (
+            <button
+              onClick={handleSubmit}
+              className="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-500 focus:outline-none transition duration-200"
+            >
+              Submit
+            </button>
+          ) : (
+            <div>
+              <h4 className="text-xl font-semibold text-gray-900 dark:text-white">Test Submitted!</h4>
+              {score !== null && (
+                <div className="mt-4 text-lg text-gray-900 dark:text-white">
+                  Score: {score} / {questions.length}
+                </div>
+              )}
+            </div>
+          )}
         </div>
 
-        {isSubmitted && score !== null && (
-          <div className="mt-4 text-center text-xl font-semibold">
-            Your Score is: {score}
-          </div>
-        )}
+        <div className="mt-4 text-center">
+          {isSubmitted && (
+            <button
+              onClick={handleResult}
+              className="px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-500 transition duration-200"
+            >
+              View Result
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );

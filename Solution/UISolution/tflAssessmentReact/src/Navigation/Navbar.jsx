@@ -3,8 +3,7 @@ import { Link } from 'react-router-dom';
 import { useNavbar } from './NavbarContext';
 
 function Navbar() {
-  const context = useNavbar();
-  const { navLinks } = context;
+  const { navLinks } = useNavbar();
 
   return (
     <nav className="bg-blue-500 p-4">
@@ -26,6 +25,5 @@ function Navbar() {
     </nav>
   );
 }
-
 
 export default Navbar;
