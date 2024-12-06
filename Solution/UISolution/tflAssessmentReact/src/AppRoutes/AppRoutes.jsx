@@ -49,8 +49,7 @@ function AppRoutes() {
         <Route path="assessmentlist" element={<AssessmentList />} />
 
         {/* New Route for CandidatesList */}
-        <Route path="assessmentlist/candidates/:testId" element={<CandidatesByTest />} />
-      </Route>
+        <Route path="/teacher/assessmentlist/candidates/:testId" element={<CandidatesByTest />} /></Route>
     </Routes>
   );
 }

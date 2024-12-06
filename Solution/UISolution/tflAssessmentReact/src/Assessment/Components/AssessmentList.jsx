@@ -3,67 +3,68 @@ import { Link } from "react-router-dom";
 import AssessmentService from "../Service/AssessmentService";
 
 const AssessmentList = () => {
-  const [assessments, setAssessment] = useState([]);
-  const [error, setError] = useState(null);
+    const [assessments, setAssessment] = useState([]);
+    const [error, setError] = useState(null);
 
-  useEffect(() => {
-    const fetchAssessments = async () => {
-      try {
-        const data = await AssessmentService.getAllAssessments();
-        setAssessment(data);
-      } catch (err) {
-        setError("Failed to fetch assessments");
-      }
-    };
+    useEffect(() => {
+        const fetchAssessments = async () => {
+            try {
+                const data = await AssessmentService.getAllAssessments();
+                setAssessment(data);
+            } catch (err) {
+                setError("Failed to fetch assessments");
+            }
+        };
 
-    fetchAssessments();
-  }, []);
+        fetchAssessments();
+    }, []);
 
-  if (error) return <p>{error}</p>;
+    if (error) return <p>{error}</p>;
 
-  return (
-    <>
-      <h1>Assessments</h1>
-      <table border="1" cellPadding="10" cellSpacing="0">
-        <thead>
-          <tr>
-            <th>Subject ID</th>
-            <th>Test Name</th>
-            <th>Subject Name</th>
-            <th>Status</th>
-            <th>SME ID</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Creation Date</th>
-            <th>Scheduled Date</th>
-          </tr>
-        </thead>
-        <tbody>
-          {assessments.map((assessment) => (
-            <tr key={assessment.id}>
-              <td>{assessment.subjectId}</td>
-              <td>
-                <Link to={`/candidates/${assessment.id}`}>
-                  {assessment.testName}
-                </Link>
-              </td>
-              <td>{assessment.subject}</td>
-              <td>{assessment.status}</td>
-              <td>{assessment.subjectExpertId}</td>
-              <td>{assessment.firstName}</td>
-              <td>{assessment.lastName}</td>
-              <td>
-                {new Date(assessment.creationDate).toLocaleDateString()}
-              </td>
-              <td>
-                {new Date(assessment.scheduledDate).toLocaleDateString()}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </>
-  );
+    return (
+        <>
+            <h1>Assessments</h1>
+            <table border="1" cellPadding="10" cellSpacing="0">
+                <thead>
+                    <tr>
+                        <th>Subject ID</th>
+                        <th>Test Name</th>
+                        <th>Subject Name</th>
+                        <th>Status</th>
+                        <th>SME ID</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Creation Date</th>
+                        <th>Scheduled Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {assessments.map((assessment) => (
+                        <tr key={assessment.id}>
+                            <td>{assessment.subjectId}</td>
+                            <td>
+                                <Link to={`/teacher/assessmentlist/candidates/${assessment.id}`}>
+                                    {assessment.testName}
+                                </Link>
+
+                            </td>
+                            <td>{assessment.subject}</td>
+                            <td>{assessment.status}</td>
+                            <td>{assessment.subjectExpertId}</td>
+                            <td>{assessment.firstName}</td>
+                            <td>{assessment.lastName}</td>
+                            <td>
+                                {new Date(assessment.creationDate).toLocaleDateString()}
+                            </td>
+                            <td>
+                                {new Date(assessment.scheduledDate).toLocaleDateString()}
+                            </td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+        </>
+    );
 };
 
 export default AssessmentList;

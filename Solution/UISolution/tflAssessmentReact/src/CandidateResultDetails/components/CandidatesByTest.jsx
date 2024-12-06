@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import CandidateDetailsService from "../services/CandidateDetailsService";
 
 const CandidatesByTest = () => {
-  const { testId } = useParams(); // Fetch testId from the route
+  const { testId } = useParams(); 
   const [candidates, setCandidates] = useState([]);
   const [error, setError] = useState(null);
 

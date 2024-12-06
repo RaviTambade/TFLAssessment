@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import CandidateDetailsService from "../Services/CandidateDetailsService";
+import CandidateService from "../services/CandidateDetailsService";
 
 const TestResultDetails = ({ testId }) => {
   const [testResults, setTestResults] = useState([]);
