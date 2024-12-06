@@ -94,7 +94,7 @@ const TestAppear = () => {
   const handleSubmit = async () => {
     try {
       if (timerId) {
-        clearInterval(timerId); // Stop the timer
+        clearInterval(timerId);
       }
       const finalCandidateAnswers = questions.map((question) => ({
         TestQuestionId: question.id,
@@ -103,8 +103,7 @@ const TestAppear = () => {
       await TestService.submitAnswers(candidateId, finalCandidateAnswers);
       var endTime = getCurrentDateTime();
       await TestService.endTime(candidateId, testId, endTime);
-      alert("Answers submitted successfully");
-      setIsSubmitted(true); // Mark test as submitted
+      setIsSubmitted(true); 
     } catch (error) {
       console.error("Error submitting answers:", error);
     }

@@ -21,11 +21,10 @@ const ChangeDuration = () => {
     fetchAssessments();
   }, []);
 
-  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setMessage(""); // Reset message on new submission
+    setMessage("");
 
     try {
       // Use the selected assessment ID and new duration to update the duration
