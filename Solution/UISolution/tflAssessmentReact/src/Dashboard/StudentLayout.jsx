@@ -25,7 +25,7 @@ function StudentLayout() {
             state={{ candidateId }}
             className="block py-2 px-4 rounded hover:bg-blue-700"
           >
-            Take Assessments
+            Start Assessment
           </Link>
           <Link
             to="candidatetestlist"

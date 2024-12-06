@@ -139,7 +139,7 @@ const TestAppear = () => {
           <h3 className="text-3xl font-semibold text-center text-gray-900 dark:text-white">
             Transflower Learning Private Limited
           </h3>
-          <div>
+          {/* <div>
             <label className="block text-gray-700 dark:text-gray-300">Candidate ID:</label>
             <input
               type="text"
@@ -147,7 +147,7 @@ const TestAppear = () => {
               onChange={(e) => setCandidateId(e.target.value)}
               className="w-full px-4 py-2 mt-2 text-gray-700 bg-gray-100 border rounded-lg dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600 focus:outline-none"
             />
-          </div>
+          </div> */}
           <div>
             <label className="block text-gray-700 dark:text-gray-300">Select Test:</label>
             <select
