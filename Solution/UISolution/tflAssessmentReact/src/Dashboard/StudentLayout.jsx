@@ -4,14 +4,14 @@ import { Link, Outlet, useLocation } from "react-router-dom";
 function StudentLayout() {
     const location = useLocation();
     const { employeeName = "Student", candidateId } = location.state || {};
-    
+
     // Check if we are on a route where the welcome message should be shown
     const showWelcomeMessage = location.pathname === "/student"; // Or other specific paths
 
     return (
-        <div className="flex h-screen bg-gray-50">
+        <div className="flex h-screen overflow-hidden bg-gray-50">
             {/* Sidebar */}
-            <aside className="w-64 bg-gray-800 text-white flex flex-col">
+            <aside className="w-64 bg-gray-800 text-white flex flex-col overflow-y-auto">
                 {/* Sidebar Header */}
                 <div className="py-6 text-center border-b border-gray-700">
                     <h2 className="text-2xl font-bold">Student Dashboard</h2>
@@ -44,7 +44,7 @@ function StudentLayout() {
             </aside>
 
             {/* Main Content */}
-            <main className="flex-1 p-8">
+            <main className="flex-1 p-8 overflow-y-auto">
                 {/* Page Header */}
                 <header className="mb-8">
                     {showWelcomeMessage && (
