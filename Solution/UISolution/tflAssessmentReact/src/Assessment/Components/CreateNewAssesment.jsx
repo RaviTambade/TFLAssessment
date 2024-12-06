@@ -26,8 +26,6 @@ const CreateTestComponent = () => {
         const assessmentData = await AssessmentService.getAllAssessments();
         setSubjects(subjectData);
         setAssessments(assessmentData);
-        console.log(subjectData);
-        console.log(assessmentData);
       } catch (error) {
         setErrorMessage('Failed to fetch dropdown data: ' + error.message);
       }

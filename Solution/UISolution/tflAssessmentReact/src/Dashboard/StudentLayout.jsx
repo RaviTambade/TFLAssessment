@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link, Outlet, useLocation } from 'react-router-dom';
 
-
 function StudentLayout() {
   const location = useLocation();
   const { employeeName = 'Student', candidateId } = location.state || {};
@@ -44,20 +43,6 @@ function StudentLayout() {
           Welcome {employeeName}!
         </h1>
 
-
-        {/* Default Dashboard Content */}
-        {!location.pathname.includes("profile") &&
-          !location.pathname.includes("candidatetestlist") &&
-          !location.pathname.includes("testAppear") && (
-            <div className="mt-4 text-gray-700">
-              <p>
-                Use the menu to access your courses, assessments, and grades.
-              </p>
-              <p className="mt-4">
-                Your Candidate ID is: {candidateId || 'Not Available'}
-              </p>
-            </div>
-          )}
 
         {/* Dynamic Content via Outlet */}
         <div className="mt-4">
