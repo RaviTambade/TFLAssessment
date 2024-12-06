@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import CandidateDetailsService from "../services/CandidateDetailsService";
 
 const CandidatesByTest = () => {
-  const { testId } = useParams(); 
+  const { testId } = useParams();
   const [candidates, setCandidates] = useState([]);
   const [error, setError] = useState(null);
 
@@ -27,6 +27,14 @@ const CandidatesByTest = () => {
 
   return (
     <div className="p-6 max-w-3xl mx-auto bg-white rounded-lg shadow-md">
+      {/* Back to Assessments Link */}
+      <Link
+        to="/teacher/assessmentlist"
+        className="text-blue-500 hover:underline mb-4 block"
+      >
+        &larr; Back to Assessments
+      </Link>
+
       <h2 className="text-2xl font-bold mb-4 text-center text-gray-800">
         Candidates for Test ID: {testId}
       </h2>

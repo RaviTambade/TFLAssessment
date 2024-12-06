@@ -20,9 +20,11 @@ const AssessmentList = () => {
     }, []);
 
     if (error) return <p>{error}</p>;
+    
 
     return (
         <>
+       
             <h1>Assessments</h1>
             <table border="1" cellPadding="10" cellSpacing="0">
                 <thead>

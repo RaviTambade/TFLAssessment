@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import AssessmentService from '../Service/AssessmentService';
 
 const CreateTestComponent = () => {
@@ -13,9 +13,28 @@ const CreateTestComponent = () => {
     PassingLevel: ''
   });
 
+  const [subjects, setSubjects] = useState([]);
+  const [assessments, setAssessments] = useState([]);
   const [errorMessage, setErrorMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  useEffect(() => {
+    const fetchDropdownData = async () => {
+      try {
+        const subjectData = await AssessmentService.getAllSubjects();
+        const assessmentData = await AssessmentService.getAllAssessments();
+        setSubjects(subjectData);
+        setAssessments(assessmentData);
+        console.log(subjectData);
+        console.log(assessmentData);
+      } catch (error) {
+        setErrorMessage('Failed to fetch dropdown data: ' + error.message);
+      }
+    };
+
+    fetchDropdownData();
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -33,7 +52,7 @@ const CreateTestComponent = () => {
 
     // Basic validation for dates
     if (new Date(testDetails.ScheduledDate) < new Date(testDetails.CreationDate)) {
-      setErrorMessage("Scheduled date cannot be before creation date.");
+      setErrorMessage('Scheduled date cannot be before creation date.');
       setIsSubmitting(false);
       return;
     }
@@ -41,7 +60,7 @@ const CreateTestComponent = () => {
     try {
       const result = await AssessmentService.createTest(testDetails);
       if (result) {
-        setSuccessMessage("Test created successfully!");
+        setSuccessMessage('Test created successfully!');
         setTestDetails({
           Name: '',
           SubjectId: '',
@@ -53,10 +72,10 @@ const CreateTestComponent = () => {
           PassingLevel: ''
         });
       } else {
-        setErrorMessage("Test creation failed.");
+        setErrorMessage('Test creation failed.');
       }
     } catch (error) {
-      setErrorMessage("Error creating test: " + error.message);
+      setErrorMessage('Error creating test: ' + error.message);
     } finally {
       setIsSubmitting(false);
     }
@@ -66,36 +85,56 @@ const CreateTestComponent = () => {
     <div className="flex items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-900">
       <form
         onSubmit={handleSubmit}
-        className="w-full max-w-lg p-8 space-y-6 bg-white rounded-lg shadow-lg dark:bg-gray-800"
+        className="grid grid-cols-2 gap-4 w-full max-w-4xl p-8 space-y-4 bg-white rounded-lg shadow-lg dark:bg-gray-800"
       >
-        <h1 className="text-3xl font-semibold text-center text-gray-900 dark:text-white">
+        <h1 className="col-span-2 text-3xl font-semibold text-center text-gray-900 dark:text-white">
           Create Test
         </h1>
-        <hr className="my-4" />
+        <hr className="col-span-2" />
 
+        {/* Test Name Dropdown */}
         <div>
           <label className="block text-gray-700 dark:text-gray-300">Test Name:</label>
-          <input
-            type="text"
+          <select
             name="Name"
             value={testDetails.Name}
             onChange={handleChange}
             required
             className="w-full px-4 py-2 mt-2 text-gray-700 bg-gray-100 border rounded-lg dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-          />
+          >
+            <option value="" disabled>
+              Select Test Name
+            </option>
+            {assessments.map((assessment) => (
+              <option key={assessment.id} value={assessment.name}>
+                {assessment.testName}
+              </option>
+            ))}
+          </select>
         </div>
+
+        {/* Subject Name Dropdown */}
         <div>
-          <label className="block text-gray-700 dark:text-gray-300">Subject ID:</label>
-          <input
-            type="text"
+          <label className="block text-gray-700 dark:text-gray-300">Subject Name:</label>
+          <select
             name="SubjectId"
             value={testDetails.SubjectId}
             onChange={handleChange}
             required
             className="w-full px-4 py-2 mt-2 text-gray-700 bg-gray-100 border rounded-lg dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-          />
+          >
+            <option value="" disabled>
+              Select Subject Name
+            </option>
+            {subjects.map((subject) => (
+              <option key={subject.id} value={subject.id}>
+                {subject.title}
+              </option>
+            ))}
+          </select>
         </div>
 
+        {/* Duration */}
         <div>
           <label className="block text-gray-700 dark:text-gray-300">Duration (HH:mm:ss):</label>
           <input
@@ -109,6 +148,7 @@ const CreateTestComponent = () => {
           />
         </div>
 
+        {/* Subject Expert ID */}
         <div>
           <label className="block text-gray-700 dark:text-gray-300">Subject Expert ID:</label>
           <input
@@ -121,6 +161,7 @@ const CreateTestComponent = () => {
           />
         </div>
 
+        {/* Dates */}
         <div>
           <label className="block text-gray-700 dark:text-gray-300">Creation Date:</label>
           <input
@@ -169,16 +210,22 @@ const CreateTestComponent = () => {
           />
         </div>
 
-        {errorMessage && <p className="text-red-600">{errorMessage}</p>}
-        {successMessage && <p className="text-green-600">{successMessage}</p>}
+        {/* Messages */}
+        <div className="col-span-2">
+          {errorMessage && <p className="text-red-600">{errorMessage}</p>}
+          {successMessage && <p className="text-green-600">{successMessage}</p>}
+        </div>
 
-        <button
-          type="submit"
-          disabled={isSubmitting}
-          className="w-full px-4 py-2 font-semibold text-white bg-indigo-600 rounded-lg hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-opacity-75"
-        >
-          {isSubmitting ? 'Submitting...' : 'Create Test'}
-        </button>
+        {/* Submit Button */}
+        <div className="col-span-2">
+          <button
+            type="submit"
+            disabled={isSubmitting}
+            className="w-full px-4 py-2 font-semibold text-white bg-indigo-600 rounded-lg hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-opacity-75"
+          >
+            {isSubmitting ? 'Submitting...' : 'Create Test'}
+          </button>
+        </div>
       </form>
     </div>
   );
