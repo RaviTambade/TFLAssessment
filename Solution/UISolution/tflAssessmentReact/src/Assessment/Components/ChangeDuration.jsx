@@ -1,11 +1,25 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import AssessmentService from "../Service/AssessmentService";
 
 const ChangeDuration = () => {
-  const [assessmentId, setAssessmentId] = useState("");
-  const [duration, setDuration] = useState("");
-  const [message, setMessage] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [assessments, setAssessments] = useState([]);
+  const [selectedTest, setSelectedTest] = useState(""); 
+  const [duration, setDuration] = useState(""); 
+  const [message, setMessage] = useState(""); 
+  const [loading, setLoading] = useState(false); 
+
+  useEffect(() => {
+    const fetchAssessments = async () => {
+      try {
+        const result = await AssessmentService.getAllAssessments(); 
+        setAssessments(result);
+      } catch (error) {
+        setMessage("Failed to fetch assessments.");
+      }
+    };
+
+    fetchAssessments();
+  }, []);
 
   // Handle form submission
   const handleSubmit = async (e) => {
@@ -14,7 +28,8 @@ const ChangeDuration = () => {
     setMessage(""); // Reset message on new submission
 
     try {
-      const result = await AssessmentService.changeDuration(assessmentId, duration);
+      // Use the selected assessment ID and new duration to update the duration
+      const result = await AssessmentService.changeDuration(selectedTest, duration);
       if (result) {
         setMessage("Duration changed successfully.");
       } else {
@@ -33,15 +48,20 @@ const ChangeDuration = () => {
       
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label className="block text-gray-700 font-medium mb-2">Assessment ID:</label>
-          <input
-            type="text"
-            value={assessmentId}
-            onChange={(e) => setAssessmentId(e.target.value)}
+          <label className="block text-gray-700 font-medium mb-2">Select Test:</label>
+          <select
+            value={selectedTest}
+            onChange={(e) => setSelectedTest(e.target.value)}
             required
             className="w-full p-3 border border-gray-300 rounded-md"
-            placeholder="Enter Assessment ID"
-          />
+          >
+            <option value="">Select a Test</option>
+            {assessments.map((assessment) => (
+              <option key={assessment.id} value={assessment.id}>
+                {assessment.testName} 
+              </option>
+            ))}
+          </select>
         </div>
         
         <div>

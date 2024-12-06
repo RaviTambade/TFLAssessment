@@ -1,17 +1,31 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import AssessmentService from "../Service/AssessmentService";
 
 const RescheduleAssessment = () => {
-    const [assessmentId, setAssessmentId] = useState("");
+    const [assessments, setAssessments] = useState([]); 
+    const [selectedAssessment, setSelectedAssessment] = useState(""); 
     const [scheduledDate, setScheduledDate] = useState("");
-    const [message, setMessage] = useState("");
+    const [message, setMessage] = useState(""); 
+
+    useEffect(() => {
+        const fetchAssessments = async () => {
+            try {
+                const result = await AssessmentService.getAllAssessments();
+                setAssessments(result); 
+            } catch (error) {
+                setMessage("Failed to fetch assessments.");
+            }
+        };
+
+        fetchAssessments();
+    }, []);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         try {
             const formattedDate = new Date(scheduledDate).toISOString().split("T")[0];
-            await AssessmentService.rescheduleAssessment(assessmentId, scheduledDate);
+            await AssessmentService.rescheduleAssessment(selectedAssessment, scheduledDate);
             setMessage("Assessment rescheduled successfully.");
         } catch (error) {
             setMessage(error.message || "Failed to reschedule assessment.");
@@ -29,17 +43,22 @@ const RescheduleAssessment = () => {
                         htmlFor="assessmentId"
                         className="block text-sm font-medium text-gray-600"
                     >
-                        Assessment ID
+                        Select Assessment
                     </label>
-                    <input
+                    <select
                         id="assessmentId"
-                        type="text"
-                        value={assessmentId}
-                        onChange={(e) => setAssessmentId(e.target.value)}
+                        value={selectedAssessment}
+                        onChange={(e) => setSelectedAssessment(e.target.value)}
                         className="w-full mt-1 p-2 border rounded-md focus:ring focus:ring-blue-300"
-                        placeholder="Enter Assessment ID"
                         required
-                    />
+                    >
+                        <option value="">Select an Assessment</option>
+                        {assessments.map((assessment) => (
+                            <option key={assessment.id} value={assessment.id}>
+                                {assessment.testName} 
+                            </option>
+                        ))}
+                    </select>
                 </div>
                 <div>
                     <label
