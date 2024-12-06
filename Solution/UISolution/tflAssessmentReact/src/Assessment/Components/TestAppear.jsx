@@ -22,7 +22,7 @@ const TestAppear = () => {
       const id = setInterval(() => {
         setTimeRemaining((prev) => prev - 1);
       }, 1000);
-      setTimerId(id); // Store the timer ID
+      setTimerId(id); 
       return () => clearInterval(id);
     }
     if (timeRemaining === 0) {
@@ -77,7 +77,7 @@ const TestAppear = () => {
   const handleLast = () => setCurrent(questions.length - 1);
 
   const getCurrentDateTime = () => {
-    let time = {}; // Define the 'time' object
+    let time = {};
     let d = new Date();
     time.month = d.getMonth();
     time.year = d.getFullYear();
@@ -128,7 +128,7 @@ const TestAppear = () => {
 
   if (!testStarted) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-900 pt-10">
+      <div className="flex items-start justify-center bg-gray-100 dark:bg-gray-900 pt-6">
         <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-lg dark:bg-gray-800">
           <h3 className="text-3xl font-semibold text-center text-gray-900 dark:text-white">
             Transflower Learning Private Limited
@@ -158,7 +158,7 @@ const TestAppear = () => {
           </button>
         </div>
       </div>
-    );
+    );    
   }
 
   if (!questions.length) return <div className="text-center">Loading questions...</div>;
