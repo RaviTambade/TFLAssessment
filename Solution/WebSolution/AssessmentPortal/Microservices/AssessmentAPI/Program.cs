@@ -3,11 +3,12 @@ using Transflower.TFLAssessment.Repositories.Interfaces;
 using Transflower.TFLAssessment.Repositories;
 using Transflower.TFLAssessment.Services.Interfaces;
 using Transflower.TFLAssessment.Services;
-
-
+using Microsoft.EntityFrameworkCore; 
+using Pomelo.EntityFrameworkCore.MySql.Infrastructure; 
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Configure Logging
 builder.Host.ConfigureLogging(logging =>
 {
     logging.ClearProviders();
@@ -15,41 +16,48 @@ builder.Host.ConfigureLogging(logging =>
     logging.AddFile("logs/catalog-{Date}.json", isJson: true);
 });
 
-
-//Service configuration
-
+// Service Configuration
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddCors();
 builder.Services.AddControllersWithViews();
+builder.Services.AddControllers();
 builder.Services.AddRazorPages();
 
-builder.Services.AddControllers();
-//builder.Services.AddScoped<IAssessmentRepository, AssessmentRepository>();
-builder.Services.AddScoped<IAssessmentRepository, AssessmentDapperRepository>();
+// Dependency Injection Configuration
+// builder.Services.AddScoped<IAssessmentRepository, AssessmentRepository>();
+// builder.Services.AddScoped<IAssessmentRepository, AssessmentDapperRepository>();
 builder.Services.AddScoped<IAssessmentService, AssessmentService>();
-builder.Services.AddDbContext<AssessmentDbContext>(options => 
-options.UseMysql(builder.Configuration.GetConnectionString("DefaultConnection"),new MysqlServerVersion(new Version (8,0,32))));
+builder.Services.AddScoped<IAssessmentRepository, AssessmentEFRepository>();
+
+// Configure MySQL Database Context
+builder.Services.AddDbContext<AssessmentDbContext>(options =>
+    options.UseMySql(
+        builder.Configuration.GetConnectionString("DefaultConnection"),
+        new MySqlServerVersion(new Version(8, 0, 32)) // Ensure MySQL version matches your setup
+    )
+);
 
 var app = builder.Build();
 
-//ASP.NET middleware configuration
+// Middleware Configuration
 app.UseCors(options => options.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
 app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthorization();
 
-//Controller Route mapping
+// Route Mapping
 app.UseEndpoints(endpoints =>
 {
-        endpoints.MapControllerRoute(
+    endpoints.MapControllerRoute(
         name: "default",
-        pattern: "{controller=Home}/{action=Index}/{id?}");
-        endpoints.MapRazorPages();
-        endpoints.MapControllers(); // Map Minimal Web API endpoints
+        pattern: "{controller=Home}/{action=Index}/{id?}"
+    );
+    endpoints.MapRazorPages();
+    endpoints.MapControllers(); // Map API controllers
 });
 
-//Middleware Pipeline
+// Development-Specific Middleware
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -57,5 +65,4 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
- 
 app.Run();

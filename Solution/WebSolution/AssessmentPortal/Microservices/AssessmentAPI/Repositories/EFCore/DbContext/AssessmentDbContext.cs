@@ -1,25 +1,14 @@
 using Microsoft.EntityFrameworkCore;
+using Transflower.TFLAssessment.Entities;
 
 namespace Transflower.TFLAssessment.Repositories
 {
-    public class AssessmentDbContext : AssessmentDbContext
+    public class AssessmentDbContext : DbContext
     {
-    public AssessmentDbContext(DbContextOptions<AssessmentDbContext> options):base (options)
-    {
-
-    }
-    public DbSet<Tests> Tests {get; set;}
-    public DbSet<Employees> Employees {get; set;}
-    public DbSet<Subjects> Subjects {get; set;}
-
-      protected override void OnModelCreating(ModelBuilder modelBuilder)
+        public AssessmentDbContext(DbContextOptions<AssessmentDbContext> options) : base(options)
         {
-            base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<Tests>()
-            .HasOne(t => t.Employees)
-            .WithMany()
-            .HasForeignKey(t => t.SmeId);
         }
 
+        public DbSet<Employee> Employees { get; set; }
     }
 }

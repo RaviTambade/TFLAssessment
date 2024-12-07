@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Transflower.TFLAssessment.Entities;
@@ -14,23 +15,9 @@ namespace Transflower.TFLAssessment.Repositories
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-        public async Task<Assessment> GetDetails(int assessmentId)
+        public async Task<List<Employee>> GetAllEmployees()
         {
-            return await _context.Tests
-                .Where(t => t.Id == assessmentId)
-                .Select(t => new Assessment
-                {
-                    Id = t.Id,
-                    TestName = t.Name,
-                    SubjectExpertId = t.Smeid,
-                    SubjectId = t.SubjectId,
-                    ScheduledDate = t.ScheduledDate,
-                    Status = t.Status,
-                    PassingLevel = t.PassingLevel,
-                    FirstName = t.Employee.FirstName,
-                    LastName = t.Employee.LastName
-                })
-                .FirstOrDefaultAsync();
+            return await _context.Employees.ToListAsync();
         }
     }
 }
