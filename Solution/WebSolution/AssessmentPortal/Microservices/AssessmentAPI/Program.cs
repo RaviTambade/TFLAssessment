@@ -28,6 +28,8 @@ builder.Services.AddControllers();
 //builder.Services.AddScoped<IAssessmentRepository, AssessmentRepository>();
 builder.Services.AddScoped<IAssessmentRepository, AssessmentDapperRepository>();
 builder.Services.AddScoped<IAssessmentService, AssessmentService>();
+builder.Services.AddDbContext<AssessmentDbContext>(options => 
+options.UseMysql(builder.Configuration.GetConnectionString("DefaultConnection"),new MysqlServerVersion(new Version (8,0,32))));
 
 var app = builder.Build();
 

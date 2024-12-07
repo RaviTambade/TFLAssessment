@@ -19,6 +19,26 @@ public class AssessmentDapperRepository :IAssessmentRepository
          SqlMapper.AddTypeHandler(new SqlTimeOnlyTypeHandler());
     }
 
+   public async Task <Assessment> GetDetails(int assessmentId) 
+    {
+            await Task.Delay(100);
+            Assessment assessment=new Assessment();   
+            string query = 
+                @"SELECT t.id,t.name AS TestName, t.smeid AS subjectExpertId, t.subjectid AS subjectId, t.creationdate AS creationDate,t.modificationdate AS modificationDate,
+                t.scheduleddate AS scheduledDate,t.status,t.passinglevel,e.firstName, e.lastName
+                FROM   tests t
+                LEFT JOIN employees e ON t.smeid = e.id 
+                WHERE t.id = @AssessmentId;";
+            using (IDbConnection con = new MySqlConnection(_connectionString))
+            {
+                assessment= con.QuerySingleOrDefault<Assessment>(query, new {assessmentId}) ;
+                TimeOnly time  = assessment.Duration;
+                Console.WriteLine(time);
+                               
+            }
+            return assessment;
+    }
+    
 public async Task<bool> CreateTest(CreateTestRequest request)
 {
     // Simulate async delay for demo purposes
@@ -60,27 +80,6 @@ public async Task<bool> CreateTest(CreateTestRequest request)
     return status;
 }
 
-
-
-    public async Task <Assessment> GetDetails(int assessmentId) 
-    {
-            await Task.Delay(100);
-            Assessment assessment=new Assessment();   
-            string query = 
-                @"SELECT t.id,t.name AS TestName, t.smeid AS subjectExpertId, t.subjectid AS subjectId, t.creationdate AS creationDate,t.modificationdate AS modificationDate,
-                t.scheduleddate AS scheduledDate,t.status,t.passinglevel,e.firstName, e.lastName
-                FROM   tests t
-                LEFT JOIN employees e ON t.smeid = e.id 
-                WHERE t.id = @AssessmentId;";
-            using (IDbConnection con = new MySqlConnection(_connectionString))
-            {
-                assessment= con.QuerySingleOrDefault<Assessment>(query, new {assessmentId}) ;
-                TimeOnly time  = assessment.Duration;
-                Console.WriteLine(time);
-                               
-            }
-            return assessment;
-    }
 
     public async Task<List<Assessment>> GetAll(DateTime fromDate, DateTime toDate) 
     {
