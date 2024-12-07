@@ -19,5 +19,11 @@ namespace Transflower.TFLAssessment.Repositories
         {
             return await _context.Employees.ToListAsync();
         }
+
+      public async Task<Employee> GetEmployeeById(int userId)
+    {
+        var employee = await _context.Employees.FirstOrDefaultAsync(e => e.UserId == userId);
+        return employee;
+    }
     }
 }

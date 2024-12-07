@@ -57,14 +57,14 @@ public class AssessmentController : ControllerBase
         return Ok(employees);
     }
 
-//      //http://localhost:5151/api/assessment/employee/{userId}
-//     [HttpGet("employee/{userId}")]
-//     public async Task<IActionResult>  GetEmployeeById(int userId)
-//     {
-//         Employee employee =await _svc.GetEmployeeById(userId);
-//         _logger.LogInformation("Get all employee method invoked at  {DT}", DateTime.UtcNow.ToLongTimeString());
-//         return Ok(employee);
-//     }
+     //http://localhost:5151/api/assessment/employee/{userId}
+    [HttpGet("employee/{userId}")]
+    public async Task<IActionResult>  GetEmployeeById(int userId)
+    {
+        Employee employee =await _svc.GetEmployeeById(userId);
+        _logger.LogInformation("Get all employee method invoked at  {DT}", DateTime.UtcNow.ToLongTimeString());
+        return Ok(employee);
+    }
   
 //     //http://localhost:5151/api/assessment/subjects
 //     [HttpGet("subjects")]

@@ -10,7 +10,7 @@ public interface IAssessmentRepository
   
   public Task <List<Employee>> GetAllEmployees();
 
-  // public Task<Employee> GetEmployeeById(int userId);
+  public Task<Employee> GetEmployeeById(int userId);
 
   // public Task <List<Subject>> GetAllSubjects();
 
