@@ -12,7 +12,7 @@ public interface IAssessmentRepository
 
   public Task<Employee> GetEmployeeById(int userId);
 
-  // public Task <List<Subject>> GetAllSubjects();
+  public Task <List<Subject>> GetAllSubjects();
 
   // public Task <List<EvaluationCriteria>> GetEvalutionCriterias();
 

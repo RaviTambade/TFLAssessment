@@ -10,5 +10,8 @@ namespace Transflower.TFLAssessment.Repositories
         }
 
         public DbSet<Employee> Employees { get; set; }
+        public DbSet<Subject> Subjects { get; set; }
+
+
     }
 }

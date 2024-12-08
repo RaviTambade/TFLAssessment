@@ -20,10 +20,17 @@ namespace Transflower.TFLAssessment.Repositories
             return await _context.Employees.ToListAsync();
         }
 
-      public async Task<Employee> GetEmployeeById(int userId)
-    {
-        var employee = await _context.Employees.FirstOrDefaultAsync(e => e.UserId == userId);
-        return employee;
-    }
+        public async Task<Employee> GetEmployeeById(int userId)
+        {
+            var employee = await _context.Employees.FirstOrDefaultAsync(e => e.UserId == userId);
+            return employee;
+        }
+
+        public async Task<List<Subject>> GetAllSubjects()
+        {
+            var subjects = await _context.Subjects.ToListAsync();
+            return subjects;
+        }
+
     }
 }

@@ -39,10 +39,10 @@ public class AssessmentService : IAssessmentService
       return await _repository.GetEmployeeById(userId);
    }
 
-//    public async Task<List<Subject>> GetAllSubjects()
-//    {
-//       return await _repository.GetAllSubjects();
-//    }
+   public async Task<List<Subject>> GetAllSubjects()
+   {
+      return await _repository.GetAllSubjects();
+   }
 
 //    public async Task<List<EvaluationCriteria>> GetEvalutionCriterias()
 //    {

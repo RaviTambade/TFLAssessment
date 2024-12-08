@@ -66,14 +66,14 @@ public class AssessmentController : ControllerBase
         return Ok(employee);
     }
   
-//     //http://localhost:5151/api/assessment/subjects
-//     [HttpGet("subjects")]
-//     public async Task<IActionResult>  GetAllSubjects()
-//     {
-//         List<Subject> subjects =await _svc.GetAllSubjects();
-//         _logger.LogInformation("Get all subject method invoked at  {DT}", DateTime.UtcNow.ToLongTimeString());
-//         return Ok(subjects);
-//     }
+    //http://localhost:5151/api/assessment/subjects
+    [HttpGet("subjects")]
+    public async Task<IActionResult>  GetAllSubjects()
+    {
+        List<Subject> subjects =await _svc.GetAllSubjects();
+        _logger.LogInformation("Get all subject method invoked at  {DT}", DateTime.UtcNow.ToLongTimeString());
+        return Ok(subjects);
+    }
 
 
 //     //http://localhost:5151/api/assessment/criterias
