@@ -32,5 +32,13 @@ namespace Transflower.TFLAssessment.Repositories
             return subjects;
         }
 
+        public async Task<List<EvaluationCriteria>> GetEvalutionCriterias()
+        {
+            var criterias = await _context.EvaluationCriterias.ToListAsync();
+            return criterias;
+        }
+        
+     
+
     }
 }

@@ -44,15 +44,15 @@ public class AssessmentService : IAssessmentService
       return await _repository.GetAllSubjects();
    }
 
-//    public async Task<List<EvaluationCriteria>> GetEvalutionCriterias()
-//    {
-//       return await _repository.GetEvalutionCriterias();
-//    }
+   public async Task<List<EvaluationCriteria>> GetEvalutionCriterias()
+   {
+      return await _repository.GetEvalutionCriterias();
+   }
 
-//    public async Task<List<EvaluationCriteria>> GetEvalutionCriteriasBySubject(int subjectId)
-//    {
-//       return await _repository.GetEvalutionCriteriasBySubject(subjectId);
-//    }
+   // public async Task<List<EvaluationCriteria>> GetEvalutionCriteriasBySubject(int subjectId)
+   // {
+   //    return await _repository.GetEvalutionCriteriasBySubject(subjectId);
+   // }
 
 //    public async Task<bool> CreateTest(CreateTestRequest request)
 //    {

@@ -76,23 +76,23 @@ public class AssessmentController : ControllerBase
     }
 
 
-//     //http://localhost:5151/api/assessment/criterias
-//     [HttpGet("criterias")]
-//     public async Task<IActionResult>  GetEvalutionCriterias()
-//     {
-//         List<EvaluationCriteria> criterias =await _svc.GetEvalutionCriterias();
-//          _logger.LogInformation("Get evaluation criteria method invoked at  {DT}", DateTime.UtcNow.ToLongTimeString());
-//         return Ok(criterias);
-//     }
+    //http://localhost:5151/api/assessment/criterias
+    [HttpGet("criterias")]
+    public async Task<IActionResult>  GetEvalutionCriterias()
+    {
+        List<EvaluationCriteria> criterias =await _svc.GetEvalutionCriterias();
+         _logger.LogInformation("Get evaluation criteria method invoked at  {DT}", DateTime.UtcNow.ToLongTimeString());
+        return Ok(criterias);
+    }
 
-//     //http://localhost:5151/api/assessment/criterias/subjects/1
-//     [HttpGet("criterias/subjects/{subjectId}")]
-//     public async Task<IActionResult>  GetEvalutionCriteriasBySubject(int subjectId)
-//     {
-//         List<EvaluationCriteria> criterias =await _svc.GetEvalutionCriteriasBySubject(subjectId);
-//          _logger.LogInformation("Get  evaluation criteria by subject method invoked at  {DT}", DateTime.UtcNow.ToLongTimeString());
-//         return Ok(criterias);
-//     }
+    // //http://localhost:5151/api/assessment/criterias/subjects/1
+    // [HttpGet("criterias/subjects/{subjectId}")]
+    // public async Task<IActionResult>  GetEvalutionCriteriasBySubject(int subjectId)
+    // {
+    //     List<EvaluationCriteria> criterias =await _svc.GetEvalutionCriteriasBySubject(subjectId);
+    //      _logger.LogInformation("Get  evaluation criteria by subject method invoked at  {DT}", DateTime.UtcNow.ToLongTimeString());
+    //     return Ok(criterias);
+    // }
 
  
 

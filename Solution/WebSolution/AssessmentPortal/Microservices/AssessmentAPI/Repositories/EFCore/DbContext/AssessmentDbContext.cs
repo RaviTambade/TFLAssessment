@@ -11,5 +11,7 @@ namespace Transflower.TFLAssessment.Repositories
 
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Subject> Subjects { get; set; }
+        public DbSet<EvaluationCriteria> EvaluationCriterias { get; set; }
+
     }
 }

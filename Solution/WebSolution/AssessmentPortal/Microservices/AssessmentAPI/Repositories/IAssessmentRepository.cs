@@ -14,7 +14,7 @@ public interface IAssessmentRepository
 
   public Task <List<Subject>> GetAllSubjects();
 
-  // public Task <List<EvaluationCriteria>> GetEvalutionCriterias();
+  public Task <List<EvaluationCriteria>> GetEvalutionCriterias();
 
   // public Task <List<EvaluationCriteria>> GetEvalutionCriteriasBySubject(int subjectId);
 
