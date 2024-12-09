@@ -20,7 +20,7 @@ public class AssessmentController : ControllerBase
        _logger = logger;
 
     }
-    //    //http://localhost:5151/api/assessment/1
+    ////http://localhost:5151/api/assessment/1
     // [HttpGet("{id}")]
     // public async Task<IActionResult>  GetDetails(int id)
     // {

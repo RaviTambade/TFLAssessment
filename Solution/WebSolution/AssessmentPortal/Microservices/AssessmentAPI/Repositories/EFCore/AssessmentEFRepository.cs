@@ -38,7 +38,5 @@ namespace Transflower.TFLAssessment.Repositories
             return criterias;
         }
         
-     
-
     }
 }
