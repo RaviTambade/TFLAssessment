@@ -8,12 +8,12 @@ using Transflower.TFLAssessment.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add EF Core and Database Connection
+
 builder.Services.AddDbContext<TFLAssessmentDbContext>(options =>
     options.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"),
         new MySqlServerVersion(new Version(8, 0, 30))));
 
-// Service configuration
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddCors();
@@ -31,20 +31,18 @@ builder.Services.AddScoped<IInterviewService, InterviewService>();
 
 var app = builder.Build();
 
-// Middleware Pipeline Configuration
 app.UseCors(options => options.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
 app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthorization();
 
-// ASP.NET Middleware for Routing and Swagger
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllerRoute(
         name: "default",
         pattern: "{controller=Home}/{action=Index}/{id?}");
     endpoints.MapRazorPages();
-    endpoints.MapControllers(); // Map Web API endpoints
+    endpoints.MapControllers();
 });
 
 if (app.Environment.IsDevelopment())
