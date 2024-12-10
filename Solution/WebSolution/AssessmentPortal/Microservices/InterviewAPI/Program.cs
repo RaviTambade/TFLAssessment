@@ -11,7 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add EF Core and Database Connection
 builder.Services.AddDbContext<TFLAssessmentDbContext>(options =>
     options.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"),
-        new MySqlServerVersion(new Version(8, 0, 30)))); // Adjust MySQL version as needed
+        new MySqlServerVersion(new Version(8, 0, 30))));
 
 // Service configuration
 builder.Services.AddEndpointsApiExplorer();

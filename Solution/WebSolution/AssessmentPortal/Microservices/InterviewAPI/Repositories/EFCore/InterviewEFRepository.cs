@@ -64,6 +64,7 @@ namespace Transflower.TFLAssessment.Repositories
                 .FirstOrDefaultAsync();
         }
 
+
         public async Task<bool> RescheduleInterview(int interviewId, DateTime date)
         {
             var interview = await _context.Interviews.FindAsync(interviewId);
@@ -74,6 +75,7 @@ namespace Transflower.TFLAssessment.Repositories
             return true;
         }
 
+
         public async Task<bool> RescheduleInterview(int interviewId, string time)
         {
             var interview = await _context.Interviews.FindAsync(interviewId);
@@ -83,6 +85,7 @@ namespace Transflower.TFLAssessment.Repositories
             await _context.SaveChangesAsync();
             return true;
         }
+
 
         public async Task<bool> RescheduleInterview(int interviewId, string time, DateTime date)
         {
@@ -95,6 +98,7 @@ namespace Transflower.TFLAssessment.Repositories
             return true;
         }
 
+
         public async Task<bool> ChangeInterviewer(int interviewId, int smeId)
         {
             var interview = await _context.Interviews.FindAsync(interviewId);
@@ -104,6 +108,7 @@ namespace Transflower.TFLAssessment.Repositories
             await _context.SaveChangesAsync();
             return true;
         }
+        
 
         public async Task<bool> CancelInterview(int interviewId)
         {
