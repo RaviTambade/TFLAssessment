@@ -1,3 +1,6 @@
+using Transflower.TFLAssessment.Entities;
+using Microsoft.EntityFrameworkCore;
+
 namespace Transflower.TFLAssessment.Data
 {
     public class TFLAssessmentDbContext : DbContext
@@ -9,7 +12,6 @@ namespace Transflower.TFLAssessment.Data
         public DbSet<Employee> Employees { get; set; }
         public DbSet<SubjectMatterExpert> SubjectMatterExperts { get; set; }
         public DbSet<Subject> Subjects { get; set; }
-        public DbSet<SomeCriteria> SomeCriteriaTable { get; set; } // Add this DbSet
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
