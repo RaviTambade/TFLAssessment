@@ -1,0 +1,20 @@
+namespace Transflower.TFLAssessment.Data
+{
+    public class TFLAssessmentDbContext : DbContext
+    {
+        public TFLAssessmentDbContext(DbContextOptions<TFLAssessmentDbContext> options)
+            : base(options) { }
+
+        public DbSet<Interview> Interviews { get; set; }
+        public DbSet<Employee> Employees { get; set; }
+        public DbSet<SubjectMatterExpert> SubjectMatterExperts { get; set; }
+        public DbSet<Subject> Subjects { get; set; }
+        public DbSet<SomeCriteria> SomeCriteriaTable { get; set; } // Add this DbSet
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            // Configure relationships or keys if necessary
+            base.OnModelCreating(modelBuilder);
+        }
+    }
+}
