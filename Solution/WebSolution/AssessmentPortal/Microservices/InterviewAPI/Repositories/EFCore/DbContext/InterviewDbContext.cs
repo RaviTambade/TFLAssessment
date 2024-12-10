@@ -5,8 +5,7 @@ namespace Transflower.TFLAssessment.Data
 {
     public class TFLAssessmentDbContext : DbContext
     {
-        public TFLAssessmentDbContext(DbContextOptions<TFLAssessmentDbContext> options)
-            : base(options) { }
+        public TFLAssessmentDbContext(DbContextOptions<TFLAssessmentDbContext> options) : base(options) { }
 
         public DbSet<Interview> Interviews { get; set; }
         public DbSet<Employee> Employees { get; set; }
@@ -15,7 +14,6 @@ namespace Transflower.TFLAssessment.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // Configure relationships or keys if necessary
             base.OnModelCreating(modelBuilder);
         }
     }
