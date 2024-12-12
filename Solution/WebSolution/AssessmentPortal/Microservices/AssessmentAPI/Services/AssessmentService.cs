@@ -49,40 +49,44 @@ public class AssessmentService : IAssessmentService
       return await _repository.GetEvalutionCriterias();
    }
 
-   // public async Task<List<EvaluationCriteria>> GetEvalutionCriteriasBySubject(int subjectId)
-   // {
-   //    return await _repository.GetEvalutionCriteriasBySubject(subjectId);
-   // }
+   public async Task<List<EvaluationCriteria>> GetEvalutionCriteriasBySubject(int subjectId)
+   {
+      return await _repository.GetEvalutionCriteriasBySubject(subjectId);
+   }
 
-//    public async Task<bool> CreateTest(CreateTestRequest request)
-//    {
-//       return await _repository.CreateTest(request);
-//    }
+   public async Task<bool> CreateTest(CreateTestRequest request)
+   {
+      return await _repository.CreateTest(request);
+   }
 
-//    public async Task<bool> AddQuestion(int AssessmentId, int questionId)
-//    {
-//       return await _repository.AddQuestion(AssessmentId, questionId);
-//    }
-//    public async Task<bool> AddQuestions(int AssessmentId, List<TestQuestion> questions)
-//    {
-//       return await _repository.AddQuestions(AssessmentId, questions);
-//    }
-//    public async Task<bool> ChangeDuration(int AssessmentId, string duration)
-//    {
-//       return await _repository.ChangeDuration(AssessmentId, duration);
-//    }
-//    public async Task<bool> Reschedule(int AssessmentId, DateTime date)
-//    {
-//       return await _repository.Reschedule(AssessmentId, date);
-//    }
-//    public async Task<bool> RemoveQuestion(int Assessmentid, int questionId)
-//    {
-//       return await _repository.RemoveQuestion(Assessmentid, questionId);
-//    }
-//    public async Task<bool> RemoveQuestions(int[] testQuestions)
-//    {
-//       return await _repository.RemoveQuestions(testQuestions);
-//    }
+   public async Task<bool> AddQuestion(int AssessmentId, int questionId)
+   {
+      return await _repository.AddQuestion(AssessmentId, questionId);
+   }
 
+   public async Task<bool> AddQuestions(int AssessmentId, List<TestQuestion> questions)
+   {
+      return await _repository.AddQuestions(AssessmentId, questions);
+   }
+
+   public async Task<bool> ChangeDuration(int AssessmentId, string duration)
+   {
+      return await _repository.ChangeDuration(AssessmentId, duration);
+   }
+
+   public async Task<bool> Reschedule(int AssessmentId, DateTime date)
+   {
+      return await _repository.Reschedule(AssessmentId, date);
+   }
+
+   public async Task<bool> RemoveQuestion(int Assessmentid, int questionId)
+   {
+      return await _repository.RemoveQuestion(Assessmentid, questionId);
+   }
+
+   public async Task<bool> RemoveQuestions(int[] testQuestions)
+   {
+      return await _repository.RemoveQuestions(testQuestions);
+   }
 
 }
