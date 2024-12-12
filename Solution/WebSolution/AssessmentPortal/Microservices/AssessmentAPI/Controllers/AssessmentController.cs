@@ -20,33 +20,33 @@ public class AssessmentController : ControllerBase
        _logger = logger;
 
     }
-    ////http://localhost:5151/api/assessment/1
-    // [HttpGet("{id}")]
-    // public async Task<IActionResult>  GetDetails(int id)
-    // {
-    //     Assessment theAssessment=await _svc.GetDetails(id);
-    //      _logger.LogInformation("Get details method invoked at  {DT}", DateTime.UtcNow.ToLongTimeString());
-    //     return Ok(theAssessment);
-    // }
+    //http://localhost:5151/api/assessment/1
+    [HttpGet("{id}")]
+    public async Task<IActionResult>  GetDetails(int id)
+    {
+        Assessment theAssessment=await _svc.GetDetails(id);
+         _logger.LogInformation("Get details method invoked at  {DT}", DateTime.UtcNow.ToLongTimeString());
+        return Ok(theAssessment);
+    }
     
-//     // GET: api/assessment
-//     [HttpGet("creationdate/fromDate/{fromDate}/toDate/{toDate}")]
-//     public async Task<IActionResult> GetAll(DateTime fromDate, DateTime toDate)
-//     {
-//         List<Assessment> assessments =await _svc.GetAll( fromDate,  toDate);
-//         _logger.LogInformation("Get all Assessments method invoked at  {DT}", DateTime.UtcNow.ToLongTimeString());
-//         return Ok(assessments);
-//     }
+    // GET: api/assessment
+    [HttpGet("creationdate/fromDate/{fromDate}/toDate/{toDate}")]
+    public async Task<IActionResult> GetAll(DateTime fromDate, DateTime toDate)
+    {
+        List<Assessment> assessments =await _svc.GetAll( fromDate,  toDate);
+        _logger.LogInformation("Get all Assessments method invoked at  {DT}", DateTime.UtcNow.ToLongTimeString());
+        return Ok(assessments);
+    }
 
-//     // GET: get all assessments
-//     //http://localhost:5151/api/assessment/assessments
-//     [HttpGet("assessments")]
-//     public async Task<IActionResult>  GetAllAssesment()
-//     {
-//         List<Assessment> assessments =await _svc.GetAllTests();
-//         _logger.LogInformation("Get all tests method invoked at  {DT}", DateTime.UtcNow.ToLongTimeString());
-//         return Ok(assessments);
-//     }
+    // GET: get all assessments
+    //http://localhost:5151/api/assessment/assessments
+    [HttpGet("assessments")]
+    public async Task<IActionResult>  GetAllAssesment()
+    {
+        List<Assessment> assessments =await _svc.GetAllTests();
+        _logger.LogInformation("Get all tests method invoked at  {DT}", DateTime.UtcNow.ToLongTimeString());
+        return Ok(assessments);
+    }
   
     //http://localhost:5151/api/assessment/employees
     [HttpGet("employees")]
@@ -85,25 +85,25 @@ public class AssessmentController : ControllerBase
         return Ok(criterias);
     }
 
-    // //http://localhost:5151/api/assessment/criterias/subjects/1
-    // [HttpGet("criterias/subjects/{subjectId}")]
-    // public async Task<IActionResult>  GetEvalutionCriteriasBySubject(int subjectId)
-    // {
-    //     List<EvaluationCriteria> criterias =await _svc.GetEvalutionCriteriasBySubject(subjectId);
-    //      _logger.LogInformation("Get  evaluation criteria by subject method invoked at  {DT}", DateTime.UtcNow.ToLongTimeString());
-    //     return Ok(criterias);
-    // }
+    //http://localhost:5151/api/assessment/criterias/subjects/1
+    [HttpGet("criterias/subjects/{subjectId}")]
+    public async Task<IActionResult>  GetEvalutionCriteriasBySubject(int subjectId)
+    {
+        List<EvaluationCriteria> criterias =await _svc.GetEvalutionCriteriasBySubject(subjectId);
+         _logger.LogInformation("Get  evaluation criteria by subject method invoked at  {DT}", DateTime.UtcNow.ToLongTimeString());
+        return Ok(criterias);
+    }
 
  
 
-//     //http://localhost:5151/api/assessment/subjectexperts/2
-//     [HttpGet("subjectexperts/{smeId}")]
-//     public async Task<IActionResult>  GetAllBySubjectMatterExpert(int smeId)
-//     {
-//         List<Assessment> assessments=await _svc.GetAllBySubjectMatterExpert(smeId);
-//         _logger.LogInformation("Get all subject matter experties method invoked at  {DT}", DateTime.UtcNow.ToLongTimeString());
-//         return Ok(assessments);
-//     }
+    //http://localhost:5151/api/assessment/subjectexperts/2
+    [HttpGet("subjectexperts/{smeId}")]
+    public async Task<IActionResult>  GetAllBySubjectMatterExpert(int smeId)
+    {
+        List<Assessment> assessments=await _svc.GetAllBySubjectMatterExpert(smeId);
+        _logger.LogInformation("Get all subject matter experties method invoked at  {DT}", DateTime.UtcNow.ToLongTimeString());
+        return Ok(assessments);
+    }
 
 //     //http://localhost:5151/api/Assessment/createtest
 //    [HttpPost("createtest")]

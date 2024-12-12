@@ -26,15 +26,15 @@ builder.Services.AddRazorPages();
 
 // Dependency Injection Configuration
 // builder.Services.AddScoped<IAssessmentRepository, AssessmentRepository>();
-// builder.Services.AddScoped<IAssessmentRepository, AssessmentDapperRepository>();
+builder.Services.AddScoped<IAssessmentRepository, AssessmentDapperRepository>();
 builder.Services.AddScoped<IAssessmentService, AssessmentService>();
-builder.Services.AddScoped<IAssessmentRepository, AssessmentEFRepository>();
+// builder.Services.AddScoped<IAssessmentRepository, AssessmentEFRepository>();
 
 // Configure MySQL Database Context
 builder.Services.AddDbContext<AssessmentDbContext>(options =>
     options.UseMySql(
         builder.Configuration.GetConnectionString("DefaultConnection"),
-        new MySqlServerVersion(new Version(8, 0, 32)) // Ensure MySQL version matches your setup
+        new MySqlServerVersion(new Version(8, 0, 32)) 
     )
 );
 
