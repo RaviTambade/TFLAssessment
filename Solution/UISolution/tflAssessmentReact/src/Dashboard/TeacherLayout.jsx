@@ -5,17 +5,17 @@ function TeacherLayout() {
   const location = useLocation();
   const { employeeName = "Teacher" } = location.state || {};
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-
-  const showWelcomeMessage = location.pathname === "/teacher"; 
-
+  const showWelcomeMessage = location.pathname === "/teacher";
 
   const toggleDropdown = () => {
     setIsDropdownOpen((prev) => !prev);
   };
 
   return (
-    <div className="flex h-screen bg-gray-50">
-      <aside className="w-64 bg-gray-800 text-white flex flex-col">
+    <div className="flex h-screen overflow-hidden bg-gray-50">
+      {/* Sidebar */}
+      <aside className="w-64 bg-gray-800 text-white flex flex-col overflow-y-auto">
+        {/* Sidebar Header */}
         <div className="py-6 text-center border-b border-gray-700">
           <h2 className="text-2xl font-bold">Teacher Dashboard</h2>
         </div>
@@ -29,12 +29,6 @@ function TeacherLayout() {
           </Link>
           <Link
             to="createTestComponent"
-            className="block py-2 px-4 rounded-lg bg-gray-700 hover:bg-gray-600 transition"
-          >
-            Create Assessment
-          </Link>
-          <Link
-            to=""
             className="block py-2 px-4 rounded-lg bg-gray-700 hover:bg-gray-600 transition"
           >
             Create Assessment
@@ -73,19 +67,20 @@ function TeacherLayout() {
         </nav>
       </aside>
 
-      <main className="flex-1 p-8">
-                <header className="mb-8">
-                    {showWelcomeMessage && (
-                        <h1 className="text-4xl font-bold text-gray-800">
-                            Welcome, {employeeName}!
-                        </h1>
-                    )}
-                </header>
+      {/* Main Content */}
+      <main className="flex-1 p-8 overflow-y-auto">
+        <header className="mb-8">
+          {showWelcomeMessage && (
+            <h1 className="text-4xl font-bold text-gray-800">
+              Welcome, {employeeName}!
+            </h1>
+          )}
+        </header>
 
-                <section>
-                    <Outlet />
-                </section>
-            </main>
+        <section>
+          <Outlet />
+        </section>
+      </main>
     </div>
   );
 }

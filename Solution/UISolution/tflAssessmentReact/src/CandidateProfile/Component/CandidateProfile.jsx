@@ -35,6 +35,12 @@ function CandidateProfile() {
       </h2>
       <div className="grid grid-cols-2 gap-6">
         <p className="text-gray-600">
+          <strong>First Name:</strong> {employeeDetails.firstName}
+        </p>
+        <p className="text-gray-600">
+          <strong>Last Name:</strong> {employeeDetails.lastName}
+        </p>
+        <p className="text-gray-600">
           <strong>ID:</strong> {employeeDetails.userId}
         </p>
         <p className="text-gray-600">
