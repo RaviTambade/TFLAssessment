@@ -2,7 +2,7 @@ import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 
 // Authentication Components
-import Login from '../authentication/Components/Login';
+import Login from '../authentication/Components/login';
 import NewUserForm from '../authentication/Components/NewUser';
 import ChangePassword from '../authentication/Components/ChangePassword';
 
