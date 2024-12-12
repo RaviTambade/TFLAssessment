@@ -15,14 +15,11 @@ function TeacherLayout() {
 
   return (
     <div className="flex h-screen bg-gray-50">
-      {/* Sidebar */}
       <aside className="w-64 bg-gray-800 text-white flex flex-col">
-        {/* Sidebar Header */}
         <div className="py-6 text-center border-b border-gray-700">
           <h2 className="text-2xl font-bold">Teacher Dashboard</h2>
         </div>
 
-        {/* Sidebar Links */}
         <nav className="flex-1 px-4 py-6 space-y-4">
           <Link
             to="assessmentlist"
@@ -37,7 +34,6 @@ function TeacherLayout() {
             Create Assessment
           </Link>
 
-          {/* Manage Assessments Dropdown */}
           <div>
             <button
               onClick={toggleDropdown}
@@ -71,9 +67,7 @@ function TeacherLayout() {
         </nav>
       </aside>
 
-      {/* Main Content */}
       <main className="flex-1 p-8">
-                {/* Page Header */}
                 <header className="mb-8">
                     {showWelcomeMessage && (
                         <h1 className="text-4xl font-bold text-gray-800">
@@ -82,7 +76,6 @@ function TeacherLayout() {
                     )}
                 </header>
 
-                {/* Dynamic Content */}
                 <section>
                     <Outlet />
                 </section>

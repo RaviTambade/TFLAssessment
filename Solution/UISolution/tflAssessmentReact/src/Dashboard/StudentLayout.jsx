@@ -5,7 +5,6 @@ function StudentLayout() {
     const location = useLocation();
     const { employeeName = "Student", candidateId } = location.state || {};
 
-    // Check if we are on a route where the welcome message should be shown
     const showWelcomeMessage = location.pathname === "/student"; // Or other specific paths
 
     return (
@@ -17,7 +16,6 @@ function StudentLayout() {
                     <h2 className="text-2xl font-bold">Student Dashboard</h2>
                 </div>
 
-                {/* Sidebar Links */}
                 <nav className="flex-1 px-4 py-6 space-y-4">
                     <Link
                         to="profile"
@@ -38,14 +36,12 @@ function StudentLayout() {
                         state={{ candidateId }}
                         className="block py-2 px-4 rounded-lg bg-gray-700 hover:bg-gray-600 transition"
                     >
-                        View Assessment List
+                        Appeared Assessments
                     </Link>
                 </nav>
             </aside>
 
-            {/* Main Content */}
             <main className="flex-1 p-8 overflow-y-auto">
-                {/* Page Header */}
                 <header className="mb-8">
                     {showWelcomeMessage && (
                         <h1 className="text-4xl font-bold text-gray-800">
@@ -54,7 +50,6 @@ function StudentLayout() {
                     )}
                 </header>
 
-                {/* Dynamic Content */}
                 <section>
                     <Outlet />
                 </section>
