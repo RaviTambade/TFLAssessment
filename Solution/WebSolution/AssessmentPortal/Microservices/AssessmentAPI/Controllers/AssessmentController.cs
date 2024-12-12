@@ -105,81 +105,81 @@ public class AssessmentController : ControllerBase
         return Ok(assessments);
     }
 
-//     //http://localhost:5151/api/Assessment/createtest
-//    [HttpPost("createtest")]
-//     public async Task<IActionResult> CreateTest([FromBody] CreateTestRequest request)
-//     {
-//     Console.WriteLine("Inside Create Test Controller");
-//     bool status = await _svc.CreateTest(request);
-//     _logger.LogInformation("Create test method invoked at  {DT}", DateTime.UtcNow.ToLongTimeString());
-//     if (status)
-//     {
-//         return Ok(new { message = "Test created successfully" });
-//     }
-//     else
-//     {
-//         return BadRequest(new { message = "Failed to create test" });
-//     }
-//  }
+    //http://localhost:5151/api/Assessment/createtest
+   [HttpPost("createtest")]
+    public async Task<IActionResult> CreateTest([FromBody] CreateTestRequest request)
+    {
+    Console.WriteLine("Inside Create Test Controller");
+    bool status = await _svc.CreateTest(request);
+    _logger.LogInformation("Create test method invoked at  {DT}", DateTime.UtcNow.ToLongTimeString());
+    if (status)
+    {
+        return Ok(new { message = "Test created successfully" });
+    }
+    else
+    {
+        return BadRequest(new { message = "Failed to create test" });
+    }
+ }
 
 
     
-//     //http://localhost:5151/api/Assessment/addquestion/assessments/1/questions/10
-//     [HttpPost("addquestion/assessments/{assessmentId}/questions/{questionId}")]
-//     public async Task<IActionResult>  AddQuestion(int assessmentId,int questionId)
-//     {
-//         bool status=await _svc.AddQuestion(assessmentId,questionId);
-//         _logger.LogInformation("Add question method invoked at  {DT}", DateTime.UtcNow.ToLongTimeString());
-//         return Ok(status);
-//     }
+    //http://localhost:5151/api/Assessment/addquestion/assessments/1/questions/10
+    [HttpPost("addquestion/assessments/{assessmentId}/questions/{questionId}")]
+    public async Task<IActionResult>  AddQuestion(int assessmentId,int questionId)
+    {
+        bool status=await _svc.AddQuestion(assessmentId,questionId);
+        _logger.LogInformation("Add question method invoked at  {DT}", DateTime.UtcNow.ToLongTimeString());
+        return Ok(status);
+    }
 
     
-//     // http://localhost:5151/api/Assessment/addmultiplequestions/assessments/1
-//    [HttpPost("addmultiplequestions/assessments/{assessmentId}")]
-//    public async Task<IActionResult> AddQuestions(int assessmentId, List<TestQuestion> questions)
-//    {
-//     // Log the incoming data for debugging
-//     _logger.LogInformation("Received Questions: {questions}", JsonConvert.SerializeObject(questions));
+    // http://localhost:5151/api/Assessment/addmultiplequestions/assessments/1
+   [HttpPost("addmultiplequestions/assessments/{assessmentId}")]
+   public async Task<IActionResult> AddQuestions(int assessmentId, List<TestQuestion> questions)
+   {
+    // Log the incoming data for debugging
+    _logger.LogInformation("Received Questions: {questions}", JsonConvert.SerializeObject(questions));
     
-//     bool status = await _svc.AddQuestions(assessmentId, questions);
-//     _logger.LogInformation("Add multiple questions method invoked at {DT}", DateTime.UtcNow.ToLongTimeString());
+    bool status = await _svc.AddQuestions(assessmentId, questions);
+    _logger.LogInformation("Add multiple questions method invoked at {DT}", DateTime.UtcNow.ToLongTimeString());
 
-//     return Ok(status);
-// }
+    return Ok(status);
+}
 
-//     //http://localhost:5151/api/Assessment/1/questions/9
-//     [HttpDelete("{assessmentId}/questions/{questionId}")]
-//     public async Task<IActionResult>  RemoveQuestion(int assessmentId,int questionId)
-//     {
-//         bool status=await _svc.RemoveQuestion(assessmentId,questionId);
-//         _logger.LogInformation("Remove question method invoked at  {DT}", DateTime.UtcNow.ToLongTimeString());
-//         return Ok(status);
-//     }
+    //http://localhost:5151/api/Assessment/1/questions/9
+    [HttpDelete("{assessmentId}/questions/{questionId}")]
+    public async Task<IActionResult>  RemoveQuestion(int assessmentId,int questionId)
+    {
+        bool status=await _svc.RemoveQuestion(assessmentId,questionId);
+        _logger.LogInformation("Remove question method invoked at  {DT}", DateTime.UtcNow.ToLongTimeString());
+        return Ok(status);
+    }
 
-//     //http://localhost:5151/api/Assessment/1/duration/40
-//     [HttpPut("{assessmentId}/duration/{duration}")]
-//     public async Task<IActionResult>  ChangeDuration(int assessmentId,string duration)
-//     {
-//         bool status=await _svc.ChangeDuration(assessmentId,duration);
-//         _logger.LogInformation("Change duration method invoked at  {DT}", DateTime.UtcNow.ToLongTimeString());
-//         return Ok(status);
-//     }
+    //http://localhost:5151/api/Assessment/1/duration/40
+    [HttpPut("{assessmentId}/duration/{duration}")]
+    public async Task<IActionResult>  ChangeDuration(int assessmentId,string duration)
+    {
+        bool status=await _svc.ChangeDuration(assessmentId,duration);
+        _logger.LogInformation("Change duration method invoked at  {DT}", DateTime.UtcNow.ToLongTimeString());
+        return Ok(status);
+    }
 
-//     //http://localhost:5151/api/Assessment/1/reschedule/2024-01-01
-//     [HttpPut("{assessmentId}/reschedule/{date}")]
-//     public async Task<IActionResult>  Reschedule(int assessmentId,DateTime date)
-//     {
-//         bool status=await _svc.Reschedule(assessmentId,date);
-//         _logger.LogInformation("Reschedule method invoked at  {DT}", DateTime.UtcNow.ToLongTimeString());
-//         return Ok(status);
-//     }
+    //http://localhost:5151/api/Assessment/1/reschedule/2024-01-01
+    [HttpPut("{assessmentId}/reschedule/{date}")]
+    public async Task<IActionResult>  Reschedule(int assessmentId,DateTime date)
+    {
+        bool status=await _svc.Reschedule(assessmentId,date);
+        _logger.LogInformation("Reschedule method invoked at  {DT}", DateTime.UtcNow.ToLongTimeString());
+        return Ok(status);
+    }
 
-//     //http://localhost:5151/api/Assessment/deletequestions
-//     [HttpDelete("deletequestions")]
-//     public async Task<IActionResult>  RemoveQuestions(int[] testQuestions)
-//     {
-//         bool status= await _svc.RemoveQuestions(testQuestions);
-//         _logger.LogInformation("Remove questions method invoked at  {DT}", DateTime.UtcNow.ToLongTimeString());
-//         return Ok(status);
-//     }
+    //http://localhost:5151/api/Assessment/deletequestions
+    [HttpDelete("deletequestions")]
+    public async Task<IActionResult>  RemoveQuestions(int[] testQuestions)
+    {
+        bool status= await _svc.RemoveQuestions(testQuestions);
+        _logger.LogInformation("Remove questions method invoked at  {DT}", DateTime.UtcNow.ToLongTimeString());
+        return Ok(status);
+    }
  }
