@@ -4,7 +4,7 @@ import CandidateService from "../services/CandidateDetailsService";
 
 const CandidateTestList = () => {
   const location = useLocation();
-  const { candidateId } = location.state || {}; // Fetch candidateId from navigation state
+  const { candidateId } = location.state || {}; 
   const [testDetails, setTestDetails] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -18,7 +18,7 @@ const CandidateTestList = () => {
 
   const fetchTestDetails = async (id) => {
     try {
-      setErrorMessage(""); // Clear previous errors
+      setErrorMessage(""); 
       const response = await CandidateService.getTestList(id);
 
       if (Array.isArray(response) && response.length > 0) {

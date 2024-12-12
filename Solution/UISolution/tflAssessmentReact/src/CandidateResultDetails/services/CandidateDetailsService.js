@@ -23,6 +23,7 @@ class CandidateDetailsService {
       throw error;
     }
   }
+  
   async handleResponse(response) {
     if (!response.ok) {
       throw new Error(`Error: ${response.statusText}`);
