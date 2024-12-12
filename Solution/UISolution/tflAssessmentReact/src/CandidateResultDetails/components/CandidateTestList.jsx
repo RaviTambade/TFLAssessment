@@ -8,7 +8,6 @@ const CandidateTestList = () => {
   const [testDetails, setTestDetails] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
 
-  // Fetch test details when the component mounts or candidateId changes
   useEffect(() => {
     if (candidateId) {
       fetchTestDetails(candidateId);

@@ -11,7 +11,6 @@ export const NavbarProvider = ({ children }) => {
     { name: 'Register', path: '/newuser' },
   ]);
 
-  // Function to update navbar links (e.g., after login)
   const updateNavLinks = (links) => setNavLinks(links);
 
   return (
@@ -21,7 +20,6 @@ export const NavbarProvider = ({ children }) => {
   );
 };
 
-// Hook for consuming context
 export const useNavbar = () => {
   const context = useContext(NavbarContext);
 

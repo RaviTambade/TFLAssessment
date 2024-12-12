@@ -5,10 +5,8 @@ function Logout() {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    // Clear the token from local storage
     localStorage.removeItem('authToken');
 
-    // Redirect to the Home page
     navigate('/');
   };
 
