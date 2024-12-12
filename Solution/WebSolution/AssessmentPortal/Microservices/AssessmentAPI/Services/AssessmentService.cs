@@ -11,23 +11,23 @@ public class AssessmentService : IAssessmentService
       _repository = repository;
 
    }
-   // public async Task<Assessment> GetDetails(int AssessmentId)
-   // {
-   //    return await _repository.GetDetails(AssessmentId);
-   // }
-//    public async Task<List<Assessment>> GetAll(DateTime fromDate, DateTime toDate)
-//    {
-//       return await _repository.GetAll(fromDate, toDate);
-//    }
+   public async Task<Assessment> GetDetails(int AssessmentId)
+   {
+      return await _repository.GetDetails(AssessmentId);
+   }
+   public async Task<List<Assessment>> GetAll(DateTime fromDate, DateTime toDate)
+   {
+      return await _repository.GetAll(fromDate, toDate);
+   }
 
-//    public async Task<List<Assessment>> GetAllTests()
-//    {
-//       return await _repository.GetAllTests();
-//    }
-//    public async Task<List<Assessment>> GetAllBySubjectMatterExpert(int smeId)
-//    {
-//       return await _repository.GetAllBySubjectMatterExpert(smeId);
-//    }
+   public async Task<List<Assessment>> GetAllTests()
+   {
+      return await _repository.GetAllTests();
+   }
+   public async Task<List<Assessment>> GetAllBySubjectMatterExpert(int smeId)
+   {
+      return await _repository.GetAllBySubjectMatterExpert(smeId);
+   }
 
    public async Task<List<Employee>> GetAllEmployees()
    {
