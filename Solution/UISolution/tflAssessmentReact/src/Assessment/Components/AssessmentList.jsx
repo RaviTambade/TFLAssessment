@@ -15,7 +15,7 @@ const AssessmentList = () => {
                 setError("Failed to fetch assessments");
             }
         };
-
+  
         fetchAssessments();
     }, []);
 
