@@ -34,7 +34,7 @@ const CandidatesByTest = () => {
       {
         label: "Scores",
         data: candidates.map((candidate) => candidate.score),
-        backgroundColor: "rgba(59, 130, 246, 0.7)", // Tailwind blue
+        backgroundColor: "rgba(59, 130, 246, 0.7)", 
         borderColor: "rgba(59, 130, 246, 1)",
         borderWidth: 1,
       },
@@ -63,8 +63,7 @@ const CandidatesByTest = () => {
     <div className="p-6 max-w-3xl mx-auto bg-white rounded-lg shadow-md">
       <Link
         to="/teacher/assessmentlist"
-        className="text-blue-500 hover:underline mb-4 block"
-      >
+        className="text-blue-500 hover:underline mb-4 block">
         &larr; Back to Assessments
       </Link>
 
@@ -79,8 +78,7 @@ const CandidatesByTest = () => {
             {candidates.map((candidate) => (
               <li
                 key={candidate.id}
-                className="p-4 bg-gray-100 rounded-lg shadow-md"
-              >
+                className="p-4 bg-gray-100 rounded-lg shadow-md">
                 <p className="font-bold text-lg text-gray-800">
                   {candidate.testName}
                 </p>

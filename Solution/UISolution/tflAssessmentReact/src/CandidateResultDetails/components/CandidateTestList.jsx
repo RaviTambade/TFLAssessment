@@ -53,8 +53,7 @@ const CandidateTestList = () => {
             {testDetails.map((test, index) => (
               <li
                 key={index}
-                className="p-4 border border-gray-200 rounded-md bg-gray-50 hover:bg-gray-100"
-              >
+                className="p-4 border border-gray-200 rounded-md bg-gray-50 hover:bg-gray-100">
                 <p className="text-gray-700">
                   <strong>Test ID:</strong> {test.testId}
                 </p>

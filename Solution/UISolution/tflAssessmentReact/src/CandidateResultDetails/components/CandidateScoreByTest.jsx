@@ -2,10 +2,10 @@ import { useLocation } from "react-router-dom";
 import { useState } from "react";
 import CandidateDetailsService from "../services/CandidateDetailsService";
 const GetCandidateResult=()=>{
-    const [testId, setTestId] = useState("");
-  const location=useLocation();
-  const {userId}=location.state ||{}
-  const [candidateId, setCandidateId] = useState(userId || "");
+const [testId, setTestId] = useState("");
+const location=useLocation();
+const {userId}=location.state ||{}
+const [candidateId, setCandidateId] = useState(userId || "");
   
   const fetchResult=async()=>{
     try{
