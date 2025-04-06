@@ -187,12 +187,12 @@ public class ResultRepository : IResultRepository
         List<TestResultDetails> resultdetails = new List<TestResultDetails>();
         MySqlConnection connection = new MySqlConnection(_connectionString);
         string query = @"SELECT 
-                        candidatetestresults.testid , 
-                        candidatetestresults.score , 
-                        candidatetestresults.candidateid ,
-                        employees.firstname , 
-                        employees.lastname , 
-                        subjects.title AS subject , 
+                        candidatetestresults.testid, 
+                        candidatetestresults.score, 
+                        candidatetestresults.candidateid,
+                        employees.firstname, 
+                        employees.lastname, 
+                        subjects.title AS subject, 
                         tests.name AS testname 
                         FROM candidatetestresults 
                         INNER JOIN employees ON employees.id = candidatetestresults.candidateid 
