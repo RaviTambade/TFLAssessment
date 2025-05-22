@@ -60,10 +60,14 @@ public async Task<IActionResult> DeleteSubject(int id)
     }
 
     int result = await _svc.DeleteSubject(id);
-
+    // Console.WriteLine("Result :: "+result);
     if (result > 0)
     {
         return Ok("Subject deleted successfully.");
+    }
+    if(result == 0)
+    {
+        return BadRequest("Invalid subject Id please enter valid id");
     }
     return StatusCode(500, "An error occurred while deleting the subject.");
 }
