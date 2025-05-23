@@ -28,7 +28,10 @@ public class SubjectController : ControllerBase
     public async Task<IActionResult>  GetAllSubjects()
     {
         List<SubjectModel> subjects =await _svc.GetAllSubject();
-       
+        if(subjects == null || subjects.Count == 0)
+        {
+            return NotFound("No subjects found.");
+        }
         return Ok(subjects);
     }
 
@@ -60,7 +63,6 @@ public async Task<IActionResult> DeleteSubject(int id)
     }
 
     int result = await _svc.DeleteSubject(id);
-    // Console.WriteLine("Result :: "+result);
     if (result > 0)
     {
         return Ok("Subject deleted successfully.");
