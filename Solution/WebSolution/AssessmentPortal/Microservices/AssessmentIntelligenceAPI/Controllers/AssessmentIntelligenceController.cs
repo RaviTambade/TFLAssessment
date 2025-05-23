@@ -28,7 +28,7 @@ public class AssessmentIntelligenceController : ControllerBase
     public async Task<IActionResult> GetCandidateResults(  int candidateId,int year)
     {
         List<AnnualCandidateResult> assessments =await _service.GetCandidateResults( candidateId, year);
-        _logger.LogInformation("Log Succefully created");
+        _logger.LogInformation("Log successfully created. Number of assessments: {Count}", assessments.Count);
         return Ok(assessments);
     }
 }
