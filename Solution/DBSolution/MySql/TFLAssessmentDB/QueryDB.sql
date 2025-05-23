@@ -98,6 +98,39 @@ update questionbank set answerkey="c" where id = 1;
 
 
 
+<<<<<<< HEAD
+
+--Retrieve the list of all questions along with their subject and evaluation criteria to facilitate SME review or exam design.
+--Filter and view questions based on a specific subject and evaluation criteria — useful for targeted assessments or question audits.
+
+--List all candidates scheduled for interviews with their names — helpful for scheduling and tracking interview panels.
+--Link interviews to subjects and SMEs to track which candidate is being assessed in which subject area.
+--Get evaluation criteria used in a specific interview — useful for generating the interview scorecard.
+--View test details by ID or within a creation date range — useful for reporting, audit, and test management.
+--Add/remove questions to/from a test to assemble or modify a test dynamically.
+--Update scheduling and timing details of tests — necessary for managing reschedules and time adjustments.
+
+
+--Question Management
+
+--Fetch or update questions, including answer keys, subjects, criteria — useful for question lifecycle management.
+--Get score details of candidates for individual tests or all tests — essential for evaluation reports and performance tracking.
+--Identify candidates who passed or failed a particular test — useful for shortlisting or eligibility verification.
+--Compare candidate answers with actual answers to analyze mistakes — useful for personalized feedback.
+
+
+
+--Sored Procedures
+--Call stored procedures to compute candidate results or get detailed interview insights — used in automation and reporting.
+
+
+--Test Management and SME  Reports
+-- Create, update, or view test metadata — supports lifecycle management of assessments.
+--Generate detailed test reports with subject and SME names — useful for dashboards and admin reports.
+
+
+=======
+>>>>>>> e5659ffdbfa1a025fc1bd1394ff20d4dd1d08264
 ----------------------------------------------------------------------------------------------------------------
 
 
