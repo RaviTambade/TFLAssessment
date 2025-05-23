@@ -26,8 +26,8 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
 builder.Services.AddControllers();
-// builder.Services.AddScoped<IQuestionBankRepository, QuestionBankRepository>();
-builder.Services.AddScoped<IQuestionBankRepository, QuestionBankDapperRepository>();
+builder.Services.AddScoped<IQuestionBankRepository, QuestionBankRepository>();
+//builder.Services.AddScoped<IQuestionBankRepository, QuestionBankDapperRepository>();
 builder.Services.AddScoped<IQuestionBankService, QuestionBankService>();
 
 var app = builder.Build();

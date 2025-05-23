@@ -4,8 +4,10 @@ DROP database assessmentdb;
 create database assessmentdb;
 
 use assessmentdb;
+
 CREATE TABLE employees(
 	id INT AUTO_INCREMENT PRIMARY KEY,
+    userId INT,
 	firstname VARCHAR(20) NOT NULL,
 	lastname VARCHAR(20) NOT NULL,
 	email VARCHAR(50) NOT NULL,
@@ -62,6 +64,7 @@ create table questionbank (
 
 create table tests (
 	id INT PRIMARY KEY AUTO_INCREMENT,
+    Name VARCHAR(255),
 	subjectid INT,
 	duration TIME,
 	smeid INT ,

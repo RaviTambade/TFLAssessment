@@ -16,8 +16,8 @@ public class EvaluationCriteriaController : ControllerBase
         _svc = service;
         _logger= logger;
     } 
-    
-    // Insert candidate answers of the test.
+   
+   
     [HttpPut("{evaluationCriteriaId}/questions/{questionId}")]
     public async Task<IActionResult> UpdateCriteria(int evaluationCriteriaId, int questionId)
     {

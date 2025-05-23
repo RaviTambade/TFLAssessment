@@ -77,6 +77,12 @@ public class QuestionBankController : ControllerBase
         return Ok(questions);
     }
 
+    [HttpGet("questions/subjects/criterias")]
+    public async Task<IActionResult> GetQuestionsWithSubjectAndCriteria()
+    {   
+        List<QuestionDetails> questions =await _svc.GetQuestionsWithSubjectAndCriteria();
+        return Ok(questions);
+    }
 
         
        
@@ -101,14 +107,6 @@ public class QuestionBankController : ControllerBase
         return Ok(status);
     }
 
-    //  [HttpPut("update/subjectcriteria/question/{questionId}")]
-    //   public IActionResult UpdateSubjectCriteria(int questionId,Question question)
-    //   {
-
-    //     bool  status = _svc.UpdateSubjectCriteria(questionId,question);
-
-    //     return Ok(status);
-    //   }
 
     //http://localhost:5172/api/questionbank/question
     [HttpPost("question")]

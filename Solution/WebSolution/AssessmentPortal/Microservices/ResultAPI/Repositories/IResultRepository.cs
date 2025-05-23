@@ -15,6 +15,8 @@ public interface IResultRepository{
 
     public Task<List<TestResultDetails>> GetTestResultDetails(int testId);
     public Task<List<AppearedCandidate>> GetAppearedCandidates(int testId);
+    public Task<List<TestList>> GetTestList(int candidateId);
+
 
     public Task<List<PassedCandidateDetails>> GetPassedCandidateResults(int testId);
     public Task<List<FailedCandidateDetails>> GetFailedCandidateResults(int testId);
@@ -23,7 +25,8 @@ public interface IResultRepository{
 
     public Task<List<CandidateSubjectResults>> GetSubjectResultDetails(int subjectId);
 
-   
+    //public Task<int[]> GetAllTestIds();
+    public Task<List<Subject>> GeAllSubjects();
 
     
 }

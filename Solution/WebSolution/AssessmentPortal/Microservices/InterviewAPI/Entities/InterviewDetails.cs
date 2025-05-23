@@ -1,4 +1,5 @@
 ﻿namespace Transflower.TFLAssessment.Entities;
+
 public class InterviewDetails{
     public int Id{get;set;}
     public string InterviewDate{get;set;}

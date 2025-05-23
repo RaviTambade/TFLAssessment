@@ -1,12 +1,18 @@
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Transflower.TFLAssessment.Data;
 using Transflower.TFLAssessment.Repositories.Interfaces;
-using  Transflower.TFLAssessment.Repositories;
+using Transflower.TFLAssessment.Repositories;
 using Transflower.TFLAssessment.Services.Interfaces;
-using   Transflower.TFLAssessment.Services;
+using Transflower.TFLAssessment.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 
-//Service configuration
+builder.Services.AddDbContext<TFLAssessmentDbContext>(options =>
+    options.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"),
+        new MySqlServerVersion(new Version(8, 0, 30))));
+
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -20,22 +26,15 @@ builder.Host.ConfigureLogging(logging =>
     logging.AddFile("logs/catalog-{Date}.json", isJson: true);
 });
 
-builder.Services.AddControllers();
-// builder.Services.AddScoped<IInterviewRepository, InterviewRepository>();
-builder.Services.AddScoped<IInterviewRepository, InterviewDapperRepository>();
+builder.Services.AddScoped<IInterviewRepository, InterviewEFCoreRepository>();
 builder.Services.AddScoped<IInterviewService, InterviewService>();
 
 var app = builder.Build();
-
-
-//ASP.NET middleware configuration
 
 app.UseCors(options => options.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
 app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthorization();
-
-//Controller Route mapping
 
 app.UseEndpoints(endpoints =>
 {
@@ -43,11 +42,9 @@ app.UseEndpoints(endpoints =>
         name: "default",
         pattern: "{controller=Home}/{action=Index}/{id?}");
     endpoints.MapRazorPages();
-    endpoints.MapControllers(); // Map Minimal Web API endpoints
+    endpoints.MapControllers();
 });
 
-
-//Middleware Pipeline
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -55,5 +52,4 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
- 
 app.Run();

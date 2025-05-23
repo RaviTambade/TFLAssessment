@@ -5,8 +5,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-
-
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <title>Objective Test</title>
 </head>
@@ -79,8 +77,8 @@
       var remainingTime = 60;
       var score;
 
-      var testId =2;
-      var candidateId = 4;
+      var testId =12;
+      var candidateId = 5;
 
       //rest api urls
       var remoteWeb = "http://localhost:5238"
@@ -91,7 +89,6 @@
       var endTimeUrl = "http://localhost:5235/api/result/setendtime/"+candidateId+"/tests/"+testId;
       
       $(document).ready(function () {
-
 
         //Test start and submit handlers
         $("#btnStart").click(() => {
@@ -362,8 +359,6 @@
         $("#btnFirst").prop("disabled", status);
         $("#btnLast").prop("disabled", status);
       }
-
-
 
       var testTimeLimit = () => {
         intervalId = setInterval(() => {

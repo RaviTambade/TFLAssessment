@@ -9,10 +9,9 @@ const InterviewSubjects = () => {
 
     useEffect(() => {
         const fetchInterviews = async () => {
-            // Only fetch when a candidate ID is submitted
             if (!submittedCandidateId) return; 
             try {
-                const data = await InterviewService.GetInterviewedCandidatesSubjects(submittedCandidateId);
+                const data = await InterviewService.getInterviewedCandidatesSubjects(submittedCandidateId);
                 console.log(data);
                 setInterviews(data);
             } catch (err) {
@@ -21,20 +20,18 @@ const InterviewSubjects = () => {
         };
 
         fetchInterviews();
-        // Re-run effect when submitted candidate ID changes
     }, [submittedCandidateId]); 
 
     const handleInputChange = (e) => {
-         // Update candidate ID as the user types
         setCandidateId(e.target.value);
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
         if (candidateId) {
-            setSubmittedCandidateId(candidateId); // Set the submitted ID for fetching
-            setError(null); // Reset any previous error
-            setInterviews([]); // Clear previous results
+            setSubmittedCandidateId(candidateId); 
+            setError(null); 
+            setInterviews([]); 
         } else {
             setError('Please enter a valid candidate ID');
         }
