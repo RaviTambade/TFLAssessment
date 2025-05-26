@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Student Assessment Grid Report</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 40px;
+      background-color: #f9f9f9;
+    }
+
+    h2 {
+      text-align: center;
+      color: #333;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 30px;
+      background-color: #fff;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    th, td {
+      border: 1px solid #ccc;
+      padding: 12px;
+      text-align: center;
+    }
+
+    th {
+      background-color: #007BFF;
+      color: white;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+
+    .pass {
+      color: green;
+      font-weight: bold;
+    }
+
+    .fail {
+      color: red;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>📝 Student Assessment Grid Report</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Student Name</th>
+        <th>Subject</th>
+        <th>Test Date</th>
+        <th>Score (%)</th>
+        <th>Grade</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Aarya Joshi</td>
+        <td>C</td>
+        <td>2025-05-15</td>
+        <td>88</td>
+        <td>A</td>
+        <td class="pass">Pass</td>
+      </tr>
+      <tr>
+        <td>Rahul Patil</td>
+        <td>C++</td>
+        <td>2025-05-15</td>
+        <td>72</td>
+        <td>B</td>
+        <td class="pass">Pass</td>
+      </tr>
+      <tr>
+        <td>Simran Shah</td>
+        <td>Java</td>
+        <td>2025-05-15</td>
+        <td>54</td>
+        <td>D</td>
+        <td class="pass">Pass</td>
+      </tr>
+      <tr>
+        <td>Yash Deshmukh</td>
+        <td>MySql</td>
+        <td>2025-05-15</td>
+        <td>35</td>
+        <td>F</td>
+        <td class="fail">Fail</td>
+      </tr>
+    </tbody>
+  </table>
+
+</body>
+</html>
