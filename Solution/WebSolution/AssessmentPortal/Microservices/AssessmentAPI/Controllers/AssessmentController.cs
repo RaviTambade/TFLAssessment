@@ -145,7 +145,7 @@ public class AssessmentController : ControllerBase
     _logger.LogInformation("Add multiple questions method invoked at {DT}", DateTime.UtcNow.ToLongTimeString());
 
     return Ok(status);
-}
+    }
 
     //http://localhost:5151/api/Assessment/1/questions/9
     [HttpDelete("{assessmentId}/questions/{questionId}")]
