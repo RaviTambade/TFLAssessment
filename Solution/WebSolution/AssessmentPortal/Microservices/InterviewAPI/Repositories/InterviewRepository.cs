@@ -21,14 +21,20 @@ public class InterviewRepository : IInterviewRepository
     public async Task<List<InterviewCandidateDetails>> GetAllInterviewCandidates()
     {
         List<InterviewCandidateDetails> CandidatesInfo = new List<InterviewCandidateDetails>();
-        string query = @"select employees.firstname,employees.lastname,interviews.candidateid from employees
-                       inner join interviews
-                       where employees.id=interviews.candidateid
-                       order by interviews.candidateid asc;";
+        // string query = @"select employees.firstname,employees.lastname,interviews.candidateid from employees
+        //                inner join interviews
+        //                where employees.id=interviews.candidateid
+        //                order by interviews.candidateid asc;";
+
+        string query = @"select interviews.candidateid,employees.firstname,employees.lastname,subjects.title
+                        from interviews 
+                        inner join employees on  interviews.candidateid= employees.id
+                        inner join subjectmatterexperts on interviews.smeid = subjectmatterexperts.id
+                        inner join subjects on subjectmatterexperts.subjectid=subjects.id;";
 
         MySqlConnection connection = new MySqlConnection(_connectionString);
         MySqlCommand command = new MySqlCommand(query, connection);
-        connection.Open();
+        // connection.Open();
         try
         {
             await connection.OpenAsync();
