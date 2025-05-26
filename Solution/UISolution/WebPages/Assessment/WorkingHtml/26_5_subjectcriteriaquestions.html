@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <title>Objective Test</title>
+</head>
+
+<body>
+  <h3>Transflower Learning Private Limited</h3>
+  <div class="jumbotron">
+    <div class="container" id="container">
+    </div>
+    <div class="questions" id="questions">
+       <ol id="questionList">
+        <!-- Questions will be dynamically added here -->
+       </ol>
+    </div>
+    </div>
+  </div>
+
+
+  <script>
+
+    function initAllQuestions(){
+        questions=[
+            {"id": 1, "title": "Which of the following is used to structure content on the web?", "optionA": "CSS", "optionB": "HTML","optionC": "JavaScript","optionD": "PHP"},
+            {"id": 2, "title": "What does CSS stand for in web development?","optionA": "Creative Style Sheets","optionB": "Cascading Style Sheets","optionC": "Computer Style Sheets","optionD": "Custom Styling Source"},
+            {"id": 3, "title": "Which HTML tag is used to define an unordered list?","optionA": "<ul>","optionB": "<ol>","optionC": "<li>","optionD": "<list>"},
+            {"id": 4, "title": "What is the purpose of the <head> tag in HTML?","optionA": "To display the main content of the page","optionB": "To include metadata and links to stylesheets and scripts","optionC": "To create a footer for the page","optionD": "To define the main heading of the page"},
+            {"id": 5, "title": "Which CSS property is used to change the text color?","optionA": "color","optionB": "text-color","optionC": "font-color","optionD": "background-color"},
+            {"id": 6, "title": "What is the purpose of the <body> tag in HTML?","optionA": "To include metadata about the document","optionB": "To define the main content of the page","optionC": "To create a header for the page","optionD": "To link external stylesheets"},
+            {"id": 7, "title": "Which HTML element is used to create a hyperlink?","optionA": "<link>","optionB": "<a>","optionC": "<href>","optionD": "<url>"},
+            {"id": 8, "title": "What does JavaScript primarily do in web development?","optionA": "Style the webpage","optionB": "Structure the content","optionC": "Add interactivity and dynamic behavior","optionD": "Create server-side applications"},
+            {"id": 9, "title": "Which CSS property is used to change the background color of an element?","optionA": "background-color","optionB": "color","optionC": "text-color","optionD": "bg-color"},
+            {"id": 10, "title": "What is the purpose of the <footer> tag in HTML?","optionA": "To display the main content of the page","optionB": "To include metadata about the document","optionC": "To create a footer for the page with copyright information and links","optionD": "To define the main heading of the page"}
+        ];
+    }
+
+    $(document).ready(function () {
+        initAllQuestions();
+
+        //get the reference of ordered list element
+        var questionList = $('#questionList');
+
+        // Loop through the questions array and append each question to the list
+        questions.forEach(function(question) {
+            // Create a list item for each question
+            var listItem = $('<li></li>');
+            listItem.append( question.title);
+            questionList.append(listItem);
+        });
+    });
+</script>

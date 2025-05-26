@@ -1,181 +1,177 @@
 <!DOCTYPE html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+        <title>Assessment</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                margin: 0;
+                padding: 0;
+                background-color: #f4f4f4;
+            }
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <title>Assessment</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-        }
+            .container {
+                max-width: 800px;
+                margin: 20px auto;
+                padding: 20px;
+                background-color: #fff;
+                border-radius: 8px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            }
 
-        .container {
-            max-width: 800px;
-            margin: 20px auto;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
+            h1,
+            h2 {
+                text-align: center;
+            }
 
-        h1,
-        h2 {
-            text-align: center;
-        }
+            .assessment-form,
+            .result {
+                margin-top: 20px;
+            }
 
-        .assessment-form,
-        .result {
-            margin-top: 20px;
-        }
+            .form-group {
+                margin-bottom: 20px;
+            }
 
-        .form-group {
-            margin-bottom: 20px;
-        }
+            .form-group label {
+                display: block;
+                font-weight: bold;
+            }
 
-        .form-group label {
-            display: block;
-            font-weight: bold;
-        }
+            .form-group input[type="text"],
+            .form-group input[type="email"] {
+                width: 100%;
+                padding: 10px;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                box-sizing: border-box;
+            }
 
-        .form-group input[type="text"],
-        .form-group input[type="email"] {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-        }
+            .form-group input[type="submit"] {
+                background-color: #007bff;
+                color: #fff;
+                border: none;
+                padding: 12px 20px;
+                border-radius: 4px;
+                cursor: pointer;
+            }
 
-        .form-group input[type="submit"] {
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            padding: 12px 20px;
-            border-radius: 4px;
-            cursor: pointer;
-        }
+            .form-group input[type="submit"]:hover {
+                background-color: #0056b3;
+            }
 
-        .form-group input[type="submit"]:hover {
-            background-color: #0056b3;
-        }
+            .result {
+                display: none;
+                /* Initially hidden */
+            }
 
-        .result {
-            display: none;
-            /* Initially hidden */
-        }
+            .result h2 {
+                margin-bottom: 10px;
+            }
 
-        .result h2 {
-            margin-bottom: 10px;
-        }
+            .result p {
+                margin-bottom: 20px;
+            }
 
-        .result p {
-            margin-bottom: 20px;
-        }
+            .restart-button {
+                text-align: center;
+            }
 
-        .restart-button {
-            text-align: center;
-        }
+            .restart-button a {
+                background-color: #007bff;
+                color: #fff;
+                padding: 10px 20px;
+                text-decoration: none;
+                border-radius: 4px;
+            }
 
-        .restart-button a {
-            background-color: #007bff;
-            color: #fff;
-            padding: 10px 20px;
-            text-decoration: none;
-            border-radius: 4px;
-        }
+            .restart-button a:hover {
+                background-color: #0056b3;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1>Assessment</h1>
 
-        .restart-button a:hover {
-            background-color: #0056b3;
-        }
-    </style>
-</head>
+            <form class="test-form" id="testForm" action="#" method="post">
+                <div class="form-group">
+                    <label for="name">Candidate Id:</label>
+                    <input type="text" id="candidateId" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Test Id:</label>
+                    <input type="text" id="testId" required>
+                </div>
+            </form>
 
-<div class="container">
-    <h1>Assessment</h1>
+            <button id="btnsubmit">Submit</button>
 
-    <form class="test-form" id="testForm" action="#" method="post">
-        <div class="form-group">
-            <label for="name">Candidate Id:</label>
-            <input type="text" id="candidateId" required>
+            <h2>Assessment Result</h2>
+            <p>Congratulations! You have completed the assessment.</p>
+            <p>Your score: <strong id="score"></strong></p>
+            <p>Here are the details of your performance:</p>
+            <ul>
+                <li>Correct Answers: <span id="correct"></span></li>
+                <li>Incorrect Answers: <span id="incorrect"></span></li>
+                <li>Skipped Questions: <span id="skipped"></span></li>
+            </ul>
+            <div class="restart-button">
+                <!--  <a href="#" onclick="restartAssessment()">Restart Assessment</a>-->
+            </div>
         </div>
-        <div class="form-group">
-            <label for="email">Test Id:</label>
-            <input type="text" id="testId" required>
-        </div>
-    </form>
+        <script>
+            $(document).ready(function () {
+            
+                // Event handler for checkboxes
+                $("#btnsubmit").click(() => {
+                    var CandidateTestScore;
+                    var candidateId = $('#candidateId').val();
+                    var testId = $('#testId').val();
+                    console.log(candidateId);
+                    console.log(testId);
+                    var CandidateTestScoreUrl = "http://localhost:5235/api/result/candidates/" + candidateId + "/tests/" + testId + "/score";
+                    var CandidateResultTestDetails = "http://localhost:5235/api/result/candidates/" + candidateId + "/tests/" + testId + "/details";
+                    $.ajax({
+                        url: CandidateTestScoreUrl,
+                        type: 'GET',
+                        contentType: 'application/json',
 
-    <button id="btnsubmit">Submit</button>
-
-    <h2>Assessment Result</h2>
-    <p>Congratulations! You have completed the assessment.</p>
-    <p>Your score: <strong id="score"></strong></p>
-    <p>Here are the details of your performance:</p>
-    <ul>
-        <li>Correct Answers: <span id="correct"></span></li>
-        <li>Incorrect Answers: <span id="incorrect"></span></li>
-        <li>Skipped Questions: <span id="skipped"></span></li>
-    </ul>
-    <div class="restart-button">
-        <!--  <a href="#" onclick="restartAssessment()">Restart Assessment</a>-->
-    </div>
-</div>
-
-
-<script>
-
-    $(document).ready(function () {
-    
-        // Event handler for checkboxes
-        $("#btnsubmit").click(() => {
-            var CandidateTestScore;
-            var candidateId = $('#candidateId').val();
-            var testId = $('#testId').val();
-            console.log(candidateId);
-            console.log(testId);
-            var CandidateTestScoreUrl = "http://localhost:5235/api/result/candidates/" + candidateId + "/tests/" + testId + "/score";
-            var CandidateResultTestDetails = "http://localhost:5235/api/result/candidates/" + candidateId + "/tests/" + testId + "/details";
-            $.ajax({
-                url: CandidateTestScoreUrl,
-                type: 'GET',
-                contentType: 'application/json',
-
-                success: function (data) {
-                    CandidateTestScore = data;
-                    console.log(CandidateTestScore)
-                    $("#score").text(CandidateTestScore);
-                },
-                error: function (xhr, status, error) {
-                    console.error(xhr.responseText);
-                }
-            })
+                        success: function (data) {
+                            CandidateTestScore = data;
+                            console.log(CandidateTestScore)
+                            $("#score").text(CandidateTestScore);
+                        },
+                        error: function (xhr, status, error) {
+                            console.error(xhr.responseText);
+                        }
+                    })
 
 
-            $.ajax({
-                url: CandidateResultTestDetails,
-                type: 'GET',
-                contentType: 'application/json',
+                    $.ajax({
+                        url: CandidateResultTestDetails,
+                        type: 'GET',
+                        contentType: 'application/json',
 
-                success: function (data) {
-                    var CandidateTestDetails = data;
-                    console.log(data);
-                    $("#correct").text(CandidateTestDetails.correctAnswers);
-                    $("#incorrect").text(CandidateTestDetails.incorrectAnswers);
-                    $("#skipped").text(CandidateTestDetails.skippedQuestions);
+                        success: function (data) {
+                            var CandidateTestDetails = data;
+                            console.log(data);
+                            $("#correct").text(CandidateTestDetails.correctAnswers);
+                            $("#incorrect").text(CandidateTestDetails.incorrectAnswers);
+                            $("#skipped").text(CandidateTestDetails.skippedQuestions);
 
-                },
-                error: function (xhr, status, error) {
-                    console.error(xhr.responseText);
-                }
-            })
-        });
+                        },
+                        error: function (xhr, status, error) {
+                            console.error(xhr.responseText);
+                        }
+                    })
+                });
 
-    });
-</script>
-</body>
+            });
+        </script>
+    </body>
 
 </html>
