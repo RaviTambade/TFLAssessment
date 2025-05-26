@@ -84,7 +84,6 @@ public class ResultRepository : IResultRepository
     public async Task<bool> SetCandidateTestEndTime(int candidateId, int testId, TestTime time)
     {
         bool status = false;
-
         MySqlConnection connection = new MySqlConnection(_connectionString);
         string query = "update candidatetestresults set testendtime =@TestEndTime where candidateid=@CandidateId and testid=@TestId";
 
