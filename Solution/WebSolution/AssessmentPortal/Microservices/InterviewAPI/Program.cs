@@ -27,6 +27,7 @@ builder.Host.ConfigureLogging(logging =>
 });
 
 builder.Services.AddScoped<IInterviewRepository, InterviewEFCoreRepository>();
+// builder.Services.AddScoped<IInterviewRepository, InterviewRepository>();
 builder.Services.AddScoped<IInterviewService, InterviewService>();
 
 var app = builder.Build();
