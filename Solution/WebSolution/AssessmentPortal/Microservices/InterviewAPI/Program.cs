@@ -26,8 +26,8 @@ builder.Host.ConfigureLogging(logging =>
     logging.AddFile("logs/catalog-{Date}.json", isJson: true);
 });
 
-builder.Services.AddScoped<IInterviewRepository, InterviewEFCoreRepository>();
-// builder.Services.AddScoped<IInterviewRepository, InterviewRepository>();
+// builder.Services.AddScoped<IInterviewRepository, InterviewEFCoreRepository>();
+builder.Services.AddScoped<IInterviewRepository, InterviewRepository>();
 builder.Services.AddScoped<IInterviewService, InterviewService>();
 
 var app = builder.Build();

@@ -26,6 +26,7 @@ public class InterviewRepository : IInterviewRepository
         //                where employees.id=interviews.candidateid
         //                order by interviews.candidateid asc;";
 
+        Console.WriteLine("In GetAllInterviewCandidates function");
         string query = @"select interviews.candidateid,employees.firstname,employees.lastname,subjects.title
                         from interviews 
                         inner join employees on  interviews.candidateid= employees.id
@@ -135,24 +136,27 @@ public class InterviewRepository : IInterviewRepository
             command.Parameters.AddWithValue("@pinterviewId", interviewId);
             await connection.OpenAsync();
             MySqlDataReader reader = command.ExecuteReader();
-            while (reader.Read())
+            if (await reader.ReadAsync())
             {
-
-                string interviewdate = reader["interviewdate"].ToString();
-                string interviewtime = reader["interviewtime"].ToString();
-                string smeName = reader["SmeName"].ToString();
-
-
                 interviewInfo.Id = interviewId;
-                interviewInfo.InterviewDate = interviewdate;
-                interviewInfo.InterviewTime = interviewtime;
-                interviewInfo.SMEName = smeName;
-                Console.WriteLine(interviewInfo.Id + " " + interviewInfo.InterviewDate + " " + interviewInfo.InterviewTime + " " + interviewInfo.SMEName);
-
+                interviewInfo.InterviewDate = reader["interviewdate"].ToString();
+                interviewInfo.InterviewTime = reader["interviewtime"].ToString();
+                interviewInfo.SMEName = reader["SmeName"].ToString();
+                interviewInfo.CandidateName = reader["CandidateName"].ToString();
+                interviewInfo.Subject = reader["Subject"].ToString();
             }
+
+            if (await reader.NextResultAsync())
+            {
+                List<string> criterias = new List<string>();
+                while (await reader.ReadAsync()) //Use while for multiple rows
+                {
+                    criterias.Add(reader["title"].ToString());
+                }
+                interviewInfo.Criterias = criterias.ToArray();
+            }
+            Console.WriteLine($"ID: {interviewInfo.Id}, Date: {interviewInfo.InterviewDate}, Time: {interviewInfo.InterviewTime}, SME: {interviewInfo.SMEName}, Candidate: {interviewInfo.CandidateName}, Subject: {interviewInfo.Subject}, Criterias: {string.Join(", ", interviewInfo.Criterias)}");
             reader.Close();
-
-
         }
         catch (Exception e)
         {
