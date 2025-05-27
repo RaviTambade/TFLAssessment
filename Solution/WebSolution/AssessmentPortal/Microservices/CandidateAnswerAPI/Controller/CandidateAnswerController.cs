@@ -23,7 +23,11 @@ public class CandidateAnswerController : ControllerBase
     public async Task<IActionResult> InsertCandidateAnswers(int candidateId, [FromBody] List<CandidateAnswer> answers)
     {
         bool status =await _service.InsertCandidateAnswers(candidateId,answers);
-        _logger.LogInformation("Log Generated");
-        return Ok(status);
+        if(!status) {
+            _logger.LogError("Failed to insert candidate answers for candidate ID: {CandidateId}", candidateId);
+            return BadRequest("Failed to insert candidate answers.");
+        }
+        _logger.LogInformation("Candidate answers inserted successfully for candidate ID: {CandidateId}", candidateId);
+        return Ok(new {message ="Candidate answers inserted successfully.",status = status});
     }
 }
