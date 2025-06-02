@@ -62,9 +62,14 @@ namespace Transflower.TFLAssessment.Controllers
         // Get candidate details of test.
         // URL: http://localhost:5235/api/Result/candidates/1/tests/1/details
         [HttpGet("candidates/{candidateId}/tests/{testId}/details")]
-        public async Task<IActionResult> GetCandidateResultDetails(int candidateId, int testId)
+        public async Task<IActionResult> GetCandidateResultDetails (int candidateId, int testId)
         {   
             CandidateResultDetails result = await _svc.CandidateTestResultDetails(candidateId, testId);
+            if (result == null)
+            {
+                _logger.LogWarning("No candidate details found for candidateId: {CandidateId} and testId: {TestId}", candidateId, testId);
+                return NotFound("Candidate details not found.");
+            }
             _logger.LogInformation("Log Generated For get candidate details of test");
             return Ok(result);
         }
