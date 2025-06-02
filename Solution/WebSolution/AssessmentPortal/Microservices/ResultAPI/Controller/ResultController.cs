@@ -80,6 +80,12 @@ namespace Transflower.TFLAssessment.Controllers
         public async Task<IActionResult> GetTestResultDetails(int testId)
         {   
             List<TestResultDetails> result = await _svc.GetTestResultDetails(testId);
+            Console.WriteLine(result.Count);
+            if (result == null || result.Count == 0)
+            {
+                _logger.LogWarning("No test result details found for testId: {TestId}", testId);
+                return BadRequest("Test result details not found.");
+            }
             _logger.LogInformation("Log Generated For get test result details");
             return Ok(result);
         }

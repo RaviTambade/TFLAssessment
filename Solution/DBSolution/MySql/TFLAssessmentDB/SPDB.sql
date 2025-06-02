@@ -73,8 +73,19 @@ create procedure spcandidatetestresultdetails(IN pcandidateId INT, IN ptestId IN
 BEGIN
 DECLARE totalQuestions INT;
 DECLARE correctCandidateAnswers INT;
+DECLARE attendedCount INT;
 
-select count(*) INTO totalQuestions from testquestions where testid=1;
+ SELECT COUNT(*) INTO attendedCount
+    FROM candidateanswers
+    INNER JOIN testquestions ON testquestions.questionbankid = candidateanswers.testquestionid
+    WHERE candidateanswers.candidateid = pcandidateId 
+      AND testquestions.testid = ptestId;
+
+    IF attendedCount = 0 THEN
+        SELECT 'Candidate has not attended the test.' AS message;
+    ELSE
+    
+select count(*) INTO totalQuestions from testquestions where testid=ptestId;
 
 SELECT COUNT(CASE WHEN candidateanswers.answerkey = questionbank.answerkey THEN 1 ELSE NULL END) AS score 
 INTO correctCandidateAnswers FROM candidateanswers 
@@ -86,9 +97,10 @@ SELECT COUNT(*) INTO pskippedQuestions FROM CandidateAnswers INNER JOIN testQues
 WHERE candidateanswers.answerkey="NO" AND candidateanswers.candidateId = pcandidateId AND testquestions.testId = ptestId;
 
 SET pcorrectAnswers=correctCandidateAnswers;
+END IF;
 END $$
 
-CALL spcandidatetestresultdetails(3,2, @pcorrectAnswers, @pincorrectAnswers,@pskippedQuestions);
+CALL spcandidatetestresultdetails(32,2, @pcorrectAnswers, @pincorrectAnswers,@pskippedQuestions);
 
 select @pcorrectAnswers,@pincorrectAnswers,@pskippedQuestions;
 
