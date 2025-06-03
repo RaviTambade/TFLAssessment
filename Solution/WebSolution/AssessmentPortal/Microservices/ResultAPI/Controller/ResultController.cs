@@ -96,6 +96,11 @@ namespace Transflower.TFLAssessment.Controllers
         public async Task<IActionResult> GetAppearedCandidates(int testId)
         {   
             List<AppearedCandidate> candidates = await _svc.GetAppearedCandidates(testId);
+            if (candidates == null || candidates.Count == 0)
+            {
+                _logger.LogWarning("No appeared candidates found for testId: {TestId}", testId);
+                return BadRequest("No appeared candidates found.");
+            }
             _logger.LogInformation("Log Generated For get appeared candidates of the test");
             return Ok(candidates);
         }
@@ -106,6 +111,11 @@ namespace Transflower.TFLAssessment.Controllers
         public async Task<IActionResult> GetPassedCandidate(int testId)
         {   
             List<PassedCandidateDetails> results = await _svc.GetPassedCandidateResults(testId);
+            if (results == null || results.Count == 0)
+            {
+                _logger.LogWarning("No passed candidates found for testId: {TestId}", testId);
+                return BadRequest("No passed candidates found.");
+            }
             _logger.LogInformation("Log Generated For get passed candidates of the test");
             return Ok(results);
         }
