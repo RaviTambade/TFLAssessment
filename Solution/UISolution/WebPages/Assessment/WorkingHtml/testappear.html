@@ -22,20 +22,20 @@
           <tbody>
             <tr>
               <td>
-                <p id="pTitle">Choose  programming language for Express farmework</p>
+                <p id="pTitle">Click on start button to start test</p>
               </td>
             </tr>
             <tr>
-              <td> <input type="radio" name="answer" id="a" /> <label id="lblOptionA"></label>C#</td>
+              <td> <input type="radio" name="answer" id="a" /> <label id="lblOptionA"></label></td>
             </tr>
             <tr>
-              <td> <input type="radio" name="answer" id="b" /><label id="lblOptionB"></label>Java </td>
+              <td> <input type="radio" name="answer" id="b" /><label id="lblOptionB"></label></td>
             </tr>
             <tr>
-              <td> <input type="radio" name="answer" id="c" /><label id="lblOptionC"></label>Javascript</td>
+              <td> <input type="radio" name="answer" id="c" /><label id="lblOptionC"></label></td>
             </tr>
             <tr>
-              <td> <input type="radio" name="answer" id="d"><label id="lblOptionD"></label> C++</td>
+              <td> <input type="radio" name="answer" id="d"><label id="lblOptionD"></label></td>
             </tr>
             <tr>
               <td>
@@ -145,12 +145,12 @@
             let answer = question.answer;
             console.log(questions);
 
-            finalCandidateAnswers.push({ "TestQuestionId": questionId, "Answer": answer });
+            finalCandidateAnswers.push({ "TestQuestionId": questionId, "AnswerKey": answer });
           })
           console.log(finalCandidateAnswers);
 
         
-          let assessmentAnswersUrl = "http://localhost:5299/api/candidateanswer/assessmentanswers/candidates/"+candidateId;
+          let assessmentAnswersUrl = "http://localhost:5299/api/candidateanswer/assessmentanswers/candidates/"+candidateId; // we need to change add test id also
           $.ajax({
             url: assessmentAnswersUrl,
             type: 'POST',
@@ -342,7 +342,7 @@
 
       var getCurrentDateTime = () => {
         let d = new Date();
-        time.month = d.getMonth() ;
+        time.month = d.getMonth()+1;
         time.year = d.getFullYear();
         time.day = d.getDate();
         time.hour = d.getHours();
