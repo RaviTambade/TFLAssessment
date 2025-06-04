@@ -296,24 +296,42 @@
         });
 
         //Show Result
-        $("#btnResult").click(() => {
-          let scoreUrl = "http://localhost:5235/api/result/candidates/"+candidateId+"/tests/"+testId+"/score";
-        $.ajax({
+      $("#btnResult").click(() => {
+    let scoreUrl = "http://localhost:5235/api/result/candidates/" + candidateId + "/tests/" + testId + "/score";
+    $.ajax({
         url: scoreUrl,
         type: 'GET',
         contentType: 'application/json',
-
         success: function (data) {
-            score = (data);
+            score = data;
             console.log(score);
-            $("#lblresult").text("Your Score is:" + score);
-            
+            $("#lblresult").text("Your Score is: " + score);
+
+            // Send score to your backend to send an email
+            $.ajax({
+                url: "http://localhost:3000/send-score-email",
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify({
+                    candidateId: candidateId,
+                    testId: testId,
+                    score: score,
+                    email: "ghewadeom@gmail.com" // Replace with actual user email
+                }),
+                success: function () {
+                    console.log("Email sent successfully!");
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error sending email:", xhr.responseText);
+                }
+            });
         },
         error: function (xhr, status, error) {
             console.error(xhr.responseText);
         }
     });
-  })
+});
+
 
 
         //refersh progress bar on answer  selection
