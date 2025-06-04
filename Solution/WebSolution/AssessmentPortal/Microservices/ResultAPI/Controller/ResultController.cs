@@ -126,6 +126,11 @@ namespace Transflower.TFLAssessment.Controllers
         public async Task<IActionResult> GetFailedCandidate(int testId)
         {   
             List<FailedCandidateDetails> results = await _svc.GetFailedCandidateResults(testId);
+            if (results == null || results.Count == 0)
+            {
+                _logger.LogWarning("No failed candidates found for testId: {TestId}", testId);
+                return BadRequest("No failed candidates found.");
+            }
             _logger.LogInformation("Log Generated For get failed candidates of the test");
             return Ok(results);
         }
@@ -136,6 +141,11 @@ namespace Transflower.TFLAssessment.Controllers
         public async Task<IActionResult> SetPassingLevel(int testId, int passingLevel)
         {   
             bool status = await _svc.SetPassingLevel(testId, passingLevel);
+            if (!status)
+            {
+                _logger.LogError("Failed to set passing level for testId: {TestId}", testId);
+                return BadRequest("Failed to set passing level.");
+            }
             _logger.LogInformation("Log Generated For Set Passing Level of the test");
             return Ok(status);
         }
@@ -145,6 +155,12 @@ namespace Transflower.TFLAssessment.Controllers
         public async Task<IActionResult> GetTestList(int candidateId)
         {
         List<TestList> results = await _svc.GetTestList(candidateId);
+            if (results == null || results.Count == 0)
+            {
+                _logger.LogWarning("No test list found for candidateId: {CandidateId}", candidateId);
+                return NotFound("Test list not found.");
+            }
+            _logger.LogInformation("Log Generated For get Test List");
         return Ok(results);
         }
 
@@ -155,6 +171,11 @@ namespace Transflower.TFLAssessment.Controllers
         public async Task<IActionResult> GetSubjectResultDetails(int subjectId)
         {   
             List<CandidateSubjectResults> results = await _svc.GetSubjectResultDetails(subjectId);
+            if (results == null || results.Count == 0)
+            {
+                _logger.LogWarning("No subject result details found for subjectId: {SubjectId}", subjectId);
+                return BadRequest("Subject result details not found.");
+            }
             _logger.LogInformation("Log Generated For get Subject Result Details");
             return Ok(results);
         }

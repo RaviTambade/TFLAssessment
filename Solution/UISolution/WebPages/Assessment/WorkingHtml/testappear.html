@@ -190,6 +190,8 @@
 
       var testId =1;
       var candidateId = 1;
+      var testId =1;
+      var candidateId = 1;
 
       //rest api urls
       var remoteWeb = "http://localhost:5238"
@@ -258,12 +260,12 @@
             let answer = question.answer;
             console.log(questions);
 
-            finalCandidateAnswers.push({ "TestQuestionId": questionId, "Answer": answer });
+            finalCandidateAnswers.push({ "TestQuestionId": questionId, "AnswerKey": answer });
           })
           console.log(finalCandidateAnswers);
 
         
-          let assessmentAnswersUrl = "http://localhost:5299/api/candidateanswer/assessmentanswers/candidates/"+candidateId;
+          let assessmentAnswersUrl = "http://localhost:5299/api/candidateanswer/assessmentanswers/candidates/"+candidateId; // we need to change add test id also
           $.ajax({
             url: assessmentAnswersUrl,
             type: 'POST',
@@ -455,7 +457,7 @@
 
       var getCurrentDateTime = () => {
         let d = new Date();
-        time.month = d.getMonth() ;
+        time.month = d.getMonth()+1;
         time.year = d.getFullYear();
         time.day = d.getDate();
         time.hour = d.getHours();
