@@ -31,7 +31,7 @@ public class CandidateAnswerController : ControllerBase
         _logger.LogInformation("Candidate answers inserted successfully for candidate ID: {CandidateId}", candidateId);
         return Ok(new { message = "Candidate answers inserted successfully.", status = status });
     }
-    
+
     // [HttpPost("assessmentanswers/candidates/{candidateId}/testId/{testId}")]
     // public async Task<IActionResult> InsertCandidateAnswers(int candidateId, [FromBody] List<CandidateAnswer> answers)
     // {
@@ -43,4 +43,20 @@ public class CandidateAnswerController : ControllerBase
     //     _logger.LogInformation("Candidate answers inserted successfully for candidate ID: {CandidateId}", candidateId);
     //     return Ok(new {message ="Candidate answers inserted successfully.",status = status});
     // }
+
+    [HttpGet("assessmentanswers/candidates/{candidateId}/testId/{testId}")]
+    public async Task<IActionResult> GetCandidateAnswers(int candidateId, int testId)
+    {
+
+        Console.WriteLine("GetCandidateAnswers called with candidateId: " + candidateId + " and testId: " + testId);
+        List<CandidateAnswer> answers = await _service.GetCandidateAnswers(candidateId, testId);
+        if (answers == null || answers.Count == 0)
+        {
+            _logger.LogWarning("No answers found for candidate ID: {CandidateId} and test ID: {TestId}", candidateId, testId);
+            return NotFound("No answers found for the specified candidate and test.");
+        }
+        _logger.LogInformation("Retrieved answers for candidate ID: {CandidateId} and test ID: {TestId}", candidateId, testId);
+        return Ok(answers);
+    }
+    
 }

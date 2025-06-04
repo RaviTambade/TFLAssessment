@@ -42,5 +42,11 @@ namespace Transflower.TFLAssessment.Repositories
             }
             return status;
         }
+
+        public async Task<List<CandidateAnswer>> GetCandidateAnswers(int candidateId, int testId)
+        {
+            List<CandidateAnswer> answers = new List<CandidateAnswer>();
+            return answers;
+        }
     }
 }

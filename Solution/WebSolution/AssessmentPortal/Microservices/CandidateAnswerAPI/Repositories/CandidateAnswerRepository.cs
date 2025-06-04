@@ -48,5 +48,44 @@ namespace Transflower.TFLAssessment.Repositories
             }
             return status;
         }
+
+        public async Task<List<CandidateAnswer>> GetCandidateAnswers(int candidateId, int testId)
+        {
+            List<CandidateAnswer> answers = new List<CandidateAnswer>();
+            string query = "SELECT * FROM candidateanswers WHERE candidateid = @CandidateId AND testquestionid IN (SELECT id FROM testquestions WHERE testid = @TestId)";
+            using (MySqlConnection connection = new MySqlConnection(_connectionString))
+            {
+                try
+                {
+                    await connection.OpenAsync();
+                    using (MySqlCommand command = new MySqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@CandidateId", candidateId);
+                        command.Parameters.AddWithValue("@TestId", testId);
+
+                        MySqlDataReader reader = command.ExecuteReader();
+                            {
+                                while (await reader.ReadAsync())
+                                {
+                                    CandidateAnswer answer = new CandidateAnswer
+                                    {
+                                        Id = reader.GetInt32("id"),
+                                        CandidateId = reader.GetInt32("candidateid"),
+                                        TestQuestionId = reader.GetInt32("testquestionid"),
+                                        AnswerKey = reader.GetString("answerkey")
+                                    };
+                                    answers.Add(answer);
+                                }
+                            }
+                        }
+                    
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+            }
+            return answers;
+        }
     }
 }
