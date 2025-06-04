@@ -58,5 +58,27 @@ public class CandidateAnswerController : ControllerBase
         _logger.LogInformation("Retrieved answers for candidate ID: {CandidateId} and test ID: {TestId}", candidateId, testId);
         return Ok(answers);
     }
+
+    [HttpGet("assessmentanswers/candidates/{candidateId}/tests/{testId}/results")]
+    public async Task<IActionResult> GetCandidateAnswerResults(int candidateId, int testId)
+    {
+        _logger.LogInformation(
+            "GetCandidateAnswerResults called with candidateId: {cand}, testId: {t}", 
+            candidateId, 
+            testId);
+
+        List<CandidateAnswerResult> results =
+            await _service.GetCandidateAnswerResultsAsync(candidateId, testId);
+
+        if (results == null || results.Count == 0)
+        {
+            _logger.LogWarning(
+                "No answers found for candidate {cand} test {t}", 
+                candidateId, 
+                testId);
+            return NotFound("No answers found for the specified candidate and test.");
+        }
+        return Ok(results);
+    }
     
 }

@@ -21,5 +21,9 @@ namespace Transflower.TFLAssessment.Services
         {
             return _repository.GetCandidateAnswers(candidateId, testId);
         }
+        public Task<List<CandidateAnswerResult>> GetCandidateAnswerResultsAsync(int candidateId, int testId)
+        {
+            return _repository.GetCandidateAnswerResultsAsync(candidateId, testId);
+        }
     }
 }

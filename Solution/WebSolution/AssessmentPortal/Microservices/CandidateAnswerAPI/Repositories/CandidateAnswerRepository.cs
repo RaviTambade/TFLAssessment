@@ -64,21 +64,21 @@ namespace Transflower.TFLAssessment.Repositories
                         command.Parameters.AddWithValue("@TestId", testId);
 
                         MySqlDataReader reader = command.ExecuteReader();
+                        {
+                            while (await reader.ReadAsync())
                             {
-                                while (await reader.ReadAsync())
+                                CandidateAnswer answer = new CandidateAnswer
                                 {
-                                    CandidateAnswer answer = new CandidateAnswer
-                                    {
-                                        Id = reader.GetInt32("id"),
-                                        CandidateId = reader.GetInt32("candidateid"),
-                                        TestQuestionId = reader.GetInt32("testquestionid"),
-                                        AnswerKey = reader.GetString("answerkey")
-                                    };
-                                    answers.Add(answer);
-                                }
+                                    Id = reader.GetInt32("id"),
+                                    CandidateId = reader.GetInt32("candidateid"),
+                                    TestQuestionId = reader.GetInt32("testquestionid"),
+                                    AnswerKey = reader.GetString("answerkey")
+                                };
+                                answers.Add(answer);
                             }
                         }
-                    
+                    }
+
                 }
                 catch (Exception e)
                 {
@@ -86,6 +86,47 @@ namespace Transflower.TFLAssessment.Repositories
                 }
             }
             return answers;
+        }
+        
+         public async Task<List<CandidateAnswerResult>> GetCandidateAnswerResultsAsync(int candidateId, int testId)
+        {
+            var list = new List<CandidateAnswerResult>();
+            string sql = @"
+                    SELECT 
+                        ca.id,
+                        ca.candidateid,
+                        ca.testquestionid,
+                        ca.answerkey AS CandidateAnswer,
+                        qb.answerkey AS CorrectAnswer
+                    FROM candidateanswers ca
+                    JOIN questionbank qb ON ca.testquestionid = qb.id
+                    WHERE ca.candidateid = @CandidateId;
+                ";
+
+            await using var conn = new MySqlConnection(_connectionString);
+            await conn.OpenAsync();
+
+            await using var cmd = new MySqlCommand(sql, conn);
+            cmd.Parameters.AddWithValue("@candidateId", candidateId);
+            // cmd.Parameters.AddWithValue("@testId", testId);
+
+            await using var reader = await cmd.ExecuteReaderAsync();
+            while (await reader.ReadAsync())
+            {
+                 var result = new CandidateAnswerResult
+                        {
+                            // Id = reader.GetInt32("id"),
+                            // CandidateId = reader.GetInt32("candidateid"),
+                            // TestQuestionId = reader.GetInt32("testquestionid"),
+                            CandidateAnswer = reader.GetString("CandidateAnswer"),
+                            CorrectAnswer = reader.GetString("CorrectAnswer"),
+                            IsCorrect = reader.GetString("CandidateAnswer")
+                                        .Equals(reader.GetString("CorrectAnswer"), StringComparison.OrdinalIgnoreCase)
+                        };
+                list.Add(result);
+            }
+
+            return list;
         }
     }
 }

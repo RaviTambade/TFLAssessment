@@ -8,5 +8,6 @@ namespace Transflower.TFLAssessment.Repositories.Interfaces
     {
         Task<bool> InsertCandidateAnswers(int candidateId, List<CandidateAnswer> answers);
         Task<List<CandidateAnswer>> GetCandidateAnswers(int candidateId, int testId);
+        Task<List<CandidateAnswerResult>> GetCandidateAnswerResultsAsync(int candidateId, int testId);
     }
 }
