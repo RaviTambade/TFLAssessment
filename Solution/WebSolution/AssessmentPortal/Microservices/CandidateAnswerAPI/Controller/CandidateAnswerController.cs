@@ -70,26 +70,26 @@ public class CandidateAnswerController : ControllerBase
     }
 
     //Get candidate and test details for the candidate answers
-    // [HttpGet("assessmentanswers/candidates/{candidateId}/tests/{testId}/details")]
-    // public async Task<CandidateTestDetails> GetCandidateTestDetails(int candidateId, int testId)
-    // {
-    //     _logger.LogInformation(
-    //         "GetCandidateTestDetails called with candidateId: {cand}, testId: {t}",
-    //         candidateId,
-    //         testId);
+    [HttpGet("assessmentanswers/candidates/{candidateId}/tests/{testId}/details")]
+    public async Task<IActionResult> GetCandidateTestDetails(int candidateId, int testId)
+    {
+        _logger.LogInformation(
+            "GetCandidateTestDetails called with candidateId: {cand}, testId: {t}",
+            candidateId,
+            testId);
 
-    //     CandidateTestDetails details =
-    //         await _service.GetCandidateTestDetails(candidateId, testId);
+        CandidateTestDetails details =
+            await _service.GetCandidateTestDetails(candidateId, testId);
 
-    //     if (details == null)
-    //     {
-    //         _logger.LogWarning(
-    //             "No details found for candidate {cand} test {t}",
-    //             candidateId,
-    //             testId);
-    //         return NotFound("No details found for the specified candidate and test.");
-    //     }
-    //     return Ok(details);
-    // }
+        if (details == null)
+        {
+            _logger.LogWarning(
+                "No details found for candidate {cand} test {t}",
+                candidateId,
+                testId);
+            return NotFound("No details found for the specified candidate and test.");
+        }
+        return Ok(details);
+    }
     
 }

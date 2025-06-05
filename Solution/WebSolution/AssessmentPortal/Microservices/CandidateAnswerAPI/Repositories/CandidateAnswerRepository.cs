@@ -131,20 +131,53 @@ namespace Transflower.TFLAssessment.Repositories
 
         public async Task<CandidateTestDetails> GetCandidateTestDetails(int candidateId, int testId)
         {
-            //get candidate and test details for the candidate answers
-
             CandidateTestDetails details = new CandidateTestDetails();
-            string query = @"
-                SELECT 
-                    c.id AS CandidateId, 
-                    c.name AS CandidateName, 
-                    t.id AS TestId, 
-                    t.name AS TestName, 
-                    t.description AS TestDescription
-                FROM candidates c
-                JOIN tests t ON c.testid = t.id
-                WHERE c.id = @CandidateId AND t.id = @TestId;";
+
+            using (MySqlConnection connection = new MySqlConnection(_connectionString))
+            {
+                await connection.OpenAsync();
+                // Query candidate
+                string candidateQuery = "SELECT id, firstname FROM employees WHERE id = @CandidateId;";
+                using (MySqlCommand cmd1 = new MySqlCommand(candidateQuery, connection))
+                {
+                    cmd1.Parameters.AddWithValue("@CandidateId", candidateId);
+                    using (MySqlDataReader reader1 = cmd1.ExecuteReader())
+                    // MySqlDataReader reader1 = cmd1.ExecuteReader();
+                    {
+                        if (await reader1.ReadAsync())
+                        {
+                            details.CandidateId = reader1.GetInt32("id");
+                            details.CandidateName = reader1.GetString("firstname");
+                        }
+                    }
+                }
+                /*
+                public int TestId { get; set; }
+                public string TestName { get; set; }
+                public DateTime TestDate { get; set; }
+                public int TestPassingLevel{ get; set; }
+                */
+                // Query test
+                string testQuery = "SELECT id, name, passinglevel, scheduleddate FROM tests WHERE id = @TestId;";
+                using (MySqlCommand cmd2 = new MySqlCommand(testQuery, connection))
+                {
+                    cmd2.Parameters.AddWithValue("@TestId", testId);
+                    
+                    using (MySqlDataReader reader2 = cmd2.ExecuteReader())
+                    {
+                        if (await reader2.ReadAsync())
+                        {
+                            details.TestId = reader2.GetInt32("id");
+                            details.TestName = reader2.GetString("name");
+                            details.TestDate = reader2.GetDateTime("scheduleddate");
+                            details.TestPassingLevel = reader2.GetInt32("passinglevel");
+                        }
+                    }
+                }
+            }
+
             return details;
         }
+
     }
 }
