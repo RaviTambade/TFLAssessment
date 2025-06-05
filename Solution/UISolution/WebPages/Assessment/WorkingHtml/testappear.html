@@ -160,7 +160,7 @@
             <tr>
               <td><button id="btnStart">Start</button></td>
               <td><button id="btnSubmit">Submit</button></td>
-              <td><button id="btnResult">ShowResult</button></td>
+              <!-- <td><button id="btnResult">ShowResult</button></td> -->
             </tr>
           </tbody>
         </table>
@@ -290,7 +290,7 @@
               console.log(response);
 
               setTimeout(() => {
-                window.location.href = "showTestResult.html"; 
+                window.location.href = "correctAnswer.html"; 
               }, 1000);
             },
             error: function (xhr, status, error) {
@@ -559,7 +559,7 @@
 
               // Redirect to Test Over page after 2 seconds
                 setTimeout(() => {
-                  window.location.href = "showTestResult.html"; 
+                  window.location.href = "correctAnswer.html"; 
                 }, 2000);
             },
             error: function (xhr, status, error) {
@@ -579,7 +579,7 @@
             
               //Redirect to Test Over page after 2 seconds
               setTimeout(() => {
-                window.location.href = "showTestResult.html"; 
+                window.location.href = "correctAnswer.html"; 
               }, 2000);
             },
             error: function (xhr, status, error) {
