@@ -80,4 +80,28 @@ public class CandidateAnswerController : ControllerBase
         }
         return Ok(results);
     }
+
+    //Get candidate and test details for the candidate answers
+    [HttpGet("assessmentanswers/candidates/{candidateId}/tests/{testId}/details")]
+    public async Task<IActionResult> GetCandidateAnswerDetails(int candidateId, int testId)
+    {
+        _logger.LogInformation(
+            "GetCandidateAnswerDetails called with candidateId: {cand}, testId: {t}",
+            candidateId,
+            testId);
+
+        CandidateAnswerDetails details =
+            await _service.GetCandidateAnswerDetails(candidateId, testId);
+
+        if (details == null)
+        {
+            _logger.LogWarning(
+                "No details found for candidate {cand} test {t}",
+                candidateId,
+                testId);
+            return NotFound("No details found for the specified candidate and test.");
+        }
+        return Ok(details);
+    }
+    
 }

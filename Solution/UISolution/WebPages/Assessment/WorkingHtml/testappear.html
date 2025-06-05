@@ -288,6 +288,10 @@
             success: function (response) {
               // Show result
               console.log(response);
+
+              setTimeout(() => {
+                window.location.href = "showTestResult.html"; 
+              }, 1000);
             },
             error: function (xhr, status, error) {
               console.error(xhr.responseText);
@@ -521,9 +525,7 @@
               
                 $("#btnStart").prop("disabled", true);
                 $("#btnSubmit").prop("disabled", true);
-              
-                // Show "Test Over" message
-                $("#testOverMessage").show();
+    
               
                 // Auto-submit answers
                 autoSubmitTest();
@@ -557,7 +559,7 @@
 
               // Redirect to Test Over page after 2 seconds
                 setTimeout(() => {
-                  window.location.href = "test-over.html"; // Replace with your actual page
+                  window.location.href = "showTestResult.html"; 
                 }, 2000);
             },
             error: function (xhr, status, error) {
@@ -577,7 +579,7 @@
             
               //Redirect to Test Over page after 2 seconds
               setTimeout(() => {
-                window.location.href = "showTestResult.html"; // Replace with your actual page
+                window.location.href = "showTestResult.html"; 
               }, 2000);
             },
             error: function (xhr, status, error) {
