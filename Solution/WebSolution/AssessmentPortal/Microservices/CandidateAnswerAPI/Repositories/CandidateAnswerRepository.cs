@@ -87,8 +87,8 @@ namespace Transflower.TFLAssessment.Repositories
             }
             return answers;
         }
-        
-         public async Task<List<CandidateAnswerResult>> GetCandidateAnswerResultsAsync(int candidateId, int testId)
+
+        public async Task<List<CandidateAnswerResult>> GetCandidateAnswerResultsAsync(int candidateId, int testId)
         {
             var list = new List<CandidateAnswerResult>();
             string sql = @"
@@ -113,20 +113,38 @@ namespace Transflower.TFLAssessment.Repositories
             await using var reader = await cmd.ExecuteReaderAsync();
             while (await reader.ReadAsync())
             {
-                 var result = new CandidateAnswerResult
-                        {
-                            // Id = reader.GetInt32("id"),
-                            // CandidateId = reader.GetInt32("candidateid"),
-                            // TestQuestionId = reader.GetInt32("testquestionid"),
-                            CandidateAnswer = reader.GetString("CandidateAnswer"),
-                            CorrectAnswer = reader.GetString("CorrectAnswer"),
-                            IsCorrect = reader.GetString("CandidateAnswer")
-                                        .Equals(reader.GetString("CorrectAnswer"), StringComparison.OrdinalIgnoreCase)
-                        };
+                var result = new CandidateAnswerResult
+                {
+                    // Id = reader.GetInt32("id"),
+                    // CandidateId = reader.GetInt32("candidateid"),
+                    // TestQuestionId = reader.GetInt32("testquestionid"),
+                    CandidateAnswer = reader.GetString("CandidateAnswer"),
+                    CorrectAnswer = reader.GetString("CorrectAnswer"),
+                    IsCorrect = reader.GetString("CandidateAnswer")
+                                       .Equals(reader.GetString("CorrectAnswer"), StringComparison.OrdinalIgnoreCase)
+                };
                 list.Add(result);
             }
 
             return list;
+        }
+
+        public async Task<CandidateTestDetails> GetCandidateTestDetails(int candidateId, int testId)
+        {
+            //get candidate and test details for the candidate answers
+
+            CandidateTestDetails details = new CandidateTestDetails();
+            string query = @"
+                SELECT 
+                    c.id AS CandidateId, 
+                    c.name AS CandidateName, 
+                    t.id AS TestId, 
+                    t.name AS TestName, 
+                    t.description AS TestDescription
+                FROM candidates c
+                JOIN tests t ON c.testid = t.id
+                WHERE c.id = @CandidateId AND t.id = @TestId;";
+            return details;
         }
     }
 }
