@@ -151,12 +151,6 @@ namespace Transflower.TFLAssessment.Repositories
                         }
                     }
                 }
-                /*
-                public int TestId { get; set; }
-                public string TestName { get; set; }
-                public DateTime TestDate { get; set; }
-                public int TestPassingLevel{ get; set; }
-                */
                 // Query test
                 string testQuery = "SELECT id, name, passinglevel, scheduleddate FROM tests WHERE id = @TestId;";
                 using (MySqlCommand cmd2 = new MySqlCommand(testQuery, connection))
