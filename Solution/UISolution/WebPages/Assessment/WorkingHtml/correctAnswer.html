@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Assessment Report</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background-color: #f9f9f9;
+    }
+    .question-card {
+      background-color: #fff;
+      padding: 15px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+    .question-title {
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    .option {
+      margin: 5px 0;
+      padding: 5px 10px;
+      border-radius: 5px;
+      display: inline-block;
+    }
+    .correct {
+      background-color: #d4edda;
+      color: #155724;
+      font-weight: bold;
+    }
+    .incorrect {
+      background-color: #f8d7da;
+      color: #721c24;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Candidate Test Review</h1>
+  <div id="questions-container">Loading...</div>
+
+  <script>
+    $(document).ready(function () {
+      const questionsUrl = "http://localhost:5172/api/questionbank/questions/tests/1";
+      const answersUrl = "http://localhost:5299/api/candidateanswer/assessmentanswers/candidates/1/tests/1/results";
+
+      // Fetch both questions and answers
+      $.when($.getJSON(questionsUrl), $.getJSON(answersUrl)).done(function (questionsData, answersData) {
+        const questions = questionsData[0];
+        const answers = answersData[0];
+
+        const container = $("#questions-container");
+        container.empty();
+
+        questions.forEach((q, index) => {
+          const answer = answers[index];
+          const userAnswer = answer?.candidateAnswer?.toLowerCase();
+          const correctAnswer = answer?.correctAnswer?.toLowerCase();
+
+          const getOptionClass = (key) => {
+            if (key === correctAnswer && key === userAnswer) return "correct"; // correct and chosen
+            if (key === correctAnswer) return "correct"; // correct but not chosen
+            if (key === userAnswer && key !== correctAnswer) return "incorrect"; // wrong answer chosen
+            return ""; // default
+          };
+
+          const html = `
+            <div class="question-card">
+              <div class="question-title">${index + 1}. ${q.title}</div>
+              <div class="option ${getOptionClass('a')}">A. ${q.a}</div><br>
+              <div class="option ${getOptionClass('b')}">B. ${q.b}</div><br>
+              <div class="option ${getOptionClass('c')}">C. ${q.c}</div><br>
+              <div class="option ${getOptionClass('d')}">D. ${q.d}</div>
+            </div>
+          `;
+          container.append(html);
+        });
+      }).fail(function () {
+        $("#questions-container").html("Error loading data. Please check API URLs or server status.");
+      });
+    });
+  </script>
+
+</body>
+</html>
