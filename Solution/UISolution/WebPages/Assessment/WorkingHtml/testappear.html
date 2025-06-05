@@ -489,21 +489,103 @@
         $("#btnLast").prop("disabled", status);
       }
 
-      var testTimeLimit = () => {
-        intervalId = setInterval(() => {
-          $("#stopWatch").html(remainingTime);
-          if (remainingTime === 0) {
-            activateNavigation(true);
-            $("#btnStart").prop("disabled", true);
-            clearInterval(intervalId);
-          }
-          else {
-            $("#btnSubmit").prop("disabled", false);
-          }
-          remainingTime--;
-        },
-          1000);
-      }
+      // var testTimeLimit = () => {
+      //   intervalId = setInterval(() => {
+      //     $("#stopWatch").html(remainingTime);
+      //     if (remainingTime === 0) {
+      //       activateNavigation(true);
+      //       $("#btnStart").prop("disabled", true);
+      //       clearInterval(intervalId);
+
+      //       $("#testOverMessage").show();
+      //       // $("#btnSubmit").prop("disabled", false);
+      //     }
+      //     else {
+      //       $("#btnSubmit").prop("disabled", false);
+      //     }
+      //     remainingTime--;
+      //   },
+      //     1000);
+      // }
+
+        var testTimeLimit = () => {
+            intervalId = setInterval(() => {
+              $("#stopWatch").html(remainingTime);
+            
+              if (remainingTime === 0) {
+                clearInterval(intervalId);
+              
+                // Disable navigation and answer inputs
+                activateNavigation(true);
+                $("input[name='answer']").prop("disabled", true);
+              
+                $("#btnStart").prop("disabled", true);
+                $("#btnSubmit").prop("disabled", true);
+              
+                // Show "Test Over" message
+                $("#testOverMessage").show();
+              
+                // Auto-submit answers
+                autoSubmitTest();
+              } else {
+                $("#btnSubmit").prop("disabled", false);
+              }
+            
+              remainingTime--;
+            }, 1000);
+          };          
+
+         var autoSubmitTest = () => {
+          var finalCandidateAnswers = [];
+            
+          questions.map((question) => {
+            let questionId = question.id;
+            let answer = question.answer;
+            finalCandidateAnswers.push({ "TestQuestionId": questionId, "AnswerKey": answer });
+          });
+        
+          let assessmentAnswersUrl = "http://localhost:5299/api/candidateanswer/assessmentanswers/candidates/" + candidateId;
+        
+          // Submit answers
+          $.ajax({
+            url: assessmentAnswersUrl,
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(finalCandidateAnswers),
+            success: function (response) {
+              console.log("Answers auto-submitted:", response);
+
+              // Redirect to Test Over page after 2 seconds
+                setTimeout(() => {
+                  window.location.href = "test-over.html"; // Replace with your actual page
+                }, 2000);
+            },
+            error: function (xhr, status, error) {
+              console.error(xhr.responseText);
+            }
+          });
+        
+          // Set end time
+          var endTime = getCurrentDateTime();
+          $.ajax({
+            url: endTimeUrl,
+            type: 'PUT',
+            contentType: 'application/json',
+            data: JSON.stringify(endTime),
+            success: function (response) {
+              console.log("End time set:", response);
+            
+              //Redirect to Test Over page after 2 seconds
+              setTimeout(() => {
+                window.location.href = "showTestResult.html"; // Replace with your actual page
+              }, 2000);
+            },
+            error: function (xhr, status, error) {
+              console.error(xhr.responseText);
+            }
+          });
+        };
+        
     </script>
 </body>
 

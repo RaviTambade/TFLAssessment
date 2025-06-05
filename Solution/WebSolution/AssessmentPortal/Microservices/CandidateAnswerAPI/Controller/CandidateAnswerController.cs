@@ -63,8 +63,8 @@ public class CandidateAnswerController : ControllerBase
     public async Task<IActionResult> GetCandidateAnswerResults(int candidateId, int testId)
     {
         _logger.LogInformation(
-            "GetCandidateAnswerResults called with candidateId: {cand}, testId: {t}", 
-            candidateId, 
+            "GetCandidateAnswerResults called with candidateId: {cand}, testId: {t}",
+            candidateId,
             testId);
 
         List<CandidateAnswerResult> results =
@@ -73,12 +73,11 @@ public class CandidateAnswerController : ControllerBase
         if (results == null || results.Count == 0)
         {
             _logger.LogWarning(
-                "No answers found for candidate {cand} test {t}", 
-                candidateId, 
+                "No answers found for candidate {cand} test {t}",
+                candidateId,
                 testId);
             return NotFound("No answers found for the specified candidate and test.");
         }
         return Ok(results);
     }
-    
 }
