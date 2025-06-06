@@ -21,7 +21,7 @@ app.post('/send-score-email', (req, res) => {
     const { candidateId, testId, score, email } = req.body;
 
     const mailOptions = {
-        from: 'ghewadeom@gmail.com',
+        from: 'bhorsanika0239@gmail.com',
         to: email,
         subject: 'Your Test Score',
         text: `Hello Candidate ${candidateId},\n\nYou have completed test ${testId}.\nYour score is: ${score}`
