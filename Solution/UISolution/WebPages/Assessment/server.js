@@ -2,7 +2,7 @@ const express = require('express');
 const nodemailer = require('nodemailer');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-
+const mysql = require('mysql2');
 const app = express();
 const port = 3000;
 
@@ -37,6 +37,36 @@ app.post('/send-score-email', (req, res) => {
         }
     });
 });
+
+const connection = mysql.createConnection({
+  host: 'localhost',     
+  user: 'root',         
+  password: 'password',  
+  database: 'assessmentdb' 
+});
+
+connection.connect((err) => {
+  if (err) {
+    return console.error('Connection error: ' + err.message);
+  }
+
+  console.log('Connected to the database.');
+
+  // Call the stored procedure
+  const testId = 2;
+  connection.query('CALL spgettestevaluationcriteriapercentage(?)', [testId], (err, results) => {
+    if (err) {
+      console.error('Error executing stored procedure:', err.message);
+      return;
+    }
+
+    // Stored procedure results usually come as an array of arrays
+    const output = results[0];
+    console.log('Stored Procedure Output:');
+    console.table(output); // Pretty print as table
+  });
+});
+
 
 app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}`);
