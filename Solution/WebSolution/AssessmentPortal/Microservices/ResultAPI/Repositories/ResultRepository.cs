@@ -182,23 +182,23 @@ public class ResultRepository : IResultRepository
         return candidateResultDetails;
     }
 
-    public async Task<List<TestResultDetails>> GetTestResultDetails(int testId)
+    public async Task<List<TestResultDetails>> GetTestResultDetail(int testId)
     {
         List<TestResultDetails> resultdetails = new List<TestResultDetails>();
         MySqlConnection connection = new MySqlConnection(_connectionString);
         string query = @"SELECT 
-                        candidatetestresults.testid, 
-                        candidatetestresults.score, 
-                        candidatetestresults.candidateid,
-                        employees.firstname, 
-                        employees.lastname, 
-                        subjects.title AS subject, 
-                        tests.name AS testname
-                        FROM candidatetestresults
-                        INNER JOIN employees ON employees.id = candidatetestresults.candidateid
-                        INNER JOIN tests ON candidatetestresults.testid = tests.id
-                        INNER JOIN subjects ON tests.subjectid = subjects.id
-                        WHERE candidatetestresults.testid=@TestId";
+                        candidatetestresults.testid , 
+                        candidatetestresults.score , 
+                        candidatetestresults.candidateid ,
+                        employees.firstname , 
+                        employees.lastname , 
+                        subjects.title AS subject , 
+                        tests.name AS testname 
+                        FROM candidatetestresults 
+                        INNER JOIN employees ON employees.id = candidatetestresults.candidateid 
+                        INNER JOIN tests ON candidatetestresults.testid = tests.id 
+                        INNER JOIN subjects ON tests.subjectid = subjects.id 
+                        WHERE candidatetestresults.testid=@TestId"; 
         try
         {
             MySqlCommand command = new MySqlCommand(query, connection);
@@ -207,36 +207,34 @@ public class ResultRepository : IResultRepository
             MySqlDataReader reader = command.ExecuteReader();
             while (await reader.ReadAsync())
             {
-                int testid = int.Parse(reader["testid"].ToString());
-                string testname = reader["testname"].ToString() ;
-                int candidateid = int.Parse(reader["candidateid"].ToString());
-                string fname = reader["firstname"].ToString();
-                string lname = reader["lastname"].ToString();
-                string subject = reader["subject"].ToString();
-                int score = int.Parse(reader["score"].ToString());
+                int testid = int.Parse(reader["testid"].ToString()); 
+                string testname = reader["testname"].ToString() ; 
+                int candidateid = int.Parse(reader["candidateid"].ToString()); 
+                string fname = reader["firstname"].ToString(); 
+                string lname = reader["lastname"].ToString(); 
+                string subject = reader["subject"].ToString(); 
+                int score = int.Parse(reader["score"].ToString()); 
 
-                TestResultDetails results = new TestResultDetails();
+                TestResultDetails results = new TestResultDetails(); 
 
-                results.TestId = testid;
-                results.TestName =testname;
-                results.CandidateId = candidateid;
-                results.FirstName = fname;
-                results.LastName = lname;
-                results.Subject = subject;
-                results.Score = score;
-                resultdetails.Add(results);
+                results.TestId = testid; 
+                results.TestName =testname; 
+                results.CandidateId = candidateid; 
+                results.FirstName = fname; 
+                results.LastName = lname; 
+                results.Subject = subject; 
+                results.Score = score; 
+                resultdetails.Add(results); 
             }
-            reader.Close();
-
-
+            reader.Close(); 
         }
         catch (Exception e)
         {
-            Console.WriteLine(e.Message);
+            Console.WriteLine(e.Message); 
         }
         finally
         {
-            await connection.CloseAsync();
+            await connection.CloseAsync(); 
         }
         return resultdetails;
     }

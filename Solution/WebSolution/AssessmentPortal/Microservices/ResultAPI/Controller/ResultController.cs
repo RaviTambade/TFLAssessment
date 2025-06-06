@@ -76,10 +76,10 @@ namespace Transflower.TFLAssessment.Controllers
 
         // Get test result details.
         // URL: http://localhost:5235/api/Result/tests/1/details
-        [HttpGet("tests/{testId}/details")]
-        public async Task<IActionResult> GetTestResultDetails(int testId)
+        [HttpGet("tests/{testId}/detail")]
+        public async Task<IActionResult> GetTestResultDetail(int testId)
         {   
-            List<TestResultDetails> result = await _svc.GetTestResultDetails(testId);
+            List<TestResultDetails> result = await _svc.GetTestResultDetail(testId);
             Console.WriteLine(result.Count);
             if (result == null || result.Count == 0)
             {

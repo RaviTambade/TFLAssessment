@@ -13,7 +13,7 @@ public interface IResultRepository{
 
     public Task<CandidateResultDetails> CandidateTestResultDetails(int candidateId, int testId);
 
-    public Task<List<TestResultDetails>> GetTestResultDetails(int testId);
+    public Task<List<TestResultDetails>> GetTestResultDetail(int testId);
     public Task<List<AppearedCandidate>> GetAppearedCandidates(int testId);
     public Task<List<TestList>> GetTestList(int candidateId);
 
