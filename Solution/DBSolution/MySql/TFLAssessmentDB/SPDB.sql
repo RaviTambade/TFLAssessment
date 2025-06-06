@@ -1,6 +1,7 @@
  -- Active: 1707123530557@@127.0.0.1@3306@assessmentdb
 
 -- get candidate test results
+use assessmentdb;
 
 drop procedure if exists spcandidatetestresult;
 
