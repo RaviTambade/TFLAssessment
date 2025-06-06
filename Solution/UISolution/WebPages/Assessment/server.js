@@ -60,10 +60,9 @@ connection.connect((err) => {
       return;
     }
 
-    // Stored procedure results usually come as an array of arrays
     const output = results[0];
     console.log('Stored Procedure Output:');
-    console.table(output); // Pretty print as table
+    console.table(output); 
   });
 });
 
