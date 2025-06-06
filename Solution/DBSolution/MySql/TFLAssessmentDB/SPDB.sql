@@ -197,3 +197,37 @@ BEGIN
 END $$
 
 call spcandidateinterviewperformance(2);
+
+
+drop procedure if exists spgettestevaluationcriteriapercentage;   
+
+DELIMITER $$
+
+CREATE PROCEDURE spgettestevaluationcriteriapercentage(IN p_testid INT)
+BEGIN
+    SELECT 
+        ec.id AS evaluation_criteria_id,
+        ec.title AS evaluation_criteria_title,
+        COUNT(qb.id) AS total_questions,
+        ROUND(COUNT(qb.id) * 100.0 / 
+            (SELECT COUNT(*) 
+             FROM testquestions tq_sub 
+             WHERE tq_sub.testid = p_testid), 2) AS percentage,
+        s.title AS subject_title
+    FROM 
+        testquestions tq
+    JOIN 
+        questionbank qb ON tq.questionbankid = qb.id
+    JOIN 
+        evaluationcriterias ec ON qb.evaluationcriteriaid = ec.id
+    JOIN 
+        subjects s ON s.id = ec.subjectid
+    WHERE 
+        tq.testid = p_testid
+    GROUP BY 
+        ec.id, ec.title, s.title;
+END $$
+
+DELIMITER ;
+
+call spgettestevaluationcriteriapercentage(1);
