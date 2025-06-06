@@ -25,6 +25,11 @@ public class QuestionBankController : ControllerBase
     public async Task<IActionResult> GetAllQuestions()
     {
         List<QuestionTitle> questions =await _svc.GetAllQuestions();
+        if (questions == null || questions.Count == 0)
+        {
+            _logger.LogWarning("No questions found at {DT}", DateTime.UtcNow.ToLongTimeString());
+            return NotFound("No questions found.");
+        }
         _logger.LogInformation("Get all products method invoked at  {DT}", DateTime.UtcNow.ToLongTimeString());
         return Ok(questions);
     }
@@ -35,6 +40,12 @@ public class QuestionBankController : ControllerBase
     public async Task<IActionResult> GetQuestion(int questionId)
     {
         Question question = await _svc.GetQuestion(questionId);
+        if (question == null)
+        {
+            _logger.LogWarning("Question with ID {Id} not found at {DT}", questionId, DateTime.UtcNow.ToLongTimeString());
+            return NotFound($"Question with ID {questionId} not found.");
+        }
+        _logger.LogInformation("Get question with ID {Id} method invoked at {DT}", questionId, DateTime.UtcNow.ToLongTimeString());
         return Ok(question);
     }
 
@@ -42,6 +53,12 @@ public class QuestionBankController : ControllerBase
     public async Task<IActionResult> GetCriteria(string subject, int questionId)
     {
         string criteria = await _svc.GetCriteria(subject,questionId);
+        if (string.IsNullOrEmpty(criteria))
+        {
+            _logger.LogWarning("Criteria for question with ID {Id} not found at {DT}", questionId, DateTime.UtcNow.ToLongTimeString());
+            return NotFound($"Criteria for question with ID {questionId} not found.");
+        }
+        _logger.LogInformation("Get criteria for question with ID {Id} method invoked at {DT}", questionId, DateTime.UtcNow.ToLongTimeString());
         return Ok(criteria);
     }
 
