@@ -186,8 +186,7 @@ public class ResultRepository : IResultRepository
     {
         List<TestResultDetails> resultdetails = new List<TestResultDetails>();
         MySqlConnection connection = new MySqlConnection(_connectionString);
-        string query =
-                        @"SELECT 
+        string query =  @"SELECT 
                         candidatetestresults.testid, 
                         candidatetestresults.score, 
                         candidatetestresults.candidateid,
