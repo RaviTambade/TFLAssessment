@@ -19,7 +19,8 @@ set pscore=totalMarks;
 Update candidatetestresults  set score =pscore where candidateid= pcandidateId and testid= ptestId;
 END $$
 
-call spcandidatetestresult(2,1,@pscore) ;
+
+call spcandidatetestresult(2,1,@pscore);
 select(@pscore);
 
 DROP PROCEDURE IF EXISTS spinterviewdetails;
@@ -197,6 +198,8 @@ BEGIN
     WHERE employeeid = pcandidateId;
 END $$
 
+DELIMITER ;
+
 call spcandidateinterviewperformance(2);
 
 
@@ -232,3 +235,37 @@ END $$
 DELIMITER ;
 
 call spgettestevaluationcriteriapercentage(1);
+
+
+DELIMITER $$
+
+CREATE PROCEDURE GetAverageReportByTestId(IN input_test_id INT)
+BEGIN
+    SELECT 
+        s.title AS subject_name,
+        ec.title AS evaluation_criteria,
+        COUNT(ca.id) AS total_questions_answered,
+        SUM(CASE 
+            WHEN qb.answerkey = ca.answerkey THEN 1
+            ELSE 0
+        END) AS correct_answers,
+        ROUND(
+            (SUM(CASE WHEN qb.answerkey = ca.answerkey THEN 1 ELSE 0 END) / COUNT(ca.id)) * 100, 
+            2
+        ) AS percentage_correct
+    FROM 
+        candidateanswers ca
+        JOIN testquestions tq ON ca.testquestionid = tq.id
+        JOIN questionbank qb ON tq.questionbankid = qb.id
+        JOIN evaluationcriterias ec ON qb.evaluationcriteriaid = ec.id
+        JOIN subjects s ON qb.subjectid = s.id
+    WHERE 
+        tq.testid = input_test_id
+    GROUP BY 
+        s.id, ec.id;
+END $$
+
+DELIMITER ;
+
+CALL GetAverageReportByTestId(1);
+
