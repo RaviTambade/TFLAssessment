@@ -236,19 +236,19 @@ DELIMITER ;
 
 call spgettestevaluationcriteriapercentage(1);
 
-
+DROP PROCEDURE IF Exists spgetaveragereportbytestid;
 DELIMITER $$
 
-CREATE PROCEDURE GetAverageReportByTestId(IN input_test_id INT)
+CREATE PROCEDURE spgetaveragereportbytestid(IN testid INT)
 BEGIN
     SELECT 
-        s.title AS subject_name,
-        ec.title AS evaluation_criteria,
-        COUNT(ca.id) AS total_questions_answered,
+        s.title AS subjectname,
+        ec.title AS evaluationcriteria,
+        COUNT(ca.id) AS totalquestionsanswered,
         SUM(CASE 
             WHEN qb.answerkey = ca.answerkey THEN 1
             ELSE 0
-        END) AS correct_answers,
+        END) AS correctanswers,
         ROUND(
             (SUM(CASE WHEN qb.answerkey = ca.answerkey THEN 1 ELSE 0 END) / COUNT(ca.id)) * 100, 
             2
@@ -260,12 +260,13 @@ BEGIN
         JOIN evaluationcriterias ec ON qb.evaluationcriteriaid = ec.id
         JOIN subjects s ON qb.subjectid = s.id
     WHERE 
-        tq.testid = input_test_id
+        tq.testid = testid
     GROUP BY 
         s.id, ec.id;
 END $$
 
 DELIMITER ;
 
-CALL GetAverageReportByTestId(1);
+CALL spgetaveragereportbytestid(1);
+
 
