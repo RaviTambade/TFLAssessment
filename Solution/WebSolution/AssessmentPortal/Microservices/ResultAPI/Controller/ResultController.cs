@@ -191,7 +191,7 @@ namespace Transflower.TFLAssessment.Controllers
                 _logger.LogWarning("No test average report found for testId: {TestId}", testId);
                 return BadRequest("Test average report not found.");
             }
-            _logger.LogInformation("Log Generated For get Test Average Report");
+            _logger.LogInformation("Test Average Report {}", testId);
             return Ok(results);
         }
     }

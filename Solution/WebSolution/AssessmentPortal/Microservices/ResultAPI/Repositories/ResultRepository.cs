@@ -556,7 +556,6 @@ public class ResultRepository : IResultRepository
     
     public async Task<List<TestAverageReport>> GetTestAverageReport(int testId)
     {
-        Console.WriteLine("GetTestAverageReport called with testId: " + testId);
         List<TestAverageReport> averageReports = new List<TestAverageReport>();
         string query = "spgetaveragereportbytestid";
         MySqlConnection connection = new MySqlConnection(_connectionString);
