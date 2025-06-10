@@ -1,4 +1,5 @@
 -- Active: 1707123530557@@127.0.0.1@3306@assessmentdb
+use assessmentdb;
 
 insert into employees(userId,firstname, lastname, email, contact)values(1,"ram","tambe","rTambe@gmail.com","8547963254");
 insert into employees(userId,firstname, lastname, email, contact)values(2,"Vaibhav","Sathe","psathe@gmail.com","9658745635");
