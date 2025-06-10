@@ -558,37 +558,44 @@ public class ResultRepository : IResultRepository
     {
         Console.WriteLine("GetTestAverageReport called with testId: " + testId);
         List<TestAverageReport> averageReports = new List<TestAverageReport>();
-        // string query = "spgetaveragereportbytestid";
-        // MySqlConnection connection = new MySqlConnection(_connectionString);
-        // try
-        // {
-        //     MySQLCommand command = new MySQLCommand(query, connection);
-        //     command.CommandType = CommandType.StoredProcedure;
-        //     command.Parameters.AddWithValue("@ptestId", testId);
-        //     await connection.OpenAsync();
-        //     MySqlDataReader reader = await command.ExecuteReaderAsync();
-        //     while (await reader.ReadAsync())
-        //     {
-        //         int testid = testId;
-        //         string subjectname = reader["subjectname"].ToString();
-        //         string evalutioncriteria = reader["evalutioncriteria"].ToString();
-        //         int totalquestionsanswered = int.Parse(reader["totalquestionsanswered"].ToString());
-        //         int correcranswers = int.Parse(reader["correcranswers"]).ToString();
-        //         double percentage_correct = double.Parse(reader["percentage_correct"].ToString());
+        string query = "spgetaveragereportbytestid";
+        MySqlConnection connection = new MySqlConnection(_connectionString);
+        try
+        {
+            MySqlCommand command = new MySqlCommand(query, connection);
+            command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.AddWithValue("@testid", testId);
+            await connection.OpenAsync();
+            MySqlDataReader reader = command.ExecuteReader();
+            while (await reader.ReadAsync())
+            {
+                // int testid = testId;
+                string subjectname = reader["subjectname"].ToString();
+                string evalutioncriteria = reader["evaluationcriteria"].ToString();
+                int totalquestionsanswered = int.Parse(reader["totalquestionsanswered"].ToString());
+                // int correctanswers = Convert.ToInt32(reader["correctanswers"]);
+                int correctanswers = int.Parse(reader["totalquestionsanswered"].ToString());
+                double percentage_correct = Convert.ToDouble(reader["percentage_correct"]);
+                
 
-        //         TestAverageReport testAverageReport = new TestAverageReport();
-        //         testAverageReport.
-        //         averageReports.Add(report);
-        //     }
-        // }
-        // catch (Exception e)
-        // {
-        //     Console.WriteLine(e.Message);
-        // }
-        // finally
-        // {
-        //     await connection.CloseAsync();
-        // }
+                TestAverageReport testAverageReport = new TestAverageReport();
+                testAverageReport.SubjectName = subjectname;
+                testAverageReport.EvalutionCriteria = evalutioncriteria;
+                testAverageReport.TotalQuestionsAnswered = totalquestionsanswered;
+                testAverageReport.CorrectAnswers = correctanswers;
+                testAverageReport.PercentageCorrect = percentage_correct;
+
+                averageReports.Add(testAverageReport);
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+        finally
+        {
+            await connection.CloseAsync();
+        }
         return averageReports;
     }
     /*public Task<int[]> GetAllTestIds()
