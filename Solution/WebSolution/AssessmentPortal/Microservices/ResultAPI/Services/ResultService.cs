@@ -76,5 +76,8 @@ public class ResultService:IResultService
         return await _repository.GeAllSubjects();
     }
      
-
+    public async Task<List<TestAverageReport>> GetTestAverageReport(int testId)
+    {
+        return await _repository.GetTestAverageReport(testId);
+    }
 }

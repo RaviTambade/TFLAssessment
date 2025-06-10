@@ -28,5 +28,5 @@ public interface IResultRepository{
     //public Task<int[]> GetAllTestIds();
     public Task<List<Subject>> GeAllSubjects();
 
-    
+    public Task<List<TestAverageReport>> GetTestAverageReport(int testId);
 }
