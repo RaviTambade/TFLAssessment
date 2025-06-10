@@ -558,8 +558,37 @@ public class ResultRepository : IResultRepository
     {
         Console.WriteLine("GetTestAverageReport called with testId: " + testId);
         List<TestAverageReport> averageReports = new List<TestAverageReport>();
-        MySqlConnection connection = new MySqlConnection(_connectionString);
+        // string query = "spgetaveragereportbytestid";
+        // MySqlConnection connection = new MySqlConnection(_connectionString);
+        // try
+        // {
+        //     MySQLCommand command = new MySQLCommand(query, connection);
+        //     command.CommandType = CommandType.StoredProcedure;
+        //     command.Parameters.AddWithValue("@ptestId", testId);
+        //     await connection.OpenAsync();
+        //     MySqlDataReader reader = await command.ExecuteReaderAsync();
+        //     while (await reader.ReadAsync())
+        //     {
+        //         int testid = testId;
+        //         string subjectname = reader["subjectname"].ToString();
+        //         string evalutioncriteria = reader["evalutioncriteria"].ToString();
+        //         int totalquestionsanswered = int.Parse(reader["totalquestionsanswered"].ToString());
+        //         int correcranswers = int.Parse(reader["correcranswers"]).ToString();
+        //         double percentage_correct = double.Parse(reader["percentage_correct"].ToString());
 
+        //         TestAverageReport testAverageReport = new TestAverageReport();
+        //         testAverageReport.
+        //         averageReports.Add(report);
+        //     }
+        // }
+        // catch (Exception e)
+        // {
+        //     Console.WriteLine(e.Message);
+        // }
+        // finally
+        // {
+        //     await connection.CloseAsync();
+        // }
         return averageReports;
     }
     /*public Task<int[]> GetAllTestIds()
