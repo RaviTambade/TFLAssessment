@@ -252,7 +252,7 @@ BEGIN
         ROUND(
             (SUM(CASE WHEN qb.answerkey = ca.answerkey THEN 1 ELSE 0 END) / COUNT(ca.id)) * 100, 
             2
-        ) AS percentage_correct
+        ) AS percentagecorrect
     FROM 
         candidateanswers ca
         JOIN testquestions tq ON ca.testquestionid = tq.id
