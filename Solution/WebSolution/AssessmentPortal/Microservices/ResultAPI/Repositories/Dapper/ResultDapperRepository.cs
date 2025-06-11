@@ -167,24 +167,6 @@ public class ResultDapperRepository : IResultRepository
         return SubjectResultDetails;
     }
 
-    // public async Task<List<TestAverageReport>> GetTestAverageReport(int testId)
-    // {
-    //     await Task.Delay(100);
-    //     List<TestAverageReport> report = new List<TestAverageReport>();
-    //     using (IDbConnection con = new MySqlConnection(_connectionString))
-    //     {
-    //         var parameters = new DynamicParameters();
-    //         parameters.Add("@testId", testId);
-    //         var result = await con.QueryAsync<TestAverageReport>(
-    //            "spgetaveragereportbytestid",
-    //            parameters,
-    //            commandType: CommandType.StoredProcedure
-    //        );
-    //         return result.ToList();
-    //     }
-
-    // }
-
     public async Task<List<TestAverageReport>> GetTestAverageReport(int testId)
 {
     await Task.Delay(100); // Simulated latency (optional; can be removed in production)
@@ -205,10 +187,17 @@ public class ResultDapperRepository : IResultRepository
 }
 
 
-    public Task<List<TestList>> GetTestList(int candidateId)
+    public async Task<List<TestList>> GetTestList(int candidateId)
     {
-        List<TestList> list = new List<TestList>();
-        return Task.FromResult(list);
+        await Task.Delay(100);
+        List<TestList> getTestList = new List<TestList>();
+        using (IDbConnection con = new MySqlConnection(_connectionString))
+        {
+            var details = con.Query<TestList>("SELECT cr.testid AS testId, cr.score AS Score, t.name AS TestName FROM candidatetestresults cr JOIN tests t ON cr.testid = t.id where candidateid=@candidateId", new { candidateId });
+            getTestList = details as List<TestList>;
+        }
+        return getTestList;
+        
     }
 
     public Task<List<TestResultDetails>> GetTestResultDetail(int testId)
