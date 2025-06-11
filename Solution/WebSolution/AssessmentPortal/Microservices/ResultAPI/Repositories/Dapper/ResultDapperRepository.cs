@@ -1,4 +1,4 @@
-/*using MySql.Data.MySqlClient;
+using MySql.Data.MySqlClient;
 using System.Data;
 using Transflower.TFLAssessment.Entities;
 using Transflower.TFLAssessment.Repositories.Interfaces;
@@ -52,7 +52,7 @@ public class ResultDapperRepository : IResultRepository
         return status;
     }
 
-     public async Task<bool> SetCandidateTestEndTime(int candidateId, int testId, TestTime time)
+    public async Task<bool> SetCandidateTestEndTime(int candidateId, int testId, TestTime time)
     {
         await Task.Delay(100);
         bool status = false;
@@ -89,8 +89,6 @@ public class ResultDapperRepository : IResultRepository
         }
         return score;
     }
-
-
     public async Task<List<TestResultDetails>> GetTestResultDetails(int testId)
     {
         await Task.Delay(100);
@@ -168,5 +166,60 @@ public class ResultDapperRepository : IResultRepository
         }
         return SubjectResultDetails;
     }
+
+    // public async Task<List<TestAverageReport>> GetTestAverageReport(int testId)
+    // {
+    //     await Task.Delay(100);
+    //     List<TestAverageReport> report = new List<TestAverageReport>();
+    //     using (IDbConnection con = new MySqlConnection(_connectionString))
+    //     {
+    //         var parameters = new DynamicParameters();
+    //         parameters.Add("@testId", testId);
+    //         var result = await con.QueryAsync<TestAverageReport>(
+    //            "spgetaveragereportbytestid",
+    //            parameters,
+    //            commandType: CommandType.StoredProcedure
+    //        );
+    //         return result.ToList();
+    //     }
+
+    // }
+
+    public async Task<List<TestAverageReport>> GetTestAverageReport(int testId)
+{
+    await Task.Delay(100); // Simulated latency (optional; can be removed in production)
+
+    using (IDbConnection con = new MySqlConnection(_connectionString))
+    {
+        var parameters = new DynamicParameters();
+        parameters.Add("@testId", testId);
+
+        var result = await con.QueryAsync<TestAverageReport>(
+            "spgetaveragereportbytestid",
+            parameters,
+            commandType: CommandType.StoredProcedure
+        );
+
+        return result.ToList();
+    }
 }
-*/
+
+
+    public Task<List<TestList>> GetTestList(int candidateId)
+    {
+        List<TestList> list = new List<TestList>();
+        return Task.FromResult(list);
+    }
+
+    public Task<List<TestResultDetails>> GetTestResultDetail(int testId)
+    {
+        List<TestResultDetails> list = new List<TestResultDetails>();
+        return Task.FromResult(list);
+    }
+
+    public Task<List<Subject>> GeAllSubjects()
+    {
+        List<Subject> list = new List<Subject>();
+        return Task.FromResult(list);
+    }
+}

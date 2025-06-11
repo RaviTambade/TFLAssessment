@@ -573,16 +573,16 @@ public class ResultRepository : IResultRepository
                 string evalutioncriteria = reader["evaluationcriteria"].ToString();
                 int totalquestionsanswered = int.Parse(reader["totalquestionsanswered"].ToString());
                 // int correctanswers = Convert.ToInt32(reader["correctanswers"]);
-                int correctanswers = int.Parse(reader["totalquestionsanswered"].ToString());
-                double percentage_correct = Convert.ToDouble(reader["percentage_correct"]);
+                int correctanswers = int.Parse(reader["correctanswers"].ToString());
+                double percentagecorrect = Convert.ToDouble(reader["percentagecorrect"]);
                 
 
                 TestAverageReport testAverageReport = new TestAverageReport();
                 testAverageReport.SubjectName = subjectname;
-                testAverageReport.EvalutionCriteria = evalutioncriteria;
+                testAverageReport.EvaluationCriteria = evalutioncriteria;
                 testAverageReport.TotalQuestionsAnswered = totalquestionsanswered;
                 testAverageReport.CorrectAnswers = correctanswers;
-                testAverageReport.PercentageCorrect = percentage_correct;
+                testAverageReport.PercentageCorrect  = percentagecorrect;
 
                 averageReports.Add(testAverageReport);
             }
