@@ -1,6 +1,7 @@
  -- Active: 1707123530557@@127.0.0.1@3306@assessmentdb
 
 -- get candidate test results
+use assessmentdb;
 
 drop procedure if exists spcandidatetestresult;
 
@@ -18,7 +19,8 @@ set pscore=totalMarks;
 Update candidatetestresults  set score =pscore where candidateid= pcandidateId and testid= ptestId;
 END $$
 
-call spcandidatetestresult(2,1,@pscore) ;
+
+call spcandidatetestresult(2,1,@pscore);
 select(@pscore);
 
 DROP PROCEDURE IF EXISTS spinterviewdetails;
@@ -73,8 +75,19 @@ create procedure spcandidatetestresultdetails(IN pcandidateId INT, IN ptestId IN
 BEGIN
 DECLARE totalQuestions INT;
 DECLARE correctCandidateAnswers INT;
+DECLARE attendedCount INT;
 
-select count(*) INTO totalQuestions from testquestions where testid=1;
+ SELECT COUNT(*) INTO attendedCount
+    FROM candidateanswers
+    INNER JOIN testquestions ON testquestions.questionbankid = candidateanswers.testquestionid
+    WHERE candidateanswers.candidateid = pcandidateId 
+      AND testquestions.testid = ptestId;
+
+    IF attendedCount = 0 THEN
+        SELECT 'Candidate has not attended the test.' AS message;
+    ELSE
+    
+select count(*) INTO totalQuestions from testquestions where testid=ptestId;
 
 SELECT COUNT(CASE WHEN candidateanswers.answerkey = questionbank.answerkey THEN 1 ELSE NULL END) AS score 
 INTO correctCandidateAnswers FROM candidateanswers 
@@ -86,9 +99,10 @@ SELECT COUNT(*) INTO pskippedQuestions FROM CandidateAnswers INNER JOIN testQues
 WHERE candidateanswers.answerkey="NO" AND candidateanswers.candidateId = pcandidateId AND testquestions.testId = ptestId;
 
 SET pcorrectAnswers=correctCandidateAnswers;
+END IF;
 END $$
 
-CALL spcandidatetestresultdetails(3,2, @pcorrectAnswers, @pincorrectAnswers,@pskippedQuestions);
+CALL spcandidatetestresultdetails(32,2, @pcorrectAnswers, @pincorrectAnswers,@pskippedQuestions);
 
 select @pcorrectAnswers,@pincorrectAnswers,@pskippedQuestions;
 
@@ -184,4 +198,75 @@ BEGIN
     WHERE employeeid = pcandidateId;
 END $$
 
+DELIMITER ;
+
 call spcandidateinterviewperformance(2);
+
+
+drop procedure if exists spgettestevaluationcriteriapercentage;   
+
+DELIMITER $$
+
+CREATE PROCEDURE spgettestevaluationcriteriapercentage(IN p_testid INT)
+BEGIN
+    SELECT 
+        ec.id AS evaluation_criteria_id,
+        ec.title AS evaluation_criteria_title,
+        COUNT(qb.id) AS total_questions,
+        ROUND(COUNT(qb.id) * 100.0 / 
+            (SELECT COUNT(*) 
+             FROM testquestions tq_sub 
+             WHERE tq_sub.testid = p_testid), 2) AS percentage,
+        s.title AS subject_title
+    FROM 
+        testquestions tq
+    JOIN 
+        questionbank qb ON tq.questionbankid = qb.id
+    JOIN 
+        evaluationcriterias ec ON qb.evaluationcriteriaid = ec.id
+    JOIN 
+        subjects s ON s.id = ec.subjectid
+    WHERE 
+        tq.testid = p_testid
+    GROUP BY 
+        ec.id, ec.title, s.title;
+END $$
+
+DELIMITER ;
+
+call spgettestevaluationcriteriapercentage(1);
+
+DROP PROCEDURE IF Exists spgetaveragereportbytestid;
+DELIMITER $$
+
+CREATE PROCEDURE spgetaveragereportbytestid(IN testid INT)
+BEGIN
+    SELECT 
+        s.title AS subjectname,
+        ec.title AS evaluationcriteria,
+        COUNT(ca.id) AS totalquestionsanswered,
+        SUM(CASE 
+            WHEN qb.answerkey = ca.answerkey THEN 1
+            ELSE 0
+        END) AS correctanswers,
+        ROUND(
+            (SUM(CASE WHEN qb.answerkey = ca.answerkey THEN 1 ELSE 0 END) / COUNT(ca.id)) * 100, 
+            2
+        ) AS percentagecorrect
+    FROM 
+        candidateanswers ca
+        JOIN testquestions tq ON ca.testquestionid = tq.id
+        JOIN questionbank qb ON tq.questionbankid = qb.id
+        JOIN evaluationcriterias ec ON qb.evaluationcriteriaid = ec.id
+        JOIN subjects s ON qb.subjectid = s.id
+    WHERE 
+        tq.testid = testid
+    GROUP BY 
+        s.id, ec.id;
+END $$
+
+DELIMITER ;
+
+CALL spgetaveragereportbytestid(1);
+
+

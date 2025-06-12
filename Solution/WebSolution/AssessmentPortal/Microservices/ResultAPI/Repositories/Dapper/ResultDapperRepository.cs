@@ -1,4 +1,4 @@
-/*using MySql.Data.MySqlClient;
+using MySql.Data.MySqlClient;
 using System.Data;
 using Transflower.TFLAssessment.Entities;
 using Transflower.TFLAssessment.Repositories.Interfaces;
@@ -52,7 +52,7 @@ public class ResultDapperRepository : IResultRepository
         return status;
     }
 
-     public async Task<bool> SetCandidateTestEndTime(int candidateId, int testId, TestTime time)
+    public async Task<bool> SetCandidateTestEndTime(int candidateId, int testId, TestTime time)
     {
         await Task.Delay(100);
         bool status = false;
@@ -89,8 +89,6 @@ public class ResultDapperRepository : IResultRepository
         }
         return score;
     }
-
-
     public async Task<List<TestResultDetails>> GetTestResultDetails(int testId)
     {
         await Task.Delay(100);
@@ -168,5 +166,59 @@ public class ResultDapperRepository : IResultRepository
         }
         return SubjectResultDetails;
     }
+
+    public async Task<List<TestAverageReport>> GetTestAverageReport(int testId)
+{
+    await Task.Delay(100); // Simulated latency (optional; can be removed in production)
+
+    using (IDbConnection con = new MySqlConnection(_connectionString))
+    {
+        var parameters = new DynamicParameters();
+        parameters.Add("@testId", testId);
+
+        var result = await con.QueryAsync<TestAverageReport>(
+            "spgetaveragereportbytestid",
+            parameters,
+            commandType: CommandType.StoredProcedure
+        );
+
+        return result.ToList();
+    }
 }
-*/
+
+
+    public async Task<List<TestList>> GetTestList(int candidateId)
+    {
+        await Task.Delay(100);
+        List<TestList> getTestList = new List<TestList>();
+        using (IDbConnection con = new MySqlConnection(_connectionString))
+        {
+            var details = con.Query<TestList>("SELECT cr.testid AS testId, cr.score AS Score, t.name AS TestName FROM candidatetestresults cr JOIN tests t ON cr.testid = t.id where candidateid=@candidateId", new { candidateId });
+            getTestList = details as List<TestList>;
+        }
+        return getTestList;
+        
+    }
+    
+    public async Task<List<TestResultDetails>> GetTestResultDetail(int testId)
+    {
+        await Task.Delay(100);
+        List<TestResultDetails> getTestResultDetails = new List<TestResultDetails>();
+        using(IDbConnection con = new MySqlConnection(_connectionString)) {
+            var details = con.Query<TestResultDetails>("SELECT candidatetestresults.testid, candidatetestresults.score, candidatetestresults.candidateid, employees.firstname, employees.lastname, subjects.title AS subject, tests.name AS testname FROM candidatetestresults INNER JOIN employees ON employees.id = candidatetestresults.candidateid INNER JOIN tests ON candidatetestresults.testid = tests.id INNER JOIN subjects ON tests.subjectid = subjects.id WHERE candidatetestresults.testid=@testId", new { testId });
+            getTestResultDetails = details as List<TestResultDetails>;
+        }
+        return getTestResultDetails;
+    }
+
+    public Task<List<Subject>> GeAllSubjects()
+    {
+        List<Subject> subjectList = new List<Subject>();
+        using (IDbConnection con = new MySqlConnection(_connectionString))
+        {
+            var allSubjects = con.Query<Subject>("SELECT * FROM subjects");
+            subjectList = allSubjects as List<Subject>;
+        }
+        return Task.FromResult(subjectList);
+    }
+}

@@ -94,7 +94,7 @@ public async Task<bool> CreateTest(CreateTestRequest request)
             {
                 await connection.OpenAsync();
                 MySqlDataReader reader = command.ExecuteReader();
-                if (reader.Read())
+                while  (reader.Read())
                 {
                     int id = int.Parse(reader["id"].ToString());
                     int  smeid = int.Parse(reader["smeid"].ToString());
