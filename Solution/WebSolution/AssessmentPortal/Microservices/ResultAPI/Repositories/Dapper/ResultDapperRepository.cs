@@ -199,11 +199,16 @@ public class ResultDapperRepository : IResultRepository
         return getTestList;
         
     }
-
-    public Task<List<TestResultDetails>> GetTestResultDetail(int testId)
+    
+    public async Task<List<TestResultDetails>> GetTestResultDetail(int testId)
     {
-        List<TestResultDetails> list = new List<TestResultDetails>();
-        return Task.FromResult(list);
+        await Task.Delay(100);
+        List<TestResultDetails> getTestResultDetails = new List<TestResultDetails>();
+        using(IDbConnection con = new MySqlConnection(_connectionString)) {
+            var details = con.Query<TestResultDetails>("SELECT candidatetestresults.testid, candidatetestresults.score, candidatetestresults.candidateid, employees.firstname, employees.lastname, subjects.title AS subject, tests.name AS testname FROM candidatetestresults INNER JOIN employees ON employees.id = candidatetestresults.candidateid INNER JOIN tests ON candidatetestresults.testid = tests.id INNER JOIN subjects ON tests.subjectid = subjects.id WHERE candidatetestresults.testid=@testId", new { testId });
+            getTestResultDetails = details as List<TestResultDetails>;
+        }
+        return getTestResultDetails;
     }
 
     public Task<List<Subject>> GeAllSubjects()

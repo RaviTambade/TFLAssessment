@@ -508,8 +508,6 @@ public class ResultRepository : IResultRepository
         }
         return resultdetails;
     }
-
-
     public async Task<List<Subject>> GeAllSubjects()
     {
 
