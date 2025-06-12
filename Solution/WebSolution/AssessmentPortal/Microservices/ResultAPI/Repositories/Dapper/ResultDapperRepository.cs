@@ -213,7 +213,12 @@ public class ResultDapperRepository : IResultRepository
 
     public Task<List<Subject>> GeAllSubjects()
     {
-        List<Subject> list = new List<Subject>();
-        return Task.FromResult(list);
+        List<Subject> subjectList = new List<Subject>();
+        using (IDbConnection con = new MySqlConnection(_connectionString))
+        {
+            var allSubjects = con.Query<Subject>("SELECT * FROM subjects");
+            subjectList = allSubjects as List<Subject>;
+        }
+        return Task.FromResult(subjectList);
     }
 }
