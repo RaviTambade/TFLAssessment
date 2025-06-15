@@ -69,6 +69,12 @@ public class QuestionBankController : ControllerBase
     public async Task<IActionResult> GetQuestionsBySubjects(int id)
     {    
         List<SubjectQuestion> questions =await _svc.GetQuestionsBySubject(id);
+        if (questions == null || questions.Count == 0)
+        {
+            _logger.LogWarning("No questions found for subject ID {Id} at {DT}", id, DateTime.UtcNow.ToLongTimeString());
+            return NotFound($"No questions found for subject ID {id}.");
+        }
+        _logger.LogInformation("Get questions by subject ID {Id} method invoked at {DT}", id, DateTime.UtcNow.ToLongTimeString());
         return Ok(questions);
     }
 
