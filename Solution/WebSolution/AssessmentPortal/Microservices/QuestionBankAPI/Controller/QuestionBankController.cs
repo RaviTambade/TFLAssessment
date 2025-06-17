@@ -86,6 +86,12 @@ public class QuestionBankController : ControllerBase
     {   
         
         List<Question> questions =await _svc.GetQuestions(testId);
+        if (questions == null || questions.Count == 0)
+        {
+            _logger.LogWarning("No questions found for test ID {Id} at {DT}", testId, DateTime.UtcNow.ToLongTimeString());
+            return NotFound($"No questions found for test ID {testId}.");
+        }
+        _logger.LogInformation("Get questions by test ID {Id} method invoked at {DT}", testId, DateTime.UtcNow.ToLongTimeString());
         return Ok(questions);
     }
 
