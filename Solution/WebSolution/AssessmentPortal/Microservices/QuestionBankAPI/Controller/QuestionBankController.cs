@@ -103,6 +103,12 @@ public class QuestionBankController : ControllerBase
     public async Task<IActionResult> GetQuestionsBySubjectAndCriteria(int subjectId,int criteriaId)
     {   
         List<QuestionDetails> questions =await _svc.GetQuestionsBySubjectAndCriteria(subjectId,criteriaId);
+        if (questions == null || questions.Count == 0)
+        {
+            _logger.LogWarning("No questions found for subject ID {SubjectId} and criteria ID {CriteriaId} at {DT}", subjectId, criteriaId, DateTime.UtcNow.ToLongTimeString());
+            return NotFound($"No questions found for subject ID {subjectId} and criteria ID {criteriaId}.");
+        }   
+        _logger.LogInformation("Get questions by subject ID {SubjectId} and criteria ID {CriteriaId} method invoked at {DT}", subjectId, criteriaId, DateTime.UtcNow.ToLongTimeString());
         return Ok(questions);
     }
 
