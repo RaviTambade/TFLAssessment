@@ -33,9 +33,9 @@ public class AssessmentService : IAssessmentService
    {
       return await _repository.GetAllEmployees();
    }
-   
-  public async Task<Employee> GetEmployeeById(int userId)
-  {
+
+   public async Task<Employee> GetEmployeeById(int userId)
+   {
       return await _repository.GetEmployeeById(userId);
    }
 
@@ -88,5 +88,19 @@ public class AssessmentService : IAssessmentService
    {
       return await _repository.RemoveQuestions(testQuestions);
    }
+   public async Task<int> CreateTestWithQuestionsAsync(CreateTestWithQuestions createTestWithQuestions)
+   {
+      return await _repository.CreateTestWithQuestionsAsync(createTestWithQuestions);
+   }
+   public async Task<List<SubjectQuestions>> GetAllQuestionsBySubject(int subjectId)
+   {
+      return await _repository.GetAllQuestionsBySubject(subjectId);
+   }
 
+   
+    public async Task<List<Employee>> GetSmeBySubject(int subjectId)
+    {
+        // Assuming the repository has a method to get SMEs by subject
+        return await _repository.GetSmeBySubject(subjectId);
+    }
 }
