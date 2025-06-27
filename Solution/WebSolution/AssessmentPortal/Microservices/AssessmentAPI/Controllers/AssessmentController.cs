@@ -10,30 +10,30 @@ namespace Transflower.TFLAssessment.Controllers;
 [ApiController]
 [Route("api/[controller]")]
 public class AssessmentController : ControllerBase
-{ 
-   private readonly IAssessmentService _svc;
-   private readonly ILogger<AssessmentController> _logger;
+{
+    private readonly IAssessmentService _svc;
+    private readonly ILogger<AssessmentController> _logger;
     public AssessmentController(IAssessmentService service, ILogger<AssessmentController> logger)
     {
         // Initialize with some sample data
-       _svc = service;  
-       _logger = logger;
+        _svc = service;
+        _logger = logger;
 
     }
     //http://localhost:5151/api/assessment/1
     [HttpGet("{id}")]
-    public async Task<IActionResult>  GetDetails(int id)
+    public async Task<IActionResult> GetDetails(int id)
     {
-        Assessment theAssessment=await _svc.GetDetails(id);
-         _logger.LogInformation("Get details method invoked at  {DT}", DateTime.UtcNow.ToLongTimeString());
+        Assessment theAssessment = await _svc.GetDetails(id);
+        _logger.LogInformation("Get details method invoked at  {DT}", DateTime.UtcNow.ToLongTimeString());
         return Ok(theAssessment);
     }
-    
+
     // GET: api/assessment
     [HttpGet("creationdate/fromDate/{fromDate}/toDate/{toDate}")]
     public async Task<IActionResult> GetAll(DateTime fromDate, DateTime toDate)
     {
-        List<Assessment> assessments =await _svc.GetAll( fromDate,  toDate);
+        List<Assessment> assessments = await _svc.GetAll(fromDate, toDate);
         _logger.LogInformation("Get all Assessments method invoked at  {DT}", DateTime.UtcNow.ToLongTimeString());
         return Ok(assessments);
     }
@@ -41,36 +41,36 @@ public class AssessmentController : ControllerBase
     // GET: get all assessments
     //http://localhost:5151/api/assessment/assessments
     [HttpGet("assessments")]
-    public async Task<IActionResult>  GetAllAssesment()
+    public async Task<IActionResult> GetAllAssesment()
     {
-        List<Assessment> assessments =await _svc.GetAllTests();
+        List<Assessment> assessments = await _svc.GetAllTests();
         _logger.LogInformation("Get all tests method invoked at  {DT}", DateTime.UtcNow.ToLongTimeString());
         return Ok(assessments);
     }
-  
+
     //http://localhost:5151/api/assessment/employees
     [HttpGet("employees")]
-    public async Task<IActionResult>  GetAllEmployees()
+    public async Task<IActionResult> GetAllEmployees()
     {
-        List<Employee> employees =await _svc.GetAllEmployees();
+        List<Employee> employees = await _svc.GetAllEmployees();
         _logger.LogInformation("Get all employee method invoked at  {DT}", DateTime.UtcNow.ToLongTimeString());
         return Ok(employees);
     }
 
-     //http://localhost:5151/api/assessment/employee/{userId}
+    //http://localhost:5151/api/assessment/employee/{userId}
     [HttpGet("employee/{userId}")]
-    public async Task<IActionResult>  GetEmployeeById(int userId)
+    public async Task<IActionResult> GetEmployeeById(int userId)
     {
-        Employee employee =await _svc.GetEmployeeById(userId);
+        Employee employee = await _svc.GetEmployeeById(userId);
         _logger.LogInformation("Get all employee method invoked at  {DT}", DateTime.UtcNow.ToLongTimeString());
         return Ok(employee);
     }
-  
+
     //http://localhost:5151/api/assessment/subjects
     [HttpGet("subjects")]
-    public async Task<IActionResult>  GetAllSubjects()
+    public async Task<IActionResult> GetAllSubjects()
     {
-        List<Subject> subjects =await _svc.GetAllSubjects();
+        List<Subject> subjects = await _svc.GetAllSubjects();
         _logger.LogInformation("Get all subject method invoked at  {DT}", DateTime.UtcNow.ToLongTimeString());
         return Ok(subjects);
     }
@@ -78,108 +78,141 @@ public class AssessmentController : ControllerBase
 
     //http://localhost:5151/api/assessment/criterias
     [HttpGet("criterias")]
-    public async Task<IActionResult>  GetEvalutionCriterias()
+    public async Task<IActionResult> GetEvalutionCriterias()
     {
-        List<EvaluationCriteria> criterias =await _svc.GetEvalutionCriterias();
-         _logger.LogInformation("Get evaluation criteria method invoked at  {DT}", DateTime.UtcNow.ToLongTimeString());
+        List<EvaluationCriteria> criterias = await _svc.GetEvalutionCriterias();
+        _logger.LogInformation("Get evaluation criteria method invoked at  {DT}", DateTime.UtcNow.ToLongTimeString());
         return Ok(criterias);
     }
 
     //http://localhost:5151/api/assessment/criterias/subjects/1
     [HttpGet("criterias/subjects/{subjectId}")]
-    public async Task<IActionResult>  GetEvalutionCriteriasBySubject(int subjectId)
+    public async Task<IActionResult> GetEvalutionCriteriasBySubject(int subjectId)
     {
-        List<EvaluationCriteria> criterias =await _svc.GetEvalutionCriteriasBySubject(subjectId);
-         _logger.LogInformation("Get  evaluation criteria by subject method invoked at  {DT}", DateTime.UtcNow.ToLongTimeString());
+        List<EvaluationCriteria> criterias = await _svc.GetEvalutionCriteriasBySubject(subjectId);
+        _logger.LogInformation("Get  evaluation criteria by subject method invoked at  {DT}", DateTime.UtcNow.ToLongTimeString());
         return Ok(criterias);
     }
 
- 
+
 
     //http://localhost:5151/api/assessment/subjectexperts/2
     [HttpGet("subjectexperts/{smeId}")]
-    public async Task<IActionResult>  GetAllBySubjectMatterExpert(int smeId)
+    public async Task<IActionResult> GetAllBySubjectMatterExpert(int smeId)
     {
-        List<Assessment> assessments=await _svc.GetAllBySubjectMatterExpert(smeId);
+        List<Assessment> assessments = await _svc.GetAllBySubjectMatterExpert(smeId);
         _logger.LogInformation("Get all subject matter experties method invoked at  {DT}", DateTime.UtcNow.ToLongTimeString());
         return Ok(assessments);
     }
 
     //http://localhost:5151/api/Assessment/createtest
-   [HttpPost("createtest")]
+    [HttpPost("createtest")]
     public async Task<IActionResult> CreateTest([FromBody] CreateTestRequest request)
     {
-    Console.WriteLine("Inside Create Test Controller");
-    bool status = await _svc.CreateTest(request);
-    _logger.LogInformation("Create test method invoked at  {DT}", DateTime.UtcNow.ToLongTimeString());
-    if (status)
-    {
-        return Ok(new { message = "Test created successfully" });
+        Console.WriteLine("Inside Create Test Controller");
+        bool status = await _svc.CreateTest(request);
+        _logger.LogInformation("Create test method invoked at  {DT}", DateTime.UtcNow.ToLongTimeString());
+        if (status)
+        {
+            return Ok(new { message = "Test created successfully" });
+        }
+        else
+        {
+            return BadRequest(new { message = "Failed to create test" });
+        }
     }
-    else
-    {
-        return BadRequest(new { message = "Failed to create test" });
-    }
- }
 
-
-    
     //http://localhost:5151/api/Assessment/addquestion/assessments/1/questions/10
     [HttpPost("addquestion/assessments/{assessmentId}/questions/{questionId}")]
-    public async Task<IActionResult>  AddQuestion(int assessmentId,int questionId)
+    public async Task<IActionResult> AddQuestion(int assessmentId, int questionId)
     {
-        bool status=await _svc.AddQuestion(assessmentId,questionId);
+        bool status = await _svc.AddQuestion(assessmentId, questionId);
         _logger.LogInformation("Add question method invoked at  {DT}", DateTime.UtcNow.ToLongTimeString());
         return Ok(status);
     }
 
-    
-    // http://localhost:5151/api/Assessment/addmultiplequestions/assessments/1
-   [HttpPost("addmultiplequestions/assessments/{assessmentId}")]
-   public async Task<IActionResult> AddQuestions(int assessmentId, List<TestQuestion> questions)
-   {
-    // Log the incoming data for debugging
-    _logger.LogInformation("Received Questions: {questions}", JsonConvert.SerializeObject(questions));
-    
-    bool status = await _svc.AddQuestions(assessmentId, questions);
-    _logger.LogInformation("Add multiple questions method invoked at {DT}", DateTime.UtcNow.ToLongTimeString());
 
-    return Ok(status);
+    // http://localhost:5151/api/Assessment/addmultiplequestions/assessments/1
+    [HttpPost("addmultiplequestions/assessments/{assessmentId}")]
+    public async Task<IActionResult> AddQuestions(int assessmentId, List<TestQuestion> questions)
+    {
+        // Log the incoming data for debugging
+        _logger.LogInformation("Received Questions: {questions}", JsonConvert.SerializeObject(questions));
+
+        bool status = await _svc.AddQuestions(assessmentId, questions);
+        _logger.LogInformation("Add multiple questions method invoked at {DT}", DateTime.UtcNow.ToLongTimeString());
+
+        return Ok(status);
     }
 
     //http://localhost:5151/api/Assessment/1/questions/9
     [HttpDelete("{assessmentId}/questions/{questionId}")]
-    public async Task<IActionResult>  RemoveQuestion(int assessmentId,int questionId)
+    public async Task<IActionResult> RemoveQuestion(int assessmentId, int questionId)
     {
-        bool status=await _svc.RemoveQuestion(assessmentId,questionId);
+        bool status = await _svc.RemoveQuestion(assessmentId, questionId);
         _logger.LogInformation("Remove question method invoked at  {DT}", DateTime.UtcNow.ToLongTimeString());
         return Ok(status);
     }
 
     //http://localhost:5151/api/Assessment/1/duration/40
     [HttpPut("{assessmentId}/duration/{duration}")]
-    public async Task<IActionResult>  ChangeDuration(int assessmentId,string duration)
+    public async Task<IActionResult> ChangeDuration(int assessmentId, string duration)
     {
-        bool status=await _svc.ChangeDuration(assessmentId,duration);
+        bool status = await _svc.ChangeDuration(assessmentId, duration);
         _logger.LogInformation("Change duration method invoked at  {DT}", DateTime.UtcNow.ToLongTimeString());
         return Ok(status);
     }
 
     //http://localhost:5151/api/Assessment/1/reschedule/2024-01-01
     [HttpPut("{assessmentId}/reschedule/{date}")]
-    public async Task<IActionResult>  Reschedule(int assessmentId,DateTime date)
+    public async Task<IActionResult> Reschedule(int assessmentId, DateTime date)
     {
-        bool status=await _svc.Reschedule(assessmentId,date);
+        bool status = await _svc.Reschedule(assessmentId, date);
         _logger.LogInformation("Reschedule method invoked at  {DT}", DateTime.UtcNow.ToLongTimeString());
         return Ok(status);
     }
 
     //http://localhost:5151/api/Assessment/deletequestions
     [HttpDelete("deletequestions")]
-    public async Task<IActionResult>  RemoveQuestions(int[] testQuestions)
+    public async Task<IActionResult> RemoveQuestions(int[] testQuestions)
     {
-        bool status= await _svc.RemoveQuestions(testQuestions);
+        bool status = await _svc.RemoveQuestions(testQuestions);
         _logger.LogInformation("Remove questions method invoked at  {DT}", DateTime.UtcNow.ToLongTimeString());
         return Ok(status);
     }
- }
+
+
+
+    // add test and there questions
+    //http://localhost:5151/api/Assessment/addtest
+    [HttpPost("addtest")]
+    public async Task<IActionResult> AddTest([FromBody] CreateTestWithQuestions request)
+    {
+        if (!ModelState.IsValid)
+    {
+        return BadRequest(ModelState); // This will return the exact error
+    }
+
+        var testId = await _svc.CreateTestWithQuestionsAsync(request);
+        return Ok(new { message = "Test created", testId });
+    }
+
+    //http://localhost:5151/api/Assessment/allquestionsbysubject/1
+    [HttpGet("allquestionsbysubject/{subjectId}")]
+    public async Task<IActionResult> GetAllQuestionsBySubject(int subjectId)
+    {
+        List<SubjectQuestions> questions = await _svc.GetAllQuestionsBySubject(subjectId);
+        _logger.LogInformation("Get all questions by subject method invoked at  {DT}", DateTime.UtcNow.ToLongTimeString());
+        return Ok(questions);
+    }
+
+//http://localhost:5151/api/Assessment/getsme/1
+    [HttpGet("getsme/{subjectId}")]
+    public async Task<IActionResult> GetSmeBySubject(int subjectId)
+    {
+        List<Employee> smeList = await _svc.GetSmeBySubject(subjectId);
+        _logger.LogInformation("Get SME by subject method invoked at  {DT}", DateTime.UtcNow.ToLongTimeString());
+        return Ok(smeList);
+    }
+
+}
