@@ -188,11 +188,6 @@ public class AssessmentController : ControllerBase
     [HttpPost("addtest")]
     public async Task<IActionResult> AddTest([FromBody] CreateTestWithQuestions request)
     {
-        if (!ModelState.IsValid)
-    {
-        return BadRequest(ModelState); // This will return the exact error
-    }
-
         var testId = await _svc.CreateTestWithQuestionsAsync(request);
         return Ok(new { message = "Test created", testId });
     }
@@ -202,6 +197,11 @@ public class AssessmentController : ControllerBase
     public async Task<IActionResult> GetAllQuestionsBySubject(int subjectId)
     {
         List<SubjectQuestions> questions = await _svc.GetAllQuestionsBySubject(subjectId);
+        if (questions == null || questions.Count == 0)
+        {
+            _logger.LogWarning("No questions found for subject ID {SubjectId} at {DT}", subjectId, DateTime.UtcNow.ToLongTimeString());
+            return NotFound(new { message = "No questions found for the specified subject." });
+        }
         _logger.LogInformation("Get all questions by subject method invoked at  {DT}", DateTime.UtcNow.ToLongTimeString());
         return Ok(questions);
     }
@@ -211,6 +211,11 @@ public class AssessmentController : ControllerBase
     public async Task<IActionResult> GetSmeBySubject(int subjectId)
     {
         List<Employee> smeList = await _svc.GetSmeBySubject(subjectId);
+        if (smeList == null || smeList.Count == 0)
+        {
+            _logger.LogWarning("No SME found for subject ID {SubjectId} at {DT}", subjectId, DateTime.UtcNow.ToLongTimeString());
+            return NotFound(new { message = "No SME found for the specified subject." });
+        }
         _logger.LogInformation("Get SME by subject method invoked at  {DT}", DateTime.UtcNow.ToLongTimeString());
         return Ok(smeList);
     }
