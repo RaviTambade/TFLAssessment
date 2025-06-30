@@ -130,13 +130,6 @@
     <h2>Create New Test</h2>
 
     <div class="form-group">
-      <label>Subject:</label>
-      <select id="subjectSelect">
-        <option value="">-- Select Subject --</option>
-      </select>
-    </div>
-
-    <div class="form-group">
       <label>Test Name:</label>
       <input type="text" id="testName" />
     </div>
@@ -144,6 +137,13 @@
     <div class="form-group">
       <label>Duration (HH:mm:ss):</label>
       <input type="text" id="duration" placeholder="00:30:00" />
+    </div>
+
+    <div class="form-group">
+      <label>Subject:</label>
+      <select id="subjectSelect">
+        <option value="">-- Select Subject --</option>
+      </select>
     </div>
 
     <div class="form-group">
@@ -173,9 +173,10 @@
 
   <script>
     let selectedQuestions = [];
-
+    var getSubjectsUrl = "http://localhost:5151/api/assessment/subjects";
     $(document).ready(function () {
-      $.get("http://localhost:5151/api/assessment/subjects", function (subjects) {
+      // "http://localhost:5151/api/assessment/subjects"
+      $.get(getSubjectsUrl, function (subjects) {
         $("#subjectSelect").html('<option value="">-- Select Subject --</option>' +
           subjects.map(s => `<option value="${s.id}">${s.title}</option>`).join(""));
       });
@@ -286,10 +287,10 @@
           contentType: "application/json",
           data: JSON.stringify(payload),
           success: function (res) {
-            alert("✅ Test created successfully with ID: " + res.testId);
+            alert(" Test created successfully with ID: " + res.testId);
           },
           error: function (xhr) {
-            console.error("❌ Error response:", xhr.responseText);
+            console.error(" Error response:", xhr.responseText);
             alert("Failed to create test.");
           }
         });

@@ -58,11 +58,23 @@
   <div id="questions-container">Loading questions...</div>
 
   <script>
+    var testId =22;
+    var candidateId = 1;
+
+    var remoteWeb = "http://localhost:5172";
+    var candidateAnswerWeb = "http://localhost:5299";
+    var resultWeb = "http://localhost:5235";
+
+    var questionsUrl = remoteWeb + "/api/questionbank/questions/tests/" + testId;
+    var answersUrl = candidateAnswerWeb + "/api/candidateanswer/assessmentanswers/candidates/1/tests/" + testId + "/results";
+    var detailsUrl = candidateAnswerWeb + "/api/candidateanswer/assessmentanswers/candidates/1/tests/" + testId + "/details";
+    var scoreUrl = resultWeb + "/api/result/candidates/" + candidateId + "/tests/" + testId + "/score";
+
     $(document).ready(function () {
-      const questionsUrl = "http://localhost:5172/api/questionbank/questions/tests/22";
-      const answersUrl = "http://localhost:5299/api/candidateanswer/assessmentanswers/candidates/1/tests/22/results";
-      const detailsUrl = "http://localhost:5299/api/candidateanswer/assessmentanswers/candidates/1/tests/22/details";
-      const scoreUrl = "http://localhost:5235/api/result/candidates/1/tests/22/score";
+      // const questionsUrl = "http://localhost:5172/api/questionbank/questions/tests/22";
+      // const answersUrl = "http://localhost:5299/api/candidateanswer/assessmentanswers/candidates/1/tests/22/results";
+      // const detailsUrl = "http://localhost:5299/api/candidateanswer/assessmentanswers/candidates/1/tests/22/details";
+      // const scoreUrl = "http://localhost:5235/api/result/candidates/1/tests/22/score";
 
       // First, load candidate details
       $.getJSON(detailsUrl, function (details) {
