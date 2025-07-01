@@ -7,30 +7,16 @@ drop procedure if exists spcandidatetestresult;
 
 DELIMITER $$
 
-CREATE PROCEDURE spcandidatetestresult(
-    IN pcandidateId INT,
-    IN ptestId INT,
-    OUT pscore INT
-)
+create procedure spcandidatetestresult(IN pcandidateId INT,In ptestId INT,OUT pscore INT )
 BEGIN
-    DECLARE totalMarks INT;
-
-    -- Corrected JOINs and logic
-    SELECT COUNT(*) INTO totalMarks
-    FROM candidateanswers ca
-    INNER JOIN testquestions tq ON ca.testquestionid = tq.id
-    INNER JOIN questionbank qb ON tq.questionbankid = qb.id
-    WHERE ca.candidateid = pcandidateId
-      AND tq.testid = ptestId
-      AND ca.answerkey = qb.answerkey;
-
-    -- Set the OUT parameter
-    SET pscore = totalMarks;
-
-    -- Update the candidatetestresults table
-    UPDATE candidatetestresults
-    SET score = pscore
-    WHERE candidateid = pcandidateId AND testid = ptestId;
+DECLARE totalMarks INT;
+SELECT COUNT(CASE WHEN candidateanswers.answerkey = questionbank.answerkey THEN 1 ELSE NULL END) AS score 
+INTO totalMarks FROM candidateanswers 
+INNER JOIN   testquestions  on testquestions.questionbankid=candidateanswers.testquestionid
+INNER JOIN   questionbank on questionbank.id=testquestions.questionbankid
+WHERE candidateanswers.candidateid = pcandidateId AND testquestions.testid = ptestId;
+set pscore=totalMarks;
+Update candidatetestresults  set score =pscore where candidateid= pcandidateId and testid= ptestId;
 END $$
 
 DELIMITER ;
