@@ -97,10 +97,18 @@ public class AssessmentService : IAssessmentService
       return await _repository.GetAllQuestionsBySubject(subjectId);
    }
 
-   
-    public async Task<List<Employee>> GetSmeBySubject(int subjectId)
-    {
-        // Assuming the repository has a method to get SMEs by subject
-        return await _repository.GetSmeBySubject(subjectId);
-    }
+
+   public async Task<List<Employee>> GetSmeBySubject(int subjectId)
+   {
+      // Assuming the repository has a method to get SMEs by subject
+      return await _repository.GetSmeBySubject(subjectId);
+   }
+   public async Task<List<Test>> GetAllTests(DateTime fromDate, DateTime toDate)
+   {
+      return await _repository.GetAllTests(fromDate, toDate);
+   }
+   public async Task<TestWithQuestions> GetTestDetails(int testId)
+   {
+      return await _repository.GetTestDetails(testId);
+   }
 }

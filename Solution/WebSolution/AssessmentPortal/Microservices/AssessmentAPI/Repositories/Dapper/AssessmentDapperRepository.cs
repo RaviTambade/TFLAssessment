@@ -531,5 +531,56 @@ public class AssessmentDapperRepository : IAssessmentRepository
 
         return smeList;
     }
+
+    public async Task<List<Test>> GetAllTests(DateTime fromDate, DateTime toDate)
+    {
+        await Task.Delay(100);
+        List<Test> tests = new List<Test>();
+        string query = @"SELECT * FROM tests WHERE scheduleddate BETWEEN @FromDate AND @ToDate";
+
+        using (IDbConnection con = new MySqlConnection(_connectionString))
+        {
+            tests = con.Query<Test>(query, new { FromDate = fromDate, ToDate = toDate }).AsList();
+        }
+
+        return tests;
+    }
+    public async Task<TestWithQuestions> GetTestDetails(int testId)
+    {
+        using (IDbConnection con = new MySqlConnection(_connectionString))
+        {
+            var test = await con.QuerySingleOrDefaultAsync<TestWithQuestions>(
+            
+                @"
+                SELECT 
+                    id AS Id,
+                    name AS Name,
+                    subjectid AS SubjectId,
+                    CAST(duration AS CHAR) AS Duration,   --  Casted to string
+                    smeid AS SmeId,
+                    creationdate AS CreationDate,
+                    modificationdate AS ModificationDate,
+                    scheduleddate AS ScheduledDate,
+                    passinglevel AS PassingLevel,
+                    status AS Status
+                FROM tests
+                WHERE id = @TestId", 
+                new { TestId = testId });
+    
+            if (test != null)
+            {
+                var questions = await con.QueryAsync<Question>(
+                    @"SELECT q.id AS QuestionId, q.subjectid AS SubjectId, q.title, q.a, q.b, q.c, q.d, q.answerkey, q.evaluationcriteriaid
+                      FROM questionbank q
+                      INNER JOIN testquestions tq ON q.id = tq.questionbankid
+                      WHERE tq.testid = @TestId", new { TestId = testId });
+    
+                test.Questions = questions.ToList();
+            }
+    
+            return test;
+        }
+    }
+
 }
 

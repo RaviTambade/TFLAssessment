@@ -28,4 +28,7 @@ public interface IAssessmentRepository
   public Task<int> CreateTestWithQuestionsAsync(CreateTestWithQuestions createTestWithQuestions);
   public Task<List<SubjectQuestions>> GetAllQuestionsBySubject(int subjectId);
   public Task<List<Employee>> GetSmeBySubject(int subjectId);
+  public Task<List<Test>> GetAllTests(DateTime fromDate, DateTime toDate);
+  public Task<TestWithQuestions> GetTestDetails(int testId);
 }
+

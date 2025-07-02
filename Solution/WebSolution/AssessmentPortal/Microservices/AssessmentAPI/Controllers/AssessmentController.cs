@@ -211,7 +211,7 @@ public class AssessmentController : ControllerBase
         return Ok(questions);
     }
 
-//http://localhost:5151/api/Assessment/getsme/1
+    //http://localhost:5151/api/Assessment/getsme/1
     [HttpGet("getsme/{subjectId}")]
     public async Task<IActionResult> GetSmeBySubject(int subjectId)
     {
@@ -225,4 +225,32 @@ public class AssessmentController : ControllerBase
         return Ok(smeList);
     }
 
+    //http://localhost:5151/api/Assessment/getalltest/from/2024-01-01/to/2024-12-31
+    [HttpGet("getalltest/from/{fromDate}/to/{toDate}")]
+    public async Task<IActionResult> GetAllTests(DateTime fromDate, DateTime toDate)
+    {
+        List<Test> assessments = await _svc.GetAllTests(fromDate, toDate);
+        if (assessments == null || assessments.Count == 0)
+        {
+            _logger.LogWarning("No tests found between {FromDate} and {ToDate} at {DT}", fromDate, toDate, DateTime.UtcNow.ToLongTimeString());
+            return NotFound(new { message = "No tests found for the specified date range." });
+        }
+        _logger.LogInformation("Get all tests method invoked at  {DT}", DateTime.UtcNow.ToLongTimeString());
+        return Ok(assessments);
+    }
+
+    // Get all test details by test ID
+    //http://localhost:5151/api/Assessment/testdetails/{testId}
+    [HttpGet("testdetails/{testId}")]
+    public async Task<IActionResult> GetTestDetails(int testId)
+    {
+        var testDetails = await _svc.GetTestDetails(testId);
+        if (testDetails == null)
+        {
+            _logger.LogWarning("No test details found for test ID {TestId} at {DT}", testId, DateTime.UtcNow.ToLongTimeString());
+            return NotFound(new { message = "No test details found for the specified test ID." });
+        }
+        _logger.LogInformation("Get test details method invoked at  {DT}", DateTime.UtcNow.ToLongTimeString());
+        return Ok(testDetails);
+    }
 }
