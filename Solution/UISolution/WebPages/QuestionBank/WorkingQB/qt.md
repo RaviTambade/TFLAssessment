@@ -11,7 +11,7 @@ B. Writing SQL queries
 C. Designing user interfaces using HTML, CSS, and frameworks like Tailwind
 D. Managing cloud infrastructure
 
-✅ **Answer:** C
+
 
 ---
 
@@ -22,7 +22,7 @@ B. Design UI components
 C. Build business logic and APIs
 D. Handle customer queries
 
-✅ **Answer:** C
+
 
 ---
 
@@ -33,7 +33,7 @@ B. Only backend
 C. DevOps infrastructure
 D. Both frontend and backend
 
-✅ **Answer:** D
+
 
 ---
 
@@ -44,7 +44,7 @@ B. Writing JSON parsers and HTTP handlers
 C. Setting up cloud containers
 D. Automating UI tests
 
-✅ **Answer:** B
+
 
 ---
 
@@ -55,7 +55,7 @@ B. Securing database backups and recovery
 C. Developing frontend dashboards
 D. Performing regression testing
 
-✅ **Answer:** B
+
 
 ---
 
@@ -66,7 +66,7 @@ B. Functional testing
 C. OS and server management
 D. Wireframe designs
 
-✅ **Answer:** C
+
 
 ---
 
@@ -77,7 +77,7 @@ B. Code in C++
 C. Manage scalability and container orchestration in cloud platforms
 D. Moderate chat conversations
 
-✅ **Answer:** C
+
 
 ---
 
@@ -88,7 +88,7 @@ B. Handle production support
 C. Execute test cases without using code
 D. Develop SQL stored procedures
 
-✅ **Answer:** C
+
 
 ---
 
@@ -99,7 +99,7 @@ B. Write test scripts using tools like Selenium or Cypress
 C. Build cloud infrastructure
 D. Create APIs
 
-✅ **Answer:** B
+
 
 ---
 
@@ -110,7 +110,7 @@ B. Develops cloud VMs
 C. Handles end-user issues and deployments
 D. Writes unit tests
 
-✅ **Answer:** C
+
 
 ---
 
@@ -123,7 +123,7 @@ B. Requirement Analysis
 C. Feedback
 D. Production Deployment
 
-✅ **Answer:** C
+
 
 ---
 
@@ -134,7 +134,7 @@ B. Achieve a complete product
 C. Improve and mature the product iteratively
 D. Perform manual testing
 
-✅ **Answer:** C
+
 
 ---
 
@@ -145,7 +145,7 @@ B. To see where their code fits and contributes
 C. To learn about accounting
 D. To perform backups
 
-✅ **Answer:** B
+
 
 ---
 
@@ -158,7 +158,7 @@ B. What the system should do
 C. Color schemes and UI designs
 D. Server uptime
 
-✅ **Answer:** B
+
 
 ---
 
@@ -169,7 +169,7 @@ B. Ability to send messages
 C. Data encryption and scalability
 D. Create/delete room feature
 
-✅ **Answer:** C
+
 
 ---
 
@@ -180,7 +180,7 @@ B. Security constraint
 C. Non-functional requirement
 D. Database rule
 
-✅ **Answer:** C
+
 
 ---
 
@@ -191,7 +191,7 @@ B. Join/Leave meeting
 C. Support for 500 concurrent users
 D. Crash tolerance
 
-✅ **Answer:** B
+
 
 ---
 
@@ -204,7 +204,7 @@ B. Automation Test Engineering
 C. DBA roles
 D. Technical Support
 
-✅ **Answer:** B
+
 
 ---
 
@@ -215,7 +215,7 @@ B. DBA and QA don’t contribute much
 C. Dev, QA, DBA, and Infra all contribute to the product's success
 D. Deployment is not important
 
-✅ **Answer:** C
+
 
 ---
 
@@ -226,7 +226,7 @@ B. Because knowing requirements helps tailor the solution, regardless of tools
 C. Because HTML is outdated
 D. Because backend code is always simple
 
-✅ **Answer:** B
+
 
 
 ## 🧠 **Role and Responsibility Deep Dive**
@@ -238,7 +238,7 @@ B. Frontend Developer
 C. System Administrator
 D. Web API Developer
 
-✅ **Answer:** C
+
 
 ---
 
@@ -249,7 +249,7 @@ B. Cloud Engineer
 C. Manual Tester
 D. Frontend Developer
 
-✅ **Answer:** B
+
 
 ---
 
@@ -260,7 +260,7 @@ B. Return data in JSON format
 C. Perform UI styling using Tailwind CSS
 D. Authenticate users using JWT
 
-✅ **Answer:** C
+
 
 ---
 
@@ -271,7 +271,7 @@ B. PostgreSQL
 C. MongoDB
 D. Oracle
 
-✅ **Answer:** C
+
 
 ---
 
@@ -282,7 +282,7 @@ B. Cloud Engineer
 C. DBA
 D. Automation Tester
 
-✅ **Answer:** C
+
 
 ---
 
@@ -295,7 +295,7 @@ B. Visual Studio Code
 C. GitHub Copilot
 D. Postman
 
-✅ **Answer:** A
+
 
 ---
 
@@ -306,7 +306,7 @@ B. Manual Tester
 C. Web API Developer
 D. Support Engineer
 
-✅ **Answer:** C
+
 
 ---
 
@@ -317,7 +317,7 @@ B. Jenkins
 C. Remote Desktop, Log Analyzer
 D. MongoDB Compass
 
-✅ **Answer:** C
+
 
 ---
 
@@ -328,7 +328,7 @@ B. DBA
 C. Frontend Developer
 D. Web API Developer
 
-✅ **Answer:** C
+
 
 ---
 
@@ -339,7 +339,7 @@ B. Managing CI/CD pipeline
 C. Verifying functionality through exploratory testing
 D. Writing frontend components
 
-✅ **Answer:** C
+
 
 ---
 
@@ -352,7 +352,7 @@ B. Functional
 C. Data-related
 D. Cloud-based
 
-✅ **Answer:** B
+
 
 ---
 
@@ -363,7 +363,6 @@ B. Admin can delete a room
 C. Chat message can be sent
 D. Mobile responsive UI
 
-✅ **Answer:** A
 
 ---
 
@@ -374,7 +373,7 @@ B. UI design
 C. Non-functional requirement
 D. Database schema design
 
-✅ **Answer:** C
+
 
 ---
 
@@ -385,7 +384,6 @@ B. Security feature
 C. Functional requirement
 D. Non-functional scalability requirement
 
-✅ **Answer:** D
 
 ---
 
@@ -396,7 +394,6 @@ B. System Admin
 C. Product Owner
 D. QA Tester
 
-✅ **Answer:** C
 
 ---
 
@@ -409,7 +406,6 @@ B. Requirement Gathering
 C. Retrospective
 D. Product Launch
 
-✅ **Answer:** C
 
 ---
 
@@ -420,7 +416,6 @@ B. Keeps the product always incomplete
 C. Allows continuous improvement
 D. Reduces team size
 
-✅ **Answer:** C
 
 ---
 
@@ -431,7 +426,6 @@ B. Check where their code fits in the product lifecycle
 C. Focus only on their module
 D. Skip documentation
 
-✅ **Answer:** B
 
 ---
 
@@ -444,7 +438,7 @@ D. QA testers
 
 ✅ **Answer:** C
 
----
+
 
 ### 40. What should a developer focus on **before choosing a framework**?
 
@@ -452,8 +446,6 @@ A. Latest version of React
 B. Requirements and use cases
 C. Tailwind color scheme
 D. MongoDB driver version
-
-✅ **Answer:** B
 
 
 
@@ -466,7 +458,6 @@ B. UI designing
 C. Verifying software quality
 D. Managing servers
 
-✅ **Answer:** C
 
 ---
 
@@ -477,7 +468,6 @@ B. Frontend Developer
 C. DBA
 D. Manual Tester
 
-✅ **Answer:** C
 
 ---
 
@@ -488,7 +478,6 @@ B. Product Owner
 C. Automation Tester
 D. Support Engineer
 
-✅ **Answer:** B
 
 ---
 
@@ -499,7 +488,6 @@ B. Frontend Developer
 C. DevOps or Cloud Engineer
 D. Web API Developer
 
-✅ **Answer:** C
 
 ---
 
@@ -510,7 +498,6 @@ B. Functional Requirements
 C. Backup configurations
 D. Scrum rituals
 
-✅ **Answer:** B
 
 ---
 
@@ -521,7 +508,6 @@ B. Admin
 C. Cloud Provider
 D. Student
 
-✅ **Answer:** C
 
 ---
 
@@ -532,7 +518,6 @@ B. Unit tests
 C. Software Requirements Specification (SRS)
 D. Product branding
 
-✅ **Answer:** C
 
 ---
 
@@ -543,7 +528,6 @@ B. To review deployment scripts
 C. To share updates, blockers, and plans
 D. To explain resume points
 
-✅ **Answer:** C
 
 ---
 
@@ -554,7 +538,6 @@ B. File upload size limit
 C. Message sent to user
 D. Emoji support
 
-✅ **Answer:** B
 
 ---
 
@@ -565,7 +548,7 @@ B. DBA & DevOps
 C. Frontend Developer
 D. Product Owner
 
-✅ **Answer:** B
+
 
 ---
 
