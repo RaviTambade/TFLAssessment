@@ -1,2 +1,6 @@
 Hello
+<<<<<<< HEAD
 c# - pranita mane
+=======
+c# - pranita mane
+>>>>>>> 0736d65da1c64fc808bb102d9ca2678ab5c20ebc
