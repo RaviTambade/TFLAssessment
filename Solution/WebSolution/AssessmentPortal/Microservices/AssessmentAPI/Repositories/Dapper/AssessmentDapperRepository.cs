@@ -552,17 +552,7 @@ public class AssessmentDapperRepository : IAssessmentRepository
             var test = await con.QuerySingleOrDefaultAsync<TestWithQuestions>(
             
                 @"
-                SELECT 
-                    id AS Id,
-                    name AS Name,
-                    subjectid AS SubjectId,
-                    CAST(duration AS CHAR) AS Duration,   --  Casted to string
-                    smeid AS SmeId,
-                    creationdate AS CreationDate,
-                    modificationdate AS ModificationDate,
-                    scheduleddate AS ScheduledDate,
-                    passinglevel AS PassingLevel,
-                    status AS Status
+                SELECT *
                 FROM tests
                 WHERE id = @TestId", 
                 new { TestId = testId });
