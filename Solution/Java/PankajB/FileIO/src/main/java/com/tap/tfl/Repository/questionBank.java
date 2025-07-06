@@ -12,19 +12,15 @@ import com.tap.tfl.ui.UIManager;
 public class questionBank {
 
     Scanner scanner = new Scanner(System.in);
-    public List<question> questionList = new ArrayList<>();
+    List<question>  questionList = new ArrayList<>();
     UIManager manager = new UIManager();
 
     public void insertQuestion(question question1) {
-
-        System.out.println("*******************");
         if (question1 == null) {
             System.out.println("No question present");
         }
-
-        questionList.add(question1);
-
-        System.out.println("*******************");
+        writeIntoList(question1);
+        //System.out.println("*******************");
     }
 
     public void updateQuestion(int questionId) {
@@ -79,15 +75,25 @@ public class questionBank {
         }
     }
 
-    public void readFileAccess() {
-        
+    public void readFileAccess() throws Exception {
+        fileIo fread = new fileIo();
+        fread.readFile();
     }
 
     public void writeFileAccess() {
         Iterator<question> itrq = questionList.iterator();
         fileIo fwrite = new fileIo();
-        while (itrq.hasNext()) { 
+        while (itrq.hasNext()) {                      //this block has to be checked
             fwrite.writeFile(itrq.next());
         }
+    }
+
+    public void writeIntoList(question q) {
+        //manager.getData(q);
+        questionList.add(q);
+        // for (question q1 : questionList) {      to check whether object is saved into the list
+        //     manager.getData(q1);
+        //     // System.out.println("Id : " + q.getQuestionId() + " Subject : " + q.getSubject() + " Title : " + q.getTitle() + " Option  A : " + q.getOptionA() + " Option  B : " + q.getOptionB() + " Option  C : " + q.getOptionC() + " Option  D : " + q.getOptionD() + " Correct Answer : " + q.getCorrectAnswer() + " Evaluation Criteria : " + q.getEvaluationCriteria());
+        // }
     }
 }

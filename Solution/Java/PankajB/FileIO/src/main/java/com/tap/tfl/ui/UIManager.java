@@ -33,7 +33,7 @@ public class UIManager {
         q1.setCorrectAnswer(scanner.next().charAt(0));
         System.out.println("Enter Evaluation Criteria: ");
         q1.setEvaluationCriteria(scanner.nextInt());
-        getData(q1);
+        //getData(q1);
         return q1;
     }
 
@@ -57,7 +57,8 @@ public class UIManager {
     //     return q1;
     // }
     public void getData(question q) {
-
+        System.out.println();
+        System.out.println("-------------------------------");
         System.out.println("Question ID:         " + q.getQuestionId());
         System.out.println("Subject:             " + q.getSubject());
         System.out.println("Title:               " + q.getTitle());
@@ -67,5 +68,6 @@ public class UIManager {
         System.out.println("Options D:           " + q.getOptionD());
         System.out.println("Correct Option:      " + q.getCorrectAnswer());
         System.out.println("Evaluation Criteria: " + q.getEvaluationCriteria());
+        System.out.println("-------------------------------");
     }
 }
