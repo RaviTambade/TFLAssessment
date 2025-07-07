@@ -550,13 +550,13 @@ public class AssessmentDapperRepository : IAssessmentRepository
         using (IDbConnection con = new MySqlConnection(_connectionString))
         {
             var test = await con.QuerySingleOrDefaultAsync<TestWithQuestions>(
-            
+
                 @"
                 SELECT *
                 FROM tests
-                WHERE id = @TestId", 
+                WHERE id = @TestId",
                 new { TestId = testId });
-    
+
             if (test != null)
             {
                 var questions = await con.QueryAsync<Question>(
@@ -564,12 +564,28 @@ public class AssessmentDapperRepository : IAssessmentRepository
                       FROM questionbank q
                       INNER JOIN testquestions tq ON q.id = tq.questionbankid
                       WHERE tq.testid = @TestId", new { TestId = testId });
-    
+
                 test.Questions = questions.ToList();
             }
-    
+
             return test;
         }
+    }
+    public async Task<List<Question>> GetQuestionsByEvaluationCriteriaId(int evaluationCriteriaId)
+    {
+        await Task.Delay(100);
+        List<Question> questions = new List<Question>();
+        string query = @"
+            SELECT q.id AS QuestionId, q.subjectid AS SubjectId, q.title, q.a, q.b, q.c, q.d, q.answerkey, q.evaluationcriteriaid
+            FROM questionbank q
+            WHERE q.evaluationcriteriaid = @EvaluationCriteriaId";
+
+        using (IDbConnection con = new MySqlConnection(_connectionString))
+        {
+            questions = con.Query<Question>(query, new { EvaluationCriteriaId = evaluationCriteriaId }).AsList();
+        }
+
+        return questions;
     }
 
 }

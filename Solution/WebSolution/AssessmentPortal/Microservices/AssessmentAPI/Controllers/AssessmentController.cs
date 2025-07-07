@@ -253,4 +253,18 @@ public class AssessmentController : ControllerBase
         _logger.LogInformation("Get test details method invoked at  {DT}", DateTime.UtcNow.ToLongTimeString());
         return Ok(testDetails);
     }
+    //evaluation criteria id give me all question base on evaluation criteria
+    //http://localhost:5151/api/Assessment/questionsbycriteria/{EvaluationCriteriaId}
+    [HttpGet("questionsbycriteria/{EvaluationCriteriaId}")]
+    public async Task<IActionResult> GetQuestionsByEvaluationCriteriaId(int EvaluationCriteriaId) 
+    {
+        var questionDetails = await _svc.GetQuestionsByEvaluationCriteriaId(EvaluationCriteriaId);
+        if (questionDetails == null)
+        {
+            _logger.LogWarning("No test details found for test ID {TestId} at {DT}", EvaluationCriteriaId, DateTime.UtcNow.ToLongTimeString());
+            return NotFound(new { message = "No test details found for the specified test ID." });
+        }
+        _logger.LogInformation("Get test details method invoked at  {DT}", DateTime.UtcNow.ToLongTimeString());
+        return Ok(questionDetails);
+    }
 }

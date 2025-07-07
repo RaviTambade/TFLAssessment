@@ -30,5 +30,6 @@ public interface IAssessmentRepository
   public Task<List<Employee>> GetSmeBySubject(int subjectId);
   public Task<List<Test>> GetAllTests(DateTime fromDate, DateTime toDate);
   public Task<TestWithQuestions> GetTestDetails(int testId);
+  public Task<List<Question>> GetQuestionsByEvaluationCriteriaId(int EvaluationCriteriaId);
 }
 
