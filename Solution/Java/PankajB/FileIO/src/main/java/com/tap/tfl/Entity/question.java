@@ -14,7 +14,6 @@ public class question implements Serializable {
     private char correctAnswer;
     private int evaluationCriteria;
 
-    
     public int getQuestionId() {
         return questionId;
     }

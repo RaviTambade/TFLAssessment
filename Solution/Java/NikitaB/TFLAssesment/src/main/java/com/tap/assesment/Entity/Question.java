@@ -1,6 +1,8 @@
 package com.tap.assesment.Entity;
 
-public class Question {
+import java.io.*;
+
+public class Question implements Serializable {
     private int id;
     private String title;
     private String optionA;
