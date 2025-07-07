@@ -115,4 +115,8 @@ public class AssessmentService : IAssessmentService
    {
       return await _repository.GetQuestionsByEvaluationCriteriaId(EvaluationCriteriaId);
    }
+   public async Task<bool> UpdateQuestion(Question question)
+   {
+      return await _repository.UpdateQuestion(question);
+   }
 }

@@ -588,5 +588,42 @@ public class AssessmentDapperRepository : IAssessmentRepository
         return questions;
     }
 
+    public async Task<bool> UpdateQuestion(Question question)
+    {
+        await Task.Delay(100);
+        bool status = false;
+        Console.WriteLine("Update Question: " + question.QuestionId);
+        string query = @"
+            UPDATE questionbank 
+            SET title = @Title, a = @A, b = @B, c = @C, d = @D, answerkey = @AnswerKey 
+            WHERE id = @Id";
+
+        using (IDbConnection con = new MySqlConnection(_connectionString))
+        {
+            try
+            {
+                int rowsAffected = con.Execute(query, new
+                {
+                    Id = question.QuestionId,
+                    Title = question.Title,
+                    A = question.A,
+                    B = question.B,
+                    C = question.C,
+                    D = question.D,
+                    AnswerKey = question.AnswerKey,
+                    // EvaluationCriteriaId = question.EvaluationCriteriaId
+                });
+
+                status = rowsAffected > 0; // Determine success based on rows affected
+            }
+            catch (Exception ex)
+            {
+                // Log or handle the exception
+                Console.WriteLine($"Error while updating question: {ex.Message}");
+            }
+        }
+
+        return status;
+    }
 }
 

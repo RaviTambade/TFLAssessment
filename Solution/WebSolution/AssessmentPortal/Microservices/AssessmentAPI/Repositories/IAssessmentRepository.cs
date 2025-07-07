@@ -31,5 +31,7 @@ public interface IAssessmentRepository
   public Task<List<Test>> GetAllTests(DateTime fromDate, DateTime toDate);
   public Task<TestWithQuestions> GetTestDetails(int testId);
   public Task<List<Question>> GetQuestionsByEvaluationCriteriaId(int EvaluationCriteriaId);
+  //UpdateQuestion
+  public Task<bool> UpdateQuestion(Question question);
 }
 

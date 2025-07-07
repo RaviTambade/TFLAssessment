@@ -256,7 +256,7 @@ public class AssessmentController : ControllerBase
     //evaluation criteria id give me all question base on evaluation criteria
     //http://localhost:5151/api/Assessment/questionsbycriteria/{EvaluationCriteriaId}
     [HttpGet("questionsbycriteria/{EvaluationCriteriaId}")]
-    public async Task<IActionResult> GetQuestionsByEvaluationCriteriaId(int EvaluationCriteriaId) 
+    public async Task<IActionResult> GetQuestionsByEvaluationCriteriaId(int EvaluationCriteriaId)
     {
         var questionDetails = await _svc.GetQuestionsByEvaluationCriteriaId(EvaluationCriteriaId);
         if (questionDetails == null)
@@ -266,5 +266,27 @@ public class AssessmentController : ControllerBase
         }
         _logger.LogInformation("Get test details method invoked at  {DT}", DateTime.UtcNow.ToLongTimeString());
         return Ok(questionDetails);
+    }
+    // update question
+    //http://localhost:5151/api/Assessment/updatequestion/{questionId}
+    [HttpPut("updatequestion/{questionId}")]
+    public async Task<IActionResult> UpdateQuestion(int questionId, [FromBody] Question question)
+    {
+        if (question == null || question.QuestionId != questionId)
+        {
+            _logger.LogError("Invalid question data provided at {DT}", DateTime.UtcNow.ToLongTimeString());
+            return BadRequest(new { message = "Invalid question data provided." });
+        }
+
+        // Assuming the service has an UpdateQuestion method
+        bool status = await _svc.UpdateQuestion(question);
+        if (!status)
+        {
+            _logger.LogError("Failed to update question with ID {QuestionId} at {DT}", questionId, DateTime.UtcNow.ToLongTimeString());
+            return BadRequest(new { message = "Failed to update question." });
+        }
+
+        _logger.LogInformation("Question with ID {QuestionId} updated successfully at {DT}", questionId, DateTime.UtcNow.ToLongTimeString());
+        return Ok(new { message = "Question updated successfully." });
     }
 }
