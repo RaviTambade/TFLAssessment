@@ -1,5 +1,6 @@
 package com.tap.assesment.UI;
 import java.util.*;
+import com.tap.assesment.Entity.*;
 
 public class UIManager {
     public void displayMenu(){
@@ -26,4 +27,11 @@ public class UIManager {
         return id;
     }
 
+    public void displayAllQuestion(ArrayList<Question> questions){
+        for(Question question:questions){
+            String alldata=question.toString();
+            System.out.println(alldata);
+            // System.out.println("id: "+question.getId());
+        }
+    }
 }

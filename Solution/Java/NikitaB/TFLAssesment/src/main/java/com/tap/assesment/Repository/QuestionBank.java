@@ -1,7 +1,12 @@
 package com.tap.assesment.Repository;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.*;
 import com.tap.assesment.Entity.*;
+import com.tap.assesment.Store.fileio;
 import com.tap.assesment.UI.*;
 
 public class QuestionBank {
@@ -14,7 +19,12 @@ public class QuestionBank {
     private char option;
     private String sub;
     private int marks;
-    
+    private String filename="Question.txt";
+    fileio file=new fileio();
+
+    public QuestionBank(){
+        questions=file.readFromFile();
+    }
 
     public void CreateQuestion(){
 
@@ -95,23 +105,22 @@ public class QuestionBank {
         
 
     public void deleteQuestion(int id){
-        try{
-            for(int i=0;i<questions.size();i++){
-                if(questions.get(i).getId() == id){
-                    questions.remove(i);
-                }
-            }
-        }
-        catch(Exception e){
-            e.printStackTrace();
-        }
+        // try{
+        //     for(int i=0;i<questions.size();i++){
+        //         if(questions.get(i).getId() == id){
+        //             questions.remove(i);
+        //         }
+        //     }
+        // }
+        // catch(Exception e){
+        //     e.printStackTrace();
+        // }
+        questions.removeIf(q -> q.getId() == id);
     }
 
 
-    public void readAllQuestion(){
-        for(Question q:questions){
-            System.out.println(q.getId()+") "+q.getTitle()+" a) "+q.getOptionA()+" b) "+q.getOptionB()+" c) "+q.getOptionC()+" d)"+q.getOptionD()+" Correct answer : "+q.getCorrectAnswer()+" Marks :"+q.getEvaluationCriteria());
-        }
-       
+    public ArrayList<Question> readAllQuestion(){
+        return questions;
     }
+
 }
