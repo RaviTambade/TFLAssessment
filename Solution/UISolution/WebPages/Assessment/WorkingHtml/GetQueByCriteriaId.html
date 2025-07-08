@@ -82,7 +82,7 @@
 
 <script>
     var baseURL = "http://localhost:5151/api/Assessment/questionsbycriteria/";
-    var criteriaId = 5;
+    var criteriaId = 10;
     var questionsData = [];
 
     $(document).ready(function () {
@@ -163,6 +163,24 @@
 
         alert("Update clicked for Question ID " + questionId);
         // You can use $.ajax PUT request here to submit to backend
+
+        
+        $.ajax({
+            url: "http://localhost:5151/api/Assessment/updatequestion/"+ questionId,
+            type: "PUT",
+            contentType: "application/json",
+            data: JSON.stringify(updatedData),
+            success: function (response) {
+                alert("Question updated successfully!");
+                // $("#fullQuestionContainer").empty(); // Clear the form after update
+                // Optionally, refresh the question list
+                location.reload();
+            },
+            error: function (err) {
+                console.error("Error updating question:", err);
+                alert("Failed to update question.");
+            }
+        });
     }
 </script>
 
