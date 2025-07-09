@@ -91,17 +91,6 @@ namespace Transflower.TFLAssessment.Repositories
         public async Task<List<CandidateAnswerResult>> GetCandidateAnswerResultsAsync(int candidateId, int testId)
         {
             var list = new List<CandidateAnswerResult>();
-            // string sql = @"
-            //         SELECT 
-            //             ca.id,
-            //             ca.candidateid,
-            //             ca.testquestionid,
-            //             ca.answerkey AS CandidateAnswer,
-            //             qb.answerkey AS CorrectAnswer
-            //         FROM candidateanswers ca
-            //         JOIN questionbank qb ON ca.testquestionid = qb.id
-            //         WHERE ca.candidateid = @CandidateId;
-            //     ";
             string sql = @"
                 SELECT 
                     ca.testquestionid,
