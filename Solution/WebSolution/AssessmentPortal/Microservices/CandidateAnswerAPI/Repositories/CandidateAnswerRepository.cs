@@ -124,9 +124,6 @@ namespace Transflower.TFLAssessment.Repositories
             {
                 var result = new CandidateAnswerResult
                 {
-                    // Id = reader.GetInt32("id"),
-                    // CandidateId = reader.GetInt32("candidateid"),
-                    // TestQuestionId = reader.GetInt32("testquestionid"),
                     CandidateAnswer = reader.GetString("CandidateAnswer"),
                     CorrectAnswer = reader.GetString("CorrectAnswer"),
                     IsCorrect = reader.GetString("CandidateAnswer")
