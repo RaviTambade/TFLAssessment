@@ -1,9 +1,10 @@
 package com.tap.assesment.demo;
 import com.tap.assesment.Repository.QuestionBank;
-import com.tap.assesment.Store.fileio;
+import com.tap.assesment.Store.*;
 import com.tap.assesment.UI.UIManager;
 import java.util.*;
 import com.tap.assesment.Entity.*;
+
 public class App 
 {
     public static void main( String[] args )
@@ -11,6 +12,7 @@ public class App
        QuestionBank qBank=new QuestionBank();
        UIManager ui=new UIManager();
        fileio file=new fileio();
+       DBManager db=new DBManager();
        ArrayList<Question> questions=new ArrayList<Question>();
        //questions=file.readFromFile();
        int choice;
@@ -36,9 +38,10 @@ public class App
                 System.out.println("*****************************************************");
                 System.out.println("You choose to update a question");
                 System.out.println("*****************************************************");
-                qBank.updateQuestion(id);
-                questions=qBank.readAllQuestion();
-                file.writeToFile(questions);
+                //qBank.updateQuestion(id);
+                //questions=qBank.readAllQuestion();
+                //file.writeToFile(questions);
+                db.update();
             }
             break;
 
@@ -59,8 +62,9 @@ public class App
                     System.out.println("You choose to view all question");
                     System.out.println("*****************************************************");
                     //qBank.readAllQuestion();
-                    questions=file.readFromFile();
-                    ui.displayAllQuestion(questions);
+                    //questions=file.readFromFile();
+                    //ui.displayAllQuestion(questions);
+                    db.display();
                     System.out.println("*****************************************************");
             }
             

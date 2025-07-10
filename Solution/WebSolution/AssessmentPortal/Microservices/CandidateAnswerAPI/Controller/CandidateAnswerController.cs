@@ -47,6 +47,7 @@ public class CandidateAnswerController : ControllerBase
         return Ok(answers);
     }
 
+    //http://localhost:5299/api/candidateanswer/assessmentanswers/candidates/1/tests/1/results
     [HttpGet("assessmentanswers/candidates/{candidateId}/tests/{testId}/results")]
     public async Task<IActionResult> GetCandidateAnswerResults(int candidateId, int testId)
     {
