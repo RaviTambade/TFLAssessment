@@ -188,8 +188,8 @@
       var remainingTime = 60;
       var score;
 
-      var testId =25; // after change this testId change in correctAnswer.html also
-      var candidateId = 5;
+      var testId =26; // after change this testId change in correctAnswer.html also
+      var candidateId = 4;
 
       //rest api urls
       var remoteWeb = "http://localhost:5238"
@@ -254,7 +254,7 @@
           var finalCandidateAnswers = [];
 
           questions.map((question) => {
-            let questionId = question.id;
+            let questionId = question.id; // questionId is the id of the testquestions
             let answer = question.answer;
             console.log(questions);
 

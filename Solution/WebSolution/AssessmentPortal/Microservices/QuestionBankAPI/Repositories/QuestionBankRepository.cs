@@ -4,6 +4,7 @@ using System.Data;
 using Transflower.TFLAssessment.Entities;
 using Transflower.TFLAssessment.Repositories.Interfaces;
 namespace Transflower.TFLAssessment.Repositories;
+
 public class QuestionBankRepository : IQuestionBankRepository
 {
     private readonly IConfiguration _configuration;
@@ -12,7 +13,7 @@ public class QuestionBankRepository : IQuestionBankRepository
     public QuestionBankRepository(IConfiguration configuration)
     {
         _configuration = configuration;
-        _connectionString = _configuration.GetConnectionString("DefaultConnection")  ?? throw new ArgumentNullException("connectionString");
+        _connectionString = _configuration.GetConnectionString("DefaultConnection") ?? throw new ArgumentNullException("connectionString");
     }
     //Disconnected Data Access
     //No 
@@ -152,7 +153,7 @@ public class QuestionBankRepository : IQuestionBankRepository
 
         MySqlConnection connection = new MySqlConnection(_connectionString);
         MySqlCommand command = new MySqlCommand(query, connection);
-        
+
         try
         {
             await connection.OpenAsync();
@@ -261,51 +262,51 @@ public class QuestionBankRepository : IQuestionBankRepository
         return question;
     }
 
-    public async Task<List<Question>> GetQuestions(int testId)
-    {
-        List<Question> questions = new List<Question>();
-        string query = @"select * from questionbank inner join testquestions on testquestions.questionbankid = questionbank.id where testquestions.testid=@TestId";
-        MySqlConnection connection = new MySqlConnection(_connectionString);
-        MySqlCommand command = new MySqlCommand(query, connection);
-        command.Parameters.AddWithValue("@TestId", testId);
-        try
-        {
-            await connection.OpenAsync();
-            MySqlDataReader reader = command.ExecuteReader();
-            while (await reader.ReadAsync())
-            {
-                int id = int.Parse(reader["id"].ToString());
-                int subjectId = int.Parse(reader["subjectid"].ToString());
-                string strQuestion = reader["title"].ToString();
-                string optionA = reader["a"].ToString();
-                string optionB = reader["b"].ToString();
-                string optionC = reader["c"].ToString();
-                string optionD = reader["d"].ToString();
-                int evaluationCriteriaId = int.Parse(reader["evaluationcriteriaid"].ToString());
+    // public async Task<List<Question>> GetQuestions(int testId)
+    // {
+    //     List<Question> questions = new List<Question>();
+    //     string query = @"select * from questionbank inner join testquestions on testquestions.questionbankid = questionbank.id where testquestions.testid=@TestId";
+    //     MySqlConnection connection = new MySqlConnection(_connectionString);
+    //     MySqlCommand command = new MySqlCommand(query, connection);
+    //     command.Parameters.AddWithValue("@TestId", testId);
+    //     try
+    //     {
+    //         await connection.OpenAsync();
+    //         MySqlDataReader reader = command.ExecuteReader();
+    //         while (await reader.ReadAsync())
+    //         {
+    //             int id = int.Parse(reader["id"].ToString());
+    //             int subjectId = int.Parse(reader["subjectid"].ToString());
+    //             string strQuestion = reader["title"].ToString();
+    //             string optionA = reader["a"].ToString();
+    //             string optionB = reader["b"].ToString();
+    //             string optionC = reader["c"].ToString();
+    //             string optionD = reader["d"].ToString();
+    //             int evaluationCriteriaId = int.Parse(reader["evaluationcriteriaid"].ToString());
 
-                Question question = new Question();
-                question.Id = id;
-                question.SubjectId = subjectId;
-                question.Title = strQuestion;
-                question.A = optionA;
-                question.B = optionB;
-                question.C = optionC;
-                question.D = optionD;
-                question.EvaluationCriteriaId = evaluationCriteriaId;
-                questions.Add(question);
-            }
-            await reader.CloseAsync();
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e.Message);
-        }
-        finally
-        {
-            await connection.CloseAsync();
-        }
-        return questions;
-    }
+    //             Question question = new Question();
+    //             question.Id = id;
+    //             question.SubjectId = subjectId;
+    //             question.Title = strQuestion;
+    //             question.A = optionA;
+    //             question.B = optionB;
+    //             question.C = optionC;
+    //             question.D = optionD;
+    //             question.EvaluationCriteriaId = evaluationCriteriaId;
+    //             questions.Add(question);
+    //         }
+    //         await reader.CloseAsync();
+    //     }
+    //     catch (Exception e)
+    //     {
+    //         Console.WriteLine(e.Message);
+    //     }
+    //     finally
+    //     {
+    //         await connection.CloseAsync();
+    //     }
+    //     return questions;
+    // }
 
     public async Task<bool> UpdateQuestionOptions(int id, Question options)
     {
@@ -442,5 +443,59 @@ public class QuestionBankRepository : IQuestionBankRepository
         return criteria;
 
     }
+    
+    public async Task<List<Question>> GetQuestions(int testId)
+    {
+        List<Question> questions = new List<Question>();
+        string query = @"
+            SELECT 
+                testquestions.id AS testquestionid, 
+                questionbank.id AS questionbankid,
+                questionbank.subjectid,
+                questionbank.title,
+                questionbank.a,
+                questionbank.b,
+                questionbank.c,
+                questionbank.d,
+                questionbank.evaluationcriteriaid
+            FROM questionbank 
+            INNER JOIN testquestions 
+                ON testquestions.questionbankid = questionbank.id 
+            WHERE testquestions.testid = @TestId";
+    
+        using (MySqlConnection connection = new MySqlConnection(_connectionString))
+        using (MySqlCommand command = new MySqlCommand(query, connection))
+        {
+            command.Parameters.AddWithValue("@TestId", testId);
+            try
+            {
+                await connection.OpenAsync();
+                MySqlDataReader reader = command.ExecuteReader();
+                // MySqlDataReader reader = await command.ExecuteReader();
+                while (await reader.ReadAsync())
+                {
+                    Question question = new Question
+                    {
+                        Id = Convert.ToInt32(reader["testquestionid"]), // Use testquestions.id
+                        SubjectId = Convert.ToInt32(reader["subjectid"]),
+                        Title = reader["title"].ToString(),
+                        A = reader["a"].ToString(),
+                        B = reader["b"].ToString(),
+                        C = reader["c"].ToString(),
+                        D = reader["d"].ToString(),
+                        EvaluationCriteriaId = Convert.ToInt32(reader["evaluationcriteriaid"])
+                    };
+                    questions.Add(question);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+    
+        return questions;
+    }
+
 }
 
