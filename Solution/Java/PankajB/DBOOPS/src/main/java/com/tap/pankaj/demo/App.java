@@ -5,52 +5,73 @@ import com.tap.pankaj.UI.UIManager;
 
 public class App {
 
+    public static int choice;
     public static void main(String args[]) {
-        int choice;
         UIManager manager = new UIManager();
         do {
             manager.displayMenu();
             choice = manager.getChoice();
             switch (choice) {
                 case 1: {
-                    DBManager.create();
+                    if(DBManager.create()) {
+                        UIManager.displayMessage(0);
+                    }
                     break;
                 }
                 case 2: {
-                    DBManager.insert();
+                    int rowsAffected = DBManager.insert();
+                    if( rowsAffected >0) {
+                        UIManager.displayMessage(rowsAffected);
+                    }
                     break;
                 }
                 case 3: {
-                    DBManager.update();
+                    int rowsAffected = DBManager.update();
+                    if( rowsAffected >0) {
+                        UIManager.displayMessage(rowsAffected);
+                    }
                     break;
                 }
                 case 4: {
-                    DBManager.delete();
+                    int rowsAffected = DBManager.delete();
+                    if( rowsAffected >0) {
+                        UIManager.displayMessage(rowsAffected);
+                    }
                     break;
                 }
                 case 5: {
-                    DBManager.getAll();
+                    int rowsAffected = DBManager.getAll();
+                    if( rowsAffected > -1) {
+                        UIManager.displayMessage(rowsAffected);
+                    }
                     break;
                 }
                 case 6: {
-                    DBManager.truncate();
+                    int rowsAffected = DBManager.truncate();
+                    if( rowsAffected > -1) {
+                        UIManager.displayMessage(rowsAffected);
+                    }
                     break;
                 }
                 case 7: {
-                    DBManager.alter();
+                    if(DBManager.alter()) {
+                        UIManager.displayMessage(0);
+                    }
                     break;
                 }
                 case 8: {
-                    DBManager.drop();
+                    if(DBManager.drop()) {
+                        UIManager.displayMessage(0);
+                    }
                     break;
                 }
                 case 9: {
+                    UIManager.displayMessage(0);
                     DBManager.close();
-                    System.out.println("Your changes are reflected in the database");
                     break;
                 }
                 default:
-                    System.out.println("Invalid Choice");
+                    UIManager.displayMessage(0);
                     break;
             }
 
