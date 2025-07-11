@@ -12,7 +12,6 @@ public class DBManager {
 
     public static Connection connection;
     public static Statement statement;
-
     static {
         try {
             String url = "jdbc:mysql://localhost:3306/tp";
@@ -31,7 +30,6 @@ public class DBManager {
         String querySelect = "SELECT * FROM tflstud;";
 
         try {
-            Statement statement = connection.createStatement();
             ResultSet resultEmployees = statement.executeQuery(querySelect);
             //ResultSetMetaData restultEmployeesMetadata = resultEmployees.getMetaData();
             //int columnCount = restultEmployeesMetadata.getColumnCount();
@@ -58,9 +56,9 @@ public class DBManager {
     }
 
     public static int update() {
-        String queryupdate = "UPDATE tflstud SET Name='Ram' WHERE Id=1;";
+        String queryUpdate = "UPDATE tflstud SET Name='Ram' WHERE Id=1;";
         try {
-            int rows = statement.executeUpdate(queryupdate);
+            int rows = statement.executeUpdate(queryUpdate);
             return rows;
         } catch (SQLException e) {
             System.out.println(e);
@@ -69,9 +67,9 @@ public class DBManager {
     }
 
     public static int delete() {
-        String querydelete = "DELETE FROM tflstud WHERE Id=1;";
+        String queryDelete = "DELETE FROM tflstud WHERE Id=1;";
         try {
-            int rows = statement.executeUpdate(querydelete);
+            int rows = statement.executeUpdate(queryDelete);
             return rows;
         } catch (SQLException e) {
             System.out.println(e);
@@ -93,9 +91,9 @@ public class DBManager {
         // int size=scanner.nextInt();
         // System.out.println("Selected Database: tp"+"\nTable Name: "+tableName+"\nOperation: "+alterType+"\nColumn Name: "+colName+"\nDatatype: "+dataType+"\nSize: "+size);
         // String queryalter = "ALTER TABLE "+tableName+" "+alterType+" COLUMN "+colName+" "+dataType+"("+size+")"+";";
-        String queryalter = "ALTER TABLE tflstud ADD COLUMN City VARCHAR(20);";
+        String queryAlter = "ALTER TABLE tflstud ADD COLUMN City VARCHAR(20);";
         try {
-            statement.execute(queryalter);
+            statement.execute(queryAlter);
             return true;
         } catch (SQLException e) {
             System.out.println(e);
@@ -104,9 +102,9 @@ public class DBManager {
     }
 
     public static boolean create() {
-        String querycreate = "CREATE TABLE tflstud(Id INT(5),Name VARCHAR(20));";
+        String queryCreate = "CREATE TABLE tflstud(Id INT(5),Name VARCHAR(20));";
         try {
-            statement.execute(querycreate);
+            statement.execute(queryCreate);
             return true;
         } catch (SQLException e) {
             System.out.println(e);
@@ -115,9 +113,9 @@ public class DBManager {
     }
 
     public static int truncate() {
-        String querytruncate = "TRUNCATE TABLE tflstud;";
+        String queryTruncate = "TRUNCATE TABLE tflstud;";
         try {
-            int rows = statement.executeUpdate(querytruncate);
+            int rows = statement.executeUpdate(queryTruncate);
             return rows;
         } catch (SQLException e) {
             System.out.println(e);
@@ -126,9 +124,9 @@ public class DBManager {
     }
 
     public static boolean drop() {
-        String querydrop = "DROP TABLE tflstud;";
+        String queryDrop = "DROP TABLE tflstud;";
         try {
-            statement.execute(querydrop);
+            statement.execute(queryDrop);
             return true;
         } catch (SQLException e) {
             System.out.println(e);

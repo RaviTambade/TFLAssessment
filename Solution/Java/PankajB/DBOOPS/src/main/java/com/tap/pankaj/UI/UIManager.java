@@ -27,10 +27,10 @@ public class UIManager {
     }
 
     public static int displaySelectResult(ResultSet result) {
-        int count = 0;
+        int count = 0;                                                                          
         try {
             while (result.next()) {
-                for (int i = 1; i <= 2; i++) {
+                for (int i = 1; i <= 2; i++) {                                  
                     System.out.printf("%-20s", result.getString(i));
                 }
                 count++;

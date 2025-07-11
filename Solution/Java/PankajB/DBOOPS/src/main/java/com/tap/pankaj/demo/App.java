@@ -20,21 +20,21 @@ public class App {
                 }
                 case 2: {
                     int rowsAffected = DBManager.insert();
-                    if( rowsAffected >0) {
+                    if( rowsAffected > -1) {
                         UIManager.displayMessage(rowsAffected);
                     }
                     break;
                 }
                 case 3: {
                     int rowsAffected = DBManager.update();
-                    if( rowsAffected >0) {
+                    if( rowsAffected > -1) {
                         UIManager.displayMessage(rowsAffected);
                     }
                     break;
                 }
                 case 4: {
                     int rowsAffected = DBManager.delete();
-                    if( rowsAffected >0) {
+                    if( rowsAffected > -1) {
                         UIManager.displayMessage(rowsAffected);
                     }
                     break;
