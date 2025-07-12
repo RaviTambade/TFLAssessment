@@ -24,17 +24,18 @@ public class App
                      System.out.println("*****************************************************");
                      System.out.println("You choose to create a question");
                      System.out.println("*****************************************************");
-                     qBank.CreateQuestion();
-                     questions=qBank.readAllQuestion();
+                     db.insert();
+                     //qBank.CreateQuestion();
+                     //questions=qBank.readAllQuestion();
                      System.out.println("*****************************************************");
-                     file.writeToFile(questions);
+                     //file.writeToFile(questions);
             }
            
             break;
 
             case 2:
             {
-                int id=ui.getId();
+               // int id=ui.getId();
                 System.out.println("*****************************************************");
                 System.out.println("You choose to update a question");
                 System.out.println("*****************************************************");
@@ -42,18 +43,20 @@ public class App
                 //questions=qBank.readAllQuestion();
                 //file.writeToFile(questions);
                 db.update();
+                db.display();
             }
             break;
 
             case 3:
             {
-                int id=ui.getId();
+                //int id=ui.getId();
                 System.out.println("*****************************************************");
-                System.out.println("You choose to delete a question with id : "+id);
-                qBank.deleteQuestion(id);
+                //System.out.println("You choose to delete a question with id : "+id);
+               // qBank.deleteQuestion(id);
                 System.out.println("*****************************************************");
-                questions=qBank.readAllQuestion();
-                file.writeToFile(questions);
+                db.delete();
+               // questions=qBank.readAllQuestion();
+                //file.writeToFile(questions);
             }
             break;
 

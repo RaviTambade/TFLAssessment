@@ -38,6 +38,7 @@ public class DBManager {
           Connection conn=DriverManager.getConnection(url, name, password);
             System.out.println("Enter the id where you want to update the data : ");
             int id=sc.nextInt();
+            sc.nextLine();
             System.out.println("Enter the title : ");
             String title=sc.nextLine();
             sc.nextLine();
@@ -49,35 +50,86 @@ public class DBManager {
             String optionC=sc.nextLine();
             System.out.println("Enter the option D : ");
             String optionD=sc.nextLine();
-            //System.out.println("Enter the correct option : ");
-            //char correctOption=sc.next().charAt(0);
+            System.out.println("Enter the correct option : ");
+            char correctOption=sc.next().charAt(0);
             System.out.println("Enter the subject : ");
             String subject=sc.nextLine();
-            sc.nextLine();
             System.out.println("Enter the evaluation criteria : ");
             int marks=sc.nextInt();
 
             
-          PreparedStatement ps=conn.prepareStatement("update question set title=? optionA=? optionB=? optionC=? optionD=? subject=? evaluationCriteria=? where id=? ");
+          PreparedStatement ps=conn.prepareStatement("update question set title=?,optionA=?,optionB=?,optionC=?,optionD=?,subject=?,evaluationCriteria=? where id=? ");
           ps.setString(1, title);
           ps.setString(2, optionA);
           ps.setString(3, optionB);
           ps.setString(4, optionC);
           ps.setString(5, optionD);
-          //ps.setCharacterStream(6, correctOption);
-          ps.setString(6, subject);
-          ps.setInt(7, marks);
-          ps.setInt(8,id);
+          ps.setString(6, String.valueOf(correctOption));
+          ps.setString(7, subject);
+          ps.setInt(8, marks);
+          ps.setInt(9,id);
+
+          ps.executeUpdate();
       }catch(Exception e){
          e.printStackTrace();
       }
    }
 
    public void delete(){
+      try{
+          Connection conn=DriverManager.getConnection(url, name, password);
+          System.out.println("Enter the id where you want to delete the data : ");
+          int id=sc.nextInt();
 
+          PreparedStatement ps=conn.prepareStatement("delete from question where id=?");
+          ps.setInt(1, id);
+          ps.executeUpdate();
+      }catch(Exception e){
+         e.printStackTrace();
+      }
+     
    }
 
    public void insert(){
+      try{
+            Connection conn=DriverManager.getConnection(url, name, password);
+            System.out.println("Enter the id : ");
+            int id=sc.nextInt();
+            sc.nextLine();
+            System.out.println("Enter the title : ");
+            String title=sc.nextLine();
+            sc.nextLine();
+            System.out.println("Enter the option A : ");
+            String optionA=sc.nextLine();
+            System.out.println("Enter the option B : ");
+            String optionB=sc.nextLine();
+            System.out.println("Enter the option C : ");
+            String optionC=sc.nextLine();
+            System.out.println("Enter the option D : ");
+            String optionD=sc.nextLine();
+            System.out.println("Enter the correct option : ");
+            char correctOption=sc.next().charAt(0);
+            System.out.println("Enter the subject : ");
+            String subject=sc.nextLine();
+            sc.nextLine();
+            System.out.println("Enter the evaluation criteria : ");
+            int marks=sc.nextInt();
+
+            PreparedStatement ps=conn.prepareStatement("insert into question(id,title,optionA,optionB,optionC,optionD,correctOption,subject,evaluationCriteria) values(?,?,?,?,?,?,?,?,?)");
+            ps.setInt(1, id);
+            ps.setString(2,title);
+            ps.setString(3, optionA);
+            ps.setString(4, optionB);
+            ps.setString(5, optionC);
+            ps.setString(6,optionD);
+            ps.setString(7,String.valueOf(correctOption));
+            ps.setString(8, subject);
+            ps.setInt(9, marks);
+           
+            ps.executeUpdate();
+      }catch(Exception e){
+         e.printStackTrace();
+      }
 
    }
 }
