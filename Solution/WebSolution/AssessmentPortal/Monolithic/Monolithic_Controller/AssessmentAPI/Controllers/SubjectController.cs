@@ -23,7 +23,7 @@ public class SubjectController : ControllerBase
     //http://localhost:5238/api/subject/subjects
    // [EnableCors("AllowOrigin")]
     //[EnableCors(origins: "http://localhost:5173", headers: "*", methods: "*")]
-    [HttpGet("subjects")]
+    [HttpGet("subjects")]   
     public async Task<IActionResult>  GetAllSubjects()
     {
         List<SubjectModel> subjects =await _svc.GetAllSubject();
