@@ -10,21 +10,24 @@ builder.Host.ConfigureLogging(logging =>
 {
     logging.ClearProviders();
     logging.AddConsole();
-    logging.AddFile("logs/catalog-{Date}.json", isJson: true);
+    // logging.AddFile("logs/catalog-{Date}.json", isJson: true);
 });
 
 
 //Service configuration
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+// builder.Services.AddSwaggerGen();
 builder.Services.AddCors();
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
 builder.Services.AddControllers();
-builder.Services.AddScoped<IAssessmentRepository, AssessmentRepository>();
-builder.Services.AddScoped<IAssessmentService, AssessmentService>();
+// builder.Services.AddScoped<IAssessmentRepository, AssessmentRepository>();
+// builder.Services.AddScoped<IAssessmentService, AssessmentService>();
+
+builder.Services.AddScoped<ISubjectRepository, SubjectRepository>();
+builder.Services.AddScoped<ISubjectService, SubjectService>();
 
 var app = builder.Build();
 
