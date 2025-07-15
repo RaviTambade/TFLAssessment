@@ -7,7 +7,7 @@
   </PropertyGroup>
 
    <ItemGroup>
-    <ProjectReference Include="..\AssessmentObjects\AssessmentObjects.csproj" />
+    <ProjectReference Include="..\AssessmentEntities\AssessmentEntities.csproj" />
     <ProjectReference Include="..\AssessmentRepo\AssessmentRepo.csproj" />
   </ItemGroup>
 
