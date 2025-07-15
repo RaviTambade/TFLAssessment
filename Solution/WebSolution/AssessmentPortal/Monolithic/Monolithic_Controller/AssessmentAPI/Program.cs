@@ -43,8 +43,12 @@ builder.Services.AddScoped<IEvaluationCriteriaService, EvaluationCriteriaService
 //CandidateAnswer
 builder.Services.AddScoped<ICandidateAnswerRepository, CandidateAnswerRepository>();
 builder.Services.AddScoped<ICandidateAnswerService, CandidateAnswerService>();
-
-
+//AssessmentIntelligence
+builder.Services.AddScoped<IAssessmentIntelligenceRepository, AssessmentIntelligenceRepository>();
+builder.Services.AddScoped<IAssessmentIntelligenceService, AssessmentIntelligenceService>();
+//Assessment
+builder.Services.AddScoped<IAssessmentRepository, AssessmentDapperRepository>();
+builder.Services.AddScoped<IAssessmentService, AssessmentService>();
 var app = builder.Build();
 
 //ASP.NET middleware configuration

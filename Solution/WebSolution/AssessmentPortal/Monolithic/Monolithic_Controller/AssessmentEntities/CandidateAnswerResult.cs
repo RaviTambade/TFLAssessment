@@ -1,3 +1,4 @@
+namespace Transflower.TFLAssessment.Entities;
 public class CandidateAnswerResult
 {
     public int TestQuestionId { get; set; }

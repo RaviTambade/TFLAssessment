@@ -1,3 +1,4 @@
+namespace Transflower.TFLAssessment.Entities;
 public class CandidateTestDetails
 {
     public int CandidateId { get; set; }
@@ -5,6 +6,6 @@ public class CandidateTestDetails
     public int TestId { get; set; }
     public string TestName { get; set; }
     public DateTime TestDate { get; set; }
-    public int TestPassingLevel{ get; set; }
+    public int TestPassingLevel { get; set; }
 
 }

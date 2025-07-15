@@ -5,8 +5,8 @@ using Transflower.TFLAssessment.Services.Interfaces;
 
 
 //Controller is now responsible to handle HTTP Requests
-namespace Transflower.Assessment.WebAPI.QuestionBankAPI.Controllers;
-
+// namespace Transflower.Assessment.WebAPI.QuestionBankAPI.Controllers;
+namespace Transflower.TFLAssessment.Controllers;
 [ApiController]
 [Route("api/questionbank")]
 public class QuestionBankController : ControllerBase
