@@ -34,7 +34,12 @@ builder.Services.AddScoped<IResultService, ResultService>();
 
 builder.Services.AddScoped<IQuestionBankRepository, QuestionBankRepository>();
 builder.Services.AddScoped<IQuestionBankService, QuestionBankService>();
-
+//Interview
+builder.Services.AddScoped<IInterviewRepository, InterviewRepository>();
+builder.Services.AddScoped<IInterviewService, InterviewService>();
+//EvaluationCriteria
+builder.Services.AddScoped<IEvaluationCriteriaRepository, EvaluationCriteriaRepository>();
+builder.Services.AddScoped<IEvaluationCriteriaService, EvaluationCriteriaService>();
 var app = builder.Build();
 
 //ASP.NET middleware configuration
