@@ -173,7 +173,8 @@
 
   <script>
     let selectedQuestions = [];
-    var getSubjectsUrl = "http://localhost:5151/api/assessment/subjects";
+    // var getSubjectsUrl = "http://localhost:5151/api/assessment/subjects";
+    var getSubjectsUrl = "http://localhost:5238/api/assessment/subjects";
     $(document).ready(function () {
       // "http://localhost:5151/api/assessment/subjects"
       $.get(getSubjectsUrl, function (subjects) {
@@ -202,7 +203,8 @@
       }
 
       function loadSMEs(subjectId) {
-        $.get(`http://localhost:5151/api/Assessment/getsme/${subjectId}`, function (smes) {
+        //http://localhost:5151/api/Assessment/getsme/${subjectId}
+        $.get(`http://localhost:5238/api/Assessment/getsme/${subjectId}`, function (smes) {
           if (smes.length === 0) {
             $("#smeSelect").html(`<option value="">No SMEs available</option>`).prop("disabled", true);
             return;
@@ -218,7 +220,8 @@
       }
 
       function loadQuestions(subjectId) {
-        $.get(`http://localhost:5151/api/Assessment/allquestionsbysubject/${subjectId}`, function (questions) {
+        //http://localhost:5151/api/Assessment/allquestionsbysubject/${subjectId}
+        $.get(`http://localhost:5238/api/Assessment/allquestionsbysubject/${subjectId}`, function (questions) {
           if (questions.length === 0) {
             $("#questionsList").html("<p class='no-questions'>No questions available for this subject.</p>");
             return;
@@ -282,7 +285,8 @@
         console.log("📦 Payload:", payload);
 
         $.ajax({
-          url: "http://localhost:5151/api/Assessment/addtest",
+          // url: "http://localhost:5151/api/Assessment/addtest",
+          url: "http://localhost:5238/api/Assessment/addtest",
           type: "POST",
           contentType: "application/json",
           data: JSON.stringify(payload),

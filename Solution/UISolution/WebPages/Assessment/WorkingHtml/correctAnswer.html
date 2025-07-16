@@ -58,12 +58,17 @@
   <div id="questions-container">Loading questions...</div>
 
   <script>
-    const testId = 26;
-    const candidateId = 5;
+    const testId = 29;
+    const candidateId = 8;
 
-    const remoteWeb = "http://localhost:5172";
-    const candidateAnswerWeb = "http://localhost:5299";
-    const resultWeb = "http://localhost:5235";
+    // const remoteWeb = "http://localhost:5172";
+    // const candidateAnswerWeb = "http://localhost:5299";
+    // const resultWeb = "http://localhost:5235";
+
+    
+    const remoteWeb = "http://localhost:5238";
+    const candidateAnswerWeb = "http://localhost:5238";
+    const resultWeb = "http://localhost:5238";
 
     const questionsUrl = `${remoteWeb}/api/questionbank/questions/tests/${testId}`;
     const answersUrl = `${candidateAnswerWeb}/api/candidateanswer/assessmentanswers/candidates/${candidateId}/tests/${testId}/results`;
