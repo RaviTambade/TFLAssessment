@@ -11,4 +11,8 @@
     <ProjectReference Include="..\AssessmentRepo\AssessmentRepo.csproj" />
   </ItemGroup>
 
+   <ItemGroup>
+     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.12.1" />
+   </ItemGroup>
+
 </Project>
