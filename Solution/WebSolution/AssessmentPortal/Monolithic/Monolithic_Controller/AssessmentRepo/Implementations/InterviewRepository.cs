@@ -1,29 +1,45 @@
- 
 using MySql.Data.MySqlClient;
 using System.Data;
+using Microsoft.Extensions.Configuration;
 using Transflower.TFLAssessment.Entities;
 using Transflower.TFLAssessment.Repositories.Interfaces;
-namespace Transflower.TFLAssessment.Repositories.Implementations;
+
+namespace Transflower.TFLAssessment.Repositories;
 
 //Providers
-public class InterviewRepository :IInterviewRepository
+public class InterviewRepository : IInterviewRepository
 {
-    private string connectionString = "server=localhost;port=3306;user=root;password=password;database=assessmentdb";
+    private readonly IConfiguration _configuration;
+    private readonly string _connectionString;
 
- 
-    public List<InterviewCandidateDetails> GetAllInterviewCandidates()
+    public InterviewRepository(IConfiguration configuration)
+    {
+        _configuration = configuration;
+        _connectionString = _configuration.GetConnectionString("DefaultConnection")  ?? throw new ArgumentNullException("connectionString");
+    }
+
+
+    public async Task<List<InterviewCandidateDetails>> GetAllInterviewCandidates()
     {
         List<InterviewCandidateDetails> CandidatesInfo = new List<InterviewCandidateDetails>();
-        string query = @"select employees.firstname,employees.lastname,interviews.candidateid from employees
-                       inner join interviews
-                       where employees.id=interviews.candidateid
-                       order by interviews.candidateid asc;";
+        // string query = @"select employees.firstname,employees.lastname,interviews.candidateid from employees
+        //                inner join interviews
+        //                where employees.id=interviews.candidateid
+        //                order by interviews.candidateid asc;";
 
-        MySqlConnection connection = new MySqlConnection(connectionString);
+        Console.WriteLine("In GetAllInterviewCandidates function");
+        string query = @"select interviews.candidateid,employees.firstname,employees.lastname,subjects.title
+                        from interviews 
+                        inner join employees on  interviews.candidateid= employees.id
+                        inner join subjectmatterexperts on interviews.smeid = subjectmatterexperts.id
+                        inner join subjects on subjectmatterexperts.subjectid=subjects.id;";
+
+        MySqlConnection connection = new MySqlConnection(_connectionString);
         MySqlCommand command = new MySqlCommand(query, connection);
-        connection.Open();
+        // connection.Open();
         try
         {
+            await connection.OpenAsync();
             MySqlDataReader reader = command.ExecuteReader();
 
 
@@ -32,10 +48,12 @@ public class InterviewRepository :IInterviewRepository
                 int candidateid = int.Parse(reader["candidateid"].ToString());
                 string fname = reader["firstname"].ToString();
                 string lname = reader["lastname"].ToString();
+                string title = reader["title"].ToString();
                 InterviewCandidateDetails CandidateInfo = new InterviewCandidateDetails();
                 CandidateInfo.CandidateId = candidateid;
                 CandidateInfo.FirstName = fname;
                 CandidateInfo.LastName = lname;
+                CandidateInfo.Title = title;
                 CandidatesInfo.Add(CandidateInfo);
 
 
@@ -48,37 +66,46 @@ public class InterviewRepository :IInterviewRepository
         }
         finally
         {
-            connection.Close();
+            await connection.CloseAsync();
         }
         return CandidatesInfo;
     }
 
-    public List<InterviewCandidateDetails> GetInterviewedCandidatesSubjects(int candidateId)
+
+
+    public async Task<List<InterviewCandidateDetails>> GetInterviewedCandidatesSubjects(int candidateId)
     {
         List<InterviewCandidateDetails> candidateDetails = new List<InterviewCandidateDetails>();
-        string query = @"select interviews.candidateid,subjects.title
-                         from interviews
-                         inner join subjectmatterexperts
-                         on interviews.smeid = subjectmatterexperts.id
-                         inner join subjects on subjectmatterexperts.subjectid=subjects.id
-                         where interviews.candidateid=@CandidateId;";
+        string query = @"select interviews.candidateid,employees.firstname,employees.lastname,subjects.title
+                        from interviews inner join employees on  interviews.candidateid= employees.id
+                        inner join subjectmatterexperts on interviews.smeid = subjectmatterexperts.id
+                        inner join subjects on subjectmatterexperts.subjectid=subjects.id
+                        where interviews.candidateid=@CandidateId;";
 
 
-        MySqlConnection connection = new MySqlConnection(connectionString);
+        MySqlConnection connection = new MySqlConnection(_connectionString);
         MySqlCommand command = new MySqlCommand(query, connection);
         command.Parameters.AddWithValue("@CandidateId", candidateId);
         try
         {
-            connection.Open();
+            await connection.OpenAsync();
             MySqlDataReader reader = command.ExecuteReader();
             while (reader.Read())
             {
                 int candidateid = int.Parse(reader["candidateid"].ToString());
                 string subName = reader["title"].ToString();
-                InterviewCandidateDetails InterviewSubjects = new InterviewCandidateDetails();
-                InterviewSubjects.CandidateId = candidateid;
-               // InterviewSubjects.InterviewSubjectName = subName;
-                candidateDetails.Add(InterviewSubjects);
+                string firstName = reader["firstname"].ToString();
+                string lastName = reader["lastname"].ToString();
+
+                InterviewCandidateDetails InterviewSubject = new InterviewCandidateDetails();
+                InterviewSubject.CandidateId = candidateid;
+                InterviewSubject.FirstName = firstName;
+                InterviewSubject.LastName = lastName;
+                InterviewSubject.Title = subName;
+
+
+
+                candidateDetails.Add(InterviewSubject);
             }
             reader.Close();
         }
@@ -88,46 +115,49 @@ public class InterviewRepository :IInterviewRepository
         }
         finally
         {
-            connection.Close();
+            await connection.CloseAsync();
         }
-        return       candidateDetails;
-;
+        return candidateDetails;
     }
 
-    
-    public InterviewDetails GetInterviewDetails(int interviewId)
+
+
+    public async Task<InterviewDetails> GetInterviewDetails(int interviewId)
     {
         Console.WriteLine("In function");
         InterviewDetails interviewInfo = new InterviewDetails();
         string query = "spinterviewdetails";
 
 
-        MySqlConnection connection = new MySqlConnection(connectionString);
+        MySqlConnection connection = new MySqlConnection(_connectionString);
         try
         {
             MySqlCommand command = new MySqlCommand(query, connection);
             command.CommandType = CommandType.StoredProcedure;
             command.Parameters.AddWithValue("@pinterviewId", interviewId);
-            connection.Open();
+            await connection.OpenAsync();
             MySqlDataReader reader = command.ExecuteReader();
-            while (reader.Read())
+            if (await reader.ReadAsync())
             {
-                int id = int.Parse(reader["id"].ToString());
-                string interviewdate = reader["interviewdate"].ToString();
-                string interviewtime = reader["interviewtime"].ToString();
-                string smeName = reader["SmeName"].ToString();
-
-
-                interviewInfo.Id = id;
-                interviewInfo.InterviewDate = interviewdate;
-                interviewInfo.InterviewTime = interviewtime;
-                interviewInfo.SMEName = smeName;
-                Console.WriteLine(interviewInfo.Id + " " + interviewInfo.InterviewDate + " " + interviewInfo.InterviewTime + " " + interviewInfo.SMEName);
-
+                interviewInfo.Id = interviewId;
+                interviewInfo.InterviewDate = reader["interviewdate"].ToString();
+                interviewInfo.InterviewTime = reader["interviewtime"].ToString();
+                interviewInfo.SMEName = reader["SmeName"].ToString();
+                interviewInfo.CandidateName = reader["CandidateName"].ToString();
+                interviewInfo.Subject = reader["Subject"].ToString();
             }
+
+            if (await reader.NextResultAsync())
+            {
+                List<string> criterias = new List<string>();
+                while (await reader.ReadAsync()) //Use while for multiple rows
+                {
+                    criterias.Add(reader["title"].ToString());
+                }
+                interviewInfo.Criterias = criterias.ToArray();
+            }
+            Console.WriteLine($"ID: {interviewInfo.Id}, Date: {interviewInfo.InterviewDate}, Time: {interviewInfo.InterviewTime}, SME: {interviewInfo.SMEName}, Candidate: {interviewInfo.CandidateName}, Subject: {interviewInfo.Subject}, Criterias: {string.Join(", ", interviewInfo.Criterias)}");
             reader.Close();
-
-
         }
         catch (Exception e)
         {
@@ -135,21 +165,23 @@ public class InterviewRepository :IInterviewRepository
         }
         finally
         {
-            connection.Close();
+            await connection.CloseAsync();
         }
         return interviewInfo;
     }
 
-    public bool ReschduleInterview(int interviewId,DateTime date){
-       bool status = false;
-        string query = "update interviews set interviewdate =@interviewdate  where  id =@interviewId ";
-        MySqlConnection connection = new MySqlConnection(connectionString);
-       MySqlCommand command = new MySqlCommand(query, connection);
-         command.Parameters.AddWithValue("@interviewdate", date);
-          command.Parameters.AddWithValue("@interviewId", interviewId);
+
+    public async Task<bool> RescheduleInterview(int interviewId, DateTime date)
+    {
+        bool status = false;
+        string query = "update interviews set interviewdate =@Interviewdate  where  id =@InterviewId ";
+        MySqlConnection connection = new MySqlConnection(_connectionString);
+        MySqlCommand command = new MySqlCommand(query, connection);
+        command.Parameters.AddWithValue("@Interviewdate", date);
+        command.Parameters.AddWithValue("@InterviewId", interviewId);
         try
         {
-            connection.Open();
+            await connection.OpenAsync();
             int rowsAffected = command.ExecuteNonQuery();
             if (rowsAffected > 0)
             {
@@ -162,25 +194,23 @@ public class InterviewRepository :IInterviewRepository
         }
         finally
         {
-            connection.Close();
+            await connection.CloseAsync();
         }
         return status;
-    
-   }
 
+    }
 
-
-     public bool ChangeInterviewer(int interviewId, int smeId){
-       bool status = false;
-        string query = "update interviews set smeid =@smeid  where  id =@interviewId ";
-        MySqlConnection connection = new MySqlConnection(connectionString);
-       MySqlCommand command = new MySqlCommand(query, connection);
-       command.Parameters.AddWithValue("@smeid", smeId);
-        command.Parameters.AddWithValue("@interviewId", interviewId);
-         
+    public async Task<bool> RescheduleInterview(int interviewId, string time)
+    {
+        bool status = false;
+        string query = "update interviews set interviewtime =@InterviewTime  where  id =@InterviewId ";
+        MySqlConnection connection = new MySqlConnection(_connectionString);
+        MySqlCommand command = new MySqlCommand(query, connection);
+        command.Parameters.AddWithValue("@InterviewTime", time);
+        command.Parameters.AddWithValue("@InterviewId", interviewId);
         try
         {
-            connection.Open();
+            await connection.OpenAsync();
             int rowsAffected = command.ExecuteNonQuery();
             if (rowsAffected > 0)
             {
@@ -193,24 +223,23 @@ public class InterviewRepository :IInterviewRepository
         }
         finally
         {
-            connection.Close();
+            await connection.CloseAsync();
         }
         return status;
-    
-   }
+    }
 
-
-
-     public  bool CancelInterview(int interviewId){
-       bool status = false;
-        string query = "delete from interview where id =@id";
-        MySqlConnection connection = new MySqlConnection(connectionString);
-       MySqlCommand command = new MySqlCommand(query, connection);
-        command.Parameters.AddWithValue("@id", interviewId);
-         
+    public async Task<bool> RescheduleInterview(int interviewId, string time, DateTime date)
+    {
+        bool status = false;
+        string query = "update interviews set interviewdate =@Interviewdate,interviewtime =@InterviewTime  where  id =@InterviewId ";
+        MySqlConnection connection = new MySqlConnection(_connectionString);
+        MySqlCommand command = new MySqlCommand(query, connection);
+        command.Parameters.AddWithValue("@InterviewTime", time);
+        command.Parameters.AddWithValue("@Interviewdate", date);
+        command.Parameters.AddWithValue("@InterviewId", interviewId);
         try
         {
-            connection.Open();
+            await connection.OpenAsync();
             int rowsAffected = command.ExecuteNonQuery();
             if (rowsAffected > 0)
             {
@@ -223,11 +252,70 @@ public class InterviewRepository :IInterviewRepository
         }
         finally
         {
-            connection.Close();
+            await connection.CloseAsync();
         }
         return status;
-    
-   }
+    }
 
-   
+
+    public async Task<bool> ChangeInterviewer(int interviewId, int smeId)
+    {
+        bool status = false;
+        string query = "update interviews set smeid =@Smeid  where  id =@InterviewId ";
+        MySqlConnection connection = new MySqlConnection(_connectionString);
+        MySqlCommand command = new MySqlCommand(query, connection);
+        command.Parameters.AddWithValue("@Smeid", smeId);
+        command.Parameters.AddWithValue("@InterviewId", interviewId);
+
+        try
+        {
+            await connection.OpenAsync();
+            int rowsAffected = command.ExecuteNonQuery();
+            if (rowsAffected > 0)
+            {
+                status = true;
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+        finally
+        {
+            await connection.CloseAsync();
+        }
+        return status;
+
+    }
+
+
+    public async Task<bool> CancelInterview(int interviewId)
+    {
+        bool status = false;
+        string query = "delete from interviews where id =@Id";
+        MySqlConnection connection = new MySqlConnection(_connectionString);
+        MySqlCommand command = new MySqlCommand(query, connection);
+        command.Parameters.AddWithValue("@Id", interviewId);
+
+        try
+        {
+            await connection.OpenAsync();
+            int rowsAffected = command.ExecuteNonQuery();
+            if (rowsAffected > 0)
+            {
+                status = true;
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+        finally
+        {
+            await connection.CloseAsync();
+        }
+        return status;
+
+    }
+
 }
