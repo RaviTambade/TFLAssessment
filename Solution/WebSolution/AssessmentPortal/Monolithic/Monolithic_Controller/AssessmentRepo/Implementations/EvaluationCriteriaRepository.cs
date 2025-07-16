@@ -1,36 +1,41 @@
 using MySql.Data.MySqlClient;
 using System.Data;
+using Microsoft.Extensions.Configuration;
 using Transflower.TFLAssessment.Entities;
 using Transflower.TFLAssessment.Repositories.Interfaces;
+namespace Transflower.TFLAssessment.Repositories;
 
-namespace Transflower.TFLAssessment.Repositories.Implementations;
 
-//Providers
-public class EvaluationCriteriaRepository :IEvaluationCriteriaRepository
-{
-    private string connectionString = "server=localhost;port=3306;user=root;password=password;database=assessmentdb";
  
-    public List<EvaluationCriteria> GetEvalutionCriterias()
-    {
-        List<EvaluationCriteria> criterias = new List<EvaluationCriteria>();
-        string query = @"select * from evaluationcriterias";
+ public class EvaluationCriteriaRepository:IEvaluationCriteriaRepository
+{ 
+    private readonly IConfiguration _configuration;
+    private readonly string _connectionString;
 
-        MySqlConnection connection = new MySqlConnection(connectionString);
+    public EvaluationCriteriaRepository(IConfiguration configuration)
+    {
+        _configuration = configuration;
+        _connectionString = _configuration.GetConnectionString("DefaultConnection")  ?? throw new ArgumentNullException("connectionString");
+    }
+    
+ public async Task <bool> UpdateCriteria(int evaluationCriteriaId, int questionId)
+    {
+
+        bool status = false;
+        MySqlConnection connection = new MySqlConnection(_connectionString );
+        string query = "update questionbank set evaluationcriteriaid=@EvaluationCriteriaId where id=@QuestionId";
         MySqlCommand command = new MySqlCommand(query, connection);
+        command.Parameters.AddWithValue("@EvaluationCriteriaId", evaluationCriteriaId);
+        command.Parameters.AddWithValue("@QuestionId", questionId);
+
         try
         {
-            connection.Open();
-            MySqlDataReader reader = command.ExecuteReader();
-            while (reader.Read())
+            await connection.OpenAsync();
+            int rowsAffected = command.ExecuteNonQuery();
+            if (rowsAffected > 0)
             {
-                int id = int.Parse(reader["id"].ToString());
-                string title = reader["title"].ToString();
-                EvaluationCriteria criteria = new EvaluationCriteria();
-                criteria.Id = id;
-                criteria.Title = title;
-                criterias.Add(criteria);
+                status = true;
             }
-            reader.Close();
         }
         catch (Exception e)
         {
@@ -38,37 +43,28 @@ public class EvaluationCriteriaRepository :IEvaluationCriteriaRepository
         }
         finally
         {
-            connection.Close();
+            await connection.CloseAsync();
         }
-        return criterias;
+        return status;
     }
 
-    public List<EvaluationCriteria> GetEvalutionCriteriasBySubject(int subjectId)
+    public async Task <bool> UpdateSubject(int id, int subjectId)
     {
-        List<EvaluationCriteria> criterias = new List<EvaluationCriteria>();
-        string query = @"select * from evaluationcriterias WHERE subjectid=@subjectId";
 
-        MySqlConnection connection = new MySqlConnection(connectionString);
+        bool status = false;
+        MySqlConnection connection = new MySqlConnection(_connectionString );
+        string query = "update evaluationcriterias set subjectid= @SubjectId where id= @Id;";
         MySqlCommand command = new MySqlCommand(query, connection);
-        command.Parameters.AddWithValue("@subjectId", subjectId);
+        command.Parameters.AddWithValue("@Id", id);
+        command.Parameters.AddWithValue("@SubjectId", subjectId);
         try
         {
-            connection.Open();
-            MySqlDataReader reader = command.ExecuteReader();
-            while (reader.Read())
+            await connection.OpenAsync();
+            int rowsAffected = command.ExecuteNonQuery();
+            if (rowsAffected > 0)
             {
-                int id = int.Parse(reader["id"].ToString());
-                string title = reader["title"].ToString();
-
-                EvaluationCriteria criteria = new EvaluationCriteria();
-                criteria.Id = id;
-                criteria.Title = title;
-
-                Console.WriteLine(criteria.Id + "  " + criteria.Title);
-
-                criterias.Add(criteria);
+                status = true;
             }
-            reader.Close();
         }
         catch (Exception e)
         {
@@ -76,60 +72,25 @@ public class EvaluationCriteriaRepository :IEvaluationCriteriaRepository
         }
         finally
         {
-            connection.Close();
+            await connection.CloseAsync();
         }
-        return criterias;
+        return status;
     }
 
-     public string GetCriteria(string subject, int questionId)
-    {
-        string criteria = "";
-        string query = @"select evaluationcriterias.title from evaluationcriterias INNER join questionbank on questionbank.evaluationcriteriaid=evaluationcriterias.id
-                       inner join subjects on questionbank.subjectid= evaluationcriterias.subjectid WHERE subjects.title=@subject and questionbank.id=@questionId";
 
-        MySqlConnection connection = new MySqlConnection(connectionString);
-        try
-        {
-            MySqlCommand command = new MySqlCommand(query, connection);
-            command.Parameters.AddWithValue("@subject", subject);
-            command.Parameters.AddWithValue("@questionId", questionId);
-            connection.Open();
-            MySqlDataReader reader = command.ExecuteReader();
-            if (reader.Read())
-            {
-
-                string title = reader["title"].ToString();
-                criteria = title;
-            }
-            reader.Close();
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e.Message);
-        }
-        finally
-        {
-            connection.Close();
-        }
-        return criteria;
-    }
- 
-    public bool InsertCriteria(NewCriteria criteria)
+    public async Task <bool> InsertCriteria(EvaluationCriteria criteria)
     {
         Console.WriteLine(criteria.SubjectId + " " + criteria.Title);
         bool status = false;
-        MySqlConnection connection = new MySqlConnection(connectionString);
-        string query = "insert into evaluationcriterias(title,subjectid) values ( @title, @subjectId)";
-
+        MySqlConnection connection = new MySqlConnection(_connectionString );
+        string query = "insert into evaluationcriterias(title,subjectid) values ( @Title, @SubjectId)";
         MySqlCommand command = new MySqlCommand(query, connection);
-
-        command.Parameters.AddWithValue("@subjectId", criteria.SubjectId);
-        command.Parameters.AddWithValue("@title", criteria.Title);
-
+        command.Parameters.AddWithValue("@SubjectId", criteria.SubjectId);
+        command.Parameters.AddWithValue("@Title", criteria.Title);
 
         try
         {
-            connection.Open();
+            await connection.OpenAsync();
             int rowsAffected = command.ExecuteNonQuery();
             if (rowsAffected > 0)
             {
@@ -142,89 +103,12 @@ public class EvaluationCriteriaRepository :IEvaluationCriteriaRepository
         }
         finally
         {
-            connection.Close();
+           await connection.CloseAsync();
         }
         return status;
     }
 
-    public bool UpdateCriteria(int evaluationCriteriaId, int questionId)
-    {
-
-        bool status = false;
-        MySqlConnection connection = new MySqlConnection(connectionString);
-        string query = "update questionbank set evaluationcriteriaid=@evaluationCriteriaId where id=@questionId";
-
-        MySqlCommand command = new MySqlCommand(query, connection);
-
-        command.Parameters.AddWithValue("@evaluationCriteriaId", evaluationCriteriaId);
-        command.Parameters.AddWithValue("@questionId", questionId);
-
-        try
-        {
-            connection.Open();
-            int rowsAffected = command.ExecuteNonQuery();
-            if (rowsAffected > 0)
-            {
-                status = true;
-            }
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e.Message);
-        }
-        finally
-        {
-            connection.Close();
-        }
-        return status;
-    }
-
-   public   List<QuestionDetails> GetQuestionsBySubjectAndCriteria(int subjectId,int criteriaId)
-    {
-        
-        List<QuestionDetails> questions = new List<QuestionDetails>();
-        
-        string query = @"select questionbank.id, questionbank.title, subjects.title as subject ,evaluationcriterias.title as criteria
-                            from questionbank, subjects,evaluationcriterias
-                            where questionbank.subjectid=subjects.id and questionbank.evaluationcriteriaid=evaluationcriterias.id
-                            and subjects.id=@subjectId and evaluationcriterias.id=@criteriaId";
-         
-        MySqlConnection connection = new MySqlConnection(connectionString);
-        MySqlCommand command = new MySqlCommand(query, connection);
-        command.Parameters.AddWithValue("@subjectId", subjectId);
-        command.Parameters.AddWithValue("@criteriaId", criteriaId);
+    
 
 
-        try
-        {
-            connection.Open();
-            MySqlDataReader reader = command.ExecuteReader();
-            while (reader.Read())
-            {
-                int id = int.Parse(reader["id"].ToString());
-                string strQuestion = reader["title"].ToString();
-                string subject = reader["subject"].ToString();
-                string criteria = reader["criteria"].ToString();
-                
-                QuestionDetails question= new QuestionDetails();
-                
-                question.Id=id;
-                question.Question=strQuestion;
-                question.Subject=subject;
-                question.Criteria=criteria;
-
-                questions.Add(question);
-            }
-            reader.Close();
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e.Message);
-        }
-        finally
-        {
-            connection.Close();
-        }
-        return questions;
-    }   
 }

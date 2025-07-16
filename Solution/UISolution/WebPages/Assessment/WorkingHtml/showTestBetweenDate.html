@@ -126,7 +126,8 @@
     function fetchTests() {
       const fromDate = $("#fromDate").val();
       const toDate = $("#toDate").val();
-      const apiBase = "http://localhost:5151/api/Assessment/getalltest";
+      // const apiBase = "http://localhost:5151/api/Assessment/getalltest";
+      const apiBase = "http://localhost:5238/api/Assessment/getalltest";
 
       if (!fromDate || !toDate) {
         $("#error").text("Please select both dates.");

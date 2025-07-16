@@ -7,8 +7,12 @@
   </PropertyGroup>
 
    <ItemGroup>
-    <ProjectReference Include="..\AssessmentObjects\AssessmentObjects.csproj" />
+    <ProjectReference Include="..\AssessmentEntities\AssessmentEntities.csproj" />
     <ProjectReference Include="..\AssessmentRepo\AssessmentRepo.csproj" />
   </ItemGroup>
+
+   <ItemGroup>
+     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.12.1" />
+   </ItemGroup>
 
 </Project>

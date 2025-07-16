@@ -3,13 +3,16 @@ package com.tap.pankaj.DBManagement;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 
 import com.tap.pankaj.UI.UIManager;
+import com.tap.pankaj.entity.data;
 
 public class DBManager {
-
+    
+    static data data2 = new data();
     public static Connection connection;
     public static Statement statement;
     static {
@@ -26,17 +29,16 @@ public class DBManager {
     }
 
     public static int getAll() {
-
         String querySelect = "SELECT * FROM tflstud;";
 
         try {
             ResultSet resultEmployees = statement.executeQuery(querySelect);
-            //ResultSetMetaData restultEmployeesMetadata = resultEmployees.getMetaData();
-            //int columnCount = restultEmployeesMetadata.getColumnCount();
-
-            int rows = UIManager.displaySelectResult(resultEmployees);
+            ResultSetMetaData resultMetaData = resultEmployees.getMetaData();
+            int columnCount = resultMetaData.getColumnCount();
+            //System.out.println(columnCount);
+            UIManager.displaySelectResult(resultMetaData, resultEmployees, columnCount);
             resultEmployees.close();
-            return rows;
+            return columnCount;
         } catch (SQLException e) {
             System.out.println(e);
             return -1;
@@ -44,7 +46,9 @@ public class DBManager {
     }
 
     public static int insert() {
-        String queryInsert = "INSERT INTO tflstud(Id, Name) VALUES(1,'Pankaj_Bhor');";
+        UIManager manager2 = new UIManager();
+        data2 = manager2.getData();
+        String queryInsert = "INSERT INTO tflstud(Name) VALUES('" +data2.name+ "');";
         try {
             int rows = statement.executeUpdate(queryInsert);
 
@@ -56,7 +60,9 @@ public class DBManager {
     }
 
     public static int update() {
-        String queryUpdate = "UPDATE tflstud SET Name='Ram' WHERE Id=1;";
+        UIManager manager2 = new UIManager();
+        data2 = manager2.getData();
+        String queryUpdate = "UPDATE tflstud SET Name='" +data2.name+ "' WHERE Id= " +data2.id+ ";";
         try {
             int rows = statement.executeUpdate(queryUpdate);
             return rows;
@@ -67,7 +73,9 @@ public class DBManager {
     }
 
     public static int delete() {
-        String queryDelete = "DELETE FROM tflstud WHERE Id=1;";
+        UIManager manager2 = new UIManager();
+        data2 = manager2.getData();
+        String queryDelete = "DELETE FROM tflstud WHERE Id= " +data2.id+ ";";
         try {
             int rows = statement.executeUpdate(queryDelete);
             return rows;
@@ -102,7 +110,7 @@ public class DBManager {
     }
 
     public static boolean create() {
-        String queryCreate = "CREATE TABLE tflstud(Id INT(5),Name VARCHAR(20));";
+        String queryCreate = "CREATE TABLE tflstud(Id INT primary key auto_increment, Name VARCHAR(20));";
         try {
             statement.execute(queryCreate);
             return true;
