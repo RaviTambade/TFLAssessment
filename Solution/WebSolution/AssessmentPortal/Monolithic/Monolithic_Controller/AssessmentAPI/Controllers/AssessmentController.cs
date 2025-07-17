@@ -1,6 +1,8 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using Microsoft.AspNetCore.Authorization;
+
 using Transflower.TFLAssessment.Entities;
 using  Transflower.TFLAssessment.Services.Interfaces;
 using Transflower.TFLAssessment.Entities.Models;
@@ -43,9 +45,15 @@ public class AssessmentController : ControllerBase
     // GET: get all assessments
     //http://localhost:5238/api/assessment/assessments
     [HttpGet("assessments")]
+    [Authorize(Roles = "sme,admin")]
     public async Task<IActionResult> GetAllAssesment()
     {
         List<Assessment> assessments = await _svc.GetAllTests();
+        if (assessments == null || assessments.Count == 0)
+        {
+            _logger.LogWarning("No assessments found at {DT}", DateTime.UtcNow.ToLongTimeString());
+            return NotFound("No assessments found.");
+        }
         _logger.LogInformation("Get all tests method invoked at  {DT}", DateTime.UtcNow.ToLongTimeString());
         return Ok(assessments);
     }
@@ -188,6 +196,7 @@ public class AssessmentController : ControllerBase
     // add test and there questions
     //http://localhost:5238/api/Assessment/addtest
     [HttpPost("addtest")]
+    [Authorize(Roles = "sme")]
     public async Task<IActionResult> AddTest([FromBody] CreateTestWithQuestions request)
     {
         var testId = await _svc.CreateTestWithQuestionsAsync(request);
@@ -229,6 +238,7 @@ public class AssessmentController : ControllerBase
 
     //http://localhost:5238/api/Assessment/getalltest/from/2024-01-01/to/2024-12-31
     [HttpGet("getalltest/from/{fromDate}/to/{toDate}")]
+    [Authorize(Roles = "admin")]
     public async Task<IActionResult> GetAllTests(DateTime fromDate, DateTime toDate)
     {
         List<Test> assessments = await _svc.GetAllTests(fromDate, toDate);
