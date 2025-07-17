@@ -44,7 +44,9 @@ public class AssessmentController : ControllerBase
 
     // GET: get all assessments
     //http://localhost:5238/api/assessment/assessments
+
     [HttpGet("assessments")]
+    [Authorize(Roles = "sme,admin")]
     public async Task<IActionResult> GetAllAssesment()
     {
         List<Assessment> assessments = await _svc.GetAllTests();
@@ -232,6 +234,7 @@ public class AssessmentController : ControllerBase
 
     //http://localhost:5238/api/Assessment/getalltest/from/2024-01-01/to/2024-12-31
     [HttpGet("getalltest/from/{fromDate}/to/{toDate}")]
+    [Authorize(Roles = "admin")]
     public async Task<IActionResult> GetAllTests(DateTime fromDate, DateTime toDate)
     {
         List<Test> assessments = await _svc.GetAllTests(fromDate, toDate);
