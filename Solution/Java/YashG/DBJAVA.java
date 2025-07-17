@@ -1,3 +1,6 @@
+This is a simple basic java program to connnect to the database and execute a query to display data from the table
+
+
 import java.sql.*;
 
 public class DBJAVA {

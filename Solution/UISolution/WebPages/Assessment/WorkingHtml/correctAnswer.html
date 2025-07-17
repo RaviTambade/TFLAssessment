@@ -58,29 +58,28 @@
   <div id="questions-container">Loading questions...</div>
 
   <script>
-    var testId =25;
-    var candidateId = 5;
+    const testId = 29;
+    const candidateId = 8;
 
-    var remoteWeb = "http://localhost:5172";
-    var candidateAnswerWeb = "http://localhost:5299";
-    var resultWeb = "http://localhost:5235";
+    // const remoteWeb = "http://localhost:5172";
+    // const candidateAnswerWeb = "http://localhost:5299";
+    // const resultWeb = "http://localhost:5235";
 
-    // var questionsUrl = remoteWeb + "/api/questionbank/questions/tests/" + testId;
-    // var answersUrl = candidateAnswerWeb + "/api/candidateanswer/assessmentanswers/candidates/1/tests/" + testId + "/results";
-    // var detailsUrl = candidateAnswerWeb + "/api/candidateanswer/assessmentanswers/candidates/1/tests/" + testId + "/details";
-    // var scoreUrl = resultWeb + "/api/result/candidates/" + candidateId + "/tests/" + testId + "/score";
+    
+    const remoteWeb = "http://localhost:5238";
+    const candidateAnswerWeb = "http://localhost:5238";
+    const resultWeb = "http://localhost:5238";
+
+    const questionsUrl = `${remoteWeb}/api/questionbank/questions/tests/${testId}`;
+    const answersUrl = `${candidateAnswerWeb}/api/candidateanswer/assessmentanswers/candidates/${candidateId}/tests/${testId}/results`;
+    const detailsUrl = `${candidateAnswerWeb}/api/candidateanswer/assessmentanswers/candidates/${candidateId}/tests/${testId}/details`;
+    const scoreUrl = `${resultWeb}/api/result/candidates/${candidateId}/tests/${testId}/score`;
 
     $(document).ready(function () {
-      const questionsUrl = "http://localhost:5172/api/questionbank/questions/tests/22";
-      const answersUrl = "http://localhost:5299/api/candidateanswer/assessmentanswers/candidates/1/tests/22/results";
-      const detailsUrl = "http://localhost:5299/api/candidateanswer/assessmentanswers/candidates/1/tests/22/details";
-      const scoreUrl = "http://localhost:5235/api/result/candidates/1/tests/22/score";
-
-      // First, load candidate details
+      // Load candidate test details
       $.getJSON(detailsUrl, function (details) {
         const date = new Date(details.testDate).toLocaleDateString();
 
-        // Then load score
         $.getJSON(scoreUrl, function (scoreData) {
           const html = `
             <h2>Candidate Report</h2>
@@ -91,15 +90,14 @@
             <p><strong>Total Score:</strong> ${scoreData}</p>
           `;
           $("#candidate-details").html(html);
-        }).fail(function () {
+        }).fail(() => {
           $("#candidate-details").html("Failed to load score.");
         });
-
-      }).fail(function () {
+      }).fail(() => {
         $("#candidate-details").html("Failed to load candidate details.");
       });
 
-      // Load questions and candidate answers
+      // Load questions and answers
       $.when($.getJSON(questionsUrl), $.getJSON(answersUrl)).done(function (questionsData, answersData) {
         const questions = questionsData[0];
         const answers = answersData[0];
@@ -107,14 +105,21 @@
         container.empty();
 
         questions.forEach((q, index) => {
-          const answer = answers[index];
-          const userAnswer = answer?.candidateAnswer?.toLowerCase();
-          const correctAnswer = answer?.correctAnswer?.toLowerCase();
+           console.log(`Matching: questionId=${q.id} vs answer.testQuestionId`);
+          const answer = answers.find(a => a.testQuestionId === q.id);
+          const userAnswer = answer && answer.candidateAnswer ? answer.candidateAnswer.toLowerCase() : null;
+          const correctAnswer = answer && answer.correctAnswer ? answer.correctAnswer.toLowerCase() : null;
+          
+          console.log(`Q${index + 1}: ${q.title}`);
+          console.log("Correct Answer:", correctAnswer);
+          console.log("Candidate Answer:", userAnswer);
+
 
           const getOptionClass = (key) => {
+            if (!userAnswer || !correctAnswer) return "";
             if (key === correctAnswer && key === userAnswer) return "correct";
-            if (key === correctAnswer) return "correct";
             if (key === userAnswer && key !== correctAnswer) return "incorrect";
+            if (key === correctAnswer) return "correct";
             return "";
           };
 
@@ -129,7 +134,7 @@
           `;
           container.append(html);
         });
-      }).fail(function () {
+      }).fail(() => {
         $("#questions-container").html("Error loading questions or answers.");
       });
     });

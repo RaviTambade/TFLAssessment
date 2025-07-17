@@ -87,9 +87,13 @@
 <script>
     $(document).ready(function () {
         const testId = 2;
-        const apiUrl = `http://localhost:5151/api/Assessment/testdetails/${testId}`;
-        const deleteApiBase = "http://localhost:5151/api/Assessment/question/"; // + questionId
-        const updateApi = "http://localhost:5151/api/Assessment/question"; // for PUT
+        // const apiUrl = `http://localhost:5151/api/Assessment/testdetails/${testId}`;
+        // const deleteApiBase = "http://localhost:5151/api/Assessment/question/"; // + questionId
+        // const updateApi = "http://localhost:5151/api/Assessment/question"; // for PUT
+
+        const apiUrl = `http://localhost:5238/api/Assessment/testdetails/${testId}`;
+        const deleteApiBase = "http://localhost:5238/api/Assessment/question/"; // + questionId
+        const updateApi = "http://localhost:5238/api/Assessment/question"; // for PUT
 
         function loadQuestions() {
             $.ajax({
@@ -137,7 +141,8 @@
         
             if (confirm("Are you sure you want to delete this question?")) {
                 $.ajax({
-                    url: `http://localhost:5151/api/Assessment/${assessmentId}/questions/${questionId}`,
+                    // url: `http://localhost:5151/api/Assessment/${assessmentId}/questions/${questionId}`,
+                    url: `http://localhost:5238/api/Assessment/${assessmentId}/questions/${questionId}`,
                     type: "DELETE",
                     success: function () {
                         alert("Question deleted successfully.");
