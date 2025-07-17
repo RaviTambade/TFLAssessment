@@ -10,6 +10,7 @@
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       display: flex;
       height: 100vh;
+      /* padding-top: 40px; */
     }
 
     /* Sidebar */
@@ -54,6 +55,9 @@
   </style>
 </head>
 <body>
+  <div style="position: fixed; top: 0; right: 0; background: #2a76c1; color: white; padding: 10px 20px; z-index: 1;">
+     Hello : <span id="userEmail"></span>
+  </div>
 
   <div class="sidebar">
     <h3>SME Panel</h3>
@@ -74,6 +78,12 @@
     if (!token || role !== "sme") {
       alert("Access denied.");
       window.location.href = "login.html";
+    }
+
+    // Set email if available
+    const userEmail = localStorage.getItem("userEmail"); //  Make sure you store email in localStorage after login
+    if (userEmail) {
+      $("#userEmail").text(userEmail);
     }
 
     // Load content dynamically into #content
