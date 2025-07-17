@@ -1,6 +1,8 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using Microsoft.AspNetCore.Authorization;
+
 using Transflower.TFLAssessment.Entities;
 using  Transflower.TFLAssessment.Services.Interfaces;
 using Transflower.TFLAssessment.Entities.Models;
@@ -188,6 +190,7 @@ public class AssessmentController : ControllerBase
     // add test and there questions
     //http://localhost:5238/api/Assessment/addtest
     [HttpPost("addtest")]
+    [Authorize(Roles = "sme")]
     public async Task<IActionResult> AddTest([FromBody] CreateTestWithQuestions request)
     {
         var testId = await _svc.CreateTestWithQuestionsAsync(request);
