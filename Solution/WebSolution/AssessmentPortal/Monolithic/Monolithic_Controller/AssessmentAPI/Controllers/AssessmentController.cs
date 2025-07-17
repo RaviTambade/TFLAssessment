@@ -44,12 +44,16 @@ public class AssessmentController : ControllerBase
 
     // GET: get all assessments
     //http://localhost:5238/api/assessment/assessments
-
     [HttpGet("assessments")]
     [Authorize(Roles = "sme,admin")]
     public async Task<IActionResult> GetAllAssesment()
     {
         List<Assessment> assessments = await _svc.GetAllTests();
+        if (assessments == null || assessments.Count == 0)
+        {
+            _logger.LogWarning("No assessments found at {DT}", DateTime.UtcNow.ToLongTimeString());
+            return NotFound("No assessments found.");
+        }
         _logger.LogInformation("Get all tests method invoked at  {DT}", DateTime.UtcNow.ToLongTimeString());
         return Ok(assessments);
     }

@@ -68,10 +68,10 @@
 
   <script>
     // Redirect unauthorized users
-    const token = localStorage.getItem("token");
+    const token2 = localStorage.getItem("token");
     const role = localStorage.getItem("role");
 
-    if (!token || role !== "student") {
+    if (!token2 || role !== "student") {
       alert("Access denied.");
       window.location.href = "login.html";
     }

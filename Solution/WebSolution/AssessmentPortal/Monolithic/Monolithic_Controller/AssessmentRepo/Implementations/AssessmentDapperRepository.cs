@@ -521,7 +521,7 @@ public class AssessmentDapperRepository : IAssessmentRepository
         await Task.Delay(100);
         List<Employee> smeList = new List<Employee>();
         string query = @"
-            SELECT e.id, e.userId, e.firstName, e.lastName, e.email, e.contact
+            SELECT sme.id, e.userId, e.firstName, e.lastName, e.email, e.contact
             FROM employees e
             INNER JOIN subjectmatterexperts sme ON e.id = sme.employeeid
             WHERE sme.subjectid = @SubjectId";
