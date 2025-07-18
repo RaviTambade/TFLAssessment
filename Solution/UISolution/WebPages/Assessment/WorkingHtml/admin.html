@@ -57,8 +57,8 @@
 
   <div class="sidebar">
     <h3>SME Panel</h3>
-    <a href="#" id="createTestLink">Show Test</a>
-    <!-- <a href="#" id="createTestWithQuestionsLink">Create Test With Questions</a> -->
+    <a href="#" id="showTestBtw">Show Test Btw Dates</a>
+    <a href="#" id="showAllTest">Show All Test</a>
   </div>
 
   <div class="main-content" id="content">
@@ -78,12 +78,12 @@
 
     // Load content dynamically into #content
     $(document).ready(function () {
-      $("#createTestLink").click(function (e) {
+      $("#showTestBtw").click(function (e) {
         e.preventDefault();
         $("#content").load("showTestBetweenDateJWT.html"); //Make sure this file is named correctly and in the same directory
       });
 
-      $("#createTestWithQuestionsLink").click(function (e) {
+      $("#showAllTest").click(function (e) {
         e.preventDefault();
         $("#content").html("<h3>Coming soon: Create Test With Questions!</h3>");
       });

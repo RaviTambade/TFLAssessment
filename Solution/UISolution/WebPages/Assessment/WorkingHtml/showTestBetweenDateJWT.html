@@ -173,8 +173,7 @@
               <td>${test.status}</td>
               
               <td>
-                <button onclick="updateTest(${test.id})" style="margin-right:5px; background:orange;">Update</button>
-                <button onclick="deleteTest(${test.id})" style="background:red;">Delete</button>
+                <button onclick="updateTest(${test.id})" style="margin-right:5px; background:orange;">Update Status</button>
               </td>
             </tr>`;
             $("#testBody").append(row);
@@ -209,12 +208,9 @@
   
     function updateTest(id) {
       // Navigate to update page or open modal with that test ID
-      // window.location.href = `update-test.html?id=${id}`;
       alert("updateTest function called with ID: " + id);
-    }
-
-    function deleteTest(id) {
-      alert("deleteTest function called with ID: " + id);
+      window.location.href = `update-test.html?id=${id}`;
+      
     }
 
   </script>
