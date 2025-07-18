@@ -115,6 +115,7 @@
             <th onclick="sortTable(0)">Test Name</th>
             <th onclick="sortTable(1)">Scheduled Date</th>
             <th>Status</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody id="testBody"></tbody>
@@ -124,11 +125,13 @@
 
   <script>
     const token1 = window.token || localStorage.getItem("token");
+    const role1 = window.role || localStorage.getItem("role");
 
-    if (!token1 || role !== "admin") {
+    if (!token1 || role1 !== "admin") {
       alert("Access denied.");
       window.location.href = "login.html";
     }
+
 
     function fetchTests() {
       const fromDate = $("#fromDate").val();
@@ -153,7 +156,7 @@
         method: "GET",
         dataType: "json",
         headers: {
-            Authorization: `Bearer ${token}`
+            Authorization: `Bearer ${token1}`
           },
         success: function (data) {
           $("#loading").hide();
@@ -161,12 +164,17 @@
             $("#error").text("No tests found in the selected date range.");
             return;
           }
+          console.log("Fetched tests:", data);
 
           data.forEach(test => {
             const row = `<tr>
               <td>${test.name}</td>
               <td>${new Date(test.scheduledDate).toLocaleString()}</td>
               <td>${test.status}</td>
+              
+              <td>
+                <button onclick="updateTest(${test.id})" style="margin-right:5px; background:orange;">Update Status</button>
+              </td>
             </tr>`;
             $("#testBody").append(row);
           });
@@ -197,6 +205,14 @@
       const tbody = table.tBodies[0];
       rows.forEach(row => tbody.appendChild(row));
     }
+  
+    function updateTest(id) {
+      // Navigate to update page or open modal with that test ID
+      alert("updateTest function called with ID: " + id);
+      window.location.href = `update-test.html?id=${id}`;
+      
+    }
+
   </script>
 
 </body>
