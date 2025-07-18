@@ -627,5 +627,70 @@ public class AssessmentDapperRepository : IAssessmentRepository
 
         return status;
     }
+
+    public Task<bool> UpdateTestStatus(int testId, TestStatusUpdate status)
+    {
+        Task.Delay(100);
+        bool updateStatus = false;
+        string query = "UPDATE tests SET status = @Status WHERE id = @TestId";
+
+        using (IDbConnection con = new MySqlConnection(_connectionString))
+        {
+            try
+            {
+                int rowsAffected = con.Execute(query, new { Status = status.Status, TestId = testId });
+                updateStatus = rowsAffected > 0; // Determine success based on rows affected
+            }
+            catch (Exception ex)
+            {
+                // Log or handle the exception
+                Console.WriteLine($"Error while updating test status: {ex.Message}");
+            }
+        }
+
+        return Task.FromResult(updateStatus);
+    }
+
+    // public async Task<List<Employee>> GetAllEmployees()
+    // {
+    //     await Task.Delay(100);
+    //     List<Employee> employees = new List<Employee>();
+    //     using (IDbConnection con = new MySqlConnection(_connectionString))
+    //     {
+    //         var emp = con.Query<Employee>("SELECT * FROM employees");
+
+    //         employees = emp as List<Employee>;
+
+    //     }
+    //     return employees;
+    // }
+    public async Task<bool> AddEmployeesToTest(TestAssignmentRequest request)
+    {
+        await Task.Delay(100);
+        bool status = false;
+        using (IDbConnection con = new MySqlConnection(_connectionString))
+        {
+            foreach (var employeeId in request.EmployeeIds)
+            {
+                var query = "INSERT INTO testschedules (testid, candidateid, scheduledstart, scheduledend, status, rescheduledon, remarks) " +
+                            "VALUES (@TestId, @EmployeeId, @ScheduledStart, @ScheduledEnd, @Status, @RescheduledOn, @Remarks)";
+                var parameters = new
+                {
+                    TestId = request.TestId,
+                    EmployeeId = employeeId,
+                    ScheduledStart = request.ScheduledStart,
+                    ScheduledEnd = request.ScheduledEnd,
+                    Status = request.Status,
+                    RescheduledOn = request.RescheduledOn,
+                    Remarks = request.Remarks
+                };
+                if (con.Execute(query, parameters) > 0)
+                {
+                    status = true;
+                }
+            }
+        }
+        return status;
+    }
 }
 

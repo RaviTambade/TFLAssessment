@@ -34,5 +34,11 @@ public interface IAssessmentRepository
   public Task<List<Question>> GetQuestionsByEvaluationCriteriaId(int EvaluationCriteriaId);
   //UpdateQuestion
   public Task<bool> UpdateQuestion(Question question);
+
+  public Task<bool> UpdateTestStatus(int testId, TestStatusUpdate status);
+
+  // public Task<List<Employee>> GetAllEmployees();
+  public Task<bool> AddEmployeesToTest(TestAssignmentRequest request);
+
 }
 

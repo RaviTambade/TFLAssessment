@@ -121,4 +121,13 @@ public class AssessmentService : IAssessmentService
    {
       return await _repository.UpdateQuestion(question);
    }
+   public async Task<bool> UpdateTestStatus(int testId, TestStatusUpdate status)
+   {
+      return await _repository.UpdateTestStatus(testId, status);
+   }
+   
+   public async Task<bool> AddEmployeesToTest(TestAssignmentRequest request)
+   {
+      return await _repository.AddEmployeesToTest(request);
+   }
 }

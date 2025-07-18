@@ -2,12 +2,140 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Test Schedule</title>
+  <title>Update Test Status</title>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 40px;
+      background-color: #f4f4f4;
+    }
+
+    h2 {
+      color: #333;
+    }
+
+    select, button {
+      margin-top: 10px;
+      padding: 10px;
+      font-size: 16px;
+    }
+
+    #changeStatus {
+      margin-left: 10px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    #changeStatus:hover {
+      background-color: #0056b3;
+    }
+  </style>
 </head>
 <body>
 
-  <h2>Update Tests</h2>
+  <h2>Update Test Status</h2>
+
+  <label for="statusDropdown">Select Status:</label>
+  <select id="statusDropdown">
+    <option value="created">Created</option>
+    <option value="scheduled">Scheduled</option>
+    <option value="cancelled">Cancelled</option>
+    <option value="conducted">Conducted</option>
+  </select>
+
+  <button id="changeStatus">Change Status</button>
+
+  <br><br>
+  <button id="getStudents">Get Students</button>
+  <div id="employeeList"></div>
+
+  <br><br>
+  <button id="addStudent">Add Students</button>
+
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const testId = urlParams.get("id");
+
+    $(document).ready(function () {
+      $("#changeStatus").click(function () {
+        const selectedStatus = $("#statusDropdown").val();
+
+        if (!testId) {
+          alert("Test ID not found in URL.");
+          return;
+        }
+
+        $.ajax({
+          url: `http://localhost:5238/api/Assessment/updateteststatus/${testId}`,
+          type: "PUT",
+          contentType: "application/json",
+          data: JSON.stringify({ status: selectedStatus }),
+          success: function (response) {
+            alert("Status updated to '" + selectedStatus + "' successfully.");
+            console.log(response);
+          },
+          error: function (xhr, status, error) {
+            console.error("Error:", error);
+            alert("Failed to update status.");
+          }
+        });
+      });
+
+      $("#addStudent").click(function () {
+        
+      });
+
+
+      $("#getStudents").click(function () {
+        $.ajax({
+          url: `http://localhost:5238/api/Assessment/employees`,
+          type: "GET",
+          contentType: "application/json",
+          dataType: "json",
+          success: function (response) {
+              let html = `
+                <table border="1" cellpadding="10" cellspacing="0" style="background:#fff; border-collapse: collapse;">
+                  <thead>
+                    <tr>
+                      <th>Select</th>
+                      <th>Name</th>
+                      <th>Email</th>
+                      <th>Contact</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+              `;
+                
+              response.forEach(function (emp) {
+                const fullName = emp.firstName + ' ' + emp.lastName;
+                html += `
+                  <tr>
+                    <td><input type="checkbox" class="emp-checkbox" value="${emp.id}"></td>
+                    <td>${fullName}</td>
+                    <td>${emp.email}</td>
+                    <td>${emp.contact}</td>
+                  </tr>
+                `;
+              });
+          
+              html += `</tbody></table>`;
+          
+              $("#employeeList").html(html); // Show the table
+            },
+          error: function (xhr, status, error) {
+            console.error("Error:", error);
+            alert("Failed to update status.");
+          }
+        });
+      });
+
+
+    });
+  </script>
+
 </body>
 </html>
