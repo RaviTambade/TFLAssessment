@@ -191,8 +191,6 @@ public class AssessmentController : ControllerBase
         return Ok(status);
     }
 
-
-
     // add test and there questions
     //http://localhost:5238/api/Assessment/addtest
     [HttpPost("addtest")]
@@ -326,9 +324,9 @@ public class AssessmentController : ControllerBase
 
     //http://localhost:5238/api/Assessment/addemployees
     [HttpPost("addemployees")]
-    public async Task<IActionResult> AddEmployeesToTest([FromBody] TestAssignmentRequest  request)
+    public async Task<IActionResult> AddEmployeesToTest([FromBody] TestAssignmentRequest request)
     {
-         if (request.EmployeeIds == null || request.EmployeeIds.Count == 0)
+        if (request.EmployeeIds == null || request.EmployeeIds.Count == 0)
         {
             return BadRequest("No employees selected.");
         }
@@ -344,4 +342,21 @@ public class AssessmentController : ControllerBase
         return Ok(new { message = "Employees added to test successfully." });
     }
 
+    // get all test by employee id
+    [HttpGet("alltestbyempid/{empId}")]
+    public async Task<IActionResult> GetAllTestByEmpId(int empId)
+    {
+        if (empId <= 0){
+            _logger.LogError("Invalid employee ID provided at {DT}", DateTime.UtcNow.ToLongTimeString());
+            return BadRequest(new { message = "Invalid employee ID provided." });
+        }
+
+        List<TestEmployeeDetails> testDetails = await _svc.GetAllTestByEmpId(empId);
+        if (testDetails == null || testDetails.Count == 0){
+            _logger.LogWarning("No test details found for employee at {DT}", DateTime.UtcNow.ToLongTimeString());
+            return NotFound(new { message = "No test details found for the employee." });
+        }
+        _logger.LogInformation("Get all test by employee method invoked at  {DT}", DateTime.UtcNow.ToLongTimeString());
+        return Ok(testDetails);
+    }
 }

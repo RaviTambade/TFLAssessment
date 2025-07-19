@@ -692,5 +692,29 @@ public class AssessmentDapperRepository : IAssessmentRepository
         }
         return status;
     }
+
+    public async Task<List<TestEmployeeDetails>> GetAllTestByEmpId(int empId)
+    {
+        await Task.Delay(100);
+        List<TestEmployeeDetails> testEmployeeDetails = new List<TestEmployeeDetails>();
+        string query = @"
+            SELECT 
+                t.id AS TestId, 
+                t.name AS TestName, 
+                te.scheduledstart AS ScheduledStart, 
+                te.scheduledend AS ScheduledEnd, 
+                te.status AS Status, 
+                te.remarks AS Remarks
+            FROM tests t
+            INNER JOIN testschedules te ON t.id = te.testid
+            WHERE te.candidateid = @EmpId";
+
+        using (IDbConnection con = new MySqlConnection(_connectionString))
+        {
+            testEmployeeDetails = con.Query<TestEmployeeDetails>(query, new { EmpId = empId }).AsList();
+        }
+
+        return testEmployeeDetails;
+    }
 }
 

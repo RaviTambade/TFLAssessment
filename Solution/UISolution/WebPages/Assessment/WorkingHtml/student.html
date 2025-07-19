@@ -56,8 +56,8 @@
 <body>
 
   <div class="sidebar">
-    <h3>SME Panel</h3>
-    <a href="#" id="TestList">Create Test</a>
+    <h3>Student Panel</h3>
+    <a href="#" id="TestList">Get All Test</a>
     <!-- <a href="#" id="createTestWithQuestionsLink">Create Test With Questions</a> -->
   </div>
 
@@ -78,9 +78,8 @@
 
     // Load content dynamically into #content
     $(document).ready(function () {
-      $("#createTestLink").click(function (e) {
-        e.preventDefault();
-        $("#content").load("testappearJWT.html"); // Make sure this file is named correctly and in the same directory
+      $("#TestList").click(function (e) {
+        $("#content").load("getAllTest.html"); 
       });
 
       $("#createTestWithQuestionsLink").click(function (e) {
