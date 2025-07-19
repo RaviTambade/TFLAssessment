@@ -370,16 +370,6 @@ public class AssessmentDapperRepository : IAssessmentRepository
         return employees;
     }
 
-    //   public async <Employee> GetAllEmployee(int userId)
-    // {
-    //     await Task.Delay(100);
-    //     using (IDbConnection con = new MySqlConnection(_connectionString))
-    //     {
-    //         var emp = con.Query<Employee>("SELECT * FROM employees where userId=@userId"); 
-    //     }
-    //     return employee;
-    // }
-
     public async Task<Employee> GetEmployeeById(int userId)
     {
         await Task.Delay(100); // Optional delay; you can remove this if not needed.
@@ -390,7 +380,6 @@ public class AssessmentDapperRepository : IAssessmentRepository
             return employee;
         }
     }
-
 
     public async Task<List<Subject>> GetAllSubjects()
     {
@@ -407,8 +396,6 @@ public class AssessmentDapperRepository : IAssessmentRepository
         return subjects;
     }
 
-
-
     public async Task<List<EvaluationCriteria>> GetEvalutionCriterias()
     {
         await Task.Delay(100);
@@ -423,8 +410,6 @@ public class AssessmentDapperRepository : IAssessmentRepository
 
         return criterias;
     }
-
-
 
     public async Task<List<EvaluationCriteria>> GetEvalutionCriteriasBySubject(int subjectId)
     {
@@ -515,7 +500,6 @@ public class AssessmentDapperRepository : IAssessmentRepository
         return questions as List<SubjectQuestions>;
     }
 
-
     public async Task<List<Employee>> GetSmeBySubject(int subjectId)
     {
         await Task.Delay(100);
@@ -533,7 +517,6 @@ public class AssessmentDapperRepository : IAssessmentRepository
 
         return smeList;
     }
-
     public async Task<List<Test>> GetAllTests(DateTime fromDate, DateTime toDate)
     {
         await Task.Delay(100);
@@ -589,7 +572,6 @@ public class AssessmentDapperRepository : IAssessmentRepository
 
         return questions;
     }
-
     public async Task<bool> UpdateQuestion(Question question)
     {
         await Task.Delay(100);
@@ -651,19 +633,6 @@ public class AssessmentDapperRepository : IAssessmentRepository
         return Task.FromResult(updateStatus);
     }
 
-    // public async Task<List<Employee>> GetAllEmployees()
-    // {
-    //     await Task.Delay(100);
-    //     List<Employee> employees = new List<Employee>();
-    //     using (IDbConnection con = new MySqlConnection(_connectionString))
-    //     {
-    //         var emp = con.Query<Employee>("SELECT * FROM employees");
-
-    //         employees = emp as List<Employee>;
-
-    //     }
-    //     return employees;
-    // }
     public async Task<bool> AddEmployeesToTest(TestAssignmentRequest request)
     {
         await Task.Delay(100);
@@ -694,27 +663,18 @@ public class AssessmentDapperRepository : IAssessmentRepository
     }
 
     public async Task<List<TestEmployeeDetails>> GetAllTestByEmpId(int empId)
+{
+    using (IDbConnection con = new MySqlConnection(_connectionString))
     {
-        await Task.Delay(100);
-        List<TestEmployeeDetails> testEmployeeDetails = new List<TestEmployeeDetails>();
-        string query = @"
-            SELECT 
-                t.id AS TestId, 
-                t.name AS TestName, 
-                te.scheduledstart AS ScheduledStart, 
-                te.scheduledend AS ScheduledEnd, 
-                te.status AS Status, 
-                te.remarks AS Remarks
-            FROM tests t
-            INNER JOIN testschedules te ON t.id = te.testid
-            WHERE te.candidateid = @EmpId";
+        var result = await con.QueryAsync<TestEmployeeDetails>(
+            "GetTestEmployeeDetailsByCandidate",
+            new { candidate = empId },
+            commandType: CommandType.StoredProcedure
+        );
 
-        using (IDbConnection con = new MySqlConnection(_connectionString))
-        {
-            testEmployeeDetails = con.Query<TestEmployeeDetails>(query, new { EmpId = empId }).AsList();
-        }
-
-        return testEmployeeDetails;
+        return result.ToList();
     }
+}
+
 }
 

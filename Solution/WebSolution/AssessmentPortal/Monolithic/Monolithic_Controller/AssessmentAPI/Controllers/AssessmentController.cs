@@ -343,6 +343,7 @@ public class AssessmentController : ControllerBase
     }
 
     // get all test by employee id
+    // http://localhost:5238/api/Assessment/alltestbyempid/{empId}
     [HttpGet("alltestbyempid/{empId}")]
     public async Task<IActionResult> GetAllTestByEmpId(int empId)
     {

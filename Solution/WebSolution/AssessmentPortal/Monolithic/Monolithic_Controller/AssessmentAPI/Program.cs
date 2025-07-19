@@ -21,7 +21,9 @@ builder.Host.ConfigureLogging(logging =>
 //Service configuration
 
 builder.Services.AddEndpointsApiExplorer();
+
 // builder.Services.AddSwaggerGen();
+
 builder.Services.AddCors();
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
