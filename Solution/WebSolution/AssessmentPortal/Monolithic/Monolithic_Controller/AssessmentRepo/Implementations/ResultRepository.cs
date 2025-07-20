@@ -19,9 +19,8 @@ public class ResultRepository : IResultRepository
 
     public async Task<int> GetCandidateScore(int candidateId, int testId)
     {
+
         string query = "spcandidatetestresult";
-
-
         MySqlConnection connection = new MySqlConnection(_connectionString);
         int score = 0;
         try
@@ -552,7 +551,7 @@ public class ResultRepository : IResultRepository
         return subjects;
 
     }
-    
+
     public async Task<List<TestAverageReport>> GetTestAverageReport(int testId)
     {
         List<TestAverageReport> averageReports = new List<TestAverageReport>();
@@ -574,14 +573,14 @@ public class ResultRepository : IResultRepository
                 // int correctanswers = Convert.ToInt32(reader["correctanswers"]);
                 int correctanswers = int.Parse(reader["correctanswers"].ToString());
                 double percentagecorrect = Convert.ToDouble(reader["percentagecorrect"]);
-                
+
 
                 TestAverageReport testAverageReport = new TestAverageReport();
                 testAverageReport.SubjectName = subjectname;
                 testAverageReport.EvaluationCriteria = evalutioncriteria;
                 testAverageReport.TotalQuestionsAnswered = totalquestionsanswered;
                 testAverageReport.CorrectAnswers = correctanswers;
-                testAverageReport.PercentageCorrect  = percentagecorrect;
+                testAverageReport.PercentageCorrect = percentagecorrect;
 
                 averageReports.Add(testAverageReport);
             }
@@ -628,6 +627,53 @@ public class ResultRepository : IResultRepository
         return testIds;
 
     }*/
+
+    //GetTestScoresByCandidateId
+    public async Task<List<TestScoreDto>> GetCandidateAllScore(int candidateId)
+    {
+        List<TestScoreDto> scores = new List<TestScoreDto>();
+        string query = @"SELECT t.Name AS TestName, ctr.score AS Score
+            FROM candidatetestresults ctr
+            JOIN tests t ON ctr.testid = t.id
+            WHERE ctr.candidateid = @candidateId";
+
+        using (MySqlConnection connection = new MySqlConnection(_connectionString))
+        {
+            try
+            {
+                MySqlCommand command = new MySqlCommand(query, connection);
+                command.CommandType = CommandType.Text;
+                command.Parameters.AddWithValue("@candidateId", candidateId);
+
+                await connection.OpenAsync();
+                MySqlDataReader reader = command.ExecuteReader();
+
+                while (await reader.ReadAsync())
+                {
+                    var scoreObj = reader["Score"];
+                    int score = scoreObj == DBNull.Value ? 0 : Convert.ToInt32(scoreObj);
+                    var dto = new TestScoreDto
+                    {
+                        TestName = reader["TestName"].ToString(),
+                        Score = score
+                    };
+
+                    scores.Add(dto);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error: " + ex.Message);
+                // Optional: log error
+            }
+            finally
+            {
+                await connection.CloseAsync();
+            }
+        }
+
+        return scores;
+    }
 
 }
 

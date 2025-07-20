@@ -22,7 +22,7 @@ builder.Host.ConfigureLogging(logging =>
 
 builder.Services.AddEndpointsApiExplorer();
 
-// builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen();
 
 builder.Services.AddCors();
 builder.Services.AddControllersWithViews();
