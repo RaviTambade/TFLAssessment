@@ -2,8 +2,10 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>SME Dashboard</title>
+  <title>Student Dashboard</title>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
   <style>
     body {
       margin: 0;
@@ -51,6 +53,26 @@
       height: 100%;
       border: none;
     }
+    /* #scoreChart {
+      height: 50vh;
+      width: 50%;
+      max-width: 100%;
+      background-color: white;
+      padding: 10px;
+      border-radius: 8px;
+      box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+    } */
+    #scoreChart {
+      display: block;
+      width: 50vw;
+      height: 50vh;
+      margin: 0 auto;
+      background-color: white;
+      padding: 10px;
+      border-radius: 8px;
+      box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+    }
+
   </style>
 </head>
 <body>
@@ -61,26 +83,90 @@
     <!-- <a href="#" id="createTestWithQuestionsLink">Create Test With Questions</a> -->
   </div>
 
-  <div class="main-content" id="content">
+  <!-- <div class="main-content" id="content">
     <h2>Welcome Student!</h2>
     <p>Select an action from the sidebar to get started.</p>
+  </div> -->
+  <div class="main-content" id="content">
+    <h2 id="studentLabel"></h2>
+    <canvas id="scoreChart"></canvas>
   </div>
 
   <script>
     // Redirect unauthorized users
     const token2 = localStorage.getItem("token");
     const role = localStorage.getItem("role");
+    const userEmail = localStorage.getItem("userEmail"); //  Make sure you store email in localStorage after login
+    const studentId = localStorage.getItem("userId"); // 
+    if (userEmail) {
+      $("#userEmail").text(userEmail);
+    }
 
     if (!token2 || role !== "student") {
       alert("Access denied.");
       window.location.href = "login.html";
     }
-    // http://localhost:5238/api/Result/candidates/1/tests/1/score
-    // I want to show student score card here
+    // http://localhost:5238/api/Result/candidates/13/scores
+    // I want to show student score line charts here
     // const empId = localStorage.getItem("userId");
-    
+
     // Load content dynamically into #content
     $(document).ready(function () {
+      $("#studentLabel").text(`${userEmail}'s Test Scores`);
+
+      $.ajax({
+      url: `http://localhost:5238/api/Result/candidates/${studentId}/scores`,
+      method: "GET",
+      headers: {
+        "Authorization": "Bearer " + token2 // If your API uses JWT auth
+      },
+      success: function (data) {
+        if (!data || data.length === 0) {
+          $("#studentLabel").text("No scores found.");
+          return;
+        }
+
+        const testNames = data.map(d => d.testName);
+        const scores = data.map(d => d.score);
+
+        const ctx = document.getElementById("scoreChart").getContext("2d");
+        new Chart(ctx, {
+          type: 'line',
+          data: {
+            labels: testNames,
+            datasets: [{
+              label: 'Score',
+              data: scores,
+              backgroundColor: 'rgba(54, 162, 235, 0.2)',
+              borderColor: 'rgba(54, 162, 235, 1)',
+              borderWidth: 2,
+              fill: false,
+              tension: 0.3
+            }]
+          },
+          options: {
+            responsive: true,
+            scales: {
+              x: {
+                title: {
+                  display: true,
+                  text: 'Test Name'
+                }
+              },
+              y: {
+                beginAtZero: true,
+                max: 100
+              }
+            }
+          }
+        });
+      },
+      error: function (xhr, status, error) {
+        console.error("Error fetching scores:", error);
+        $("#studentLabel").text("Error loading scores.");
+      }
+    });
+
       $("#TestList").click(function (e) {
         $("#content").load("getAllTest.html"); 
       });
