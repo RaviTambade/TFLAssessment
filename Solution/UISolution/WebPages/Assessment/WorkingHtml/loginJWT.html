@@ -104,10 +104,17 @@
             const token = response.token;
             const user = response.user;
             const role = user.userRoles[0].role.name.toLowerCase();
+            
+             if (!user.id) {
+              $("#error").text("User ID is missing in the response.");
+              return; // stop further execution
+            }
 
             localStorage.setItem("token", token);
+            localStorage.setItem("userId", user.id); 
             localStorage.setItem("userEmail", user.email);
             localStorage.setItem("role", role);
+            // localStorage.setItem("userId", user.id);
 
             if (role === "admin") {
               window.location.href = "admin.html";
