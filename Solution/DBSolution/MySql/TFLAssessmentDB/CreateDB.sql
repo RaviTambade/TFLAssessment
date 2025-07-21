@@ -1,5 +1,4 @@
 -- Active: 1712217931410@@127.0.0.1@3306@assessmentdb
-
 DROP database assessmentdb;
 create database assessmentdb;
 
@@ -13,7 +12,6 @@ CREATE TABLE employees(
 	email VARCHAR(50) NOT NULL,
 	contact VARCHAR(10) NOT NULL
 );
-
 
 create table employeeperformance(
 	id INT PRIMARY KEY AUTO_INCREMENT,
