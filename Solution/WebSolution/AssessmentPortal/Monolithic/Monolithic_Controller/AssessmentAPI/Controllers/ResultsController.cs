@@ -32,16 +32,6 @@ namespace Transflower.TFLAssessment.Controllers
             return Ok(subjects);
         }
 
-        // Get candidate score with stored procedure.
-        // URL: http://localhost:5238/api/Result/candidates/1/tests/1/score
-        [HttpGet("candidates/{candidateId}/tests/{testId}/score")]
-        public async Task<IActionResult> GetCandidateScore(int candidateId, int testId)
-        {
-            int result = await _svc.GetCandidateScore(candidateId, testId);
-            _logger.LogInformation("Log Generated For get candidate score with stored procedure");
-            return Ok(result);
-        }
-
         // Set start time in the test.
         // URL: http://localhost:5238/api/Result/setstarttime/1/tests/1
         [HttpPost("setstarttime/{candidateId}/tests/{testId}")]
@@ -196,6 +186,32 @@ namespace Transflower.TFLAssessment.Controllers
             }
             _logger.LogInformation("Test Average Report {}", testId);
             return Ok(results);
+        }
+
+        // Get candidate score with stored procedure.
+        // URL: http://localhost:5238/api/Result/candidates/1/tests/1/score
+        [HttpGet("candidates/{candidateId}/tests/{testId}/score")]
+        public async Task<IActionResult> GetCandidateScore(int candidateId, int testId)
+        {
+            int result = await _svc.GetCandidateScore(candidateId, testId);
+            _logger.LogInformation("Log Generated For get candidate score with stored procedure");
+            return Ok(result);
+        }
+
+        // URL: http://localhost:5238/api/Result/candidates/13/scores
+        // [HttpGet("candidates/{candidateId}")]
+        [HttpGet("candidates/{candidateId}/scores")]
+        public async Task<IActionResult> GetCandidateAllScore(int candidateId)
+        {
+            List<TestScoreDto> result = await _svc.GetCandidateAllScore(candidateId);
+            if (result == null || result.Count == 0)
+            {
+                _logger.LogWarning("No scores found for candidateId: {CandidateId}", candidateId);
+                return NotFound("No scores found for the candidate.");
+            }
+
+            _logger.LogInformation("Log Generated for candidateId: {CandidateId}", candidateId);
+            return Ok(result);
         }
     }
 }

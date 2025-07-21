@@ -39,9 +39,9 @@ var questionsList;
 
 
 
-var subjectsApi ="http://localhost:5151/api/assessment/subjects";
-var criteriaApi = "http://localhost:5151/api/assessment/criterias";
-var questionsApi = "http://localhost:5172/api/questionbank/questions";
+var subjectsApi ="http://localhost:5238/api/assessment/subjects";
+var criteriaApi = "http://localhost:5238/api/assessment/criterias";
+var questionsApi = "http://localhost:5238/api/questionbank/questions";
 
 $(document).ready(function () {
 
@@ -97,7 +97,7 @@ $(document).ready(function () {
 
         var subjectId = $("#ddlSubjects").val();
         
-      var questionsApi ="http://localhost:5172/api/questionbank/questions/subjects/" +subjectId;
+      var questionsApi ="http://localhost:5238/api/questionbank/questions/subjects/" +subjectId;
     
         $.get(questionsApi, function (data, status) {
             questionsList = (data);
@@ -139,7 +139,7 @@ $(document).ready(function () {
         var subjectTitle = $("#ddlSubjects").find('option:selected').text();
         var criteriaTitle = $("#ddlCriteria").find('option:selected').text();
        
-        var apiQuestionBySubjectCriteria = " http://localhost:5172/api/questionbank/questions/subjects/" + subjectId + "/criterias/"+criteriaId;
+        var apiQuestionBySubjectCriteria = " http://localhost:5238/api/questionbank/questions/subjects/" + subjectId + "/criterias/"+criteriaId;
            
         $.get(apiQuestionBySubjectCriteria, function (data, status) {
             questionsList = (data);

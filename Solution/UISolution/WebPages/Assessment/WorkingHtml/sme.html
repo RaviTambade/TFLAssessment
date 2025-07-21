@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>SME Dashboard</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display: flex;
+      height: 100vh;
+      /* padding-top: 40px; */
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 220px;
+      background-color: #2c3e50;
+      color: white;
+      padding-top: 30px;
+      flex-shrink: 0;
+    }
+
+    .sidebar h3 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .sidebar a {
+      display: block;
+      padding: 15px 20px;
+      color: white;
+      text-decoration: none;
+      transition: background 0.3s;
+    }
+
+    .sidebar a:hover {
+      background-color: #34495e;
+    }
+
+    /* Main content area */
+    .main-content {
+      flex-grow: 1;
+      background-color: #f4f6f9;
+      padding: 30px;
+      overflow-y: auto;
+    }
+
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+  </style>
+</head>
+<body>
+  <div style="position: fixed; top: 0; right: 0; background: #2a76c1; color: white; padding: 10px 20px; z-index: 1;">
+     Hello : <span id="userEmail"></span>
+  </div>
+
+  <div class="sidebar">
+    <h3>SME Panel</h3>
+    <a href="#" id="createTestLink">Create Test</a>
+    <a href="#" id="checkQuestionAsPerCriteria">Get Subject and Criteria via Questions</a>
+    <!-- <a href="#" id="getAlltest">Get All Test</a> -->
+  </div>
+
+  <div class="main-content" id="content">
+    <h2>Welcome SME!</h2>
+    <p>Select an action from the sidebar to get started.</p>
+  </div>
+
+  <script>
+    // Redirect unauthorized users
+    const token = localStorage.getItem("token");
+    const role = localStorage.getItem("role");
+
+    if (!token || role !== "sme") {
+      alert("Access denied.");
+      window.location.href = "login.html";
+    }
+
+    // Set email if available
+    const userEmail = localStorage.getItem("userEmail"); //  Make sure you store email in localStorage after login
+    if (userEmail) {
+      $("#userEmail").text(userEmail);
+    }
+
+    // Load content dynamically into #content
+    $(document).ready(function () {
+      $("#createTestLink").click(function (e) {
+        e.preventDefault();
+        $("#content").load("createTestJWT.html"); // 🔄 Make sure this file is named correctly and in the same directory
+      });
+
+      $("#checkQuestionAsPerCriteria").click(function (e) {
+        e.preventDefault();
+        $("#content").load("subjectcriteriaquestionsJWT.html"); // 🔄 Make sure this file is named correctly and in the same directory
+      });
+
+      //http://localhost:5238/api/assessment/assessments
+      $("#checkQuestionAsPerCriteria").click(function (e) {
+        e.preventDefault();
+        $("#content").load("subjectcriteriaquestionsJWT.html"); // 🔄 Make sure this file is named correctly and in the same directory
+      });
+    });
+  </script>
+
+</body>
+</html>

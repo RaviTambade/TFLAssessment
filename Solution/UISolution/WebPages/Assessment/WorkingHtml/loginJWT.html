@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #B22222, #FF8C00); /* Red to Orange gradient */
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .login-container {
+      background: #fff;
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+      width: 100%;
+      max-width: 400px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #B22222;
+    }
+
+    label {
+      font-weight: bold;
+      color: #FF4500;
+    }
+
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      padding: 12px;
+      margin-top: 6px;
+      margin-bottom: 16px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 14px;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background-color: #FF4500;
+      border: none;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background-color: #E64500;
+    }
+
+    #error {
+      text-align: center;
+      margin-top: 15px;
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <h2>Login</h2>
+    <form id="loginForm">
+      <label>Email:</label>
+      <input type="email" id="email" required />
+
+      <label>Password:</label>
+      <input type="password" id="password" required />
+
+      <button type="submit">Login</button>
+    </form>
+    <p id="error"></p>
+  </div>
+
+  <script>
+    $(document).ready(function () {
+      $("#loginForm").submit(function (e) {
+        e.preventDefault();
+
+        const loginData = {
+          email: $("#email").val(),
+          password: $("#password").val()
+        };
+
+        $.ajax({
+          url: "http://localhost:5238/api/Auth/login",
+          type: "POST",
+          contentType: "application/json",
+          data: JSON.stringify(loginData),
+          success: function (response) {
+            const token = response.token;
+            const user = response.user;
+            const role = user.userRoles[0].role.name.toLowerCase();
+            
+             if (!user.id) {
+              $("#error").text("User ID is missing in the response.");
+              return; // stop further execution
+            }
+
+            localStorage.setItem("token", token);
+            localStorage.setItem("userId", user.id); 
+            localStorage.setItem("userEmail", user.email);
+            localStorage.setItem("role", role);
+            // localStorage.setItem("userId", user.id);
+
+            if (role === "admin") {
+              window.location.href = "admin.html";
+            } else if (role === "sme") {
+              window.location.href = "sme.html";
+            } else if (role === "student") {
+              window.location.href = "student.html";
+            } else {
+              $("#error").text("Role not recognized.");
+            }
+          },
+          error: function () {
+            $("#error").text("Invalid email or password.");
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>
