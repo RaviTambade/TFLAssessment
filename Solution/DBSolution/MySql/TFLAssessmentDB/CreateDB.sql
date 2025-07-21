@@ -13,7 +13,6 @@ CREATE TABLE employees(
 	contact VARCHAR(10) NOT NULL
 );
 
-
 create table employeeperformance(
 	id INT PRIMARY KEY AUTO_INCREMENT,
 	employeeid INT,
