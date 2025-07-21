@@ -370,16 +370,6 @@ public class AssessmentDapperRepository : IAssessmentRepository
         return employees;
     }
 
-    //   public async <Employee> GetAllEmployee(int userId)
-    // {
-    //     await Task.Delay(100);
-    //     using (IDbConnection con = new MySqlConnection(_connectionString))
-    //     {
-    //         var emp = con.Query<Employee>("SELECT * FROM employees where userId=@userId"); 
-    //     }
-    //     return employee;
-    // }
-
     public async Task<Employee> GetEmployeeById(int userId)
     {
         await Task.Delay(100); // Optional delay; you can remove this if not needed.
@@ -390,7 +380,6 @@ public class AssessmentDapperRepository : IAssessmentRepository
             return employee;
         }
     }
-
 
     public async Task<List<Subject>> GetAllSubjects()
     {
@@ -407,8 +396,6 @@ public class AssessmentDapperRepository : IAssessmentRepository
         return subjects;
     }
 
-
-
     public async Task<List<EvaluationCriteria>> GetEvalutionCriterias()
     {
         await Task.Delay(100);
@@ -423,8 +410,6 @@ public class AssessmentDapperRepository : IAssessmentRepository
 
         return criterias;
     }
-
-
 
     public async Task<List<EvaluationCriteria>> GetEvalutionCriteriasBySubject(int subjectId)
     {
@@ -515,13 +500,12 @@ public class AssessmentDapperRepository : IAssessmentRepository
         return questions as List<SubjectQuestions>;
     }
 
-
     public async Task<List<Employee>> GetSmeBySubject(int subjectId)
     {
         await Task.Delay(100);
         List<Employee> smeList = new List<Employee>();
         string query = @"
-            SELECT e.id, e.userId, e.firstName, e.lastName, e.email, e.contact
+            SELECT sme.id, e.userId, e.firstName, e.lastName, e.email, e.contact
             FROM employees e
             INNER JOIN subjectmatterexperts sme ON e.id = sme.employeeid
             WHERE sme.subjectid = @SubjectId";
@@ -533,7 +517,6 @@ public class AssessmentDapperRepository : IAssessmentRepository
 
         return smeList;
     }
-
     public async Task<List<Test>> GetAllTests(DateTime fromDate, DateTime toDate)
     {
         await Task.Delay(100);
@@ -589,7 +572,6 @@ public class AssessmentDapperRepository : IAssessmentRepository
 
         return questions;
     }
-
     public async Task<bool> UpdateQuestion(Question question)
     {
         await Task.Delay(100);
@@ -627,5 +609,72 @@ public class AssessmentDapperRepository : IAssessmentRepository
 
         return status;
     }
+
+    public Task<bool> UpdateTestStatus(int testId, TestStatusUpdate status)
+    {
+        Task.Delay(100);
+        bool updateStatus = false;
+        string query = "UPDATE tests SET status = @Status WHERE id = @TestId";
+
+        using (IDbConnection con = new MySqlConnection(_connectionString))
+        {
+            try
+            {
+                int rowsAffected = con.Execute(query, new { Status = status.Status, TestId = testId });
+                updateStatus = rowsAffected > 0; // Determine success based on rows affected
+            }
+            catch (Exception ex)
+            {
+                // Log or handle the exception
+                Console.WriteLine($"Error while updating test status: {ex.Message}");
+            }
+        }
+
+        return Task.FromResult(updateStatus);
+    }
+
+    public async Task<bool> AddEmployeesToTest(TestAssignmentRequest request)
+    {
+        await Task.Delay(100);
+        bool status = false;
+        using (IDbConnection con = new MySqlConnection(_connectionString))
+        {
+            foreach (var employeeId in request.EmployeeIds)
+            {
+                var query = "INSERT INTO testschedules (testid, candidateid, scheduledstart, scheduledend, status, rescheduledon, remarks) " +
+                            "VALUES (@TestId, @EmployeeId, @ScheduledStart, @ScheduledEnd, @Status, @RescheduledOn, @Remarks)";
+                var parameters = new
+                {
+                    TestId = request.TestId,
+                    EmployeeId = employeeId,
+                    ScheduledStart = request.ScheduledStart,
+                    ScheduledEnd = request.ScheduledEnd,
+                    Status = request.Status,
+                    RescheduledOn = request.RescheduledOn,
+                    Remarks = request.Remarks
+                };
+                if (con.Execute(query, parameters) > 0)
+                {
+                    status = true;
+                }
+            }
+        }
+        return status;
+    }
+
+    public async Task<List<TestEmployeeDetails>> GetAllTestByEmpId(int empId)
+{
+    using (IDbConnection con = new MySqlConnection(_connectionString))
+    {
+        var result = await con.QueryAsync<TestEmployeeDetails>(
+            "GetTestEmployeeDetailsByCandidate",
+            new { candidate = empId },
+            commandType: CommandType.StoredProcedure
+        );
+
+        return result.ToList();
+    }
+}
+
 }
 
