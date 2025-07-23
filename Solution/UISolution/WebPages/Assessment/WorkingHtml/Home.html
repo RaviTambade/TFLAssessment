@@ -23,7 +23,7 @@
     .navbar-brand {
       font-style: italic;
       font-weight: bold;
-      color: #4b0082;
+      color: #820b00;
       display: flex;
       align-items: center;
     }
@@ -44,6 +44,17 @@
 
     .nav-link:hover {
       color: #4b0082;
+    }
+
+    .login-link {
+      transition: all 0.3s ease;
+      padding: 8px 16px;
+      border-radius: 5px;
+    }
+
+    .login-link:hover {
+      background-color: #4b0082;
+      color: #fff !important;
     }
 
     .btn-primary {
@@ -132,11 +143,11 @@
       <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link btn btn-outline-primary ms-2 px-3 py-1" href="loginJWT.html" style="border-radius: 20px;">Login</a></li>
+            <a class="nav-link login-link" href="loginJWT.html">Login</a>
+          </li>
           <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
           <li class="nav-item"><a class="nav-link" href="#">About</a></li>
           <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
-          
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown"><i class="fas fa-bars"></i></a>
             <ul class="dropdown-menu dropdown-menu-end">
