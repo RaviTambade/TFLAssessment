@@ -1,6 +1,30 @@
 -- Active: 1707123530557@@127.0.0.1@3306@assessmentdb
 use assessmentdb;
 
+INSERT INTO users (aadharid, firstname, lastname, email, contactnumber, password)VALUES ('10564789', 'ravi', 'tambade', 'ravi.tambade@example.com', '9000000000', '12345');
+INSERT INTO users (aadharid, firstname, lastname, email, contactnumber, password)VALUES ('123564789', 'kajal', 'ghule', 'kajal.ghule@example.com', '9000000001', '12345');
+INSERT INTO users (aadharid, firstname, lastname, email, contactnumber, password)VALUES ('963258741', 'nirjala', 'naik', 'nirjala.naik@example.com', '9000000002', '12345');
+INSERT INTO users (aadharid, firstname, lastname, email, contactnumber, password)VALUES ('987654321', 'sahil', 'kamble', 'sahil.kamble@example.com', '9000000003', '12345');
+INSERT INTO users (aadharid, firstname, lastname, email, contactnumber, password)VALUES ('789456123', 'sanika', 'bhor', 'sanika.bhor@example.com', '9000000004', '12345');
+INSERT INTO users (aadharid, firstname, lastname, email, contactnumber, password)VALUES ('159753642', 'sumit', 'bhor', 'sumit.bhor@example.com', '9000000005', '12345');
+INSERT INTO users (aadharid, firstname, lastname, email, contactnumber, password)VALUES ('258741369', 'nikita', 'bansode', 'nikita.bansode@example.com', '9000000001', '12345');
+INSERT INTO users (aadharid, firstname, lastname, email, contactnumber, password)VALUES ('258963147', 'pranita', 'mane', 'pranita.mane@example.com', '9000000002', '12345');
+INSERT INTO users (aadharid, firstname, lastname, email, contactnumber, password)VALUES ('456741963', 'rutuja', 'mokale', 'rutuja.mokale@example.com', '9000000003', '12345');
+INSERT INTO users (aadharid, firstname, lastname, email, contactnumber, password)VALUES ('123658749', 'pankaj', 'bhor', 'pankaj.bhor@example.com', '9000000004', '12345');
+INSERT INTO users (aadharid, firstname, lastname, email, contactnumber, password)VALUES ('321789456', 'sarthak', 'walake', 'sarthak.walake@example.com', '9000000005', '12345');
+INSERT INTO users (aadharid, firstname, lastname, email, contactnumber, password)VALUES ('789123654', 'naina', 'surve', 'naina.surve@example.com', '9000000006', '12345');
+INSERT INTO users (aadharid, firstname, lastname, email, contactnumber, password)VALUES ('456741935', 'nikhil', 'navale', 'nikhil.navale@example.com', '9000000007', '12345');
+INSERT INTO users (aadharid, firstname, lastname, email, contactnumber, password)VALUES ('789357124', 'sarthak', 'kadam', 'sarthak.kadam@example.com', '9000000008', '12345');
+
+INSERT INTO employees (userId, firstname, lastname, email, contact)
+VALUES
+('1','ravi','tambade', 'ravi.tambade@example.com','9000000000'),
+('1', 'kajal', 'ghule', 'kajal.ghule@example.com', '9000000001'),
+('2', 'nirjala', 'naik', 'nirjala.naik@example.com', '9000000002'),
+('3', 'sahil', 'kamble', 'sahil.kamble@example.com', '9000000003'),
+('4', 'sanika', 'bhor', 'sanika.bhor@example.com', '9000000004'),
+('5', 'sumit', 'bhor', 'sumit.bhor@example.com', '9000000005');
+
 insert into employees(userId,firstname, lastname, email, contact)values(1,"ram","tambe","rTambe@gmail.com","8547963254");
 insert into employees(userId,firstname, lastname, email, contact)values(2,"Vaibhav","Sathe","psathe@gmail.com","9658745635");
 insert into employees(userId,firstname, lastname, email, contact)values(3,"Shreedhar","Kumar","pkumar@gmail.com","8654793254");
@@ -10,8 +34,18 @@ insert into employees(userId,firstname, lastname, email, contact)values(6,"Vaibh
 insert into employees(userId,firstname, lastname, email, contact)values(7,"Shree","pawer","spawar@gmail.com","8654653254");
 insert into employees(userId,firstname, lastname, email, contact)values(8,"Aniket","Zarekar","Zarekar@gmail.com","9764263254");
 
+INSERT INTO roles (name, lob) VALUES
+('admin', 'HR'),
+('sme', 'Technical'),
+('student', 'Assessment');
 
 
+INSERT INTO userroles (userid, roleid) VALUES (1,1); -- (2,2), (3,3),(14,2),(15,3);
+INSERT INTO userroles (userid, roleid) VALUES (2,1);
+INSERT INTO userroles (userid, roleid) VALUES (3,2);
+INSERT INTO userroles (userid, roleid) VALUES (4,3);
+-- INSERT INTO userroles (userid, roleid) VALUES ()
+-- INSERT INTO userroles (userid, roleid) VALUES
 
 INSERT INTO subjects(title) VALUES('COREJAVA');
 INSERT INTO subjects(title) VALUES('ADVJAVA');
