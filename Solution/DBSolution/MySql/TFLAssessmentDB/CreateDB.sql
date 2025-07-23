@@ -169,3 +169,16 @@ Create table interviewresults(
 	CONSTRAINT fk_intresults_intcrite_intcriteid FOREIGN KEY(interviewcriteriaid) REFERENCES interviewcriterias(id) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
+CREATE TABLE testschedules (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    candidateid INT NOT NULL,
+    testid INT NOT NULL,
+    scheduledstart DATETIME NOT NULL,
+    scheduledend DATETIME NOT NULL,
+    status ENUM('Scheduled', 'Started', 'Completed', 'Rescheduled', 'Cancelled') NOT NULL,
+    rescheduledon DATETIME,
+    remarks VARCHAR(255),
+    CONSTRAINT fk_testschedules_candidate FOREIGN KEY (candidateid) REFERENCES employees(id) ON UPDATE CASCADE ON DELETE CASCADE,
+    CONSTRAINT fk_testschedules_test FOREIGN KEY (testid) REFERENCES tests(id) ON UPDATE CASCADE ON DELETE CASCADE
+);
+
