@@ -3,7 +3,7 @@
 create database assessmentdb;
 use assessmentdb;
 
-CREATE TABLE users (
+CREATE TABLE users(
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     aadharid VARCHAR(30) NOT NULL UNIQUE,
     firstname VARCHAR(50),
@@ -71,7 +71,7 @@ CREATE TABLE evaluationcriterias(
 	CONSTRAINT fk_eval_subjects_subjectid FOREIGN KEY(subjectid) REFERENCES subjects(id) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
-create table questionbank (
+create table questionbank(
 	id INT PRIMARY KEY AUTO_INCREMENT,
 	subjectid INT,
 	title VARCHAR(200),
@@ -169,7 +169,7 @@ Create table interviewresults(
 	CONSTRAINT fk_intresults_intcrite_intcriteid FOREIGN KEY(interviewcriteriaid) REFERENCES interviewcriterias(id) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
-CREATE TABLE testschedules (
+CREATE TABLE testschedules(
     id INT AUTO_INCREMENT PRIMARY KEY,
     candidateid INT NOT NULL,
     testid INT NOT NULL,

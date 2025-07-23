@@ -87,6 +87,11 @@
     <h2>Welcome Student!</h2>
     <p>Select an action from the sidebar to get started.</p>
   </div> -->
+  <div style="position: fixed; top: 0; right: 0; background: #2a76c1; color: white; padding: 10px 20px; z-index: 1; display: flex; align-items: center; gap: 10px;">
+    Hello: <span id="userEmail"></span>
+    <button id="logoutBtn" style="background-color: #e74c3c; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer;">Logout</button>
+  </div>
+  
   <div class="main-content" id="content">
     <h2 id="studentLabel"></h2>
     <canvas id="scoreChart"></canvas>
@@ -176,6 +181,11 @@
         $("#content").html("<h3>Coming soon: Create Test With Questions!</h3>");
       });
     });
+    $("#logoutBtn").click(function () {
+        localStorage.clear();  
+        sessionStorage.clear(); 
+        window.location.href = "Home.html";
+      });
   </script>
 
 </body>

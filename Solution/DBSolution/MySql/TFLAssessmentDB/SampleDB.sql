@@ -69,7 +69,7 @@ INSERT INTO employeeperformance(employeeid, test, communication, congition, inte
 
 INSERT INTO subjectmatterexperts(employeeid,subjectid,certificationdate)VALUES(1,1,'2023-02-15');
 INSERT INTO subjectmatterexperts(employeeid,subjectid,certificationdate)VALUES(2,2,'2023-02-15');
-INSERT INTO subjectmatterexperts(employeeid,subjectid,certificationdate)VALUES(3,5,'2023-02-15');
+INSERT INTO subjectmatterexperts(employeeid,subjectid,certificationdate)VALUES(3,1,'2023-02-15');
 INSERT INTO subjectmatterexperts(employeeid,subjectid,certificationdate)VALUES(4,6,'2023-02-15');
 INSERT INTO subjectmatterexperts(employeeid,subjectid,certificationdate)VALUES(3,4,'2023-03-19');
 INSERT INTO subjectmatterexperts(employeeid,subjectid,certificationdate)VALUES(2,5,'2023-04-18');

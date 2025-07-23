@@ -55,9 +55,11 @@
   </style>
 </head>
 <body>
-  <div style="position: fixed; top: 0; right: 0; background: #2a76c1; color: white; padding: 10px 20px; z-index: 1;">
-     Hello : <span id="userEmail"></span>
+  <div style="position: fixed; top: 0; right: 0; background: #2a76c1; color: white; padding: 10px 20px; z-index: 1; display: flex; align-items: center; gap: 10px;">
+    Hello: <span id="userEmail"></span>
+    <button id="logoutBtn" style="background-color: #e74c3c; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer;">Logout</button>
   </div>
+
 
   <div class="sidebar">
     <h3>SME Panel</h3>
@@ -91,20 +93,26 @@
     $(document).ready(function () {
       $("#createTestLink").click(function (e) {
         e.preventDefault();
-        $("#content").load("createTestJWT.html"); // 🔄 Make sure this file is named correctly and in the same directory
+        $("#content").load("createTestJWT.html"); //Make sure this file is named correctly and in the same directory
       });
 
       $("#checkQuestionAsPerCriteria").click(function (e) {
         e.preventDefault();
-        $("#content").load("subjectcriteriaquestionsJWT.html"); // 🔄 Make sure this file is named correctly and in the same directory
+        $("#content").load("subjectcriteriaquestionsJWT.html"); //Make sure this file is named correctly and in the same directory
       });
 
       //http://localhost:5238/api/assessment/assessments
       $("#checkQuestionAsPerCriteria").click(function (e) {
         e.preventDefault();
-        $("#content").load("subjectcriteriaquestionsJWT.html"); // 🔄 Make sure this file is named correctly and in the same directory
+        $("#content").load("subjectcriteriaquestionsJWT.html"); //Make sure this file is named correctly and in the same directory
       });
     });
+
+    $("#logoutBtn").click(function () {
+        localStorage.clear();  
+        sessionStorage.clear(); 
+        window.location.href = "Home.html";
+      });
   </script>
 
 </body>
