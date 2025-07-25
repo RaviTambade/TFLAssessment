@@ -10,7 +10,6 @@
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       display: flex;
       height: 100vh;
-      /* padding-top: 40px; */
     }
 
     /* Sidebar */
@@ -60,16 +59,14 @@
     <button id="logoutBtn" style="background-color: #e74c3c; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer;">Logout</button>
   </div>
 
-
   <div class="sidebar">
-    <h3>SME Panel</h3>
-    <a href="#" id="createTestLink">Create Test</a>
-    <a href="#" id="checkQuestionAsPerCriteria">Get Subject and Criteria via Questions</a>
-    <!-- <a href="#" id="getAlltest">Get All Test</a> -->
+    <h3>Admin Panel</h3>
+    <a href="#" id="showTestBtw">Assign Test</a>
+    <a href="#" id="showAllTest">Show All Test</a>
   </div>
 
   <div class="main-content" id="content">
-    <h2>Welcome SME!</h2>
+    <h2>Welcome Admin!</h2>
     <p>Select an action from the sidebar to get started.</p>
   </div>
 
@@ -78,41 +75,30 @@
     const token = localStorage.getItem("token");
     const role = localStorage.getItem("role");
 
-    if (!token || role !== "sme") {
+    if (!token || role !== "admin") {
       alert("Access denied.");
-      window.location.href = "login.html";
-    }
-
-    // Set email if available
-    const userEmail = localStorage.getItem("userEmail"); //  Make sure you store email in localStorage after login
-    if (userEmail) {
-      $("#userEmail").text(userEmail);
+      window.location.href = "WorkingHtml/login.html";
     }
 
     // Load content dynamically into #content
     $(document).ready(function () {
-      $("#createTestLink").click(function (e) {
+      $("#showTestBtw").click(function (e) {
         e.preventDefault();
-        $("#content").load("createTestJWT.html"); //Make sure this file is named correctly and in the same directory
+        $("#content").load("showTestBetweenDateJWT.html"); //Make sure this file is named correctly and in the same directory
       });
 
-      $("#checkQuestionAsPerCriteria").click(function (e) {
+      $("#showAllTest").click(function (e) {
         e.preventDefault();
-        $("#content").load("subjectcriteriaquestionsJWT.html"); //Make sure this file is named correctly and in the same directory
+        $("#content").html("<h3>Coming soon: Create Test With Questions!</h3>");
       });
 
-      //http://localhost:5238/api/assessment/assessments
-      $("#checkQuestionAsPerCriteria").click(function (e) {
-        e.preventDefault();
-        $("#content").load("subjectcriteriaquestionsJWT.html"); //Make sure this file is named correctly and in the same directory
-      });
-    });
-
-    $("#logoutBtn").click(function () {
+      $("#logoutBtn").click(function () {
         localStorage.clear();  
         sessionStorage.clear(); 
-        window.location.href = "Home.html";
+        window.location.href = "WorkingHtml/Home.html";
       });
+
+    });
   </script>
 
 </body>

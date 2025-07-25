@@ -53,15 +53,7 @@
       height: 100%;
       border: none;
     }
-    /* #scoreChart {
-      height: 50vh;
-      width: 50%;
-      max-width: 100%;
-      background-color: white;
-      padding: 10px;
-      border-radius: 8px;
-      box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
-    } */
+
     #scoreChart {
       display: block;
       width: 50vw;
@@ -83,10 +75,6 @@
     <!-- <a href="#" id="createTestWithQuestionsLink">Create Test With Questions</a> -->
   </div>
 
-  <!-- <div class="main-content" id="content">
-    <h2>Welcome Student!</h2>
-    <p>Select an action from the sidebar to get started.</p>
-  </div> -->
   <div style="position: fixed; top: 0; right: 0; background: #2a76c1; color: white; padding: 10px 20px; z-index: 1; display: flex; align-items: center; gap: 10px;">
     Hello: <span id="userEmail"></span>
     <button id="logoutBtn" style="background-color: #e74c3c; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer;">Logout</button>
@@ -109,12 +97,10 @@
 
     if (!token2 || role !== "student") {
       alert("Access denied.");
-      window.location.href = "login.html";
+      window.location.href = "WorkingHtml/login.html";
     }
     // http://localhost:5238/api/Result/candidates/13/scores
-    // I want to show student score line charts here
-    // const empId = localStorage.getItem("userId");
-
+    
     // Load content dynamically into #content
     $(document).ready(function () {
       $("#studentLabel").text(`${userEmail}'s Test Scores`);
@@ -181,10 +167,11 @@
         $("#content").html("<h3>Coming soon: Create Test With Questions!</h3>");
       });
     });
+
     $("#logoutBtn").click(function () {
         localStorage.clear();  
         sessionStorage.clear(); 
-        window.location.href = "Home.html";
+        window.location.href = "WorkingHtml/Home.html";
       });
   </script>
 

@@ -88,7 +88,6 @@
 
 <div class="container">
   <h2>Create New Test</h2>
-
   <div class="form-group">
     <label>Test Name:</label>
     <input type="text" id="testName" />
@@ -136,7 +135,7 @@
   const role1 = window.role || localStorage.getItem("role");
   if (!token1 || role1 !== "sme") {
     alert("Access denied.");
-    window.location.href = "login.html";
+    window.location.href = "WorkingHtml/login.html";
   }
 
   let selectedQuestions = [];
