@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Update Test Status</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #e9eff6;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 40px auto;
+      background-color: #fff;
+      padding: 30px 40px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      border-radius: 12px;
+    }
+
+    h2 {
+      color: #2c3e50;
+      margin-bottom: 25px;
+      text-align: center;
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+      color: #34495e;
+    }
+
+    select, input[type="datetime-local"], input[type="text"], button {
+      width: 100%;
+      padding: 10px 12px;
+      margin-top: 6px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 16px;
+    }
+
+    button {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      margin-top: 20px;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    #getStudents, #addStudent {
+      background-color: #28a745;
+    }
+
+    #getStudents:hover, #addStudent:hover {
+      background-color: #218838;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    th, td {
+      padding: 12px;
+      text-align: center;
+      border: 1px solid #ccc;
+    }
+
+    th {
+      background-color: #f8f9fa;
+    }
+
+    #employeeList {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2>Update Test Status</h2>
+
+    <label for="statusDropdown">Select Status:</label>
+    <select id="statusDropdown">
+      <option value="created">Created</option>
+      <option value="scheduled">Scheduled</option>
+      <option value="cancelled">Cancelled</option>
+      <option value="conducted">Conducted</option>
+    </select>
+
+    <button id="changeStatus">Change Status</button>
+
+    <button id="getStudents">Get Students</button>
+    <div id="employeeList"></div>
+
+    <label>Scheduled Start:</label>
+    <input type="datetime-local" id="scheduledStart">
+
+    <label>Scheduled End:</label>
+    <input type="datetime-local" id="scheduledEnd">
+
+    <label>Remarks:</label>
+    <input type="text" id="remarks" placeholder="Enter remarks">
+
+    <button id="addStudent">Add Students</button>
+  </div>
+  <script src="script/updatetest.js"></script>
+  
+</body>
+</html>
