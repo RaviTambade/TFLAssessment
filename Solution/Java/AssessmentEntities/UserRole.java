@@ -1,11 +1,11 @@
 package com.transflower.tflAssessment.entities;
 
-public class userRole {
+public class UserRole {
    private int id;
    private int userId;
    private int roleId;
    private Role role;
-}
+
 
 public UserRole(){
     this.id=0;
@@ -54,3 +54,4 @@ this.role=role;
  public void setrole(Role role){
     this.Role=Role;
  }
+}
