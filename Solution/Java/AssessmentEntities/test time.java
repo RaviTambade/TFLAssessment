@@ -2,7 +2,7 @@ package.transflower.tflassessment.entities;
 
 
 public class testtime {
- 
+
     private int hour;
     private int day;
     private int minutes;
