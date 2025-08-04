@@ -35,7 +35,7 @@ public class SubjectMatterExpert {
     {
         this.EmployeeId = EmployeeId;
     }
-    public Subject getSubject(String Subject)
+    public Subject getSubject(Subject Subject)
     {
         return Subject;
     }
