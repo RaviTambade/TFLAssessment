@@ -1,9 +1,34 @@
 -- Active: 1712217931410@@127.0.0.1@3306@assessmentdb
 
-DROP database assessmentdb;
 create database assessmentdb;
-
 use assessmentdb;
+
+CREATE TABLE users(
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    aadharid VARCHAR(30) NOT NULL UNIQUE,
+    firstname VARCHAR(50),
+    lastname VARCHAR(50),
+    email VARCHAR(40),
+    contactnumber VARCHAR(40),
+    password VARCHAR(255),  -- Store hashed password
+    createdon DATETIME DEFAULT CURRENT_TIMESTAMP,
+    modifiedon DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE roles(
+            id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+            name varchar(20),
+            lob varchar(20)
+);
+
+CREATE TABLE userroles(
+            id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+            userid INT NOT NULL,
+            roleid INT NOT NULL,
+            CONSTRAINT uc_userroles UNIQUE (userid, roleid),
+            CONSTRAINT fk_userroles_roles FOREIGN KEY(roleid) REFERENCES roles(id) ON UPDATE CASCADE ON DELETE CASCADE,
+            CONSTRAINT fk_userroles_users FOREIGN KEY(userid) REFERENCES users(id) ON UPDATE CASCADE ON DELETE CASCADE
+);
 
 CREATE TABLE employees(
 	id INT AUTO_INCREMENT PRIMARY KEY,
@@ -13,7 +38,6 @@ CREATE TABLE employees(
 	email VARCHAR(50) NOT NULL,
 	contact VARCHAR(10) NOT NULL
 );
-
 
 create table employeeperformance(
 	id INT PRIMARY KEY AUTO_INCREMENT,
@@ -47,7 +71,7 @@ CREATE TABLE evaluationcriterias(
 	CONSTRAINT fk_eval_subjects_subjectid FOREIGN KEY(subjectid) REFERENCES subjects(id) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
-create table questionbank (
+create table questionbank(
 	id INT PRIMARY KEY AUTO_INCREMENT,
 	subjectid INT,
 	title VARCHAR(200),
@@ -143,5 +167,18 @@ Create table interviewresults(
 	ratings INT,
 	comments VARCHAR(200),
 	CONSTRAINT fk_intresults_intcrite_intcriteid FOREIGN KEY(interviewcriteriaid) REFERENCES interviewcriterias(id) ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+CREATE TABLE testschedules(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    candidateid INT NOT NULL,
+    testid INT NOT NULL,
+    scheduledstart DATETIME NOT NULL,
+    scheduledend DATETIME NOT NULL,
+    status ENUM('Scheduled', 'Started', 'Completed', 'Rescheduled', 'Cancelled') NOT NULL,
+    rescheduledon DATETIME,
+    remarks VARCHAR(255),
+    CONSTRAINT fk_testschedules_candidate FOREIGN KEY (candidateid) REFERENCES employees(id) ON UPDATE CASCADE ON DELETE CASCADE,
+    CONSTRAINT fk_testschedules_test FOREIGN KEY (testid) REFERENCES tests(id) ON UPDATE CASCADE ON DELETE CASCADE
 );
 

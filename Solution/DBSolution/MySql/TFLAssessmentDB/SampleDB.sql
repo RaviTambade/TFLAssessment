@@ -1,17 +1,51 @@
 -- Active: 1707123530557@@127.0.0.1@3306@assessmentdb
 use assessmentdb;
 
-insert into employees(userId,firstname, lastname, email, contact)values(1,"ram","tambe","rTambe@gmail.com","8547963254");
-insert into employees(userId,firstname, lastname, email, contact)values(2,"Vaibhav","Sathe","psathe@gmail.com","9658745635");
-insert into employees(userId,firstname, lastname, email, contact)values(3,"Shreedhar","Kumar","pkumar@gmail.com","8654793254");
-insert into employees(userId,firstname, lastname, email, contact)values(4,"Prajakta","Powar","rTambe@gmail.com","8547963254");
-insert into employees(userId,firstname, lastname, email, contact)values(5,"Ganesh","ghodake","gghodake@gmail.com","9022923254");
-insert into employees(userId,firstname, lastname, email, contact)values(6,"Vaibhav","Walekar","psathe@gmail.com","7058745635");
-insert into employees(userId,firstname, lastname, email, contact)values(7,"Shree","pawer","spawar@gmail.com","8654653254");
-insert into employees(userId,firstname, lastname, email, contact)values(8,"Aniket","Zarekar","Zarekar@gmail.com","9764263254");
+INSERT INTO users (aadharid, firstname, lastname, email, contactnumber, password)VALUES ('10564789', 'ravi', 'tambade', 'ravi.tambade@example.com', '9000000000', '12345');
+INSERT INTO users (aadharid, firstname, lastname, email, contactnumber, password)VALUES ('123564789', 'kajal', 'ghule', 'kajal.ghule@example.com', '9000000001', '12345');
+INSERT INTO users (aadharid, firstname, lastname, email, contactnumber, password)VALUES ('963258741', 'nirjala', 'naik', 'nirjala.naik@example.com', '9000000002', '12345');
+INSERT INTO users (aadharid, firstname, lastname, email, contactnumber, password)VALUES ('987654321', 'sahil', 'kamble', 'sahil.kamble@example.com', '9000000003', '12345');
+INSERT INTO users (aadharid, firstname, lastname, email, contactnumber, password)VALUES ('789456123', 'sanika', 'bhor', 'sanika.bhor@example.com', '9000000004', '12345');
+INSERT INTO users (aadharid, firstname, lastname, email, contactnumber, password)VALUES ('159753642', 'sumit', 'bhor', 'sumit.bhor@example.com', '9000000005', '12345');
+INSERT INTO users (aadharid, firstname, lastname, email, contactnumber, password)VALUES ('258741369', 'nikita', 'bansode', 'nikita.bansode@example.com', '9000000001', '12345');
+INSERT INTO users (aadharid, firstname, lastname, email, contactnumber, password)VALUES ('258963147', 'pranita', 'mane', 'pranita.mane@example.com', '9000000002', '12345');
+INSERT INTO users (aadharid, firstname, lastname, email, contactnumber, password)VALUES ('456741963', 'rutuja', 'mokale', 'rutuja.mokale@example.com', '9000000003', '12345');
+INSERT INTO users (aadharid, firstname, lastname, email, contactnumber, password)VALUES ('123658749', 'pankaj', 'bhor', 'pankaj.bhor@example.com', '9000000004', '12345');
+INSERT INTO users (aadharid, firstname, lastname, email, contactnumber, password)VALUES ('321789456', 'sarthak', 'walake', 'sarthak.walake@example.com', '9000000005', '12345');
+INSERT INTO users (aadharid, firstname, lastname, email, contactnumber, password)VALUES ('789123654', 'naina', 'surve', 'naina.surve@example.com', '9000000006', '12345');
+INSERT INTO users (aadharid, firstname, lastname, email, contactnumber, password)VALUES ('456741935', 'nikhil', 'navale', 'nikhil.navale@example.com', '9000000007', '12345');
+INSERT INTO users (aadharid, firstname, lastname, email, contactnumber, password)VALUES ('789357124', 'sarthak', 'kadam', 'sarthak.kadam@example.com', '9000000008', '12345');
 
 
 
+INSERT INTO employees(userId,firstname, lastname, email, contact)VALUES(1, 'ravi', 'tambade', 'ravi.tambade@example.com', '9000000000');
+INSERT INTO employees(userId,firstname, lastname, email, contact)VALUES(2, 'kajal', 'ghule', 'kajal.ghule@example.com', '9000000001');
+INSERT INTO employees(userId,firstname, lastname, email, contact)VALUES(3, 'nirjala', 'naik', 'nirjala.naik@example.com', '9000000002');
+INSERT INTO employees(userId,firstname, lastname, email, contact)VALUES(4, 'sahil', 'kamble', 'sahil.kamble@example.com', '9000000003');
+INSERT INTO employees(userId,firstname, lastname, email, contact)VALUES(5, 'sanika', 'bhor', 'sanika.bhor@example.com', '9000000004');
+INSERT INTO employees(userId,firstname, lastname, email, contact)VALUES(6, 'sumit', 'bhor', 'sumit.bhor@example.com', '9000000005');
+INSERT INTO employees(userId,firstname, lastname, email, contact)VALUES(7, 'nikita', 'bansode', 'nikita.bansode@example.com', '9000000006');
+INSERT INTO employees(userId,firstname, lastname, email, contact)VALUES(8, 'pranita', 'mane', 'pranita.mane@example.com', '9000000007');
+INSERT INTO employees(userId,firstname, lastname, email, contact)VALUES(9, 'rutuja', 'mokale', 'rutuja.mokale@example.com', '9000000008');
+INSERT INTO employees(userId,firstname, lastname, email, contact)VALUES(10, 'pankaj', 'bhor', 'pankaj.bhor@example.com', '9000000009');
+INSERT INTO employees(userId,firstname, lastname, email, contact)VALUES(11, 'sarthak', 'walake', 'sarthak.walake@example.com', '9000000010');
+INSERT INTO employees(userId,firstname, lastname, email, contact)VALUES(12, 'naina', 'surve', 'naina.surve@example.com', '9000000011');
+INSERT INTO employees(userId,firstname, lastname, email, contact)VALUES(13, 'nikhil', 'navale', 'nikhil.navale@example.com', '9000000012');
+INSERT INTO employees(userId,firstname, lastname, email, contact)VALUES(14, 'sarthak', 'kadam', 'sarthak.kadam@example.com', '9000000013');
+
+INSERT INTO roles (name, lob) VALUES('admin', 'HR');
+INSERT INTO roles (name, lob) VALUES('sme', 'Technical');
+INSERT INTO roles (name, lob) VALUES('student', 'Assessment');
+
+
+INSERT INTO userroles (userid, roleid) VALUES (1,1);
+INSERT INTO userroles (userid, roleid) VALUES (2,1);
+INSERT INTO userroles (userid, roleid) VALUES (3,2);
+INSERT INTO userroles (userid, roleid) VALUES (4,3);
+INSERT INTO userroles (userid, roleid) VALUES (5,2);
+INSERT INTO userroles (userid, roleid) VALUES (6,3);
+INSERT INTO userroles (userid, roleid) VALUES (7,3);
+INSERT INTO userroles (userid, roleid) VALUES (3,3);
 
 INSERT INTO subjects(title) VALUES('COREJAVA');
 INSERT INTO subjects(title) VALUES('ADVJAVA');
@@ -22,16 +56,14 @@ INSERT INTO subjects(title) VALUES('ANGULAR');
 INSERT INTO subjects(title) VALUES('CSHARP');
 INSERT INTO subjects(title) VALUES('JAVASCRIPT');
 
-
-
-insert into employeeperformance(employeeid, test, communication, congition, interview)values(1,"poor", "good","good","poor");
-insert into employeeperformance(employeeid, test, communication, congition, interview)values(2,"poor", "good","good","poor");
-insert into employeeperformance(employeeid, test, communication, congition, interview)values(3,"poor", "good","good","poor");
-insert into employeeperformance(employeeid, test, communication, congition, interview)values(4,"poor", "good","good","poor");
-insert into employeeperformance(employeeid, test, communication, congition, interview)values(5,"poor", "good","good","poor");
-insert into employeeperformance(employeeid, test, communication, congition, interview)values(6,"poor", "good","good","poor");
-insert into employeeperformance(employeeid, test, communication, congition, interview)values(7,"poor", "good","good","poor");
-insert into employeeperformance(employeeid, test, communication, congition, interview)values(8,"poor", "good","good","poor");
+INSERT INTO employeeperformance(employeeid, test, communication, congition, interview)VALUES(1,"poor", "good","good","poor");
+INSERT INTO employeeperformance(employeeid, test, communication, congition, interview)VALUES(2,"poor", "good","good","poor");
+INSERT INTO employeeperformance(employeeid, test, communication, congition, interview)VALUES(3,"poor", "good","good","poor");
+INSERT INTO employeeperformance(employeeid, test, communication, congition, interview)VALUES(4,"poor", "good","good","poor");
+INSERT INTO employeeperformance(employeeid, test, communication, congition, interview)VALUES(5,"poor", "good","good","poor");
+INSERT INTO employeeperformance(employeeid, test, communication, congition, interview)VALUES(6,"poor", "good","good","poor");
+INSERT INTO employeeperformance(employeeid, test, communication, congition, interview)VALUES(7,"poor", "good","good","poor");
+INSERT INTO employeeperformance(employeeid, test, communication, congition, interview)VALUES(8,"poor", "good","good","poor");
 
 
 
@@ -279,13 +311,13 @@ VALUES (
 
 INSERT INTO tests(Name, subjectid, duration, smeid, creationdate, modificationdate, scheduleddate, passinglevel, status) 
 VALUES 
-('Basic MCQ Test', 1, "00:30:00", 1, '2023-12-05', '2024-02-05', '2024-02-07', 6, 'scheduled'),
-('Advanced MCQ Test', 1, "00:40:00", 1, '2023-11-05', '2024-01-05', '2024-02-07', 7, 'scheduled'),
+('Basic MCQ Test', 1, "00:30:00", 1, '2025-12-05', '2025-02-05', '2025-02-07', 6, 'scheduled'),
+('Advanced MCQ Test', 1, "00:40:00", 1, '2025-11-05', '2025-01-05', '2025-02-07', 7, 'scheduled'),
 ('Short Quiz on Basics', 1, "00:20:00", 1, '2023-09-05', '2024-01-05', '2024-02-08', 7, 'created'),
 ('Data Structures Test', 2, "00:30:00", 2, '2023-09-21', '2023-12-05', '2024-01-05', 6, 'conducted'),
 ('Algorithm Design Assessment', 3, "01:00:00", 1, '2023-11-05', '2023-12-21', '2024-01-24', 8, 'cancelled'),
 ('Full-Length Programming Test', 4, "01:30:00", 2, '2023-09-05', '2023-10-10', '2024-01-18', 5, 'scheduled'),
-('Quick Aptitude Test', 7, "00:30:00", 7, '2024-01-01', '2024-01-01', '2024-01-10', 6, 'scheduled'),
+('Quick Aptitude Test', 7, "00:30:00", 7, '2025-01-01', '2025-01-01', '2025-01-10', 6, 'scheduled'),
 ('Logical Reasoning Test', 7, "00:30:00", 7, '2024-01-01', '2024-01-01', '2024-01-10', 7, 'created');
 
 

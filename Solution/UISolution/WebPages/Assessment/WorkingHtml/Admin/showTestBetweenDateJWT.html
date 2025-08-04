@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Test Schedule</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 30px;
+      background-color: #f4f4f4;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    label {
+      font-weight: bold;
+      margin-right: 10px;
+    }
+
+    input[type="date"] {
+      padding: 5px;
+      margin: 0 10px;
+    }
+
+    button {
+      padding: 8px 16px;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 30px;
+      background-color: white;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+      display: none;
+    }
+
+    th, td {
+      padding: 12px;
+      text-align: left;
+      border: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #007BFF;
+      color: white;
+      cursor: pointer;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+
+    .loading {
+      text-align: center;
+      font-size: 18px;
+      color: #555;
+    }
+
+    .error {
+      color: red;
+      text-align: center;
+    }
+    .table-container {
+      display: flex;
+      justify-content: center;
+      margin-top: 30px;
+    }
+
+    #testTable {
+      width: 20%; /* or any desired width */
+    }
+
+  </style>
+</head>
+<body>
+
+  <h2>Search Scheduled Tests by Date</h2>
+
+  <div class="form-group">
+    <label for="fromDate">From:</label>
+    <input type="date" id="fromDate" required>
+    
+    <label for="toDate">To:</label>
+    <input type="date" id="toDate" required>
+
+    <button onclick="fetchTests()">Get Tests</button>
+  </div>
+
+  <div class="loading" id="loading" style="display: none;">Loading tests...</div>
+  <div class="error" id="error"></div>
+
+  <div class="table-container">
+    <table id="testTable">
+        <thead>
+          <tr>
+            <th onclick="sortTable(0)">Test Name</th>
+            <th onclick="sortTable(1)">Scheduled Date</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="testBody"></tbody>
+    </table>
+   </div>
+   <script src="script/showTestBetweenDate.js"></script>
+
+</body>
+</html>

@@ -4,7 +4,7 @@ public class TestWithQuestions
     public int Id { get; set; }
     public string Name { get; set; }
     public int SubjectId { get; set; }
-    public string Duration { get; set; }
+    public TimeSpan  Duration { get; set; }
     public int SmeId { get; set; }
     public DateTime CreationDate { get; set; }
     public DateTime ModificationDate { get; set; }

@@ -16,12 +16,16 @@ public class EvaluationCriteriaController : ControllerBase
         _svc = service;
         _logger= logger;
     } 
-    
-    // Insert candidate answers of the test.
+   
+   
     [HttpPut("{evaluationCriteriaId}/questions/{questionId}")]
     public async Task<IActionResult> UpdateCriteria(int evaluationCriteriaId, int questionId)
     {
         bool status = await _svc.UpdateCriteria(evaluationCriteriaId, questionId);
+        if (!status){
+            _logger.LogError("Failed to update criteria for evaluationCriteriaId: {EvaluationCriteriaId} and questionId: {QuestionId}", evaluationCriteriaId, questionId);
+            return BadRequest("Failed to update criteria.");    
+        }
          _logger.LogInformation("Log Generated to Insert candidate answers of the test");
         return Ok(status);
     }

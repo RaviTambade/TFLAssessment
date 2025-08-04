@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Candidate Test Review</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background-color: #f9f9f9;
+    }
+    .header {
+      background-color: #e9ecef;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+    .header h2 {
+      margin-top: 0;
+    }
+    .question-card {
+      background-color: #fff;
+      padding: 15px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+    .question-title {
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    .option {
+      margin: 5px 0;
+      padding: 5px 10px;
+      border-radius: 5px;
+      display: inline-block;
+    }
+    .correct {
+      background-color: #d4edda;
+      color: #155724;
+      font-weight: bold;
+    }
+    .incorrect {
+      background-color: #f8d7da;
+      color: #721c24;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header" id="candidate-details">
+    Loading candidate details...
+  </div>
+
+  <div id="questions-container">Loading questions...</div>
+
+  <script>
+    // const testId = 29;
+    // const candidateId = 8;
+    // --- Helper to read query string ---
+    function getQueryParam(param) {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get(param);
+    }
+
+    // --- Read parameters from query string ---
+    const testId = getQueryParam("testid");
+    const candidateId = getQueryParam("userid");
+    
+    // const remoteWeb = "http://localhost:5172";
+    // const candidateAnswerWeb = "http://localhost:5299";
+    // const resultWeb = "http://localhost:5235";
+
+    
+    const remoteWeb = "http://localhost:5238";
+    const candidateAnswerWeb = "http://localhost:5238";
+    const resultWeb = "http://localhost:5238";
+
+    const questionsUrl = `${remoteWeb}/api/questionbank/questions/tests/${testId}`;
+    const answersUrl = `${candidateAnswerWeb}/api/candidateanswer/assessmentanswers/candidates/${candidateId}/tests/${testId}/results`;
+    const detailsUrl = `${candidateAnswerWeb}/api/candidateanswer/assessmentanswers/candidates/${candidateId}/tests/${testId}/details`;
+    const scoreUrl = `${resultWeb}/api/result/candidates/${candidateId}/tests/${testId}/score`;
+
+    $(document).ready(function () {
+      // Load candidate test details
+      $.getJSON(detailsUrl, function (details) {
+        const date = new Date(details.testDate).toLocaleDateString();
+
+        $.getJSON(scoreUrl, function (scoreData) {
+          const html = `
+            <h2>Candidate Report</h2>
+            <p><strong>Name:</strong> ${details.candidateName}</p>
+            <p><strong>Test:</strong> ${details.testName}</p>
+            <p><strong>Date:</strong> ${date}</p>
+            <p><strong>Passing Level:</strong> ${details.testPassingLevel}</p>
+            <p><strong>Total Score:</strong> ${scoreData}</p>
+          `;
+          $("#candidate-details").html(html);
+        }).fail(() => {
+          $("#candidate-details").html("Failed to load score.");
+        });
+      }).fail(() => {
+        $("#candidate-details").html("Failed to load candidate details.");
+      });
+
+      // Load questions and answers
+      $.when($.getJSON(questionsUrl), $.getJSON(answersUrl)).done(function (questionsData, answersData) {
+        const questions = questionsData[0];
+        const answers = answersData[0];
+        const container = $("#questions-container");
+        container.empty();
+
+        questions.forEach((q, index) => {
+           console.log(`Matching: questionId=${q.id} vs answer.testQuestionId`);
+          const answer = answers.find(a => a.testQuestionId === q.id);
+          const userAnswer = answer && answer.candidateAnswer ? answer.candidateAnswer.toLowerCase() : null;
+          const correctAnswer = answer && answer.correctAnswer ? answer.correctAnswer.toLowerCase() : null;
+          
+          console.log(`Q${index + 1}: ${q.title}`);
+          console.log("Correct Answer:", correctAnswer);
+          console.log("Candidate Answer:", userAnswer);
+
+
+          const getOptionClass = (key) => {
+            if (!userAnswer || !correctAnswer) return "";
+            if (key === correctAnswer && key === userAnswer) return "correct";
+            if (key === userAnswer && key !== correctAnswer) return "incorrect";
+            if (key === correctAnswer) return "correct";
+            return "";
+          };
+
+          const html = `
+            <div class="question-card">
+              <div class="question-title">${index + 1}. ${q.title}</div>
+              <div class="option ${getOptionClass('a')}">A. ${q.a}</div><br>
+              <div class="option ${getOptionClass('b')}">B. ${q.b}</div><br>
+              <div class="option ${getOptionClass('c')}">C. ${q.c}</div><br>
+              <div class="option ${getOptionClass('d')}">D. ${q.d}</div>
+            </div>
+          `;
+          container.append(html);
+        });
+      }).fail(() => {
+        $("#questions-container").html("Error loading questions or answers.");
+      });
+    });
+  </script>
+
+</body>
+</html>

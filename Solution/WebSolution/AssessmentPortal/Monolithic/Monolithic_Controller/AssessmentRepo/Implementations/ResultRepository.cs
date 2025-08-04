@@ -1,19 +1,27 @@
 using MySql.Data.MySqlClient;
 using System.Data;
+using Microsoft.Extensions.Configuration;
 using Transflower.TFLAssessment.Entities;
 using Transflower.TFLAssessment.Repositories.Interfaces;
-namespace Transflower.TFLAssessment.Repositories.Implementations;
-//Providers
-public class ResultRepository :IResultRepository
-{ 
+namespace  Transflower.TFLAssessment.Repositories;
 
-     private string connectionString = "server=localhost;port=3306;user=root;password=password;database=assessmentdb";
-    public int GetCandidateScore(int candidateId, int testId)
+public class ResultRepository : IResultRepository
+{
+
+    private readonly IConfiguration _configuration;
+    private readonly string _connectionString;
+
+    public ResultRepository(IConfiguration configuration)
     {
-        
-        string query = "spcandidatetestresult";
+        _configuration = configuration;
+        _connectionString = _configuration.GetConnectionString("DefaultConnection") ?? throw new ArgumentNullException("connectionString");
+    }
 
-        MySqlConnection connection = new MySqlConnection(connectionString);
+    public async Task<int> GetCandidateScore(int candidateId, int testId)
+    {
+
+        string query = "spcandidatetestresult";
+        MySqlConnection connection = new MySqlConnection(_connectionString);
         int score = 0;
         try
         {
@@ -23,8 +31,8 @@ public class ResultRepository :IResultRepository
             command.Parameters.AddWithValue("@ptestId", testId);
             command.Parameters.AddWithValue("@pscore", MySqlDbType.Int32);
             command.Parameters["@pscore"].Direction = ParameterDirection.Output;
-            connection.Open();
-            int rowsAffected = command.ExecuteNonQuery();
+            await connection.OpenAsync();
+            int rowsAffected = await command.ExecuteNonQueryAsync();
             score = Convert.ToInt32(command.Parameters["@pscore"].Value);
             Console.WriteLine(score);
         }
@@ -34,24 +42,31 @@ public class ResultRepository :IResultRepository
         }
         finally
         {
-            connection.Close();
+            await connection.CloseAsync();
         }
+        Console.WriteLine(score);
         return score;
     }
-    public int GetCandidateTestScore(int candidateId, int testId)
+
+    public async Task<bool> SetCandidateTestStartTime(int candidateId, int testId, TestTime time)
     {
-        int score=0;
-        MySqlConnection connection = new MySqlConnection(connectionString);
-        string query = @"select score from candidatetestresults where candidateid=@candidateId and testid=@testId";
+        bool status = false;
+        string query = "insert into candidatetestresults(testid,teststarttime,candidateid) values (@Testid,@Teststarttime,@Candidateid)";
+        MySqlConnection connection = new MySqlConnection(_connectionString);
+
+        var testTime = time.Year + "-" + time.Month + "-" + time.Day + " " + time.Hour + ":" + time.Minutes + ":" + time.Seconds;
+        MySqlCommand command = new MySqlCommand(query, connection);
+        command.Parameters.AddWithValue("@Testid", testId);
+        command.Parameters.AddWithValue("@Candidateid", candidateId);
+        command.Parameters.AddWithValue("@Teststarttime", testTime);
         try
         {
-            MySqlCommand command = new MySqlCommand(query, connection);
-            command.Parameters.AddWithValue("@candidateId", candidateId);
-            command.Parameters.AddWithValue("@testId", testId);
-            connection.Open();
-             score= (int)command.ExecuteScalar();
-
-   
+            await connection.OpenAsync();
+            int rowsAffected = await command.ExecuteNonQueryAsync();
+            if (rowsAffected > 0)
+            {
+                status = true;
+            }
         }
         catch (Exception e)
         {
@@ -59,15 +74,74 @@ public class ResultRepository :IResultRepository
         }
         finally
         {
-            connection.Close();
+            await connection.CloseAsync();
+        }
+        Console.WriteLine(status);
+        return status;
+    }
+
+
+    public async Task<bool> SetCandidateTestEndTime(int candidateId, int testId, TestTime time)
+    {
+        bool status = false;
+        MySqlConnection connection = new MySqlConnection(_connectionString);
+        string query = "update candidatetestresults set testendtime =@TestEndTime where candidateid=@CandidateId and testid=@TestId";
+
+        var testTime = time.Year + "-" + time.Month + "-" + time.Day + "T" + time.Hour + ":" + time.Minutes + ":" + time.Seconds;
+        MySqlCommand command = new MySqlCommand(query, connection);
+        command.Parameters.AddWithValue("@CandidateId", candidateId);
+        command.Parameters.AddWithValue("@TestId", testId);
+        command.Parameters.AddWithValue("@TestEndTime", testTime);
+        Console.WriteLine(candidateId + " " + testId + " " + testTime);
+        try
+        {
+            await connection.OpenAsync();
+            int rowsAffected = await command.ExecuteNonQueryAsync();
+            if (rowsAffected > 0)
+            {
+                status = true;
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+        finally
+        {
+            await connection.CloseAsync();
+        }
+        return status;
+    }
+
+    public async Task<int> GetCandidateTestScore(int candidateId, int testId)
+    {
+        int score = 0;
+        MySqlConnection connection = new MySqlConnection(_connectionString);
+        string query = @"select score from candidatetestresults where candidateid=@CandidateId and testid=@TestId";
+        try
+        {
+            MySqlCommand command = new MySqlCommand(query, connection);
+            command.Parameters.AddWithValue("@CandidateId", candidateId);
+            command.Parameters.AddWithValue("@TestId", testId);
+            await connection.OpenAsync();
+            score = (int)command.ExecuteScalar();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+        finally
+        {
+            await connection.CloseAsync();
         }
         return score;
     }
-    public CandidateResultDetails CandidateTestResultDetails(int candidateId, int testId)
+
+    public async Task<CandidateResultDetails> CandidateTestResultDetails(int candidateId, int testId)
     {
         string query = "spcandidatetestresultdetails";
-         CandidateResultDetails candidateResultDetails=null;
-        MySqlConnection connection = new MySqlConnection(connectionString);
+        CandidateResultDetails candidateResultDetails = null;
+        MySqlConnection connection = new MySqlConnection(_connectionString);
         try
         {
             MySqlCommand command = new MySqlCommand(query, connection);
@@ -81,20 +155,21 @@ public class ResultRepository :IResultRepository
             command.Parameters["@pincorrectAnswers"].Direction = ParameterDirection.Output;
             command.Parameters["@pskippedQuestions"].Direction = ParameterDirection.Output;
 
-            connection.Open();
-            int rowsAffected = command.ExecuteNonQuery();
+            await connection.OpenAsync();
+            int rowsAffected = await command.ExecuteNonQueryAsync();
             int correctAnswers = Convert.ToInt32(command.Parameters["@pcorrectAnswers"].Value);
             int incorrectAnswers = Convert.ToInt32(command.Parameters["@pincorrectAnswers"].Value);
             int skippedQuestions = Convert.ToInt32(command.Parameters["@pskippedQuestions"].Value);
-        
-                candidateResultDetails=new CandidateResultDetails(){
-                CorrectAnswers=correctAnswers,
-                IncorrectAnswers=incorrectAnswers,
-                SkippedQuestions=skippedQuestions,
-                CandidateId=candidateId,
-                TestId=testId
+
+            candidateResultDetails = new CandidateResultDetails()
+            {
+                CorrectAnswers = correctAnswers,
+                IncorrectAnswers = incorrectAnswers,
+                SkippedQuestions = skippedQuestions,
+                CandidateId = candidateId,
+                TestId = testId
             };
-        
+
         }
         catch (Exception e)
         {
@@ -102,9 +177,503 @@ public class ResultRepository :IResultRepository
         }
         finally
         {
-            connection.Close();
+            await connection.CloseAsync();
         }
         return candidateResultDetails;
     }
 
+    public async Task<List<TestResultDetails>> GetTestResultDetail(int testId)
+    {
+        List<TestResultDetails> resultdetails = new List<TestResultDetails>();
+        MySqlConnection connection = new MySqlConnection(_connectionString);
+        string query = @"SELECT 
+                        candidatetestresults.testid, 
+                        candidatetestresults.score, 
+                        candidatetestresults.candidateid,
+                        employees.firstname, 
+                        employees.lastname, 
+                        subjects.title AS subject, 
+                        tests.name AS testname 
+                        FROM candidatetestresults 
+                        INNER JOIN employees ON employees.id = candidatetestresults.candidateid 
+                        INNER JOIN tests ON candidatetestresults.testid = tests.id 
+                        INNER JOIN subjects ON tests.subjectid = subjects.id 
+                        WHERE candidatetestresults.testid=@TestId";
+        try
+        {
+            MySqlCommand command = new MySqlCommand(query, connection);
+            command.Parameters.AddWithValue("@TestId", testId);
+            await connection.OpenAsync();
+            MySqlDataReader reader = command.ExecuteReader();
+            while (await reader.ReadAsync())
+            {
+                int testid = int.Parse(reader["testid"].ToString());
+                string testname = reader["testname"].ToString();
+                int candidateid = int.Parse(reader["candidateid"].ToString());
+                string fname = reader["firstname"].ToString();
+                string lname = reader["lastname"].ToString();
+                string subject = reader["subject"].ToString();
+                int score = int.Parse(reader["score"].ToString());
+
+                TestResultDetails results = new TestResultDetails();
+
+                results.TestId = testid;
+                results.TestName = testname;
+                results.CandidateId = candidateid;
+                results.FirstName = fname;
+                results.LastName = lname;
+                results.Subject = subject;
+                results.Score = score;
+                resultdetails.Add(results);
+            }
+            reader.Close();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+        finally
+        {
+            await connection.CloseAsync();
+        }
+        return resultdetails;
+    }
+
+    public async Task<List<AppearedCandidate>> GetAppearedCandidates(int testId)
+    {
+        List<AppearedCandidate> appearedCandidates = new List<AppearedCandidate>();
+        MySqlConnection connection = new MySqlConnection(_connectionString);
+        string query = @"select candidatetestresults.testid, candidatetestresults.candidateid, employees.firstname, employees.lastname
+                            from candidatetestresults 
+                            inner join employees 
+                            on employees.id= candidatetestresults.candidateid
+                            where candidatetestresults.testid=@TestId";
+        try
+        {
+            MySqlCommand command = new MySqlCommand(query, connection);
+            command.Parameters.AddWithValue("@TestId", testId);
+            await connection.OpenAsync();
+            MySqlDataReader reader = command.ExecuteReader();
+            while (await reader.ReadAsync())
+            {
+                int testid = int.Parse(reader["testid"].ToString());
+                int candidateid = int.Parse(reader["candidateid"].ToString());
+                string fname = reader["firstname"].ToString();
+                string lname = reader["lastname"].ToString();
+
+                AppearedCandidate candidate = new AppearedCandidate();
+
+                candidate.TestId = testid;
+                candidate.CandidateId = candidateid;
+                candidate.FirstName = fname;
+                candidate.LastName = lname;
+                appearedCandidates.Add(candidate);
+            }
+            reader.Close();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+        finally
+        {
+            await connection.CloseAsync();
+        }
+        return appearedCandidates;
+    }
+
+    public async Task<List<TestList>> GetTestList(int candidateId)
+    {
+        List<TestList> testResultDetails = new List<TestList>();
+        MySqlConnection connection = new MySqlConnection(_connectionString);
+        string query = @"SELECT cr.testid AS Id, cr.score AS Score, t.name AS TestName
+                        FROM candidatetestresults cr
+                        JOIN tests t ON cr.testid = t.id where candidateid=@candidateId";
+        try
+        {
+            MySqlCommand command = new MySqlCommand(query, connection);
+            command.Parameters.AddWithValue("@candidateId", candidateId);
+            await connection.OpenAsync();
+            MySqlDataReader reader = command.ExecuteReader();
+            while (await reader.ReadAsync())
+            {
+                TestList details = new TestList
+                {
+                    TestId = int.Parse(reader["Id"].ToString()),
+                    Score = int.Parse(reader["Score"].ToString()),
+                    TestName = reader["TestName"].ToString()
+                };
+
+                testResultDetails.Add(details);
+            }
+            reader.Close();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+        finally
+        {
+            await connection.CloseAsync();
+        }
+        return testResultDetails;
+    }
+
+
+    public async Task<List<PassedCandidateDetails>> GetPassedCandidateResults(int testId)
+    {
+        List<PassedCandidateDetails> passedCandidates = new List<PassedCandidateDetails>();
+        MySqlConnection connection = new MySqlConnection(_connectionString);
+        string query = @"select tests.id,candidatetestresults.candidateid,candidatetestresults.score,tests.passinglevel,employees.firstname,employees.lastname
+                            from tests
+                            inner join candidatetestresults
+                            on tests.id=candidatetestresults.testid
+                            inner join employees
+                            on candidatetestresults.candidateid=employees.id
+                            where candidatetestresults.score >= tests.passinglevel AND tests.id=@TestId";
+        try
+        {
+            MySqlCommand command = new MySqlCommand(query, connection);
+            command.Parameters.AddWithValue("@TestId", testId);
+            await connection.OpenAsync();
+            MySqlDataReader reader = command.ExecuteReader();
+            while (await reader.ReadAsync())
+            {
+                int testid = int.Parse(reader["id"].ToString());
+                int candidateid = int.Parse(reader["candidateid"].ToString());
+                string fname = reader["firstname"].ToString();
+                string lname = reader["lastname"].ToString();
+                int passinglevel = int.Parse(reader["passinglevel"].ToString());
+                int score = int.Parse(reader["score"].ToString());
+
+                PassedCandidateDetails candidate = new PassedCandidateDetails();
+
+                candidate.TestId = testid;
+                candidate.CandidateId = candidateid;
+                candidate.FirstName = fname;
+                candidate.LastName = lname;
+                candidate.PassingLevel = passinglevel;
+                candidate.Score = score;
+
+                passedCandidates.Add(candidate);
+            }
+            reader.Close();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+        finally
+        {
+            await connection.CloseAsync();
+        }
+        return passedCandidates;
+    }
+
+    public async Task<List<FailedCandidateDetails>> GetFailedCandidateResults(int testId)
+    {
+        List<FailedCandidateDetails> failedCandidates = new List<FailedCandidateDetails>();
+        MySqlConnection connection = new MySqlConnection(_connectionString);
+        string query = @"select tests.id,candidatetestresults.candidateid,candidatetestresults.score,tests.passinglevel,employees.firstname,employees.lastname
+                            from tests
+                            inner join candidatetestresults
+                            on tests.id=candidatetestresults.testid
+                            inner join employees
+                            on candidatetestresults.candidateid=employees.id
+                            where candidatetestresults.score <= tests.passinglevel AND tests.id=@TestId";
+        try
+        {
+            MySqlCommand command = new MySqlCommand(query, connection);
+            command.Parameters.AddWithValue("@TestId", testId);
+            await connection.OpenAsync();
+            MySqlDataReader reader = command.ExecuteReader();
+            while (await reader.ReadAsync())
+            {
+                int testid = int.Parse(reader["id"].ToString());
+                int candidateid = int.Parse(reader["candidateid"].ToString());
+                string fname = reader["firstname"].ToString();
+                string lname = reader["lastname"].ToString();
+                int passinglevel = int.Parse(reader["passinglevel"].ToString());
+                int score = int.Parse(reader["score"].ToString());
+
+                FailedCandidateDetails candidate = new FailedCandidateDetails();
+
+                candidate.TestId = testid;
+                candidate.CandidateId = candidateid;
+                candidate.FirstName = fname;
+                candidate.LastName = lname;
+                candidate.PassingLevel = passinglevel;
+                candidate.Score = score;
+
+                failedCandidates.Add(candidate);
+            }
+            reader.Close();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+        finally
+        {
+            await connection.CloseAsync();
+        }
+        return failedCandidates;
+    }
+
+    public async Task<bool> SetPassingLevel(int testId, int passingLevel)//Using Dissconnected 
+    {
+        bool status = false;
+        MySqlConnection connection = new MySqlConnection(_connectionString);
+        await Task.Delay(5000);
+        try
+        {
+
+            string query = "select * from tests";
+            MySqlCommand command = new MySqlCommand(query, connection);
+            MySqlDataAdapter adapter = new MySqlDataAdapter(command);
+            DataSet dataSet = new DataSet();
+            MySqlCommandBuilder builder = new MySqlCommandBuilder(adapter);
+            adapter.Fill(dataSet);
+            DataTable dataTable = dataSet.Tables[0];
+
+            DataColumn[] keyColumn = new DataColumn[1];
+            keyColumn[0] = dataTable.Columns["id"];
+            dataTable.PrimaryKey = keyColumn;
+
+            DataRow row = dataTable.Rows.Find(testId);
+            row["passinglevel"] = passingLevel;
+            adapter.Update(dataSet);
+            status = true;
+
+
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+            throw e;
+        }
+        return status;
+    }
+    public async Task<List<CandidateSubjectResults>> GetSubjectResultDetails(int subjectId)
+    {
+        List<CandidateSubjectResults> resultdetails = new List<CandidateSubjectResults>();
+        MySqlConnection connection = new MySqlConnection(_connectionString);
+        string query = @"select tests.id,tests.subjectid,candidatetestresults.candidateid,employees.firstname,employees.lastname,candidatetestresults.score,subjects.title
+                        from tests
+                        inner join candidatetestresults
+                        on tests.id=candidatetestresults.testid
+                        inner join employees
+                        on candidatetestresults.candidateid=employees.id
+                        inner join subjects
+                        on tests.subjectid=subjects.id
+                        where tests.subjectid=@SubjectId";
+        try
+        {
+            MySqlCommand command = new MySqlCommand(query, connection);
+            command.Parameters.AddWithValue("@SubjectId", subjectId);
+            await connection.OpenAsync();
+            MySqlDataReader reader = command.ExecuteReader();
+
+            while (await reader.ReadAsync())
+            {
+                int testid = int.Parse(reader["id"].ToString());
+                int candidateid = int.Parse(reader["candidateid"].ToString());
+                int subjectid = int.Parse(reader["subjectId"].ToString());
+                string fname = reader["firstname"].ToString();
+                string lname = reader["lastname"].ToString();
+                string subject = reader["title"].ToString();
+                int score = int.Parse(reader["score"].ToString());
+
+                CandidateSubjectResults subjectresults = new CandidateSubjectResults();
+
+                subjectresults.TestId = testid;
+                subjectresults.CandidateId = candidateid;
+                subjectresults.SubjectId = subjectid;
+                subjectresults.FirstName = fname;
+                subjectresults.LastName = lname;
+                subjectresults.Subject = subject;
+                subjectresults.Score = score;
+                resultdetails.Add(subjectresults);
+            }
+            reader.Close();
+        }
+
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+        finally
+        {
+            await connection.CloseAsync();
+        }
+        return resultdetails;
+    }
+    public async Task<List<Subject>> GeAllSubjects()
+    {
+
+        List<Subject> subjects = new List<Subject>();
+
+        List<CandidateSubjectResults> resultdetails = new List<CandidateSubjectResults>();
+        MySqlConnection connection = new MySqlConnection(_connectionString);
+        string query = @"select * from subjects";
+        try
+        {
+            MySqlCommand command = new MySqlCommand(query, connection);
+
+            await connection.OpenAsync();
+            MySqlDataReader reader = command.ExecuteReader();
+
+            while (await reader.ReadAsync())
+            {
+                int subjectid = int.Parse(reader["id"].ToString());
+
+                string title = reader["title"].ToString();
+
+
+                Subject sub = new Subject();
+
+                sub.Id = subjectid;
+                sub.Title = title;
+
+                subjects.Add(sub);
+            }
+            reader.Close();
+        }
+
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+        finally
+        {
+            await connection.CloseAsync();
+        }
+        return subjects;
+
+    }
+
+    public async Task<List<TestAverageReport>> GetTestAverageReport(int testId)
+    {
+        List<TestAverageReport> averageReports = new List<TestAverageReport>();
+        string query = "spgetaveragereportbytestid";
+        MySqlConnection connection = new MySqlConnection(_connectionString);
+        try
+        {
+            MySqlCommand command = new MySqlCommand(query, connection);
+            command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.AddWithValue("@testid", testId);
+            await connection.OpenAsync();
+            MySqlDataReader reader = command.ExecuteReader();
+            while (await reader.ReadAsync())
+            {
+                // int testid = testId;
+                string subjectname = reader["subjectname"].ToString();
+                string evalutioncriteria = reader["evaluationcriteria"].ToString();
+                int totalquestionsanswered = int.Parse(reader["totalquestionsanswered"].ToString());
+                // int correctanswers = Convert.ToInt32(reader["correctanswers"]);
+                int correctanswers = int.Parse(reader["correctanswers"].ToString());
+                double percentagecorrect = Convert.ToDouble(reader["percentagecorrect"]);
+
+
+                TestAverageReport testAverageReport = new TestAverageReport();
+                testAverageReport.SubjectName = subjectname;
+                testAverageReport.EvaluationCriteria = evalutioncriteria;
+                testAverageReport.TotalQuestionsAnswered = totalquestionsanswered;
+                testAverageReport.CorrectAnswers = correctanswers;
+                testAverageReport.PercentageCorrect = percentagecorrect;
+
+                averageReports.Add(testAverageReport);
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+        finally
+        {
+            await connection.CloseAsync();
+        }
+        return averageReports;
+    }
+    /*public Task<int[]> GetAllTestIds()
+    {
+            int[] testIds = new []int();
+        MySqlConnection connection = new MySqlConnection(_connectionString);
+        string query=@"select * from tests";
+         try
+        {
+            MySqlCommand command = new MySqlCommand(query, connection);
+           
+            await connection.OpenAsync();
+            MySqlDataReader reader = command.ExecuteReader();
+
+             while (await reader.ReadAsync())
+            {
+                int testid = int.Parse(reader["id"].ToString());
+                
+                testIds.Add(testid);
+            }
+              reader.Close();
+         }
+
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+        finally
+        {
+            await connection.CloseAsync();
+        }
+        return testIds;
+
+    }*/
+
+    //GetTestScoresByCandidateId
+    public async Task<List<TestScoreDto>> GetCandidateAllScore(int candidateId)
+    {
+        List<TestScoreDto> scores = new List<TestScoreDto>();
+        string query = @"SELECT t.Name AS TestName, ctr.score AS Score
+            FROM candidatetestresults ctr
+            JOIN tests t ON ctr.testid = t.id
+            WHERE ctr.candidateid = @candidateId";
+
+        using (MySqlConnection connection = new MySqlConnection(_connectionString))
+        {
+            try
+            {
+                MySqlCommand command = new MySqlCommand(query, connection);
+                command.CommandType = CommandType.Text;
+                command.Parameters.AddWithValue("@candidateId", candidateId);
+
+                await connection.OpenAsync();
+                MySqlDataReader reader = command.ExecuteReader();
+
+                while (await reader.ReadAsync())
+                {
+                    var scoreObj = reader["Score"];
+                    int score = scoreObj == DBNull.Value ? 0 : Convert.ToInt32(scoreObj);
+                    var dto = new TestScoreDto
+                    {
+                        TestName = reader["TestName"].ToString(),
+                        Score = score
+                    };
+
+                    scores.Add(dto);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error: " + ex.Message);
+                // Optional: log error
+            }
+            finally
+            {
+                await connection.CloseAsync();
+            }
+        }
+
+        return scores;
+    }
+
 }
+
