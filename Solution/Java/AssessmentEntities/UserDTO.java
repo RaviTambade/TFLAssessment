@@ -1,66 +1,69 @@
-import Transflower.TFLAssessment.Entities;
+package com.transflower.tflAssessment.entities;
 
-public class UserDTO
-{
-    private int Id ;
-    private string Firstname;
-    private string Lastname;
-    private string Email;
-    private List<string> Roles;
+public class UserDTO {
+    private int id;
+    private string firstName;
+    private string lastName;
+    private string email;
+    private List<string> roles;
 
+    public UserDTO() {
 
-public UserDTO (){
+        this.id = 0;
+        this.firstname = 0;
+        this.lastName = 0;
+        this.email = 0;
+        this.role = null;
 
+    }
+
+    public UserDTO(int id, string firstName, string lastName, string email, List<string> roles) {
+
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastname;
+        this.email = email;
+        this.roles = roles;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+
+    }
+
+    public String getFirstname() {
+        return Firstname;
+    }
+
+    public void setfirstName(string firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getlastName() {
+        return lastName;
+    }
+
+    public void setlastName(string lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getemail() {
+        return email;
+    }
+
+    public void setemail(string email) {
+        this.email = email;
+    }
+
+    public List<string> getroles() {
+        return Roles;
+    }
+
+    public void setRoles(List<string> roles) {
+        this.roles = roles;
+    }
 }
-
-public UserDTO(int Id ,string Firstname,string Lastname,string Email,List<string> Roles){
-
-    this.id=id;
-    this.Firstname=Firstname;
-    this.Lastname=Lastname;
-    this.Email=Email;
-    this.Roles=Roles;
-}
-
-public int getId (){
-return Id ;
-}
-
-public void setId(int id){
-    this.id=id;
-
-}
-public String getFirstname(){
-    return Firstname;
-}
-public void setFirstname(string Firstname){
-    this.Firstname=Firstname;
-}
-
-public String getLastname(){
-    return Lastname;
-}
-
-public void setLastname(string Lastname){
-    this.Lastname=Lastname;
-}
-
-public String getEmail(){
-    return Email;
-}
-
-public void setEmail(string Email){
-    this.Email=Email;
-}
-
-public List<string>getRoles(){
-    return Roles;
-}
-
-public void setRoles (List<string>Roles){
-    this.roles=roles;
-}
-}
-
-
-
