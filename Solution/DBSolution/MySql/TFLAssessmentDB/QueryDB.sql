@@ -98,7 +98,6 @@ update questionbank set answerkey="c" where id = 1;
 
 
 
-<<<<<<< HEAD
 
 --Retrieve the list of all questions along with their subject and evaluation criteria to facilitate SME review or exam design.
 --Filter and view questions based on a specific subject and evaluation criteria — useful for targeted assessments or question audits.
@@ -129,8 +128,6 @@ update questionbank set answerkey="c" where id = 1;
 --Generate detailed test reports with subject and SME names — useful for dashboards and admin reports.
 
 
-=======
->>>>>>> e5659ffdbfa1a025fc1bd1394ff20d4dd1d08264
 ----------------------------------------------------------------------------------------------------------------
 
 
