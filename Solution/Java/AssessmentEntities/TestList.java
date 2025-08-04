@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 package com.transflower.tflAssessment.entities;
 
 public class TestList{
@@ -37,4 +38,8 @@ public class TestList{
     public int getScore(){
         return score;
     }
+=======
+public class TestList {
+    
+>>>>>>> e50f16e4210b1b9db33f367be8b1ea682141cc33
 }
