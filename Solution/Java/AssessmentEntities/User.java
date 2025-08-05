@@ -105,7 +105,7 @@ if (this== obj) return true;
 if (obj == null || getClass() !=obj.getClass())return false;
 
 userRole other = (UserRole) obj;
-        return id ==  Uother.id &&
+        return id ==  other.id &&
 Objects.equals(adharId, other.adharId) &&
 Objects.equals(firstname, other.firstname) &&
  Objects.equals(lastname, other.lastname);
