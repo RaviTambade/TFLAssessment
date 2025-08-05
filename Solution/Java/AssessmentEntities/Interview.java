@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Objects;
 
-public class Interview {
+public class Interview implements Cloneable {
 
     public int id;
     public LocalDate interviewDate;
