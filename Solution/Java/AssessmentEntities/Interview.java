@@ -1,8 +1,11 @@
-package transflower.tflAssessment.entities;
+package com.transflower.tflAssessment.entities;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
-public class Interview
-{
+import java.util.Objects;
+
+public class Interview {
+
     public int id;
     public LocalDate interviewDate;
     public LocalTime interviewTime;
@@ -64,4 +67,51 @@ public class Interview
     public void setCandidateId(int candidateId) {
         this.candidateId = candidateId;
     }
+
+    @Override
+    public String toString() {
+        return ("Id: " + id + "Interview Date: " + interviewDate + "Interview Time: " + interviewTime + "SME Id: " + smeId + "Candidate Id:" + candidateId);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || this.getClass() != obj.getClass()) {
+            return false;
+        }
+        Interview in = (Interview) obj;
+        return this.id == in.id
+                && this.interviewDate == in.interviewDate
+                && this.interviewTime == in.interviewTime
+                && this.smeId == in.smeId
+                && this.candidateId == in.candidateId;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.id, this.interviewDate, this.smeId, this.candidateId);
+    }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        try {
+            return new Interview(this.id, this.interviewDate, this.interviewTime, this.smeId, this.candidateId);
+        } catch (Exception e) {
+            System.out.println(e);
+            return null;
+        }
+    }
+
+    @Override
+    public void finalize() throws Throwable {
+        try {
+            System.out.println("Finalized called for " + this);
+        } finally {
+            super.finalize();
+        }
+
+    }
+
 }

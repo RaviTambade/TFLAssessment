@@ -1,9 +1,12 @@
 package com.transflower.tflAssessment.entities;
 
-public class EvaluationCriteria { 
-    private int  id;
+import java.util.Objects;
+
+public class EvaluationCriteria {
+
+    private int id;
     private String title;
-    private int  subjectId;
+    private int subjectId;
 
     public EvaluationCriteria() {
         this.id = 0;
@@ -43,26 +46,44 @@ public class EvaluationCriteria {
 
     @Override
     public String toString() {
-        return ("ID: "+this.id+"Title: "+this.title+"Subject Id: "+subjectId);
+        return ("ID: " + this.id + "Title: " + this.title + "Subject Id: " + subjectId);
     }
 
     @Override
     public boolean equals(Object obj) {
-        if(this == obj) {
-            if (obj != null && obj.getClass() == this.getClass()) {
-                EvaluationCriteria ec1 = (EvaluationCriteria)obj;
-                if(this.toString() == ec1.toString()) {
-                    return true;
-                }
-            }
+        if (this == obj) {
+            return true;
         }
+        if (obj == null || this.getClass() != obj.getClass()) {
             return false;
+        }
+        EvaluationCriteria ec = (EvaluationCriteria) obj;
+        return this.id == ec.id
+                && this.subjectId == ec.subjectId
+                && (this.title == null ? ec.title == null : this.title.equals(ec.title));
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.id, this.subjectId, this.title);
+    }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        try {
+            return new EvaluationCriteria(this.id, this.title, this.subjectId);
+        } catch (Exception e) {
+            System.out.println(e);
+            return null;
+        }
+    }
+
+    @Override
+    public void finalize() throws Throwable {
+        try {
+            System.out.println("Finalized called for " + this);
+        } finally {
+            super.finalize();
+        }
     }
 }
-/* 
-equals()	Compare object contents
-toString()	Get object as string
-hashCode()	Store objects in hash tables
-getClass()	Get object's class info
-clone()	Duplicate object
-finalize()	Cleanup before object deleted*/
