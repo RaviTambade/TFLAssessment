@@ -1,5 +1,5 @@
 
-package com.transflower.tflAssesment.entities;
+package com.transflower.tflassessment.demo.entities;
 
 import java.util.Objects;
 
