@@ -41,7 +41,7 @@ public class QuestionTitle {
 
    
      @Override
-    public int hashcode() {
+    public int hashCode() {
         return Objects.hash(id, title);
     }
 
