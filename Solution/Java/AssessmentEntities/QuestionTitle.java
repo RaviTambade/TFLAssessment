@@ -23,7 +23,7 @@ public class QuestionTitle {
         this.title = title;
     }
 
-    public QuestionTitle(int id, int title) {
+    public QuestionTitle(int id, String title) {
         this.id = id;
         this.title = title;
     }
