@@ -135,7 +135,7 @@ public boolean equals(Object obj) {
 
     @Override
     public int hashCode(){
-        return java.util.Objects.hash(subjectId,name,duration,smeId,scheduledDate,passingLevel,questionIds);
+        return Objects.hash(subjectId,name,duration,smeId,scheduledDate,passingLevel,questionIds);
     }
      @Override
     protected void finalize() throws Throwable {

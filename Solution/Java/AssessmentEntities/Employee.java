@@ -129,7 +129,7 @@ public boolean equals(Object obj) {
 
 @Override
 public int hashCode() {
-    return java.util.Objects.hash(id, userId, firstName, lastName, email, contact, role);
+    return Objects.hash(id, userId, firstName, lastName, email, contact, role);
 }
 
 @Override
