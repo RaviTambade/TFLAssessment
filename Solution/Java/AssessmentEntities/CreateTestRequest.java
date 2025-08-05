@@ -1,5 +1,6 @@
 package com.transflower.tflAssessment.entities;
 import java.time.LocalDateTime;
+import java.util.Objects;
 public class CreateTestRequest {
     private int subjectId;
     private String name;
@@ -104,4 +105,60 @@ public class CreateTestRequest {
 
         this.passingLevel=passLevel;
     }
+
+    @Override
+    public String toString (){
+        return "CreateTestRequest{" +
+        "subjectId = " + subjectId +
+        ", name = '" + name + '\'' +
+        ", duration = '" + duration + '\'' +
+        ", subjectExpertId =  " + subjectExpertId +
+        ", creationDate =  " + creationDate +
+        "modificationDate=" + modificationDate +
+        ", scheduleDate=" + scheduledDate +
+        ", passingLevel=" + passingLevel +
+          
+       '}';
+
+    }   
+
+
+    @Override
+public boolean equals(Object obj) {
+    if (this == obj) return true;
+    if (obj == null || getClass() != obj.getClass()) return false;
+
+    CreateTestRequest other = (CreateTestRequest) obj;
+
+    return subjectId == other.subjectId &&
+            subjectExpertId == other.subjectExpertId &&
+            passingLevel == other.passingLevel &&
+            Objects.equals(name, other.name) &&
+            Objects.equals(duration, other.duration) &&
+            Objects.equals(creationDate, other.creationDate) &&
+            Objects.equals(modificationDate, other.modificationDate) &&
+            Objects.equals(scheduledDate, other.scheduledDate);
+}
+@Override
+public int hashCode() {
+    return Objects.hash( subjectId, name,duration,subjectExpertId,creationDate, modificationDate,scheduledDate, passingLevel          
+    );
+}
+@Override
+    protected void finalize() throws Throwable {
+        try {
+            System.out.println("Finalize called for: " + this);
+        } finally {
+            super.finalize();
+        }
+    }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException
+    {
+        return super.clone();
+    }
+
+    
+
 }

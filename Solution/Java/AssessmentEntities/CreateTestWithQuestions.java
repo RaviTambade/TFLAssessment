@@ -3,9 +3,10 @@ package com.transflower.tflAssessment.entities;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 
-public class CreateTestWithQuestions {
+public class CreateTestWithQuestions implements Cloneable{
     private int subjectId;
     private String name;
     private String duration;
@@ -99,6 +100,56 @@ public class CreateTestWithQuestions {
     public void setQuestionIds(List<Integer> qIds){
 
         this.questionIds=qIds;
+    }
+
+    @Override
+
+    public String toString (){
+        return "CreateTestWithQuestions{" +
+        "subjectId = " + subjectId +
+        ", name = '" + name + '\'' +
+        ", duration = '" + duration + '\'' +
+        ", smeId =  " + smeId +
+        " ,scheduleDate =" + scheduledDate +
+        " ,passingLevel=" + passingLevel +
+        " , questionIds=  " + questionIds +
+          
+       '}';
+
+    }
+    @Override
+public boolean equals(Object obj) {
+    if (this == obj) return true;
+    if (obj == null || getClass() != obj.getClass()) return false;
+
+    CreateTestWithQuestions other = (CreateTestWithQuestions) obj;
+
+    return subjectId == other.subjectId &&
+            smeId == other.smeId &&
+            passingLevel == other.passingLevel &&
+            Objects.equals(name, other.name) &&
+            Objects.equals(duration, other.duration) &&
+            Objects.equals(scheduledDate, other.scheduledDate) &&  
+            Objects.equals(questionIds, other.questionIds);
+}
+
+    @Override
+    public int hashCode(){
+        return Objects.hash(subjectId,name,duration,smeId,scheduledDate,passingLevel,questionIds);
+    }
+     @Override
+    protected void finalize() throws Throwable {
+        try {
+            System.out.println("Finalize called for: " + this);
+        } finally {
+            super.finalize();
+        }
+    }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException
+    {
+        return super.clone();
     }
 }
 

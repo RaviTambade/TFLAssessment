@@ -2,10 +2,14 @@ package com.transflower.tflAssessment.entities;
 
 import java.util.Objects;
 
+<<<<<<< HEAD
 public class Question implements IClonable {
 
     //encapsulate
 
+=======
+public class Question {
+>>>>>>> 94157d77e243a41a7ebdc0e05cd834a9eb04055a
     private int id;
     private int subjectId;
     private String title;
@@ -87,6 +91,7 @@ public class Question implements IClonable {
         this.evaluationCriteriaId =evaluationCriteriaId;
     }
 
+<<<<<<< HEAD
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
@@ -109,7 +114,44 @@ public class Question implements IClonable {
     public String toString() {
         return "Question {name='" + name + "', id=" + id + "}";
     }
+=======
+    @Override     
+    public boolean equals(Object obj){
+    if (this==obj) return true;
+    if(obj==null || getClass() != obj.getClass()) return false;
+     Question other = (Question) obj;
+       return Objects.equals(A, other.A) && Objects.equals(B, other.B);     
+    }  
+    
+     @Override
+    public int hashCode() {
+    return Objects.hash(A, B);
+    }
+
+
+    @Override
+    protected void finalize() throws Throwable {
+    try {
+    } finally {
+        super.finalize();
+    }
+    }
+
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+    return super.clone();
+    }
+
+    @Override
+     public String toString(){
+     return "Question{id ="+ id + " , subjectId = " + subjectId +" , title" + title + " , A" + A + "B" +B+ " , C" +C+ ", D" + D+ " ,answerKey " +answerKey+" , evaluationCriteriaId" +evaluationCriteriaId+ "}";
+    }
+
+>>>>>>> 94157d77e243a41a7ebdc0e05cd834a9eb04055a
 }
+    
+
  
 
 

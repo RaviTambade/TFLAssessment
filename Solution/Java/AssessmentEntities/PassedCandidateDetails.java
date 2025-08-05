@@ -1,5 +1,7 @@
 package com.transflower.tflAssessment.entities;
 
+import java.util.Objects;
+
 public class PassedCandidateDetails {
     private int testId ;
     private int candidateId ;
@@ -58,6 +60,40 @@ public class PassedCandidateDetails {
 
     public void setScore(int score){
         this.score =score;
+    }
+
+
+     @Override     
+    public boolean equals(Object obj){
+    if (this==obj) return true;
+    if(obj==null || getClass() != obj.getClass()) return false;
+     PassedCandidateDetails other = (PassedCandidateDetails) obj;
+       return Objects.equals(firstName, other.firstName) && Objects.equals(lastName, other.lastName);     
+    }  
+    
+     @Override
+    public int hashCode() {
+    return Objects.hash(firstName, lastName);
+    }
+
+
+    @Override
+    protected void finalize() throws Throwable {
+    try {
+    } finally {
+        super.finalize();
+    }
+    }
+
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+    return super.clone();
+    }
+
+    @Override
+     public String toString(){
+     return "PassedCandidateDetails{testId  ="+ testId + " , candidateId = " + candidateId +" , firstName" + firstName + " , lastName" + lastName+ " , passingLevel" +passingLevel+  " , score " +score+ "}";
     }
 }
 

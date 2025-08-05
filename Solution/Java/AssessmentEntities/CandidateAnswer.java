@@ -1,4 +1,5 @@
 // package com.transflower.tflAssessment.entities;
+import java.util.*;
 
 public class CandidateAnswer {
     
@@ -50,5 +51,49 @@ public class CandidateAnswer {
         {
             this.answerKey=answerKey;
         }
+        @Override
+        public  String toString()
+        {
+             return "CandidateAnswer{"+
+                "id=" + id +
+                "candidateId=" + candidateId +
+                " ,testQuestionId= ' " + testQuestionId +
+                " ',answerKey= '" + answerKey + '}';
+        }
+        @Override
+        public boolean equals(Object obj)
+        {
+            if(this == obj)return true;
+            if(obj==null || getClass()!=obj.getClass())return false;
+            CandidateAnswer other=(CandidateAnswer)obj;
+            return id==other.id &&
+             candidateId==other.candidateId &&
+             testQuestionId==other.testQuestionId &&
+             answerKey.equals(other.answerKey);
 
-}
+        }
+        @Override
+        public int hashCode()
+        {
+            return Objects.hash(id,candidateId,testQuestionId,answerKey);
+        }
+        @Override
+        protected Object clone() throws CloneNotSupportedException
+        {
+            return super.clone();
+            
+        }
+        
+        @Override
+        protected void finalize() throws Throwable
+        {
+            try
+            {
+                System.out.println("Return from"+this);
+            }
+            finally
+            {
+                super.finalize();
+            }
+        }
+    }
