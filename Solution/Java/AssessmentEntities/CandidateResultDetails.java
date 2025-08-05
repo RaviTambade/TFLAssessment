@@ -1,5 +1,7 @@
 package com.transflower.tflAssessment.entities;
 
+import java.util.Objects;
+
 public class CandidateResultDetails {
     private int candidateId;
 
@@ -74,5 +76,46 @@ public class CandidateResultDetails {
     {
         this.skippedQuestions = skippedQuestions;
     }
+    
+    @Override
+    public String toString()
+    {
+        return "CandidateResultDetails{candidateId' "+candidateId+" ',testId' "+testId+" ',correctAnswer' "+correctAnswers+" ',incorrectAnswer+' "+incorrectAnswers+" ',skippedQuestions+' "+skippedQuestions+"}";
+
+    }
+  
+    @Override
+    public boolean equals(Object obj)
+    {
+        if(this == obj) return true;
+        if(obj == null || getClass() != obj.getClass()) return false;
+        CandidateResultDetails that =(CandidateResultDetails) obj;
+        return candidateId == that.candidateId &&
+               testId == that.testId &&
+               correctAnswers == that.correctAnswers &&
+               incorrectAnswers == that.incorrectAnswers &&
+               skippedQuestions == that.skippedQuestions;
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return Objects.hash(candidateId,testId,correctAnswers,incorrectAnswers,skippedQuestions);
+    }
      
+    @Override
+    protected void finalize() throws Throwable
+    {
+        try{
+            System.out.println("Finallized Called"+this);
+        }finally{
+            super.finalize();
+        }
+    }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException
+    {
+        return super.clone();
+    }
 }

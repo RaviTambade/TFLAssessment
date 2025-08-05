@@ -95,5 +95,9 @@ public class CandidateSubjectResults {
         this.score = score;
     }
 
-
+    @Override
+    public String toString()
+    {
+        return "CandidateSubjectResults{testId' "+testId+" ''}
+    }
 }
