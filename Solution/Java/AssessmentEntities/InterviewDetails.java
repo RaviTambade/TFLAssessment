@@ -2,12 +2,12 @@ package tap.transflower.tflAssessment.entities;
 
 public class InterviewDetails{
      private int id;
-     private  string interviewDate;
-     private  string interviewTime;
-     private  string smeName;
-     private  string candidateName;
-     private  string subject;
-     private  string [] criterias;
+     private  String interviewDate;
+     private  String interviewTime;
+     private  String smeName;
+     private  String candidateName;
+     private  String subject;
+     private  String [] criterias;
 
     public int getid(){
         return id;
@@ -17,7 +17,7 @@ public class InterviewDetails{
         this.id=id;
     }
 
-    public string interviewDate(){
+    public String interviewDate(){
         return interviewDate;
     }
 

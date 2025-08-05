@@ -41,4 +41,28 @@ public class EvaluationCriteria {
         this.subjectId = subjectId;
     }
 
+    @Override
+    public String toString() {
+        return ("ID: "+this.id+"Title: "+this.title+"Subject Id: "+subjectId);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(this == obj) {
+            if (obj != null && obj.getClass() == this.getClass()) {
+                EvaluationCriteria ec1 = (EvaluationCriteria)obj;
+                
+            }
+        }
+        else {
+            return false;
+        }
+    }
 }
+/* 
+equals()	Compare object contents
+toString()	Get object as string
+hashCode()	Store objects in hash tables
+getClass()	Get object's class info
+clone()	Duplicate object
+finalize()	Cleanup before object deleted*/
