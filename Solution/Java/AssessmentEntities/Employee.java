@@ -1,4 +1,5 @@
 package com.transflower.tflAssessment.entities;
+import java.util.Objects;
 public class Employee {
    private int id;
    private int userId;
@@ -97,5 +98,53 @@ public void setRole(String role){
     this.role = role;
 }
 
+@Override
+public String toString() {
+    return "Employee{" +
+            "id=" + id +
+            ", userId=" + userId +
+            ", firstName='" + firstName + '\'' +
+            ", lastName='" + lastName + '\'' +
+            ", email='" + email + '\'' +
+            ", contact='" + contact + '\'' +
+            ", role='" + role + '\'' +
+            '}';
+}
+
+@Override
+public boolean equals(Object obj) {
+    if (this == obj) return true;
+    if (obj == null || getClass() != obj.getClass()) return false;
+
+    Employee other = (Employee) obj;
+
+    return id == other.id &&
+            userId == other.userId &&
+            Objects.equals(firstName, other.firstName) &&
+            Objects.equals(lastName, other.lastName) &&
+            Objects.equals(email, other.email) &&
+            Objects.equals(contact, other.contact) &&
+            Objects.equals(role, other.role);
+}
+
+@Override
+public int hashCode() {
+    return java.util.Objects.hash(id, userId, firstName, lastName, email, contact, role);
+}
+
+@Override
+    protected void finalize() throws Throwable {
+        try {
+            System.out.println("Finalize called for: " + this);
+        } finally {
+            super.finalize();
+        }
+    }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException
+    {
+        return super.clone();
+    }
 
 }

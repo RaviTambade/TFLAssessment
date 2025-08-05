@@ -1,5 +1,6 @@
 package com.transflower.tflAssessment.entities;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 public class CandidateTestDetails {
     
@@ -99,5 +100,52 @@ public class CandidateTestDetails {
         this.testPassingLevel=tplevel;
 
 
+    
     }
+    @Override
+public String toString() {
+    return "CandidateTestDetails{" +
+            "candidateId=" + candidateId +
+            ", candidateName='" + candidateName + '\'' +
+            ", testId=" + testId +
+            ", testName='" + testName + '\'' +
+            ", testDate=" + testDate +
+            ", testPassingLevel=" + testPassingLevel +
+            '}';
+}
+
+@Override
+public boolean equals(Object obj) {
+    if (this == obj) return true;
+    if (obj == null || getClass() != obj.getClass()) return false;
+
+    CandidateTestDetails other = (CandidateTestDetails) obj;
+
+    return candidateId == other.candidateId &&
+            testId == other.testId &&
+            testPassingLevel == other.testPassingLevel &&
+            Objects.equals(candidateName, other.candidateName) &&
+            Objects.equals(testName, other.testName) &&
+            Objects.equals(testDate, other.testDate);
+}
+
+@Override
+public int hashCode() {
+    return java.util.Objects.hash(candidateId, candidateName, testId, testName, testDate, testPassingLevel);
+}
+
+@Override
+protected void finalize() throws Throwable {
+    try {
+        System.out.println("CandidateTestDetails object with candidateId " + candidateId + " is being garbage collected");
+    } finally {
+        super.finalize(); 
+    }
+}
+@Override
+    protected Object clone() throws CloneNotSupportedException
+    {
+        return super.clone();
+    }
+
 }
