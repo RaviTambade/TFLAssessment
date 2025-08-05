@@ -3,6 +3,9 @@ package transflower.tflassessment.entities;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+
+import com.transflower.tflAssessment.entities.UserRole;
 
 public class User {
 
@@ -80,4 +83,51 @@ public class User {
     public void setUserRoles(List<UserRole> userRoles) {
         this.userRoles = userRoles;
     }
+
+
+@Override
+public  toString String(){
+return "userRole{"+
+"id=" +id+
+",adharId='"+aadharId+
+",firstname='"+firstname+
+",lastname='"+lastname+
+",email='"+email+
+",contactNumber'"+contactNumber+
+",password'"+password+"''}";
+
 }
+
+}
+@Override
+public equal toequal(){
+if (this== obj) return true;
+if (obj == null || getClass() !=obj.getClass())return false;
+
+userRole other = (UserRole) obj;
+        return id ==  Uother.id &&
+Objects.equals(adharId, other.adharId) &&
+Objects.equals(firstname, other.firstname) &&
+ Objects.equals(lastname, other.lastname);
+{
+ {   
+}
+
+    
+
+}
+
+       
+    }
+
+
+
+
+
+
+
+
+
+
+
+
