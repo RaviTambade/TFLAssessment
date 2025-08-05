@@ -1,7 +1,10 @@
 package com.transflower.tflassessment.demo.entities;
+
 import java.time.LocalDateTime;
 import java.util.Objects;
-public class CreateTestRequest {
+
+public class CreateTestRequest implements Cloneable {
+
     private int subjectId;
     private String name;
     private String duration;
@@ -11,16 +14,16 @@ public class CreateTestRequest {
     private LocalDateTime scheduledDate;
     private int passingLevel;
 
-    public CreateTestRequest(){
+    public CreateTestRequest() {
 
-        this.subjectId=0;
-        this.name=null;
-        this.duration=null;
-        this.subjectExpertId=0;
-        this.creationDate=null;
-        this.modificationDate=null;
-        this.scheduledDate=null;
-        this.passingLevel=0;
+        this.subjectId = 0;
+        this.name = null;
+        this.duration = null;
+        this.subjectExpertId = 0;
+        this.creationDate = null;
+        this.modificationDate = null;
+        this.scheduledDate = null;
+        this.passingLevel = 0;
 
     }
 
@@ -34,115 +37,119 @@ public class CreateTestRequest {
         this.scheduledDate = scheduledDate;
         this.passingLevel = passingLevel;
     }
-    public int getSubjectId(){
+
+    public int getSubjectId() {
 
         return this.subjectId;
     }
-    public void setSubjectId(int id){
 
-        this.subjectId=id;
+    public void setSubjectId(int id) {
+
+        this.subjectId = id;
     }
 
-    public String getName(){
+    public String getName() {
 
         return this.name;
     }
-    public void setName(String name){
 
-        this.name=name;
+    public void setName(String name) {
+
+        this.name = name;
     }
 
-    public String getDuration(){
+    public String getDuration() {
 
         return this.duration;
     }
-    public void setDuration(String duration){
 
-        this.duration=duration;
+    public void setDuration(String duration) {
+
+        this.duration = duration;
     }
 
-    public int getSubjectExpertId(){
+    public int getSubjectExpertId() {
 
         return this.subjectExpertId;
     }
-    public void setSubjectExpertId(int subEId){
 
-        this.subjectExpertId=subEId;
+    public void setSubjectExpertId(int subEId) {
+
+        this.subjectExpertId = subEId;
     }
 
-    public LocalDateTime getCreationDate(){
+    public LocalDateTime getCreationDate() {
 
         return this.creationDate;
     }
-    public void setCreationDate(LocalDateTime createDate){
 
-        this.creationDate=createDate;
+    public void setCreationDate(LocalDateTime createDate) {
+
+        this.creationDate = createDate;
     }
 
-    public LocalDateTime getModificationDate(){
+    public LocalDateTime getModificationDate() {
 
         return this.modificationDate;
     }
-    public void setModificationDate(LocalDateTime modifyDate){
 
-        this.modificationDate=modifyDate;
+    public void setModificationDate(LocalDateTime modifyDate) {
+
+        this.modificationDate = modifyDate;
     }
 
-    public LocalDateTime getScheduledDate(){
+    public LocalDateTime getScheduledDate() {
 
         return this.scheduledDate;
     }
-    public void setScheduledDate(LocalDateTime schDate){
 
-        this.scheduledDate=schDate;
+    public void setScheduledDate(LocalDateTime schDate) {
+
+        this.scheduledDate = schDate;
     }
 
-    public int getPassingLevel(){
+    public int getPassingLevel() {
 
         return this.passingLevel;
     }
-    public void setPassingLevel(int passLevel){
 
-        this.passingLevel=passLevel;
+    public void setPassingLevel(int passLevel) {
+
+        this.passingLevel = passLevel;
     }
 
     @Override
-    public String toString (){
-        return "CreateTestRequest{" +
-        "subjectId = " + subjectId +
-        ", name = '" + name + '\'' +
-        ", duration = '" + duration + '\'' +
-        ", subjectExpertId =  " + subjectExpertId +
-        ", creationDate =  " + creationDate +
-        "modificationDate=" + modificationDate +
-        ", scheduleDate=" + scheduledDate +
-        ", passingLevel=" + passingLevel +
-          
-       '}';
-    }   
+public String toString() {
+    return "CreateTestRequest{subjectId='" + subjectId + "', name='" + name + "', duration='" + duration + "', subjectExpertId='" + subjectExpertId + "', creationDate='" + creationDate + "', modificationDate='" + modificationDate + "', scheduledDate='" + scheduledDate + "', passingLevel='" + passingLevel + "'}";
+}
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+
+        CreateTestRequest other = (CreateTestRequest) obj;
+
+        return subjectId == other.subjectId
+                && subjectExpertId == other.subjectExpertId
+                && passingLevel == other.passingLevel
+                && Objects.equals(name, other.name)
+                && Objects.equals(duration, other.duration)
+                && Objects.equals(creationDate, other.creationDate)
+                && Objects.equals(modificationDate, other.modificationDate)
+                && Objects.equals(scheduledDate, other.scheduledDate);
+    }
 
     @Override
-public boolean equals(Object obj) {
-    if (this == obj) return true;
-    if (obj == null || getClass() != obj.getClass()) return false;
+    public int hashCode() {
+        return Objects.hash(subjectId, name, duration, subjectExpertId, creationDate, modificationDate, scheduledDate, passingLevel
+        );
+    }
 
-    CreateTestRequest other = (CreateTestRequest) obj;
-
-    return subjectId == other.subjectId &&
-            subjectExpertId == other.subjectExpertId &&
-            passingLevel == other.passingLevel &&
-            Objects.equals(name, other.name) &&
-            Objects.equals(duration, other.duration) &&
-            Objects.equals(creationDate, other.creationDate) &&
-            Objects.equals(modificationDate, other.modificationDate) &&
-            Objects.equals(scheduledDate, other.scheduledDate);
-}
-@Override
-public int hashCode() {
-    return Objects.hash( subjectId, name,duration,subjectExpertId,creationDate, modificationDate,scheduledDate, passingLevel          
-    );
-}
-@Override
+    @Override
     protected void finalize() throws Throwable {
         try {
             System.out.println("Finalize called for: " + this);
@@ -152,10 +159,15 @@ public int hashCode() {
     }
 
     @Override
-    protected Object clone() throws CloneNotSupportedException
-    {
-        return super.clone();
+    protected Object clone() throws CloneNotSupportedException {
+       try{
+       
+        return new CreateTestRequest( subjectId,name,duration,subjectExpertId,creationDate,modificationDate,scheduledDate,passingLevel);
+       }catch (Exception e)
+       {
+        System.out.println(e);
+        return null;
+       }
     }
- 
 
 }

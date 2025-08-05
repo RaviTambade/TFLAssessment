@@ -111,10 +111,18 @@ public class TestAverageReport implements Cloneable
         }
     }
 
-   
-    protected Object Clone()throws CloneNotSupportedException
+   @Override
+    protected Object clone()throws CloneNotSupportedException
     {
-        return super.clone();
+        try
+        {
+            return new TestAverageReport(subjectName,evaluationCriteria,totalQuestionAnswered,correctAnswer,percentageCorrect);
+        }
+        catch(Exception e)
+        {
+            System.out.println("Clone Exception");
+            return null;
+        }
     }
 
 

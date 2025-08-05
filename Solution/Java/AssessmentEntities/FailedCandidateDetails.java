@@ -2,9 +2,7 @@ package com.transflower.tflAssessment.entities;
 
 import java.util.Objects;
 
-import com.transflower.tflAssessment.entities.EvaluationCriteria;
-
-public class FailedCandidateDetails {
+public class FailedCandidateDetails implements Cloneable {
 
     private int testId;
     private int candidateId;
@@ -95,8 +93,8 @@ public class FailedCandidateDetails {
         FailedCandidateDetails fc = (FailedCandidateDetails) obj;
         return this.testId == fc.testId
                 && this.candidateId == fc.candidateId
-                && (this.firstName == null ? fc.firstName == null : this.firstName.equals(fc.firstName))
-                && (this.lastName == null ? fc.firstName == null : this.lastName.equals(fc.lastName))
+                && this.firstName.equals(fc.firstName)
+                && this.lastName.equals(fc.lastName)
                 && this.passingLevel == fc.passingLevel
                 && this.score == fc.score;
     }
