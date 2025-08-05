@@ -1,6 +1,10 @@
 package tap.transflower.tflAssessment.entities;
 
-public class NewCriteria {
+import java.util.Objects;
+
+
+
+public class NewCriteria implements Cloneable {
 
      private String title;
         private int subjectId;
@@ -26,4 +30,35 @@ public class NewCriteria {
         this.subjectId=subjectId;
     }
     
+  @Override
+  public String toString(){
+    return "NewCriteria{title=" + title + ", subjectID is " + subjectId + "}" ;
+  }
+
+   @Override
+    public boolean equals(Object obj) {
+    if (this == obj) return true;
+    if (obj == null || getClass() != obj.getClass()) return false;
+     NewCriteria other = ( NewCriteria) obj;
+        return subjectId == other.subjectId && Objects.equals(title, other.title);
+      }
+  
+      @Override
+    public int hashCode() {
+    return Objects.hash(title,subjectId) ;
+}
+ 
+   @Override
+protected void finalize() throws Throwable {
+    try {
+    } finally {
+        super.finalize();
+    }
+}
+
+
+@Override
+public NewCriteria clone() throws CloneNotSupportedException {
+    return (NewCriteria) super.clone();
+}
 }
