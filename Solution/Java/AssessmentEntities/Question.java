@@ -1,6 +1,11 @@
 package com.transflower.tflAssessment.entities;
 
-public class Question {
+import java.util.Objects;
+
+public class Question implements IClonable {
+
+    //encapsulate
+
     private int id;
     private int subjectId;
     private String title;
@@ -11,7 +16,8 @@ public class Question {
     private char answerKey;
     private int evaluationCriteriaId;
 
-
+    //getter and setters
+    
     public int getId(){
         return id;
     }
@@ -80,7 +86,29 @@ public class Question {
     public void setEvaluationCriteriaId(int evaluationCriteriaId){
         this.evaluationCriteriaId =evaluationCriteriaId;
     }
-    
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Question other = (Question) obj;
+        return id == other.id && Objects.equals(name, other.name);
+    }
+   
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name);
+    }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
+
+    @Override
+    public String toString() {
+        return "Question {name='" + name + "', id=" + id + "}";
+    }
 }
  
 
