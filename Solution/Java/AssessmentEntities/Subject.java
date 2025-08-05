@@ -71,3 +71,11 @@ public class Subject implements Cloneable
     }
 }
 
+<<<<<<< HEAD
+=======
+public void setTitle(String Title)
+{
+    this.Title=Title;
+}
+}
+>>>>>>> 86fbdedf77a9b58c7634f56a49407a721b73be88

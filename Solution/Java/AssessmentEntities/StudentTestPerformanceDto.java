@@ -1,5 +1,7 @@
 package com.transflower.tflassessment.Entities;
+
 import java.util.*;
+
 public class StudentTestPerformanceDto
 {
     private List<TestScoreDto> testScores;
