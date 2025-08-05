@@ -2,10 +2,10 @@ package tap.transflower.tflAssessment.entities;
 
 import java.util.Objects;
 
-public class LoginRequest {
+public class LoginRequest implements Cloneable{
     
-    private string email;
-    private string password ;
+    private String email;
+    private String password ;
 
 
     public String getemail(){
@@ -48,24 +48,17 @@ public int hashCode() {
 
 @Override
 protected void finalize() throws Throwable {
-try {
- } finally {
- super.finalize();
-}
+    try {
+    } finally {
+        super.finalize();
+    }
 }
 
 
 @Override
-protected Object clone() throws CloneNotSupportedException {
+public Object clone() throws CloneNotSupportedException {
     return super.clone();
 }
-
-
-
-}
-
-
-
 
 
 
