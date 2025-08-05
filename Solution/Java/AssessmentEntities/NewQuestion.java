@@ -114,7 +114,7 @@ public class NewQuestion {
 
     @Override
      public String toString(){
-     return "LoginResponse{id ="+ id + " , subjectId = " + subjectId +" , title" + title + " , A" + A + "B" +B+ " , C" +C+ ", D" + D+ " ,answerKey " +answerKey+" , evaluationCriteriaId" +evaluationCriteriaId+ "}";
+     return "NewQuestion{id ="+ id + " , subjectId = " + subjectId +" , title" + title + " , A" + A + "B" +B+ " , C" +C+ ", D" + D+ " ,answerKey " +answerKey+" , evaluationCriteriaId" +evaluationCriteriaId+ "}";
     }
 
 }
@@ -124,4 +124,5 @@ public class NewQuestion {
 
 
  
+
 
