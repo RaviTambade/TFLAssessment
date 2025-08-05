@@ -8,7 +8,6 @@ public class QuestionDetails {
     private String question;
     private String subject;
     private String criteria;
-    
 
     public int getId() {
         return id;
@@ -66,7 +65,6 @@ public class QuestionDetails {
     @Override
     public int hashcode() {
         return Objects.hash(id, question, subject, criteria);
-
     }
 
     @Override
