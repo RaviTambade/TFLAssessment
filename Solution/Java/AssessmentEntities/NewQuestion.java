@@ -1,5 +1,7 @@
 package com.transflower.tflAssessment.entities;
 
+import java.util.Objects;
+
 public class NewQuestion {
     private int id;
     private int subjectId;
@@ -56,7 +58,7 @@ public class NewQuestion {
     public void setC(String C){
         this.C =C;
     }
-    
+
 
     public String getD(){
         return D;
@@ -81,6 +83,45 @@ public class NewQuestion {
         this.evaluationCriteriaId =evaluationCriteriaId;
     }
     
+    
+    @Override     
+    public boolean equals(Object obj){
+    if (this==obj) return true;
+    if(obj==null || getClass() != obj.getClass()) return false;
+     NewQuestion other = (NewQuestion) obj;
+       return Objects.equals(A, other.A) && Objects.equals(B, other.B);     
+    }  
+    
+     @Override
+    public int hashCode() {
+    return Objects.hash(A, B);
+    }
+
+
+    @Override
+    protected void finalize() throws Throwable {
+    try {
+    } finally {
+        super.finalize();
+    }
+    }
+
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+    return super.clone();
+    }
+
+    @Override
+     public String toString(){
+     return "LoginResponse{id ="+ id + " , subjectId = " + subjectId +" , title" + title + " , A" + A + "B" +B+ " , C" +C+ ", D" + D+ " ,answerKey " +answerKey+" , evaluationCriteriaId" +evaluationCriteriaId+ "}";
+    }
+
 }
+
+  
+     
+
+
  
 
