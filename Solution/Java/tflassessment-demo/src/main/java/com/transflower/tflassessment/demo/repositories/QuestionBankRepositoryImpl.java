@@ -14,38 +14,49 @@ public class QuestionBankRepositoryImpl implements QuestionBankRepository {
     //     _configuration = configuration;
     //     _connectionString = _configuration.GetConnectionString("DefaultConnection") ?? throw new ArgumentNullException("connectionString");
     // }
-   
+    @Override
     public  List<QuestionTitle> getAllQuestions(){
         return null;
     }
+    @Override
     public  List<SubjectQuestion> getQuestionsBySubject(int id){
         return null;
     }
+    @Override
     public  List<QuestionDetails> getQuestionsBySubjectAndCriteria(int subjectId,int criteriaId){
         return null;
     }
+    @Override
     public  List<QuestionDetails> getQuestionsWithSubjectAndCriteria(){
         return null;
     }
+    @Override
     public  List<Question> getQuestions(int testId){
         return null;
     }
+    @Override
     public  List <boolean> updateAnswer(int id,char answerKey){
-        return null;
+        return false;
     }
+    @Override
     public  List<Question> getQuestion(int questionId){
         return null;
     }
+    @Override
     public  List<boolean> updateQuestionOptions(int id,Question options){
-        return null;
+        return false;
     }
+    @Override
     public  List<boolean> updateSubjectCriteria(int questionId,Question question){
-        return null;
+        return false;
     }
+    @Override
     public  List<boolean> insertQuestion(NewQuestion question){
-        return null;
+        return false;
     }
+    @Override
     public  List<String> getCriteria(String subject, int questionId){
         return null;
     }
+    
 }
