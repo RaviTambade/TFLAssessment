@@ -1,4 +1,4 @@
-package com.transflower.tflassessment.Entities;
+package com.transflower.tflAssessment.entities;
 
 import java.util.List;
 import java.util.Objects;
@@ -17,7 +17,15 @@ public class StudentTestPerformanceDto {
 
     @Override
     public String toString() {
-        return "StudentTestPerformanceDto{" +"testScores=" + testScores +'}';
+        return "StudentTestPerformanceDto{" + "testScores=" + testScores +'}';
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        StudentTestPerformanceDto other = (StudentTestPerformanceDto) obj;
+        return Objects.equals(testScores, other.testScores);
     }
 
     @Override
