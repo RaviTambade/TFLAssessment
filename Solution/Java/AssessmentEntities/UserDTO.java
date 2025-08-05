@@ -10,9 +10,9 @@ public class UserDTO {
     public UserDTO() {
 
         this.id = 0;
-        this.firstName = 0;
-        this.lastName = 0;
-        this.email = 0;
+        this.firstName = null;
+        this.lastName = null;
+        this.email = null;
         this.role = null;
 
     }
@@ -65,5 +65,54 @@ public class UserDTO {
 
     public void setRoles(List<String> roles) {
         this.roles = roles;
+    }
+    @Override
+    public String toString() {
+        return "UserDTO{Id: "+id+"First Name: "+firstName+"Last= Name: "+lastName+"Email: "+email+"Roles: "+roles+"}";
+    }
+
+    @Override
+    public boolean equals(Object obj){
+      if(this == obj) {
+        return true;
+      }
+      if(obj == null || this.getClass() != obj.getClass()) {
+        return false;
+      }
+      UserDTO ud = (UserDTO) obj;
+      if(this.id == ud.id &&
+            (this.firstName == null ? ud.firstName == null: this.firstName.equals(ud.firstName)) &&
+            (this.lastName == null ? ud.lastName == null: this.lastName.equals(ud.lastName)) &&
+            (this.email == null ? ud.email == null: this.email.equals(ud.email)) &&
+            Objects.equals(this.roles,ud.roles)) {
+                return true;
+            }
+            else {
+                return false;
+            }
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.id, this.firstName, this.lastName, this.email, this.roles);
+    }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        try {
+            return new UserDTO(this.id, this.firstName, this.lastName, this.email, this.role);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+    @Override
+    public void finalize() throws Throwable{
+        try {
+            System.out.println("Finalize called for: "+this);
+        } 
+        finally {
+            super.finalize();
+        }
     }
 }
