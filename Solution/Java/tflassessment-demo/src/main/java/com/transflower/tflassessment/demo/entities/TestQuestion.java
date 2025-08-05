@@ -1,6 +1,8 @@
 package com.transflower.tflassessment.demo.entities;
 
-public class TestQuestion {
+import java.util.Objects;
+
+public class TestQuestion implements Cloneable {
     private int id;
     private String title;
     private String A;
@@ -134,6 +136,36 @@ public class TestQuestion {
     }
 
     @Override
-    public 
+    public int hashCode(){
+        return Objects.hash(id,title,A,B,C,D,testId,evaluationCriteria,criteria,answerKey,questionBankId);
+    }
+
+    @Override
+    public boolean equals(Object obj){
+        if(this==obj) return true;
+        if(obj==null||getClass()!=obj.getClass()) return false;
+        TestQuestion other=(TestQuestion) obj;
+        return(id==other.id && 
+               title.equals(other.title) && 
+               A.equals(other.getA()) &&
+               B.equals(other.B) &&
+               C.equals(other.C) &&
+               D.equals(other.D) &&
+               testId==other.testId &&
+               evaluationCriteria==other.testId &&
+               criteria.equals(other.criteria) &&
+               answerKey.equals(other.answerKey) &&
+               questionBankId==other.questionBankId);
+    }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException{
+        try{
+            return new TestQuestion(id,title,A,B,C,D,testId,evaluationCriteria,criteria,answerKey,questionBankId);
+        }catch(Exception e){
+            System.out.println(e);
+            return null;
+        }
+    }
 
 }
