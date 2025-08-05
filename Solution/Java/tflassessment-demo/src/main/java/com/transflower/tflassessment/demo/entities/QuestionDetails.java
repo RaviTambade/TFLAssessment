@@ -61,12 +61,8 @@ public class QuestionDetails {
                 Objects.equals(subject, other.subject) &&
                 Objects.equals(criteria, other.criteria);
     }
-<<<<<<< HEAD
 
     @Override
-=======
-    
->>>>>>> 91d724f050ac4a21ce50ace181ff6c281730f9f4
     public int hashcode() {
         return Objects.hash(id, question, subject, criteria);
     }
