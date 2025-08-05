@@ -39,6 +39,8 @@ public class QuestionTitle {
 
     }
 
+    @Override
+
     public int hashcode() {
         return Objects.hash(id, title);
     }

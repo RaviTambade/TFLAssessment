@@ -63,6 +63,7 @@ public class QuestionDetails {
                 Objects.equals(criteria, other.criteria);
     }
 
+    @Override
     public int hashcode() {
         return Objects.hash(id, question, subject, criteria);
 
