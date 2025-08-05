@@ -49,7 +49,7 @@ public class Role {
         return id == other.id &&
                 Objects.equals(name, other.name);
     }
-
+    @Override
     public int hashcode() {
         return Objects.hash(id, name, lob);
     }
