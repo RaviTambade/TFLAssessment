@@ -1,5 +1,4 @@
-package com.transflower.tflAssessment.entities;
-
+package com.transflower.tflassessment.demo.entities;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
