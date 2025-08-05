@@ -1,6 +1,8 @@
 package tap.transflower.tflAssessment.entities;
 
-public class LoginResponse {
+import java.util.Objects;
+
+public class LoginResponse implements Cloneable {
     
     private String token ;
     private User user ;
@@ -20,6 +22,38 @@ public class LoginResponse {
  public void setUser(User user){
     this.user=user;
  }
+
+@Override
+  public String toString(){
+     return "LoginResponse{token ="+ token + " , user = " + user + "}";
+  }
+
+@Override
+  public boolean equals(Object obj){
+    if (this==obj) return true;
+    if(obj==null || getClass() != obj.getClass()) return false;
+     LoginResponse other = (LoginResponse) obj;
+       return Objects.equals(token, other.token) && Objects.equals(user, other.user);     
+  }   
+  
+@Override
+public int hashCode() {
+    return Objects.hash(token, user);
+}
+
+@Override
+protected void finalize() throws Throwable {
+    try {
+    } finally {
+        super.finalize();
+    }
+}
+
+
+@Override
+public Object clone() throws CloneNotSupportedException {
+    return super.clone();
+}
 
 
 }
