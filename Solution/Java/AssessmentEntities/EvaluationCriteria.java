@@ -51,12 +51,12 @@ public class EvaluationCriteria {
         if(this == obj) {
             if (obj != null && obj.getClass() == this.getClass()) {
                 EvaluationCriteria ec1 = (EvaluationCriteria)obj;
-                
+                if(this.toString() == ec1.toString()) {
+                    return true;
+                }
             }
         }
-        else {
             return false;
-        }
     }
 }
 /* 
