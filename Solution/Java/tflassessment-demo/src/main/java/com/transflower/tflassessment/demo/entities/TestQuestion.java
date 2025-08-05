@@ -1,4 +1,4 @@
-package com.transflower.tflAssessment.entities;
+package com.transflower.tflassessment.demo.entities;
 
 public class TestQuestion {
     private int id;
@@ -118,8 +118,22 @@ public class TestQuestion {
         return questionBankId;
     }
 
-    
+    @Override
+    public String toString(){
+        return "TestQuestion{ Id : "+id+"\t"
+        +"Title : "+title+"\t "
+        +"Option A : "+A+"\t "
+        +"Option B : "+B+"\t "
+        +"Option C : "+C+"\t"
+        +"Option D : "+D+"\t "
+        +"Test Id : "+testId+"\t"
+        +"Evaluation Criteria :"+evaluationCriteria+"\t "
+        +"Criteria : "+criteria+"\t"
+        +"Answer Key : "+answerKey+"\t "
+        +"Question Bank Id : "+questionBankId;
+    }
 
-
+    @Override
+    public 
 
 }
