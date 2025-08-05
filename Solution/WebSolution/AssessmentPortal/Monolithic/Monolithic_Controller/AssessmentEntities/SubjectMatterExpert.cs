@@ -15,6 +15,7 @@ namespace Transflower.TFLAssessment.Entities
 }
 
 
+<<<<<<< HEAD
 package com.transflower.tflAssesment.entities;
 
 public class SubjectMatterExpert {
@@ -68,4 +69,7 @@ public class SubjectMatterExpert {
         this.Employee = Employee;
     }
 }
+=======
+
+>>>>>>> f80797a8a93967558d70bb49bb4948cfe747db0f
 

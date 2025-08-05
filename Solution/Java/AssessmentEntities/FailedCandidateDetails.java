@@ -1,5 +1,11 @@
 package com.transflower.tflAssessment.entities;
+
+import java.util.Objects;
+
+import com.transflower.tflAssessment.entities.EvaluationCriteria;
+
 public class FailedCandidateDetails {
+
     private int testId;
     private int candidateId;
     private String firstName;
@@ -73,4 +79,48 @@ public class FailedCandidateDetails {
         this.score = score;
     }
 
+    @Override
+    public String toString() {
+        return ("Test Id: " + testId + "Candidate Id: " + candidateId + "First Name: " + firstName + "Last Name: " + lastName + "Passing Level: " + passingLevel + "Score: " + score);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || (this.getClass() != obj.getClass())) {
+            return false;
+        }
+        FailedCandidateDetails fc = (FailedCandidateDetails) obj;
+        return this.testId == fc.testId
+                && this.candidateId == fc.candidateId
+                && (this.firstName == null ? fc.firstName == null : this.firstName.equals(fc.firstName))
+                && (this.lastName == null ? fc.firstName == null : this.lastName.equals(fc.lastName))
+                && this.passingLevel == fc.passingLevel
+                && this.score == fc.score;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.testId, this.candidateId, this.firstName, this.lastName, this.passingLevel, this.score);
+    }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        try {
+            return new FailedCandidateDetails(this.testId, this.candidateId, this.firstName, this.lastName, this.passingLevel, this.score);
+        } catch (Exception e) {
+            System.out.println(e);
+            return null;
+        }
+    }
+
+    @Override
+    public void finalize() throws Throwable {
+        try {
+            System.out.println("Finalize called for \" + this");
+        } finally {
+        }
+    }
 }

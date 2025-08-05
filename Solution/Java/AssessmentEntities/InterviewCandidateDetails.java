@@ -1,6 +1,8 @@
-namespace com.transflower.tflAssessment.entities;
+package  com.transflower.tflAssessment.entities;
 
-public class InterviewCandidateDetails{
+import java.util.Objects;
+
+public class InterviewCandidateDetails {
 
     public String firstName;
     public String lastName;
@@ -13,7 +15,7 @@ public class InterviewCandidateDetails{
         this.candidateId = 0;
         this.title = null;
     }
-    
+
     public InterviewCandidateDetails(String firstName, String lastName, int candidateId, String title) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -51,5 +53,50 @@ public class InterviewCandidateDetails{
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    @Override
+    public String toString() {
+        return ("First Name: " + firstName + "last Name: " + lastName + "Candidate Id" + candidateId + "Title: " + title);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || this.getClass() != obj.getClass()) {
+            return false;
+        }
+        InterviewCandidateDetails ic = (InterviewCandidateDetails) obj;
+        return (this.firstName == null ? ic.firstName == null : this.firstName.equals(ic.firstName))
+                && (this.lastName == null ? ic.lastName == null : this.lastName.equals(ic.lastName))
+                && this.candidateId == ic.candidateId
+                && (this.title == null ? ic.title == null : this.equals(ic.title));
+
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.firstName, this.lastName, this.candidateId, this.title);
+    }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        try {
+            return new InterviewCandidateDetails(this.firstName, this.lastName, this.candidateId, this.title);
+        } catch (Exception e) {
+            System.out.println(e);
+            return null;
+        }
+    }
+
+    @Override
+    public void finalize() throws Throwable {
+        try {
+            System.out.println("Finalized called for " + this);
+        } finally {
+            super.finalize();
+        }
     }
 }

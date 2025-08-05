@@ -1,7 +1,53 @@
-namespace Transflower.TFLAssessment.Entities;
+package com.transflower.tflAssesment.entities;
 
-public class Subject {
-   
-   public int Id {get;set;}
-   public string Title {get;set;}
+public class SubjectMatterExpert {
+
+    private int Id;
+    private int SubjectId;
+    private int EmployeeId;
+    private Subject Subject;
+    private Employee Employee;
+
+    public int getId(int Id)
+    {
+        return Id;
+    }
+
+    public void setId()
+    {
+        this.Id = Id;
+    }
+
+    public int getSubjectId(int SubjectId)
+    {
+        return SubjectId;
+    }
+    public void setSubjectId()
+    {
+        this.SubjectId = SubjectId;
+    }
+    public int getEmployeeId(int EmployeeId)
+    {
+        return EmployeeId;
+    }
+    public int setEmployeeId()
+    {
+        this.EmployeeId = EmployeeId;
+    }
+    public Subject getSubject(String Subject)
+    {
+        return Subject;
+    }
+    public Subject setSubject()
+    {
+        this.Subject = Subject;
+    }
+    public Employee getEmployee(Employee Employee)
+    {
+        return Employee;
+    }
+    public Employee setEmployee()
+    {
+        this.Employee = Employee;
+    }
 }
