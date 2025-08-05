@@ -4,7 +4,7 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-public class TestEmployeeDetails {
+public class TestEmployeeDetails implements Cloneable {
     private int id;
     private String testName;
     private String passingLevel;
@@ -132,8 +132,14 @@ public class TestEmployeeDetails {
         }
     }
 
-    protected Object Clone() throws CloneNotSupportedException {
-        return super.clone();
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        try {
+            return new TestEmployeeDetails(id, testName, passingLevel, duration, scheduledStart, scheduledEnd, status);
+        } catch (Exception e) {
+            System.out.println("Clone Exception");
+            return null;
+        }
     }
 
 }
