@@ -31,19 +31,19 @@ public class QuestionBankRepositoryImpl implements QuestionBankRepository {
         return null;
     }
     public  List <boolean> updateAnswer(int id,char answerKey){
-        return null;
+        return false;
     }
     public  List<Question> getQuestion(int questionId){
         return null;
     }
     public  List<boolean> updateQuestionOptions(int id,Question options){
-        return null;
+        return false;
     }
     public  List<boolean> updateSubjectCriteria(int questionId,Question question){
-        return null;
+        return false;
     }
     public  List<boolean> insertQuestion(NewQuestion question){
-        return null;
+        return false;
     }
     public  List<String> getCriteria(String subject, int questionId){
         return null;
