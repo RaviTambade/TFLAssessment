@@ -74,12 +74,54 @@ public class ResultRepositoryImpl implements ResultRepository {
 
     @Override
     public boolean setCandidateTestEndTime(int candidateId, int testId, LocalDateTime time) {
-        return false;
+        boolean status = false;
+        String query = "update candidatetestresults set testendtime =? where candidateid=? and testid=?";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setTimestamp(1, Timestamp.valueOf(time));
+            preparedStatement.setInt(2, candidateId);
+            preparedStatement.setInt(3, testId);
+
+            int rowsAffected = preparedStatement.executeUpdate();
+            if (rowsAffected > 0) {
+                status = true;
+            }
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+        return status;
      }
 
     @Override
     public CandidateResultDetails candidateTestResultDetails(int candidateId, int testId) {
-        return null;
+       CandidateResultDetails candidateResultDetails=new CandidateResultDetails();
+        try
+        {
+            CallableStatement callableStatement=connection.prepareCall("{call spcandidatetestresultdetails(?,?,?,?,?)}");
+            callableStatement.setInt(1,candidateId);
+            callableStatement.setInt(2,testId);
+            callableStatement.registerOutParameter(3,java.sql.Types.INTEGER);
+            callableStatement.registerOutParameter(4,java.sql.Types.INTEGER);
+            callableStatement.registerOutParameter(5,java.sql.Types.INTEGER);
+
+            callableStatement.execute();
+            int correctAnswer=callableStatement.getInt(3);
+            int incorrectAnswer=callableStatement.getInt(4);
+            int skippedQuestions=callableStatement.getInt(5);
+            
+            candidateResultDetails.setCorrectAnswer(correctAnswer);
+            candidateResultDetails.setIncorrectAnswer(incorrectAnswer);
+            candidateResultDetails.setSkippedQuestions(skippedQuestions);
+            candidateResultDetails.setCandidateId(candidateId);
+            candidateResultDetails.setTestId(testId);
+        }
+        catch(Exception e)
+        {
+            System.out.println(e);
+        }
+        return candidateResultDetails;
     }
 
     @Override
