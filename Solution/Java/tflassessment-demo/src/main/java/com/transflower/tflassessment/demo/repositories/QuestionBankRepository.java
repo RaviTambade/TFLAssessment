@@ -3,7 +3,7 @@ package com.transflower.tflassessment.demo.entities;
 import java.util.List;
 
 
-public interface IQuestionBankRepository{
+public interface QuestionBankRepository{
     public  List<QuestionTitle>  getAllQuestions();
     public  List<SubjectQuestion>  getQuestionsBySubject(int id);
     public  List<QuestionDetails>  getQuestionsBySubjectAndCriteria(int subjectId,int criteriaId);
