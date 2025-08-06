@@ -196,12 +196,56 @@ public class ResultRepositoryImpl implements ResultRepository {
 
     @Override
     public List<TestList> getTestList(int candidateId) {
-        return null;
+        List<TestList> testList = new ArrayList<TestList>();
+        String query = "SELECT cr.testid AS Id, cr.score AS Score, t.name AS TestName"
+                        +" FROM candidatetestresults cr"
+                        +" JOIN tests t ON cr.testid = t.id where candidateid=?";
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, candidateId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                TestList test = new TestList();
+                test.setTestId(resultSet.getInt("Id"));
+                test.setScore(resultSet.getInt("Score"));
+                test.setTestName(resultSet.getString("TestName"));
+
+                testList.add(test);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return testList;
        }
 
     @Override
     public List<PassedCandidateDetails> getPassedCandidateResults(int testId) {
-        return null;
+        List<PassedCandidateDetails> passedCandidateDetails = new ArrayList<PassedCandidateDetails>();
+        String query = "select tests.id,candidatetestresults.candidateid,candidatetestresults.score,tests.passinglevel,employees.firstname,employees.lastname"
+                        +" from tests"
+                        +" inner join candidatetestresults on tests.id=candidatetestresults.testid"
+                         +" inner join employees on candidatetestresults.candidateid=employees.id"
+                          +" where candidatetestresults.score >= tests.passinglevel AND tests.id=?";
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, testId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                PassedCandidateDetails passedCandidateDetail = new PassedCandidateDetails();
+                passedCandidateDetail.setTestId(resultSet.getInt("id"));
+                passedCandidateDetail.setCandidateId(resultSet.getInt("candidateid"));
+                passedCandidateDetail.setFirstName(resultSet.getString("firstname"));
+                passedCandidateDetail.setLastName(resultSet.getString("lastname"));
+                passedCandidateDetail.setPassingLevel(resultSet.getInt("passinglevel"));
+                passedCandidateDetail.setScore(resultSet.getInt("score"));
+                passedCandidateDetails.add(passedCandidateDetail);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return passedCandidateDetails;
     }
 
     @Override
