@@ -78,4 +78,9 @@ public class User {
         public void setUserRoles(List<UserRole> userRoles) {
         this.userRoles = userRoles;
     }
+
+        public void addUserRole(UserRole userRole) {
+            // TODO Auto-generated method stub
+            throw new UnsupportedOperationException("Unimplemented method 'addUserRole'");
+        }
 }
