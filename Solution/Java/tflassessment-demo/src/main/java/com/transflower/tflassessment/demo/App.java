@@ -1,8 +1,9 @@
 package com.transflower.tflassessment.demo;
-import com.transflower.tflassessment.demo.entities.*;
+import com.transflower.tflassessment.demo.entities.Person;
 import com.transflower.tflassessment.demo.repositories.PersonRepository;
 import com.transflower.tflassessment.demo.repositories.PersonRepositoryImpl;
-import com.transflower.tflassessment.demo.services.*;
+import com.transflower.tflassessment.demo.services.PersonService;
+import com.transflower.tflassessment.demo.services.PersonServiceImpl;
 
 public class App 
 {
@@ -15,6 +16,10 @@ public class App
         PersonRepository repo=new PersonRepositoryImpl();
         PersonService svc=new PersonServiceImpl(repo);
         svc.getAll();
+
+        // EvaluationCriteria evc=new EvaluationCriteria(23,"JAVA",10);
+        // evc.updateSubject();
+        // evc.
 
     }
 }
