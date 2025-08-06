@@ -4,6 +4,17 @@ import java.util.List;
 // import transflower.tflassessment.Repositories.Repositories.*
 
 public class QuestionBankRepositoryImpl implements QuestionBankRepository {
+
+
+    // private readonly IConfiguration _configuration;
+    // private readonly string _connectionString;
+
+    // public QuestionBankRepository(IConfiguration configuration)
+    // {
+    //     _configuration = configuration;
+    //     _connectionString = _configuration.GetConnectionString("DefaultConnection") ?? throw new ArgumentNullException("connectionString");
+    // }
+   
     public  List<QuestionTitle> getAllQuestions(){
         return null;
     }
