@@ -1,5 +1,6 @@
-package com.transflower.tflassessment.demo.entities;
+package com.transflower.tflassessment.demo.repositories;
 
+import com.transflower.tflassessment.demo.entities.*;
 import java.util.List;
 
 
@@ -9,12 +10,12 @@ public interface QuestionBankRepository{
     public  List<QuestionDetails>  getQuestionsBySubjectAndCriteria(int subjectId,int criteriaId);
     public  List<QuestionDetails>  getQuestionsWithSubjectAndCriteria();
     public  List<Question>  getQuestions(int testId);
-    public  <bool> updateAnswer(int id,char answerKey);
-    public  <Question>  getQuestion(int questionId);
-    public  <bool> updateQuestionOptions(int id,Question options);
-    public  <bool> updateSubjectCriteria(int questionId,Question question);
-    public  <bool> insertQuestion(NewQuestion question);
-    public  <string>  getCriteria(string subject, int questionId);
+    public  boolean updateAnswer(int id,char answerKey);
+    public  Question  getQuestion(int questionId);
+    public  boolean updateQuestionOptions(int id,Question options);
+    public  boolean updateSubjectCriteria(int questionId,Question question);
+    public  boolean insertQuestion(NewQuestion question);
+    public  String  getCriteria(String subject, int questionId);
 }
     
-}
+
