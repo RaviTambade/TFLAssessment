@@ -17,13 +17,28 @@ public class App
             System.out.println("Candidate ID: " + candidateId + "Score: " + score);
         }
 
+        AuthRepositoryImpl auth=new AuthRepositoryImpl();
+    User user = auth.getUserWithRolesByEmail("kajal.ghule@example.com", "12345");
+    for (UserRole userRole : user.getUserRoles()) {
+        String email = userRole.getEmail();
+        String password = userRole.getPassword();
+        System.out.println("User Email:" + email + " User Password:" + password);
+    }
+
+        
+        
+       }
+        
+    }
+
+
+      
         // EvaluationCriteria evc=new EvaluationCriteria(23,"JAVA",10);
         // evc.updateSubject();
         // evc.
 
 
-    }
-}
+    
 //mvn clean install
 //mvn package
 //mvn exec:java -Dexec.mainClass="com.transflower.tflAssessment.demo.App"
