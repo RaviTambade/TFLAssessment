@@ -1,10 +1,11 @@
 package com.transflower.tflassessment.demo;
+
 import com.transflower.tflassessment.demo.entities.*;
 import com.transflower.tflassessment.demo.repositories.*;
+
 import java.util.*;
 
-public class App 
-{
+public class App {
     public static void main( String[] args )
     { 
         //Create instance of the repository implementation
@@ -18,7 +19,7 @@ public class App
         }
 
         AuthRepositoryImpl auth=new AuthRepositoryImpl();
-    User user = auth.getUserWithRolesByEmail("kajal.ghule@example.com", "12345");
+     User user = auth.getUserWithRolesByEmail("kajal.ghule@example.com", "12345");
     for (UserRole userRole : user.getUserRoles()) {
         String email = userRole.getEmail();
         String password = userRole.getPassword();
@@ -28,20 +29,15 @@ public class App
         
         
        }
-        
-    }
 
+}
 
-      
-        // EvaluationCriteria evc=new EvaluationCriteria(23,"JAVA",10);
-        // evc.updateSubject();
-        // evc.
+// EvaluationCriteria evc=new EvaluationCriteria(23,"JAVA",10);
+// evc.updateSubject();
+// evc.
 
+// mvn clean install
+// mvn package
+// mvn exec:java -Dexec.mainClass="com.transflower.tflAssessment.demo.App"
 
-    
-//mvn clean install
-//mvn package
-//mvn exec:java -Dexec.mainClass="com.transflower.tflAssessment.demo.App"
-
-
-//These are commands to used for compiling, running java app
+// These are commands to used for compiling, running java app

@@ -1,30 +1,75 @@
 package com.transflower.tflassessment.demo.repositories;
 
+import java.sql.*;
+
 import java.time.LocalDateTime;
 import java.util.List;
 import com.transflower.tflassessment.demo.entities.*;
 
 public class ResultRepositoryImpl implements ResultRepository {
 
-    // private readonly IConfiguration _configuration;
-    // private readonly string _connectionString;
-
-    // public ResultRepository(IConfiguration configuration)
-    // {
-    //     _configuration = configuration;
-    //     _connectionString = _configuration.GetConnectionString("DefaultConnection") ?? throw new ArgumentNullException("connectionString");
-    // }
+    Connection connection;
+    public ResultRepositoryImpl()
+    {
+        try
+        {
+            String url="jdbc:mysql://localhost:3306/assessmentdb";
+            String userName="root";
+            String password="password";
+            connection=DriverManager.getConnection(url, userName, password);
+            System.out.println("Connection Established");
+        }
+        catch(Exception e)
+        {
+            System.out.println(e);
+            System.out.println("Error in connecting to database");
+        }
+    }
 
     @Override
     public int getCandidateScore(int candidateId, int testId) {
+        try{
+        CallableStatement callableStatement = connection.prepareCall("{call spcandidatetestresult(?,?,?)}");
+        callableStatement.setInt(1, candidateId);
+        callableStatement.setInt(2, testId);
+        callableStatement.registerOutParameter(3, java.sql.Types.INTEGER);
+
+        callableStatement.execute();
+        int score = callableStatement.getInt(3);
+        return score;
+        }
+        catch(Exception e)
+        {
+            System.out.println(e);
+            System.out.println("Error in getting candidate score");
+        }
         return -1;
     }
         
 
     @Override
     public boolean setCandidateTestStartTime(int candidateId, int testId, LocalDateTime time) {
-       
-        return false;
+       boolean status=false;
+       String query= "insert into candidatetestresults(testid,teststarttime,candidateid) values (?,?,?)";
+       try{
+            PreparedStatement preparedStatement=connection.prepareStatement(query);
+            preparedStatement.setInt(1, testId);
+            preparedStatement.setTimestamp(2, Timestamp.valueOf(time));
+            preparedStatement.setInt(3, candidateId);
+
+            int rowsAffected=preparedStatement.executeUpdate();
+            if(rowsAffected>0)
+            {
+                status=true;
+            }
+        
+       }
+       catch(Exception e)
+       {
+        System.out.println(e);
+       }
+
+        return status;
     }
 
     @Override
@@ -88,5 +133,4 @@ public class ResultRepositoryImpl implements ResultRepository {
     public List<TestScoreDto> getCandidateAllScore(int candidateId) {
         return null;
     }
-    
 }
