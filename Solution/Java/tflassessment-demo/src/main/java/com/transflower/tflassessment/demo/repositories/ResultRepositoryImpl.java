@@ -250,7 +250,31 @@ public class ResultRepositoryImpl implements ResultRepository {
 
     @Override
     public List<FailedCandidateDetails> getFailedCandidateResults(int testId) {
-        return null;
+        List<FailedCandidateDetails> failedCandidateDetails = new ArrayList<FailedCandidateDetails>();
+        String query = "select tests.id,candidatetestresults.candidateid,candidatetestresults.score,tests.passinglevel,employees.firstname,employees.lastname"
+                + " from tests"
+                + " inner join candidatetestresults on tests.id=candidatetestresults.testid"
+                + " inner join employees on candidatetestresults.candidateid=employees.id"
+                + " where candidatetestresults.score <= tests.passinglevel AND tests.id=?";
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, testId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                FailedCandidateDetails failedCandidateDetail = new FailedCandidateDetails();
+                failedCandidateDetail.setTestId(resultSet.getInt("id"));
+                failedCandidateDetail.setCandidateId(resultSet.getInt("candidateid"));
+                failedCandidateDetail.setFirstName(resultSet.getString("firstname"));
+                failedCandidateDetail.setLastName(resultSet.getString("lastname"));
+                failedCandidateDetail.setPassingLevel(resultSet.getInt("passinglevel"));
+                failedCandidateDetail.setScore(resultSet.getInt("score"));
+                failedCandidateDetails.add(failedCandidateDetail);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return failedCandidateDetails;
     }
 
     @Override
