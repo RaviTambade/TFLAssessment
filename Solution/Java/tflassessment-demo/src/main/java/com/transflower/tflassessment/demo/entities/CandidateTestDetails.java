@@ -96,16 +96,10 @@ public class CandidateTestDetails {
     }
 
     @Override
-    public String toString() {
-        return "CandidateTestDetails{"
-                + "candidateId=" + candidateId
-                + ", candidateName='" + candidateName + '\''
-                + ", testId=" + testId
-                + ", testName='" + testName + '\''
-                + ", testDate=" + testDate
-                + ", testPassingLevel=" + testPassingLevel
-                + '}';
-    }
+public String toString() {
+    return "CandidateTestDetails{candidateId='" + candidateId + "', candidateName='" + candidateName + "', testId='" + testId + "', testName='" + testName + "', testDate='" + testDate + "', testPassingLevel='" + testPassingLevel + "'}";
+}
+
 
     @Override
     public boolean equals(Object obj) {

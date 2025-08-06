@@ -107,19 +107,9 @@ public class CreateTestWithQuestions implements Cloneable {
     }
 
     @Override
-
-    public String toString() {
-        return "CreateTestWithQuestions{"
-                + "subjectId = " + subjectId
-                + ", name = '" + name + '\''
-                + ", duration = '" + duration + '\''
-                + ", smeId =  " + smeId
-                + " ,scheduleDate =" + scheduledDate
-                + " ,passingLevel=" + passingLevel
-                + " , questionIds=  " + questionIds
-                + '}';
-
-    }
+public String toString() {
+    return "CreateTestWithQuestions{subjectId='" + subjectId + "', name='" + name + "', duration='" + duration + "', smeId='" + smeId + "', scheduleDate='" + scheduledDate + "', passingLevel='" + passingLevel + "', questionIds='" + questionIds + "'}";
+}
 
     @Override
     public boolean equals(Object obj) {

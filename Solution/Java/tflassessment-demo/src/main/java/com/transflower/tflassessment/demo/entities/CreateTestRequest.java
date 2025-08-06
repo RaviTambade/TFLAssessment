@@ -120,16 +120,7 @@ public class CreateTestRequest implements Cloneable {
 
     @Override
 public String toString() {
-    return "CreateTestRequest{" +
-            "subjectId=" + subjectId +
-            ", name='" + name + '\'' +
-            ", duration='" + duration + '\'' +
-            ", subjectExpertId=" + subjectExpertId +
-            ", creationDate=" + creationDate +
-            ", modificationDate=" + modificationDate +
-            ", scheduledDate=" + scheduledDate +
-            ", passingLevel=" + passingLevel +
-            '}';
+    return "CreateTestRequest{subjectId='" + subjectId + "', name='" + name + "', duration='" + duration + "', subjectExpertId='" + subjectExpertId + "', creationDate='" + creationDate + "', modificationDate='" + modificationDate + "', scheduledDate='" + scheduledDate + "', passingLevel='" + passingLevel + "'}";
 }
     @Override
     public boolean equals(Object obj) {

@@ -90,17 +90,9 @@ public class Employee implements Cloneable {
     }
 
     @Override
-    public String toString() {
-        return "Employee{"
-                + "id=" + id
-                + ", userId=" + userId
-                + ", firstName='" + firstName + '\''
-                + ", lastName='" + lastName + '\''
-                + ", email='" + email + '\''
-                + ", contact='" + contact + '\''
-                + ", role='" + role + '\''
-                + '}';
-    }
+public String toString() {
+    return "Employee{id='" + id + "', userId='" + userId + "', firstName='" + firstName + "', lastName='" + lastName + "', email='" + email + "', contact='" + contact + "', role='" + role + "'}";
+}
 
     @Override
     public boolean equals(Object obj) {
