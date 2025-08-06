@@ -1,4 +1,4 @@
-package com.transflower.tflassessment.demo.*;
+package com.transflower.tflassessment.demo.repositories;
 import java.util.List;
 // import transflower.tflassessment.Repositories.Interfaces.*
 // import transflower.tflassessment.Repositories.Repositories.*
@@ -19,19 +19,19 @@ public class QuestionBankRepositoryImpl implements QuestionBankRepository {
     public  List<Question> getQuestions(int testId){
         return null;
     }
-    public  List <bool> updateAnswer(int id,char answerKey){
+    public  List <boolean> updateAnswer(int id,char answerKey){
         return null;
     }
     public  List<Question> getQuestion(int questionId){
         return null;
     }
-    public  List<bool> updateQuestionOptions(int id,Question options){
+    public  List<boolean> updateQuestionOptions(int id,Question options){
         return null;
     }
-    public  List<bool> updateSubjectCriteria(int questionId,Question question){
+    public  List<boolean> updateSubjectCriteria(int questionId,Question question){
         return null;
     }
-    public  List<bool> insertQuestion(NewQuestion question){
+    public  List<boolean> insertQuestion(NewQuestion question){
         return null;
     }
     public  List<String> getCriteria(String subject, int questionId){
