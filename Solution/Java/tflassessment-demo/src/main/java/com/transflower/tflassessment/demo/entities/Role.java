@@ -38,7 +38,6 @@ public class Role {
         this.lob = lob;
     }
 
-    
     @Override
     public boolean equals(Object obj) {
         if (this == obj)
@@ -47,9 +46,11 @@ public class Role {
             return false;
         Role other = (Role) obj;
         return id == other.id &&
-                Objects.equals(name, other.name);
+                Objects.equals(name, other.name) &&
+                Objects.equals(lob, other.lob);
     }
-    
+
+    @Override
     public int hashcode() {
         return Objects.hash(id, name, lob);
     }

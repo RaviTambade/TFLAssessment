@@ -1,9 +1,10 @@
 package com.transflower.tflassessment.demo.entities;
+
 import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class CandidateTestDetails {
-    
+
     private int candidateId;
 
     private String candidateName;
@@ -16,14 +17,14 @@ public class CandidateTestDetails {
 
     private int testPassingLevel;
 
-   public CandidateTestDetails() {
- 
+    public CandidateTestDetails() {
+
         this.candidateId = 0;
-        this.candidateName=null;
-        this.testId=0;
-        this.testName=null;
-        this.testDate=null;
-        this.testPassingLevel=0;
+        this.candidateName = null;
+        this.testId = 0;
+        this.testName = null;
+        this.testDate = null;
+        this.testPassingLevel = 0;
     }
 
     public CandidateTestDetails(int candidateId, String candidateName, int testId, String testName, LocalDateTime testDate, int testPassingLevel) {
@@ -34,115 +35,114 @@ public class CandidateTestDetails {
         this.testDate = testDate;
         this.testPassingLevel = testPassingLevel;
     }
-    
-    public int getCandidateId()
-    {
+
+    public int getCandidateId() {
         return this.candidateId;
 
     }
-    public void setCandidateId(int id)
-    {
-        this.candidateId=id;
+
+    public void setCandidateId(int id) {
+        this.candidateId = id;
     }
-    
-     public String getCandidateName()
-    {
+
+    public String getCandidateName() {
         return this.candidateName;
 
     }
-    public void setCandidateName(String name)
-    {
-        this.candidateName=name;
+
+    public void setCandidateName(String name) {
+        this.candidateName = name;
 
     }
-    
-    public int getTestId()
-    {
+
+    public int getTestId() {
         return this.testId;
 
     }
-    public void setTestId(int id)
-    {
-        this.testId=id;
+
+    public void setTestId(int id) {
+        this.testId = id;
 
     }
 
-    public String getTestName()
-    {
+    public String getTestName() {
         return this.testName;
 
     }
-    public void setTestName(String name)
-    {
-        this.testName=name;
+
+    public void setTestName(String name) {
+        this.testName = name;
 
     }
 
-    public LocalDateTime getTestDate()
-    {
+    public LocalDateTime getTestDate() {
         return this.testDate;
 
     }
-    public void setTestDate(LocalDateTime date)
-    {
-        this.testDate=date;
+
+    public void setTestDate(LocalDateTime date) {
+        this.testDate = date;
 
     }
 
-    public int getTestPassingLevel()
-    {
+    public int getTestPassingLevel() {
         return this.testPassingLevel;
 
     }
-    public void setTestPassingLevel(int tplevel)
-    {
-        this.testPassingLevel=tplevel;
-    
+
+    public void setTestPassingLevel(int tplevel) {
+        this.testPassingLevel = tplevel;
+
     }
+
     @Override
 public String toString() {
-    return "CandidateTestDetails{" +
-            "candidateId=" + candidateId +
-            ", candidateName='" + candidateName + '\'' +
-            ", testId=" + testId +
-            ", testName='" + testName + '\'' +
-            ", testDate=" + testDate +
-            ", testPassingLevel=" + testPassingLevel +
-            '}';
+    return "CandidateTestDetails{candidateId='" + candidateId + "', candidateName='" + candidateName + "', testId='" + testId + "', testName='" + testName + "', testDate='" + testDate + "', testPassingLevel='" + testPassingLevel + "'}";
 }
 
-@Override
-public boolean equals(Object obj) {
-    if (this == obj) return true;
-    if (obj == null || getClass() != obj.getClass()) return false;
 
-    CandidateTestDetails other = (CandidateTestDetails) obj;
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
 
-    return candidateId == other.candidateId &&
-            testId == other.testId &&
-            testPassingLevel == other.testPassingLevel &&
-            Objects.equals(candidateName, other.candidateName) &&
-            Objects.equals(testName, other.testName) &&
-            Objects.equals(testDate, other.testDate);
-}
+        CandidateTestDetails other = (CandidateTestDetails) obj;
 
-@Override
-public int hashCode() {
-    return Objects.hash(candidateId, candidateName, testId, testName, testDate, testPassingLevel);
-}
-
-@Override
-protected void finalize() throws Throwable {
-    try {
-        System.out.println("CandidateTestDetails object with candidateId " + candidateId + " is being garbage collected");
-    } finally {
-        super.finalize(); 
-    }
-}
-@Override
-    protected Object clone() throws CloneNotSupportedException
-    {
-        return super.clone();
+        return candidateId == other.candidateId
+                && testId == other.testId
+                && testPassingLevel == other.testPassingLevel
+                && Objects.equals(candidateName, other.candidateName)
+                && Objects.equals(testName, other.testName)
+                && Objects.equals(testDate, other.testDate);
     }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(candidateId, candidateName, testId, testName, testDate, testPassingLevel);
+    }
+
+    @Override
+    protected void finalize() throws Throwable {
+        try {
+            System.out.println("CandidateTestDetails object with candidateId " + candidateId + " is being garbage collected");
+        } finally {
+            super.finalize();
+        }
+    }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        try{
+        return new CandidateTestDetails(candidateId,candidateName,testId,testName,testDate,testPassingLevel);
+        } catch(Exception e)   
+        {
+            System.out.println(e);
+            return null;
+        }
+
+    }    
 }

@@ -8,7 +8,6 @@ public class QuestionDetails {
     private String question;
     private String subject;
     private String criteria;
-    
 
     public int getId() {
         return id;
@@ -62,10 +61,10 @@ public class QuestionDetails {
                 Objects.equals(subject, other.subject) &&
                 Objects.equals(criteria, other.criteria);
     }
-    
+
+    @Override
     public int hashcode() {
         return Objects.hash(id, question, subject, criteria);
-
     }
 
     @Override
