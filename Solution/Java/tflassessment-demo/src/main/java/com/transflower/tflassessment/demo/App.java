@@ -1,9 +1,7 @@
 package com.transflower.tflassessment.demo;
 import com.transflower.tflassessment.demo.entities.*;
 import com.transflower.tflassessment.demo.repositories.*;
-import com.transflower.tflassessment.demo.services.*; 
 import java.util.*;
-
 
 public class App 
 {
@@ -18,6 +16,12 @@ public class App
             int score = result.getScore();
             System.out.println("Candidate ID: " + candidateId + "Score: " + score);
         }
+
+        // EvaluationCriteria evc=new EvaluationCriteria(23,"JAVA",10);
+        // evc.updateSubject();
+        // evc.
+
+>>>>>>> 2cbc63912ca9b5b19ec7b3b2eb8e17c37cc2c43a
     }
 }
 //mvn clean install

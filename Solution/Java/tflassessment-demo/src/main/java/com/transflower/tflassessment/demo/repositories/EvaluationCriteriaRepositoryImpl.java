@@ -1,30 +1,59 @@
 package com.transflower.tflassessment.demo.repositories;
-import com.transflower.tflassessment.demo.entities.*;
 
-public class EvaluationCriteriaRepositoryImpl implements EvaluationCriteriaRepository{
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
-    // private readonly IConfiguration _configuration;
-    // private readonly string _connectionString;
+import com.transflower.tflassessment.demo.entities.EvaluationCriteria;
 
-    // public EvaluationCriteriaRepositoryImpl(IConfiguration configuration)
-    // {
-    //     _configuration = configuration;
-    //     _connectionString = _configuration.GetConnectionString("DefaultConnection")  ?? throw new ArgumentNullException("connectionString");
-    // }
-    
+public class EvaluationCriteriaRepositoryImpl implements EvaluationCriteriaRepository {
+
+    private String Url = "jdbc:mysql://localhost:3306/tflassessment";
+    private String Username = "root";
+    private String Password = "password";
+
     @Override
-   public boolean updateSubject(int id, int subjectId) {
+    public boolean updateSubject(int id, int subjectId) {
+        String query = "UPDATE EvaluationCriteria SET subjectId = " + subjectId + " WHERE id = " + id;
+        try {
+            Connection connection = DriverManager.getConnection(Url, Username, Password);
+            Statement statement = connection.createStatement();
+            statement.executeUpdate(query);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return false;
+
     }
 
     @Override
-   public boolean insertCriteria(EvaluationCriteria criteria) {
-         return false;
+    public boolean insertCriteria(EvaluationCriteria criteria) {
+        String query = "INSERT INTO EvaluationCriteria (title, subjectId) VALUES ("
+                + criteria.getTitle() + "," + criteria.getSubjectId() + ")";
+        try{
+                Connection connection = DriverManager.getConnection(Url, Username, Password);
+                Statement statement = connection.createStatement();
+                statement.executeUpdate(query);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return true;
     }
 
     @Override
-   public boolean updateCriteria(int evaluationCriteriaId, int questionId) {
-          return false;
+    public boolean updateCriteria(int EvaluationCriteriaId, int subjectId) {
+
+        String query = "UPDATE  SET subjectId = " + subjectId + " WHERE id = " + EvaluationCriteriaId;
+        try (
+                Connection connection = DriverManager.getConnection(Url, Username, Password); Statement statement = connection.createStatement(); ResultSet result = statement.executeQuery(query);) {
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return true;
+
     }
 
 }
