@@ -51,7 +51,7 @@ public class Role {
     }
 
     @Override
-    public int hashcode() {
+    public int hashCode() {
         return Objects.hash(id, name, lob);
     }
 
@@ -60,7 +60,7 @@ public class Role {
         try {
             System.out.println("Finalize called for " + this);
         } finally {
-            super.finalize();
+            
         }
     }
 

@@ -63,7 +63,7 @@ public class QuestionDetails {
     }
 
     @Override
-    public int hashcode() {
+    public int hashCode() {
         return Objects.hash(id, question, subject, criteria);
     }
 
@@ -72,7 +72,7 @@ public class QuestionDetails {
         try {
             System.out.println("fianlize called for " + this);
         } finally {
-            super.finalize();
+           
         }
     }
 
