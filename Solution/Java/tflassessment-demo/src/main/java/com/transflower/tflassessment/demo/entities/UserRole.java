@@ -1,8 +1,11 @@
-package com.transflower.tflAssessment.entities;
+package com.transflower.tflassessment.demo.entities;
+import java.util.Objects;
 
-import javax.management.relation.Role;
+import com.transflower.tflassessment.demo.entities.*;
+
 
 public class UserRole {
+
    private int id;
    private int userId;
    private int roleId;
@@ -15,13 +18,17 @@ public class UserRole {
       this.role = null;
    }
 
+   public UserRole(Role role) {
+      
+      this.role = role;
+   }
+
    public UserRole(int id, int userId, int roleId, Role role) {
 
       this.id = id;
       this.userId = userId;
       this.roleId = roleId;
       this.role = role;
-
    }
 
    public int getid() {
@@ -53,7 +60,7 @@ public class UserRole {
    }
 
    public void setrole(Role role) {
-      this.Role = Role;
+      this.role = role;
    }
 
    @Override
@@ -62,18 +69,15 @@ public class UserRole {
    }
 
    @Override
-   public boolean equals(object obj) {
+   public boolean equals(Object obj) {
       if (this == obj) {
          return true;
       }
-      if (obj == null || this.getClass != obj.getClass()) {
+      if (obj == null || this.getClass() != obj.getClass()) {
          return false;
       }
-      Userrole ur = new Userrole(obj);
-      if (this.id == ur.id &&
-            this.userId.equals(ur.userId) &&
-            this.roleId.equals(ur.roleId) &&
-            this.role.equals(ur.role)) {
+      UserRole userRole = (UserRole)obj;
+      if (this.id == userRole.id && this.role.equals(userRole.role)) {
          return true;
       } else {
          return false;
@@ -82,26 +86,30 @@ public class UserRole {
 
    @Override
    public int hashCode() {
-      return objects.hash(this.id, this.userId, this.roleId, this.role);
+      return Objects.hash(this.id, this.userId, this.roleId, this.role);
    }
 
    @Override
-   public object clone() throws CloneNotSupportedException {
+   public Object clone() throws CloneNotSupportedException {
+      
+      Object theObject=null;
       try {
-         return new UserRole(this.id, this.userId, this.roleId, this.role);
-      } catch (Exception e) {
-         system.out.println(e);
+        theObject= new UserRole(this.id, this.userId, this.roleId, this.role);
+      } 
+      catch (Exception e) {
+         System.out.println(e);
       }
+      return theObject;
    }
 
    @Override
-   public void finalize() throws throwable {
+   public void finalize() throws Throwable {
 
       try {
-         system.out.println("finalize called for:" + this);
+         System.out.println("finalize called for:" + this);
 
       } finally {
-         super.finalize();
+       
       }
    }
 }

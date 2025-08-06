@@ -2,34 +2,36 @@ package com.transflower.tflassessment.demo.repositories;
 
 import java.util.List;
 
-import com.transflower.tflassessment.demo.entities.CandidateAnswer;
-import com.transflower.tflassessment.demo.entities.CandidateAnswerResult;
-import com.transflower.tflassessment.demo.entities.CandidateTestDetails;
+import com.transflower.tflassessment.demo.entities.*;
+
 
 public class CandidateAnswerRepositoryImpl implements CandidateAnswerRepository{
 
     @Override
-    public boolean insertCandidateAnswers(int candidateId, List<CandidateAnswer> answers) {
+    public boolean insertCandidateAnswer(int candidateId, List<CandidateAnswer> answer) {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'insertCandidateAnswers'");
+        throw new UnsupportedOperationException("Unimplemented method 'insertCandidateAnswer'");
     }
 
     @Override
-    public List<CandidateAnswer> getCandidateAnswers(int candidateId, int testId) {
+    public List<CandidateAnswer> getCandidateAnswer(int CandidateId, int TestId) {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getCandidateAnswers'");
+        throw new UnsupportedOperationException("Unimplemented method 'getCandidateAnswer'");
     }
 
     @Override
-    public List<CandidateAnswerResult> getCandidateAnswerResults(int candidateId, int testId) {
+    public List<CandidateAnswer> getCandidateAnswerResult(int CandidateId, int TestId) {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getCandidateAnswerResults'");
+        throw new UnsupportedOperationException("Unimplemented method 'getCandidateAnswerResult'");
     }
 
     @Override
-    public CandidateTestDetails getCandidateTestDetails(int candidateId, int testId) {
+    public com.transflower.tflassessment.demo.entities.CandidateTestDetails CandidateTestDetails(int CandidateId,
+            int TestId) {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getCandidateTestDetails'");
+        throw new UnsupportedOperationException("Unimplemented method 'CandidateTestDetails'");
     }
+
+    
     
 }

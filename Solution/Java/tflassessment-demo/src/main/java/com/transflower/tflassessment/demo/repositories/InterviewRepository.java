@@ -6,7 +6,7 @@ import com.transflower.tflassessment.demo.entities.InterviewCandidateDetails;
 import com.transflower.tflassessment.demo.entities.InterviewDetails;
 
 
-public interface IInterviewRepository{
+public interface InterviewRepository{
 
     public List<InterviewCandidateDetails> getAllInterviewCandidates();
     public List<InterviewCandidateDetails> getInterviewedCandidatesSubjects(int candidateId);

@@ -161,7 +161,7 @@ public class AssessmentRepositoryImpl implements AssessmentRepository {
     }
 
     @Override
-    public boolean addQuestions(int assessmentId, List<TestQuestionBank> questions) {
+    public boolean addQuestions(int assessmentId, List<TestQuestion> questions) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'addQuestions'");
     }

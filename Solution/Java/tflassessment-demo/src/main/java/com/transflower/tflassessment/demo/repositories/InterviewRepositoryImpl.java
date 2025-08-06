@@ -6,7 +6,7 @@ import java.util.List;
 import com.transflower.tflassessment.demo.entities.InterviewCandidateDetails;
 import com.transflower.tflassessment.demo.entities.InterviewDetails;
 
-public class InterviewRepositoryImpl implements IInterviewRepository {
+public class InterviewRepositoryImpl implements InterviewRepository {
 
     @Override
     public List<InterviewCandidateDetails> getAllInterviewCandidates() {

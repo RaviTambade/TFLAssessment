@@ -1,6 +1,4 @@
 package com.transflower.tflassessment.demo.repositories;
-
-import java.time.LocalDate;
 import java.util.*;
 import com.transflower.tflassessment.demo.entities.*;
 
@@ -27,7 +25,7 @@ public interface AssessmentRepository {
 
     public boolean addQuestion(int assessmentId, int questionId);
 
-    public boolean addQuestions(int assessmentId, List<TestQuestionBank> questions);
+    public boolean addQuestions(int assessmentId, List<TestQuestion> questions);
 
     public boolean changeDuration(int assessmentId, String duration);
 
