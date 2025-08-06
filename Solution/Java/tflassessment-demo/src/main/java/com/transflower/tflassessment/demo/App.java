@@ -21,7 +21,7 @@ public class App
         // evc.updateSubject();
         // evc.
 
->>>>>>> 2cbc63912ca9b5b19ec7b3b2eb8e17c37cc2c43a
+
     }
 }
 //mvn clean install
