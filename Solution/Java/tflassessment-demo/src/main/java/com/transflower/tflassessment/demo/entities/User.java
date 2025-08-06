@@ -114,12 +114,12 @@ public class User {
 public String toString() {
     return "User{" +
             "id=" + id +
-            ", aadharId='" + aadharId + '\'' +
-            ", firstname='" + firstname + '\'' +
-            ", lastname='" + lastname + '\'' +
-            ", email='" + email + '\'' +
-            ", contactNumber='" + contactNumber + '\'' +
-            ", password='" + password + '\'' +
+            ", aadharId='" + aadharId + 
+            ", firstname='" + firstname + 
+            ", lastname='" + lastname + 
+            ", email='" + email + 
+            ", contactNumber='" + contactNumber + 
+            ", password='" + password + 
             '}';
 }
 
