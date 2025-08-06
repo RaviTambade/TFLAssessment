@@ -1,0 +1,17 @@
+{
+  "name": "taskapp",
+  "version": "1.0.0",
+  "description": "This is fullstack application for Task Management",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ravi Tambade",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongoose": "^5.13.2",
+    "mysql": "^2.18.1",
+    "taskapp": "file:"
+  }
+}

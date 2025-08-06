@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Transflower Store</title>
+</head>
+
+<body>
+       <h1>Client Storage</h1>
+       <label> First Name</label><input type="text" id="firstname"/>
+       <br/>
+       <label> Last Name</label><input type="text" id="lastname"/>
+       <br/>
+       <label> City</label><input type="text" id="city"/>
+       <br/>
+
+       <button onclick="onSaveData()" >Store User Data</button>
+       
+       <script>
+           var onSaveData=function(){
+
+            var firstName= document.getElementById("firstname").value;
+            var lastName=document.getElementById("lastname").value;
+            var city=document.getElementById("city").value;
+
+            var user={
+                firstname:firstName,
+                lastname:lastName,
+                city:city
+            };
+
+           // var users=[];
+           // users.push(user);
+
+            //will store user details into localstorage managed by the browser
+            //localStorage.setItem("user",JSON.stringify(user));
+            sessionStorage.setItem("user",JSON.stringify(user));
+
+           };
+
+       </script>
+          
+     
+</body>
+</html>

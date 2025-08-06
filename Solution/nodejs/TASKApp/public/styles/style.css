@@ -1,0 +1,13 @@
+
+
+body {
+    background-image: url("../images/transflowerfarm.jpg");
+}
+
+ h1{ color: darkblue;}
+
+ p{ 
+    color:blueviolet;
+    font-size: x-large;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
