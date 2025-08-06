@@ -1,6 +1,7 @@
 package com.transflower.tflassessment.demo.entities;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class User {
     private int id;
@@ -12,6 +13,30 @@ public class User {
     private String password;
 
     private List<UserRole> userRoles = new ArrayList<>();
+
+
+
+      public User( int id, String aadharId, String firstname, String lastname, String email, String contactNumber, String password) {
+        this.id = id;
+        this.aadharId = aadharId;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.email = email;
+        this.contactNumber = contactNumber;
+        this.password = password;
+
+    }
+    public User() {
+        this.id = 0;
+        this.aadharId = "";
+        this.firstname = "";
+        this.lastname = "";
+        this.email = "";
+        this.contactNumber = "";
+        this.password = "";
+    }
+
+
 
     // Getters and Setters
 
@@ -82,4 +107,66 @@ public class User {
      public void addUserRole(UserRole userRole) {
            this.userRoles=userRoles;
         }
+
+        @Override
+
+   @Override
+public String toString() {
+    return "User{" +
+            "id=" + id +
+            ", aadharId='" + aadharId + '\'' +
+            ", firstname='" + firstname + '\'' +
+            ", lastname='" + lastname + '\'' +
+            ", email='" + email + '\'' +
+            ", contactNumber='" + contactNumber + '\'' +
+            ", password='" + password + '\'' +
+            '}';
 }
+
+    @Override
+public boolean equals(Object obj) {
+    if (this == obj)
+        return true;
+    if (obj == null || getClass() != obj.getClass())
+        return false;
+
+    User other = (User) obj;
+    return id == other.id &&
+           Objects.equals(aadharId, other.aadharId) &&
+           Objects.equals(firstname, other.firstname) &&
+           Objects.equals(lastname, other.lastname) &&
+           Objects.equals(email, other.email) &&
+           Objects.equals(contactNumber, other.contactNumber) &&
+           Objects.equals(password, other.password);
+}
+
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, aadharId, firstname, lastname, email, contactNumber, password);
+
+    }
+
+    @Override
+    protected void finalize() throws Throwable {
+        try {
+            System.out.println("Finalize called for " + this);
+        } finally {
+            super.finalize();
+
+        }
+    }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
+}
+
+        
+    
+        
+    
+        
+
+
