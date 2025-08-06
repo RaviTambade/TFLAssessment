@@ -27,6 +27,7 @@ public class QuestionTitle {
         this.id = id;
         this.title = title;
     }
+    public QuestionTitle(){}
 
     @Override
     public boolean equals(Object obj) {

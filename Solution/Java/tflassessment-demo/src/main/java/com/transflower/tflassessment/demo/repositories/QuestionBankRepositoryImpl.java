@@ -1,26 +1,60 @@
 package com.transflower.tflassessment.demo.repositories;
 
+import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 import com.transflower.tflassessment.demo.entities.*;
 
 
 public class QuestionBankRepositoryImpl implements QuestionBankRepository {
+    public String URL="jdbc:mysql://localhost:3306/tflassessment";
+    public String USERNAME="root";
+    public String PASSWORD="password";
+    public Connection connection;
+    public String query;
 
-
-    // private readonly IConfiguration _configuration;
-    // private readonly string _connectionString;
-
-    // public QuestionBankRepository(IConfiguration configuration)
-    // {
-    //     _configuration = configuration;
-    //     _connectionString = _configuration.GetConnectionString("DefaultConnection") ?? throw new ArgumentNullException("connectionString");
-    // }
     @Override
     public  List<QuestionTitle> getAllQuestions(){
-        return null;
+        ArrayList <QuestionTitle> questions=new ArrayList<>();
+        try {
+            connection=DriverManager.getConnection(URL, USERNAME, PASSWORD);
+        Statement statement=connection.createStatement();
+        query="SELECT * FROM questiobank";
+        ResultSet resultSet=statement.executeQuery(query);
+            
+        while (resultSet.next()) {
+           int id=resultSet.getInt("id");
+           String title=resultSet.getString("title");
+           QuestionTitle questionTitle=new QuestionTitle(id,title);
+           questions.add(questionTitle);
+            
+        }
+      
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        for (QuestionTitle questionTitle : questions) {
+            System.out.println(questionTitle);
+        }
+        return questions;
+
     }
+
+    
     @Override
     public  List<SubjectQuestion> getQuestionsBySubject(int id){
+        List<SubjectQuestion> subjectQuestions=new ArrayList<>();
+        try {
+            connection=DriverManager.getConnection(URL, USERNAME, PASSWORD);
+            Statement statement=connection.createStatement();
+            query="select questionbank.id as questionid, questionbank.title as question, subjects.title as subject, subjects.id as subjectid from questionbank, subjects where questionbank.subjectid=subjects.id and subjects.id=@SubjectId";
+            
+        } catch (Exception e) {
+            // TODO: handle exception
+        }   
+
+
+        
         return null;
     }
     @Override
