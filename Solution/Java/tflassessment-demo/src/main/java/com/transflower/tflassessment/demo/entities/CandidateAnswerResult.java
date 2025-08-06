@@ -72,11 +72,11 @@ public class CandidateAnswerResult {
     {
         if(this == obj) return true;
         if(obj == null || getClass() != obj.getClass()) return false;
-        CandidateAnswerResult that =(CandidateAnswerResult) obj;
-        return testQuestionId == that.testQuestionId &&
-               isCorrect == that.isCorrect &&
-               Objects.equals(candidateAnswer,that.candidateAnswer);
-               Objects.equals(correctAnswer,that.correctAnswer);
+        CandidateAnswerResult other =(CandidateAnswerResult) obj;
+        return testQuestionId == other.testQuestionId &&
+               isCorrect == other.isCorrect &&
+               Objects.equals(candidateAnswer,other.candidateAnswer)&&
+               Objects.equals(correctAnswer,other.correctAnswer);
     }
 
     @Override
@@ -90,8 +90,12 @@ public class CandidateAnswerResult {
     {
         try{
             System.out.println("Finallized Called"+this);
-        }finally{
-            super.finalize();
+        }
+        catch(Exception ee){
+            
+        }
+        finally{
+           
         }
     }
 

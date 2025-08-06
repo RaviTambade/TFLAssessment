@@ -1,4 +1,6 @@
-package com.transflower.tflAssessment.entities;
+package com.transflower.tflassessment.demo.entities;
+
+import java.util.*;
 
 public class UserDTO {
     private int id;
@@ -13,7 +15,7 @@ public class UserDTO {
         this.firstName = null;
         this.lastName = null;
         this.email = null;
-        this.role = null;
+        this.roles = null;
 
     }
 
@@ -21,7 +23,7 @@ public class UserDTO {
 
         this.id = id;
         this.firstName = firstName;
-        this.lastName = lastname;
+        this.lastName = lastName;
         this.email = email;
         this.roles = roles;
     }
@@ -60,7 +62,7 @@ public class UserDTO {
     }
 
     public List<String> getRoles() {
-        return Roles;
+        return roles;
     }
 
     public void setRoles(List<String> roles) {
@@ -100,10 +102,11 @@ public class UserDTO {
     @Override
     public Object clone() throws CloneNotSupportedException {
         try {
-            return new UserDTO(this.id, this.firstName, this.lastName, this.email, this.role);
+            return new UserDTO(this.id, this.firstName, this.lastName, this.email, this.roles);
         } catch (Exception e) {
             System.out.println(e);
         }
+        return null;
     }
 
     @Override
@@ -112,7 +115,6 @@ public class UserDTO {
             System.out.println("Finalize called for: "+this);
         } 
         finally {
-            super.finalize();
         }
     }
 }
