@@ -1,7 +1,8 @@
 package com.transflower.tflassessment.demo.repositories;
+
 import java.util.List;
-// import transflower.tflassessment.Repositories.Interfaces.*
-// import transflower.tflassessment.Repositories.Repositories.*
+import com.transflower.tflassessment.demo.entities.*;
+
 
 public class QuestionBankRepositoryImpl implements QuestionBankRepository {
 
@@ -35,27 +36,28 @@ public class QuestionBankRepositoryImpl implements QuestionBankRepository {
         return null;
     }
     @Override
-    public  List <boolean> updateAnswer(int id,char answerKey){
+    public boolean updateAnswer(int id,char answerKey){
         return false;
     }
+
     @Override
-    public  List<Question> getQuestion(int questionId){
+    public  Question getQuestion(int questionId){
         return null;
     }
     @Override
-    public  List<boolean> updateQuestionOptions(int id,Question options){
+    public  boolean updateQuestionOptions(int id,Question options){
         return false;
     }
     @Override
-    public  List<boolean> updateSubjectCriteria(int questionId,Question question){
+    public  boolean updateSubjectCriteria(int questionId,Question question){
         return false;
     }
     @Override
-    public  List<boolean> insertQuestion(NewQuestion question){
+    public  boolean insertQuestion(NewQuestion question){
         return false;
     }
     @Override
-    public  List<String> getCriteria(String subject, int questionId){
+    public  String getCriteria(String subject, int questionId){
         return null;
     }
     
