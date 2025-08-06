@@ -1,8 +1,12 @@
 package com.transflower.tflassessment.demo.repositories;
 
 import java.sql.*;
+<<<<<<< HEAD
 import java.util.ArrayList;
 import java.util.List;
+=======
+import java.util.*;
+>>>>>>> 7d9530abda55d6050d12f29eb17a0073d12f9744
 import com.transflower.tflassessment.demo.entities.*;
 
 
@@ -13,6 +17,7 @@ public class QuestionBankRepositoryImpl implements QuestionBankRepository {
     public Connection connection;
     public String query;
 
+<<<<<<< HEAD
     @Override
     public  List<QuestionTitle> getAllQuestions(){
         ArrayList <QuestionTitle> questions=new ArrayList<>();
@@ -56,13 +61,95 @@ public class QuestionBankRepositoryImpl implements QuestionBankRepository {
 
         
         return null;
+=======
+    private String URL="jdbc:mysql://localhost:3306/assessmentdb";
+    private String USERNAME="root";
+    private String PASSWORD="password";
+
+    @Override
+    public  List<QuestionTitle> getAllQuestions(){
+
+        List<QuestionTitle> questions = new ArrayList<>();
+        String query = "SELECT * FROM questionbank";
+
+        try (Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(query)) 
+             {
+
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                String title = resultSet.getString("title");
+                QuestionTitle questiontitle=new QuestionTitle(id,title);
+                questions.add( questiontitle);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        for(QuestionTitle questiontitle:questions)
+        {
+           System.out.println(questions);
+        }
+        return questions;
+    }
+    
+    @Override
+    public  List<SubjectQuestion> getQuestionsBySubject(int id){
+        List<SubjectQuestion> questions = new ArrayList<>();
+        String query = "SELECT questionbank.id AS questionid, questionbank.title AS question, subjects.title AS subject, subjects.id AS subjectid FROM questionbank JOIN subjects ON questionbank.subjectid=subjects.id WHERE subjects.id=?";
+
+        try (Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+             PreparedStatement statement = connection.prepareStatement(query)) {
+
+            statement.setInt(1, id);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                SubjectQuestion subjectquestion = new SubjectQuestion();
+                subjectquestion.setQuestionId(resultSet.getInt("questionid"));
+                subjectquestion.setQuestion(resultSet.getString("question"));
+                subjectquestion.setSubjectId(resultSet.getInt("subjectid"));
+                subjectquestion.setSubject(resultSet.getString("subject"));
+                questions.add(subjectquestion);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return questions;
+       
+>>>>>>> 7d9530abda55d6050d12f29eb17a0073d12f9744
     }
     @Override
     public  List<QuestionDetails> getQuestionsBySubjectAndCriteria(int subjectId,int criteriaId){
-        return null;
-    }
+        List<QuestionDetails> questions=new ArrayList<>();
+        String query="select questionbank.id, questionbank.title, subjects.title as subject ,evaluationcriterias.title as criteria from questionbank, subjects,evaluationcriterias where questionbank.subjectid=subjects.id and questionbank.evaluationcriteriaid=evaluationcriterias.id and subjects.id=@SubjectId and evaluationcriterias.id=? " ;
+        try(
+            Connection connection=DriverManager.getConnection(URL, USERNAME, PASSWORD);
+            PreparedStatement statement=connection.prepareStatement(query))
+            {
+                statement.setInt(2, subjectId);
+                statement.setInt(9, criteriaId);
+                ResultSet resultset=statement.executeQuery();
+                while(resultset.next())
+                {
+                    QuestionDetails questiondetails=new QuestionDetails();
+                    questiondetails.setId(resultset.getInt("id"));
+                    questiondetails.setId(resultset.getInt("question"));
+                    questiondetails.setId(resultset.getInt("subject"));
+                    questiondetails.setId(resultset.getInt("criteria"));
+                    questions.add(questiondetails);
+                }
+            }
+            catch(SQLException e)
+            {
+                System.out.println(e);
+            }
+                return questions;
+            
+         }
+
     @Override
     public  List<QuestionDetails> getQuestionsWithSubjectAndCriteria(){
+        
         return null;
     }
     @Override
@@ -96,3 +183,13 @@ public class QuestionBankRepositoryImpl implements QuestionBankRepository {
     }
     
 }
+
+
+
+
+
+
+
+
+
+

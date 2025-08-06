@@ -34,36 +34,46 @@ public class InterviewRepositoryImpl implements InterviewRepository {
 
     @Override
     public List<InterviewCandidateDetails> getInterviewedCandidatesSubjects(int candidateId) {
-        
+       
+        return new ArrayList<InterviewCandidateDetails> ();
     }
 
     @Override
     public InterviewDetails getInterviewDetails(int interviewId) {
+
+        return new InterviewDetails();
         
     }
 
     @Override
     public boolean rescheduleInterview(int interviewId, LocalDateTime date) {
 
-        }
+            return true;
+    }
 
     @Override
     public boolean rescheduleInterview(int interviewId, String time) {
+
+        return true;
         
     }
 
     @Override
     public boolean rescheduleInterview(int interviewId, String time, LocalDateTime date) {
 
+        return true;
     }
 
     @Override
     public boolean changeInterviewer(int interviewId, int smeId) {
-        
+        return false;
+
     }
 
     @Override
     public boolean cancelInterview(int interviewId) {
+
+        return false;
        
     }
     
