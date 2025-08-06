@@ -8,7 +8,7 @@ import javax.security.auth.Subject;
 import com.transflower.tflassessment.demo.entities.*;
 
 
-public class AssessmentRepositoryImpl {
+public class AssessmentRepositoryImpl implements IAssessmentRepository{
     public List<Assessment> GetDetails(int assessmentId) {
         return null;
     }
