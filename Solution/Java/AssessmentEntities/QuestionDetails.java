@@ -1,11 +1,13 @@
 package com.Transflower.TFLAssessment.Entities;
 
+import java.util.Objects;
+
 public class QuestionDetails {
 
-    private int id;
+    int id;
     private String question;
     private String subject;
-    private String Criteria;
+    private String criteria;
 
     public int getId() {
         return id;
@@ -37,6 +39,48 @@ public class QuestionDetails {
 
     public void setCriteria(String criteria) {
         Criteria = criteria;
+    }
+
+    public QuestionDetails(int id, String question, String subject, String criteria) {
+        this.id = id;
+        this.question = question;
+        this.subject = subject;
+        this.criteria = criteria;
+
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null || getClass() != obj.getClass())
+            return false;
+        QuestionDetails other = (QuestionDetails) obj;
+        return id == other.id &&
+                Objects.equals(question, other.question) &&
+                Objects.equals(subject, other.subject) &&
+                Objects.equals(criteria, other.criteria);
+    }
+
+    @Override
+    public int hashcode() {
+        return Objects.hash(id, question, subject, criteria);
+
+    }
+
+    @Override
+    protected void finalize() throws Throwable {
+        try {
+            System.out.println("fianlize called for " + this);
+        } finally {
+            super.finalize();
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "QuestionDetails{id=" + id + ",question=" + question + "',subject=" + subject + ",criteria=" + criteria
+                + "}";
     }
 
 }

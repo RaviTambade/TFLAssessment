@@ -2,7 +2,7 @@ package com.transflower.tflAssessment.entities;
 
 import java.util.Objects;
 
-public class EvaluationCriteria {
+public class EvaluationCriteria implements Cloneable {
 
     private int id;
     private String title;
@@ -60,7 +60,7 @@ public class EvaluationCriteria {
         EvaluationCriteria ec = (EvaluationCriteria) obj;
         return this.id == ec.id
                 && this.subjectId == ec.subjectId
-                && (this.title == null ? ec.title == null : this.title.equals(ec.title));
+                && this.title.equals(ec.title);
     }
 
     @Override

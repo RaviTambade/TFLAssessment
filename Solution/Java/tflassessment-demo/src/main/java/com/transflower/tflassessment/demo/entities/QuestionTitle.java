@@ -38,8 +38,10 @@ public class QuestionTitle {
         return id == other.id && Objects.equals(title, other.title);
 
     }
+
    
-    public int hashcode() {
+     @Override
+    public int hashCode() {
         return Objects.hash(id, title);
     }
 

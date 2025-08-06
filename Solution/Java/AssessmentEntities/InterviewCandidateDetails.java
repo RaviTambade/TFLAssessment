@@ -2,7 +2,7 @@ package  com.transflower.tflAssessment.entities;
 
 import java.util.Objects;
 
-public class InterviewCandidateDetails {
+public class InterviewCandidateDetails implements Cloneable {
 
     public String firstName;
     public String lastName;
@@ -69,10 +69,10 @@ public class InterviewCandidateDetails {
             return false;
         }
         InterviewCandidateDetails ic = (InterviewCandidateDetails) obj;
-        return (this.firstName == null ? ic.firstName == null : this.firstName.equals(ic.firstName))
-                && (this.lastName == null ? ic.lastName == null : this.lastName.equals(ic.lastName))
+        return this.firstName.equals(ic.firstName)
+                && this.lastName.equals(ic.lastName)
                 && this.candidateId == ic.candidateId
-                && (this.title == null ? ic.title == null : this.equals(ic.title));
+                && this.equals(ic.title);
 
     }
 
