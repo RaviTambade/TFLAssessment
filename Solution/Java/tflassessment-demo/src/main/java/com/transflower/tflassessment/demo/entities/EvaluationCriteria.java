@@ -13,6 +13,11 @@ public class EvaluationCriteria implements Cloneable {
         this.subjectId = 0;
     }
 
+    public EvaluationCriteria(String title,int subjectId){
+        this.title=title;
+        this.subjectId=subjectId;
+    }
+
     public EvaluationCriteria(int id, String title, int subjectId) {
         this.id = id;
         this.title = title;
@@ -28,7 +33,7 @@ public class EvaluationCriteria implements Cloneable {
     }
 
     public String getTitle() {
-        return title;
+        return this.title;
     }
 
     public void setTitle(String title) {

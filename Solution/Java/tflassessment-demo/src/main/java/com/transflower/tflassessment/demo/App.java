@@ -1,6 +1,9 @@
 package com.transflower.tflassessment.demo;
 import com.transflower.tflassessment.demo.entities.*;
 import com.transflower.tflassessment.demo.repositories.*;
+import com.transflower.tflassessment.demo.services.EvaluationCriteriaService;
+import com.transflower.tflassessment.demo.services.EvaluationCriteriaserviceImpl;
+
 import java.util.*;
 
 public class App 
@@ -8,19 +11,22 @@ public class App
     public static void main( String[] args )
     { 
         // Create instance of the repository implementation
-        AssessmentIntelligenceRepositoryImpl repo = new AssessmentIntelligenceRepositoryImpl();
+       /*  AssessmentIntelligenceRepositoryImpl repo = new AssessmentIntelligenceRepositoryImpl();
         List<AnnualCandidateResult> results=  repo.getCandidateResults(2, 2015);
         for (AnnualCandidateResult result : results) {
 
             int candidateId = result.getCandidateId();
             int score = result.getScore();
             System.out.println("Candidate ID: " + candidateId + "Score: " + score);
-        }
+        }*/
 
-        // EvaluationCriteria evc=new EvaluationCriteria(23,"JAVA",10);
-        // evc.updateSubject();
-        // evc.
+        EvaluationCriteria evc=new EvaluationCriteria("JAVA",2);
+        EvaluationCriteriaRepositoryImpl evc1= new EvaluationCriteriaRepositoryImpl();
+        EvaluationCriteriaService ser =new EvaluationCriteriaserviceImpl();
 
+        ser.insertCriteria(evc);
+        ser.updateSubject(1,7);
+        ser.updateCriteria(1, 1);
 
     }
 }
