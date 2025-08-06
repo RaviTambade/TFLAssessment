@@ -1,102 +1,104 @@
-
 package com.transflower.tflassessment.demo.entities;
 
 import java.util.Objects;
-
 import javax.security.auth.Subject;
 
-public class SubjectMatterExpert {
+public class SubjectMatterExpert implements Cloneable {
 
-    private int Id;
-    private int SubjectId;
-    private int EmployeeId;
-    private Subject Subject;
-    private Employee Employee;
+    private int id;
+    private int subjectId;
+    private int employeeId;
+    private Subject subject;
+    private Employee employee;
 
-    public int getId(int Id)
-    {
-        return Id;
-    }
-
-    public void setId()
-    {
-        this.Id = Id;
+    public int getId() {
+        return id;
     }
 
-    public int getSubjectId(int SubjectId)
-    {
-        return SubjectId;
+    public void setId(int id) {
+        this.id = id;
     }
-    public void setSubjectId()
-    {
-        this.SubjectId = SubjectId;
+
+    public int getSubjectId() {
+        return subjectId;
     }
-    public int getEmployeeId(int EmployeeId)
-    {
-        return EmployeeId;
+
+    public void setSubjectId(int subjectId) {
+        this.subjectId = subjectId;
     }
-    public int setEmployeeId()
-    {
-        this.EmployeeId = EmployeeId;
+
+    public int getEmployeeId() {
+        return employeeId;
     }
-    public Subject getSubject(Subject Subject)
-    {
-        return Subject;
+
+    public void setEmployeeId(int employeeId) {
+        this.employeeId = employeeId;
     }
-    public Subject setSubject()
-    {
-        this.Subject = Subject;
+
+    public Subject getSubject() {
+        return subject;
     }
-    public Employee getEmployee(Employee Employee)
-    {
-        return Employee;
+
+    public void setSubject(Subject subject) {
+        this.subject = subject;
     }
-    public Employee setEmployee()
-    {
-        this.Employee = Employee;
+
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
     }
 
     @Override
-    public String toString()
-    {
-        return "SubjectMatterExpert{Id="+Id+",SubjectId="+SubjectId+",EmployeeId="+EmployeeId+",Subject='"+Subject+"',Employee='"+Employee+"'}";
+    public String toString() {
+        return "SubjectMatterExpert{" +
+                "id=" + id +
+                ", subjectId=" + subjectId +
+                ", employeeId=" + employeeId +
+                ", subject=" + subject +
+                ", employee=" + employee +
+                '}';
     }
 
     @Override
-    public boolean equals(Object obj)
-    {
+    public boolean equals(Object obj) {
         if (this == obj) return true;
         if (obj == null || getClass() != obj.getClass()) return false;
-        SubjectMatterExpert other =(SubjectMatterExpert) obj;
-        return Id==other.Id &&
-               SubjectId == other.SubjectId &&
-               EmployeeId == other.EmployeeId &&
-               Employee != null ? Employee.equals (other.Employee):other.Employee == null &&
-               Subject != null ? Subject.equals(other.Subject):other.Subject == null;
-    }
-
-    @Override 
-    public int hashCode(){
-        return Objects.hash(Id,SubjectId,EmployeeId,Subject,Employee);
+        SubjectMatterExpert other = (SubjectMatterExpert) obj;
+        return id == other.id &&
+                subjectId == other.subjectId &&
+                employeeId == other.employeeId &&
+                Objects.equals(subject, other.subject) &&
+                Objects.equals(employee, other.employee);
     }
 
     @Override
-    public void finalize() throws Throwable
-    {
-        try{
-            System.out.println("Finalize method called!!"+this);
-        }finally{
-            super.finalize();
+    public int hashCode() {
+        return Objects.hash(id, subjectId, employeeId, subject, employee);
+    }
+
+    @Override
+    protected void finalize() throws Throwable {
+        try {
+            System.out.println("Finalize method called: " + this);
+        } finally {
+            
         }
     }
 
     @Override
-    public Object clone() throws CloneNotSupportedException
-    {
+    public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
 
     public static void main(String[] args) {
-         
+        // Test object creation
+        SubjectMatterExpert sme = new SubjectMatterExpert();
+        sme.setId(1);
+        sme.setSubjectId(101);
+        sme.setEmployeeId(1001);
+        System.out.println(sme);
     }
 }

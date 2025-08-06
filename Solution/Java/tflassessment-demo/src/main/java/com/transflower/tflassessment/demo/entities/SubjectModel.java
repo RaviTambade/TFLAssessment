@@ -26,7 +26,7 @@ public class SubjectModel {
     }
 
     @Override
-    public boolean equal(Object obj)
+    public boolean equals(Object obj)
     {
         if (this == obj) return true;
         if (obj == null || getClass() != obj.getClass()) return false;
@@ -47,7 +47,7 @@ public class SubjectModel {
         try{
             System.out.println("Finalized Called!!"+this);
         }finally{
-            super.finalize();
+          
         }
     }
 

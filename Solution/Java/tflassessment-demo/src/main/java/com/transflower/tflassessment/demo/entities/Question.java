@@ -101,7 +101,7 @@ public class Question {
     protected void finalize() throws Throwable {
     try {
     } finally {
-        super.finalize();
+      
     }
     }
 

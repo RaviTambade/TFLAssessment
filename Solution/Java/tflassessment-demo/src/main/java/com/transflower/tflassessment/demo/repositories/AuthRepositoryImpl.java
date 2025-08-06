@@ -1,12 +1,18 @@
 package com.transflower.tflassessment.demo.repositories;
 
+import com.transflower.tflassessment.demo.entities.*;
 public class AuthRepositoryImpl implements AuthRepository {
 
       @Override
-      public  user getUserWithRolesByEmail(String email,String password){
-        return null;
-    }
+    public  User getUserWithRolesByEmail(String email,String password){
+      
+     
 
+      User user=new User()  ;
+       //database code to fetch user based on email id and password
+
+      return user;
+    }
     
     }
     
