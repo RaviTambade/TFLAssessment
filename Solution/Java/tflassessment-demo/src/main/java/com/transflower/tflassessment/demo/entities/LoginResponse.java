@@ -1,6 +1,6 @@
 package com.transflower.tflassessment.demo.entities;
 import java.util.*;
-public class LoginRespone {
+public class LoginResponse {
     
     private String token ;
     private User user ;
@@ -46,7 +46,7 @@ public int hashCode() {
             System.out.println("Finalize called for"+this);
         }finally
         {
-            super.finalize();
+            
         }
     }
 
@@ -54,7 +54,5 @@ public int hashCode() {
 public Object clone() throws CloneNotSupportedException {
     return super.clone();
 }
-
-
 
 }

@@ -1,18 +1,9 @@
 package com.transflower.tflassessment.demo.repositories;
-
-import java.time.LocalDate;
 import java.util.*;
-import java.util.concurrent.CompletableFuture;
+import com.transflower.tflassessment.demo.entities.*;
 
-import javax.security.auth.Subject;
 
-import com.transflower.tflassessment.demo.entities.Assessment;
-import com.transflower.tflassessment.demo.entities.CreateTestRequest;
-import com.transflower.tflassessment.demo.entities.CreateTestWithQuestions;
-import com.transflower.tflassessment.demo.entities.Employee;
-import com.transflower.tflassessment.demo.entities.TestQuestion;
-
-public interface IAssesmentRepository {
+public interface AssessmentRepository {
     
     public Assessment getDetails(int assessmentId);
 
@@ -34,7 +25,7 @@ public interface IAssesmentRepository {
 
     public boolean addQuestion(int assessmentId, int questionId);
 
-    public boolean addQuestions(int assessmentId, List<TestQuestionBank> questions);
+    public boolean addQuestions(int assessmentId, List<TestQuestion> questions);
 
     public boolean changeDuration(int assessmentId, String duration);
 

@@ -5,37 +5,37 @@ import java.util.*;
 
 public class Subject implements Cloneable
 {
-        private int Id;
-        private String Title;
+        private int id;
+        private String title;
 
-    public int getId()
+    public int getid()
     {
-        return Id;
+        return id;
     }
-    public void setId(int Id)
+    public void setid(int id)
     {
-        this.Id=Id;
+        this.id=id;
     }
-    public String getTitle()
+    public String gettitle()
     {
-        return Title;
-    }
-
-    public void setTitle(String Title)
-    {
-        this.Title=Title;
+        return title;
     }
 
-    public Subject(int Id,String Title)
+    public void settitle(String title)
     {
-        this.Id=Id;
-        this.Title=Title;
+        this.title=title;
+    }
+
+    public Subject(int id,String title)
+    {
+        this.id=id;
+        this.title=title;
     }
 
     @Override
     public String toString()
     {
-        return "Subject{Id="+Id+",Title='"+Title+"'}";
+        return "Subject{id="+id+",title='"+title+"'}";
     }
 
     @Override
@@ -44,13 +44,13 @@ public class Subject implements Cloneable
         if(this==obj) return true;
         if(obj==null || getClass() !=obj.getClass())return false;
         Subject other=(Subject) obj;
-        return Id == other.Id && Objects.equals(Title,other.Title);
+        return id == other.id && Objects.equals(title,other.title);
     }
 
     @Override
     public int hashCode()
     {
-        return Objects.hash(Id,Title);
+        return Objects.hash(id,title);
     }
 
     @Override

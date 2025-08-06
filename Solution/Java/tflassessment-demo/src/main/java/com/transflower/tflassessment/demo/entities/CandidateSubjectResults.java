@@ -113,8 +113,8 @@ public class CandidateSubjectResults {
                 subjectId == that.subjectId &&
                 candidateId == that.candidateId &&
                 score == that.score &&
-                Objects.equals(firstName,that.firstName);
-                Objects.equals(lastName,that.lastName);
+                Objects.equals(firstName,that.firstName) &&
+                Objects.equals(lastName,that.lastName) &&
                 Objects.equals(subject,that.subject);
     }
 
@@ -131,7 +131,7 @@ public class CandidateSubjectResults {
             System.out.println("Finilizaed called"+this);
         }finally
         {
-            super.finalize();
+           
         }
     }
 

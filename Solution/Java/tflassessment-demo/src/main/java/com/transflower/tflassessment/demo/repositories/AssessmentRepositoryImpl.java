@@ -1,14 +1,13 @@
 package com.transflower.tflassessment.demo.repositories;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
-
-import javax.security.auth.Subject;
 
 import com.transflower.tflassessment.demo.entities.*;
 
+public class AssessmentRepositoryImpl implements AssessmentRepository {
 
-public class AssessmentRepositoryImpl {
     public List<Assessment> GetDetails(int assessmentId) {
         return null;
     }
@@ -100,6 +99,96 @@ public class AssessmentRepositoryImpl {
     public List<Boolean> UpdateQuestion(Question question) {
         return null;
     }
-} 
-    
+
+    @Override
+    public Assessment getDetails(int assessmentId) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getDetails'");
+    }
+
+    @Override
+    public List<Assessment> getAll(Date fromDate, Date toDate) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getAll'");
+    }
+
+    @Override
+    public List<Assessment> getAllTests() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getAllTests'");
+    }
+
+    @Override
+    public List<Assessment> getAllBySubjectMatterExpert(int smeId) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getAllBySubjectMatterExpert'");
+    }
+
+    @Override
+    public List<Employee> getAllEmployees() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getAllEmployees'");
+    }
+
+    @Override
+    public List<Subject> getAllSubjects() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getAllSubjects'");
+    }
+
+    @Override
+    public List<EvaluationCriteria> getEvaluationCriterias() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getEvaluationCriterias'");
+    }
+
+    @Override
+    public List<EvaluationCriteria> getEvaluationCriteriasBySubject(int subjectId) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getEvaluationCriteriasBySubject'");
+    }
+
+    @Override
+    public boolean createTest(Assessment newTest) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'createTest'");
+    }
+
+    @Override
+    public boolean addQuestion(int assessmentId, int questionId) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'addQuestion'");
+    }
+
+    @Override
+    public boolean addQuestions(int assessmentId, List<TestQuestion> questions) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'addQuestions'");
+    }
+
+    @Override
+    public boolean changeDuration(int assessmentId, String duration) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'changeDuration'");
+    }
+
+    @Override
+    public boolean reschedule(int assessmentId, Date date) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'reschedule'");
+    }
+
+    @Override
+    public boolean removeQuestion(int assessmentId, int questionId) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'removeQuestion'");
+    }
+
+    @Override
+    public boolean removeQuestions(int[] testQuestions) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'removeQuestions'");
+    }
+}
+ 
 
