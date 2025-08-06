@@ -19,8 +19,8 @@ public class User {
       public User( int id, String aadharId, String firstname, String lastname, String email, String contactNumber, String password) {
         this.id = id;
         this.aadharId = aadharId;
-        this.firstname = firstname;
-        this.lastname = lastname;
+        this.firstName = firstname;
+        this.lastName = lastname;
         this.email = email;
         this.contactNumber = contactNumber;
         this.password = password;
@@ -29,8 +29,8 @@ public class User {
     public User() {
         this.id = 0;
         this.aadharId = "";
-        this.firstname = "";
-        this.lastname = "";
+        this.firstName = "";
+        this.lastName = "";
         this.email = "";
         this.contactNumber = "";
         this.password = "";
@@ -115,8 +115,8 @@ public String toString() {
     return "User{" +
             "id=" + id +
             ", aadharId='" + aadharId + 
-            ", firstname='" + firstname + 
-            ", lastname='" + lastname + 
+            ", firstname='" + firstName + 
+            ", lastname='" + lastName + 
             ", email='" + email + 
             ", contactNumber='" + contactNumber + 
             ", password='" + password + 
@@ -133,8 +133,8 @@ public boolean equals(Object obj) {
     User other = (User) obj;
     return id == other.id &&
            Objects.equals(aadharId, other.aadharId) &&
-           Objects.equals(firstname, other.firstname) &&
-           Objects.equals(lastname, other.lastname) &&
+           Objects.equals(firstName, other.firstName) &&
+           Objects.equals(lastName, other.lastName) &&
            Objects.equals(email, other.email) &&
            Objects.equals(contactNumber, other.contactNumber) &&
            Objects.equals(password, other.password);
@@ -143,7 +143,7 @@ public boolean equals(Object obj) {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, aadharId, firstname, lastname, email, contactNumber, password);
+        return Objects.hash(id, aadharId, firstName, lastName, email, contactNumber, password);
 
     }
 

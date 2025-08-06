@@ -1,4 +1,5 @@
 package com.transflower.tflassessment.demo.entities;
+
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -6,8 +7,6 @@ import java.util.List;
 import java.util.Objects;
 
 public class TestWithQuestions {
-
-
 
     // Test fields
     private int id;
@@ -24,39 +23,41 @@ public class TestWithQuestions {
     // List of related questions
     private List<Question> questions = new ArrayList<>();
 
-public TestWithQuestions(){
-    this.questions=new ArrayList<>();
-    this.id=0;
-    this.name="";
-    this.subjectId=0;
-    this.duration=Duration.zero();
-    this.smeId=0;
-    this.creationDate=LocalDateTime.now();
-    this.modificationDate=LocalDateTime.now();
-    this.scheduledDate=LocalDateTime.now();
-    this.passingLevel=0;
-    this.status="";
-    this.questions = new ArrayList<>();
-    
-}
-public TestWithQuestions(int id,String name, int subjectId,Duration duration,
-int smeId,LocalDateTime creationDate,LocalDateTime modificationDate,LocalDateTime scheduledDate,List<Question>question){
+    public TestWithQuestions() {
+        this.questions = new ArrayList<>();
+        this.id = 0;
+        this.name = "";
+        this.subjectId = 0;
+        this.duration = Duration.ZERO;
+        this.smeId = 0;
+        this.creationDate = LocalDateTime.now();
+        this.modificationDate = LocalDateTime.now();
+        this.scheduledDate = LocalDateTime.now();
+        this.passingLevel = 0;
+        this.status = "";
+        this.questions = new ArrayList<>();
 
-    this.id = id;
-    this.name = name;
-    this.subjectId = subjectId;
-    this.duration = duration;
-    this.smeId = smeId;
-    this.creationDate= creationDate;
-    this.modificationDate = modificationDate;
-    this.scheduledDate = scheduledDate;
-    this.questions = question;
-    this.passingLevel = passingLevel;
-    this.status = status;
-    this.question =question; 
-}
+    }
 
-   // Getters and Setters
+    public TestWithQuestions(int id, String name, int subjectId, Duration duration,
+            int smeId, LocalDateTime creationDate, LocalDateTime modificationDate, LocalDateTime scheduledDate,
+            List<Question> question) {
+
+        this.id = id;
+        this.name = name;
+        this.subjectId = subjectId;
+        this.duration = duration;
+        this.smeId = smeId;
+        this.creationDate = creationDate;
+        this.modificationDate = modificationDate;
+        this.scheduledDate = scheduledDate;
+        this.questions = question;
+        this.passingLevel = passingLevel;
+        this.status = status;
+        this.questions = question;
+    }
+
+    // Getters and Setters
 
     public int getId() {
         return id;
@@ -114,73 +115,66 @@ int smeId,LocalDateTime creationDate,LocalDateTime modificationDate,LocalDateTim
         this.modificationDate = modificationDate;
     }
 
-
     @Override
     public String toString() {
         return "TestWithQuestions{" +
-         "id=" + id + 
-         ", name=" + name +
-         ", subjectId=" + subjectId +
-         ", duration=" + duration +
-         ", smeId=" + smeId +
-          ", creationDate=" + creationDate +
-          ", modificationDate=" + modificationDate +
-          ", scheduledDate=" + scheduledDate +
-          ", passingLevel=" + passingLevel +
-          ", status='" + status +  
-          ", questions=" + questions +
+                "id=" + id +
+                ", name=" + name +
+                ", subjectId=" + subjectId +
+                ", duration=" + duration +
+                ", smeId=" + smeId +
+                ", creationDate=" + creationDate +
+                ", modificationDate=" + modificationDate +
+                ", scheduledDate=" + scheduledDate +
+                ", passingLevel=" + passingLevel +
+                ", status='" + status +
+                ", questions=" + questions +
                 '}';
     }
 
-    
-     @Override
-public boolean equals(Object  obj){
-    if (this==obj)
-    return true;
-if (obj == null || getClass() != obj.getClass()) {       
-    return false;
-}
-TestWithQuestion other = (TestWithQuestion) obj;
-return
-    id == other.id &&
-    Objects.equals(name, other.name) &&
-    subjectId == other.subjectId &&
-    Objects.equals(duration, other.duration) &&
-    smeId == other.smeId &&
-    Objects.equals(creationDate, other.creationDate) &&
-    Objects.equals(modificationDate, other.modificationDate) &&
-    Objects.equals(scheduledDate, other.scheduledDate) &&
-    passingLevel == other.passingLevel &&
-    Objects.equals(status, other.status) &&
-    Objects.equals(questions, other.questions);
-
-}
-
-@Override
-public int hashCode(){
-    return Objects.hash( id,name,subjectId,duration,smeId,creationDate,modificationDate,scheduledDate,passingLevel,status,questions); 
-
-}
-@Override
-public Object clone() throws CloneNotSupportedException {
-    return super.clone();
-
-
-}
-
-@Override
-protected void finalize() throws Throwable {
-    try {
-        System.out.println("Finalize called for " + this);
-    } finally {
-        super.finalize();
-    
-    }
-}
-
-
-
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        TestWithQuestions other = (TestWithQuestions) obj;
+        return id == other.id &&
+                Objects.equals(name, other.name) &&
+                subjectId == other.subjectId &&
+                Objects.equals(duration, other.duration) &&
+                smeId == other.smeId &&
+                Objects.equals(creationDate, other.creationDate) &&
+                Objects.equals(modificationDate, other.modificationDate) &&
+                Objects.equals(scheduledDate, other.scheduledDate) &&
+                passingLevel == other.passingLevel &&
+                Objects.equals(status, other.status) &&
+                Objects.equals(questions, other.questions);
 
     }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, subjectId, duration, smeId, creationDate, modificationDate, scheduledDate,
+                passingLevel, status, questions);
 
+    }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
+
+    }
+
+    @Override
+    protected void finalize() throws Throwable {
+        try {
+            System.out.println("Finalize called for " + this);
+        } finally {
+            super.finalize();
+
+        }
+    }
+
+}

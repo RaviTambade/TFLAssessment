@@ -3,6 +3,7 @@ package com.transflower.tflassessment.demo.repositories;
 import java.sql.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import com.transflower.tflassessment.demo.entities.*;
 
@@ -126,14 +127,71 @@ public class ResultRepositoryImpl implements ResultRepository {
 
     @Override
     public List<TestResultDetails> getTestResultDetail(int testId) {
-       
-        return null;
+       List<TestResultDetails> resultDetails=new ArrayList<TestResultDetails>();
+        String query = "SELECT "
+                       +"candidatetestresults.testid," 
+                       +" candidatetestresults.score, "
+                        +"candidatetestresults.candidateid,"
+                       +" employees.firstname, "
+                        +"employees.lastname, "
+                        +"subjects.title AS subject, "
+                        +"tests.name AS testname "
+                       +" FROM candidatetestresults "
+                        +"INNER JOIN employees ON employees.id = candidatetestresults.candidateid "
+                        +"INNER JOIN tests ON candidatetestresults.testid = tests.id "
+                      +"  INNER JOIN subjects ON tests.subjectid = subjects.id "
+                      +"  WHERE candidatetestresults.testid=?";
+
+        try
+        { 
+            PreparedStatement preparedStatement=connection.prepareStatement(query);
+            preparedStatement.setInt(1, testId);
+            ResultSet resultSet=preparedStatement.executeQuery();
+            while(resultSet.next())
+            {
+                TestResultDetails testResultDetail=new TestResultDetails();
+                testResultDetail.setTestId(testId);
+                testResultDetail.setTestName(resultSet.getString("testname"));
+                testResultDetail.setCandidateId(resultSet.getInt("candidateid"));
+                testResultDetail.setFirstName(resultSet.getString("firstname"));
+                testResultDetail.setLastName(resultSet.getString("lastname"));
+                testResultDetail.setSubject(resultSet.getString("subject"));
+                testResultDetail.setScore(resultSet.getInt("score"));
+                resultDetails.add(testResultDetail);
+            }
+        }
+        catch(Exception e)
+        {
+            System.out.println(e);
+        }
+        return resultDetails;
     }
 
     @Override
     public List<AppearedCandidate> getAppearedCandidates(int testId) {
     
-        return null;
+        List<AppearedCandidate> appearedCandidates = new ArrayList<AppearedCandidate>();
+        String query = "select candidatetestresults.testid, candidatetestresults.candidateid, employees.firstname, employees.lastname"
+                        +" from candidatetestresults" 
+                        + " join employees on employees.id= candidatetestresults.candidateid"
+                        +" where candidatetestresults.testid=?";
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, testId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                AppearedCandidate appearedCandidate = new AppearedCandidate();
+                appearedCandidate.setTestId(testId);
+                appearedCandidate.setCandidateId(resultSet.getInt("candidateid"));
+                appearedCandidate.setFirstName(resultSet.getString("firstname"));
+                appearedCandidate.setLastName(resultSet.getString("lastname"));
+                appearedCandidates.add(appearedCandidate);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return appearedCandidates;
     }
 
     @Override
