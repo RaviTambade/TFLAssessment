@@ -9,7 +9,7 @@ import java.util.*;
 public class App {
     public static void main( String[] args )
     { 
-        // Create instance of the repository implementation
+        //Create instance of the repository implementation
         AssessmentIntelligenceRepositoryImpl repo = new AssessmentIntelligenceRepositoryImpl();
         List<AnnualCandidateResult> results=  repo.getCandidateResults(2, 2015);
         for (AnnualCandidateResult result : results) {

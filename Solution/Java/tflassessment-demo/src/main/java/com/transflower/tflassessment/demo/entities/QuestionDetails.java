@@ -40,8 +40,15 @@ public class QuestionDetails {
     public void setCriteria(String criteria) {
         criteria = criteria;
     }
+     public QuestionDetails() {
+        this.id = id;
+        this.question = question;
+        this.subject = subject;
+        this.criteria = criteria;
 
-    public QuestionDetails() {
+    }
+
+    public QuestionDetails(int id,String question,String subject,String criteria) {
         this.id = id;
         this.question = question;
         this.subject = subject;
