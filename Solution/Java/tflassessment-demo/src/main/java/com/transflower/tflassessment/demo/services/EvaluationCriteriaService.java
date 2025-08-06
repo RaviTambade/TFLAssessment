@@ -4,6 +4,7 @@ import com.transflower.tflassessment.demo.entities.EvaluationCriteria;
 
 public interface EvaluationCriteriaService {
 
+    
     boolean updateSubject(int id, int subjectId);
 
     boolean insertCriteria(EvaluationCriteria criteria);

@@ -1,17 +1,7 @@
 package com.transflower.tflassessment.demo;
-<<<<<<< HEAD
-import com.transflower.tflassessment.demo.entities.Person;
-=======
-import com.transflower.tflassessment.demo.entities.*;
-<<<<<<< HEAD
-import com.transflower.tflassessment.demo.repositories.AuthRepositoryImpl;
-=======
+
 import com.transflower.tflassessment.demo.repositories.AssessmentIntelligenceRepositoryImpl;
->>>>>>> f1cc438a4c6f15bedcf468a0eb4c795a20a0c855
-import com.transflower.tflassessment.demo.repositories.PersonRepository;
-import com.transflower.tflassessment.demo.repositories.PersonRepositoryImpl;
-import com.transflower.tflassessment.demo.services.PersonService;
-import com.transflower.tflassessment.demo.services.PersonServiceImpl;
+import com.transflower.tflassessment.demo.repositories.EvaluationCriteriaRepositoryImpl;
 
 public class App 
 {
@@ -20,16 +10,13 @@ public class App
         // Person p1=new Person();
         // System.out.println(p1);
         // System.out.println( "Hello World!" );
-<<<<<<< HEAD
+
 
         // PersonRepository repo=new PersonRepositoryImpl();
         // PersonService svc=new PersonServiceImpl(repo);
         // svc.getAll();
-         AuthRepositoryImpl auth=new AuthRepositoryImpl();
-         auth.getUserWithRolesByEmail("kajal.ghule@example.com", "12345");
-
-
-=======
+        //  AuthRepositoryImpl auth=new AuthRepositoryImpl();
+        //  auth.getUserWithRolesByEmail("kajal.ghule@example.com", "123
 
         // PersonRepository repo=new PersonRepositoryImpl();
         // PersonService svc=new PersonServiceImpl(repo);
@@ -39,12 +26,16 @@ public class App
         AssessmentIntelligenceRepositoryImpl repo = new AssessmentIntelligenceRepositoryImpl();
 
         // Call the method with sample candidateId and year
-        repo.getCandidateResults(2, 2024);
->>>>>>> f1cc438a4c6f15bedcf468a0eb4c795a20a0c855
+      //  repo.getCandidateResults(2, 2024);
 
-        // EvaluationCriteria evc=new EvaluationCriteria(23,"JAVA",10);
-        // evc.updateSubject();
-        // evc.
+       // EvaluationCriteria evc1=new EvaluationCriteria(23,"JAVA",10);
+        EvaluationCriteriaRepositoryImpl evc2 = new EvaluationCriteriaRepositoryImpl();
+      //  EvaluationCriteriaserviceImpl evc=new EvaluationCriteriaserviceImpl();
+       
+      
+      //  evc.insertCriteria(evc1);
+       //  evc.updateCriteria(22,3);
+       // evc.updateSubject();
 
     }
 }
