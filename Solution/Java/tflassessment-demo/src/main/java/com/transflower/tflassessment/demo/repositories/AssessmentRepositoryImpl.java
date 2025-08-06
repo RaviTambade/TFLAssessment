@@ -3,12 +3,10 @@ package com.transflower.tflassessment.demo.repositories;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import javax.security.auth.Subject;
-
 import com.transflower.tflassessment.demo.entities.*;
 
+public class AssessmentRepositoryImpl implements AssessmentRepository {
 
-public class AssessmentRepositoryImpl implements IAssessmentRepository{
     public List<Assessment> GetDetails(int assessmentId) {
         return null;
     }
@@ -100,6 +98,6 @@ public class AssessmentRepositoryImpl implements IAssessmentRepository{
     public List<Boolean> UpdateQuestion(Question question) {
         return null;
     }
-} 
-    
+}
+ 
 
