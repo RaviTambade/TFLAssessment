@@ -12,7 +12,7 @@ public class AuthRepositoryImpl implements AuthRepository {
     try {
       String URL = "jdbc:mysql://localhost:3306/assessmentdb";
       String UserName = "root";
-      String Password = "password";
+      String Password = "Sarthak@2004";
       connection = DriverManager.getConnection(URL, UserName, Password);
       System.out.println("Connection Established");
     } catch (Exception e) {
@@ -25,13 +25,13 @@ public class AuthRepositoryImpl implements AuthRepository {
   public User getUserWithRolesByEmail(String email, String password) {
     User user = new User();
     try {
-      String selectQuery = "SELECT u.id AS UserId, u.aadharid, u.firstname, u.lastname, u.email, u.contactnumber, u.password, "
-          +
-          "ur.id AS UserRoleId, ur.roleid, r.name AS RoleName, r.lob " +
-          "FROM users u " +
-          "LEFT JOIN userroles ur ON u.id = ur.userid " +
-          "LEFT JOIN roles r ON ur.roleid = r.id " +
-          "WHERE u.email = ?";
+      String selectQuery =  
+    "SELECT u.id AS UserId, u.aadharid, u.firstname, u.lastname, u.email, u.contactnumber, u.password, " +
+                "ur.id AS UserRoleId, ur.roleid, r.name AS RoleName, r.lob " +
+                "FROM users u " +
+                "LEFT JOIN userroles ur ON u.id = ur.userid " +
+                "LEFT JOIN roles r ON ur.roleid = r.id " +
+                "WHERE u.email = '" + email + "'";
 
       statement = connection.createStatement();
       ResultSet resultSet = statement.executeQuery(selectQuery);
@@ -39,19 +39,38 @@ public class AuthRepositoryImpl implements AuthRepository {
       while (resultSet.next()) {
         user.setId(resultSet.getInt("UserId"));
         user.setAadharId(resultSet.getString("aadharid"));
-        user.setFirstName(resultSet.getString("name").split(" ")[0]);
-        user.setFirstName(resultSet.getString("name").split(" ")[1]);
+        user.setFirstName(resultSet.getString("firstname"));
+        user.setLastname(resultSet.getString("lastname"));
         user.setEmail(resultSet.getString("email"));
-        user.setContactNumber(resultSet.getString("contcatnumber"));
+        user.setContactNumber(resultSet.getString("contactnumber"));
         user.setPassword(resultSet.getString("password"));
 
         UserRole userRole = new UserRole();
         userRole.setid(resultSet.getInt("UserRoleId"));
+        userRole.setuserId(resultSet.getInt("UserId"));
         userRole.setroleId(resultSet.getInt("roleid"));
-        userRole.setRoleName(resultSet.getString("RoleName"));
-        userRole.setLob(resultSet.getString("lob"));
 
-        user.addUserRole(userRole);
+        Role role=new Role(resultSet.getInt("roleid"), resultSet.getString("RoleName"), resultSet.getString("lob"));
+
+        userRole.setrole(role);
+
+       user.addUserRole(userRole);
+       
+
+
+        // ResultSetMetaData columnResult = resultSet.getMetaData();
+        //     int columnCount = columnResult.getColumnCount();
+        //     for(int i = 1; i <= columnCount; i++) {
+        //         System.out.printf("%-20s",columnResult.getColumnName(i));
+        //     }
+        //     System.out.println();
+        //     while (resultSet.next()) {
+        //         for (int coloum = 1; coloum <= columnCount; coloum++) {
+        //             System.out.printf("%-20s",resultSet.getString(coloum));
+        //         }
+        //         System.out.println();
+        //     }
+
       }
 
     } catch (Exception e) {
