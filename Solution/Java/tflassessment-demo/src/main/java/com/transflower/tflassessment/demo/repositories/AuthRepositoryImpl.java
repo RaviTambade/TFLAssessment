@@ -54,7 +54,7 @@ public class AuthRepositoryImpl implements AuthRepository {
 
         userRole.setrole(role);
 
-       user.addUserRole(userRole);
+        user.addUserRole(userRole);
        
 
 
