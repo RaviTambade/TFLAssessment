@@ -43,7 +43,7 @@ public class CandidateAnswer {
         {
             this.testQuestionId=testQuestionId;
         }
-        public String getAnserKey()
+        public String getAnswerKey()
         {
             return answerKey;
         }
@@ -95,5 +95,13 @@ public class CandidateAnswer {
             {
                 super.finalize();
             }
+        }
+        public void setTestId(int int1) {
+            // TODO Auto-generated method stub
+            throw new UnsupportedOperationException("Unimplemented method 'setTestId'");
+        }
+        public void add(List<CandidateAnswer> candidates) {
+            // TODO Auto-generated method stub
+            throw new UnsupportedOperationException("Unimplemented method 'add'");
         }
     }

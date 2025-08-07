@@ -4,10 +4,14 @@ import com.transflower.tflassessment.demo.entities.EvaluationCriteria;
 
 public interface EvaluationCriteriaRepository {
 
-    boolean updateSubject(int id, int subjectId);
+    public boolean updateSubject(int id, int subjectId);
 
+<<<<<<< HEAD
     boolean insertCriteria(EvaluationCriteria ec);
+=======
+    public boolean insertCriteria(EvaluationCriteria criteria);
+>>>>>>> 948a715bb6906672a0aa84a6064efbd114d6fc51
 
-    boolean updateCriteria(int EvaluationCriteriaId, int subjectId);
+    public boolean updateCriteria(int EvaluationCriteriaId, int questionId);
 
 }

@@ -37,6 +37,7 @@ public class Role {
         this.name = name;
         this.lob = lob;
     }
+    
 
     @Override
     public boolean equals(Object obj) {
