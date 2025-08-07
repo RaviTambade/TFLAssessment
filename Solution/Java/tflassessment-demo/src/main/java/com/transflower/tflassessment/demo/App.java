@@ -1,45 +1,33 @@
 package com.transflower.tflassessment.demo;
-
-import com.transflower.tflassessment.demo.repositories.AssessmentIntelligenceRepositoryImpl;
+import com.transflower.tflassessment.demo.entities.EvaluationCriteria;
 import com.transflower.tflassessment.demo.repositories.EvaluationCriteriaRepositoryImpl;
+
 
 public class App 
 {
     public static void main( String[] args )
-    {
-        // Person p1=new Person();
-        // System.out.println(p1);
-        // System.out.println( "Hello World!" );
-
-
-        // PersonRepository repo=new PersonRepositoryImpl();
-        // PersonService svc=new PersonServiceImpl(repo);
-        // svc.getAll();
-        //  AuthRepositoryImpl auth=new AuthRepositoryImpl();
-        //  auth.getUserWithRolesByEmail("kajal.ghule@example.com", "123
-
-        // PersonRepository repo=new PersonRepositoryImpl();
-        // PersonService svc=new PersonServiceImpl(repo);
-        // svc.getAll();
-
+    { 
         // Create instance of the repository implementation
-        AssessmentIntelligenceRepositoryImpl repo = new AssessmentIntelligenceRepositoryImpl();
+        // AssessmentIntelligenceRepositoryImpl repo = new AssessmentIntelligenceRepositoryImpl();
+        // List<AnnualCandidateResult> results=  repo.getCandidateResults(2, 2015);
+        // for (AnnualCandidateResult result : results) {
 
-        // Call the method with sample candidateId and year
-      //  repo.getCandidateResults(2, 2024);
+        //     int candidateId = result.getCandidateId();
+        //     int score = result.getScore();
+        //     System.out.println("Candidate ID: " + candidateId + "Score: " + score);
+        // }
 
-       // EvaluationCriteria evc1=new EvaluationCriteria(23,"JAVA",10);
+        EvaluationCriteria evc1=new EvaluationCriteria ("JAVA",1);
         EvaluationCriteriaRepositoryImpl evc2 = new EvaluationCriteriaRepositoryImpl();
-      //  EvaluationCriteriaserviceImpl evc=new EvaluationCriteriaserviceImpl();
-       
       
-      //  evc.insertCriteria(evc1);
-       //  evc.updateCriteria(22,3);
+      
+        evc2.insertCriteria(evc1);
+       // evc.updateCriteria(22,3);
        // evc.updateSubject();
+
 
     }
 }
-
 //mvn clean install
 //mvn package
 //mvn exec:java -Dexec.mainClass="com.transflower.tflAssessment.demo.App"

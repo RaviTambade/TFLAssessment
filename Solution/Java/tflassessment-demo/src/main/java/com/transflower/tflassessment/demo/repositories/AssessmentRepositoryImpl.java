@@ -1,6 +1,7 @@
 package com.transflower.tflassessment.demo.repositories;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -9,10 +10,18 @@ import com.transflower.tflassessment.demo.entities.*;
 public class AssessmentRepositoryImpl implements AssessmentRepository {
 
     public List<Assessment> GetDetails(int assessmentId) {
-        return null;
+
+
+        List<Assessment> assessments=new ArrayList<Assessment>();
+
+        //jdbc code
+
+
+        return assessments;
     }
 
     public List<List<Assessment>> GetAll(LocalDateTime fromDate, LocalDateTime toDate) {
+
         return null;
     }
 
@@ -24,7 +33,7 @@ public class AssessmentRepositoryImpl implements AssessmentRepository {
         return null;
     }
 
-    public List<List<Employee>> GetAllEmployees() {
+    public List<Employee> GetAllEmployees() {
         return null;
     }
 

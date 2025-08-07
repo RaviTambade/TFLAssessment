@@ -7,7 +7,7 @@ import com.transflower.tflassessment.demo.entities.*;
 
 public class QuestionBankRepositoryImpl implements QuestionBankRepository {
 
-    private String URL="jdbc:mysql://localhost:3306/tflecommerce";
+    private String URL="jdbc:mysql://localhost:3306/assessmentdb";
     private String USERNAME="root";
     private String PASSWORD="password";
 
@@ -64,21 +64,36 @@ public class QuestionBankRepositoryImpl implements QuestionBankRepository {
     }
     @Override
     public  List<QuestionDetails> getQuestionsBySubjectAndCriteria(int subjectId,int criteriaId){
-        // // List<QuestionDetails> questions=new ArrayList<>();
-        // String query="select questionbank.id, questionbank.title, subjects.title as subject ,evaluationcriterias.title as criteria from questionbank, subjects,evaluationcriterias where questionbank.subjectid=subjects.id and questionbank.evaluationcriteriaid=evaluationcriterias.id and subjects.id=@SubjectId and evaluationcriterias.id=? " ;
-        // try(
-        //     Connection connection=DriverManager.getConnection(URL, USERNAME, PASSWORD);
-        //     PreparedStatement statement=connection.prepareStatement(query))
-        //     {
-        //         // statement.setInt(2, subjectId);
-        //         // statement.setInt(9, criteriaId);
-        //         ResultSet resultset
-
-        //     }
-        return null;
+        List<QuestionDetails> questions=new ArrayList<>();
+        String query="select questionbank.id, questionbank.title, subjects.title as subject ,evaluationcriterias.title as criteria from questionbank, subjects,evaluationcriterias where questionbank.subjectid=subjects.id and questionbank.evaluationcriteriaid=evaluationcriterias.id and subjects.id=@SubjectId and evaluationcriterias.id=? " ;
+        try(
+            Connection connection=DriverManager.getConnection(URL, USERNAME, PASSWORD);
+            PreparedStatement statement=connection.prepareStatement(query))
+            {
+                statement.setInt(2, subjectId);
+                statement.setInt(9, criteriaId);
+                ResultSet resultset=statement.executeQuery();
+                while(resultset.next())
+                {
+                    QuestionDetails questiondetails=new QuestionDetails();
+                    questiondetails.setId(resultset.getInt("id"));
+                    questiondetails.setId(resultset.getInt("question"));
+                    questiondetails.setId(resultset.getInt("subject"));
+                    questiondetails.setId(resultset.getInt("criteria"));
+                    questions.add(questiondetails);
+                }
+            }
+            catch(SQLException e)
+            {
+                System.out.println(e);
+            }
+                return questions;
+            
          }
+
     @Override
     public  List<QuestionDetails> getQuestionsWithSubjectAndCriteria(){
+        
         return null;
     }
     @Override
