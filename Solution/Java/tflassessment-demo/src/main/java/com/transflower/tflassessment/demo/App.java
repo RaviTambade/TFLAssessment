@@ -44,5 +44,3 @@ public class App
 //mvn package
 //mvn exec:java -Dexec.mainClass="com.transflower.tflAssessment.demo.App"
 
-
-//These are commands to used for compiling, running java app
