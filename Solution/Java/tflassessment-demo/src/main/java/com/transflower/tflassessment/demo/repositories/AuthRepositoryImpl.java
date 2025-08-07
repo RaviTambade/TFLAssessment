@@ -1,6 +1,8 @@
 package com.transflower.tflassessment.demo.repositories;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.transflower.tflassessment.demo.entities.*;
 
@@ -26,6 +28,7 @@ public class AuthRepositoryImpl implements AuthRepository {
   @Override
   public User getUserWithRolesByEmail(String email, String password) {
     User user = new User();
+    List<UserRole> userRoles=new ArrayList<UserRole>();
     try {
       String selectQuery = "SELECT u.id AS UserId, u.aadharid, u.firstname, u.lastname, u.email, u.contactnumber, u.password, "
           +
@@ -37,7 +40,7 @@ public class AuthRepositoryImpl implements AuthRepository {
 
       statement = connection.createStatement();
       ResultSet resultSet = statement.executeQuery(selectQuery);
-
+    
       while (resultSet.next()) {
         user.setId(resultSet.getInt("UserId"));
         user.setAadharId(resultSet.getString("aadharid"));
@@ -49,16 +52,36 @@ public class AuthRepositoryImpl implements AuthRepository {
 
         UserRole userRole = new UserRole();
         userRole.setid(resultSet.getInt("UserRoleId"));
+        userRole.setuserId(resultSet.getInt("UserId"));
         userRole.setroleId(resultSet.getInt("roleid"));
-        userRole.setRoleName(resultSet.getString("RoleName"));
-        userRole.setLob(resultSet.getString("lob"));
 
-        user.addUserRole(userRole);
+        Role role=new Role(resultSet.getInt("roleid"), resultSet.getString("RoleName"), resultSet.getString("lob"));
+
+        userRole.setrole(role);
+
+        userRoles.add(userRole);
+       
+
+        // ResultSetMetaData columnResult = resultSet.getMetaData();
+        //     int columnCount = columnResult.getColumnCount();
+        //     for(int i = 1; i <= columnCount; i++) {
+        //         System.out.printf("%-20s",columnResult.getColumnName(i));
+        //     }
+        //     System.out.println();
+        //     while (resultSet.next()) {
+        //         for (int coloum = 1; coloum <= columnCount; coloum++) {
+        //             System.out.printf("%-20s",resultSet.getString(coloum));
+        //         }
+        //         System.out.println();
+        //     }
+
       }
 
     } catch (Exception e) {
       System.out.println(e);
     }
+    user.addUserRole(userRoles);
+       
 
     return user;
   }
