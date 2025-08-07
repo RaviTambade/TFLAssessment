@@ -15,7 +15,7 @@ public class AssessmentIntelligenceRepositoryImpl implements AssessmentIntellige
         try {
             String URL = "jdbc:mysql://localhost:3306/assessmentdb";
             String Username = "root";
-            String Password = "Sarthak@2004";
+            String Password = "password";
             connection = DriverManager.getConnection(URL, Username, Password);
 
             System.out.println("Connection Established");

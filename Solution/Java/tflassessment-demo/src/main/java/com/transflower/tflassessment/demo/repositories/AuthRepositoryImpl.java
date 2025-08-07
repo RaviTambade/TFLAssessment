@@ -55,6 +55,7 @@ public class AuthRepositoryImpl implements AuthRepository {
         userRole.setuserId(resultSet.getInt("UserId"));
         userRole.setroleId(resultSet.getInt("roleid"));
 
+        
         Role role=new Role(resultSet.getInt("roleid"), resultSet.getString("RoleName"), resultSet.getString("lob"));
 
         userRole.setrole(role);
