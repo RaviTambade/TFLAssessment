@@ -28,13 +28,9 @@ public class QuestionTitle {
         this.id = id;
         this.title = title;
     }
-<<<<<<< HEAD
-    public QuestionTitle(){}
-=======
     public QuestionTitle() {
     }
 
->>>>>>> 7d9530abda55d6050d12f29eb17a0073d12f9744
 
     @Override
     public boolean equals(Object obj) {

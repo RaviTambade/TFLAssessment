@@ -1,67 +1,12 @@
 package com.transflower.tflassessment.demo.repositories;
 
 import java.sql.*;
-<<<<<<< HEAD
-import java.util.ArrayList;
-import java.util.List;
-=======
 import java.util.*;
->>>>>>> 7d9530abda55d6050d12f29eb17a0073d12f9744
 import com.transflower.tflassessment.demo.entities.*;
 
 
 public class QuestionBankRepositoryImpl implements QuestionBankRepository {
-    public String URL="jdbc:mysql://localhost:3306/tflassessment";
-    public String USERNAME="root";
-    public String PASSWORD="password";
-    public Connection connection;
-    public String query;
-
-<<<<<<< HEAD
-    @Override
-    public  List<QuestionTitle> getAllQuestions(){
-        ArrayList <QuestionTitle> questions=new ArrayList<>();
-        try {
-            connection=DriverManager.getConnection(URL, USERNAME, PASSWORD);
-        Statement statement=connection.createStatement();
-        query="SELECT * FROM questiobank";
-        ResultSet resultSet=statement.executeQuery(query);
-            
-        while (resultSet.next()) {
-           int id=resultSet.getInt("id");
-           String title=resultSet.getString("title");
-           QuestionTitle questionTitle=new QuestionTitle(id,title);
-           questions.add(questionTitle);
-            
-        }
-      
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        for (QuestionTitle questionTitle : questions) {
-            System.out.println(questionTitle);
-        }
-        return questions;
-
-    }
-
     
-    @Override
-    public  List<SubjectQuestion> getQuestionsBySubject(int id){
-        List<SubjectQuestion> subjectQuestions=new ArrayList<>();
-        try {
-            connection=DriverManager.getConnection(URL, USERNAME, PASSWORD);
-            Statement statement=connection.createStatement();
-            query="select questionbank.id as questionid, questionbank.title as question, subjects.title as subject, subjects.id as subjectid from questionbank, subjects where questionbank.subjectid=subjects.id and subjects.id=@SubjectId";
-            
-        } catch (Exception e) {
-            // TODO: handle exception
-        }   
-
-
-        
-        return null;
-=======
     private String URL="jdbc:mysql://localhost:3306/assessmentdb";
     private String USERNAME="root";
     private String PASSWORD="password";
@@ -90,6 +35,10 @@ public class QuestionBankRepositoryImpl implements QuestionBankRepository {
         {
            System.out.println(questions);
         }
+
+    //     for (QuestionTitle questionTitle : questions) {
+    //     System.out.println("ID: " + questionTitle.getId() + " | Title: " + questionTitle.getTitle());
+    // }
         return questions;
     }
     
@@ -116,20 +65,20 @@ public class QuestionBankRepositoryImpl implements QuestionBankRepository {
         }
         return questions;
        
->>>>>>> 7d9530abda55d6050d12f29eb17a0073d12f9744
     }
     @Override
     public  List<QuestionDetails> getQuestionsBySubjectAndCriteria(int subjectId,int criteriaId){
         List<QuestionDetails> questions=new ArrayList<>();
-        String query="select questionbank.id, questionbank.title, subjects.title as subject ,evaluationcriterias.title as criteria from questionbank, subjects,evaluationcriterias where questionbank.subjectid=subjects.id and questionbank.evaluationcriteriaid=evaluationcriterias.id and subjects.id=@SubjectId and evaluationcriterias.id=? " ;
-        try(
+        String query="select questionbank.id, questionbank.title, subjects.title as subject ,evaluationcriterias.title as criteria from questionbank, subjects,evaluationcriterias where questionbank.subjectid=subjects.id and questionbank.evaluationcriteriaid=evaluationcriterias.id and subjects.id=? and evaluationcriterias.id=? " ;
+       try (
             Connection connection=DriverManager.getConnection(URL, USERNAME, PASSWORD);
             PreparedStatement statement=connection.prepareStatement(query))
             {
-                statement.setInt(2, subjectId);
-                statement.setInt(9, criteriaId);
+                statement.setInt(1, subjectId);
+                statement.setInt(2, criteriaId);
                 ResultSet resultset=statement.executeQuery();
                 while(resultset.next())
+
                 {
                     QuestionDetails questiondetails=new QuestionDetails();
                     questiondetails.setId(resultset.getInt("id"));
@@ -154,24 +103,127 @@ public class QuestionBankRepositoryImpl implements QuestionBankRepository {
     }
     @Override
     public  List<Question> getQuestions(int testId){
-        return null;
+        
+        List<Question> questions=new ArrayList<>();
+        String query="select * from questionbank where id=? ";
+        try (
+            Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+            PreparedStatement preparedStatement=connection.prepareStatement(query))
+            {
+                preparedStatement.setInt(1, testId);
+                ResultSet resultSet=preparedStatement.executeQuery();
+                while (resultSet.next()) {
+                    Question question = new Question();
+                    question.setId(resultSet.getInt("id"));
+                    question.setSubjectId(resultSet.getInt("SubjectId"));
+                    question.setTitle(resultSet.getString("Title"));
+                    question.setA(resultSet.getString("Option_A"));
+                    question.setB(resultSet.getString("Option_B"));
+                    question.setC(resultSet.getString("Option_C"));
+                    question.setD(resultSet.getString("OPtion_D"));
+                    //Answerkey is defined as char in Question.java; unable to solve this error
+                    //question.setAnswerKey(resultSet.getString("Answer_key"));
+                    question.setEvaluationCriteriaId(resultSet.getInt("Evaluation_CriteriaId"));
+                    questions.add(question);
+                    
+                }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+
+            
+        }
+        return questions;
     }
     @Override
     public boolean updateAnswer(int id,char answerKey){
-        return false;
+        String query = "UPDATE questionbank SET answerkey=? WHERE id=?";
+            try (Connection connection = DriverManager.getConnection(URL,USERNAME,PASSWORD);
+                PreparedStatement preparedStatement = connection.prepareStatement(query)) 
+                {
+                    preparedStatement.setString(1, String.valueOf(answerKey));
+                    preparedStatement.setInt(2, id);
+                    return preparedStatement.executeUpdate() > 0;
+                }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+            return false;
     }
+    
 
     @Override
     public  Question getQuestion(int questionId){
-        return null;
+        String query = " SELECT" + //
+                        "                testquestions.id AS testquestionid, \r\n" + //
+                        "                questionbank.id AS questionbankid,\r\n" + //
+                        "                questionbank.subjectid,\r\n" + //
+                        "                questionbank.title,\r\n" + //
+                        "                questionbank.a,\r\n" + //
+                        "                questionbank.b,\r\n" + //
+                        "                questionbank.c,\r\n" + //
+                        "                questionbank.d,\r\n" + //
+                        "                questionbank.evaluationcriteriaid\r\n" + //
+                        "            FROM questionbank \r\n" + //
+                        "            INNER JOIN testquestions \r\n" + //
+                        "                ON testquestions.questionbankid = questionbank.id \r\n" + //
+                        "            WHERE testquestions.testid = ?";
+
+        try (
+            Connection connection=DriverManager.getConnection(URL,USERNAME , PASSWORD);
+            PreparedStatement preparedStatement=connection.prepareStatement(query);
+        ){
+            preparedStatement.setInt(1,questionId );
+            preparedStatement.executeQuery();
+        } catch (SQLException e) {
+           
+            e.printStackTrace();
+        }
+
+        return ;
     }
     @Override
-    public  boolean updateQuestionOptions(int id,Question options){
-        return false;
+    public  boolean updateQuestionOptions(int id,Question options) {
+        boolean status=false;
+         String query = "UPDATE questionbank SET a=?, b=?, c=?, d=?, answerkey=? WHERE id=?";
+        try (
+            Connection connection=DriverManager.getConnection(URL,USERNAME , PASSWORD);
+            PreparedStatement preparedStatement=connection.prepareStatement(query);
+        )
+        {
+            
+            preparedStatement.setString(1,options.getA());
+            preparedStatement.setString(2,options.getB());
+            preparedStatement.setString(3, options.getC());
+            preparedStatement.setString(4, options.getD());
+            //char is converted to String
+            preparedStatement.setString(5,String.valueOf(options.getAnswerKey()));
+            preparedStatement.setInt(6,options.getId());
+            preparedStatement.executeUpdate();
+            status=true;
+            
+        } catch (Exception e) {
+           e.printStackTrace();
+        }
+       return status;
     }
     @Override
     public  boolean updateSubjectCriteria(int questionId,Question question){
-        return false;
+        boolean status=false;
+        String query="update questionbank set evaluationcriteriaid=? ,subjectid=? where id =?";
+        try (
+            Connection connection=DriverManager.getConnection(URL, USERNAME, PASSWORD);
+            PreparedStatement preparedStatement=connection.prepareStatement(query);)
+            {
+                preparedStatement.setInt(1,question.getEvaluationCriteriaId());
+                preparedStatement.setInt(2, question.getSubjectId());
+                preparedStatement.setInt(3, question.getId());
+                preparedStatement.executeUpdate();
+                status=true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return status;
     }
     @Override
     public  boolean insertQuestion(NewQuestion question){
