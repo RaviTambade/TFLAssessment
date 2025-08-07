@@ -1,8 +1,8 @@
 package com.transflower.tflassessment.demo.repositories;
 
+import com.transflower.tflassessment.demo.entities.*;
 import java.sql.*;
 import java.util.*;
-import com.transflower.tflassessment.demo.entities.*;
 
 
 public class QuestionBankRepositoryImpl implements QuestionBankRepository {
@@ -30,10 +30,6 @@ public class QuestionBankRepositoryImpl implements QuestionBankRepository {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        }
-        for(QuestionTitle questiontitle:questions)
-        {
-           System.out.println(questions);
         }
         return questions;
     }
@@ -69,24 +65,28 @@ public class QuestionBankRepositoryImpl implements QuestionBankRepository {
     @Override
     public  List<QuestionDetails> getQuestionsBySubjectAndCriteria(int subjectId,int criteriaId){
         List<QuestionDetails> questions=new ArrayList<>();
-        String query="select questionbank.id, questionbank.title, subjects.title as subject ,evaluationcriterias.title as criteria from questionbank, subjects,evaluationcriterias where questionbank.subjectid=subjects.id and questionbank.evaluationcriteriaid=evaluationcriterias.id and subjects.id=? and evaluationcriterias.id=? " ;
+        String query="select questionbank.id, questionbank.title, subjects.title as subject ,evaluationcriterias.title as criteria\r\n" + 
+                        "from questionbank, subjects,evaluationcriterias\r\n" + 
+                        "where questionbank.subjectid=subjects.id and questionbank.evaluationcriteriaid=evaluationcriterias.id\r\n" + 
+                        "and subjects.id=? and evaluationcriterias.id=? " ;
         try(
             Connection connection=DriverManager.getConnection(URL, USERNAME, PASSWORD);
             PreparedStatement statement=connection.prepareStatement(query))
             {
                 statement.setInt(1, subjectId);
                 statement.setInt(2, criteriaId);
-                ResultSet resultset=statement.executeQuery();
-                while(resultset.next())
+                ResultSet resultSet=statement.executeQuery();
+                while(resultSet.next())
                 {
                     QuestionDetails questiondetails=new QuestionDetails();
-                    questiondetails.setId(resultset.getInt("id"));
-                    questiondetails.setId(resultset.getInt("question"));
-                    questiondetails.setId(resultset.getInt("subject"));
-                    questiondetails.setId(resultset.getInt("criteria"));
-                    questions.add(questiondetails);
+                    int id = resultSet.getInt("id");
+                    String title = resultSet.getString("title");
+                    String subject = resultSet.getString("subject");
+                    String criteria = resultSet.getString("criteria");
+                    QuestionDetails questionDetails = new QuestionDetails(id, title, subject, criteria);
+                    questions.add(questionDetails);
                 }
-            }
+             }
             catch(SQLException e)
             {
                 System.out.println(e);
@@ -111,19 +111,15 @@ public class QuestionBankRepositoryImpl implements QuestionBankRepository {
                         while(resultset.next())
                         {
                             int id= resultset.getInt("id");
-                            String question=resultset.getString("question");
+                            String title=resultset.getString("title");
                             String subject=resultset.getString("subject");
                             String criteria=resultset.getString("criteria");
-                            QuestionDetails questiondetails=new QuestionDetails(id,question,subject,criteria);
+                            QuestionDetails questiondetails=new QuestionDetails(id,title,subject,criteria);
                             questions.add(questiondetails);
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-                    for(QuestionDetails questiondetails:questions)
-                        {
-                        System.out.println(questions);
-                        }
 
         return questions;
     }
@@ -150,7 +146,7 @@ public class QuestionBankRepositoryImpl implements QuestionBankRepository {
             catch (Exception e) {
                 e.printStackTrace();
             }
-            return false;
+            return true;
     }
 
 
@@ -213,8 +209,21 @@ public class QuestionBankRepositoryImpl implements QuestionBankRepository {
 
     @Override
     public  boolean updateSubjectCriteria(int questionId,Question question){
+        String query = "UPDATE questionbank SET evaluationcriteriaid=?, subjectid=? WHERE id=?";
+        try (Connection connection = DriverManager.getConnection(URL,USERNAME,PASSWORD);
+             PreparedStatement statement = connection.prepareStatement(query)) {
+
+            statement.setInt(1, question.getEvaluationCriteriaId());
+            statement.setInt(2, question.getSubjectId());
+            statement.setInt(3, questionId);
+            return statement.executeUpdate() > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return false;
+       
     }
+
     @Override
     public  boolean insertQuestion(NewQuestion question){
         boolean status=false;
@@ -240,7 +249,8 @@ public class QuestionBankRepositoryImpl implements QuestionBankRepository {
 
     @Override
     public  String getCriteria(String subject, int questionId){
-            String query = "SELECT evaluationcriterias.title FROM evaluationcriterias INNER JOIN questionbank ON questionbank.evaluationcriteriaid = evaluationcriterias.id INNER JOIN subjects ON questionbank.subjectid = evaluationcriterias.subjectid WHERE subjects.title = ? AND questionbank.id = ?";
+            String query = "select evaluationcriterias.title from evaluationcriterias INNER join questionbank on questionbank.evaluationcriteriaid=evaluationcriterias.id\r\n" + 
+                           "inner join subjects on questionbank.subjectid= evaluationcriterias.subjectid WHERE subjects.title=? and questionbank.id=?";
             try (Connection connection = DriverManager.getConnection(URL,USERNAME,PASSWORD);
                 PreparedStatement statement = connection.prepareStatement(query)) {
 
