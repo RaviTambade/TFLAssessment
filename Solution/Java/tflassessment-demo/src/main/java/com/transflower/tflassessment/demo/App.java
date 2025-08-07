@@ -1,5 +1,6 @@
 package com.transflower.tflassessment.demo;
 
+<<<<<<< HEAD
 import com.transflower.tflassessment.demo.entities.*;
 import com.transflower.tflassessment.demo.repositories.AuthRepositoryImpl;
 
@@ -15,6 +16,28 @@ public class App {
         // int score = result.getScore();
         // System.out.println("Candidate ID: " + candidateId + "Score: " + score);
         // }
+=======
+import java.util.List;
+
+import com.transflower.tflassessment.demo.entities.AnnualCandidateResult;
+import com.transflower.tflassessment.demo.entities.User;
+import com.transflower.tflassessment.demo.entities.UserRole;
+import com.transflower.tflassessment.demo.repositories.AssessmentIntelligenceRepositoryImpl;
+import com.transflower.tflassessment.demo.repositories.AuthRepositoryImpl;
+
+public class App {
+    public static void main( String[] args )
+    { 
+        //Create instance of the repository implementation
+        AssessmentIntelligenceRepositoryImpl repo = new AssessmentIntelligenceRepositoryImpl();
+        List<AnnualCandidateResult> results=  repo.getCandidateResults(2, 2015);
+        for (AnnualCandidateResult result : results) {
+
+            int candidateId = result.getCandidateId();
+            int score = result.getScore();
+            System.out.println("Candidate ID: " + candidateId + "Score: " + score);
+        }
+>>>>>>> 71331f978f5c9a5eab5f60f569c7277f6ebcd8f2
 
         AuthRepositoryImpl auth = new AuthRepositoryImpl();
 
