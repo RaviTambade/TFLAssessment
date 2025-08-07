@@ -30,14 +30,14 @@ public class EvaluationCriteriaRepositoryImpl implements EvaluationCriteriaRepos
 
     @Override
     public boolean insertCriteria(EvaluationCriteria criteria) {
-        String query = "INSERT INTO EvaluationCriteria (title, subjectId) VALUES ("
-                + criteria.getTitle() + "," + criteria.getSubjectId() + ")";
-        try{
-                Connection connection = DriverManager.getConnection(Url, Username, Password);
-                Statement statement = connection.createStatement();
-                statement.executeUpdate(query);
+       String query = "UPDATE EvaluationCriteria SET subjectId = " + subjectId + " WHERE id = " + id;
+        try {
+            Connection connection = DriverManager.getConnection(Url, Username, Password);
+            Statement statement = connection.createStatement();
+            statement.executeUpdate(query);
         } catch (SQLException e) {
             e.printStackTrace();
+        }
         }
         return true;
     }

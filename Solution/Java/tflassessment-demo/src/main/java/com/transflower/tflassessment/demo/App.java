@@ -8,14 +8,20 @@ public class App
     public static void main( String[] args )
     { 
         // Create instance of the repository implementation
-        AssessmentIntelligenceRepositoryImpl repo = new AssessmentIntelligenceRepositoryImpl();
-        List<AnnualCandidateResult> results=  repo.getCandidateResults(2, 2015);
-        for (AnnualCandidateResult result : results) {
+        //AssessmentIntelligenceRepositoryImpl repo = new AssessmentIntelligenceRepositoryImpl();
+        //List<AnnualCandidateResult> results=  repo.getCandidateResults(2, 2015);
+        //for (AnnualCandidateResult result : results) {
 
-            int candidateId = result.getCandidateId();
-            int score = result.getScore();
-            System.out.println("Candidate ID: " + candidateId + "Score: " + score);
-        }
+          //  int candidateId = result.getCandidateId();
+            //int score = result.getScore();
+            //System.out.println("Candidate ID: " + candidateId + "Score: " + score);
+        //}
+        
+
+
+
+    }
+
 
         // EvaluationCriteria evc=new EvaluationCriteria(23,"JAVA",10);
         // evc.updateSubject();
@@ -23,7 +29,7 @@ public class App
 
 
     }
-}
+
 //mvn clean install
 //mvn package
 //mvn exec:java -Dexec.mainClass="com.transflower.tflAssessment.demo.App"
