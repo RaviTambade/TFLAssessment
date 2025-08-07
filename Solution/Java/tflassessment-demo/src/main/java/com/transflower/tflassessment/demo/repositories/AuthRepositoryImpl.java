@@ -59,11 +59,7 @@ public class AuthRepositoryImpl implements AuthRepository {
 
         userRole.setrole(role);
 
-<<<<<<< HEAD
         userRoles.add(userRole);
-=======
-        user.addUserRole(userRole);
->>>>>>> 71331f978f5c9a5eab5f60f569c7277f6ebcd8f2
        
 
         // ResultSetMetaData columnResult = resultSet.getMetaData();
