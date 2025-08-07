@@ -1,11 +1,30 @@
 package com.transflower.tflassessment.demo;
 
+<<<<<<< HEAD
 import com.transflower.tflassessment.demo.entities.*;
 import com.transflower.tflassessment.demo.repositories.*;
 import java.util.*;
 
 public class App {
     public static void main(String[] args) {
+=======
+import java.util.List;
+
+import com.transflower.tflassessment.demo.entities.AnnualCandidateResult;
+import com.transflower.tflassessment.demo.entities.User;
+import com.transflower.tflassessment.demo.entities.UserRole;
+import com.transflower.tflassessment.demo.entities.Role;
+import com.transflower.tflassessment.demo.repositories.AssessmentIntelligenceRepositoryImpl;
+import com.transflower.tflassessment.demo.repositories.AuthRepositoryImpl;
+
+public class App {
+    public static void main( String[] args )
+    { 
+        //Create instance of the repository implementation
+        AssessmentIntelligenceRepositoryImpl repo = new AssessmentIntelligenceRepositoryImpl();
+        List<AnnualCandidateResult> results=  repo.getCandidateResults(2, 2015);
+        for (AnnualCandidateResult result : results) {
+>>>>>>> 5155dc5f13931292a8d015a5c1facaba400268fa
 
         // // ================= AssessmentIntelligenceRepository =================
         // AssessmentIntelligenceRepositoryImpl intelligenceRepo = new AssessmentIntelligenceRepositoryImpl();
@@ -31,6 +50,7 @@ public class App {
             System.out.println(q.getId() + " - " + q.getTitle());
         }
 
+<<<<<<< HEAD
         // -------- getQuestionsBySubject --------
         int subjectId = 2;
         System.out.println("\nQuestions by Subject:");
@@ -107,3 +127,50 @@ public class App {
         // }
     }
 }
+=======
+        AuthRepositoryImpl auth = new AuthRepositoryImpl();
+
+        User user = auth.getUserWithRolesByEmail("nirjala.naik@example.com", "12345");
+        int id = user.getId();
+        String aadharId = user.getAadharId();
+        String email = user.getEmail();
+        String password = user.getPassword();
+        String firstName = user.getFirstName();
+        String lastName = user.getLastName();
+        String contactNumber = user.getContactNumber();
+
+        for (UserRole userRole : user.getUserRoles()) {
+
+            Role r = userRole.getrole();
+            // System.out.println("ID: " + id + ", Aadhar ID: " + aadharId + ", Email: " +
+            // email + ", Password: " + password +
+            // ", Role: " + r.getName() + ", First Name: " + firstName + ", Last Name: " +
+            // lastName +
+            // ", Contact Number: " + contactNumber);
+
+            System.out.println("ID: " + id);
+            System.out.println("Aadhar ID: " + aadharId);
+            System.out.println("Email: " + email);
+            System.out.println("Password: " + password);
+            System.out.println("Role: " + r.getName());
+            System.out.println("First Name: " + firstName);
+            System.out.println("Last Name: " + lastName);
+            System.out.println("Contact Number: " + contactNumber);
+
+        }
+
+    }
+}
+
+// EvaluationCriteria evc=new EvaluationCriteria(23,"JAVA",10);
+// evc.updateSubject();
+// evc.
+
+// mvn clean install
+// mvn package
+// mvn exec:java -Dexec.mainClass="com.transflower.tflAssessment.demo.App"
+
+// mvn clean install
+// mvn package
+// mvn exec:java -Dexec.mainClass="com.transflower.tflAssessment.demo.App"
+>>>>>>> 5155dc5f13931292a8d015a5c1facaba400268fa

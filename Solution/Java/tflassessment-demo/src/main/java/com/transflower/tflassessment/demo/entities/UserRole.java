@@ -1,8 +1,6 @@
 package com.transflower.tflassessment.demo.entities;
 import java.util.Objects;
 
-import com.transflower.tflassessment.demo.entities.*;
-
 
 public class UserRole {
 
@@ -131,5 +129,10 @@ public class UserRole {
    public String getPassword() {
     // TODO Auto-generated method stub
     throw new UnsupportedOperationException("Unimplemented method 'getPassword'");
+   }
+
+   public void setName(String string) {
+    // TODO Auto-generated method stub
+    throw new UnsupportedOperationException("Unimplemented method 'setName'");
    }
 }
