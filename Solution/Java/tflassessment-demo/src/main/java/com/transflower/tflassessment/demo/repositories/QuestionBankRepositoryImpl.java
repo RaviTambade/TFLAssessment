@@ -1,8 +1,19 @@
 package com.transflower.tflassessment.demo.repositories;
 
-import java.sql.*;
-import java.util.*;
-import com.transflower.tflassessment.demo.entities.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.transflower.tflassessment.demo.entities.NewQuestion;
+import com.transflower.tflassessment.demo.entities.Question;
+import com.transflower.tflassessment.demo.entities.QuestionDetails;
+import com.transflower.tflassessment.demo.entities.QuestionTitle;
+import com.transflower.tflassessment.demo.entities.SubjectQuestion;
 
 
 public class QuestionBankRepositoryImpl implements QuestionBankRepository {
@@ -135,7 +146,7 @@ public class QuestionBankRepositoryImpl implements QuestionBankRepository {
         return null;
     }
     @Override
-    public boolean updateAnswer(int id,char answerKey){
+    public boolean updateAnswer(int id, String answerKey){
           boolean status=false;
             String query = "UPDATE questionbank SET answerkey=? WHERE id=?";
             try (Connection connection = DriverManager.getConnection(URL,USERNAME,PASSWORD);
@@ -175,7 +186,7 @@ public class QuestionBankRepositoryImpl implements QuestionBankRepository {
                 question.setB(result.getString("b"));
                 question.setC(result.getString("c"));
                 question.setD(result.getString("d"));
-                question.setAnswerKey(result.getString("answerkey").charAt(0));
+                question.setAnswerKey(result.getString("answerkey"));
                 question.setEvaluationCriteriaId(result.getInt("evaluationcriteriaid"));
                 }
             }
@@ -255,6 +266,14 @@ public class QuestionBankRepositoryImpl implements QuestionBankRepository {
             }
             return "";
         
+    }
+
+
+
+    @Override
+    public boolean updateAnswer(int id, char answerKey) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'updateAnswer'");
     }
     
 }

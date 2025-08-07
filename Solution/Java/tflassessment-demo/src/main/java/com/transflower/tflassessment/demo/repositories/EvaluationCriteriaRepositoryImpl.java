@@ -14,20 +14,20 @@ public class EvaluationCriteriaRepositoryImpl implements EvaluationCriteriaRepos
     private String Password = "password";
 
     @Override
-    public boolean updateSubject(int id, int subjectId) {
-        String query = "UPDATE evaluationcriterias SET subjectId = " + subjectId + " WHERE id = " + id;
-        try {
-            Connection connection = DriverManager.getConnection(Url,Username,Password);
-            Statement statement = connection.createStatement();
-            statement.executeUpdate(query);
-             return true;
+    public boolean updateSubject(int id,int subjectId) {
+       String query = "UPDATE evaluationcriterias SET subjectId = " + subjectId + " WHERE id = " + id;
+       try {
+          Connection connection = DriverManager.getConnection(Url,Username,Password);
+          Statement statement = connection.createStatement();
+           statement.executeUpdate(query);
+            return true;
         } catch (SQLException e) {
-            e.printStackTrace();
+          e.printStackTrace();
             return false;
         }
-       
-
+    
     }
+           
 
     @Override
     public boolean insertCriteria(EvaluationCriteria criteria) {
@@ -45,11 +45,11 @@ public class EvaluationCriteriaRepositoryImpl implements EvaluationCriteriaRepos
         }
         
     }
-    
     @Override
-    public boolean updateCriteria(int EvaluationCriteriaId, int subjectId) {
+    public boolean updateCriteria(int evaluationCriteriaId, int id) {
+        
+     String query = "UPDATE questionbank SET evaluationcriteriaid = "+evaluationCriteriaId + " WHERE id = "+ id+";";
 
-        String query = "UPDATE evaluationcriterias SET subjectId = " + subjectId + " WHERE id = " + EvaluationCriteriaId;
         try {
                 Connection connection = DriverManager.getConnection(Url, Username, Password);
                  Statement statement = connection.createStatement(); 
@@ -62,5 +62,4 @@ public class EvaluationCriteriaRepositoryImpl implements EvaluationCriteriaRepos
         }
 
     }
-
 }
