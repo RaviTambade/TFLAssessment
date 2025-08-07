@@ -1,10 +1,10 @@
 package com.transflower.tflassessment.demo;
-import com.transflower.tflassessment.demo.entities.EvaluationCriteria;
-import com.transflower.tflassessment.demo.repositories.EvaluationCriteriaRepositoryImpl;
 
+import com.transflower.tflassessment.demo.entities.User;
+import com.transflower.tflassessment.demo.entities.UserRole;
+import com.transflower.tflassessment.demo.repositories.AuthRepositoryImpl;
 
-public class App 
-{
+public class App {
     public static void main( String[] args )
     { 
         // Create instance of the repository implementation
@@ -17,20 +17,26 @@ public class App
         //     System.out.println("Candidate ID: " + candidateId + "Score: " + score);
         // }
 
-        EvaluationCriteria evc1=new EvaluationCriteria ("JAVA",1);
-        EvaluationCriteriaRepositoryImpl evc2 = new EvaluationCriteriaRepositoryImpl();
-      
-      
-        evc2.insertCriteria(evc1);
-       // evc.updateCriteria(22,3);
-       // evc.updateSubject();
-
-
+        AuthRepositoryImpl auth=new AuthRepositoryImpl();
+     User user = auth.getUserWithRolesByEmail("kajal.ghule@example.com", "12345");
+    for (UserRole userRole : user.getUserRoles()) {
+        String email = userRole.getEmail();
+        String password = userRole.getPassword();
+        System.out.println("User Email:" + email + " User Password:" + password);
     }
+
+        
+        
+       }
+
 }
-//mvn clean install
-//mvn package
-//mvn exec:java -Dexec.mainClass="com.transflower.tflAssessment.demo.App"
 
+// EvaluationCriteria evc=new EvaluationCriteria(23,"JAVA",10);
+// evc.updateSubject();
+// evc.
 
-//These are commands to used for compiling, running java app
+// mvn clean install
+// mvn package
+// mvn exec:java -Dexec.mainClass="com.transflower.tflAssessment.demo.App"
+
+// These are commands to used for compiling, running java app
