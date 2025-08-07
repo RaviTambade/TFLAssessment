@@ -13,6 +13,8 @@ public class AuthRepositoryImpl implements AuthRepository {
       String URL = "jdbc:mysql://localhost:3306/assessmentdb";
       String UserName = "root";
       String Password = "password";
+      // Class.forName("com.mysql.cj.jdbc.Driver");
+      // System.out.println("Driver Loaded");
       connection = DriverManager.getConnection(URL, UserName, Password);
       System.out.println("Connection Established");
     } catch (Exception e) {
@@ -31,7 +33,7 @@ public class AuthRepositoryImpl implements AuthRepository {
           "FROM users u " +
           "LEFT JOIN userroles ur ON u.id = ur.userid " +
           "LEFT JOIN roles r ON ur.roleid = r.id " +
-          "WHERE u.email = ?";
+          "WHERE u.email = '" + email + "'";
 
       statement = connection.createStatement();
       ResultSet resultSet = statement.executeQuery(selectQuery);
@@ -39,10 +41,10 @@ public class AuthRepositoryImpl implements AuthRepository {
       while (resultSet.next()) {
         user.setId(resultSet.getInt("UserId"));
         user.setAadharId(resultSet.getString("aadharid"));
-        user.setFirstName(resultSet.getString("name").split(" ")[0]);
-        user.setFirstName(resultSet.getString("name").split(" ")[1]);
+        user.setFirstName(resultSet.getString("firstName"));
+        user.setLastname(resultSet.getString("lastName"));
         user.setEmail(resultSet.getString("email"));
-        user.setContactNumber(resultSet.getString("contcatnumber"));
+        user.setContactNumber(resultSet.getString("contactnumber"));
         user.setPassword(resultSet.getString("password"));
 
         UserRole userRole = new UserRole();

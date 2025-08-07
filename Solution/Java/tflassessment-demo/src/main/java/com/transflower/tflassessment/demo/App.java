@@ -8,17 +8,17 @@ public class App
     public static void main( String[] args )
     { 
         // Create instance of the repository implementation
-        AssessmentIntelligenceRepositoryImpl repo = new AssessmentIntelligenceRepositoryImpl();
-        List<AnnualCandidateResult> results=  repo.getCandidateResults(2, 2015);
-        for (AnnualCandidateResult result : results) {
+        // AssessmentIntelligenceRepositoryImpl repo = new AssessmentIntelligenceRepositoryImpl();
+        // List<AnnualCandidateResult> results=  repo.getCandidateResults(2, 2015);
+        // for (AnnualCandidateResult result : results) {
 
-            int candidateId = result.getCandidateId();
-            int score = result.getScore();
-            System.out.println("Candidate ID: " + candidateId + "Score: " + score);
-        }
+        //     int candidateId = result.getCandidateId();
+        //     int score = result.getScore();
+        //     System.out.println("Candidate ID: " + candidateId + "Score: " + score);
+        // }
 
         AuthRepositoryImpl auth=new AuthRepositoryImpl();
-    User user = auth.getUserWithRolesByEmail("kajal.ghule@example.com", "12345");
+    User user = auth.getUserWithRolesByEmail("nirjala.naik@example.com", "12345");
     for (UserRole userRole : user.getUserRoles()) {
         String email = userRole.getEmail();
         String password = userRole.getPassword();
@@ -26,10 +26,11 @@ public class App
     }
 
         
-        
        }
         
     }
+
+    
 
 
       
