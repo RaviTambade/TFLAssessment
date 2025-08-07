@@ -1,6 +1,8 @@
 package com.transflower.tflassessment.demo.repositories;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.transflower.tflassessment.demo.entities.*;
 
@@ -12,7 +14,9 @@ public class AuthRepositoryImpl implements AuthRepository {
     try {
       String URL = "jdbc:mysql://localhost:3306/assessmentdb";
       String UserName = "root";
-      String Password = "Sarthak@2004";
+      String Password = "password";
+      // Class.forName("com.mysql.cj.jdbc.Driver");
+      // System.out.println("Driver Loaded");
       connection = DriverManager.getConnection(URL, UserName, Password);
       System.out.println("Connection Established");
     } catch (Exception e) {
@@ -24,23 +28,24 @@ public class AuthRepositoryImpl implements AuthRepository {
   @Override
   public User getUserWithRolesByEmail(String email, String password) {
     User user = new User();
+    List<UserRole> userRoles=new ArrayList<UserRole>();
     try {
-      String selectQuery =  
-    "SELECT u.id AS UserId, u.aadharid, u.firstname, u.lastname, u.email, u.contactnumber, u.password, " +
-                "ur.id AS UserRoleId, ur.roleid, r.name AS RoleName, r.lob " +
-                "FROM users u " +
-                "LEFT JOIN userroles ur ON u.id = ur.userid " +
-                "LEFT JOIN roles r ON ur.roleid = r.id " +
-                "WHERE u.email = '" + email + "'";
+      String selectQuery = "SELECT u.id AS UserId, u.aadharid, u.firstname, u.lastname, u.email, u.contactnumber, u.password, "
+          +
+          "ur.id AS UserRoleId, ur.roleid, r.name AS RoleName, r.lob " +
+          "FROM users u " +
+          "LEFT JOIN userroles ur ON u.id = ur.userid " +
+          "LEFT JOIN roles r ON ur.roleid = r.id " +
+          "WHERE u.email = '" + email + "'";
 
       statement = connection.createStatement();
       ResultSet resultSet = statement.executeQuery(selectQuery);
-
+    
       while (resultSet.next()) {
         user.setId(resultSet.getInt("UserId"));
         user.setAadharId(resultSet.getString("aadharid"));
-        user.setFirstName(resultSet.getString("firstname"));
-        user.setLastname(resultSet.getString("lastname"));
+        user.setFirstName(resultSet.getString("firstName"));
+        user.setLastname(resultSet.getString("lastName"));
         user.setEmail(resultSet.getString("email"));
         user.setContactNumber(resultSet.getString("contactnumber"));
         user.setPassword(resultSet.getString("password"));
@@ -50,13 +55,13 @@ public class AuthRepositoryImpl implements AuthRepository {
         userRole.setuserId(resultSet.getInt("UserId"));
         userRole.setroleId(resultSet.getInt("roleid"));
 
+        
         Role role=new Role(resultSet.getInt("roleid"), resultSet.getString("RoleName"), resultSet.getString("lob"));
 
         userRole.setrole(role);
 
-       user.addUserRole(userRole);
+        userRoles.add(userRole);
        
-
 
         // ResultSetMetaData columnResult = resultSet.getMetaData();
         //     int columnCount = columnResult.getColumnCount();
@@ -76,6 +81,8 @@ public class AuthRepositoryImpl implements AuthRepository {
     } catch (Exception e) {
       System.out.println(e);
     }
+    user.addUserRole(userRoles);
+       
 
     return user;
   }

@@ -104,7 +104,7 @@ public class User {
         this.userRoles = userRoles;
     }
 
-     public void addUserRole(UserRole userRole) {
+     public void addUserRole(List<UserRole> userRoles) {
            this.userRoles=userRoles;
         }
 

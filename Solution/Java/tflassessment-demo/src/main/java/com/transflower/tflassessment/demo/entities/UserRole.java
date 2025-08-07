@@ -1,8 +1,6 @@
 package com.transflower.tflassessment.demo.entities;
 import java.util.Objects;
 
-import com.transflower.tflassessment.demo.entities.*;
-
 
 public class UserRole {
 
