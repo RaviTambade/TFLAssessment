@@ -28,18 +28,18 @@
       <version>3.5.6-Final</version>
     </dependency>
   </dependencies>
-
   <build>
-    <plugins>
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>exec-maven-plugin</artifactId>
-        <version>3.1.0</version>
-        <configuration>
-          <mainClass>com.transflower.tflassessment.demo.App</mainClass> <!-- Replace this with your actual main class -->
-        </configuration>
-      </plugin>
-    </plugins>
-  </build>
+<plugins>
+<plugin>
+<groupId>org.codehaus.mojo</groupId>
+<artifactId>exec-maven-plugin</artifactId>
+<version>3.1.0</version>
+<configuration>
+<mainClass>com.transflower.tflassessment.demo.App</mainClass>
+<!--  Replace this with your actual main class  -->
+</configuration>
+</plugin>
+</plugins>
 
+</build>
 </project>

@@ -1,6 +1,7 @@
 package com.transflower.tflassessment.demo.entities;
 
 import java.util.Objects;
+
 import javax.security.auth.Subject;
 
 public class SubjectMatterExpert implements Cloneable {
@@ -10,6 +11,14 @@ public class SubjectMatterExpert implements Cloneable {
     private int employeeId;
     private Subject subject;
     private Employee employee;
+
+    public SubjectMatterExpert(int id, int subjectId, int employeeId, Subject subject, Employee employee) {
+        this.id = id;
+        this.subjectId = subjectId;
+        this.employeeId = employeeId;
+        this.subject = subject;
+        this.employee = employee;
+    }
 
     public int getId() {
         return id;
@@ -93,12 +102,4 @@ public class SubjectMatterExpert implements Cloneable {
         return super.clone();
     }
 
-    public static void main(String[] args) {
-        // Test object creation
-        SubjectMatterExpert sme = new SubjectMatterExpert();
-        sme.setId(1);
-        sme.setSubjectId(101);
-        sme.setEmployeeId(1001);
-        System.out.println(sme);
-    }
 }

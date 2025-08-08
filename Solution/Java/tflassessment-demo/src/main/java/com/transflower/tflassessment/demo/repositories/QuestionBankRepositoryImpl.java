@@ -1,8 +1,26 @@
 package com.transflower.tflassessment.demo.repositories;
 
+<<<<<<< HEAD
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.transflower.tflassessment.demo.entities.NewQuestion;
+import com.transflower.tflassessment.demo.entities.Question;
+import com.transflower.tflassessment.demo.entities.QuestionDetails;
+import com.transflower.tflassessment.demo.entities.QuestionTitle;
+import com.transflower.tflassessment.demo.entities.SubjectQuestion;
+
+=======
 import com.transflower.tflassessment.demo.entities.*;
 import java.sql.*;
 import java.util.*;
+>>>>>>> 3a53f0e7cf550669a4a5c775c202424d86b80874
 
 public class QuestionBankRepositoryImpl implements QuestionBankRepository {
 
@@ -115,11 +133,73 @@ public class QuestionBankRepositoryImpl implements QuestionBankRepository {
     }
 
     @Override
-    public List<Question> getQuestions(int testId) {
-        return null;
+        public List<Question> getQuestions(int testId) {
+    List<Question> questions = new ArrayList<>();
+    
+    String query = " SELECT " + 
+                "testquestions.id AS testquestionid, \r\n" + 
+                "questionbank.id AS questionbankid,\r\n" + 
+                "questionbank.subjectid,\r\n" + 
+                "questionbank.title,\r\n" + 
+                "questionbank.a,\r\n" + 
+                "questionbank.b,\r\n" + 
+                "questionbank.c,\r\n" + 
+                "questionbank.d,\r\n" + 
+                "questionbank.evaluationcriteriaid\r\n" + 
+                "FROM questionbank \r\n" + 
+                "INNER JOIN testquestions \r\n" + 
+                "ON testquestions.questionbankid = questionbank.id \r\n" + 
+                "WHERE testquestions.testid = ?";
+
+    try (Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+         PreparedStatement statement = connection.prepareStatement(query)) {
+
+        statement.setInt(1, testId);
+
+        try (ResultSet resultSet = statement.executeQuery()) {
+            while (resultSet.next()) {
+                Question question = new Question();
+                question.setId(resultSet.getInt("testquestionid")); // testquestions.id
+                question.setSubjectId(resultSet.getInt("subjectid"));
+                question.setTitle(resultSet.getString("title"));
+                question.setA(resultSet.getString("a"));
+                question.setB(resultSet.getString("b"));
+                question.setC(resultSet.getString("c"));
+                question.setD(resultSet.getString("d"));
+                question.setEvaluationCriteriaId(resultSet.getInt("evaluationcriteriaid"));
+                
+                questions.add(question);
+            }
+        }
+    } catch (SQLException e) {
+        e.printStackTrace(); 
     }
 
+    return questions;
+}
+
+    
+    
+
     @Override
+<<<<<<< HEAD
+    public boolean updateAnswer(int id, String answerKey){
+          boolean status=false;
+            String query = "UPDATE questionbank SET answerkey=? WHERE id=?";
+            try (Connection connection = DriverManager.getConnection(URL,USERNAME,PASSWORD);
+                PreparedStatement statement = connection.prepareStatement(query)) 
+                {
+                    statement.setString(1, String.valueOf(answerKey));
+                    statement.setInt(2, id);
+                    statement.executeUpdate();
+                    status=true;
+                   
+                }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+            return false;
+=======
     public boolean updateAnswer(int id, char answerKey) {
         String query = "UPDATE questionbank SET answerkey = ? WHERE id = ?";
 
@@ -136,6 +216,7 @@ public class QuestionBankRepositoryImpl implements QuestionBankRepository {
         }
 
         return false;
+>>>>>>> 3a53f0e7cf550669a4a5c775c202424d86b80874
     }
 
     @Override
@@ -158,7 +239,7 @@ public class QuestionBankRepositoryImpl implements QuestionBankRepository {
                 question.setB(result.getString("b"));
                 question.setC(result.getString("c"));
                 question.setD(result.getString("d"));
-                question.setAnswerKey(result.getString("answerkey").charAt(0));
+                question.setAnswerKey(result.getString("answerkey"));
                 question.setEvaluationCriteriaId(result.getInt("evaluationcriteriaid"));
             }
 
@@ -263,4 +344,16 @@ public class QuestionBankRepositoryImpl implements QuestionBankRepository {
 
         return "";
     }
+<<<<<<< HEAD
+
+
+
+    @Override
+    public boolean updateAnswer(int id, char answerKey) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'updateAnswer'");
+    }
+    
+=======
+>>>>>>> 3a53f0e7cf550669a4a5c775c202424d86b80874
 }
