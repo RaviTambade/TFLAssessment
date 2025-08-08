@@ -1,11 +1,7 @@
-namespace Transflower.TflAssesment.Entities
-{
-    public class SubjectMatterExpert
-    {
-        public int Id { get; set; }
-        public int SubjectId { get; set; }
-        public int EmployeeId { get; set; }
-        public Subject Subject { get; set; }
-        public Employee Employee { get; set; }
-    }
+namespace Transflower.TFLAssessment.Entities;
+
+public class Subject {
+   
+   public int Id {get;set;}
+   public string Title {get;set;}
 }
