@@ -1,4 +1,20 @@
 package com.transflower.tflassessment.demo;
+<<<<<<< HEAD
+=======
+
+
+
+
+
+
+// mvn clean install
+// mvn package
+
+// mvn exec:java -Dexec.mainClass="com.transflower.tflAssessment.demo.App"
+
+// These are commands to used for compiling, running java app
+
+>>>>>>> 3c13fd90504ffcc27e36d28e316052ccf31a8d13
 import com.transflower.tflassessment.demo.entities.*;
 import com.transflower.tflassessment.demo.repositories.*;
 import java.util.*;
