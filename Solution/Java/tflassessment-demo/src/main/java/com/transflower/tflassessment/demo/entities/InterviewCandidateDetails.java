@@ -1,4 +1,5 @@
 package com.transflower.tflassessment.demo.entities;
+
 import java.util.Objects;
 
 public class InterviewCandidateDetails implements Cloneable {
@@ -15,7 +16,7 @@ public class InterviewCandidateDetails implements Cloneable {
         this.title = null;
     }
 
-    public InterviewCandidateDetails(String firstName, String lastName, int candidateId, String title) {
+    public InterviewCandidateDetails(int candidateId, String firstName, String lastName, String title) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.candidateId = candidateId;
@@ -56,7 +57,7 @@ public class InterviewCandidateDetails implements Cloneable {
 
     @Override
     public String toString() {
-        return ("First Name: " + firstName + "last Name: " + lastName + "Candidate Id" + candidateId + "Title: " + title);
+        return "InterviewCandidateDetails{First Name: " + firstName + "last Name: " + lastName + "Candidate Id" + candidateId + "Title: " + title+"}";
     }
 
     @Override
@@ -77,13 +78,14 @@ public class InterviewCandidateDetails implements Cloneable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.firstName, this.lastName, this.candidateId, this.title);
+        return Objects.hash(this.candidateId, this.firstName, this.lastName, this.title);
     }
 
     @Override
     public Object clone() throws CloneNotSupportedException {
         try {
-            return new InterviewCandidateDetails(this.firstName, this.lastName, this.candidateId, this.title);
+
+            return new InterviewCandidateDetails(this.candidateId, this.firstName, this.lastName, this.title);
         } catch (Exception e) {
             System.out.println(e);
             return null;
