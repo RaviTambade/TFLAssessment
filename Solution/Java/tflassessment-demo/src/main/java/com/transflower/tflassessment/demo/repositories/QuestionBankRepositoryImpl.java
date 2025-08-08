@@ -1,8 +1,33 @@
 package com.transflower.tflassessment.demo.repositories;
+<<<<<<< HEAD
+
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.transflower.tflassessment.demo.entities.NewQuestion;
+import com.transflower.tflassessment.demo.entities.Question;
+import com.transflower.tflassessment.demo.entities.QuestionDetails;
+import com.transflower.tflassessment.demo.entities.QuestionTitle;
+import com.transflower.tflassessment.demo.entities.SubjectQuestion;
+
+
+import com.transflower.tflassessment.demo.entities.*;
+import java.sql.*;
+import java.util.*;
+
+=======
 import com.transflower.tflassessment.demo.repositories.*;
 import com.transflower.tflassessment.demo.entities.*;
 import java.sql.*;
 import java.util.*;
+>>>>>>> d2e6b0eb86a8b75c92272191f6876f07c9be8dd6
 
 public class QuestionBankRepositoryImpl implements QuestionBankRepository {
 
@@ -162,6 +187,27 @@ public class QuestionBankRepositoryImpl implements QuestionBankRepository {
 }
 
     @Override
+<<<<<<< HEAD
+
+    public boolean updateAnswer(int id, String answerKey){
+          boolean status=false;
+            String query = "UPDATE questionbank SET answerkey=? WHERE id=?";
+            try (Connection connection = DriverManager.getConnection(URL,USERNAME,PASSWORD);
+                PreparedStatement statement = connection.prepareStatement(query)) 
+                {
+                    statement.setString(1, String.valueOf(answerKey));
+                    statement.setInt(2, id);
+                    statement.executeUpdate();
+                    status=true;
+                   
+                }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+            return false;
+
+=======
+>>>>>>> d2e6b0eb86a8b75c92272191f6876f07c9be8dd6
     public boolean updateAnswer(int id, char answerKey) {
         String query = "UPDATE questionbank SET answerkey = ? WHERE id = ?";
 
@@ -178,6 +224,10 @@ public class QuestionBankRepositoryImpl implements QuestionBankRepository {
         }
 
         return false;
+<<<<<<< HEAD
+
+=======
+>>>>>>> d2e6b0eb86a8b75c92272191f6876f07c9be8dd6
     }
 
     @Override
@@ -303,9 +353,12 @@ public class QuestionBankRepositoryImpl implements QuestionBankRepository {
             e.printStackTrace();
         }
 
-        return "";
+        return null;
     }
+<<<<<<< HEAD
+=======
      public static void main(String[] args) {
+>>>>>>> d2e6b0eb86a8b75c92272191f6876f07c9be8dd6
 
         // ================= AssessmentIntelligenceRepository =================
         AssessmentIntelligenceRepositoryImpl intelligenceRepo = new AssessmentIntelligenceRepositoryImpl();
@@ -407,8 +460,13 @@ public class QuestionBankRepositoryImpl implements QuestionBankRepository {
         }
     }
 
+<<<<<<< HEAD
+
+  
+=======
     @Override
     public boolean updateAnswer(int id, String answerKey) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
+>>>>>>> d2e6b0eb86a8b75c92272191f6876f07c9be8dd6
 }
