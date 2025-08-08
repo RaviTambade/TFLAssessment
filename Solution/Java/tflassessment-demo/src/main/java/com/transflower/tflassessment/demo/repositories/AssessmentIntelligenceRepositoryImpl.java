@@ -54,4 +54,19 @@ public class AssessmentIntelligenceRepositoryImpl implements AssessmentIntellige
             }
             return results;
     }
+
+
+    public static void main(String [] args)
+    {
+         // ================= AssessmentIntelligenceRepository =================
+        AssessmentIntelligenceRepositoryImpl intelligenceRepo = new AssessmentIntelligenceRepositoryImpl();
+        List<AnnualCandidateResult> results = intelligenceRepo.getCandidateResults(2, 2015);
+        for (AnnualCandidateResult result : results)
+         {
+            System.out.println("Candidate ID: " + result.getCandidateId() + " Score: " + result.getScore());
+        }
+    }
 }
+
+
+

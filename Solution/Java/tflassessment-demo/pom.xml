@@ -19,8 +19,7 @@
     <artifactId>mysql-connector-j</artifactId>
     <version>9.3.0</version>
 </dependency>
-
-    
+  
   
     <dependency>
       <groupId>org.hibernate</groupId>
@@ -35,8 +34,10 @@
 <artifactId>exec-maven-plugin</artifactId>
 <version>3.1.0</version>
 <configuration>
-<mainClass>com.transflower.tflassessment.demo.App</mainClass>
+<mainClass>com.transflower.tflassessment.demo.repositories.AssessmentIntelligenceRepositoryImpl</mainClass>
 <!--  Replace this with your actual main class  -->
+  <mainClass>com.transflower.tflassessment.demo.repositories.AssessmentIntelligenceRepositoryImpl</mainClass>
+  <mainClass>com.transflower.tflassessment.demo.repositories.AssessmentIntelligenceRepositoryImpl</mainClass>
 </configuration>
 </plugin>
 </plugins>

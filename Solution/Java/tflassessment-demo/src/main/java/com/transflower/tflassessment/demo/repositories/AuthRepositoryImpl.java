@@ -86,4 +86,14 @@ public class AuthRepositoryImpl implements AuthRepository {
 
     return user;
   }
+
+  public static void main(String [] args)
+   {
+//      // ================= AuthRepository =================
+         AuthRepositoryImpl authRepo = new AuthRepositoryImpl();
+         User user = authRepo.getUserWithRolesByEmail("kajal.ghule@example.com", "12345");
+         for (UserRole role : user.getUserRoles()) {
+         System.out.println("User Email: " + role.getEmail() + " User Password: " + role.getPassword());
+      }
+    }
 }
