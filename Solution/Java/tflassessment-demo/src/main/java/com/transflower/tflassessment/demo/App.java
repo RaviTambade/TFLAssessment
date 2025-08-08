@@ -105,6 +105,49 @@ public class App {
         // for (Question q : testQuestions) {
         //     System.out.println(q.getId() + " - " + q.getTitle());
         // }
+
+        //-------------- Insert Candidate Answer------------
+//         CandidateAnswerRepositoryImpl answer=new CandidateAnswerRepositoryImpl();
+//         List<CandidateAnswer> answers=answer.getCandidateAnswer(1,1);
+//         for(CandidateAnswer ans:answers){
+//             int candidateid=ans.getCandidateId();
+//             int TestId=ans.getTestQuestionId();
+//             System.out.println("CandidateId:"+ candidateid + "TestId:"+ TestId);
+//         }
+
+//         //-------------Get Candidate Answer-----
+//         answers.add(new CandidateAnswer(101,1,1, "A"));
+//         answers.add(new CandidateAnswer(102,1,2, "B"));
+//         boolean success = answer.insertCandidateAnswer(1, answers);
+//         if (success) 
+//         {
+            
+//             System.out.println("Candidate answers inserted successfully.");
+//         } else 
+//         {
+//             System.out.println("Failed to insert candidate answers.");
+//         }
+
+//         //------------getCandidateAnswerResult---------
+//         List<CandidateAnswerResult> ansResult=new ArrayList<CandidateAnswerResult>();
+//         ansResult.add(new CandidateAnswerResult(1,"C","A",true));
+//         ansResult.add(new CandidateAnswerResult(2,"D","C",false));
+        
+//         for(CandidateAnswerResult ans:ansResult)
+//         {
+//             int TestQuestionId=ans.getTestQuestionId();
+//             String CandidateAnswer=ans.getCandidateAnswer();
+//             String CorrectAnswer=ans.getCorrectAnswer();
+//             System.out.println("TestQuestionId:"+TestQuestionId+ "CandidateAnswer"+CandidateAnswer+"CorrectAnswer:"+CorrectAnswer);
+//         }
+
+//         //--------------CandidateTestDetails -------
+
+//         int candidateId = 1; 
+//         int testId = 101;   
+
+//         CandidateTestDetails details = getCandidateTestDetails(candidateId, testId);
+//         System.out.println(details);
     }
 <<<<<<< HEAD
 
