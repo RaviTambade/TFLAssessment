@@ -11,7 +11,7 @@ public class Question {
     private String B;
     private String C;
     private String D;
-    public String answerKey;
+    public char answerKey;
     private int evaluationCriteriaId;
 
     public Question() {
@@ -22,12 +22,12 @@ public class Question {
         this.B = null;
         this.C = null;
         this.D = null;
-        this.answerKey = null;
+        this.answerKey = ' ';
         this.evaluationCriteriaId = 0;
 
     }
 
-    public Question(int id, int subjectId, String title, String a, String b, String c, String d, String answerKey,
+    public Question(int id, int subjectId, String title, String a, String b, String c, String d, char answerKey,
             int evaluationCriteriaId) {
         this.id = id;
         this.subjectId = subjectId;
@@ -96,11 +96,11 @@ public class Question {
         this.D = D;
     }
 
-    public String getAnswerKey() {
+    public char getAnswerKey() {
         return answerKey;
     }
 
-    public void setAnswerKey(String answerKey) {
+    public void setAnswerKey(char answerKey) {
         this.answerKey = answerKey;
     }
 
