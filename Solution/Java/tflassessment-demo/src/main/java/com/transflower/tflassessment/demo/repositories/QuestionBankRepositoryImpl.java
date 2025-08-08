@@ -115,9 +115,53 @@ public class QuestionBankRepositoryImpl implements QuestionBankRepository {
     }
 
     @Override
-    public List<Question> getQuestions(int testId) {
-        return null;
+        public List<Question> getQuestions(int testId) {
+    List<Question> questions = new ArrayList<>();
+    
+    String query = " SELECT " + 
+                "testquestions.id AS testquestionid, \r\n" + 
+                "questionbank.id AS questionbankid,\r\n" + 
+                "questionbank.subjectid,\r\n" + 
+                "questionbank.title,\r\n" + 
+                "questionbank.a,\r\n" + 
+                "questionbank.b,\r\n" + 
+                "questionbank.c,\r\n" + 
+                "questionbank.d,\r\n" + 
+                "questionbank.evaluationcriteriaid\r\n" + 
+                "FROM questionbank \r\n" + 
+                "INNER JOIN testquestions \r\n" + 
+                "ON testquestions.questionbankid = questionbank.id \r\n" + 
+                "WHERE testquestions.testid = ?";
+
+    try (Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+         PreparedStatement statement = connection.prepareStatement(query)) {
+
+        statement.setInt(1, testId);
+
+        try (ResultSet resultSet = statement.executeQuery()) {
+            while (resultSet.next()) {
+                Question question = new Question();
+                question.setId(resultSet.getInt("testquestionid")); // testquestions.id
+                question.setSubjectId(resultSet.getInt("subjectid"));
+                question.setTitle(resultSet.getString("title"));
+                question.setA(resultSet.getString("a"));
+                question.setB(resultSet.getString("b"));
+                question.setC(resultSet.getString("c"));
+                question.setD(resultSet.getString("d"));
+                question.setEvaluationCriteriaId(resultSet.getInt("evaluationcriteriaid"));
+                
+                questions.add(question);
+            }
+        }
+    } catch (SQLException e) {
+        e.printStackTrace(); 
     }
+
+    return questions;
+}
+
+    
+    
 
     @Override
     public boolean updateAnswer(int id, char answerKey) {
