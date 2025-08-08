@@ -6,32 +6,42 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.transflower.tflassessment.demo.entities.InterviewCandidateDetails;
 import com.transflower.tflassessment.demo.entities.InterviewDetails;
 
-
 public class InterviewRepositoryImpl implements InterviewRepository {
 
     private String url = "jdbc:mysql://localhost:3306/assessmentdb";
     private String userName = "root";
     private String password = "password";
+    Connection connection;
+    Statement statement;
+
+    public InterviewRepositoryImpl() {
+        try {
+            connection = DriverManager.getConnection(url, userName, password);
+            statement = connection.createStatement();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
 
     @Override
     public List<InterviewCandidateDetails> getAllInterviewCandidates() {
         List<InterviewCandidateDetails> allInterviewCandidates = new ArrayList<>();
         try {
-            String selectQuery = "select interviews.candidateid,employees.firstname,employees.lastname,subjects.title\r\n" + 
-                                "from interviews \r\n" + 
-                                "inner join employees on  interviews.candidateid= employees.id\r\n" + 
-                                "inner join subjectmatterexperts on interviews.smeid = subjectmatterexperts.id\r\n" + 
-                                "inner join subjects on subjectmatterexperts.subjectid=subjects.id";
-            Connection conn = DriverManager.getConnection(url, userName, password);
-            Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery(selectQuery);
-            
+            String selectQuery = "SELECT interviews.candidateid,employees.firstname,employees.lastname,subjects.title "
+                    + "FROM interviews "
+                    + "INNER JOIN employees ON  interviews.candidateid= employees.id "
+                    + "INNER JOIN subjectmatterexperts ON interviews.smeid = subjectmatterexperts.id "
+                    + "INNER JOIN subjects ON subjectmatterexperts.subjectid=subjects.id";
+
+            ResultSet rs = statement.executeQuery(selectQuery);
+
             while (rs.next()) {
                 InterviewCandidateDetails candidateDetails = new InterviewCandidateDetails(rs.getInt(1), rs.getString(2), rs.getString(3), null);
                 allInterviewCandidates.add(candidateDetails);
@@ -46,10 +56,13 @@ public class InterviewRepositoryImpl implements InterviewRepository {
     public List<InterviewCandidateDetails> getInterviewedCandidatesSubjects(int candidateId) {
         List<InterviewCandidateDetails> interviewCandidateSubjectDetails = new ArrayList<>();
         try {
-            String selectQuery = "SELECT i.candidateid,e.firstname,e.lastname,s.Title FROM employees e JOIN interviews i ON e.id = i.candidateid JOIN subjectmatterexperts sme ON sme.id = i.smeid JOIN subjects s ON sme.subjectid = s.id WHERE candidateid =" + candidateId + ";";
-            Connection conn = DriverManager.getConnection(url, userName, password);
-            Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery(selectQuery);
+            String selectQuery = "SELECT interviews.candidateid,employees.firstname,employees.lastname,subjects.Title "
+                    + "FROM employees INNER JOIN interviews ON employees.id = interviews.candidateid "
+                    + "INNER JOIN subjectmatterexperts ON subjectmatterexperts.id = interviews.smeid "
+                    + "INNER JOIN subjects ON subjectmatterexperts.subjectid = subjects.id "
+                    + "WHERE candidateid =" + candidateId + ";";
+
+            ResultSet rs = statement.executeQuery(selectQuery);
             while (rs.next()) {
                 InterviewCandidateDetails CandidateSubjectDetails = new InterviewCandidateDetails(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4));
                 interviewCandidateSubjectDetails.add(CandidateSubjectDetails);
@@ -65,10 +78,9 @@ public class InterviewRepositoryImpl implements InterviewRepository {
         InterviewDetails interviewDetails = null;
         try {
             String callableStatement = "{CALL spinterviewdetails(?)}";
-            Connection conn = DriverManager.getConnection(url, userName, password);
-            CallableStatement cstmt = conn.prepareCall(callableStatement);
-            cstmt.setInt(1, interviewId);
-            ResultSet rs = cstmt.executeQuery();
+            CallableStatement callablestatement = connection.prepareCall(callableStatement);
+            callablestatement.setInt(1, interviewId);
+            ResultSet rs = callablestatement.executeQuery();
             if (rs.next()) {
                 interviewDetails = new InterviewDetails(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(5), rs.getString(6), rs.getString(7), null);
             }
@@ -83,40 +95,67 @@ public class InterviewRepositoryImpl implements InterviewRepository {
     @Override
     public boolean rescheduleInterview(int interviewId, LocalDate date) {
         try {
-            String updateQuery = "UPDATE interviews SET interviewdate ="+"'"+date+"'"+"WHERE id ="+interviewId+";";
-            Connection connection = DriverManager.getConnection(url,userName,password);
-            Statement statement = connection.createStatement();
+            String updateQuery = "UPDATE interviews "
+                    + "SET interviewdate = '" + date + "' "
+                    + "WHERE id =" + interviewId + ";";
             statement.executeUpdate(updateQuery);
-        } catch(Exception e) {
+            return true;
+        } catch (Exception e) {
             System.out.println(e);
         }
         return true;
     }
 
     @Override
-    public boolean rescheduleInterview(int interviewId, String time) {
-
+    public boolean rescheduleInterview(int interviewId, LocalTime time) {
+        try {
+            String updateQuery = "UPDATE interviews "
+                    + "SET interviewtime = '" + time + " AM ' "
+                    + "WHERE id =" + interviewId;
+            statement.executeUpdate(updateQuery);
+            return true;
+        } catch (Exception e) {
+            System.out.println(e);
+        }
         return true;
 
     }
 
     @Override
-    public boolean rescheduleInterview(int interviewId, String time, LocalDate date) {
-
+    public boolean rescheduleInterview(int interviewId, LocalTime time, LocalDate date) {
+        try {
+            String updateQuery = "UPDATE interviews "
+                    + "SET interviewdate = '" + date + "', interviewtime = '" + time + " AM' "
+                    + "WHERE id =" + interviewId + ";";
+            statement.executeUpdate(updateQuery);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
         return true;
     }
 
     @Override
     public boolean changeInterviewer(int interviewId, int smeId) {
+        try {
+            String updateQuery = "UPDATE interviews "
+                    + "SET smeid = " + smeId + " "
+                    + "WHERE id = " + interviewId + ";";
+            statement.executeUpdate(updateQuery);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
         return false;
-
     }
 
     @Override
     public boolean cancelInterview(int interviewId) {
-
+        try {
+            String updateQuery = "DELETE FROM interviews WHERE id =" + interviewId + ";";
+            statement.executeUpdate(updateQuery);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
         return false;
-
     }
 
 }
