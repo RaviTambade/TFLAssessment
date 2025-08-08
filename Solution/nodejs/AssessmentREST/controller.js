@@ -1,52 +1,53 @@
 //logic for handling HTTP request types///GET, POST, PUT, DELETE ETC
 
 'use strict';
-var Task = require('./dal');
+var QuestionBank = require('./dal');
 
-exports.getAll = function(req, res) {
+exports.getAll= function(req, res) {
     
-    Task.getAllTask(function(err,task){
+    QuestionBank.getAllQuestions(function(err,questions){
         if(err)
             res.send(err);
-        res.send(task);
+        res.send(questions);
     });
 };
 
 exports.insert = function(req, res) {
-     var new_task = new Task(req.body);
+     var question= (req.body);
 
      //handles null error
-     if (!new_task.task || !new_task.status){
-        res.status(400).send({error:true,message:'Please provide task/status'});
-     }else{
-        Task.createTask(new_task,function(err,task){
-             if(err)
+     if ( !question.subjectid || !question.title || !question.a || !question.b || !question.c || !question.d || !question.answerkey || !question.evaluationcriteriasid){
+        res.status(400).send({error: true, message:'Please provide all required fields (title, subjectId, options, answerKey)' });
+     }else {
+        QuestionBank.createQuestion(question,function(err,insertId){
+            if(err)
                 res.send(err);
-            res.json(task);
+            else
+            res.json({ id: insertId, message: 'Question inserted successfully'});
         });
      }
 };
 
-exports.getBy = function(req, res) {
-    Task.getTaskById(req.params.taskId,function(err,task) {
+exports.getById = function(req, res) {
+    QuestionBank.getById(req.params.id,function(err,question) {
         if(err)
             res.send(err);
-        res.json(task);
+        res.json(question);
     });
 };
 
 exports.update = function(req, res) {
-    Task.updateById(req.params.taskId,new Task(req.body),function(err,task) {
+    QuestionBank.updateById(req.params.id,new QuestionBank(req.body),function(err,question) {
         if(err)
             res.send(err);
-        res.json(task);
+      res.json({message:'Question updated successfully'});
     });
 };
 
 exports.remove = function(req, res) {
-    Task.remove(req.params.taskId,function(err,task) {
+    QuestionBank.remove(req.params.id,function(err,result) {
         if(err)
             res.send(err);
-        res.json({message:'Task successfully deleted'});
+        res.json({message:' deleted successfully '});
     });
-};
+}

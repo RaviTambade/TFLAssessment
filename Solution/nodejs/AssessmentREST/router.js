@@ -1,15 +1,18 @@
 //request mapping with operations
 
+//request mapping with operations
+
 'use strict';
 module.exports = function(app) {
-    var taskController = require('./controller');
+    var questionController = require('./controller');
 
-    app.route('/tasks')
-    .get(taskController.getAll)
-    .post(taskController.insert);
+    app.route('/questionbank')
+    .get(questionController.getAll)
+    .post(questionController.insert); 
 
-    app.route('/tasks/:taskId')
-    .get(taskController.getBy)
-    .put(taskController.update)
-    .delete(taskController.remove);
+    app.route('/questionbank/:id')
+    .get(questionController.getById)
+
+    .put(questionController.update)
+   .delete(questionController.remove);
 };
