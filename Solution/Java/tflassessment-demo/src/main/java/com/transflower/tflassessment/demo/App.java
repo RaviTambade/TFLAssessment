@@ -1,6 +1,5 @@
 package com.transflower.tflassessment.demo;
-<<<<<<< HEAD
-=======
+
 
 
 
@@ -14,14 +13,16 @@ package com.transflower.tflassessment.demo;
 
 // These are commands to used for compiling, running java app
 
->>>>>>> 3c13fd90504ffcc27e36d28e316052ccf31a8d13
+
 import com.transflower.tflassessment.demo.entities.*;
 import com.transflower.tflassessment.demo.repositories.*;
 import java.util.*;
 
 
-public class App {
-    public static void main(String[] args) {
+public class App 
+{
+    public static void main(String[] args) 
+    {
 
         // // ================= AssessmentIntelligenceRepository =================
         // AssessmentIntelligenceRepositoryImpl intelligenceRepo = new AssessmentIntelligenceRepositoryImpl();
@@ -38,7 +39,7 @@ public class App {
         // }
 
         // // ================= QuestionBankRepository =================
-         QuestionBankRepositoryImpl repo = new QuestionBankRepositoryImpl();
+        // QuestionBankRepositoryImpl repo = new QuestionBankRepositoryImpl();
 
         // // -------- getAllQuestions --------
         // System.out.println("\nAll Questions:");
@@ -75,45 +76,45 @@ public class App {
         // System.out.println(existingQuestion.getId() + " - " + existingQuestion.getTitle());
 
         // // -------- updateAnswer --------
-        boolean answerUpdated = repo.updateAnswer(1, 'b');
-        System.out.println("\nAnswer Updated: " + answerUpdated);
+       // boolean answerUpdated = repo.updateAnswer(1, 'b');
+        //System.out.println("\nAnswer Updated: " + answerUpdated);
 
         // // -------- updateQuestionOptions --------
-        Question question = new Question();
-        question.setTitle("Updated Question?");
-        question.setA("Option A");
-        question.setB("Option B");
-        question.setC("Option C");
-        question.setD("Option D");
-        question.setAnswerKey('C');
-        boolean optionsUpdated = repo.updateQuestionOptions(1, question);
-        System.out.println("\nOptions Updated: " + optionsUpdated);
+        // Question question = new Question();
+        // question.setTitle("Updated Question?");
+        // question.setA("Option A");
+        // question.setB("Option B");
+        // question.setC("Option C");
+        // question.setD("Option D");
+        // question.setAnswerKey('C');
+        // boolean optionsUpdated = repo.updateQuestionOptions(1, question);
+        // System.out.println("\nOptions Updated: " + optionsUpdated);
 
         // // -------- updateSubjectCriteria --------
-        Question updateSubjectCriteria = new Question();
-        updateSubjectCriteria.setSubjectId(1);
-        updateSubjectCriteria.setEvaluationCriteriaId(1);
-        boolean subjectCriteriaUpdated = repo.updateSubjectCriteria(1, updateSubjectCriteria);
-        System.out.println("\nSubject and Criteria Updated: " + subjectCriteriaUpdated);
+        // Question updateSubjectCriteria = new Question();
+        // updateSubjectCriteria.setSubjectId(1);
+        // updateSubjectCriteria.setEvaluationCriteriaId(1);
+        // boolean subjectCriteriaUpdated = repo.updateSubjectCriteria(1, updateSubjectCriteria);
+        // System.out.println("\nSubject and Criteria Updated: " + subjectCriteriaUpdated);
 
         // // -------- insertQuestion --------
-        NewQuestion newquestion = new NewQuestion();
-        newquestion.setSubjectId(1);
-        newquestion.setTitle("New Inserted Question?");
-        newquestion.setA("A1");
-        newquestion.setB("B1");
-        newquestion.setC("C1");
-        newquestion.setD("D1");
-        newquestion.setAnswerKey('A');
-        newquestion.setEvaluationCriteriaId(1);
-        boolean inserted = repo.insertQuestion(newquestion);
-        System.out.println("\nNew Question Inserted: " + inserted);
+        // NewQuestion newquestion = new NewQuestion();
+        // newquestion.setSubjectId(1);
+        // newquestion.setTitle("New Inserted Question?");
+        // newquestion.setA("A1");
+        // newquestion.setB("B1");
+        // newquestion.setC("C1");
+        // newquestion.setD("D1");
+        // newquestion.setAnswerKey('A');
+        // newquestion.setEvaluationCriteriaId(1);
+        // boolean inserted = repo.insertQuestion(newquestion);
+        // System.out.println("\nNew Question Inserted: " + inserted);
 
         // // -------- getCriteria --------
-        String subjectTitle = "COREJAVA";
-        int questionId = 1;
-        String criteriaTitle = repo.getCriteria(subjectTitle, questionId);
-        System.out.println("\nCriteria Title for Subject and Question ID: " + criteriaTitle);
+        // String subjectTitle = "COREJAVA";
+        // int questionId = 1;
+        // String criteriaTitle = repo.getCriteria(subjectTitle, questionId);
+        // System.out.println("\nCriteria Title for Subject and Question ID: " + criteriaTitle);
 
 
         // -------- getQuestions --------
@@ -124,52 +125,72 @@ public class App {
         // }
 
      //-------------- Insert Candidate Answer------------
-       CandidateAnswerRepositoryImpl answer=new CandidateAnswerRepositoryImpl();
-       List<CandidateAnswer> answers=answer.getCandidateAnswer(1,1);
-         for(CandidateAnswer ans:answers){
-            int candidateid=ans.getCandidateId();
-            int TestId=ans.getTestQuestionId();
-            System.out.println("CandidateId:"+ candidateid + "TestId:"+ TestId);}
+    //    CandidateAnswerRepositoryImpl answer=new CandidateAnswerRepositoryImpl();
+    //    List<CandidateAnswer> answers=answer.getCandidateAnswer(1,1);
+    //      for(CandidateAnswer ans:answers){
+    //         int candidateid=ans.getCandidateId();
+    //         int TestId=ans.getTestQuestionId();
+    //         System.out.println("CandidateId:"+ candidateid + "TestId:"+ TestId);}
 
         //-------------Get Candidate Answer-----
-        answers.add(new CandidateAnswer(101,1,1, "A"));
-        answers.add(new CandidateAnswer(102,1,2, "B"));
-        boolean success = answer.insertCandidateAnswer(1, answers);
-        if (success) 
-        {
+        // answers.add(new CandidateAnswer(101,1,1, "A"));
+        // answers.add(new CandidateAnswer(102,1,2, "B"));
+        // boolean success = answer.insertCandidateAnswer(1, answers);
+        // if (success) 
+        // {
             
-             System.out.println("Candidate answers inserted successfully.");
-        } else 
-         {
-             System.out.println("Failed to insert candidate answers.");
-         }
+        //      System.out.println("Candidate answers inserted successfully.");
+        // } else 
+        //  {
+        //      System.out.println("Failed to insert candidate answers.");
+        //  }
 
         //------------getCandidateAnswerResult---------
-      List<CandidateAnswerResult> ansResult=new ArrayList<CandidateAnswerResult>();
-        ansResult.add(new CandidateAnswerResult(1,"C","A",true));
-         ansResult.add(new CandidateAnswerResult(2,"D","C",false));
+    //   List<CandidateAnswerResult> ansResult=new ArrayList<CandidateAnswerResult>();
+    //     ansResult.add(new CandidateAnswerResult(1,"C","A",true));
+    //      ansResult.add(new CandidateAnswerResult(2,"D","C",false));
         
-         for(CandidateAnswerResult ans:ansResult){         {
-            int TestQuestionId=ans.getTestQuestionId();
-            String CandidateAnswer=ans.getCandidateAnswer();
-            String CorrectAnswer=ans.getCorrectAnswer();
-             System.out.println("TestQuestionId:"+TestQuestionId+ "CandidateAnswer"+CandidateAnswer+"CorrectAnswer:"+CorrectAnswer);
-         }
+    //      for(CandidateAnswerResult ans:ansResult){         {
+    //         int TestQuestionId=ans.getTestQuestionId();
+    //         String CandidateAnswer=ans.getCandidateAnswer();
+    //         String CorrectAnswer=ans.getCorrectAnswer();
+    //          System.out.println("TestQuestionId:"+TestQuestionId+ "CandidateAnswer"+CandidateAnswer+"CorrectAnswer:"+CorrectAnswer);
+    //      }
 
          //--------------CandidateTestDetails -------
 
-        int candidateId = 1; 
-        int testId = 101;   
+        //CandidateTestDetails details = getCandidateTestDetails(candidateId, testId);
+        //details.add(new CandidateResultDetails(1,111,1,2,3));
+        // int candidateId = 101;
+        // int testId = 5;
+        // CandidateTestDetails details = getCandidateTestDetails(candidateId, testId);
+        // details.add(new CandidateResultDetails(1,111,1,2,3));
+        // // Display details
+        // if (details != null) 
+        // {
+        //     System.out.println("Candidate Test Details:");
+        //     System.out.println("Candidate ID: " + details.getCandidateId());
+        //     System.out.println("Candidate TestId: " + details.getTestId());
+        //     System.out.println("Test ID: " + details.getTestId());
+        //     System.out.println("Correct Answer: " + details.getCorrectAnswer());
+        //     System.out.println("InCorrect Answer:"+getInCorrectAnswer());
+        //     System.out.println("Skipped Question:"+getSkippedQuestion());
+        //      System.out.println("details");
+            
+        // } else
+        // {
+        //     System.out.println("Failed");
 
-         CandidateTestDetails details = getCandidateTestDetails(candidateId, testId);
-         System.out.println(details);
+
+        // }
+        
 
         //-------- getQuestions --------
-        List<Question> testQuestions = repo.getQuestions(1);
-        System.out.println("\nQuestions from Test:");
-        for (Question q : testQuestions) {
-            System.out.println(q.getId() + " - " + q.getTitle());
-        }
+        // List<Question> testQuestions = repo.getQuestions(1);
+        // System.out.println("\nQuestions from Test:");
+        // for (Question q : testQuestions) {
+        //     System.out.println(q.getId() + " - " + q.getTitle());
+        // }
 
     }
 }

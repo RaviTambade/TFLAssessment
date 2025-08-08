@@ -52,7 +52,7 @@ public class NewCriteria {
             System.out.println("Finalize called for"+this);
         }finally
         {
-            super.finalize();
+            
         }
     }
 

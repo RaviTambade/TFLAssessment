@@ -1,6 +1,6 @@
 package com.transflower.tflassessment.demo.repositories;
 
-<<<<<<< HEAD
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -16,11 +16,11 @@ import com.transflower.tflassessment.demo.entities.QuestionDetails;
 import com.transflower.tflassessment.demo.entities.QuestionTitle;
 import com.transflower.tflassessment.demo.entities.SubjectQuestion;
 
-=======
+
 import com.transflower.tflassessment.demo.entities.*;
 import java.sql.*;
 import java.util.*;
->>>>>>> 3a53f0e7cf550669a4a5c775c202424d86b80874
+
 
 public class QuestionBankRepositoryImpl implements QuestionBankRepository {
 
@@ -182,7 +182,7 @@ public class QuestionBankRepositoryImpl implements QuestionBankRepository {
     
 
     @Override
-<<<<<<< HEAD
+
     public boolean updateAnswer(int id, String answerKey){
           boolean status=false;
             String query = "UPDATE questionbank SET answerkey=? WHERE id=?";
@@ -199,7 +199,7 @@ public class QuestionBankRepositoryImpl implements QuestionBankRepository {
                 e.printStackTrace();
             }
             return false;
-=======
+
     public boolean updateAnswer(int id, char answerKey) {
         String query = "UPDATE questionbank SET answerkey = ? WHERE id = ?";
 
@@ -216,7 +216,7 @@ public class QuestionBankRepositoryImpl implements QuestionBankRepository {
         }
 
         return false;
->>>>>>> 3a53f0e7cf550669a4a5c775c202424d86b80874
+
     }
 
     @Override
@@ -342,18 +342,11 @@ public class QuestionBankRepositoryImpl implements QuestionBankRepository {
             e.printStackTrace();
         }
 
-        return "";
+        return null;
     }
-<<<<<<< HEAD
 
 
 
-    @Override
-    public boolean updateAnswer(int id, char answerKey) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'updateAnswer'");
-    }
-    
-=======
->>>>>>> 3a53f0e7cf550669a4a5c775c202424d86b80874
+
+  
 }
