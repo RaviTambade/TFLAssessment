@@ -133,9 +133,51 @@ public class CandidateAnswerRepositoryImpl implements CandidateAnswerRepository
     public CandidateTestDetails CandidateTestDetails (int CandidateId,int TestId)
     {
 
-         
+         CandidateTestDetails details = new CandidateTestDetails();
+
+        try (Connection connection = DriverManager.getConnection(URL,USERNAME,PASSWORD)) 
+        {
+
+            // Query candidate
+            String candidateQuery = "SELECT id, firstname FROM employees WHERE id = ?";
+            try (PreparedStatement stmt1 = connection.prepareStatement(candidateQuery)) 
+            {
+                stmt1.setInt(1, candidateId);
+                try (ResultSet rs1 = stmt1.executeQuery())
+                {
+                    if (rs1.next()) 
+                    {
+                        details.setCandidateId(rs1.getInt("id"));
+                        details.setCandidateName(rs1.getString("firstname"));
+                    }
+                }
+            }
+
+            // Query test
+            String testQuery = "SELECT id, name, passinglevel, scheduleddate FROM tests WHERE id = ?";
+            try (PreparedStatement stmt2 = connection.prepareStatement(testQuery)) 
+            {
+                stmt2.setInt(1, testId);
+                try (ResultSet rs2 = stmt2.executeQuery()) 
+                {
+                    if (rs2.next())
+                    {
+                        details.setTestId(rs2.getInt("id"));
+                        details.setTestName(rs2.getString("name"));
+                        details.setTestDate(rs2.getTimestamp("scheduleddate").toLocalDateTime());
+                        details.setTestPassingLevel(rs2.getInt("passinglevel"));
+                    }
+                }
+            }
+
+        } catch (Exception e)
+        {
+            System.out.println(e);
+        }
+
+        return details;
         
-        return null;
+        
     }
 
     
