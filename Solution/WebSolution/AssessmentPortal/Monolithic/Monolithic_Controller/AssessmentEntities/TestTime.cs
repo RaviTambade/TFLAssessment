@@ -11,5 +11,4 @@ public class TestTime{
     {
         return this.Day+" "+this.Hour+" "+this.Minutes+" "+this.Month+" "+this.Seconds+" "+this.Year;
     }
-
 }
