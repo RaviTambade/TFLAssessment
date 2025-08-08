@@ -6,14 +6,38 @@
 var sql = require('./mysqlconnect');
 
 //define model
-var Task = function(task) {
-    this.task = task;
-    this.status = task.status;
-    this.created_at = new Date();
+var QuestionBank = function(question) {
+    this.subjectid = question.subjectid;
+    this.title = question.title;
+    this.a = question.a;
+    this.b = question.b;
+    this.c = question.c; 
+    this.d = question.d;
+    this.answerKey = question.answerKey;
+    this.evaluationCriteriasid = question.evaluationCriteriasid;
 };
 
-Task.createTask = function(newTask,result) {
-    sql.query("INSERT INTO tasks set ?",newTask, function(err, res) {
+
+
+//get all questions
+QuestionBank.getAllQuestions = function (result){
+    sql.query("SELECT * FROM questionbank", function (err, res) {
+        if(err){
+            console.log ("error: ", err);
+            result(err, null);
+        
+        }
+    
+        else{
+           result(null,res);
+        };
+    });      
+};
+
+
+
+ QuestionBank.createQuestion= function(newQuestion,result) {
+    sql.query("INSERT INTO questionbank SET ?",newQuestion, function(err, res) {
         if (err) {
             console.log("error:",err);
             result(err, null);
@@ -24,8 +48,8 @@ Task.createTask = function(newTask,result) {
     });
 };
 
-Task.getTaskById = function(TaskId,result) {
-    sql.query("select task from tasks where id = ?",TaskId, function(err, res) {
+QuestionBank.getById = function(questionId,result) {
+    sql.query("select * from questionbank where id = ?",questionId, function(err, res) {
         if (err) {
             console.log("error:",err);
             result(err, null);
@@ -35,9 +59,21 @@ Task.getTaskById = function(TaskId,result) {
     });
 };
 
-Task.updateById= function(id,task,result) {
-    sql.query("UPDATE tasks SET task = ? WHERE id = ?", [task.task,id],
-        function(err,res) {
+QuestionBank.updateById= function(id,question,result) {
+    sql.query("UPDATE questionbank SET ? WHERE id = ?", [question,id],function(err,res) {
+        if (err) {
+            console.log("Update error:",err);
+            result(err,null);
+        }
+        else {
+            result(null, res);
+        
+        }
+    });
+};
+
+QuestionBank.remove = function(id,result) {
+    sql.query("DELETE FROM questionbank WHERE id = ?",[id],function(err,res) {
         if (err) {
             console.log("error:",err);
             result(null, err);
@@ -47,14 +83,4 @@ Task.updateById= function(id,task,result) {
     });
 };
 
-Task.remove = function(id,task,result) {
-    sql.query("DELETE FROM  tasks WHERE id = ?",[id],function(err,res) {
-        if (err) {
-            console.log("error:",err);
-            result(null, err);
-        }else {
-            result(null, res);
-        }
-    });
-};
-module.exports = Task;
+module.exports = QuestionBank;
