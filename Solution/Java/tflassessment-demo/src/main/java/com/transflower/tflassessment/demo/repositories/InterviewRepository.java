@@ -1,5 +1,6 @@
 package com.transflower.tflassessment.demo.repositories;
 
+import java.time.LocalTime;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
@@ -14,7 +15,6 @@ public interface InterviewRepository {
     public List<InterviewCandidateDetails> getInterviewedCandidatesSubjects(int candidateId);
 
     public InterviewDetails getInterviewDetails(int interviewId);
-
     public boolean rescheduleInterview(int interviewId, LocalDate date);
 
     public boolean rescheduleInterview(int interviewId, LocalTime time);
