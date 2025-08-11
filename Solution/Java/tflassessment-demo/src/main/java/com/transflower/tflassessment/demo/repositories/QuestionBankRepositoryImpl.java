@@ -406,9 +406,4 @@ public class QuestionBankRepositoryImpl implements QuestionBankRepository {
             System.out.println(q.getId() + " - " + q.getTitle());
         }
     }
-
-    @Override
-    public boolean updateAnswer(int id, String answerKey) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
 }
