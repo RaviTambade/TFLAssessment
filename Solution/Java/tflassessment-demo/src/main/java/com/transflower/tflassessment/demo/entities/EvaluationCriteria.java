@@ -23,12 +23,7 @@ public class EvaluationCriteria implements Cloneable {
         this.title = title;
         this.subjectId = subjectId;
     }
-    public EvaluationCriteria(String title,int subjectId){
-
-        this.title=title;
-        this.subjectId=subjectId;
-    }
-
+   
     public int getId() {
         return id;
     }

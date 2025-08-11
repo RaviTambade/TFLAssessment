@@ -1,6 +1,6 @@
 package com.transflower.tflassessment.demo.services;
 
-import com.transflower.tflassessment.demo.entities.EvaluationCriteria;
+import com.transflower.tflassessment.demo.entities.*;
 import com.transflower.tflassessment.demo.repositories.EvaluationCriteriaRepositoryImpl;
 
 public class EvaluationCriteriaserviceImpl implements EvaluationCriteriaService {

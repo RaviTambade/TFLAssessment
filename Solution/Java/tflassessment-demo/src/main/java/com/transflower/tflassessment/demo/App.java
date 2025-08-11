@@ -11,6 +11,8 @@ import com.transflower.tflassessment.demo.repositories.InterviewRepositoryImpl;
 public class App {
 
     public static void main(String[] args) throws Exception {
+
+        System.out.println("Welcome to transflower");
         InterviewRepositoryImpl obj1 = new InterviewRepositoryImpl();
         List<InterviewCandidateDetails> icd1 = obj1.getAllInterviewCandidates();
         List<InterviewCandidateDetails> icd2 = obj1.getInterviewedCandidatesSubjects(6);
