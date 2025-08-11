@@ -318,23 +318,10 @@ public class QuestionBankRepositoryImpl implements QuestionBankRepository {
 
         return null;
     }
+
+    
      public static void main(String[] args) {
-
-        // ================= AssessmentIntelligenceRepository =================
-        AssessmentIntelligenceRepositoryImpl intelligenceRepo = new AssessmentIntelligenceRepositoryImpl();
-        List<AnnualCandidateResult> results = intelligenceRepo.getCandidateResults(2, 2015);
-        for (AnnualCandidateResult result : results) {
-            System.out.println("Candidate ID: " + result.getCandidateId() + " Score: " + result.getScore());
-        }
-
-        // ================= AuthRepository =================
-        AuthRepositoryImpl authRepo = new AuthRepositoryImpl();
-        User user = authRepo.getUserWithRolesByEmail("kajal.ghule@example.com", "12345");
-        for (UserRole role : user.getUserRoles()) {
-            System.out.println("User Email: " + role.getEmail() + " User Password: " + role.getPassword());
-        }
-
-        // ================= QuestionBankRepository =================
+         // ================= QuestionBankRepository =================
         QuestionBankRepositoryImpl repo = new QuestionBankRepositoryImpl();
 
         // -------- getAllQuestions --------
