@@ -5,8 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+
 
 import com.transflower.tflassessment.demo.entities.AnnualCandidateResult;
 import com.transflower.tflassessment.demo.entities.NewQuestion;
