@@ -467,6 +467,9 @@ INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(2,9,'c
 INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(3,10,'d');
 
 
+INSERT INTO interviewcriterias(interviewid, evaluationcriteriaid)VALUES(1,6);
+INSERT INTO interviewcriterias(interviewid, evaluationcriteriaid)VALUES(1,5);
+INSERT INTO interviewcriterias(interviewid, evaluationcriteriaid)VALUES(2,3);
 INSERT INTO interviews(interviewdate,interviewtime, smeid, candidateid)VALUES('2024-02-10',"10:00 AM",1,2);
 INSERT INTO interviews(interviewdate,interviewtime, smeid, candidateid)VALUES('2024-02-10',"10:30 AM",2,3);
 INSERT INTO interviews(interviewdate,interviewtime, smeid, candidateid)VALUES('2024-03-12',"11:00 AM",1,4);
@@ -480,10 +483,7 @@ INSERT INTO interviews(interviewdate,interviewtime, smeid, candidateid)VALUES('2
 
 
 
-INSERT INTO interviewcriterias(interviewid, evaluationcriteriaid)VALUES(1,6);
-INSERT INTO interviewcriterias(interviewid, evaluationcriteriaid)VALUES(1,5);
-INSERT INTO interviewcriterias(interviewid, evaluationcriteriaid)VALUES(2,3);
-INSERT INTO interviewcriterias(interviewid, evaluationcriteriaid)VALUES(1,2);
+ INSERT INTO interviewcriterias(interviewid, evaluationcriteriaid)VALUES(1,2);
 INSERT INTO interviewcriterias(interviewid, evaluationcriteriaid)VALUES(3,4);
 INSERT INTO interviewcriterias(interviewid, evaluationcriteriaid)VALUES(2,4);
 INSERT INTO interviewcriterias(interviewid, evaluationcriteriaid)VALUES(3,6);

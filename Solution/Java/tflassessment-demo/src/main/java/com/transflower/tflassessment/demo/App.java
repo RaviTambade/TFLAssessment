@@ -1,11 +1,15 @@
 package com.transflower.tflassessment.demo;
 
-import com.transflower.tflassessment.demo.entities.*;
+import java.time.LocalDate;
+import java.util.List;
+
+import com.transflower.tflassessment.demo.entities.InterviewCandidateDetails;
+import com.transflower.tflassessment.demo.entities.InterviewDetails;
+import com.transflower.tflassessment.demo.repositories.InterviewRepositoryImpl;
 import com.transflower.tflassessment.demo.repositories.*;
-import java.util.*;
+
 
 public class App {
-    public static void main(String[] args) {
 
         // ================= AssessmentIntelligenceRepository =================
         // AssessmentIntelligenceRepositoryImpl intelligenceRepo = new AssessmentIntelligenceRepositoryImpl();
@@ -106,4 +110,4 @@ public class App {
         //     System.out.println(q.getId() + " - " + q.getTitle());
         // }
     }
-}
+
