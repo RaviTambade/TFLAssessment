@@ -51,14 +51,14 @@ public class AuthRepositoryImpl implements AuthRepository {
         user.setPassword(resultSet.getString("password"));
 
         UserRole userRole = new UserRole();
-        userRole.setid(resultSet.getInt("UserRoleId"));
-        userRole.setuserId(resultSet.getInt("UserId"));
-        userRole.setroleId(resultSet.getInt("roleid"));
+        userRole.setId(resultSet.getInt("UserRoleId"));
+        userRole.setUserId(resultSet.getInt("UserId"));
+        userRole.setRoleId(resultSet.getInt("roleid"));
 
         
         Role role=new Role(resultSet.getInt("roleid"), resultSet.getString("RoleName"), resultSet.getString("lob"));
 
-        userRole.setrole(role);
+        userRole.setRole(role);
 
         userRoles.add(userRole);
        
@@ -93,7 +93,7 @@ public class AuthRepositoryImpl implements AuthRepository {
          AuthRepositoryImpl authRepo = new AuthRepositoryImpl();
          User user = authRepo.getUserWithRolesByEmail("kajal.ghule@example.com", "12345");
          for (UserRole role : user.getUserRoles()) {
-         System.out.println("User Email: " + role.getEmail() + " User Password: " + role.getPassword());
+        //System.out.println("User Email: " + role.() + " User Password: " + role.getPassword());
       }
     }
 }
