@@ -17,7 +17,7 @@ public interface QuestionBankRepository{
     public  boolean updateSubjectCriteria(int questionId,Question question);
     public  boolean insertQuestion(NewQuestion question);
     public  String  getCriteria(String subject, int questionId);
-    boolean updateAnswer(int id, String answerKey);
+  
 }
     
 
