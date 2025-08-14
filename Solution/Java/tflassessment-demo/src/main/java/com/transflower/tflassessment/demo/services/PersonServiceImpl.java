@@ -5,9 +5,11 @@ import com.transflower.tflassessment.demo.repositories.PersonRepository;
 public class PersonServiceImpl implements PersonService{
 
     private PersonRepository personRepo ;
+
     public PersonServiceImpl(PersonRepository repo){
         this.personRepo=repo;
     }
+    
     @Override
     public void getAll() {
         personRepo.getAll();

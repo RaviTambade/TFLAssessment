@@ -31,5 +31,4 @@
     <ProjectReference Include="..\AssessmentEntities\AssessmentEntities.csproj" />
     <ProjectReference Include="..\AssessmentServices\AssessmentServices.csproj" />
   </ItemGroup>
-
 </Project>
