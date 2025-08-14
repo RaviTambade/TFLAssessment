@@ -130,7 +130,7 @@ public String toString() {
         try {
             System.out.println("CandidateTestDetails object with candidateId " + candidateId + " is being garbage collected");
         } finally {
-            super.finalize();
+        
         }
     }
 
@@ -144,5 +144,12 @@ public String toString() {
             return null;
         }
 
-    }    
+    }
+
+    public void add(CandidateResultDetails candidateResultDetails) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'add'");
+    }
+
+    
 }

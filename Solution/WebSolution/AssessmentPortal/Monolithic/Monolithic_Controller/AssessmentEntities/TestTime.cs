@@ -7,12 +7,9 @@ public class TestTime{
     public  int Seconds{get;set;}
     public int  Year{get;set;}
 
-
-    public  class testtime(this day,this hour,this minutes,this moth,this seconds,int)
-  this day=day;
-  thid day=
-
-
+    public override string ToString()
+    {
+        return this.Day+" "+this.Hour+" "+this.Minutes+" "+this.Month+" "+this.Seconds+" "+this.Year;
     }
 
-
+}

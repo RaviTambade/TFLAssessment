@@ -2,8 +2,8 @@ package com.transflower.tflassessment.demo.repositories;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 import com.transflower.tflassessment.demo.entities.EvaluationCriteria;
 
@@ -14,98 +14,79 @@ public class EvaluationCriteriaRepositoryImpl implements EvaluationCriteriaRepos
     private String Password = "password";
 
     @Override
-<<<<<<< HEAD
     public boolean updateSubject(int id, int subjectId) {
-        String query = "UPDATE evaluationcriterias SET subjectId = " + subjectId + " WHERE id = " + id;
-=======
-    public boolean updateSubject(int id,int subjectId) {
-       String query = "UPDATE evaluationcriterias SET subjectId = " + subjectId + " WHERE id = " + id;
-       try {
-          Connection connection = DriverManager.getConnection(Url,Username,Password);
-          Statement statement = connection.createStatement();
-           statement.executeUpdate(query);
+        String query = "UPDATE evaluationcriterias SET subjectId = ? WHERE id = ?";
+        try (
+            Connection connection = DriverManager.getConnection(Url, Username, Password);
+            PreparedStatement statement = connection.prepareStatement(query)
+        ) {
+            statement.setInt(1, subjectId);
+            statement.setInt(2, id);
+            statement.executeUpdate();
             return true;
         } catch (SQLException e) {
-          e.printStackTrace();
+            e.printStackTrace();
             return false;
         }
-    
     }
-           
 
     @Override
     public boolean insertCriteria(EvaluationCriteria criteria) {
-<<<<<<< HEAD
-       String query = "UPDATE EvaluationCriteria SET subjectId = " + subjectId + " WHERE id = " + id;
->>>>>>> 948a715bb6906672a0aa84a6064efbd114d6fc51
-        try {
-            Connection connection = DriverManager.getConnection(Url,Username,Password);
-            Statement statement = connection.createStatement();
-            statement.executeUpdate(query);
-<<<<<<< HEAD
-             return true;
+        String query = "INSERT INTO evaluationcriterias (title, subjectId) VALUES (?, ?)";
+        try (
+            Connection connection = DriverManager.getConnection(Url, Username, Password);
+            PreparedStatement statement = connection.prepareStatement(query)
+        ) {
+            statement.setString(1, criteria.getTitle());
+            statement.setInt(2, criteria.getSubjectId());
+            statement.executeUpdate();
+            return true;
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
         }
-       
-
     }
 
     @Override
-    public boolean insertCriteria(EvaluationCriteria ec) {
-        String query = "INSERT INTO evaluationcriterias (title, subjectId) VALUES ('"
-                +ec.getTitle() + "'," + ec.getSubjectId() + ")";
-=======
-=======
-            String query = "INSERT INTO evaluationcriterias (title, subjectId) VALUES ('"
-            + criteria.getTitle() + "','" + criteria.getSubjectId() + "')";
-        
->>>>>>> 948a715bb6906672a0aa84a6064efbd114d6fc51
-        try{
-                Connection connection = DriverManager.getConnection(Url, Username, Password);
-                Statement statement = connection.createStatement();
-                statement.executeUpdate(query);
-                return true;
-<<<<<<< HEAD
+    public boolean updateCriteria(int id, int evaluationCriteriaId) {
+        String query = "UPDATE questionbank SET evaluationcriteriaid = ? WHERE id = ?";
+        try (
+            Connection connection = DriverManager.getConnection(Url, Username, Password);
+            PreparedStatement statement = connection.prepareStatement(query)
+        ) {
+            statement.setInt(1, evaluationCriteriaId);
+            statement.setInt(2, id);
+            statement.executeUpdate();
+            return true;
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
         }
-        
-=======
->>>>>>> 2167425a6f4a8e4a0bbe89fa2f5171429ea9dc0f
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
-<<<<<<< HEAD
-        }
-        return true;
-=======
-        
->>>>>>> 2167425a6f4a8e4a0bbe89fa2f5171429ea9dc0f
->>>>>>> 948a715bb6906672a0aa84a6064efbd114d6fc51
     }
-    @Override
-    public boolean updateCriteria(int evaluationCriteriaId, int id) {
-        
-     String query = "UPDATE questionbank SET evaluationcriteriaid = "+evaluationCriteriaId + " WHERE id = "+ id+";";
 
-<<<<<<< HEAD
-        String query = "UPDATE evaluationcriterias SET subjectId = " + subjectId + " WHERE id = " + EvaluationCriteriaId;
-=======
->>>>>>> 948a715bb6906672a0aa84a6064efbd114d6fc51
+    public static void main(String[] args) throws InterruptedException {
+        EvaluationCriteriaRepositoryImpl er = new EvaluationCriteriaRepositoryImpl();
+
         try {
-                Connection connection = DriverManager.getConnection(Url, Username, Password);
-                 Statement statement = connection.createStatement(); 
-                 statement.executeUpdate(query);
-                 return true;
+            System.out.println("Welcome java");
+            EvaluationCriteria evc1 = new EvaluationCriteria(1, "java", 4);
+            er.updateSubject(1, 4);
 
-        } catch (SQLException e) {
+            EvaluationCriteria evc2 = new EvaluationCriteria(39, "R", 2);
+            er.insertCriteria(evc2);
+
+            EvaluationCriteria evc3 = new EvaluationCriteria(3, "what is java", 6);
+            er.updateCriteria(3, 6);
+
+        } catch (Exception e) {
             e.printStackTrace();
-            return false;
+        } finally {
+            
+            try {
+                com.mysql.cj.jdbc.AbandonedConnectionCleanupThread.checkedShutdown();
+            } catch (NoClassDefFoundError err) {
+                System.err.println("MySQL AbandonedConnectionCleanupThread class not found: " + err.getMessage());
+            }
         }
-
     }
 }

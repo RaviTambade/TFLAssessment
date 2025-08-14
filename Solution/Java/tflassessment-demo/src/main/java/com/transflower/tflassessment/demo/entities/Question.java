@@ -22,7 +22,11 @@ public class Question {
         this.B = null;
         this.C = null;
         this.D = null;
+<<<<<<< HEAD
         this.answerKey = (Character) null;
+=======
+        this.answerKey = ' ';
+>>>>>>> c1e39152aeff42eb601cb31a1618b5188250ed7d
         this.evaluationCriteriaId = 0;
 
     }

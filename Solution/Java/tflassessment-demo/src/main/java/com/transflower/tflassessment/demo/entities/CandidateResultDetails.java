@@ -89,12 +89,12 @@ public class CandidateResultDetails {
     {
         if(this == obj) return true;
         if(obj == null || getClass() != obj.getClass()) return false;
-        CandidateResultDetails that =(CandidateResultDetails) obj;
-        return candidateId == that.candidateId &&
-               testId == that.testId &&
-               correctAnswers == that.correctAnswers &&
-               incorrectAnswers == that.incorrectAnswers &&
-               skippedQuestions == that.skippedQuestions;
+        CandidateResultDetails CandidateResultDetails = (CandidateResultDetails) obj;
+        return candidateId ==candidateId &&
+               testId ==testId &&
+               correctAnswers == correctAnswers &&
+               incorrectAnswers == incorrectAnswers &&
+               skippedQuestions == skippedQuestions;
     }
 
     @Override
@@ -109,7 +109,7 @@ public class CandidateResultDetails {
         try{
             System.out.println("Finallized Called"+this);
         }finally{
-            super.finalize();
+            
         }
     }
 

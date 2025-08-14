@@ -2,11 +2,7 @@ package com.transflower.tflassessment.demo.repositories;
 
 import java.util.List;
 
-import com.transflower.tflassessment.demo.entities.NewQuestion;
-import com.transflower.tflassessment.demo.entities.Question;
-import com.transflower.tflassessment.demo.entities.QuestionDetails;
-import com.transflower.tflassessment.demo.entities.QuestionTitle;
-import com.transflower.tflassessment.demo.entities.SubjectQuestion;
+import com.transflower.tflassessment.demo.entities.*;
 
 
 public interface QuestionBankRepository{
