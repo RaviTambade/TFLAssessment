@@ -13,6 +13,7 @@ import java.util.List;
 import com.transflower.tflassessment.demo.entities.InterviewCandidateDetails;
 import com.transflower.tflassessment.demo.entities.InterviewDetails;
 
+
 public class InterviewRepositoryImpl implements InterviewRepository {
 
     private String url = "jdbc:mysql://localhost:3306/assessmentdb";
@@ -77,19 +78,40 @@ public class InterviewRepositoryImpl implements InterviewRepository {
     public InterviewDetails getInterviewDetails(int interviewId) {
         InterviewDetails interviewDetails = null;
         try {
-            String callableStatement = "{CALL spinterviewdetails(?)}";
-            CallableStatement callablestatement = connection.prepareCall(callableStatement);
+            String call = "{CALL spinterviewdetails(?)}";
+            CallableStatement callablestatement = connection.prepareCall(call);
             callablestatement.setInt(1, interviewId);
-            ResultSet rs = callablestatement.executeQuery();
-            if (rs.next()) {
-                interviewDetails = new InterviewDetails(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(5), rs.getString(6), rs.getString(7), null);
+
+            ResultSet rs1 = callablestatement.executeQuery();
+            if (rs1.next()) {
+                interviewDetails = new InterviewDetails(
+                        rs1.getInt(1),
+                        rs1.getString(2),
+                        rs1.getString(3),
+                        rs1.getString(5),
+                        rs1.getString(6),
+                        rs1.getString(7),
+                        null
+                );
             }
+
+            if (callablestatement.getMoreResults()) {
+                ResultSet rs2 = callablestatement.getResultSet();
+                List<String> criterias = new ArrayList<>();
+                while (rs2.next()) {
+                    criterias.add(rs2.getString("title"));
+                }
+                if (interviewDetails != null) {
+                    interviewDetails.setCriterias(criterias.toArray(new String[0]));
+                }
+            }
+
             return interviewDetails;
+
         } catch (Exception e) {
             System.out.println(e);
         }
         return interviewDetails;
-
     }
 
     @Override
@@ -162,16 +184,17 @@ public class InterviewRepositoryImpl implements InterviewRepository {
         List<InterviewCandidateDetails> icd1 = obj1.getAllInterviewCandidates();
         List<InterviewCandidateDetails> icd2 = obj1.getInterviewedCandidatesSubjects(6);
         InterviewDetails id = obj1.getInterviewDetails(4);
-        boolean status1 = obj1.rescheduleInterview(4,LocalDate.of(2022,12,23) );
-        boolean status2 = obj1.rescheduleInterview(3,LocalTime.of(12, 00),LocalDate.of(2032,07,23));
-        boolean status3 = obj1.rescheduleInterview(2,LocalDate.of(2022,07,23) );
-        boolean status4 = obj1.cancelInterview(2);
-        boolean status5 = obj1.changeInterviewer(4,1);
-        for (InterviewCandidateDetails icd : icd1) {
-            System.out.println(icd);
-        }
-        for (InterviewCandidateDetails icd: icd2) {
-            System.out.println(icd);
-        }
+        // boolean status1 = obj1.rescheduleInterview(4,LocalDate.of(2022,12,23) );
+        // boolean status2 = obj1.rescheduleInterview(3,LocalTime.of(12, 00),LocalDate.of(2032,07,23));
+        // boolean status3 = obj1.rescheduleInterview(2,LocalDate.of(2022,07,23) );
+        // boolean status4 = obj1.cancelInterview(2);
+        // boolean status5 = obj1.changeInterviewer(4,1);
+        // for (InterviewCandidateDetails icd : icd1) {
+        //     System.out.println(icd);
+        // }
+        // for (InterviewCandidateDetails icd: icd2) {
+        //     System.out.println(icd);
+        // }
+        System.out.println(id);
     }
 }
