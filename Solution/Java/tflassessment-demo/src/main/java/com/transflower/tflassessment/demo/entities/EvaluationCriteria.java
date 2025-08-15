@@ -18,6 +18,7 @@
 //         this.subjectId=subjectId;
 //     }
 
+<<<<<<< HEAD
 //     public EvaluationCriteria(int id, String title, int subjectId) {
 //         this.id = id;
 //         this.title = title;
@@ -32,6 +33,17 @@
 //     public int getId() {
 //         return id;
 //     }
+=======
+    public EvaluationCriteria(int id, String title, int subjectId) {
+        this.id = id;
+        this.title = title;
+        this.subjectId = subjectId;
+    }
+   
+    public int getId() {
+        return id;
+    }
+>>>>>>> 3173487a655a00882400c373282e250444d1b2c9
 
 //     public void setId(int id) {
 //         this.id = id;

@@ -51,14 +51,14 @@ public class AuthRepositoryImpl implements AuthRepository {
         user.setPassword(resultSet.getString("password"));
 
         UserRole userRole = new UserRole();
-        userRole.setid(resultSet.getInt("UserRoleId"));
-        userRole.setuserId(resultSet.getInt("UserId"));
-        userRole.setroleId(resultSet.getInt("roleid"));
+        userRole.setId(resultSet.getInt("UserRoleId"));
+        userRole.setUserId(resultSet.getInt("UserId"));
+        userRole.setRoleId(resultSet.getInt("roleid"));
 
         
         Role role=new Role(resultSet.getInt("roleid"), resultSet.getString("RoleName"), resultSet.getString("lob"));
 
-        userRole.setrole(role);
+        userRole.setRole(role);
 
         userRoles.add(userRole);
        
@@ -87,6 +87,7 @@ public class AuthRepositoryImpl implements AuthRepository {
     return user;
   }
 
+<<<<<<< HEAD
   
       public static void main(String[] args) {
           System.out.println("Starting test...");
@@ -107,6 +108,15 @@ public class AuthRepositoryImpl implements AuthRepository {
           } else {
               System.out.println("⚠ Repository ran, but no user found for the given email/password.");
           }
+=======
+  public static void main(String [] args)
+   {
+//      // ================= AuthRepository =================
+         AuthRepositoryImpl authRepo = new AuthRepositoryImpl();
+         User user = authRepo.getUserWithRolesByEmail("kajal.ghule@example.com", "12345");
+         for (UserRole role : user.getUserRoles()) {
+        //System.out.println("User Email: " + role.() + " User Password: " + role.getPassword());
+>>>>>>> 3173487a655a00882400c373282e250444d1b2c9
       }
   }
   

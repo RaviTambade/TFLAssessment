@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // package com.transflower.tflassessment.demo.repositories;
 // <<<<<<< HEAD
 
@@ -28,6 +29,26 @@
 // import java.sql.*;
 // import java.util.*;
 // >>>>>>> d2e6b0eb86a8b75c92272191f6876f07c9be8dd6
+=======
+package com.transflower.tflassessment.demo.repositories;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.*;
+import java.util.concurrent.CompletableFuture;
+
+import com.transflower.tflassessment.demo.entities.AnnualCandidateResult;
+import com.transflower.tflassessment.demo.entities.NewQuestion;
+import com.transflower.tflassessment.demo.entities.Question;
+import com.transflower.tflassessment.demo.entities.QuestionDetails;
+import com.transflower.tflassessment.demo.entities.QuestionTitle;
+import com.transflower.tflassessment.demo.entities.SubjectQuestion;
+import com.transflower.tflassessment.demo.entities.User;
+import com.transflower.tflassessment.demo.entities.UserRole;
+>>>>>>> 3173487a655a00882400c373282e250444d1b2c9
 
 // public class QuestionBankRepositoryImpl implements QuestionBankRepository {
 
@@ -44,6 +65,7 @@
 //              Statement statement = connection.createStatement();
 //              ResultSet resultSet = statement.executeQuery(query)) {
 
+<<<<<<< HEAD
 //             while (resultSet.next()) {
 //                 int id = resultSet.getInt("id");
 //                 String title = resultSet.getString("title");
@@ -55,6 +77,18 @@
 
 //         return questions;
 //     }
+=======
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                String title = resultSet.getString("title");
+                questions.add(new QuestionTitle(id, title));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return questions;
+    }
+>>>>>>> 3173487a655a00882400c373282e250444d1b2c9
 
 //     @Override
 //     public List<SubjectQuestion> getQuestionsBySubject(int id) {
@@ -186,6 +220,7 @@
 //     return questions;
 // }
 
+<<<<<<< HEAD
 //     @Override
 // <<<<<<< HEAD
 
@@ -210,6 +245,11 @@
 // >>>>>>> d2e6b0eb86a8b75c92272191f6876f07c9be8dd6
 //     public boolean updateAnswer(int id, char answerKey) {
 //         String query = "UPDATE questionbank SET answerkey = ? WHERE id = ?";
+=======
+    @Override
+    public boolean updateAnswer(int id, char answerKey) {
+        String query = "UPDATE questionbank SET answerkey = ? WHERE id = ?";
+>>>>>>> 3173487a655a00882400c373282e250444d1b2c9
 
 //         try (Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
 //              PreparedStatement statement = connection.prepareStatement(query)) {
@@ -223,12 +263,18 @@
 //             e.printStackTrace();
 //         }
 
+<<<<<<< HEAD
 //         return false;
 // <<<<<<< HEAD
 
 // =======
 // >>>>>>> d2e6b0eb86a8b75c92272191f6876f07c9be8dd6
 //     }
+=======
+        return false;
+    }
+    
+>>>>>>> 3173487a655a00882400c373282e250444d1b2c9
 
 //     @Override
 //     public Question getQuestion(int questionId) {
@@ -353,6 +399,7 @@
 //             e.printStackTrace();
 //         }
 
+<<<<<<< HEAD
 //         return null;
 //     }
 // <<<<<<< HEAD
@@ -376,6 +423,15 @@
 
 //         // ================= QuestionBankRepository =================
 //         QuestionBankRepositoryImpl repo = new QuestionBankRepositoryImpl();
+=======
+        return null;
+    }
+
+    
+     public static void main(String[] args) {
+         // ================= QuestionBankRepository =================
+        QuestionBankRepositoryImpl repo = new QuestionBankRepositoryImpl();
+>>>>>>> 3173487a655a00882400c373282e250444d1b2c9
 
 //         // -------- getAllQuestions --------
 //         System.out.println("\nAll Questions:");
@@ -452,6 +508,7 @@
 //         String criteriaTitle = repo.getCriteria(subjectTitle, questionId);
 //         System.out.println("\nCriteria Title for Subject and Question ID: " + criteriaTitle);
 
+<<<<<<< HEAD
 //         // -------- getQuestions --------
 //         List<Question> testQuestions = repo.getQuestions(1);
 //         System.out.println("\nQuestions from Test (may be empty):");
@@ -470,3 +527,13 @@
 //     }
 // >>>>>>> d2e6b0eb86a8b75c92272191f6876f07c9be8dd6
 // }
+=======
+        // -------- getQuestions --------
+        List<Question> testQuestions = repo.getQuestions(1);
+        System.out.println("\nQuestions from Test (may be empty):");
+        for (Question q : testQuestions) {
+            System.out.println(q.getId() + " - " + q.getTitle());
+        }
+    }
+}
+>>>>>>> 3173487a655a00882400c373282e250444d1b2c9

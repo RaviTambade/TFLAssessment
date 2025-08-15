@@ -20,7 +20,6 @@ public class InterviewService : IInterviewService
     {
         return await _repository.GetInterviewedCandidatesSubjects(candidateId);
     }
-
     public async Task<InterviewDetails> GetInterviewDetails(int interviewId)
     {
         return await _repository.GetInterviewDetails(interviewId);
