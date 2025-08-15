@@ -5,8 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.concurrent.CompletableFuture;
 
 import com.transflower.tflassessment.demo.entities.AnnualCandidateResult;
 import com.transflower.tflassessment.demo.entities.NewQuestion;
@@ -40,7 +40,6 @@ public class QuestionBankRepositoryImpl implements QuestionBankRepository {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return questions;
     }
 
@@ -192,6 +191,7 @@ public class QuestionBankRepositoryImpl implements QuestionBankRepository {
 
         return false;
     }
+    
 
     @Override
     public Question getQuestion(int questionId) {
@@ -318,23 +318,10 @@ public class QuestionBankRepositoryImpl implements QuestionBankRepository {
 
         return null;
     }
+
+    
      public static void main(String[] args) {
-
-        // ================= AssessmentIntelligenceRepository =================
-        AssessmentIntelligenceRepositoryImpl intelligenceRepo = new AssessmentIntelligenceRepositoryImpl();
-        List<AnnualCandidateResult> results = intelligenceRepo.getCandidateResults(2, 2015);
-        for (AnnualCandidateResult result : results) {
-            System.out.println("Candidate ID: " + result.getCandidateId() + " Score: " + result.getScore());
-        }
-
-        // ================= AuthRepository =================
-        AuthRepositoryImpl authRepo = new AuthRepositoryImpl();
-        User user = authRepo.getUserWithRolesByEmail("kajal.ghule@example.com", "12345");
-        for (UserRole role : user.getUserRoles()) {
-            System.out.println("User Email: " + role.getEmail() + " User Password: " + role.getPassword());
-        }
-
-        // ================= QuestionBankRepository =================
+         // ================= QuestionBankRepository =================
         QuestionBankRepositoryImpl repo = new QuestionBankRepositoryImpl();
 
         // -------- getAllQuestions --------
@@ -418,10 +405,5 @@ public class QuestionBankRepositoryImpl implements QuestionBankRepository {
         for (Question q : testQuestions) {
             System.out.println(q.getId() + " - " + q.getTitle());
         }
-    }
-
-    @Override
-    public boolean updateAnswer(int id, String answerKey) {
-        throw new UnsupportedOperationException("Not supported yet.");
     }
 }

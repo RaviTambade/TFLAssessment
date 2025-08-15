@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net9.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
@@ -31,5 +31,4 @@
     <ProjectReference Include="..\AssessmentEntities\AssessmentEntities.csproj" />
     <ProjectReference Include="..\AssessmentServices\AssessmentServices.csproj" />
   </ItemGroup>
-
 </Project>
