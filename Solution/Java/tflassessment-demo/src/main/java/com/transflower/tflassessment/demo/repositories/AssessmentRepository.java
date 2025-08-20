@@ -17,9 +17,9 @@ public interface AssessmentRepository {
 
     public List<Subject> getAllSubjects();
 
-    public List<EvaluationCriteria> getEvaluationCriterias();
+    // public List<EvaluationCriteria> getEvaluationCriterias();
 
-    public List<EvaluationCriteria> getEvaluationCriteriasBySubject(int subjectId);
+    // public List<EvaluationCriteria> getEvaluationCriteriasBySubject(int subjectId);
 
     public boolean createTest(Assessment newTest);
 

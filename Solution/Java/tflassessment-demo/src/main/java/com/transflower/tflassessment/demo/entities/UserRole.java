@@ -111,28 +111,31 @@ public class UserRole {
       }
    }
 
-   public void setRoleName(String string) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'setRoleName'");
-   }
 
-   public void setLob(String string) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'setLob'");
-   }
+   // public void setRoleName(String string) {
+   //  // TODO Auto-generated method stub
+   //  throw new UnsupportedOperationException("Unimplemented method 'setRoleName'");
+   // }
+
+   // public void setLob(String string) {
+   //  // TODO Auto-generated method stub
+   //  throw new UnsupportedOperationException("Unimplemented method 'setLob'");
+   // }
 
    public String getEmail() {
     // TODO Auto-generated method stub
     throw new UnsupportedOperationException("Unimplemented method 'getEmail'");
-   }
 
-   public String getPassword() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'getPassword'");
-   }
-
-   public void setName(String string) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'setName'");
    }
 }
+
+//    public String getPassword() {
+//     // TODO Auto-generated method stub
+//     throw new UnsupportedOperationException("Unimplemented method 'getPassword'");
+//    }
+
+//    public void setName(String string) {
+//     // TODO Auto-generated method stub
+//     throw new UnsupportedOperationException("Unimplemented method 'setName'");
+//    }
+// }

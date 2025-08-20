@@ -34,14 +34,11 @@
 <artifactId>exec-maven-plugin</artifactId>
 <version>3.1.0</version>
 <configuration>
-<<<<<<< HEAD
-<mainClass>com.transflower.tflassessment.demo.repositories.CandidateAnswerRepositoryImpl</mainClass>
-=======
-<mainClass>com.transflower.tflassessment.demo.repositories.AssessmentIntelligenceRepositoryImpl</mainClass>
->>>>>>> d2e6b0eb86a8b75c92272191f6876f07c9be8dd6
+<!-- <mainClass>com.transflower.tflassessment.demo.repositories.AssessmentIntelligenceRepositoryImpl</mainClass> -->
 <!--  Replace this with your actual main class  -->
-  <mainClass>com.transflower.tflassessment.demo.repositories.AssessmentIntelligenceRepositoryImpl</mainClass>
-  <mainClass>com.transflower.tflassessment.demo.repositories.AssessmentIntelligenceRepositoryImpl</mainClass>
+ <!-- <mainClass>com.transflower.tflassessment.demo.repositories.AssessmentIntelligenceRepositoryImpl</mainClass> -->
+  <mainClass>com.transflower.tflassessment.demo.repositories.AuthRepositoryImpl</mainClass> 
+ <!-- <mainClass>com.transflower.tflassement.demo.repositories.CandidateAnswerRepositoryImpl</mainClass>  -->
 </configuration>
 </plugin>
 </plugins>
