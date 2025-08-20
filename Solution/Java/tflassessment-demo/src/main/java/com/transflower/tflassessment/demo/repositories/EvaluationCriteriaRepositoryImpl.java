@@ -1,5 +1,4 @@
-package com.transflower.tflassessment.demo.repositories;
-
+ package com.transflower.tflassessment.demo.repositories;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -7,10 +6,11 @@ import java.sql.SQLException;
 
 import com.transflower.tflassessment.demo.entities.EvaluationCriteria;
 
-public class EvaluationCriteriaRepositoryImpl implements EvaluationCriteriaRepository {
 
-    private String Url = "jdbc:mysql://localhost:3306/assessmentdb";
-    private String Username = "root";
+ public class EvaluationCriteriaRepositoryImpl implements EvaluationCriteriaRepository {
+
+  private String Url = "jdbc:mysql://localhost:3306/assessmentdb";
+   private String Username = "root";
     private String Password = "password";
 
     @Override

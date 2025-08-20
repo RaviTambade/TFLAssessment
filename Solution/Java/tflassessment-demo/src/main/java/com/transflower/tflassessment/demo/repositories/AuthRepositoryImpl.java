@@ -87,6 +87,28 @@ public class AuthRepositoryImpl implements AuthRepository {
     return user;
   }
 
+<<<<<<< HEAD
+  
+      public static void main(String[] args) {
+          System.out.println("Starting test...");
+  
+          // Create repository object (this will try to connect to DB in constructor)
+          AuthRepositoryImpl repo = new AuthRepositoryImpl();
+  
+          // Just test with some dummy values
+          String email = "kajal.ghule@example.com";
+          String password = "12345";
+  
+          // Call method
+          User user = repo.getUserWithRolesByEmail(email, password);
+  
+          // Print result
+          if (user != null && user.getId() != 0) {
+              System.out.println("✅ Repository is working. User found: " + user.getFirstName() + " " + user.getLastName());
+          } else {
+              System.out.println("⚠ Repository ran, but no user found for the given email/password.");
+          }
+=======
   public static void main(String [] args)
    {
 //      // ================= AuthRepository =================
@@ -94,6 +116,7 @@ public class AuthRepositoryImpl implements AuthRepository {
          User user = authRepo.getUserWithRolesByEmail("kajal.ghule@example.com", "12345");
          for (UserRole role : user.getUserRoles()) {
         //System.out.println("User Email: " + role.() + " User Password: " + role.getPassword());
+>>>>>>> 3173487a655a00882400c373282e250444d1b2c9
       }
-    }
-}
+  }
+  
