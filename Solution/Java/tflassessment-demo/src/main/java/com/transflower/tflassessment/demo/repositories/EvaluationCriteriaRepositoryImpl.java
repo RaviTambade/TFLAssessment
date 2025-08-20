@@ -1,86 +1,18 @@
-// package com.transflower.tflassessment.demo.repositories;
-
-<<<<<<< HEAD
-// import java.sql.Connection;
-// import java.sql.DriverManager;
-// import java.sql.SQLException;
-// import java.sql.Statement;
-=======
+ package com.transflower.tflassessment.demo.repositories;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
->>>>>>> 3173487a655a00882400c373282e250444d1b2c9
 
-// import com.transflower.tflassessment.demo.entities.EvaluationCriteria;
+import com.transflower.tflassessment.demo.entities.EvaluationCriteria;
 
-// public class EvaluationCriteriaRepositoryImpl implements EvaluationCriteriaRepository {
 
-//     private String Url = "jdbc:mysql://localhost:3306/assessmentdb";
-//     private String Username = "root";
-//     private String Password = "password";
+ public class EvaluationCriteriaRepositoryImpl implements EvaluationCriteriaRepository {
 
-<<<<<<< HEAD
-//     @Override
+  private String Url = "jdbc:mysql://localhost:3306/assessmentdb";
+   private String Username = "root";
+    private String Password = "password";
 
-//     public boolean updateSubject(int id, int subjectId) {
-//         String query = "UPDATE evaluationcriterias SET subjectId = " + subjectId + " WHERE id = " + id;
-
-//     public boolean updateSubject(int id,int subjectId) {
-//        String query = "UPDATE evaluationcriterias SET subjectId = " + subjectId + " WHERE id = " + id;
-//        try {
-//           Connection connection = DriverManager.getConnection(Url,Username,Password);
-//           Statement statement = connection.createStatement();
-//            statement.executeUpdate(query);
-//             return true;
-//         } catch (SQLException e) {
-//           e.printStackTrace();
-//             return false;
-//         }
-    
-//     }
-           
-
-//     @Override
-//     public boolean insertCriteria(EvaluationCriteria criteria) {
-//        String query = "UPDATE EvaluationCriteria SET subjectId = " + subjectId + " WHERE id = " + id;
-//         try {
-//             Connection connection = DriverManager.getConnection(Url,Username,Password);
-//             Statement statement = connection.createStatement();
-//             statement.executeUpdate(query);
-//             String query = "INSERT INTO evaluationcriterias (title, subjectId) VALUES ('"
-//             + criteria.getTitle() + "','" + criteria.getSubjectId() + "')";
-        
-//         try{
-//                 Connection connection = DriverManager.getConnection(Url, Username, Password);
-//                 Statement statement = connection.createStatement();
-//                 statement.executeUpdate(query);
-//                 return true;
-//         } catch (SQLException e) {
-//             e.printStackTrace();
-//             return false;
-//         }
-        
-//     }
-//     @Override
-//     public boolean updateCriteria(int evaluationCriteriaId, int id) {
-        
-//      String query = "UPDATE questionbank SET evaluationcriteriaid = "+evaluationCriteriaId + " WHERE id = "+ id+";";
-
-//         try {
-//                 Connection connection = DriverManager.getConnection(Url, Username, Password);
-//                  Statement statement = connection.createStatement(); 
-//                  statement.executeUpdate(query);
-//                  return true;
-
-//         } catch (SQLException e) {
-//             e.printStackTrace();
-//             return false;
-//         }
-
-//     }
-// }
-=======
     @Override
     public boolean updateSubject(int id, int subjectId) {
         String query = "UPDATE evaluationcriterias SET subjectId = ? WHERE id = ?";
@@ -136,15 +68,15 @@ import java.sql.SQLException;
         EvaluationCriteriaRepositoryImpl er = new EvaluationCriteriaRepositoryImpl();
 
         try {
-            System.out.println("Welcome java");
-            EvaluationCriteria evc1 = new EvaluationCriteria(1, "java", 4);
-            er.updateSubject(1, 4);
+             System.out.println("Welcome java");
+             EvaluationCriteria evc1 = new EvaluationCriteria(2, "c#", 5);
+             er.updateSubject(2, 5);
 
-            EvaluationCriteria evc2 = new EvaluationCriteria(39, "R", 2);
-            er.insertCriteria(evc2);
+             EvaluationCriteria evc2 = new EvaluationCriteria(39, "c", 7);
+             er.insertCriteria(evc2);
 
-            EvaluationCriteria evc3 = new EvaluationCriteria(3, "what is java", 6);
-            er.updateCriteria(3, 6);
+            EvaluationCriteria evc3 = new EvaluationCriteria(4, "what is java", 7);
+             er.updateCriteria(4, 7);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -158,4 +90,3 @@ import java.sql.SQLException;
         }
     }
 }
->>>>>>> 3173487a655a00882400c373282e250444d1b2c9

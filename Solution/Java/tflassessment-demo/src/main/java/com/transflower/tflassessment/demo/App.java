@@ -1,19 +1,6 @@
-<<<<<<< HEAD
-
-// public class App {
-
-//     public static void main(String[] args) throws Exception {
-       
-//         System.out.println("Welcome to transflower");
-//     }
-// }
-
-
-
-
-=======
 package com.transflower.tflassessment.demo;
 
+<<<<<<< HEAD
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
@@ -29,6 +16,10 @@ import static com.transflower.tflassessment.demo.repositories.ResultRepositoryIm
 =======
 import com.transflower.tflassessment.demo.repositories.*;
 >>>>>>> cbe737872bdb4053c151d49b802d36e14c36fe00
+=======
+import com.transflower.tflassessment.demo.entities.EvaluationCriteria;
+import com.transflower.tflassessment.demo.repositories.EvaluationCriteriaRepositoryImpl;
+>>>>>>> e97bc5c9576e0fba8d25c0feb8d81d824c90ba63
 
 <<<<<<< HEAD
 public class App 
@@ -68,9 +59,15 @@ public class App
         }
 =======
 public class App {
+public static void main(String[] args) throws InterruptedException {
+        EvaluationCriteriaRepositoryImpl er = new EvaluationCriteriaRepositoryImpl();
 
-    public static void main(String[] args) throws Exception {
+        try {
+             System.out.println("Welcome java");
+             EvaluationCriteria evc1 = new EvaluationCriteria(2, "c#", 5);
+             er.updateSubject(2, 5);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
          System.out.println("Welcome to transflower");
          InterviewRepositoryImpl obj1 = new InterviewRepositoryImpl();
@@ -101,6 +98,28 @@ System.out.println("Subjects from InterviewRepositoryImpl: " Subject2);
         System.out.println("Welcome to transflower");
 >>>>>>> 41afbd6b65e21b4b9f89c2b8c8b8a9f4f431476d
 >>>>>>> cbe737872bdb4053c151d49b802d36e14c36fe00
+=======
+             EvaluationCriteria evc2 = new EvaluationCriteria(39, "c", 7);
+             er.insertCriteria(evc2);
+
+            EvaluationCriteria evc3 = new EvaluationCriteria(4, "what is java", 7);
+             er.updateCriteria(4, 7);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            
+            try {
+                com.mysql.cj.jdbc.AbandonedConnectionCleanupThread.checkedShutdown();
+            } catch (NoClassDefFoundError err) {
+                System.err.println("MySQL AbandonedConnectionCleanupThread class not found: " + err.getMessage());
+            }
+        }
+=======
+        System.out.println("Welcome to transflower");
+>>>>>>> 41afbd6b65e21b4b9f89c2b8c8b8a9f4f431476d
+>>>>>>> db47f8c6f99ca0ee88a6b42b1728d1aa91aaae5f
+>>>>>>> e97bc5c9576e0fba8d25c0feb8d81d824c90ba63
     }
 }
->>>>>>> 3173487a655a00882400c373282e250444d1b2c9
+
