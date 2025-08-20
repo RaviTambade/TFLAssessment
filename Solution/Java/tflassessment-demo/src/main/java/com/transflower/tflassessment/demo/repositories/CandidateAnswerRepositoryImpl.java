@@ -31,13 +31,8 @@ public class CandidateAnswerRepositoryImpl implements CandidateAnswerRepository
            
             for (CandidateAnswer ans : answers)
             { 
-                 PreparedStatement preparedStatement = connection.prepareStatement(query);
-                preparedStatement.setInt(1, candidateId);
-                preparedStatement.setInt(2, ans.getTestQuestionId());
-                preparedStatement.setString(3, ans.getAnswerKey());
-                preparedStatement.executeUpdate(); // Add to batch
-            }
-
+            
+                
                 
                 status=true; // Execute batch insert
                 //return result.length == answers.size(); // Return true if all inserted
