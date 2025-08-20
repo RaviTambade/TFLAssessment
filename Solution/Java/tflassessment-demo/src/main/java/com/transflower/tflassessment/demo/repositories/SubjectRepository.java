@@ -1,6 +1,6 @@
 package com.transflower.tflassessment.demo.repositories;
 
-import com.transflower.tflassessment.demo.entities;
+import com.transflower.tflassessment.demo.entities.Subject;
 import java.util.*;
 
 public interface SubjectRepository {

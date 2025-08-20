@@ -1,13 +1,15 @@
 package com.transflower.tflassessment.demo.entities;
-import java.lang.annotation.*;
 import java.util.Objects;
-import java.util.*;
 
 public class Subject implements Cloneable
 {
         private int id;
         private String title;
 
+    public Subject() {
+        this.id = 0;
+        this.title = null;
+    }
     public int getid()
     {
         return id;

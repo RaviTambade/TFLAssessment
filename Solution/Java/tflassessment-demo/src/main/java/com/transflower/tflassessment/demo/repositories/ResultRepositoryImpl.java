@@ -7,9 +7,17 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.security.auth.Subject;
 
-import com.transflower.tflassessment.demo.entities.*;
+import com.transflower.tflassessment.demo.entities.AppearedCandidate;
+import com.transflower.tflassessment.demo.entities.CandidateResultDetails;
+import com.transflower.tflassessment.demo.entities.CandidateSubjectResults;
+import com.transflower.tflassessment.demo.entities.FailedCandidateDetails;
+import com.transflower.tflassessment.demo.entities.PassedCandidateDetails;
+import com.transflower.tflassessment.demo.entities.Subject;
+import com.transflower.tflassessment.demo.entities.TestAverageReport;
+import com.transflower.tflassessment.demo.entities.TestList;
+import com.transflower.tflassessment.demo.entities.TestResultDetails;
+import com.transflower.tflassessment.demo.entities.TestScoreDto;
 
 public class ResultRepositoryImpl implements ResultRepository {
 
@@ -393,6 +401,14 @@ public List<TestAverageReport> getTestAverageReport(int testId) {
         }
         return testScores;
     }
+
+    @Override
+    public List<CandidateSubjectResults> getSubjectResultDetails(int subjectId) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getSubjectResultDetails'");
+    }
+
+    
 }
 
 
