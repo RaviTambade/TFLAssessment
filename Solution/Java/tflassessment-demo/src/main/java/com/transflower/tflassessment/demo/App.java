@@ -1,8 +1,29 @@
-package com.transflower.tflassessment.demo;
-import com.transflower.tflassessment.demo.entities.*;
-import com.transflower.tflassessment.demo.repositories.*;
-import java.util.*;
+<<<<<<< HEAD
 
+// public class App {
+
+//     public static void main(String[] args) throws Exception {
+       
+//         System.out.println("Welcome to transflower");
+//     }
+// }
+
+
+
+
+=======
+package com.transflower.tflassessment.demo;
+
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.List;
+
+import com.transflower.tflassessment.demo.entities.InterviewCandidateDetails;
+import com.transflower.tflassessment.demo.entities.InterviewDetails;
+import com.transflower.tflassessment.demo.repositories.InterviewRepositoryImpl;
+import com.transflower.tflassessment.demo.repositories.*;
+
+<<<<<<< HEAD
 public class App 
 {
     public static void main( String[] args )
@@ -38,11 +59,13 @@ public class App
         // evc.
             }
         }
+=======
+public class App {
+
+    public static void main(String[] args) throws Exception {
+
+        System.out.println("Welcome to transflower");
+>>>>>>> 41afbd6b65e21b4b9f89c2b8c8b8a9f4f431476d
     }
 }
-//mvn clean install
-//mvn package
-//mvn exec:java -Dexec.mainClass="com.transflower.tflAssessment.demo.App"
-
-
-//These are commands to used for compiling, running java app
+>>>>>>> 3173487a655a00882400c373282e250444d1b2c9

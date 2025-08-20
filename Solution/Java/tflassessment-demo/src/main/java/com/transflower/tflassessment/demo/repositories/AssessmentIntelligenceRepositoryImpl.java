@@ -31,15 +31,17 @@ public class AssessmentIntelligenceRepositoryImpl implements AssessmentIntellige
         List<AnnualCandidateResult> results = new ArrayList<AnnualCandidateResult>();
         try{
             
-                Statement statement = connection.createStatement();
-                ResultSet result = statement.executeQuery("select candidatetestresults.score,subjects.title,tests.id"+
-                                                        "from candidatetestresults "+
-                                                        "inner join tests on tests.id=candidatetestresults.testid "+
-                                                        "inner join subjects on subjects.id=tests.subjectid ");
-                                                      //
-                                                      //  "where candidatetestresults.candidateid="+candidateId+ 
-                                                      //      " and year(teststarttime)="+ year+ ";");
-                while(result.next())
+        Statement statement = connection.createStatement();
+        String query = "SELECT candidatetestresults.score, subjects.title, tests.id " +
+                        "FROM candidatetestresults " +
+                        "JOIN tests ON (tests.id = candidatetestresults.testid) " +
+                        "JOIN subjects ON (subjects.id = tests.subjectid) " +
+                        "WHERE candidatetestresults.candidateid = " + candidateId + 
+                        " AND YEAR(teststarttime) = " + year;
+                                                        
+        ResultSet result = statement.executeQuery(query);
+
+        while(result.next())
                 {
                     AnnualCandidateResult  obj= new AnnualCandidateResult();
                     obj.setScore(result.getInt("score"));
@@ -52,4 +54,19 @@ public class AssessmentIntelligenceRepositoryImpl implements AssessmentIntellige
             }
             return results;
     }
+
+
+    public static void main(String [] args)
+    {
+         // ================= AssessmentIntelligenceRepository =================
+        AssessmentIntelligenceRepositoryImpl intelligenceRepo = new AssessmentIntelligenceRepositoryImpl();
+        List<AnnualCandidateResult> results = intelligenceRepo.getCandidateResults(2, 2015);
+        for (AnnualCandidateResult result : results)
+         {
+            System.out.println("Candidate ID: " + result.getCandidateId() + " Score: " + result.getScore());
+        }
+    }
 }
+
+
+

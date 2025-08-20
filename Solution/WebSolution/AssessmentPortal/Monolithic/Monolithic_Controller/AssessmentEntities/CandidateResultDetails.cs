@@ -13,4 +13,5 @@ public class CandidateResultDetails
     public int SkippedQuestions { get; set; }
 
 
+
 }

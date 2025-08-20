@@ -1,7 +1,8 @@
 package com.transflower.tflassessment.demo.repositories;
 
-import com.transflower.tflassessment.demo.entities.*;
 import java.util.List;
+
+import com.transflower.tflassessment.demo.entities.*;
 
 
 public interface QuestionBankRepository{
@@ -16,6 +17,7 @@ public interface QuestionBankRepository{
     public  boolean updateSubjectCriteria(int questionId,Question question);
     public  boolean insertQuestion(NewQuestion question);
     public  String  getCriteria(String subject, int questionId);
+  
 }
     
 
