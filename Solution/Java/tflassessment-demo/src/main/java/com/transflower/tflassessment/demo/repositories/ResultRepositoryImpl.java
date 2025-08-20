@@ -356,9 +356,9 @@ public List<TestAverageReport> getTestAverageReport(int testId) {
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 TestAverageReport report = new TestAverageReport();
-                report.setTestId(resultSet.getInt("testId"));
-                report.setTestName(resultSet.getString("testName"));
-                report.setAverageScore(resultSet.getDouble("averageScore"));
+                report.setSubjectName(resultSet.getString("testName"));
+                report.setCorrectAnswer(resultSet.getInt("correctAnswer"));
+
                 averageReports.add(report);
             }
         } catch (Exception e) {
@@ -366,6 +366,7 @@ public List<TestAverageReport> getTestAverageReport(int testId) {
         }
         return averageReports;
     }
+
 
     @Override
     public List<TestScoreDto> getCandidateAllScore(int candidateId) {
