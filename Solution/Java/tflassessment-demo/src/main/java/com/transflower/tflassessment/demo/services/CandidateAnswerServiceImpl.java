@@ -3,9 +3,13 @@ package com.transflower.tflassessment.demo.services;
 import java.util.List;
 
 import com.transflower.tflassessment.demo.entities.CandidateAnswer;
+import com.transflower.tflassessment.demo.repositories.CandidateAnswerRepository;
 
 public class CandidateAnswerServiceImpl implements CandidateAnswerService
 {
+    public CandidateAnswerServiceImpl(CandidateAnswerRepository repo){
+        
+    }
 
     @Override
     public boolean insertCandidateAnswer(int candidateId, List<CandidateAnswer> answer) {

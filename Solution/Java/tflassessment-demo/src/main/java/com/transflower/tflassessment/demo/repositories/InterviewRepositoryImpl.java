@@ -13,6 +13,7 @@ import java.util.List;
 import com.transflower.tflassessment.demo.entities.InterviewCandidateDetails;
 import com.transflower.tflassessment.demo.entities.InterviewDetails;
 
+
 public class InterviewRepositoryImpl implements InterviewRepository {
 
     private String url = "jdbc:mysql://localhost:3306/assessmentdb";
@@ -77,19 +78,40 @@ public class InterviewRepositoryImpl implements InterviewRepository {
     public InterviewDetails getInterviewDetails(int interviewId) {
         InterviewDetails interviewDetails = null;
         try {
-            String callableStatement = "{CALL spinterviewdetails(?)}";
-            CallableStatement callablestatement = connection.prepareCall(callableStatement);
+            String call = "{CALL spinterviewdetails(?)}";
+            CallableStatement callablestatement = connection.prepareCall(call);
             callablestatement.setInt(1, interviewId);
-            ResultSet rs = callablestatement.executeQuery();
-            if (rs.next()) {
-                interviewDetails = new InterviewDetails(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(5), rs.getString(6), rs.getString(7), null);
+
+            ResultSet rs1 = callablestatement.executeQuery();
+            if (rs1.next()) {
+                interviewDetails = new InterviewDetails(
+                        rs1.getInt(1),
+                        rs1.getString(2),
+                        rs1.getString(3),
+                        rs1.getString(5),
+                        rs1.getString(6),
+                        rs1.getString(7),
+                        null
+                );
             }
+
+            if (callablestatement.getMoreResults()) {
+                ResultSet rs2 = callablestatement.getResultSet();
+                List<String> criterias = new ArrayList<>();
+                while (rs2.next()) {
+                    criterias.add(rs2.getString("title"));
+                }
+                if (interviewDetails != null) {
+                    interviewDetails.setCriterias(criterias.toArray(new String[0]));
+                }
+            }
+
             return interviewDetails;
+
         } catch (Exception e) {
             System.out.println(e);
         }
         return interviewDetails;
-
     }
 
     @Override
@@ -173,5 +195,6 @@ public class InterviewRepositoryImpl implements InterviewRepository {
         for (InterviewCandidateDetails icd: icd2) {
             System.out.println(icd);
         }
+        System.out.println(id);
     }
 }
