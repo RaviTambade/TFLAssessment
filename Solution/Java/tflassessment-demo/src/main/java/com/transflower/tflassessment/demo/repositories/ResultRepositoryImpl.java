@@ -383,7 +383,6 @@ public List<TestAverageReport> getTestAverageReport(int testId) {
 
             while (resultSet.next()) {
                 TestScoreDto scoreDto = new TestScoreDto();
-                scoreDto.setTestId(resultSet.getInt("testId"));
                 scoreDto.setTestName(resultSet.getString("testName"));
                 scoreDto.setScore(resultSet.getInt("score"));
                 testScores.add(scoreDto);
