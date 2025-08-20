@@ -5,7 +5,7 @@ import com.transflower.tflassessment.demo.entities.*;
 
 public interface AssessmentRepository {
     
-    public Assessment getDetails(int assessmentId);
+    public List<Assessment> getDetails(int assessmentId);
 
     public List<Assessment> getAll(Date fromDate, Date toDate);
 

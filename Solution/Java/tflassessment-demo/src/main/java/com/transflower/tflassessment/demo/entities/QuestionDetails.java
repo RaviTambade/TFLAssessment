@@ -41,7 +41,7 @@ public class QuestionDetails {
         criteria = criteria;
     }
 
-    public QuestionDetails(int id, String question, String subject, String criteria) {
+    public QuestionDetails() {
         this.id = id;
         this.question = question;
         this.subject = subject;

@@ -1,5 +1,6 @@
 package com.transflower.tflassessment.demo.entities;
 
+import java.util.List;
 import java.util.Objects;
 
 public class QuestionTitle {
@@ -27,6 +28,9 @@ public class QuestionTitle {
         this.id = id;
         this.title = title;
     }
+    public QuestionTitle() {
+    }
+
 
     @Override
     public boolean equals(Object obj) {
@@ -49,7 +53,11 @@ public class QuestionTitle {
     protected void finalize() throws Throwable {
         try {
             System.out.println("Finalize called for " + this);
-        } finally {
+        } 
+        catch(Exception e)
+        {
+            System.out.println(e);
+        }finally {
             super.finalize();
         }
     }
@@ -57,5 +65,9 @@ public class QuestionTitle {
     @Override
     public String toString() {
         return "Question Title{id =" + id + ",title=" + title + "}";
+    }
+
+    public void add(List<QuestionTitle> questions) {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 }
