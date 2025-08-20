@@ -1,7 +1,25 @@
 package com.transflower.tflassessment.demo;
 
+<<<<<<< HEAD
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.List;
+
+import com.transflower.tflassessment.demo.entities.InterviewCandidateDetails;
+import com.transflower.tflassessment.demo.entities.InterviewDetails;
+import com.transflower.tflassessment.demo.repositories.InterviewRepositoryImpl;
+<<<<<<< HEAD
+import com.transflower.tflassessment.demo.repositories.GetAllSubjectsImpl;
+import com.transflower.tflassessment.demo.repositories.ResultRepositoryImpl;
+
+import static com.transflower.tflassessment.demo.repositories.ResultRepositoryImpl.status1;
+=======
+import com.transflower.tflassessment.demo.repositories.*;
+>>>>>>> cbe737872bdb4053c151d49b802d36e14c36fe00
+=======
 import com.transflower.tflassessment.demo.entities.EvaluationCriteria;
 import com.transflower.tflassessment.demo.repositories.EvaluationCriteriaRepositoryImpl;
+>>>>>>> e97bc5c9576e0fba8d25c0feb8d81d824c90ba63
 
 <<<<<<< HEAD
 public class App 
@@ -50,6 +68,37 @@ public static void main(String[] args) throws InterruptedException {
              er.updateSubject(2, 5);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+         System.out.println("Welcome to transflower");
+         InterviewRepositoryImpl obj1 = new InterviewRepositoryImpl();
+         List<InterviewCandidateDetails> icd1 = obj1.getAllInterviewCandidates();
+         List<InterviewCandidateDetails> icd2 = obj1.getInterviewedCandidatesSubjects(6);
+         InterviewDetails id = obj1.getInterviewDetails(4);
+         boolean status1 = obj1.rescheduleInterview(4, LocalDate.of(2022, 12, 23));
+         boolean status2 = obj1.rescheduleInterview(3, LocalTime.of(12, 00), LocalDate.of(2032, 07, 23));
+         boolean status3 = obj1.rescheduleInterview(2, LocalDate.of(2022, 07, 23));
+         boolean status4 = obj1.cancelInterview(2);
+         boolean status5 = obj1.changeInterviewer(4, 1);
+System.out.println("Subjects from InterviewRepositoryImpl: " Subject2);
+        
+    
+        
+        
+        
+    //     System.out.println("*");
+    //     System.out.println(id.toString());
+    //     System.out.println("*");
+    //     for (InterviewCandidateDetails icd : icd1) {
+    //         System.out.println(icd);
+    //     }
+    //     for (InterviewCandidateDetails icd : icd2) {
+    //         System.out.println(icd);
+    //     }
+=======
+        System.out.println("Welcome to transflower");
+>>>>>>> 41afbd6b65e21b4b9f89c2b8c8b8a9f4f431476d
+>>>>>>> cbe737872bdb4053c151d49b802d36e14c36fe00
+=======
              EvaluationCriteria evc2 = new EvaluationCriteria(39, "c", 7);
              er.insertCriteria(evc2);
 
@@ -70,6 +119,7 @@ public static void main(String[] args) throws InterruptedException {
         System.out.println("Welcome to transflower");
 >>>>>>> 41afbd6b65e21b4b9f89c2b8c8b8a9f4f431476d
 >>>>>>> db47f8c6f99ca0ee88a6b42b1728d1aa91aaae5f
+>>>>>>> e97bc5c9576e0fba8d25c0feb8d81d824c90ba63
     }
 }
 
