@@ -7,9 +7,17 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.security.auth.Subject;
 
-import com.transflower.tflassessment.demo.entities.*;
+import com.transflower.tflassessment.demo.entities.AppearedCandidate;
+import com.transflower.tflassessment.demo.entities.CandidateResultDetails;
+import com.transflower.tflassessment.demo.entities.CandidateSubjectResults;
+import com.transflower.tflassessment.demo.entities.FailedCandidateDetails;
+import com.transflower.tflassessment.demo.entities.PassedCandidateDetails;
+import com.transflower.tflassessment.demo.entities.Subject;
+import com.transflower.tflassessment.demo.entities.TestAverageReport;
+import com.transflower.tflassessment.demo.entities.TestList;
+import com.transflower.tflassessment.demo.entities.TestResultDetails;
+import com.transflower.tflassessment.demo.entities.TestScoreDto;
 
 public class ResultRepositoryImpl implements ResultRepository {
 
@@ -356,9 +364,9 @@ public List<TestAverageReport> getTestAverageReport(int testId) {
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 TestAverageReport report = new TestAverageReport();
-                report.setTestId(resultSet.getInt("testId"));
-                report.setTestName(resultSet.getString("testName"));
-                report.setAverageScore(resultSet.getDouble("averageScore"));
+                report.setSubjectName(resultSet.getString("testName"));
+                report.setCorrectAnswer(resultSet.getInt("correctAnswer"));
+
                 averageReports.add(report);
             }
         } catch (Exception e) {
@@ -366,6 +374,7 @@ public List<TestAverageReport> getTestAverageReport(int testId) {
         }
         return averageReports;
     }
+
 
     @Override
     public List<TestScoreDto> getCandidateAllScore(int candidateId) {
@@ -382,7 +391,6 @@ public List<TestAverageReport> getTestAverageReport(int testId) {
 
             while (resultSet.next()) {
                 TestScoreDto scoreDto = new TestScoreDto();
-                scoreDto.setTestId(resultSet.getInt("testId"));
                 scoreDto.setTestName(resultSet.getString("testName"));
                 scoreDto.setScore(resultSet.getInt("score"));
                 testScores.add(scoreDto);
@@ -393,6 +401,14 @@ public List<TestAverageReport> getTestAverageReport(int testId) {
         }
         return testScores;
     }
+
+    @Override
+    public List<CandidateSubjectResults> getSubjectResultDetails(int subjectId) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getSubjectResultDetails'");
+    }
+
+    
 }
 
 
