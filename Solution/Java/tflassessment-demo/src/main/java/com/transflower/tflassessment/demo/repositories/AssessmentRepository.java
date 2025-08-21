@@ -1,6 +1,9 @@
 package com.transflower.tflassessment.demo.repositories;
 
 import java.util.*;
+
+import javax.security.auth.Subject;
+
 import com.transflower.tflassessment.demo.entities.*;
 
 public interface AssessmentRepository {
@@ -17,7 +20,11 @@ public interface AssessmentRepository {
 
     // public Employee getEmployeeById(int userId);
 
+<<<<<<< HEAD
     // public List<Subject> getAllSubjects();
+=======
+    public List<com.transflower.tflassessment.demo.entities.Subject> getAllSubjects();
+>>>>>>> 9e9aad5b508d4d72063af5b5c99d566b5cb0aedb
 
     // public List<EvaluationCriteria> getEvaluationCriterias();
 
@@ -27,7 +34,11 @@ public interface AssessmentRepository {
 
     // public boolean addQuestion(int assessmentId, int questionId);
 
+<<<<<<< HEAD
     // public boolean addQuestions(int assessmentId, List<QuestionBank> questions);
+=======
+   // public boolean addQuestions(int assessmentId, List<QuestionBank> questions);
+>>>>>>> 9e9aad5b508d4d72063af5b5c99d566b5cb0aedb
 
     // public boolean changeDuration(int assessmentId, String duration);
 
@@ -56,4 +67,8 @@ public interface AssessmentRepository {
     public boolean addEmployeesToTest(TestAssignmentRequest request);
 
     public List<TestEmployeeDetails> getAllTestByEmpId(int empId);
+
+  //  boolean addQuestions(int assessmentId, List<TestQuestion> questions);
+
+    boolean createTest(Assessment newTest);
 }

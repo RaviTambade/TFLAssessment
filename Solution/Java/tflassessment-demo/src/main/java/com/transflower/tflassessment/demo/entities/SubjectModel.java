@@ -2,58 +2,53 @@ package com.transflower.tflassessment.demo.entities;
 
 import java.util.Objects;
 
-public class SubjectModel {
-    private int Id;
-    private String Title;
+public class SubjectModel implements Cloneable{
 
-    public int getId(int Id){
-        return Id;
+    private int id;
+    private String title;
+
+    public SubjectModel() {}
+
+    public SubjectModel(int id, String title) {
+        this.id = id;
+        this.title = title;
     }
-    public void setId(){
-        this.Id=Id;
+    
+    // Getters and Setters
+    public int getId(){
+        return id;
     }
-    public String getTitle(String Title){
-        return Title;
+    public void setId(int id){
+        this.id=id;
     }
-    public void setTitle(){
-        this.Title=Title;
+    public String getTitle(){
+        return title;
+    }
+    public void setTitle(String title){
+        this.title=title;
     }
 
     @Override
-    public String toString()
-    {
-        return "SubjectModel{Id="+Id+",Title='"+Title+"'}";
+    public String toString(){
+        return "SubjectModel{id="+id+",title='"+title+"'}";
     }
 
     @Override
-    public boolean equals(Object obj)
-    {
+    public boolean equals(Object obj){
         if (this == obj) return true;
         if (obj == null || getClass() != obj.getClass()) return false;
         SubjectModel other = (SubjectModel) obj;
-        return Id==other.Id &&
-               Title==other.Title;
-
+        return id==other.id &&
+                Objects.equals(title, other.title);
     }
 
     @Override
     public int hashCode(){
-        return Objects.hash(Id,Title);
+        return Objects.hash(id,title);
     }
 
     @Override
-    public void finalize() throws Throwable
-    {
-        try{
-            System.out.println("Finalized Called!!"+this);
-        }finally{
-          
-        }
-    }
-
-    @Override
-    public Object clone() throws CloneNotSupportedException
-    {
+    public Object clone() throws CloneNotSupportedException{
         return super.clone();
     }
 }
