@@ -1,8 +1,15 @@
 package com.transflower.tflassessment.demo.repositories;
 
-import java.sql.*;
-import java.util.*;
-import com.transflower.tflassessment.demo.repositories.SubjectRepository;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.transflower.tflassessment.demo.entities.SubjectModel;
 
 public class SubjectRepositoryImpl implements SubjectRepository {
 
@@ -10,7 +17,7 @@ public class SubjectRepositoryImpl implements SubjectRepository {
     private final String username;
     private final String password;
 
-    public SubjectRepository(String connectionString, String username, String password) {
+    public SubjectRepositoryImpl(String connectionString, String username, String password) {
         this.connectionString = connectionString;
         this.username = username;
         this.password = password;
@@ -79,5 +86,31 @@ public class SubjectRepositoryImpl implements SubjectRepository {
             return -1;
         }
     }
-}
 
+    // Main Method For Testing
+
+    public static void main( String[] args )
+    {
+        String connectionString = "jdbc:mysql://localhost:3306/assessmentdb";
+        String username = "root";
+        String password = "password";
+
+        SubjectRepositoryImpl repo = new SubjectRepositoryImpl(connectionString, username, password);
+
+        // Get all subjects
+        List<SubjectModel> subjects = repo.getAllSubjects();
+        System.out.println("All subjects:");
+        for (SubjectModel s : subjects) {
+            System.out.println(s);
+        }
+
+        // Add subject
+        SubjectModel newSubject = new SubjectModel(9, "OOPS");
+        int newId = repo.addSubject(newSubject);
+        System.out.println("Inserted subject with id: " + newId);
+
+        // Delete subject
+        int deleted = repo.deleteSubject(11);
+        System.out.println("Deleted rows: " + deleted);
+    }
+}
