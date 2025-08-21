@@ -29,42 +29,6 @@ public class AssessmentRepositoryImpl implements AssessmentRepository {
         }
     }
 
-<<<<<<< HEAD
-    public List<Assessment> getDetails(int assessmentId) {
-
-        List<Assessment> assessment = new ArrayList<Assessment>();
-
-        String query = "SELECT t.id, t.name AS TestName, t.smeid AS subjectExpertId, " +
-                "t.subjectid AS subjectId, t.creationdate AS creationDate, " +
-                "t.modificationdate AS modificationDate, t.scheduleddate AS scheduledDate, " +
-                "t.status, t.passinglevel, e.firstname, e.lastname, t.duration " +
-                "FROM tests t " +
-                "LEFT JOIN employees e ON t.smeid = e.id " +
-                "WHERE t.id = " + assessmentId;
-
-        try (Statement stmt = connection.createStatement();
-                ResultSet rs = stmt.executeQuery(query)) {
-            if (rs.next()) {
-                Assessment assessments = new Assessment();
-                assessments.setId(rs.getInt("id"));
-                assessments.setTestName(rs.getString("TestName"));
-                assessments.setSubjectExpertId(rs.getInt("subjectExpertId"));
-                assessments.setSubjectId(rs.getInt("subjectId"));
-                assessments.setCreationDate(LocalDateTime(rs.getTimestamp("creationDate")));
-                // assessments.setModificationDate(toLocalDateTime(rs.getTimestamp("modificationDate")));
-                // assessments.setScheduledDate(toLocalDateTime(rs.getTimestamp("scheduledDate")));
-                assessments.setStatus(rs.getString("status"));
-                assessments.setPassingLevel(rs.getInt("passinglevel"));
-                assessments.setFirstName(rs.getString("firstname"));
-                assessments.setLastName(rs.getString("lastname"));
-
-            }
-
-        } catch (SQLException e) {
-            System.out.println("Error fetching assessment: " + e.getMessage());
-        }
-        return assessment;
-=======
 
 @Override
 public Assessment getDetails(int assessmentId) {
@@ -112,17 +76,11 @@ public Assessment getDetails(int assessmentId) {
 
     } catch (SQLException e) {
         System.out.println("Error fetching assessment: " + e.getMessage());
->>>>>>> 9e9aad5b508d4d72063af5b5c99d566b5cb0aedb
     }
 
     return assessment; // Return a single object
 }
 
-<<<<<<< HEAD
-        return null;
-    }
-
-=======
 
    
 
@@ -138,7 +96,6 @@ public Assessment getDetails(int assessmentId) {
 
 
 
->>>>>>> 9e9aad5b508d4d72063af5b5c99d566b5cb0aedb
     public List<Assessment> getAll(LocalDateTime fromDate, LocalDateTime toDate) {
         List<Assessment> assessments = new ArrayList<>();
 
@@ -178,9 +135,6 @@ public Assessment getDetails(int assessmentId) {
         return assessments;
     }
 
-<<<<<<< HEAD
-    @Override
-=======
     return assessments;
 }
 
@@ -191,40 +145,9 @@ public Assessment getDetails(int assessmentId) {
        
 
         @Override
->>>>>>> 9e9aad5b508d4d72063af5b5c99d566b5cb0aedb
     public List<Assessment> getAllTests() {
     List<Assessment> tests = new ArrayList<>();
 
-<<<<<<< HEAD
-        return null;
-    }
-
-    @Override
-    public List<Assessment> getAllBySubjectMatterExpert(int smeId) {
-        List<Assessment> assessments = new ArrayList<>();
-
-        String query = "SELECT * FROM tests WHERE smeid = ?";
-
-        try (PreparedStatement stmt = connection.prepareStatement(query)) {
-            stmt.setInt(1, smeId);
-
-            try (ResultSet rs = stmt.executeQuery()) {
-                while (rs.next()) {
-                    Assessment assessment = new Assessment();
-
-                    assessment.setId(rs.getInt("id"));
-                    assessment.setSmeId(rs.getInt("smeid"));
-                    assessment.setName(rs.getString("name"));
-                    assessment.setDescription(rs.getString("description"));
-                    assessment.setCreatedDate(rs.getTimestamp("createdDate").toLocalDateTime());
-
-                    assessments.add(assessment);
-                }
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-=======
     String query = 
     "SELECT tests.*, subjects.title AS skill, employees.firstname, employees.lastname " +
     "FROM tests " +
@@ -255,7 +178,6 @@ public Assessment getDetails(int assessmentId) {
             test.setLastName(rs.getString("lastname"));
 
             tests.add(test);
->>>>>>> 9e9aad5b508d4d72063af5b5c99d566b5cb0aedb
         }
 
     } catch (SQLException e) {
@@ -324,93 +246,6 @@ public List<Assessment> getAllBySubjectMatterExpert(int smeId) {
 
 
     @Override
-<<<<<<< HEAD
-     public List<Question> getQuestionsByEvaluationCriteriaId(int evaluationCriteriaId)
-     {
-     List<Question> questions=new ArrayList<>();
-     try{ 
-         Statement   stmt = connection.createStatement();
-       
-
-     String query="SELECT q.id AS QuestionId, q.subjectid AS SubjectId, q.title, q.a, q.b, q.c, q.d, q.answerkey, q.evaluationcriteriaid " +
-            "FROM questionbank q " +
-            "WHERE q.evaluationcriteriaid = EvaluationCriteriaId";
-
-              ResultSet resultSet = stmt.executeQuery(query);
-
-            while (resultSet.next()) {
-                Question question=new Question();
-                question.setEvaluationCriteriaId(resultSet.getInt("evaluationCriteriaId")); 
-                question.setSubjectId(resultSet.getInt("SubjectId")); 
-                question.setTitle(resultSet.getString("Title"));
-
-                 TestQuestion testQuestion=new TestQuestion();
-                 testQuestion.setId(resultSet.getInt("QuestionId"));
-                 testQuestion.setA(resultSet.getString("a"));
-                testQuestion.setB(resultSet.getString("b"));
-                testQuestion.setC(resultSet.getString("c"));
-                testQuestion.setD(resultSet.getString("d"));
-                testQuestion.setAnswerKey(resultSet.getString("AnswerKey"));
-                 testQuestion.setCriteria(resultSet.getString("Criterai"));
-
-                 
-          
-
-                questions.add(question);
-               // questions.add(testQuestion);
-                
-            }
-        } catch(Exception e)
-        {
-            System.out.println("Error fetching questions:"+e.getMessage());
-        }
-        return questions;
-     }
-
-    @Override
-    public boolean updateQuestion(Question question) {
-        
-        try {
-            
-            String query =  "UPDATE questionbank " +
-               "SET title = ?, a = ?, b = ?, c = ?, d = ?, answerkey = ? " +
-               "WHERE id = ?";
-
-             PreparedStatement prepareStatement = connection.prepareStatement(query);
-             ResultSet resultSet = prepareStatement.executeQuery(query);
-
-            prepareStatement.setString(1, question.getTitle());
-            prepareStatement.setString(2, question.getA());
-            prepareStatement.setString(3, question.getB());
-            prepareStatement.setString(4, question.getC());
-            prepareStatement.setString(5, question.getD());
-            prepareStatement.setString(6,question.getAnswerKey());
-            prepareStatement.setInt(7, question.getId());
-
-            int rowsUpdated = prepareStatement.executeUpdate();
-            return rowsUpdated > 0;
-        } catch (Exception e) {
-            System.out.println("Error updating question:" + e.getMessage());
-
-        }
-        return false;
-    }
-
-    public boolean updateTestStatus(int testId, TestStatusUpdate status) {
-         try {
-            String query = "UPDATE tests SET status = ? WHERE id = ?";
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
-            ResultSet resultSet=preparedStatement.executeQuery(query);
-
-
-            preparedStatement.setString(1, status.getStatus());
-            preparedStatement.setInt(2, testId);
-
-         int rowsUpdated = preparedStatement.executeUpdate();
-            return rowsUpdated > 0;
-        } catch (Exception e) {
-            System.out.println("error updating test status:" + e.getMessage());
-=======
     public List<Employee> getAllEmployees() {
            List<Employee> employees = new ArrayList<>();
            String query = "SELECT * FROM employees";
@@ -531,7 +366,6 @@ public List<Assessment> getAllBySubjectMatterExpert(int smeId) {
   //  public boolean addQuestions(int assessmentId, List<TestQuestion> questions) {
   //     return false;
   //  }
->>>>>>> 9e9aad5b508d4d72063af5b5c99d566b5cb0aedb
 
         }
         return false;
@@ -564,7 +398,189 @@ public List<Assessment> getAllBySubjectMatterExpert(int smeId) {
     }
 
     @Override
-<<<<<<< HEAD
+    public boolean removeQuestions(int[] testQuestions) {
+       return false;
+    }
+
+    public int createTestWithQuestions(CreateTestWithQuestions createTestWithQuestions) {
+        return 0;
+    }
+
+    public List<SubjectQuestions> getAllQuestionsBySubject(int subjectId) {
+        return null;
+    }
+
+    public List<Employee> getSmeBySubject(int subjectId) {
+        return null;
+    }
+
+    public List<Test> getAllTests(Date fromDate, Date toDate) {
+        return null;
+    }
+
+    public TestWithQuestions getTestDetails(int testId) {
+        return null;
+    }
+
+    public List<Question> getQuestionsByEvaluationCriteriaId(int evaluationCriteriaId) {
+        return null;
+    }
+
+    public boolean updateQuestion(Question question) {
+        return false;
+    }
+
+    public boolean updateTestStatus(int testId, TestStatusUpdate status) {
+        return false;
+    }
+
+    public boolean addEmployeesToTest(TestAssignmentRequest request) {
+        return false;
+    }
+
+  @Override
+public Employee getEmployeeById(int userId) {
+    Employee employee = null;
+
+    String query = "SELECT * FROM employees WHERE id = ?";
+
+    try (PreparedStatement stmt = connection.prepareStatement(query)) {
+        stmt.setInt(1, userId);
+
+        try (ResultSet rs = stmt.executeQuery()) {
+            if (rs.next()) {
+                employee = new Employee();
+                employee.setId(rs.getInt("id"));
+                employee.setFirstName(rs.getString("firstname"));
+                employee.setLastName(rs.getString("lastname"));
+                employee.setEmail(rs.getString("email"));
+                employee.setContact(rs.getString("contact")); // Make sure this matches your DB column
+            }
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+
+    return employee;
+}
+@Override
+     public List<Question> getQuestionsByEvaluationCriteriaId(int evaluationCriteriaId)
+     {
+     List<Question> questions=new ArrayList<>();
+     try{ 
+         Statement   stmt = connection.createStatement();
+       
+
+     String query="SELECT q.id AS QuestionId, q.subjectid AS SubjectId, q.title, q.a, q.b, q.c, q.d, q.answerkey, q.evaluationcriteriaid " +
+            "FROM questionbank q " +
+            "WHERE q.evaluationcriteriaid = EvaluationCriteriaId";
+
+              ResultSet resultSet = stmt.executeQuery(query);
+
+            while (resultSet.next()) {
+                Question question=new Question();
+                question.setEvaluationCriteriaId(resultSet.getInt("evaluationCriteriaId")); 
+                question.setSubjectId(resultSet.getInt("SubjectId")); 
+                question.setTitle(resultSet.getString("Title"));
+
+                 TestQuestion testQuestion=new TestQuestion();
+                 testQuestion.setId(resultSet.getInt("QuestionId"));
+                 testQuestion.setA(resultSet.getString("a"));
+                testQuestion.setB(resultSet.getString("b"));
+                testQuestion.setC(resultSet.getString("c"));
+                testQuestion.setD(resultSet.getString("d"));
+                testQuestion.setAnswerKey(resultSet.getString("AnswerKey"));
+                 testQuestion.setCriteria(resultSet.getString("Criterai"));
+
+                 
+          
+
+                questions.add(question);
+               // questions.add(testQuestion);
+                
+            }
+        } catch(Exception e)
+        {
+            System.out.println("Error fetching questions:"+e.getMessage());
+        }
+        return questions;
+     }
+
+    @Override
+    public boolean updateQuestion(Question question) {
+        
+        try {
+            
+            String query =  "UPDATE questionbank " +
+               "SET title = ?, a = ?, b = ?, c = ?, d = ?, answerkey = ? " +
+               "WHERE id = ?";
+
+             PreparedStatement prepareStatement = connection.prepareStatement(query);
+             ResultSet resultSet = prepareStatement.executeQuery(query);
+
+            prepareStatement.setString(1, question.getTitle());
+            prepareStatement.setString(2, question.getA());
+            prepareStatement.setString(3, question.getB());
+            prepareStatement.setString(4, question.getC());
+            prepareStatement.setString(5, question.getD());
+            prepareStatement.setString(6,question.getAnswerKey());
+            prepareStatement.setInt(7, question.getId());
+
+            int rowsUpdated = prepareStatement.executeUpdate();
+            return rowsUpdated > 0;
+        } catch (Exception e) {
+            System.out.println("Error updating question:" + e.getMessage());
+
+        }
+        return false;
+    }
+
+    public boolean updateTestStatus(int testId, TestStatusUpdate status) {
+         try {
+            String query = "UPDATE tests SET status = ? WHERE id = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            ResultSet resultSet=preparedStatement.executeQuery(query);
+
+
+            preparedStatement.setString(1, status.getStatus());
+            preparedStatement.setInt(2, testId);
+
+         int rowsUpdated = preparedStatement.executeUpdate();
+            return rowsUpdated > 0;
+        } catch (Exception e) {
+            System.out.println("error updating test status:" + e.getMessage());
+
+        }
+        return false;
+    }
+
+    @Override
+    public boolean addEmployeesToTest(TestAssignmentRequest request) {
+
+        String query = "INSERT INTO testschedules " +
+               "(testid, candidateid, scheduledstart, scheduledend, status, rescheduledon, remarks) " +
+               "VALUES (?, ?, ?, ?, ?, ?, ?)";
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement((query));
+            preparedStatement.setInt(1, request.getTestId());
+           // preparedStatement.setInt(2, request.getCandidateId());
+            preparedStatement.setTimestamp(3, Timestamp.valueOf(request.getScheduledStart()));
+            preparedStatement.setTimestamp(4, Timestamp.valueOf(request.getScheduledEnd()));
+            preparedStatement.setString(4, request.getStatus());
+            preparedStatement.setTimestamp(5, Timestamp.valueOf(request.getRescheduledOn()));
+            preparedStatement.setString(6, request.getRemarks());
+            preparedStatement.setInt(8, request.getTestId());
+
+            int rowsUpdated = preparedStatement.executeUpdate();
+            return rowsUpdated > 0;
+        } catch (Exception e) {
+            System.out.println("Error adding employee to test :" + e.getMessage());
+        }
+        return false;
+    }
+
+    @Override
     
     public List<TestEmployeeDetails> getAllTestByEmpId(int empId) {
         List<TestEmployeeDetails> testEmployeeDetailsList = new ArrayList<>();
@@ -662,112 +678,17 @@ public List<Assessment> getAllBySubjectMatterExpert(int smeId) {
 }
 
 
-}
 
-  
+
+
+
+
 
    
-=======
-    public boolean removeQuestions(int[] testQuestions) {
-       return false;
-    }
-
-    public int createTestWithQuestions(CreateTestWithQuestions createTestWithQuestions) {
-        return 0;
-    }
-
-    public List<SubjectQuestions> getAllQuestionsBySubject(int subjectId) {
-        return null;
-    }
-
-    public List<Employee> getSmeBySubject(int subjectId) {
-        return null;
-    }
-
-    public List<Test> getAllTests(Date fromDate, Date toDate) {
-        return null;
-    }
-
-    public TestWithQuestions getTestDetails(int testId) {
-        return null;
-    }
-
-    public List<Question> getQuestionsByEvaluationCriteriaId(int evaluationCriteriaId) {
-        return null;
-    }
-
-    public boolean updateQuestion(Question question) {
-        return false;
-    }
-
-    public boolean updateTestStatus(int testId, TestStatusUpdate status) {
-        return false;
-    }
-
-    public boolean addEmployeesToTest(TestAssignmentRequest request) {
-        return false;
-    }
-
-  @Override
-public Employee getEmployeeById(int userId) {
-    Employee employee = null;
-
-    String query = "SELECT * FROM employees WHERE id = ?";
-
-    try (PreparedStatement stmt = connection.prepareStatement(query)) {
-        stmt.setInt(1, userId);
-
-        try (ResultSet rs = stmt.executeQuery()) {
-            if (rs.next()) {
-                employee = new Employee();
-                employee.setId(rs.getInt("id"));
-                employee.setFirstName(rs.getString("firstname"));
-                employee.setLastName(rs.getString("lastname"));
-                employee.setEmail(rs.getString("email"));
-                employee.setContact(rs.getString("contact")); // Make sure this matches your DB column
-            }
-        }
-    } catch (SQLException e) {
-        e.printStackTrace();
-    }
-
-    return employee;
-}
+    
 
 
 
 
 
 
-
-   @Override
-   public List<Assessment> getAll(Date fromDate, Date toDate) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'getAll'");
-   }
-
-
-
-
-   @Override
-   public boolean createTest(CreateTestRequest request) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'createTest'");
-   }
-
-
-
-
-   @Override
-   public List<TestEmployeeDetails> getAllTestByEmpId(int empId) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'getAllTestByEmpId'");
-   }
-
-
-
-
-
-
-}
->>>>>>> 9e9aad5b508d4d72063af5b5c99d566b5cb0aedb
