@@ -1,6 +1,6 @@
  package com.transflower.tflassessment.demo.entities;
 
-import java.security.Timestamp;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -73,8 +73,8 @@ public class Assessment {
         return duration;
     }
 
-    public void setDuration(Timestamp duration) {
-        this.duration = duration;
+  public void setDuration(Timestamp duration) {
+    this.duration = duration;
     }
 
     public int getSubjectExpertId() {
