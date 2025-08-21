@@ -114,3 +114,14 @@ public class UserRole {
     }
 
 }
+
+//    public String getPassword() {
+//     // TODO Auto-generated method stub
+//     throw new UnsupportedOperationException("Unimplemented method 'getPassword'");
+//    }
+
+//    public void setName(String string) {
+//     // TODO Auto-generated method stub
+//     throw new UnsupportedOperationException("Unimplemented method 'setName'");
+//    }
+// }

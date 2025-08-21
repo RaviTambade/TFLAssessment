@@ -20,32 +20,6 @@
             <version>9.3.0</version>
         </dependency>
   
-  
-<<<<<<< HEAD
-    <dependency>
-      <groupId>org.hibernate</groupId>
-      <artifactId>hibernate-annotations</artifactId>
-      <version>3.5.6-Final</version>
-    </dependency>
-  </dependencies>
-  <build>
-<plugins>
-<plugin>
-<groupId>org.codehaus.mojo</groupId>
-<artifactId>exec-maven-plugin</artifactId>
-<version>3.1.0</version>
-<configuration>
-<mainClass>com.transflower.tflassessment.demo.repositories.AssessmentIntelligenceRepositoryImpl</mainClass>
-<!--  Replace this with your actual main class  -->
-  <!-- <mainClass>com.transflower.tflassessment.demo.repositories.AssessmentIntelligenceRepositoryImpl</mainClass> -->
-  <!-- <mainClass>com.transflower.tflassessment.demo.repositories.AuthRepositoryImpl</mainClass> -->
-</configuration>
-</plugin>
-</plugins>
-
-</build>
-</project>
-=======
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-annotations</artifactId>
@@ -55,14 +29,23 @@
     <build>
         <plugins>
             <plugin>
+<<<<<<< HEAD
+    <groupId>org.codehaus.mojo</groupId>
+    <artifactId>exec-maven-plugin</artifactId>
+    <version>3.1.0</version>
+    <configuration>
+        <mainClass>com.transflower.tflassessment.demo.repositories.AssessmentRepositoryImpl</mainClass>
+    </configuration>
+</plugin>
+=======
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
                 <version>3.1.0</version>
                 <configuration>
-                    <mainClass>com.transflower.tflassessment.demo.App</mainClass> 
+                    <mainClass>com.transflower.tflassessment.demo.repositories.SubjectRepositoryImpl</mainClass> 
                 </configuration>
             </plugin>
+>>>>>>> 9e9aad5b508d4d72063af5b5c99d566b5cb0aedb
         </plugins>
     </build>
 </project>
->>>>>>> 3173487a655a00882400c373282e250444d1b2c9

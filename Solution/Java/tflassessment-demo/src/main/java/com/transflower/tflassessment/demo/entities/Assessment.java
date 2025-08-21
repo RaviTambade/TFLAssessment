@@ -1,6 +1,6 @@
  package com.transflower.tflassessment.demo.entities;
 
-import java.security.Timestamp;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -43,6 +43,8 @@ public class Assessment {
 
     }
 
+   
+
     public int getId() {
         return id;
     }
@@ -71,8 +73,8 @@ public class Assessment {
         return duration;
     }
 
-    public void setDuration(Timestamp duration) {
-        this.duration = duration;
+  public void setDuration(Timestamp duration) {
+    this.duration = duration;
     }
 
     public int getSubjectExpertId() {
@@ -83,12 +85,28 @@ public class Assessment {
         this.subjectExpertId = subjectExpertId;
     }
 
-    public LocalDateTime getcreationDate() {
+    public LocalDateTime getCreationDate() {
         return creationDate;
     }
 
     public void setCreationDate(LocalDateTime creationDate) {
         this.creationDate = creationDate;
+    }
+    
+    public LocalDateTime getModificationDate() {
+        return modificationDate;
+    }
+
+    public void setModificationDate(LocalDateTime modificationDate) {
+        this.modificationDate = modificationDate;
+    }
+
+    public LocalDateTime getScheduleDate() {
+        return scheduleDate;
+    }
+
+    public void setScheduleDate(LocalDateTime scheduleDate) {
+        this.scheduleDate = scheduleDate;
     }
 
     public String getStatus() {
@@ -128,7 +146,7 @@ public class Assessment {
         return lastName;
     }
 
-    public void setLastName() {
+    public void setLastName(String lastName) {
         this.lastName = lastName;
     }
 

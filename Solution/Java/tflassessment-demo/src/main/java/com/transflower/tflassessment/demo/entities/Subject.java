@@ -1,73 +1,72 @@
 package com.transflower.tflassessment.demo.entities;
-import java.lang.annotation.*;
+<<<<<<< HEAD
+
+=======
+>>>>>>> c81ec6a16a13bdccf5cf3696fcf98289e1387b90
 import java.util.Objects;
-import java.util.*;
 
-public class Subject implements Cloneable
-{
-        private int id;
-        private String title;
+public class Subject implements Cloneable {
 
+<<<<<<< HEAD
+    private int id;
+    private String title;
+
+    // No-argument constructor (important for frameworks like JDBC, JPA, etc.)
+    public Subject() {
+    }
+
+    // Parameterized constructor
+    public Subject(int id, String title) {
+        this.id = id;
+        this.title = title;
+    }
+
+    // Getters and Setters (follow Java naming conventions: camelCase)
+    public int getId() {
+=======
+    public Subject() {
+        this.id = 0;
+        this.title = null;
+    }
     public int getid()
     {
+>>>>>>> c81ec6a16a13bdccf5cf3696fcf98289e1387b90
         return id;
     }
-    public void setid(int id)
-    {
-        this.id=id;
+
+    public void setId(int id) {
+        this.id = id;
     }
-    public String gettitle()
-    {
+
+    public String getTitle() {
         return title;
     }
 
-    public void settitle(String title)
-    {
-        this.title=title;
-    }
-
-    public Subject(int id,String title)
-    {
-        this.id=id;
-        this.title=title;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     @Override
-    public String toString()
-    {
-        return "Subject{id="+id+",title='"+title+"'}";
+    public String toString() {
+        return "Subject{id=" + id + ", title='" + title + "'}";
     }
 
     @Override
-    public boolean equals(Object obj)
-    {
-        if(this==obj) return true;
-        if(obj==null || getClass() !=obj.getClass())return false;
-        Subject other=(Subject) obj;
-        return id == other.id && Objects.equals(title,other.title);
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Subject other = (Subject) obj;
+        return id == other.id && Objects.equals(title, other.title);
     }
 
     @Override
-    public int hashCode()
-    {
-        return Objects.hash(id,title);
+    public int hashCode() {
+        return Objects.hash(id, title);
     }
 
+    // Clone support
     @Override
-    public void finalize() throws Throwable
-    {
-        try{
-            System.out.println("Finalize called for"+this);
-        }
-       finally{
-            super.finalize();
-        }
-    }
-
-    // @Override
-    protected Object Clone()throws CloneNotSupportedException
-    {
+    protected Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
 }
-
