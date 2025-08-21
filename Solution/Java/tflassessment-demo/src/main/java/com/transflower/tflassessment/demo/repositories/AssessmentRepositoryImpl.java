@@ -674,8 +674,8 @@ public Employee getEmployeeById(int userId) {
             " | End: " + t.getScheduledEnd() +
             " | Status: " + t.getStatus()
         );
-    }
-}
+    }}
+
 
 
 
