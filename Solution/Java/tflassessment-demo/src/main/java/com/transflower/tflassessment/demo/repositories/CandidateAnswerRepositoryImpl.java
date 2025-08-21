@@ -27,6 +27,7 @@ public class CandidateAnswerRepositoryImpl implements CandidateAnswerRepository 
         try (Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD))
 
         {
+<<<<<<< HEAD
 
             for (CandidateAnswer ans : answers) {
                 PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -40,6 +41,22 @@ public class CandidateAnswerRepositoryImpl implements CandidateAnswerRepository 
             // return result.length == answers.size(); // Return true if all inserted
 
         } catch (Exception e) {
+=======
+           
+            for (CandidateAnswer ans : answers)
+            { 
+            
+                
+                
+                status=true; // Execute batch insert
+                //return result.length == answers.size(); // Return true if all inserted
+
+        
+        } 
+    }
+        catch (Exception e) 
+        {
+>>>>>>> 58e6945592fdd9670c5d252cfc7e0ab024977eb9
             System.out.println(e);
 
         }

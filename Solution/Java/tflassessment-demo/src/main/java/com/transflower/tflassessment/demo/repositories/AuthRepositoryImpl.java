@@ -10,7 +10,7 @@ public class AuthRepositoryImpl implements AuthRepository {
   Connection connection;
   Statement statement;
 
-  public AuthRepositoryImpl() {
+  public  AuthRepositoryImpl() {
     try {
       String URL = "jdbc:mysql://localhost:3306/assessmentdb";
       String UserName = "root";
@@ -87,36 +87,33 @@ public class AuthRepositoryImpl implements AuthRepository {
     return user;
   }
 
-<<<<<<< HEAD
-  
-      public static void main(String[] args) {
-          System.out.println("Starting test...");
-  
-          // Create repository object (this will try to connect to DB in constructor)
-          AuthRepositoryImpl repo = new AuthRepositoryImpl();
-  
-          // Just test with some dummy values
-          String email = "kajal.ghule@example.com";
-          String password = "12345";
-  
-          // Call method
-          User user = repo.getUserWithRolesByEmail(email, password);
-  
-          // Print result
-          if (user != null && user.getId() != 0) {
-              System.out.println("✅ Repository is working. User found: " + user.getFirstName() + " " + user.getLastName());
-          } else {
-              System.out.println("⚠ Repository ran, but no user found for the given email/password.");
-          }
-=======
-  public static void main(String [] args)
-   {
-//      // ================= AuthRepository =================
-         AuthRepositoryImpl authRepo = new AuthRepositoryImpl();
-         User user = authRepo.getUserWithRolesByEmail("kajal.ghule@example.com", "12345");
-         for (UserRole role : user.getUserRoles()) {
-        //System.out.println("User Email: " + role.() + " User Password: " + role.getPassword());
->>>>>>> 3173487a655a00882400c373282e250444d1b2c9
-      }
+
+    public static void main(String[] args) {
+        // Create the repository (connects to DB in the constructor)
+        AuthRepositoryImpl repo = new AuthRepositoryImpl();
+
+        // Replace these with actual test values from your database
+        String testEmail = "kajal.ghule@example.com";
+        String testPassword = "12345";
+
+        // Fetch user with roles
+        User user = repo.getUserWithRolesByEmail(testEmail, testPassword);
+
+        // Display the retrieved user details
+        if (user != null) {
+            System.out.println("User ID: " + user.getId());
+            System.out.println("Aadhar ID: " + user.getAadharId());
+            System.out.println("First Name: " + user.getFirstName());
+            System.out.println("Last Name: " + user.getLastName());
+            System.out.println("Email: " + user.getEmail());
+            System.out.println("Contact Number: " + user.getContactNumber());
+            System.out.println("Password: " + user.getPassword());
+            System.out.println("Roles: " +user.getUserRoles());
+        } else {
+            System.out.println("No user found for the given email and password.");
+        }
+    }
+
   }
+
   

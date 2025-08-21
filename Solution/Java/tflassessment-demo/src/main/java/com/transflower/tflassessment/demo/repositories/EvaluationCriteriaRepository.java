@@ -1,103 +1,13 @@
-package com.transflower.tflassessment.demo.repositories;
-import com.transflower.tflassessment.demo.entities.EvaluationCriteria;
-public interface EvaluationCriteriaRepository {
+// package com.transflower.tflassessment.demo.repositories;
 
-     public boolean updateSubject(int id, int subjectId);
+// import com.transflower.tflassessment.demo.entities.EvaluationCriteria;
 
-    public boolean insertCriteria(EvaluationCriteria criteria);
+// public interface EvaluationCriteriaRepository {
 
-     public boolean updateCriteria(int EvaluationCriteriaId, int questionId);
+//     public boolean updateSubject(int id, int subjectId);
 
- }
+//     public boolean insertCriteria(EvaluationCriteria criteria);
 
+//     public boolean updateCriteria(int EvaluationCriteriaId, int questionId);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- 
+// }

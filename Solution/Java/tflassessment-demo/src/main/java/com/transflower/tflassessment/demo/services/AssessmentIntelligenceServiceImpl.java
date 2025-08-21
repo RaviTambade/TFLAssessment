@@ -18,6 +18,5 @@ public class AssessmentIntelligenceServiceImpl implements AssessmentIntelligence
         {
             return repo.getCandidateResults(candidateId,year);
         }
-
-    
+  
 }

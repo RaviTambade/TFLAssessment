@@ -5,17 +5,19 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.*;
-import java.util.concurrent.CompletableFuture;
+import java.util.ArrayList;
+import java.util.List;
 
-import com.transflower.tflassessment.demo.entities.AnnualCandidateResult;
 import com.transflower.tflassessment.demo.entities.NewQuestion;
 import com.transflower.tflassessment.demo.entities.Question;
 import com.transflower.tflassessment.demo.entities.QuestionDetails;
 import com.transflower.tflassessment.demo.entities.QuestionTitle;
 import com.transflower.tflassessment.demo.entities.SubjectQuestion;
+<<<<<<< HEAD
 import com.transflower.tflassessment.demo.entities.User;
 import com.transflower.tflassessment.demo.entities.UserRole;
+=======
+>>>>>>> 58e6945592fdd9670c5d252cfc7e0ab024977eb9
 
 public class QuestionBankRepositoryImpl implements QuestionBankRepository {
 
@@ -324,14 +326,22 @@ public class QuestionBankRepositoryImpl implements QuestionBankRepository {
          // ================= QuestionBankRepository =================
         QuestionBankRepositoryImpl repo = new QuestionBankRepositoryImpl();
 
+<<<<<<< HEAD
         // -------- getAllQuestions --------
+=======
+//         // -------- getAllQuestions --------
+>>>>>>> 58e6945592fdd9670c5d252cfc7e0ab024977eb9
         System.out.println("\nAll Questions:");
         List<QuestionTitle> allQuestions = repo.getAllQuestions();
         for (QuestionTitle q : allQuestions) {
             System.out.println(q.getId() + " - " + q.getTitle());
         }
 
+<<<<<<< HEAD
         // -------- getQuestionsBySubject --------
+=======
+//         // -------- getQuestionsBySubject --------
+>>>>>>> 58e6945592fdd9670c5d252cfc7e0ab024977eb9
         int subjectId = 2;
         System.out.println("\nQuestions by Subject:");
         List<SubjectQuestion> subjectQuestions = repo.getQuestionsBySubject(subjectId);
@@ -339,30 +349,50 @@ public class QuestionBankRepositoryImpl implements QuestionBankRepository {
             System.out.println(q.getQuestionId() + " - " + q.getQuestion() + " - " + q.getSubject());
         }
 
+<<<<<<< HEAD
         // -------- getQuestionsBySubjectAndCriteria --------
+=======
+//         // -------- getQuestionsBySubjectAndCriteria --------
+>>>>>>> 58e6945592fdd9670c5d252cfc7e0ab024977eb9
         System.out.println("\nQuestions by Subject and Criteria:");
         List<QuestionDetails> filteredQuestions = repo.getQuestionsBySubjectAndCriteria(1, 1);
         for (QuestionDetails q : filteredQuestions) {
             System.out.println(q.getId() + " - " + q.getQuestion() + " - " + q.getSubject() + " - " + q.getCriteria());
         }
 
+<<<<<<< HEAD
         // -------- getQuestionsWithSubjectAndCriteria --------
+=======
+//         // -------- getQuestionsWithSubjectAndCriteria --------
+>>>>>>> 58e6945592fdd9670c5d252cfc7e0ab024977eb9
         System.out.println("\nAll Questions with Subject and Criteria:");
         List<QuestionDetails> fullQuestions = repo.getQuestionsWithSubjectAndCriteria();
         for (QuestionDetails q : fullQuestions) {
             System.out.println(q.getId() + " - " + q.getQuestion() + " - " + q.getSubject() + " - " + q.getCriteria());
         }
 
+<<<<<<< HEAD
         // -------- getQuestion --------
+=======
+//         // -------- getQuestion --------
+>>>>>>> 58e6945592fdd9670c5d252cfc7e0ab024977eb9
         System.out.println("\nGet Question by ID:");
         Question existingQuestion = repo.getQuestion(1);
         System.out.println(existingQuestion.getId() + " - " + existingQuestion.getTitle());
 
+<<<<<<< HEAD
         // -------- updateAnswer --------
         boolean answerUpdated = repo.updateAnswer(1, 'b');
         System.out.println("\nAnswer Updated: " + answerUpdated);
 
         // -------- updateQuestionOptions --------
+=======
+//         // -------- updateAnswer --------
+        boolean answerUpdated = repo.updateAnswer(1, 'b');
+        System.out.println("\nAnswer Updated: " + answerUpdated);
+
+//         // -------- updateQuestionOptions --------
+>>>>>>> 58e6945592fdd9670c5d252cfc7e0ab024977eb9
         Question question = new Question();
         question.setTitle("Updated Question?");
         question.setA("Option A");
@@ -373,14 +403,22 @@ public class QuestionBankRepositoryImpl implements QuestionBankRepository {
         boolean optionsUpdated = repo.updateQuestionOptions(1, question);
         System.out.println("\nOptions Updated: " + optionsUpdated);
 
+<<<<<<< HEAD
         // -------- updateSubjectCriteria --------
+=======
+//         // -------- updateSubjectCriteria --------
+>>>>>>> 58e6945592fdd9670c5d252cfc7e0ab024977eb9
         Question updateSubjectCriteria = new Question();
         updateSubjectCriteria.setSubjectId(1);
         updateSubjectCriteria.setEvaluationCriteriaId(1);
         boolean subjectCriteriaUpdated = repo.updateSubjectCriteria(1, updateSubjectCriteria);
         System.out.println("\nSubject and Criteria Updated: " + subjectCriteriaUpdated);
 
+<<<<<<< HEAD
         // -------- insertQuestion --------
+=======
+//         // -------- insertQuestion --------
+>>>>>>> 58e6945592fdd9670c5d252cfc7e0ab024977eb9
         NewQuestion newquestion = new NewQuestion();
         newquestion.setSubjectId(1);
         newquestion.setTitle("New Inserted Question?");
@@ -406,4 +444,8 @@ public class QuestionBankRepositoryImpl implements QuestionBankRepository {
             System.out.println(q.getId() + " - " + q.getTitle());
         }
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 58e6945592fdd9670c5d252cfc7e0ab024977eb9

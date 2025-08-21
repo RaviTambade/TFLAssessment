@@ -20,7 +20,6 @@
             <version>9.3.0</version>
         </dependency>
   
-  
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-annotations</artifactId>
@@ -30,13 +29,27 @@
     <build>
         <plugins>
             <plugin>
+<<<<<<< HEAD
+    <groupId>org.codehaus.mojo</groupId>
+    <artifactId>exec-maven-plugin</artifactId>
+    <version>3.1.0</version>
+    <configuration>
+        <mainClass>com.transflower.tflassessment.demo.repositories.AssessmentRepositoryImpl</mainClass>
+    </configuration>
+</plugin>
+=======
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
                 <version>3.1.0</version>
                 <configuration>
+<<<<<<< HEAD
                     <mainClass>com.transflower.tflassessment.demo.repositories.CandidateAnswerRepositoryImpl</mainClass> 
+=======
+                    <mainClass>com.transflower.tflassessment.demo.repositories.SubjectRepositoryImpl</mainClass> 
+>>>>>>> 58e6945592fdd9670c5d252cfc7e0ab024977eb9
                 </configuration>
             </plugin>
+>>>>>>> 9e9aad5b508d4d72063af5b5c99d566b5cb0aedb
         </plugins>
     </build>
 </project>
