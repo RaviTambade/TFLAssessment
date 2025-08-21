@@ -100,7 +100,7 @@ public class Question {
         return answerKey;
     }
 
-    public void setAnswerKey(char answerKey) {
+    public void setAnswerKey(String answerKey) {
         this.answerKey = answerKey;
     }
 
@@ -145,6 +145,16 @@ public class Question {
     @Override
     public String toString() {
         return "Question{id =" + id + " , subjectId = " + subjectId + " , title" + title + " , A" + A + "B" + B + " , C" + C + ", D" + D + " ,answerKey " + answerKey + " , evaluationCriteriaId" + evaluationCriteriaId + "}";
+    }
+
+    public String getQuestionId() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getQuestionId'");
+    }
+
+    public void setQuestionId(int int1) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'setQuestionId'");
     }
 
 
