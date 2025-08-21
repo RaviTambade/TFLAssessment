@@ -96,7 +96,7 @@ public class Question {
         this.D = D;
     }
 
-    public char getAnswerKey() {
+    public String getAnswerKey() {
         return answerKey;
     }
 
@@ -146,5 +146,11 @@ public class Question {
     public String toString() {
         return "Question{id =" + id + " , subjectId = " + subjectId + " , title" + title + " , A" + A + "B" + B + " , C" + C + ", D" + D + " ,answerKey " + answerKey + " , evaluationCriteriaId" + evaluationCriteriaId + "}";
     }
+
+    public void setAnswerKey(String string) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'setAnswerKey'");
+    }
+
 
 }

@@ -29,37 +29,7 @@ public class UserRole {
       this.role = role;
    }
 
-   public int getid() {
-      return id;
-   }
 
-   public void setid(int id) {
-      this.id = id;
-   }
-
-   public int getuserId() {
-      return userId;
-   }
-
-   public void setuserId(int userId) {
-      this.userId = userId;
-   }
-
-   public int getroleId() {
-      return roleId;
-   }
-
-   public void setroleId(int roleId) {
-      this.roleId = roleId;
-   }
-
-   public Role getrole() {
-      return role;
-   }
-
-   public void setrole(Role role) {
-      this.role = role;
-   }
 
    @Override
    public String toString() {
@@ -111,22 +81,38 @@ public class UserRole {
       }
    }
 
+    public int getId() {
+        return id;
+    }
 
-   // public void setRoleName(String string) {
-   //  // TODO Auto-generated method stub
-   //  throw new UnsupportedOperationException("Unimplemented method 'setRoleName'");
-   // }
+    public void setId(int id) {
+        this.id = id;
+    }
 
-   // public void setLob(String string) {
-   //  // TODO Auto-generated method stub
-   //  throw new UnsupportedOperationException("Unimplemented method 'setLob'");
-   // }
+    public int getUserId() {
+        return userId;
+    }
 
-   public String getEmail() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'getEmail'");
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
 
-   }
+    public int getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(int roleId) {
+        this.roleId = roleId;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
 }
 
 //    public String getPassword() {

@@ -10,7 +10,7 @@ public class AuthRepositoryImpl implements AuthRepository {
   Connection connection;
   Statement statement;
 
-  public AuthRepositoryImpl() {
+  public  AuthRepositoryImpl() {
     try {
       String URL = "jdbc:mysql://localhost:3306/assessmentdb";
       String UserName = "root";
@@ -51,14 +51,14 @@ public class AuthRepositoryImpl implements AuthRepository {
         user.setPassword(resultSet.getString("password"));
 
         UserRole userRole = new UserRole();
-       userRole.setid(resultSet.getInt("UserRoleId"));
-        // userRole.setuserId(resultSet.getInt("UserId"));
-        // userRole.setroleId(resultSet.getInt("roleid"));
+        userRole.setId(resultSet.getInt("UserRoleId"));
+        userRole.setUserId(resultSet.getInt("UserId"));
+        userRole.setRoleId(resultSet.getInt("roleid"));
 
         
         Role role=new Role(resultSet.getInt("roleid"), resultSet.getString("RoleName"), resultSet.getString("lob"));
 
-        userRole.setrole(role);
+        userRole.setRole(role);
 
         userRoles.add(userRole);
        
@@ -86,6 +86,7 @@ public class AuthRepositoryImpl implements AuthRepository {
 
     return user;
   }
+
 
     public static void main(String[] args) {
         // Create the repository (connects to DB in the constructor)
@@ -115,3 +116,4 @@ public class AuthRepositoryImpl implements AuthRepository {
 
   }
 
+  
