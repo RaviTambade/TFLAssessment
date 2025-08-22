@@ -485,7 +485,7 @@ public List<EvaluationCriteria> getEvaluationCriteriasBySubject(int subjectId) {
 //addQuestions
 
 @Override
-    public boolean addQuestions(int assessmentId, List<QuestionBank> questions) {    
+    public boolean addQuesitions(int assessmentId, List<QuestionBank> questions) {    
        
         String query = "INSERT INTO testquestions (testid, questionBankid) VALUES (?, ?)";
         try {
