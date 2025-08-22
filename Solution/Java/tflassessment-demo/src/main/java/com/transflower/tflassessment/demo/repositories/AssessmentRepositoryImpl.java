@@ -29,42 +29,6 @@ public class AssessmentRepositoryImpl implements AssessmentRepository {
         }
     }
 
-<<<<<<< HEAD
-    public List<Assessment> getDetails(int assessmentId) {
-
-        List<Assessment> assessment = new ArrayList<Assessment>();
-
-        String query = "SELECT t.id, t.name AS TestName, t.smeid AS subjectExpertId, " +
-                "t.subjectid AS subjectId, t.creationdate AS creationDate, " +
-                "t.modificationdate AS modificationDate, t.scheduleddate AS scheduledDate, " +
-                "t.status, t.passinglevel, e.firstname, e.lastname, t.duration " +
-                "FROM tests t " +
-                "LEFT JOIN employees e ON t.smeid = e.id " +
-                "WHERE t.id = " + assessmentId;
-
-        try (Statement stmt = connection.createStatement();
-                ResultSet rs = stmt.executeQuery(query)) {
-            if (rs.next()) {
-                Assessment assessments = new Assessment();
-                assessments.setId(rs.getInt("id"));
-                assessments.setTestName(rs.getString("TestName"));
-                assessments.setSubjectExpertId(rs.getInt("subjectExpertId"));
-                assessments.setSubjectId(rs.getInt("subjectId"));
-                assessments.setCreationDate(LocalDateTime(rs.getTimestamp("creationDate")));
-                // assessments.setModificationDate(toLocalDateTime(rs.getTimestamp("modificationDate")));
-                // assessments.setScheduledDate(toLocalDateTime(rs.getTimestamp("scheduledDate")));
-                assessments.setStatus(rs.getString("status"));
-                assessments.setPassingLevel(rs.getInt("passinglevel"));
-                assessments.setFirstName(rs.getString("firstname"));
-                assessments.setLastName(rs.getString("lastname"));
-
-            }
-
-        } catch (SQLException e) {
-            System.out.println("Error fetching assessment: " + e.getMessage());
-        }
-        return assessment;
-=======
 
 @Override
 public Assessment getDetails(int assessmentId) {
@@ -112,17 +76,11 @@ public Assessment getDetails(int assessmentId) {
 
     } catch (SQLException e) {
         System.out.println("Error fetching assessment: " + e.getMessage());
->>>>>>> 9e9aad5b508d4d72063af5b5c99d566b5cb0aedb
     }
 
     return assessment; // Return a single object
 }
 
-<<<<<<< HEAD
-        return null;
-    }
-
-=======
 
    
 
@@ -138,7 +96,6 @@ public Assessment getDetails(int assessmentId) {
 
 
 
->>>>>>> 9e9aad5b508d4d72063af5b5c99d566b5cb0aedb
     public List<Assessment> getAll(LocalDateTime fromDate, LocalDateTime toDate) {
         List<Assessment> assessments = new ArrayList<>();
 
