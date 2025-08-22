@@ -29,7 +29,7 @@ List<Assessment> getAll(LocalDateTime fromDate, LocalDateTime toDate);
 
   public List<EvaluationCriteria> getEvaluationCriteriasBySubject(int subjectId);
 
-  //public boolean createTest(CreateTestRequest request);
+  public boolean createTest(CreateTestRequest request);
 
      public boolean addQuestion(int assessmentId, int questionId);
 
@@ -37,9 +37,9 @@ List<Assessment> getAll(LocalDateTime fromDate, LocalDateTime toDate);
 
    public boolean changeDuration(int assessmentId, String duration);
 
-//     public boolean reschedule(int assessmentId, Date date);
+   public boolean reschedule(int assessmentId, Date date);
 
-//     public boolean removeQuestion(int assessmentId, int questionId);
+//  public boolean removeQuestion(int assessmentId, int questionId);
 
 //     public boolean removeQuestions(int[] testQuestions);
 
