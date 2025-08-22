@@ -8,11 +8,11 @@ public class Test implements Cloneable {
 
     private int id;
     private String name;
-    private LocalDateTime scheduledDate;
+    private Date scheduledDate;
     private String status;
 
 
-    public Test(int id, String name, LocalDateTime scheduledDate, String status) {
+    public Test(int id, String name, Date scheduledDate, String status) {
         this.id = id;
         this.name = name;
         this.scheduledDate = scheduledDate;
@@ -36,11 +36,11 @@ public class Test implements Cloneable {
         this.name = name;
     }
 
-    public LocalDateTime getScheduledDate() {
+    public Date getScheduledDate() {
         return scheduledDate;
     }
 
-    public void setScheduledDate(LocalDateTime scheduledDate) {
+    public void setScheduledDate(Date scheduledDate) {
         this.scheduledDate = scheduledDate;
     }
 

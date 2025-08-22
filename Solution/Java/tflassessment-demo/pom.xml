@@ -33,7 +33,15 @@
                 <artifactId>exec-maven-plugin</artifactId>
                 <version>3.1.0</version>
                 <configuration>
+<<<<<<< HEAD
                     <mainClass>com.transflower.tflassessment.demo.repositories.AssessmentRepositoryImpl</mainClass> 
+=======
+<<<<<<< HEAD
+                    <mainClass>com.transflower.tflassessment.demo.repositories.CandidateAnswerRepositoryImpl</mainClass> 
+=======
+                    <mainClass>com.transflower.tflassessment.demo.repositories.SubjectRepositoryImpl</mainClass> 
+>>>>>>> 58e6945592fdd9670c5d252cfc7e0ab024977eb9
+>>>>>>> 407e843930de314791ac5af742a1405973b50be8
                 </configuration>
             </plugin>
         </plugins>
