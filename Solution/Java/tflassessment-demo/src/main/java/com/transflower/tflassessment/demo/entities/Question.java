@@ -96,7 +96,7 @@ public class Question {
         this.D = D;
     }
 
-    public String getAnswerKey() {
+    public char getAnswerKey() {
         return answerKey;
     }
 

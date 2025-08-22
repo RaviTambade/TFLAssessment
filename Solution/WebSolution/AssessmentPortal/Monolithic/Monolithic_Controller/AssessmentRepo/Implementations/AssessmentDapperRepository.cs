@@ -643,7 +643,7 @@ public class AssessmentDapperRepository : IAssessmentRepository
             {
                 var query = "INSERT INTO testschedules (testid, candidateid, scheduledstart, scheduledend, status, rescheduledon, remarks) " +
                             "VALUES (@TestId, @EmployeeId, @ScheduledStart, @ScheduledEnd, @Status, @RescheduledOn, @Remarks)";
-                var parameters = new
+                var parameters = newccc
                 {
                     TestId = request.TestId,
                     EmployeeId = employeeId,

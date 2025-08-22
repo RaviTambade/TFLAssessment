@@ -115,6 +115,16 @@ public class TestWithQuestions {
         this.modificationDate = modificationDate;
     }
 
+    public LocalDateTime getScheduledDate()
+    {
+        return scheduledDate;
+    }
+
+    public void setScheduledDate(LocalDateTime scheduledDate)
+    {
+        this.scheduledDate=scheduledDate;
+    }
+
     @Override
     public String toString() {
         return "TestWithQuestions{" +

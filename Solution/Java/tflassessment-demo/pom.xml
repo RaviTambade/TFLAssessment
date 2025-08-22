@@ -29,23 +29,13 @@
     <build>
         <plugins>
             <plugin>
-<<<<<<< HEAD
-    <groupId>org.codehaus.mojo</groupId>
-    <artifactId>exec-maven-plugin</artifactId>
-    <version>3.1.0</version>
-    <configuration>
-        <mainClass>com.transflower.tflassessment.demo.repositories.AssessmentRepositoryImpl</mainClass>
-    </configuration>
-</plugin>
-=======
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
                 <version>3.1.0</version>
                 <configuration>
-                    <mainClass>com.transflower.tflassessment.demo.repositories.SubjectRepositoryImpl</mainClass> 
+                    <mainClass>com.transflower.tflassessment.demo.repositories.AssessmentRepositoryImpl</mainClass> 
                 </configuration>
             </plugin>
->>>>>>> 9e9aad5b508d4d72063af5b5c99d566b5cb0aedb
         </plugins>
     </build>
 </project>

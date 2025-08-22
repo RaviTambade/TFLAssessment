@@ -1,36 +1,16 @@
 package com.transflower.tflassessment.demo.entities;
-<<<<<<< HEAD
-
-=======
->>>>>>> c81ec6a16a13bdccf5cf3696fcf98289e1387b90
 import java.util.Objects;
 
 public class Subject implements Cloneable {
-
-<<<<<<< HEAD
     private int id;
     private String title;
 
-    // No-argument constructor (important for frameworks like JDBC, JPA, etc.)
-    public Subject() {
-    }
-
-    // Parameterized constructor
-    public Subject(int id, String title) {
-        this.id = id;
-        this.title = title;
-    }
-
-    // Getters and Setters (follow Java naming conventions: camelCase)
-    public int getId() {
-=======
     public Subject() {
         this.id = 0;
         this.title = null;
     }
     public int getid()
     {
->>>>>>> c81ec6a16a13bdccf5cf3696fcf98289e1387b90
         return id;
     }
 
