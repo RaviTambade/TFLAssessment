@@ -385,7 +385,7 @@ public Employee getEmployeeById(int userId) {
 
 //getAllSubjects
 
- @Override
+@Override
 public List<Subject> getAllSubjects() {
     List<Subject> subjects = new ArrayList<>();
     String query = "SELECT * FROM subjects";
@@ -400,7 +400,7 @@ public List<Subject> getAllSubjects() {
  
             subjects.add(subject);
         }
- 
+        return subjects;
     } catch (SQLException e) {
         System.err.println("Error fetching subjects: " + e.getMessage());
     }
@@ -462,6 +462,32 @@ public List<EvaluationCriteria> getEvaluationCriteriasBySubject(int subjectId) {
  
     return criterias;
 }
+//createTest
+
+@Override
+    public boolean createTest(CreateTestRequest request) {
+        String insertTestSQL = "INSERT INTO tests " +
+                "(name, smeid, subjectid, creationdate, modificationdate, scheduleddate, status, passinglevel, duration) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(insertTestSQL)) {
+            preparedStatement.setString(1, request.getTestName());
+            preparedStatement.setInt(2, request.getSubjectExpertId());
+            preparedStatement.setInt(3, request.getSubjectExpertId());
+            preparedStatement.setTimestamp(4, Timestamp.valueOf(LocalDateTime.now()));
+            preparedStatement.setTimestamp(5, Timestamp.valueOf(LocalDateTime.now()));
+            preparedStatement.setTimestamp(6, Timestamp.valueOf(request.getScheduledDate()));
+            preparedStatement.setString(7, request.getStatus());
+            preparedStatement.setInt(8, request.getPassingLevel());
+            preparedStatement.setInt(9, request.getDuration());
+
+            int rowsAffected = preparedStatement.executeUpdate();
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
  
  // addQuestion
  @Override
@@ -508,6 +534,29 @@ public List<EvaluationCriteria> getEvaluationCriteriasBySubject(int subjectId) {
         }
        return false;
     }
+
+    //reschedule
+ @Override
+    public boolean reschedule(int assessmentId, Date date) {
+        //String query="UPDATE tests " +
+        //                "JOIN subjects ON tests.subjectid = subjects.id " +
+        //                "SET tests.scheduleddate = ? " +
+        //                "WHERE tests.id = ?";
+          
+        String query =  "UPDATE tests JOIN subjects ON tests.subjectid = subjects.id SET tests.scheduleddate = ? WHERE tests.id = ?";
+
+         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setDate(1, new java.sql.Date(date.getTime()));
+            preparedStatement.setInt(2, assessmentId);
+            int rowsAffected = preparedStatement.executeUpdate();
+            return rowsAffected > 0;
+        } catch (Exception e) {
+            System.out.println("Error while rescheduling: " + e.getMessage());
+            return false;
+        }
+    }
+
+
 
     //changeDuration
 
