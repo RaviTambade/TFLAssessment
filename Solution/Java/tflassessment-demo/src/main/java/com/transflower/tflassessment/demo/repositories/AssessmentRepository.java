@@ -7,19 +7,6 @@ import javax.security.auth.Subject;
 
 import com.transflower.tflassessment.demo.entities.*;
 
-<<<<<<< HEAD
-
-public interface AssessmentRepository 
-{
-    
-
-    
-    public List<Assessment> getAllBySubjectMatterExpert(int subjectId);
-    public List<Test> getAllTests(Date fromDate,Date toDate);
-    public List<Question> getTestDetails(int testId);
-        
-    
-=======
 public interface AssessmentRepository {
 
     public Assessment getDetails(int assessmentId);
@@ -46,7 +33,7 @@ List<Assessment> getAll(LocalDateTime fromDate, LocalDateTime toDate);
 
      public boolean addQuestion(int assessmentId, int questionId);
 
-    public boolean addQuestions(int assessmentId, List<QuesitionBank> questions);
+    public boolean addQuestions(int assessmentId, List<QuestionBank> questions);
 
    public boolean changeDuration(int assessmentId, String duration);
 
@@ -76,11 +63,4 @@ List<Assessment> getAll(LocalDateTime fromDate, LocalDateTime toDate);
 
    public List<TestEmployeeDetails> getAllTestByEmpId(int empId);
 
-<<<<<<< HEAD
-=======
-  //  boolean addQuestions(int assessmentId, List<TestQuestion> questions);
-
-    boolean createTest(Assessment newTest);
->>>>>>> 58e6945592fdd9670c5d252cfc7e0ab024977eb9
->>>>>>> 407e843930de314791ac5af742a1405973b50be8
 }

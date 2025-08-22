@@ -2,7 +2,7 @@ package com.transflower.tflassessment.demo.entities;
 
 import java.util.Objects;
 
-public class QuesitionBank {
+public class QuestionBank {
     private int questionBankId;
 
     public int getQuestionBankId(){
