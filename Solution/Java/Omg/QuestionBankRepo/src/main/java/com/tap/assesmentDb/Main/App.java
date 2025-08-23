@@ -1,12 +1,12 @@
 package com.tap.assesmentDb.Main;
-
+import java.util.Scanner;
 import com.tap.assesmentDb.Main.DBManager;
 
 public class App {
     public static void main(String[] args) {
 
         DBManager dbManager = new DBManager();
-
+        Scanner scanner = new Scanner(System.in);
         UIManager mgr=new UIManager()   ;
 
         while (true) {

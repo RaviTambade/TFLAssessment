@@ -1,7 +1,8 @@
-package com.tap.assesmentDb.DBManager;
+package com.tap.assesmentDb.Main;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 
 public class DBManager {
 

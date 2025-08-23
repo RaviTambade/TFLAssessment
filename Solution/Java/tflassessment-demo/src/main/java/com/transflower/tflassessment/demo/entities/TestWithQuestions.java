@@ -1,6 +1,5 @@
 package com.transflower.tflassessment.demo.entities;
 
-import java.sql.Date;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -9,97 +8,16 @@ import java.util.Objects;
 
 public class TestWithQuestions {
 
-    
     private int id;
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
     private String name;
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     private int subjectId;
-    public int getSubjectId() {
-        return subjectId;
-    }
-
-    public void setSubjectId(int subjectId) {
-        this.subjectId = subjectId;
-    }
-
     private Duration duration;
-    public Duration getDuration() {
-        return duration;
-    }
-
-    public void setDuration(Duration duration) {
-        this.duration = duration;
-    }
-
     private int smeId;
-    public int getSmeId() {
-        return smeId;
-    }
-
-    public void setSmeId(int smeId) {
-        this.smeId = smeId;
-    }
-
     private LocalDateTime creationDate;
-    public LocalDateTime getCreationDate() {
-        return creationDate;
-    }
-
-    public void setCreationDate(LocalDateTime creationDate) {
-        this.creationDate = creationDate;
-    }
-
     private LocalDateTime modificationDate;
-    public LocalDateTime getModificationDate() {
-        return modificationDate;
-    }
-
-    public void setModificationDate(LocalDateTime modificationDate) {
-        this.modificationDate = modificationDate;
-    }
-
     private LocalDateTime scheduledDate;
-    public LocalDateTime getScheduledDate() {
-        return scheduledDate;
-    }
-
-    public void setScheduledDate(LocalDateTime scheduledDate) {
-        this.scheduledDate = scheduledDate;
-    }
-
     private int passingLevel;
-    public int getPassingLevel() {
-        return passingLevel;
-    }
-
-    public void setPassingLevel(int passingLevel) {
-        this.passingLevel = passingLevel;
-    }
-
     private String status;
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
 
     // List of related questions
     private List<Question> questions = new ArrayList<>();
@@ -139,54 +57,51 @@ public class TestWithQuestions {
     }
 
     // Getters and Setters
-
-
-    public LocalDateTime getScheduledDate()
-    {
+    public LocalDateTime getScheduledDate() {
         return scheduledDate;
     }
 
-    public void setScheduledDate(LocalDateTime scheduledDate)
-    {
-        this.scheduledDate=scheduledDate;
+    public void setScheduledDate(LocalDateTime scheduledDate) {
+        this.scheduledDate = scheduledDate;
     }
 
     @Override
     public String toString() {
-        return "TestWithQuestions{" +
-                "id=" + id +
-                ", name=" + name +
-                ", subjectId=" + subjectId +
-                ", duration=" + duration +
-                ", smeId=" + smeId +
-                ", creationDate=" + creationDate +
-                ", modificationDate=" + modificationDate +
-                ", scheduledDate=" + scheduledDate +
-                ", passingLevel=" + passingLevel +
-                ", status='" + status +
-                ", questions=" + questions +
-                '}';
+        return "TestWithQuestions{"
+                + "id=" + id
+                + ", name=" + name
+                + ", subjectId=" + subjectId
+                + ", duration=" + duration
+                + ", smeId=" + smeId
+                + ", creationDate=" + creationDate
+                + ", modificationDate=" + modificationDate
+                + ", scheduledDate=" + scheduledDate
+                + ", passingLevel=" + passingLevel
+                + ", status='" + status
+                + ", questions=" + questions
+                + '}';
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj)
+        if (this == obj) {
             return true;
+        }
         if (obj == null || getClass() != obj.getClass()) {
             return false;
         }
         TestWithQuestions other = (TestWithQuestions) obj;
-        return id == other.id &&
-                Objects.equals(name, other.name) &&
-                subjectId == other.subjectId &&
-                Objects.equals(duration, other.duration) &&
-                smeId == other.smeId &&
-                Objects.equals(creationDate, other.creationDate) &&
-                Objects.equals(modificationDate, other.modificationDate) &&
-                Objects.equals(scheduledDate, other.scheduledDate) &&
-                passingLevel == other.passingLevel &&
-                Objects.equals(status, other.status) &&
-                Objects.equals(questions, other.questions);
+        return id == other.id
+                && Objects.equals(name, other.name)
+                && subjectId == other.subjectId
+                && Objects.equals(duration, other.duration)
+                && smeId == other.smeId
+                && Objects.equals(creationDate, other.creationDate)
+                && Objects.equals(modificationDate, other.modificationDate)
+                && Objects.equals(scheduledDate, other.scheduledDate)
+                && passingLevel == other.passingLevel
+                && Objects.equals(status, other.status)
+                && Objects.equals(questions, other.questions);
 
     }
 
@@ -213,9 +128,60 @@ public class TestWithQuestions {
         }
     }
 
+    public int getId() {
+        return id;
+    }
 
+    public void setId(int id) {
+        this.id = id;
+    }
 
-   
-    
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getSubjectId() {
+        return subjectId;
+    }
+
+    public void setSubjectId(int subjectId) {
+        this.subjectId = subjectId;
+    }
+
+    public Duration getDuration() {
+        return duration;
+    }
+
+    public void setDuration(Duration duration) {
+        this.duration = duration;
+    }
+
+    public int getSmeId() {
+        return smeId;
+    }
+
+    public void setSmeId(int smeId) {
+        this.smeId = smeId;
+    }
+
+    public LocalDateTime getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(LocalDateTime creationDate) {
+        this.creationDate = creationDate;
+    }
+
+    public LocalDateTime getModificationDate() {
+        return modificationDate;
+    }
+
+    public void setModificationDate(LocalDateTime modificationDate) {
+        this.modificationDate = modificationDate;
+    }
 
 }

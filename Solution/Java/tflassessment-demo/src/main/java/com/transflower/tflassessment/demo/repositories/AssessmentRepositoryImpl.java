@@ -1,15 +1,34 @@
-package main.java.com.transflower.tflassessment.demo.repositories;
+package com.transflower.tflassessment.demo.repositories;
 
-import java.sql.*;
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.Time;
+import java.sql.Timestamp;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
-import com.transflower.tflassessment.demo.entities.*;
-
-import com.transflower.tflassessment.demo.repositories.AssessmentRepository;
+import com.transflower.tflassessment.demo.entities.Assessment;
+import com.transflower.tflassessment.demo.entities.CandidateTestDetails;
+import com.transflower.tflassessment.demo.entities.Employee;
+import com.transflower.tflassessment.demo.entities.EvaluationCriteria;
+import com.transflower.tflassessment.demo.entities.Question;
+import com.transflower.tflassessment.demo.entities.QuestionBank;
+import com.transflower.tflassessment.demo.entities.Subject;
+import com.transflower.tflassessment.demo.entities.Test;
+import com.transflower.tflassessment.demo.entities.TestAssignmentRequest;
+import com.transflower.tflassessment.demo.entities.TestEmployeeDetails;
+import com.transflower.tflassessment.demo.entities.TestQuestion;
+import com.transflower.tflassessment.demo.entities.TestStatusUpdate;
+import com.transflower.tflassessment.demo.entities.TestWithQuestions;
 
 public class AssessmentRepositoryImpl implements AssessmentRepository {
 
@@ -385,7 +404,7 @@ public Employee getEmployeeById(int userId) {
 
 //getAllSubjects
 
-@Override
+ @Override
 public List<Subject> getAllSubjects() {
     List<Subject> subjects = new ArrayList<>();
     String query = "SELECT * FROM subjects";
@@ -400,7 +419,7 @@ public List<Subject> getAllSubjects() {
  
             subjects.add(subject);
         }
-        return subjects;
+ 
     } catch (SQLException e) {
         System.err.println("Error fetching subjects: " + e.getMessage());
     }
@@ -462,32 +481,6 @@ public List<EvaluationCriteria> getEvaluationCriteriasBySubject(int subjectId) {
  
     return criterias;
 }
-//createTest
-
-@Override
-    public boolean createTest(CreateTestRequest request) {
-        String insertTestSQL = "INSERT INTO tests " +
-                "(name, smeid, subjectid, creationdate, modificationdate, scheduleddate, status, passinglevel, duration) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-
-        try (PreparedStatement preparedStatement = connection.prepareStatement(insertTestSQL)) {
-            preparedStatement.setString(1, request.getTestName());
-            preparedStatement.setInt(2, request.getSubjectExpertId());
-            preparedStatement.setInt(3, request.getSubjectExpertId());
-            preparedStatement.setTimestamp(4, Timestamp.valueOf(LocalDateTime.now()));
-            preparedStatement.setTimestamp(5, Timestamp.valueOf(LocalDateTime.now()));
-            preparedStatement.setTimestamp(6, Timestamp.valueOf(request.getScheduledDate()));
-            preparedStatement.setString(7, request.getStatus());
-            preparedStatement.setInt(8, request.getPassingLevel());
-            preparedStatement.setInt(9, request.getDuration());
-
-            int rowsAffected = preparedStatement.executeUpdate();
-            return rowsAffected > 0;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
  
  // addQuestion
  @Override
@@ -511,14 +504,14 @@ public List<EvaluationCriteria> getEvaluationCriteriasBySubject(int subjectId) {
 //addQuestions
 
 @Override
-    public boolean addQuesitions(int assessmentId, List<QuestionBank> questions) {    
+    public boolean addQuestions(int assessmentId, List<QuestionBank> questions) {    
        
         String query = "INSERT INTO testquestions (testid, questionBankid) VALUES (?, ?)";
         try {
             int rowCount =0;
            
             PreparedStatement statement = connection.prepareStatement(query);
-            for (QuesitionBank elem : questions) {
+            for (QuestionBank elem : questions) {
                 statement.setInt(1, assessmentId);
                 statement.setInt(2, elem.getQuestionBankId());
                 rowCount = statement.executeUpdate();
@@ -534,29 +527,6 @@ public List<EvaluationCriteria> getEvaluationCriteriasBySubject(int subjectId) {
         }
        return false;
     }
-
-    //reschedule
- @Override
-    public boolean reschedule(int assessmentId, Date date) {
-        //String query="UPDATE tests " +
-        //                "JOIN subjects ON tests.subjectid = subjects.id " +
-        //                "SET tests.scheduleddate = ? " +
-        //                "WHERE tests.id = ?";
-          
-        String query =  "UPDATE tests JOIN subjects ON tests.subjectid = subjects.id SET tests.scheduleddate = ? WHERE tests.id = ?";
-
-         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setDate(1, new java.sql.Date(date.getTime()));
-            preparedStatement.setInt(2, assessmentId);
-            int rowsAffected = preparedStatement.executeUpdate();
-            return rowsAffected > 0;
-        } catch (Exception e) {
-            System.out.println("Error while rescheduling: " + e.getMessage());
-            return false;
-        }
-    }
-
-
 
     //changeDuration
 
@@ -784,6 +754,7 @@ public List<Test> getAllTests(Date fromDate, Date toDate) {
         }
         return testEmployeeDetailsList;
     }
+
 }
  
 

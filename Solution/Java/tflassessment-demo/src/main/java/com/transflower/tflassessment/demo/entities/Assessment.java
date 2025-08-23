@@ -130,7 +130,7 @@ public class Assessment {
         return subject;
     }
 
-    public void setSubject(int subject) {
+    public void setSubject(String subject) {
         this.subject = subject;
     }
 
