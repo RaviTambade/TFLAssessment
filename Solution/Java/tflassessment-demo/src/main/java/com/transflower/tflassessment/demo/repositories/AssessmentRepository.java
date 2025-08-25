@@ -45,9 +45,10 @@ public interface AssessmentRepository {
 
 //  public boolean reschedule(int assessmentId, Date date);
 //  public boolean removeQuestion(int assessmentId, int questionId);
-//  public boolean removeQuestions(int[] testQuestions);
+    public boolean removeQuestions(int[] testQuestions);
 //  public int createTestWithQuestions(CreateTestWithQuestions createTestWithQuestions);
 //  public List<SubjectQuestions> getAllQuestionsBySubject(int subjectId);
+
     public List<Employee> getSmeBySubject(int subjectId);
 
     public List<Test> getAllTests(Date fromDate, Date toDate);
