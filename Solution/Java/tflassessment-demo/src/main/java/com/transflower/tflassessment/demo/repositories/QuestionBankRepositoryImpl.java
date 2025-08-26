@@ -107,9 +107,11 @@ public class QuestionBankRepositoryImpl implements QuestionBankRepository {
 
         try (Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
              Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(query)) {
+             ResultSet resultSet = statement.executeQuery(query)) 
+        {
 
-            while (resultSet.next()) {
+            while (resultSet.next()) 
+            {
                 int id = resultSet.getInt("id");
                 String title = resultSet.getString("title");
                 String subject = resultSet.getString("subject");
