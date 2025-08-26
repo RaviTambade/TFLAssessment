@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.transflower.tflassessment.demo.entities.Assessment;
 import com.transflower.tflassessment.demo.entities.CandidateTestDetails;
+import com.transflower.tflassessment.demo.entities.CreateTestWithQuestions;
 import com.transflower.tflassessment.demo.entities.Employee;
 import com.transflower.tflassessment.demo.entities.EvaluationCriteria;
 import com.transflower.tflassessment.demo.entities.Question;
@@ -15,7 +16,7 @@ import com.transflower.tflassessment.demo.entities.TestAssignmentRequest;
 import com.transflower.tflassessment.demo.entities.TestEmployeeDetails;
 import com.transflower.tflassessment.demo.entities.TestStatusUpdate;
 import com.transflower.tflassessment.demo.entities.TestWithQuestions;
-
+import com.transflower.tflassessment.demo.entities.CreateTestRequest;
 public interface AssessmentRepository {
 
     public Assessment getDetails(int assessmentId);
@@ -36,18 +37,18 @@ public interface AssessmentRepository {
 
     public List<EvaluationCriteria> getEvaluationCriteriasBySubject(int subjectId);
 
-// public boolean createTest(CreateTestRequest request);
+    public boolean createTest(CreateTestRequest request);
     public boolean addQuestion(int assessmentId, int questionId);
 
     public boolean addQuestions(int assessmentId, List<QuestionBank> questions);
 
     public boolean changeDuration(int assessmentId, String duration);
 
-//  public boolean reschedule(int assessmentId, Date date);
-//  public boolean removeQuestion(int assessmentId, int questionId);
+  public boolean reschedule(int assessmentId, Date date);
+  public boolean removeQuestion(int assessmentId, int questionId);
     public boolean removeQuestions(int[] testQuestions);
-//  public int createTestWithQuestions(CreateTestWithQuestions createTestWithQuestions);
-//  public List<SubjectQuestions> getAllQuestionsBySubject(int subjectId);
+  //public int createTestWithQuestions(CreateTestWithQuestions createTestWithQuestions);
+ // public List<SubjectQuestions> getAllQuestionsBySubject(int subjectId);
 
     public List<Employee> getSmeBySubject(int subjectId);
 

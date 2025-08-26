@@ -18,6 +18,7 @@ import java.util.List;
 
 import com.transflower.tflassessment.demo.entities.Assessment;
 import com.transflower.tflassessment.demo.entities.CandidateTestDetails;
+import com.transflower.tflassessment.demo.entities.CreateTestRequest;
 import com.transflower.tflassessment.demo.entities.Employee;
 import com.transflower.tflassessment.demo.entities.EvaluationCriteria;
 import com.transflower.tflassessment.demo.entities.Question;
@@ -29,6 +30,8 @@ import com.transflower.tflassessment.demo.entities.TestEmployeeDetails;
 import com.transflower.tflassessment.demo.entities.TestQuestion;
 import com.transflower.tflassessment.demo.entities.TestStatusUpdate;
 import com.transflower.tflassessment.demo.entities.TestWithQuestions;
+import com.transflower.tflassessment.demo.entities.CreateTestWithQuestions;
+import com.transflower.tflassessment.demo.entities.CreateTestRequest;
 
 public class AssessmentRepositoryImpl implements AssessmentRepository {
 
@@ -739,4 +742,65 @@ public class AssessmentRepositoryImpl implements AssessmentRepository {
         }
         return status;
     }
+
+
+    @Override
+    public boolean reschedule(int assessmentId, Date date) {
+                     
+          
+        String query =  "UPDATE tests JOIN subjects ON tests.subjectid = subjects.id SET tests.scheduleddate = ? WHERE tests.id = ?";
+
+         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setDate(1, new java.sql.Date(date.getTime()));
+            preparedStatement.setInt(2, assessmentId);
+            int rowsAffected = preparedStatement.executeUpdate();
+            return rowsAffected > 0;
+        } catch (Exception e) {
+            System.out.println("Error while rescheduling: " + e.getMessage());
+            return false;
+        }
+    }
+
+
+ @Override
+    public boolean removeQuestion(int assessmentId, int questionId) {
+        String sql = "DELETE FROM testquestions WHERE testid = ? AND questionbankid = ?;";
+
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, assessmentId);
+            stmt.setInt(2, questionId);
+            int rowsAffected = stmt.executeUpdate();
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+@Override
+    public boolean createTest(CreateTestRequest request) {
+        String insertTestSQL = "INSERT INTO tests " +
+                "(name, smeid, subjectid, creationdate, modificationdate, scheduleddate, passinglevel, duration) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(insertTestSQL)) {
+            LocalDateTime now = LocalDateTime.now();
+              preparedStatement.setString(1, request.getName());
+            preparedStatement.setInt(2, request.getSubjectExpertId());
+             preparedStatement.setString(3, request.getDuration());
+            preparedStatement.setInt(4, request.getSubjectId());
+            preparedStatement.setTimestamp(5, Timestamp.valueOf(now)); 
+            preparedStatement.setTimestamp(6, Timestamp.valueOf(now)); 
+            preparedStatement.setTimestamp(7, Timestamp.valueOf(request.getScheduledDate())); // scheduled date    
+            preparedStatement.setInt(8, request.getPassingLevel());
+            
+
+            int rowsAffected = preparedStatement.executeUpdate();
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return true;
+        }
+    }
+
+
 }
