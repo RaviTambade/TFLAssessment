@@ -22,12 +22,6 @@ public class CandidateAnswerServiceImpl implements CandidateAnswerService
         // 
         throw new UnsupportedOperationException("Unimplemented method 'getCandidateAnswer'");
     }
-TODO Auto-generated method stub
-    @Override
-    public List<CandidateAnswer> getCandidateAnswerResult(int CandidateId, int TestId) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getCandidateAnswerResult'");
-    }
 
     @Override
     public com.transflower.tflassessment.demo.entities.CandidateTestDetails CandidateTestDetails(int CandidateId,

@@ -1,75 +1,60 @@
 package com.transflower.tflassessment.demo.repositories;
 
-import java.util.*;
+import java.time.LocalDateTime;
+import java.util.Date;
+import java.util.List;
 
-import javax.security.auth.Subject;
-
-import com.transflower.tflassessment.demo.entities.*;
-
-<<<<<<< HEAD
-
-public interface AssessmentRepository 
-{
-    
-
-    
-    public List<Assessment> getAllBySubjectMatterExpert(int subjectId);
-    public List<Test> getAllTests(Date fromDate,Date toDate);
-    public List<Question> getTestDetails(int testId);
-        
-    
-=======
+import com.transflower.tflassessment.demo.entities.Assessment;
+import com.transflower.tflassessment.demo.entities.CandidateTestDetails;
+import com.transflower.tflassessment.demo.entities.CreateTestWithQuestions;
+import com.transflower.tflassessment.demo.entities.Employee;
+import com.transflower.tflassessment.demo.entities.EvaluationCriteria;
+import com.transflower.tflassessment.demo.entities.Question;
+import com.transflower.tflassessment.demo.entities.QuestionBank;
+import com.transflower.tflassessment.demo.entities.Test;
+import com.transflower.tflassessment.demo.entities.TestAssignmentRequest;
+import com.transflower.tflassessment.demo.entities.TestEmployeeDetails;
+import com.transflower.tflassessment.demo.entities.TestStatusUpdate;
+import com.transflower.tflassessment.demo.entities.TestWithQuestions;
+import com.transflower.tflassessment.demo.entities.CreateTestRequest;
 public interface AssessmentRepository {
 
-    // public Assessment getDetails(int assessmentId);
+    public Assessment getDetails(int assessmentId);
 
-    // public List<Assessment> getAll(Date fromDate, Date toDate);
+    List<Assessment> getAll(LocalDateTime fromDate, LocalDateTime toDate);
 
-    // public List<Assessment> getAllTests();
+    public List<Assessment> getAllTests();
 
-    // public List<Assessment> getAllBySubjectMatterExpert(int smeId);
+    public List<Assessment> getAllBySubjectMatterExpert(int smeId);
 
-    // public List<Employee> getAllEmployees();
+    public List<Employee> getAllEmployees();
 
-    // public Employee getEmployeeById(int userId);
+    public Employee getEmployeeById(int userId);
 
-<<<<<<< HEAD
-    // public List<Subject> getAllSubjects();
-=======
     public List<com.transflower.tflassessment.demo.entities.Subject> getAllSubjects();
->>>>>>> 9e9aad5b508d4d72063af5b5c99d566b5cb0aedb
 
-    // public List<EvaluationCriteria> getEvaluationCriterias();
+    public List<EvaluationCriteria> getEvaluationCriterias();
 
-    // public List<EvaluationCriteria> getEvaluationCriteriasBySubject(int subjectId);
+    public List<EvaluationCriteria> getEvaluationCriteriasBySubject(int subjectId);
 
-    // public boolean createTest(CreateTestRequest request);
+    public boolean createTest(CreateTestRequest request);
+    public boolean addQuestion(int assessmentId, int questionId);
 
-    // public boolean addQuestion(int assessmentId, int questionId);
+    public boolean addQuestions(int assessmentId, List<QuestionBank> questions);
 
-<<<<<<< HEAD
-    // public boolean addQuestions(int assessmentId, List<QuestionBank> questions);
-=======
-   // public boolean addQuestions(int assessmentId, List<QuestionBank> questions);
->>>>>>> 9e9aad5b508d4d72063af5b5c99d566b5cb0aedb
+    public boolean changeDuration(int assessmentId, String duration);
 
-    // public boolean changeDuration(int assessmentId, String duration);
+  public boolean reschedule(int assessmentId, Date date);
+  public boolean removeQuestion(int assessmentId, int questionId);
+    public boolean removeQuestions(int[] testQuestions);
+  //public int createTestWithQuestions(CreateTestWithQuestions createTestWithQuestions);
+ // public List<SubjectQuestions> getAllQuestionsBySubject(int subjectId);
 
-    // public boolean reschedule(int assessmentId, Date date);
+    public List<Employee> getSmeBySubject(int subjectId);
 
-    // public boolean removeQuestion(int assessmentId, int questionId);
+    public List<Test> getAllTests(Date fromDate, Date toDate);
 
-    // public boolean removeQuestions(int[] testQuestions);
-
-    // public int createTestWithQuestions(CreateTestWithQuestions createTestWithQuestions);
-
-    // public List<SubjectQuestions> getAllQuestionsBySubject(int subjectId);
-
-    // public List<Employee> getSmeBySubject(int subjectId);
-
-    // public List<Test> getAllTests(Date fromDate, Date toDate);
-
-    // public TestWithQuestions getTestDetails(int testId);
+    public TestWithQuestions getTestDetails(int testId);
 
     public List<Question> getQuestionsByEvaluationCriteriaId(int evaluationCriteriaId);
 
@@ -77,12 +62,8 @@ public interface AssessmentRepository {
 
     public boolean updateTestStatus(int testId, TestStatusUpdate status);
 
-    public boolean addEmployeesToTest(TestAssignmentRequest request);
+    public boolean addEmployeesToTest(TestAssignmentRequest request, CandidateTestDetails candidateTestDetails);
 
     public List<TestEmployeeDetails> getAllTestByEmpId(int empId);
 
-  //  boolean addQuestions(int assessmentId, List<TestQuestion> questions);
-
-    boolean createTest(Assessment newTest);
->>>>>>> 58e6945592fdd9670c5d252cfc7e0ab024977eb9
 }

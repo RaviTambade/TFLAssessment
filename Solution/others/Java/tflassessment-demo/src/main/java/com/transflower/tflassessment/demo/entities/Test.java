@@ -1,6 +1,5 @@
 package com.transflower.tflassessment.demo.entities;
 
-import java.sql.Date;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -8,11 +7,11 @@ public class Test implements Cloneable {
 
     private int id;
     private String name;
-    private Date scheduledDate;
+    private LocalDateTime scheduledDate;
     private String status;
 
 
-    public Test(int id, String name, Date scheduledDate, String status) {
+    public Test(int id, String name, LocalDateTime scheduledDate, String status) {
         this.id = id;
         this.name = name;
         this.scheduledDate = scheduledDate;
@@ -36,11 +35,11 @@ public class Test implements Cloneable {
         this.name = name;
     }
 
-    public Date getScheduledDate() {
+    public LocalDateTime getScheduledDate() {
         return scheduledDate;
     }
 
-    public void setScheduledDate(Date scheduledDate) {
+    public void setScheduledDate(LocalDateTime scheduledDate) {
         this.scheduledDate = scheduledDate;
     }
 

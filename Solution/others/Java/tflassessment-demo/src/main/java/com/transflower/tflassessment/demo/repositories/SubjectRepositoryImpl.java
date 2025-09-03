@@ -1,10 +1,5 @@
-// package com.transflower.tflassessment.demo.repositories;
+package com.transflower.tflassessment.demo.repositories;
 
-<<<<<<< HEAD
-// import java.sql.*;
-// import java.util.*;
-// import com.transflower.tflassessment.demo.repositories.SubjectRepository;
-=======
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -15,100 +10,82 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.transflower.tflassessment.demo.entities.SubjectModel;
->>>>>>> 9e9aad5b508d4d72063af5b5c99d566b5cb0aedb
 
-// public class SubjectRepositoryImpl implements SubjectRepository {
+public class SubjectRepositoryImpl implements SubjectRepository {
 
-//     private final String connectionString;
-//     private final String username;
-//     private final String password;
+    private final String connectionString;
+    private final String username;
+    private final String password;
 
-<<<<<<< HEAD
-//     public SubjectRepository(String connectionString, String username, String password) {
-//         this.connectionString = connectionString;
-//         this.username = username;
-//         this.password = password;
-//     }
-=======
     public SubjectRepositoryImpl(String connectionString, String username, String password) {
         this.connectionString = connectionString;
         this.username = username;
         this.password = password;
     }
->>>>>>> 9e9aad5b508d4d72063af5b5c99d566b5cb0aedb
 
-//     @Override
-//     public List<SubjectModel> getAllSubjects() {
-//         List<SubjectModel> subjects = new ArrayList<>();
-//         String query = "SELECT * FROM subjects";
+    @Override
+    public List<SubjectModel> getAllSubjects() {
+        List<SubjectModel> subjects = new ArrayList<>();
+        String query = "SELECT * FROM subjects";
 
-//         try (Connection connection = DriverManager.getConnection(connectionString, username, password);
-//              PreparedStatement statement = connection.prepareStatement(query);
-//              ResultSet rs = statement.executeQuery()) {
+        try (Connection connection = DriverManager.getConnection(connectionString, username, password);
+             PreparedStatement statement = connection.prepareStatement(query);
+             ResultSet rs = statement.executeQuery()) {
 
-//             while (rs.next()) {
-//                 SubjectModel subject = new SubjectModel();
-//                 subject.setId(rs.getInt("id"));
-//                 subject.setTitle(rs.getString("title"));
-//                 subjects.add(subject);
-//             }
+            while (rs.next()) {
+                SubjectModel subject = new SubjectModel();
+                subject.setId(rs.getInt("id"));
+                subject.setTitle(rs.getString("title"));
+                subjects.add(subject);
+            }
 
-//         } catch (SQLException e) {
-//             e.printStackTrace();
-//         }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
-//         return subjects;
-//     }
+        return subjects;
+    }
 
-//     @Override
-//     public int addSubject(SubjectModel subject) {
-//         String query = "INSERT INTO subjects (title) VALUES (?)";
+    @Override
+    public int addSubject(SubjectModel subject) {
+        String query = "INSERT INTO subjects (title) VALUES (?)";
 
-//         try (Connection connection = DriverManager.getConnection(connectionString, username, password);
-//              PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+        try (Connection connection = DriverManager.getConnection(connectionString, username, password);
+             PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
 
-//             statement.setString(1, subject.getTitle());
-//             int rows = statement.executeUpdate();
+            statement.setString(1, subject.getTitle());
+            int rows = statement.executeUpdate();
 
-//             if (rows > 0) {
-//                 try (ResultSet keys = statement.getGeneratedKeys()) {
-//                     if (keys.next()) {
-//                         return keys.getInt(1); // return generated ID
-//                     }
-//                 }
-//             }
-//             return rows;
+            if (rows > 0) {
+                try (ResultSet keys = statement.getGeneratedKeys()) {
+                    if (keys.next()) {
+                        return keys.getInt(1); // return generated ID
+                    }
+                }
+            }
+            return rows;
 
-//         } catch (SQLException e) {
-//             e.printStackTrace();
-//             return -1;
-//         }
-//     }
-
-//     @Override
-//     public int deleteSubject(int subjectId) {
-//         String query = "DELETE FROM subjects WHERE id = ?";
-
-//         try (Connection connection = DriverManager.getConnection(connectionString, username, password);
-//              PreparedStatement statement = connection.prepareStatement(query)) {
-
-//             statement.setInt(1, subjectId);
-//             return statement.executeUpdate();
-
-<<<<<<< HEAD
-//         } catch (SQLException e) {
-//             e.printStackTrace();
-//             return -1;
-//         }
-//     }
-// }
-=======
         } catch (SQLException e) {
             e.printStackTrace();
             return -1;
         }
     }
->>>>>>> 9e9aad5b508d4d72063af5b5c99d566b5cb0aedb
+
+    @Override
+    public int deleteSubject(int subjectId) {
+        String query = "DELETE FROM subjects WHERE id = ?";
+
+        try (Connection connection = DriverManager.getConnection(connectionString, username, password);
+             PreparedStatement statement = connection.prepareStatement(query)) {
+
+            statement.setInt(1, subjectId);
+            return statement.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return -1;
+        }
+    }
 
     // Main Method For Testing
 
