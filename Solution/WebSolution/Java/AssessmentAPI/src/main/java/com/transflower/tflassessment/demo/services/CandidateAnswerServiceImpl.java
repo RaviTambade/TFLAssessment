@@ -4,30 +4,34 @@ import java.util.List;
 
 import com.transflower.tflassessment.demo.entities.CandidateAnswer;
 import com.transflower.tflassessment.demo.repositories.CandidateAnswerRepository;
+import com.transflower.tflassessment.demo.entities.CandidateTestDetails;
 
-public class CandidateAnswerServiceImpl implements CandidateAnswerService
-{
-    public CandidateAnswerServiceImpl(CandidateAnswerRepository repo){
-        
+public class CandidateAnswerServiceImpl implements CandidateAnswerService {
+
+    private final CandidateAnswerRepository _repo;
+
+    public CandidateAnswerServiceImpl(CandidateAnswerRepository repo) {
+        _repo = repo;
     }
 
     @Override
     public boolean insertCandidateAnswer(int candidateId, List<CandidateAnswer> answer) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'insertCandidateAnswer'");
+        return _repo.insertCandidateAnswer(candidateId, answer);
     }
 
     @Override
     public List<CandidateAnswer> getCandidateAnswer(int CandidateId, int TestId) {
-        // 
-        throw new UnsupportedOperationException("Unimplemented method 'getCandidateAnswer'");
+        return _repo.getCandidateAnswer(CandidateId, TestId);
     }
 
     @Override
-    public com.transflower.tflassessment.demo.entities.CandidateTestDetails CandidateTestDetails(int CandidateId,
-            int TestId) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'CandidateTestDetails'");
+    public CandidateTestDetails CandidateTestDetails(int CandidateId, int TestId) {
+        return CandidateTestDetails(CandidateId, TestId);
     }
-    
+
+    @Override
+    public List<CandidateAnswer> getCandidateAnswerResult(int CandidateId, int TestId) {
+        return _repo.getCandidateAnswerResult(CandidateId, TestId);
+    }
+
 }

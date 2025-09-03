@@ -1,38 +1,29 @@
-// package com.transflower.tflassessment.demo.services;
-//  import com.transflower.tflassessment.demo.entities.*;
-// import com.transflower.tflassessment.demo.repositories.EvaluationCriteriaRepositoryImpl;
-//  public class EvaluationCriteriaserviceImpl implements EvaluationCriteriaService {
+package com.transflower.tflassessment.demo.services;
 
-//     private EvaluationCriteriaRepositoryImpl repo = new EvaluationCriteriaRepositoryImpl();
+import com.transflower.tflassessment.demo.entities.*;
+import com.transflower.tflassessment.demo.repositories.*;
 
-//     @Override
-//     public boolean updateSubject(int id, int subjectId) {
-//         repo.updateSubject(id, subjectId);
-//         return true;
-//     }
+public class EvaluationCriteriaserviceImpl implements EvaluationCriteriaService {
 
-//     private EvaluationCriteriaRepository repo = null;
+    private final EvaluationCriteriaRepository _repo;
 
-//     public EvaluationCriteriaserviceImpl(EvaluationCriteriaRepository _repo) {
-//         this.repo = _repo;
-//     }
+    public EvaluationCriteriaserviceImpl(EvaluationCriteriaRepository repo) {
+        _repo = repo;
+    }
 
-// //     @Override
-// //     public boolean updateSubject(int id, int subjectId) {
-// //         repo.updateSubject(id, subjectId);
-// //         return true;
-// //     }
+    @Override
+    public boolean insertCriteria(EvaluationCriteria ec) {
+        return _repo.insertCriteria(ec);
+    }
 
-// //     @Override
-// //     public boolean insertCriteria(EvaluationCriteria ec) {
-// //         repo.insertCriteria(ec);
-// //         return true;
-// //     }
+    @Override
+    public boolean updateCriteria(int EvaluationCriteriaId, int subjectId) {
+        return _repo.updateCriteria(EvaluationCriteriaId, subjectId);
+    }
 
-// //     @Override
-// //     public boolean updateCriteria(int EvaluationCriteriaId, int subjectId) {
-// //         repo.updateCriteria(EvaluationCriteriaId, subjectId);
-// //         return true;
-// //     }
+    @Override
+    public boolean updateSubject(int id, int subjectId) {
+        return _repo.updateSubject(id, subjectId);
+    }
 
-// // }
+}

@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
 
 import com.transflower.tflassessment.demo.entities.AppearedCandidate;
 import com.transflower.tflassessment.demo.entities.CandidateResultDetails;
@@ -19,6 +20,7 @@ import com.transflower.tflassessment.demo.entities.TestList;
 import com.transflower.tflassessment.demo.entities.TestResultDetails;
 import com.transflower.tflassessment.demo.entities.TestScoreDto;
 
+@Repository
 public class ResultRepositoryImpl implements ResultRepository {
 
     Connection connection;
