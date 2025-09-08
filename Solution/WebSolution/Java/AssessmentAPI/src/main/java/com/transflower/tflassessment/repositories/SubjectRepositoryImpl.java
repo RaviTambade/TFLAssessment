@@ -9,15 +9,19 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
 import com.transflower.tflassessment.entities.SubjectModel;
 
-
+@Repository
 public class SubjectRepositoryImpl implements SubjectRepository {
 
     private final String connectionString;
     private final String username;
     private final String password;
-
+     
+    @Autowired
     public SubjectRepositoryImpl(String connectionString, String username, String password) {
         this.connectionString = connectionString;
         this.username = username;

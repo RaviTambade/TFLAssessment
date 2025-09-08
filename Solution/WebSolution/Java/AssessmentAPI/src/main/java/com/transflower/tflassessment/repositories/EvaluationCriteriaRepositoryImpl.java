@@ -10,8 +10,7 @@ import com.transflower.tflassessment.entities.EvaluationCriteria;
 
 // import com.transflower.tflassessment.entities.EvaluationCriteria;
 
-@Repository
-
+ @Repository
  public class EvaluationCriteriaRepositoryImpl implements EvaluationCriteriaRepository {
 
   private String Url = "jdbc:mysql://localhost:3306/assessmentdb";

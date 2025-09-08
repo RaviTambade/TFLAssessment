@@ -2,14 +2,18 @@ package com.transflower.tflassessment.services;
 
 import java.util.List;
 
-import com.transflower.tflassessment.entities.CandidateAnswer;
-import com.transflower.tflassessment.repositories.CandidateAnswerRepository;
-import com.transflower.tflassessment.entities.CandidateTestDetails;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import com.transflower.tflassessment.entities.CandidateAnswer;
+import com.transflower.tflassessment.entities.CandidateTestDetails;
+import com.transflower.tflassessment.repositories.CandidateAnswerRepository;
+
+@Service
 public class CandidateAnswerServiceImpl implements CandidateAnswerService {
 
     private final CandidateAnswerRepository _repo;
-
+    @Autowired
     public CandidateAnswerServiceImpl(CandidateAnswerRepository repo) {
         _repo = repo;
     }

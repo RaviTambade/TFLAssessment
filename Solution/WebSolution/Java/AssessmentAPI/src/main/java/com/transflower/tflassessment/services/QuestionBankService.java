@@ -7,7 +7,6 @@ import com.transflower.tflassessment.entities.Question;
 import com.transflower.tflassessment.entities.QuestionDetails;
 import com.transflower.tflassessment.entities.QuestionTitle;
 import com.transflower.tflassessment.entities.SubjectQuestion;
-import com.transflower.tflassessment.repositories.*;
 public interface QuestionBankService  {
 
      public List<QuestionTitle> getAllQuestions();

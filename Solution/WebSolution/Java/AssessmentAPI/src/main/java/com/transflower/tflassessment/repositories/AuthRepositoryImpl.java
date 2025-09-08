@@ -4,8 +4,10 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.transflower.tflassessment.entities.*;
+import org.springframework.stereotype.Repository;
 
+import com.transflower.tflassessment.entities.*;
+@Repository
 public class AuthRepositoryImpl implements AuthRepository {
   Connection connection;
   Statement statement;

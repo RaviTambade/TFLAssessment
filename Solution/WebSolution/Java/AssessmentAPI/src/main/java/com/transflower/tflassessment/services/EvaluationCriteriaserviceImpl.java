@@ -1,16 +1,15 @@
 package com.transflower.tflassessment.services;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.transflower.tflassessment.entities.EvaluationCriteria;
 import com.transflower.tflassessment.repositories.EvaluationCriteriaRepository;
-
 @Service
-
 public class EvaluationCriteriaserviceImpl implements EvaluationCriteriaService {
 
     private final EvaluationCriteriaRepository _repo;
-
+    @Autowired
     public EvaluationCriteriaserviceImpl(EvaluationCriteriaRepository repo) {
         _repo = repo;
     }

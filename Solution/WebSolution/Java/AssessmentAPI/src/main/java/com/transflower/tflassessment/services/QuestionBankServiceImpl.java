@@ -1,16 +1,22 @@
 package com.transflower.tflassessment.services;
 
-import java.util.concurrent.CompletableFuture;
-import java.util.*;
+import java.util.List;
 
-import com.transflower.tflassessment.entities.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.transflower.tflassessment.entities.NewQuestion;
+import com.transflower.tflassessment.entities.Question;
+import com.transflower.tflassessment.entities.QuestionDetails;
+import com.transflower.tflassessment.entities.QuestionTitle;
+import com.transflower.tflassessment.entities.SubjectQuestion;
 import com.transflower.tflassessment.repositories.QuestionBankRepository;
 
-
+@Service
 public class QuestionBankServiceImpl implements QuestionBankService {
 
     private final QuestionBankRepository repository;
-
+    @Autowired
     public QuestionBankServiceImpl(QuestionBankRepository repository)
     {
         this.repository=repository;

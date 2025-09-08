@@ -10,10 +10,12 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import com.transflower.tflassessment.entities.InterviewCandidateDetails;
 import com.transflower.tflassessment.entities.InterviewDetails;
 
-
+@Repository
 public class InterviewRepositoryImpl implements InterviewRepository {
 
     private String url = "jdbc:mysql://localhost:3306/assessmentdb";
