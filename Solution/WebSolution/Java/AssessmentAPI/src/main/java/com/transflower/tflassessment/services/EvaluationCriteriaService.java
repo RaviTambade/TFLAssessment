@@ -1,6 +1,9 @@
 package com.transflower.tflassessment.services;
 
+import org.springframework.stereotype.Service;
+
 import com.transflower.tflassessment.entities.EvaluationCriteria;
+@Service
 
 public interface  EvaluationCriteriaService {
      

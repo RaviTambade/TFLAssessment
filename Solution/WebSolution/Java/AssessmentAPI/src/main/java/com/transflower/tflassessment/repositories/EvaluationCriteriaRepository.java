@@ -1,7 +1,9 @@
 package com.transflower.tflassessment.repositories;
 
-import com.transflower.tflassessment.entities.EvaluationCriteria;
+import org.springframework.stereotype.Repository;
 
+import com.transflower.tflassessment.entities.EvaluationCriteria;
+@Repository 
 public interface EvaluationCriteriaRepository {
 
     public boolean updateSubject(int id, int subjectId);

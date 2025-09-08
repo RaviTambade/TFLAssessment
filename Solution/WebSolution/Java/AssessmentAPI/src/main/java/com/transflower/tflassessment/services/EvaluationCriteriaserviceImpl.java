@@ -1,7 +1,11 @@
 package com.transflower.tflassessment.services;
 
-import com.transflower.tflassessment.entities.*;
-import com.transflower.tflassessment.repositories.*;
+import org.springframework.stereotype.Service;
+
+import com.transflower.tflassessment.entities.EvaluationCriteria;
+import com.transflower.tflassessment.repositories.EvaluationCriteriaRepository;
+
+@Service
 
 public class EvaluationCriteriaserviceImpl implements EvaluationCriteriaService {
 
@@ -17,8 +21,8 @@ public class EvaluationCriteriaserviceImpl implements EvaluationCriteriaService 
     }
 
     @Override
-    public boolean updateCriteria(int EvaluationCriteriaId, int subjectId) {
-        return _repo.updateCriteria(EvaluationCriteriaId, subjectId);
+    public boolean updateCriteria(int id, int EvaluationCriteriaId) {
+        return _repo.updateCriteria(id, EvaluationCriteriaId);
     }
 
     @Override
