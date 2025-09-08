@@ -2,10 +2,12 @@ package com.transflower.tflassessment.repositories;
 
 import java.util.*;
 
+import org.springframework.stereotype.Repository;
+
 import java.sql.*;
 import com.transflower.tflassessment.entities.AnnualCandidateResult;
 import com.transflower.tflassessment.entities.Question;
-
+@Repository
 public class AssessmentIntelligenceRepositoryImpl implements AssessmentIntelligenceRepository {
 
     private List<AnnualCandidateResult> annualCandidateResults;

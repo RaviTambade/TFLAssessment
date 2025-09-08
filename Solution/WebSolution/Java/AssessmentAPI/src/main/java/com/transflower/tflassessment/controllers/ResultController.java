@@ -30,7 +30,7 @@ public class ResultController {
     public Boolean setCandidateTestStartTime(@PathVariable("candidateId") int candidateid, @PathVariable("testId") int testid) {
         return svc.setCandidateTestStartTime(candidateid, testid, LocalDateTime.now());
 
-    }
+    } 
 
     @PutMapping("setendtime/{candidateId}/tests/{testId}")
     public Boolean setCandidateTestEndTime(@PathVariable("candidateId") int candidateid, @PathVariable("testId") int testid) {

@@ -8,12 +8,14 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import com.transflower.tflassessment.entities.NewQuestion;
 import com.transflower.tflassessment.entities.Question;
 import com.transflower.tflassessment.entities.QuestionDetails;
 import com.transflower.tflassessment.entities.QuestionTitle;
 import com.transflower.tflassessment.entities.SubjectQuestion;
-
+@Repository
 public class QuestionBankRepositoryImpl implements QuestionBankRepository {
 
     private String URL = "jdbc:mysql://localhost:3306/assessmentdb";

@@ -4,11 +4,13 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+import org.springframework.stereotype.Repository;
+
 import com.transflower.tflassessment.entities.EvaluationCriteria;
 
 // import com.transflower.tflassessment.entities.EvaluationCriteria;
 
-
+ @Repository
  public class EvaluationCriteriaRepositoryImpl implements EvaluationCriteriaRepository {
 
   private String Url = "jdbc:mysql://localhost:3306/assessmentdb";

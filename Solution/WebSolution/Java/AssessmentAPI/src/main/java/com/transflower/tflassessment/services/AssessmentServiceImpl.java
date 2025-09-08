@@ -4,6 +4,9 @@ import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.transflower.tflassessment.entities.Assessment;
 import com.transflower.tflassessment.entities.CandidateTestDetails;
 import com.transflower.tflassessment.entities.CreateTestRequest;
@@ -18,9 +21,12 @@ import com.transflower.tflassessment.entities.TestEmployeeDetails;
 import com.transflower.tflassessment.entities.TestStatusUpdate;
 import com.transflower.tflassessment.entities.TestWithQuestions;
 
+
+@Service
 public class AssessmentServiceImpl implements AssessmentService {
 
     private final AssessmentService _repo;
+    @Autowired
     public AssessmentServiceImpl(AssessmentService repo)
     {
         _repo=repo;

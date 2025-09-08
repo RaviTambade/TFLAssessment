@@ -9,9 +9,11 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import com.transflower.tflassessment.entities.*;
 import com.transflower.tflassessment.repositories.*;
-
+@Repository
 public class CandidateAnswerRepositoryImpl implements CandidateAnswerRepository {
 
     private String URL = "jdbc:mysql://localhost:3306/assessmentdb";

@@ -4,13 +4,17 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.transflower.tflassessment.entities.InterviewCandidateDetails;
 import com.transflower.tflassessment.entities.InterviewDetails;
 import com.transflower.tflassessment.repositories.InterviewRepository;
-
+@Service
 public class InterviewServiceImpl  implements InterviewService{
 
     private final InterviewRepository _repo;
+    @Autowired
     public InterviewServiceImpl(InterviewRepository repo)
     {
         _repo=repo;

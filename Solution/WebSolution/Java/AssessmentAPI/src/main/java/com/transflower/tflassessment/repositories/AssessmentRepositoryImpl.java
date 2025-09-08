@@ -16,6 +16,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import com.transflower.tflassessment.entities.Assessment;
 import com.transflower.tflassessment.entities.CandidateTestDetails;
 import com.transflower.tflassessment.entities.CreateTestRequest;
@@ -30,9 +32,7 @@ import com.transflower.tflassessment.entities.TestEmployeeDetails;
 import com.transflower.tflassessment.entities.TestQuestion;
 import com.transflower.tflassessment.entities.TestStatusUpdate;
 import com.transflower.tflassessment.entities.TestWithQuestions;
-import com.transflower.tflassessment.entities.CreateTestWithQuestions;
-import com.transflower.tflassessment.entities.CreateTestRequest;
-
+@Repository
 public class AssessmentRepositoryImpl implements AssessmentRepository {
 
     private static Connection connection;
