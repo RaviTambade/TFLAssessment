@@ -165,7 +165,7 @@ public class AssessmentController {
 
     @GetMapping("/api/assessment/alltestbyempid/{empId}")
     public List<TestEmployeeDetails> getAllTestByEmpId(@PathVariable("empId")int empId){
-        return getAllTestByEmpId(empId);
+        return svc.getAllTestByEmpId(empId);
     }
 
 }
