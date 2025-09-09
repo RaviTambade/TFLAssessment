@@ -15,22 +15,19 @@ import org.springframework.web.bind.annotation.RestController;
 import com.transflower.tflassessment.entities.Assessment;
 import com.transflower.tflassessment.entities.CandidateTestDetails;
 import com.transflower.tflassessment.entities.CreateTestRequest;
+import com.transflower.tflassessment.entities.CreateTestWithQuestions;
 import com.transflower.tflassessment.entities.Employee;
 import com.transflower.tflassessment.entities.EvaluationCriteria;
-import com.transflower.tflassessment.entities.NewQuestion;
 import com.transflower.tflassessment.entities.Question;
 import com.transflower.tflassessment.entities.QuestionBank;
-import com.transflower.tflassessment.entities.QuestionDetails;
-import com.transflower.tflassessment.entities.QuestionTitle;
 import com.transflower.tflassessment.entities.Subject;
-import com.transflower.tflassessment.entities.SubjectQuestion;
+import com.transflower.tflassessment.entities.SubjectQuestions;
 import com.transflower.tflassessment.entities.Test;
 import com.transflower.tflassessment.entities.TestAssignmentRequest;
 import com.transflower.tflassessment.entities.TestEmployeeDetails;
 import com.transflower.tflassessment.entities.TestStatusUpdate;
 import com.transflower.tflassessment.entities.TestWithQuestions;
 import com.transflower.tflassessment.services.AssessmentService;
-import com.transflower.tflassessment.services.QuestionBankService;
 
 //@RequestMapping("/api/assessment")
 @RestController
@@ -114,9 +111,20 @@ public class AssessmentController {
         return svc.reschedule(assessmentId, date);
     }
 
+
     @DeleteMapping("/api/assessment/deletequestions")
     public boolean removeQuestions(@PathVariable("testQuestions")int[] testQuestions){
         return svc.removeQuestions(testQuestions);
+    }
+
+    @PostMapping("/api/assessment/addtest")
+    public int createTestWithQuestions(@PathVariable("createTestWithQuestions")CreateTestWithQuestions createTestWithQuestions){
+        return createTestWithQuestions(createTestWithQuestions);
+    }
+
+    @GetMapping("/api/assessment/allquestionsbysubject/{subjectId}")
+    public List<SubjectQuestions> getAllQuestionsBySubject(@PathVariable("subjectId")int subjectId){
+        return svc.getAllQuestionsBySubject(subjectId);
     }
 
     @GetMapping("/api/assessment/getsme/{subjectId}")
@@ -159,7 +167,5 @@ public class AssessmentController {
     public List<TestEmployeeDetails> getAllTestByEmpId(@PathVariable("empId")int empId){
         return getAllTestByEmpId(empId);
     }
-
-
 
 }
