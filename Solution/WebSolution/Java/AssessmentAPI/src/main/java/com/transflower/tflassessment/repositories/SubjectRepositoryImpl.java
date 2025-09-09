@@ -22,6 +22,7 @@ public class SubjectRepositoryImpl implements SubjectRepository {
     private final String password;
      
     @Autowired
+<<<<<<< HEAD
      public SubjectRepositoryImpl(String connectionString, String username, String password) {
        this.connectionString = connectionString;
         this.username = username;
@@ -29,6 +30,14 @@ public class SubjectRepositoryImpl implements SubjectRepository {
     
      }
        
+=======
+    public SubjectRepositoryImpl() {
+        this.connectionString = "jdbc:mysql://localhost:3306/assessmentdb";
+        this.username = "root";
+        this.password = "password";
+    }
+
+>>>>>>> 389a408764630a3b93d7582f8e303ef865cde700
     @Override
     public List<SubjectModel> getAllSubjects() {
         List<SubjectModel> subjects = new ArrayList<>();
@@ -92,6 +101,7 @@ public class SubjectRepositoryImpl implements SubjectRepository {
             return -1;
         }
     }
+<<<<<<< HEAD
 
     // Main Method For Testing
 
@@ -120,3 +130,6 @@ public class SubjectRepositoryImpl implements SubjectRepository {
     //     System.out.println("Deleted rows: " + deleted);
     // }
 }
+=======
+}
+>>>>>>> 389a408764630a3b93d7582f8e303ef865cde700
