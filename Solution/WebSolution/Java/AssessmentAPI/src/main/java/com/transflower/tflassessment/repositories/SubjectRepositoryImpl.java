@@ -26,7 +26,6 @@ public class SubjectRepositoryImpl implements SubjectRepository {
         this.connectionString = "jdbc:mysql://localhost:3306/assessmentdb";
         this.username = "root";
         this.password = "password";
-        
     }
 
     @Override
@@ -92,8 +91,4 @@ public class SubjectRepositoryImpl implements SubjectRepository {
             return -1;
         }
     }
-
-    // Main Method For Testing
-
-   
 }

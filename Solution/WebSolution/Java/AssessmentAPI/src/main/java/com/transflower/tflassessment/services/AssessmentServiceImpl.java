@@ -15,19 +15,21 @@ import com.transflower.tflassessment.entities.EvaluationCriteria;
 import com.transflower.tflassessment.entities.Question;
 import com.transflower.tflassessment.entities.QuestionBank;
 import com.transflower.tflassessment.entities.Subject;
+import com.transflower.tflassessment.entities.SubjectQuestions;
 import com.transflower.tflassessment.entities.Test;
 import com.transflower.tflassessment.entities.TestAssignmentRequest;
 import com.transflower.tflassessment.entities.TestEmployeeDetails;
 import com.transflower.tflassessment.entities.TestStatusUpdate;
 import com.transflower.tflassessment.entities.TestWithQuestions;
+import com.transflower.tflassessment.repositories.AssessmentRepository;
 
 
 @Service
 public class AssessmentServiceImpl implements AssessmentService {
 
-    private final AssessmentService _repo;
+    private final AssessmentRepository _repo;
     @Autowired
-    public AssessmentServiceImpl(AssessmentService repo)
+    public AssessmentServiceImpl(AssessmentRepository repo)
     {
         _repo=repo;
     }
@@ -150,5 +152,16 @@ public class AssessmentServiceImpl implements AssessmentService {
     public List<TestEmployeeDetails> getAllTestByEmpId(int empId) {
         return _repo.getAllTestByEmpId(empId);
     }
+
+    @Override
+    public List<SubjectQuestions> getAllQuestionsBySubject(int subjectId) {
+      // TODO Auto-generated method stub
+      throw new UnsupportedOperationException("Unimplemented method 'getAllQuestionsBySubject'");
+    }
+
+   //  @Override
+   //  public List<SubjectQuestions> getAllQuestionsBySubject(int subjectId) {
+   //    return _repo.getAllQuestionsBySubject(subjectId);
+   //  }
     
 }

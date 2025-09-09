@@ -17,9 +17,8 @@ public class AssessmentIntelligenceController {
     private AssessmentIntelligenceService svc;
 
     @GetMapping("CandidateResults/candidateanswer/{candidateid}/testtime/{year}")
-        List <AnnualCandidateResult> getCandidateResults(@PathVariable("candidateId") int candidateId , @PathVariable("year") int year)
+        List <AnnualCandidateResult> getCandidateResults(@PathVariable("candidateid") int candidateId , @PathVariable("year") int year)
         {
             return svc.getCandidateResults(candidateId, year);
         }
-
 }
