@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.transflower.tflassessment.entities.Assessment;
@@ -42,7 +43,7 @@ public class AssessmentController {
     }
 
     @GetMapping("/api/assessment/creationdate/fromDate/{fromDate}/toDate/{toDate}")
-    public List<Assessment> getAll(LocalDateTime fromDate, LocalDateTime toDate){
+    public List<Assessment> getAll(@RequestBody LocalDateTime fromDate,@RequestBody LocalDateTime toDate){
         return svc.getAll(fromDate, toDate);
     }
 
@@ -82,7 +83,7 @@ public class AssessmentController {
     }
 
     @PostMapping("/api/assessment/createtest")
-    public boolean createTest(@PathVariable("request")CreateTestRequest request){
+    public boolean createTest(@RequestBody CreateTestRequest request){
         return svc.createTest(request);
     }
 
@@ -92,7 +93,7 @@ public class AssessmentController {
     }
 
     @PostMapping("/api/assessment/addmultiplequestions/assessments/{assessmentId}")
-        public boolean addQuestions(@PathVariable("assessmentId")int assessmentId, @PathVariable("questions")List<QuestionBank> questions){
+        public boolean addQuestions(@PathVariable("assessmentId")int assessmentId, @RequestBody List<QuestionBank> questions){
             return svc.addQuestions(assessmentId, questions);
         }
 
@@ -107,18 +108,18 @@ public class AssessmentController {
     }
 
     @PutMapping("/api/assessment/{assessmentId}/reschedule/{date}")
-    public boolean reschedule(@PathVariable("assessmentId")int assessmentId,@PathVariable("date") Date date){
+    public boolean reschedule(@PathVariable("assessmentId")int assessmentId,@RequestBody Date date){
         return svc.reschedule(assessmentId, date);
     }
 
 
     @DeleteMapping("/api/assessment/deletequestions")
-    public boolean removeQuestions(@PathVariable("testQuestions")int[] testQuestions){
+    public boolean removeQuestions(@RequestBody int[] testQuestions){
         return svc.removeQuestions(testQuestions);
     }
 
     @PostMapping("/api/assessment/addtest")
-    public int createTestWithQuestions(@PathVariable("createTestWithQuestions")CreateTestWithQuestions createTestWithQuestions){
+    public int createTestWithQuestions(@RequestBody CreateTestWithQuestions createTestWithQuestions){
         return createTestWithQuestions(createTestWithQuestions);
     }
 
@@ -133,7 +134,7 @@ public class AssessmentController {
      }
 
     @GetMapping("/api/assessment/getalltest/from/{fromDate}/to/{toDate}")
-    public List<Test> getAllTests(@PathVariable("fromDate")Date fromDate,@PathVariable("toDate") Date toDate){
+    public List<Test> getAllTests(@RequestBody Date fromDate,@RequestBody Date toDate){
         return svc.getAllTests(fromDate, toDate);
     }
 
@@ -148,17 +149,17 @@ public class AssessmentController {
     }
 
     @PutMapping("/api/assessment/updatequestion/{questionId}")
-    public boolean updateQuestion(@PathVariable("question")Question question){
+    public boolean updateQuestion(@RequestBody Question question){
         return svc.updateQuestion(question);
     }
 
     @PutMapping("/api/assessment/updateteststatus/{testId}")
-    public boolean updateTestStatus(@PathVariable("testId")int testId, @PathVariable("status")TestStatusUpdate status){
+    public boolean updateTestStatus(@PathVariable("testId")int testId, @RequestBody TestStatusUpdate status){
         return svc.updateTestStatus(testId, status);
     }
 
     @PostMapping("/api/assessment/addemployees")
-    public boolean addEmployeesToTest(@PathVariable("request")TestAssignmentRequest request, @PathVariable("candidateTestDetails")CandidateTestDetails candidateTestDetails){
+    public boolean addEmployeesToTest(@RequestBody TestAssignmentRequest request, @RequestBody CandidateTestDetails candidateTestDetails){
         return svc.addEmployeesToTest(request, candidateTestDetails);
 
     }

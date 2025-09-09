@@ -10,27 +10,31 @@ import org.springframework.stereotype.Service;
 import com.transflower.tflassessment.entities.Assessment;
 import com.transflower.tflassessment.entities.CandidateTestDetails;
 import com.transflower.tflassessment.entities.CreateTestRequest;
+import com.transflower.tflassessment.entities.CreateTestWithQuestions;
 import com.transflower.tflassessment.entities.Employee;
 import com.transflower.tflassessment.entities.EvaluationCriteria;
 import com.transflower.tflassessment.entities.Question;
 import com.transflower.tflassessment.entities.QuestionBank;
 import com.transflower.tflassessment.entities.Subject;
+import com.transflower.tflassessment.entities.SubjectQuestions;
 import com.transflower.tflassessment.entities.Test;
 import com.transflower.tflassessment.entities.TestAssignmentRequest;
 import com.transflower.tflassessment.entities.TestEmployeeDetails;
 import com.transflower.tflassessment.entities.TestStatusUpdate;
 import com.transflower.tflassessment.entities.TestWithQuestions;
+import com.transflower.tflassessment.repositories.AssessmentRepository;
 
 
 @Service
 public class AssessmentServiceImpl implements AssessmentService {
 
-    private final AssessmentService _repo;
-    @Autowired
-    public AssessmentServiceImpl(AssessmentService repo)
-    {
-        _repo=repo;
-    }
+   private final AssessmentRepository _repo;
+
+   @Autowired
+   public AssessmentServiceImpl(AssessmentRepository repo) {
+    this._repo = repo;
+}
+
 
     @Override
     public Assessment getDetails(int assessmentId) {
@@ -149,6 +153,18 @@ public class AssessmentServiceImpl implements AssessmentService {
     @Override
     public List<TestEmployeeDetails> getAllTestByEmpId(int empId) {
         return _repo.getAllTestByEmpId(empId);
+    }
+
+    @Override
+    public int createTestWithQuestions(CreateTestWithQuestions createTestWithQuestions) {
+      // TODO Auto-generated method stub
+      throw new UnsupportedOperationException("Unimplemented method 'createTestWithQuestions'");
+    }
+
+    @Override
+    public List<SubjectQuestions> getAllQuestionsBySubject(int subjectId) {
+      // TODO Auto-generated method stub
+      throw new UnsupportedOperationException("Unimplemented method 'getAllQuestionsBySubject'");
     }
     
 }

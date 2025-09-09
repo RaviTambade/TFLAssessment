@@ -40,7 +40,7 @@ public class AnnualCandidateResult {
         return subjectTitle;
     }
 
-    public void getSubjectTitle(String subjectTitle) {
+    public void setSubjectTitle(String subjectTitle) {
         this.subjectTitle = subjectTitle;
     }
 

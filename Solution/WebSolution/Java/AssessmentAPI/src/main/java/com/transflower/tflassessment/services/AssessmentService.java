@@ -50,9 +50,8 @@ public interface AssessmentService {
     public boolean removeQuestion(int assessmentId, int questionId);
 
     public boolean removeQuestions(int[] testQuestions);
-    // public int createTestWithQuestions(CreateTestWithQuestions
-    // createTestWithQuestions);
-    // public List<SubjectQuestions> getAllQuestionsBySubject(int subjectId);
+    public int createTestWithQuestions(CreateTestWithQuestions createTestWithQuestions);
+    public List<SubjectQuestions> getAllQuestionsBySubject(int subjectId);
 
     public List<Employee> getSmeBySubject(int subjectId);
 
