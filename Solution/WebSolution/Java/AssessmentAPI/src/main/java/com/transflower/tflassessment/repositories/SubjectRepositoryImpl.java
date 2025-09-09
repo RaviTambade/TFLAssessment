@@ -22,10 +22,11 @@ public class SubjectRepositoryImpl implements SubjectRepository {
     private final String password;
      
     @Autowired
-    public SubjectRepositoryImpl(String connectionString, String username, String password) {
-        this.connectionString = connectionString;
-        this.username = username;
-        this.password = password;
+    public SubjectRepositoryImpl() {
+        this.connectionString = "jdbc:mysql://localhost:3306/assessmentdb";
+        this.username = "root";
+        this.password = "password";
+        
     }
 
     @Override
@@ -94,28 +95,5 @@ public class SubjectRepositoryImpl implements SubjectRepository {
 
     // Main Method For Testing
 
-    public static void main( String[] args )
-    {
-        String connectionString = "jdbc:mysql://localhost:3306/assessmentdb";
-        String username = "root";
-        String password = "password";
-
-        SubjectRepositoryImpl repo = new SubjectRepositoryImpl(connectionString, username, password);
-
-        // Get all subjects
-        List<SubjectModel> subjects = repo.getAllSubjects();
-        System.out.println("All subjects:");
-        for (SubjectModel s : subjects) {
-            System.out.println(s);
-        }
-
-        // Add subject
-        SubjectModel newSubject = new SubjectModel(9, "OOPS");
-        int newId = repo.addSubject(newSubject);
-        System.out.println("Inserted subject with id: " + newId);
-
-        // Delete subject
-        int deleted = repo.deleteSubject(11);
-        System.out.println("Deleted rows: " + deleted);
-    }
+   
 }
