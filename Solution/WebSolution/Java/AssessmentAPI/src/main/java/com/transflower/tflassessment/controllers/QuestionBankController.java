@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.transflower.tflassessment.entities.NewQuestion;
@@ -16,6 +17,7 @@ import com.transflower.tflassessment.entities.SubjectQuestion;
 import com.transflower.tflassessment.services.QuestionBankService;
 
 @RestController
+@RequestMapping("api/questionbank")
 public class QuestionBankController {
     
     @Autowired
