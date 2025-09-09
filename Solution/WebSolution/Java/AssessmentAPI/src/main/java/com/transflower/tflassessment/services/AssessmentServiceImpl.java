@@ -20,14 +20,15 @@ import com.transflower.tflassessment.entities.TestAssignmentRequest;
 import com.transflower.tflassessment.entities.TestEmployeeDetails;
 import com.transflower.tflassessment.entities.TestStatusUpdate;
 import com.transflower.tflassessment.entities.TestWithQuestions;
+import com.transflower.tflassessment.repositories.AssessmentRepository;
 
 
 @Service
 public class AssessmentServiceImpl implements AssessmentService {
 
-    private final AssessmentService _repo;
+    private final AssessmentRepository _repo;
     @Autowired
-    public AssessmentServiceImpl(AssessmentService repo)
+    public AssessmentServiceImpl(AssessmentRepository repo)
     {
         _repo=repo;
     }
