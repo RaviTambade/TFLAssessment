@@ -1,6 +1,7 @@
 package com.transflower.tflassessment.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,13 +14,13 @@ import com.transflower.tflassessment.services.EvaluationCriteriaService;
 
 
 @RestController
-@RequestMapping("api/criteria")
+@RequestMapping("/api/criteria")
 public class EvaluationCriteriaController {
 
     @Autowired
     private EvaluationCriteriaService svc;
 
-    @PostMapping("/eva/criteria")
+    @PostMapping("/insert")
     public boolean postinsertCriteria(@RequestBody EvaluationCriteria criteria) {
         return svc.insertCriteria(criteria);
     }
@@ -29,8 +30,8 @@ public class EvaluationCriteriaController {
         return svc.updateSubject(id, subjectId);
     }
 
-    @PutMapping("{evaluationCriteriaId}/questions/{questionId}")
-    public boolean putupdateCriteria(@RequestParam int EvaluationCriteriaId, @RequestParam int questionId) {
-        return svc.updateCriteria(questionId, EvaluationCriteriaId);
+    @PutMapping("{evaluationCriteriaId}/questions/{id}")
+    public boolean putupdateCriteria(@PathVariable int id, @PathVariable int evaluationCriteriaId) {
+        return svc.updateCriteria(id, evaluationCriteriaId);
     }
 }
