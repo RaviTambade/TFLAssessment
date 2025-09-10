@@ -41,7 +41,7 @@ public class QuestionBankController : ControllerBase
     {
         Question question = await _svc.GetQuestion(questionId);
         if (question == null)
-        {
+        { 
             _logger.LogWarning("Question with ID {Id} not found at {DT}", questionId, DateTime.UtcNow.ToLongTimeString());
             return NotFound($"Question with ID {questionId} not found.");
         }

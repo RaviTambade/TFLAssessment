@@ -6,16 +6,19 @@ import java.util.List;
 
 import com.transflower.tflassessment.entities.Assessment;
 import com.transflower.tflassessment.entities.CandidateTestDetails;
+import com.transflower.tflassessment.entities.CreateTestRequest;
+import com.transflower.tflassessment.entities.CreateTestWithQuestions;
 import com.transflower.tflassessment.entities.Employee;
 import com.transflower.tflassessment.entities.EvaluationCriteria;
 import com.transflower.tflassessment.entities.Question;
 import com.transflower.tflassessment.entities.QuestionBank;
+import com.transflower.tflassessment.entities.Subject;
+import com.transflower.tflassessment.entities.SubjectQuestions;
 import com.transflower.tflassessment.entities.Test;
 import com.transflower.tflassessment.entities.TestAssignmentRequest;
 import com.transflower.tflassessment.entities.TestEmployeeDetails;
 import com.transflower.tflassessment.entities.TestStatusUpdate;
 import com.transflower.tflassessment.entities.TestWithQuestions;
-import com.transflower.tflassessment.entities.*;
 
 public interface AssessmentService {
 

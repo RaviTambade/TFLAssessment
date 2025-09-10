@@ -28,13 +28,12 @@ import com.transflower.tflassessment.repositories.AssessmentRepository;
 @Service
 public class AssessmentServiceImpl implements AssessmentService {
 
-   private final AssessmentRepository _repo;
-
-   @Autowired
-   public AssessmentServiceImpl(AssessmentRepository repo) {
-    this._repo = repo;
-}
-
+    private final AssessmentRepository _repo;
+    @Autowired
+    public AssessmentServiceImpl(AssessmentRepository repo)
+    {
+        _repo=repo;
+    }
 
     @Override
     public Assessment getDetails(int assessmentId) {
@@ -156,15 +155,20 @@ public class AssessmentServiceImpl implements AssessmentService {
     }
 
     @Override
+    public List<SubjectQuestions> getAllQuestionsBySubject(int subjectId) {
+      // TODO Auto-generated method stub
+      throw new UnsupportedOperationException("Unimplemented method 'getAllQuestionsBySubject'");
+    }
+
+    @Override
     public int createTestWithQuestions(CreateTestWithQuestions createTestWithQuestions) {
       // TODO Auto-generated method stub
       throw new UnsupportedOperationException("Unimplemented method 'createTestWithQuestions'");
     }
 
-    @Override
-    public List<SubjectQuestions> getAllQuestionsBySubject(int subjectId) {
-      // TODO Auto-generated method stub
-      throw new UnsupportedOperationException("Unimplemented method 'getAllQuestionsBySubject'");
-    }
+   //  @Override
+   //  public List<SubjectQuestions> getAllQuestionsBySubject(int subjectId) {
+   //    return _repo.getAllQuestionsBySubject(subjectId);
+   //  }
     
 }

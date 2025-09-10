@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.transflower.tflassessment.entities.NewQuestion;
@@ -61,12 +62,12 @@ public class QuestionBankController {
     }
 
     @GetMapping("update/options/question/{id}")
-    public boolean updateQuestionOptions(@PathVariable("id")int id,@PathVariable("option")Question option){
+    public boolean updateQuestionOptions(@PathVariable("id")int id,@RequestBody Question option){
         return svc.updateQuestionOptions(id, option);
     }
 
     @GetMapping("/question")
-    public boolean  insertQuestion(@PathVariable("question")NewQuestion question){
+    public boolean  insertQuestion(@RequestBody NewQuestion question){
         return svc.insertQuestion( question);
     }
  

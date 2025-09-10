@@ -43,7 +43,7 @@ public class AssessmentController {
     }
 
     @GetMapping("/api/assessment/creationdate/fromDate/{fromDate}/toDate/{toDate}")
-    public List<Assessment> getAll(@RequestBody LocalDateTime fromDate,@RequestBody LocalDateTime toDate){
+    public List<Assessment> getAll(@PathVariable LocalDateTime fromDate,@PathVariable LocalDateTime toDate){
         return svc.getAll(fromDate, toDate);
     }
 
@@ -108,7 +108,7 @@ public class AssessmentController {
     }
 
     @PutMapping("/api/assessment/{assessmentId}/reschedule/{date}")
-    public boolean reschedule(@PathVariable("assessmentId")int assessmentId,@RequestBody Date date){
+    public boolean reschedule(@PathVariable("assessmentId")int assessmentId,@PathVariable Date date){
         return svc.reschedule(assessmentId, date);
     }
 
@@ -134,7 +134,7 @@ public class AssessmentController {
      }
 
     @GetMapping("/api/assessment/getalltest/from/{fromDate}/to/{toDate}")
-    public List<Test> getAllTests(@RequestBody Date fromDate,@RequestBody Date toDate){
+    public List<Test> getAllTests(@PathVariable Date fromDate,@PathVariable Date toDate){
         return svc.getAllTests(fromDate, toDate);
     }
 
@@ -149,7 +149,7 @@ public class AssessmentController {
     }
 
     @PutMapping("/api/assessment/updatequestion/{questionId}")
-    public boolean updateQuestion(@RequestBody Question question){
+    public boolean updateQuestion(@PathVariable Question question){
         return svc.updateQuestion(question);
     }
 
