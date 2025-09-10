@@ -1,4 +1,4 @@
- package com.transflower.tflassessment.entities;
+package com.transflower.tflassessment.entities;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;

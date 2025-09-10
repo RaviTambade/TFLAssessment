@@ -21,18 +21,20 @@ import org.springframework.stereotype.Repository;
 import com.transflower.tflassessment.entities.Assessment;
 import com.transflower.tflassessment.entities.CandidateTestDetails;
 import com.transflower.tflassessment.entities.CreateTestRequest;
+import com.transflower.tflassessment.entities.CreateTestWithQuestions;
 import com.transflower.tflassessment.entities.Employee;
 import com.transflower.tflassessment.entities.EvaluationCriteria;
 import com.transflower.tflassessment.entities.Question;
 import com.transflower.tflassessment.entities.QuestionBank;
 import com.transflower.tflassessment.entities.Subject;
+import com.transflower.tflassessment.entities.SubjectQuestion;
+import com.transflower.tflassessment.entities.SubjectQuestions;
 import com.transflower.tflassessment.entities.Test;
 import com.transflower.tflassessment.entities.TestAssignmentRequest;
 import com.transflower.tflassessment.entities.TestEmployeeDetails;
 import com.transflower.tflassessment.entities.TestQuestion;
 import com.transflower.tflassessment.entities.TestStatusUpdate;
 import com.transflower.tflassessment.entities.TestWithQuestions;
-
 @Repository
 public class AssessmentRepositoryImpl implements AssessmentRepository {
 
@@ -778,28 +780,112 @@ public class AssessmentRepositoryImpl implements AssessmentRepository {
         }
     }
 @Override
-    public boolean createTest(CreateTestRequest request) {
-        String insertTestSQL = "INSERT INTO tests " +
-                "(name, smeid, subjectid, creationdate, modificationdate, scheduleddate, passinglevel, duration) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+public boolean createTest(CreateTestRequest request) {
+    String insertTestSQL = "INSERT INTO tests " +
+            "(name, subject_id, duration, subject_expert_id, creation_date, modification_date, scheduled_date, passing_level, status) " +
+            "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-        try (PreparedStatement preparedStatement = connection.prepareStatement(insertTestSQL)) {
-            LocalDateTime now = LocalDateTime.now();
-              preparedStatement.setString(1, request.getName());
-            preparedStatement.setInt(2, request.getSubjectExpertId());
-             preparedStatement.setString(3, request.getDuration());
-            preparedStatement.setInt(4, request.getSubjectId());
-            preparedStatement.setTimestamp(5, Timestamp.valueOf(now)); 
-            preparedStatement.setTimestamp(6, Timestamp.valueOf(now)); 
-            preparedStatement.setTimestamp(7, Timestamp.valueOf(request.getScheduledDate())); // scheduled date    
-            preparedStatement.setInt(8, request.getPassingLevel());
-            
+    try (PreparedStatement preparedStatement = connection.prepareStatement(insertTestSQL)) {
+        LocalDateTime now = LocalDateTime.now();
 
-            int rowsAffected = preparedStatement.executeUpdate();
-            return rowsAffected > 0;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return true;
-        }
+        preparedStatement.setString(1, request.getName());
+        preparedStatement.setInt(2, request.getSubjectId());
+        preparedStatement.setString(3, request.getDuration());
+        preparedStatement.setInt(4, request.getSubjectExpertId());
+
+        preparedStatement.setTimestamp(5, Timestamp.valueOf(now));
+        preparedStatement.setTimestamp(6, Timestamp.valueOf(now));
+        preparedStatement.setTimestamp(7, Timestamp.valueOf(request.getScheduledDate()));
+
+        preparedStatement.setInt(8, request.getPassingLevel());
+        preparedStatement.setString(9, "created");  // default status
+
+        int rowsAffected = preparedStatement.executeUpdate();
+        return rowsAffected > 0;
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+        return false;  
     }
+}
+
+
+@Override
+public int createTestWithQuestions(CreateTestWithQuestions createTestWithQuestions) {
+    int testId = -1;
+    String insertTestSQL = "INSERT INTO tests " +
+            "(name, smeid, subjectid, creationdate, modificationdate, scheduleddate, passinglevel, duration) " +
+            "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+
+    try (PreparedStatement preparedStatement = connection.prepareStatement(insertTestSQL, Statement.RETURN_GENERATED_KEYS)) {
+        LocalDateTime now = LocalDateTime.now();
+
+        preparedStatement.setString(1, createTestWithQuestions.getName());
+        preparedStatement.setInt(2, createTestWithQuestions.getSmeId());
+        preparedStatement.setInt(3, createTestWithQuestions.getSubjectId());
+        preparedStatement.setTimestamp(4, Timestamp.valueOf(now));
+        preparedStatement.setTimestamp(5, Timestamp.valueOf(now));
+        preparedStatement.setTimestamp(6, Timestamp.valueOf(createTestWithQuestions.getScheduledDate()));
+        preparedStatement.setInt(7, createTestWithQuestions.getPassingLevel());
+        preparedStatement.setString(8, createTestWithQuestions.getDuration());
+
+        int rowsAffected = preparedStatement.executeUpdate();
+
+        if (rowsAffected > 0) {
+            try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    testId = generatedKeys.getInt(1);
+                }
+            }
+        }
+
+        // Insert questions into testquestions table
+        if (testId > 0 && createTestWithQuestions.getQuestionIds() != null) {
+            String insertQuestionSQL = "INSERT INTO testquestions (testid, questionbankid) VALUES (?, ?)";
+            try (PreparedStatement stmt = connection.prepareStatement(insertQuestionSQL)) {
+                for (Integer questionId : createTestWithQuestions.getQuestionIds()) {
+                    stmt.setInt(1, testId);
+                    stmt.setInt(2, questionId);
+                    stmt.addBatch();
+                }
+                stmt.executeBatch();
+            }
+        }
+    } catch (SQLException e) {
+        System.out.println("Error creating test with questions: " + e.getMessage());
+    }
+
+    return testId;
+}
+
+@Override
+public List<SubjectQuestion> getAllQuestionsBySubject(int subjectId) {
+    List<SubjectQuestion> subjectQuestionsList = new ArrayList<>();
+
+    String query = "SELECT q.id AS questionId, q.title AS question, q.subjectid, s.title AS subject " +
+            "FROM questionbank q " +
+            "INNER JOIN subjects s ON q.subjectid = s.id " +
+            "WHERE q.subjectid = ?";
+
+    try (PreparedStatement stmt = connection.prepareStatement(query)) {
+        stmt.setInt(1, subjectId);
+
+        try (ResultSet rs = stmt.executeQuery()) {
+            while (rs.next()) {
+                SubjectQuestion subjectQuestion = new SubjectQuestion();
+
+                subjectQuestion.setQuestionId(rs.getInt("questionId"));
+                subjectQuestion.setQuestion(rs.getString("question"));
+                subjectQuestion.setSubjectId(rs.getInt("subjectid"));
+                subjectQuestion.setSubject(rs.getString("subject"));
+
+                subjectQuestionsList.add(subjectQuestion);
+            }
+        }
+    } catch (SQLException e) {
+        System.out.println("Error fetching questions by subject: " + e.getMessage());
+    }
+
+    return subjectQuestionsList;
+}
 }

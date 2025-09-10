@@ -1,6 +1,5 @@
 package com.transflower.tflassessment.services;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
@@ -14,6 +13,7 @@ import com.transflower.tflassessment.entities.EvaluationCriteria;
 import com.transflower.tflassessment.entities.Question;
 import com.transflower.tflassessment.entities.QuestionBank;
 import com.transflower.tflassessment.entities.Subject;
+import com.transflower.tflassessment.entities.SubjectQuestion;
 import com.transflower.tflassessment.entities.SubjectQuestions;
 import com.transflower.tflassessment.entities.Test;
 import com.transflower.tflassessment.entities.TestAssignmentRequest;
@@ -25,7 +25,7 @@ public interface AssessmentService {
 
     public Assessment getDetails(int assessmentId);
 
-    List<Assessment> getAll(LocalDate fromDate, LocalDate toDate);
+    List<Assessment> getAll(LocalDateTime fromDate, LocalDateTime toDate);
 
     public List<Assessment> getAllTests();
 
@@ -55,7 +55,6 @@ public interface AssessmentService {
 
     public boolean removeQuestions(int[] testQuestions);
     public int createTestWithQuestions(CreateTestWithQuestions createTestWithQuestions);
-    public List<SubjectQuestions> getAllQuestionsBySubject(int subjectId);
 
     public List<Employee> getSmeBySubject(int subjectId);
 
@@ -73,6 +72,7 @@ public interface AssessmentService {
 
     public List<TestEmployeeDetails> getAllTestByEmpId(int empId);
 
-    List<Assessment> getAll(LocalDateTime fromDate, LocalDateTime toDate);
+    public List<SubjectQuestion> getAllQuestionsBySubject(int subjectId);
+
 
 }

@@ -1,6 +1,5 @@
 package com.transflower.tflassessment.controllers;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
@@ -24,6 +23,7 @@ import com.transflower.tflassessment.entities.EvaluationCriteria;
 import com.transflower.tflassessment.entities.Question;
 import com.transflower.tflassessment.entities.QuestionBank;
 import com.transflower.tflassessment.entities.Subject;
+import com.transflower.tflassessment.entities.SubjectQuestion;
 import com.transflower.tflassessment.entities.SubjectQuestions;
 import com.transflower.tflassessment.entities.Test;
 import com.transflower.tflassessment.entities.TestAssignmentRequest;
@@ -45,10 +45,10 @@ public class AssessmentController {
     }
 
     @GetMapping("/api/assessment/creationdate/fromDate/{fromDate}/toDate/{toDate}")
-    public List<Assessment> getAll(@PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fromDate,
-                               @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate toDate) {
-         return svc.getAll(fromDate, toDate);
+    public List<Assessment> getAll(@PathVariable ("fromDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDateTime fromDate, @PathVariable("toDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDateTime toDate){
+        return svc.getAll(fromDate, toDate);
     }
+
     @GetMapping("/api/assessment/assessments")
     public List<Assessment> getAllTests(){
         return svc.getAllTests();
@@ -85,7 +85,7 @@ public class AssessmentController {
     }
 
     @PostMapping("/api/assessment/createtest")
-    public boolean createTest(@RequestBody CreateTestRequest request){
+    public boolean createTest(@PathVariable("request")CreateTestRequest request){
         return svc.createTest(request);
     }
 
@@ -95,7 +95,7 @@ public class AssessmentController {
     }
 
     @PostMapping("/api/assessment/addmultiplequestions/assessments/{assessmentId}")
-        public boolean addQuestions(@PathVariable("assessmentId")int assessmentId, @RequestBody List<QuestionBank> questions){
+        public boolean addQuestions(@PathVariable("assessmentId")int assessmentId, @PathVariable("questions")List<QuestionBank> questions){
             return svc.addQuestions(assessmentId, questions);
         }
 
@@ -110,23 +110,23 @@ public class AssessmentController {
     }
 
     @PutMapping("/api/assessment/{assessmentId}/reschedule/{date}")
-    public boolean reschedule(@PathVariable("assessmentId")int assessmentId,@PathVariable Date date){
+    public boolean reschedule(@PathVariable("assessmentId")int assessmentId,@PathVariable("date") Date date){
         return svc.reschedule(assessmentId, date);
     }
 
 
     @DeleteMapping("/api/assessment/deletequestions")
-    public boolean removeQuestions(@RequestBody int[] testQuestions){
+    public boolean removeQuestions(@PathVariable("testQuestions")int[] testQuestions){
         return svc.removeQuestions(testQuestions);
     }
 
     @PostMapping("/api/assessment/addtest")
     public int createTestWithQuestions(@RequestBody CreateTestWithQuestions createTestWithQuestions){
-        return createTestWithQuestions(createTestWithQuestions);
+        return svc.createTestWithQuestions(createTestWithQuestions);
     }
 
     @GetMapping("/api/assessment/allquestionsbysubject/{subjectId}")
-    public List<SubjectQuestions> getAllQuestionsBySubject(@PathVariable("subjectId")int subjectId){
+    public List<SubjectQuestion> getAllQuestionsBySubject(@PathVariable("subjectId")int subjectId){
         return svc.getAllQuestionsBySubject(subjectId);
     }
 
@@ -136,7 +136,7 @@ public class AssessmentController {
      }
 
     @GetMapping("/api/assessment/getalltest/from/{fromDate}/to/{toDate}")
-    public List<Test> getAllTests(@PathVariable Date fromDate,@PathVariable Date toDate){
+    public List<Test> getAllTests(@PathVariable("fromDate")Date fromDate,@PathVariable("toDate") Date toDate){
         return svc.getAllTests(fromDate, toDate);
     }
 
@@ -151,17 +151,17 @@ public class AssessmentController {
     }
 
     @PutMapping("/api/assessment/updatequestion/{questionId}")
-    public boolean updateQuestion(@PathVariable Question question){
+    public boolean updateQuestion(@PathVariable("question")Question question){
         return svc.updateQuestion(question);
     }
 
     @PutMapping("/api/assessment/updateteststatus/{testId}")
-    public boolean updateTestStatus(@PathVariable("testId")int testId, @RequestBody TestStatusUpdate status){
+    public boolean updateTestStatus(@PathVariable("testId")int testId, @PathVariable("status")TestStatusUpdate status){
         return svc.updateTestStatus(testId, status);
     }
 
     @PostMapping("/api/assessment/addemployees")
-    public boolean addEmployeesToTest(@RequestBody TestAssignmentRequest request, @RequestBody CandidateTestDetails candidateTestDetails){
+    public boolean addEmployeesToTest(@RequestBody TestAssignmentRequest request, @PathVariable("candidateTestDetails")CandidateTestDetails candidateTestDetails){
         return svc.addEmployeesToTest(request, candidateTestDetails);
 
     }
@@ -170,5 +170,4 @@ public class AssessmentController {
     public List<TestEmployeeDetails> getAllTestByEmpId(@PathVariable("empId")int empId){
         return svc.getAllTestByEmpId(empId);
     }
-
 }

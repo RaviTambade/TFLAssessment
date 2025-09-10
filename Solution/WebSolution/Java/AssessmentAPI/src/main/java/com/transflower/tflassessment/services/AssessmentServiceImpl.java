@@ -1,6 +1,5 @@
 package com.transflower.tflassessment.services;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
@@ -17,6 +16,7 @@ import com.transflower.tflassessment.entities.EvaluationCriteria;
 import com.transflower.tflassessment.entities.Question;
 import com.transflower.tflassessment.entities.QuestionBank;
 import com.transflower.tflassessment.entities.Subject;
+import com.transflower.tflassessment.entities.SubjectQuestion;
 import com.transflower.tflassessment.entities.SubjectQuestions;
 import com.transflower.tflassessment.entities.Test;
 import com.transflower.tflassessment.entities.TestAssignmentRequest;
@@ -156,26 +156,13 @@ public class AssessmentServiceImpl implements AssessmentService {
     }
 
     @Override
-    public List<SubjectQuestions> getAllQuestionsBySubject(int subjectId) {
-      // TODO Auto-generated method stub
-      throw new UnsupportedOperationException("Unimplemented method 'getAllQuestionsBySubject'");
-    }
-
-    @Override
     public int createTestWithQuestions(CreateTestWithQuestions createTestWithQuestions) {
-      // TODO Auto-generated method stub
-      throw new UnsupportedOperationException("Unimplemented method 'createTestWithQuestions'");
+      return _repo.createTestWithQuestions(createTestWithQuestions);
     }
 
     @Override
-    public List<Assessment> getAll(LocalDate fromDate, LocalDate toDate) {
-      // TODO Auto-generated method stub
-      throw new UnsupportedOperationException("Unimplemented method 'getAll'");
+    public List<SubjectQuestion> getAllQuestionsBySubject(int subjectId) {
+      return _repo.getAllQuestionsBySubject(subjectId);
     }
-
-   //  @Override
-   //  public List<SubjectQuestions> getAllQuestionsBySubject(int subjectId) {
-   //    return _repo.getAllQuestionsBySubject(subjectId);
-   //  }
     
 }
