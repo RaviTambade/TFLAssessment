@@ -19,7 +19,7 @@ public class EvaluationCriteriaController {
     @Autowired
     private EvaluationCriteriaService svc;
 
-    @PostMapping("/eva/criteria")
+    @PostMapping("/insert")
     public boolean postinsertCriteria(@RequestBody EvaluationCriteria criteria) {
         return svc.insertCriteria(criteria);
     }
@@ -34,4 +34,6 @@ public boolean putupdateCriteria(@PathVariable("evaluationCriteriaId")int evalua
     return svc.updateCriteria( evaluationCriteriaId,questionId);
 }
 
+
+   
 }

@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -42,7 +43,7 @@ public class AssessmentController {
     }
 
     @GetMapping("/api/assessment/creationdate/fromDate/{fromDate}/toDate/{toDate}")
-    public List<Assessment> getAll(LocalDateTime fromDate, LocalDateTime toDate){
+    public List<Assessment> getAll(@PathVariable ("fromDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDateTime fromDate, @PathVariable("toDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDateTime toDate){
         return svc.getAll(fromDate, toDate);
     }
 
