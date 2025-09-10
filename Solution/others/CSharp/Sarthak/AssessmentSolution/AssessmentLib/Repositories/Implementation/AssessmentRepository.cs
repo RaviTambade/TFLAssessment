@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AssessmentLib.Entities
+namespace AssessmentLib.Repositories.Implementation
 {
-    internal class Role
+    public class AssessmentRepository
     {
     }
 }
