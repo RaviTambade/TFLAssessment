@@ -67,7 +67,7 @@ public class ResultServiceImpl implements ResultService {
 
     @Override
     public List<TestList> getTestList(int candidateId) {
-       return getTestList(candidateId);
+       return _repo.getTestList(candidateId);
     }
 
     @Override
