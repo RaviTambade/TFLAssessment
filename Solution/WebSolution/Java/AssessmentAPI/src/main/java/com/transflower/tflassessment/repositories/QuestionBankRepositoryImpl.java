@@ -320,7 +320,6 @@ public class QuestionBankRepositoryImpl implements QuestionBankRepository {
         return null;
     }
 
-    
      public static void main(String[] args) {
          // ================= QuestionBankRepository =================
         QuestionBankRepositoryImpl repo = new QuestionBankRepositoryImpl();
