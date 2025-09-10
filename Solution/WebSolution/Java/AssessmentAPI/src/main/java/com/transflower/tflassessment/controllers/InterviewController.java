@@ -49,9 +49,9 @@ public class InterviewController {
     }
 
     @PutMapping("/{interviewId}/time/{time}/date/{date}")
-    public boolean rescheduleInterview(@PathVariable int interviewId,
-                                       @PathVariable LocalTime time,
-                                       @PathVariable LocalDate date) {
+    public boolean rescheduleInterview(@PathVariable("interviewId") int interviewId,
+                                       @PathVariable ("time")LocalTime time,
+                                       @PathVariable ("date") LocalDate date) {
        return svc.rescheduleInterview(interviewId, time, date);
     }
 
