@@ -308,7 +308,7 @@ public boolean setPassingLevel(int testId, int passingLevel) {
 }
 
 
-public List<CandidateSubjectResults> getCandidateSubjectResults(int candidateId) {
+public List<CandidateSubjectResults> getCandidateSubjectResults(int subjectId) {
     List<CandidateSubjectResults> candidateSubjectResults = new ArrayList<>();
     String query = "SELECT Test.id, s.title AS subject, cs.score"
                    + "FROM candidatesubjectresults cs "
@@ -316,11 +316,11 @@ public List<CandidateSubjectResults> getCandidateSubjectResults(int candidateId)
                    + "WHERE cs.candidateid = ?";
     try {
         PreparedStatement preparedStatement = connection.prepareStatement(query);
-        preparedStatement.setInt(1, candidateId);
+        preparedStatement.setInt(1, subjectId);
         ResultSet resultSet = preparedStatement.executeQuery();
         while (resultSet.next()) {
             CandidateSubjectResults result = new CandidateSubjectResults();
-            result.setCandidateId(resultSet.getInt("candidateid"));
+            result.setCandidateId(resultSet.getInt("subjectId"));
             result.setTestId( resultSet.getInt("id"));
               result.setScore(resultSet.getInt("score"));
             candidateSubjectResults.add(result);
@@ -405,16 +405,61 @@ public List<TestAverageReport> getTestAverageReport(int testId) {
     }
 
     @Override
-    public List<CandidateSubjectResults> getSubjectResultDetails(int subjectId) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getSubjectResultDetails'");
+public List<CandidateSubjectResults> getSubjectResultDetails(int subjectId) {
+    List<CandidateSubjectResults> subjectResults = new ArrayList<>();
+    String query = "SELECT cs.candidateid, e.firstname, e.lastname, cs.testid, cs.subjectid, cs.score, s.title AS subject " +
+                   "FROM candidatesubjectresults cs " +
+                   "JOIN employees e ON cs.candidateid = e.id " +
+                   "JOIN subjects s ON cs.subjectid = s.id " +
+                   "WHERE cs.subjectid = ?";
+
+    try {
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setInt(1, subjectId);
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        while (resultSet.next()) {
+            CandidateSubjectResults result = new CandidateSubjectResults();
+            result.setCandidateId(resultSet.getInt("candidateid"));
+            result.setTestId(resultSet.getInt("testid"));
+            result.setSubjectId(resultSet.getInt("subjectid"));
+            result.setScore(resultSet.getInt("score"));
+            result.setFirstName(resultSet.getString("firstname"));
+            result.setLastName(resultSet.getString("lastname"));
+            result.setSubject(resultSet.getString("subject"));
+            subjectResults.add(result);
+        }
+
+    } catch (Exception e) {
+        System.out.println("Error fetching subject results: " + e);
     }
 
-    @Override
-    public List<Subject> getAllSubjects() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getAllSubjects'");
+    return subjectResults;
+}
+
+@Override
+public List<Subject> getAllSubjects() {
+    List<Subject> subjects = new ArrayList<>();
+    String query = "SELECT id, title FROM subjects";
+
+    try {
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        while (resultSet.next()) {
+            Subject subject = new Subject();
+            subject.setId(resultSet.getInt("id"));
+            subject.setTitle(resultSet.getString("title"));
+            subjects.add(subject);
+        }
+
+    } catch (Exception e) {
+        System.out.println("Error fetching all subjects: " + e);
     }
+
+    return subjects;
+}
+
 
     
 }

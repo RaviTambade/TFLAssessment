@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.transflower.tflassessment.entities.Assessment;
@@ -22,6 +23,7 @@ import com.transflower.tflassessment.entities.EvaluationCriteria;
 import com.transflower.tflassessment.entities.Question;
 import com.transflower.tflassessment.entities.QuestionBank;
 import com.transflower.tflassessment.entities.Subject;
+import com.transflower.tflassessment.entities.SubjectQuestion;
 import com.transflower.tflassessment.entities.SubjectQuestions;
 import com.transflower.tflassessment.entities.Test;
 import com.transflower.tflassessment.entities.TestAssignmentRequest;
@@ -119,12 +121,12 @@ public class AssessmentController {
     }
 
     @PostMapping("/api/assessment/addtest")
-    public int createTestWithQuestions(@PathVariable("createTestWithQuestions")CreateTestWithQuestions createTestWithQuestions){
+    public int createTestWithQuestions(@RequestBody CreateTestWithQuestions createTestWithQuestions){
         return createTestWithQuestions(createTestWithQuestions);
     }
 
     @GetMapping("/api/assessment/allquestionsbysubject/{subjectId}")
-    public List<SubjectQuestions> getAllQuestionsBySubject(@PathVariable("subjectId")int subjectId){
+    public List<SubjectQuestion> getAllQuestionsBySubject(@PathVariable("subjectId")int subjectId){
         return svc.getAllQuestionsBySubject(subjectId);
     }
 
@@ -159,7 +161,7 @@ public class AssessmentController {
     }
 
     @PostMapping("/api/assessment/addemployees")
-    public boolean addEmployeesToTest(@PathVariable("request")TestAssignmentRequest request, @PathVariable("candidateTestDetails")CandidateTestDetails candidateTestDetails){
+    public boolean addEmployeesToTest(@RequestBody TestAssignmentRequest request, @PathVariable("candidateTestDetails")CandidateTestDetails candidateTestDetails){
         return svc.addEmployeesToTest(request, candidateTestDetails);
 
     }
@@ -168,5 +170,4 @@ public class AssessmentController {
     public List<TestEmployeeDetails> getAllTestByEmpId(@PathVariable("empId")int empId){
         return svc.getAllTestByEmpId(empId);
     }
-
 }
