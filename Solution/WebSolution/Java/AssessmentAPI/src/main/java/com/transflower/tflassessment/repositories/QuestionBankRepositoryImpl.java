@@ -23,7 +23,7 @@ public class QuestionBankRepositoryImpl implements QuestionBankRepository {
     private String USERNAME = "root";
     private String PASSWORD = "password";
 
- 
+
     static {
         try {
             String url = "jdbc:mysql://localhost:3306/assessmentdb";
