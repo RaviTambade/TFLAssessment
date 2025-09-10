@@ -19,17 +19,17 @@ public class EvaluationCriteriaController {
     @Autowired
     private EvaluationCriteriaService svc;
 
-    @PostMapping("/insert/Criteria")
+    @PostMapping("/eva/criteria")
     public boolean postinsertCriteria(@RequestBody EvaluationCriteria criteria) {
         return svc.insertCriteria(criteria);
     }
 
-    @PutMapping("/update/Subject")
+    @PutMapping("{id}/subjects/{subjectId}")
     public boolean putupdateSubject(@RequestParam int id, @RequestParam int subjectId) {
         return svc.updateSubject(id, subjectId);
     }
 
-    @PutMapping("/update/Criteria")
+    @PutMapping("{evaluationCriteriaId}/questions/{questionId}")
     public boolean putupdateCriteria(@RequestParam int EvaluationCriteriaId, @RequestParam int questionId) {
         return svc.updateCriteria(questionId, EvaluationCriteriaId);
     }
