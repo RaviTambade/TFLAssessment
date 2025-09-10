@@ -806,9 +806,7 @@ public boolean createTest(CreateTestRequest request) {
     } catch (SQLException e) {
         e.printStackTrace();
         return false;  
-    }
-}
-
+    }}
 
 @Override
 public int createTestWithQuestions(CreateTestWithQuestions createTestWithQuestions) {

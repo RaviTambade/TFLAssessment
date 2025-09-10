@@ -46,7 +46,7 @@ public class InterviewServiceImpl  implements InterviewService{
 
     @Override
     public boolean rescheduleInterview(int interviewId, LocalTime time, LocalDate date) {
-       return _repo.rescheduleInterview(interviewId, time);
+       return _repo.rescheduleInterview(interviewId, time,date);
     }
 
     @Override

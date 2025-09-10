@@ -23,12 +23,12 @@ public class SubjectController {
         this.svc = svc;
     }
 
-    @GetMapping
+    @GetMapping("/subjects")
     public List<SubjectModel> getAllSubjects() {
         return svc.getAllSubjects();
     }
 
-    @PostMapping
+    @PostMapping("/add")
     public String addSubject(@RequestBody SubjectModel subject) {
         int newId = svc.addSubject(subject);
         return (newId > 0) ? "Subject created with id: " + newId 
