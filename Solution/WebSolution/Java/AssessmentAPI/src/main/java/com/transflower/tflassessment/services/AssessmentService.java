@@ -1,5 +1,6 @@
 package com.transflower.tflassessment.services;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
@@ -24,7 +25,7 @@ public interface AssessmentService {
 
     public Assessment getDetails(int assessmentId);
 
-    List<Assessment> getAll(LocalDateTime fromDate, LocalDateTime toDate);
+    List<Assessment> getAll(LocalDate fromDate, LocalDate toDate);
 
     public List<Assessment> getAllTests();
 
@@ -71,5 +72,7 @@ public interface AssessmentService {
     public boolean addEmployeesToTest(TestAssignmentRequest request, CandidateTestDetails candidateTestDetails);
 
     public List<TestEmployeeDetails> getAllTestByEmpId(int empId);
+
+    List<Assessment> getAll(LocalDateTime fromDate, LocalDateTime toDate);
 
 }

@@ -1,10 +1,12 @@
 package com.transflower.tflassessment.controllers;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -43,10 +45,10 @@ public class AssessmentController {
     }
 
     @GetMapping("/api/assessment/creationdate/fromDate/{fromDate}/toDate/{toDate}")
-    public List<Assessment> getAll(@PathVariable LocalDateTime fromDate,@PathVariable LocalDateTime toDate){
-        return svc.getAll(fromDate, toDate);
+    public List<Assessment> getAll(@PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fromDate,
+                               @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate toDate) {
+         return svc.getAll(fromDate, toDate);
     }
-
     @GetMapping("/api/assessment/assessments")
     public List<Assessment> getAllTests(){
         return svc.getAllTests();

@@ -1,5 +1,6 @@
 package com.transflower.tflassessment.services;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
@@ -164,6 +165,12 @@ public class AssessmentServiceImpl implements AssessmentService {
     public int createTestWithQuestions(CreateTestWithQuestions createTestWithQuestions) {
       // TODO Auto-generated method stub
       throw new UnsupportedOperationException("Unimplemented method 'createTestWithQuestions'");
+    }
+
+    @Override
+    public List<Assessment> getAll(LocalDate fromDate, LocalDate toDate) {
+      // TODO Auto-generated method stub
+      throw new UnsupportedOperationException("Unimplemented method 'getAll'");
     }
 
    //  @Override
