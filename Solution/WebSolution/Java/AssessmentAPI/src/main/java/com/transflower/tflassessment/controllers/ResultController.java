@@ -31,7 +31,7 @@ public class ResultController {
     private ResultService svc;
 
     @GetMapping("/candidates/{candidateId}/tests/{testId}/score")
-    public int getCandidateScore(@PathVariable int candidateId, @PathVariable int testId) {
+    public int getCandidateScore(@PathVariable("candidateId") int candidateId, @PathVariable("testId") int testId) {
         return svc.getCandidateScore(candidateId, testId);
     }
 

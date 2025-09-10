@@ -23,8 +23,8 @@ import com.transflower.tflassessment.entities.TestScoreDto;
 @Repository
 public class ResultRepositoryImpl implements ResultRepository {
 
-    Connection connection;
-    public ResultRepositoryImpl()
+    private static Connection connection;
+    static
     {
         try
         {
