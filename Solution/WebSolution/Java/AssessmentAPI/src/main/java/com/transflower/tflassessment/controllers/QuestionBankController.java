@@ -74,7 +74,5 @@ public class QuestionBankController {
     @PostMapping("/question")
     public boolean  insertQuestion(@RequestBody NewQuestion question){
         return svc.insertQuestion( question);
-    }
- 
-    
+    }    
 }
