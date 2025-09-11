@@ -1,6 +1,9 @@
 package com.transflower.tflassessment.repositories;
 
+<<<<<<< HEAD
 import java.io.IOException;
+=======
+>>>>>>> 1aae9cd02863ecb82ff2c2aa77d3b945e2f6b977
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -21,6 +24,7 @@ import com.transflower.tflassessment.repositories.*;
 @Repository
 public class CandidateAnswerRepositoryImpl implements CandidateAnswerRepository {
 
+<<<<<<< HEAD
     private static Connection connection;
 
     static{
@@ -50,11 +54,39 @@ public class CandidateAnswerRepositoryImpl implements CandidateAnswerRepository 
     }
 
     
+=======
+    public static Connection connection;
+   static {
+        try(InputStream input=CandidateAnswerRepositoryImpl.class.getClassLoader().getResourceAsStream("application.properties")){
+            Properties props=new Properties();
+            props.load(input);
+
+            String URL=props.getProperty("db.url");
+            String USER=props.getProperty("db.username");
+            String enpass=props.getProperty("db.password");
+            AES256TextEncryptor textEncryptor=new AES256TextEncryptor();
+            textEncryptor.setPassword("TransFlower");
+            String PASS = textEncryptor.decrypt(enpass.replace("ENC(", "").replace(")", ""));
+            // ix3jGci+cQ5VXBXcnfDeGfETyVy1yWkUxsdJPXiPt/x2J+3B079VBAJnSj6TeDWv
+            String driver = props.getProperty("db.driver");
+            Class.forName(driver);
+            connection = DriverManager.getConnection(URL, USER, PASS);
+
+            System.out.println("Connection Established");
+        } catch (Exception e) {
+            System.out.println(e);
+            System.out.println("Error in connecting to database");
+        }}
+>>>>>>> 1aae9cd02863ecb82ff2c2aa77d3b945e2f6b977
     @Override
     public boolean insertCandidateAnswer(int candidateId, List<CandidateAnswer> answers) {
         String query = "INSERT INTO candidateanswers (candidateid, testquestionid, answerkey) VALUES (?, ?, ?)";
         boolean status = false;
+<<<<<<< HEAD
         try  {
+=======
+        try {
+>>>>>>> 1aae9cd02863ecb82ff2c2aa77d3b945e2f6b977
             for (CandidateAnswer ans : answers) {
                 PreparedStatement preparedStatement = connection.prepareStatement(query);
                 preparedStatement.setInt(1, candidateId);
@@ -74,7 +106,11 @@ public class CandidateAnswerRepositoryImpl implements CandidateAnswerRepository 
         List<CandidateAnswer> candidates = new ArrayList<>();
         String query = "SELECT * FROM candidateanswers WHERE candidateid = ? AND testquestionid IN (SELECT id FROM testquestions WHERE testId = ?)";
         try (
+<<<<<<< HEAD
             
+=======
+           
+>>>>>>> 1aae9cd02863ecb82ff2c2aa77d3b945e2f6b977
             PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setInt(1, CandidateId);
             statement.setInt(2, TestId);
@@ -103,7 +139,10 @@ public class CandidateAnswerRepositoryImpl implements CandidateAnswerRepository 
                        "JOIN questionbank qb ON tq.questionbankid = qb.id " +
                        "WHERE ca.candidateid = ? AND tq.testid = ?";
         try (
+<<<<<<< HEAD
             
+=======
+>>>>>>> 1aae9cd02863ecb82ff2c2aa77d3b945e2f6b977
             PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setInt(1, CandidateId);
             statement.setInt(2, TestId);
@@ -128,7 +167,11 @@ public class CandidateAnswerRepositoryImpl implements CandidateAnswerRepository 
     public CandidateTestDetails getCandidateTestDetails(int CandidateId, int TestId) {
         CandidateTestDetails details = new CandidateTestDetails();
         try {
+<<<<<<< HEAD
             
+=======
+           
+>>>>>>> 1aae9cd02863ecb82ff2c2aa77d3b945e2f6b977
             // Query candidate
             String candidateQuery = "SELECT id, firstname FROM employees WHERE id = ?";
             PreparedStatement stmt1 = connection.prepareStatement(candidateQuery);
