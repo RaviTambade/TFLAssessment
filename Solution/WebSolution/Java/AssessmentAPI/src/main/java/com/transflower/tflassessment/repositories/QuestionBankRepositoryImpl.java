@@ -19,9 +19,6 @@ import com.transflower.tflassessment.entities.SubjectQuestion;
 public class QuestionBankRepositoryImpl implements QuestionBankRepository {
     
      private static Connection connection;
-    private String URL = "jdbc:mysql://localhost:3306/assessmentdb";
-    private String USERNAME = "root";
-    private String PASSWORD = "password";
 
 
     static {
