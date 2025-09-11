@@ -745,12 +745,8 @@ public class AssessmentRepositoryImpl implements AssessmentRepository {
         }
         return status;
     }
-
-
     @Override
     public boolean reschedule(int assessmentId, Date date) {
-                     
-          
         String query =  "UPDATE tests JOIN subjects ON tests.subjectid = subjects.id SET tests.scheduleddate = ? WHERE tests.id = ?";
 
          try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -780,30 +776,33 @@ public class AssessmentRepositoryImpl implements AssessmentRepository {
         }
     }
 @Override
-    public boolean createTest(CreateTestRequest request) {
-        String insertTestSQL = "INSERT INTO tests " +
-                "(name, smeid, subjectid, creationdate, modificationdate, scheduleddate, passinglevel, duration) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+public boolean createTest(CreateTestRequest request) {
+    String insertTestSQL = "INSERT INTO tests " +
+            "(name, subject_id, duration, subject_expert_id, creation_date, modification_date, scheduled_date, passing_level, status) " +
+            "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-        try (PreparedStatement preparedStatement = connection.prepareStatement(insertTestSQL)) {
-            LocalDateTime now = LocalDateTime.now();
-              preparedStatement.setString(1, request.getName());
-            preparedStatement.setInt(2, request.getSubjectExpertId());
-             preparedStatement.setString(3, request.getDuration());
-            preparedStatement.setInt(4, request.getSubjectId());
-            preparedStatement.setTimestamp(5, Timestamp.valueOf(now)); 
-            preparedStatement.setTimestamp(6, Timestamp.valueOf(now)); 
-            preparedStatement.setTimestamp(7, Timestamp.valueOf(request.getScheduledDate())); // scheduled date    
-            preparedStatement.setInt(8, request.getPassingLevel());
-            
+    try (PreparedStatement preparedStatement = connection.prepareStatement(insertTestSQL)) {
+        LocalDateTime now = LocalDateTime.now();
 
-            int rowsAffected = preparedStatement.executeUpdate();
-            return rowsAffected > 0;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return true;
-        }
-    }
+        preparedStatement.setString(1, request.getName());
+        preparedStatement.setInt(2, request.getSubjectId());
+        preparedStatement.setString(3, request.getDuration());
+        preparedStatement.setInt(4, request.getSubjectExpertId());
+
+        preparedStatement.setTimestamp(5, Timestamp.valueOf(now));
+        preparedStatement.setTimestamp(6, Timestamp.valueOf(now));
+        preparedStatement.setTimestamp(7, Timestamp.valueOf(request.getScheduledDate()));
+
+        preparedStatement.setInt(8, request.getPassingLevel());
+        preparedStatement.setString(9, "created");  // default status
+
+        int rowsAffected = preparedStatement.executeUpdate();
+        return rowsAffected > 0;
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+        return false;  
+    }}
 
 @Override
 public int createTestWithQuestions(CreateTestWithQuestions createTestWithQuestions) {
@@ -884,5 +883,3 @@ public List<SubjectQuestion> getAllQuestionsBySubject(int subjectId) {
     return subjectQuestionsList;
 }
 }
-
-

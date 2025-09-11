@@ -112,7 +112,7 @@ public class AssessmentController : ControllerBase
     {
         List<Assessment> assessments = await _svc.GetAllBySubjectMatterExpert(smeId);
         _logger.LogInformation("Get all subject matter experties method invoked at  {DT}", DateTime.UtcNow.ToLongTimeString());
-        return Ok(assessments);
+        return  Ok(assessments);
     }
 
     //http://localhost:5238/api/Assessment/createtest

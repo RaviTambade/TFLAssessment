@@ -460,5 +460,20 @@ namespace AssessmentLib.Repositories.Implementation
             }
             return questions;
         }
+
+        public Task<List<QuestionTitle>> GetAllQuestions()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> UpdateQuestionOptions(int Id, Question options)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<string> GetString(string subject, int QuestionId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
