@@ -135,25 +135,28 @@ public class AssessmentController {
         return svc.getSmeBySubject(subjectId);
      }
 
-    @GetMapping("/api/assessment/getalltest/from/{fromDate}/to/{toDate}")
-    public List<Test> getAllTests(@PathVariable("fromDate")Date fromDate,@PathVariable("toDate") Date toDate){
+    @GetMapping("/api/assessment/getalltest/from/{fromDate}/to/{toDate}")//tested
+    public List<Test> getAllTests(@PathVariable("fromDate")@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)Date fromDate,@PathVariable("toDate")@DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date toDate){
         return svc.getAllTests(fromDate, toDate);
     }
 
-    @GetMapping("/api/assessment/testdetails/{testId}")
+    @GetMapping("/api/assessment/testdetails/{testId}")//tested
     public TestWithQuestions getTestDetails(@PathVariable("testId")int testId){
         return svc.getTestDetails(testId);
     }
 
-    @GetMapping("/api/assessment/questionsbycriteria/{EvaluationCriteriaId}")
+    @GetMapping("/api/assessment/questionsbycriteria/{evaluationCriteriaId}")//tested
     public List<Question> getQuestionsByEvaluationCriteriaId(@PathVariable("evaluationCriteriaId")int evaluationCriteriaId){
         return svc.getQuestionsByEvaluationCriteriaId(evaluationCriteriaId);
     }
 
-    @PutMapping("/api/assessment/updatequestion/{questionId}")
-    public boolean updateQuestion(@PathVariable("question")Question question){
-        return svc.updateQuestion(question);
-    }
+   @PutMapping("/api/assessment/updatequestion/{questionId}")
+    public boolean updateQuestion(@PathVariable int questionId,
+                              @RequestBody Question question) {
+    question.setId(questionId);
+    return svc.updateQuestion(question);
+}
+
 
     @PutMapping("/api/assessment/updateteststatus/{testId}")
     public boolean updateTestStatus(@PathVariable("testId")int testId, @PathVariable("status")TestStatusUpdate status){

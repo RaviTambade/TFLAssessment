@@ -575,73 +575,62 @@ public class AssessmentRepositoryImpl implements AssessmentRepository {
     }
 
     // getQuestionsByEvaluationCriteriaId 
-    @Override
-    public List<Question> getQuestionsByEvaluationCriteriaId(int evaluationCriteriaId) {
-        List<Question> questions = new ArrayList<>();
-        try {
-            Statement stmt = connection.createStatement();
+   @Override
+public List<Question> getQuestionsByEvaluationCriteriaId(int evaluationCriteriaId) {
+    List<Question> questions = new ArrayList<>();
+    String query = "SELECT q.id, q.subjectid, q.title, q.a, q.b, q.c, q.d, q.answerkey, q.evaluationcriteriaid " +
+                   "FROM questionbank q WHERE q.evaluationcriteriaid = ?";
 
-            String query = "SELECT q.id AS QuestionId, q.subjectid AS SubjectId, q.title, q.a, q.b, q.c, q.d, q.answerkey, q.evaluationcriteriaid "
-                    + "FROM questionbank q "
-                    + "WHERE q.evaluationcriteriaid = EvaluationCriteriaId";
+    try (PreparedStatement stmt = connection.prepareStatement(query)) {
+        stmt.setInt(1, evaluationCriteriaId);
 
-            ResultSet resultSet = stmt.executeQuery(query);
-
-            while (resultSet.next()) {
+        try (ResultSet rs = stmt.executeQuery()) {
+            while (rs.next()) {
                 Question question = new Question();
-
-                question.setEvaluationCriteriaId(resultSet.getInt("evaluationCriteriaId"));
-                question.setSubjectId(resultSet.getInt("SubjectId"));
-                question.setTitle(resultSet.getString("Title"));
-
-                TestQuestion testQuestion = new TestQuestion();
-                testQuestion.setId(resultSet.getInt("QuestionId"));
-                testQuestion.setA(resultSet.getString("a"));
-                testQuestion.setB(resultSet.getString("b"));
-                testQuestion.setC(resultSet.getString("c"));
-                testQuestion.setD(resultSet.getString("d"));
-                testQuestion.setAnswerKey(resultSet.getString("answerKey"));
-                testQuestion.setCriteria(resultSet.getString("Criterai"));
+                question.setId(rs.getInt("id"));
+                question.setSubjectId(rs.getInt("subjectid"));
+                question.setTitle(rs.getString("title"));
+                question.setA(rs.getString("a"));
+                question.setB(rs.getString("b"));
+                question.setC(rs.getString("c"));
+                question.setD(rs.getString("d"));
+                question.setAnswerKey(rs.getString("answerkey"));
+                question.setEvaluationCriteriaId(rs.getInt("evaluationcriteriaid"));
 
                 questions.add(question);
-                // questions.add(testQuestion);
-
             }
-        } catch (Exception e) {
-            System.out.println("Error fetching questions:" + e.getMessage());
         }
-        return questions;
+    } catch (SQLException e) {
+        System.out.println("Error fetching questions: " + e.getMessage());
     }
-
+    return questions;
+   }
     //updateQuestion
     @Override
-    public boolean updateQuestion(Question question) {
+public boolean updateQuestion(Question question) {
+    try {
+        String query = "UPDATE questionbank "
+                     + "SET title = ?, a = ?, b = ?, c = ?, d = ?, answerkey = ? "
+                     + "WHERE id = ?";
 
-        try {
+        PreparedStatement prepareStatement = connection.prepareStatement(query);
 
-            String query = "UPDATE questionbank "
-                    + "SET title = ?, a = ?, b = ?, c = ?, d = ?, answerkey = ? "
-                    + "WHERE id = ?";
+        prepareStatement.setString(1, question.getTitle());
+        prepareStatement.setString(2, question.getA());
+        prepareStatement.setString(3, question.getB());
+        prepareStatement.setString(4, question.getC());
+        prepareStatement.setString(5, question.getD());
+        prepareStatement.setString(6, question.getAnswerKey());
+        prepareStatement.setInt(7, question.getId());
 
-            PreparedStatement prepareStatement = connection.prepareStatement(query);
-            ResultSet resultSet = prepareStatement.executeQuery(query);
-
-            prepareStatement.setString(1, question.getTitle());
-            prepareStatement.setString(2, question.getA());
-            prepareStatement.setString(3, question.getB());
-            prepareStatement.setString(4, question.getC());
-            prepareStatement.setString(5, question.getD());
-            prepareStatement.setString(6, String.valueOf(question.getAnswerKey()));
-            prepareStatement.setInt(7, question.getId());
-
-            int rowsUpdated = prepareStatement.executeUpdate();
-            return rowsUpdated > 0;
-        } catch (Exception e) {
-            System.out.println("Error updating question:" + e.getMessage());
-
-        }
-        return false;
+        int rowsUpdated = prepareStatement.executeUpdate();
+        return rowsUpdated > 0;
+    } catch (Exception e) {
+        System.out.println("Error updating question: " + e.getMessage());
     }
+    return false;
+}
+
 
     // updateTestStatus
     @Override
