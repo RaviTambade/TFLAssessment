@@ -1,12 +1,17 @@
 package com.transflower.tflassessment.repositories;
 
+import java.io.InputStream;
 import java.sql.*;
 
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
+import javax.naming.spi.DirStateFactory.Result;
+
+import org.jasypt.util.text.AES256TextEncryptor;
 import org.springframework.stereotype.Repository;
 
 import com.transflower.tflassessment.entities.AppearedCandidate;
@@ -23,19 +28,28 @@ import com.transflower.tflassessment.entities.TestScoreDto;
 @Repository
 public class ResultRepositoryImpl implements ResultRepository {
 
-    private static Connection connection;
-    static
-    {
-        try
-        {
-            String url="jdbc:mysql://localhost:3306/assessmentdb";
-            String userName="root";
-            String password="password";
-            connection=DriverManager.getConnection(url, userName, password);
+      private static Connection connection;
+  static {
+        try {
+            Properties props = new Properties();
+            try (InputStream input = ResultRepositoryImpl.class.getClassLoader().getResourceAsStream("application.properties")) {
+                props.load(input);
+            }
+
+            String url = props.getProperty("db.url");
+            String username = props.getProperty("db.username");
+            String encPass = props.getProperty("db.password"); 
+            AES256TextEncryptor textEncryptor = new AES256TextEncryptor();
+            textEncryptor.setPassword("TransFlower"); 
+            String pass = textEncryptor.decrypt(encPass.replace("ENC(", "").replace(")", ""));
+
+            String driver = props.getProperty("db.driver");
+
+            Class.forName(driver);
+            connection = DriverManager.getConnection(url, username, pass);
+
             System.out.println("Connection Established");
-        }
-        catch(Exception e)
-        {
+        } catch (Exception e) {
             System.out.println(e);
             System.out.println("Error in connecting to database");
         }
@@ -183,8 +197,7 @@ public class ResultRepositoryImpl implements ResultRepository {
 
     @Override
     public List<AppearedCandidate> getAppearedCandidates(int testId) {
-    
-        List<AppearedCandidate> appearedCandidates = new ArrayList<AppearedCandidate>();
+      List<AppearedCandidate> appearedCandidates = new ArrayList<AppearedCandidate>();
         String query = "select candidatetestresults.testid, candidatetestresults.candidateid, employees.firstname, employees.lastname"
                         +" from candidatetestresults" 
                         + " join employees on employees.id= candidatetestresults.candidateid"
@@ -354,55 +367,34 @@ public List<Subject> getAllSubjects(int subjectId) {
 
 @Override
 public List<TestAverageReport> getTestAverageReport(int testId) {
-        List<TestAverageReport> averageReports = new ArrayList<>();
-        String query = "SELECT t.id AS testId, t.name AS testName, AVG(cr.score) AS averageScore "
-                           +"FROM tests t "
-                            + "JOIN candidatetestresults cr ON t.id = cr.testid "
-                            + "WHERE t.id = ? "
-                            + "GROUP BY t.id, t.name";
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setInt(1, testId);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
+    List<TestAverageReport> averageReports = new ArrayList<>();
+    String query = "{CALL spgetaveragereportbytestid(?)}";
+try(
+         CallableStatement stmt = connection.prepareCall(query)) {
+
+        stmt.setInt(1, testId);
+
+        try (ResultSet rs = stmt.executeQuery()) {
+            while (rs.next()) {
                 TestAverageReport report = new TestAverageReport();
-                report.setSubjectName(resultSet.getString("testName"));
-                report.setCorrectAnswer(resultSet.getInt("correctAnswer"));
+
+                report.setSubjectName(rs.getString("subjectname"));
+                report.setEvaluationCriteria(rs.getString("evaluationcriteria"));
+                report.setTotalQuestionAnswered(rs.getInt("totalquestionsanswered"));
+                report.setCorrectAnswer(rs.getInt("correctanswers"));
+                report.setPercentageCorrect(rs.getDouble("percentagecorrect"));
 
                 averageReports.add(report);
             }
-        } catch (Exception e) {
-            System.out.println(e);
         }
-        return averageReports;
+
+    } catch (SQLException e) {
+        e.printStackTrace(); 
     }
 
+    return averageReports;
+}
 
-    @Override
-    public List<TestScoreDto> getCandidateAllScore(int candidateId) {
-        List<TestScoreDto> testScores = new ArrayList<>();
-        String query = "SELECT t.id AS testId, t.name AS testName, cr.score "
-                       + "FROM tests t "
-                       + "JOIN candidatetestresults cr ON t.id = cr.testid "
-                       + "WHERE cr.candidateid = ?";
-    
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setInt(1, candidateId);
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            while (resultSet.next()) {
-                TestScoreDto scoreDto = new TestScoreDto();
-                scoreDto.setTestName(resultSet.getString("testName"));
-                scoreDto.setScore(resultSet.getInt("score"));
-                testScores.add(scoreDto);
-            }
-
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        return testScores;
-    }
 
     @Override
 public List<CandidateSubjectResults> getSubjectResultDetails(int subjectId) {
@@ -459,6 +451,40 @@ public List<Subject> getAllSubjects() {
 
     return subjects;
 }
+
+
+@Override
+public List<TestScoreDto> getCandidateAllScore(int candidateId) {
+    List<TestScoreDto> scores = new ArrayList<>();
+    
+    String query = "SELECT t.name AS TestName, ctr.score AS Score " +
+                   "FROM candidatetestresults ctr " +
+                   "JOIN tests t ON ctr.testid = t.id " +
+                   "WHERE ctr.candidateid = ?";
+
+    try (
+        PreparedStatement stmt = connection.prepareStatement(query)
+    ) {
+        stmt.setInt(1, candidateId);
+
+        try (ResultSet rs = stmt.executeQuery()) {
+            while (rs.next()) {
+                int score = rs.getObject("Score") == null ? 0 : rs.getInt("Score");
+
+                TestScoreDto dto = new TestScoreDto();
+                dto.setTestName(rs.getString("TestName"));
+                dto.setScore(score);
+
+                scores.add(dto);
+            }
+        }
+    } catch (SQLException e) {
+        e.printStackTrace(); 
+    }
+
+    return scores;
+}
+
 
 
     
