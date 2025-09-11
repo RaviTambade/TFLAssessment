@@ -52,7 +52,6 @@ public class CandidateAnswerRepositoryImpl implements CandidateAnswerRepository 
             ResultSet resultset = statement.executeQuery();
             while (resultset.next()) {
                 CandidateAnswer answer = new CandidateAnswer();
-                // ✅ Fixed: fetch columns by name instead of wrong param indexes
                 answer.setCandidateId(resultset.getInt("candidateid"));
                 answer.setTestQuestionId(resultset.getInt("testquestionid"));
                 answer.setAnswerKey(resultset.getString("answerkey"));
