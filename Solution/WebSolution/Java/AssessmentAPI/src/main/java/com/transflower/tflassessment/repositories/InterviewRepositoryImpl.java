@@ -1,5 +1,6 @@
 package com.transflower.tflassessment.repositories;
 
+import java.io.InputStream;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -9,7 +10,9 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
+import org.jasypt.util.text.AES256TextEncryptor;
 import org.springframework.stereotype.Repository;
 
 import com.transflower.tflassessment.entities.InterviewCandidateDetails;
@@ -17,26 +20,40 @@ import com.transflower.tflassessment.entities.InterviewDetails;
 
 @Repository
 public class InterviewRepositoryImpl implements InterviewRepository {
+    private static Connection connection;
+    
+static{
+    try{
+        Properties props=new Properties();
+    
+    try(InputStream input=InterviewRepositoryImpl.class.getClassLoader().getResourceAsStream("application.properties")){
+        props.load(input);
+    }
+     String url = props.getProperty("db.url");
+     String username = props.getProperty("db.username");
+     String encPass = props.getProperty("db.password");
 
-    private String url = "jdbc:mysql://localhost:3306/assessmentdb";
-    private String userName = "root";
-    private String password = "password";
-    Connection connection;
-    Statement statement;
+     AES256TextEncryptor textEncryptor=new AES256TextEncryptor();
+     textEncryptor.setPassword("TransFlower");
 
-    public InterviewRepositoryImpl() {
-        try {
-            connection = DriverManager.getConnection(url, userName, password);
-            statement = connection.createStatement();
+     String pass=textEncryptor.decrypt(encPass.replace("ENC(", "").replace(")", ""));
+     
+     String driver=props.getProperty("db.driver");
+     Class.forName(driver);
+
+     connection=DriverManager.getConnection(url,username,pass);
+     System.out.println("Connection Established");
         } catch (Exception e) {
             System.out.println(e);
         }
     }
 
+
+
     @Override
     public List<InterviewCandidateDetails> getAllInterviewCandidates() {
         List<InterviewCandidateDetails> allInterviewCandidates = new ArrayList<>();
-        try {
+        try (Statement statement = connection.createStatement()) {
             String selectQuery = "SELECT interviews.candidateid,employees.firstname,employees.lastname,subjects.title "
                     + "FROM interviews "
                     + "INNER JOIN employees ON  interviews.candidateid= employees.id "
@@ -58,7 +75,7 @@ public class InterviewRepositoryImpl implements InterviewRepository {
     @Override
     public List<InterviewCandidateDetails> getInterviewedCandidatesSubjects(int candidateId) {
         List<InterviewCandidateDetails> interviewCandidateSubjectDetails = new ArrayList<>();
-        try {
+        try (Statement statement = connection.createStatement()) {
             String selectQuery = "SELECT interviews.candidateid,employees.firstname,employees.lastname,subjects.Title "
                     + "FROM employees INNER JOIN interviews ON employees.id = interviews.candidateid "
                     + "INNER JOIN subjectmatterexperts ON subjectmatterexperts.id = interviews.smeid "
@@ -79,7 +96,7 @@ public class InterviewRepositoryImpl implements InterviewRepository {
     @Override
     public InterviewDetails getInterviewDetails(int interviewId) {
         InterviewDetails interviewDetails = null;
-        try {
+        try (Statement statement = connection.createStatement()) {
             String call = "{CALL spinterviewdetails(?)}";
             CallableStatement callablestatement = connection.prepareCall(call);
             callablestatement.setInt(1, interviewId);
@@ -118,7 +135,7 @@ public class InterviewRepositoryImpl implements InterviewRepository {
 
     @Override
     public boolean rescheduleInterview(int interviewId, LocalDate date) {
-        try {
+        try (Statement statement = connection.createStatement()) {
             String updateQuery = "UPDATE interviews "
                     + "SET interviewdate = '" + date + "' "
                     + "WHERE id =" + interviewId + ";";
@@ -132,7 +149,7 @@ public class InterviewRepositoryImpl implements InterviewRepository {
 
     @Override
     public boolean rescheduleInterview(int interviewId, LocalTime time) {
-        try {
+        try (Statement statement = connection.createStatement()) {
             String updateQuery = "UPDATE interviews "
                     + "SET interviewtime = '" + time + " AM ' "
                     + "WHERE id =" + interviewId;
@@ -148,7 +165,7 @@ public class InterviewRepositoryImpl implements InterviewRepository {
     @Override
 
     public boolean rescheduleInterview(int interviewId, LocalTime time, LocalDate date) {
-        try {
+        try(Statement statement = connection.createStatement())  {
             String updateQuery = "UPDATE interviews "
                     + "SET interviewdate = '" + date + "', interviewtime = '" + time + "' "
                     + "WHERE id = " + interviewId + ";";
@@ -166,7 +183,7 @@ public class InterviewRepositoryImpl implements InterviewRepository {
 
     @Override
      public boolean changeInterviewer(int interviewId, int smeId) {
-         try {
+         try (Statement statement = connection.createStatement()) {
            String updateQuery = "UPDATE interviews "
                     + "SET smeid = " + smeId + " "
                      + "WHERE id = " + interviewId + ";";
@@ -181,7 +198,7 @@ public class InterviewRepositoryImpl implements InterviewRepository {
 
     @Override
     public boolean cancelInterview(int interviewId) {
-        try {
+        try(Statement statement = connection.createStatement())  {
             String updateQuery = "DELETE FROM interviews WHERE id =" + interviewId + ";";
             statement.executeUpdate(updateQuery);
         } catch (Exception e) {

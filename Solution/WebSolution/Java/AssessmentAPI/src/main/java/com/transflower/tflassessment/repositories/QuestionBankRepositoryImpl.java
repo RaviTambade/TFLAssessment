@@ -25,7 +25,7 @@ public class QuestionBankRepositoryImpl implements QuestionBankRepository {
   static {
         try {
             Properties props = new Properties();
-            try (InputStream input = AuthRepositoryImpl.class.getClassLoader().getResourceAsStream("application.properties")) {
+            try (InputStream input = QuestionBankRepositoryImpl.class.getClassLoader().getResourceAsStream("application.properties")) {
                 props.load(input);
             }
 
