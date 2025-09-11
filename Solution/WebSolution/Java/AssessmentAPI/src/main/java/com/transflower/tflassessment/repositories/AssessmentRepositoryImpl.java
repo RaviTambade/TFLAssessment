@@ -18,6 +18,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 
+import org.jasypt.util.text.AES256TextEncryptor;
 import org.springframework.stereotype.Repository;
 
 import com.transflower.tflassessment.entities.Assessment;
@@ -47,7 +48,10 @@ public class AssessmentRepositoryImpl implements AssessmentRepository {
 
             String url=props.getProperty("db.url");
             String user=props.getProperty("db.username");
-            String pass=props.getProperty("db.password");
+            String enpass=props.getProperty("db.password");
+            AES256TextEncryptor textEncryptor=new AES256TextEncryptor();
+            textEncryptor.setPassword("TransFlower");
+            String pass = textEncryptor.decrypt(enpass.replace("ENC(", "").replace(")", ""));
             String driver = props.getProperty("db.driver");
 
             Class.forName(driver);
