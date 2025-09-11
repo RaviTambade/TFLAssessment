@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.transflower.tflassessment.entities.Assessment;
-import com.transflower.tflassessment.entities.CandidateTestDetails;
 import com.transflower.tflassessment.entities.CreateTestRequest;
 import com.transflower.tflassessment.entities.CreateTestWithQuestions;
 import com.transflower.tflassessment.entities.Employee;
@@ -24,10 +23,9 @@ import com.transflower.tflassessment.entities.Question;
 import com.transflower.tflassessment.entities.QuestionBank;
 import com.transflower.tflassessment.entities.Subject;
 import com.transflower.tflassessment.entities.SubjectQuestion;
-import com.transflower.tflassessment.entities.SubjectQuestions;
 import com.transflower.tflassessment.entities.Test;
-import com.transflower.tflassessment.entities.TestAssignmentRequest;
 import com.transflower.tflassessment.entities.TestEmployeeDetails;
+import com.transflower.tflassessment.entities.TestEmployeeRequest;
 import com.transflower.tflassessment.entities.TestStatusUpdate;
 import com.transflower.tflassessment.entities.TestWithQuestions;
 import com.transflower.tflassessment.services.AssessmentService;
@@ -150,7 +148,7 @@ public class AssessmentController {
         return svc.getQuestionsByEvaluationCriteriaId(evaluationCriteriaId);
     }
 
-   @PutMapping("/api/assessment/updatequestion/{questionId}")
+   @PutMapping("/api/assessment/updatequestion/{questionId}")//tested
     public boolean updateQuestion(@PathVariable int questionId,
                               @RequestBody Question question) {
     question.setId(questionId);
@@ -158,18 +156,18 @@ public class AssessmentController {
 }
 
 
-    @PutMapping("/api/assessment/updateteststatus/{testId}")
-    public boolean updateTestStatus(@PathVariable("testId")int testId, @PathVariable("status")TestStatusUpdate status){
+    @PutMapping("/api/assessment/updateteststatus/{testId}")//tested
+    public boolean updateTestStatus(@PathVariable("testId")int testId, @RequestBody TestStatusUpdate status){
         return svc.updateTestStatus(testId, status);
     }
 
-    @PostMapping("/api/assessment/addemployees")
-    public boolean addEmployeesToTest(@RequestBody TestAssignmentRequest request, @PathVariable("candidateTestDetails")CandidateTestDetails candidateTestDetails){
-        return svc.addEmployeesToTest(request, candidateTestDetails);
+    @PostMapping("/api/assessment/addemployees")//tested
+    public boolean addEmployeesToTest(@RequestBody TestEmployeeRequest wrapper){
+    return svc.addEmployeesToTest(wrapper.getRequest(), wrapper.getCandidateTestDetails());
+   }
 
-    }
 
-    @GetMapping("/api/assessment/alltestbyempid/{empId}")
+    @GetMapping("/api/assessment/alltestbyempid/{empId}")//tested
     public List<TestEmployeeDetails> getAllTestByEmpId(@PathVariable("empId")int empId){
         return svc.getAllTestByEmpId(empId);
     }

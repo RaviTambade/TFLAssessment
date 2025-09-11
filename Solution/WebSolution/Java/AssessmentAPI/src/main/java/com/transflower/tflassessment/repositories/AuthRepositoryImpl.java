@@ -1,25 +1,26 @@
 package com.transflower.tflassessment.repositories;
 
+import java.io.InputStream;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 import org.springframework.stereotype.Repository;
 
 import com.transflower.tflassessment.entities.*;
 @Repository
 public class AuthRepositoryImpl implements AuthRepository {
-  Connection connection;
-  Statement statement;
-
-  public  AuthRepositoryImpl() {
+  private static Connection connection;
+  static {
     try {
-      String URL = "jdbc:mysql://localhost:3306/assessmentdb";
-      String UserName = "root";
-      String Password = "password";
-      // Class.forName("com.mysql.cj.jdbc.Driver");
-      // System.out.println("Driver Loaded");
-      connection = DriverManager.getConnection(URL, UserName, Password);
+      InputStream input=AuthRepositoryImpl.class.getClassLoader().getResourceAsStream("application.properties");
+      Properties prop=new Properties();
+      prop.load(input);
+      String url=prop.getProperty("db.url");
+      String username=prop.getProperty("db.username");
+      String password=prop.getProperty("db.password");
+      connection = DriverManager.getConnection(url, username, password);
       System.out.println("Connection Established");
     } catch (Exception e) {
       System.out.println(e);
@@ -40,7 +41,7 @@ public class AuthRepositoryImpl implements AuthRepository {
           "LEFT JOIN roles r ON ur.roleid = r.id " +
           "WHERE u.email = '" + email + "'";
 
-      statement = connection.createStatement();
+     Statement statement = connection.createStatement();
       ResultSet resultSet = statement.executeQuery(selectQuery);
     
       while (resultSet.next()) {

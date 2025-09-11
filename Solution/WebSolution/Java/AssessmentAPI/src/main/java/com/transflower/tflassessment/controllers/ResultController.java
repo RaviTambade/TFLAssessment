@@ -81,7 +81,7 @@ public class ResultController {
     }
 
     @GetMapping("/subjects/{subjectId}/results")
-    public List<CandidateSubjectResults> getSubjectResultDetails(@PathVariable int subjectId) {
+    public List<CandidateSubjectResults> getSubjectResultDetails(@PathVariable("subjectId") int subjectId) {
         return svc.getSubjectResultDetails(subjectId);
     }
 

@@ -1,5 +1,6 @@
 package com.transflower.tflassessment.repositories;
 
+import java.io.InputStream;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -15,6 +16,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Properties;
 
 import org.springframework.stereotype.Repository;
 
@@ -28,11 +30,9 @@ import com.transflower.tflassessment.entities.Question;
 import com.transflower.tflassessment.entities.QuestionBank;
 import com.transflower.tflassessment.entities.Subject;
 import com.transflower.tflassessment.entities.SubjectQuestion;
-import com.transflower.tflassessment.entities.SubjectQuestions;
 import com.transflower.tflassessment.entities.Test;
 import com.transflower.tflassessment.entities.TestAssignmentRequest;
 import com.transflower.tflassessment.entities.TestEmployeeDetails;
-import com.transflower.tflassessment.entities.TestQuestion;
 import com.transflower.tflassessment.entities.TestStatusUpdate;
 import com.transflower.tflassessment.entities.TestWithQuestions;
 @Repository
@@ -41,17 +41,23 @@ public class AssessmentRepositoryImpl implements AssessmentRepository {
     private static Connection connection;
 
     static {
-        try {
-            String url = "jdbc:mysql://localhost:3306/assessmentdb";
-            String user = "root";
-            String password = "password";
-            connection = DriverManager.getConnection(url, user, password);
+        try(InputStream input=AssessmentRepositoryImpl.class.getClassLoader().getResourceAsStream("application.properties")){
+            Properties props=new Properties();
+            props.load(input);
+
+            String url=props.getProperty("db.url");
+            String user=props.getProperty("db.username");
+            String pass=props.getProperty("db.password");
+            String driver = props.getProperty("db.driver");
+
+            Class.forName(driver);
+            connection = DriverManager.getConnection(url, user, pass);
+
             System.out.println("Connection Established");
         } catch (Exception e) {
-            System.out.println("Connection Failed: " + e.getMessage());
-        }
-    }
-
+            System.out.println(e);
+            System.out.println("Error in connecting to database");
+        }}
     @Override
     public Assessment getDetails(int assessmentId) {
         Assessment assessment = null;
@@ -703,6 +709,7 @@ public boolean updateQuestion(Question question) {
                         .plusSeconds(localTime.getSecond());
                 testEmployeeDetails = new TestEmployeeDetails(set.getInt("candidateid"), set.getString("testname"),
                         set.getString("passinglevel"), duration, l1, l2, set.getString("status"));
+                         testEmployeeDetailsList.add(testEmployeeDetails);
             }
             return testEmployeeDetailsList;
 
