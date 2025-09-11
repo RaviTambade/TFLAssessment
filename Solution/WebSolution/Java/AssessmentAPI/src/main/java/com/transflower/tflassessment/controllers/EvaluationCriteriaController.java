@@ -20,19 +20,19 @@ public class EvaluationCriteriaController {
     private EvaluationCriteriaService svc;
 
     @PostMapping("/insert")
-    public boolean postinsertCriteria(@RequestBody EvaluationCriteria criteria) {
+    public boolean insertCriteria(@RequestBody EvaluationCriteria criteria) {
         return svc.insertCriteria(criteria);
     }
 
    @PutMapping("{id}/subjects/{subjectId}")
-public boolean putupdateSubject(@PathVariable("id") int id, @PathVariable ("subjectId")int subjectId) {
+    public boolean updateSubject(@PathVariable("id") int id, @PathVariable ("subjectId")int subjectId) {
     return svc.updateSubject(id, subjectId);
 }
 
-@PutMapping("{evaluationCriteriaId}/questions/{questionId}")
-public boolean putupdateCriteria(@PathVariable("evaluationCriteriaId")int evaluationCriteriaId, @PathVariable("questionId") int questionId) {
-    return svc.updateCriteria( evaluationCriteriaId,questionId);
-}
+    @PutMapping("{id}/questions/{evaluationCriteriaId}")
+    public boolean updateCriteria(@PathVariable("id")int id, @PathVariable("evaluationCriteriaId") int evaluationCriteriaId) {
+        return svc.updateCriteria(id, evaluationCriteriaId);
+    }
 
 
    

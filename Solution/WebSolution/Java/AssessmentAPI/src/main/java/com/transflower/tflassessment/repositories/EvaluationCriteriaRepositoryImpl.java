@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.util.Properties;
 
+import org.jasypt.util.text.AES256TextEncryptor;
 import org.springframework.stereotype.Repository;
 
 import com.transflower.tflassessment.entities.EvaluationCriteria;
@@ -14,26 +15,31 @@ import com.transflower.tflassessment.entities.EvaluationCriteria;
  @Repository
  public class EvaluationCriteriaRepositoryImpl implements EvaluationCriteriaRepository {
 
-    private static String url;
-    private static String username;
-    private static String password;
-    private static String driver;
     private static Connection connection;   
 
     static {
-        try (InputStream input = EvaluationCriteriaRepositoryImpl.class.getClassLoader().getResourceAsStream("application.properties")) {
-            Properties props = new Properties();
+        try{
+             Properties props = new Properties();
+       
+        try (InputStream input = EvaluationCriteriaRepositoryImpl.class.getClassLoader().getResourceAsStream("application.properties")) { 
             props.load(input);
+        }
+            String url = props.getProperty("db.url");
+            String username = props.getProperty("db.username");
+            String encPass = props.getProperty("db.password");
 
-            url = props.getProperty("db.url");
-            username = props.getProperty("db.username");
-            password = props.getProperty("db.password");
-            driver = props.getProperty("db.driver");
-            connection=DriverManager.getConnection(url,username,password);
-            
+            AES256TextEncryptor textEncryptor= new AES256TextEncryptor();
+            textEncryptor.setPassword("TransFlower");
+            String pass = textEncryptor.decrypt(encPass.replace("ENC(", "").replace(")", ""));
+
+            String driver = props.getProperty("db.driver");
             Class.forName(driver);
+            connection=DriverManager.getConnection(url,username,pass);
+            
+            
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println(e);
+            
         }
     }
     
