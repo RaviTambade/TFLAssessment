@@ -1,4 +1,5 @@
 package com.transflower.tflassessment.repositories;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -7,6 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 import org.springframework.stereotype.Repository;
 
@@ -18,19 +20,29 @@ import com.transflower.tflassessment.entities.SubjectQuestion;
 @Repository
 public class QuestionBankRepositoryImpl implements QuestionBankRepository {
     
+    private static String url;
+    private static String username;
+    private static String password;
+    private static String driver;
      private static Connection connection;
 
 
     static {
-        try {
-            String url = "jdbc:mysql://localhost:3306/assessmentdb";
-            String user = "root";
-            String password = "password";
-            connection = DriverManager.getConnection(url, user, password);
-            System.out.println("Connection Established");
-        } catch (SQLException e) {
-            System.out.println("Connection Failed: " + e.getMessage());
+        try (InputStream input=QuestionBankRepositoryImpl.class.getClassLoader().getResourceAsStream("application.properties")){
+            Properties props=new Properties();
+            props.load(input);
+
+            url=props.getProperty("db.url");
+            username=props.getProperty("db.username");
+            password=props.getProperty("db.password");
+            driver=props.getProperty("db.driver");
+            Class.forName(driver);
+            connection=DriverManager.getConnection(url,username,password);
         }
+        catch(Exception e){
+            e.printStackTrace();
+        } 
+        
     }
 
     @Override
