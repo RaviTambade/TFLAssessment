@@ -32,7 +32,6 @@ public class CandidateAnswerRepositoryImpl implements CandidateAnswerRepository 
             AES256TextEncryptor textEncryptor=new AES256TextEncryptor();
             textEncryptor.setPassword("TransFlower");
             String PASS = textEncryptor.decrypt(enpass.replace("ENC(", "").replace(")", ""));
-            // ix3jGci+cQ5VXBXcnfDeGfETyVy1yWkUxsdJPXiPt/x2J+3B079VBAJnSj6TeDWv
             String driver = props.getProperty("db.driver");
             Class.forName(driver);
             connection = DriverManager.getConnection(URL, USER, PASS);
