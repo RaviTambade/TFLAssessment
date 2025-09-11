@@ -1,5 +1,7 @@
 package com.transflower.tflassessment.repositories;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -8,7 +10,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
+import org.jasypt.util.text.AES256TextEncryptor;
 import org.springframework.stereotype.Repository;
 
 import com.transflower.tflassessment.entities.*;
@@ -17,15 +21,40 @@ import com.transflower.tflassessment.repositories.*;
 @Repository
 public class CandidateAnswerRepositoryImpl implements CandidateAnswerRepository {
 
-    private String URL = "jdbc:mysql://localhost:3306/assessmentdb";
-    private String USERNAME = "root";
-    private String PASSWORD = "password";
+    private static Connection connection;
 
+    static{
+        try(InputStream input=CandidateAnswerRepositoryImpl.class.getClassLoader().getResourceAsStream("application.properties"))
+        {
+            Properties props=new Properties();
+            props.load(input);
+
+            String url=props.getProperty("db.url");
+            String user=props.getProperty("db.username");
+            String enpass=props.getProperty("db.password");
+            AES256TextEncryptor textEncryptor=new AES256TextEncryptor();
+            textEncryptor.setPassword("TransFlower");
+            String pass = textEncryptor.decrypt(enpass.replace("ENC(", "").replace(")", ""));
+            String driver = props.getProperty("db.driver");
+
+            Class.forName(driver);
+            connection = DriverManager.getConnection(url, user, pass);
+
+            System.out.println("Connection Established");
+             } catch (Exception e) {
+
+            
+            System.out.println(e);
+            System.out.println("Error in connecting to database");
+        }
+    }
+
+    
     @Override
     public boolean insertCandidateAnswer(int candidateId, List<CandidateAnswer> answers) {
         String query = "INSERT INTO candidateanswers (candidateid, testquestionid, answerkey) VALUES (?, ?, ?)";
         boolean status = false;
-        try (Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD)) {
+        try  {
             for (CandidateAnswer ans : answers) {
                 PreparedStatement preparedStatement = connection.prepareStatement(query);
                 preparedStatement.setInt(1, candidateId);
@@ -45,7 +74,7 @@ public class CandidateAnswerRepositoryImpl implements CandidateAnswerRepository 
         List<CandidateAnswer> candidates = new ArrayList<>();
         String query = "SELECT * FROM candidateanswers WHERE candidateid = ? AND testquestionid IN (SELECT id FROM testquestions WHERE testId = ?)";
         try (
-            Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+            
             PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setInt(1, CandidateId);
             statement.setInt(2, TestId);
@@ -74,8 +103,8 @@ public class CandidateAnswerRepositoryImpl implements CandidateAnswerRepository 
                        "JOIN questionbank qb ON tq.questionbankid = qb.id " +
                        "WHERE ca.candidateid = ? AND tq.testid = ?";
         try (
-            Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-            PreparedStatement statement = conn.prepareStatement(query)) {
+            
+            PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setInt(1, CandidateId);
             statement.setInt(2, TestId);
             
@@ -99,7 +128,7 @@ public class CandidateAnswerRepositoryImpl implements CandidateAnswerRepository 
     public CandidateTestDetails getCandidateTestDetails(int CandidateId, int TestId) {
         CandidateTestDetails details = new CandidateTestDetails();
         try {
-            Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+            
             // Query candidate
             String candidateQuery = "SELECT id, firstname FROM employees WHERE id = ?";
             PreparedStatement stmt1 = connection.prepareStatement(candidateQuery);
