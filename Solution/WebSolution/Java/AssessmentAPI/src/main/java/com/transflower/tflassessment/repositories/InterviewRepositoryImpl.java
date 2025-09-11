@@ -153,7 +153,7 @@ public class InterviewRepositoryImpl implements InterviewRepository {
                     + "SET interviewdate = '" + date + "', interviewtime = '" + time + "' "
                     + "WHERE id = " + interviewId + ";";
 
-            System.out.println("Executing: " + updateQuery); // DEBUG
+            System.out.println("Executing: " + updateQuery); 
             statement.executeUpdate(updateQuery);
             return true;
         } catch (Exception e) {
