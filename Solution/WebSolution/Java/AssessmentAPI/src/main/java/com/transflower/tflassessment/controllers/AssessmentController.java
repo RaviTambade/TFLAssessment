@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.transflower.tflassessment.entities.Assessment;
-import com.transflower.tflassessment.entities.CandidateTestDetails;
 import com.transflower.tflassessment.entities.CreateTestRequest;
 import com.transflower.tflassessment.entities.CreateTestWithQuestions;
 import com.transflower.tflassessment.entities.Employee;
@@ -24,13 +23,13 @@ import com.transflower.tflassessment.entities.Question;
 import com.transflower.tflassessment.entities.QuestionBank;
 import com.transflower.tflassessment.entities.Subject;
 import com.transflower.tflassessment.entities.SubjectQuestion;
-import com.transflower.tflassessment.entities.SubjectQuestions;
 import com.transflower.tflassessment.entities.Test;
-import com.transflower.tflassessment.entities.TestAssignmentRequest;
 import com.transflower.tflassessment.entities.TestEmployeeDetails;
+import com.transflower.tflassessment.entities.TestEmployeeRequest;
 import com.transflower.tflassessment.entities.TestStatusUpdate;
 import com.transflower.tflassessment.entities.TestWithQuestions;
 import com.transflower.tflassessment.services.AssessmentService;
+
 
 //@RequestMapping("/api/assessment")
 @RestController
@@ -135,38 +134,41 @@ public class AssessmentController {
         return svc.getSmeBySubject(subjectId);
      }
 
-    @GetMapping("/api/assessment/getalltest/from/{fromDate}/to/{toDate}")
-    public List<Test> getAllTests(@PathVariable("fromDate")Date fromDate,@PathVariable("toDate") Date toDate){
+    @GetMapping("/api/assessment/getalltest/from/{fromDate}/to/{toDate}")//tested
+    public List<Test> getAllTests(@PathVariable("fromDate")@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)Date fromDate,@PathVariable("toDate")@DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date toDate){
         return svc.getAllTests(fromDate, toDate);
     }
 
-    @GetMapping("/api/assessment/testdetails/{testId}")
+    @GetMapping("/api/assessment/testdetails/{testId}")//tested
     public TestWithQuestions getTestDetails(@PathVariable("testId")int testId){
         return svc.getTestDetails(testId);
     }
 
-    @GetMapping("/api/assessment/questionsbycriteria/{EvaluationCriteriaId}")
+    @GetMapping("/api/assessment/questionsbycriteria/{evaluationCriteriaId}")//tested
     public List<Question> getQuestionsByEvaluationCriteriaId(@PathVariable("evaluationCriteriaId")int evaluationCriteriaId){
         return svc.getQuestionsByEvaluationCriteriaId(evaluationCriteriaId);
     }
 
-    @PutMapping("/api/assessment/updatequestion/{questionId}")
-    public boolean updateQuestion(@PathVariable("question")Question question){
-        return svc.updateQuestion(question);
-    }
+   @PutMapping("/api/assessment/updatequestion/{questionId}")//tested
+    public boolean updateQuestion(@PathVariable int questionId,
+                              @RequestBody Question question) {
+    question.setId(questionId);
+    return svc.updateQuestion(question);
+}
 
-    @PutMapping("/api/assessment/updateteststatus/{testId}")
-    public boolean updateTestStatus(@PathVariable("testId")int testId, @PathVariable("status")TestStatusUpdate status){
+
+    @PutMapping("/api/assessment/updateteststatus/{testId}")//tested
+    public boolean updateTestStatus(@PathVariable("testId")int testId, @RequestBody TestStatusUpdate status){
         return svc.updateTestStatus(testId, status);
     }
 
-    @PostMapping("/api/assessment/addemployees")
-    public boolean addEmployeesToTest(@RequestBody TestAssignmentRequest request, @PathVariable("candidateTestDetails")CandidateTestDetails candidateTestDetails){
-        return svc.addEmployeesToTest(request, candidateTestDetails);
+    @PostMapping("/api/assessment/addemployees")//tested
+    public boolean addEmployeesToTest(@RequestBody TestEmployeeRequest wrapper){
+    return svc.addEmployeesToTest(wrapper.getRequest(), wrapper.getCandidateTestDetails());
+   }
 
-    }
 
-    @GetMapping("/api/assessment/alltestbyempid/{empId}")
+    @GetMapping("/api/assessment/alltestbyempid/{empId}")//tested
     public List<TestEmployeeDetails> getAllTestByEmpId(@PathVariable("empId")int empId){
         return svc.getAllTestByEmpId(empId);
     }

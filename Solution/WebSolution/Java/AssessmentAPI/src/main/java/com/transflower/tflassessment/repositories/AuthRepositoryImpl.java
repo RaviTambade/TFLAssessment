@@ -23,11 +23,6 @@ public class AuthRepositoryImpl implements AuthRepository {
             String url = props.getProperty("db.url");
             String user = props.getProperty("db.username");
             String encPass = props.getProperty("db.password"); // this
-                                                               // will
-                                                               // be
-                                                               // ENC(...)
-
-            // decrypt manually
             AES256TextEncryptor textEncryptor = new AES256TextEncryptor();
             textEncryptor.setPassword("TransFlower"); // your secret key
             String pass = textEncryptor.decrypt(encPass.replace("ENC(", "").replace(")", ""));

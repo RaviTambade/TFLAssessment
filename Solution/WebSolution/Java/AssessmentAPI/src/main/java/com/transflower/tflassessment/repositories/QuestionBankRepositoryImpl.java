@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import org.jasypt.util.text.AES256TextEncryptor;
 import org.springframework.stereotype.Repository;
 
 import com.transflower.tflassessment.entities.NewQuestion;
@@ -20,30 +21,33 @@ import com.transflower.tflassessment.entities.SubjectQuestion;
 @Repository
 public class QuestionBankRepositoryImpl implements QuestionBankRepository {
     
-    private static String url;
-    private static String username;
-    private static String password;
-    private static String driver;
-     private static Connection connection;
+    private static Connection connection;
+  static {
+        try {
+            Properties props = new Properties();
+            try (InputStream input = QuestionBankRepositoryImpl.class.getClassLoader().getResourceAsStream("application.properties")) {
+                props.load(input);
+            }
 
+            String url = props.getProperty("db.url");
+            String username = props.getProperty("db.username");
+            String encPass = props.getProperty("db.password"); 
+            AES256TextEncryptor textEncryptor = new AES256TextEncryptor();
+            textEncryptor.setPassword("TransFlower"); 
+            String pass = textEncryptor.decrypt(encPass.replace("ENC(", "").replace(")", ""));
 
-    static {
-        try (InputStream input=QuestionBankRepositoryImpl.class.getClassLoader().getResourceAsStream("application.properties")){
-            Properties props=new Properties();
-            props.load(input);
+            String driver = props.getProperty("db.driver");
 
-            url=props.getProperty("db.url");
-            username=props.getProperty("db.username");
-            password=props.getProperty("db.password");
-            driver=props.getProperty("db.driver");
             Class.forName(driver);
-            connection=DriverManager.getConnection(url,username,password);
+            connection = DriverManager.getConnection(url, username, pass);
+
+            System.out.println("Connection Established");
+        } catch (Exception e) {
+            System.out.println(e);
+            System.out.println("Error in connecting to database");
         }
-        catch(Exception e){
-            e.printStackTrace();
-        } 
-        
     }
+  
 
     @Override
     public List<QuestionTitle> getAllQuestions() {
