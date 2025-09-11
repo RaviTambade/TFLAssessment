@@ -78,14 +78,15 @@ public class CandidateAnswerRepositoryImpl implements CandidateAnswerRepository 
             PreparedStatement statement = conn.prepareStatement(query)) {
             statement.setInt(1, CandidateId);
             statement.setInt(2, TestId);
+            
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
                 CandidateAnswer answer = new CandidateAnswer();
                 // ✅ Fixed: only map what query selects
                 answer.setTestQuestionId(rs.getInt("testquestionid"));
                 answer.setAnswerKey(rs.getString("CandidateAnswer"));
-                // If CandidateAnswer has field for correct answer, you can set it here
-                // answer.setCorrectAnswer(rs.getString("CorrectAnswer"));
+                answer.setId(TestId);
+                answer.setCandidateId(CandidateId);
                 candidateAnswers.add(answer);
             }
         } catch (Exception e) {

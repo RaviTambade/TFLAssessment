@@ -27,17 +27,17 @@ public class CandidateAnswerController {
     }
 
     @GetMapping("/assessmentanswers/candidates/{candidateId}/testId/{testId}")
-    public List<CandidateAnswer> getCandidateAnswer(@PathVariable("CandidateId")int CandidateId,@PathVariable("TestId") int TestId) {
-        return svc.getCandidateAnswer(CandidateId, TestId);
+    public List<CandidateAnswer> getCandidateAnswer(@PathVariable("candidateId")int candidateId,@PathVariable("testId") int testId) {
+        return svc.getCandidateAnswer(candidateId, testId);
     }
 
-    @GetMapping("/assessmentanswers/candidates/{candidateId}/tests/{testId}/results")
+    @GetMapping("/assessmentanswers/candidates/{candidateId}/tests/{testId}/details")
 public CandidateTestDetails getCandidateTestDetails(@PathVariable("candidateId") int candidateId,@PathVariable("testId") int testId) {
     return svc.getCandidateTestDetails(candidateId,testId);
 }
 
 
-   @GetMapping("/assessmentanswers/candidates/{candidateId}/tests/{testId}/details")
+   @GetMapping("/assessmentanswers/candidates/{candidateId}/tests/{testId}/results")
 public List<CandidateAnswer> getCandidateAnswerResult(@PathVariable int candidateId,@PathVariable int testId) {
     return svc.getCandidateAnswerResult(candidateId, testId);
 }
