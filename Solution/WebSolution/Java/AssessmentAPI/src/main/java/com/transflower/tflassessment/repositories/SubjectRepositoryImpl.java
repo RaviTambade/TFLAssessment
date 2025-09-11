@@ -1,5 +1,6 @@
 package com.transflower.tflassessment.repositories;
 
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -8,33 +9,49 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.jasypt.util.text.AES256TextEncryptor;
 import org.springframework.stereotype.Repository;
 
 import com.transflower.tflassessment.entities.SubjectModel;
 
 @Repository
 public class SubjectRepositoryImpl implements SubjectRepository {
+      private static Connection connection;
 
-    private final String connectionString;
-    private final String username;
-    private final String password;
-     
-    @Autowired
-     public SubjectRepositoryImpl() {
-       this.connectionString = "jdbc:mysql://localhost:3306/assessmentdb";
-        this.username = "root";
-         this.password = "password";
-    
-     }
+    static {
+        try {
+            Properties props = new Properties();
+            try (InputStream input = SubjectRepositoryImpl.class.getClassLoader().getResourceAsStream("application.properties")) {
+                props.load(input);
+            }
+
+            String url = props.getProperty("db.url");
+            String user = props.getProperty("db.username");
+            String encPass = props.getProperty("db.password"); // this
+            AES256TextEncryptor textEncryptor = new AES256TextEncryptor();
+            textEncryptor.setPassword("TransFlower"); // your secret key
+            String pass = textEncryptor.decrypt(encPass.replace("ENC(", "").replace(")", ""));
+
+            String driver = props.getProperty("db.driver");
+
+            Class.forName(driver);
+            connection = DriverManager.getConnection(url, user, pass);
+
+            System.out.println("Connection Established");
+        } catch (Exception e) {
+            System.out.println(e);
+            System.out.println("Error in connecting to database");
+        }
+    }
        
     @Override
     public List<SubjectModel> getAllSubjects() {
         List<SubjectModel> subjects = new ArrayList<>();
         String query = "SELECT * FROM subjects";
 
-        try (Connection connection = DriverManager.getConnection(connectionString, username, password);
+        try (
              PreparedStatement statement = connection.prepareStatement(query);
              ResultSet rs = statement.executeQuery()) {
 
@@ -56,7 +73,7 @@ public class SubjectRepositoryImpl implements SubjectRepository {
     public int addSubject(SubjectModel subject) {
         String query = "INSERT INTO subjects (title) VALUES (?)";
 
-        try (Connection connection = DriverManager.getConnection(connectionString, username, password);
+        try (
              PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
 
             statement.setString(1, subject.getTitle());
@@ -81,7 +98,7 @@ public class SubjectRepositoryImpl implements SubjectRepository {
     public int deleteSubject(int subjectId) {
         String query = "DELETE FROM subjects WHERE id = ?";
 
-        try (Connection connection = DriverManager.getConnection(connectionString, username, password);
+        try (
              PreparedStatement statement = connection.prepareStatement(query)) {
 
             statement.setInt(1, subjectId);
@@ -93,30 +110,4 @@ public class SubjectRepositoryImpl implements SubjectRepository {
         }
     }
 
-    //Main Method For Testing
-
-    // public static void main( String[] args )
-    // {
-    //     String connectionString = "jdbc:mysql://localhost:3306/assessmentdb";
-    //     String username = "root";
-    //     String password = "password";
-
-    //     SubjectRepositoryImpl repo = new SubjectRepositoryImpl(connectionString, username, password);
-
-    //     // Get all subjects
-    //     List<SubjectModel> subjects = repo.getAllSubjects();
-    //     System.out.println("All subjects:");
-    //     for (SubjectModel s : subjects) {
-    //         System.out.println(s);
-    //     }
-
-    //     // Add subject
-    //     SubjectModel newSubject = new SubjectModel(9, "OOPS");
-    //     int newId = repo.addSubject(newSubject);
-    //     System.out.println("Inserted subject with id: " + newId);
-
-    //     // Delete subject
-    //     int deleted = repo.deleteSubject(11);
-    //     System.out.println("Deleted rows: " + deleted);
-    // }
 }
