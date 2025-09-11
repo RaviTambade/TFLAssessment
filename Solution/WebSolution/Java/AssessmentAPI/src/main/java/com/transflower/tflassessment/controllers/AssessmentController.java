@@ -39,42 +39,42 @@ public class AssessmentController {
     @Autowired
     private AssessmentService svc;
 
-    @GetMapping("/api/assessment/{id}")
+    @GetMapping("/api/assessment/{id}")//tested
     public Assessment getDetails (@PathVariable("id")int id){
         return svc.getDetails(id);
     }
 
-    @GetMapping("/api/assessment/creationdate/fromDate/{fromDate}/toDate/{toDate}")
+    @GetMapping("/api/assessment/creationdate/fromDate/{fromDate}/toDate/{toDate}")//tested
     public List<Assessment> getAll(@PathVariable ("fromDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDateTime fromDate, @PathVariable("toDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDateTime toDate){
         return svc.getAll(fromDate, toDate);
     }
 
-    @GetMapping("/api/assessment/assessments")
+    @GetMapping("/api/assessment/assessments")//tested
     public List<Assessment> getAllTests(){
         return svc.getAllTests();
     }
 
-    @GetMapping("/api/assessment/employees")
+    @GetMapping("/api/assessment/employees")//tested
     public List<Employee> getAllEmployees(){
         return svc.getAllEmployees();
     }
 
-    @GetMapping("/api/assessment/employee/{userId}")
+    @GetMapping("/api/assessment/employee/{userId}")//tested
     public Employee getEmployeeById (@PathVariable("userId")int userId){
         return svc.getEmployeeById(userId);
     }
 
-    @GetMapping("/api/assessment/subjects")
+    @GetMapping("/api/assessment/subjects")//tested
     public List<Subject> getAllSubjects(){
         return svc.getAllSubjects();
     }
 
-    @GetMapping("/api/assessment/criterias")
+    @GetMapping("/api/assessment/criterias")//tested
     public List<EvaluationCriteria> getEvaluationCriterias(){
         return svc.getEvaluationCriterias();
     }
 
-    @GetMapping("/api/assessment/criterias/subjects/{subjectId}")
+    @GetMapping("/api/assessment/criterias/subjects/{subjectId}")//tested
     public List<EvaluationCriteria> getEvaluationCriteriasBySubject(@PathVariable("subjectId")int subjectId){
         return svc.getEvaluationCriteriasBySubject(subjectId);
     }
@@ -84,32 +84,32 @@ public class AssessmentController {
         return svc.getAllBySubjectMatterExpert(smeId);
     }
 
-    @PostMapping("/api/assessment/createtest")
+    @PostMapping("/api/assessment/createtest")//tested
     public boolean createTest(@PathVariable("request")CreateTestRequest request){
         return svc.createTest(request);
     }
 
-    @PostMapping("/api/assessment/addquestion/assessments/{assessmentId}/questions/{questionId}")
+    @PostMapping("/api/assessment/addquestion/assessments/{assessmentId}/questions/{questionId}")//tested
     public boolean addQuestion(@PathVariable("assessmentId")int assessmentId, @PathVariable("questionId")int questionId){
         return svc.addQuestion(assessmentId, questionId);
     }
 
-    @PostMapping("/api/assessment/addmultiplequestions/assessments/{assessmentId}")
+    @PostMapping("/api/assessment/addmultiplequestions/assessments/{assessmentId}")//tested
         public boolean addQuestions(@PathVariable("assessmentId")int assessmentId, @PathVariable("questions")List<QuestionBank> questions){
             return svc.addQuestions(assessmentId, questions);
         }
 
-    @DeleteMapping("/api/assessment/{assessmentId}/questions/{questionId}")
+    @DeleteMapping("/api/assessment/{assessmentId}/questions/{questionId}")//tested
     public boolean removeQuestion(@PathVariable("assessmentId")int assessmentId,@PathVariable("questionId")int questionId){
         return svc.removeQuestion(assessmentId, questionId);
     }
 
-    @PutMapping("/api/assessment/{assessmentId}/duration/{duration}")
+    @PutMapping("/api/assessment/{assessmentId}/duration/{duration}")//tested
     public boolean changeDuration(@PathVariable("assessmentId")int assessmentId, @PathVariable("duration")String duration){
         return svc.changeDuration(assessmentId, duration);
     }
 
-    @PutMapping("/api/assessment/{assessmentId}/reschedule/{date}")
+    @PutMapping("/api/assessment/{assessmentId}/reschedule/{date}")//tested
     public boolean reschedule(@PathVariable("assessmentId")int assessmentId,@PathVariable("date") Date date){
         return svc.reschedule(assessmentId, date);
     }
@@ -120,17 +120,17 @@ public class AssessmentController {
         return svc.removeQuestions(testQuestions);
     }
 
-    @PostMapping("/api/assessment/addtest")
+    @PostMapping("/api/assessment/addtest")//tested
     public int createTestWithQuestions(@RequestBody CreateTestWithQuestions createTestWithQuestions){
         return svc.createTestWithQuestions(createTestWithQuestions);
     }
 
-    @GetMapping("/api/assessment/allquestionsbysubject/{subjectId}")
+    @GetMapping("/api/assessment/allquestionsbysubject/{subjectId}")//tested
     public List<SubjectQuestion> getAllQuestionsBySubject(@PathVariable("subjectId")int subjectId){
         return svc.getAllQuestionsBySubject(subjectId);
     }
 
-    @GetMapping("/api/assessment/getsme/{subjectId}")
+    @GetMapping("/api/assessment/getsme/{subjectId}")//tested
      public List<Employee> getSmeBySubject(@PathVariable("subjectId")int subjectId){
         return svc.getSmeBySubject(subjectId);
      }

@@ -745,12 +745,8 @@ public class AssessmentRepositoryImpl implements AssessmentRepository {
         }
         return status;
     }
-
-
     @Override
     public boolean reschedule(int assessmentId, Date date) {
-                     
-          
         String query =  "UPDATE tests JOIN subjects ON tests.subjectid = subjects.id SET tests.scheduleddate = ? WHERE tests.id = ?";
 
          try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
