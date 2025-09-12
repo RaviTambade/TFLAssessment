@@ -3,13 +3,16 @@ package com.transflower.tflassessment.services;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import com.transflower.tflassessment.entities.InterviewCandidateDetails;
 import com.transflower.tflassessment.entities.InterviewDetails;
 import com.transflower.tflassessment.repositories.InterviewRepository;
+
 @Service
 public class InterviewServiceImpl  implements InterviewService{
 
@@ -19,44 +22,53 @@ public class InterviewServiceImpl  implements InterviewService{
     {
         _repo=repo;
     }
+    
     @Override
-    public List<InterviewCandidateDetails> getAllInterviewCandidates() {
-        return _repo.getAllInterviewCandidates();
+    @Async("asyncExecutor")
+    public CompletableFuture<List<InterviewCandidateDetails>> getAllInterviewCandidates() {
+        return  CompletableFuture.completedFuture(_repo.getAllInterviewCandidates());
     }
 
     @Override
-    public List<InterviewCandidateDetails> getInterviewedCandidatesSubjects(int candidateId) {
-       return _repo.getInterviewedCandidatesSubjects(candidateId);
+    @Async("asyncExecutor")
+    public CompletableFuture<List<InterviewCandidateDetails>> getInterviewedCandidatesSubjects(int candidateId) {
+       return CompletableFuture.completedFuture(_repo.getInterviewedCandidatesSubjects(candidateId));
     }
 
     @Override
-    public InterviewDetails getInterviewDetails(int interviewId) {
-        return _repo.getInterviewDetails(interviewId);
+    @Async("asyncExecutor")
+    public CompletableFuture<InterviewDetails> getInterviewDetails(int interviewId) {
+        return CompletableFuture.completedFuture(_repo.getInterviewDetails(interviewId));
     }
 
     @Override
-    public boolean rescheduleInterview(int interviewId, LocalDate date) {
-       return _repo.rescheduleInterview(interviewId, date);
+    @Async("asyncExecutor")
+    public CompletableFuture<Boolean> rescheduleInterview(int interviewId, LocalDate date) {
+       return CompletableFuture.completedFuture(_repo.rescheduleInterview(interviewId, date));
     }
 
     @Override
-    public boolean rescheduleInterview(int interviewId, LocalTime time) {
-       return _repo.rescheduleInterview(interviewId, time);
+    @Async("asyncExecutor")
+    public CompletableFuture<Boolean> rescheduleInterview(int interviewId, LocalTime time) {
+       return CompletableFuture.completedFuture( _repo.rescheduleInterview(interviewId, time));
     }
 
     @Override
-    public boolean rescheduleInterview(int interviewId, LocalTime time, LocalDate date) {
-       return _repo.rescheduleInterview(interviewId, time,date);
+    @Async("asyncExecutor")
+    public  CompletableFuture<Boolean> rescheduleInterview(int interviewId, LocalTime time, LocalDate date) {
+       return CompletableFuture.completedFuture(_repo.rescheduleInterview(interviewId, time,date));
     }
 
     @Override
-    public boolean changeInterviewer(int interviewId, int smeId) {
-       return _repo.changeInterviewer(interviewId, smeId);
+    @Async("asyncExecutor")
+    public CompletableFuture<Boolean> changeInterviewer(int interviewId, int smeId) {
+       return CompletableFuture.completedFuture(_repo.changeInterviewer(interviewId, smeId));
     }
 
     @Override
-    public boolean cancelInterview(int interviewId) {
-        return _repo.cancelInterview(interviewId);
+    @Async("asyncExecutor")
+    public CompletableFuture<Boolean> cancelInterview(int interviewId) {
+        return CompletableFuture.completedFuture(_repo.cancelInterview(interviewId));
     }
     
 }

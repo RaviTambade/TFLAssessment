@@ -3,6 +3,7 @@ package com.transflower.tflassessment.controllers;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -24,44 +25,44 @@ public class InterviewController {
     private InterviewService svc;
 
     @GetMapping("/details")
-    public List<InterviewCandidateDetails> getAllInterviewCandidates() {
+    public CompletableFuture<List<InterviewCandidateDetails>> getAllInterviewCandidates() {
         return svc.getAllInterviewCandidates();
     }
 
     @GetMapping("/candidate/{candidateId}")
-    public List<InterviewCandidateDetails> getInterviewedCandidatesSubjects(@PathVariable int candidateId) {
+    public CompletableFuture<List<InterviewCandidateDetails>> getInterviewedCandidatesSubjects(@PathVariable int candidateId) {
        return svc.getInterviewedCandidatesSubjects(candidateId);
     }
 
     @GetMapping("/{interviewId}")
-    public InterviewDetails getInterviewDetails(@PathVariable int interviewId) {
+    public CompletableFuture<InterviewDetails> getInterviewDetails(@PathVariable int interviewId) {
         return svc.getInterviewDetails(interviewId);
     }
 
     @PutMapping("/{interviewId}/date/{date}")
-    public boolean rescheduleInterview(@PathVariable int interviewId, @PathVariable LocalDate date) {
+    public CompletableFuture<Boolean> rescheduleInterview(@PathVariable int interviewId, @PathVariable LocalDate date) {
        return svc.rescheduleInterview(interviewId, date);
     }
 
     @PutMapping("/{interviewId}/time/{time}")
-    public boolean rescheduleInterview(@PathVariable int interviewId, @PathVariable LocalTime time) {
+    public CompletableFuture<Boolean> rescheduleInterview(@PathVariable int interviewId, @PathVariable LocalTime time) {
        return svc.rescheduleInterview(interviewId, time);
     }
 
     @PutMapping("/{interviewId}/time/{time}/date/{date}")
-    public boolean rescheduleInterview(@PathVariable("interviewId") int interviewId,
+    public CompletableFuture<Boolean> rescheduleInterview(@PathVariable("interviewId") int interviewId,
                                        @PathVariable ("time")LocalTime time,
                                        @PathVariable ("date") LocalDate date) {
        return svc.rescheduleInterview(interviewId, time, date);
     }
 
     @PutMapping("/{interviewId}/subjectexperts/{smeId}")
-    public boolean changeInterviewer(@PathVariable int interviewId, @PathVariable int smeId) {
+    public CompletableFuture<Boolean> changeInterviewer(@PathVariable int interviewId, @PathVariable int smeId) {
        return svc.changeInterviewer(interviewId, smeId);
     }
 
     @DeleteMapping("/{interviewId}")
-    public boolean cancelInterview(@PathVariable int interviewId) {
+    public CompletableFuture<Boolean> cancelInterview(@PathVariable int interviewId) {
         return svc.cancelInterview(interviewId);
     }
 }
