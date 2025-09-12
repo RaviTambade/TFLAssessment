@@ -1,6 +1,7 @@
 package com.transflower.tflassessment.controllers;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,25 +22,35 @@ public class CandidateAnswerController {
     @Autowired
     private CandidateAnswerService svc;
 
+    // Insert candidate answers asynchronously
     @PostMapping("/assessmentanswers/candidates/{candidateId}")
-    public boolean insertCandidateAnswers(@PathVariable("candidateId")int candidateId,@RequestBody List<CandidateAnswer> answers) {
+    public CompletableFuture<Boolean> insertCandidateAnswers(
+            @PathVariable("candidateId") int candidateId,
+            @RequestBody List<CandidateAnswer> answers) {
         return svc.insertCandidateAnswer(candidateId, answers);
     }
 
+    // Fetch candidate answers asynchronously
     @GetMapping("/assessmentanswers/candidates/{candidateId}/testId/{testId}")
-    public List<CandidateAnswer> getCandidateAnswer(@PathVariable("candidateId")int candidateId,@PathVariable("testId") int testId) {
+    public CompletableFuture<List<CandidateAnswer>> getCandidateAnswer(
+            @PathVariable("candidateId") int candidateId,
+            @PathVariable("testId") int testId) {
         return svc.getCandidateAnswer(candidateId, testId);
     }
 
+    // Fetch candidate test details asynchronously
     @GetMapping("/assessmentanswers/candidates/{candidateId}/tests/{testId}/details")
-public CandidateTestDetails getCandidateTestDetails(@PathVariable("candidateId") int candidateId,@PathVariable("testId") int testId) {
-    return svc.getCandidateTestDetails(candidateId,testId);
-}
+    public CompletableFuture<CandidateTestDetails> getCandidateTestDetails(
+            @PathVariable("candidateId") int candidateId,
+            @PathVariable("testId") int testId) {
+        return svc.getCandidateTestDetails(candidateId, testId);
+    }
 
-
-   @GetMapping("/assessmentanswers/candidates/{candidateId}/tests/{testId}/results")
-public List<CandidateAnswer> getCandidateAnswerResult(@PathVariable int candidateId,@PathVariable int testId) {
-    return svc.getCandidateAnswerResult(candidateId, testId);
-}
-
+    // Fetch candidate answer results asynchronously
+    @GetMapping("/assessmentanswers/candidates/{candidateId}/tests/{testId}/results")
+    public CompletableFuture<CompletableFuture<List<CandidateAnswer>>> getCandidateAnswerResult(
+            @PathVariable int candidateId,
+            @PathVariable int testId) {
+        return CompletableFuture.supplyAsync(() -> svc.getCandidateAnswerResult(candidateId, testId));
+    }
 }
