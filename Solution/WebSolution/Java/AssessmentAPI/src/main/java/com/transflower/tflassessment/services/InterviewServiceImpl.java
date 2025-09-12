@@ -26,49 +26,49 @@ public class InterviewServiceImpl  implements InterviewService{
     @Override
     @Async("asyncExecutor")
     public CompletableFuture<List<InterviewCandidateDetails>> getAllInterviewCandidates() {
-        return  CompletableFuture.completedFuture(_repo.getAllInterviewCandidates());
+        return  CompletableFuture.supplyAsync(()->_repo.getAllInterviewCandidates());
     }
 
     @Override
     @Async("asyncExecutor")
     public CompletableFuture<List<InterviewCandidateDetails>> getInterviewedCandidatesSubjects(int candidateId) {
-       return CompletableFuture.completedFuture(_repo.getInterviewedCandidatesSubjects(candidateId));
+       return CompletableFuture.supplyAsync(()->_repo.getInterviewedCandidatesSubjects(candidateId));
     }
 
     @Override
     @Async("asyncExecutor")
     public CompletableFuture<InterviewDetails> getInterviewDetails(int interviewId) {
-        return CompletableFuture.completedFuture(_repo.getInterviewDetails(interviewId));
+        return CompletableFuture.supplyAsync(()->_repo.getInterviewDetails(interviewId));
     }
 
     @Override
     @Async("asyncExecutor")
     public CompletableFuture<Boolean> rescheduleInterview(int interviewId, LocalDate date) {
-       return CompletableFuture.completedFuture(_repo.rescheduleInterview(interviewId, date));
+       return CompletableFuture.supplyAsync(()->_repo.rescheduleInterview(interviewId, date));
     }
 
     @Override
     @Async("asyncExecutor")
     public CompletableFuture<Boolean> rescheduleInterview(int interviewId, LocalTime time) {
-       return CompletableFuture.completedFuture( _repo.rescheduleInterview(interviewId, time));
+       return CompletableFuture.supplyAsync(()-> _repo.rescheduleInterview(interviewId, time));
     }
 
     @Override
     @Async("asyncExecutor")
     public  CompletableFuture<Boolean> rescheduleInterview(int interviewId, LocalTime time, LocalDate date) {
-       return CompletableFuture.completedFuture(_repo.rescheduleInterview(interviewId, time,date));
+       return CompletableFuture.supplyAsync(()->_repo.rescheduleInterview(interviewId, time,date));
     }
 
     @Override
     @Async("asyncExecutor")
     public CompletableFuture<Boolean> changeInterviewer(int interviewId, int smeId) {
-       return CompletableFuture.completedFuture(_repo.changeInterviewer(interviewId, smeId));
+       return CompletableFuture.supplyAsync(()->_repo.changeInterviewer(interviewId, smeId));
     }
 
     @Override
     @Async("asyncExecutor")
     public CompletableFuture<Boolean> cancelInterview(int interviewId) {
-        return CompletableFuture.completedFuture(_repo.cancelInterview(interviewId));
+        return CompletableFuture.supplyAsync(()->_repo.cancelInterview(interviewId));
     }
     
 }
