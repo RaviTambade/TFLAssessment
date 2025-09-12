@@ -1,21 +1,27 @@
 package com.transflower.tflassessment.services;
 
+import java.util.concurrent.CompletableFuture;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import com.transflower.tflassessment.entities.User;
 import com.transflower.tflassessment.repositories.AuthRepository;
+
 @Service
 public class AuthServiceImpl implements AuthService {
-    private final AuthRepository _repo;
+
+    private final AuthRepository repository;
+
     @Autowired
-    public AuthServiceImpl(AuthRepository repo)
-    {
-        _repo=repo;
+    public AuthServiceImpl(AuthRepository repository) {
+        this.repository = repository;
     }
+
     @Override
-    public User getUserWithRolesByEmail(String email, String password) {
-        return _repo.getUserWithRolesByEmail(email, password);
+    @Async("asyncExecutor")
+    public CompletableFuture<User> getUserWithRolesByEmail(String email, String password) {
+        return CompletableFuture.completedFuture(repository.getUserWithRolesByEmail(email, password));
     }
-    
 }
