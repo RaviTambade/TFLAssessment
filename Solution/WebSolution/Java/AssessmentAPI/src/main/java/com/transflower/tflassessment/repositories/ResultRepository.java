@@ -45,4 +45,6 @@ public interface ResultRepository {
     List<TestAverageReport> getTestAverageReport(int testId);
 
     List<TestScoreDto> getCandidateAllScore(int candidateId);
+
+    boolean setCandidateTestResultDetails(int candidateId, int testId);
 }
