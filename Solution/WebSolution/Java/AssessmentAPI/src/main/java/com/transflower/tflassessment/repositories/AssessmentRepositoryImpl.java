@@ -54,6 +54,7 @@ public class AssessmentRepositoryImpl implements AssessmentRepository {
             String pass = textEncryptor.decrypt(enpass.replace("ENC(", "").replace(")", ""));
             // ix3jGci+cQ5VXBXcnfDeGfETyVy1yWkUxsdJPXiPt/x2J+3B079VBAJnSj6TeDWv
             String driver = props.getProperty("db.driver");
+
             Class.forName(driver);
             connection = DriverManager.getConnection(url, user, pass);
 
