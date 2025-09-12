@@ -1,16 +1,18 @@
 package com.transflower.tflassessment.services;
 
+import java.util.concurrent.CompletableFuture;
+
 import org.springframework.stereotype.Service;
 
 import com.transflower.tflassessment.entities.EvaluationCriteria;
-@Service
 
+@Service
 public interface  EvaluationCriteriaService {
      
-    public boolean updateSubject(int id, int subjectId);
+    public CompletableFuture<Boolean> updateSubject(int id, int subjectId);
  
-    public boolean insertCriteria(EvaluationCriteria ec);
+    public CompletableFuture<Boolean> insertCriteria(EvaluationCriteria ec);
 
-    public boolean updateCriteria(int EvaluationCriteriaId, int subjectId);
+    public CompletableFuture<Boolean> updateCriteria(int EvaluationCriteriaId, int subjectId);
 
 }
