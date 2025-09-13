@@ -65,6 +65,7 @@ public class QuestionBankRepositoryImpl implements QuestionBankRepository {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            System.out.println("Exception handled");
         }
         return questions;
     }
@@ -93,6 +94,7 @@ public class QuestionBankRepositoryImpl implements QuestionBankRepository {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            System.out.println("Exception handled");
         }
 
         return questions;
@@ -122,6 +124,7 @@ public class QuestionBankRepositoryImpl implements QuestionBankRepository {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            System.out.println("Exception handled");
         }
 
         return questions;
@@ -149,6 +152,7 @@ public class QuestionBankRepositoryImpl implements QuestionBankRepository {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            System.out.println("Exception handled");
         }
 
         return questions;
