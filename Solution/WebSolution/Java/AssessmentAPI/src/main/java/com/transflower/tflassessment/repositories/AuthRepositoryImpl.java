@@ -1,32 +1,44 @@
 package com.transflower.tflassessment.repositories;
 
+import java.io.InputStream;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
+import org.jasypt.util.text.AES256TextEncryptor;
 import org.springframework.stereotype.Repository;
 
 import com.transflower.tflassessment.entities.*;
 @Repository
 public class AuthRepositoryImpl implements AuthRepository {
-  Connection connection;
-  Statement statement;
+  private static Connection connection;
+  static {
+        try {
+            Properties props = new Properties();
+            try (InputStream input = AuthRepositoryImpl.class.getClassLoader().getResourceAsStream("application.properties")) {
+                props.load(input);
+            }
 
-  public  AuthRepositoryImpl() {
-    try {
-      String URL = "jdbc:mysql://localhost:3306/assessmentdb";
-      String UserName = "root";
-      String Password = "password";
-      // Class.forName("com.mysql.cj.jdbc.Driver");
-      // System.out.println("Driver Loaded");
-      connection = DriverManager.getConnection(URL, UserName, Password);
-      System.out.println("Connection Established");
-    } catch (Exception e) {
-      System.out.println(e);
-      System.out.println("Connection Failed");
+            String url = props.getProperty("db.url");
+            String user = props.getProperty("db.username");
+            String encPass = props.getProperty("db.password"); // this
+            AES256TextEncryptor textEncryptor = new AES256TextEncryptor();
+            textEncryptor.setPassword("TransFlower"); // your secret key
+            String pass = textEncryptor.decrypt(encPass.replace("ENC(", "").replace(")", ""));
+
+            String driver = props.getProperty("db.driver");
+
+            Class.forName(driver);
+            connection = DriverManager.getConnection(url, user, pass);
+
+            System.out.println("Connection Established");
+        } catch (Exception e) {
+            System.out.println(e);
+            System.out.println("Error in connecting to database");
+        }
     }
-  }
-
+  
   @Override
   public User getUserWithRolesByEmail(String email, String password) {
     User user = new User();
@@ -40,7 +52,7 @@ public class AuthRepositoryImpl implements AuthRepository {
           "LEFT JOIN roles r ON ur.roleid = r.id " +
           "WHERE u.email = '" + email + "'";
 
-      statement = connection.createStatement();
+     Statement statement = connection.createStatement();
       ResultSet resultSet = statement.executeQuery(selectQuery);
     
       while (resultSet.next()) {
@@ -90,32 +102,6 @@ public class AuthRepositoryImpl implements AuthRepository {
   }
 
 
-    public static void main(String[] args) {
-        // Create the repository (connects to DB in the constructor)
-        AuthRepositoryImpl repo = new AuthRepositoryImpl();
-
-        // Replace these with actual test values from your database
-        String testEmail = "kajal.ghule@example.com";
-        String testPassword = "12345";
-
-        // Fetch user with roles
-        User user = repo.getUserWithRolesByEmail(testEmail, testPassword);
-
-        // Display the retrieved user details
-        if (user != null) {
-            System.out.println("User ID: " + user.getId());
-            System.out.println("Aadhar ID: " + user.getAadharId());
-            System.out.println("First Name: " + user.getFirstName());
-            System.out.println("Last Name: " + user.getLastName());
-            System.out.println("Email: " + user.getEmail());
-            System.out.println("Contact Number: " + user.getContactNumber());
-            System.out.println("Password: " + user.getPassword());
-            System.out.println("Roles: " +user.getUserRoles());
-        } else {
-            System.out.println("No user found for the given email and password.");
-        }
-    }
-
-  }
+}
 
   

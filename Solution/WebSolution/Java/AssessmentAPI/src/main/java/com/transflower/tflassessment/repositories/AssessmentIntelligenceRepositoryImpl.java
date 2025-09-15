@@ -1,32 +1,48 @@
 package com.transflower.tflassessment.repositories;
 
-import java.util.*;
+import java.io.InputStream;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Properties;
 
+import org.jasypt.util.text.AES256TextEncryptor;
 import org.springframework.stereotype.Repository;
 
-import java.sql.*;
 import com.transflower.tflassessment.entities.AnnualCandidateResult;
-import com.transflower.tflassessment.entities.Question;
 @Repository
 public class AssessmentIntelligenceRepositoryImpl implements AssessmentIntelligenceRepository {
 
-    private List<AnnualCandidateResult> annualCandidateResults;
-    Connection connection;
-    public AssessmentIntelligenceRepositoryImpl() {
-            
+    private static Connection connection;
+  static {
         try {
-            String URL = "jdbc:mysql://localhost:3306/assessmentdb";
-            String Username = "root";
-            String Password = "password";
-            connection = DriverManager.getConnection(URL, Username, Password);
+            Properties props = new Properties();
+            try (InputStream input = AssessmentIntelligenceRepositoryImpl.class.getClassLoader().getResourceAsStream("application.properties")) {
+                props.load(input);
+            }
+
+            String url = props.getProperty("db.url");
+            String username = props.getProperty("db.username");
+            String encPass = props.getProperty("db.password"); 
+            AES256TextEncryptor textEncryptor = new AES256TextEncryptor();
+            textEncryptor.setPassword("TransFlower"); 
+            String pass = textEncryptor.decrypt(encPass.replace("ENC(", "").replace(")", ""));
+
+            String driver = props.getProperty("db.driver");
+
+            Class.forName(driver);
+            connection = DriverManager.getConnection(url, username, pass);
 
             System.out.println("Connection Established");
         } catch (Exception e) {
             System.out.println(e);
-            System.out.println("Connection Falied");
+            System.out.println("Error in connecting to database");
         }
     }
-
+  
     @Override
     public List<AnnualCandidateResult> getCandidateResults(int candidateId, int year) {
     
@@ -48,6 +64,7 @@ public class AssessmentIntelligenceRepositoryImpl implements AssessmentIntellige
                     AnnualCandidateResult  obj= new AnnualCandidateResult();
                     obj.setScore(result.getInt("score"));
                     obj.setCandidateId(result.getInt("id"));
+                    obj.setSubjectTitle(result.getString("title"));
                     results.add(obj);
                 }
             }
@@ -58,16 +75,7 @@ public class AssessmentIntelligenceRepositoryImpl implements AssessmentIntellige
     }
 
 
-    public static void main(String [] args)
-    {
-         // ================= AssessmentIntelligenceRepository =================
-        AssessmentIntelligenceRepositoryImpl intelligenceRepo = new AssessmentIntelligenceRepositoryImpl();
-        List<AnnualCandidateResult> results = intelligenceRepo.getCandidateResults(2, 2015);
-        for (AnnualCandidateResult result : results)
-         {
-            System.out.println("Candidate ID: " + result.getCandidateId() + " Score: " + result.getScore());
-        }
-    }
+    
 }
 
 

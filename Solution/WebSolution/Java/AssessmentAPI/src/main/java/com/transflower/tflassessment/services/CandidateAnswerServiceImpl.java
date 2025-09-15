@@ -29,8 +29,8 @@ public class CandidateAnswerServiceImpl implements CandidateAnswerService {
     }
 
     @Override
-    public CandidateTestDetails CandidateTestDetails(int CandidateId, int TestId) {
-        return CandidateTestDetails(CandidateId, TestId);
+    public CandidateTestDetails getCandidateTestDetails(int CandidateId, int TestId) {
+        return _repo.getCandidateTestDetails(CandidateId, TestId);
     }
 
     @Override

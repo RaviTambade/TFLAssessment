@@ -97,6 +97,7 @@ namespace AssessmentLib.Repositories.Implementation
             {
                 await connection.CloseAsync();
             }
+            return status;
         }
     }
 }

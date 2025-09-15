@@ -25,8 +25,8 @@ public class EvaluationCriteriaserviceImpl implements EvaluationCriteriaService 
     }
 
     @Override
-    public boolean updateSubject(int id, int subjectId) {
-        return _repo.updateSubject(id, subjectId);
+    public boolean updateSubject(int id, int evaluationCriteriaId) {
+        return _repo.updateSubject(id, evaluationCriteriaId);
     }
 
 }

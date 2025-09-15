@@ -61,7 +61,9 @@ namespace AssessmentLib.Services.Implementation
          return await _repository.GetString(subject, QuestionId);
         }
 
-
-
+        public Task<string> GetCriteria(string subjectId, int questionId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

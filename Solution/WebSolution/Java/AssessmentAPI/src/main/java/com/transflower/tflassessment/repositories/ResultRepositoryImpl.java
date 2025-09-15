@@ -1,12 +1,17 @@
 package com.transflower.tflassessment.repositories;
 
+import java.io.InputStream;
 import java.sql.*;
 
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
+import javax.naming.spi.DirStateFactory.Result;
+
+import org.jasypt.util.text.AES256TextEncryptor;
 import org.springframework.stereotype.Repository;
 
 import com.transflower.tflassessment.entities.AppearedCandidate;
@@ -23,19 +28,28 @@ import com.transflower.tflassessment.entities.TestScoreDto;
 @Repository
 public class ResultRepositoryImpl implements ResultRepository {
 
-    Connection connection;
-    public ResultRepositoryImpl()
-    {
-        try
-        {
-            String url="jdbc:mysql://localhost:3306/assessmentdb";
-            String userName="root";
-            String password="password";
-            connection=DriverManager.getConnection(url, userName, password);
+      private static Connection connection;
+  static {
+        try {
+            Properties props = new Properties();
+            try (InputStream input = ResultRepositoryImpl.class.getClassLoader().getResourceAsStream("application.properties")) {
+                props.load(input);
+            }
+
+            String url = props.getProperty("db.url");
+            String username = props.getProperty("db.username");
+            String encPass = props.getProperty("db.password"); 
+            AES256TextEncryptor textEncryptor = new AES256TextEncryptor();
+            textEncryptor.setPassword("TransFlower"); 
+            String pass = textEncryptor.decrypt(encPass.replace("ENC(", "").replace(")", ""));
+
+            String driver = props.getProperty("db.driver");
+
+            Class.forName(driver);
+            connection = DriverManager.getConnection(url, username, pass);
+
             System.out.println("Connection Established");
-        }
-        catch(Exception e)
-        {
+        } catch (Exception e) {
             System.out.println(e);
             System.out.println("Error in connecting to database");
         }
@@ -183,8 +197,7 @@ public class ResultRepositoryImpl implements ResultRepository {
 
     @Override
     public List<AppearedCandidate> getAppearedCandidates(int testId) {
-    
-        List<AppearedCandidate> appearedCandidates = new ArrayList<AppearedCandidate>();
+      List<AppearedCandidate> appearedCandidates = new ArrayList<AppearedCandidate>();
         String query = "select candidatetestresults.testid, candidatetestresults.candidateid, employees.firstname, employees.lastname"
                         +" from candidatetestresults" 
                         + " join employees on employees.id= candidatetestresults.candidateid"
@@ -308,7 +321,7 @@ public boolean setPassingLevel(int testId, int passingLevel) {
 }
 
 
-public List<CandidateSubjectResults> getCandidateSubjectResults(int candidateId) {
+public List<CandidateSubjectResults> getCandidateSubjectResults(int subjectId) {
     List<CandidateSubjectResults> candidateSubjectResults = new ArrayList<>();
     String query = "SELECT Test.id, s.title AS subject, cs.score"
                    + "FROM candidatesubjectresults cs "
@@ -316,11 +329,11 @@ public List<CandidateSubjectResults> getCandidateSubjectResults(int candidateId)
                    + "WHERE cs.candidateid = ?";
     try {
         PreparedStatement preparedStatement = connection.prepareStatement(query);
-        preparedStatement.setInt(1, candidateId);
+        preparedStatement.setInt(1, subjectId);
         ResultSet resultSet = preparedStatement.executeQuery();
         while (resultSet.next()) {
             CandidateSubjectResults result = new CandidateSubjectResults();
-            result.setCandidateId(resultSet.getInt("candidateid"));
+            result.setCandidateId(resultSet.getInt("subjectId"));
             result.setTestId( resultSet.getInt("id"));
               result.setScore(resultSet.getInt("score"));
             candidateSubjectResults.add(result);
@@ -354,67 +367,125 @@ public List<Subject> getAllSubjects(int subjectId) {
 
 @Override
 public List<TestAverageReport> getTestAverageReport(int testId) {
-        List<TestAverageReport> averageReports = new ArrayList<>();
-        String query = "SELECT t.id AS testId, t.name AS testName, AVG(cr.score) AS averageScore "
-                           +"FROM tests t "
-                            + "JOIN candidatetestresults cr ON t.id = cr.testid "
-                            + "WHERE t.id = ? "
-                            + "GROUP BY t.id, t.name";
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setInt(1, testId);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
+    List<TestAverageReport> averageReports = new ArrayList<>();
+    String query = "{CALL spgetaveragereportbytestid(?)}";
+try(
+         CallableStatement stmt = connection.prepareCall(query)) {
+
+        stmt.setInt(1, testId);
+
+        try (ResultSet rs = stmt.executeQuery()) {
+            while (rs.next()) {
                 TestAverageReport report = new TestAverageReport();
-                report.setSubjectName(resultSet.getString("testName"));
-                report.setCorrectAnswer(resultSet.getInt("correctAnswer"));
+
+                report.setSubjectName(rs.getString("subjectname"));
+                report.setEvaluationCriteria(rs.getString("evaluationcriteria"));
+                report.setTotalQuestionAnswered(rs.getInt("totalquestionsanswered"));
+                report.setCorrectAnswer(rs.getInt("correctanswers"));
+                report.setPercentageCorrect(rs.getDouble("percentagecorrect"));
 
                 averageReports.add(report);
             }
-        } catch (Exception e) {
-            System.out.println(e);
         }
-        return averageReports;
+
+    } catch (SQLException e) {
+        e.printStackTrace(); 
     }
+
+    return averageReports;
+}
 
 
     @Override
-    public List<TestScoreDto> getCandidateAllScore(int candidateId) {
-        List<TestScoreDto> testScores = new ArrayList<>();
-        String query = "SELECT t.id AS testId, t.name AS testName, cr.score "
-                       + "FROM tests t "
-                       + "JOIN candidatetestresults cr ON t.id = cr.testid "
-                       + "WHERE cr.candidateid = ?";
+public List<CandidateSubjectResults> getSubjectResultDetails(int subjectId) {
+    List<CandidateSubjectResults> subjectResults = new ArrayList<>();
+    String query = "SELECT cs.candidateid, e.firstname, e.lastname, cs.testid, cs.subjectid, cs.score, s.title AS subject " +
+                   "FROM candidatesubjectresults cs " +
+                   "JOIN employees e ON cs.candidateid = e.id " +
+                   "JOIN subjects s ON cs.subjectid = s.id " +
+                   "WHERE cs.subjectid = ?";
+
+    try {
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setInt(1, subjectId);
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        while (resultSet.next()) {
+            CandidateSubjectResults result = new CandidateSubjectResults();
+            result.setCandidateId(resultSet.getInt("candidateid"));
+            result.setTestId(resultSet.getInt("testid"));
+            result.setSubjectId(resultSet.getInt("subjectid"));
+            result.setScore(resultSet.getInt("score"));
+            result.setFirstName(resultSet.getString("firstname"));
+            result.setLastName(resultSet.getString("lastname"));
+            result.setSubject(resultSet.getString("subject"));
+            subjectResults.add(result);
+        }
+
+    } catch (Exception e) {
+        System.out.println("Error fetching subject results: " + e);
+    }
+
+    return subjectResults;
+}
+
+@Override
+public List<Subject> getAllSubjects() {
+    List<Subject> subjects = new ArrayList<>();
+    String query = "SELECT id, title FROM subjects";
+
+    try {
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        while (resultSet.next()) {
+            Subject subject = new Subject();
+            subject.setId(resultSet.getInt("id"));
+            subject.setTitle(resultSet.getString("title"));
+            subjects.add(subject);
+        }
+
+    } catch (Exception e) {
+        System.out.println("Error fetching all subjects: " + e);
+    }
+
+    return subjects;
+}
+
+
+@Override
+public List<TestScoreDto> getCandidateAllScore(int candidateId) {
+    List<TestScoreDto> scores = new ArrayList<>();
     
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setInt(1, candidateId);
-            ResultSet resultSet = preparedStatement.executeQuery();
+    String query = "SELECT t.name AS TestName, ctr.score AS Score " +
+                   "FROM candidatetestresults ctr " +
+                   "JOIN tests t ON ctr.testid = t.id " +
+                   "WHERE ctr.candidateid = ?";
 
-            while (resultSet.next()) {
-                TestScoreDto scoreDto = new TestScoreDto();
-                scoreDto.setTestName(resultSet.getString("testName"));
-                scoreDto.setScore(resultSet.getInt("score"));
-                testScores.add(scoreDto);
+    try (
+        PreparedStatement stmt = connection.prepareStatement(query)
+    ) {
+        stmt.setInt(1, candidateId);
+
+        try (ResultSet rs = stmt.executeQuery()) {
+            while (rs.next()) {
+                int score = rs.getObject("Score") == null ? 0 : rs.getInt("Score");
+
+                TestScoreDto dto = new TestScoreDto();
+                dto.setTestName(rs.getString("TestName"));
+                dto.setScore(score);
+
+                scores.add(dto);
             }
-
-        } catch (Exception e) {
-            System.out.println(e);
         }
-        return testScores;
+    } catch (SQLException e) {
+        e.printStackTrace(); 
     }
 
-    @Override
-    public List<CandidateSubjectResults> getSubjectResultDetails(int subjectId) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getSubjectResultDetails'");
-    }
+    return scores;
+}
 
-    @Override
-    public List<Subject> getAllSubjects() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getAllSubjects'");
-    }
+
 
     
 }

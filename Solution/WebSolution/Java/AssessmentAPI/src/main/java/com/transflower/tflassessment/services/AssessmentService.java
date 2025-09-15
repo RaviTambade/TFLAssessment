@@ -7,11 +7,13 @@ import java.util.List;
 import com.transflower.tflassessment.entities.Assessment;
 import com.transflower.tflassessment.entities.CandidateTestDetails;
 import com.transflower.tflassessment.entities.CreateTestRequest;
+import com.transflower.tflassessment.entities.CreateTestWithQuestions;
 import com.transflower.tflassessment.entities.Employee;
 import com.transflower.tflassessment.entities.EvaluationCriteria;
 import com.transflower.tflassessment.entities.Question;
 import com.transflower.tflassessment.entities.QuestionBank;
 import com.transflower.tflassessment.entities.Subject;
+import com.transflower.tflassessment.entities.SubjectQuestion;
 import com.transflower.tflassessment.entities.SubjectQuestions;
 import com.transflower.tflassessment.entities.Test;
 import com.transflower.tflassessment.entities.TestAssignmentRequest;
@@ -52,9 +54,7 @@ public interface AssessmentService {
     public boolean removeQuestion(int assessmentId, int questionId);
 
     public boolean removeQuestions(int[] testQuestions);
-    // public int createTestWithQuestions(CreateTestWithQuestions
-    // createTestWithQuestions);
-    // public List<SubjectQuestions> getAllQuestionsBySubject(int subjectId);
+    public int createTestWithQuestions(CreateTestWithQuestions createTestWithQuestions);
 
     public List<Employee> getSmeBySubject(int subjectId);
 
@@ -72,6 +72,7 @@ public interface AssessmentService {
 
     public List<TestEmployeeDetails> getAllTestByEmpId(int empId);
 
-    public List<SubjectQuestions> getAllQuestionsBySubject(int subjectId);
+    public List<SubjectQuestion> getAllQuestionsBySubject(int subjectId);
+
 
 }

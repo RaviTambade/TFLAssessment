@@ -1,5 +1,6 @@
 package com.transflower.tflassessment.repositories;
 
+import java.io.InputStream;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -15,21 +16,24 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Properties;
 
+import org.jasypt.util.text.AES256TextEncryptor;
 import org.springframework.stereotype.Repository;
 
 import com.transflower.tflassessment.entities.Assessment;
 import com.transflower.tflassessment.entities.CandidateTestDetails;
 import com.transflower.tflassessment.entities.CreateTestRequest;
+import com.transflower.tflassessment.entities.CreateTestWithQuestions;
 import com.transflower.tflassessment.entities.Employee;
 import com.transflower.tflassessment.entities.EvaluationCriteria;
 import com.transflower.tflassessment.entities.Question;
 import com.transflower.tflassessment.entities.QuestionBank;
 import com.transflower.tflassessment.entities.Subject;
+import com.transflower.tflassessment.entities.SubjectQuestion;
 import com.transflower.tflassessment.entities.Test;
 import com.transflower.tflassessment.entities.TestAssignmentRequest;
 import com.transflower.tflassessment.entities.TestEmployeeDetails;
-import com.transflower.tflassessment.entities.TestQuestion;
 import com.transflower.tflassessment.entities.TestStatusUpdate;
 import com.transflower.tflassessment.entities.TestWithQuestions;
 @Repository
@@ -38,17 +42,27 @@ public class AssessmentRepositoryImpl implements AssessmentRepository {
     private static Connection connection;
 
     static {
-        try {
-            String url = "jdbc:mysql://localhost:3306/assessmentdb";
-            String user = "root";
-            String password = "password";
-            connection = DriverManager.getConnection(url, user, password);
+        try(InputStream input=AssessmentRepositoryImpl.class.getClassLoader().getResourceAsStream("application.properties")){
+            Properties props=new Properties();
+            props.load(input);
+
+            String url=props.getProperty("db.url");
+            String user=props.getProperty("db.username");
+            String enpass=props.getProperty("db.password");
+            AES256TextEncryptor textEncryptor=new AES256TextEncryptor();
+            textEncryptor.setPassword("TransFlower");
+            String pass = textEncryptor.decrypt(enpass.replace("ENC(", "").replace(")", ""));
+            // ix3jGci+cQ5VXBXcnfDeGfETyVy1yWkUxsdJPXiPt/x2J+3B079VBAJnSj6TeDWv
+            String driver = props.getProperty("db.driver");
+
+            Class.forName(driver);
+            connection = DriverManager.getConnection(url, user, pass);
+
             System.out.println("Connection Established");
         } catch (Exception e) {
-            System.out.println("Connection Failed: " + e.getMessage());
-        }
-    }
-
+            System.out.println(e);
+            System.out.println("Error in connecting to database");
+        }}
     @Override
     public Assessment getDetails(int assessmentId) {
         Assessment assessment = null;
@@ -572,73 +586,62 @@ public class AssessmentRepositoryImpl implements AssessmentRepository {
     }
 
     // getQuestionsByEvaluationCriteriaId 
-    @Override
-    public List<Question> getQuestionsByEvaluationCriteriaId(int evaluationCriteriaId) {
-        List<Question> questions = new ArrayList<>();
-        try {
-            Statement stmt = connection.createStatement();
+   @Override
+public List<Question> getQuestionsByEvaluationCriteriaId(int evaluationCriteriaId) {
+    List<Question> questions = new ArrayList<>();
+    String query = "SELECT q.id, q.subjectid, q.title, q.a, q.b, q.c, q.d, q.answerkey, q.evaluationcriteriaid " +
+                   "FROM questionbank q WHERE q.evaluationcriteriaid = ?";
 
-            String query = "SELECT q.id AS QuestionId, q.subjectid AS SubjectId, q.title, q.a, q.b, q.c, q.d, q.answerkey, q.evaluationcriteriaid "
-                    + "FROM questionbank q "
-                    + "WHERE q.evaluationcriteriaid = EvaluationCriteriaId";
+    try (PreparedStatement stmt = connection.prepareStatement(query)) {
+        stmt.setInt(1, evaluationCriteriaId);
 
-            ResultSet resultSet = stmt.executeQuery(query);
-
-            while (resultSet.next()) {
+        try (ResultSet rs = stmt.executeQuery()) {
+            while (rs.next()) {
                 Question question = new Question();
-
-                question.setEvaluationCriteriaId(resultSet.getInt("evaluationCriteriaId"));
-                question.setSubjectId(resultSet.getInt("SubjectId"));
-                question.setTitle(resultSet.getString("Title"));
-
-                TestQuestion testQuestion = new TestQuestion();
-                testQuestion.setId(resultSet.getInt("QuestionId"));
-                testQuestion.setA(resultSet.getString("a"));
-                testQuestion.setB(resultSet.getString("b"));
-                testQuestion.setC(resultSet.getString("c"));
-                testQuestion.setD(resultSet.getString("d"));
-                testQuestion.setAnswerKey(resultSet.getString("answerKey"));
-                testQuestion.setCriteria(resultSet.getString("Criterai"));
+                question.setId(rs.getInt("id"));
+                question.setSubjectId(rs.getInt("subjectid"));
+                question.setTitle(rs.getString("title"));
+                question.setA(rs.getString("a"));
+                question.setB(rs.getString("b"));
+                question.setC(rs.getString("c"));
+                question.setD(rs.getString("d"));
+                question.setAnswerKey(rs.getString("answerkey"));
+                question.setEvaluationCriteriaId(rs.getInt("evaluationcriteriaid"));
 
                 questions.add(question);
-                // questions.add(testQuestion);
-
             }
-        } catch (Exception e) {
-            System.out.println("Error fetching questions:" + e.getMessage());
         }
-        return questions;
+    } catch (SQLException e) {
+        System.out.println("Error fetching questions: " + e.getMessage());
     }
-
+    return questions;
+   }
     //updateQuestion
     @Override
-    public boolean updateQuestion(Question question) {
+public boolean updateQuestion(Question question) {
+    try {
+        String query = "UPDATE questionbank "
+                     + "SET title = ?, a = ?, b = ?, c = ?, d = ?, answerkey = ? "
+                     + "WHERE id = ?";
 
-        try {
+        PreparedStatement prepareStatement = connection.prepareStatement(query);
 
-            String query = "UPDATE questionbank "
-                    + "SET title = ?, a = ?, b = ?, c = ?, d = ?, answerkey = ? "
-                    + "WHERE id = ?";
+        prepareStatement.setString(1, question.getTitle());
+        prepareStatement.setString(2, question.getA());
+        prepareStatement.setString(3, question.getB());
+        prepareStatement.setString(4, question.getC());
+        prepareStatement.setString(5, question.getD());
+        prepareStatement.setString(6, question.getAnswerKey());
+        prepareStatement.setInt(7, question.getId());
 
-            PreparedStatement prepareStatement = connection.prepareStatement(query);
-            ResultSet resultSet = prepareStatement.executeQuery(query);
-
-            prepareStatement.setString(1, question.getTitle());
-            prepareStatement.setString(2, question.getA());
-            prepareStatement.setString(3, question.getB());
-            prepareStatement.setString(4, question.getC());
-            prepareStatement.setString(5, question.getD());
-            prepareStatement.setString(6, String.valueOf(question.getAnswerKey()));
-            prepareStatement.setInt(7, question.getId());
-
-            int rowsUpdated = prepareStatement.executeUpdate();
-            return rowsUpdated > 0;
-        } catch (Exception e) {
-            System.out.println("Error updating question:" + e.getMessage());
-
-        }
-        return false;
+        int rowsUpdated = prepareStatement.executeUpdate();
+        return rowsUpdated > 0;
+    } catch (Exception e) {
+        System.out.println("Error updating question: " + e.getMessage());
     }
+    return false;
+}
+
 
     // updateTestStatus
     @Override
@@ -711,6 +714,7 @@ public class AssessmentRepositoryImpl implements AssessmentRepository {
                         .plusSeconds(localTime.getSecond());
                 testEmployeeDetails = new TestEmployeeDetails(set.getInt("candidateid"), set.getString("testname"),
                         set.getString("passinglevel"), duration, l1, l2, set.getString("status"));
+                         testEmployeeDetailsList.add(testEmployeeDetails);
             }
             return testEmployeeDetailsList;
 
@@ -742,12 +746,8 @@ public class AssessmentRepositoryImpl implements AssessmentRepository {
         }
         return status;
     }
-
-
     @Override
     public boolean reschedule(int assessmentId, Date date) {
-                     
-          
         String query =  "UPDATE tests JOIN subjects ON tests.subjectid = subjects.id SET tests.scheduleddate = ? WHERE tests.id = ?";
 
          try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -777,28 +777,110 @@ public class AssessmentRepositoryImpl implements AssessmentRepository {
         }
     }
 @Override
-    public boolean createTest(CreateTestRequest request) {
-        String insertTestSQL = "INSERT INTO tests " +
-                "(name, smeid, subjectid, creationdate, modificationdate, scheduleddate, passinglevel, duration) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+public boolean createTest(CreateTestRequest request) {
+    String insertTestSQL = "INSERT INTO tests " +
+            "(name, subject_id, duration, subject_expert_id, creation_date, modification_date, scheduled_date, passing_level, status) " +
+            "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-        try (PreparedStatement preparedStatement = connection.prepareStatement(insertTestSQL)) {
-            LocalDateTime now = LocalDateTime.now();
-              preparedStatement.setString(1, request.getName());
-            preparedStatement.setInt(2, request.getSubjectExpertId());
-             preparedStatement.setString(3, request.getDuration());
-            preparedStatement.setInt(4, request.getSubjectId());
-            preparedStatement.setTimestamp(5, Timestamp.valueOf(now)); 
-            preparedStatement.setTimestamp(6, Timestamp.valueOf(now)); 
-            preparedStatement.setTimestamp(7, Timestamp.valueOf(request.getScheduledDate())); // scheduled date    
-            preparedStatement.setInt(8, request.getPassingLevel());
-            
+    try (PreparedStatement preparedStatement = connection.prepareStatement(insertTestSQL)) {
+        LocalDateTime now = LocalDateTime.now();
 
-            int rowsAffected = preparedStatement.executeUpdate();
-            return rowsAffected > 0;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return true;
+        preparedStatement.setString(1, request.getName());
+        preparedStatement.setInt(2, request.getSubjectId());
+        preparedStatement.setString(3, request.getDuration());
+        preparedStatement.setInt(4, request.getSubjectExpertId());
+
+        preparedStatement.setTimestamp(5, Timestamp.valueOf(now));
+        preparedStatement.setTimestamp(6, Timestamp.valueOf(now));
+        preparedStatement.setTimestamp(7, Timestamp.valueOf(request.getScheduledDate()));
+
+        preparedStatement.setInt(8, request.getPassingLevel());
+        preparedStatement.setString(9, "created");  // default status
+
+        int rowsAffected = preparedStatement.executeUpdate();
+        return rowsAffected > 0;
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+        return false;  
+    }}
+
+@Override
+public int createTestWithQuestions(CreateTestWithQuestions createTestWithQuestions) {
+    int testId = -1;
+    String insertTestSQL = "INSERT INTO tests " +
+            "(name, smeid, subjectid, creationdate, modificationdate, scheduleddate, passinglevel, duration) " +
+            "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+
+    try (PreparedStatement preparedStatement = connection.prepareStatement(insertTestSQL, Statement.RETURN_GENERATED_KEYS)) {
+        LocalDateTime now = LocalDateTime.now();
+
+        preparedStatement.setString(1, createTestWithQuestions.getName());
+        preparedStatement.setInt(2, createTestWithQuestions.getSmeId());
+        preparedStatement.setInt(3, createTestWithQuestions.getSubjectId());
+        preparedStatement.setTimestamp(4, Timestamp.valueOf(now));
+        preparedStatement.setTimestamp(5, Timestamp.valueOf(now));
+        preparedStatement.setTimestamp(6, Timestamp.valueOf(createTestWithQuestions.getScheduledDate()));
+        preparedStatement.setInt(7, createTestWithQuestions.getPassingLevel());
+        preparedStatement.setString(8, createTestWithQuestions.getDuration());
+
+        int rowsAffected = preparedStatement.executeUpdate();
+
+        if (rowsAffected > 0) {
+            try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    testId = generatedKeys.getInt(1);
+                }
+            }
         }
+
+        // Insert questions into testquestions table
+        if (testId > 0 && createTestWithQuestions.getQuestionIds() != null) {
+            String insertQuestionSQL = "INSERT INTO testquestions (testid, questionbankid) VALUES (?, ?)";
+            try (PreparedStatement stmt = connection.prepareStatement(insertQuestionSQL)) {
+                for (Integer questionId : createTestWithQuestions.getQuestionIds()) {
+                    stmt.setInt(1, testId);
+                    stmt.setInt(2, questionId);
+                    stmt.addBatch();
+                }
+                stmt.executeBatch();
+            }
+        }
+    } catch (SQLException e) {
+        System.out.println("Error creating test with questions: " + e.getMessage());
     }
+
+    return testId;
+}
+
+@Override
+public List<SubjectQuestion> getAllQuestionsBySubject(int subjectId) {
+    List<SubjectQuestion> subjectQuestionsList = new ArrayList<>();
+
+    String query = "SELECT q.id AS questionId, q.title AS question, q.subjectid, s.title AS subject " +
+            "FROM questionbank q " +
+            "INNER JOIN subjects s ON q.subjectid = s.id " +
+            "WHERE q.subjectid = ?";
+
+    try (PreparedStatement stmt = connection.prepareStatement(query)) {
+        stmt.setInt(1, subjectId);
+
+        try (ResultSet rs = stmt.executeQuery()) {
+            while (rs.next()) {
+                SubjectQuestion subjectQuestion = new SubjectQuestion();
+
+                subjectQuestion.setQuestionId(rs.getInt("questionId"));
+                subjectQuestion.setQuestion(rs.getString("question"));
+                subjectQuestion.setSubjectId(rs.getInt("subjectid"));
+                subjectQuestion.setSubject(rs.getString("subject"));
+
+                subjectQuestionsList.add(subjectQuestion);
+            }
+        }
+    } catch (SQLException e) {
+        System.out.println("Error fetching questions by subject: " + e.getMessage());
+    }
+
+    return subjectQuestionsList;
+}
 }

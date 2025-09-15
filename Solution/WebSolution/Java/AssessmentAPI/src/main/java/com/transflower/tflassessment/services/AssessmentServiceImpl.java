@@ -10,11 +10,13 @@ import org.springframework.stereotype.Service;
 import com.transflower.tflassessment.entities.Assessment;
 import com.transflower.tflassessment.entities.CandidateTestDetails;
 import com.transflower.tflassessment.entities.CreateTestRequest;
+import com.transflower.tflassessment.entities.CreateTestWithQuestions;
 import com.transflower.tflassessment.entities.Employee;
 import com.transflower.tflassessment.entities.EvaluationCriteria;
 import com.transflower.tflassessment.entities.Question;
 import com.transflower.tflassessment.entities.QuestionBank;
 import com.transflower.tflassessment.entities.Subject;
+import com.transflower.tflassessment.entities.SubjectQuestion;
 import com.transflower.tflassessment.entities.SubjectQuestions;
 import com.transflower.tflassessment.entities.Test;
 import com.transflower.tflassessment.entities.TestAssignmentRequest;
@@ -154,14 +156,13 @@ public class AssessmentServiceImpl implements AssessmentService {
     }
 
     @Override
-    public List<SubjectQuestions> getAllQuestionsBySubject(int subjectId) {
-      // TODO Auto-generated method stub
-      throw new UnsupportedOperationException("Unimplemented method 'getAllQuestionsBySubject'");
+    public int createTestWithQuestions(CreateTestWithQuestions createTestWithQuestions) {
+      return _repo.createTestWithQuestions(createTestWithQuestions);
     }
 
-   //  @Override
-   //  public List<SubjectQuestions> getAllQuestionsBySubject(int subjectId) {
-   //    return _repo.getAllQuestionsBySubject(subjectId);
-   //  }
+    @Override
+    public List<SubjectQuestion> getAllQuestionsBySubject(int subjectId) {
+      return _repo.getAllQuestionsBySubject(subjectId);
+    }
     
 }

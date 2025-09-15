@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,10 +30,11 @@ public class QuestionBankController {
         return svc.getAllQuestions();
     }
 
-    @GetMapping("questions/{qestionId}")
-    public Question getQuestion(@PathVariable("questionId")int questionId){
+    @GetMapping("questions/{questionId}")
+    public Question getQuestion(@PathVariable("questionId") int questionId) {
         return svc.getQuestion(questionId);
     }
+
     
     @GetMapping("questions/subjects/{subject}/questions/{questionId}")
     public String getCriteria(@PathVariable("subject") String subject,@PathVariable("questionId") int questionId){
@@ -53,25 +56,23 @@ public class QuestionBankController {
         return svc.getQuestionsBySubjectAndCriteria(subjectId, criteriaId);
     }
 
-    @GetMapping("questions/subjects/criterias")
+    @GetMapping("/questions/subjects/criterias")
     public List<QuestionDetails> getQuestionsWithSubjectAndCriteria(){
         return svc.getQuestionsWithSubjectAndCriteria();
     }
 
-    @GetMapping("question/{id}/updateanswer/{answerKey}")
+    @PutMapping("/question/{id}/updateanswer/{answerKey}")
     public boolean updateAnswer(@PathVariable("id")int id,@PathVariable("answerKey") char answerKey){
         return svc.updateAnswer(id, answerKey);
     }
 
-    @GetMapping("update/options/question/{id}")
+    @PutMapping("/update/options/question/{id}")
     public boolean updateQuestionOptions(@PathVariable("id")int id,@RequestBody Question option){
         return svc.updateQuestionOptions(id, option);
     }
 
-    @GetMapping("/question")
+    @PostMapping("/question")
     public boolean  insertQuestion(@RequestBody NewQuestion question){
         return svc.insertQuestion( question);
-    }
- 
-    
+    }    
 }
