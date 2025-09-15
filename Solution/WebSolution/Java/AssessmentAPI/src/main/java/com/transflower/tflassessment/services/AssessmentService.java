@@ -3,6 +3,7 @@ package com.transflower.tflassessment.services;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 import com.transflower.tflassessment.entities.Assessment;
 import com.transflower.tflassessment.entities.CandidateTestDetails;
@@ -14,7 +15,6 @@ import com.transflower.tflassessment.entities.Question;
 import com.transflower.tflassessment.entities.QuestionBank;
 import com.transflower.tflassessment.entities.Subject;
 import com.transflower.tflassessment.entities.SubjectQuestion;
-import com.transflower.tflassessment.entities.SubjectQuestions;
 import com.transflower.tflassessment.entities.Test;
 import com.transflower.tflassessment.entities.TestAssignmentRequest;
 import com.transflower.tflassessment.entities.TestEmployeeDetails;
@@ -23,56 +23,55 @@ import com.transflower.tflassessment.entities.TestWithQuestions;
 
 public interface AssessmentService {
 
-    public Assessment getDetails(int assessmentId);
+    CompletableFuture<Assessment> getDetails(int assessmentId);
 
-    List<Assessment> getAll(LocalDateTime fromDate, LocalDateTime toDate);
+    CompletableFuture<List<Assessment>> getAll(LocalDateTime fromDate, LocalDateTime toDate);
 
-    public List<Assessment> getAllTests();
+    CompletableFuture<List<Assessment>> getAllTests();
 
-    public List<Assessment> getAllBySubjectMatterExpert(int smeId);
+    CompletableFuture<List<Assessment>> getAllBySubjectMatterExpert(int smeId);
 
-    public List<Employee> getAllEmployees();
+    CompletableFuture<List<Employee>> getAllEmployees();
 
-    public Employee getEmployeeById(int userId);
+    CompletableFuture<Employee> getEmployeeById(int userId);
 
-    public List<Subject> getAllSubjects();
+    CompletableFuture<List<Subject>> getAllSubjects();
 
-    public List<EvaluationCriteria> getEvaluationCriterias();
+    CompletableFuture<List<EvaluationCriteria>> getEvaluationCriterias();
 
-    public List<EvaluationCriteria> getEvaluationCriteriasBySubject(int subjectId);
+    CompletableFuture<List<EvaluationCriteria>> getEvaluationCriteriasBySubject(int subjectId);
 
-    public boolean createTest(CreateTestRequest request);
+    CompletableFuture<Boolean> createTest(CreateTestRequest request);
 
-    public boolean addQuestion(int assessmentId, int questionId);
+    CompletableFuture<Boolean> addQuestion(int assessmentId, int questionId);
 
-    public boolean addQuestions(int assessmentId, List<QuestionBank> questions);
+    CompletableFuture<Boolean> addQuestions(int assessmentId, List<QuestionBank> questions);
 
-    public boolean changeDuration(int assessmentId, String duration);
+    CompletableFuture<Boolean> changeDuration(int assessmentId, String duration);
 
-    public boolean reschedule(int assessmentId, Date date);
+    CompletableFuture<Boolean> reschedule(int assessmentId, Date date);
 
-    public boolean removeQuestion(int assessmentId, int questionId);
+    CompletableFuture<Boolean> removeQuestion(int assessmentId, int questionId);
 
-    public boolean removeQuestions(int[] testQuestions);
-    public int createTestWithQuestions(CreateTestWithQuestions createTestWithQuestions);
+    CompletableFuture<Boolean> removeQuestions(int[] testQuestions);
 
-    public List<Employee> getSmeBySubject(int subjectId);
+    CompletableFuture<Integer> createTestWithQuestions(CreateTestWithQuestions createTestWithQuestions);
 
-    public List<Test> getAllTests(Date fromDate, Date toDate);
+    CompletableFuture<List<Employee>> getSmeBySubject(int subjectId);
 
-    public TestWithQuestions getTestDetails(int testId);
+    CompletableFuture<List<Test>> getAllTests(Date fromDate, Date toDate);
 
-    public List<Question> getQuestionsByEvaluationCriteriaId(int evaluationCriteriaId);
+    CompletableFuture<TestWithQuestions> getTestDetails(int testId);
 
-    public boolean updateQuestion(Question question);
+    CompletableFuture<List<Question>> getQuestionsByEvaluationCriteriaId(int evaluationCriteriaId);
 
-    public boolean updateTestStatus(int testId, TestStatusUpdate status);
+    CompletableFuture<Boolean> updateQuestion(Question question);
 
-    public boolean addEmployeesToTest(TestAssignmentRequest request, CandidateTestDetails candidateTestDetails);
+    CompletableFuture<Boolean> updateTestStatus(int testId, TestStatusUpdate status);
 
-    public List<TestEmployeeDetails> getAllTestByEmpId(int empId);
+    CompletableFuture<Boolean> addEmployeesToTest(TestAssignmentRequest request, CandidateTestDetails candidateTestDetails);
 
-    public List<SubjectQuestion> getAllQuestionsBySubject(int subjectId);
+    CompletableFuture<List<TestEmployeeDetails>> getAllTestByEmpId(int empId);
 
-
+    CompletableFuture<List<SubjectQuestion>> getAllQuestionsBySubject(int subjectId);
 }

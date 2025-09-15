@@ -1,8 +1,10 @@
 package com.transflower.tflassessment.services;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import com.transflower.tflassessment.entities.NewQuestion;
@@ -16,65 +18,87 @@ import com.transflower.tflassessment.repositories.QuestionBankRepository;
 public class QuestionBankServiceImpl implements QuestionBankService {
 
     private final QuestionBankRepository repository;
+
     @Autowired
-    public QuestionBankServiceImpl(QuestionBankRepository repository)
-    {
-        this.repository=repository;
+    public QuestionBankServiceImpl(QuestionBankRepository repository) {
+        this.repository = repository;
     }
 
     @Override
-    public List<QuestionTitle> getAllQuestions() {
-       return repository.getAllQuestions();
+    @Async("asyncExecutor")
+    public CompletableFuture<List<QuestionTitle>> getAllQuestions() {
+        System.out.println("Executing getAllQuestionsAsync on: " + Thread.currentThread().getName());
+        return CompletableFuture.supplyAsync(()->repository.getAllQuestions());
+    }
+
+     @Override
+    @Async("asyncExecutor")
+    public CompletableFuture<Question> getQuestion(int questionId) {
+        System.out.println("Executing getQuestion on: " + Thread.currentThread().getName());
+        return CompletableFuture.supplyAsync(()->repository.getQuestion(questionId));
     }
 
     @Override
-    public List<SubjectQuestion> getQuestionsBySubject(int id) {
-        return repository.getQuestionsBySubject(id);
+    @Async("asyncExecutor")
+    public CompletableFuture<List<Question>> getQuestions(int testId) {
+        System.out.println("Executing getQuestion on: " + Thread.currentThread().getName());
+        return CompletableFuture.supplyAsync(()->repository.getQuestions(testId));
     }
 
     @Override
-    public List<QuestionDetails> getQuestionsBySubjectAndCriteria(int subjectId, int criteriaId) {
-        return repository.getQuestionsBySubjectAndCriteria(subjectId, criteriaId);
-     }
-
-    @Override
-    public List<QuestionDetails> getQuestionsWithSubjectAndCriteria() {
-        return repository.getQuestionsWithSubjectAndCriteria();
+    @Async("asyncExecutor")
+    public CompletableFuture<List<SubjectQuestion>> getQuestionsBySubject(int id) {
+        System.out.println("Executing getQuestion on: " + Thread.currentThread().getName());
+        return CompletableFuture.supplyAsync(()->repository.getQuestionsBySubject(id));
     }
 
     @Override
-    public List<Question> getQuestions(int testId) {
-        return repository.getQuestions(testId);
+    @Async("asyncExecutor")
+    public CompletableFuture<List<QuestionDetails>> getQuestionsBySubjectAndCriteria(int subjectId, int criteriaId) {
+        System.out.println("Executing getQuestion on: " + Thread.currentThread().getName());
+        return CompletableFuture.supplyAsync(()->repository.getQuestionsBySubjectAndCriteria(subjectId, criteriaId));
     }
 
     @Override
-    public boolean updateAnswer(int id, char answerKey) {
-        return repository.updateAnswer(id, answerKey);
+    @Async("asyncExecutor")
+    public CompletableFuture<List<QuestionDetails>> getQuestionsWithSubjectAndCriteria() {
+         System.out.println("Executing getQuestion on: " + Thread.currentThread().getName());
+        return CompletableFuture.supplyAsync(()->repository.getQuestionsWithSubjectAndCriteria());
     }
 
     @Override
-    public Question getQuestion(int questionId) {
-        return repository.getQuestion(questionId);
+    @Async("asyncExecutor")
+    public CompletableFuture<Boolean> updateAnswer(int id, char answerKey) {
+         System.out.println("Executing getQuestion on: " + Thread.currentThread().getName());
+        return CompletableFuture.supplyAsync(()->repository.updateAnswer(id, answerKey));
     }
 
     @Override
-    public boolean updateQuestionOptions(int id, Question options) {
-        return repository.updateQuestionOptions(id, options);
+    @Async("asyncExecutor")
+    public CompletableFuture<Boolean> updateQuestionOptions(int id, Question options) {
+         System.out.println("Executing getQuestion on: " + Thread.currentThread().getName());
+        return CompletableFuture.supplyAsync(()->repository.updateQuestionOptions(id, options));
     }
 
     @Override
-    public boolean updateSubjectCriteria(int questionId, Question question) {
-        return repository.updateSubjectCriteria(questionId, question);
+    @Async("asyncExecutor")
+    public CompletableFuture<Boolean> updateSubjectCriteria(int questionId, Question question) {
+         System.out.println("Executing getQuestion on: " + Thread.currentThread().getName());
+        return CompletableFuture.supplyAsync(()->repository.updateSubjectCriteria(questionId, question));
     }
 
     @Override
-    public boolean insertQuestion(NewQuestion question) {
-        return repository.insertQuestion(question);
+    @Async("asyncExecutor")
+    public CompletableFuture<Boolean> insertQuestion(NewQuestion question) {
+         System.out.println("Executing getQuestion on: " + Thread.currentThread().getName());
+        return CompletableFuture.supplyAsync(()->repository.insertQuestion(question));
     }
 
     @Override
-    public String getCriteria(String subject, int questionId) {
-        return repository.getCriteria(subject, questionId);
+    @Async("asyncExecutor")
+    public CompletableFuture<String> getCriteria(String subject, int questionId) {
+         System.out.println("Executing getQuestion on: " + Thread.currentThread().getName());
+        return CompletableFuture.supplyAsync(()->repository.getCriteria(subject, questionId));
     }
 
 }

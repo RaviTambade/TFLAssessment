@@ -61,7 +61,7 @@ import com.transflower.tflassessment.entities.EvaluationCriteria;
 
     @Override
     public boolean insertCriteria(EvaluationCriteria criteria) {
-        String query = "INSERT INTO evaluationcriterias (title, subjectId) VALUES (?, ?)";
+        String query = "INSERT INTO evaluationcriterias(title, subjectId) VALUES (?, ?)";
         try (
             PreparedStatement statement = connection.prepareStatement(query)
         ) {

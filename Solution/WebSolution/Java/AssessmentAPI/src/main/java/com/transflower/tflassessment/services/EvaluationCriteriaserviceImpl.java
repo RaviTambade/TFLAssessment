@@ -1,6 +1,9 @@
 package com.transflower.tflassessment.services;
 
+import java.util.concurrent.CompletableFuture;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import com.transflower.tflassessment.entities.EvaluationCriteria;
@@ -15,18 +18,21 @@ public class EvaluationCriteriaserviceImpl implements EvaluationCriteriaService 
     }
 
     @Override
-    public boolean insertCriteria(EvaluationCriteria ec) {
-        return _repo.insertCriteria(ec);
+    @Async("asyncExecutor")
+    public CompletableFuture<Boolean> insertCriteria(EvaluationCriteria ec) {
+        return CompletableFuture.completedFuture(_repo.insertCriteria(ec));
     }
 
     @Override
-    public boolean updateCriteria(int id, int EvaluationCriteriaId) {
-        return _repo.updateCriteria(id, EvaluationCriteriaId);
+    @Async("asyncExecutor")
+    public CompletableFuture<Boolean> updateCriteria(int id, int EvaluationCriteriaId) {
+        return CompletableFuture.completedFuture(_repo.updateCriteria(id, EvaluationCriteriaId));
     }
 
     @Override
-    public boolean updateSubject(int id, int evaluationCriteriaId) {
-        return _repo.updateSubject(id, evaluationCriteriaId);
+    @Async("asyncExecutor")
+    public CompletableFuture<Boolean> updateSubject(int id, int evaluationCriteriaId) {
+        return CompletableFuture.completedFuture(_repo.updateSubject(id, evaluationCriteriaId));
     }
 
 }

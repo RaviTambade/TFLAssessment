@@ -3,25 +3,26 @@ package com.transflower.tflassessment.services;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 import com.transflower.tflassessment.entities.InterviewCandidateDetails;
 import com.transflower.tflassessment.entities.InterviewDetails;
 
 public interface InterviewService  {
 
-    public List<InterviewCandidateDetails> getAllInterviewCandidates();
+    public CompletableFuture<List<InterviewCandidateDetails>> getAllInterviewCandidates();
 
-    public List<InterviewCandidateDetails> getInterviewedCandidatesSubjects(int candidateId);
+    public CompletableFuture<List<InterviewCandidateDetails>> getInterviewedCandidatesSubjects(int candidateId);
 
-    public InterviewDetails getInterviewDetails(int interviewId);
+    public CompletableFuture<InterviewDetails> getInterviewDetails(int interviewId);
 
-    public boolean rescheduleInterview(int interviewId, LocalDate date);
+    public CompletableFuture<Boolean> rescheduleInterview(int interviewId, LocalDate date);
 
-    public boolean rescheduleInterview(int interviewId, LocalTime time);
+    public CompletableFuture<Boolean> rescheduleInterview(int interviewId, LocalTime time);
 
-    public boolean rescheduleInterview(int interviewId, LocalTime time, LocalDate date);
+    public CompletableFuture<Boolean> rescheduleInterview(int interviewId, LocalTime time, LocalDate date);
 
-    public boolean changeInterviewer(int interviewId, int smeId);
+    public CompletableFuture<Boolean> changeInterviewer(int interviewId, int smeId);
 
-    public boolean cancelInterview(int interviewId);
+    public CompletableFuture<Boolean> cancelInterview(int interviewId);
 }

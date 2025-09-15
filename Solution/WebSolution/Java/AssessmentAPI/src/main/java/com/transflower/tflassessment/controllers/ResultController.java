@@ -2,6 +2,7 @@ package com.transflower.tflassessment.controllers;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +17,7 @@ import com.transflower.tflassessment.entities.CandidateResultDetails;
 import com.transflower.tflassessment.entities.CandidateSubjectResults;
 import com.transflower.tflassessment.entities.FailedCandidateDetails;
 import com.transflower.tflassessment.entities.PassedCandidateDetails;
+import com.transflower.tflassessment.entities.Question;
 import com.transflower.tflassessment.entities.Subject;
 import com.transflower.tflassessment.entities.TestAverageReport;
 import com.transflower.tflassessment.entities.TestList;
@@ -31,72 +33,72 @@ public class ResultController {
     private ResultService svc;
 
     @GetMapping("/candidates/{candidateId}/tests/{testId}/score")
-    public int getCandidateScore(@PathVariable("candidateId") int candidateId, @PathVariable("testId") int testId) {
+    public CompletableFuture<Integer> getCandidateScore(@PathVariable("candidateId") int candidateId, @PathVariable("testId") int testId) {
         return svc.getCandidateScore(candidateId, testId);
     }
 
     @PostMapping("/candidates/{candidateId}/tests/{testId}/starttime")
-    public boolean setCandidateTestStartTime(@PathVariable int candidateId, @PathVariable int testId) {
-        return svc.setCandidateTestStartTime(candidateId, testId, LocalDateTime.now());
+        public CompletableFuture<Boolean> setCandidatTeststarttime(@PathVariable int candidateId, @PathVariable int testId) {
+        return svc.setCandidatTeststarttime(candidateId, testId, LocalDateTime.now());
     }
 
     @PutMapping("/candidates/{candidateId}/tests/{testId}/endtime")
-    public boolean setCandidateTestEndTime(@PathVariable int candidateId, @PathVariable int testId) {
+    public CompletableFuture<Boolean> setCandidateTestEndTime(@PathVariable int candidateId, @PathVariable int testId) {
         return svc.setCandidateTestEndTime(candidateId, testId, LocalDateTime.now());
     }
 
     @GetMapping("/candidates/{candidateId}/tests/{testId}/details")
-    public CandidateResultDetails candidateTestResultDetails(@PathVariable int candidateId, @PathVariable int testId) {
-        return svc.candidateTestResultDetails(candidateId, testId);
+    public CompletableFuture<CandidateResultDetails> setCandidateTestResultDetails(@PathVariable int candidateId, @PathVariable int testId) {
+        return svc.CandidateTestResultDetails(candidateId, testId);
     }
 
     @GetMapping("/tests/{testId}/details")
-    public List<TestResultDetails> getTestResultDetail(@PathVariable int testId) {
+    public CompletableFuture<List<TestResultDetails>> setCandidateTestResultDetails(@PathVariable int testId) {
         return svc.getTestResultDetail(testId);
     }
 
     @GetMapping("/tests/{testId}/appearedcandidates")
-    public List<AppearedCandidate> getAppearedCandidates(@PathVariable int testId) {
+    public CompletableFuture <List<AppearedCandidate>> getAppearedCandidates(@PathVariable int testId) {
         return svc.getAppearedCandidates(testId);
     }
 
     @GetMapping("/candidates/{candidateId}/testlist")
-    public List<TestList> getTestList(@PathVariable int candidateId) {
+      public CompletableFuture<List<TestList>> getTestList(@PathVariable int candidateId) {
         return svc.getTestList(candidateId);
     }
 
     @GetMapping("/tests/{testId}/passedcandidates")
-    public List<PassedCandidateDetails> getPassedCandidateResults(@PathVariable int testId) {
+     public CompletableFuture <List<PassedCandidateDetails>> getPassedCandidateResults (@PathVariable int testId) {
         return svc.getPassedCandidateResults(testId);
     }
 
     @GetMapping("/tests/{testId}/failedcandidates")
-    public List<FailedCandidateDetails> getFailedCandidateResults(@PathVariable int testId) {
+        public CompletableFuture<List<FailedCandidateDetails>> getFailedCandidateResults(@PathVariable int testId) {
         return svc.getFailedCandidateResults(testId);
     }
 
     @PutMapping("/tests/{testId}/passingLevel/{passingLevel}")
-    public boolean setPassingLevel(@PathVariable int testId, @PathVariable int passingLevel) {
+    public CompletableFuture<Boolean> setPassingLevel(@PathVariable int testId, @PathVariable int passingLevel) {
         return svc.setPassingLevel(testId, passingLevel);
     }
 
     @GetMapping("/subjects/{subjectId}/results")
-    public List<CandidateSubjectResults> getSubjectResultDetails(@PathVariable("subjectId") int subjectId) {
+    public CompletableFuture<List<CandidateSubjectResults>> getSubjectResultDetails(@PathVariable("subjectId") int subjectId) {
         return svc.getSubjectResultDetails(subjectId);
     }
 
     @GetMapping("/subjects")
-    public List<Subject> getAllSubjects() {
+    public CompletableFuture<List<Subject>>  getAllSubjects() {
         return svc.getAllSubjects();
     }
 
     @GetMapping("/tests/{testId}/averagereport")
-    public List<TestAverageReport> getTestAverageReport(@PathVariable int testId) {
+     public  CompletableFuture<List<TestAverageReport>> getTestAverageReport(@PathVariable int testId) {
         return svc.getTestAverageReport(testId);
     }
 
     @GetMapping("/candidates/{candidateId}/scores")
-    public List<TestScoreDto> getCandidateAllScore(@PathVariable int candidateId) {
+      public CompletableFuture<List<TestScoreDto>> getCandidateAllScore(@PathVariable int candidateId) {
         return svc.getCandidateAllScore(candidateId);
     }
 }

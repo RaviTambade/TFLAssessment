@@ -1,6 +1,7 @@
 package com.transflower.tflassessment.controllers;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,53 +27,53 @@ public class QuestionBankController {
     private QuestionBankService svc;
 
     @GetMapping("/questions")
-    public List<QuestionTitle> getAllQuestions(){
+    public CompletableFuture<List<QuestionTitle>> getAllQuestions(){
         return svc.getAllQuestions();
     }
 
     @GetMapping("questions/{questionId}")
-    public Question getQuestion(@PathVariable("questionId") int questionId) {
+    public CompletableFuture<Question> getQuestion(@PathVariable("questionId") int questionId) {
         return svc.getQuestion(questionId);
     }
 
-    
     @GetMapping("questions/subjects/{subject}/questions/{questionId}")
-    public String getCriteria(@PathVariable("subject") String subject,@PathVariable("questionId") int questionId){
+    public CompletableFuture<String> getCriteria(@PathVariable("subject") String subject,@PathVariable("questionId") int questionId){
         return svc.getCriteria(subject, questionId);
     }
 
     @GetMapping("questions/subjects/{id}")
-    public List<SubjectQuestion> getQuestionsBySubject(@PathVariable("id")int id){
+    public CompletableFuture<List<SubjectQuestion>> getQuestionsBySubject(@PathVariable("id")int id){
         return svc.getQuestionsBySubject(id);
     }
 
     @GetMapping("questions/tests/{testId}")
-    public List<Question> getQuestions(@PathVariable("testId")int testId){
+    public CompletableFuture<List<Question>> getQuestions(@PathVariable("testId")int testId){
         return svc.getQuestions(testId);
     }
 
     @GetMapping("questions/subjects/{subjectId}/criterias/{criteriaId}")
-    public List<QuestionDetails> getQuestionsBySubjectAndCriteria(@PathVariable("subjectId") int subjectId,@PathVariable("criteriaId")int criteriaId){
+    public CompletableFuture<List<QuestionDetails>> getQuestionsBySubjectAndCriteria(@PathVariable("subjectId") int subjectId,@PathVariable("criteriaId")int criteriaId){
         return svc.getQuestionsBySubjectAndCriteria(subjectId, criteriaId);
     }
 
     @GetMapping("/questions/subjects/criterias")
-    public List<QuestionDetails> getQuestionsWithSubjectAndCriteria(){
+    public CompletableFuture<List<QuestionDetails>> getQuestionsWithSubjectAndCriteria(){
         return svc.getQuestionsWithSubjectAndCriteria();
     }
 
     @PutMapping("/question/{id}/updateanswer/{answerKey}")
-    public boolean updateAnswer(@PathVariable("id")int id,@PathVariable("answerKey") char answerKey){
+    public CompletableFuture<Boolean> updateAnswer(@PathVariable("id")int id,@PathVariable("answerKey") char answerKey){
         return svc.updateAnswer(id, answerKey);
     }
 
     @PutMapping("/update/options/question/{id}")
-    public boolean updateQuestionOptions(@PathVariable("id")int id,@RequestBody Question option){
+    public CompletableFuture<Boolean> updateQuestionOptions(@PathVariable("id")int id,@RequestBody Question option){
         return svc.updateQuestionOptions(id, option);
     }
 
     @PostMapping("/question")
-    public boolean  insertQuestion(@RequestBody NewQuestion question){
-        return svc.insertQuestion( question);
+    public CompletableFuture<Boolean>  insertQuestion(@RequestBody NewQuestion question){
+        return svc.insertQuestion(question);
     }    
+
 }

@@ -21,34 +21,33 @@ import com.transflower.tflassessment.entities.InterviewDetails;
 @Repository
 public class InterviewRepositoryImpl implements InterviewRepository {
     private static Connection connection;
-    
-static{
-    try{
-        Properties props=new Properties();
-    
-    try(InputStream input=InterviewRepositoryImpl.class.getClassLoader().getResourceAsStream("application.properties")){
-        props.load(input);
-    }
-     String url = props.getProperty("db.url");
-     String username = props.getProperty("db.username");
-     String encPass = props.getProperty("db.password");
 
-     AES256TextEncryptor textEncryptor=new AES256TextEncryptor();
-     textEncryptor.setPassword("TransFlower");
+    static {
+        try {
+            Properties props = new Properties();
 
-     String pass=textEncryptor.decrypt(encPass.replace("ENC(", "").replace(")", ""));
-     
-     String driver=props.getProperty("db.driver");
-     Class.forName(driver);
+            try (InputStream input = InterviewRepositoryImpl.class.getClassLoader()
+                    .getResourceAsStream("application.properties")) {
+                props.load(input);
+            }
+            String url = props.getProperty("db.url");
+            String username = props.getProperty("db.username");
+            String encPass = props.getProperty("db.password");
 
-     connection=DriverManager.getConnection(url,username,pass);
-     System.out.println("Connection Established");
+            AES256TextEncryptor textEncryptor = new AES256TextEncryptor();
+            textEncryptor.setPassword("TransFlower");
+
+            String pass = textEncryptor.decrypt(encPass.replace("ENC(", "").replace(")", ""));
+
+            String driver = props.getProperty("db.driver");
+            Class.forName(driver);
+
+            connection = DriverManager.getConnection(url, username, pass);
+            System.out.println("Connection Established");
         } catch (Exception e) {
             System.out.println(e);
         }
     }
-
-
 
     @Override
     public List<InterviewCandidateDetails> getAllInterviewCandidates() {
@@ -63,7 +62,8 @@ static{
             ResultSet rs = statement.executeQuery(selectQuery);
 
             while (rs.next()) {
-                InterviewCandidateDetails candidateDetails = new InterviewCandidateDetails(rs.getInt(1), rs.getString(2), rs.getString(3), null);
+                InterviewCandidateDetails candidateDetails = new InterviewCandidateDetails(rs.getInt(1),
+                        rs.getString(2), rs.getString(3), null);
                 allInterviewCandidates.add(candidateDetails);
             }
         } catch (Exception e) {
@@ -84,7 +84,8 @@ static{
 
             ResultSet rs = statement.executeQuery(selectQuery);
             while (rs.next()) {
-                InterviewCandidateDetails CandidateSubjectDetails = new InterviewCandidateDetails(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4));
+                InterviewCandidateDetails CandidateSubjectDetails = new InterviewCandidateDetails(rs.getInt(1),
+                        rs.getString(2), rs.getString(3), rs.getString(4));
                 interviewCandidateSubjectDetails.add(CandidateSubjectDetails);
             }
         } catch (Exception e) {
@@ -110,8 +111,7 @@ static{
                         rs1.getString(5),
                         rs1.getString(6),
                         rs1.getString(7),
-                        null
-                );
+                        null);
             }
 
             if (callablestatement.getMoreResults()) {
@@ -165,12 +165,12 @@ static{
     @Override
 
     public boolean rescheduleInterview(int interviewId, LocalTime time, LocalDate date) {
-        try(Statement statement = connection.createStatement())  {
+        try (Statement statement = connection.createStatement()) {
             String updateQuery = "UPDATE interviews "
                     + "SET interviewdate = '" + date + "', interviewtime = '" + time + "' "
                     + "WHERE id = " + interviewId + ";";
 
-            System.out.println("Executing: " + updateQuery); 
+            System.out.println("Executing: " + updateQuery);
             statement.executeUpdate(updateQuery);
             return true;
         } catch (Exception e) {
@@ -179,32 +179,32 @@ static{
         }
     }
 
-
-
     @Override
-     public boolean changeInterviewer(int interviewId, int smeId) {
-         try (Statement statement = connection.createStatement()) {
-           String updateQuery = "UPDATE interviews "
+    public boolean changeInterviewer(int interviewId, int smeId) {
+        try (Statement statement = connection.createStatement()) {
+            String updateQuery = "UPDATE interviews "
                     + "SET smeid = " + smeId + " "
-                     + "WHERE id = " + interviewId + ";";
+                    + "WHERE id = " + interviewId + ";";
             statement.executeUpdate(updateQuery);
+            return true;
         } catch (Exception e) {
             System.out.println(e);
+            return false;
         }
-        return false;
-     }
-   
 
+    }
 
     @Override
     public boolean cancelInterview(int interviewId) {
-        try(Statement statement = connection.createStatement())  {
+        try (Statement statement = connection.createStatement()) {
             String updateQuery = "DELETE FROM interviews WHERE id =" + interviewId + ";";
             statement.executeUpdate(updateQuery);
+            return true;
         } catch (Exception e) {
             System.out.println(e);
+            return false;
+
         }
-        return false;
     }
-    
+
 }

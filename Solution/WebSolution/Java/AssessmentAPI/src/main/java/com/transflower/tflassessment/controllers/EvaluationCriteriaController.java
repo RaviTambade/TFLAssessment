@@ -1,5 +1,7 @@
 package com.transflower.tflassessment.controllers;
 
+import java.util.concurrent.CompletableFuture;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,20 +22,18 @@ public class EvaluationCriteriaController {
     private EvaluationCriteriaService svc;
 
     @PostMapping("/insert")
-    public boolean insertCriteria(@RequestBody EvaluationCriteria criteria) {
+    public CompletableFuture<Boolean> insertCriteria(@RequestBody EvaluationCriteria criteria) {
         return svc.insertCriteria(criteria);
     }
 
    @PutMapping("{id}/subjects/{subjectId}")
-    public boolean updateSubject(@PathVariable("id") int id, @PathVariable ("subjectId")int subjectId) {
+    public CompletableFuture<Boolean> updateSubject(@PathVariable("id") int id, @PathVariable ("subjectId")int subjectId) {
     return svc.updateSubject(id, subjectId);
 }
 
     @PutMapping("{id}/questions/{evaluationCriteriaId}")
-    public boolean updateCriteria(@PathVariable("id")int id, @PathVariable("evaluationCriteriaId") int evaluationCriteriaId) {
+    public CompletableFuture<Boolean> updateCriteria(@PathVariable("id")int id, @PathVariable("evaluationCriteriaId") int evaluationCriteriaId) {
         return svc.updateCriteria(id, evaluationCriteriaId);
     }
-
-
    
 }
