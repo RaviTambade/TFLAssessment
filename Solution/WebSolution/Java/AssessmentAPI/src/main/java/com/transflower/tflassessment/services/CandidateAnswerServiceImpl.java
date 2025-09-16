@@ -1,6 +1,7 @@
 package com.transflower.tflassessment.services;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,29 +14,29 @@ import com.transflower.tflassessment.repositories.CandidateAnswerRepository;
 public class CandidateAnswerServiceImpl implements CandidateAnswerService {
 
     private final CandidateAnswerRepository _repo;
+
     @Autowired
     public CandidateAnswerServiceImpl(CandidateAnswerRepository repo) {
-        _repo = repo;
+        this._repo = repo;
     }
 
     @Override
-    public boolean insertCandidateAnswer(int candidateId, List<CandidateAnswer> answer) {
-        return _repo.insertCandidateAnswer(candidateId, answer);
+    public CompletableFuture<Boolean> insertCandidateAnswer(int candidateId, List<CandidateAnswer> answers) {
+        return CompletableFuture.supplyAsync(() -> _repo.insertCandidateAnswer(candidateId, answers));
     }
 
     @Override
-    public List<CandidateAnswer> getCandidateAnswer(int CandidateId, int TestId) {
-        return _repo.getCandidateAnswer(CandidateId, TestId);
+    public CompletableFuture<List<CandidateAnswer>> getCandidateAnswer(int candidateId, int testId) {
+        return CompletableFuture.supplyAsync(() -> _repo.getCandidateAnswer(candidateId, testId));
     }
 
     @Override
-    public CandidateTestDetails getCandidateTestDetails(int CandidateId, int TestId) {
-        return _repo.getCandidateTestDetails(CandidateId, TestId);
+    public CompletableFuture<CandidateTestDetails> getCandidateTestDetails(int candidateId, int testId) {
+        return CompletableFuture.supplyAsync(() -> _repo.getCandidateTestDetails(candidateId, testId));
     }
 
     @Override
-    public List<CandidateAnswer> getCandidateAnswerResult(int CandidateId, int TestId) {
-        return _repo.getCandidateAnswerResult(CandidateId, TestId);
+    public CompletableFuture<List<CandidateAnswer>> getCandidateAnswerResult(int candidateId, int testId) {
+        return CompletableFuture.supplyAsync(() -> _repo.getCandidateAnswerResult(candidateId, testId));
     }
-
 }

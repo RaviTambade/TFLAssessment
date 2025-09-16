@@ -65,6 +65,7 @@ public class QuestionBankRepositoryImpl implements QuestionBankRepository {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            System.out.println("Exception handled");
         }
         return questions;
     }
@@ -93,6 +94,7 @@ public class QuestionBankRepositoryImpl implements QuestionBankRepository {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            System.out.println("Exception handled");
         }
 
         return questions;
@@ -122,6 +124,7 @@ public class QuestionBankRepositoryImpl implements QuestionBankRepository {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            System.out.println("Exception handled");
         }
 
         return questions;
@@ -149,6 +152,7 @@ public class QuestionBankRepositoryImpl implements QuestionBankRepository {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            System.out.println("Exception handled");
         }
 
         return questions;
@@ -160,19 +164,19 @@ public class QuestionBankRepositoryImpl implements QuestionBankRepository {
     List<Question> questions = new ArrayList<>();
     
     String query = " SELECT" + 
-                "                testquestions.id AS testquestionid, \r\n" + 
-                "                questionbank.id AS questionbankid,\r\n" + 
-                "                questionbank.subjectid,\r\n" + 
-                "                questionbank.title,\r\n" + 
-                "                questionbank.a,\r\n" + 
-                "                questionbank.b,\r\n" + 
-                "                questionbank.c,\r\n" + 
-                "                questionbank.d,\r\n" + 
-               "                questionbank.evaluationcriteriaid\r\n" + 
-            "            FROM questionbank \r\n" + 
-                "            INNER JOIN testquestions \r\n" + 
-                "                ON testquestions.questionbankid = questionbank.id \r\n" + 
-                "            WHERE testquestions.testid = ?";
+                "testquestions.id AS testquestionid, \r\n" + 
+                "questionbank.id AS questionbankid,\r\n" + 
+                "questionbank.subjectid,\r\n" + 
+                "questionbank.title,\r\n" + 
+                "questionbank.a,\r\n" + 
+                "questionbank.b,\r\n" + 
+                "questionbank.c,\r\n" + 
+                "questionbank.d,\r\n" + 
+               "questionbank.evaluationcriteriaid\r\n" + 
+            "FROM questionbank \r\n" + 
+                "INNER JOIN testquestions \r\n" + 
+                "ON testquestions.questionbankid = questionbank.id \r\n" + 
+                "WHERE testquestions.testid = ?";
 
     try (
          PreparedStatement statement = connection.prepareStatement(query)) {
@@ -195,7 +199,8 @@ public class QuestionBankRepositoryImpl implements QuestionBankRepository {
             }
         }
     } catch (SQLException e) {
-        e.printStackTrace(); // or log error
+        e.printStackTrace();
+        System.out.println("Exception handled"); // or log error
     }
 
     return questions;
@@ -215,6 +220,7 @@ public class QuestionBankRepositoryImpl implements QuestionBankRepository {
 
         } catch (SQLException e) {
             e.printStackTrace();
+            System.out.println("Exception handled");
         }
 
         return false;
@@ -247,6 +253,7 @@ public class QuestionBankRepositoryImpl implements QuestionBankRepository {
 
         } catch (SQLException e) {
             e.printStackTrace();
+            System.out.println("Exception handled");
         }
 
         return question;
@@ -271,6 +278,7 @@ public class QuestionBankRepositoryImpl implements QuestionBankRepository {
 
         } catch (SQLException e) {
             e.printStackTrace();
+            System.out.println("Exception handled");
         }
 
         return false;
@@ -291,6 +299,7 @@ public class QuestionBankRepositoryImpl implements QuestionBankRepository {
 
         } catch (SQLException e) {
             e.printStackTrace();
+            System.out.println("Exception handled");
         }
 
         return false;
@@ -316,6 +325,7 @@ public class QuestionBankRepositoryImpl implements QuestionBankRepository {
 
         } catch (SQLException e) {
             e.printStackTrace();
+            System.out.println("Exception handled");
         }
 
         return false;
@@ -342,6 +352,7 @@ public class QuestionBankRepositoryImpl implements QuestionBankRepository {
 
         } catch (SQLException e) {
             e.printStackTrace();
+            System.out.println("Exception handled");
         }
 
         return null;

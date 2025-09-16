@@ -345,23 +345,9 @@ public List<CandidateSubjectResults> getCandidateSubjectResults(int subjectId) {
 }
 
 
-public List<Subject> getAllSubjects(int subjectId) {
-    List<Subject> subjects = new ArrayList<>();
-    String query = "SELECT id, title FROM subjects WHERE id = ?";
-    try {
-        PreparedStatement preparedStatement = connection.prepareStatement(query);
-        preparedStatement.setInt(1, subjectId);
-        ResultSet resultSet = preparedStatement.executeQuery();
-        while (resultSet.next()) {
-            Subject subject = new Subject();
-            subject.setId(resultSet.getInt("id"));
-            subject.setTitle(resultSet.getString("title"));
-            subjects.add(subject);
-        }
-    } catch (Exception e) {
-        System.out.println(e);
-    }
-    return subjects;
+@Override
+public boolean setCandidateTestResultDetails(int candidateId, int testId){
+    return true;
 }
 
 
@@ -484,9 +470,6 @@ public List<TestScoreDto> getCandidateAllScore(int candidateId) {
 
     return scores;
 }
-
-
-
     
 }
 

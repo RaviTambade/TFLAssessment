@@ -2,6 +2,7 @@ package com.transflower.tflassessment.services;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 import com.transflower.tflassessment.entities.AppearedCandidate;
 import com.transflower.tflassessment.entities.CandidateResultDetails;
@@ -16,33 +17,38 @@ import com.transflower.tflassessment.entities.TestScoreDto;
 
 public interface ResultService {
 
-   int getCandidateScore(int candidateId, int testId);
-
+    public CompletableFuture<Integer> getCandidateScore(int candidateId, int testId);
     // public Task<int> GetCandidateTestScore(int candidateId, int testId);
-    boolean setCandidateTestStartTime(int candidateId, int testId, LocalDateTime time);
+    public CompletableFuture<Boolean> setCandidatTeststarttime(int candidateId, int testId, LocalDateTime time) ;
 
-    boolean setCandidateTestEndTime(int candidateId, int testId, LocalDateTime time);
+    public CompletableFuture<Boolean> setCandidateTestEndTime(int candidateId, int testId, LocalDateTime time);
 
-    CandidateResultDetails candidateTestResultDetails(int candidateId, int testId);
+    public CompletableFuture<CandidateResultDetails> CandidateTestResultDetails(int candidateId, int testId);
 
-    List<TestResultDetails> getTestResultDetail(int testId);
+    public CompletableFuture <List<AppearedCandidate>> getAppearedCandidates(int testId);
 
-    List<AppearedCandidate> getAppearedCandidates(int testId);
+    public CompletableFuture<List<TestList>> getTestList(int candidateId);
 
-    List<TestList> getTestList(int candidateId);
+    public CompletableFuture <List<PassedCandidateDetails>> getPassedCandidateResults(int testId);
 
-    List<PassedCandidateDetails> getPassedCandidateResults(int testId);
+    public CompletableFuture<List<FailedCandidateDetails>> getFailedCandidateResults(int testId);
 
-    List<FailedCandidateDetails> getFailedCandidateResults(int testId);
+    public CompletableFuture<Boolean> setPassingLevel (int testId, int passingLevel);
 
-    boolean setPassingLevel(int testId, int passingLevel);
-
-    List<CandidateSubjectResults> getSubjectResultDetails(int subjectId);
+    public CompletableFuture<List<CandidateSubjectResults>> getSubjectResultDetails(int subjectId);
 
     // public Task<int[]> GetAllTestIds();
-    List<Subject> getAllSubjects();
+    public CompletableFuture<List<Subject>> getAllSubjects();
 
-    List<TestAverageReport> getTestAverageReport(int testId);
+    public  CompletableFuture<List<TestAverageReport>> getTestAverageReport(int testId);
 
-    List<TestScoreDto> getCandidateAllScore(int candidateId);
+    public CompletableFuture<List<TestScoreDto>> getCandidateAllScore(int candidateId);
+         
+    public CompletableFuture<List<TestResultDetails>> getTestResultDetail(int testId);
+
+    public CompletableFuture<Boolean> setCandidateTestResultDetails(int candidateId, int testId);
+
+
+
 }
+

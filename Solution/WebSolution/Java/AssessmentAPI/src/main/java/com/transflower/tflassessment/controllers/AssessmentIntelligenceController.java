@@ -1,6 +1,7 @@
 package com.transflower.tflassessment.controllers;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,7 +20,7 @@ public class AssessmentIntelligenceController {
     private AssessmentIntelligenceService svc;
 
     @GetMapping("/candidateanswer/{candidateid}/testtime/{year}")
-    public List<AnnualCandidateResult> getCandidateResults(@PathVariable("candidateid") int candidateId, @PathVariable("year") int year) {
+    public CompletableFuture<List<AnnualCandidateResult>> getCandidateResults(@PathVariable("candidateid") int candidateId, @PathVariable("year") int year) {
         
         return svc.getCandidateResults(candidateId, year);
     }
