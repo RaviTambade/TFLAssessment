@@ -24,7 +24,7 @@ public class RegistrationTest {
     static void setup(){
         WebDriverManager.chromedriver().setup();
         driver=new ChromeDriver();
-        driver.get("http://127.0.0.1:5500/All_elements_html_testing/src/webpages/registration.html");
+        driver.get("http://127.0.0.1:5500/src/webpages/registration.html");
          wait=new WebDriverWait(driver, Duration.ofSeconds(5));
         
     }
