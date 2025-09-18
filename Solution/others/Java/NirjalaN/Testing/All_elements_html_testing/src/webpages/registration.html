@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        center {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        form {
+            background: white;
+            padding: 30px 40px;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            max-width: 450px;
+            width: 100%;
+        }
+
+        h2 {
+            margin-bottom: 25px;
+            color: #2575fc;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        input[type="number"],
+        input[type="date"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+
+        input[type="radio"],
+        input[type="checkbox"] {
+            margin-right: 5px;
+        }
+
+        input[type="button"],
+        input[type="reset"] {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-right: 10px;
+            font-weight: bold;
+            font-size: 14px;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        input[type="button"] {
+            background-color: #2575fc;
+            color: white;
+        }
+
+        input[type="button"]:hover {
+            background-color: #6a11cb;
+        }
+
+        input[type="reset"] {
+            background-color: #ccc;
+        }
+
+        input[type="reset"]:hover {
+            background-color: #999;
+            color: white;
+        }
+
+        #msg {
+            margin-top: 15px;
+            font-weight: bold;
+            font-size: 16px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <center>
+        <form id="registrationForm">
+
+            <h2>Registration Form</h2>
+
+            <label for="username">username</label><br>
+            <input type="text" id="username" name="fname" required><br>
+
+            <label for="email">Email:</label><br>
+            <input type="email" id="email" name="email" required><br>
+
+            <label for="password">Password:</label><br>
+            <input type="password" id="password" name="password" required><br>
+
+            <label for="age">Age:</label><br>
+            <input type="number" id="age" name="age" min="1" max="100"><br>
+
+            <label for="dob">Date of Birth:</label><br>
+            <input type="date" id="dob" name="dob"><br>
+
+            <label>Gender:</label><br>
+            <input type="radio" id="male" name="gender" value="Male">
+            <label for="male">Male</label>
+            <input type="radio" id="female" name="gender" value="Female">
+            <label for="female">Female</label><br><br>
+
+            <label>Hobbies:</label><br>
+            <input type="checkbox" id="reading" name="hobby" value="Reading">
+            <label for="reading">Reading</label>
+            <input type="checkbox" id="sports" name="hobby" value="Sports">
+            <label for="sports">Sports</label>
+            <input type="checkbox" id="music" name="hobby" value="Music">
+            <label for="music">Music</label><br><br>
+
+            <label for="country">Country:</label><br>
+            <select id="country" name="country">
+                <option id="none" value="">--Select--</option>
+                <option id="india" value="India">India</option>
+                <option id="usa" value="USA">USA</option>
+                <option id="uk" value="UK">UK</option>
+            </select><br>
+
+            <label for="address">Address:</label><br>
+            <textarea id="address" name="address" rows="4" cols="40"></textarea><br>
+
+            <div>
+            <input type="button" id="submit" value="Submit" >
+            <input type="reset" id="reset" value="Reset">
+            <input type="text" id="msg" >
+            </div>
+
+
+            
+        </form>
+    </center>
+    <!-- <script>
+        document.getElementById("submit").onclick = () => {
+            const msg = document.getElementById("msg");
+            msg.value = "Registration Successful!";
+            msg.style.display = "block";
+        };
+    </script> -->
+</body>
+</html>
