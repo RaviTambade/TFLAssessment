@@ -105,7 +105,7 @@ public class LoginTest {
         } catch (Exception e) {
             System.out.println(e);
         }
-        dob.sendKeys("2004-01-19");
+        dob.sendKeys("19-01-2004");
          try {
              Thread.sleep(1000);
         } catch (Exception e) {
@@ -147,7 +147,7 @@ public class LoginTest {
       }
       
        @AfterAll
-     void exit() {
+      static void exit() {
         if (driver != null) {
             driver.quit();
         }
