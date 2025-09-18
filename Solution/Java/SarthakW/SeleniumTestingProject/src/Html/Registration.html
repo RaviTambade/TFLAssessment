@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Form Test</title>
+  <style>
+    /* Reset default browser styles */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to right, #b9e9e7, #b7ebecf3);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .form-container {
+      background-color: #ffffff;
+      max-width: 450px;
+      width: 100%;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    }
+
+    h2 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 25px;
+      font-size: 28px;
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 600;
+      color: #555;
+    }
+
+    input,
+    select,
+    textarea,
+    button {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 15px;
+      transition: all 0.3s ease;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border-color: #2575fc;
+      outline: none;
+      box-shadow: 0 0 8px rgba(37, 117, 252, 0.3);
+    }
+
+    .form-inline {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .form-inline input[type="radio"] {
+      width: auto;
+    }
+
+    .form-inline label {
+      margin: 0;
+      font-weight: normal;
+      color: #333;
+    }
+
+    input[type="checkbox"] {
+      width: auto;
+      transform: scale(1.1);
+      margin-right: 8px;
+    }
+
+    button {
+      background-color: #e7620a;
+      color: white;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #6a11cb;
+    }
+
+    textarea {
+      resize: none;
+    }
+
+    /* Small responsive tweaks */
+    @media (max-width: 480px) {
+      .form-inline {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .form-inline label {
+        margin-bottom: 5px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <h2>Login Form </h2>
+    <form action="/submit" method="POST">
+
+      <!-- Username -->
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" placeholder="Enter username" required>
+      </div>
+
+      <!-- Email -->
+      <div class="form-group">
+        <label for="email">Email ID</label>
+        <input type="email" id="email" name="email" placeholder="Enter email">
+      </div>
+
+      <!-- Password -->
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" placeholder="Enter password" required>
+      </div>
+
+      <!-- Radio Buttons (Gender) -->
+      <div class="form-group">
+        <label>Gender</label>
+        <div class="form-inline">
+          <input type="radio" id="male" name="gender" value="male">
+          <label for="male">Male</label>
+          <input type="radio" id="female" name="gender" value="female">
+          <label for="female">Female</label>
+        </div>
+      </div>
+
+      <!-- Checkbox -->
+      <div class="form-group">
+        <label>
+          <input type="checkbox" name="remember" id="remember" value="yes"> Remember Me
+        </label>
+      </div>
+
+      <!-- Toggle Button -->
+      <div class="form-group">
+        <label for="toggle">Enable Notifications</label>
+        <input type="checkbox" id="toggle" name="notifications" value="enabled">
+      </div>
+
+      <!-- Select Dropdown -->
+      <div class="form-group">
+        <label for="role">Select Role</label>
+        <select id="role" name="role">
+          <option value="admin">Admin</option>
+          <option value="student">Student</option>
+          <option value="teacher">Teacher</option>
+          <option value="guest">Guest</option>
+        </select>
+      </div>
+
+      <!-- Textarea -->
+      <div class="form-group">
+        <label for="comments">Additional Comments</label>
+        <textarea id="comments" name="comments" rows="3" placeholder="Enter any message..."></textarea>
+      </div>
+
+      <!-- Date and Time -->
+      <div class="form-group">
+        <label for="dob">Date of Birth</label>
+        <input type="date" id="dob" name="dob">
+      </div>
+
+      <!-- Submit -->
+      <div class="form-group">
+        <button type="submit" id="submit">Login</button>
+      </div>
+
+    </form>
+  </div>
+</body>
+</html>
