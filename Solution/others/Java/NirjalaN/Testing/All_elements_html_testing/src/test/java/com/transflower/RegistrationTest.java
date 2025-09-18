@@ -24,7 +24,7 @@ public class RegistrationTest {
     static void setup(){
         WebDriverManager.chromedriver().setup();
         driver=new ChromeDriver();
-        driver.get("http://127.0.0.1:5500/All_elements_html_testing/src/webpages/registration.html");
+        driver.get("http://127.0.0.1:5500/src/webpages/registration.html");
          wait=new WebDriverWait(driver, Duration.ofSeconds(5));
         
     }
@@ -45,6 +45,7 @@ public class RegistrationTest {
         WebElement address=driver.findElement(By.id("address"));
         WebElement button=driver.findElement(By.id("submit"));
         WebElement reset=driver.findElement(By.id("reset"));
+        WebElement msg=driver.findElement(By.id("msg"));
 
 
         username.sendKeys("Nirjala Naik");
@@ -82,13 +83,7 @@ public class RegistrationTest {
         catch(InterruptedException e){
             System.out.println(e);
         }
-
-         String enteredusername=username.getAttribute("value");
-        // String enteredemail=email.getAttribute("nirjalanaik@gmail.com");
-        // String enteredpassword=password.getAttribute("nirjala@123");
-        // String enteredage=age.getAttribute("21");
-        // String entereddob=dob.getAttribute("17-06-2004");
-
+       
         female.click();
         reading.click();
         music.click();
@@ -96,17 +91,27 @@ public class RegistrationTest {
         Select CountrySelect=new Select(country);
         CountrySelect.selectByVisibleText("India");
 
-        // String enteredcountry=country.getAttribute("India");
-
         address.sendKeys("Kolhapur");
-        // String enteredaddress=address.getAttribute("Kolhapur");
-        button.click();
+        String enteredusername = username.getAttribute("value");
+        // String enteredemail=email.getAttribute("nirjalanaik@gmail.com");
+        // String enteredpassword=password.getAttribute("nirjala@123");
+        // String enteredage=age.getAttribute("21");
+        // String entereddob=dob.getAttribute("17-06-2004");
+         // String enteredcountry=country.getAttribute("India");
+         // String enteredaddress=address.getAttribute("Kolhapur");
 
-       
-        WebElement message=wait.until(
-            ExpectedConditions.visibilityOfElementLocated(By.id("msg"))
+        button.click(); 
+        WebElement welcomeMessage = wait.until(
+                ExpectedConditions.presenceOfElementLocated(By.id("msg"))
         );
-        message.sendKeys("Welcome Dear "+enteredusername);
+
+        assertTrue(welcomeMessage.getText().contains("Welcome " + enteredusername + "!"));
+        try{
+            Thread.sleep(2000);
+        }
+        catch(InterruptedException e){
+            System.out.println(e);
+        }
 
         // if(enteredusername.equals("Nirjala Naik")&&
         //    enteredemail.equals("nirjalanaik@gmail.com")&&
@@ -121,15 +126,6 @@ public class RegistrationTest {
         // else{
         //     message.sendKeys("Registration failed");
         // }
-        assertTrue(message.getAttribute("value").contains("Welcome Dear " +enteredusername));
-        try{
-            Thread.sleep(2000);
-        }
-        catch(InterruptedException e){
-            System.out.println(e);
-        }
-        
-
     }
 
     @AfterAll

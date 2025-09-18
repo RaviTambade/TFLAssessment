@@ -145,22 +145,24 @@
             <label for="address">Address:</label><br>
             <textarea id="address" name="address" rows="4" cols="40"></textarea><br>
 
-            <div>
-            <input type="button" id="submit" value="Submit" >
-            <input type="reset" id="reset" value="Reset">
-            <input type="text" id="msg" >
-            </div>
-
-
-            
+                <!-- only change: onclick calls JS function -->
+                <input type="submit" id="submit" value="Submit" onclick="showMessage()">
+                <input type="reset" id="reset" value="Reset">
+            <div id="msg"></div>
         </form>
     </center>
-    <!-- <script>
-        document.getElementById("submit").onclick = () => {
-            const msg = document.getElementById("msg");
-            msg.value = "Registration Successful!";
-            msg.style.display = "block";
-        };
-    </script> -->
+
+   <script>
+        function showMessage() {
+            document.getElementById("registrationForm").addEventListener("submit", function(e) {
+                e.preventDefault();
+                if (this.checkValidity()) {
+                    let username = document.getElementById("username").value;
+                    window.location.href = "welcome.html?username=" + encodeURIComponent(username);
+                }
+            });
+        }
+    </script>
+
 </body>
 </html>
