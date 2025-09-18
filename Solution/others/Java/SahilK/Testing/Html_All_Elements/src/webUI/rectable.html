@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Canvas Rectangle</title>
+</head>
+<body>
+  <h2>Drawing a Rectangle using HTML Canvas</h2>
+
+  <!-- Canvas area -->
+  <canvas id="myCanvas" width="400" height="300" style="border:5px solid #000;"></canvas>
+
+  <script>
+    // get the canvas element
+    var canvas = document.getElementById("myCanvas");
+    var ctx = canvas.getContext("2d");
+
+    // draw a filled rectangle
+    ctx.fillStyle = "blue";       // fill color
+    ctx.fillRect(50, 50, 150, 100);  // x, y, width, height
+
+    // draw a rectangle border
+    ctx.strokeStyle = "red";      // border color
+    ctx.lineWidth = 10;
+    ctx.strokeRect(250, 70, 100, 150); // x, y, width, height
+
+    ctx.fillStyle = "green";
+    ctx.fillRect(100, 200, 200, 50); // x,
+  </script>
+</body>
+</html>
