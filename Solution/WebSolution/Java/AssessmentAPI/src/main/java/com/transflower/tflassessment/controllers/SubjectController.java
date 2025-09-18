@@ -1,7 +1,10 @@
 package com.transflower.tflassessment.controllers;
 
-import java.util.List;
 
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,28 +20,25 @@ import com.transflower.tflassessment.services.SubjectService;
 @RequestMapping("/api/subjects")
 public class SubjectController {
 
-    private final SubjectService svc;
+    @Autowired
+    private  SubjectService svc;
 
     public SubjectController(SubjectService svc) {
         this.svc = svc;
     }
 
     @GetMapping("/subjects")
-    public List<SubjectModel> getAllSubjects() {
+    public CompletableFuture<List<SubjectModel>> getAllSubjects() {
         return svc.getAllSubjects();
     }
 
     @PostMapping("/add")
-    public String addSubject(@RequestBody SubjectModel subject) {
-        int newId = svc.addSubject(subject);
-        return (newId > 0) ? "Subject created with id: " + newId 
-                           : "Failed to create subject";
+    public CompletableFuture<Integer> addSubject(@RequestBody SubjectModel subject) {
+        return svc.addSubject(subject);
     }
 
     @DeleteMapping("/{id}")
-    public String deleteSubject(@PathVariable int id) {
-        int deleted = svc.deleteSubject(id);
-        return (deleted > 0) ? "Subject deleted successfully"
-                             : "Subject not found with id: " + id;
+    public CompletableFuture<Integer>deleteSubject(@PathVariable int id) {
+        return  svc.deleteSubject(id);
     }
 }

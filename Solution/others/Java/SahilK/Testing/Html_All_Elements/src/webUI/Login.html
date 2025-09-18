@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Form Test</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background: #f4f6f9;
+    }
+
+    .form-container {
+      max-width: 400px;
+      margin: auto;
+      padding: 20px;
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+      background: #fff;
+    }
+
+    h2 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: bold;
+      color: #555;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 14px;
+      transition: all 0.3s ease;
+    }
+
+    /* Modern textbox effect */
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border-color: #6a11cb;
+      box-shadow: 0 0 6px rgba(106, 17, 203, 0.5);
+      outline: none;
+    }
+
+    .form-inline {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    /* Modern Button */
+    button {
+      width: 100%;
+      padding: 12px;
+      background: linear-gradient(135deg, #6a11cb, #2575fc);
+      border: none;
+      border-radius: 8px;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: transform 0.2s ease, background 0.3s ease;
+    }
+
+    button:hover {
+      background: linear-gradient(135deg, #2575fc, #6a11cb);
+      transform: scale(1.05);
+    }
+
+    #message {
+      margin-top: 12px;
+      padding: 8px;
+      border-radius: 6px;
+      text-align: center;
+      font-weight: bold;
+      color: #2575fc;
+      background: #f0f7ff;
+    }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <h2>Login Form (Testing)</h2>
+    <form action="/submit" method="POST">
+      
+      <!-- Username -->
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" placeholder="Enter username" required>
+      </div>
+
+      <!-- Email -->
+      <div class="form-group">
+        <label for="email">Email ID</label>
+        <input type="email" id="email" name="email" placeholder="Enter email">
+      </div>
+
+      <!-- Password -->
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" placeholder="Enter password" required>
+      </div>
+
+      <!-- Gender -->
+      <div class="form-group">
+        <label>Gender</label>
+        <div class="form-inline">
+          <input type="radio" id="male" name="gender" value="male">
+          <label for="male">Male</label>
+          <input type="radio" id="female" name="gender" value="female">
+          <label for="female">Female</label>
+        </div>
+      </div>
+
+      <!-- Remember Me -->
+      <div class="form-group">
+        <label>
+          <input type="checkbox" name="remember" id="remember" value="yes"> Remember Me
+        </label>
+      </div>
+
+      <!-- Notifications -->
+      <div class="form-group">
+        <label for="toggle">Enable Notifications</label>
+        <input type="checkbox" id="toggle" name="notifications" value="enabled">
+      </div>
+
+      <!-- Role -->
+      <div class="form-group">
+        <label for="role">Select Role</label>
+        <select id="role" name="role">
+          <option value="admin">Admin</option>
+          <option value="student">Student</option>
+          <option value="teacher">Teacher</option>
+          <option value="guest">Guest</option>
+        </select>
+      </div>
+
+      <!-- Comments -->
+      <div class="form-group">
+        <label for="comments">Additional Comments</label>
+        <textarea id="comments" name="comments" rows="3" placeholder="Enter any message..."></textarea>
+      </div>
+
+      <!-- DOB -->
+      <div class="form-group">
+        <label for="dob">Date of Birth</label>
+        <input type="date" id="dob" name="dob">
+      </div>
+
+      <!-- Submit -->
+      <div class="form-group">
+        <button type="button" id="submit">Login</button>
+        <input id="message" type="text" placeholder="Result will be shown here"> 
+      </div>
+
+    </form>
+  </div>
+</body>
+</html>

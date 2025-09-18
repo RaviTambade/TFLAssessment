@@ -17,7 +17,6 @@ import com.transflower.tflassessment.entities.CandidateResultDetails;
 import com.transflower.tflassessment.entities.CandidateSubjectResults;
 import com.transflower.tflassessment.entities.FailedCandidateDetails;
 import com.transflower.tflassessment.entities.PassedCandidateDetails;
-import com.transflower.tflassessment.entities.Question;
 import com.transflower.tflassessment.entities.Subject;
 import com.transflower.tflassessment.entities.TestAverageReport;
 import com.transflower.tflassessment.entities.TestList;

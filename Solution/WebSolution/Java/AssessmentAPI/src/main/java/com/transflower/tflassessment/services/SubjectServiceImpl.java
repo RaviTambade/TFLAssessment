@@ -1,6 +1,7 @@
 package com.transflower.tflassessment.services;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,19 +17,22 @@ public class SubjectServiceImpl implements SubjectService {
     {
         _repo=repo;
     }
+    @Async("asyncExecutor")
     @Override
-    public List<SubjectModel> getAllSubjects() {
-       return _repo.getAllSubjects();
+    public CompletableFuture<List<SubjectModel>> getAllSubjects() {
+       return CompletableFuture.completedFuture(_repo.getAllSubjects());
     }
 
+    @Async("asyncExecutor")
     @Override
-    public int addSubject(SubjectModel subject) {
-       return _repo.addSubject(subject);
+    public CompletableFuture<Integer> addSubject(SubjectModel subject) {
+        return CompletableFuture.completedFuture( _repo.addSubject(subject));
     }
 
+    @Async("asyncExecutor")
     @Override
-    public int deleteSubject(int subjectId) {
-      return _repo.deleteSubject(subjectId);
+    public CompletableFuture<Integer> deleteSubject(int subjectId) {
+      return CompletableFuture.completedFuture(_repo.deleteSubject(subjectId)) ;
     }
     
 }
