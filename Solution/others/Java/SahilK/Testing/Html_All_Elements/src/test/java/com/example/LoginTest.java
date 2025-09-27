@@ -97,11 +97,11 @@ public class LoginTest {
         }
 
         comments.sendKeys("This is a Selenium test run.");
-         try {
-             Thread.sleep(1000);
-        } catch (Exception e) {
-            System.out.println(e);
-        }
+        //  try {
+        //      Thread.sleep(1000);
+        // } catch (Exception e) {
+        //     System.out.println(e);
+        // }
         dob.sendKeys("19-01-2004");
          try {
              Thread.sleep(1000);
