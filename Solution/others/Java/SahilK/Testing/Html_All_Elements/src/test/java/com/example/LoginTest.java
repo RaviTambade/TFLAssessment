@@ -142,7 +142,12 @@ public class LoginTest {
             System.out.println(e);
         }
       }
+     @AfterAll
+      static void exit() {
+        if (driver != null) {
+            driver.quit();
+        }
+    }
       
       
-    
 }
