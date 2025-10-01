@@ -143,11 +143,6 @@ public class LoginTest {
         }
       }
       
-       @AfterAll
-      static void exit() {
-        if (driver != null) {
-            driver.quit();
-        }
-    }
+      
     
 }
