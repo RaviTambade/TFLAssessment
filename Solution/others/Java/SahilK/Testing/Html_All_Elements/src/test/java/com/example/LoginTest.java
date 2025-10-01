@@ -136,11 +136,11 @@ public class LoginTest {
         }
 
         assertTrue(message.getAttribute("value").contains("Welcome-"+enteredUsername));
-        //  try {
-        //      Thread.sleep(5000);
-        // } catch (Exception e) {
-        //     System.out.println(e);
-        // }
+         try {
+             Thread.sleep(5000);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
       }
       
        @AfterAll
