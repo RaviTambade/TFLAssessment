@@ -25,7 +25,7 @@ public class AuthRepository : IAuthRepository
             FROM users u
             LEFT JOIN userroles ur ON u.id = ur.userid
             LEFT JOIN roles r ON ur.roleid = r.id
-            WHERE u.email = @Email";
+            WHERE u.email = @Email AND u.password=@Password";
 
         using (MySqlConnection connection = new MySqlConnection(_connectionString))
         {
@@ -35,6 +35,7 @@ public class AuthRepository : IAuthRepository
                 using (MySqlCommand command = new MySqlCommand(query, connection))
                 {
                     command.Parameters.AddWithValue("@Email", email);
+                    command.Parameters.AddWithValue("@Password", password);
                     using (var reader = await command.ExecuteReaderAsync())
                     {
                         while (await reader.ReadAsync())
