@@ -34,7 +34,6 @@ public class LoginTest {
         WebElement button   = webDriver.findElement(By.id("login"));
         //WebElement msg= webDriver.findElement(By.id("message"));
 
-
         try {
             Thread.sleep(2000);
             
