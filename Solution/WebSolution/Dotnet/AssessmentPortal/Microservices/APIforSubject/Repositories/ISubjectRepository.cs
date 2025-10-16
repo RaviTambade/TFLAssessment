@@ -1,6 +1,7 @@
-using Transflower.Entities;
-
-namespace Transflower.SubjectAPI.Repositories.Interfaces
+// using Transflower.Entities;
+using APIforSubject.Entities;
+// namespace Transflower.SubjectAPI.Repositories.Interfaces
+namespace APIforSubject.Repositories.Interfaces
 {
     public interface ISubjectRepository
     {

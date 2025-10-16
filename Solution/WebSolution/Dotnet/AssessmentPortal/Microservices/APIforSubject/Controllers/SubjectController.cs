@@ -1,10 +1,13 @@
 
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using Transflower.Entities;
-using  Transflower.SubjectAPI.Services.Interfaces;
-namespace Transflower.Subject.Controllers;
+// using Transflower.Entities;
+// using Transflower.SubjectAPI.Services.Interfaces;
+using APIforSubject.Entities;
+using APIforSubject.Services.Interfaces;
 
+// namespace Transflower.Subject.Controllers;
+namespace APIforSubject.Subject.Controllers;
 //Controller is now responsible to handle HTTP Requests
 
 [ApiController]

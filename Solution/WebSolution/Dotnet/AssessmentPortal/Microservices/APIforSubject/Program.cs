@@ -1,8 +1,14 @@
 using Microsoft.Extensions.Logging;
-using Transflower.SubjectAPI.Repositories.Interfaces;
-using Transflower.SubjectAPI.Services.Interfaces;
-using Transflower.SubjectAPI.Repositories;
-using Transflower.SubjectAPI.Services;
+// using Transflower.SubjectAPI.Repositories.Interfaces;
+// using Transflower.SubjectAPI.Services.Interfaces;
+// using Transflower.SubjectAPI.Repositories;
+// using Transflower.SubjectAPI.Services;
+
+
+using APIforSubject.Repositories.Interfaces;
+using APIforSubject.Services.Interfaces;
+using APIforSubject.Repositories;
+using APIforSubject.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
