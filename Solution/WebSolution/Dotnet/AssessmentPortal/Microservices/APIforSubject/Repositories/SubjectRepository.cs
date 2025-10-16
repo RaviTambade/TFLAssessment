@@ -72,7 +72,9 @@ public class SubjectRepository : ISubjectRepository
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                // Console.WriteLine(e.Message);
+                Console.WriteLine(" ERROR in AddSubject: " + e.Message);
+                Console.WriteLine(" StackTrace: " + e.StackTrace);
                 return -1;
             }
             finally
