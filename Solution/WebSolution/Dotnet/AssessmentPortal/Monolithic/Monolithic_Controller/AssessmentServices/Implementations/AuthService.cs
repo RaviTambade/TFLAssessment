@@ -68,4 +68,9 @@ public class AuthService : IAuthService
 
         return new JwtSecurityTokenHandler().WriteToken(token);
     }
+     public async Task<bool> AddUser(User user)
+    {
+        return await _repository.AddUser(user);
+
+    }
 }
