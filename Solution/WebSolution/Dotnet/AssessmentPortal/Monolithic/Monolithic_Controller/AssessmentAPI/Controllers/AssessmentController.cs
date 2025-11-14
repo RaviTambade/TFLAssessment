@@ -10,7 +10,6 @@ using Transflower.TFLAssessment.Entities.Models;
 namespace Transflower.TFLAssessment.Controllers;
 
 //Controller is now responsible to handle HTTP Requests
-
 [ApiController]
 [Route("api/[controller]")]
 public class AssessmentController : ControllerBase
@@ -24,6 +23,7 @@ public class AssessmentController : ControllerBase
         _logger = logger;
 
     }
+    
     //http://localhost:5238/api/assessment/1
     [HttpGet("{id}")]
     public async Task<IActionResult> GetDetails(int id)
