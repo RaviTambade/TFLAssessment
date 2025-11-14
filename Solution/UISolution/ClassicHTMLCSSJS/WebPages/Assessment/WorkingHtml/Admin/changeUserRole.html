@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin - User Role Control</title>
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <style>
+      body {
+        background: #f7f7f7;
+      }
+      .role-box {
+        border: 1px solid #ddd;
+        padding: 15px;
+        background: #fff;
+        border-radius: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container mt-4">
+      <h2 class="text-center mb-4">🔐 Admin – Manage User Roles</h2>
+
+      <!-- Search Section -->
+      <div class="card p-3 mb-4 shadow-sm">
+        <h5>Search User</h5>
+        <div class="row g-3">
+          <div class="col-md-6">
+            <input
+              type="text"
+              id="mobileSearch"
+              class="form-control"
+              placeholder="Enter Mobile Number"
+            />
+          </div>
+          <div class="col-md-3">
+            <button class="btn btn-primary w-100" onclick="searchUser()">
+              Search
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- User Details -->
+      <div id="userDetails" class="card p-3 shadow-sm" style="display: none">
+        <h5>User Information</h5>
+        <div class="row mt-2">
+          <div class="col-md-6">
+            <p><strong>First Name:</strong> <span id="firstName"></span></p>
+            <p><strong>Last Name:</strong> <span id="lastName"></span></p>
+          </div>
+          <div class="col-md-6">
+            <p><strong>Mobile:</strong> <span id="mobile"></span></p>
+            <p><strong>Email:</strong> <span id="email"></span></p>
+          </div>
+        </div>
+
+        <hr />
+
+        <!-- Role Selection -->
+        <h5>Roles</h5>
+        <div class="role-box">
+          <div class="form-check">
+            <input
+              class="form-check-input roleCheck"
+              type="checkbox"
+              value="admin"
+              id="roleAdmin"
+            />
+            <label class="form-check-label">Admin</label>
+          </div>
+          <div class="form-check">
+            <input
+              class="form-check-input roleCheck"
+              type="checkbox"
+              value="sme"
+              id="roleSME"
+            />
+            <label class="form-check-label">SME</label>
+          </div>
+          <div class="form-check">
+            <input
+              class="form-check-input roleCheck"
+              type="checkbox"
+              value="student"
+              id="roleStudent"
+            />
+            <label class="form-check-label">Student</label>
+          </div>
+        </div>
+
+        <button class="btn btn-success mt-3" onclick="updateRole()">
+          Update Role
+        </button>
+      </div>
+    </div>
+
+    <script>
+
+
+ 
+      function searchUser() {
+        const mobile = document.getElementById("mobileSearch").value.trim();
+
+
+         var sme=document.getElementById("roleSME")
+          var student=document.getElementById("roleStudent");
+          var admin=document.getElementById("roleAdmin");
+
+          sme.checked=false;
+          student.checked=false;
+          admin.checked=false;
+
+        if (mobile === "") {
+          alert("Please enter mobile number");
+          return;
+        }
+
+          $(document).ready(function () {
+              $.ajax({
+                url: `http://localhost:5238/api/UserProfile/contactno/${mobile}`,
+                method: "GET",
+                success: function (data) {
+                  if (!data) {
+                    alert("No user found with this mobile number!!");
+                    return;
+                  }
+
+                  
+
+                   document.getElementById("firstName").innerText = data.firstname;
+                   document.getElementById("firstName").innerText = data.firstname;
+                  document.getElementById("lastName").innerText = data.lastname;
+                  document.getElementById("email").innerText = data.email;
+                  document.getElementById("mobile").innerText = data.contactNumber;
+
+                  data.roles.forEach(role => {
+                      if(role.name==sme.value)
+                      {
+                            sme.checked = true;
+                      }
+                      else if(role.name==student.value)
+                      {
+                          student.checked = true;
+                      }
+                      else  if(role.name==admin.value)
+                      {
+                          admin.checked = true;
+                      }
+                  });
+  
+
+                    document.getElementById("userDetails").style.display = "block";
+                },
+                error: function (xhr, status, error) {
+                  console.error("Error fetching scores:", error);
+                  $("#studentLabel").text("Error loading scores.");
+                },
+              });
+            });
+      }
+
+    </script>
+  </body>
+</html>
