@@ -79,17 +79,17 @@
       <input type="email" id="email" name="email">
 
       <label for="contactnumber">Contact Number</label>
-      <input type="text" id="contactnumber" name="contactnumber">
+      <input type="text" id="contactnumber" name="contactnumber"  maxlength="10">
 
       <label for="password">Password</label>
       <input type="password" id="password" name="password">
 
-      <label for="userRole">User Role</label>
+      <!-- <label for="userRole">User Role</label>
       <select id="userRole" name="userRole">
         <option value="">Select Role</option>
         <option value="Admin">Admin</option>
         <option value="User">User</option>
-      </select>
+      </select> -->
 
       <button type="submit">Register</button>
     </form>
@@ -110,7 +110,7 @@
       };
 
       try {
-        const response = await fetch("http://localhost:5238/api/UserRegistration/register", {
+        const response = await fetch("http://localhost:5238/api/Auth/register", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(userData)

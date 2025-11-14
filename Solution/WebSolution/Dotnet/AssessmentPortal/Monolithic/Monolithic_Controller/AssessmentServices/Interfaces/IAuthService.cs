@@ -6,4 +6,6 @@ namespace Transflower.TFLAssessment.Services.Interfaces;
 public interface IAuthService
 {
     Task<LoginResponse> GetUserWithRolesByEmail(string email, string password);
+     Task<bool> AddUser(User user);
+
 }
