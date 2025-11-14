@@ -101,6 +101,8 @@
           contentType: "application/json",
           data: JSON.stringify(loginData),
           success: function (response) {
+                  console.log("responseresponseresponse:", response);
+
             const token = response.token;
             const user = response.user;
             const role = user.userRoles[0].role.name.toLowerCase();
@@ -121,6 +123,7 @@
             } else if (role === "sme") {
               window.location.href = "SME/sme.html";
             } else if (role === "student") {
+              
               window.location.href = "Student/student.html";
             } else {
               $("#error").text("Role not recognized.");

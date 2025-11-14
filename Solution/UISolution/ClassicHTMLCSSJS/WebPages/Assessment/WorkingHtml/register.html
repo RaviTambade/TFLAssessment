@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -33,7 +34,8 @@
       font-weight: bold;
     }
 
-    input, select {
+    input,
+    select {
       width: 100%;
       padding: 8px;
       margin-bottom: 15px;
@@ -58,6 +60,7 @@
     }
   </style>
 </head>
+
 <body>
 
   <div class="register-container">
@@ -93,27 +96,46 @@
   </div>
 
   <script>
-  document.getElementById("registerForm").addEventListener("submit", function(event) {
-    event.preventDefault(); // stop page reload
+    document.getElementById("registerForm").addEventListener("submit", async function (event) {
+      event.preventDefault(); // stop page reload
 
-    const userData = {
-      aadharid: document.getElementById("aadharid").value,
-      firstname: document.getElementById("firstname").value,
-      lastname: document.getElementById("lastname").value,
-      email: document.getElementById("email").value,
-      contactnumber: document.getElementById("contactnumber").value,
-      password: document.getElementById("password").value,
-      userRole: document.getElementById("userRole").value,
-    };
+      const userData = {
+        aadharid: document.getElementById("aadharid").value,
+        firstname: document.getElementById("firstname").value,
+        lastname: document.getElementById("lastname").value,
+        email: document.getElementById("email").value,
+        contactnumber: document.getElementById("contactnumber").value,
+        password: document.getElementById("password").value,
+        userRole: document.getElementById("userRole").value,
+      };
 
-    console.log("User Registration Data:", userData);
-    alert("Registration successful! Redirecting to login...");
+      try {
+        const response = await fetch("http://localhost:5238/api/UserRegistration/register", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(userData)
+        });
 
-    // Redirect to login page
-    window.location.href = "loginJWT.html";
-  });
-</script>
+        if (response.ok) {
+          const data = await response.json();
+          alert("✅ Registration successful! Redirecting to login...");
+          window.location.href = "loginJWT.html";
+        } else {
+          const errorData = await response.json();
+          alert("❌ Registration failed: " + errorData.message);
+        }
+
+      } catch (error) {
+        document.getElementById("message").innerText = "⚠️ Server error!";
+        console.error(error);
+      }
+
+      console.log("User Registration Data:", userData);
+     
+    });
+  </script>
 
 
 </body>
+
 </html>

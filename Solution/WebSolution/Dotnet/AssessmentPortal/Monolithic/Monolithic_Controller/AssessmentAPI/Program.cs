@@ -64,6 +64,8 @@ builder.Services.AddScoped<IAssessmentIntelligenceRepository, AssessmentIntellig
 builder.Services.AddScoped<IAssessmentIntelligenceService, AssessmentIntelligenceService>();
 builder.Services.AddScoped<IAssessmentRepository, AssessmentDapperRepository>();
 builder.Services.AddScoped<IAssessmentService, AssessmentService>();
+builder.Services.AddScoped<IUserRegistrationRepository, UserRegistrationRepository>();
+builder.Services.AddScoped<IUserRegistrationService, UserRegistrationService>();
 
 var app = builder.Build();
 
