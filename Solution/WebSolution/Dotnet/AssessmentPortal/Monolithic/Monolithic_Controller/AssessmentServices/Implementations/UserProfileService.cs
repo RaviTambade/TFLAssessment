@@ -42,4 +42,21 @@ public class UserProfileService : IUserProfileService
     }
 
 
+    public async Task<List<User>> GetAllSmeUser()
+    {
+        return await _repository.GetAllSmeUser();
+    }
+
+    public async Task<List<Subject>> GetSubjectBySmeId(int id)
+    {
+        return await _repository.GetSubjectBySmeId(id);
+    }
+
+    public async Task<List<UserSubjectAssign>> GetAllSmeDetails()
+    {
+        return await _repository.GetAllSmeDetails();
+    }
+
+
+
 }

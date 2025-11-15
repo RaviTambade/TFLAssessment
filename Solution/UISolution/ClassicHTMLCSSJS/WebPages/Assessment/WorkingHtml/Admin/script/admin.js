@@ -23,6 +23,11 @@ function getRole() {
  });
 
 
+  $("#updateSme").click(function (e) {
+    $("#content").load("smeSubject.html");
+  });
+
+
 // Load content dynamically into #content
 $(document).ready(function () {
   $("#showTestBtw").click(function (e) {

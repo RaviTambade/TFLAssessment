@@ -15,5 +15,9 @@ public interface IUserProfileRepository
     // edit user Profile
     Task<bool> UpdateUserProfile(User user, int id);
     // Delete a user Profile
-    // Task<bool> DeleteUserProfile(int id);
+    Task<List<User>> GetAllSmeUser();
+    Task<List<Subject>> GetSubjectBySmeId(int id);
+
+    Task<List<UserSubjectAssign>> GetAllSmeDetails();
+
 }

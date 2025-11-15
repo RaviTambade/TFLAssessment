@@ -195,4 +195,119 @@ public class UserProfileRepository : IUserProfileRepository
         }
         return status;
     }
+
+    public async Task<List<User>> GetAllSmeUser()
+    {
+        string query = @"select e.id, e.firstname, e.lastname,e.email,e.contact
+                            from employees e
+                            join userroles ur on ur.userid=e.userId
+                            join roles r on r.id=ur.roleid where r.name='sme';";
+
+        MySqlConnection connection = new MySqlConnection(_connectionString);
+        MySqlCommand command = new MySqlCommand(query, connection);
+        List<User> smeUser = new List<User>();
+
+        try
+        {
+            await connection.OpenAsync();
+            MySqlDataReader reader = command.ExecuteReader();
+
+            while(reader.Read())
+            {
+                int id = int.Parse(reader["id"].ToString());
+                string firstname = reader["firstname"].ToString();
+                string lastname = reader["lastname"].ToString();
+                string email = reader["email"].ToString();
+                string contactnumber = reader["contact"].ToString();
+
+                User userData=new User();
+                userData.Id = id;
+                userData.Firstname = firstname;
+                userData.Lastname = lastname;
+                userData.Email = email;
+                userData.ContactNumber = contactnumber;
+
+                smeUser.Add(userData);
+            }
+            await reader.CloseAsync();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+        finally
+        {
+            await connection.CloseAsync();
+        }
+        return smeUser;
+    }
+
+    public async Task<List<Subject>> GetSubjectBySmeId(int id)
+    {
+
+        string query = @"select s.title as subjectname
+                            from subjects s
+                            join subjectmatterexperts sme on sme.subjectid=s.id 
+                            where sme.employeeid=@Id";
+
+        MySqlConnection connection = new MySqlConnection(_connectionString);
+        MySqlCommand command = new MySqlCommand(query, connection);
+        List<Subject> subjects = new List<Subject>();
+
+        try
+        {
+            await connection.OpenAsync();
+            command.Parameters.AddWithValue("@Id", id);
+            MySqlDataReader reader = command.ExecuteReader();
+
+            while(reader.Read())
+            {
+
+            string subjectname = reader["subjectname"].ToString();
+
+            Subject subject=new Subject();
+            subject.Title = subjectname;
+            subjects.Add(subject);
+
+            }
+            await reader.CloseAsync();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+        finally
+        {
+            await connection.CloseAsync();
+        }
+        return subjects;
+    }
+
+    public async Task<List<UserSubjectAssign>> GetAllSmeDetails()
+    {
+        List<UserSubjectAssign> userSubjectAssign=new List<UserSubjectAssign>();
+        List<User> smeUsers= await GetAllSmeUser();
+        if(smeUsers==null)
+        {
+            return null;
+        }
+
+        foreach(User user in smeUsers )
+        {
+            List<Subject> smeSubjects= await GetSubjectBySmeId(user.Id);
+
+            UserSubjectAssign newUser=new UserSubjectAssign();
+            newUser.Id=user.Id;
+            newUser.Firstname=user.Firstname;
+            newUser.Lastname=user.Lastname;
+            newUser.Email=user.Email;
+            newUser.ContactNumber=user.ContactNumber;
+            newUser.Subjects= smeSubjects;
+
+            userSubjectAssign.Add(newUser);
+        }
+
+        return userSubjectAssign;
+    }
+
 }

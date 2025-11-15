@@ -55,4 +55,18 @@ public class UserProfileController : ControllerBase
         }
         return Ok(userData);
     }
+
+
+
+    [HttpGet("SmeUser")]
+    public async Task<IActionResult> GetAllSmeDetails()
+    {
+        List<UserSubjectAssign> userData = await _svc.GetAllSmeDetails();
+
+        if (userData == null)
+        {
+            return NotFound("No user found.");
+        }
+        return Ok(userData);
+    }
 }
