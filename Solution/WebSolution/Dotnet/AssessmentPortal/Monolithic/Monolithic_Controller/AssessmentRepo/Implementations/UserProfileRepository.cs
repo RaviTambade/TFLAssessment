@@ -107,7 +107,7 @@ public class UserProfileRepository : IUserProfileRepository
     public async Task<List<Role>> GetRolesByUser(int userid)
     {
         List<Role> userRole=new List<Role>();
-        string query = @" select r.name as rolename from roles r 
+        string query = @" select r.id as id, r.name as rolename from roles r 
                             join userroles ur on ur.roleid=r.id 
                             join users u on u.id=ur.userid
                             where  u.id=@userid;
@@ -126,6 +126,7 @@ public class UserProfileRepository : IUserProfileRepository
             {
 
                Role role=new Role();
+               role.Id=int.Parse(reader["id"].ToString());
                role.Name= reader["rolename"].ToString();
                 userRole.Add(role);
             }
@@ -167,21 +168,29 @@ public class UserProfileRepository : IUserProfileRepository
     public async Task<bool> UpdateUserProfile(User user, int id)
     {
         bool status = false;
-        string query = @"update users  set aadharid=@aadharid, firstname=@firstname, lastname=@lastname, contactnumber=@contactnumber where id=@Id";
+        string query1 = @"update users  set aadharid=@aadharid, firstname=@firstname, lastname=@lastname, contactnumber=@contactnumber where id=@Id";
+        string query2 = @"update employees  set firstname=@firstname, lastname=@lastname, contact=@contactnumber where userId=@Id";
 
         MySqlConnection connection = new MySqlConnection(_connectionString);
-        MySqlCommand command = new MySqlCommand(query, connection);
+        MySqlCommand command1 = new MySqlCommand(query1, connection);
+        MySqlCommand command2 = new MySqlCommand(query2, connection);
 
         try
         {
             await connection.OpenAsync();
-            command.Parameters.AddWithValue("@Id", id);
-            command.Parameters.AddWithValue("@aadharid", user.AadharId);
-            command.Parameters.AddWithValue("@firstname", user.Firstname);
-            command.Parameters.AddWithValue("@lastname", user.Lastname);
-            command.Parameters.AddWithValue("@contactnumber", user.ContactNumber);
+            command1.Parameters.AddWithValue("@Id", id);
+            command1.Parameters.AddWithValue("@aadharid", user.AadharId);
+            command1.Parameters.AddWithValue("@firstname", user.Firstname);
+            command1.Parameters.AddWithValue("@lastname", user.Lastname);
+            command1.Parameters.AddWithValue("@contactnumber", user.ContactNumber);
 
-            await command.ExecuteNonQueryAsync();
+            command2.Parameters.AddWithValue("@Id", id);
+            command2.Parameters.AddWithValue("@firstname", user.Firstname);
+            command2.Parameters.AddWithValue("@lastname", user.Lastname);
+            command2.Parameters.AddWithValue("@contactnumber", user.ContactNumber);
+
+            await command1.ExecuteNonQueryAsync();
+            await command2.ExecuteNonQueryAsync();
             status = true;
 
         }

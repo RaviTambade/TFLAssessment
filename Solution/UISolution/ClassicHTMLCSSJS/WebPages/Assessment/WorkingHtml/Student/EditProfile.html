@@ -106,7 +106,7 @@
     </div>
 
     <script>
-      const userProfileIdData = localStorage.getItem("userId");
+       userProfileIdData = localStorage.getItem("userId");
 
       // Load profile data
       $(document).ready(function () {
@@ -119,7 +119,6 @@
               return;
             }
 
-            console.log(data.aadharId);
             // Fill input fields with data
             document.getElementById("profileFirstName").value = data.firstname;
             document.getElementById("profileLastName").value = data.lastname;
@@ -144,7 +143,6 @@
           email: document.getElementById("profileEmail").value,
           password: "",
         };
-        console.log("ok.....");
 
         $.ajax({
           url: `http://localhost:5238/api/UserProfile/${userProfileIdData}`,

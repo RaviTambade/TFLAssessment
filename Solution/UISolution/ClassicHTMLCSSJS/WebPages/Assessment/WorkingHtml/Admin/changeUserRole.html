@@ -51,6 +51,7 @@
         <h5>User Information</h5>
         <div class="row mt-2">
           <div class="col-md-6">
+            <input type="hidden" id="userIdHidden">
             <p><strong>First Name:</strong> <span id="firstName"></span></p>
             <p><strong>Last Name:</strong> <span id="lastName"></span></p>
           </div>
@@ -64,108 +65,128 @@
 
         <!-- Role Selection -->
         <h5>Roles</h5>
-        <div class="role-box">
-          <div class="form-check">
-            <input
-              class="form-check-input roleCheck"
-              type="checkbox"
-              value="admin"
-              id="roleAdmin"
-            />
-            <label class="form-check-label">Admin</label>
-          </div>
-          <div class="form-check">
-            <input
-              class="form-check-input roleCheck"
-              type="checkbox"
-              value="sme"
-              id="roleSME"
-            />
-            <label class="form-check-label">SME</label>
-          </div>
-          <div class="form-check">
-            <input
-              class="form-check-input roleCheck"
-              type="checkbox"
-              value="student"
-              id="roleStudent"
-            />
-            <label class="form-check-label">Student</label>
-          </div>
-        </div>
+        <div class="role-box" id="roleContainer"></div>
 
         <button class="btn btn-success mt-3" onclick="updateRole()">
           Update Role
         </button>
-
-       
       </div>
     </div>
 
     <script>
+      function loadRoles() {
+        $.ajax({
+          url: "http://localhost:5238/api/Role/roles",
+          method: "GET",
+          success: function (roles) {
+            let container = document.getElementById("roleContainer");
+            container.innerHTML = ""; // clear old roles
 
+            roles.forEach((role) => {
+              container.innerHTML += `
+                    <div class="form-check">
+                        <input class="form-check-input roleCheck" 
+                               type="checkbox" 
+                               value="${role.id}" 
+                               id="role_${role.id}">
+                        <label class="form-check-label" for="role_${role.id}">
+                            ${role.name}
+                        </label>
+                    </div>
+                `;
+            });
+          },
+          error: function () {
+            alert("Failed to load roles.");
+          },
+        });
+      }
 
- 
+      // Load roles when page opens
+      loadRoles();
+
       function searchUser() {
         const mobile = document.getElementById("mobileSearch").value.trim();
-
-
-         var sme=document.getElementById("roleSME")
-          var student=document.getElementById("roleStudent");
-          var admin=document.getElementById("roleAdmin");
-
-          sme.checked=false;
-          student.checked=false;
-          admin.checked=false;
 
         if (mobile === "") {
           alert("Please enter mobile number");
           return;
         }
 
-          $(document).ready(function () {
-              $.ajax({
-                url: `http://localhost:5238/api/UserProfile/contactno/${mobile}`,
-                method: "GET",
-                success: function (data) {
-                  if (!data) {
-                    alert("No user found with this mobile number!!");
-                    return;
-                  }
+        $(document).ready(function () {
+          $.ajax({
+            url: `http://localhost:5238/api/UserProfile/contactno/${mobile}`,
+            method: "GET",
+            success: function (data) {
+              // Fill user info
+              document.getElementById("userIdHidden").value = data.id;
+              document.getElementById("firstName").innerText = data.firstname;
+              document.getElementById("lastName").innerText = data.lastname;
+              document.getElementById("email").innerText = data.email;
+              document.getElementById("mobile").innerText = data.contactNumber;
 
-                  
+              // Step 1 → uncheck all dynamic checkboxes
+              document
+                .querySelectorAll(".roleCheck")
+                .forEach((chk) => (chk.checked = false));
 
-                   document.getElementById("firstName").innerText = data.firstname;
-                   document.getElementById("firstName").innerText = data.firstname;
-                  document.getElementById("lastName").innerText = data.lastname;
-                  document.getElementById("email").innerText = data.email;
-                  document.getElementById("mobile").innerText = data.contactNumber;
-
-                  data.roles.forEach(role => {
-                      if(role.name==sme.value)
-                      {
-                            sme.checked = true;
-                      }
-                      else if(role.name==student.value)
-                      {
-                          student.checked = true;
-                      }
-                      else  if(role.name==admin.value)
-                      {
-                          admin.checked = true;
-                      }
-                  });
-  
-
-                    document.getElementById("userDetails").style.display = "block";
-                },
-                error: function (xhr, status, error) {
-                  console.error("Error fetching scores:", error);
-                  $("#studentLabel").text("Error loading scores.");
-                },
+              // Step 2 → check roles based on role IDs
+              data.roles.forEach((userRole) => {
+                let checkbox = document.getElementById("role_" + userRole.id);
+                if (checkbox) {
+                  checkbox.checked = true;
+                }
               });
-            });
+
+              document.getElementById("userDetails").style.display = "block";
+            },
+            error: function (xhr, status, error) {
+              console.error("Error fetching scores:", error);
+              $("#studentLabel").text("Error loading scores.");
+            },
+          });
+        });
       }
+    
+    
+   function updateRole() {
+
+    const userId = document.getElementById("userIdHidden").value;
+
+    if (!userId) {
+        alert("User not found. Search user first.");
+        return;
+    }
+
+    let selectedRoles = [];
+    document.querySelectorAll(".roleCheck:checked").forEach((chk) => {
+        selectedRoles.push({
+            id: parseInt(chk.value),
+            name: chk.nextElementSibling.innerText,
+            lob: ""  
+        });
+    });
+
+    if (selectedRoles.length === 0) {
+        alert("Please select at least one role.");
+        return;
+    }
+
+    $.ajax({
+        url: `http://localhost:5238/api/Membership/updaterole/${userId}`,
+        method: "POST",
+        contentType: "application/json",
+        data: JSON.stringify(selectedRoles),
+
+        success: function () {
+            alert("Roles updated successfully!");
+        },
+        error: function (xhr) {
+            console.error(xhr);
+            alert("Failed to update roles.");
+        }
+    });
+}
 
     </script>
   </body>

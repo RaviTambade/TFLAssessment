@@ -6,7 +6,6 @@ using Transflower.TFLAssessment.Repositories.Interfaces;
 
 namespace Transflower.TFLAssessment.Services.Interfaces;
 
-public interface IMembershipService : IMembershipRepository
+public interface IRoleService : IRoleRepository
 {
-    Task<bool> UpdateRole(int id, List<Role> roles);
 }
