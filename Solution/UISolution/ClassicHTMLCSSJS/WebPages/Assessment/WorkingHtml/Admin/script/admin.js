@@ -10,9 +10,23 @@ function getRole() {
 (function checkAuth() {
   if (!getToken() || getRole() !== "admin") {
     alert("Access denied.");
-    window.location.href = "/WorkingHtml/login.html";
+    window.location.href = "loginJWT.html";
   }
 })();
+
+ $("#Profile").click(function (e) {
+   $("#content").load("profile.html");
+ });
+
+ $("#changeRole").click(function (e) {
+   $("#content").load("changeUserRole.html");
+ });
+
+
+  $("#updateSme").click(function (e) {
+    $("#content").load("smeSubject.html");
+  });
+
 
 // Load content dynamically into #content
 $(document).ready(function () {
@@ -29,6 +43,6 @@ $(document).ready(function () {
   $("#logoutBtn").click(function () {
     localStorage.clear();
     sessionStorage.clear();
-    window.location.href = "/WorkingHtml/Home.html";
+    window.location.href = "/Home.html";
   });
 });

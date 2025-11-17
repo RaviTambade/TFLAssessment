@@ -64,6 +64,12 @@ builder.Services.AddScoped<IAssessmentIntelligenceRepository, AssessmentIntellig
 builder.Services.AddScoped<IAssessmentIntelligenceService, AssessmentIntelligenceService>();
 builder.Services.AddScoped<IAssessmentRepository, AssessmentDapperRepository>();
 builder.Services.AddScoped<IAssessmentService, AssessmentService>();
+builder.Services.AddScoped<IUserProfileRepository, UserProfileRepository>();
+builder.Services.AddScoped<IUserProfileService, UserProfileService>();
+builder.Services.AddScoped<IMembershipRepository, MembershipRepository>();
+builder.Services.AddScoped<IMembershipService, MembershipService>();
+builder.Services.AddScoped<IRoleRepository, RoleRepository>();
+builder.Services.AddScoped<IRoleService, RoleService>();
 
 
 var app = builder.Build();
@@ -74,6 +80,7 @@ app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthentication(); //Must come before UseAuthorization
 app.UseAuthorization();
+
 
 //Controller Route mapping
 app.UseEndpoints(endpoints =>

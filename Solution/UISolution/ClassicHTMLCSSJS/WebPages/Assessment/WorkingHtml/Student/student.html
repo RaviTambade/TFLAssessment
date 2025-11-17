@@ -72,6 +72,7 @@
   <div class="sidebar">
     <h3>Student Panel</h3>
     <a href="#" id="TestList">Get All Test</a>
+    <a href="#" id="Profile">Your Profile</a>
     <!-- <a href="#" id="createTestWithQuestionsLink">Create Test With Questions</a> -->
   </div>
 
@@ -162,6 +163,10 @@
         $("#content").load("getAllTest.html"); 
       });
 
+       $("#Profile").click(function (e) {
+        $("#content").load("profile.html"); 
+      });
+
       $("#createTestWithQuestionsLink").click(function (e) {
         e.preventDefault();
         $("#content").html("<h3>Coming soon: Create Test With Questions!</h3>");
@@ -171,7 +176,7 @@
     $("#logoutBtn").click(function () {
         localStorage.clear();  
         sessionStorage.clear(); 
-        window.location.href = "/WorkingHtml/Home.html";
+        window.location.href = "/Home.html";
       });
   </script>
 

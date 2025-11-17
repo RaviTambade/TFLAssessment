@@ -10,7 +10,7 @@
     (function checkAuth() {
       if (!getToken() || getRole() !== "sme") {
         alert("Access denied.");
-        window.location.href = "/WorkingHtml/login.html";
+        window.location.href = "/loginJWT.html";
       }
     })();
 
@@ -19,6 +19,10 @@
     if (userEmail) {
       $("#userEmail").text(userEmail);
     }
+
+     $("#Profile").click(function (e) {
+       $("#content").load("profile.html");
+     });
 
     // Load content dynamically into #content
     $(document).ready(function () {
@@ -36,5 +40,5 @@
     $("#logoutBtn").click(function () {
         localStorage.clear();  
         sessionStorage.clear(); 
-        window.location.href = "/WorkingHtml/Home.html";
+        window.location.href = "/Home.html";
       });
