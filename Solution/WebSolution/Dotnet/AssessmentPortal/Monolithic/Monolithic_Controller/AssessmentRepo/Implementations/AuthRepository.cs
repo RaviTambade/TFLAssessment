@@ -118,4 +118,48 @@ public class AuthRepository : IAuthRepository
     }
 }
 
+public async Task<bool> CheckOldPassword(string email, string oldPassword)
+{
+    string query = @"SELECT COUNT(*) 
+                     FROM users 
+                     WHERE email = @Email AND password = @Password";
+
+    using (MySqlConnection connection = new MySqlConnection(_connectionString))
+    {
+        await connection.OpenAsync();
+
+        using (MySqlCommand command = new MySqlCommand(query, connection))
+        {
+            command.Parameters.AddWithValue("@Email", email);
+            command.Parameters.AddWithValue("@Password", oldPassword);
+
+            int count = Convert.ToInt32(await command.ExecuteScalarAsync());
+             Console.WriteLine($"Counter: {count}");
+            return count == 1;  // Found → correct password
+        }
+    }
+}
+public async Task<bool> UpdatePassword(string email, string newPassword)
+{
+    string query = @"UPDATE users 
+                     SET password = @Password 
+                     WHERE email = @Email";
+
+    using (MySqlConnection connection = new MySqlConnection(_connectionString))
+    {
+        await connection.OpenAsync();
+
+        using (MySqlCommand command = new MySqlCommand(query, connection))
+        {
+            command.Parameters.AddWithValue("@Email", email);
+            command.Parameters.AddWithValue("@Password", newPassword);
+
+            int rows = await command.ExecuteNonQueryAsync();
+            return rows > 0;   
+        }
+    }
+}
+
+
+
 }

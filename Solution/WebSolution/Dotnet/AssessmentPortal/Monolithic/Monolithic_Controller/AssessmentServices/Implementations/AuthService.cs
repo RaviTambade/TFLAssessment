@@ -73,4 +73,18 @@ public class AuthService : IAuthService
         return await _repository.AddUser(user);
 
     }
+
+public async Task<bool> ChangePassword(ChangePasswordRequest request)
+{
+    bool isOldCorrect = await _repository.CheckOldPassword(request.Email, request.OldPassword);
+    Console.WriteLine($"isOldCorrect: {isOldCorrect}");
+
+    if (!isOldCorrect)
+        return false;
+
+    bool updated = await _repository.UpdatePassword(request.Email, request.NewPassword);
+    return updated;
+}
+
+
 }

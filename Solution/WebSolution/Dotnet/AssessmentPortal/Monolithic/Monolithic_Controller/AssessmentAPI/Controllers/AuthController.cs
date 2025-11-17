@@ -75,5 +75,17 @@ public class AuthController : ControllerBase
                 return StatusCode(500, new { message = $"Server error: {ex.Message}" });
             }
         }
+        [HttpPost("change-password")]
+        public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordRequest request)
+        {
+        var result = await  _service.ChangePassword(request);
+
+         if (!result)
+        return BadRequest("Old password is incorrect or update failed.");
+
+          return Ok("Password updated successfully.");
+}
+
+
 
 }
