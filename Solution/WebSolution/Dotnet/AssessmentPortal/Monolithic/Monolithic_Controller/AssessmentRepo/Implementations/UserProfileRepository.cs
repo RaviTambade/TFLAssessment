@@ -207,7 +207,7 @@ public class UserProfileRepository : IUserProfileRepository
 
     public async Task<List<User>> GetAllSmeUser()
     {
-        string query = @"select e.id, e.firstname, e.lastname,e.email,e.contact
+        string query = @"select e.id, e.firstname, e.lastname
                             from employees e
                             join userroles ur on ur.userid=e.userId
                             join roles r on r.id=ur.roleid where r.name='sme';";
@@ -226,15 +226,11 @@ public class UserProfileRepository : IUserProfileRepository
                 int id = int.Parse(reader["id"].ToString());
                 string firstname = reader["firstname"].ToString();
                 string lastname = reader["lastname"].ToString();
-                string email = reader["email"].ToString();
-                string contactnumber = reader["contact"].ToString();
-
+                
                 User userData=new User();
                 userData.Id = id;
                 userData.Firstname = firstname;
                 userData.Lastname = lastname;
-                userData.Email = email;
-                userData.ContactNumber = contactnumber;
 
                 smeUser.Add(userData);
             }
@@ -318,5 +314,11 @@ public class UserProfileRepository : IUserProfileRepository
 
         return userSubjectAssign;
     }
+
+
+
+
+  
+
 
 }

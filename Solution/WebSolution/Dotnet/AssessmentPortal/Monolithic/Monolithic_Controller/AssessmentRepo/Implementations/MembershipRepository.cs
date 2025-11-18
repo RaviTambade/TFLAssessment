@@ -209,5 +209,94 @@ public class MembershipRepository : IMembershipRepository
         return status;
     }
 
-   
+    public async Task<bool> AssignSubject(int empid, int subjectid)
+    {
+
+        bool status = false;
+        string query = @"insert into subjectmatterexperts(employeeid, subjectid) values(@empid, @subjectid);";
+
+        MySqlConnection connection = new MySqlConnection(_connectionString);
+        MySqlCommand command = new MySqlCommand(query, connection);
+
+        try
+        {
+            await connection.OpenAsync();
+            command.Parameters.AddWithValue("@empid", empid);
+            command.Parameters.AddWithValue("@subjectid", subjectid);
+
+
+            await command.ExecuteNonQueryAsync();
+            status = true;
+
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+        finally
+        {
+            await connection.CloseAsync();
+        }
+        return status;
+    }
+
+    public async Task<bool> RemoveAssignSubject(int empid, int subjectid)
+    {
+        bool status = false;
+        string query = @"delete from subjectmatterexperts where employeeid=@empid and subjectid= @subjectid;";
+
+        MySqlConnection connection = new MySqlConnection(_connectionString);
+        MySqlCommand command = new MySqlCommand(query, connection);
+
+        try
+        {
+            await connection.OpenAsync();
+            command.Parameters.AddWithValue("@empid", empid);
+            command.Parameters.AddWithValue("@subjectid", subjectid);
+
+
+            await command.ExecuteNonQueryAsync();
+            status = true;
+
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+        finally
+        {
+            await connection.CloseAsync();
+        }
+        return status;
+    }
+
+    public async Task<int> GetAssignsubject(int empId, int subjectId)
+    {
+        string query = @"select id from subjectmatterexperts where employeeid=@empid and subjectid= @subjectid;";
+
+        MySqlConnection connection = new MySqlConnection(_connectionString);
+        MySqlCommand command = new MySqlCommand(query, connection);
+        int id=-1;
+
+        try
+        {
+            await connection.OpenAsync();
+            command.Parameters.AddWithValue("@empid", empId);
+            command.Parameters.AddWithValue("@subjectid", subjectId);
+            MySqlDataReader reader = command.ExecuteReader();
+            reader.Read();
+             id = int.Parse(reader["id"].ToString());
+
+            await reader.CloseAsync();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+        finally
+        {
+            await connection.CloseAsync();
+        }
+        return id;
+    }
 }

@@ -46,6 +46,21 @@ public class MembershipService : IMembershipService
         return await _repository.DeleteSmeSubject(empId);
     }
 
+    public async Task<bool> AssignSubject(int empid, int subjectid)
+    {
+        return await _repository.AssignSubject(empid, subjectid);
+    }
+
+    public async Task<bool> RemoveAssignSubject(int empid, int subjectid)
+    {
+        return await _repository.RemoveAssignSubject(empid, subjectid);
+    }
+
+    public async Task<int> GetAssignsubject(int empId, int subjectId)
+    {
+        return await _repository.GetAssignsubject(empId, subjectId);
+    }
+
     public async Task<bool> UpdateRole(int id, List<Role> roles)
     {
         bool status = false;
@@ -96,5 +111,20 @@ public class MembershipService : IMembershipService
             }
         }
         return insertRoleStatus;
+    }
+
+    public async Task<bool> UpdateSmeSubject(int empid, int subjectid)
+    {
+        bool status=false;
+        bool insertStatus=false;
+
+        int existingid = await _repository.GetAssignsubject(empid, subjectid);
+
+        if(existingid<0)
+        {
+            insertStatus= await _repository.AssignSubject(empid, subjectid);
+        }
+
+        return insertStatus;
     }
 }

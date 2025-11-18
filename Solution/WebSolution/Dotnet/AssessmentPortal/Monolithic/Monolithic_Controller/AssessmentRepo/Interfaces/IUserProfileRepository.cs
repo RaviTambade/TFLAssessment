@@ -20,4 +20,5 @@ public interface IUserProfileRepository
 
     Task<List<UserSubjectAssign>> GetAllSmeDetails();
 
+   
 }
