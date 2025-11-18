@@ -52,4 +52,62 @@ public class RoleRepository : IRoleRepository
         return allRoles;
     }
 
+    public async Task<bool> AddNewRole(Role role)
+    {
+        bool status=false;
+        string query = @"insert into roles (name,lob) values (@rolename, @lob)";
+
+        MySqlConnection connection = new MySqlConnection(_connectionString);
+        MySqlCommand command = new MySqlCommand(query, connection);
+        List<Role> allRoles = new List<Role>();
+
+        try
+        {
+            await connection.OpenAsync();
+            command.Parameters.AddWithValue("@rolename",role.Name);
+            command.Parameters.AddWithValue("@lob","assessment");
+            await command.ExecuteNonQueryAsync();
+
+            status =true;
+
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+        finally
+        {
+            await connection.CloseAsync();
+        }
+        return status;
+    }
+
+    public async  Task<bool> removeExistingRole(int roleid)
+    {
+        bool status = false;
+        string query = @"delete from roles where id=@roleid";
+
+        MySqlConnection connection = new MySqlConnection(_connectionString);
+        MySqlCommand command = new MySqlCommand(query, connection);
+        List<Role> allRoles = new List<Role>();
+
+        try
+        {
+            await connection.OpenAsync();
+            command.Parameters.AddWithValue("@roleid", roleid);
+            await command.ExecuteNonQueryAsync();
+
+            status = true;
+
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+        finally
+        {
+            await connection.CloseAsync();
+        }
+        return status;
+    }
 }
