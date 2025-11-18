@@ -87,7 +87,10 @@
 
               body += `
                     <tr>
-                        <td>${user.firstname}  ${user.lastname}</td>
+                       <td>  <a href="#" onclick="loadProfilePage(${user.userId})">
+                            ${user.firstname} ${user.lastname}
+                        </a>
+                        </td>
                         <td>${subjectText}</td>
                         <td>
                             <button class="btn btn-primary btn-sm" onclick='openSubjectSelector(${JSON.stringify(
@@ -107,21 +110,21 @@
           },
         });
       }
-function openSubjectSelector(user) {
-  currentUserId = user.id;
+      function openSubjectSelector(user) {
+        currentUserId = user.id;
 
-  let assignedSubjects = Array.isArray(user.subjects)
-    ? user.subjects.map((s) => s.title)
-    : [];
+        let assignedSubjects = Array.isArray(user.subjects)
+          ? user.subjects.map((s) => s.title)
+          : [];
 
-  let checkboxHTML = `
+        let checkboxHTML = `
     <div id="subjectSelector" class="card p-3 mb-3 shadow-sm">
       <h5>Assign SME Subjects to: <b>${user.firstname} ${user.lastname}</b></h5>
       <div class="row">
   `;
 
-  allSubjects.forEach((sub) => {
-    checkboxHTML += `
+        allSubjects.forEach((sub) => {
+          checkboxHTML += `
       <div class="col-md-3">
         <input type="checkbox" class="form-check-input subject-check"
             data-id="${sub.id}"
@@ -129,33 +132,42 @@ function openSubjectSelector(user) {
         <label class="form-check-label">${sub.title}</label>
       </div>
     `;
-  });
+        });
 
-  $("#subjectSelector").remove();
-  $(".container").append(checkboxHTML);
+        $("#subjectSelector").remove();
+        $(".container").append(checkboxHTML);
 
-  // ✅ Bind once here
-  $(".subject-check").off("change").on("change", function () {
-    let subjectId = $(this).data("id");
-    let isChecked = $(this).is(":checked");
+        // ✅ Bind once here
+        $(".subject-check")
+          .off("change")
+          .on("change", function () {
+            let subjectId = $(this).data("id");
+            let isChecked = $(this).is(":checked");
 
-    let url = isChecked
-      ? `http://localhost:5238/api/Membership/assignsubject/${currentUserId}/addsubject/${subjectId}`
-      : `http://localhost:5238/api/Membership/assignsubject/${currentUserId}/removesubject/${subjectId}`;
+            let url = isChecked
+              ? `http://localhost:5238/api/Membership/assignsubject/${currentUserId}/addsubject/${subjectId}`
+              : `http://localhost:5238/api/Membership/assignsubject/${currentUserId}/removesubject/${subjectId}`;
 
-    $.ajax({
-      url: url,
-      method: "POST",
-      success: function () {
-        console.log((isChecked ? "Added " : "Removed ") + subjectId);
-        loadUsers();
-      },
-      error: function () {
-        alert("Error updating subject!");
-      },
+            $.ajax({
+              url: url,
+              method: "POST",
+              success: function () {
+                console.log((isChecked ? "Added " : "Removed ") + subjectId);
+                loadUsers();
+              },
+              error: function () {
+                alert("Error updating subject!");
+              },
+            });
+          });
+      }
+
+function loadProfilePage(userId) {
+    $("#content").load("../publicProfile.html", function () {
+        loadUserProfile(userId);   // Call API after HTML is inserted
     });
-  });
 }
+
     </script>
   </body>
 </html>

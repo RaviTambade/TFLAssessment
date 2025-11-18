@@ -19,7 +19,6 @@ public class RoleController : ControllerBase
     }
 
 
-    //http://localhost:5238/api/UserProfile/1
     [HttpGet("{roles}")]
     public async Task<IActionResult> GetAllRoles()
     {

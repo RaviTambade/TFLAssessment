@@ -42,7 +42,7 @@ public class UserProfileService : IUserProfileService
     }
 
 
-    public async Task<List<User>> GetAllSmeUser()
+    public async Task<List<Employee>> GetAllSmeUser()
     {
         return await _repository.GetAllSmeUser();
     }
