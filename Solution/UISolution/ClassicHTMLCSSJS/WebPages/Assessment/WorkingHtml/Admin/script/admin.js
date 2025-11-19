@@ -27,8 +27,13 @@ function getRole() {
   $("#updateSme").click(function (e) {
     $("#content").load("smeSubject.html");
   });
+
   $("#addNewRole").click(function (e) {
     $("#content").load("addNewRole.html");
+  });
+
+  $("#getQuestions").click(function (e) {
+    $("#content").load("getQuestions.html");
   });
 
 
