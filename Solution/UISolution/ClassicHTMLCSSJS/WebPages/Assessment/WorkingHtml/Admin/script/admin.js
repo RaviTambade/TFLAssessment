@@ -49,6 +49,10 @@ $(document).ready(function () {
     $("#content").html("<h3>Coming soon: Create Test With Questions!</h3>");
   });
 
+    $("#rolesDash").click(function (e) {
+    $("#content").load("rolesDashboard.html");
+    });
+
   $("#logoutBtn").click(function () {
     localStorage.clear();
     sessionStorage.clear();
