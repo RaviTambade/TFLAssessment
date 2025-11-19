@@ -27,13 +27,15 @@ function getRole() {
   $("#updateSme").click(function (e) {
     $("#content").load("smeSubject.html");
   });
+
   $("#addNewRole").click(function (e) {
     $("#content").load("addNewRole.html");
   });
 
-  $("#rolesDash").click(function (e) {
-    $("#content").load("rolesDashboard.html");
+  $("#getQuestions").click(function (e) {
+    $("#content").load("getQuestions.html");
   });
+
 
 // Load content dynamically into #content
 $(document).ready(function () {
@@ -46,6 +48,10 @@ $(document).ready(function () {
     e.preventDefault();
     $("#content").html("<h3>Coming soon: Create Test With Questions!</h3>");
   });
+
+    $("#rolesDash").click(function (e) {
+    $("#content").load("rolesDashboard.html");
+    });
 
   $("#logoutBtn").click(function () {
     localStorage.clear();
