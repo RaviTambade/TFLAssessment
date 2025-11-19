@@ -52,62 +52,35 @@ public class RoleRepository : IRoleRepository
         return allRoles;
     }
 
-    public async Task<bool> AddNewRole(Role role)
+    
+   public async Task<List<User>> GetUsersByRole(List<int> roleIds)
+{
+    List<User> users = new List<User>();
+
+    using var connection = new MySqlConnection(_connectionString);
+
+    await connection.OpenAsync();
+
+   string query = @"
+                    SELECT DISTINCT 
+                    u.id, u.firstname, u.lastname
+                    FROM users u
+                    JOIN userroles ur ON u.id = ur.userid
+                    WHERE ur.roleid IN (" + string.Join(",", roleIds) + ")";
+
+    using var cmd = new MySqlCommand(query, connection);
+    using var reader = await cmd.ExecuteReaderAsync();
+    while (await reader.ReadAsync())
     {
-        bool status=false;
-        string query = @"insert into roles (name,lob) values (@rolename, @lob)";
-
-        MySqlConnection connection = new MySqlConnection(_connectionString);
-        MySqlCommand command = new MySqlCommand(query, connection);
-        List<Role> allRoles = new List<Role>();
-
-        try
+        users.Add(new User
         {
-            await connection.OpenAsync();
-            command.Parameters.AddWithValue("@rolename",role.Name);
-            command.Parameters.AddWithValue("@lob","assessment");
-            await command.ExecuteNonQueryAsync();
-
-            status =true;
-
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e.Message);
-        }
-        finally
-        {
-            await connection.CloseAsync();
-        }
-        return status;
+            Id = reader.GetInt32("id"),
+            Firstname = reader.GetString("firstname"),
+            Lastname = reader.GetString("lastname")
+        });
     }
 
-    public async  Task<bool> removeExistingRole(int roleid)
-    {
-        bool status = false;
-        string query = @"delete from roles where id=@roleid";
+    return users;
+}
 
-        MySqlConnection connection = new MySqlConnection(_connectionString);
-        MySqlCommand command = new MySqlCommand(query, connection);
-        List<Role> allRoles = new List<Role>();
-
-        try
-        {
-            await connection.OpenAsync();
-            command.Parameters.AddWithValue("@roleid", roleid);
-            await command.ExecuteNonQueryAsync();
-
-            status = true;
-
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e.Message);
-        }
-        finally
-        {
-            await connection.CloseAsync();
-        }
-        return status;
-    }
 }
