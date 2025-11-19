@@ -398,7 +398,7 @@ public class QuestionBankRepository : IQuestionBankRepository
         return criteria;
 
     }
-    
+
     public async Task<List<Question>> GetQuestions(int testId)
     {
         List<Question> questions = new List<Question>();
@@ -417,7 +417,7 @@ public class QuestionBankRepository : IQuestionBankRepository
             INNER JOIN testquestions 
                 ON testquestions.questionbankid = questionbank.id 
             WHERE testquestions.testid = @TestId";
-    
+
         using (MySqlConnection connection = new MySqlConnection(_connectionString))
         using (MySqlCommand command = new MySqlCommand(query, connection))
         {
@@ -448,9 +448,44 @@ public class QuestionBankRepository : IQuestionBankRepository
                 Console.WriteLine(ex.Message);
             }
         }
-    
+
         return questions;
     }
 
+    public async Task<List<SubjectQuestionCount>> GetSubjectQuestionCount()
+    {
+        string query = @"
+           select count(q.title) as questionCount, s.title ,s.id as subjectId from questionbank q
+            join subjects s on s.id=q.subjectid group by(subjectid);";
+
+        List<SubjectQuestionCount>subjectQuestionCounts = new List<SubjectQuestionCount>();
+        using (MySqlConnection connection = new MySqlConnection(_connectionString))
+        using (MySqlCommand command = new MySqlCommand(query, connection))
+        {
+            try
+            {
+                await connection.OpenAsync();
+                MySqlDataReader reader = command.ExecuteReader();
+                // MySqlDataReader reader = await command.ExecuteReader();
+                while (await reader.ReadAsync())
+                {
+                    SubjectQuestionCount questionCount = new SubjectQuestionCount();
+                    Subject subject = new Subject();
+
+                    questionCount.QuestionCount = Convert.ToInt32(reader["questionCount"]);
+                    subject.Id = Convert.ToInt32(reader["subjectId"]);
+                    subject.Title = reader["title"].ToString();
+                    questionCount.subject=subject;
+                    subjectQuestionCounts.Add(questionCount);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+
+        return subjectQuestionCounts;
+    }
 }
 

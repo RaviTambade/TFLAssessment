@@ -13,4 +13,9 @@ public interface IMembershipRepository
     Task<bool> DeleteUserRole(int userid);
     Task<Employee> GetEmployeeByUserId(int id);
     Task<bool> DeleteSmeSubject(int empId);
+
+    Task<bool> AssignSubject(int empid, int subjectid);
+    Task<bool> RemoveAssignSubject(int empid, int subjectid);
+
+    Task<int> GetAssignsubject(int empId,int subjectId);
 }

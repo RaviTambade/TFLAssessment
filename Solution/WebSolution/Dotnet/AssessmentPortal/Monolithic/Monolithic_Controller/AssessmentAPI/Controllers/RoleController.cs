@@ -46,5 +46,30 @@ public class RoleController : ControllerBase
 }
 
 
- 
+
+
+    [HttpPost("roles")]
+    
+    public async Task<IActionResult> AddNewRole([FromBody]Role role)
+    {
+        bool status = await _svc.AddNewRole(role);
+        if (status == false)
+        {
+            return NotFound("No roles added.");
+        }
+        return Ok(status);
+    }
+
+
+    [HttpDelete("roles/{id}")]
+    public async Task<IActionResult> removeExistingRole(int id)
+    {
+        bool status = await _svc.removeExistingRole(id);
+        if (status == false)
+        {
+            return NotFound("No roles removed.");
+        }
+        return Ok(status);
+    }
+
 }

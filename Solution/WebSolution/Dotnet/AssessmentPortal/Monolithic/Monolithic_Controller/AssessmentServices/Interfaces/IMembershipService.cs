@@ -9,4 +9,5 @@ namespace Transflower.TFLAssessment.Services.Interfaces;
 public interface IMembershipService : IMembershipRepository
 {
     Task<bool> UpdateRole(int id, List<Role> roles);
+    Task<bool> UpdateSmeSubject(int empid, int subjectid);
 }

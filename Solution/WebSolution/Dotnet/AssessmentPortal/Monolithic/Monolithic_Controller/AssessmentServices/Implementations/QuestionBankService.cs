@@ -77,4 +77,11 @@ public class QuestionBankService:IQuestionBankService
     {
         return await _repository.GetCriteria(subject,questionId);
     }
+
+
+    public async Task<List<SubjectQuestionCount>> GetSubjectQuestionCount()
+    {
+        return await _repository.GetSubjectQuestionCount();
+    }
 }
+

@@ -25,4 +25,13 @@ public class RoleService : IRoleService
             return _repository.GetUsersByRole(roleIds);
         }
 
+    public async Task<bool> AddNewRole(Role role)
+    {
+        return await _repository.AddNewRole(role);
+    }
+
+    public async Task<bool> removeExistingRole(int roleid)
+    {
+        return await _repository.removeExistingRole(roleid);
+    }
   }

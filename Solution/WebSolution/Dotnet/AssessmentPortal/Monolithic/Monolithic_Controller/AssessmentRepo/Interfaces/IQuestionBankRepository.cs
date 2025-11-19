@@ -13,4 +13,5 @@ public interface IQuestionBankRepository{
     public Task<bool> UpdateSubjectCriteria(int questionId,Question question);
     public Task<bool> InsertQuestion(NewQuestion question);
     public Task<string> GetCriteria(string subject, int questionId);
+    public Task<List<SubjectQuestionCount>> GetSubjectQuestionCount();
 }

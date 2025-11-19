@@ -18,6 +18,7 @@ function getRole() {
    $("#content").load("profile.html");
  });
 
+
  $("#changeRole").click(function (e) {
    $("#content").load("changeUserRole.html");
  });
@@ -25,6 +26,9 @@ function getRole() {
 
   $("#updateSme").click(function (e) {
     $("#content").load("smeSubject.html");
+  });
+  $("#addNewRole").click(function (e) {
+    $("#content").load("addNewRole.html");
   });
 
   $("#rolesDash").click(function (e) {

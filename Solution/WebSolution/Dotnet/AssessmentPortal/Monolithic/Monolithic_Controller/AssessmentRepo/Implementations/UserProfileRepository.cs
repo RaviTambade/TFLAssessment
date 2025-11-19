@@ -205,16 +205,16 @@ public class UserProfileRepository : IUserProfileRepository
         return status;
     }
 
-    public async Task<List<User>> GetAllSmeUser()
+    public async Task<List<Employee>> GetAllSmeUser()
     {
-        string query = @"select e.id, e.firstname, e.lastname,e.email,e.contact
+        string query = @"select e.id,e.userId, e.firstname, e.lastname
                             from employees e
                             join userroles ur on ur.userid=e.userId
                             join roles r on r.id=ur.roleid where r.name='sme';";
 
         MySqlConnection connection = new MySqlConnection(_connectionString);
         MySqlCommand command = new MySqlCommand(query, connection);
-        List<User> smeUser = new List<User>();
+        List<Employee> smeUser = new List<Employee>();
 
         try
         {
@@ -224,17 +224,15 @@ public class UserProfileRepository : IUserProfileRepository
             while(reader.Read())
             {
                 int id = int.Parse(reader["id"].ToString());
+                int userid=int.Parse(reader["userId"].ToString());
                 string firstname = reader["firstname"].ToString();
                 string lastname = reader["lastname"].ToString();
-                string email = reader["email"].ToString();
-                string contactnumber = reader["contact"].ToString();
 
-                User userData=new User();
+                Employee userData =new Employee();
                 userData.Id = id;
-                userData.Firstname = firstname;
-                userData.Lastname = lastname;
-                userData.Email = email;
-                userData.ContactNumber = contactnumber;
+                userData.UserId = userid;
+                userData.FirstName = firstname;
+                userData.LastName = lastname;
 
                 smeUser.Add(userData);
             }
@@ -295,22 +293,23 @@ public class UserProfileRepository : IUserProfileRepository
     public async Task<List<UserSubjectAssign>> GetAllSmeDetails()
     {
         List<UserSubjectAssign> userSubjectAssign=new List<UserSubjectAssign>();
-        List<User> smeUsers= await GetAllSmeUser();
+        List<Employee> smeUsers= await GetAllSmeUser();
         if(smeUsers==null)
         {
             return null;
         }
 
-        foreach(User user in smeUsers )
+        foreach(Employee user in smeUsers )
         {
             List<Subject> smeSubjects= await GetSubjectBySmeId(user.Id);
 
             UserSubjectAssign newUser=new UserSubjectAssign();
             newUser.Id=user.Id;
-            newUser.Firstname=user.Firstname;
-            newUser.Lastname=user.Lastname;
+            newUser.UserId=user.UserId;
+            newUser.Firstname=user.FirstName;
+            newUser.Lastname=user.LastName;
             newUser.Email=user.Email;
-            newUser.ContactNumber=user.ContactNumber;
+            newUser.ContactNumber=user.Contact;
             newUser.Subjects= smeSubjects;
 
             userSubjectAssign.Add(newUser);
@@ -318,5 +317,11 @@ public class UserProfileRepository : IUserProfileRepository
 
         return userSubjectAssign;
     }
+
+
+
+
+  
+
 
 }

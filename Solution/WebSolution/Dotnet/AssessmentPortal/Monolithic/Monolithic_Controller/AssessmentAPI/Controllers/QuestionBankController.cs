@@ -150,5 +150,19 @@ public class QuestionBankController : ControllerBase
         bool status =await  _svc.InsertQuestion(question);
         return Ok(status);
     }
-      
+
+
+    
+
+    [HttpGet("questionCount")]
+    public async Task<IActionResult> GetSubjectQuestionCount()
+    {
+        List< SubjectQuestionCount > subjectQuestionCount = await _svc.GetSubjectQuestionCount();
+        if(subjectQuestionCount.Count<0)
+        {
+            return NotFound("No subject with question count found.");
+        }
+        return Ok(subjectQuestionCount);
+    }
+
 }
