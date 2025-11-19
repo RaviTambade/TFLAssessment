@@ -27,6 +27,9 @@ function getRole() {
     $("#content").load("smeSubject.html");
   });
 
+  $("#rolesDash").click(function (e) {
+    $("#content").load("rolesDashboard.html");
+  });
 
 // Load content dynamically into #content
 $(document).ready(function () {
@@ -46,3 +49,46 @@ $(document).ready(function () {
     window.location.href = "/Home.html";
   });
 });
+
+// Delegated event listener for role checkboxes inside dynamic content
+$(document).on("change", ".roleCheck", function () {
+
+    const outputDiv = document.getElementById("output");
+
+    const selectedRoleIds = $(".roleCheck:checked")
+        .map(function() { return $(this).data("id"); })
+        .get();
+
+    if (selectedRoleIds.length === 0) {
+        outputDiv.innerHTML = "";
+        return;
+    }
+
+    outputDiv.innerHTML = "<p>Loading...</p>";
+
+    const queryString = selectedRoleIds.map(id => `roleIds=${id}`).join("&");
+
+    fetch(`http://localhost:5238/api/Role/users?${queryString}`)
+        .then(r => r.json())
+        .then(result => {
+            outputDiv.innerHTML = "";
+
+            if (!result || result.length === 0) {
+                outputDiv.innerHTML = "<p>No users found.</p>";
+                return;
+            }
+
+            let html = "<ul>";
+            result.forEach(u => {
+                html += `<li>${u.firstname} ${u.lastname}</li>`;
+            });
+            html += "</ul>";
+
+            outputDiv.innerHTML = html;
+        })
+        .catch(err => {
+            console.error(err);
+            outputDiv.innerHTML = "<p>Error loading users.</p>";
+        });
+});
+

@@ -19,5 +19,10 @@ public class RoleService : IRoleService
     {
         return await _repository.GetAllRoles();
     }
+  
+    public Task<List<User>> GetUsersByRole(List<int> roleIds)
+        {
+            return _repository.GetUsersByRole(roleIds);
+        }
 
   }

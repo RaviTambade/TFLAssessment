@@ -19,7 +19,7 @@ public class RoleController : ControllerBase
     }
 
 
-    //http://localhost:5238/api/UserProfile/1
+    //http://localhost:5238/api/role/roles
     [HttpGet("{roles}")]
     public async Task<IActionResult> GetAllRoles()
     {
@@ -30,6 +30,21 @@ public class RoleController : ControllerBase
         }
         return Ok(roles);
     }
+    //http://localhost:5238/api/Role/1
+    [HttpGet("users")]
+    public async Task<IActionResult> GetUsersByRole([FromQuery] List<int> roleIds)
+    {
+    if (roleIds == null || roleIds.Count == 0)
+    return BadRequest("Please provide at least one roleId.");
+
+    var users = await _svc.GetUsersByRole(roleIds);
+    
+    if (users.Count == 0)
+    return NotFound("No users found for selected roles.");
+
+    return Ok(users);
+}
+
 
  
 }
