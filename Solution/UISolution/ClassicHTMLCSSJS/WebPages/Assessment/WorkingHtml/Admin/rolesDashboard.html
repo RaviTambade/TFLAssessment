@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <title>Filter Users by Role</title>
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
     <style>
         body { font-family: Arial; padding: 20px; }
         li { 
@@ -11,7 +13,6 @@
             padding: 10px;
             margin: 5px 0;
             border-radius: 6px;
-            list-style: disc;
         }
     </style>
 </head>
@@ -19,12 +20,73 @@
 
 <h2>Select Role</h2>
 
-<label><input type="checkbox" class="roleCheck" data-id="1"> Admin</label>
-<label><input type="checkbox" class="roleCheck" data-id="2"> SME</label>
-<label><input type="checkbox" class="roleCheck" data-id="3"> Student</label>
+<!-- WHERE CHECKBOXES WILL BE ADDED -->
+<div id="rolesBox"></div>
 
 <h3>Users:</h3>
-<div id="output"></div>
+<ul id="output"></ul>
+
+<script>
+$(document).ready(function () {
+
+    // 1. Load roles dynamically
+    $.ajax({
+        url: "http://localhost:5238/api/role/roles",
+        type: "GET",
+        success: function (roles) {
+            let html = "";
+            roles.forEach(role => {
+                html += `
+                    <label>
+                        <input type="checkbox" class="roleCheck" data-id="${role.id}">
+                        ${role.name}
+                    </label><br>
+                `;
+            });
+            $("#rolesBox").html(html);
+        }
+    });
+
+    // 2. Fetch users based on selected roles
+    $(document).on("change", ".roleCheck", function () {
+
+        let selectedRoleIds = [];
+
+        $(".roleCheck:checked").each(function () {
+            selectedRoleIds.push($(this).data("id"));
+        });
+
+        if (selectedRoleIds.length === 0) {
+            $("#output").html("");
+            return;
+        }
+
+        $("#output").html("<li>Loading...</li>");
+
+        $.ajax({
+            url: "http://localhost:5238/api/role/users",
+            type: "GET",
+            traditional: true,
+            data: { roleIds: selectedRoleIds },
+
+            success: function (users) {
+                let html = "";
+
+                users.forEach(u => {
+                    html += `<li>${u.firstname} ${u.lastname}</li>`;
+                });
+
+                $("#output").html(html);
+            },
+
+            error: function () {
+                $("#output").html("<li>Error loading users</li>");
+            }
+        });
+
+    });
+});
+</script>
 
 </body>
 </html>
