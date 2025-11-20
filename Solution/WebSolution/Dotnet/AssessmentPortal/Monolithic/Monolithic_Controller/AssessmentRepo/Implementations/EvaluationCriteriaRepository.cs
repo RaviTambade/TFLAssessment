@@ -108,7 +108,43 @@ namespace Transflower.TFLAssessment.Repositories;
         return status;
     }
 
-    
+    public async Task<List<EvaluationCriteria>> GetCriteriaBySubjectId(int subjectId)
+    {
+        List<EvaluationCriteria> evaluationCriteria = new List<EvaluationCriteria>();
+        string query = @" SELECT * FROM evaluationcriterias where subjectid=@subjectId;";
+
+        MySqlConnection connection = new MySqlConnection(_connectionString);
+        MySqlCommand command = new MySqlCommand(query, connection);
+
+        try
+        {
+            await connection.OpenAsync();
+            command.Parameters.AddWithValue("@subjectId", subjectId);
+            MySqlDataReader reader = command.ExecuteReader();
+
+            while (reader.Read())
+            {
+
+                EvaluationCriteria criteria = new EvaluationCriteria();
+                criteria.Id = int.Parse(reader["id"].ToString());
+                criteria.Title = reader["Title"].ToString();
+                criteria.SubjectId = int.Parse(reader["subjectid"].ToString());
+
+                evaluationCriteria.Add(criteria);
+            }
+            await reader.CloseAsync();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+        finally
+        {
+            await connection.CloseAsync();
+        }
+        return evaluationCriteria;
+    }
+
 
 
 }

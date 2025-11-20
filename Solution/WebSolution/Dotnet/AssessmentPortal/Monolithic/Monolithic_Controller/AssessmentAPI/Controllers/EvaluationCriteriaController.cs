@@ -6,7 +6,7 @@ using Transflower.TFLAssessment.Services.Interfaces;
 [ApiController]
 [Route("api/criteria")]
 public class EvaluationCriteriaController : ControllerBase
-{ 
+{   
 
     private readonly ILogger <EvaluationCriteriaController> _logger;
     private readonly IEvaluationCriteriaService _svc;
@@ -44,5 +44,12 @@ public class EvaluationCriteriaController : ControllerBase
         bool status = await _svc.InsertCriteria(criteria);
          _logger.LogInformation("Log Generated For Insert Criteria ");
         return Ok(status);
-    }    
+    }
+
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetCriteriaBySubjectId(int id)
+    {
+        List<EvaluationCriteria> evaluationCriteria = await _svc.GetCriteriaBySubjectId(id);
+        return Ok(evaluationCriteria);
+    }
 }

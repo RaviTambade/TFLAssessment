@@ -36,6 +36,10 @@ function getRole() {
     $("#content").load("getQuestions.html");
   });
 
+  $("#getCriteriaQuestion").click(function (e) {
+    $("#content").load("getCriteriaQuestion.html");
+  });
+
 
 // Load content dynamically into #content
 $(document).ready(function () {

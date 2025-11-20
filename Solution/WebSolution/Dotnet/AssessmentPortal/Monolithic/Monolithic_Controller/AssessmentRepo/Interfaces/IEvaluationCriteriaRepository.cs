@@ -10,4 +10,6 @@ public interface IEvaluationCriteriaRepository
 
     public Task <bool> UpdateCriteria(int evaluationCriteriaId, int questionId);
 
+    public Task<List<EvaluationCriteria>> GetCriteriaBySubjectId(int subjectId);
+
 }

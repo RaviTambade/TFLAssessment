@@ -27,6 +27,10 @@ namespace Transflower.TFLAssessment.Services
         {
             return await _repository.UpdateCriteria(evaluationCriteriaId, questionId);
         }
-        
+
+        public async Task<List<EvaluationCriteria>> GetCriteriaBySubjectId(int subjectId)
+        {
+            return await _repository.GetCriteriaBySubjectId(subjectId);
+        }
     }
 }
