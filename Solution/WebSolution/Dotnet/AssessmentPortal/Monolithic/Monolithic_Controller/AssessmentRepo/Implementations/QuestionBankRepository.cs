@@ -99,7 +99,7 @@ public class QuestionBankRepository : IQuestionBankRepository
     {
 
         List<QuestionDetails> questions = new List<QuestionDetails>();
-        string query = @"select questionbank.id, questionbank.title, subjects.title as subject ,evaluationcriterias.title as criteria
+        string query = @"select questionbank.id,questionbank.id as questionid,  questionbank.title, subjects.title as subject ,evaluationcriterias.title as criteria
                             from questionbank, subjects,evaluationcriterias
                             where questionbank.subjectid=subjects.id and questionbank.evaluationcriteriaid=evaluationcriterias.id
                             and subjects.id=@SubjectId and evaluationcriterias.id=@CriteriaId";
@@ -117,6 +117,7 @@ public class QuestionBankRepository : IQuestionBankRepository
             while (await reader.ReadAsync())
             {
                 int id = int.Parse(reader["id"].ToString());
+                int qid = int.Parse(reader["questionid"].ToString());
                 string strQuestion = reader["title"].ToString();
                 string subject = reader["subject"].ToString();
                 string criteria = reader["criteria"].ToString();
@@ -124,6 +125,7 @@ public class QuestionBankRepository : IQuestionBankRepository
                 QuestionDetails question = new QuestionDetails();
 
                 question.Id = id;
+                question.QuestionId = qid;
                 question.Question = strQuestion;
                 question.Subject = subject;
                 question.Criteria = criteria;

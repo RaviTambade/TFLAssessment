@@ -206,7 +206,9 @@ function loadCriteria(subjectId, subjectName) {
       // --------------------------- LOAD QUESTION DETAILS ---------------------------
 
       function QuestionDisplay(questionId) {
-        alert("Open details page for Question ID: " + questionId);
+        $("#content").load("QuestionDetails.html", function () {
+          QuestionDetails(questionId);
+        });
       }
     </script>
   </body>
