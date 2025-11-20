@@ -61,12 +61,21 @@ public class RoleRepository : IRoleRepository
 
     await connection.OpenAsync();
 
-   string query = @"
-                    SELECT DISTINCT 
-                    u.id, u.firstname, u.lastname
-                    FROM users u
-                    JOIN userroles ur ON u.id = ur.userid
-                    WHERE ur.roleid IN (" + string.Join(",", roleIds) + ")";
+//    string query = @"
+//                     SELECT DISTINCT 
+//                     u.id, u.firstname, u.lastname
+//                     FROM users u
+//                     JOIN userroles ur ON u.id = ur.userid
+//                     WHERE ur.roleid IN (" + string.Join(",", roleIds) + ")";
+
+string query = @"
+    SELECT u.id, u.firstname, u.lastname
+    FROM users u
+    JOIN userroles ur ON u.id = ur.userid
+    WHERE ur.roleid IN (" + string.Join(",", roleIds) + @")
+    GROUP BY u.id, u.firstname, u.lastname
+    HAVING COUNT(DISTINCT ur.roleid) = " + roleIds.Count + ";";
+
 
     using var cmd = new MySqlCommand(query, connection);
     using var reader = await cmd.ExecuteReaderAsync();

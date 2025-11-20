@@ -61,44 +61,44 @@ $(document).ready(function () {
 });
 
 // Delegated event listener for role checkboxes inside dynamic content
-$(document).on("change", ".roleCheck", function () {
+// $(document).on("change", ".roleCheck", function () {
 
-    const outputDiv = document.getElementById("output");
+//     const outputDiv = document.getElementById("output");
 
-    const selectedRoleIds = $(".roleCheck:checked")
-        .map(function() { return $(this).data("id"); })
-        .get();
+//     const selectedRoleIds = $(".roleCheck:checked")
+//         .map(function() { return $(this).data("id"); })
+//         .get();
 
-    if (selectedRoleIds.length === 0) {
-        outputDiv.innerHTML = "";
-        return;
-    }
+//     if (selectedRoleIds.length === 0) {
+//         outputDiv.innerHTML = "";
+//         return;
+//     }
 
-    outputDiv.innerHTML = "<p>Loading...</p>";
+//     outputDiv.innerHTML = "<p>Loading...</p>";
 
-    const queryString = selectedRoleIds.map(id => `roleIds=${id}`).join("&");
+//     const queryString = selectedRoleIds.map(id => `roleIds=${id}`).join("&");
 
-    fetch(`http://localhost:5238/api/Role/users?${queryString}`)
-        .then(r => r.json())
-        .then(result => {
-            outputDiv.innerHTML = "";
+//     fetch(`http://localhost:5238/api/Role/users?${queryString}`)
+//         .then(r => r.json())
+//         .then(result => {
+//             outputDiv.innerHTML = "";
 
-            if (!result || result.length === 0) {
-                outputDiv.innerHTML = "<p>No users found.</p>";
-                return;
-            }
+//             if (!result || result.length === 0) {
+//                 outputDiv.innerHTML = "<p>No users found.</p>";
+//                 return;
+//             }
 
-            let html = "<ul>";
-            result.forEach(u => {
-                html += `<li>${u.firstname} ${u.lastname}</li>`;
-            });
-            html += "</ul>";
+//             let html = "<ul>";
+//             result.forEach(u => {
+//                 html += `<li>${u.firstname} ${u.lastname}</li>`;
+//             });
+//             html += "</ul>";
 
-            outputDiv.innerHTML = html;
-        })
-        .catch(err => {
-            console.error(err);
-            outputDiv.innerHTML = "<p>Error loading users.</p>";
-        });
-});
+//             outputDiv.innerHTML = html;
+//         })
+//         .catch(err => {
+//             console.error(err);
+//             outputDiv.innerHTML = "<p>Error loading users.</p>";
+//         });
+// });
 
