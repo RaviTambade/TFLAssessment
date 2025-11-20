@@ -52,4 +52,11 @@ public class EvaluationCriteriaController : ControllerBase
         List<EvaluationCriteria> evaluationCriteria = await _svc.GetCriteriaBySubjectId(id);
         return Ok(evaluationCriteria);
     }
+
+    [HttpGet("questioncount/{id}")]
+    public async Task<IActionResult> getCriteriaQuestionCount(int id)
+    {
+        List<CriteriaQuestionCount> evaluationCriteriaCount = await _svc.getCriteriaQuestionCount(id);
+        return Ok(evaluationCriteriaCount);
+    }
 }
