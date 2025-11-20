@@ -79,9 +79,9 @@ $(document).ready(function () {
                 $("#output").html(html);
             },
 
-            error: function () {
-                $("#output").html("<li>Error loading users</li>");
-            }
+            error: function (xhr) {
+            $("#output").html(`<li>${xhr.responseText}</li>`);
+}
         });
 
     });
