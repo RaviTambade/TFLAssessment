@@ -1,0 +1,4634 @@
+{
+	"info": {
+		"_postman_id": "668a1fbf-be63-46e0-b509-a2a31b7d4fce",
+		"name": "TLFAssessment",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29865016"
+	},
+	"item": [
+		{
+			"name": "APIforSubject",
+			"item": [
+				{
+					"name": "add subject",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"MySQL2\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5238/api/subject/add",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5238",
+							"path": [
+								"api",
+								"subject",
+								"add"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "New Request",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"title\": \"MySQL\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:5264/api/subject/add",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5264",
+									"path": [
+										"api",
+										"subject",
+										"add"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 22 May 2025 10:28:21 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "Subject added successfully."
+						}
+					]
+				},
+				{
+					"name": "get all subjects",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5264/api/subject/subjects",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5264",
+							"path": [
+								"api",
+								"subject",
+								"subjects"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "New Request",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5264/api/subject/subjects",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5264",
+									"path": [
+										"api",
+										"subject",
+										"subjects"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 22 May 2025 10:33:20 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": 1,\n        \"title\": \"COREJAVA\"\n    },\n    {\n        \"id\": 2,\n        \"title\": \"ADVJAVA\"\n    },\n    {\n        \"id\": 3,\n        \"title\": \"DOTNET\"\n    },\n    {\n        \"id\": 4,\n        \"title\": \"MICROSERVICES\"\n    },\n    {\n        \"id\": 5,\n        \"title\": \"REACT\"\n    },\n    {\n        \"id\": 6,\n        \"title\": \"ANGULAR\"\n    },\n    {\n        \"id\": 7,\n        \"title\": \"CSHARP\"\n    },\n    {\n        \"id\": 8,\n        \"title\": \"JAVASCRIPT\"\n    },\n    {\n        \"id\": 9,\n        \"title\": \"MySQL\"\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "delete by id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5264/api/subject/delete/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5264",
+							"path": [
+								"api",
+								"subject",
+								"delete",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "delete by id",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5264/api/subject/delete/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5264",
+									"path": [
+										"api",
+										"subject",
+										"delete",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 23 May 2025 07:38:29 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "Subject deleted successfully."
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "AssessmentIntelligenceAPI",
+			"item": [
+				{
+					"name": "New Request",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5238/api/AssessmentIntelligence/candidates/1/year/2015",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5238",
+							"path": [
+								"api",
+								"AssessmentIntelligence",
+								"candidates",
+								"1",
+								"year",
+								"2015"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "New Request",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5294/api/AssessmentIntelligence/candidates/6/year/2015",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5294",
+									"path": [
+										"api",
+										"AssessmentIntelligence",
+										"candidates",
+										"6",
+										"year",
+										"2015"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 23 May 2025 08:02:28 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"candidateId\": 6,\n        \"score\": 10,\n        \"subjectTitle\": \"ADVJAVA\"\n    }\n]"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "EvaluationCriteriaAPI",
+			"item": [
+				{
+					"name": "UpdateCriteria",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5238/api/criteria/2/questions/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5238",
+							"path": [
+								"api",
+								"criteria",
+								"2",
+								"questions",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "UpdateCriteria",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5195/api/criteria/2/questions/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5195",
+									"path": [
+										"api",
+										"criteria",
+										"2",
+										"questions",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 26 May 2025 11:48:42 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "true"
+						}
+					]
+				},
+				{
+					"name": "UpdateSubject",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5238/api/criteria/22/subjects/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5238",
+							"path": [
+								"api",
+								"criteria",
+								"22",
+								"subjects",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "New Request",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5195/api/criteria/22/subjects/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5195",
+									"path": [
+										"api",
+										"criteria",
+										"22",
+										"subjects",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 26 May 2025 11:51:31 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "true"
+						}
+					]
+				},
+				{
+					"name": "InsertCriteria",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"Java 8 features\",\r\n    \"subjectId\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5238/api/criteria",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5238",
+							"path": [
+								"api",
+								"criteria"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "add criteria",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"title\": \"Java 8 features\",\r\n    \"subjectId\": 1\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:5195/api/criteria",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5195",
+									"path": [
+										"api",
+										"criteria"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 26 May 2025 11:53:50 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "true"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "QuestionBankapi",
+			"item": [
+				{
+					"name": "get all que",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5238/api/questionbank/questions",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5238",
+							"path": [
+								"api",
+								"questionbank",
+								"questions"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "get all ques",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5172/api/questionbank/questions",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5172",
+									"path": [
+										"api",
+										"questionbank",
+										"questions"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 26 May 2025 06:01:56 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": 1,\n        \"title\": \"Number of primitive data types in Java are?\"\n    },\n    {\n        \"id\": 2,\n        \"title\": \"Which of the following language was developed as the first purely object programming language?\"\n    },\n    {\n        \"id\": 3,\n        \"title\": \"Who developed object-oriented programming?\"\n    },\n    {\n        \"id\": 4,\n        \"title\": \"Which of the following is not an OOPS concept?\"\n    },\n    {\n        \"id\": 5,\n        \"title\": \"Which of the following language supports polymorphism but not the classes?\"\n    },\n    {\n        \"id\": 6,\n        \"title\": \"Spring Boot is used for developing?\"\n    },\n    {\n        \"id\": 7,\n        \"title\": \"How can a Spring Boot application be packaged and distributed?\"\n    },\n    {\n        \"id\": 8,\n        \"title\": \"What AOP stands for?\"\n    },\n    {\n        \"id\": 9,\n        \"title\": \"Which of the following is the correct name of React.js?\"\n    },\n    {\n        \"id\": 10,\n        \"title\": \"How to use ref keyword in beans.xml?\"\n    },\n    {\n        \"id\": 11,\n        \"title\": \"What is the role of HTML helper in ASP.NET MVC?\"\n    },\n    {\n        \"id\": 12,\n        \"title\": \"Which ASP.NET MVC filter will be executed at last during request processing in ASP.NET MVC Pipeline?\"\n    },\n    {\n        \"id\": 13,\n        \"title\": \"Which server , we can not deploy asp.net core Application?\"\n    },\n    {\n        \"id\": 14,\n        \"title\": \"ECommerce Application is built using ASP.NET object Model. Which ASP.NET object would be used to maintain Shopping Cart across number of requests being received from users?\"\n    },\n    {\n        \"id\": 15,\n        \"title\": \"Which namespace is used ASP.NET MVC for JSON serialization?\"\n    },\n    {\n        \"id\": 16,\n        \"title\": \"Which of the following statement is TRUE?\"\n    },\n    {\n        \"id\": 17,\n        \"title\": \"Visual Studio .NET tool is used to build WCF Service Application project. The project contains web.config file. Which is the root element in configuration file for WCF Service declaration?\"\n    },\n    {\n        \"id\": 18,\n        \"title\": \"Which of the following is used to check the validity of the model in ASP.NET Web API?\"\n    },\n    {\n        \"id\": 19,\n        \"title\": \"Which component is essential for collecting data using Connected Data Access Mode?\"\n    },\n    {\n        \"id\": 20,\n        \"title\": \"Which configuration file is used to change configuration setting that will affect only the current Web application?\"\n    },\n    {\n        \"id\": 21,\n        \"title\": \"Customer is demanding to buid web solution using decoupled , reusable , stateless Application logic. Which type of attribute would help to define reusable, corss platfrom, stateless application logic.\"\n    },\n    {\n        \"id\": 22,\n        \"title\": \"Which is not the data object used for data transfer in ASP.NET MVC?\"\n    },\n    {\n        \"id\": 23,\n        \"title\": \".Which of these is an attribute that you can apply to a controller action or an entire controller that modifies the way in which the action is executed?\"\n    },\n    {\n        \"id\": 24,\n        \"title\": \"Which statement is correct about Response.Output.Write()?\"\n    },\n    {\n        \"id\": 25,\n        \"title\": \"Which of the following tool is used to manage the GAC in .NET Framework?\"\n    },\n    {\n        \"id\": 26,\n        \"title\": \"Which method of DBContext class reflects changes to database for CRUD Operation in .net while implementing Entity Framework?\"\n    },\n    {\n        \"id\": 27,\n        \"title\": \"Which File extension is used for defining views in ASP.NET Core MVC?\"\n    },\n    {\n        \"id\": 28,\n        \"title\": \"Which of the following is not a member of ADO.NET Command object?\"\n    },\n    {\n        \"id\": 29,\n        \"title\": \"What is the best practice to isolate connection string while using asp.net core application?\"\n    },\n    {\n        \"id\": 30,\n        \"title\": \"How do you get information from a form that is submitted using the \\\"post\\\" method?\"\n    },\n    {\n        \"id\": 31,\n        \"title\": \"Which degault pages technology is used default for presentation logic implementation in ASP.NET MVC based Applications\"\n    },\n    {\n        \"id\": 32,\n        \"title\": \"Which Request/Response data fromat supported by Web API by default?\"\n    },\n    {\n        \"id\": 33,\n        \"title\": \"Which of the following types of routing supported in Web API?\"\n    },\n    {\n        \"id\": 34,\n        \"title\": \"Which interface must be implemented to provide querying facility in LINQ?\"\n    },\n    {\n        \"id\": 35,\n        \"title\": \"What is the default injection type of Unit Container used in ASP.NET Core\"\n    },\n    {\n        \"id\": 36,\n        \"title\": \"Which is the following .net cli command used to create and build Single Page Applicaion?\"\n    },\n    {\n        \"id\": 37,\n        \"title\": \"Which of the following term define rules for .Net Languages?\"\n    },\n    {\n        \"id\": 38,\n        \"title\": \"Which component of .net Architecture defines Events and Delegate?\"\n    },\n    {\n        \"id\": 39,\n        \"title\": \"What is the Assembly scope of an .net type defined in Code ?\"\n    },\n    {\n        \"id\": 40,\n        \"title\": \"Which is the incorrect syntax of array in C# ?\"\n    },\n    {\n        \"id\": 41,\n        \"title\": \"Which access specifier will you use to make base class members accessible in the derived class and not accessible for the rest of the program?\"\n    },\n    {\n        \"id\": 42,\n        \"title\": \"What is Nullable type?\"\n    },\n    {\n        \"id\": 43,\n        \"title\": \"Which type of inheritance is not supported in C# Programming?\"\n    },\n    {\n        \"id\": 44,\n        \"title\": \"What is the type of structure (struct) in C# Programming Language?\"\n    },\n    {\n        \"id\": 45,\n        \"title\": \"Missing Explicit Typecasting in code leads to following type of error.\"\n    },\n    {\n        \"id\": 46,\n        \"title\": \"Which namespace provide a specialized form of reflection that enables you to build types at runtime?\"\n    },\n    {\n        \"id\": 47,\n        \"title\": \"Which file extention define .net external dependencies needed for buliding .net core application?\"\n    },\n    {\n        \"id\": 48,\n        \"title\": \"Which of the following statement is correct MySQL database connection string ?\"\n    },\n    {\n        \"id\": 49,\n        \"title\": \"Which of the following class is used to send HTTP requires in .NET?\"\n    },\n    {\n        \"id\": 50,\n        \"title\": \"What is the name of Default Application Pool in IIS?\"\n    },\n    {\n        \"id\": 51,\n        \"title\": \"Which of the following object is used along with application object in order to ensure that only one process accesses a variable at a time?\"\n    },\n    {\n        \"id\": 52,\n        \"title\": \"Which Class is used to make a thread instance explicitly?\"\n    },\n    {\n        \"id\": 53,\n        \"title\": \"Which of the following is not a valid data type in JavaScript?\"\n    },\n    {\n        \"id\": 54,\n        \"title\": \"What does the 'this' keyword refer to in JavaScript?\"\n    },\n    {\n        \"id\": 55,\n        \"title\": \"How do you declare a variable in JavaScript that cannot be reassigned?\"\n    },\n    {\n        \"id\": 56,\n        \"title\": \"What function is used to change the state in React?\"\n    },\n    {\n        \"id\": 57,\n        \"title\": \"Which method is called immediately after a component is inserted into the DOM in React?\"\n    },\n    {\n        \"id\": 58,\n        \"title\": \"What is JSX in React?\"\n    },\n    {\n        \"id\": 59,\n        \"title\": \"In Angular, what does NgModule decorator do?\"\n    },\n    {\n        \"id\": 60,\n        \"title\": \"Which Angular feature allows you to subscribe to changes in the router's navigation events?\"\n    },\n    {\n        \"id\": 61,\n        \"title\": \"In Angular, what is the purpose of the 'ngOnInit' lifecycle hook?\"\n    },\n    {\n        \"id\": 62,\n        \"title\": \"What is a characteristic of microservices architecture?\"\n    },\n    {\n        \"id\": 63,\n        \"title\": \"Which of the following is a benefit of using microservices?\"\n    },\n    {\n        \"id\": 64,\n        \"title\": \"Which technology is commonly used for inter-service communication in microservices architecture?\"\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "get by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5238/api/questionbank/questions/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5238",
+							"path": [
+								"api",
+								"questionbank",
+								"questions",
+								"2"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "get by id",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5172/api/questionbank/questions/2",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5172",
+									"path": [
+										"api",
+										"questionbank",
+										"questions",
+										"2"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 26 May 2025 06:26:33 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 2,\n    \"title\": \"Which of the following language was developed as the first purely object programming language?\",\n    \"a\": \"SmallTalk\",\n    \"b\": \"C++\",\n    \"c\": \"Kotlin\",\n    \"d\": \"Java\",\n    \"subjectId\": 1,\n    \"answerKey\": \"a\",\n    \"evaluationCriteriaId\": 1\n}"
+						}
+					]
+				},
+				{
+					"name": "GetCriteria",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5238/api/questionbank/questions/subjects/corejava/questions/5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5238",
+							"path": [
+								"api",
+								"questionbank",
+								"questions",
+								"subjects",
+								"corejava",
+								"questions",
+								"5"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "get question criterial",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5172/api/questionbank/questions/subjects/corejava/questions/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5172",
+									"path": [
+										"api",
+										"questionbank",
+										"questions",
+										"subjects",
+										"corejava",
+										"questions",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 26 May 2025 06:28:53 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "OOPS"
+						}
+					]
+				},
+				{
+					"name": "get questions by subject",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5238/api/questionbank/questions/subjects/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5238",
+							"path": [
+								"api",
+								"questionbank",
+								"questions",
+								"subjects",
+								"2"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "get questions by subject",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5172/api/questionbank/questions/subjects/2",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5172",
+									"path": [
+										"api",
+										"questionbank",
+										"questions",
+										"subjects",
+										"2"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 26 May 2025 06:34:39 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"questionId\": 6,\n        \"question\": \"Spring Boot is used for developing?\",\n        \"subjectId\": 2,\n        \"subject\": \"ADVJAVA\"\n    },\n    {\n        \"questionId\": 7,\n        \"question\": \"How can a Spring Boot application be packaged and distributed?\",\n        \"subjectId\": 2,\n        \"subject\": \"ADVJAVA\"\n    },\n    {\n        \"questionId\": 8,\n        \"question\": \"What AOP stands for?\",\n        \"subjectId\": 2,\n        \"subject\": \"ADVJAVA\"\n    },\n    {\n        \"questionId\": 9,\n        \"question\": \"Which of the following is the correct name of React.js?\",\n        \"subjectId\": 2,\n        \"subject\": \"ADVJAVA\"\n    },\n    {\n        \"questionId\": 10,\n        \"question\": \"How to use ref keyword in beans.xml?\",\n        \"subjectId\": 2,\n        \"subject\": \"ADVJAVA\"\n    },\n    {\n        \"questionId\": 34,\n        \"question\": \"Which interface must be implemented to provide querying facility in LINQ?\",\n        \"subjectId\": 2,\n        \"subject\": \"ADVJAVA\"\n    },\n    {\n        \"questionId\": 41,\n        \"question\": \"Which access specifier will you use to make base class members accessible in the derived class and not accessible for the rest of the program?\",\n        \"subjectId\": 2,\n        \"subject\": \"ADVJAVA\"\n    },\n    {\n        \"questionId\": 48,\n        \"question\": \"Which of the following statement is correct MySQL database connection string ?\",\n        \"subjectId\": 2,\n        \"subject\": \"ADVJAVA\"\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "Get questions by test id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5238/api/questionbank/questions/tests/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5238",
+							"path": [
+								"api",
+								"questionbank",
+								"questions",
+								"tests",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "New Request",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5172/api/questionbank/questions/tests/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5172",
+									"path": [
+										"api",
+										"questionbank",
+										"questions",
+										"tests",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 26 May 2025 06:36:59 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": 1,\n        \"title\": \"Number of primitive data types in Java are?\",\n        \"a\": \"6\",\n        \"b\": \"7\",\n        \"c\": \"8\",\n        \"d\": \"9\",\n        \"subjectId\": 1,\n        \"answerKey\": null,\n        \"evaluationCriteriaId\": 1\n    },\n    {\n        \"id\": 2,\n        \"title\": \"Which of the following language was developed as the first purely object programming language?\",\n        \"a\": \"SmallTalk\",\n        \"b\": \"C++\",\n        \"c\": \"Kotlin\",\n        \"d\": \"Java\",\n        \"subjectId\": 1,\n        \"answerKey\": null,\n        \"evaluationCriteriaId\": 1\n    },\n    {\n        \"id\": 3,\n        \"title\": \"Who developed object-oriented programming?\",\n        \"a\": \"Adele Goldberg\",\n        \"b\": \"Dennis Ritchie\",\n        \"c\": \"Alan Kay\",\n        \"d\": \"Andrea Ferro\",\n        \"subjectId\": 1,\n        \"answerKey\": null,\n        \"evaluationCriteriaId\": 1\n    },\n    {\n        \"id\": 4,\n        \"title\": \"Which of the following is not an OOPS concept?\",\n        \"a\": \"Exception\",\n        \"b\": \"Abstraction\",\n        \"c\": \"Polymorphism\",\n        \"d\": \"Encapsulation\",\n        \"subjectId\": 1,\n        \"answerKey\": null,\n        \"evaluationCriteriaId\": 1\n    },\n    {\n        \"id\": 5,\n        \"title\": \"Which of the following language supports polymorphism but not the classes?\",\n        \"a\": \"C++ programming language\",\n        \"b\": \"Java programming language\",\n        \"c\": \"Ada programming language\",\n        \"d\": \"C# programming language\",\n        \"subjectId\": 1,\n        \"answerKey\": null,\n        \"evaluationCriteriaId\": 1\n    },\n    {\n        \"id\": 6,\n        \"title\": \"Spring Boot is used for developing?\",\n        \"a\": \"Web applications\",\n        \"b\": \"Distributed applications (Restful web services)\",\n        \"c\": \"Microservices\",\n        \"d\": \"All of the above\",\n        \"subjectId\": 2,\n        \"answerKey\": null,\n        \"evaluationCriteriaId\": 5\n    },\n    {\n        \"id\": 7,\n        \"title\": \"How can a Spring Boot application be packaged and distributed?\",\n        \"a\": \"As a JAR file \",\n        \"b\": \"As a WAR file\",\n        \"c\": \"As a ZIP file\",\n        \"d\": \"All of the above.\",\n        \"subjectId\": 2,\n        \"answerKey\": null,\n        \"evaluationCriteriaId\": 5\n    },\n    {\n        \"id\": 8,\n        \"title\": \"What AOP stands for?\",\n        \"a\": \"Aspect Oriented Programming\",\n        \"b\": \"Any Object Programming\",\n        \"c\": \"Asset Oriented Programming\",\n        \"d\": \"Asset Oriented Protocol\",\n        \"subjectId\": 2,\n        \"answerKey\": null,\n        \"evaluationCriteriaId\": 5\n    },\n    {\n        \"id\": 9,\n        \"title\": \"Which of the following is the correct name of React.js?\",\n        \"a\": \" React\",\n        \"b\": \"React.js\",\n        \"c\": \"ReactJs\",\n        \"d\": \"All of the above\",\n        \"subjectId\": 2,\n        \"answerKey\": null,\n        \"evaluationCriteriaId\": 5\n    },\n    {\n        \"id\": 10,\n        \"title\": \"How to use ref keyword in beans.xml?\",\n        \"a\": \"Using setter method only.\",\n        \"b\": \"Using constructor argument only.\",\n        \"c\": \"Using setter method and constructor argument both.\",\n        \"d\": \"None of the above.\",\n        \"subjectId\": 2,\n        \"answerKey\": null,\n        \"evaluationCriteriaId\": 5\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "Get questions by subject criteria",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5238/api/questionbank/questions/subjects/1/criterias/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5238",
+							"path": [
+								"api",
+								"questionbank",
+								"questions",
+								"subjects",
+								"1",
+								"criterias",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "New Request",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5172/api/questionbank/questions/subjects/1/criterias/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5172",
+									"path": [
+										"api",
+										"questionbank",
+										"questions",
+										"subjects",
+										"1",
+										"criterias",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 26 May 2025 06:39:04 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": 1,\n        \"question\": \"Number of primitive data types in Java are?\",\n        \"subject\": \"COREJAVA\",\n        \"criteria\": \"OOPS\"\n    },\n    {\n        \"id\": 2,\n        \"question\": \"Which of the following language was developed as the first purely object programming language?\",\n        \"subject\": \"COREJAVA\",\n        \"criteria\": \"OOPS\"\n    },\n    {\n        \"id\": 3,\n        \"question\": \"Who developed object-oriented programming?\",\n        \"subject\": \"COREJAVA\",\n        \"criteria\": \"OOPS\"\n    },\n    {\n        \"id\": 4,\n        \"question\": \"Which of the following is not an OOPS concept?\",\n        \"subject\": \"COREJAVA\",\n        \"criteria\": \"OOPS\"\n    },\n    {\n        \"id\": 5,\n        \"question\": \"Which of the following language supports polymorphism but not the classes?\",\n        \"subject\": \"COREJAVA\",\n        \"criteria\": \"OOPS\"\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "Update  answer of the question",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5238/api/questionbank/question/65/updateanswer/b",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5238",
+							"path": [
+								"api",
+								"questionbank",
+								"question",
+								"65",
+								"updateanswer",
+								"b"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "New Request",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5172/api/questionbank/question/65/updateanswer/b",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5172",
+									"path": [
+										"api",
+										"questionbank",
+										"question",
+										"65",
+										"updateanswer",
+										"b"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 26 May 2025 06:51:50 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "true"
+						}
+					]
+				},
+				{
+					"name": "Update question options",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "//ask to sir why update whole title of question",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5238/api/questionbank/update/options/question/65",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5238",
+							"path": [
+								"api",
+								"questionbank",
+								"update",
+								"options",
+								"question",
+								"65"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add question",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"subjectId\": 1,\r\n  \"title\": \"Which of the following best describes polymorphism in OOP?\",\r\n  \"a\": \"Ability of a class to inherit from multiple classes\",\r\n  \"b\": \"Ability of an object to take many forms\",\r\n  \"c\": \"Ability to encapsulate data\",\r\n  \"d\": \"Ability to create private data members\",\r\n  \"answerKey\": \"B\",\r\n  \"evaluationCriteriaId\": 1\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5238/api/questionbank/question",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5238",
+							"path": [
+								"api",
+								"questionbank",
+								"question"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "New Request",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"subjectId\": 1,\r\n  \"title\": \"Which of the following best describes polymorphism in OOP?\",\r\n  \"a\": \"Ability of a class to inherit from multiple classes\",\r\n  \"b\": \"Ability of an object to take many forms\",\r\n  \"c\": \"Ability to encapsulate data\",\r\n  \"d\": \"Ability to create private data members\",\r\n  \"answerKey\": \"B\",\r\n  \"evaluationCriteriaId\": 1\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:5172/api/questionbank/question",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5172",
+									"path": [
+										"api",
+										"questionbank",
+										"question"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 26 May 2025 06:50:14 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "true"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "ResultAPI",
+			"item": [
+				{
+					"name": "Get all subject",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5238/api/Result/subjects",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5238",
+							"path": [
+								"api",
+								"Result",
+								"subjects"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "get all subject",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5235/api/Result/subjects",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5235",
+									"path": [
+										"api",
+										"Result",
+										"subjects"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 26 May 2025 07:00:47 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": 1,\n        \"title\": \"COREJAVA\"\n    },\n    {\n        \"id\": 2,\n        \"title\": \"ADVJAVA\"\n    },\n    {\n        \"id\": 3,\n        \"title\": \"DOTNET\"\n    },\n    {\n        \"id\": 4,\n        \"title\": \"MICROSERVICES\"\n    },\n    {\n        \"id\": 5,\n        \"title\": \"REACT\"\n    },\n    {\n        \"id\": 6,\n        \"title\": \"ANGULAR\"\n    },\n    {\n        \"id\": 7,\n        \"title\": \"CSHARP\"\n    },\n    {\n        \"id\": 8,\n        \"title\": \"JAVASCRIPT\"\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "Get candidate score with stored procedure",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5238/api/Result/candidates/1/tests/2/score",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5238",
+							"path": [
+								"api",
+								"Result",
+								"candidates",
+								"1",
+								"tests",
+								"2",
+								"score"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get candidate score with stored procedure",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5235/api/Result/candidates/1/tests/1/score",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5235",
+									"path": [
+										"api",
+										"Result",
+										"candidates",
+										"1",
+										"tests",
+										"1",
+										"score"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 26 May 2025 07:01:39 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "2"
+						}
+					]
+				},
+				{
+					"name": "set start time",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"day\": 26,\r\n  \"hour\": 1,\r\n  \"minutes\": 0,\r\n  \"month\": 6,\r\n  \"seconds\": 0,\r\n  \"year\": 2025\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5238/api/Result/setstarttime/1/tests/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5238",
+							"path": [
+								"api",
+								"Result",
+								"setstarttime",
+								"1",
+								"tests",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "set start time",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"day\": 26,\r\n  \"hour\": 1,\r\n  \"minutes\": 0,\r\n  \"month\": 5,\r\n  \"seconds\": 0,\r\n  \"year\": 2025\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:5235/api/Result/setstarttime/1/tests/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5235",
+									"path": [
+										"api",
+										"Result",
+										"setstarttime",
+										"1",
+										"tests",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 26 May 2025 07:07:40 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "true"
+						}
+					]
+				},
+				{
+					"name": "set end time",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"day\": 26,\r\n  \"hour\": 3,\r\n  \"minutes\": 0,\r\n  \"month\": 5,\r\n  \"seconds\": 0,\r\n  \"year\": 2025\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5235/api/Result/setendtime/1/tests/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5235",
+							"path": [
+								"api",
+								"Result",
+								"setendtime",
+								"1",
+								"tests",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "New Request",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"day\": 26,\r\n  \"hour\": 3,\r\n  \"minutes\": 0,\r\n  \"month\": 5,\r\n  \"seconds\": 0,\r\n  \"year\": 2025\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:5235/api/Result/setendtime/1/tests/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5235",
+									"path": [
+										"api",
+										"Result",
+										"setendtime",
+										"1",
+										"tests",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 26 May 2025 07:12:28 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "true"
+						}
+					]
+				},
+				{
+					"name": "candidate details of test",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5238/api/Result/candidates/1/tests/10/details",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5238",
+							"path": [
+								"api",
+								"Result",
+								"candidates",
+								"1",
+								"tests",
+								"10",
+								"details"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "New Request",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5235/api/Result/candidates/1/tests/1/details",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5235",
+									"path": [
+										"api",
+										"Result",
+										"candidates",
+										"1",
+										"tests",
+										"1",
+										"details"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 26 May 2025 07:13:53 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"candidateId\": 1,\n    \"testId\": 1,\n    \"correctAnswers\": 2,\n    \"incorrectAnswers\": 8,\n    \"skippedQuestions\": 0\n}"
+						}
+					]
+				},
+				{
+					"name": "Get test result details.",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5238/api/Result/tests/1/detail",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5238",
+							"path": [
+								"api",
+								"Result",
+								"tests",
+								"1",
+								"detail"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "New Request",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5235/api/Result/tests/1/details",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5235",
+									"path": [
+										"api",
+										"Result",
+										"tests",
+										"1",
+										"details"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 26 May 2025 07:14:44 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"testId\": 1,\n        \"testName\": \"Basic MCQ Test\",\n        \"candidateId\": 2,\n        \"firstName\": \"Vaibhav\",\n        \"lastName\": \"Sathe\",\n        \"subject\": \"COREJAVA\",\n        \"score\": 2\n    },\n    {\n        \"testId\": 1,\n        \"testName\": \"Basic MCQ Test\",\n        \"candidateId\": 1,\n        \"firstName\": \"ram\",\n        \"lastName\": \"tambe\",\n        \"subject\": \"COREJAVA\",\n        \"score\": 2\n    },\n    {\n        \"testId\": 1,\n        \"testName\": \"Basic MCQ Test\",\n        \"candidateId\": 5,\n        \"firstName\": \"Ganesh\",\n        \"lastName\": \"ghodake\",\n        \"subject\": \"COREJAVA\",\n        \"score\": 10\n    },\n    {\n        \"testId\": 1,\n        \"testName\": \"Basic MCQ Test\",\n        \"candidateId\": 3,\n        \"firstName\": \"Shreedhar\",\n        \"lastName\": \"Kumar\",\n        \"subject\": \"COREJAVA\",\n        \"score\": 9\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "Get appeared candidates of the test",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5238/api/Result/candidates/tests/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5238",
+							"path": [
+								"api",
+								"Result",
+								"candidates",
+								"tests",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "New Request",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5235/api/Result/candidates/tests/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5235",
+									"path": [
+										"api",
+										"Result",
+										"candidates",
+										"tests",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 26 May 2025 07:15:42 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"testId\": 1,\n        \"candidateId\": 2,\n        \"firstName\": \"Vaibhav\",\n        \"lastName\": \"Sathe\"\n    },\n    {\n        \"testId\": 1,\n        \"candidateId\": 1,\n        \"firstName\": \"ram\",\n        \"lastName\": \"tambe\"\n    },\n    {\n        \"testId\": 1,\n        \"candidateId\": 5,\n        \"firstName\": \"Ganesh\",\n        \"lastName\": \"ghodake\"\n    },\n    {\n        \"testId\": 1,\n        \"candidateId\": 3,\n        \"firstName\": \"Shreedhar\",\n        \"lastName\": \"Kumar\"\n    },\n    {\n        \"testId\": 1,\n        \"candidateId\": 1,\n        \"firstName\": \"ram\",\n        \"lastName\": \"tambe\"\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "Get passed candidates of the test",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5238/api/Result/passedcandidates/tests/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5238",
+							"path": [
+								"api",
+								"Result",
+								"passedcandidates",
+								"tests",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "New Request",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5235/api/Result/passedcandidates/tests/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5235",
+									"path": [
+										"api",
+										"Result",
+										"passedcandidates",
+										"tests",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 26 May 2025 07:16:25 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"testId\": 1,\n        \"candidateId\": 5,\n        \"firstName\": \"Ganesh\",\n        \"lastName\": \"ghodake\",\n        \"passingLevel\": 6,\n        \"score\": 10\n    },\n    {\n        \"testId\": 1,\n        \"candidateId\": 3,\n        \"firstName\": \"Shreedhar\",\n        \"lastName\": \"Kumar\",\n        \"passingLevel\": 6,\n        \"score\": 9\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "Get failed candidates of the test",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5238/api/Result/failedcandidates/tests/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5238",
+							"path": [
+								"api",
+								"Result",
+								"failedcandidates",
+								"tests",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get failed candidates of the test",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5235/api/Result/failedcandidates/tests/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5235",
+									"path": [
+										"api",
+										"Result",
+										"failedcandidates",
+										"tests",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 26 May 2025 07:23:36 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"testId\": 1,\n        \"candidateId\": 2,\n        \"firstName\": \"Vaibhav\",\n        \"lastName\": \"Sathe\",\n        \"passingLevel\": 7,\n        \"score\": 2\n    },\n    {\n        \"testId\": 1,\n        \"candidateId\": 1,\n        \"firstName\": \"ram\",\n        \"lastName\": \"tambe\",\n        \"passingLevel\": 7,\n        \"score\": 2\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "Set passing level of the test",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5238/api/Result/setpassinglevel/1/passingLevel/6",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5238",
+							"path": [
+								"api",
+								"Result",
+								"setpassinglevel",
+								"1",
+								"passingLevel",
+								"6"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "New Request",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5235/api/Result/setpassinglevel/1/passingLevel/7",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5235",
+									"path": [
+										"api",
+										"Result",
+										"setpassinglevel",
+										"1",
+										"passingLevel",
+										"7"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 26 May 2025 07:18:08 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [
+								{
+									"expires": "Invalid Date",
+									"domain": "",
+									"path": ""
+								}
+							],
+							"body": "true"
+						},
+						{
+							"name": "New Request",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5235/api/Result/setpassinglevel/1/passingLevel/7",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5235",
+									"path": [
+										"api",
+										"Result",
+										"setpassinglevel",
+										"1",
+										"passingLevel",
+										"7"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 26 May 2025 07:20:44 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "true"
+						}
+					]
+				},
+				{
+					"name": "Get testlist as per candidate",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5238/api/Result/testlist/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5238",
+							"path": [
+								"api",
+								"Result",
+								"testlist",
+								"3"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "New Request",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5235/api/Result/testlist/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5235",
+									"path": [
+										"api",
+										"Result",
+										"testlist",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 26 May 2025 07:24:51 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"testId\": 1,\n        \"testName\": \"Basic MCQ Test\",\n        \"score\": 2\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "Get subject result details",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5238/api/Result/results/subjectresults/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5238",
+							"path": [
+								"api",
+								"Result",
+								"results",
+								"subjectresults",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "New Request",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5235/api/Result/results/subjectresults/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5235",
+									"path": [
+										"api",
+										"Result",
+										"results",
+										"subjectresults",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 26 May 2025 07:25:25 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"testId\": 1,\n        \"subjectId\": 1,\n        \"candidateId\": 2,\n        \"firstName\": \"Vaibhav\",\n        \"lastName\": \"Sathe\",\n        \"subject\": \"COREJAVA\",\n        \"score\": 2\n    },\n    {\n        \"testId\": 1,\n        \"subjectId\": 1,\n        \"candidateId\": 1,\n        \"firstName\": \"ram\",\n        \"lastName\": \"tambe\",\n        \"subject\": \"COREJAVA\",\n        \"score\": 2\n    },\n    {\n        \"testId\": 1,\n        \"subjectId\": 1,\n        \"candidateId\": 5,\n        \"firstName\": \"Ganesh\",\n        \"lastName\": \"ghodake\",\n        \"subject\": \"COREJAVA\",\n        \"score\": 10\n    },\n    {\n        \"testId\": 1,\n        \"subjectId\": 1,\n        \"candidateId\": 3,\n        \"firstName\": \"Shreedhar\",\n        \"lastName\": \"Kumar\",\n        \"subject\": \"COREJAVA\",\n        \"score\": 9\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "get avg",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5299/api/candidateanswer/assessmentanswers/candidates/4/tests/26/results",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5299",
+							"path": [
+								"api",
+								"candidateanswer",
+								"assessmentanswers",
+								"candidates",
+								"4",
+								"tests",
+								"26",
+								"results"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get list of test and score by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5238/api/Result/candidates/13/scores",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5238",
+							"path": [
+								"api",
+								"Result",
+								"candidates",
+								"13",
+								"scores"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "InterviewAPI",
+			"item": [
+				{
+					"name": "New Request",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5238/api/interviews/details",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5238",
+							"path": [
+								"api",
+								"interviews",
+								"details"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "interview details",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5129/api/interviews/details",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5129",
+									"path": [
+										"api",
+										"interviews",
+										"details"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 26 May 2025 07:51:51 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"firstName\": \"Vaibhav\",\n        \"lastName\": \"Sathe\",\n        \"candidateId\": 2,\n        \"title\": \"COREJAVA\"\n    },\n    {\n        \"firstName\": \"Shreedhar\",\n        \"lastName\": \"Kumar\",\n        \"candidateId\": 3,\n        \"title\": \"ADVJAVA\"\n    },\n    {\n        \"firstName\": \"Prajakta\",\n        \"lastName\": \"Powar\",\n        \"candidateId\": 4,\n        \"title\": \"COREJAVA\"\n    },\n    {\n        \"firstName\": \"Ganesh\",\n        \"lastName\": \"ghodake\",\n        \"candidateId\": 5,\n        \"title\": \"REACT\"\n    },\n    {\n        \"firstName\": \"Vaibhav\",\n        \"lastName\": \"Walekar\",\n        \"candidateId\": 6,\n        \"title\": \"COREJAVA\"\n    },\n    {\n        \"firstName\": \"Vaibhav\",\n        \"lastName\": \"Sathe\",\n        \"candidateId\": 2,\n        \"title\": \"ANGULAR\"\n    },\n    {\n        \"firstName\": \"Shreedhar\",\n        \"lastName\": \"Kumar\",\n        \"candidateId\": 3,\n        \"title\": \"COREJAVA\"\n    },\n    {\n        \"firstName\": \"Prajakta\",\n        \"lastName\": \"Powar\",\n        \"candidateId\": 4,\n        \"title\": \"ADVJAVA\"\n    },\n    {\n        \"firstName\": \"Ganesh\",\n        \"lastName\": \"ghodake\",\n        \"candidateId\": 5,\n        \"title\": \"COREJAVA\"\n    },\n    {\n        \"firstName\": \"Vaibhav\",\n        \"lastName\": \"Walekar\",\n        \"candidateId\": 6,\n        \"title\": \"REACT\"\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "Get Interviewed Candidate Subjects",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5238/api/interviews/candidate/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5238",
+							"path": [
+								"api",
+								"interviews",
+								"candidate",
+								"2"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "New Request",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5129/api/interviews/candidate/2",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5129",
+									"path": [
+										"api",
+										"interviews",
+										"candidate",
+										"2"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 26 May 2025 08:55:58 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"firstName\": \"Vaibhav\",\n        \"lastName\": \"Sathe\",\n        \"candidateId\": 2,\n        \"title\": \"COREJAVA\"\n    },\n    {\n        \"firstName\": \"Vaibhav\",\n        \"lastName\": \"Sathe\",\n        \"candidateId\": 2,\n        \"title\": \"ANGULAR\"\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "Get interview detail",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5238/api/interviews/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5238",
+							"path": [
+								"api",
+								"interviews",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get interview detail",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5129/api/interviews/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5129",
+									"path": [
+										"api",
+										"interviews",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 26 May 2025 09:35:30 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 1,\n    \"interviewDate\": \"2024-02-10\",\n    \"interviewTime\": \"10:00 AM\",\n    \"smeName\": \"ram\",\n    \"candidateName\": \"Vaibhav\",\n    \"subject\": null,\n    \"criterias\": null\n}"
+						},
+						{
+							"name": "Get interview detail",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5129/api/interviews/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5129",
+									"path": [
+										"api",
+										"interviews",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 26 May 2025 10:05:49 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 1,\n    \"interviewDate\": \"10-02-2024 00:00:00\",\n    \"interviewTime\": \"10:00 AM\",\n    \"smeName\": \"ram tambe\",\n    \"candidateName\": \"Vaibhav Sathe\",\n    \"subject\": \"COREJAVA\",\n    \"criterias\": [\n        \"Multithreading\",\n        \"DataAccess\",\n        \"Collection\",\n        \"HyberNet\",\n        \"Spring Boot\"\n    ]\n}"
+						},
+						{
+							"name": "Get interview detail",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5238/api/interviews/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5238",
+									"path": [
+										"api",
+										"interviews",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 10 Aug 2025 06:43:33 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 1,\n    \"interviewDate\": \"02-06-2025 00:00:00\",\n    \"interviewTime\": \"12:00 AM\",\n    \"smeName\": \"Shreedhar Kumar\",\n    \"candidateName\": \"Vaibhav Sathe\",\n    \"subject\": \"REACT\",\n    \"criterias\": [\n        \"Multithreading\",\n        \"DataAccess\",\n        \"Collection\",\n        \"HyberNet\",\n        \"Spring Boot\"\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "RescheduleInterview",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5238/api/interviews/1/date/2025-06-01",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5238",
+							"path": [
+								"api",
+								"interviews",
+								"1",
+								"date",
+								"2025-06-01"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "change date",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5129/api/interviews/1/date/2025-06-01",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5129",
+									"path": [
+										"api",
+										"interviews",
+										"1",
+										"date",
+										"2025-06-01"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 26 May 2025 11:18:26 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "true"
+						}
+					]
+				},
+				{
+					"name": "RescheduleInterview time",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5238/api/interviews/1/time/11:00 AM",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5238",
+							"path": [
+								"api",
+								"interviews",
+								"1",
+								"time",
+								"11:00 AM"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "change time",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5129/api/interviews/1/time/11:00 AM",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5129",
+									"path": [
+										"api",
+										"interviews",
+										"1",
+										"time",
+										"11:00 AM"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 26 May 2025 11:22:00 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "true"
+						}
+					]
+				},
+				{
+					"name": "change date time",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5238/api/interviews/1/time/12:00 AM/date/2025-06-02",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5238",
+							"path": [
+								"api",
+								"interviews",
+								"1",
+								"time",
+								"12:00 AM",
+								"date",
+								"2025-06-02"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "New Request",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5129/api/interviews/1/time/12:00 AM/date/2025-06-02",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5129",
+									"path": [
+										"api",
+										"interviews",
+										"1",
+										"time",
+										"12:00 AM",
+										"date",
+										"2025-06-02"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 26 May 2025 11:24:01 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "true"
+						}
+					]
+				},
+				{
+					"name": "change interviews",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5238/api/interviews/1/subjectexperts/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5238",
+							"path": [
+								"api",
+								"interviews",
+								"1",
+								"subjectexperts",
+								"3"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "New Request",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5129/api/interviews/1/subjectexperts/3",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5129",
+									"path": [
+										"api",
+										"interviews",
+										"1",
+										"subjectexperts",
+										"3"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 26 May 2025 11:28:15 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "true"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "CandidateAnsApi",
+			"item": [
+				{
+					"name": "Insert candidate answers of the test",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n  {\r\n    \"testQuestionId\": 1,\r\n    \"answerKey\": \"a\"\r\n  },\r\n  {\r\n    \"testQuestionId\": 2,\r\n    \"answerKey\": \"b\"\r\n  },\r\n  {\r\n    \"testQuestionId\": 3,\r\n    \"answerKey\": \"c\"\r\n  }\r\n]\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5238/api/candidateanswer/assessmentanswers/candidates/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5238",
+							"path": [
+								"api",
+								"candidateanswer",
+								"assessmentanswers",
+								"candidates",
+								"2"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "New Request",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "[\r\n  {\r\n    \"testQuestionId\": 1,\r\n    \"answerKey\": \"a\"\r\n  },\r\n  {\r\n    \"testQuestionId\": 2,\r\n    \"answerKey\": \"b\"\r\n  },\r\n  {\r\n    \"testQuestionId\": 3,\r\n    \"answerKey\": \"c\"\r\n  }\r\n]\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:5299/api/candidateanswer/assessmentanswers/candidates/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5299",
+									"path": [
+										"api",
+										"candidateanswer",
+										"assessmentanswers",
+										"candidates",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 26 May 2025 11:43:01 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "true"
+						},
+						{
+							"name": "Insert candidate answers of the test",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "[\r\n  {\r\n    \"testQuestionId\": 1,\r\n    \"answerKey\": \"a\"\r\n  },\r\n  {\r\n    \"testQuestionId\": 2,\r\n    \"answerKey\": \"b\"\r\n  },\r\n  {\r\n    \"testQuestionId\": 3,\r\n    \"answerKey\": \"c\"\r\n  }\r\n]\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:5299/api/candidateanswer/assessmentanswers/candidates/2",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5299",
+									"path": [
+										"api",
+										"candidateanswer",
+										"assessmentanswers",
+										"candidates",
+										"2"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 04 Jun 2025 05:58:46 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Candidate answers inserted successfully.\",\n    \"status\": true\n}"
+						}
+					]
+				},
+				{
+					"name": "get candidate ans and correct ans",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5238/api/candidateanswer/assessmentanswers/candidates/1/testId/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5238",
+							"path": [
+								"api",
+								"candidateanswer",
+								"assessmentanswers",
+								"candidates",
+								"1",
+								"testId",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get candidate ans result",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5238/api/candidateanswer/assessmentanswers/candidates/1/tests/1/results",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5238",
+							"path": [
+								"api",
+								"candidateanswer",
+								"assessmentanswers",
+								"candidates",
+								"1",
+								"tests",
+								"1",
+								"results"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "get candidate ans result",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5299/api/candidateanswer/assessmentanswers/candidates/1/tests/1/results",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5299",
+									"path": [
+										"api",
+										"candidateanswer",
+										"assessmentanswers",
+										"candidates",
+										"1",
+										"tests",
+										"1",
+										"results"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 04 Jun 2025 08:55:40 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"candidateAnswer\": \"b\",\n        \"correctAnswer\": \"c\",\n        \"isCorrect\": false\n    },\n    {\n        \"candidateAnswer\": \"c\",\n        \"correctAnswer\": \"a\",\n        \"isCorrect\": false\n    },\n    {\n        \"candidateAnswer\": \"a\",\n        \"correctAnswer\": \"c\",\n        \"isCorrect\": false\n    },\n    {\n        \"candidateAnswer\": \"a\",\n        \"correctAnswer\": \"a\",\n        \"isCorrect\": true\n    },\n    {\n        \"candidateAnswer\": \"b\",\n        \"correctAnswer\": \"c\",\n        \"isCorrect\": false\n    },\n    {\n        \"candidateAnswer\": \"c\",\n        \"correctAnswer\": \"d\",\n        \"isCorrect\": false\n    },\n    {\n        \"candidateAnswer\": \"d\",\n        \"correctAnswer\": \"d\",\n        \"isCorrect\": true\n    },\n    {\n        \"candidateAnswer\": \"d\",\n        \"correctAnswer\": \"a\",\n        \"isCorrect\": false\n    },\n    {\n        \"candidateAnswer\": \"a\",\n        \"correctAnswer\": \"d\",\n        \"isCorrect\": false\n    },\n    {\n        \"candidateAnswer\": \"a\",\n        \"correctAnswer\": \"c\",\n        \"isCorrect\": false\n    },\n    {\n        \"candidateAnswer\": \"c\",\n        \"correctAnswer\": \"a\",\n        \"isCorrect\": false\n    },\n    {\n        \"candidateAnswer\": \"b\",\n        \"correctAnswer\": \"a\",\n        \"isCorrect\": false\n    },\n    {\n        \"candidateAnswer\": \"b\",\n        \"correctAnswer\": \"d\",\n        \"isCorrect\": false\n    },\n    {\n        \"candidateAnswer\": \"b\",\n        \"correctAnswer\": \"b\",\n        \"isCorrect\": true\n    },\n    {\n        \"candidateAnswer\": \"a\",\n        \"correctAnswer\": \"a\",\n        \"isCorrect\": true\n    },\n    {\n        \"candidateAnswer\": \"a\",\n        \"correctAnswer\": \"d\",\n        \"isCorrect\": false\n    },\n    {\n        \"candidateAnswer\": \"a\",\n        \"correctAnswer\": \"b\",\n        \"isCorrect\": false\n    },\n    {\n        \"candidateAnswer\": \"d\",\n        \"correctAnswer\": \"c\",\n        \"isCorrect\": false\n    },\n    {\n        \"candidateAnswer\": \"b\",\n        \"correctAnswer\": \"b\",\n        \"isCorrect\": true\n    },\n    {\n        \"candidateAnswer\": \"b\",\n        \"correctAnswer\": \"b\",\n        \"isCorrect\": true\n    },\n    {\n        \"candidateAnswer\": \"a\",\n        \"correctAnswer\": \"b\",\n        \"isCorrect\": false\n    },\n    {\n        \"candidateAnswer\": \"b\",\n        \"correctAnswer\": \"d\",\n        \"isCorrect\": false\n    },\n    {\n        \"candidateAnswer\": \"c\",\n        \"correctAnswer\": \"a\",\n        \"isCorrect\": false\n    },\n    {\n        \"candidateAnswer\": \"c\",\n        \"correctAnswer\": \"b\",\n        \"isCorrect\": false\n    },\n    {\n        \"candidateAnswer\": \"b\",\n        \"correctAnswer\": \"b\",\n        \"isCorrect\": true\n    },\n    {\n        \"candidateAnswer\": \"d\",\n        \"correctAnswer\": \"c\",\n        \"isCorrect\": false\n    },\n    {\n        \"candidateAnswer\": \"a\",\n        \"correctAnswer\": \"c\",\n        \"isCorrect\": false\n    },\n    {\n        \"candidateAnswer\": \"d\",\n        \"correctAnswer\": \"c\",\n        \"isCorrect\": false\n    },\n    {\n        \"candidateAnswer\": \"b\",\n        \"correctAnswer\": \"b\",\n        \"isCorrect\": true\n    },\n    {\n        \"candidateAnswer\": \"b\",\n        \"correctAnswer\": \"b\",\n        \"isCorrect\": true\n    },\n    {\n        \"candidateAnswer\": \"A\",\n        \"correctAnswer\": \"c\",\n        \"isCorrect\": false\n    },\n    {\n        \"candidateAnswer\": \"C\",\n        \"correctAnswer\": \"a\",\n        \"isCorrect\": false\n    },\n    {\n        \"candidateAnswer\": \"B\",\n        \"correctAnswer\": \"c\",\n        \"isCorrect\": false\n    },\n    {\n        \"candidateAnswer\": \"A\",\n        \"correctAnswer\": \"c\",\n        \"isCorrect\": false\n    },\n    {\n        \"candidateAnswer\": \"C\",\n        \"correctAnswer\": \"a\",\n        \"isCorrect\": false\n    },\n    {\n        \"candidateAnswer\": \"B\",\n        \"correctAnswer\": \"c\",\n        \"isCorrect\": false\n    },\n    {\n        \"candidateAnswer\": \"a\",\n        \"correctAnswer\": \"c\",\n        \"isCorrect\": false\n    },\n    {\n        \"candidateAnswer\": \"b\",\n        \"correctAnswer\": \"a\",\n        \"isCorrect\": false\n    },\n    {\n        \"candidateAnswer\": \"c\",\n        \"correctAnswer\": \"c\",\n        \"isCorrect\": true\n    },\n    {\n        \"candidateAnswer\": \"a\",\n        \"correctAnswer\": \"c\",\n        \"isCorrect\": false\n    },\n    {\n        \"candidateAnswer\": \"b\",\n        \"correctAnswer\": \"a\",\n        \"isCorrect\": false\n    },\n    {\n        \"candidateAnswer\": \"c\",\n        \"correctAnswer\": \"c\",\n        \"isCorrect\": true\n    },\n    {\n        \"candidateAnswer\": \"b\",\n        \"correctAnswer\": \"c\",\n        \"isCorrect\": false\n    },\n    {\n        \"candidateAnswer\": \"a\",\n        \"correctAnswer\": \"a\",\n        \"isCorrect\": true\n    },\n    {\n        \"candidateAnswer\": \"b\",\n        \"correctAnswer\": \"c\",\n        \"isCorrect\": false\n    },\n    {\n        \"candidateAnswer\": \"a\",\n        \"correctAnswer\": \"a\",\n        \"isCorrect\": true\n    },\n    {\n        \"candidateAnswer\": \"c\",\n        \"correctAnswer\": \"c\",\n        \"isCorrect\": true\n    },\n    {\n        \"candidateAnswer\": \"d\",\n        \"correctAnswer\": \"d\",\n        \"isCorrect\": true\n    },\n    {\n        \"candidateAnswer\": \"d\",\n        \"correctAnswer\": \"d\",\n        \"isCorrect\": true\n    },\n    {\n        \"candidateAnswer\": \"a\",\n        \"correctAnswer\": \"a\",\n        \"isCorrect\": true\n    },\n    {\n        \"candidateAnswer\": \"d\",\n        \"correctAnswer\": \"d\",\n        \"isCorrect\": true\n    },\n    {\n        \"candidateAnswer\": \"d\",\n        \"correctAnswer\": \"c\",\n        \"isCorrect\": false\n    },\n    {\n        \"candidateAnswer\": \"b\",\n        \"correctAnswer\": \"c\",\n        \"isCorrect\": false\n    },\n    {\n        \"candidateAnswer\": \"a\",\n        \"correctAnswer\": \"a\",\n        \"isCorrect\": true\n    },\n    {\n        \"candidateAnswer\": \"b\",\n        \"correctAnswer\": \"c\",\n        \"isCorrect\": false\n    },\n    {\n        \"candidateAnswer\": \"a\",\n        \"correctAnswer\": \"a\",\n        \"isCorrect\": true\n    },\n    {\n        \"candidateAnswer\": \"c\",\n        \"correctAnswer\": \"c\",\n        \"isCorrect\": true\n    },\n    {\n        \"candidateAnswer\": \"d\",\n        \"correctAnswer\": \"d\",\n        \"isCorrect\": true\n    },\n    {\n        \"candidateAnswer\": \"d\",\n        \"correctAnswer\": \"d\",\n        \"isCorrect\": true\n    },\n    {\n        \"candidateAnswer\": \"a\",\n        \"correctAnswer\": \"a\",\n        \"isCorrect\": true\n    },\n    {\n        \"candidateAnswer\": \"d\",\n        \"correctAnswer\": \"d\",\n        \"isCorrect\": true\n    },\n    {\n        \"candidateAnswer\": \"d\",\n        \"correctAnswer\": \"c\",\n        \"isCorrect\": false\n    },\n    {\n        \"candidateAnswer\": \"b\",\n        \"correctAnswer\": \"c\",\n        \"isCorrect\": false\n    },\n    {\n        \"candidateAnswer\": \"a\",\n        \"correctAnswer\": \"a\",\n        \"isCorrect\": true\n    },\n    {\n        \"candidateAnswer\": \"b\",\n        \"correctAnswer\": \"c\",\n        \"isCorrect\": false\n    },\n    {\n        \"candidateAnswer\": \"b\",\n        \"correctAnswer\": \"c\",\n        \"isCorrect\": false\n    },\n    {\n        \"candidateAnswer\": \"a\",\n        \"correctAnswer\": \"a\",\n        \"isCorrect\": true\n    },\n    {\n        \"candidateAnswer\": \"c\",\n        \"correctAnswer\": \"c\",\n        \"isCorrect\": true\n    },\n    {\n        \"candidateAnswer\": \"a\",\n        \"correctAnswer\": \"a\",\n        \"isCorrect\": true\n    },\n    {\n        \"candidateAnswer\": \"c\",\n        \"correctAnswer\": \"c\",\n        \"isCorrect\": true\n    },\n    {\n        \"candidateAnswer\": \"d\",\n        \"correctAnswer\": \"d\",\n        \"isCorrect\": true\n    },\n    {\n        \"candidateAnswer\": \"d\",\n        \"correctAnswer\": \"d\",\n        \"isCorrect\": true\n    },\n    {\n        \"candidateAnswer\": \"a\",\n        \"correctAnswer\": \"a\",\n        \"isCorrect\": true\n    },\n    {\n        \"candidateAnswer\": \"d\",\n        \"correctAnswer\": \"d\",\n        \"isCorrect\": true\n    },\n    {\n        \"candidateAnswer\": \"c\",\n        \"correctAnswer\": \"c\",\n        \"isCorrect\": true\n    },\n    {\n        \"candidateAnswer\": \"b\",\n        \"correctAnswer\": \"c\",\n        \"isCorrect\": false\n    },\n    {\n        \"candidateAnswer\": \"a\",\n        \"correctAnswer\": \"a\",\n        \"isCorrect\": true\n    },\n    {\n        \"candidateAnswer\": \"c\",\n        \"correctAnswer\": \"c\",\n        \"isCorrect\": true\n    },\n    {\n        \"candidateAnswer\": \"b\",\n        \"correctAnswer\": \"c\",\n        \"isCorrect\": false\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "candidate test details",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5238/api/candidateanswer/assessmentanswers/candidates/1/tests/1/details",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5238",
+							"path": [
+								"api",
+								"candidateanswer",
+								"assessmentanswers",
+								"candidates",
+								"1",
+								"tests",
+								"1",
+								"details"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "AssessmentAPI",
+			"item": [
+				{
+					"name": "GetDetails",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5238/api/assessment/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5238",
+							"path": [
+								"api",
+								"assessment",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "GetDetails",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5151/api/assessment/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5151",
+									"path": [
+										"api",
+										"assessment",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 26 May 2025 12:03:12 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 1,\n    \"testName\": \"Basic MCQ Test\",\n    \"subjectId\": 1,\n    \"duration\": \"00:00:00\",\n    \"subjectExpertId\": 1,\n    \"creationDate\": \"2023-12-05T00:00:00\",\n    \"modificationDate\": \"2024-02-05T00:00:00\",\n    \"scheduledDate\": \"2024-02-07T00:00:00\",\n    \"status\": \"scheduled\",\n    \"passingLevel\": 7,\n    \"subject\": null,\n    \"firstName\": \"ram\",\n    \"lastName\": \"tambe\"\n}"
+						}
+					]
+				},
+				{
+					"name": "get btw two dates",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5238/api/assessment/creationdate/fromDate/2022-01-05/toDate/2026-01-01",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5238",
+							"path": [
+								"api",
+								"assessment",
+								"creationdate",
+								"fromDate",
+								"2022-01-05",
+								"toDate",
+								"2026-01-01"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "New Request",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5151/api/assessment/creationdate/fromDate/2023-01-05 00:00:00/toDate/2025-01-01 00:00:00",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5151",
+									"path": [
+										"api",
+										"assessment",
+										"creationdate",
+										"fromDate",
+										"2023-01-05 00:00:00",
+										"toDate",
+										"2025-01-01 00:00:00"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 26 May 2025 12:08:10 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": 1,\n        \"testName\": null,\n        \"subjectId\": 1,\n        \"duration\": \"00:00:00\",\n        \"subjectExpertId\": 1,\n        \"creationDate\": \"0001-01-01T00:00:00\",\n        \"modificationDate\": \"2024-02-05T00:00:00\",\n        \"scheduledDate\": \"2024-02-07T00:00:00\",\n        \"status\": \"1\",\n        \"passingLevel\": 0,\n        \"subject\": null,\n        \"firstName\": null,\n        \"lastName\": null\n    }\n]"
+						},
+						{
+							"name": "New Request",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5151/api/assessment/creationdate/fromDate/2022-01-05/toDate/2026-01-01",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5151",
+									"path": [
+										"api",
+										"assessment",
+										"creationdate",
+										"fromDate",
+										"2022-01-05",
+										"toDate",
+										"2026-01-01"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 26 May 2025 12:11:37 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": 1,\n        \"testName\": null,\n        \"subjectId\": 1,\n        \"duration\": \"00:00:00\",\n        \"subjectExpertId\": 1,\n        \"creationDate\": \"0001-01-01T00:00:00\",\n        \"modificationDate\": \"2024-02-05T00:00:00\",\n        \"scheduledDate\": \"2024-02-07T00:00:00\",\n        \"status\": \"1\",\n        \"passingLevel\": 0,\n        \"subject\": null,\n        \"firstName\": null,\n        \"lastName\": null\n    },\n    {\n        \"id\": 2,\n        \"testName\": null,\n        \"subjectId\": 1,\n        \"duration\": \"00:00:00\",\n        \"subjectExpertId\": 1,\n        \"creationDate\": \"0001-01-01T00:00:00\",\n        \"modificationDate\": \"2024-01-05T00:00:00\",\n        \"scheduledDate\": \"2024-02-07T00:00:00\",\n        \"status\": \"1\",\n        \"passingLevel\": 0,\n        \"subject\": null,\n        \"firstName\": null,\n        \"lastName\": null\n    },\n    {\n        \"id\": 3,\n        \"testName\": null,\n        \"subjectId\": 1,\n        \"duration\": \"00:00:00\",\n        \"subjectExpertId\": 1,\n        \"creationDate\": \"0001-01-01T00:00:00\",\n        \"modificationDate\": \"2024-01-05T00:00:00\",\n        \"scheduledDate\": \"2024-02-08T00:00:00\",\n        \"status\": \"1\",\n        \"passingLevel\": 0,\n        \"subject\": null,\n        \"firstName\": null,\n        \"lastName\": null\n    },\n    {\n        \"id\": 4,\n        \"testName\": null,\n        \"subjectId\": 2,\n        \"duration\": \"00:00:00\",\n        \"subjectExpertId\": 2,\n        \"creationDate\": \"0001-01-01T00:00:00\",\n        \"modificationDate\": \"2023-12-05T00:00:00\",\n        \"scheduledDate\": \"2024-01-05T00:00:00\",\n        \"status\": \"2\",\n        \"passingLevel\": 0,\n        \"subject\": null,\n        \"firstName\": null,\n        \"lastName\": null\n    },\n    {\n        \"id\": 5,\n        \"testName\": null,\n        \"subjectId\": 3,\n        \"duration\": \"00:00:00\",\n        \"subjectExpertId\": 1,\n        \"creationDate\": \"0001-01-01T00:00:00\",\n        \"modificationDate\": \"2023-12-21T00:00:00\",\n        \"scheduledDate\": \"2024-01-24T00:00:00\",\n        \"status\": \"3\",\n        \"passingLevel\": 0,\n        \"subject\": null,\n        \"firstName\": null,\n        \"lastName\": null\n    },\n    {\n        \"id\": 6,\n        \"testName\": null,\n        \"subjectId\": 4,\n        \"duration\": \"00:00:00\",\n        \"subjectExpertId\": 2,\n        \"creationDate\": \"0001-01-01T00:00:00\",\n        \"modificationDate\": \"2023-10-10T00:00:00\",\n        \"scheduledDate\": \"2024-01-18T00:00:00\",\n        \"status\": \"4\",\n        \"passingLevel\": 0,\n        \"subject\": null,\n        \"firstName\": null,\n        \"lastName\": null\n    },\n    {\n        \"id\": 7,\n        \"testName\": null,\n        \"subjectId\": 7,\n        \"duration\": \"00:00:00\",\n        \"subjectExpertId\": 7,\n        \"creationDate\": \"0001-01-01T00:00:00\",\n        \"modificationDate\": \"2024-01-01T00:00:00\",\n        \"scheduledDate\": \"2024-01-10T00:00:00\",\n        \"status\": \"7\",\n        \"passingLevel\": 0,\n        \"subject\": null,\n        \"firstName\": null,\n        \"lastName\": null\n    },\n    {\n        \"id\": 8,\n        \"testName\": null,\n        \"subjectId\": 7,\n        \"duration\": \"00:00:00\",\n        \"subjectExpertId\": 7,\n        \"creationDate\": \"0001-01-01T00:00:00\",\n        \"modificationDate\": \"2024-01-01T00:00:00\",\n        \"scheduledDate\": \"2024-01-10T00:00:00\",\n        \"status\": \"7\",\n        \"passingLevel\": 0,\n        \"subject\": null,\n        \"firstName\": null,\n        \"lastName\": null\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "get all assessments",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5238/api/assessment/assessments",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5238",
+							"path": [
+								"api",
+								"assessment",
+								"assessments"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "getall assess",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5151/api/assessment/assessments",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5151",
+									"path": [
+										"api",
+										"assessment",
+										"assessments"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 26 May 2025 12:12:53 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": 1,\n        \"testName\": \"Basic MCQ Test\",\n        \"subjectId\": 1,\n        \"duration\": \"00:00:00\",\n        \"subjectExpertId\": 1,\n        \"creationDate\": \"2023-12-05T00:00:00\",\n        \"modificationDate\": \"2024-02-05T00:00:00\",\n        \"scheduledDate\": \"2024-02-07T00:00:00\",\n        \"status\": \"scheduled\",\n        \"passingLevel\": 0,\n        \"subject\": \"COREJAVA\",\n        \"firstName\": \"ram\",\n        \"lastName\": \"tambe\"\n    },\n    {\n        \"id\": 2,\n        \"testName\": \"Advanced MCQ Test\",\n        \"subjectId\": 1,\n        \"duration\": \"00:00:00\",\n        \"subjectExpertId\": 1,\n        \"creationDate\": \"2023-11-05T00:00:00\",\n        \"modificationDate\": \"2024-01-05T00:00:00\",\n        \"scheduledDate\": \"2024-02-07T00:00:00\",\n        \"status\": \"scheduled\",\n        \"passingLevel\": 0,\n        \"subject\": \"COREJAVA\",\n        \"firstName\": \"ram\",\n        \"lastName\": \"tambe\"\n    },\n    {\n        \"id\": 3,\n        \"testName\": \"Short Quiz on Basics\",\n        \"subjectId\": 1,\n        \"duration\": \"00:00:00\",\n        \"subjectExpertId\": 1,\n        \"creationDate\": \"2023-09-05T00:00:00\",\n        \"modificationDate\": \"2024-01-05T00:00:00\",\n        \"scheduledDate\": \"2024-02-08T00:00:00\",\n        \"status\": \"created\",\n        \"passingLevel\": 0,\n        \"subject\": \"COREJAVA\",\n        \"firstName\": \"ram\",\n        \"lastName\": \"tambe\"\n    },\n    {\n        \"id\": 4,\n        \"testName\": \"Data Structures Test\",\n        \"subjectId\": 2,\n        \"duration\": \"00:00:00\",\n        \"subjectExpertId\": 2,\n        \"creationDate\": \"2023-09-21T00:00:00\",\n        \"modificationDate\": \"2023-12-05T00:00:00\",\n        \"scheduledDate\": \"2024-01-05T00:00:00\",\n        \"status\": \"conducted\",\n        \"passingLevel\": 0,\n        \"subject\": \"ADVJAVA\",\n        \"firstName\": \"Vaibhav\",\n        \"lastName\": \"Sathe\"\n    },\n    {\n        \"id\": 5,\n        \"testName\": \"Algorithm Design Assessment\",\n        \"subjectId\": 3,\n        \"duration\": \"00:00:00\",\n        \"subjectExpertId\": 1,\n        \"creationDate\": \"2023-11-05T00:00:00\",\n        \"modificationDate\": \"2023-12-21T00:00:00\",\n        \"scheduledDate\": \"2024-01-24T00:00:00\",\n        \"status\": \"cancelled\",\n        \"passingLevel\": 0,\n        \"subject\": \"COREJAVA\",\n        \"firstName\": \"ram\",\n        \"lastName\": \"tambe\"\n    },\n    {\n        \"id\": 6,\n        \"testName\": \"Full-Length Programming Test\",\n        \"subjectId\": 4,\n        \"duration\": \"00:00:00\",\n        \"subjectExpertId\": 2,\n        \"creationDate\": \"2023-09-05T00:00:00\",\n        \"modificationDate\": \"2023-10-10T00:00:00\",\n        \"scheduledDate\": \"2024-01-18T00:00:00\",\n        \"status\": \"scheduled\",\n        \"passingLevel\": 0,\n        \"subject\": \"ADVJAVA\",\n        \"firstName\": \"Vaibhav\",\n        \"lastName\": \"Sathe\"\n    },\n    {\n        \"id\": 7,\n        \"testName\": \"Quick Aptitude Test\",\n        \"subjectId\": 7,\n        \"duration\": \"00:00:00\",\n        \"subjectExpertId\": 7,\n        \"creationDate\": \"2024-01-01T00:00:00\",\n        \"modificationDate\": \"2024-01-01T00:00:00\",\n        \"scheduledDate\": \"2024-01-10T00:00:00\",\n        \"status\": \"scheduled\",\n        \"passingLevel\": 0,\n        \"subject\": \"CSHARP\",\n        \"firstName\": \"Shreedhar\",\n        \"lastName\": \"Kumar\"\n    },\n    {\n        \"id\": 8,\n        \"testName\": \"Logical Reasoning Test\",\n        \"subjectId\": 7,\n        \"duration\": \"00:00:00\",\n        \"subjectExpertId\": 7,\n        \"creationDate\": \"2024-01-01T00:00:00\",\n        \"modificationDate\": \"2024-01-01T00:00:00\",\n        \"scheduledDate\": \"2024-01-10T00:00:00\",\n        \"status\": \"created\",\n        \"passingLevel\": 0,\n        \"subject\": \"CSHARP\",\n        \"firstName\": \"Shreedhar\",\n        \"lastName\": \"Kumar\"\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "get all emp",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5238/api/assessment/employees",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5238",
+							"path": [
+								"api",
+								"assessment",
+								"employees"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "New Request",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5151/api/assessment/employees",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5151",
+									"path": [
+										"api",
+										"assessment",
+										"employees"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 26 May 2025 12:14:00 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": 1,\n        \"userId\": 1,\n        \"firstName\": \"ram\",\n        \"lastName\": \"tambe\",\n        \"email\": \"rTambe@gmail.com\",\n        \"contact\": \"8547963254\",\n        \"role\": null\n    },\n    {\n        \"id\": 2,\n        \"userId\": 2,\n        \"firstName\": \"Vaibhav\",\n        \"lastName\": \"Sathe\",\n        \"email\": \"psathe@gmail.com\",\n        \"contact\": \"9658745635\",\n        \"role\": null\n    },\n    {\n        \"id\": 3,\n        \"userId\": 3,\n        \"firstName\": \"Shreedhar\",\n        \"lastName\": \"Kumar\",\n        \"email\": \"pkumar@gmail.com\",\n        \"contact\": \"8654793254\",\n        \"role\": null\n    },\n    {\n        \"id\": 4,\n        \"userId\": 4,\n        \"firstName\": \"Prajakta\",\n        \"lastName\": \"Powar\",\n        \"email\": \"rTambe@gmail.com\",\n        \"contact\": \"8547963254\",\n        \"role\": null\n    },\n    {\n        \"id\": 5,\n        \"userId\": 5,\n        \"firstName\": \"Ganesh\",\n        \"lastName\": \"ghodake\",\n        \"email\": \"gghodake@gmail.com\",\n        \"contact\": \"9022923254\",\n        \"role\": null\n    },\n    {\n        \"id\": 6,\n        \"userId\": 6,\n        \"firstName\": \"Vaibhav\",\n        \"lastName\": \"Walekar\",\n        \"email\": \"psathe@gmail.com\",\n        \"contact\": \"7058745635\",\n        \"role\": null\n    },\n    {\n        \"id\": 7,\n        \"userId\": 7,\n        \"firstName\": \"Shree\",\n        \"lastName\": \"pawer\",\n        \"email\": \"spawar@gmail.com\",\n        \"contact\": \"8654653254\",\n        \"role\": null\n    },\n    {\n        \"id\": 8,\n        \"userId\": 8,\n        \"firstName\": \"Aniket\",\n        \"lastName\": \"Zarekar\",\n        \"email\": \"Zarekar@gmail.com\",\n        \"contact\": \"9764263254\",\n        \"role\": null\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "get emp by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5238/api/assessment/employee/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5238",
+							"path": [
+								"api",
+								"assessment",
+								"employee",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "New Request",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5151/api/assessment/employee/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5151",
+									"path": [
+										"api",
+										"assessment",
+										"employee",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 26 May 2025 12:14:55 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 1,\n    \"userId\": 1,\n    \"firstName\": \"ram\",\n    \"lastName\": \"tambe\",\n    \"email\": \"rTambe@gmail.com\",\n    \"contact\": \"8547963254\",\n    \"role\": null\n}"
+						}
+					]
+				},
+				{
+					"name": "GetAllSubjects",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5238/api/assessment/subjects",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5238",
+							"path": [
+								"api",
+								"assessment",
+								"subjects"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "New Request",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5151/api/assessment/subjects",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5151",
+									"path": [
+										"api",
+										"assessment",
+										"subjects"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 26 May 2025 12:15:48 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": 1,\n        \"title\": \"COREJAVA\"\n    },\n    {\n        \"id\": 2,\n        \"title\": \"ADVJAVA\"\n    },\n    {\n        \"id\": 3,\n        \"title\": \"DOTNET\"\n    },\n    {\n        \"id\": 4,\n        \"title\": \"MICROSERVICES\"\n    },\n    {\n        \"id\": 5,\n        \"title\": \"REACT\"\n    },\n    {\n        \"id\": 6,\n        \"title\": \"ANGULAR\"\n    },\n    {\n        \"id\": 7,\n        \"title\": \"CSHARP\"\n    },\n    {\n        \"id\": 8,\n        \"title\": \"JAVASCRIPT\"\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "GetEvalutionCriterias",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5238/api/assessment/criterias",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5238",
+							"path": [
+								"api",
+								"assessment",
+								"criterias"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "New Request",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5151/api/assessment/criterias",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5151",
+									"path": [
+										"api",
+										"assessment",
+										"criterias"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 26 May 2025 12:16:22 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": 1,\n        \"title\": \"OOPS\"\n    },\n    {\n        \"id\": 2,\n        \"title\": \"Collection\"\n    },\n    {\n        \"id\": 3,\n        \"title\": \"Reflection\"\n    },\n    {\n        \"id\": 4,\n        \"title\": \"IO\"\n    },\n    {\n        \"id\": 5,\n        \"title\": \"DataAccess\"\n    },\n    {\n        \"id\": 6,\n        \"title\": \"Multithreading\"\n    },\n    {\n        \"id\": 7,\n        \"title\": \"HyberNet\"\n    },\n    {\n        \"id\": 8,\n        \"title\": \"Spring Boot\"\n    },\n    {\n        \"id\": 9,\n        \"title\": \"JPA\"\n    },\n    {\n        \"id\": 10,\n        \"title\": \"Kafka\"\n    },\n    {\n        \"id\": 11,\n        \"title\": \"Messaging\"\n    },\n    {\n        \"id\": 12,\n        \"title\": \"OOPS\"\n    },\n    {\n        \"id\": 13,\n        \"title\": \"Collection\"\n    },\n    {\n        \"id\": 14,\n        \"title\": \"Reflection\"\n    },\n    {\n        \"id\": 15,\n        \"title\": \"IO\"\n    },\n    {\n        \"id\": 16,\n        \"title\": \"DataAccess\"\n    },\n    {\n        \"id\": 17,\n        \"title\": \"Multithreading\"\n    },\n    {\n        \"id\": 18,\n        \"title\": \"JSON\"\n    },\n    {\n        \"id\": 19,\n        \"title\": \"Components\"\n    },\n    {\n        \"id\": 20,\n        \"title\": \"OOPS\"\n    },\n    {\n        \"id\": 21,\n        \"title\": \"Multithreading\"\n    },\n    {\n        \"id\": 22,\n        \"title\": \"Loops\"\n    },\n    {\n        \"id\": 23,\n        \"title\": \"Java 8 features\"\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "get criteria by sun=bject",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5238/api/assessment/criterias/subjects/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5238",
+							"path": [
+								"api",
+								"assessment",
+								"criterias",
+								"subjects",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "New Request",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5151/api/assessment/criterias/subjects/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5151",
+									"path": [
+										"api",
+										"assessment",
+										"criterias",
+										"subjects",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 26 May 2025 12:17:17 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": 1,\n        \"title\": \"OOPS\"\n    },\n    {\n        \"id\": 2,\n        \"title\": \"Collection\"\n    },\n    {\n        \"id\": 3,\n        \"title\": \"Reflection\"\n    },\n    {\n        \"id\": 4,\n        \"title\": \"IO\"\n    },\n    {\n        \"id\": 5,\n        \"title\": \"DataAccess\"\n    },\n    {\n        \"id\": 6,\n        \"title\": \"Multithreading\"\n    },\n    {\n        \"id\": 22,\n        \"title\": \"Loops\"\n    },\n    {\n        \"id\": 23,\n        \"title\": \"Java 8 features\"\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "GetAllBySubjectMatterExpert",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5238/api/assessment/subjectexperts/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5238",
+							"path": [
+								"api",
+								"assessment",
+								"subjectexperts",
+								"2"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "New Request",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5151/api/assessment/subjectexperts/2",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5151",
+									"path": [
+										"api",
+										"assessment",
+										"subjectexperts",
+										"2"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 26 May 2025 12:18:20 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": 4,\n        \"testName\": null,\n        \"subjectId\": 2,\n        \"duration\": \"00:30:00\",\n        \"subjectExpertId\": 0,\n        \"creationDate\": \"2023-09-21T00:00:00\",\n        \"modificationDate\": \"2023-12-05T00:00:00\",\n        \"scheduledDate\": \"2024-01-05T00:00:00\",\n        \"status\": \"conducted\",\n        \"passingLevel\": 6,\n        \"subject\": null,\n        \"firstName\": null,\n        \"lastName\": null\n    },\n    {\n        \"id\": 6,\n        \"testName\": null,\n        \"subjectId\": 4,\n        \"duration\": \"01:30:00\",\n        \"subjectExpertId\": 0,\n        \"creationDate\": \"2023-09-05T00:00:00\",\n        \"modificationDate\": \"2023-10-10T00:00:00\",\n        \"scheduledDate\": \"2024-01-18T00:00:00\",\n        \"status\": \"scheduled\",\n        \"passingLevel\": 5,\n        \"subject\": null,\n        \"firstName\": null,\n        \"lastName\": null\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "create test",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"subjectId\": 1,\r\n  \"name\": \"Final Assessment 100\",\r\n  \"duration\": \"01:30:00\",\r\n  \"subjectExpertId\": 3,\r\n  \"creationDate\": \"2025-05-26T10:00:00\",\r\n  \"modificationDate\": \"2025-05-26T10:00:00\",\r\n  \"scheduledDate\": \"2025-06-01T09:00:00\",\r\n  \"passingLevel\": 60\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5238/api/Assessment/createtest",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5238",
+							"path": [
+								"api",
+								"Assessment",
+								"createtest"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "New Request",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"subjectId\": 1,\r\n  \"name\": \"Final Assessment\",\r\n  \"duration\": \"01:30:00\",\r\n  \"subjectExpertId\": 3,\r\n  \"creationDate\": \"2025-05-26T10:00:00\",\r\n  \"modificationDate\": \"2025-05-26T10:00:00\",\r\n  \"scheduledDate\": \"2025-06-01T09:00:00\",\r\n  \"passingLevel\": 60\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:5151/api/Assessment/createtest",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5151",
+									"path": [
+										"api",
+										"Assessment",
+										"createtest"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 26 May 2025 12:21:54 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Test created successfully\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Add single Question",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5238/api/Assessment/addquestion/assessments/9/questions/10",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5238",
+							"path": [
+								"api",
+								"Assessment",
+								"addquestion",
+								"assessments",
+								"9",
+								"questions",
+								"10"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "New Request",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5151/api/Assessment/addquestion/assessments/9/questions/10",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5151",
+									"path": [
+										"api",
+										"Assessment",
+										"addquestion",
+										"assessments",
+										"9",
+										"questions",
+										"10"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 26 May 2025 12:25:38 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "true"
+						}
+					]
+				},
+				{
+					"name": "New Request",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n {\"QuestionBankId\": 1 },\r\n {\"QuestionBankId\": 2 },\r\n {\"QuestionBankId\": 3 },\r\n {\"QuestionBankId\": 4 },\r\n {\"QuestionBankId\": 5 }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5238/api/Assessment/addmultiplequestions/assessments/9",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5238",
+							"path": [
+								"api",
+								"Assessment",
+								"addmultiplequestions",
+								"assessments",
+								"9"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "add ques for assessment",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "[\r\n {\"QuestionBankId\": 1 },\r\n {\"QuestionBankId\": 2 },\r\n {\"QuestionBankId\": 3 },\r\n {\"QuestionBankId\": 4 },\r\n {\"QuestionBankId\": 5 }\r\n]",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:5151/api/Assessment/addmultiplequestions/assessments/9",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5151",
+									"path": [
+										"api",
+										"Assessment",
+										"addmultiplequestions",
+										"assessments",
+										"9"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 26 May 2025 12:31:03 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "true"
+						}
+					]
+				},
+				{
+					"name": "remove que",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5238/api/Assessment/9/questions/5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5238",
+							"path": [
+								"api",
+								"Assessment",
+								"9",
+								"questions",
+								"5"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "New Request",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5151/api/Assessment/9/questions/5",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5151",
+									"path": [
+										"api",
+										"Assessment",
+										"9",
+										"questions",
+										"5"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 26 May 2025 12:32:43 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "true"
+						}
+					]
+				},
+				{
+					"name": "change duration",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5151/api/Assessment/1/duration/40",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5151",
+							"path": [
+								"api",
+								"Assessment",
+								"1",
+								"duration",
+								"40"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "New Request",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5151/api/Assessment/1/duration/40",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5151",
+									"path": [
+										"api",
+										"Assessment",
+										"1",
+										"duration",
+										"40"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 26 May 2025 12:33:30 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "true"
+						}
+					]
+				},
+				{
+					"name": "Reschedule",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5151/api/Assessment/9/reschedule/2025-06-15",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5151",
+							"path": [
+								"api",
+								"Assessment",
+								"9",
+								"reschedule",
+								"2025-06-15"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Reschedule",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5151/api/Assessment/9/reschedule/2025-06-15",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5151",
+									"path": [
+										"api",
+										"Assessment",
+										"9",
+										"reschedule",
+										"2025-06-15"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 26 May 2025 12:34:36 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "true"
+						}
+					]
+				},
+				{
+					"name": "delete questions",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[41]\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5151/api/Assessment/deletequestions",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5151",
+							"path": [
+								"api",
+								"Assessment",
+								"deletequestions"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "New Request",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "[41]\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:5151/api/Assessment/deletequestions",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5151",
+									"path": [
+										"api",
+										"Assessment",
+										"deletequestions"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 26 May 2025 12:41:26 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "true"
+						}
+					]
+				},
+				{
+					"name": "create test with questions",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"subjectId\": 1,\r\n  \"name\": \"Core Java Test 2\",\r\n  \"duration\": \"00:30:00\",\r\n  \"smeId\": 1,\r\n  \"scheduledDate\": \"2025-07-01T10:00:00\",\r\n  \"passingLevel\": 60,\r\n  \"questionIds\": [1, 2, 3, 4, 5]\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5238/api/Assessment/addtest",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5238",
+							"path": [
+								"api",
+								"Assessment",
+								"addtest"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get questions by subject",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5238/api/Assessment/allquestionsbysubject/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5238",
+							"path": [
+								"api",
+								"Assessment",
+								"allquestionsbysubject",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get sme by subject",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5238/api/Assessment/getsme/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5238",
+							"path": [
+								"api",
+								"Assessment",
+								"getsme",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get tests from between",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjEiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJrYWphbC5naHVsZUBleGFtcGxlLmNvbSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6ImFkbWluIiwiZXhwIjoxNzUyODI4OTM1LCJpc3MiOiJBc3Nlc3NtZW50QVBJIiwiYXVkIjoiQXNzZXNzbWVudEFQSSJ9.QP9J5xhosXkjJrx5XkpLCaprgFkPaVDiDtlTpjWg4hE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5238/api/Assessment/getalltest/from/2025-01-01/to/2025-12-31",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5238",
+							"path": [
+								"api",
+								"Assessment",
+								"getalltest",
+								"from",
+								"2025-01-01",
+								"to",
+								"2025-12-31"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "New Request",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5151/api/Assessment/getalltest/from/2025-01-01/to/2025-12-31",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5151",
+									"path": [
+										"api",
+										"Assessment",
+										"getalltest",
+										"from",
+										"2025-01-01",
+										"to",
+										"2025-12-31"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 02 Jul 2025 06:35:24 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"name\": \"Final Assessment\",\n        \"scheduledDate\": \"2025-06-15T00:00:00\",\n        \"status\": \"created\"\n    },\n    {\n        \"name\": \"Core Java Test\",\n        \"scheduledDate\": \"2025-07-01T10:00:00\",\n        \"status\": \"created\"\n    },\n    {\n        \"name\": \"Core Java Test 2\",\n        \"scheduledDate\": \"2025-07-01T10:00:00\",\n        \"status\": \"created\"\n    },\n    {\n        \"name\": \"demo test\",\n        \"scheduledDate\": \"2025-07-03T09:08:00\",\n        \"status\": \"created\"\n    },\n    {\n        \"name\": \"demo test\",\n        \"scheduledDate\": \"2025-07-03T09:08:00\",\n        \"status\": \"created\"\n    },\n    {\n        \"name\": \"demo test\",\n        \"scheduledDate\": \"2025-07-10T09:46:00\",\n        \"status\": \"created\"\n    },\n    {\n        \"name\": \"demo test\",\n        \"scheduledDate\": \"2025-07-10T09:48:00\",\n        \"status\": \"created\"\n    },\n    {\n        \"name\": \"demo test\",\n        \"scheduledDate\": \"2025-07-10T09:48:00\",\n        \"status\": \"created\"\n    },\n    {\n        \"name\": \"asb as\",\n        \"scheduledDate\": \"2025-07-09T09:54:00\",\n        \"status\": \"created\"\n    },\n    {\n        \"name\": \"asb as\",\n        \"scheduledDate\": \"2025-07-09T09:54:00\",\n        \"status\": \"created\"\n    },\n    {\n        \"name\": \"asb as\",\n        \"scheduledDate\": \"2025-07-09T09:54:00\",\n        \"status\": \"created\"\n    },\n    {\n        \"name\": \"kajal\",\n        \"scheduledDate\": \"2025-07-12T12:31:00\",\n        \"status\": \"created\"\n    },\n    {\n        \"name\": \"adv java\",\n        \"scheduledDate\": \"2025-07-11T10:39:00\",\n        \"status\": \"created\"\n    },\n    {\n        \"name\": \"Test23\",\n        \"scheduledDate\": \"2025-07-08T06:42:00\",\n        \"status\": \"created\"\n    },\n    {\n        \"name\": \"demotest1\",\n        \"scheduledDate\": \"2025-08-09T15:10:00\",\n        \"status\": \"created\"\n    },\n    {\n        \"name\": \"test 22\",\n        \"scheduledDate\": \"2025-07-15T10:12:00\",\n        \"status\": \"created\"\n    },\n    {\n        \"name\": \"Kajal test try\",\n        \"scheduledDate\": \"2025-07-09T10:33:00\",\n        \"status\": \"created\"\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "get test details by test id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5238/api/Assessment/testdetails/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5238",
+							"path": [
+								"api",
+								"Assessment",
+								"testdetails",
+								"2"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "get test details by test id",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5151/api/Assessment/testdetails/2",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5151",
+									"path": [
+										"api",
+										"Assessment",
+										"testdetails",
+										"2"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 02 Jul 2025 11:59:57 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 2,\n    \"name\": \"Advanced MCQ Test\",\n    \"subjectId\": 1,\n    \"duration\": \"00:40:00\",\n    \"smeId\": 1,\n    \"creationDate\": \"2023-11-05T00:00:00\",\n    \"modificationDate\": \"2024-01-05T00:00:00\",\n    \"scheduledDate\": \"2024-02-07T00:00:00\",\n    \"passingLevel\": 7,\n    \"status\": \"scheduled\",\n    \"questions\": [\n        {\n            \"questionId\": 5,\n            \"subjectId\": 1,\n            \"title\": \"Which of the following language supports polymorphism but not the classes?\",\n            \"a\": \"C++ programming language\",\n            \"b\": \"Java programming language\",\n            \"c\": \"Ada programming language\",\n            \"d\": \"C# programming language\",\n            \"answerKey\": \"c\",\n            \"evaluationCriteriaId\": 1\n        },\n        {\n            \"questionId\": 6,\n            \"subjectId\": 2,\n            \"title\": \"Spring Boot is used for developing?\",\n            \"a\": \"Web applications\",\n            \"b\": \"Distributed applications (Restful web services)\",\n            \"c\": \"Microservices\",\n            \"d\": \"All of the above\",\n            \"answerKey\": \"d\",\n            \"evaluationCriteriaId\": 5\n        },\n        {\n            \"questionId\": 7,\n            \"subjectId\": 2,\n            \"title\": \"How can a Spring Boot application be packaged and distributed?\",\n            \"a\": \"As a JAR file \",\n            \"b\": \"As a WAR file\",\n            \"c\": \"As a ZIP file\",\n            \"d\": \"All of the above.\",\n            \"answerKey\": \"d\",\n            \"evaluationCriteriaId\": 5\n        },\n        {\n            \"questionId\": 8,\n            \"subjectId\": 2,\n            \"title\": \"What AOP stands for?\",\n            \"a\": \"Aspect Oriented Programming\",\n            \"b\": \"Any Object Programming\",\n            \"c\": \"Asset Oriented Programming\",\n            \"d\": \"Asset Oriented Protocol\",\n            \"answerKey\": \"a\",\n            \"evaluationCriteriaId\": 5\n        },\n        {\n            \"questionId\": 9,\n            \"subjectId\": 2,\n            \"title\": \"Which of the following is the correct name of React.js?\",\n            \"a\": \" React\",\n            \"b\": \"React.js\",\n            \"c\": \"ReactJs\",\n            \"d\": \"All of the above\",\n            \"answerKey\": \"d\",\n            \"evaluationCriteriaId\": 5\n        },\n        {\n            \"questionId\": 16,\n            \"subjectId\": 4,\n            \"title\": \"Which of the following statement is TRUE?\",\n            \"a\": \"Action method can be static method in a controller class. \",\n            \"b\": \"Action method can be private method in a controller class.\",\n            \"c\": \"Action method can be protected method in a controller class.\",\n            \"d\": \"Action method must be public method in a controller class.\",\n            \"answerKey\": \"d\",\n            \"evaluationCriteriaId\": 8\n        },\n        {\n            \"questionId\": 17,\n            \"subjectId\": 4,\n            \"title\": \"Visual Studio .NET tool is used to build WCF Service Application project. The project contains web.config file. Which is the root element in configuration file for WCF Service declaration?\",\n            \"a\": \"System.Service \",\n            \"b\": \"System.ServiceModel\",\n            \"c\": \"Service.Contract\",\n            \"d\": \"None\",\n            \"answerKey\": \"b\",\n            \"evaluationCriteriaId\": 8\n        },\n        {\n            \"questionId\": 18,\n            \"subjectId\": 4,\n            \"title\": \"Which of the following is used to check the validity of the model in ASP.NET Web API?\",\n            \"a\": \"Mode.Valid \",\n            \"b\": \"Model.IsValid\",\n            \"c\": \"ModelState.IsValid\",\n            \"d\": \"ModelState.Valid\",\n            \"answerKey\": \"c\",\n            \"evaluationCriteriaId\": 7\n        },\n        {\n            \"questionId\": 19,\n            \"subjectId\": 4,\n            \"title\": \"Which component is essential for collecting data using Connected Data Access Mode?\",\n            \"a\": \"DataSet \",\n            \"b\": \"DataReader\",\n            \"c\": \"DataRow\",\n            \"d\": \"DataAdapter\",\n            \"answerKey\": \"b\",\n            \"evaluationCriteriaId\": 8\n        },\n        {\n            \"questionId\": 20,\n            \"subjectId\": 7,\n            \"title\": \"Which configuration file is used to change configuration setting that will affect only the current Web application?\",\n            \"a\": \"web.xml \",\n            \"b\": \"appsettings.json\",\n            \"c\": \"Machine.config\",\n            \"d\": \"web.config\",\n            \"answerKey\": \"b\",\n            \"evaluationCriteriaId\": 5\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "get all questions by EvaluationCriteriaId",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:5238/api/Assessment/questionsbycriteria/5",
+							"host": [
+								"localhost"
+							],
+							"port": "5238",
+							"path": [
+								"api",
+								"Assessment",
+								"questionsbycriteria",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update question",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"Id\": 63,\r\n  \"title\": \"Which of the following is a benefit of using microservices?\",\r\n  \"a\": \"Centralized management\",\r\n  \"b\": \"High complexity\",\r\n  \"c\": \"Rapid development and deployment\",\r\n  \"d\": \"Tight integration\",\r\n  \"answerKey\": \"c\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5238/api/Assessment/updatequestion/63",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5238",
+							"path": [
+								"api",
+								"Assessment",
+								"updatequestion",
+								"63"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "// {\r\n//     \"email\": \"nirjala.naik@example.com\",\r\n//     \"password\":\"12345\"\r\n// }\r\n\r\n{\r\n    \"email\": \"kajal.ghule@example.com\",\r\n    \"password\":\"12345\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5238/api/Auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5238",
+							"path": [
+								"api",
+								"Auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create test with jwt",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjIiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJuaXJqYWxhLm5haWtAZXhhbXBsZS5jb20iLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJzbWUiLCJleHAiOjE3NTI3NTg2NjMsImlzcyI6IkFzc2Vzc21lbnRBUEkiLCJhdWQiOiJBc3Nlc3NtZW50QVBJIn0.jqthApt59G3U0wfjg4pJQyTi_eOj9eM6YK6UmGsHdfg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"subjectId\": 1,\r\n  \"name\": \"JWT\",\r\n  \"duration\": \"00:30:00\",\r\n  \"smeId\": 1,\r\n  \"scheduledDate\": \"2025-07-01T10:00:00\",\r\n  \"passingLevel\": 6,\r\n  \"questionIds\": [1, 2, 3, 4, 5]\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5238/api/Assessment/addtest",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5238",
+							"path": [
+								"api",
+								"Assessment",
+								"addtest"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all tests",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjEiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJrYWphbC5naHVsZUBleGFtcGxlLmNvbSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6ImFkbWluIiwiZXhwIjoxNzUyODI4MTkxLCJpc3MiOiJBc3Nlc3NtZW50QVBJIiwiYXVkIjoiQXNzZXNzbWVudEFQSSJ9.AoAd-cQngqIo-RBA-kv0ohefaUlwBFW9Zue1EMgz5N4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5238/api/assessment/assessments",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5238",
+							"path": [
+								"api",
+								"assessment",
+								"assessments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"status\": \"cancelled\" \r\n}\r\n\r\n\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5238/api/Assessment/updateteststatus/24",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5238",
+							"path": [
+								"api",
+								"Assessment",
+								"updateteststatus",
+								"24"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all emp",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "assign emp to test",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"testId\": 1,\r\n  \"employeeIds\": [1, 3, 5],\r\n  \"scheduledStart\": \"2025-07-25T10:00:00\",\r\n  \"scheduledEnd\": \"2025-07-25T11:00:00\",\r\n  \"status\": \"scheduled\",\r\n  \"rescheduledOn\": null,\r\n  \"remarks\": \"UI Assigned\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5238/api/Assessment/addemployees",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5238",
+							"path": [
+								"api",
+								"Assessment",
+								"addemployees"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get test details by emp",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5238/api/Assessment/alltestbyempid/13",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5238",
+							"path": [
+								"api",
+								"Assessment",
+								"alltestbyempid",
+								"13"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Bonus API",
+			"item": [
+				{
+					"name": "Get all",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
