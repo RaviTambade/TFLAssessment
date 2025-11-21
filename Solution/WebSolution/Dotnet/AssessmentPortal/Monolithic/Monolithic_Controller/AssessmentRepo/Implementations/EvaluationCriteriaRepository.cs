@@ -146,5 +146,44 @@ namespace Transflower.TFLAssessment.Repositories;
     }
 
 
+    public async Task<List<CriteriaQuestionCount>> getCriteriaQuestionCount(int subjectid)
+    {
+        string query = @"
+           select count(q.title) as questionCount, e.title ,e.id as criteriaId 
+            from questionbank q
+            join evaluationcriterias e on e.id=q.evaluationcriteriaid 
+            where q.subjectid=@subjectid
+            group by(q.evaluationcriteriaid);";
+
+        List<CriteriaQuestionCount> criteriaQuestionCount = new List<CriteriaQuestionCount>();
+        using (MySqlConnection connection = new MySqlConnection(_connectionString))
+        using (MySqlCommand command = new MySqlCommand(query, connection))
+        {
+            try
+            {
+                await connection.OpenAsync();
+                command.Parameters.AddWithValue("@subjectid",subjectid);
+                MySqlDataReader reader = command.ExecuteReader();
+                // MySqlDataReader reader = await command.ExecuteReader();
+                while (await reader.ReadAsync())
+                {
+                    CriteriaQuestionCount questionCount = new CriteriaQuestionCount();
+                    EvaluationCriteria criteria = new EvaluationCriteria();
+
+                    questionCount.QuestionCount = Convert.ToInt32(reader["questionCount"]);
+                    criteria.Id = Convert.ToInt32(reader["criteriaId"]);
+                    criteria.Title = reader["title"].ToString();
+                    questionCount.Criteria = criteria;
+                    criteriaQuestionCount.Add(questionCount);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+
+        return criteriaQuestionCount;
+    }
 
 }

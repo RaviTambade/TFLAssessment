@@ -12,4 +12,5 @@ public interface IEvaluationCriteriaRepository
 
     public Task<List<EvaluationCriteria>> GetCriteriaBySubjectId(int subjectId);
 
+    public Task<List<CriteriaQuestionCount>> getCriteriaQuestionCount(int subjectid);
 }

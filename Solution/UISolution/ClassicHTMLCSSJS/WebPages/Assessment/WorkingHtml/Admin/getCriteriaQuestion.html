@@ -121,7 +121,7 @@
 
       // --------------------------- LOAD CRITERIA ---------------------------
 function loadCriteria(subjectId, subjectName) {
-     CRITERIA_API = `http://localhost:5238/api/criteria/${subjectId}`;
+     CRITERIA_API = `http://localhost:5238/api/criteria/questioncount/${subjectId}`;
 
     $.ajax({
         url: CRITERIA_API,
@@ -143,14 +143,14 @@ function loadCriteria(subjectId, subjectName) {
             // If criteria exists
             criteria.forEach((c) => {
                 let tab = $(`
-                    <div class="criteria-tab">${c.title}</div>
+                    <div class="criteria-tab">${c.criteria.title}(${c.questionCount})</div>
                 `);
 
                 tab.click(function () {
                     $(".criteria-tab").removeClass("activeCriteria");
                     $(this).addClass("activeCriteria");
 
-                    loadQuestions(subjectId, c.id, c.title);
+                    loadQuestions(subjectId, c.criteria.id, c.criteria.title);
                 });
 
                 $("#criteriasTabs").append(tab);

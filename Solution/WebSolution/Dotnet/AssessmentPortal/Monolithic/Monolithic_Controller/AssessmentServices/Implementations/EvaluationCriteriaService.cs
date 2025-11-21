@@ -32,5 +32,10 @@ namespace Transflower.TFLAssessment.Services
         {
             return await _repository.GetCriteriaBySubjectId(subjectId);
         }
+
+        public async Task<List<CriteriaQuestionCount>> getCriteriaQuestionCount(int subjectid)
+        {
+            return await _repository.getCriteriaQuestionCount(subjectid);
+        }
     }
 }
