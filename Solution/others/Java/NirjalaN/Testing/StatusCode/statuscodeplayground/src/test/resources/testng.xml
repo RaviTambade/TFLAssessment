@@ -1,0 +1,16 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="TFLAssessmentTestSuiteSuite" verbose="1" parallel="false" preserve-order="true">
+
+<test name="CucumberTestRunner">
+        <classes>
+            <class name="com.transflower.statuscodeplayground.stepdefs.CucumberTestRunner"/>
+        </classes>
+    </test>
+    
+    <test name="StatusStepDefinitions">
+        <classes>
+            <class name="com.transflower.statuscodeplayground.stepdefs.StatusStepDefinitions"/>
+        </classes>
+    </test>
+
+</suite>
