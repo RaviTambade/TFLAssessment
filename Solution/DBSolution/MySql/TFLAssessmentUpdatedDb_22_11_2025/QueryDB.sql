@@ -342,3 +342,25 @@ FROM candidatetestresults ctr
 JOIN tests t ON ctr.testid = t.id
 WHERE ctr.candidateid = 6;
 
+-- Retrieve all roles assigned to a specific user by their user ID.
+SELECT r.id AS id, r.name AS rolename
+FROM roles r
+JOIN userroles ur ON ur.roleid = r.id
+JOIN users u ON u.id = ur.userid
+WHERE u.id = 5;
+
+-- Retrieve all employees who are assigned the role of 'SME'.
+SELECT e.id, e.userId, e.firstname, e.lastname
+FROM employees e
+JOIN userroles ur ON ur.userid = e.userId
+JOIN roles r ON r.id = ur.roleid
+WHERE r.name = 'sme';
+
+-- Retrieve users who have all of the specified roles, grouping by user and ensuring they match the total role count.
+SELECT u.id, u.firstname, u.lastname
+FROM users u
+JOIN userroles ur ON u.id = ur.userid
+WHERE ur.roleid IN (2,3)
+GROUP BY u.id, u.firstname, u.lastname
+HAVING COUNT(DISTINCT ur.roleid) = 2;
+
