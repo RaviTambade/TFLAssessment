@@ -58,6 +58,11 @@ public class SubjectRepository : ISubjectRepository
 
     public async Task<int> AddSubject(SubjectModel subject)
     {
+        if (string.IsNullOrWhiteSpace(subject?.Title))
+        {
+            Console.WriteLine("Validation failed: Title is null or empty");
+            return -1;
+        }
         string query = @"INSERT INTO subjects (title) VALUES (@Title)";
 
         using (MySqlConnection connection = new MySqlConnection(_connectionString))

@@ -1,8 +1,7 @@
 package com.transflower;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import org.junit.jupiter.api.AfterAll;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
@@ -20,6 +19,7 @@ public class TFLStoreTest {
     {
         WebDriverManager.chromedriver().setup();
         driver=new ChromeDriver();
+        // run the tflstore project and get a link
         driver.get("http://localhost:8000/index.html");
     }
     @Test
@@ -32,9 +32,11 @@ public class TFLStoreTest {
          try{
         Thread.sleep(2000); 
         }
-        catch(InterruptedException e){
+        catch(InterruptedException e)
+        {
             System.out.println(e);
         }
+        //only one button clicked at once
         // WebElement jasminbtn=driver.findElement(By.id("1"));
         // jasminbtn.click();
         // WebElement gerberabtn=driver.findElement(By.id("2"));
@@ -53,10 +55,12 @@ public class TFLStoreTest {
         rosebtn.click();
         String afterclickrose = driver.getCurrentUrl();
         assertTrue(afterclickrose.contains("details.html"), afterclickrose);
-        try{
+        try
+        {
         Thread.sleep(2000); 
         }
-        catch(InterruptedException e){
+        catch(InterruptedException e)
+        {
             System.out.println(e);
         }
        
@@ -67,7 +71,8 @@ public class TFLStoreTest {
         try{
         Thread.sleep(2000); 
         }
-        catch(InterruptedException e){
+        catch(InterruptedException e)
+        {
             System.out.println(e);
         }
 
@@ -76,7 +81,8 @@ public class TFLStoreTest {
         try{
         Thread.sleep(2000); 
         }
-        catch(InterruptedException e){
+        catch(InterruptedException e)
+        {
             System.out.println(e);
             }
         WebElement productquantity=driver.findElement(By.id("txtquantity"));
@@ -96,13 +102,14 @@ public class TFLStoreTest {
         catch(InterruptedException e){
             System.out.println(e);
         }
-        
+        // only one button uses at a time 
         // WebElement removerfromcart=driver.findElement(By.id("removecart"));
         // removerfromcart.click();
         // try{
         // Thread.sleep(2000); 
         // }
-        // catch(InterruptedException e){
+        // catch(InterruptedException e)
+        // {
         //     System.out.println(e);
         // }
         
