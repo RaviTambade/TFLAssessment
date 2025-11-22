@@ -21,15 +21,15 @@ public class QuestionBankService:IQuestionBankService
         
     }
 
-    public async Task<List<QuestionDetails>> GetQuestionsBySubjectAndCriteria(int subjectId,int criteriaId)
+    public async Task<List<QuestionDetails>> GetQuestionsBySubjectAndConcept(int subjectId,int conceptId)
     {
-        return await _repository.GetQuestionsBySubjectAndCriteria(subjectId,criteriaId);
+        return await _repository.GetQuestionsBySubjectAndConcept(subjectId, conceptId);
        
     }
 
-      public async Task<List<QuestionDetails>> GetQuestionsWithSubjectAndCriteria()
+      public async Task<List<QuestionDetails>> GetQuestionsWithSubjectAndConcept()
     {
-        return await _repository.GetQuestionsWithSubjectAndCriteria();
+        return await _repository.GetQuestionsWithSubjectAndConcept();
        
     }
 
@@ -55,9 +55,9 @@ public class QuestionBankService:IQuestionBankService
 
 
     //update only evaluationcriteriaid
-    public async Task<bool> UpdateSubjectCriteria(int questionId,Question question)
+    public async Task<bool> UpdateSubjectConcept(int questionId,Question question)
     {
-        return await _repository.UpdateSubjectCriteria(questionId,question);
+        return await _repository.UpdateSubjectConcept(questionId,question);
         
        
     }
@@ -73,9 +73,9 @@ public class QuestionBankService:IQuestionBankService
     }
 
     
-    public async Task<string> GetCriteria(string subject, int questionId)
+    public async Task<string> GetConcept(string subject, int questionId)
     {
-        return await _repository.GetCriteria(subject,questionId);
+        return await _repository.GetConcept(subject,questionId);
     }
 
 

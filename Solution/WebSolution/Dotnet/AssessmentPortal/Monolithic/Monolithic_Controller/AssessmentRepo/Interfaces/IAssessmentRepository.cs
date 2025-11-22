@@ -15,9 +15,9 @@ public interface IAssessmentRepository
 
   public Task<List<Subject>> GetAllSubjects();
 
-  public Task<List<EvaluationCriteria>> GetEvalutionCriterias();
+  public Task<List<Concepts>> GetConcepts();
 
-  public Task<List<EvaluationCriteria>> GetEvalutionCriteriasBySubject(int subjectId);
+  public Task<List<Concepts>> GetConceptsBySubject(int subjectId);
 
   public Task<bool> CreateTest(CreateTestRequest request);
   public Task<bool> AddQuestion(int AssessmentId, int questionId);
@@ -31,7 +31,7 @@ public interface IAssessmentRepository
   public Task<List<Employee>> GetSmeBySubject(int subjectId);
   public Task<List<Test>> GetAllTests(DateTime fromDate, DateTime toDate);
   public Task<TestWithQuestions> GetTestDetails(int testId);
-  public Task<List<Question>> GetQuestionsByEvaluationCriteriaId(int EvaluationCriteriaId);
+  public Task<List<Question>> GetQuestionsByConceptId(int ConceptId);
   //UpdateQuestion
   public Task<bool> UpdateQuestion(Question question);
 

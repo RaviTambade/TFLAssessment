@@ -50,15 +50,15 @@ public class QuestionBankController : ControllerBase
     }
 
     [HttpGet("questions/subjects/{subject}/questions/{questionId}")]
-    public async Task<IActionResult> GetCriteria(string subject, int questionId)
+    public async Task<IActionResult> GetConcept(string subject, int questionId)
     {
-        string criteria = await _svc.GetCriteria(subject,questionId);
+        string criteria = await _svc.GetConcept(subject,questionId);
         if (string.IsNullOrEmpty(criteria))
         {
-            _logger.LogWarning("Criteria for question with ID {Id} not found at {DT}", questionId, DateTime.UtcNow.ToLongTimeString());
-            return NotFound($"Criteria for question with ID {questionId} not found.");
+            _logger.LogWarning("Concept for question with ID {Id} not found at {DT}", questionId, DateTime.UtcNow.ToLongTimeString());
+            return NotFound($"Concept for question with ID {questionId} not found.");
         }
-        _logger.LogInformation("Get criteria for question with ID {Id} method invoked at {DT}", questionId, DateTime.UtcNow.ToLongTimeString());
+        _logger.LogInformation("Get Concept for question with ID {Id} method invoked at {DT}", questionId, DateTime.UtcNow.ToLongTimeString());
         return Ok(criteria);
     }
 
@@ -95,27 +95,27 @@ public class QuestionBankController : ControllerBase
         return Ok(questions);
     }
 
-        
-        
-    //Get questions by subject criteria .
-    //http://localhost:5238/api/questionbank/questions/subjects/4/criterias/1
-    [HttpGet("questions/subjects/{subjectId}/criterias/{criteriaId}")]
-    public async Task<IActionResult> GetQuestionsBySubjectAndCriteria(int subjectId,int criteriaId)
+
+
+    //Get questions by subject concepts .
+    //http://localhost:5238/api/questionbank/questions/subjects/4/concepts/1
+    [HttpGet("questions/subjects/{subjectId}/concepts/{conceptId}")]
+    public async Task<IActionResult> GetQuestionsBySubjectAndConcept(int subjectId,int conceptId)
     {   
-        List<QuestionDetails> questions =await _svc.GetQuestionsBySubjectAndCriteria(subjectId,criteriaId);
+        List<QuestionDetails> questions =await _svc.GetQuestionsBySubjectAndConcept(subjectId, conceptId);
         if (questions == null || questions.Count == 0)
         {
-            _logger.LogWarning("No questions found for subject ID {SubjectId} and criteria ID {CriteriaId} at {DT}", subjectId, criteriaId, DateTime.UtcNow.ToLongTimeString());
-            return NotFound($"No questions found for subject ID {subjectId} and criteria ID {criteriaId}.");
+            _logger.LogWarning("No questions found for subject ID {SubjectId} and concept ID {ConceptId} at {DT}", subjectId, conceptId, DateTime.UtcNow.ToLongTimeString());
+            return NotFound($"No questions found for subject ID {subjectId} and concept ID {conceptId}.");
         }   
-        _logger.LogInformation("Get questions by subject ID {SubjectId} and criteria ID {CriteriaId} method invoked at {DT}", subjectId, criteriaId, DateTime.UtcNow.ToLongTimeString());
+        _logger.LogInformation("Get questions by subject ID {SubjectId} and concept ID {ConceptId} method invoked at {DT}", subjectId, conceptId, DateTime.UtcNow.ToLongTimeString());
         return Ok(questions);
     }
 
-    [HttpGet("questions/subjects/criterias")]
-    public async Task<IActionResult> GetQuestionsWithSubjectAndCriteria()
+    [HttpGet("questions/subjects/concepts")]
+    public async Task<IActionResult> GetQuestionsWithSubjectAndConcept()
     {   
-        List<QuestionDetails> questions =await _svc.GetQuestionsWithSubjectAndCriteria();
+        List<QuestionDetails> questions =await _svc.GetQuestionsWithSubjectAndConcept();
         return Ok(questions);
     }
 
@@ -134,7 +134,7 @@ public class QuestionBankController : ControllerBase
     //Update question options .
     //http://localhost:5238/api/questionbank/update/options/question/1
     [HttpPut("update/options/question/{id}")]
-    public async Task<IActionResult> UpdateQuestionOptions(int id,Question options)
+    public async Task<IActionResult> UpdateQuestionOptions(int id, [FromBody]Question options)
     {
 
         bool  status = await _svc.UpdateQuestionOptions(id,options);

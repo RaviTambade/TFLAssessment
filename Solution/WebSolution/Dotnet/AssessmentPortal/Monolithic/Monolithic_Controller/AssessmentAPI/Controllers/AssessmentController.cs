@@ -86,22 +86,22 @@ public class AssessmentController : ControllerBase
     }
 
 
-    //http://localhost:5238/api/assessment/criterias
-    [HttpGet("criterias")]
-    public async Task<IActionResult> GetEvalutionCriterias()
+    //http://localhost:5238/api/assessment/concepts
+    [HttpGet("concepts")]
+    public async Task<IActionResult> GetConcepts()
     {
-        List<EvaluationCriteria> criterias = await _svc.GetEvalutionCriterias();
-        _logger.LogInformation("Get evaluation criteria method invoked at  {DT}", DateTime.UtcNow.ToLongTimeString());
-        return Ok(criterias);
+        List<Concepts> concepts = await _svc.GetConcepts();
+        _logger.LogInformation("Get evaluation Concepts method invoked at  {DT}", DateTime.UtcNow.ToLongTimeString());
+        return Ok(concepts);
     }
 
-    //http://localhost:5238/api/assessment/criterias/subjects/1
-    [HttpGet("criterias/subjects/{subjectId}")]
-    public async Task<IActionResult> GetEvalutionCriteriasBySubject(int subjectId)
+    //http://localhost:5238/api/assessment/concepts/subjects/1
+    [HttpGet("concepts/subjects/{subjectId}")]
+    public async Task<IActionResult> GetConceptsBySubject(int subjectId)
     {
-        List<EvaluationCriteria> criterias = await _svc.GetEvalutionCriteriasBySubject(subjectId);
-        _logger.LogInformation("Get  evaluation criteria by subject method invoked at  {DT}", DateTime.UtcNow.ToLongTimeString());
-        return Ok(criterias);
+        List<Concepts> concepts = await _svc.GetConceptsBySubject(subjectId);
+        _logger.LogInformation("Get  evaluation Concepts by subject method invoked at  {DT}", DateTime.UtcNow.ToLongTimeString());
+        return Ok(concepts);
     }
 
 
@@ -264,14 +264,14 @@ public class AssessmentController : ControllerBase
         return Ok(testDetails);
     }
     //evaluation criteria id give me all question base on evaluation criteria
-    //http://localhost:5238/api/Assessment/questionsbycriteria/{EvaluationCriteriaId}
-    [HttpGet("questionsbycriteria/{EvaluationCriteriaId}")]
-    public async Task<IActionResult> GetQuestionsByEvaluationCriteriaId(int EvaluationCriteriaId)
+    //http://localhost:5238/api/Assessment/questionsbyconcepts/{conceptid}
+    [HttpGet("questionsbyconcepts/{conceptid}")]
+    public async Task<IActionResult> GetQuestionsByConceptId(int conceptid)
     {
-        var questionDetails = await _svc.GetQuestionsByEvaluationCriteriaId(EvaluationCriteriaId);
+        var questionDetails = await _svc.GetQuestionsByConceptId(conceptid);
         if (questionDetails == null)
         {
-            _logger.LogWarning("No test details found for test ID {TestId} at {DT}", EvaluationCriteriaId, DateTime.UtcNow.ToLongTimeString());
+            _logger.LogWarning("No test details found for test ID {TestId} at {DT}", conceptid, DateTime.UtcNow.ToLongTimeString());
             return NotFound(new { message = "No test details found for the specified test ID." });
         }
         _logger.LogInformation("Get test details method invoked at  {DT}", DateTime.UtcNow.ToLongTimeString());

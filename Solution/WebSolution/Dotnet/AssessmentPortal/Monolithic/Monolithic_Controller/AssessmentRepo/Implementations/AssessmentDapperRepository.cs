@@ -396,34 +396,34 @@ public class AssessmentDapperRepository : IAssessmentRepository
         return subjects;
     }
 
-    public async Task<List<EvaluationCriteria>> GetEvalutionCriterias()
+    public async Task<List<Concepts>> GetConcepts()
     {
         await Task.Delay(100);
-        List<EvaluationCriteria> criterias = new List<EvaluationCriteria>();
+        List<Concepts> concepts = new List<Concepts>();
         using (IDbConnection con = new MySqlConnection(_connectionString))
         {
-            var criteriaList = con.Query<EvaluationCriteria>("select * from evaluationcriterias");
+            var conceptList = con.Query<Concepts>("select * from concepts");
 
-            criterias = criteriaList as List<EvaluationCriteria>;
+            concepts = conceptList as List<Concepts>;
 
         }
 
-        return criterias;
+        return concepts;
     }
 
-    public async Task<List<EvaluationCriteria>> GetEvalutionCriteriasBySubject(int subjectId)
+    public async Task<List<Concepts>> GetConceptsBySubject(int subjectId)
     {
         await Task.Delay(100);
-        List<EvaluationCriteria> criterias = new List<EvaluationCriteria>();
+        List<Concepts> concepts = new List<Concepts>();
         using (IDbConnection con = new MySqlConnection(_connectionString))
         {
-            var criteriaList = con.Query<EvaluationCriteria>("select * from evaluationcriterias WHERE subjectid=@SubjectId", new { subjectId });
+            var conceptList = con.Query<Concepts>("select * from concepts WHERE subjectid=@SubjectId", new { subjectId });
 
-            criterias = criteriaList as List<EvaluationCriteria>;
+            concepts = conceptList as List<Concepts>;
 
         }
 
-        return criterias;
+        return concepts;
     }
 
     public async Task<int> CreateTestWithQuestionsAsync(CreateTestWithQuestions createTestWithQuestions)
@@ -545,7 +545,7 @@ public class AssessmentDapperRepository : IAssessmentRepository
             if (test != null)
             {
                 var questions = await con.QueryAsync<Question>(
-                    @"SELECT q.id AS QuestionId, q.subjectid AS SubjectId, q.title, q.a, q.b, q.c, q.d, q.answerkey, q.evaluationcriteriaid
+                    @"SELECT q.id AS QuestionId, q.subjectid AS SubjectId, q.title, q.a, q.b, q.c, q.d, q.answerkey, q.conceptid
                       FROM questionbank q
                       INNER JOIN testquestions tq ON q.id = tq.questionbankid
                       WHERE tq.testid = @TestId", new { TestId = testId });
@@ -556,18 +556,18 @@ public class AssessmentDapperRepository : IAssessmentRepository
             return test;
         }
     }
-    public async Task<List<Question>> GetQuestionsByEvaluationCriteriaId(int evaluationCriteriaId)
+    public async Task<List<Question>> GetQuestionsByConceptId(int evaluationConceptId)
     {
         await Task.Delay(100);
         List<Question> questions = new List<Question>();
         string query = @"
-            SELECT q.id AS QuestionId, q.subjectid AS SubjectId, q.title, q.a, q.b, q.c, q.d, q.answerkey, q.evaluationcriteriaid
+            SELECT q.id AS QuestionId, q.subjectid AS SubjectId, q.title, q.a, q.b, q.c, q.d, q.answerkey, q.conceptid
             FROM questionbank q
-            WHERE q.evaluationcriteriaid = @EvaluationCriteriaId";
+            WHERE q.conceptid = @conceptid";
 
         using (IDbConnection con = new MySqlConnection(_connectionString))
         {
-            questions = con.Query<Question>(query, new { EvaluationCriteriaId = evaluationCriteriaId }).AsList();
+            questions = con.Query<Question>(query, new { conceptid = evaluationConceptId }).AsList();
         }
 
         return questions;

@@ -38,7 +38,7 @@ $(document).ready(function () {
             roles.forEach(role => {
                 html += `
                     <label>
-                        <input type="checkbox" class="roleCheck" data-id="${role.id}">
+                        <input type="checkbox" class="roleChecked" data-id="${role.id}">
                         ${role.name}
                     </label><br>
                 `;
@@ -48,11 +48,11 @@ $(document).ready(function () {
     });
 
     // 2. Fetch users based on selected roles
-    $(document).on("change", ".roleCheck", function () {
+    $(document).on("change", ".roleChecked", function () {
 
         let selectedRoleIds = [];
 
-        $(".roleCheck:checked").each(function () {
+        $(".roleChecked:checked").each(function () {
             selectedRoleIds.push($(this).data("id"));
         });
 

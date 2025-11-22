@@ -95,19 +95,19 @@ public class QuestionBankRepository : IQuestionBankRepository
         return questions;
     }
 
-    public async Task<List<QuestionDetails>> GetQuestionsBySubjectAndCriteria(int subjectId, int criteriaId)
+    public async Task<List<QuestionDetails>> GetQuestionsBySubjectAndConcept(int subjectId, int conceptId)
     {
 
         List<QuestionDetails> questions = new List<QuestionDetails>();
-        string query = @"select questionbank.id,questionbank.id as questionid,  questionbank.title, subjects.title as subject ,evaluationcriterias.title as criteria
-                            from questionbank, subjects,evaluationcriterias
-                            where questionbank.subjectid=subjects.id and questionbank.evaluationcriteriaid=evaluationcriterias.id
-                            and subjects.id=@SubjectId and evaluationcriterias.id=@CriteriaId";
+        string query = @"select questionbank.id,questionbank.id as questionid,  questionbank.title, subjects.title as subject ,concepts.title as concept
+                            from questionbank, subjects,concepts
+                            where questionbank.subjectid=subjects.id and questionbank.conceptid=concepts.id
+                            and subjects.id=@SubjectId and concepts.id=@conceptid";
 
         MySqlConnection connection = new MySqlConnection(_connectionString);
         MySqlCommand command = new MySqlCommand(query, connection);
         command.Parameters.AddWithValue("@SubjectId", subjectId);
-        command.Parameters.AddWithValue("@CriteriaId", criteriaId);
+        command.Parameters.AddWithValue("@conceptid", conceptId);
 
 
         try
@@ -120,7 +120,7 @@ public class QuestionBankRepository : IQuestionBankRepository
                 int qid = int.Parse(reader["questionid"].ToString());
                 string strQuestion = reader["title"].ToString();
                 string subject = reader["subject"].ToString();
-                string criteria = reader["criteria"].ToString();
+                string criteria = reader["concept"].ToString();
 
                 QuestionDetails question = new QuestionDetails();
 
@@ -145,13 +145,13 @@ public class QuestionBankRepository : IQuestionBankRepository
         return questions;
     }
 
-    public async Task<List<QuestionDetails>> GetQuestionsWithSubjectAndCriteria()
+    public async Task<List<QuestionDetails>> GetQuestionsWithSubjectAndConcept()
     {
 
         List<QuestionDetails> questions = new List<QuestionDetails>();
-        string query = @"select questionbank.id, questionbank.title, subjects.title as subject ,evaluationcriterias.title as criteria
-                            from questionbank, subjects,evaluationcriterias
-                            where questionbank.subjectid=subjects.id and questionbank.evaluationcriteriaid=evaluationcriterias.id";
+        string query = @"select questionbank.id, questionbank.title, subjects.title as subject ,concepts.title as concept
+                            from questionbank, subjects,concepts
+                            where questionbank.subjectid=subjects.id and questionbank.conceptid=concepts.id";
 
         MySqlConnection connection = new MySqlConnection(_connectionString);
         MySqlCommand command = new MySqlCommand(query, connection);
@@ -165,7 +165,7 @@ public class QuestionBankRepository : IQuestionBankRepository
                 int id = int.Parse(reader["id"].ToString());
                 string strQuestion = reader["title"].ToString();
                 string subject = reader["subject"].ToString();
-                string criteria = reader["criteria"].ToString();
+                string criteria = reader["concept"].ToString();
 
                 QuestionDetails question = new QuestionDetails();
 
@@ -238,7 +238,7 @@ public class QuestionBankRepository : IQuestionBankRepository
                 string optionC = reader["c"].ToString();
                 string optionD = reader["d"].ToString();
                 string correctAnswer = reader["answerkey"].ToString();
-                int evaluationCriteriaId = int.Parse(reader["evaluationcriteriaid"].ToString());
+                int conceptId = int.Parse(reader["conceptid"].ToString());
 
                 question = new Question();
                 question.Id = questionId;
@@ -249,7 +249,7 @@ public class QuestionBankRepository : IQuestionBankRepository
                 question.C = optionC;
                 question.D = optionD;
                 question.AnswerKey = correctAnswer;
-                question.EvaluationCriteriaId = evaluationCriteriaId;
+                question.ConceptId = conceptId;
             }
             await reader.CloseAsync();
         }
@@ -300,16 +300,16 @@ public class QuestionBankRepository : IQuestionBankRepository
 
 
     //update only evaluationcriteriaid
-    public async Task<bool> UpdateSubjectCriteria(int questionId, Question question)
+    public async Task<bool> UpdateSubjectConcept(int questionId, Question question)
     {
         bool status = false;
-        string query = "update questionbank set evaluationcriteriaid=@EvaluationCriteriaId ,subjectid=@SubjectId where id =@Id";
+        string query = "update questionbank set conceptid=@conceptid ,subjectid=@SubjectId where id =@Id";
         MySqlConnection connection = new MySqlConnection(_connectionString);
         try
         {
             await connection.OpenAsync();
             MySqlCommand command = new MySqlCommand(query, connection);
-            command.Parameters.AddWithValue("@EvaluationCriteriaId", question.EvaluationCriteriaId);
+            command.Parameters.AddWithValue("@conceptid", question.ConceptId);
             command.Parameters.AddWithValue("@SubjectId", question.SubjectId);
             command.Parameters.AddWithValue("@Id", questionId);
             int rowsAffected = await command.ExecuteNonQueryAsync();
@@ -354,7 +354,7 @@ public class QuestionBankRepository : IQuestionBankRepository
             row["c"] = question.C;
             row["d"] = question.D;
             row["answerKey"] = question.AnswerKey;
-            row["evaluationCriteriaId"] = question.EvaluationCriteriaId;
+            row["conceptid"] = question.ConceptId;
             dataTable.Rows.Add(row);
             dataAdapter.Update(dataSet);
             status = true;
@@ -368,11 +368,11 @@ public class QuestionBankRepository : IQuestionBankRepository
         return status;
     }
 
-    public async Task<string> GetCriteria(string subject, int questionId)
+    public async Task<string> GetConcept(string subject, int questionId)
     {
         string criteria = "";
-        string query = @"select evaluationcriterias.title from evaluationcriterias INNER join questionbank on questionbank.evaluationcriteriaid=evaluationcriterias.id
-                       inner join subjects on questionbank.subjectid= evaluationcriterias.subjectid WHERE subjects.title=@Subject and questionbank.id=@QuestionId";
+        string query = @"select concepts.title from concepts INNER join questionbank on questionbank.conceptid=concepts.id
+                       inner join subjects on questionbank.subjectid= concepts.subjectid WHERE subjects.title=@Subject and questionbank.id=@QuestionId";
 
         MySqlConnection connection = new MySqlConnection(_connectionString);
         try
@@ -414,7 +414,7 @@ public class QuestionBankRepository : IQuestionBankRepository
                 questionbank.b,
                 questionbank.c,
                 questionbank.d,
-                questionbank.evaluationcriteriaid
+                questionbank.conceptid
             FROM questionbank 
             INNER JOIN testquestions 
                 ON testquestions.questionbankid = questionbank.id 
@@ -440,7 +440,7 @@ public class QuestionBankRepository : IQuestionBankRepository
                         B = reader["b"].ToString(),
                         C = reader["c"].ToString(),
                         D = reader["d"].ToString(),
-                        EvaluationCriteriaId = Convert.ToInt32(reader["evaluationcriteriaid"])
+                        ConceptId = Convert.ToInt32(reader["conceptid"])
                     };
                     questions.Add(question);
                 }

@@ -7,25 +7,25 @@ namespace Transflower.TFLAssessment.Repositories;
 
 
  
- public class EvaluationCriteriaRepository:IEvaluationCriteriaRepository
+ public class ConceptRepository:IConceptRepository
 { 
     private readonly IConfiguration _configuration;
     private readonly string _connectionString;
 
-    public EvaluationCriteriaRepository(IConfiguration configuration)
+    public ConceptRepository(IConfiguration configuration)
     {
         _configuration = configuration;
         _connectionString = _configuration.GetConnectionString("DefaultConnection")  ?? throw new ArgumentNullException("connectionString");
     }
     
- public async Task <bool> UpdateCriteria(int evaluationCriteriaId, int questionId)
+ public async Task <bool> UpdateConcept(int conceptId, int questionId)
     {
 
         bool status = false;
         MySqlConnection connection = new MySqlConnection(_connectionString );
-        string query = "update questionbank set evaluationcriteriaid=@EvaluationCriteriaId where id=@QuestionId";
+        string query = "update questionbank set conceptid=@conceptid where id=@QuestionId";
         MySqlCommand command = new MySqlCommand(query, connection);
-        command.Parameters.AddWithValue("@EvaluationCriteriaId", evaluationCriteriaId);
+        command.Parameters.AddWithValue("@conceptid", conceptId);
         command.Parameters.AddWithValue("@QuestionId", questionId);
 
         try
@@ -53,7 +53,7 @@ namespace Transflower.TFLAssessment.Repositories;
 
         bool status = false;
         MySqlConnection connection = new MySqlConnection(_connectionString );
-        string query = "update evaluationcriterias set subjectid= @SubjectId where id= @Id;";
+        string query = "update concepts set subjectid= @SubjectId where id= @Id;";
         MySqlCommand command = new MySqlCommand(query, connection);
         command.Parameters.AddWithValue("@Id", id);
         command.Parameters.AddWithValue("@SubjectId", subjectId);
@@ -78,15 +78,15 @@ namespace Transflower.TFLAssessment.Repositories;
     }
 
 
-    public async Task <bool> InsertCriteria(EvaluationCriteria criteria)
+    public async Task <bool> InsertConcept(Concepts concept)
     {
-        Console.WriteLine(criteria.SubjectId + " " + criteria.Title);
+        Console.WriteLine(concept.SubjectId + " " + concept.Title);
         bool status = false;
         MySqlConnection connection = new MySqlConnection(_connectionString );
-        string query = "insert into evaluationcriterias(title,subjectid) values ( @Title, @SubjectId)";
+        string query = "insert into concepts(title,subjectid) values ( @Title, @SubjectId)";
         MySqlCommand command = new MySqlCommand(query, connection);
-        command.Parameters.AddWithValue("@SubjectId", criteria.SubjectId);
-        command.Parameters.AddWithValue("@Title", criteria.Title);
+        command.Parameters.AddWithValue("@SubjectId", concept.SubjectId);
+        command.Parameters.AddWithValue("@Title", concept.Title);
 
         try
         {
@@ -108,10 +108,10 @@ namespace Transflower.TFLAssessment.Repositories;
         return status;
     }
 
-    public async Task<List<EvaluationCriteria>> GetCriteriaBySubjectId(int subjectId)
+    public async Task<List<Concepts>> GetConceptBySubjectId(int subjectId)
     {
-        List<EvaluationCriteria> evaluationCriteria = new List<EvaluationCriteria>();
-        string query = @" SELECT * FROM evaluationcriterias where subjectid=@subjectId;";
+        List<Concepts> concepts = new List<Concepts>();
+        string query = @" SELECT * FROM concepts where subjectid=@subjectId;";
 
         MySqlConnection connection = new MySqlConnection(_connectionString);
         MySqlCommand command = new MySqlCommand(query, connection);
@@ -125,12 +125,12 @@ namespace Transflower.TFLAssessment.Repositories;
             while (reader.Read())
             {
 
-                EvaluationCriteria criteria = new EvaluationCriteria();
-                criteria.Id = int.Parse(reader["id"].ToString());
-                criteria.Title = reader["Title"].ToString();
-                criteria.SubjectId = int.Parse(reader["subjectid"].ToString());
+                Concepts concept = new Concepts();
+                concept.Id = int.Parse(reader["id"].ToString());
+                concept.Title = reader["Title"].ToString();
+                concept.SubjectId = int.Parse(reader["subjectid"].ToString());
 
-                evaluationCriteria.Add(criteria);
+                concepts.Add(concept);
             }
             await reader.CloseAsync();
         }
@@ -142,20 +142,20 @@ namespace Transflower.TFLAssessment.Repositories;
         {
             await connection.CloseAsync();
         }
-        return evaluationCriteria;
+        return concepts;
     }
 
 
-    public async Task<List<CriteriaQuestionCount>> getCriteriaQuestionCount(int subjectid)
+    public async Task<List<ConceptQuestionCount>> getConceptQuestionCount(int subjectid)
     {
         string query = @"
-           select count(q.title) as questionCount, e.title ,e.id as criteriaId 
+           select count(q.title) as questionCount, e.title ,e.id as conceptid 
             from questionbank q
-            join evaluationcriterias e on e.id=q.evaluationcriteriaid 
+            join concepts e on e.id=q.conceptid 
             where q.subjectid=@subjectid
-            group by(q.evaluationcriteriaid);";
+            group by(q.conceptid);";
 
-        List<CriteriaQuestionCount> criteriaQuestionCount = new List<CriteriaQuestionCount>();
+        List<ConceptQuestionCount> conceptQuestionCount = new List<ConceptQuestionCount>();
         using (MySqlConnection connection = new MySqlConnection(_connectionString))
         using (MySqlCommand command = new MySqlCommand(query, connection))
         {
@@ -167,14 +167,14 @@ namespace Transflower.TFLAssessment.Repositories;
                 // MySqlDataReader reader = await command.ExecuteReader();
                 while (await reader.ReadAsync())
                 {
-                    CriteriaQuestionCount questionCount = new CriteriaQuestionCount();
-                    EvaluationCriteria criteria = new EvaluationCriteria();
+                    ConceptQuestionCount questionCount = new ConceptQuestionCount();
+                    Concepts concept = new Concepts();
 
                     questionCount.QuestionCount = Convert.ToInt32(reader["questionCount"]);
-                    criteria.Id = Convert.ToInt32(reader["criteriaId"]);
-                    criteria.Title = reader["title"].ToString();
-                    questionCount.Criteria = criteria;
-                    criteriaQuestionCount.Add(questionCount);
+                    concept.Id = Convert.ToInt32(reader["conceptid"]);
+                    concept.Title = reader["title"].ToString();
+                    questionCount.Concept = concept;
+                    conceptQuestionCount.Add(questionCount);
                 }
             }
             catch (Exception ex)
@@ -183,7 +183,7 @@ namespace Transflower.TFLAssessment.Repositories;
             }
         }
 
-        return criteriaQuestionCount;
+        return conceptQuestionCount;
     }
 
 }

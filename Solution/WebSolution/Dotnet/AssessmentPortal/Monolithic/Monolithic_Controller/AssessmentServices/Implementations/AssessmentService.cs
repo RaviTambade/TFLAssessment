@@ -46,14 +46,14 @@ public class AssessmentService : IAssessmentService
       return await _repository.GetAllSubjects();
    }
 
-   public async Task<List<EvaluationCriteria>> GetEvalutionCriterias()
+   public async Task<List<Concepts>> GetConcepts()
    {
-      return await _repository.GetEvalutionCriterias();
+      return await _repository.GetConcepts();
    }
 
-   public async Task<List<EvaluationCriteria>> GetEvalutionCriteriasBySubject(int subjectId)
+   public async Task<List<Concepts>> GetConceptsBySubject(int subjectId)
    {
-      return await _repository.GetEvalutionCriteriasBySubject(subjectId);
+      return await _repository.GetConceptsBySubject(subjectId);
    }
 
    public async Task<bool> CreateTest(CreateTestRequest request)
@@ -113,9 +113,9 @@ public class AssessmentService : IAssessmentService
    {
       return await _repository.GetTestDetails(testId);
    }
-   public async Task<List<Question>> GetQuestionsByEvaluationCriteriaId(int EvaluationCriteriaId)
+   public async Task<List<Question>> GetQuestionsByConceptId(int conceptId)
    {
-      return await _repository.GetQuestionsByEvaluationCriteriaId(EvaluationCriteriaId);
+      return await _repository.GetQuestionsByConceptId(conceptId);
    }
    public async Task<bool> UpdateQuestion(Question question)
    {

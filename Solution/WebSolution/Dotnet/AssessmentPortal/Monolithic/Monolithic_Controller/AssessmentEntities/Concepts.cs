@@ -1,6 +1,6 @@
 namespace Transflower.TFLAssessment.Entities;
 
-public class EvaluationCriteria
+public class Concepts
 {
     public int  Id{get;set;}
 

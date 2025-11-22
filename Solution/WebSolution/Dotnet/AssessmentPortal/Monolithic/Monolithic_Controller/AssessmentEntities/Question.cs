@@ -10,5 +10,5 @@ public class Question{
     public string D{get;set;}
     public int SubjectId{get;set;}
     public string AnswerKey{get;set;}
-    public int EvaluationCriteriaId{get;set;}
+    public int ConceptId{get;set;}
 }

@@ -9,5 +9,5 @@ public class NewQuestion{
     public string C{get;set;}
     public string D{get;set;}
     public char AnswerKey{get;set;}
-    public int EvaluationCriteriaId{get;set;}
+    public int ConceptId{get;set;}
 }
