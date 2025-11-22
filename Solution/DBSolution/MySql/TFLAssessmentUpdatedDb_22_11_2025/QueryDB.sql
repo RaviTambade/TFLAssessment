@@ -208,3 +208,137 @@ update interviews set smeid =1 where  id =1;
 -- Delete the interview record for the specified interview ID. cancel interview
 DELETE FROM interviews WHERE id = 1;
 
+
+-- Remove the SME assignment for the given employee and subject.
+DELETE FROM subjectmatterexperts WHERE employeeid = 3 AND subjectid = 1;
+
+-- Retrieve all questions for a specific subject along with subject details.
+SELECT questionbank.id AS questionid, questionbank.title AS question, 
+       subjects.title AS subject, subjects.id AS subjectid
+FROM questionbank, subjects 
+WHERE questionbank.subjectid = subjects.id 
+  AND subjects.id = 1;
+
+-- Retrieve questions for the given subject and concept along with subject and concept details.
+SELECT questionbank.id, questionbank.id AS questionid, questionbank.title, 
+       subjects.title AS subject, concepts.title AS concept
+FROM questionbank, subjects, concepts
+WHERE questionbank.subjectid = subjects.id 
+  AND questionbank.conceptid = concepts.id
+  AND subjects.id = 1 
+  AND concepts.id = 1;
+
+
+-- Retrieve all questions along with their associated subject and concept details.
+SELECT questionbank.id, questionbank.title, subjects.title AS subject, concepts.title AS concept
+FROM questionbank, subjects, concepts
+WHERE questionbank.subjectid = subjects.id 
+  AND questionbank.conceptid = concepts.id;
+
+-- Retrieve the concept title for a specific question within the given subject.
+SELECT concepts.title
+FROM concepts
+INNER JOIN questionbank ON questionbank.conceptid = concepts.id
+INNER JOIN subjects ON questionbank.subjectid = concepts.subjectid
+WHERE subjects.title = "corejava"
+  AND questionbank.id = 1;
+
+
+-- Retrieve all questions assigned to a test along with their full details from the question bank.
+SELECT 
+    testquestions.id AS testquestionid, 
+    questionbank.id AS questionbankid,
+    questionbank.subjectid,
+    questionbank.title,
+    questionbank.a,
+    questionbank.b,
+    questionbank.c,
+    questionbank.d,
+    questionbank.conceptid
+FROM questionbank 
+INNER JOIN testquestions 
+    ON testquestions.questionbankid = questionbank.id 
+WHERE testquestions.testid = 1;
+
+
+-- Get the count of questions grouped by subject along with subject details.
+SELECT COUNT(q.title) AS questionCount, s.title, s.id AS subjectId
+FROM questionbank q
+JOIN subjects s ON s.id = q.subjectid
+GROUP BY q.subjectid;
+
+-- Retrieve candidate test results with candidate details, subject name, and test name for a specific test.
+SELECT 
+    candidatetestresults.testid, 
+    candidatetestresults.score, 
+    candidatetestresults.candidateid,
+    employees.firstname, 
+    employees.lastname, 
+    subjects.title AS subject, 
+    tests.name AS testname 
+FROM candidatetestresults 
+INNER JOIN employees ON employees.id = candidatetestresults.candidateid 
+INNER JOIN tests ON candidatetestresults.testid = tests.id 
+INNER JOIN subjects ON tests.subjectid = subjects.id 
+WHERE candidatetestresults.testid = 1;
+
+
+-- Retrieve the list of candidates who attempted a specific test along with their names.
+SELECT candidatetestresults.testid, candidatetestresults.candidateid, 
+       employees.firstname, employees.lastname
+FROM candidatetestresults 
+INNER JOIN employees 
+    ON employees.id = candidatetestresults.candidateid
+WHERE candidatetestresults.testid = 2;
+
+
+-- Retrieve all test scores of a candidate along with corresponding test names.
+SELECT cr.testid AS Id, cr.score AS Score, t.name AS TestName
+FROM candidatetestresults cr
+JOIN tests t ON cr.testid = t.id 
+WHERE candidateid = 6;
+
+
+-- Retrieve candidates who passed a specific test along with their scores and personal details.
+SELECT tests.id, candidatetestresults.candidateid, candidatetestresults.score, 
+       tests.passinglevel, employees.firstname, employees.lastname
+FROM tests
+INNER JOIN candidatetestresults
+    ON tests.id = candidatetestresults.testid
+INNER JOIN employees
+    ON candidatetestresults.candidateid = employees.id
+WHERE candidatetestresults.score >= tests.passinglevel 
+  AND tests.id = 2;
+
+
+-- Retrieve candidates who failed a specific test along with their scores and personal details.
+SELECT tests.id, candidatetestresults.candidateid, candidatetestresults.score, 
+       tests.passinglevel, employees.firstname, employees.lastname
+FROM tests
+INNER JOIN candidatetestresults
+    ON tests.id = candidatetestresults.testid
+INNER JOIN employees
+    ON candidatetestresults.candidateid = employees.id
+WHERE candidatetestresults.score <= tests.passinglevel 
+  AND tests.id = 2;
+
+
+-- Retrieve candidates' test scores and details for all tests under a specific subject.
+SELECT tests.id, tests.subjectid, candidatetestresults.candidateid, 
+       employees.firstname, employees.lastname, candidatetestresults.score, subjects.title
+FROM tests
+INNER JOIN candidatetestresults
+    ON tests.id = candidatetestresults.testid
+INNER JOIN employees
+    ON candidatetestresults.candidateid = employees.id
+INNER JOIN subjects
+    ON tests.subjectid = subjects.id
+WHERE tests.subjectid = 1;
+
+
+-- Retrieve all test names and corresponding scores for a given candidate.
+SELECT t.Name AS TestName, ctr.score AS Score
+FROM candidatetestresults ctr
+JOIN tests t ON ctr.testid = t.id
+WHERE ctr.candidateid = 6;
+
