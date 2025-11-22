@@ -123,3 +123,88 @@ WHERE id = 10;
 UPDATE tests 
 SET status = 'COMPLETED' 
 WHERE id = 5;
+
+
+-- Retrieve a candidate's test scores with subject title and test ID for the specified year.
+SELECT candidatetestresults.score, subjects.title, tests.id
+FROM candidatetestresults
+INNER JOIN tests ON tests.id = candidatetestresults.testid
+INNER JOIN subjects ON subjects.id = tests.subjectid
+WHERE candidatetestresults.candidateid =6
+  AND YEAR(teststarttime) = 2025;
+
+-- Fetch user details along with assigned role information for login authentication using email and password.
+SELECT u.id AS UserId, u.aadharid, u.firstname, u.lastname, u.email, u.contactnumber, u.password,
+       ur.id AS UserRoleId, ur.roleid, r.name AS RoleName, r.lob
+FROM users u
+LEFT JOIN userroles ur ON u.id = ur.userid
+LEFT JOIN roles r ON ur.roleid = r.id
+WHERE u.email = "ravi.tambade@example.com" AND u.password = "12345";
+
+-- Check whether a user exists by validating the provided email and password.
+SELECT COUNT(*) 
+FROM users 
+WHERE email = "ravi.tambade@example.com" AND password = "12345";
+
+-- Update the user's password for the account matching the specified email.
+UPDATE users 
+SET password = "12345" 
+WHERE email = "ravi.tambade@example.com";
+
+-- Retrieve all answers submitted by a candidate for the specified test.
+SELECT * FROM candidateanswers 
+WHERE candidateid =6
+AND testquestionid IN (SELECT id FROM testquestions WHERE testid = 9);
+
+-- Fetch candidate answers along with correct answers for all questions in a specific test.
+SELECT 
+    ca.testquestionid,
+    ca.answerkey AS CandidateAnswer,
+    qb.answerkey AS CorrectAnswer
+FROM candidateanswers ca
+JOIN testquestions tq ON ca.testquestionid = tq.id
+JOIN questionbank qb ON tq.questionbankid = qb.id
+WHERE ca.candidateid = 5 AND tq.testid = 1;
+
+-- Retrieve all concepts belonging to the specified subject.
+SELECT * FROM concepts WHERE subjectid = 1;
+
+-- Get the count of questions grouped by concept for a given subject.
+SELECT COUNT(q.title) AS questionCount, e.title, e.id AS conceptid
+FROM questionbank q
+JOIN concepts e ON e.id = q.conceptid
+WHERE q.subjectid = 1
+GROUP BY q.conceptid;
+
+-- Retrieve interview candidate details along with SME subject and candidate name.
+SELECT interviews.candidateid, employees.firstname, employees.lastname, subjects.title
+FROM interviews
+INNER JOIN employees ON interviews.candidateid = employees.id
+INNER JOIN subjectmatterexperts ON interviews.smeid = subjectmatterexperts.id
+INNER JOIN subjects ON subjectmatterexperts.subjectid = subjects.id;
+
+
+-- Retrieve interview details for a specific candidate along with their name and SME subject.
+SELECT interviews.candidateid, employees.firstname, employees.lastname, subjects.title
+FROM interviews
+INNER JOIN employees ON interviews.candidateid = employees.id
+INNER JOIN subjectmatterexperts ON interviews.smeid = subjectmatterexperts.id
+INNER JOIN subjects ON subjectmatterexperts.subjectid = subjects.id
+WHERE interviews.candidateid = 6;
+
+-- Update the interview date for the specified interview ID.
+UPDATE interviews 
+SET interviewdate = '2025-11-21'
+WHERE id = 2;
+
+-- Update the interview time for the specified interview ID.
+UPDATE interviews 
+SET interviewtime = '15:30:00' 
+WHERE id = 12;
+
+-- change interviwer
+update interviews set smeid =1 where  id =1;
+
+-- Delete the interview record for the specified interview ID. cancel interview
+DELETE FROM interviews WHERE id = 1;
+
