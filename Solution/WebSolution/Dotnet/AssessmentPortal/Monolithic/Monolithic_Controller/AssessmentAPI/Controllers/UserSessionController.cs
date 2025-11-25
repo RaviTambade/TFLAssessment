@@ -13,16 +13,16 @@ public class UserSessionController : ControllerBase
     {
         _service = service;
     }
- [HttpPost("login/{userId}")]
-    public async Task<IActionResult> Login(long userId)
-    {
-        bool success = await _service.LoginAsync(userId);
+//  [HttpPost("login/{userId}")]
+//     public async Task<IActionResult> Login(long userId)
+//     {
+//         bool success = await _service.LoginAsync(userId);
 
-        if (!success)
-            return BadRequest("Failed to login user.");
+//         if (!success)
+//             return BadRequest("Failed to login user.");
 
-        return Ok("User logged in successfully.");
-    }
+//         return Ok("User logged in successfully.");
+//     }
 
     [HttpPost("logout/{userId}")]
     public async Task<IActionResult> Logout(long userId)

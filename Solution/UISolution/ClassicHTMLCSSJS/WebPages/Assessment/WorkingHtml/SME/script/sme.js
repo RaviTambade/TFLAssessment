@@ -38,7 +38,28 @@
     });
 
     $("#logoutBtn").click(function () {
-        localStorage.clear();  
-        sessionStorage.clear(); 
-        window.location.href = "/Home.html";
+         let userId = localStorage.getItem("userId");
+        if (!userId) {
+        alert("User ID missing.");
+        return;
+    }
+    $.ajax({
+        url: `http://localhost:5238/api/usersession/logout/${userId}`,
+        method: "POST",
+        success: function (res) {
+            console.log("Logout success:", res);
+
+            // Clear browser storage
+            localStorage.clear();
+            sessionStorage.clear();
+
+            // Redirect
+            window.location.href = "/Home.html";
+        },
+        error: function (err) {
+            console.error("Logout error:", err);
+            alert("Something went wrong while logging out.");
+        }
+    });
+
       });
