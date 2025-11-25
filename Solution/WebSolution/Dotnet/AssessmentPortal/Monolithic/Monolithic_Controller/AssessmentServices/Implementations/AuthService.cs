@@ -15,21 +15,26 @@ public class AuthService : IAuthService
 {
     private readonly IAuthRepository _repository;
     private readonly IConfiguration _config;
-    public AuthService(IAuthRepository repository, IConfiguration config)
+    private readonly IUserSessionRepository _repo;
+    
+    public AuthService(IAuthRepository repository, IConfiguration config,IUserSessionRepository repo)
     {
         _repository = repository;
         _config = config;
+        _repo = repo;
     }
 
     public async Task<LoginResponse> GetUserWithRolesByEmail(string email, string password)
     {
         var user = await _repository.GetUserWithRolesByEmail(email, password);
+Console.WriteLine($"User details: {user.Id}");
+Console.WriteLine("Login successful");
+
         if (user == null || user.Password != password)
             return null;
-
         var roles = user.UserRoles.Select(r => r.Role.Name).ToList();
         var token = GenerateJwtToken(user);
-
+         _repo.CreateLoginAsync(user.Id);
         return new LoginResponse
         {
             Token = token,
@@ -44,6 +49,7 @@ public class AuthService : IAuthService
                 UserRoles = user.UserRoles
             }
         };
+
     }
     private string GenerateJwtToken(User user)
     {
