@@ -72,7 +72,8 @@ builder.Services.AddScoped<IRoleRepository, RoleRepository>();
 builder.Services.AddScoped<IRoleService, RoleService>();
 builder.Services.AddScoped<IUserSessionRepository, UserSessionRepository>();
 builder.Services.AddScoped<IUserSessionService, UserSessionService>();
-
+builder.Services.AddScoped<IUserAnalyticsRepository, UserAnalyticsRepository>();
+builder.Services.AddScoped<IUserAnalyticsService, UserAnalyticsService>();
 
 var app = builder.Build();
 

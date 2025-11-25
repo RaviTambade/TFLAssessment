@@ -39,10 +39,20 @@ function getRole() {
   $("#getCriteriaQuestion").click(function (e) {
     $("#content").load("getCriteriaQuestion.html");
   });
+  
+  $("#UserAnalytics").click(function (e) {
+    $("#content").load("UserAnalytics.html");
+  });
 
 
 // Load content dynamically into #content
 $(document).ready(function () {
+  const userEmail = localStorage.getItem("userEmail");
+  if (userEmail) {
+    $("#userEmail").text(userEmail);
+  }
+
+
   $("#showTestBtw").click(function (e) {
     e.preventDefault();
     $("#content").load("showTestBetweenDateJWT.html"); // Make sure this file is named correctly
@@ -86,6 +96,7 @@ $(document).ready(function () {
 
 });
 });
+
 
 // Delegated event listener for role checkboxes inside dynamic content
 // $(document).on("change", ".roleCheck", function () {
