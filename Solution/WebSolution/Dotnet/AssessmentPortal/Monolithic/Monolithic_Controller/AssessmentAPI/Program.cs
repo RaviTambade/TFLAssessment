@@ -70,6 +70,8 @@ builder.Services.AddScoped<IMembershipRepository, MembershipRepository>();
 builder.Services.AddScoped<IMembershipService, MembershipService>();
 builder.Services.AddScoped<IRoleRepository, RoleRepository>();
 builder.Services.AddScoped<IRoleService, RoleService>();
+builder.Services.AddScoped<IUserAnalyticsRepository, UserAnalyticsRepository>();
+builder.Services.AddScoped<IUserAnalyticsService, UserAnalyticsService>();
 
 
 var app = builder.Build();
