@@ -27,9 +27,6 @@ public class AuthService : IAuthService
     public async Task<LoginResponse> GetUserWithRolesByEmail(string email, string password)
     {
         var user = await _repository.GetUserWithRolesByEmail(email, password);
-Console.WriteLine($"User details: {user.Id}");
-Console.WriteLine("Login successful");
-
         if (user == null || user.Password != password)
             return null;
         var roles = user.UserRoles.Select(r => r.Role.Name).ToList();

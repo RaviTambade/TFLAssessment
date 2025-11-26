@@ -46,14 +46,14 @@
 
         <!-- Active Users -->
         <div class="col-md-4">
-            <div class="dashboard-card" style="background:#0d6efd;">
+            <div class="dashboard-card" style="background:#0d6efd;" onclick="LoadActiveuser()">
                 <div class="card-title">Active Users</div>
                 <div id="activeUsers" class="card-value">0</div>
             </div>
         </div>
 
          <div class="col-md-4">
-            <div class="dashboard-card" style="background:#fd9d0d;">
+            <div class="dashboard-card" style="background:#fd9d0d;" onclick="loadAllUsers()">
                 <div class="card-title">Total Users</div>
                 <div id="allUsers" class="card-value">0</div>
             </div>
@@ -63,7 +63,7 @@
     <hr class="my-5">
 
     <!-- TOP 10 USERS TABLE -->
-    <h3>Top 10 Users</h3>
+    <h3 id="heading">Top 10 Users</h3>
     <table class="table table-bordered table-striped mt-3">
         <thead class="table-dark">
             <tr>
@@ -91,7 +91,6 @@ $(document).ready(function () {
 
     setInterval(() => {
         loadDashboard();
-        loadTop10Users();
     }, 3000); 
 });
 
@@ -112,7 +111,7 @@ function loadDashboard() {
     });
     
     $.ajax({
-        url: API + "/alluser",
+        url: API + "/allusercount",
         method: "GET",
         success: function (data) {
             $("#allUsers").text(data);
@@ -153,6 +152,33 @@ function loadTop10Users() {
     });
 }
 
+function LoadActiveuser() {
+    $.ajax({
+        url: API + "/activeuser",
+        method: "GET",
+        success: function (data) {
+
+            $("#topTenTable").empty();
+            document.getElementById("heading").textContent="Active Users"
+
+            data.forEach(user => {
+                let roles = user.userRoles && user.userRoles.length > 0
+                    ? user.userRoles.map(r => r.role.name).join(", ")
+                    : "-";
+
+                $("#topTenTable").append(`
+                    <tr>
+                    
+                        <td>${user.firstname} ${user.lastname}</td>
+                        <td>${roles}</td>
+                        <td>${user.email}</td>
+                    </tr>
+                `);
+            });
+        }
+    });
+}
+
 
 function userhistory(userId)
 {
@@ -172,13 +198,18 @@ function loadAllUsers() {
         method: "GET",
         success: function (data) {
 
-            $("#allUserTable").empty();
+            $("#topTenTable").empty();
+             document.getElementById("heading").textContent="All Users"
+                 data.forEach(user => {
+                let roles = user.userRoles && user.userRoles.length > 0
+                    ? user.userRoles.map(r => r.role.name).join(", ")
+                    : "-";
 
-            data.forEach(user => {
-                $("#allUserTable").append(`
+                $("#topTenTable").append(`
                     <tr>
-                        <td>${user.userId}</td>
-                        <td>${user.name}</td>
+                    
+                        <td>${user.firstname} ${user.lastname}</td>
+                        <td>${roles}</td>
                         <td>${user.email}</td>
                     </tr>
                 `);

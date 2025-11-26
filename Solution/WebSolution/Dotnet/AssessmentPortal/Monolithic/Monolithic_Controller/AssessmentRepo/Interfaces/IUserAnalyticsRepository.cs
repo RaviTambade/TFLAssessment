@@ -10,4 +10,9 @@ public interface IUserAnalyticsRepository
     Task<List<User>> GetTopTenUser();
     Task<String> GetAverageSessionDurationAsync();
     // Task<IEnumerable<UserSession>> GetUserSessionsAsync(long userId, DateTime? start, DateTime? end);
+    Task<List<User>> GetActiveUsers();
+
+    Task<List<User>> GetAllUsers();
+
+    
 }

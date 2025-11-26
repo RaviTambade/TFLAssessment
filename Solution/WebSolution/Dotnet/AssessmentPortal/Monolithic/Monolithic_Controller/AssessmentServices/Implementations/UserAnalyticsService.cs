@@ -36,5 +36,14 @@ public class UserAnalyticsService : IUserAnalyticsService
         return await _repository.GetAverageSessionDurationAsync();
     }
 
+    public async Task<List<User>> GetActiveUsers()
+    {
+        return await _repository.GetActiveUsers();
+    }
+
+    public async Task<List<User>> GetAllUsers()
+    {
+        return await _repository.GetAllUsers();
+    }
     // Task<IEnumerable<UserSession>> GetUserSessionsAsync(long userId, DateTime? start, DateTime? end);
 }
