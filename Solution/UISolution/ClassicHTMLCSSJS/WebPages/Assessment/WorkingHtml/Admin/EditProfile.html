@@ -1,138 +1,170 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>User History Table</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Customer Profile</title>
 
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      padding: 20px;
-      background: #eef2f7;
-    }
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
 
-    #getHistoryBtn {
-      background: #2962ff;
-      color: white;
-      padding: 12px 20px;
-      border: none;
-      cursor: pointer;
-      border-radius: 6px;
-      font-size: 16px;
-      transition: 0.3s;
-    }
+    <style>
+      body {
+        background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+        font-family: "Poppins", sans-serif;
+      }
+      .profile-container {
+        max-width: 700px;
+        margin: 60px auto;
+        background: #fff;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+      }
+      .profile-header {
+        text-align: center;
+        margin-bottom: 25px;
+      }
+      .profile-header img {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 3px solid #0d47a1;
+      }
+      .profile-header h3 {
+        margin-top: 15px;
+        font-weight: 600;
+        color: #0d47a1;
+      }
+      .info-label {
+        font-weight: 600;
+        color: #333;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="profile-container">
+        <div class="profile-header">
+          <img
+            src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
+            alt="User Avatar"
+          />
+          <h3 id="profileName"></h3>
+          <p class="text-muted" id="profileRole">User Role: Admin</p>
+        </div>
 
-    #getHistoryBtn:hover {
-      background: #0039cb;
-    }
+        <form id="editProfileForm">
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label class="info-label">Aadhar ID</label>
+              <input type="text" id="profileAadhar" class="form-control" />
+            </div>
 
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 20px;
-      background: white;
-      border-radius: 6px;
-      overflow: hidden;
-      box-shadow: 0px 2px 8px rgba(0,0,0,0.1);
-    }
+            <div class="col-md-6 mb-3">
+              <label class="info-label">First Name</label>
+              <input type="text" id="profileFirstName" class="form-control" />
+            </div>
 
-    th, td {
-      padding: 12px;
-      text-align: center;
-      border-bottom: 1px solid #ddd;
-    }
+            <div class="col-md-6 mb-3">
+              <label class="info-label">Last Name</label>
+              <input type="text" id="profileLastName" class="form-control" />
+            </div>
 
-    th {
-      background: #4a90e2;
-      color: white;
-      font-weight: bold;
-      text-transform: uppercase;
-    }
+            <div class="col-md-6 mb-3">
+              <label class="info-label">Email</label>
+              <input
+                type="email"
+                id="profileEmail"
+                class="form-control"
+                readonly
+              />
+            </div>
 
-    tr:hover {
-      background: #f1f5ff;
-    }
+            <div class="col-md-6 mb-3">
+              <label class="info-label">Contact Number</label>
+              <input type="text" id="profileContact" class="form-control" />
+            </div>
+          </div>
 
-    .loading {
-      font-size: 18px;
-      font-weight: bold;
-      color: #444;
-    }
+          <div class="text-center mt-4">
+            <button
+              type="button"
+              id="editBtn"
+              class="btn btn-primary"
+              onclick="toggleEdit()"
+            >
+              Update Profile
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
 
-    .no-data {
-      color: red;
-      font-weight: bold;
-      margin-top: 15px;
-    }
-  </style>
+    <script>
+      const userProfileIdData = localStorage.getItem("userId");
 
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-</head>
-<body>
+      // Load profile data
+      $(document).ready(function () {
+        $.ajax({
+          url: `http://localhost:5238/api/UserProfile/${userProfileIdData}`,
+          method: "GET",
+          success: function (data) {
+            if (!data) {
+              alert("Profile Not Found!!");
+              return;
+            }
 
-  <button id="getHistoryBtn" onclick="userDetailHistory(5)">Show History</button>
-  <div id="historyContainer"></div>
-
-  <script>
-    function calculateDuration(start, end) {
-      let startTime = new Date(start);
-      let endTime = new Date(end);
-
-      let diff = endTime - startTime; 
-      let hours = Math.floor(diff / (1000 * 60 * 60));
-      let minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-
-      return `${hours}h ${minutes}m`;
-    }
-
-    function userDetailHistory(userId) {
-
-      $("#historyContainer").html("<p class='loading'>⏳ Loading...</p>");
-
-      $.ajax({
-        url: `http://localhost:5238/api/UserSession/history/${userId}`,
-        method: "GET",
-        success: function (data) {
-
-          if (!data || data.length === 0) {
-            $("#historyContainer").html("<p class='no-data'>⚠ No history found.</p>");
-            return;
-          }
-
-          let html = `
-          <table>
-            <thead>
-              <tr>
-                <th>Login Time</th>
-                <th>Logout Time</th>
-                <th>Duration</th>
-              </tr>
-            </thead>
-            <tbody>
-          `;
-
-          data.forEach(item => {
-            let duration = calculateDuration(item.loginTime, item.logoutTime);
-
-            html += `
-              <tr>
-                <td>${item.loginTime}</td>
-                <td>${item.logoutTime}</td>
-                <td><strong>${duration}</strong></td>
-              </tr>
-            `;
-          });
-
-          html += `</tbody></table>`;
-
-          $("#historyContainer").html(html);
-        },
-        error: function () {
-          $("#historyContainer").html("<p class='no-data'>❌ Server error or no data found.</p>");
-        }
+            console.log(data.aadharId);
+            // Fill input fields with data
+            document.getElementById("profileFirstName").value = data.firstname;
+            document.getElementById("profileLastName").value = data.lastname;
+            document.getElementById("profileAadhar").value = data.aadharId;
+            document.getElementById("profileEmail").value = data.email;
+            document.getElementById("profileContact").value =
+              data.contactNumber;
+          },
+          error: function (xhr, status, error) {
+            console.error("Error fetching profile:", error);
+          },
+        });
       });
-    }
-  </script>
 
-</body>
+      function toggleEdit() {
+        const updatedData = {
+          id: userProfileIdData,
+          aadharId: document.getElementById("profileAadhar").value,
+          firstname: document.getElementById("profileFirstName").value,
+          lastname: document.getElementById("profileLastName").value,
+          contactNumber: document.getElementById("profileContact").value,
+          email: document.getElementById("profileEmail").value,
+          password: "",
+        };
+        console.log("ok.....");
+
+        $.ajax({
+          url: `http://localhost:5238/api/UserProfile/${userProfileIdData}`,
+          method: "PUT",
+          contentType: "application/json",
+          data: JSON.stringify(updatedData),
+          success: function (response) {
+            if (response == false) {
+              alert("Profile Not Edit!!");
+              return;
+            } else {
+              alert("data edited successfully");
+              $("#content").load("profile.html ");
+            }
+          },
+          error: function (xhr, status, error) {
+            console.error("Error fetching profile:", error);
+          },
+        });
+      }
+    </script>
+  </body>
 </html>
