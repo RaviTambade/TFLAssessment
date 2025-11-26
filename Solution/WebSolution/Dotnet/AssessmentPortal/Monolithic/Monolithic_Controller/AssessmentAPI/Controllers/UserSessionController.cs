@@ -34,7 +34,7 @@ public class UserSessionController : ControllerBase
 
         return Ok("User logged out successfully.");
     }
-
+ // http://localhost:5238/api/UserSession/history/1
     [HttpGet("history/{userId}")]
     public async Task<IActionResult> GetUserHistory(int userId)
     {

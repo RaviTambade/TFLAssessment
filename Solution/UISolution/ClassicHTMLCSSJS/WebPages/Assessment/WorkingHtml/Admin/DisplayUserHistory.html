@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>User History Table</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background: #eef2f7;
+    }
+
+    #getHistoryBtn {
+      background: #2962ff;
+      color: white;
+      padding: 12px 20px;
+      border: none;
+      cursor: pointer;
+      border-radius: 6px;
+      font-size: 16px;
+      transition: 0.3s;
+    }
+
+    #getHistoryBtn:hover {
+      background: #0039cb;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      background: white;
+      border-radius: 6px;
+      overflow: hidden;
+      box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    th,
+    td {
+      padding: 12px;
+      text-align: center;
+      border-bottom: 1px solid #ddd;
+    }
+
+    th {
+      background: #4a90e2;
+      color: white;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+
+    tr:hover {
+      background: #f1f5ff;
+    }
+
+    .loading,
+    .no-data {
+      font-size: 18px;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+
+    .no-data {
+      color: red;
+    }
+  </style>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+
+  <div id="historyContainer"></div>
+
+  <script>
+
+    function formatDate(datetime) {
+      const date = new Date(datetime);
+      return date.toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" });
+    }
+
+    function formatTime(datetime) {
+      const date = new Date(datetime);
+      return date.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" });
+    }
+
+    function calculateDuration(start, end) {
+
+      // Convert to valid Date format only if both exist
+      const startDate = new Date(start);
+      const endDate = new Date(end);
+
+      if (isNaN(startDate) || isNaN(endDate)) return "Invalid time";
+
+      let diff = Math.abs(endDate.getTime() - startDate.getTime());
+
+      let hours = Math.floor(diff / (1000 * 60 * 60));
+      let minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+
+      // Format clean output
+      hours = hours > 0 ? `${hours}h` : "";
+      minutes = minutes > 0 ? `${minutes}m` : "";
+
+      return `${hours} ${minutes}`.trim() || "0m";
+    }
+
+
+
+    function userDetailHistory(userId) {
+
+      $("#historyContainer").html("<p class='loading'>⏳ Loading...</p>");
+
+      $.ajax({
+        url: `http://localhost:5238/api/UserSession/history/${userId}`,
+        method: "GET",
+        success: function (data) {
+
+          //store data globally for auto-refresh
+          sessionData = data;
+
+          if (!data || data.length === 0) {
+            $("#historyContainer").html("<p class='no-data'>⚠ No history found.</p>");
+            return;
+          }
+        
+          let html = `
+          <table>
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Login Time</th>
+                <th>Logout Time</th>
+                <th>Duration</th>
+              </tr>
+            </thead>
+            <tbody>
+          `;
+            
+          data.forEach(item => {
+            const isActive = item.sessionStatus === "ACTIVE";
+            const logoutTime = isActive ? new Date() : item.logoutTime;
+          
+            html += `
+              <tr>
+                <td>${formatDate(item.loginTime)}</td>
+                <td>${formatTime(item.loginTime)}</td>
+                <td>${isActive ? "Now" : formatTime(item.logoutTime)}</td>
+                <td class="duration-cell"><strong>${calculateDuration(item.loginTime, logoutTime)}</strong></td>
+              </tr>`;
+          });
+        
+          html += `</tbody></table>`;
+          $("#historyContainer").html(html);
+        },
+
+        error: function () {
+          $("#historyContainer").html("<p class='no-data'>❌ Server error or no data found.</p>");
+        }
+      });
+    }
+
+
+    function updateDurationOnly() {
+      $("#historyContainer table tbody tr").each(function (index) {
+        let item = sessionData[index];
+        if (!item) return;
+      
+        let isActive = item.sessionStatus === "ACTIVE";
+        let newDuration = isActive
+          ? calculateDuration(item.loginTime, new Date())
+          : calculateDuration(item.loginTime, item.logoutTime);
+      
+        $(this).find("td.duration-cell").html(`<strong>${newDuration}</strong>`);
+      });
+    }
+
+
+    function updateDurations() {
+      $("#historyContainer").each(function () {
+        const login = $(this).data("login");
+        const isActive = $(this).data("active") === true || $(this).data("active") === "true";
+
+        const logout = isActive ? new Date() : $(this).data("logout");
+
+        $(this).text(calculateDuration(login, logout));
+      });
+    }
+
+    $(document).ready(function () {
+      userDetailHistory(userId);
+    });
+
+    setInterval(updateDurationOnly, 1000);
+
+  </script>
+
+</body>
+
+</html>

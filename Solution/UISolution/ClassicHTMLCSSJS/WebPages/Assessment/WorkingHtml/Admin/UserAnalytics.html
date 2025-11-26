@@ -70,6 +70,7 @@
                 <th>Name</th>
                 <th>Role</th>
                 <th>Email</th>
+                 <th>Action</th>
             </tr>
         </thead>
         <tbody id="topTenTable"></tbody>
@@ -81,7 +82,7 @@
 
 
 <script>
-const API = "http://localhost:5238/api/UserAnalytics";
+ API = "http://localhost:5238/api/UserAnalytics";
 
 $(document).ready(function () {
     loadDashboard();              
@@ -143,11 +144,21 @@ function loadTop10Users() {
                         <td>${user.firstname} ${user.lastname}</td>
                         <td>${roles}</td>
                         <td>${user.email}</td>
+                        <td><button onclick ="userhistory(${user.id})">details</button>
+                            </td>
                     </tr>
                 `);
             });
         }
     });
+}
+
+
+function userhistory(userId)
+{
+     $("#content").load("DisplayUserHistory.html",function(){
+      userDetailHistory(userId);
+     });
 }
 
 
