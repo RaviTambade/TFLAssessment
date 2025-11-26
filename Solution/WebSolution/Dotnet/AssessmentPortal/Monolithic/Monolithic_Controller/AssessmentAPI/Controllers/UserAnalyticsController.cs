@@ -18,7 +18,7 @@ public class UserAnalyticsController : ControllerBase
 
     }
 
-// 3 display below block
+
     //http://localhost:5238/api/UserAnalytics/ActiveUserSeconds/1
     [HttpGet("ActiveUserSeconds/{id}")]
     public async Task<IActionResult> GetTotalOnlineSecondsAsync(int id)
@@ -31,7 +31,6 @@ public class UserAnalyticsController : ControllerBase
         return Ok(activeSecond);
     }
 
-// 2. display in block
     [HttpGet("ActiveUsercount")]
     public async Task<IActionResult> GetActiveUsersCountAsync()
     {
@@ -43,7 +42,7 @@ public class UserAnalyticsController : ControllerBase
         return Ok(activeusercount);
     }
 
-    [HttpGet("alluser")]
+    [HttpGet("allusercount")]
     public async Task<IActionResult> GetUserCount()
     {
         int dailyactiveusercount = await _svc.GetUserCount();
@@ -66,7 +65,28 @@ public class UserAnalyticsController : ControllerBase
         return Ok(topten);
     }
 
-// 1. display in block
+    [HttpGet("activeUser")]
+    public async Task<IActionResult> GetActiveUsers()
+    {
+        List<User> activeusers = await _svc.GetActiveUsers();
+        if (activeusers == null)
+        {
+            return NotFound("No daily active user found.");
+        }
+        return Ok(activeusers);
+    }
+    [HttpGet("alluser")]
+    public async Task<IActionResult> GetAllUsers()
+    {
+        List<User> allusers = await _svc.GetAllUsers();
+        if (allusers == null)
+        {
+            return NotFound("No daily active user found.");
+        }
+        return Ok(allusers);
+    }
+
+   
     [HttpGet("AverageActiveUserSeconds")]
     public async Task<IActionResult> GetAverageSessionDurationAsync()
     {

@@ -7,5 +7,6 @@ public interface IUserSessionRepository
     Task<bool> LogoutAsync(long userId);
     Task<IEnumerable<UserSession>> GetUserHistory(int userId);
 
+
 }
 
