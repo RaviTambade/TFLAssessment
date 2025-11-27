@@ -273,7 +273,6 @@ CREATE TABLE Assessment (
   id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   test_id INT,
   candidate_id INT,
-  schedule_id INT,
   status VARCHAR(20) DEFAULT 'Created',
   createdby INT,
   createdon DATETIME,
@@ -282,6 +281,5 @@ CREATE TABLE Assessment (
   deletedby INT,
   deleted  VARCHAR(20) DEFAULT 'NO',
    FOREIGN KEY (test_id) REFERENCES tests(id),
-   FOREIGN KEY (candidate_id) REFERENCES employees(id),
-  FOREIGN KEY (schedule_id) REFERENCES subjectmatterexperts(id)
+   FOREIGN KEY (candidate_id) REFERENCES employees(id)
 );
