@@ -364,3 +364,75 @@ WHERE ur.roleid IN (2,3)
 GROUP BY u.id, u.firstname, u.lastname
 HAVING COUNT(DISTINCT ur.roleid) = 2;
 
+
+-- all active user count
+SELECT COUNT(DISTINCT user_id) as activeuser
+FROM user_session
+WHERE session_status = "ACTIVE";
+
+-- all active user 
+SELECT 
+    u.id AS user_id,
+    u.firstname,
+    u.lastname,
+    u.email,
+    GROUP_CONCAT(DISTINCT r.name ORDER BY r.name) AS roles
+FROM user_session us
+JOIN employees u ON u.id = us.user_id
+LEFT JOIN userroles ur ON ur.userid = u.id
+LEFT JOIN roles r ON r.id = ur.roleid
+WHERE us.session_status = 'ACTIVE'
+GROUP BY u.id, u.firstname, u.lastname;
+
+-- all unique user count use appliaction
+SELECT COUNT(DISTINCT user_id) AS allUserCount
+FROM user_session;
+
+-- all unique user use appliaction
+SELECT 
+    u.id AS user_id,
+    u.firstname,
+    u.lastname,
+    u.email,
+    GROUP_CONCAT(DISTINCT r.name) AS roles
+FROM user_session us
+JOIN employees u ON u.id = us.user_id
+LEFT JOIN userroles ur ON ur.userid = u.id
+LEFT JOIN roles r ON r.id = ur.roleid
+GROUP BY u.id, u.firstname, u.lastname, u.email;
+
+ -- top 10 user using application
+  SELECT 
+    us.user_id,
+    e.firstname,
+    e.lastname,
+    GROUP_CONCAT(DISTINCT r.name) AS roles,
+    SEC_TO_TIME(
+        MAX(TIMESTAMPDIFF(SECOND, us.login_time, COALESCE(us.logout_time, NOW())))
+    ) AS longest_session
+FROM user_session us
+JOIN employees e ON e.id = us.user_id
+LEFT JOIN userroles ur ON ur.userid = e.id
+LEFT JOIN roles r ON r.id = ur.roleid
+GROUP BY us.user_id, e.firstname, e.lastname
+ORDER BY longest_session DESC
+LIMIT 10;
+
+-- count total schedule test
+select count(id) as testcount from tests where status="scheduled";
+
+-- detalis of total shedule test
+select 
+    t.id,
+    t.name,
+    s.title,
+    t.duration,
+    MAX(ts.scheduledstart) as scheduledstart,
+    MAX(ts.scheduledend) as scheduledend
+from tests t
+left join testschedules ts on t.id = ts.testid
+left join subjects s on s.id = t.subjectid
+where t.status = 'scheduled'
+group by t.id, t.name, s.title, t.duration;
+
+
