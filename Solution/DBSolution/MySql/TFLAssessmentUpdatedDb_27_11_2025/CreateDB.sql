@@ -278,6 +278,8 @@ CREATE TABLE Assessment (
   createdon DATETIME,
   modifiedby INT,
   modifiedon DATETIME,
+  schedulestart DATETIME,
+  scheduleend DATETIME,
   deletedby INT,
   deleted  VARCHAR(20) DEFAULT 'NO',
    FOREIGN KEY (test_id) REFERENCES tests(id),
