@@ -273,7 +273,7 @@ CREATE TABLE Assessment (
   id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   test_id INT,
   candidate_id INT,
-  status VARCHAR(20) DEFAULT 'Created',
+  status ENUM('created','scheduled','cancelled','conducted') DEFAULT 'created',
   createdby INT,
   createdon DATETIME,
   modifiedby INT,
@@ -281,7 +281,7 @@ CREATE TABLE Assessment (
   scheduledstart DATETIME,
   scheduledend DATETIME,
   deletedby INT,
-  deleted  VARCHAR(20) DEFAULT 'NO',
+  deleted  ENUM('yes','no')  DEFAULT 'no',
    FOREIGN KEY (test_id) REFERENCES tests(id),
    FOREIGN KEY (candidate_id) REFERENCES employees(id)
 );
