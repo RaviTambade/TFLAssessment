@@ -377,4 +377,6 @@ public class UserAnalyticsRepository : IUserAnalyticsRepository
 
         return allusers;
     }
+
+  
 }

@@ -676,5 +676,91 @@ public class AssessmentDapperRepository : IAssessmentRepository
     }
 }
 
+
+    public async Task<int> GetTestCountByStatus(string status)
+    {
+
+       int count=0;
+        MySqlConnection connection = new MySqlConnection(_connectionString);
+        string query = "select count(id) as testcount from tests where status=@status;";
+        MySqlCommand command = new MySqlCommand(query, connection);
+        command.Parameters.AddWithValue("@status", status);
+        try
+        {
+            
+            await connection.OpenAsync();
+            MySqlDataReader reader = command.ExecuteReader();
+            reader.Read();
+            count=int.Parse(reader["testcount"].ToString());
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+        finally
+        {
+            await connection.CloseAsync();
+        }
+        return count;
+    }
+
+    public async  Task<List<TestDetails>> GetAllTestByStatus(string status)
+    {
+        List<TestDetails> tests = new List<TestDetails>();
+        string query = @"select 
+                    t.id,
+                    t.name,
+                    s.title,
+                    t.duration,
+                    MAX(ts.scheduledstart) as scheduledstart,
+                    MAX(ts.scheduledend) as scheduledend
+                from tests t
+                left join testschedules ts on t.id = ts.testid
+                left join subjects s on s.id = t.subjectid
+                where t.status = @status
+                group by t.id, t.name, s.title, t.duration;
+                ;";
+
+        MySqlConnection connection = new MySqlConnection(_connectionString);
+        MySqlCommand command = new MySqlCommand(query, connection);
+        command.Parameters.AddWithValue("@status", status);
+        try
+        {
+            await connection.OpenAsync();
+            MySqlDataReader reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                int id = int.Parse(reader["id"].ToString());
+                string TestName = reader["Name"].ToString();
+                string subjectName = reader["title"].ToString();
+                TimeSpan duration = TimeSpan.Parse(reader["duration"].ToString());
+                DateTime? scheduledStart = reader.IsDBNull("scheduledstart")
+               ? (DateTime?)null
+               : reader.GetDateTime("scheduledstart");
+
+                DateTime? scheduledEnd = reader.IsDBNull("scheduledend")
+                    ? (DateTime?)null
+                    : reader.GetDateTime("scheduledend");
+
+                TestDetails test = new TestDetails();
+                test.Id = id;
+                test.TestName = TestName;
+                test.Subjectname = subjectName;
+                test.Duration = duration;
+                test.ScheduledStart = scheduledStart;
+                test.ScheduledEnd = scheduledEnd;
+                tests.Add(test);
+            }
+        }
+        catch (Exception e)
+        {
+            throw e;
+        }
+        finally
+        {
+            await connection.CloseAsync();
+        }
+        return tests;
+    }
 }
 

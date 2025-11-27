@@ -134,4 +134,14 @@ public class AssessmentService : IAssessmentService
    {
       return await _repository.GetAllTestByEmpId(empId);
    }
+
+   public async Task<int> GetTestCountByStatus(string status)
+    {
+      return await _repository.GetTestCountByStatus(status);
+   }
+
+   public async Task<List<TestDetails>> GetAllTestByStatus(string status)
+    {
+      return await _repository.GetAllTestByStatus(status);
+   }
 }

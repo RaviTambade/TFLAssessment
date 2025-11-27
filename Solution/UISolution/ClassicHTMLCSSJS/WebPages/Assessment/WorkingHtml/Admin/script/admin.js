@@ -39,7 +39,7 @@ function getRole() {
   $("#getCriteriaQuestion").click(function (e) {
     $("#content").load("getCriteriaQuestion.html");
   });
-  
+
   $("#UserAnalytics").click(function (e) {
     $("#content").load("UserAnalytics.html");
   });
@@ -60,7 +60,7 @@ $(document).ready(function () {
 
   $("#showAllTest").click(function (e) {
     e.preventDefault();
-    $("#content").html("<h3>Coming soon: Create Test With Questions!</h3>");
+    $("#content").load("TestByStatus.html");
   });
 
     $("#rolesDash").click(function (e) {
