@@ -281,21 +281,22 @@ CREATE PROCEDURE GetTestEmployeeDetailsByCandidate(IN candidate INT)
 BEGIN
     SELECT 
         t.id,
-        ts.candidateid,
+        a.id,
+        a.candidate_id,
         t.name AS testname,
         t.passinglevel,
         t.duration,
-        ts.scheduledstart,
-        ts.scheduledend,
-        ts.status
+        a.scheduledstart,
+        a.scheduledend,
+        a.status
     FROM 
-        testschedules ts
+        assessment a
     JOIN 
-        tests t ON ts.testid = t.id
+        tests t ON a.test_id = t.id
     WHERE 
-        ts.candidateid = candidate;
+        a.candidate_id = candidate;
 END $$
 
 DELIMITER ;
 
-CALL GetTestEmployeeDetailsByCandidate(6);
+CALL GetTestEmployeeDetailsByCandidate(4);

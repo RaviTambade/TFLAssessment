@@ -339,16 +339,16 @@ INSERT INTO user_session VALUES
 (1, 1, '2025-11-20 15:40:51', '2025-11-20 15:42:04', 'LOGGED_OUT');
 
 INSERT INTO Assessment 
-(test_id, candidate_id, status, createdby, createdon, schedulestart, scheduleend)
+(test_id, candidate_id, status, createdby, createdon, scheduledstart, scheduledend)
 VALUES
 (1, 4, 'Scheduled', 1, NOW(), '2025-01-20 10:00:00', '2025-01-20 12:00:00');
 
 INSERT INTO Assessment 
-(test_id, candidate_id, status, createdby, createdon, schedulestart, scheduleend)
+(test_id, candidate_id, status, createdby, createdon, scheduledstart, scheduledend)
 VALUES
 (2, 4, 'Scheduled', 1, NOW(), '2025-01-22 09:00:00', '2025-01-22 11:00:00');
 
 INSERT INTO Assessment 
-(test_id, candidate_id, status, createdby, createdon, schedulestart, scheduleend)
+(test_id, candidate_id, status, createdby, createdon, scheduledstart, scheduledend)
 VALUES
 (3, 4, 'Scheduled', 1, NOW(), '2025-01-25 14:00:00', '2025-01-25 16:00:00');
