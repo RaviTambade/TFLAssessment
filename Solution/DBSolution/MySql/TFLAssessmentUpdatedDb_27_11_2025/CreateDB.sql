@@ -268,8 +268,8 @@ CREATE TABLE user_session (
 );
 
 
-DROP TABLE IF EXISTS Assessment;
-CREATE TABLE Assessment (
+DROP TABLE IF EXISTS Assessments;
+CREATE TABLE Assessments (
   id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   test_id INT,
   candidate_id INT,
@@ -285,3 +285,15 @@ CREATE TABLE Assessment (
    FOREIGN KEY (test_id) REFERENCES tests(id),
    FOREIGN KEY (candidate_id) REFERENCES employees(id)
 );
+
+
+ALTER TABLE candidatetestresults 
+DROP FOREIGN KEY fk_test_testid;
+
+alter table candidatetestresults 
+CHANGE COLUMN testid assessmentid INT;
+
+ALTER TABLE candidatetestresults 
+ADD CONSTRAINT fk_testresults_assessment
+FOREIGN KEY (assessmentid) REFERENCES assessments(id);
+

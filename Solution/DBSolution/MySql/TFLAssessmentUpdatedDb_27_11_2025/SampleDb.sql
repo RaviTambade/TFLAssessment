@@ -302,6 +302,18 @@ INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(1,17,'
 INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(1,18,'d');
 INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(1,19,'b');
 INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(1,20,'b');
+
+INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(4,2,'N');
+INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(4,3,'N');
+INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(4,4,'N');
+INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(4,5,'N');
+INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(4,6,'N');
+INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(4,7,'N');
+INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(4,8,'N');
+INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(4,9,'b');
+INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(4,10,'N');
+
+
 -- =========================================================================================================================
 
 
@@ -338,17 +350,23 @@ INSERT INTO employeeperformance VALUES
 INSERT INTO user_session VALUES
 (1, 1, '2025-11-20 15:40:51', '2025-11-20 15:42:04', 'LOGGED_OUT');
 
-INSERT INTO Assessment 
+INSERT INTO Assessments 
 (test_id, candidate_id, status, createdby, createdon, scheduledstart, scheduledend)
 VALUES
 (1, 4, 'Scheduled', 1, NOW(), '2025-01-20 10:00:00', '2025-01-20 12:00:00');
 
-INSERT INTO Assessment 
+INSERT INTO Assessments
 (test_id, candidate_id, status, createdby, createdon, scheduledstart, scheduledend)
 VALUES
 (2, 4, 'Scheduled', 1, NOW(), '2025-01-22 09:00:00', '2025-01-22 11:00:00');
 
-INSERT INTO Assessment 
+INSERT INTO Assessments
 (test_id, candidate_id, status, createdby, createdon, scheduledstart, scheduledend)
 VALUES
 (3, 4, 'Scheduled', 1, NOW(), '2025-01-25 14:00:00', '2025-01-25 16:00:00');
+
+INSERT INTO Assessments 
+(test_id, candidate_id, status, createdby, createdon, scheduledstart, scheduledend)
+VALUES
+(13, 4, 'conducted', 1, NOW(), '2025-01-25 14:00:00', '2025-01-25 16:00:00');
+
