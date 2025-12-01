@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <title>SME Dashboard</title>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="../Script/Tailwind.min.js"></script>
   <style>
     body {
-      margin: 0;
+      margin: auto;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       display: flex;
       height: 100vh;
@@ -52,13 +54,33 @@
       height: 100%;
       border: none;
     }
+    /* .emailProfil{
+       
+        } */
   </style>
 </head>
+
 <body>
-  <div style="position: fixed; top: 0; right: 0; background: #2a76c1; color: white; padding: 10px 20px; z-index: 1; display: flex; align-items: center; gap: 10px;">
-    Hello: <span id="userEmail"></span>
-    <button id="logoutBtn" style="background-color: #e74c3c; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer;">Logout</button>
+
+  <!-- Top bar -->
+  <div class="fixed top-0 right-0 mt-2 flex items-center gap-2 bg-transparent text-black font-semibold p-2 z-50">
+    Hello:
+    <button id="emailTrigger" class="text-Black-600 cursor-pointer bg-transparent p-0 m-0 font-inherit mr-5">
+      <span id="userEmail"></span> 
+    </button>
+    
+    <!-- dropdown menu -->
+    <div id="dropdownMenu"
+    class="dropdown-menu absolute left-1 mt-40 w-80 bg-white border border-gray-200 rounded shadow-lg hidden">
+    <div class="px-4 py-2 hover:bg-gray-100 cursor-pointer" id="profile">My Profile</div>
+    <div class="px-4 py-2 hover:bg-gray-100 cursor-pointer" id="settings">Settings</div>
+    <div class="px-4 py-2 hover:bg-gray-100 cursor-pointer" id="logoutBtn">Logout</div>
   </div>
+</div>
+  <!-- <div id="emailProfil">
+    <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
+    alt="User Avatar" />
+  </div> -->
 
 
   <div class="sidebar">
@@ -74,6 +96,7 @@
     <p>Select an action from the sidebar to get started.</p>
   </div>
   <script src="script/sme.js"></script>
-  
+
 </body>
+
 </html>

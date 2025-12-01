@@ -14,6 +14,31 @@ function getRole() {
   }
 })();
 
+$(document).ready(function () {
+  $("#emailTrigger").on("click", function (e) {
+    e.stopPropagation();
+    $("#dropdownMenu").toggleClass("hidden");
+  });
+
+  $(document).on("click", function () {
+    $("#dropdownMenu").addClass("hidden");
+  });
+  $("#profile").on("click", function (e) {
+    $("#content").load("profile.html");
+  });
+  $("#settings").on("click", function () {
+    window.location.href = "/settings";
+  });
+  $("#logoutBtn").on("click", function () {
+    // logout logic
+    alert("Logging out");
+    localStorage.clear();
+    sessionStorage.clear();
+    window.location.href = "/Home.html";
+    // maybe redirect
+  });
+});
+
  $("#Profile").click(function (e) {
    $("#content").load("profile.html");
  });
@@ -70,7 +95,7 @@ $(document).ready(function () {
   $("#logoutBtn").click(function () {
         let userId = localStorage.getItem("userId");
         if (!userId) {
-        alert("User ID missing.");
+        // alert("User ID missing.");
         return;
     }
     $.ajax({

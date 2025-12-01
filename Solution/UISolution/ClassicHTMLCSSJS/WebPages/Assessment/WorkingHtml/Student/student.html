@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <title>Student Dashboard</title>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="../Script/Tailwind.min.js">s</script>
 
   <style>
     body {
@@ -64,9 +66,9 @@
       border-radius: 8px;
       box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
     }
-
   </style>
 </head>
+
 <body>
 
   <div class="sidebar">
@@ -76,11 +78,22 @@
     <!-- <a href="#" id="createTestWithQuestionsLink">Create Test With Questions</a> -->
   </div>
 
-  <div style="position: fixed; top: 0; right: 0; background: #2a76c1; color: white; padding: 10px 20px; z-index: 1; display: flex; align-items: center; gap: 10px;">
-    Hello: <span id="userEmail"></span>
-    <button id="logoutBtn" style="background-color: #e74c3c; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer;">Logout</button>
+  <!-- Top bar -->
+  <div class="fixed top-0 right-0 mt-2 flex items-center gap-2 bg-transparent text-black font-semibold p-2 z-50">
+    Hello:
+    <button id="emailTrigger" class="text-Black-600 cursor-pointer bg-transparent p-0 m-0 font-inherit ">
+      <span id="userEmail"></span>
+    </button>
+
+    <!-- dropdown menu -->
+    <div id="dropdownMenu"
+      class="dropdown-menu absolute left-1 mt-40 w-80 bg-white border border-gray-200 rounded shadow-lg hidden">
+      <div class="px-4 py-2 hover:bg-gray-100 cursor-pointer" id="profile">My Profile</div>
+      <div class="px-4 py-2 hover:bg-gray-100 cursor-pointer" id="settings">Settings</div>
+      <div class="px-4 py-2 hover:bg-gray-100 cursor-pointer" id="logoutBtn">Logout</div>
+    </div>
   </div>
-  
+
   <div class="main-content" id="content">
     <h2 id="studentLabel"></h2>
     <canvas id="scoreChart"></canvas>
@@ -96,75 +109,100 @@
       $("#userEmail").text(userEmail);
     }
 
+     $(document).ready(function () {
+  $("#emailTrigger").on("click", function (e) {
+    e.stopPropagation();
+    $("#dropdownMenu").toggleClass("hidden");
+  });
+
+  $(document).on("click", function () {
+    $("#dropdownMenu").addClass("hidden");
+  });
+  $("#profile").on("click", function (e) {
+    $("#content").load("profile.html");
+  });
+  $("#settings").on("click", function () {
+    window.location.href = "/settings";
+  });
+  $("#logoutBtn").on("click", function () {
+    // logout logic
+    alert("Logging out");
+    localStorage.clear();
+    sessionStorage.clear();
+    window.location.href = "/Home.html";
+    // maybe redirect
+  });
+});
+
     if (!token2 || role !== "student") {
       alert("Access denied.");
       window.location.href = "WorkingHtml/login.html";
     }
     // http://localhost:5238/api/Result/candidates/13/scores
-    
+
     // Load content dynamically into #content
     $(document).ready(function () {
       $("#studentLabel").text(`${userEmail}'s Test Scores`);
 
       $.ajax({
-      url: `http://localhost:5238/api/Result/candidates/${studentId}/scores`,
-      method: "GET",
-      headers: {
-        "Authorization": "Bearer " + token2 // If your API uses JWT auth
-      },
-      success: function (data) {
-        if (!data || data.length === 0) {
-          $("#studentLabel").text("No scores found.");
-          return;
-        }
+        url: `http://localhost:5238/api/Result/candidates/${studentId}/scores`,
+        method: "GET",
+        headers: {
+          "Authorization": "Bearer " + token2 // If your API uses JWT auth
+        },
+        success: function (data) {
+          if (!data || data.length === 0) {
+            $("#studentLabel").text("No scores found.");
+            return;
+          }
 
-        const testNames = data.map(d => d.testName);
-        const scores = data.map(d => d.score);
+          const testNames = data.map(d => d.testName);
+          const scores = data.map(d => d.score);
 
-        const ctx = document.getElementById("scoreChart").getContext("2d");
-        new Chart(ctx, {
-          type: 'line',
-          data: {
-            labels: testNames,
-            datasets: [{
-              label: 'Score',
-              data: scores,
-              backgroundColor: 'rgba(54, 162, 235, 0.2)',
-              borderColor: 'rgba(54, 162, 235, 1)',
-              borderWidth: 2,
-              fill: false,
-              tension: 0.3
-            }]
-          },
-          options: {
-            responsive: true,
-            scales: {
-              x: {
-                title: {
-                  display: true,
-                  text: 'Test Name'
+          const ctx = document.getElementById("scoreChart").getContext("2d");
+          new Chart(ctx, {
+            type: 'line',
+            data: {
+              labels: testNames,
+              datasets: [{
+                label: 'Score',
+                data: scores,
+                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 2,
+                fill: false,
+                tension: 0.3
+              }]
+            },
+            options: {
+              responsive: true,
+              scales: {
+                x: {
+                  title: {
+                    display: true,
+                    text: 'Test Name'
+                  }
+                },
+                y: {
+                  beginAtZero: true,
+                  max: 100
                 }
-              },
-              y: {
-                beginAtZero: true,
-                max: 100
               }
             }
-          }
-        });
-      },
-      error: function (xhr, status, error) {
-        console.error("Error fetching scores:", error);
-        $("#studentLabel").text("Error loading scores.");
-      }
-    });
-
-      $("#TestList").click(function (e) {
-        $("#content").load("getAllTest.html"); 
+          });
+        },
+        error: function (xhr, status, error) {
+          console.error("Error fetching scores:", error);
+          $("#studentLabel").text("Error loading scores.");
+        }
       });
 
-       $("#Profile").click(function (e) {
-        $("#content").load("profile.html"); 
+      $("#TestList").click(function (e) {
+        $("#content").load("getAllTest.html");
+      });
+
+      $("#Profile").click(function (e) {
+        $("#content").load("profile.html");
       });
 
       $("#createTestWithQuestionsLink").click(function (e) {
@@ -174,33 +212,34 @@
     });
 
     $("#logoutBtn").click(function () {
-         let userId = localStorage.getItem("userId");
-        if (!userId) {
+      let userId = localStorage.getItem("userId");
+      if (!userId) {
         alert("User ID missing.");
         return;
-    }
-    
-    $.ajax({
+      }
+
+      $.ajax({
         url: `http://localhost:5238/api/usersession/logout/${userId}`,
         method: "POST",
         success: function (res) {
-            console.log("Logout success:", res);
+          console.log("Logout success:", res);
 
-            // Clear browser storage
-            localStorage.clear();
-            sessionStorage.clear();
+          // Clear browser storage
+          localStorage.clear();
+          sessionStorage.clear();
 
-            // Redirect
-            window.location.href = "/Home.html";
+          // Redirect
+          window.location.href = "/Home.html";
         },
         error: function (err) {
-            console.error("Logout error:", err);
-            alert("Something went wrong while logging out.");
+          console.error("Logout error:", err);
+          alert("Something went wrong while logging out.");
         }
-    });
-
       });
+
+    });
   </script>
 
 </body>
+
 </html>
