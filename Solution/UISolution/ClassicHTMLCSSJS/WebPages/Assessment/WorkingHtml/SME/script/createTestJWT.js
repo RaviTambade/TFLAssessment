@@ -14,8 +14,8 @@
       }
     })();
 
-  let selectedQuestions = [];
-  const getSubjectsUrl = "http://localhost:5238/api/assessment/subjects";
+   selectedQuestions = [];
+   getSubjectsUrl = "http://localhost:5238/api/assessment/subjects";
 
   $(document).ready(function () {
     const editMode = new URLSearchParams(window.location.search).get("edit") === "true";

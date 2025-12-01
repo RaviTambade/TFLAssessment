@@ -231,8 +231,152 @@ public class UserAnalyticsRepository : IUserAnalyticsRepository
         return avgSessionSeconds;
 
     }
+    
+    public async Task<List<User>> GetActiveUsers()
+    {
 
+        List<User> activeusers = new List<User>();
 
+        string query = @"
+                    SELECT 
+                    u.id AS user_id,
+                    u.firstname,
+                    u.lastname,
+                    u.email,
+                    GROUP_CONCAT(DISTINCT r.name ORDER BY r.name) AS roles
+                FROM user_session us
+                JOIN employees u ON u.id = us.user_id
+                LEFT JOIN userroles ur ON ur.userid = u.id
+                LEFT JOIN roles r ON r.id = ur.roleid
+                WHERE us.session_status = 'ACTIVE'
+                GROUP BY u.id, u.firstname, u.lastname;
+                ";
 
+        using MySqlConnection connection = new MySqlConnection(_connectionString);
+        using MySqlCommand command = new MySqlCommand(query, connection);
+
+        try
+        {
+            await connection.OpenAsync();
+            MySqlDataReader reader = command.ExecuteReader();
+
+            while (reader.Read())
+            {
+                User user = new User
+                {
+                    Id = int.Parse(reader["user_id"].ToString()),
+                    Firstname = reader["firstname"].ToString(),
+                    Lastname = reader["lastname"].ToString(),
+                    Email = reader["email"].ToString(),
+                UserRoles = new List<UserRole>()
+                };
+
+                string rolesString = reader["roles"] == DBNull.Value
+                                     ? ""
+                                     : reader["roles"].ToString();
+
+                if (!string.IsNullOrEmpty(rolesString))
+                {
+                    foreach (var roleName in rolesString.Split(','))
+                    {
+                        user.UserRoles.Add(new UserRole
+                        {
+                            Role = new Role
+                            {
+                                Name = roleName.Trim()
+                            }
+                        });
+                    }
+                }
+
+                activeusers.Add(user);
+            }
+
+            await reader.CloseAsync();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+        finally
+        {
+            await connection.CloseAsync();
+        }
+
+        return activeusers;
+    }
     // Task<IEnumerable<UserSession>> GetUserSessionsAsync(long userId, DateTime? start, DateTime? end);
+
+    public async Task<List<User>> GetAllUsers()
+    {
+        List<User> allusers = new List<User>();
+
+        string query = @"
+                    SELECT 
+                    u.id AS user_id,
+                    u.firstname,
+                    u.lastname,
+                    u.email,
+                    GROUP_CONCAT(DISTINCT r.name) AS roles
+                FROM user_session us
+                JOIN employees u ON u.id = us.user_id
+                LEFT JOIN userroles ur ON ur.userid = u.id
+                LEFT JOIN roles r ON r.id = ur.roleid
+                GROUP BY u.id, u.firstname, u.lastname, u.email;
+                ";
+
+        using MySqlConnection connection = new MySqlConnection(_connectionString);
+        using MySqlCommand command = new MySqlCommand(query, connection);
+
+        try
+        {
+            await connection.OpenAsync();
+            MySqlDataReader reader = command.ExecuteReader();
+
+            while (reader.Read())
+            {
+                User user = new User
+                {
+                    Id = int.Parse(reader["user_id"].ToString()),
+                    Firstname = reader["firstname"].ToString(),
+                    Lastname = reader["lastname"].ToString(),
+                    Email = reader["email"].ToString(),
+                UserRoles = new List<UserRole>()
+                };
+
+                string rolesString = reader["roles"] == DBNull.Value
+                                     ? ""
+                                     : reader["roles"].ToString();
+
+                if (!string.IsNullOrEmpty(rolesString))
+                {
+                    foreach (var roleName in rolesString.Split(','))
+                    {
+                        user.UserRoles.Add(new UserRole
+                        {
+                            Role = new Role
+                            {
+                                Name = roleName.Trim()
+                            }
+                        });
+                    }
+                }
+                allusers.Add(user);
+            }
+
+            await reader.CloseAsync();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+        finally
+        {
+            await connection.CloseAsync();
+        }
+
+        return allusers;
+    }
+
+  
 }

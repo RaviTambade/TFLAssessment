@@ -2,7 +2,7 @@
     var subjects;
     var questionsList;
     var subjectsApi = "http://localhost:5238/api/assessment/subjects";
-    var criteriaApi = "http://localhost:5238/api/assessment/criterias";
+    var criteriaApi = "http://localhost:5238/api/assessment/concepts";
 
     $(document).ready(function () {
       $.ajax({
@@ -84,7 +84,7 @@
 
         var subjectId = $("#ddlSubjects").val();
         var criteriaId = $("#ddlCriteria").val();
-        var apiQuestionBySubjectCriteria = "http://localhost:5238/api/questionbank/questions/subjects/" + subjectId + "/criterias/" + criteriaId;
+        var apiQuestionBySubjectCriteria = "http://localhost:5238/api/questionbank/questions/subjects/" + subjectId + "/concepts/" + criteriaId;
 
         $.get(apiQuestionBySubjectCriteria, function (data) {
           questionsList = data;

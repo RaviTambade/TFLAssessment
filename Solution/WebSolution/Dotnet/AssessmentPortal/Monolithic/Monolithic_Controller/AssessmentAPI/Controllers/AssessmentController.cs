@@ -360,4 +360,27 @@ public class AssessmentController : ControllerBase
         _logger.LogInformation("Get all test by employee method invoked at  {DT}", DateTime.UtcNow.ToLongTimeString());
         return Ok(testDetails);
     }
+
+
+    [HttpGet("testcount/{status}")]
+    public async Task<IActionResult> GetTestCountByStatus(string status)
+    {
+        int testcount = await _svc.GetTestCountByStatus(status);
+        if(testcount==0)
+        {
+            return NotFound("No test count.");
+        }
+        return Ok(testcount);
+    }
+
+    [HttpGet("alltest/{status}")]
+    public async Task<IActionResult> GetAllTestByStatus(string status)
+    {
+       List<TestDetails> tests = await _svc.GetAllTestByStatus(status);
+        if (tests == null)
+        {
+            return NotFound("No test found.");
+        }
+        return Ok(tests);
+    }
 }

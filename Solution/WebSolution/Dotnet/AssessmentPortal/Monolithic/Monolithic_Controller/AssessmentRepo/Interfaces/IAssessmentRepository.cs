@@ -41,5 +41,8 @@ public interface IAssessmentRepository
   public Task<bool> AddEmployeesToTest(TestAssignmentRequest request);
 
   public Task<List<TestEmployeeDetails>> GetAllTestByEmpId(int empId);
+
+  public Task<int> GetTestCountByStatus(string status);
+  public Task<List<TestDetails>> GetAllTestByStatus(string status);
 }
 

@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Website Launch - Countdown</title>
+  <style>
+    :root{font-family:system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial}
+    html,body{height:100%;margin:0}
+    .wrap{min-height:100%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#0f172a,#0f766e);color:#fff;padding:24px;box-sizing:border-box}
+    .card{max-width:720px;width:100%;text-align:center;padding:36px;border-radius:12px;background:rgba(255,255,255,0.03);box-shadow:0 6px 24px rgba(2,6,23,0.6)}
+    h1{margin:0 0 8px;font-size:24px;font-weight:600}
+    p.lead{margin:0 0 20px;opacity:0.9}
+    .count{font-size:96px;font-weight:700;letter-spacing:2px;margin:10px 0}
+    .url{display:block;word-break:break-all;margin-top:6px;font-weight:600}
+    .small{font-size:14px;opacity:0.85}
+    .actions{margin-top:18px}
+    .btn{display:inline-block;padding:10px 14px;border-radius:8px;background:rgba(255,255,255,0.06);color:inherit;text-decoration:none;border:1px solid rgba(255,255,255,0.06);cursor:pointer}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card" role="region" aria-label="Website launch countdown">
+      <h1>Website is launching soon</h1>
+      <p class="lead">We'll take you to the website when the countdown ends.</p>
+
+      <div id="count" class="count" aria-live="polite">10</div>
+
+      <a id="targetLink" class="url" href="#" target="_blank" rel="noopener">https://transflowerlearning.com/</a>
+      <div class="small">If the page doesn't redirect automatically, click the link above.</div>
+
+      <div class="actions">
+        <button id="cancelBtn" class="btn">Cancel redirect</button>
+        <button id="jumpBtn" class="btn" style="margin-left:8px">Go now</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // === CONFIGURE THESE ===
+    let seconds = 10; // starting number to count down from
+    const targetUrl = 'https://transflowerlearning.com/'; // the website URL to show / redirect to
+    const autoRedirect = true; // set false to stop automatic redirect at 0
+    // =======================
+
+    const countEl = document.getElementById('count');
+    const linkEl = document.getElementById('targetLink');
+    const cancelBtn = document.getElementById('cancelBtn');
+    const jumpBtn = document.getElementById('jumpBtn');
+
+    linkEl.href = targetUrl;
+    linkEl.textContent = targetUrl;
+    countEl.textContent = seconds;
+
+    let running = true;
+
+    const interval = setInterval(() => {
+      if (!running) return;
+      seconds -= 1;
+      if (seconds >= 0) countEl.textContent = seconds;
+
+      if (seconds <= 0) {
+        clearInterval(interval);
+        countEl.textContent = 0;
+        // show a final message briefly then redirect (if enabled)
+        countEl.textContent = '0';
+        if (autoRedirect) {
+          // small timeout so user sees 0 before navigating
+          setTimeout(() => {
+            // use replace to avoid creating a history entry
+            window.location.replace(targetUrl);
+          }, 600);
+        }
+      }
+    }, 1000);
+
+    // allow cancelling auto-redirect
+    cancelBtn.addEventListener('click', () => {
+      running = false;
+      clearInterval(interval);
+      cancelBtn.textContent = 'Redirect cancelled';
+      cancelBtn.disabled = true;
+    });
+
+    // immediate jump
+    jumpBtn.addEventListener('click', () => {
+      window.location.href = targetUrl;
+    });
+  </script>
+</body>
+</html>

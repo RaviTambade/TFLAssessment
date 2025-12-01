@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>User Analytics Dashboard</title>
+    <title>Test Status Dashboard</title>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
@@ -38,24 +38,24 @@
 
         <!-- Average Time -->
         <div class="col-md-4">
-            <div class="dashboard-card" style="background:#198754;">
-                <div class="card-title">for future used</div>
-                <div id="avgTime" class="card-value">0</div>
+            <div class="dashboard-card" style="background:#198754;" onclick="LoadCreatedTest()">
+                <div class="card-title">Test Created</div>
+                <div id="Createdtest" class="card-value">0</div>
             </div>
         </div>
 
         <!-- Active Users -->
         <div class="col-md-4">
-            <div class="dashboard-card" style="background:#0d6efd;" onclick="LoadActiveuser()">
-                <div class="card-title">Active Users</div>
-                <div id="activeUsers" class="card-value">0</div>
+            <div class="dashboard-card" style="background:#0d6efd;" onclick="LoadScheduledTest()">
+                <div class="card-title">Test Scheduled</div>
+                <div id="Scheduledtest" class="card-value">0</div>
             </div>
         </div>
 
          <div class="col-md-4">
-            <div class="dashboard-card" style="background:#fd9d0d;" onclick="loadAllUsers()">
-                <div class="card-title">Total Users</div>
-                <div id="allUsers" class="card-value">0</div>
+            <div class="dashboard-card" style="background:#fd9d0d;" onclick="loadCancelledTest()">
+                <div class="card-title">Test Cancelled</div>
+                <div id="Cancelledtest" class="card-value">0</div>
             </div>
         </div>
     </div>
@@ -63,14 +63,15 @@
     <hr class="my-5">
 
     <!-- TOP 10 USERS TABLE -->
-    <h3 id="heading">Top 10 Users</h3>
+    <h3 id="heading">Created Test</h3>
     <table class="table table-bordered table-striped mt-3">
         <thead class="table-dark">
             <tr>
                 <th>Name</th>
-                <th>Role</th>
-                <th>Email</th>
-                 <th>Action</th>
+                <th>Subject</th>
+                <th>Duration</th>
+                 <th>Start date</th>
+                 <th>End date</th>
             </tr>
         </thead>
         <tbody id="topTenTable"></tbody>
@@ -82,11 +83,11 @@
 
 
 <script>
- API = "http://localhost:5238/api/UserAnalytics";
+ API = "http://localhost:5238/api/assessment";
 
 $(document).ready(function () {
     loadDashboard();              
-    loadTop10Users();
+    LoadCreatedTest();
 
 
     setInterval(() => {
@@ -101,50 +102,52 @@ $(document).ready(function () {
 function loadDashboard() {
 
 
-    // Active Users Count
-    $.ajax({
-        url: API + "/ActiveUsercount",
+     $.ajax({
+        url: API + "/testcount/created",
         method: "GET",
         success: function (data) {
-            $("#activeUsers").text(data);
+            $("#Createdtest").text(data);
+        }
+    });
+    // Active Users Count
+    $.ajax({
+        url: API + "/testcount/scheduled",
+        method: "GET",
+        success: function (data) {
+            $("#Scheduledtest").text(data);
         }
     });
     
     $.ajax({
-        url: API + "/allusercount",
+        url: API + "/testcount/cancelled",
         method: "GET",
         success: function (data) {
-            $("#allUsers").text(data);
+            $("#Cancelledtest").text(data);
         }
     });
 
 }
 
 
-// ---------------------------
-// Top 10 Users Table
-// ---------------------------
-function loadTop10Users() {
+
+function LoadCreatedTest() {
     $.ajax({
-        url: API + "/toptenuser",
+        url: API + "/alltest/created",
         method: "GET",
         success: function (data) {
 
             $("#topTenTable").empty();
 
-            data.forEach(user => {
-                let roles = user.userRoles && user.userRoles.length > 0
-                    ? user.userRoles.map(r => r.role.name).join(", ")
-                    : "-";
-
+            data.forEach(test => {
+            
                 $("#topTenTable").append(`
                     <tr>
                     
-                        <td>${user.firstname} ${user.lastname}</td>
-                        <td>${roles}</td>
-                        <td>${user.email}</td>
-                        <td><button onclick ="userhistory(${user.id})">details</button>
-                            </td>
+                        <td>${test.testName}</td>
+                        <td>${test.subjectname}</td>
+                        <td>${test.duration}</td>
+                        <td>${test.scheduledStart}</td>
+                        <td>${test.scheduledEnd}</td>
                     </tr>
                 `);
             });
@@ -152,26 +155,52 @@ function loadTop10Users() {
     });
 }
 
-function LoadActiveuser() {
+
+function LoadScheduledTest() {
     $.ajax({
-        url: API + "/activeuser",
+        url: API + "/alltest/scheduled",
         method: "GET",
         success: function (data) {
 
             $("#topTenTable").empty();
             document.getElementById("heading").textContent="Active Users"
 
-            data.forEach(user => {
-                let roles = user.userRoles && user.userRoles.length > 0
-                    ? user.userRoles.map(r => r.role.name).join(", ")
-                    : "-";
-
+            data.forEach(test => {
+               
                 $("#topTenTable").append(`
                     <tr>
                     
-                        <td>${user.firstname} ${user.lastname}</td>
-                        <td>${roles}</td>
-                        <td>${user.email}</td>
+                        <td>${test.testName}</td>
+                        <td>${test.subjectname}</td>
+                        <td>${test.duration}</td>
+                        <td>${test.scheduledStart}</td>
+                        <td>${test.scheduledEnd}</td>
+                    </tr>
+                `);
+            });
+        }
+    });
+}
+
+function loadCancelledTest() {
+    $.ajax({
+        url: API + "/alltest/cancelled",
+        method: "GET",
+        success: function (data) {
+
+            $("#topTenTable").empty();
+            document.getElementById("heading").textContent="Active Users"
+
+            data.forEach(test => {
+               
+                $("#topTenTable").append(`
+                      <tr>
+                    
+                        <td>${test.testName}</td>
+                        <td>${test.subjectname}</td>
+                        <td>${test.duration}</td>
+                        <td>${test.scheduledStart}</td>
+                        <td>${test.scheduledEnd}</td>
                     </tr>
                 `);
             });

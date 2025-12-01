@@ -14,6 +14,8 @@ public class AssessmentIntelligenceService:IAssessmentIntelligenceService
     public async Task<List<AnnualCandidateResult>> GetCandidateResults(int candidateId, int year){
         return await _repo.GetCandidateResults(candidateId, year);
     }
+
+    
 }
 }
 

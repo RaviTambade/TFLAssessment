@@ -136,9 +136,12 @@ string query = @"
         {
             await connection.OpenAsync();
             command.Parameters.AddWithValue("@roleid", roleid);
-            await command.ExecuteNonQueryAsync();
+            int rowAffected=   await command.ExecuteNonQueryAsync();
 
-            status = true;
+           if(rowAffected>0)
+            {
+                status = true;
+            }
 
         }
         catch (Exception e)

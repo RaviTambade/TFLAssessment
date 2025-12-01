@@ -124,8 +124,7 @@
             document.getElementById("profileLastName").value = data.lastname;
             document.getElementById("profileAadhar").value = data.aadharId;
             document.getElementById("profileEmail").value = data.email;
-            document.getElementById("profileContact").value =
-              data.contactNumber;
+            document.getElementById("profileContact").value = data.contactNumber;
           },
           error: function (xhr, status, error) {
             console.error("Error fetching profile:", error);
