@@ -99,7 +99,7 @@
       
           const requestBody = {
             testId: parseInt(testId),
-            employeeIds: selectedIds,
+            candidateIds: selectedIds,
             scheduledStart: scheduledStart,
             scheduledEnd: scheduledEnd,
             status: $("#statusDropdown").val(), // Get from dropdown

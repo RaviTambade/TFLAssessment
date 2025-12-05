@@ -34,20 +34,20 @@ namespace Transflower.TFLAssessment.Controllers
 
         // Set start time in the test.
         // URL: http://localhost:5238/api/Result/setstarttime/1/tests/1
-        [HttpPost("setstarttime/{candidateId}/tests/{testId}")]
-        public async Task<IActionResult> SetCandidateTestStartTime(int candidateId, int testId, [FromBody] TestTime time)
+        [HttpPost("setstarttime/{candidateId}/tests/{assessmentid}")]
+        public async Task<IActionResult> SetCandidateTestStartTime(int candidateId, int assessmentid, [FromBody] TestTime time)
         {
-            bool status = await _svc.SetCandidateTestStartTime(candidateId, testId, time);
+            bool status = await _svc.SetCandidateTestStartTime(candidateId, assessmentid, time);
             _logger.LogInformation("Log Generated For set start time in the test");
             return Ok(status);
         }
 
         // Set end time in the test.
         // URL: http://localhost:5238/api/Result/setendtime/1/tests/1
-        [HttpPut("setendtime/{candidateId}/tests/{testId}")]
-        public async Task<IActionResult> SetCandidateTestEndTime(int candidateId, int testId, [FromBody] TestTime time)
+        [HttpPut("setendtime/{candidateId}/tests/{assessmentid}")]
+        public async Task<IActionResult> SetCandidateTestEndTime(int candidateId, int assessmentid, [FromBody] TestTime time)
         {
-            bool status = await _svc.SetCandidateTestEndTime(candidateId, testId, time);
+            bool status = await _svc.SetCandidateTestEndTime(candidateId, assessmentid, time);
             _logger.LogInformation("Log Generated For set end time in the test");
             return Ok(status);
         }
@@ -68,15 +68,16 @@ namespace Transflower.TFLAssessment.Controllers
         }
 
         // Get test result details.
-        // URL: http://localhost:5238/api/Result/tests/1/details
-        [HttpGet("tests/{testId}/detail")]
-        public async Task<IActionResult> GetTestResultDetail(int testId)
-        {
-            List<TestResultDetails> result = await _svc.GetTestResultDetail(testId);
+        // URL: http://localhost:5238/api/Result/tests/1/detail
+        [HttpGet("tests/{assessmentid}/detail")]
+        public async Task<IActionResult> GetTestResultDetail(int assessmentid)
+        {        Console.WriteLine(assessmentid);
+
+            List<TestResultDetails> result = await _svc.GetTestResultDetail(assessmentid);
             // Console.WriteLine(result.Count);
             if (result == null || result.Count == 0)
             {
-                _logger.LogWarning("No test result details found for testId: {TestId}", testId);
+                _logger.LogWarning("No test result details found for testId: {assessmentid}", assessmentid);
                 return BadRequest("Test result details not found.");
             }
             _logger.LogInformation("Log Generated For get test result details");
@@ -85,13 +86,13 @@ namespace Transflower.TFLAssessment.Controllers
 
         // Get appeared candidates of the test.
         // URL: http://localhost:5238/api/Result/candidates/tests/1
-        [HttpGet("candidates/tests/{testId}")]
-        public async Task<IActionResult> GetAppearedCandidates(int testId)
+        [HttpGet("candidates/tests/{assessmentId}")]
+        public async Task<IActionResult> GetAppearedCandidates(int assessmentId)
         {
-            List<AppearedCandidate> candidates = await _svc.GetAppearedCandidates(testId);
+            List<AppearedCandidate> candidates = await _svc.GetAppearedCandidates(assessmentId);
             if (candidates == null || candidates.Count == 0)
             {
-                _logger.LogWarning("No appeared candidates found for testId: {TestId}", testId);
+                _logger.LogWarning("No appeared candidates found for testId: {AssessmentId}", assessmentId);
                 return BadRequest("No appeared candidates found.");
             }
             _logger.LogInformation("Log Generated For get appeared candidates of the test");
@@ -100,13 +101,13 @@ namespace Transflower.TFLAssessment.Controllers
 
         // Get passed candidates of the test.
         // URL: http://localhost:5238/api/Result/passedcandidates/tests/1
-        [HttpGet("passedcandidates/tests/{testId}")]
-        public async Task<IActionResult> GetPassedCandidate(int testId)
+        [HttpGet("passedcandidates/tests/{assessmentId}")]
+        public async Task<IActionResult> GetPassedCandidate(int assessmentId)
         {
-            List<PassedCandidateDetails> results = await _svc.GetPassedCandidateResults(testId);
+            List<PassedCandidateDetails> results = await _svc.GetPassedCandidateResults(assessmentId);
             if (results == null || results.Count == 0)
             {
-                _logger.LogWarning("No passed candidates found for testId: {TestId}", testId);
+                _logger.LogWarning("No passed candidates found for testId: {AssessmentId}", assessmentId);
                 return BadRequest("No passed candidates found.");
             }
             _logger.LogInformation("Log Generated For get passed candidates of the test");

@@ -302,19 +302,19 @@ public class AssessmentController : ControllerBase
 
     //update test
     //http://localhost:5238/api/Assessment/updateteststatus/{testId}
-    [HttpPut("updateteststatus/{testId}")]
-    public async Task<IActionResult> UpdateTestStatus(int testId, [FromBody] TestStatusUpdate status)
+    [HttpPut("updateteststatus/{Id}")]
+    public async Task<IActionResult> UpdateTestStatus(int Id, [FromBody] TestStatusUpdate status)
     {
 
         // Assuming the service has an UpdateTest method
-        bool status1 = await _svc.UpdateTestStatus(testId, status);
+        bool status1 = await _svc.UpdateTestStatus(Id, status);
         // if (!status1)
         // {
         //     _logger.LogError("Failed to update test with ID {TestId} at {DT}", testId, DateTime.UtcNow.ToLongTimeString());
         //     return BadRequest(new { message = "Failed to update test." });
         // }
 
-        _logger.LogInformation("Test with ID {TestId} updated successfully at {DT}", testId, DateTime.UtcNow.ToLongTimeString());
+        _logger.LogInformation("Test with ID {Id} updated successfully at {DT}", Id , DateTime.UtcNow.ToLongTimeString());
         return Ok(new { message = "Test updated successfully." });
     }
 
@@ -323,24 +323,22 @@ public class AssessmentController : ControllerBase
     // insert students in test with candidateid, testid, scheduledstart, scheduledend, status, rescheduledon, remarks
 
     //http://localhost:5238/api/Assessment/addemployees
-    [HttpPost("addemployees")]
-    public async Task<IActionResult> AddEmployeesToTest([FromBody] TestAssignmentRequest request)
-    {
-        if (request.EmployeeIds == null || request.EmployeeIds.Count == 0)
-        {
-            return BadRequest("No employees selected.");
-        }
+   [HttpPost("addemployees")]
+public async Task<IActionResult> AddEmployeesToTest([FromBody] TestAssignmentRequest request)
+{
+    if (request == null)
+        return BadRequest("Invalid request body");
 
-        bool status = await _svc.AddEmployeesToTest(request);
-        if (!status)
-        {
-            _logger.LogError("Failed to add employees to test at {DT}", DateTime.UtcNow.ToLongTimeString());
-            return BadRequest(new { message = "Failed to add employees to test." });
-        }
+    if (request.CandidateIds == null || request.CandidateIds.Count == 0)
+        return BadRequest("No employees selected");
+ Console.WriteLine("hiiiiiiiiiiii");
+    bool status = await _svc.AddEmployeesToTest(request);
+    if (!status)
+        return BadRequest(new { message = "Failed to add employees to test." });
 
-        _logger.LogInformation("Employees added to test successfully at {DT}", DateTime.UtcNow.ToLongTimeString());
-        return Ok(new { message = "Employees added to test successfully." });
-    }
+    return Ok(new { message = "Employees added to test successfully." });
+}
+
 
     // get all test by employee id
     // http://localhost:5238/api/Assessment/alltestbyempid/{empId}

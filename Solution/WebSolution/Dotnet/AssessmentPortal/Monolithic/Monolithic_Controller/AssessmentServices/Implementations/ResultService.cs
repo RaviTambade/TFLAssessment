@@ -26,9 +26,9 @@ public class ResultService : IResultService
         return await _repository.SetCandidateTestStartTime(candidateId, testId, time);
     }
 
-    public async Task<bool> SetCandidateTestEndTime(int candidateId, int testId, TestTime time)
+    public async Task<bool> SetCandidateTestEndTime(int candidateId, int assessmentid, TestTime time)
     {
-        return await _repository.SetCandidateTestEndTime(candidateId, testId, time);
+        return await _repository.SetCandidateTestEndTime(candidateId, assessmentid, time);
     }
 
     public async Task<CandidateResultDetails> CandidateTestResultDetails(int candidateId, int testId)
@@ -36,24 +36,24 @@ public class ResultService : IResultService
         return await _repository.CandidateTestResultDetails(candidateId, testId);
     }
 
-    public async Task<List<TestResultDetails>> GetTestResultDetail(int testId)
+    public async Task<List<TestResultDetails>> GetTestResultDetail(int assessmentid)
     {
-        return await _repository.GetTestResultDetail(testId);
+        return await _repository.GetTestResultDetail(assessmentid);
     }
 
-    public async Task<List<AppearedCandidate>> GetAppearedCandidates(int testId)
+    public async Task<List<AppearedCandidate>> GetAppearedCandidates(int assessmentId)
     {
-        return await _repository.GetAppearedCandidates(testId);
+        return await _repository.GetAppearedCandidates(assessmentId);
     }
 
-    public async Task<List<PassedCandidateDetails>> GetPassedCandidateResults(int testId)
+    public async Task<List<PassedCandidateDetails>> GetPassedCandidateResults(int assessmentId)
     {
-        return await _repository.GetPassedCandidateResults(testId);
+        return await _repository.GetPassedCandidateResults(assessmentId);
     }
 
-    public async Task<List<FailedCandidateDetails>> GetFailedCandidateResults(int testId)
+    public async Task<List<FailedCandidateDetails>> GetFailedCandidateResults(int assessmentId)
     {
-        return await _repository.GetFailedCandidateResults(testId);
+        return await _repository.GetFailedCandidateResults(assessmentId);
     }
 
     public async Task<bool> SetPassingLevel(int testId, int passingLevel)
