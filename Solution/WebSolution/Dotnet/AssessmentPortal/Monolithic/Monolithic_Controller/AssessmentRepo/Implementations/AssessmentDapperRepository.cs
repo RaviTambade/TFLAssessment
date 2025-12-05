@@ -274,7 +274,9 @@ public class AssessmentDapperRepository : IAssessmentRepository
     {
         bool status = false;
         MySqlConnection connection = new MySqlConnection(_connectionString);
-        string query = "update tests set scheduleddate=@ScheduledDate where id=@AssessmentId";
+        // string query = "update tests set scheduleddate=@ScheduledDate where id=@AssessmentId";
+        string query = "update assessments set scheduledstart=@ScheduledDate where id=@AssessmentId";
+
         MySqlCommand command = new MySqlCommand(query, connection);
         command.Parameters.AddWithValue("@AssessmentId", assessmentId);
         command.Parameters.AddWithValue("@ScheduledDate", date);
@@ -610,17 +612,19 @@ public class AssessmentDapperRepository : IAssessmentRepository
         return status;
     }
 
-    public Task<bool> UpdateTestStatus(int testId, TestStatusUpdate status)
+    public Task<bool> UpdateTestStatus(int Id, TestStatusUpdate status)
     {
         Task.Delay(100);
         bool updateStatus = false;
-        string query = "UPDATE tests SET status = @Status WHERE id = @TestId";
+        // string query = "UPDATE tests SET status = @Status WHERE id = @TestId";
+        string query = "UPDATE assessments SET status = @Status WHERE id = @AssessmentId";
+
 
         using (IDbConnection con = new MySqlConnection(_connectionString))
         {
             try
             {
-                int rowsAffected = con.Execute(query, new { Status = status.Status, TestId = testId });
+                int rowsAffected = con.Execute(query, new { Status = status.Status,AssessmentId = Id });
                 updateStatus = rowsAffected > 0; // Determine success based on rows affected
             }
             catch (Exception ex)
@@ -633,37 +637,72 @@ public class AssessmentDapperRepository : IAssessmentRepository
         return Task.FromResult(updateStatus);
     }
 
-    public async Task<bool> AddEmployeesToTest(TestAssignmentRequest request)
-    {
-        await Task.Delay(100);
-        bool status = false;
-        using (IDbConnection con = new MySqlConnection(_connectionString))
+    // public async Task<bool> AddEmployeesToTest(TestAssignmentRequest request)
+    // {
+    //     await Task.Delay(100);
+    //     bool status = false;
+    //     using (IDbConnection con = new MySqlConnection(_connectionString))
+    //     {
+    //         foreach (var employeeId in request.EmployeeIds)
+    //         {
+    //             var query = "INSERT INTO testschedules (testid, candidateid, scheduledstart, scheduledend, status, rescheduledon, remarks) " +
+    //                         "VALUES (@TestId, @EmployeeId, @ScheduledStart, @ScheduledEnd, @Status, @RescheduledOn, @Remarks)";
+               
+               
+    //             var parameters = new
+    //             {
+    //                 TestId = request.TestId,
+    //                 EmployeeId = employeeId,
+    //                 ScheduledStart = request.ScheduledStart,
+    //                 ScheduledEnd = request.ScheduledEnd,
+    //                 Status = request.Status,
+    //                 RescheduledOn = request.RescheduledOn,
+    //                 Remarks = request.Remarks
+    //             };
+    //             if (con.Execute(query, parameters) > 0)
+    //             {
+    //                 status = true;
+    //             }
+    //         }
+    //     }
+    //     return status;
+    // }
+
+       public async Task<bool> AddEmployeesToTest(TestAssignmentRequest request)
+    {   
+
+    await Task.Delay(100);
+    bool status = false;
+
+    using (IDbConnection con = new MySqlConnection(_connectionString))
+    {       
+
+        foreach (var candidateId in request.CandidateIds)
         {
-            foreach (var employeeId in request.EmployeeIds)
+
+            var query = 
+            "INSERT INTO assessments (test_id, candidate_id, status, createdby, scheduledstart, scheduledend) " +
+            "VALUES (@test_id, @candidate_id, @status, @createdBy, @scheduledstart, @scheduledend)";
+            var parameters = new
             {
-                var query = "INSERT INTO testschedules (testid, candidateid, scheduledstart, scheduledend, status, rescheduledon, remarks) " +
-                            "VALUES (@TestId, @EmployeeId, @ScheduledStart, @ScheduledEnd, @Status, @RescheduledOn, @Remarks)";
-                var parameters = new
-                {
-                    TestId = request.TestId,
-                    EmployeeId = employeeId,
-                    ScheduledStart = request.ScheduledStart,
-                    ScheduledEnd = request.ScheduledEnd,
-                    Status = request.Status,
-                    RescheduledOn = request.RescheduledOn,
-                    Remarks = request.Remarks
-                };
-                if (con.Execute(query, parameters) > 0)
-                {
-                    status = true;
-                }
-            }
+                test_id = request.TestId,
+                candidate_id = candidateId,
+                status = request.Status,
+                createdBy = request.CreatedBy,
+                scheduledstart = request.ScheduledStart,
+                scheduledend = request.ScheduledEnd
+            };
+
+            if (con.Execute(query, parameters) > 0)
+                status = true;
         }
-        return status;
     }
+    return status;
+}
+  
 
     public async Task<List<TestEmployeeDetails>> GetAllTestByEmpId(int empId)
-{
+    {
     using (IDbConnection con = new MySqlConnection(_connectionString))
     {
         var result = await con.QueryAsync<TestEmployeeDetails>(
@@ -704,7 +743,7 @@ public class AssessmentDapperRepository : IAssessmentRepository
         return count;
     }
 
-    public async  Task<List<TestDetails>> GetAllTestByStatus(string status)
+ public async  Task<List<TestDetails>> GetAllTestByStatus(string status)
     {
         List<TestDetails> tests = new List<TestDetails>();
         string query = @"select 
@@ -715,11 +754,10 @@ public class AssessmentDapperRepository : IAssessmentRepository
                     MAX(ts.scheduledstart) as scheduledstart,
                     MAX(ts.scheduledend) as scheduledend
                 from tests t
-                left join testschedules ts on t.id = ts.testid
+                left join assessments ts on t.id = ts.test_id
                 left join subjects s on s.id = t.subjectid
                 where t.status = @status
-                group by t.id, t.name, s.title, t.duration;
-                ;";
+                group by t.id, t.name, s.title, t.duration;";
 
         MySqlConnection connection = new MySqlConnection(_connectionString);
         MySqlCommand command = new MySqlCommand(query, connection);
@@ -763,4 +801,3 @@ public class AssessmentDapperRepository : IAssessmentRepository
         return tests;
     }
 }
-
