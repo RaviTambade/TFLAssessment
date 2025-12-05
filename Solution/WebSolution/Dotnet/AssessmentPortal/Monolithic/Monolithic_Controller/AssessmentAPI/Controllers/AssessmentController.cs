@@ -198,12 +198,19 @@ public class AssessmentController : ControllerBase
     public async Task<IActionResult> AddTest([FromBody] CreateTestWithQuestions request)
     {
         var testId = await _svc.CreateTestWithQuestionsAsync(request);
+        // var AssessmentId = await _svc.CreateTestWithQuestionsAsync(request);
         if (testId == 0)
         {
             _logger.LogError("Failed to create test at {DT}", DateTime.UtcNow.ToLongTimeString());
             return BadRequest(new { message = "Failed to create test" });
         }
+        // if (AssessmentId == 0)
+        // {
+        //     _logger.LogError("Failed to create test at {DT}", DateTime.UtcNow.ToLongTimeString());
+        //     return BadRequest(new { message = "Failed to create test" });
+        // }
         return Ok(new { message = "Test created", testId });
+        // return Ok(new { message = "Test created", AssessmentId });
     }
 
     //http://localhost:5238/api/Assessment/allquestionsbysubject/1

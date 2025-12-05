@@ -68,7 +68,7 @@ namespace Transflower.TFLAssessment.Controllers
         }
 
         // Get test result details.
-        // URL: http://localhost:5238/api/Result/tests/1/details
+        // URL: http://localhost:5238/api/Result/tests/1/detail
         [HttpGet("tests/{testId}/detail")]
         public async Task<IActionResult> GetTestResultDetail(int testId)
         {

@@ -50,19 +50,19 @@ namespace Transflower.TFLAssessment.Repositories
             return status;
         }
 
-        public async Task<List<CandidateAnswer>> GetCandidateAnswers(int candidateId, int testId)
+        public async Task<List<CandidateAnswer>> GetCandidateAnswers(int candidateId, int assessmentid)
         {
             List<CandidateAnswer> answers = new List<CandidateAnswer>();
-            string query = "SELECT * FROM candidateanswers WHERE candidateid = @CandidateId AND testquestionid IN (SELECT id FROM testquestions WHERE testid = @TestId)";
+            string query = "SELECT * FROM candidateanswers WHERE candidateid = @CandidateId AND testquestionid IN (SELECT testquestions.id FROM testquestions inner join assessments on assessments.test_id=testquestions.testid where assessments.id=@AssessmentId)";
             using (MySqlConnection connection = new MySqlConnection(_connectionString))
             {
                 try
-                {
+                {   
                     await connection.OpenAsync();
                     using (MySqlCommand command = new MySqlCommand(query, connection))
                     {
                         command.Parameters.AddWithValue("@CandidateId", candidateId);
-                        command.Parameters.AddWithValue("@TestId", testId);
+                        command.Parameters.AddWithValue("@AssessmentId", assessmentid);
 
                         MySqlDataReader reader = command.ExecuteReader();
                         {
@@ -71,6 +71,7 @@ namespace Transflower.TFLAssessment.Repositories
                                 CandidateAnswer answer = new CandidateAnswer
                                 {
                                     Id = reader.GetInt32("id"),
+                                    AssessmentId=assessmentid,
                                     CandidateId = reader.GetInt32("candidateid"),
                                     TestQuestionId = reader.GetInt32("testquestionid"),
                                     AnswerKey = reader.GetString("answerkey")
@@ -89,7 +90,7 @@ namespace Transflower.TFLAssessment.Repositories
             return answers;
         }
 
-        public async Task<List<CandidateAnswerResult>> GetCandidateAnswerResultsAsync(int candidateId, int testId)
+        public async Task<List<CandidateAnswerResult>> GetCandidateAnswerResultsAsync(int candidateId, int assessmentid)
         {
             var list = new List<CandidateAnswerResult>();
             string sql = @"
@@ -100,14 +101,15 @@ namespace Transflower.TFLAssessment.Repositories
                 FROM candidateanswers ca
                 JOIN testquestions tq ON ca.testquestionid = tq.id
                 JOIN questionbank qb ON tq.questionbankid = qb.id
-                WHERE ca.candidateid = @CandidateId AND tq.testid = @TestId";
+                JOIN assessments a ON a.test_id = tq.testid
+                WHERE ca.candidateid = @CandidateId AND a.id = @AssessmentId";
 
             await using var conn = new MySqlConnection(_connectionString);
             await conn.OpenAsync();
 
             await using var cmd = new MySqlCommand(sql, conn);
             cmd.Parameters.AddWithValue("@candidateId", candidateId);
-            cmd.Parameters.AddWithValue("@testId", testId);
+            cmd.Parameters.AddWithValue("@AssessmentId", assessmentid);
 
             await using var reader = await cmd.ExecuteReaderAsync();
             while (await reader.ReadAsync())
@@ -126,7 +128,7 @@ namespace Transflower.TFLAssessment.Repositories
             return list;
         }
 
-        public async Task<CandidateTestDetails> GetCandidateTestDetails(int candidateId, int testId)
+        public async Task<CandidateTestDetails> GetCandidateTestDetails(int candidateId, int AssessmentId)
         {
             CandidateTestDetails details = new CandidateTestDetails();
 
@@ -139,7 +141,7 @@ namespace Transflower.TFLAssessment.Repositories
                 {
                     cmd1.Parameters.AddWithValue("@CandidateId", candidateId);
                     using (MySqlDataReader reader1 = cmd1.ExecuteReader())
-                    // MySqlDataReader reader1 = cmd1.ExecuteReader();
+                    
                     {
                         if (await reader1.ReadAsync())
                         {
@@ -149,16 +151,16 @@ namespace Transflower.TFLAssessment.Repositories
                     }
                 }
                 // Query test
-                string testQuery = "SELECT id, name, passinglevel, scheduleddate FROM tests WHERE id = @TestId;";
+                string testQuery = "SELECT tests.id, tests.name, tests.passinglevel, tests.scheduleddate FROM tests Inner join assessments on assessments.test_id= tests.id WHERE assessments.id = @AssessmentId";
                 using (MySqlCommand cmd2 = new MySqlCommand(testQuery, connection))
                 {
-                    cmd2.Parameters.AddWithValue("@TestId", testId);
+                    cmd2.Parameters.AddWithValue("@AssessmentId", AssessmentId);
                     
                     using (MySqlDataReader reader2 = cmd2.ExecuteReader())
                     {
                         if (await reader2.ReadAsync())
                         {
-                            details.TestId = reader2.GetInt32("id");
+                            details.AssessmentId = reader2.GetInt32("id");
                             details.TestName = reader2.GetString("name");
                             details.TestDate = reader2.GetDateTime("scheduleddate");
                             details.TestPassingLevel = reader2.GetInt32("passinglevel");

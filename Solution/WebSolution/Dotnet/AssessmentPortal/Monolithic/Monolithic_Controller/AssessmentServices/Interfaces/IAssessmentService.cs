@@ -2,6 +2,7 @@ using Transflower.TFLAssessment.Repositories.Interfaces;
 namespace Transflower.TFLAssessment.Services.Interfaces;
 
 
- public interface IAssessmentService:IAssessmentRepository{
+ public interface IAssessmentService:IAssessmentRepository
+{
     
- }
+}
