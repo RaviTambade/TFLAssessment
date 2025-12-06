@@ -8,9 +8,10 @@ public class TestAssignmentRequest
     public DateTime ScheduledEnd { get; set; }
     public string Status { get; set; }
     public DateTime? RescheduledOn { get; set; }
-    public string? Remarks { get; set; }
-        public int CreatedBy { get; set; }
-
+    // public string? Remarks { get; set; }
+    public int CreatedBy { get; set; }
+         
+    public DateTime CreatedOn { get; set; }
 
 }
 

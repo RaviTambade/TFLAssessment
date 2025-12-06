@@ -681,13 +681,14 @@ public class AssessmentDapperRepository : IAssessmentRepository
         {
 
             var query = 
-            "INSERT INTO assessments (test_id, candidate_id, status, createdby, scheduledstart, scheduledend) " +
-            "VALUES (@test_id, @candidate_id, @status, @createdBy, @scheduledstart, @scheduledend)";
+            "INSERT INTO assessments (test_id, candidate_id, status,createdOn, createdby, scheduledstart, scheduledend) " +
+            "VALUES (@test_id, @candidate_id, @status,@createdOn, @createdBy, @scheduledstart, @scheduledend)";
             var parameters = new
             {
                 test_id = request.TestId,
                 candidate_id = candidateId,
                 status = request.Status,
+                creatdOn = Datetime.Now,
                 createdBy = request.CreatedBy,
                 scheduledstart = request.ScheduledStart,
                 scheduledend = request.ScheduledEnd

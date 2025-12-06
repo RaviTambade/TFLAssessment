@@ -53,7 +53,6 @@ public class ResultRepository : IResultRepository
     public async Task<bool> SetCandidateTestStartTime(int candidateId, int assessmentid, TestTime time)
     {
         bool status = false;
-        // string query = "insert into candidatetestresults(testid,teststarttime,candidateid) values (@Testid,@Teststarttime,@Candidateid)";
         string query="insert into candidatetestresults(assessmentid,teststarttime,candidateid) values (@assessmentid,@Teststarttime,@Candidateid)";
 
         MySqlConnection connection = new MySqlConnection(_connectionString);
@@ -121,8 +120,7 @@ public class ResultRepository : IResultRepository
     {
         int score = 0;
         MySqlConnection connection = new MySqlConnection(_connectionString);
-        string query = @"select score from candidatetestresults where candidateid=@CandidateId and assessmentid=@assessmentid
-";
+        string query = @"select score from candidatetestresults where candidateid=@CandidateId and assessmentid=@assessmentid";
         try
         {
             MySqlCommand command = new MySqlCommand(query, connection);

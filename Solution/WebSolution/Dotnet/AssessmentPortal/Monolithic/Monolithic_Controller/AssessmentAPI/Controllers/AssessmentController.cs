@@ -340,6 +340,7 @@ public async Task<IActionResult> AddEmployeesToTest([FromBody] TestAssignmentReq
         return BadRequest("No employees selected");
  Console.WriteLine("hiiiiiiiiiiii");
     bool status = await _svc.AddEmployeesToTest(request);
+    _logger.LogInformation("Add employees to test method invoked at {DT}", DateTime.UtcNow.ToLongTimeString());
     if (!status)
         return BadRequest(new { message = "Failed to add employees to test." });
 
