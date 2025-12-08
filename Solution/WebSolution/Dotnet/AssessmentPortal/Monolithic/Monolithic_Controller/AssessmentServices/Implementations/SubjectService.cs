@@ -38,6 +38,12 @@ public class SubjectService : ISubjectService
     {
         return await _repository.DeleteSubject(subjectId);
     }
+     public async Task<List<SubjectModel>> GetSubjectsByEmployeeId(int smeId)
+    {
+
+        return await _repository.GetSubjectsByEmployeeId(smeId);
+
+    }
 
 
 }

@@ -13,4 +13,6 @@ public interface ISubjectRepository
     Task<int> AddSubject(SubjectModel subject);
     // Delete a subject by ID
     Task<int> DeleteSubject(int subjectId);
+
+     Task<List<SubjectModel>> GetSubjectsByEmployeeId(int smeId);
 }
