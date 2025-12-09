@@ -688,7 +688,7 @@ public class AssessmentDapperRepository : IAssessmentRepository
                 test_id = request.TestId,
                 candidate_id = candidateId,
                 status = request.Status,
-                creatdOn = DateTime.Now,
+                createdOn = DateTime.Now,
                 createdBy = request.CreatedBy,
                 scheduledstart = request.ScheduledStart,
                 scheduledend = request.ScheduledEnd
