@@ -624,7 +624,7 @@ public class AssessmentDapperRepository : IAssessmentRepository
         {
             try
             {
-                int rowsAffected = con.Execute(query, new { Status = status.Status,AssessmentId = Id });
+                int rowsAffected = con.Execute(query, new { Status = status.Status, AssessmentId = Id });
                 updateStatus = rowsAffected > 0; // Determine success based on rows affected
             }
             catch (Exception ex)
@@ -647,8 +647,8 @@ public class AssessmentDapperRepository : IAssessmentRepository
     //         {
     //             var query = "INSERT INTO testschedules (testid, candidateid, scheduledstart, scheduledend, status, rescheduledon, remarks) " +
     //                         "VALUES (@TestId, @EmployeeId, @ScheduledStart, @ScheduledEnd, @Status, @RescheduledOn, @Remarks)";
-               
-               
+
+
     //             var parameters = new
     //             {
     //                 TestId = request.TestId,
@@ -668,70 +668,70 @@ public class AssessmentDapperRepository : IAssessmentRepository
     //     return status;
     // }
 
-       public async Task<bool> AddEmployeesToTest(TestAssignmentRequest request)
-    {   
+    public async Task<bool> AddEmployeesToTest(TestAssignmentRequest request)
+    {
 
-    await Task.Delay(100);
-    bool status = false;
+        await Task.Delay(100);
+        bool status = false;
 
-    using (IDbConnection con = new MySqlConnection(_connectionString))
-    {       
-
-        foreach (var candidateId in request.CandidateIds)
+        using (IDbConnection con = new MySqlConnection(_connectionString))
         {
 
-            var query = 
-            "INSERT INTO assessments (test_id, candidate_id, status,createdOn, createdby, scheduledstart, scheduledend) " +
-            "VALUES (@test_id, @candidate_id, @status,@createdOn, @createdBy, @scheduledstart, @scheduledend)";
-            var parameters = new
+            foreach (var candidateId in request.CandidateIds)
             {
-                test_id = request.TestId,
-                candidate_id = candidateId,
-                status = request.Status,
-                createdOn = DateTime.Now,
-                createdBy = request.CreatedBy,
-                scheduledstart = request.ScheduledStart,
-                scheduledend = request.ScheduledEnd
-            };
 
-            if (con.Execute(query, parameters) > 0)
-                status = true;
+                var query =
+                "INSERT INTO assessments (test_id, candidate_id, status,createdOn, createdby, scheduledstart, scheduledend) " +
+                "VALUES (@test_id, @candidate_id, @status,@createdOn, @createdBy, @scheduledstart, @scheduledend)";
+                var parameters = new
+                {
+                    test_id = request.TestId,
+                    candidate_id = candidateId,
+                    status = request.Status,
+                    createdOn = DateTime.Now,
+                    createdBy = request.CreatedBy,
+                    scheduledstart = request.ScheduledStart,
+                    scheduledend = request.ScheduledEnd
+                };
+
+                if (con.Execute(query, parameters) > 0)
+                    status = true;
+            }
         }
+        return status;
     }
-    return status;
-}
-  
+
 
     public async Task<List<TestEmployeeDetails>> GetAllTestByEmpId(int empId)
     {
-    using (IDbConnection con = new MySqlConnection(_connectionString))
-    {
-        var result = await con.QueryAsync<TestEmployeeDetails>(
-            "GetTestEmployeeDetailsByCandidate",
-            new { candidate = empId },
-            commandType: CommandType.StoredProcedure
-        );
+        using (IDbConnection con = new MySqlConnection(_connectionString))
+        {
+            var result = await con.QueryAsync<TestEmployeeDetails>(
+                "GetTestEmployeeDetailsByCandidate",
+                new { candidate = empId },
+                commandType: CommandType.StoredProcedure
+            );
 
-        return result.ToList();
+            return result.ToList();
+        }
     }
-}
 
 
     public async Task<int> GetTestCountByStatus(string status)
     {
 
-       int count=0;
+        int count = 0;
         MySqlConnection connection = new MySqlConnection(_connectionString);
         string query = "select count(id) as testcount from tests where status=@status;";
         MySqlCommand command = new MySqlCommand(query, connection);
         command.Parameters.AddWithValue("@status", status);
         try
         {
-            
+
             await connection.OpenAsync();
             MySqlDataReader reader = command.ExecuteReader();
             reader.Read();
-            count=int.Parse(reader["testcount"].ToString());
+            count = int.Parse(reader["testcount"].ToString());
         }
         catch (Exception e)
         {
@@ -744,7 +744,7 @@ public class AssessmentDapperRepository : IAssessmentRepository
         return count;
     }
 
- public async  Task<List<TestDetails>> GetAllTestByStatus(string status)
+    public async Task<List<TestDetails>> GetAllTestByStatus(string status)
     {
         List<TestDetails> tests = new List<TestDetails>();
         string query = @"select 
@@ -805,7 +805,7 @@ public class AssessmentDapperRepository : IAssessmentRepository
 
 
 
-public async  Task<List<Subject>> GetSubjectBySME(int smeid)
+    public async Task<List<Subject>> GetSubjectBySME(int smeid)
     {
         List<Subject> subjects = new List<Subject>();
         const string query = @"
@@ -842,5 +842,44 @@ public async  Task<List<Subject>> GetSubjectBySME(int smeid)
         }
         return subjects;
     }
+
+    public async Task<List<TestDetails>> GetSmeTestList(int smeId)
+    {
+        Console.WriteLine("DAL SmeId: " + smeId);
+        List<TestDetails> tests = new List<TestDetails>();
+        string query = @"SELECT 
+                        Name AS test_name,
+                        duration
+                        FROM tests
+                        WHERE smeid = @SmeId"; 
+        MySqlConnection connection = new MySqlConnection(_connectionString);
+        MySqlCommand command = new MySqlCommand(query, connection);
+        command.Parameters.AddWithValue("@smeid", smeId);
+        try
+        {
+            await connection.OpenAsync();
+            MySqlDataReader reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                string TestName = reader["test_name"].ToString();
+                TimeSpan duration = TimeSpan.Parse(reader["duration"].ToString());
+
+                TestDetails test = new TestDetails();
+                test.TestName = TestName;
+                test.Duration = duration;
+                tests.Add(test);
+            }
+        }
+        catch(Exception e)
+        {
+          throw e;  
+        }
+        finally
+        {
+            await connection.CloseAsync();
+        }
+        return tests;
+    }
+
 
 }

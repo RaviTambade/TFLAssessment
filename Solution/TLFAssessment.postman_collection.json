@@ -1,9 +1,10 @@
 {
 	"info": {
-		"_postman_id": "668a1fbf-be63-46e0-b509-a2a31b7d4fce",
+		"_postman_id": "a13331cf-b33a-4d95-bfb8-6df0056aa202",
 		"name": "TLFAssessment",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "29865016"
+		"_exporter_id": "47845050",
+		"_collection_link": "https://sarthak-kadam-s-team.postman.co/workspace/Team-Workspace~06b4a5ef-e063-40af-86c3-544325a41d66/collection/47845050-a13331cf-b33a-4d95-bfb8-6df0056aa202?action=share&source=collection_link&creator=47845050"
 	},
 	"item": [
 		{
@@ -221,6 +222,67 @@
 							],
 							"cookie": [],
 							"body": "Subject deleted successfully."
+						}
+					]
+				},
+				{
+					"name": "New Request",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "GetSmeSubjects",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": [
+						{
+							"name": "New Request",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5238/api/subject/GetSmeSubjects/3",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5238",
+									"path": [
+										"api",
+										"subject",
+										"GetSmeSubjects",
+										"3"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 09 Dec 2025 11:46:01 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": 5,\n        \"title\": \"REACT\"\n    },\n    {\n        \"id\": 4,\n        \"title\": \"MICROSERVICES\"\n    },\n    {\n        \"id\": 7,\n        \"title\": \"CSHARP\"\n    }\n]"
 						}
 					]
 				}
@@ -2068,7 +2130,10 @@
 					"name": "get avg",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": ""
+						}
 					},
 					"response": []
 				},
@@ -4559,7 +4624,10 @@
 					"name": "get all emp",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": ""
+						}
 					},
 					"response": []
 				},
@@ -4614,6 +4682,64 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "GetSmeTestList",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": [
+						{
+							"name": "New Request",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5238/api/Assessment/GetSmeTestList?smeId=3",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5238",
+									"path": [
+										"api",
+										"Assessment",
+										"GetSmeTestList"
+									],
+									"query": [
+										{
+											"key": "smeId",
+											"value": "3"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 09 Dec 2025 11:32:38 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": 0,\n        \"testName\": \"Data Structures Test\",\n        \"subjectname\": null,\n        \"duration\": \"00:30:00\",\n        \"scheduledStart\": null,\n        \"scheduledEnd\": null\n    },\n    {\n        \"id\": 0,\n        \"testName\": \"Full-Length Programming Test\",\n        \"subjectname\": null,\n        \"duration\": \"01:30:00\",\n        \"scheduledStart\": null,\n        \"scheduledEnd\": null\n    }\n]"
+						}
+					]
 				}
 			]
 		},
@@ -4624,7 +4750,10 @@
 					"name": "Get all",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": ""
+						}
 					},
 					"response": []
 				}
