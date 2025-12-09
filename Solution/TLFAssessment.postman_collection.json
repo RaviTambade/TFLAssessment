@@ -232,6 +232,59 @@
 						"header": []
 					},
 					"response": []
+				},
+				{
+					"name": "GetSmeSubjects",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": [
+						{
+							"name": "New Request",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5238/api/subject/GetSmeSubjects/3",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5238",
+									"path": [
+										"api",
+										"subject",
+										"GetSmeSubjects",
+										"3"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 09 Dec 2025 11:46:01 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": 5,\n        \"title\": \"REACT\"\n    },\n    {\n        \"id\": 4,\n        \"title\": \"MICROSERVICES\"\n    },\n    {\n        \"id\": 7,\n        \"title\": \"CSHARP\"\n    }\n]"
+						}
+					]
 				}
 			]
 		},
