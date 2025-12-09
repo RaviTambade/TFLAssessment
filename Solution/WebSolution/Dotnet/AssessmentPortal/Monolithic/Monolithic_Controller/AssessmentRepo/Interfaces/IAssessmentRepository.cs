@@ -44,5 +44,9 @@ public interface IAssessmentRepository
 
   public Task<int> GetTestCountByStatus(string status);
   public Task<List<TestDetails>> GetAllTestByStatus(string status);
+  public  Task<List<Subject>> GetSubjectBySME(int smeid);
+  
+
+
 }
 

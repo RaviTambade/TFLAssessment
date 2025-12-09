@@ -389,4 +389,19 @@ public async Task<IActionResult> AddEmployeesToTest([FromBody] TestAssignmentReq
         }
         return Ok(tests);
     }
+    // http://localhost:5238/api/Assessment/subjectBySme/{smeId}
+  [HttpGet("subjectBySme/{smeId}")]
+public async Task<IActionResult> GetSubjectBySME(int smeId)
+{
+    List<Subject> subjects = await _svc.GetSubjectBySME(smeId);
+
+    if (subjects == null || subjects.Count == 0)
+    {
+        return NotFound("No subjects found.");
+    }
+
+    return Ok(subjects);
+}
+
+
 }

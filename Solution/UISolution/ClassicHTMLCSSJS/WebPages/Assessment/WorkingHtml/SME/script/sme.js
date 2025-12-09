@@ -1,65 +1,95 @@
-    function getToken() {
-      return localStorage.getItem("token");
-    }
+function getToken() {
+  return localStorage.getItem("token");
+}
 
-    function getRole() {
-      return localStorage.getItem("role");
-    }
+function getRole() {
+  return localStorage.getItem("role");
+}
 
-    // Redirect unauthorized users
-    (function checkAuth() {
-      if (!getToken() || getRole() !== "sme") {
-        alert("Access denied.");
-        window.location.href = "/loginJWT.html";
-      }
-    })();
+// Redirect unauthorized users
+(function checkAuth() {
+  if (!getToken() || getRole() !== "sme") {
+    alert("Access denied.");
+    window.location.href = "/loginJWT.html";
+  }
+})();
 
-    // Set email if available
-    const userEmail = localStorage.getItem("userEmail"); 
-    if (userEmail) {
-      $("#userEmail").text(userEmail);
-    }
+$(document).ready(function () {
 
-     $("#Profile").click(function (e) {
-       $("#content").load("profile.html");
-     });
+  // Show username
+  const userName = localStorage.getItem("userName");
+  if (userName) {
+    $("#userName").text(userName);
+  }
 
-    // Load content dynamically into #content
-    $(document).ready(function () {
-      $("#createTestLink").click(function (e) {
-        e.preventDefault();
-        $("#content").load("createTestJWT.html"); //Make sure this file is named correctly and in the same directory
-      });
+  // Show email
+  const userEmail = localStorage.getItem("userEmail");
+  if (userEmail) {
+    $("#userEmail").text(userEmail);
+  }
 
-      $("#checkQuestionAsPerCriteria").click(function (e) {
-        e.preventDefault();
-        $("#content").load("subjectcriteriaquestionsJWT.html"); 
-      });
-    });
+  // Load SME subjects
+  loadSubjects();
 
-    $("#logoutBtn").click(function () {
-         let userId = localStorage.getItem("userId");
-        if (!userId) {
-        alert("User ID missing.");
-        return;
+  // Sidebar clicks
+  $("#createTestLink").click(function (e) {
+    e.preventDefault();
+    $("#content").load("createTestJWT.html");
+  });
+
+  $("#checkQuestionAsPerCriteria").click(function (e) {
+    e.preventDefault();
+    $("#content").load("subjectcriteriaquestionsJWT.html");
+  });
+
+  $("#Profile").click(function (e) {
+    e.preventDefault();
+    $("#content").load("profile.html");
+  });
+
+  // Logout
+  $("#logoutBtn").click(function () {
+    let userId = localStorage.getItem("userId");
+    if (!userId) {
+      alert("User ID missing.");
+      return;
     }
     $.ajax({
-        url: `http://localhost:5238/api/usersession/logout/${userId}`,
-        method: "POST",
-        success: function (res) {
-            console.log("Logout success:", res);
-
-            // Clear browser storage
-            localStorage.clear();
-            sessionStorage.clear();
-
-            // Redirect
-            window.location.href = "/Home.html";
-        },
-        error: function (err) {
-            console.error("Logout error:", err);
-            alert("Something went wrong while logging out.");
-        }
+      url: `http://localhost:5238/api/usersession/logout/${userId}`,
+      method: "POST",
+      success: function (res) {
+        localStorage.clear();
+        sessionStorage.clear();
+        window.location.href = "/Home.html";
+      },
+      error: function (err) {
+        alert("Logout failed");
+      }
     });
+  });
 
+});
+
+function loadSubjects() {
+  let smeId = localStorage.getItem("userId");
+
+  $.ajax({
+    url: `http://localhost:5238/api/Assessment/subjectBySme/${smeId}`,
+    method: "GET",
+    headers: { "Authorization": "Bearer " + getToken() },
+    success: function (subjects) {
+     
+      let html = "<h3>Your Subjects</h3><ul>";
+      subjects.forEach(s => {
+        html += `<li>${s.title}</li>`;
       });
+      html += "</ul>";
+
+      $("#content").append(html);
+    },
+    error: function (err) {
+      console.error(err);
+      alert("Failed to load subjects");
+    }
+  });
+}

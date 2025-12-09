@@ -688,7 +688,7 @@ public class AssessmentDapperRepository : IAssessmentRepository
                 test_id = request.TestId,
                 candidate_id = candidateId,
                 status = request.Status,
-                creatdOn = Datetime.Now,
+                creatdOn = DateTime.Now,
                 createdBy = request.CreatedBy,
                 scheduledstart = request.ScheduledStart,
                 scheduledend = request.ScheduledEnd
@@ -801,4 +801,46 @@ public class AssessmentDapperRepository : IAssessmentRepository
         }
         return tests;
     }
+
+
+
+
+public async  Task<List<Subject>> GetSubjectBySME(int smeid)
+    {
+        List<Subject> subjects = new List<Subject>();
+        const string query = @"
+        SELECT s.id, s.title
+        FROM subjectmatterexperts sme
+        JOIN subjects s ON sme.subjectId = s.id
+        WHERE sme.employeeId = @smeid";
+
+        MySqlConnection connection = new MySqlConnection(_connectionString);
+        MySqlCommand command = new MySqlCommand(query, connection);
+        command.Parameters.AddWithValue("@smeid", smeid);
+        try
+        {
+            await connection.OpenAsync();
+            MySqlDataReader reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                int id = int.Parse(reader["id"].ToString());
+                string title = reader["Title"].ToString();
+
+                Subject subject = new Subject();
+                subject.Id = id;
+                subject.Title = title;
+                subjects.Add(subject);
+            }
+        }
+        catch (Exception e)
+        {
+            throw e;
+        }
+        finally
+        {
+            await connection.CloseAsync();
+        }
+        return subjects;
+    }
+
 }
