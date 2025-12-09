@@ -403,5 +403,21 @@ public async Task<IActionResult> GetSubjectBySME(int smeId)
     return Ok(subjects);
 }
 
+//[HttpGet("GetSmeTestList/{smeId}")]
+//  http://localhost:5238/api/Assessment/GetSmeTestList/1 ==> GetSmeTestList(int smeId)
+
+//FromQuery
+//  http://localhost:5238/api/Assessment/GetSmeTestList?smeId=1 ==> [HttpGet("GetSmeTestList")] ==> GetSmeTestList([FromQuery] int smeId)
+[HttpGet("GetSmeTestList")]
+public async Task<IActionResult> GetSmeTestList([FromQuery] int smeId)
+{
+    List<TestDetails> tests = await _svc.GetSmeTestList(smeId);
+    
+    if (tests == null || tests.Count == 0)
+    {
+        return NotFound("No test found.");
+    }
+    return Ok(tests);
+}
 
 }

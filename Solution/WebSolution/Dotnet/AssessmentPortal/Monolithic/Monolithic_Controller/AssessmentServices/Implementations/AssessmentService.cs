@@ -147,10 +147,14 @@ public class AssessmentService : IAssessmentService
    }
    
 
-public async  Task<List<Subject>> GetSubjectBySME(int smeid)
-{
+   public async  Task<List<Subject>> GetSubjectBySME(int smeid)
+   {
          return await _repository.GetSubjectBySME(smeid);
-}
-
+   }
+   
+   public async Task<List<TestDetails>> GetSmeTestList(int smeId)
+   {
+      return  await _repository.GetSmeTestList(smeId);
+   }
    
 }
