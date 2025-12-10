@@ -162,7 +162,7 @@ namespace Transflower.TFLAssessment.Repositories
                     {
                         if (await reader2.ReadAsync())
                         {
-                            details.testId = reader2.GetInt32("id");
+                            details.TestId = reader2.GetInt32("id");
                             details.TestName = reader2.GetString("TestName");
                             details.TestDate = reader2.GetDateTime("scheduleddate");
                             details.TestPassingLevel = reader2.GetInt32("passinglevel");
