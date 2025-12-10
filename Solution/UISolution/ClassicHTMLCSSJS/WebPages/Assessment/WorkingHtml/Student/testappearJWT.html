@@ -109,16 +109,6 @@
 
   
     <script>
-      //global variable 
-      // var current = 0;
-      // var subjects = [];
-      // var questions = [];
-      // var time = {};
-      // var intervalId;
-      // var remainingTime = 60;
-      // var score;
-      // var testId =55; // after change this testId change in correctAnswer.html also
-      // var candidateId = 8;
           // --- Helper to read query string ---
     function getQueryParam(param) {
       const urlParams = new URLSearchParams(window.location.search);
@@ -127,6 +117,7 @@
 
     // --- Read parameters from query string ---
     const testId = getQueryParam("testid");
+    console.log("testId",testId);
     const candidateId = getQueryParam("userid");
     const durationParam = getQueryParam("duration"); // format: "HH:mm:ss"
 

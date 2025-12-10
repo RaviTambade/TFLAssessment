@@ -48,13 +48,14 @@ public class CandidateAnswerController : ControllerBase
     }
 
     //http://localhost:5299/api/candidateanswer/assessmentanswers/candidates/1/tests/1/results
-    [HttpGet("assessmentanswers/candidates/{candidateId}/tests/{testId}/results")]
+    [HttpGet("assessmentanswers/candidates/{candidateId}/tests/{assessmentid}/results")]
     public async Task<IActionResult> GetCandidateAnswerResults(int candidateId, int assessmentid)
     {
         _logger.LogInformation(
             "GetCandidateAnswerResults called with candidateId: {cand}, assessmentid: {t}",
             candidateId,
             assessmentid);
+
 
         List<CandidateAnswerResult> results =
             await _service.GetCandidateAnswerResultsAsync(candidateId, assessmentid);
@@ -71,7 +72,7 @@ public class CandidateAnswerController : ControllerBase
     }
 
     //Get candidate and test details for the candidate answers
-    [HttpGet("assessmentanswers/candidates/{candidateId}/tests/{testId}/details")]
+    [HttpGet("assessmentanswers/candidates/{candidateId}/tests/{AssessmentId}/details")]
     public async Task<IActionResult> GetCandidateTestDetails(int candidateId, int AssessmentId)
     {
         _logger.LogInformation(
