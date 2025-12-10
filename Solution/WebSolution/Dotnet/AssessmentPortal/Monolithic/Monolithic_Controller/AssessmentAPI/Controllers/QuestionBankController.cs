@@ -141,6 +141,20 @@ public class QuestionBankController : ControllerBase
         return Ok(questions);
     }
 
+     //http://localhost:5238/api/questionbank/questions/subjects/1/concepts/1/questionId/1
+    [HttpGet("questions/subjects/{subjectId}/concepts/{conceptId}/questionId/{questionId}")]
+    public async Task<IActionResult> GetQuestionsBySubjectAndConceptAndQuestionId(int subjectId,int conceptId,int questionId)
+    {   
+        List<QuestionDetails> questions =await _svc.GetQuestionsBySubjectAndConceptAndQuestionId(subjectId, conceptId, questionId);
+        if (questions == null || questions.Count == 0)
+        {
+            _logger.LogWarning("No questions found for subject ID {SubjectId} and concept ID {ConceptId} and questionId {questionId} at {DT} ", subjectId, conceptId,questionId, DateTime.UtcNow.ToLongTimeString());
+            return NotFound($"No questions found for subject ID {subjectId} and concept ID {conceptId}.");
+        }   
+        _logger.LogInformation("Get questions by subject ID {SubjectId} and concept ID {ConceptId} method invoked at {DT}", subjectId, conceptId, DateTime.UtcNow.ToLongTimeString());
+        return Ok(questions);
+    }
+
     [HttpGet("questions/subjects/concepts")]
     public async Task<IActionResult> GetQuestionsWithSubjectAndConcept()
     {   

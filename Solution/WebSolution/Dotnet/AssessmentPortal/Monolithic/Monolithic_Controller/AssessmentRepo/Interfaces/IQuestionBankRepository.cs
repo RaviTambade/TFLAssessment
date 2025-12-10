@@ -7,6 +7,7 @@ public interface IQuestionBankRepository{
     public Task<List<QuestionDetails>> GetQuestionsBySubjectAndConcept(int subjectId,int conceptId);
     public  Task<List<QuestionDetails>> GetQuestionsBySubjectAndConceptWithOptions(int subjectId, int conceptId);
     public  Task<List<QuestionDetails>> GetQuestionsBySubjectAndConceptWithOptionsAndAnswer(int subjectId, int conceptId);
+    public Task<List<QuestionDetails>> GetQuestionsBySubjectAndConceptAndQuestionId(int subjectId,int conceptId,int questionId);
     public Task<List<QuestionDetails>> GetQuestionsWithSubjectAndConcept();
     public Task<List<Question>> GetQuestions(int testId);
     public Task<bool> UpdateAnswer(int id,char answerKey);

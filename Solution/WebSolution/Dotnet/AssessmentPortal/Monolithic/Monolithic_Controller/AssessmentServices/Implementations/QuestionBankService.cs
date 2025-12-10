@@ -36,6 +36,13 @@ public class QuestionBankService:IQuestionBankService
                 return await _repository.GetQuestionsBySubjectAndConceptWithOptionsAndAnswer(subjectId, conceptId);
 
     }
+    public async Task<List<QuestionDetails>> GetQuestionsBySubjectAndConceptAndQuestionId(int subjectId,int conceptId,int questionId)
+    {
+                return await _repository.GetQuestionsBySubjectAndConceptAndQuestionId(subjectId, conceptId, questionId);
+
+    }
+
+    
       public async Task<List<QuestionDetails>> GetQuestionsWithSubjectAndConcept()
     {
         return await _repository.GetQuestionsWithSubjectAndConcept();
