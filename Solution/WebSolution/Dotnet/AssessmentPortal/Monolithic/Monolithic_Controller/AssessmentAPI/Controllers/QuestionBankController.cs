@@ -48,7 +48,7 @@ public class QuestionBankController : ControllerBase
         _logger.LogInformation("Get question with ID {Id} method invoked at {DT}", questionId, DateTime.UtcNow.ToLongTimeString());
         return Ok(question);
     }
-
+    //http://localhost:5238/api/questionbank/questions/subjects/1/questions/1
     [HttpGet("questions/subjects/{subject}/questions/{questionId}")]
     public async Task<IActionResult> GetConcept(string subject, int questionId)
     {

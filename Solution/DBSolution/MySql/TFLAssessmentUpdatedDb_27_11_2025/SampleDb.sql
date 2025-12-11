@@ -152,7 +152,11 @@ INSERT INTO questionbank VALUES
 (61,6,'In Angular, what is the purpose of the ngOnInit lifecycle hook?','It is called once the component is initialized','It is called when the component is about to be destroyed','It is called when there is an input change to the component','It is called when there is an output change from the component','a',9),
 (62,4,'What is a characteristic of microservices architecture?','Monolithic','Tightly coupled components','Single, large codebase','Decentralized and independently deployable services','d',9),
 (63,4,'Which of the following is a benefit of using microservices?','Centralized management','High complexity','Rapid development and deployment','Tight integration','c',10),
-(64,4,'Which technology is commonly used for inter-service communication in microservices architecture?','HTTP','SMTP','FTP','SNMP','a',10);
+(64,4,'Which technology is commonly used for inter-service communication in microservices architecture?','HTTP','SMTP','FTP','SNMP','a',10),
+(65,5,'In React, which method is commonly used to convert a JavaScript object into JSON format??','JSON.parse()','JSON.stringify()','toJSON()','React.json()','b',18),
+(66, 5, 'Which function converts a JSON string to an object in React?', 'JSON.parse()', 'JSON.stringify()', 'useEffect()', 'React.parse()', 'a', 18),
+(67, 5, 'Which React hook is commonly used to load JSON data from an API?', 'useState', 'useEffect', 'useMemo', 'useCallback', 'b', 18);
+
 
 INSERT INTO subjectmatterexperts (id, employeeid, subjectid, certificationdate) VALUES
 (1,1,1,'2023-02-15'),
