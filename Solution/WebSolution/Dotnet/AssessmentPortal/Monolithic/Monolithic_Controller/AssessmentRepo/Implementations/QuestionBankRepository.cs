@@ -581,8 +581,38 @@ public class QuestionBankRepository : IQuestionBankRepository
 
     }
 
+    private async Task<int> GetTestIdByAssessmentId(int assessmentId)
+    {
+        int testId = 0;
+        string query = "SELECT test_id FROM assessments WHERE id = @AssessmentId";
+
+        using (MySqlConnection connection = new MySqlConnection(_connectionString))
+        using (MySqlCommand command = new MySqlCommand(query, connection))
+        {
+            command.Parameters.AddWithValue("@AssessmentId", assessmentId);
+            try
+            {
+                await connection.OpenAsync();
+                object result = await command.ExecuteScalarAsync();
+                if (result != null)
+                {
+                    testId = Convert.ToInt32(result);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+
+        return testId;
+    }
+
     public async Task<List<Question>> GetQuestions(int testId)
     {
+        int id = await GetTestIdByAssessmentId(testId);
+        Console.WriteLine("Test Id in Question Bank Repository: " + id);
+        
         List<Question> questions = new List<Question>();
         string query = @"
             SELECT 
@@ -603,7 +633,7 @@ public class QuestionBankRepository : IQuestionBankRepository
         using (MySqlConnection connection = new MySqlConnection(_connectionString))
         using (MySqlCommand command = new MySqlCommand(query, connection))
         {
-            command.Parameters.AddWithValue("@TestId", testId);
+            command.Parameters.AddWithValue("@TestId", id);
             try
             {
                 await connection.OpenAsync();

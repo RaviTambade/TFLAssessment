@@ -8,5 +8,6 @@ public class CandidateTestDetails
     public string TestName { get; set; }
     public DateTime TestDate { get; set; }
     public int TestPassingLevel { get; set; }
+    
 
 }
