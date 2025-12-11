@@ -155,7 +155,32 @@ INSERT INTO questionbank VALUES
 (64,4,'Which technology is commonly used for inter-service communication in microservices architecture?','HTTP','SMTP','FTP','SNMP','a',10),
 (65,5,'In React, which method is commonly used to convert a JavaScript object into JSON format??','JSON.parse()','JSON.stringify()','toJSON()','React.json()','b',18),
 (66, 5, 'Which function converts a JSON string to an object in React?', 'JSON.parse()', 'JSON.stringify()', 'useEffect()', 'React.parse()', 'a', 18),
-(67, 5, 'Which React hook is commonly used to load JSON data from an API?', 'useState', 'useEffect', 'useMemo', 'useCallback', 'b', 18);
+(67, 5, 'Which React hook is commonly used to load JSON data from an API?', 'useState', 'useEffect', 'useMemo', 'useCallback', 'b', 18),
+
+
+(68, 7, 'Which symbol is used for inheritance in C#?', 'extends', 'implements', ':', 'inherits', 'c', 1),
+(69, 7, 'Polymorphism in C# is achieved by?', 'Method Overloading', 'Method Overriding', 'Both', 'None', 'c', 1),
+(70, 7, 'Which symbol is used for inheritance in C#?', 'extends', 'implements', ':', 'inherits', 'c', 1),
+(71, 7, 'Which method cannot be overridden in C#?', 'virtual', 'abstract', 'sealed', 'override', 'c', 1),
+(72, 7, 'Which namespace is used for multithreading in C#?', 'System.MultiThread', 'System.Threading', 'System.Tasks', 'System.Concurrent', 'b', 21),
+(73, 7, 'How do you start a thread in C#?', 'thread.run()', 'thread.execute()', 'thread.Start()', 'Thread.begin()', 'c', 21),
+(74, 7, 'What is a deadlock?', 'Threads execute faster', 'Threads wait on each other forever', 'Thread stops automatically', 'CPU overload', 'b', 21),
+(75, 7, 'Which class is used for asynchronous programming in C#?', 'Thread', 'Task', 'Process', 'Worker', 'b', 21),
+
+(76, 7, 'Which loop in C# always executes at least once?', 'for', 'while', 'do-while', 'foreach', 'c', 22),
+(77, 7, 'Which keyword is used to immediately exit a loop?', 'exit', 'continue', 'break', 'stop', 'c', 22),
+(78, 7, 'Which loop is best suited for iterating through collections?', 'for', 'foreach', 'do-while', 'while', 'b', 22),
+(79, 7, 'What does the continue statement do in a loop?', 'Stops the loop', 'Skips the next iteration', 'Skips the current iteration', 'Restarts the loop', 'c', 22),
+(80, 7, 'What happens when a while loop condition is always true?', 'Loop runs once', 'Loop never runs', 'Infinite loop', 'Compile error', 'c', 22),
+(81, 7, 'Which loop is most suitable when the number of iterations is known?', 'while', 'foreach', 'do-while', 'for', 'd', 2),
+(82, 7, 'Which part of a for loop executes after each iteration?', 'Condition', 'Update expression', 'Initialization', 'Return statement', 'b', 22),
+(83, 7, 'Which of the following loops is entry-controlled?', 'do-while', 'foreach', 'for', 'None', 'c', 22),
+(84, 7, 'Which loop is exit-controlled?', 'for', 'while', 'do-while', 'foreach', 'c', 2),
+(85, 7, 'What keyword is used to terminate only the current iteration of a loop?', 'break', 'continue', 'stop', 'halt', 'b', 22);
+
+
+
+
 
 
 INSERT INTO subjectmatterexperts (id, employeeid, subjectid, certificationdate) VALUES
