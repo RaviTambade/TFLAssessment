@@ -63,7 +63,6 @@ public class MembershipService : IMembershipService
 
     public async Task<bool> UpdateRole(int id, List<Role> roles)
     {
-        bool status = false;
         bool insertStatus = false;
         bool deleteRoleStatus=false;
         bool insertRoleStatus=false;
@@ -110,12 +109,13 @@ public class MembershipService : IMembershipService
                 removeSme = await DeleteSmeSubject(employee.Id);
             }
         }
-        return insertRoleStatus;
-    }
+        await Task.Delay(500);
+        return insertStatus;  
+        
+  }
 
     public async Task<bool> UpdateSmeSubject(int empid, int subjectid)
     {
-        bool status=false;
         bool insertStatus=false;
 
         int existingid = await _repository.GetAssignsubject(empid, subjectid);
@@ -125,6 +125,8 @@ public class MembershipService : IMembershipService
             insertStatus= await _repository.AssignSubject(empid, subjectid);
         }
 
+        await Task.Delay(500);
         return insertStatus;
+        
     }
 }

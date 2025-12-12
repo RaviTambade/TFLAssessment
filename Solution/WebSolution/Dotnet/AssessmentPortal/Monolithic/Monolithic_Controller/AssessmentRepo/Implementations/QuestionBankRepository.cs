@@ -145,6 +145,186 @@ public class QuestionBankRepository : IQuestionBankRepository
         return questions;
     }
 
+
+     public async Task<List<QuestionDetails>> GetQuestionsBySubjectAndConceptWithOptions(int subjectId, int conceptId)
+    {
+
+        List<QuestionDetails> questions = new List<QuestionDetails>();
+        string query = @"select questionbank.id,questionbank.id as questionid,  questionbank.title, questionbank.a as optionA ,questionbank.b as optionB ,questionbank.c as optionC ,questionbank.d as optionD, subjects.title as subject ,concepts.title as concept
+                            from questionbank, subjects,concepts
+                            where questionbank.subjectid=subjects.id and questionbank.conceptid=concepts.id
+                            and subjects.id=@SubjectId and concepts.id=@conceptid";
+
+        MySqlConnection connection = new MySqlConnection(_connectionString);
+        MySqlCommand command = new MySqlCommand(query, connection);
+        command.Parameters.AddWithValue("@SubjectId", subjectId);
+        command.Parameters.AddWithValue("@conceptid", conceptId);
+
+
+        try
+        {
+            await connection.OpenAsync();
+            MySqlDataReader reader = command.ExecuteReader();
+            while (await reader.ReadAsync())
+            {
+                int id = int.Parse(reader["id"].ToString());
+                int qid = int.Parse(reader["questionid"].ToString());
+                string strQuestion = reader["title"].ToString();
+                string subject = reader["subject"].ToString();
+                string criteria = reader["concept"].ToString();
+                string optionA=reader["optionA"].ToString();
+                string optionB=reader["optionB"].ToString();
+                string optionC=reader["optionC"].ToString();
+                string optionD=reader["optionD"].ToString();
+
+
+
+
+                QuestionDetails question = new QuestionDetails();
+
+                question.Id = id;
+                question.QuestionId = qid;
+                question.Question = strQuestion;
+                question.Subject = subject;
+                question.Criteria = criteria;
+                question.A = optionA;
+                question.B = optionB;
+                question.C = optionC;
+                question.D = optionD;
+
+
+
+
+                questions.Add(question);
+            }
+            await reader.CloseAsync();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+        finally
+        {
+            await connection.CloseAsync();
+        }
+        return questions;
+    }
+
+    public async Task<List<QuestionDetails>> GetQuestionsBySubjectAndConceptWithOptionsAndAnswer(int subjectId, int conceptId)
+    {
+
+        List<QuestionDetails> questions = new List<QuestionDetails>();
+        string query = @"select questionbank.id,questionbank.id as questionid,  questionbank.title, subjects.title as subject ,concepts.title as concept,questionbank.a as optionA ,questionbank.b as optionB ,questionbank.c as optionC ,questionbank.d as optionD,questionbank.answerkey as result
+                            from questionbank, subjects,concepts
+                            where questionbank.subjectid=subjects.id and questionbank.conceptid=concepts.id
+                            and subjects.id=@SubjectId and concepts.id=@conceptid";
+
+        MySqlConnection connection = new MySqlConnection(_connectionString);
+        MySqlCommand command = new MySqlCommand(query, connection);
+        command.Parameters.AddWithValue("@SubjectId", subjectId);
+        command.Parameters.AddWithValue("@conceptid", conceptId);
+
+
+        try
+        {
+            await connection.OpenAsync();
+            MySqlDataReader reader = command.ExecuteReader();
+            while (await reader.ReadAsync())
+            {
+                int id = int.Parse(reader["id"].ToString());
+                int qid = int.Parse(reader["questionid"].ToString());
+                string strQuestion = reader["title"].ToString();
+                string subject = reader["subject"].ToString();
+                string criteria = reader["concept"].ToString();
+                string optionA=reader["optionA"].ToString();
+                string optionB=reader["optionB"].ToString();
+                string optionC=reader["optionC"].ToString();
+                string optionD=reader["optionD"].ToString();
+                string result=reader["result"].ToString();
+
+
+
+
+
+                QuestionDetails question = new QuestionDetails();
+
+                question.Id = id;
+                question.QuestionId = qid;
+                question.Question = strQuestion;
+                question.Subject = subject;
+                question.Criteria = criteria;
+                question.A = optionA;
+                question.B = optionB;
+                question.C = optionC;
+                question.D = optionD;
+                question.result=result;
+                questions.Add(question);
+            }
+            await reader.CloseAsync();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+        finally
+        {
+            await connection.CloseAsync();
+        }
+        return questions;
+    }
+    public async Task<List<QuestionDetails>> GetQuestionsBySubjectAndConceptAndQuestionId(int subjectId,int conceptId,int questionId)
+    {
+
+        List<QuestionDetails> questions = new List<QuestionDetails>();
+        string query = @"select questionbank.id,questionbank.id as questionid,  questionbank.title, subjects.title as subject ,concepts.title as concept,questionbank.a as optionA ,questionbank.b as optionB ,questionbank.c as optionC ,questionbank.d as optionD,questionbank.answerkey
+                            from questionbank, subjects,concepts
+                            where questionbank.subjectid=subjects.id and questionbank.conceptid=concepts.id
+                            and subjects.id=@subjectId and concepts.id=@conceptId and questionbank.id=@questionId;";
+
+        MySqlConnection connection = new MySqlConnection(_connectionString);
+        MySqlCommand command = new MySqlCommand(query, connection);
+        command.Parameters.AddWithValue("@subjectId", subjectId);
+        command.Parameters.AddWithValue("@conceptid", conceptId);
+        command.Parameters.AddWithValue("@questionId", questionId);
+        try
+        {
+            await connection.OpenAsync();
+            MySqlDataReader reader = command.ExecuteReader();
+            while (await reader.ReadAsync())
+            {
+                int id = int.Parse(reader["id"].ToString());
+                int qid = int.Parse(reader["questionid"].ToString());
+                string strQuestion = reader["title"].ToString();
+                Console.WriteLine("strQuestion" + strQuestion);
+                string subject = reader["subject"].ToString();
+                string criteria = reader["concept"].ToString();
+    
+                QuestionDetails question = new QuestionDetails();
+                question.Id = id;
+                question.QuestionId = qid;
+                question.Question = strQuestion;
+                Console.WriteLine("questionsquestions" + question.Question);
+
+                question.Subject = subject;
+                question.Criteria = criteria;
+
+                questions.Add(question);
+
+
+            }
+            await reader.CloseAsync();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+        finally
+        {
+            await connection.CloseAsync();
+        }
+
+        return questions;
+    }
     public async Task<List<QuestionDetails>> GetQuestionsWithSubjectAndConcept()
     {
 

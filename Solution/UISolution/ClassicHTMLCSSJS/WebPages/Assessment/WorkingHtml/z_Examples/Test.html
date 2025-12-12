@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dynamic Expert Content</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <style>
+        .box { padding: 15px; margin: 10px 0; border: 1px solid #ccc; }
+        #preview-box { background: #f5f5f5; padding: 15px; margin-top: 10px; }
+        button { margin-top: 10px; }
+    </style>
+</head>
+<body>
+
+<h2>Welcome User</h2>
+
+<!-- Load Expert Data Button -->
+<button id="loadSubjectsBtn">Load My Expert Subjects</button>
+
+<!-- Subjects List -->
+<div id="subjectsBox" class="box" style="display:none;"></div>
+
+<!-- Concepts List -->
+<div id="conceptsBox" class="box" style="display:none;"></div>
+
+<!-- Questions List -->
+<div id="questionsBox" class="box" style="display:none;"></div>
+
+<!-- Preview Section -->
+<div id="previewSection" style="display:none;">
+    <h3>Preview</h3>
+    <div id="preview-box"></div>
+    <button id="doneBtn">Done</button>
+    <button id="editBtn">Edit</button>
+</div>
+
+
+<script>
+$(document).ready(function () {
+  let smeId = localStorage.getItem("userId");
+console.log("SME ID",smeId);
+    // 1️⃣ Load Subjects on Button Click
+    $("#loadSubjectsBtn").click(function () {
+        $.ajax({
+            url: `http://localhost:5238/api/subject/GetSmeSubjects/${smeId}`,
+            method: "GET",
+            success: function (subjects) {
+                $("#subjectsBox").show().html("<h3>Select Subject</h3>");
+                
+                $.each(subjects, function (i, sub) {
+                    $("#subjectsBox").append(
+                        `<label><input type="radio" name="subject" class="subjectRadio" value="${sub.id}"> ${sub.name}</label><br>`
+                    );
+                });
+            }
+        });
+    });
+
+
+    // 2️⃣ Load Concepts When Subject Selected
+    $(document).on("change", ".subjectRadio", function () {
+        let subjectId = $(this).val();
+
+        $.ajax({
+            url: "your_api_url_here/getConcepts?subject_id=" + subjectId,
+            method: "GET",
+            success: function (concepts) {
+                $("#conceptsBox").show().html("<h3>Select Concept</h3>");
+
+                $.each(concepts, function (i, concept) {
+                    $("#conceptsBox").append(
+                        `<label><input type="checkbox" class="conceptCheckbox" value="${concept.id}"> ${concept.name}</label><br>`
+                    );
+                });
+
+                $("#questionsBox").hide();
+                $("#previewSection").hide();
+            }
+        });
+    });
+
+
+    // 3️⃣ Load Questions When Concept Checkbox Selected
+    $(document).on("change", ".conceptCheckbox", function () {
+        let conceptId = $(this).val();
+
+        $.ajax({
+            url: "your_api_url_here/getQuestions?concept_id=" + conceptId,
+            method: "GET",
+            success: function (questions) {
+                $("#questionsBox").show().html("<h3>Select Question</h3>");
+
+                $.each(questions, function (i, q) {
+                    $("#questionsBox").append(
+                        `<label><input type="checkbox" class="questionCheckbox" value="${q.id}" data-text="${q.text}"> ${q.text}</label><br>`
+                    );
+                });
+
+                $("#questionsBox").append(`<button id="previewBtn">Preview</button>`);
+            }
+        });
+    });
+
+
+    // 4️⃣ Preview Selected Question
+    $(document).on("click", "#previewBtn", function () {
+        let selected = [];
+
+        $(".questionCheckbox:checked").each(function () {
+            selected.push($(this).data("text"));
+        });
+
+        if (selected.length === 0) {
+            alert("Please select a question");
+            return;
+        }
+
+        $("#preview-box").html(selected.join("<br><br>"));
+        $("#previewSection").show();
+    });
+
+
+    // 5️⃣ Done Button Action
+    $("#doneBtn").click(function () {
+        alert("Selection saved!");
+    });
+
+    // 6️⃣ Edit button → go back
+    $("#editBtn").click(function () {
+        $("#previewSection").hide();
+    });
+
+});
+</script>
+
+</body>
+</html>

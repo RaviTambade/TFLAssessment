@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Customer Profile</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+      body {
+        font-family: "Poppins", sans-serif;
+      }
+    </style>
+  </head>
+  <body class="bg-gradient-to-br from-blue-100 to-blue-200">
+    <div class="container mx-auto px-4">
+      <div
+        class="profile-container max-w-[700px] mx-auto mt-16 bg-white rounded-xl p-8 shadow-xl"
+      >
+        <div class="profile-header text-center mb-6">
+          <img
+            src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
+            alt="User Avatar"
+            class="w-32 h-32 rounded-full object-cover border-4 border-blue-900 mx-auto"
+          />
+          <h3 id="profileName" class="mt-4 font-semibold text-blue-900 text-xl"></h3>
+          <p class="text-gray-500" id="profileRole">User Role: Admin</p>
+        </div>
+
+        <div class="row grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="col-md-6 mb-3">
+            <p class="info-label font-semibold text-gray-800">Aadhar ID</p>
+            <p class="info-value text-gray-600" id="profileAadhar"></p>
+          </div>
+          <div class="col-md-6 mb-3">
+            <p class="info-label font-semibold text-gray-800">Full Name</p>
+            <p class="info-value text-gray-600" id="profileFullName"></p>
+          </div>
+          <div class="col-md-6 mb-3">
+            <p class="info-label font-semibold text-gray-800">Email</p>
+            <p class="info-value text-gray-600" id="profileEmail"></p>
+          </div>
+          <div class="col-md-6 mb-3">
+            <p class="info-label font-semibold text-gray-800">Contact Number</p>
+            <p class="info-value text-gray-600" id="profileContact"></p>
+          </div>
+        </div>
+
+        <div class="text-center mt-6">
+          <button
+            class="bg-gray-600 hover:bg-gray-400 text-white px-6 py-2 rounded-md"
+            onclick="editProfile()"
+          >
+            Edit Profile
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Removed Bootstrap JS -->
+
+    <script>
+      userId = localStorage.getItem("userId");
+
+      function editProfile() {
+        $("#content").load("EditProfile.html");
+      }
+
+      $(document).ready(function () {
+        $.ajax({
+          url: `http://localhost:5238/api/UserProfile/${userId}`,
+          method: "GET",
+          success: function (data) {
+            if (!data) {
+              alert("Profile Not Found!!");
+              return;
+            }
+            document.getElementById("profileName").textContent =
+              data.firstname + " " + data.lastname;
+            document.getElementById("profileFullName").innerText =
+              data.firstname + " " + data.lastname;
+            document.getElementById("profileAadhar").textContent =
+              data.aadharId;
+            document.getElementById("profileEmail").textContent = data.email;
+            document.getElementById("profileContact").textContent =
+              data.contactNumber;
+          },
+          error: function (xhr, status, error) {
+            console.error("Error fetching scores:", error);
+            $("#studentLabel").text("Error loading scores.");
+          },
+        });
+      });
+    </script>
+  </body>
+</html>

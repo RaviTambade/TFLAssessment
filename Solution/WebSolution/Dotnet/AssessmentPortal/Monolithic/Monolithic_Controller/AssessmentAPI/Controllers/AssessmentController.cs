@@ -198,12 +198,19 @@ public class AssessmentController : ControllerBase
     public async Task<IActionResult> AddTest([FromBody] CreateTestWithQuestions request)
     {
         var testId = await _svc.CreateTestWithQuestionsAsync(request);
+        // var AssessmentId = await _svc.CreateTestWithQuestionsAsync(request);
         if (testId == 0)
         {
             _logger.LogError("Failed to create test at {DT}", DateTime.UtcNow.ToLongTimeString());
             return BadRequest(new { message = "Failed to create test" });
         }
+        // if (AssessmentId == 0)
+        // {
+        //     _logger.LogError("Failed to create test at {DT}", DateTime.UtcNow.ToLongTimeString());
+        //     return BadRequest(new { message = "Failed to create test" });
+        // }
         return Ok(new { message = "Test created", testId });
+        // return Ok(new { message = "Test created", AssessmentId });
     }
 
     //http://localhost:5238/api/Assessment/allquestionsbysubject/1
@@ -302,19 +309,19 @@ public class AssessmentController : ControllerBase
 
     //update test
     //http://localhost:5238/api/Assessment/updateteststatus/{testId}
-    [HttpPut("updateteststatus/{testId}")]
-    public async Task<IActionResult> UpdateTestStatus(int testId, [FromBody] TestStatusUpdate status)
+    [HttpPut("updateteststatus/{Id}")]
+    public async Task<IActionResult> UpdateTestStatus(int Id, [FromBody] TestStatusUpdate status)
     {
 
         // Assuming the service has an UpdateTest method
-        bool status1 = await _svc.UpdateTestStatus(testId, status);
+        bool status1 = await _svc.UpdateTestStatus(Id, status);
         // if (!status1)
         // {
         //     _logger.LogError("Failed to update test with ID {TestId} at {DT}", testId, DateTime.UtcNow.ToLongTimeString());
         //     return BadRequest(new { message = "Failed to update test." });
         // }
 
-        _logger.LogInformation("Test with ID {TestId} updated successfully at {DT}", testId, DateTime.UtcNow.ToLongTimeString());
+        _logger.LogInformation("Test with ID {Id} updated successfully at {DT}", Id , DateTime.UtcNow.ToLongTimeString());
         return Ok(new { message = "Test updated successfully." });
     }
 
@@ -323,24 +330,23 @@ public class AssessmentController : ControllerBase
     // insert students in test with candidateid, testid, scheduledstart, scheduledend, status, rescheduledon, remarks
 
     //http://localhost:5238/api/Assessment/addemployees
-    [HttpPost("addemployees")]
-    public async Task<IActionResult> AddEmployeesToTest([FromBody] TestAssignmentRequest request)
-    {
-        if (request.EmployeeIds == null || request.EmployeeIds.Count == 0)
-        {
-            return BadRequest("No employees selected.");
-        }
+   [HttpPost("addemployees")]
+public async Task<IActionResult> AddEmployeesToTest([FromBody] TestAssignmentRequest request)
+{
+    if (request == null)
+        return BadRequest("Invalid request body");
 
-        bool status = await _svc.AddEmployeesToTest(request);
-        if (!status)
-        {
-            _logger.LogError("Failed to add employees to test at {DT}", DateTime.UtcNow.ToLongTimeString());
-            return BadRequest(new { message = "Failed to add employees to test." });
-        }
+    if (request.CandidateIds == null || request.CandidateIds.Count == 0)
+        return BadRequest("No employees selected");
+ Console.WriteLine("hiiiiiiiiiiii");
+    bool status = await _svc.AddEmployeesToTest(request);
+    _logger.LogInformation("Add employees to test method invoked at {DT}", DateTime.UtcNow.ToLongTimeString());
+    if (!status)
+        return BadRequest(new { message = "Failed to add employees to test." });
 
-        _logger.LogInformation("Employees added to test successfully at {DT}", DateTime.UtcNow.ToLongTimeString());
-        return Ok(new { message = "Employees added to test successfully." });
-    }
+    return Ok(new { message = "Employees added to test successfully." });
+}
+
 
     // get all test by employee id
     // http://localhost:5238/api/Assessment/alltestbyempid/{empId}
@@ -383,4 +389,35 @@ public class AssessmentController : ControllerBase
         }
         return Ok(tests);
     }
+    // http://localhost:5238/api/Assessment/subjectBySme/{smeId}
+  [HttpGet("subjectBySme/{smeId}")]
+public async Task<IActionResult> GetSubjectBySME(int smeId)
+{
+    List<Subject> subjects = await _svc.GetSubjectBySME(smeId);
+
+    if (subjects == null || subjects.Count == 0)
+    {
+        return NotFound("No subjects found.");
+    }
+
+    return Ok(subjects);
+}
+
+//[HttpGet("GetSmeTestList/{smeId}")]
+//  http://localhost:5238/api/Assessment/GetSmeTestList/1 ==> GetSmeTestList(int smeId)
+
+//FromQuery
+//  http://localhost:5238/api/Assessment/GetSmeTestList?smeId=1 ==> [HttpGet("GetSmeTestList")] ==> GetSmeTestList([FromQuery] int smeId)
+[HttpGet("GetSmeTestList")]
+public async Task<IActionResult> GetSmeTestList([FromQuery] int smeId)
+{
+    List<TestDetails> tests = await _svc.GetSmeTestList(smeId);
+    
+    if (tests == null || tests.Count == 0)
+    {
+        return NotFound("No test found.");
+    }
+    return Ok(tests);
+}
+
 }

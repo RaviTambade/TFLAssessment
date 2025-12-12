@@ -74,6 +74,24 @@ public async Task<IActionResult> DeleteSubject(int id)
     return StatusCode(500, "An error occurred while deleting the subject.");
 }
 
+[HttpGet("GetSmeSubjects/{smeId}")]
+    public async Task<IActionResult> GetSmeSubjects(int smeId)
+    {
+        if (smeId <= 0)
+        {
+            return BadRequest("Invalid Employee ID.");
+        }
+
+        var subjects = await _svc.GetSubjectsByEmployeeId(smeId);
+
+        if (subjects == null || subjects.Count == 0)
+        {
+            return NotFound("No subjects assigned to this SME.");
+        }
+
+        return Ok(subjects);
+    }
+
   
     //http://localhost:5151/api/assessment/1
    /* [HttpGet("{id}")]

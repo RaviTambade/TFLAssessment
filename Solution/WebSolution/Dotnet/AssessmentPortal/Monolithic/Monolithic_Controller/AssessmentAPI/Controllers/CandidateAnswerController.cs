@@ -32,39 +32,39 @@ public class CandidateAnswerController : ControllerBase
         return Ok(new { message = "Candidate answers inserted successfully.", status = status });
     }
 
-    [HttpGet("assessmentanswers/candidates/{candidateId}/testId/{testId}")]
-    public async Task<IActionResult> GetCandidateAnswers(int candidateId, int testId)
+    [HttpGet("assessmentanswers/candidates/{candidateId}/testId/{assessmentid}")]
+    public async Task<IActionResult> GetCandidateAnswers(int candidateId, int assessmentid)
     {
-
-        Console.WriteLine("GetCandidateAnswers called with candidateId: " + candidateId + " and testId: " + testId);
-        List<CandidateAnswer> answers = await _service.GetCandidateAnswers(candidateId, testId);
+        
+        Console.WriteLine("GetCandidateAnswers called with candidateId: " + candidateId + " and AssessmentId: " + assessmentid);
+        List<CandidateAnswer> answers = await _service.GetCandidateAnswers(candidateId, assessmentid);
         if (answers == null || answers.Count == 0)
         {
-            _logger.LogWarning("No answers found for candidate ID: {CandidateId} and test ID: {TestId}", candidateId, testId);
+            _logger.LogWarning("No answers found for candidate ID: {CandidateId} and Assessment ID: {AssessmentId}", candidateId, assessmentid);
             return NotFound("No answers found for the specified candidate and test.");
         }
-        _logger.LogInformation("Retrieved answers for candidate ID: {CandidateId} and test ID: {TestId}", candidateId, testId);
+        _logger.LogInformation("Retrieved answers for candidate ID: {CandidateId} and test ID: {AssessmentId}", candidateId, assessmentid);
         return Ok(answers);
     }
 
     //http://localhost:5299/api/candidateanswer/assessmentanswers/candidates/1/tests/1/results
     [HttpGet("assessmentanswers/candidates/{candidateId}/tests/{testId}/results")]
-    public async Task<IActionResult> GetCandidateAnswerResults(int candidateId, int testId)
+    public async Task<IActionResult> GetCandidateAnswerResults(int candidateId, int assessmentid)
     {
         _logger.LogInformation(
-            "GetCandidateAnswerResults called with candidateId: {cand}, testId: {t}",
+            "GetCandidateAnswerResults called with candidateId: {cand}, assessmentid: {t}",
             candidateId,
-            testId);
+            assessmentid);
 
         List<CandidateAnswerResult> results =
-            await _service.GetCandidateAnswerResultsAsync(candidateId, testId);
+            await _service.GetCandidateAnswerResultsAsync(candidateId, assessmentid);
 
         if (results == null || results.Count == 0)
         {
             _logger.LogWarning(
-                "No answers found for candidate {cand} test {t}",
+                "No answers found for candidate {cand} assessment {a}",
                 candidateId,
-                testId);
+                assessmentid);
             return NotFound("No answers found for the specified candidate and test.");
         }
         return Ok(results);
@@ -72,22 +72,22 @@ public class CandidateAnswerController : ControllerBase
 
     //Get candidate and test details for the candidate answers
     [HttpGet("assessmentanswers/candidates/{candidateId}/tests/{testId}/details")]
-    public async Task<IActionResult> GetCandidateTestDetails(int candidateId, int testId)
+    public async Task<IActionResult> GetCandidateTestDetails(int candidateId, int AssessmentId)
     {
         _logger.LogInformation(
-            "GetCandidateTestDetails called with candidateId: {cand}, testId: {t}",
+            "GetCandidateTestDetails called with candidateId: {cand}, AssessmentId: {as}",
             candidateId,
-            testId);
+            AssessmentId);
 
         CandidateTestDetails details =
-            await _service.GetCandidateTestDetails(candidateId, testId);
+            await _service.GetCandidateTestDetails(candidateId, AssessmentId);
 
         if (details == null)
         {
             _logger.LogWarning(
                 "No details found for candidate {cand} test {t}",
                 candidateId,
-                testId);
+                AssessmentId);
             return NotFound("No details found for the specified candidate and test.");
         }
         return Ok(details);
