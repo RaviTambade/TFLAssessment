@@ -30,7 +30,7 @@ public class ResultRepository : IResultRepository
             MySqlCommand command = new MySqlCommand(query, connection);
             command.CommandType = CommandType.StoredProcedure;
             command.Parameters.AddWithValue("@pcandidateId", candidateId);
-            command.Parameters.AddWithValue("@ptestId", testId);
+            command.Parameters.AddWithValue("@passessmentId", testId);
             command.Parameters.AddWithValue("@pscore", MySqlDbType.Int32);
             command.Parameters["@pscore"].Direction = ParameterDirection.Output;
             await connection.OpenAsync();

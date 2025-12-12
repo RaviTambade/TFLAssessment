@@ -92,6 +92,7 @@ namespace Transflower.TFLAssessment.Repositories
 
         public async Task<List<CandidateAnswerResult>> GetCandidateAnswerResultsAsync(int candidateId, int assessmentid)
         {
+            Console.WriteLine("GetCandidateAnswerResultsAsync called with candidateId: " + candidateId + " and AssessmentId: " + assessmentid);
             var list = new List<CandidateAnswerResult>();
             string sql = @"
                 SELECT 
@@ -130,6 +131,7 @@ namespace Transflower.TFLAssessment.Repositories
 
         public async Task<CandidateTestDetails> GetCandidateTestDetails(int candidateId, int AssessmentId)
         {
+            Console.WriteLine("****GetCandidateTestDetails called with candidateId: " + candidateId + " and AssessmentId: " + AssessmentId);    
             CandidateTestDetails details = new CandidateTestDetails();
 
             using (MySqlConnection connection = new MySqlConnection(_connectionString))
@@ -151,7 +153,11 @@ namespace Transflower.TFLAssessment.Repositories
                     }
                 }
                 // Query test
+<<<<<<< HEAD
                 string testQuery = "SELECT tests.id, tests.name, tests.passinglevel, tests.scheduleddate FROM tests Inner join assessments on assessments.test_id= tests.id WHERE assessments.id = @AssessmentId";
+=======
+                string testQuery = "SELECT tests.id, tests.name AS TestName, tests.passinglevel, tests.scheduleddate FROM tests Inner join assessments on assessments.test_id= tests.id WHERE assessments.id = @AssessmentId";
+>>>>>>> 2a81a862673f993c89fe1b23ffb1e8d6f9b24007
                 using (MySqlCommand cmd2 = new MySqlCommand(testQuery, connection))
                 {
                     cmd2.Parameters.AddWithValue("@AssessmentId", AssessmentId);
@@ -160,8 +166,13 @@ namespace Transflower.TFLAssessment.Repositories
                     {
                         if (await reader2.ReadAsync())
                         {
+<<<<<<< HEAD
                             details.AssessmentId = reader2.GetInt32("id");
                             details.TestName = reader2.GetString("name");
+=======
+                            details.TestId = reader2.GetInt32("id");
+                            details.TestName = reader2.GetString("TestName");
+>>>>>>> 2a81a862673f993c89fe1b23ffb1e8d6f9b24007
                             details.TestDate = reader2.GetDateTime("scheduleddate");
                             details.TestPassingLevel = reader2.GetInt32("passinglevel");
                         }

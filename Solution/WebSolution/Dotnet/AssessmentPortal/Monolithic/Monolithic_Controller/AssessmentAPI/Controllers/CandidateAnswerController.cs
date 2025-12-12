@@ -48,13 +48,21 @@ public class CandidateAnswerController : ControllerBase
     }
 
     //http://localhost:5299/api/candidateanswer/assessmentanswers/candidates/1/tests/1/results
+<<<<<<< HEAD
     [HttpGet("assessmentanswers/candidates/{candidateId}/tests/{testId}/results")]
+=======
+    [HttpGet("assessmentanswers/candidates/{candidateId}/tests/{assessmentid}/results")]
+>>>>>>> 2a81a862673f993c89fe1b23ffb1e8d6f9b24007
     public async Task<IActionResult> GetCandidateAnswerResults(int candidateId, int assessmentid)
     {
         _logger.LogInformation(
             "GetCandidateAnswerResults called with candidateId: {cand}, assessmentid: {t}",
             candidateId,
             assessmentid);
+<<<<<<< HEAD
+=======
+
+>>>>>>> 2a81a862673f993c89fe1b23ffb1e8d6f9b24007
 
         List<CandidateAnswerResult> results =
             await _service.GetCandidateAnswerResultsAsync(candidateId, assessmentid);
@@ -71,7 +79,11 @@ public class CandidateAnswerController : ControllerBase
     }
 
     //Get candidate and test details for the candidate answers
+<<<<<<< HEAD
     [HttpGet("assessmentanswers/candidates/{candidateId}/tests/{testId}/details")]
+=======
+    [HttpGet("assessmentanswers/candidates/{candidateId}/tests/{AssessmentId}/details")]
+>>>>>>> 2a81a862673f993c89fe1b23ffb1e8d6f9b24007
     public async Task<IActionResult> GetCandidateTestDetails(int candidateId, int AssessmentId)
     {
         _logger.LogInformation(

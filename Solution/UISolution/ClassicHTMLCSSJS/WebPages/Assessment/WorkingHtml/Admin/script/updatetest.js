@@ -99,12 +99,13 @@
       
           const requestBody = {
             testId: parseInt(testId),
-            employeeIds: selectedIds,
+            candidateIds: selectedIds,
             scheduledStart: scheduledStart,
             scheduledEnd: scheduledEnd,
+            createdBy: localStorage.getItem("userId"),
             status: $("#statusDropdown").val(), // Get from dropdown
             rescheduledOn: null,
-            remarks: remarks || "No remark"
+            // remarks: remarks || "No remark"
           };
       
           $.ajax({

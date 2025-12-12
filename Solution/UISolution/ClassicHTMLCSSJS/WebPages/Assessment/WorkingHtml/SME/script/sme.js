@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 var subjectId;
 var conceptId;
 
@@ -60,6 +61,41 @@ $(document).ready(function () {
 
   loadSubjects();
 
+=======
+function getToken() {
+  return localStorage.getItem("token");
+}
+
+function getRole() {
+  return localStorage.getItem("role");
+}
+
+// Redirect unauthorized users
+(function checkAuth() {
+  if (!getToken() || getRole() !== "sme") {
+    alert("Access denied.");
+    window.location.href = "/loginJWT.html";
+  }
+})();
+
+$(document).ready(function () {
+
+  // Show username
+  const userName = localStorage.getItem("userName");
+  if (userName) {
+    $("#userName").text(userName);
+  }
+
+  // Show email
+  const userEmail = localStorage.getItem("userEmail");
+  if (userEmail) {
+    $("#userEmail").text(userEmail);
+  }
+
+  // Load SME subjects
+  loadSubjects();
+
+>>>>>>> 2a81a862673f993c89fe1b23ffb1e8d6f9b24007
   // Sidebar clicks
   $("#createTestLink").click(function (e) {
     e.preventDefault();
@@ -96,6 +132,7 @@ $(document).ready(function () {
       }
     });
   });
+<<<<<<< HEAD
 
 });
 
@@ -256,3 +293,31 @@ $(document).on("click", "#submitPreviewBtn", function () {
 });
 
 
+=======
+
+});
+
+function loadSubjects() {
+  let smeId = localStorage.getItem("userId");
+
+  $.ajax({
+    url: `http://localhost:5238/api/Assessment/subjectBySme/${smeId}`,
+    method: "GET",
+    headers: { "Authorization": "Bearer " + getToken() },
+    success: function (subjects) {
+     
+      let html = "<h3>Your Subjects</h3><ul>";
+      subjects.forEach(s => {
+        html += `<li>${s.title}</li>`;
+      });
+      html += "</ul>";
+
+      $("#content").append(html);
+    },
+    error: function (err) {
+      console.error(err);
+      alert("Failed to load subjects");
+    }
+  });
+}
+>>>>>>> 2a81a862673f993c89fe1b23ffb1e8d6f9b24007

@@ -43,6 +43,7 @@
 
     $(document).ready(function () {
       // Load candidate test details
+      console.log("detailsUrl ",detailsUrl)
       $.getJSON(detailsUrl, function (details) {
         const date = new Date(details.testDate).toLocaleDateString();
 
