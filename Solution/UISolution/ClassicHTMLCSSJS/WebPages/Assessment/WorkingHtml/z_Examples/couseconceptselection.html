@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Course Selector (jQuery)</title>
+
+    <!-- jQuery CDN -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .concept-box { margin-top: 10px; }
+    </style>
+</head>
+<body>
+    
+    <h2>Select a Course</h2>
+
+    <!-- Courses -->
+    <label><input type="radio" name="course" value="HTML"> HTML</label><br>
+    <label><input type="radio" name="course" value="CSS"> CSS</label><br>
+    <label><input type="radio" name="course" value="JavaScript"> JavaScript</label><br>
+
+    <div id="concepts" class="concept-box"></div>
+
+    <button id="submitBtn">Submit</button>
+-
+    <h2>Output:</h2>
+    <div id="output"></div>
+
+
+    <script>
+        // Concepts for each course
+        const courseConcepts = {
+            "HTML": ["Tags", "Elements", "Forms", "Attributes"],
+            "CSS": ["Selectors", "Box Model", "Flexbox", "Grid"],
+            "JavaScript": ["Variables", "Functions", "DOM", "Events"]
+        };
+
+        // When selecting a course
+        $("input[name='course']").on("change", function () {
+            let course = $(this).val();
+            let html = `<h3>Select Concepts:</h3>`;
+
+            courseConcepts[course].forEach(concept => {
+                html += `
+                    <label>
+                        <input type="checkbox" name="concept" value="${concept}">
+                        ${concept}
+                    </label><br>
+                `;
+            });
+
+            $("#concepts").html(html);
+        });
+
+        // Submit button action
+        $("#submitBtn").on("click", function () {
+            let selectedCourse = $("input[name='course']:checked").val();
+
+            if (!selectedCourse) {
+                alert("Please select a course!");
+                return;
+            }
+
+            let selectedConcepts = $("input[name='concept']:checked")
+                .map(function () { return $(this).val(); })
+                .get();
+
+            $("#output").html(`
+                <p><strong>Selected Course:</strong> ${selectedCourse}</p>
+                <p><strong>Selected Concepts:</strong> ${selectedConcepts.join(", ") || "None"}</p>
+            `);
+        });
+    </script>
+
+</body>
+</html>

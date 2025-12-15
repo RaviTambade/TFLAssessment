@@ -1,88 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Login</title>
+
+  <!-- Tailwind CDN -->
+  <script src="./Script/Tailwind.min.js"></script>
+
+  <!-- jQuery -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(to right, #B22222, #FF8C00); /* Red to Orange gradient */
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
 
-    .login-container {
-      background: #fff;
-      padding: 40px;
-      border-radius: 12px;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-      width: 100%;
-      max-width: 400px;
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Segoe UI', 'sans-serif']
+          }
+        }
+      }
     }
-
-    h2 {
-      text-align: center;
-      margin-bottom: 30px;
-      color: #B22222;
-    }
-
-    label {
-      font-weight: bold;
-      color: #FF4500;
-    }
-
-    input[type="email"],
-    input[type="password"] {
-      width: 100%;
-      padding: 12px;
-      margin-top: 6px;
-      margin-bottom: 16px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      font-size: 14px;
-    }
-
-    button {
-      width: 100%;
-      padding: 12px;
-      background-color: #FF4500;
-      border: none;
-      color: white;
-      font-size: 16px;
-      font-weight: bold;
-      border-radius: 6px;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-
-    button:hover {
-      background-color: #E64500;
-    }
-
-    #error {
-      text-align: center;
-      margin-top: 15px;
-      color: red;
-    }
-  </style>
+  </script>
 </head>
-<body>
-  <div class="login-container">
-    <h2>Login</h2>
-    <form id="loginForm">
-      <label>Email:</label>
-      <input type="email" id="email" required />
 
-      <label>Password:</label>
-      <input type="password" id="password" required />
+<body class="h-screen flex justify-center items-center font-sans">
 
-      <button type="submit">Login</button>
+  <div class="bg-white p-10 rounded-xl shadow-2xl w-full max-w-sm">
+    <h2 class="text-2xl font-bold text-center mb-8 text-black">Login</h2>
+
+    <form id="loginForm" class="space-y-4">
+      <div>
+        <label class="font-semibold text-black">Email:</label>
+        <input type="email" id="email" required
+          class="w-full mt-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-400 focus:outline-none text-sm" />
+      </div>
+
+      <div>
+        <label class="font-semibold text-black">Password:</label>
+        <input type="password" id="password" required
+          class="w-full mt-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-400 focus:outline-none text-sm" />
+      </div>
+
+      <button type="submit"
+        class="w-full bg-[#7870d2] hover:bg-[#5c55a4] text-white py-2 rounded-lg font-bold transition">
+        Login
+      </button>
     </form>
-    <p id="error"></p>
+
+    <p id="error" class="text-center text-red-600 mt-4"></p>
   </div>
 
   <script>
@@ -94,48 +60,53 @@
           email: $("#email").val(),
           password: $("#password").val()
         };
-      
+
         $.ajax({
           url: "http://localhost:5238/api/Auth/login",
           type: "POST",
           contentType: "application/json",
           data: JSON.stringify(loginData),
+
           success: function (response) {
-                  console.log("responseresponseresponse:", response);
+            console.log("responseresponseresponse:", response);
 
             const token = response.token;
             const user = response.user;
             const role = user.userRoles[0].role.name.toLowerCase();
-            
-             if (!user.id) {
+
+            if (!user.id) {
               $("#error").text("User ID is missing in the response.");
-              return; // stop further execution
+              return;
             }
 
             localStorage.setItem("token", token);
-            localStorage.setItem("userId", user.id); 
+            localStorage.setItem("userId", user.id);
             localStorage.setItem("userEmail", user.email);
             localStorage.setItem("role", role);
+<<<<<<< HEAD
+=======
            localStorage.setItem("userName", user.firstname);
+>>>>>>> 2a81a862673f993c89fe1b23ffb1e8d6f9b24007
 
             if (role === "admin") {
               window.location.href = "Admin/admin.html";
             } else if (role === "sme") {
               window.location.href = "SME/sme.html";
             } else if (role === "student") {
-              
               window.location.href = "Student/student.html";
             } else {
               $("#error").text("Role not recognized.");
             }
           },
+
           error: function () {
             $("#error").text("Invalid email or password.");
           }
         });
       });
     });
-
   </script>
+
 </body>
+
 </html>

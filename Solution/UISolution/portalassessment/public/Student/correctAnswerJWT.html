@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Candidate Test Review</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="font-[Arial] bg-[#f9f9f9]">
+
+
+  <div id="candidate-details"
+       class="bg-[#e9ecef] p-[15px] rounded-[8px] mb-[20px] max-w-[900px] mx-auto shadow-sm">
+    Loading candidate details...
+  </div>
+
+
+  <div id="questions-container"
+       class="max-w-[900px] mx-auto">
+    Loading questions...
+  </div>
+
+  <script>
+    function getQueryParam(param) {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get(param);
+    }
+
+    const testId = getQueryParam("testid");
+    const candidateId = getQueryParam("userid");
+
+    const remoteWeb = "http://localhost:5238";
+    const candidateAnswerWeb = "http://localhost:5238";
+    const resultWeb = "http://localhost:5238";
+
+    const questionsUrl = `${remoteWeb}/api/questionbank/questions/tests/${testId}`;
+    const answersUrl = `${candidateAnswerWeb}/api/candidateanswer/assessmentanswers/candidates/${candidateId}/tests/${testId}/results`;
+    const detailsUrl = `${candidateAnswerWeb}/api/candidateanswer/assessmentanswers/candidates/${candidateId}/tests/${testId}/details`;
+    const scoreUrl = `${resultWeb}/api/result/candidates/${candidateId}/tests/${testId}/score`;
+
+    $(document).ready(function () {
+      // Load candidate test details
+      $.getJSON(detailsUrl, function (details) {
+        const date = new Date(details.testDate).toLocaleDateString();
+
+        $.getJSON(scoreUrl, function (scoreData) {
+          const html = `
+            <h2 class="text-[22px] font-bold">Candidate Report</h2>
+            <p><strong>Name:</strong> ${details.candidateName}</p>
+            <p><strong>Test:</strong> ${details.testName}</p>
+            <p><strong>Date:</strong> ${date}</p>
+            <p><strong>Passing Level:</strong> ${details.testPassingLevel}</p>
+            <p><strong>Total Score:</strong> ${scoreData}</p>
+          `;
+          $("#candidate-details").html(html);
+        }).fail(() => {
+          $("#candidate-details").html("Failed to load score.");
+        });
+      }).fail(() => {
+        $("#candidate-details").html("Failed to load candidate details.");
+      });
+
+      // Load questions + answers
+      $.when($.getJSON(questionsUrl), $.getJSON(answersUrl)).done(function (questionsData, answersData) {
+        const questions = questionsData[0];
+        const answers = answersData[0];
+
+        const container = $("#questions-container");
+        container.empty();
+
+        questions.forEach((q, index) => {
+
+          const answer = answers.find(a => a.testQuestionId === q.id);
+          const userAnswer = answer && answer.candidateAnswer ? answer.candidateAnswer.toLowerCase() : null;
+          const correctAnswer = answer && answer.correctAnswer ? answer.correctAnswer.toLowerCase() : null;
+
+          const getOptionClass = (key) => {
+            if (!userAnswer || !correctAnswer) return "";
+            if (key === correctAnswer && key === userAnswer) 
+              return "bg-[#d4edda] text-[#155724] font-bold";
+            if (key === userAnswer && key !== correctAnswer) 
+              return "bg-[#f8d7da] text-[#721c24] font-bold";
+            if (key === correctAnswer) 
+              return "bg-[#d4edda] text-[#155724] font-bold";
+            return "";
+          };
+
+          const html = `
+            <div class="bg-white p-[15px] mb-[20px] rounded-[8px] border border-[#ccc] shadow-sm">
+              <div class="font-bold mb-[10px]">${index + 1}. ${q.title}</div>
+
+              <div class="inline-block my-[5px] px-[10px] py-[5px] rounded ${getOptionClass('a')}">
+                A. ${q.a}
+              </div><br>
+
+              <div class="inline-block my-[5px] px-[10px] py-[5px] rounded ${getOptionClass('b')}">
+                B. ${q.b}
+              </div><br>
+
+              <div class="inline-block my-[5px] px-[10px] py-[5px] rounded ${getOptionClass('c')}">
+                C. ${q.c}
+              </div><br>
+
+              <div class="inline-block my-[5px] px-[10px] py-[5px] rounded ${getOptionClass('d')}">
+                D. ${q.d}
+              </div>
+            </div>
+          `;
+
+          container.append(html);
+        });
+      }).fail(() => {
+        $("#questions-container").html("Error loading questions or answers.");
+      });
+    });
+  </script>
+
+</body>
+</html>

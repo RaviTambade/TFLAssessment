@@ -1,120 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Update Test Status</title>
+
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-  <style>
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #e9eff6;
-      margin: 0;
-      padding: 0;
-    }
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
 
-    .container {
-      max-width: 900px;
-      margin: 40px auto;
-      background-color: #fff;
-      padding: 30px 40px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.1);
-      border-radius: 12px;
-    }
-
-    h2 {
-      color: #2c3e50;
-      margin-bottom: 25px;
-      text-align: center;
-    }
-
-    label {
-      display: block;
-      margin-top: 15px;
-      font-weight: bold;
-      color: #34495e;
-    }
-
-    select, input[type="datetime-local"], input[type="text"], button {
-      width: 100%;
-      padding: 10px 12px;
-      margin-top: 6px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      font-size: 16px;
-    }
-
-    button {
-      background-color: #007bff;
-      color: white;
-      border: none;
-      margin-top: 20px;
-      transition: background-color 0.3s ease;
-    }
-
-    button:hover {
-      background-color: #0056b3;
-    }
-
-    #getStudents, #addStudent {
-      background-color: #28a745;
-    }
-
-    #getStudents:hover, #addStudent:hover {
-      background-color: #218838;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 20px;
-    }
-
-    th, td {
-      padding: 12px;
-      text-align: center;
-      border: 1px solid #ccc;
-    }
-
-    th {
-      background-color: #f8f9fa;
-    }
-
-    #employeeList {
-      margin-top: 20px;
-    }
-  </style>
 </head>
-<body>
 
+<<<<<<< HEAD
+<body class="font-[Segoe_UI] bg-[#e9eff6] m-0 p-0">
+=======
   <div class="container">
     <h2>Update Assign Test Status</h2>
+>>>>>>> 2a81a862673f993c89fe1b23ffb1e8d6f9b24007
 
-    <label for="statusDropdown">Select Status:</label>
-    <select id="statusDropdown">
-      <option value="created">Created</option>
-      <option value="scheduled">Scheduled</option>
-      <option value="cancelled">Cancelled</option>
-      <option value="conducted">Conducted</option>
-    </select>
+  <div class="max-w-[900px] mt-10 mx-auto bg-white p-[30px_40px] shadow-[0_0_15px_rgba(0,0,0,0.1)] rounded-xl">
+    <h2 class="text-[#2c3e50] mb-6 text-center text-2xl font-semibold">Update Test Status</h2>
 
+<<<<<<< HEAD
+    <label for="statusDropdown" class="block mt-4 font-bold text-[#34495e]">Select Status:</label>
+    <select id="statusDropdown"
+      class="w-full p-3 mt-1 border border-[#ccc] rounded-md text-[16px]"></select>
+
+    <button id="changeStatus"
+      class="w-full p-3 mt-5 bg-[#007bff] text-white rounded-md text-[16px] hover:bg-[#0056b3]">Change Status</button>
+=======
     <button id="changeStatus"> Status</button>
 
     <button id="getStudents">AssignTest Students</button>
     <div id="employeeList"></div>
+>>>>>>> 2a81a862673f993c89fe1b23ffb1e8d6f9b24007
 
-    <label>Scheduled Start:</label>
-    <input type="datetime-local" id="scheduledStart">
+    <button id="getStudents"
+      class="w-full p-3 mt-5 bg-[#28a745] text-white rounded-md text-[16px] hover:bg-[#218838]">Get Students</button>
 
-    <label>Scheduled End:</label>
-    <input type="datetime-local" id="scheduledEnd">
+    <div id="employeeList" class="mt-5"></div>
 
+<<<<<<< HEAD
+    <label class="block mt-4 font-bold text-[#34495e]">Scheduled Start:</label>
+    <input type="datetime-local" id="scheduledStart"
+      class="w-full p-3 mt-1 border border-[#ccc] rounded-md text-[16px]">
+=======
     <!-- <label>Remarks:</label>
     <input type="text" id="remarks" placeholder="Enter remarks"> -->
+>>>>>>> 2a81a862673f993c89fe1b23ffb1e8d6f9b24007
 
-    <button id="addStudent">Add Students</button>
+    <label class="block mt-4 font-bold text-[#34495e]">Scheduled End:</label>
+    <input type="datetime-local" id="scheduledEnd"
+      class="w-full p-3 mt-1 border border-[#ccc] rounded-md text-[16px]">
+
+    <label class="block mt-4 font-bold text-[#34495e]">Remarks:</label>
+    <input type="text" id="remarks" placeholder="Enter remarks"
+      class="w-full p-3 mt-1 border border-[#ccc] rounded-md text-[16px]">
+
+    <button id="addStudent"
+      class="w-full p-3 mt-6 bg-[#28a745] text-white rounded-md text-[16px] hover:bg-[#218838]">Add Students</button>
   </div>
+
   <script src="script/updatetest.js"></script>
-  
+
 </body>
+
 </html>

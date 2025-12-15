@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Subject → Concept → Questions</title>
+
+    <!-- Tailwind CDN -->
+    <script src="../Script/Tailwind.min.js"></script>
+    <script src="./subjectselection.js"></script>
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body class="bg-gray-100 min-h-screen p-6">
+
+    <div class="max-w-3xl mx-auto bg-white p-6 shadow-lg rounded-xl">
+
+        <h1 class="text-3xl font-bold text-blue-600 mb-6 text-center">
+            Select Subject → Concept → Questions
+        </h1>
+
+        <!-- SUBJECTS -->
+        <h2 class="text-xl font-semibold mb-3">Subjects</h2>
+
+        <div class="space-y-2 mb-6">
+            <label class="flex items-center gap-2">
+                <input type="radio" name="subject" value="math" class="h-4 w-4 text-blue-600">
+                <span>Mathematics</span>
+            </label>
+
+            <label class="flex items-center gap-2">
+                <input type="radio" name="subject" value="science" class="h-4 w-4 text-blue-600">
+                <span>Science</span>
+            </label>
+        </div>
+
+        <!-- CONCEPT BOX -->
+        <div id="conceptBox" class="hidden border rounded-xl p-4 bg-gray-50 mb-6">
+            <h2 class="text-xl font-semibold mb-3">Concepts</h2>
+            <div id="conceptList" class="space-y-2"></div>
+        </div>
+
+        <!-- QUESTION BOX -->
+        <div id="questionBox" class="hidden border rounded-xl p-4 bg-gray-50 mb-6">
+            <h2 class="text-xl font-semibold mb-3">Questions</h2>
+            <div id="questionList" class="space-y-3"></div>
+        </div>
+
+        <!-- SELECTED QUESTIONS -->
+        <div class="border rounded-xl p-4 bg-blue-50">
+            <h2 class="text-xl font-semibold mb-3 text-blue-700">Selected Questions</h2>
+            <ul id="selectedList" class="list-disc pl-6 text-gray-700"></ul>
+        </div>
+    </div>
+
+<script>
+const data = {
+    math: {
+        concepts: {
+            "Algebra": [
+                "What is x in 2x + 4 = 10?",
+                "Simplify: 3(a + 2)",
+                "Solve: x² = 25"
+            ],
+            "Geometry": [
+                "Define a radius.",
+                "What is area of a circle?",
+                "What is Pythagoras theorem?"
+            ]
+        }
+    },
+    science: {
+        concepts: {
+            "Physics": [
+                "Define force.",
+                "State Newton’s 2nd law.",
+                "What is gravity?"
+            ],
+            "Biology": [
+                "What is photosynthesis?",
+                "Define cell.",
+                "What is DNA?"
+            ]
+        }
+    }
+};
+
+// ---------------- SUBJECT CLICK -----------------
+$('input[name="subject"]').change(function () {
+    let subject = $(this).val();
+    let concepts = data[subject].concepts;
+
+    $("#conceptList").empty();
+    $("#questionList").empty();
+    $("#selectedList").empty();
+
+    $("#questionBox").addClass('hidden');
+
+    // Load concepts
+    $.each(concepts, function (concept, questions) {
+        $("#conceptList").append(`
+            <label class="flex items-center gap-2">
+                <input type="checkbox" class="concept h-4 w-4 text-blue-600" value="${concept}">
+                <span>${concept}</span>
+            </label>
+        `);
+    });
+
+    $("#conceptBox")
+        .hide()
+        .removeClass("hidden")
+        .slideDown(300);
+});
+
+// ---------------- CONCEPT CLICK -----------------
+$(document).on("change", ".concept", function () {
+    let subject = $('input[name="subject"]:checked').val();
+    let selectedConcepts = $(".concept:checked");
+
+    $("#questionList").empty();
+
+    if (selectedConcepts.length === 0) {
+        $("#questionBox").addClass("hidden");
+        return;
+    }
+
+    selectedConcepts.each(function () {
+        let concept = $(this).val();
+        let questions = data[subject].concepts[concept];
+
+        $("#questionList").append(`<h3 class="font-semibold text-blue-700">${concept}</h3>`);
+
+        questions.forEach(q => {
+            $("#questionList").append(`
+                <label class="flex items-center gap-2 ml-4">
+                    <input type="checkbox" class="question h-4 w-4 text-green-600" value="${q}">
+                    <span>${q}</span>
+                </label>
+            `);
+        });
+    });
+
+    $("#questionBox")
+        .hide()
+        .removeClass("hidden")
+        .slideDown(300);
+});
+
+// ---------------- QUESTION CLICK -----------------
+$(document).on("change", ".question", function () {
+    let selectedQuestions = $(".question:checked");
+
+    $("#selectedList").empty();
+
+    selectedQuestions.each(function () {
+        $("#selectedList").append(`<li>${$(this).val()}</li>`);
+    });
+});
+
+</script>
+
+</body>
+</html>
+
+

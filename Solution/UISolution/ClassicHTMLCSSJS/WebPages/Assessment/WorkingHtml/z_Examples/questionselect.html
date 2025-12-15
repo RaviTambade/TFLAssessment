@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Select Questions (Dynamic)</title>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+
+        .question-box {
+            padding: 10px;
+            margin: 6px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        #result {
+            margin-top: 25px;
+            padding: 15px;
+            border: 2px solid #007bff;
+            display: none;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+
+<body>
+
+<h2>Choose Questions From List</h2>
+
+<!-- Container where questions will be inserted -->
+<div id="questionList"></div>
+
+<br>
+<button id="showSelected">Show Selected Questions</button>
+
+<!-- Selected Questions Output -->
+<div id="result">
+    <h3>Selected Questions:</h3>
+    <ul id="selectedList"></ul>
+</div>
+
+<script>
+    // 🔹 1. Questions array (fetch from DB/API later if needed)
+    const questions = [
+        "What is 15 × 9?",
+        "Solve: 3x + 7 = 22",
+        "Define Pythagorean theorem.",
+        "What is gravity?",
+        "Explain the water cycle.",
+        "Who built the Taj Mahal?"
+    ];
+
+    // 🔹 2. On page load, generate question checkboxes dynamically
+    $(document).ready(function () {
+        const container = $("#questionList");
+
+        questions.forEach((q, index) => {
+            const html = `
+                <div class="question-box">
+                    <input type="checkbox" class="q" id="q${index}" value="${q}">
+                    <label for="q${index}">${q}</label>
+                </div>
+            `;
+            container.append(html);
+        });
+
+        // 🔹 3. On button click → show selected questions
+        $("#showSelected").click(function () {
+            $("#selectedList").empty();  
+
+            $(".q:checked").each(function () {
+                $("#selectedList").append(`<li>${$(this).val()}</li>`);
+            });
+
+            if ($(".q:checked").length > 0) {
+                $("#result").show();
+            } else {
+                $("#result").hide();
+                alert("Please select at least one question.");
+            }
+        });
+    });
+</script>
+
+</body>
+</html>
