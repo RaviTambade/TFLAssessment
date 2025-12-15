@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Candidate Tests</title>
+    <title>Candidate Assessments</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
         body {
@@ -51,12 +51,14 @@
 </head>
 <body>
 
-    <h2>Test To Appear</h2>
+    <h2>Assessments To Appear</h2>
 
     <table id="testTable">
         <thead>
             <tr>
-                <th>Test Name</th>
+                <th>Assessment Name</th>
+                <th>Date</th>
+                <th>Score</th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -66,8 +68,8 @@
     </table>
 
     <div id="detailsBox">
-        <h3>Test Details</h3>
-        <p><strong>Test Name:</strong> <span id="dTestName"></span></p>
+        <h3>Assessment Details</h3>
+        <p><strong>Assessment Name:</strong> <span id="dTestName"></span></p>
         <p><strong>Passing Level:</strong> <span id="dPassingLevel"></span></p>
         <p><strong>Duration:</strong> <span id="dDuration"></span></p>
         <p><strong>Scheduled Start:</strong> <span id="dStart"></span></p>
@@ -93,12 +95,15 @@
                         $('#testTable tbody').append(`
                             <tr>
                                 <td>${test.testName}</td>
+                                <td>${new Date(test.scheduledStart).toLocaleDateString()}</td>
+                                <td>${test.score ?? "Not Attempted"}</td>
                                 <td>
                                     <button class="detailsBtn" data-test='${JSON.stringify(test)}'>Details</button>
-                                    <button class="startBtn" data-id="${test.id}">Start Test</button>
                                 </td>
                             </tr>
                         `);
+                                
+                        // <button class="startBtn" data-id="${test.id}">Start Assessment</button>
                     });
 
                     $(".detailsBtn").click(function () {
@@ -114,31 +119,31 @@
                         $("#detailsBox").slideDown();
                     });
 
-                    $(".startBtn").click(function () {
-                        // const testId = $(this).data("id");
-                        const testRow = $(this).closest("tr");
-                        const testData = JSON.parse(testRow.find(".detailsBtn").attr("data-test"));
-                        const testId = testData.id;
+                    // $(".startBtn").click(function () {
+                    //     // const testId = $(this).data("id");
+                    //     const testRow = $(this).closest("tr");
+                    //     const testData = JSON.parse(testRow.find(".detailsBtn").attr("data-test"));
+                    //     const testId = testData.id;
                         
-                        const scheduledStart = new Date(testData.scheduledStart);
-                        const now = new Date();
+                    //     const scheduledStart = new Date(testData.scheduledStart);
+                    //     const now = new Date();
 
-                        // Optional: add a buffer of ±2 minutes (120000 ms)
-                        const buffer = 2 * 60 * 1000;
+                    //     // Optional: add a buffer of ±2 minutes (120000 ms)
+                    //     const buffer = 2 * 60 * 1000;
 
-                        if (Math.abs(now - scheduledStart) <= buffer) {
-                            const userId = localStorage.getItem("userId");
-                            if (!userId) {
-                                alert("User not logged in!");
-                                return;
-                            }
-                            const duration = testData.duration;
-                            // Redirect to test appear page with query params
-                            window.location.href = `testappearJWT.html?userid=${userId}&testid=${testId}&duration=${duration}`;
-                        } else {
-                            alert("You can only start the test at the scheduled time.");
-                        }
-                    });
+                    //     if (Math.abs(now - scheduledStart) <= buffer) {
+                    //         const userId = localStorage.getItem("userId");
+                    //         if (!userId) {
+                    //             alert("User not logged in!");
+                    //             return;
+                    //         }
+                    //         const duration = testData.duration;
+                    //         // Redirect to test appear page with query params
+                    //         window.location.href = `testappearJWT.html?userid=${userId}&testid=${testId}&duration=${duration}`;
+                    //     } else {
+                    //         alert("You can only start the test at the scheduled time.");
+                    //     }
+                    // });
 
                 },
                 error: function () {

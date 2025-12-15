@@ -28,8 +28,6 @@ $(document).ready(function () {
     $("#userEmail").text(userEmail);
   }
 
-  // Load SME subjects
-  loadSubjects();
 
   // Sidebar clicks
   $("#createTestLink").click(function (e) {
@@ -70,6 +68,13 @@ $(document).ready(function () {
 
 });
 
+
+
+
+
+
+
+// Load SME subjects
 function loadSubjects() {
   let smeId = localStorage.getItem("userId");
 
@@ -78,14 +83,14 @@ function loadSubjects() {
     method: "GET",
     headers: { "Authorization": "Bearer " + getToken() },
     success: function (subjects) {
-     
-      let html = "<h3>Your Subjects</h3><ul>";
-      subjects.forEach(s => {
-        html += `<li>${s.title}</li>`;
-      });
-      html += "</ul>";
 
-      $("#content").append(html);
+      let subjectList = subjects.map(s => s.title).join(", ") + ".";
+
+      let html = `Subject Experties In: ${subjectList}`;
+
+      // $("#content").append(html);
+      $("#subjectContainer").html(html);
+
     },
     error: function (err) {
       console.error(err);
@@ -93,3 +98,36 @@ function loadSubjects() {
     }
   });
 }
+loadSubjects();
+
+//select subject for creating test
+
+$("#loadSubjectsBtn").click(function () {
+  let smeId = localStorage.getItem("userId");
+  console.log("SME ID:", smeId);
+
+  $.ajax({
+    url: `http://localhost:5238/api/subject/GetSmeSubjects/${smeId}`,
+    method: "GET",
+    success: function (subjects) {
+      console.log("Subjects:", subjects);
+
+      let html = `<h3>Select Subject</h3>`;
+
+      subjects.forEach(sub => {
+        html += `
+                <div>
+                    <input type="radio" name="subject" class="subjectRadio" value="${sub.id}">
+                    <label>${sub.title}</label> 
+                </div>
+            `;
+      });
+
+      $("#subjectsBox").html(html).show();
+    },
+    error: function (err) {
+      console.error(err);
+    }
+  });
+
+});

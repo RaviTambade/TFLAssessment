@@ -112,8 +112,6 @@ public class QuestionBankController : ControllerBase
         return Ok(questions);
     }
 
-
-    
     //http://localhost:5238/api/questionbank/questions/subjects/options/4/concepts/1
     [HttpGet("questions/subjects/options/{subjectId}/concepts/{conceptId}")]
     public async Task<IActionResult> GetQuestionsBySubjectAndConceptWithOptions(int subjectId,int conceptId)

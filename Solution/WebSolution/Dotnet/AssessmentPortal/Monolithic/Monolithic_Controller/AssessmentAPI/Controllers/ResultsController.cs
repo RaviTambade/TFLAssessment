@@ -199,7 +199,7 @@ namespace Transflower.TFLAssessment.Controllers
             return Ok(result);
         }
 
-        // URL: http://localhost:5238/api/Result/candidates/13/scores
+        // URL: http://localhost:5238/api/Result/candidates/1/scores
         // [HttpGet("candidates/{candidateId}")]
         [HttpGet("candidates/{candidateId}/scores")]
         public async Task<IActionResult> GetCandidateAllScore(int candidateId)

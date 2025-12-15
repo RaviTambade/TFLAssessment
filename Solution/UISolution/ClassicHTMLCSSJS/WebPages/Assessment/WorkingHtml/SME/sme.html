@@ -70,7 +70,34 @@
   </div>
 
   <div class="main-content" id="content">
-    <h2>Welcome,<span id="userName"></span></h2>
+    <div>
+      <h2>Welcome,<span id="userName"></span></h2>
+    </div>
+    <div id="subjectContainer"></div>
+    <br>
+    <br>
+
+    <!-- Load Expert Data Button -->
+    <button id="loadSubjectsBtn">Load My Expert Subjects</button>
+
+    <!-- Subjects List -->
+    <div id="subjectsBox" class="box" style="display:none;"></div>
+
+    <!-- Concepts List -->
+    <div id="conceptsBox" class="box" style="display:none;"></div>
+
+    <!-- Questions List -->
+    <div id="questionsBox" class="box" style="display:none;"></div>
+
+    <!-- Preview Section -->
+    <div id="previewSection" style="display:none;">
+      <h3>Preview</h3>
+      <div id="preview-box"></div>
+      <button id="doneBtn">Done</button>
+      <button id="editBtn">Edit</button>
+    </div>
+
+
   </div>
   <script src="script/sme.js"></script>
   
