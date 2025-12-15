@@ -881,5 +881,53 @@ public class AssessmentDapperRepository : IAssessmentRepository
         return tests;
     }
 
+     public async Task<List<CandidateAssesmentHistory>> GetAssesmentHistory(int candidateid)
+{
+    List<CandidateAssesmentHistory> CandidateAssesmentsHistory = new();
+
+    const string query = @"
+        SELECT 
+            t.Name,
+            ctr.score,
+            DATE(ctr.teststarttime) AS Date
+        FROM candidatetestresults ctr
+        JOIN tests t ON ctr.id = t.id
+        WHERE ctr.candidateid = @candidateId;
+    ";
+
+    using MySqlConnection connection = new MySqlConnection(_connectionString);
+    using MySqlCommand command = new MySqlCommand(query, connection);
+
+    command.Parameters.AddWithValue("@candidateId", candidateid);
+
+    await connection.OpenAsync();
+    using MySqlDataReader reader = command.ExecuteReader();
+
+    while (reader.Read())
+    {
+        string assessmentName = reader.IsDBNull("Name")
+            ? string.Empty
+            : reader["Name"].ToString();
+
+        DateTime? assessmentDate = reader.IsDBNull("Date")
+            ? (DateTime?)null
+            : reader.GetDateTime("Date");
+
+        int score = reader.IsDBNull("score")
+            ? 0
+            : reader.GetInt32("score");
+
+        CandidateAssesmentsHistory.Add(new CandidateAssesmentHistory
+        {
+            AssessmentName = assessmentName,
+            AssessmentDate = assessmentDate,
+            Score = score
+        });
+    }
+
+    return CandidateAssesmentsHistory;
+}
+
+
 
 }
