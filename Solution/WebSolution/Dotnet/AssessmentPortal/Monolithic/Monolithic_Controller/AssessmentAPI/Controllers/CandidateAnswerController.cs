@@ -56,7 +56,6 @@ public class CandidateAnswerController : ControllerBase
             candidateId,
             assessmentid);
 
-
         List<CandidateAnswerResult> results =
             await _service.GetCandidateAnswerResultsAsync(candidateId, assessmentid);
 

@@ -92,7 +92,6 @@ namespace Transflower.TFLAssessment.Repositories
 
         public async Task<List<CandidateAnswerResult>> GetCandidateAnswerResultsAsync(int candidateId, int assessmentid)
         {
-            Console.WriteLine("GetCandidateAnswerResultsAsync called with candidateId: " + candidateId + " and AssessmentId: " + assessmentid);
             var list = new List<CandidateAnswerResult>();
             string sql = @"
                 SELECT 
@@ -131,7 +130,6 @@ namespace Transflower.TFLAssessment.Repositories
 
         public async Task<CandidateTestDetails> GetCandidateTestDetails(int candidateId, int AssessmentId)
         {
-            Console.WriteLine("****GetCandidateTestDetails called with candidateId: " + candidateId + " and AssessmentId: " + AssessmentId);    
             CandidateTestDetails details = new CandidateTestDetails();
 
             using (MySqlConnection connection = new MySqlConnection(_connectionString))
