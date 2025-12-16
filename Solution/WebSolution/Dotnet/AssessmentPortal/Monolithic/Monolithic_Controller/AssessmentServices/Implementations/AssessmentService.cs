@@ -156,5 +156,9 @@ public class AssessmentService : IAssessmentService
    {
       return  await _repository.GetSmeTestList(smeId);
    }
+    public async Task<List<CandidateAssesmentHistory>> GetAssesmentHistory(int candidateid){
+            return  await _repository.GetAssesmentHistory(candidateid);
+
+    }
    
 }
