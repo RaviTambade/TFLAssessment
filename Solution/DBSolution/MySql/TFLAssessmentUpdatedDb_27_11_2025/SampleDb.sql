@@ -152,36 +152,7 @@ INSERT INTO questionbank VALUES
 (61,6,'In Angular, what is the purpose of the ngOnInit lifecycle hook?','It is called once the component is initialized','It is called when the component is about to be destroyed','It is called when there is an input change to the component','It is called when there is an output change from the component','a',9),
 (62,4,'What is a characteristic of microservices architecture?','Monolithic','Tightly coupled components','Single, large codebase','Decentralized and independently deployable services','d',9),
 (63,4,'Which of the following is a benefit of using microservices?','Centralized management','High complexity','Rapid development and deployment','Tight integration','c',10),
-(64,4,'Which technology is commonly used for inter-service communication in microservices architecture?','HTTP','SMTP','FTP','SNMP','a',10),
-(65,5,'In React, which method is commonly used to convert a JavaScript object into JSON format??','JSON.parse()','JSON.stringify()','toJSON()','React.json()','b',18),
-(66, 5, 'Which function converts a JSON string to an object in React?', 'JSON.parse()', 'JSON.stringify()', 'useEffect()', 'React.parse()', 'a', 18),
-(67, 5, 'Which React hook is commonly used to load JSON data from an API?', 'useState', 'useEffect', 'useMemo', 'useCallback', 'b', 18),
-
-
-(68, 7, 'Which symbol is used for inheritance in C#?', 'extends', 'implements', ':', 'inherits', 'c', 1),
-(69, 7, 'Polymorphism in C# is achieved by?', 'Method Overloading', 'Method Overriding', 'Both', 'None', 'c', 1),
-(70, 7, 'Which symbol is used for inheritance in C#?', 'extends', 'implements', ':', 'inherits', 'c', 1),
-(71, 7, 'Which method cannot be overridden in C#?', 'virtual', 'abstract', 'sealed', 'override', 'c', 1),
-(72, 7, 'Which namespace is used for multithreading in C#?', 'System.MultiThread', 'System.Threading', 'System.Tasks', 'System.Concurrent', 'b', 21),
-(73, 7, 'How do you start a thread in C#?', 'thread.run()', 'thread.execute()', 'thread.Start()', 'Thread.begin()', 'c', 21),
-(74, 7, 'What is a deadlock?', 'Threads execute faster', 'Threads wait on each other forever', 'Thread stops automatically', 'CPU overload', 'b', 21),
-(75, 7, 'Which class is used for asynchronous programming in C#?', 'Thread', 'Task', 'Process', 'Worker', 'b', 21),
-
-(76, 7, 'Which loop in C# always executes at least once?', 'for', 'while', 'do-while', 'foreach', 'c', 22),
-(77, 7, 'Which keyword is used to immediately exit a loop?', 'exit', 'continue', 'break', 'stop', 'c', 22),
-(78, 7, 'Which loop is best suited for iterating through collections?', 'for', 'foreach', 'do-while', 'while', 'b', 22),
-(79, 7, 'What does the continue statement do in a loop?', 'Stops the loop', 'Skips the next iteration', 'Skips the current iteration', 'Restarts the loop', 'c', 22),
-(80, 7, 'What happens when a while loop condition is always true?', 'Loop runs once', 'Loop never runs', 'Infinite loop', 'Compile error', 'c', 22),
-(81, 7, 'Which loop is most suitable when the number of iterations is known?', 'while', 'foreach', 'do-while', 'for', 'd', 2),
-(82, 7, 'Which part of a for loop executes after each iteration?', 'Condition', 'Update expression', 'Initialization', 'Return statement', 'b', 22),
-(83, 7, 'Which of the following loops is entry-controlled?', 'do-while', 'foreach', 'for', 'None', 'c', 22),
-(84, 7, 'Which loop is exit-controlled?', 'for', 'while', 'do-while', 'foreach', 'c', 2),
-(85, 7, 'What keyword is used to terminate only the current iteration of a loop?', 'break', 'continue', 'stop', 'halt', 'b', 22);
-
-
-
-
-
+(64,4,'Which technology is commonly used for inter-service communication in microservices architecture?','HTTP','SMTP','FTP','SNMP','a',10);
 
 INSERT INTO subjectmatterexperts (id, employeeid, subjectid, certificationdate) VALUES
 (1,1,1,'2023-02-15'),
@@ -344,6 +315,38 @@ INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(4,10,'
 
 
 -- =========================================================================================================================
+
+
+INSERT INTO candidatetestresults VALUES
+(1,1,2,'2015-11-05 14:29:36','2025-08-06 23:39:59',2),
+(2,1,2,'2015-11-05 14:29:36','2025-08-28 16:16:24',1),
+(3,1,10,'2015-11-06 14:29:36','2015-11-06 16:29:36',5),
+(4,1,9,'2015-11-05 14:29:36','2015-11-05 16:29:36',3),
+(5,3,8,'2015-11-07 14:29:36','2015-11-07 16:29:36',4),
+(7,2,8,'2015-11-07 14:29:36','2015-11-07 16:29:36',7),
+(8,5,10,'2015-11-08 14:29:36','2015-11-08 16:29:36',8),
+(9,2,1,'2025-07-24 23:46:41','2025-07-24 23:47:26',6),
+(10,3,2,'2025-08-06 18:16:38',NULL,1),
+(11,1,2,'2025-08-28 16:12:03','2025-08-28 16:16:24',1),
+(12,1,2,'2025-09-03 13:14:46',NULL,1),
+(13,1,2,'2025-09-03 13:18:38',NULL,1),
+(14,1,2,'2025-09-03 15:19:04',NULL,1),
+(15,1,2,'2025-09-03 17:24:38',NULL,1),
+(16,1,NULL,'2025-09-11 10:33:58',NULL,1),
+(17,5,0,'2025-10-07 19:09:08','2025-10-07 19:09:54',6);
+
+
+INSERT INTO employeeperformance VALUES
+(1,1,'poor','good','good','poor'),
+(2,2,'poor','good','good','very good'),
+(3,3,'poor','good','good','poor'),
+(4,4,'poor','good','good','poor'),
+(5,5,'poor','good','good','poor'),
+(6,6,'poor','good','good','poor'),
+(7,7,'poor','good','good','poor'),
+(8,8,'poor','good','good','poor');
+
+
 INSERT INTO user_session VALUES
 (1, 1, '2025-11-20 15:40:51', '2025-11-20 15:42:04', 'LOGGED_OUT');
 
@@ -365,38 +368,5 @@ VALUES
 INSERT INTO Assessments 
 (test_id, candidate_id, status, createdby, createdon, scheduledstart, scheduledend)
 VALUES
-(4, 4, 'conducted', 1, NOW(), '2025-01-25 14:00:00', '2025-01-25 16:00:00');
-
-
-INSERT INTO candidatetestresults VALUES
-(1,1,2,'2015-11-05 14:29:36','2025-08-06 23:39:59',2),
-(2,1,2,'2015-11-05 14:29:36','2025-08-28 16:16:24',1),
-(3,1,10,'2015-11-06 14:29:36','2015-11-06 16:29:36',5),
-(4,1,9,'2015-11-05 14:29:36','2015-11-05 16:29:36',3),
-(5,3,8,'2015-11-07 14:29:36','2015-11-07 16:29:36',4),
-(7,2,8,'2015-11-07 14:29:36','2015-11-07 16:29:36',7),
-(8,4,10,'2015-11-08 14:29:36','2015-11-08 16:29:36',8),
-(9,2,1,'2025-07-24 23:46:41','2025-07-24 23:47:26',6),
-(10,3,2,'2025-08-06 18:16:38',NULL,1),
-(11,1,2,'2025-08-28 16:12:03','2025-08-28 16:16:24',1),
-(12,1,2,'2025-09-03 13:14:46',NULL,1),
-(13,1,2,'2025-09-03 13:18:38',NULL,1),
-(14,1,2,'2025-09-03 15:19:04',NULL,1),
-(15,1,2,'2025-09-03 17:24:38',NULL,1),
-(16,1,NULL,'2025-09-11 10:33:58',NULL,1),
-(17,4,0,'2025-10-07 19:09:08','2025-10-07 19:09:54',6);
-
-
-INSERT INTO employeeperformance VALUES
-(1,1,'poor','good','good','poor'),
-(2,2,'poor','good','good','very good'),
-(3,3,'poor','good','good','poor'),
-(4,4,'poor','good','good','poor'),
-(5,5,'poor','good','good','poor'),
-(6,6,'poor','good','good','poor'),
-(7,7,'poor','good','good','poor'),
-(8,8,'poor','good','good','poor');
-
-
-
+(13, 4, 'conducted', 1, NOW(), '2025-01-25 14:00:00', '2025-01-25 16:00:00');
 
