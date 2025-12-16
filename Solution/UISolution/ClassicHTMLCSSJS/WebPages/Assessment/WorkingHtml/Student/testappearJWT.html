@@ -6,72 +6,102 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Objective Test</title>
 
-  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons (optional) -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <!-- jQuery -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f4f6f8;
+    }
+
+    .card {
+      border-radius: 1rem;
+    }
+
+    .card-header {
+      border-radius: 1rem 1rem 0 0;
+    }
+
+    .form-check-input {
+      margin-top: 0.4rem;
+    }
+
+    .progress-bar {
+      transition: width 0.4s ease-in-out;
+    }
+
+    #stopWatch {
+      font-size: 2.5rem;
+      font-weight: bold;
+      color: #27ae60;
+    }
+
+    #lblresult {
+      font-size: 1.2rem;
+      color: #2c3e50;
+    }
+  </style>
 </head>
 
-<body class="bg-[#f4f6f8] font-[Segoe UI]">
-  <div class="container mx-auto py-5 px-3">
-    <div class="bg-white shadow-lg rounded-xl border border-transparent">
-
-      <div class="bg-[#0d6efd] text-white text-center rounded-t-xl p-4">
-        <h2 class="text-2xl font-semibold">Objective Test</h2>
+<body class="bg-light">
+  <div class="container py-5">
+    <div class="card shadow-lg border-0">
+      <div class="card-header bg-primary text-white text-center">
+        <h2 class="mb-0">Objective Test</h2>
         <small>Transflower Learning Private Limited</small>
       </div>
 
-  
-      <div class="p-6">
-
+      <div class="card-body">
         <div class="text-center mb-4">
-          <div id="stopWatch" class="text-[2.5rem] font-bold text-[#27ae60]">0</div>
+          <div id="stopWatch">0</div>
         </div>
 
         <div id="questionSection">
+          <h5 id="pTitle" class="mb-4 text-dark"></h5>
 
-          <h5 id="pTitle" class="text-lg text-[#2c3e50] mb-4"></h5>
-
-          <div class="flex items-start gap-2 mb-2">
-            <input type="radio" name="answer" id="a" class="mt-1">
-            <label for="a" id="lblOptionA"></label>
+          <div class="form-check mb-2">
+            <input type="radio" name="answer" id="a" class="form-check-input">
+            <label class="form-check-label" for="a" id="lblOptionA"></label>
           </div>
 
-          <div class="flex items-start gap-2 mb-2">
-            <input type="radio" name="answer" id="b" class="mt-1">
-            <label for="b" id="lblOptionB"></label>
+          <div class="form-check mb-2">
+            <input type="radio" name="answer" id="b" class="form-check-input">
+            <label class="form-check-label" for="b" id="lblOptionB"></label>
           </div>
 
-          <div class="flex items-start gap-2 mb-2">
-            <input type="radio" name="answer" id="c" class="mt-1">
-            <label for="c" id="lblOptionC"></label>
+          <div class="form-check mb-2">
+            <input type="radio" name="answer" id="c" class="form-check-input">
+            <label class="form-check-label" for="c" id="lblOptionC"></label>
           </div>
 
-          <div class="flex items-start gap-2 mb-4">
-            <input type="radio" name="answer" id="d" class="mt-1">
-            <label for="d" id="lblOptionD"></label>
+          <div class="form-check mb-3">
+            <input type="radio" name="answer" id="d" class="form-check-input">
+            <label class="form-check-label" for="d" id="lblOptionD"></label>
           </div>
 
-          <div class="flex flex-wrap justify-center gap-3 mt-3">
-            <button id="btnFirst" class="bg-gray-600 text-white px-4 py-2 rounded disabled:opacity-50" disabled>First</button>
-            <button id="btnPrevious" class="bg-gray-600 text-white px-4 py-2 rounded disabled:opacity-50" disabled>Previous</button>
-            <button id="btnNext" class="bg-gray-600 text-white px-4 py-2 rounded disabled:opacity-50" disabled>Next</button>
-            <button id="btnLast" class="bg-gray-600 text-white px-4 py-2 rounded disabled:opacity-50" disabled>Last</button>
+          <div class="d-flex flex-wrap justify-content-center gap-2 mt-3">
+            <button id="btnFirst" class="btn btn-secondary" disabled>First</button>
+            <button id="btnPrevious" class="btn btn-secondary" disabled>Previous</button>
+            <button id="btnNext" class="btn btn-secondary" disabled>Next</button>
+            <button id="btnLast" class="btn btn-secondary" disabled>Last</button>
           </div>
 
-     
-          <div class="flex flex-wrap justify-center gap-3 mt-4">
-            <button id="btnStart" class="bg-green-600 text-white px-4 py-2 rounded">Start</button>
-            <button id="btnSubmit" class="bg-yellow-500 text-white px-4 py-2 rounded">Submit</button>
-            <button id="btnResult" class="bg-sky-500 text-white px-4 py-2 rounded">Show Result</button>
+          <div class="d-flex flex-wrap justify-content-center gap-2 mt-3">
+            <button id="btnStart" class="btn btn-success">Start</button>
+            <button id="btnSubmit" class="btn btn-warning">Submit</button>
+            <button id="btnResult" class="btn btn-info text-white">Show Result</button>
           </div>
 
-   
-          <div class="w-full bg-gray-300 rounded mt-5 h-6 overflow-hidden">
-            <div id="progress1" class="h-full bg-green-600 text-white text-center text-sm leading-6" style="width:0%;">0%</div>
+          <div class="progress mt-4">
+            <div class="progress-bar bg-success" id="progress1" role="progressbar" style="width: 0%;">0%</div>
           </div>
 
-    
-          <p id="lblresult" class="text-center mt-4 font-bold text-[#2c3e50] text-lg"></p>
-
+          <p id="lblresult" class="text-center mt-3 fw-bold"></p>
         </div>
       </div>
     </div>

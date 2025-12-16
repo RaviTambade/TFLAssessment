@@ -1,103 +1,139 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Customer Profile</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Customer Profile</title>
 
-  <!-- Tailwind CSS CDN -->
-  <script src="../Script/Tailwind.min.js"></script>
-</head>
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
 
-<body class="min-h-screen bg-gradient-to-br from-blue-100 to-blue-300 flex justify-center items-center">
+    <style>
+      body {
+        background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+        font-family: "Poppins", sans-serif;
+      }
+      .profile-container {
+        max-width: 700px;
+        margin: 60px auto;
+        background: #fff;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+      }
+      .profile-header {
+        text-align: center;
+        margin-bottom: 25px;
+      }
+      .profile-header img {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 3px solid #0d47a1;
+      }
+      .profile-header h3 {
+        margin-top: 15px;
+        font-weight: 600;
+        color: #0d47a1;
+      }
+      .info-label {
+        font-weight: 600;
+        color: #333;
+      }
+      .info-value {
+        color: #555;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="profile-container">
+        <div class="profile-header">
+          <img
+            src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
+            alt="User Avatar"
+          />
+          <h3 id="profileName"></h3>
+          <p class="text-muted" id="profileRole">
+            User Role: subject matter expert
+          </p>
+        </div>
 
-  <!-- Profile Card -->
-  <div class="w-full max-w-3xl bg-white rounded-2xl shadow-xl p-10 mt-20 ml-60">
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <p class="info-label">Aadhar ID</p>
+            <p class="info-value" id="profileAadhar"></p>
+          </div>
+          <div class="col-md-6 mb-3">
+            <p class="info-label">Full Name</p>
+            <p class="info-value" id="profileFullName"></p>
+          </div>
+          <div class="col-md-6 mb-3">
+            <p class="info-label">Email</p>
+            <p class="info-value" id="profileEmail"></p>
+          </div>
+          <div class="col-md-6 mb-3">
+            <p class="info-label">Contact Number</p>
+            <p class="info-value" id="profileContact"></p>
+          </div>
+        </div>
 
-    <!-- Profile Header -->
-    <div class="text-center mb-10">
-      <img 
-        src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
-        class="w-32 h-32 rounded-full border-4 border-blue-700 mx-auto"
-        alt="User Avatar"
-      />
-
-      <h3 id="profileName" class="text-3xl font-semibold text-blue-800 mt-4"></h3>
-      <p id="profileRole" class="text-gray-500 text-sm">User Role: subject matter expert</p>
+        <div class="text-center mt-4">
+          <button class="btn btn-primary" onclick="editProfile()">
+            Edit Profile
+          </button>
+        </div>
+      </div>
     </div>
 
-    <!-- User Info Grid -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
-      <div>
-        <p class="font-semibold text-gray-800">Aadhar ID</p>
-        <p id="profileAadhar" class="text-gray-600"></p>
-      </div>
+    <script>
+      userId = localStorage.getItem("userId");
 
-      <div>
-        <p class="font-semibold text-gray-800">Full Name</p>
-        <p id="profileFullName" class="text-gray-600"></p>
-      </div>
+      function editProfile() {
+        $("#content").load("EditProfile.html");
+      }
 
-      <div>
-        <p class="font-semibold text-gray-800">Email</p>
-        <p id="profileEmail" class="text-gray-600"></p>
-      </div>
-
-      <div>
-        <p class="font-semibold text-gray-800">Contact Number</p>
-        <p id="profileContact" class="text-gray-600"></p>
-      </div>
-
-    </div>
-
-    <!-- Edit Button -->
-    <div class="text-center mt-10">
-      <button
-        class="px-6 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition"
-        onclick="editProfile()"
-      >
-        Edit Profile
-      </button>
-    </div>
-
-  </div>
-
-  <!-- jQuery (if needed for your AJAX) -->
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-  <script>
-    userId = localStorage.getItem("userId");
-
-    function editProfile() {
-      $("#content").load("EditProfile.html");
-    }
-
-    $(document).ready(function () {
-      $.ajax({
-        url: `http://localhost:5238/api/UserProfile/${userId}`,
-        method: "GET",
-        success: function (data) {
-          if (!data) {
-            alert("Profile Not Found!!");
-            return;
-          }
-
-          document.getElementById("profileName").textContent =
-            data.firstname + " " + data.lastname;
-          document.getElementById("profileFullName").textContent =
-            data.firstname + " " + data.lastname;
-
-          document.getElementById("profileAadhar").textContent = data.aadharId;
-          document.getElementById("profileEmail").textContent = data.email;
-          document.getElementById("profileContact").textContent = data.contactNumber;
-        },
-        error: function (xhr, status, error) {
-          console.error("Error fetching profile:", error);
-        },
+      $(document).ready(function () {
+        $.ajax({
+          url: `http://localhost:5238/api/UserProfile/${userId}`,
+          method: "GET",
+          success: function (data) {
+            if (!data) {
+              alert("Profile Not Found!!");
+              return;
+            }
+            // Display user data
+            document.getElementById("profileName").textContent =
+              data.firstname + " " + data.lastname;
+            document.getElementById("profileFullName").innerText =
+              data.firstname + " " + data.lastname;
+            document.getElementById("profileAadhar").textContent =
+              data.aadharId;
+            document.getElementById("profileEmail").textContent = data.email;
+            document.getElementById("profileContact").textContent =
+              data.contactNumber;
+          },
+          error: function (xhr, status, error) {
+            console.error("Error fetching scores:", error);
+            $("#studentLabel").text("Error loading scores.");
+          },
+        });
       });
-    });
-  </script>
 
-</body>
+      //  userData.Id=id;
+      //          userData.AadharId=aadharid;
+      //          userData.Firstname=firstname;
+      //          userData.Lastname=lastname;
+      //          userData.Email=email;
+      //          userData.ContactNumber=contactnumber;
+      //          userData.Password=password;
+    </script>
+  </body>
 </html>

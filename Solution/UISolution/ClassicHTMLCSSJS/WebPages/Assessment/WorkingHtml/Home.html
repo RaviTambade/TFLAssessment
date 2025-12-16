@@ -1,114 +1,193 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Home | Full Stack Mentorship</title>
-
-  <!-- Tailwind CDN -->
-  <script src="./Script/Tailwind.min.js"></script>
-
-  <!-- FontAwesome -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
-
-  <!-- AOS -->
   <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
 
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: {
-            sans: ['Segoe UI', 'sans-serif']
-          }
-        }
-      }
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f9f9fb;
+      color: #333;
     }
-  </script>
+
+    .navbar {
+      background-color: #fff;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    }
+
+    .navbar-brand {
+      font-style: italic;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+
+       background: linear-gradient(to right, #B22222, #FF8C00);
+       -webkit-background-clip: text;
+       -webkit-text-fill-color: transparent;
+    }
+
+    .navbar-brand img {
+      height: 30px;
+      margin-right: 10px;
+    }
+
+    .navbar-toggler {
+      border: none;
+      padding-right: 0;
+    }
+
+    .nav-link {
+      transition: color 0.3s ease;
+    }
+
+    .nav-link:hover {
+      color: #4b0082;
+    }
+
+    .login-link {
+      transition: all 0.3s ease;
+      padding: 8px 16px;
+      border-radius: 5px;
+    }
+
+    .login-link:hover {
+      background-color: #4b0082;
+      color: #fff !important;
+    }
+
+    .btn-primary {
+      background-color: #4b0082;
+      border: none;
+    }
+
+    .btn-outline-primary {
+      border-color: #4b0082;
+      color: #4b0082;
+    }
+
+    .btn-outline-primary:hover {
+      background-color: #4b0082;
+      color: #fff;
+    }
+
+    .banner {
+      background: url('https://images.unsplash.com/photo-1603574670812-d24560880210?auto=format&fit=crop&w=1920&q=80') no-repeat center center/cover;
+      color: white;
+      padding: 100px 20px;
+      text-align: center;
+    }
+
+    .banner h1 {
+      font-size: 2.5rem;
+      font-weight: bold;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+    }
+
+    .section {
+      padding: 60px 20px;
+    }
+
+    .mentor-card {
+      text-align: center;
+      transition: transform 0.3s ease;
+    }
+
+    .mentor-card:hover {
+      transform: translateY(-10px);
+    }
+
+    .mentor-card img {
+      width: 100%;
+      max-width: 200px;
+      border-radius: 50%;
+      margin-bottom: 15px;
+    }
+
+    .footer {
+      background-color: #f2f2f2;
+      color: #333;
+      padding: 40px 20px;
+    }
+
+    .footer a {
+      color: #555;
+      text-decoration: none;
+    }
+
+    .footer a:hover {
+      text-decoration: underline;
+    }
+
+    .social-icons i {
+      margin: 0 10px;
+      font-size: 20px;
+      color: #666;
+    }
+  </style>
 </head>
 
-<body class="bg-[#f9f9fb] text-gray-800 font-sans">
+<body>
 
   <!-- Navbar -->
-  <nav class="bg-white shadow-md px-4 py-3 sticky top-0 z-50">
-    <div class="max-w-6xl mx-auto flex items-center justify-between">
-
-      <!-- Logo -->
-      <a href="#" class="flex items-center font-bold italic text-transparent bg-clip-text bg-gradient-to-r from-red-700 to-orange-500">
-        <img src="logo2.png" alt="Logo" class="h-8 mr-2">
+  <nav class="navbar navbar-expand-lg">
+    <div class="container">
+      <a class="navbar-brand" href="#">
+        <img src="logo2.png" alt="Logo" />
         Transflower Learning
       </a>
-
-      <!-- Mobile Button -->
-      <button id="menuBtn" class="lg:hidden text-gray-700 text-2xl">
-        <i class="fas fa-bars"></i>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
       </button>
-
-      <!-- Menu -->
-      <ul id="navMenu" class="hidden lg:flex items-center space-x-4">
-        <li><a href="loginJWT.html" class="font-bold px-1 py-1 rounded hover:text-purple-700">Login</a></li>
-        <li><a href="register.html" class="font-bold px-1 py-1 rounded hover:text-purple-700">Register</a></li>
-        <li><a href="#" class="font-bold hover:text-purple-700">Home</a></li>
-        <li><a href="#" class="font-bold hover:text-purple-700">About</a></li>
-        <li><a href="#" class="font-bold hover:text-purple-700">Contact</a></li>
-
-        <!-- Dropdown -->
-        <li class="relative">
-          <button id="dropdownBtn" class="font-bold hover:text-purple-700 text-lg">
-            <i class="fas fa-bars"></i>
-          </button>
-
-          <ul id="dropdownMenu"
-            class="hidden absolute right-0 mt-2 bg-white shadow-lg rounded w-40 py-2">
-            <li><a href="#" class="block px-4 py-2 hover:bg-gray-100">Courses</a></li>
-            <li><a href="#" class="block px-4 py-2 hover:bg-gray-100">Mentorship</a></li>
-            <li><a href="#" class="block px-4 py-2 hover:bg-gray-100">Blog</a></li>
-            <li><a href="#" class="block px-4 py-2 hover:bg-gray-100">Testimonials</a></li>
-            <li><a href="#" class="block px-4 py-2 hover:bg-gray-100">Gallery</a></li>
-            <li><a href="#" class="block px-4 py-2 hover:bg-gray-100">Reviews</a></li>
-          </ul>
-        </li>
-
-      </ul>
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link login-link" href="loginJWT.html">Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link login-link" href="register.html">Register</a>
+          </li>
+          <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown"><i class="fas fa-bars"></i></a>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li><a class="dropdown-item" href="#">Courses</a></li>
+              <li><a class="dropdown-item" href="#">Mentorship</a></li>
+              <li><a class="dropdown-item" href="#">Blog</a></li>
+              <li><a class="dropdown-item" href="#">Testimonials</a></li>
+              <li><a class="dropdown-item" href="#">Gallery</a></li>
+              <li><a class="dropdown-item" href="#">Reviews</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
     </div>
-
-    <!-- Mobile Nav -->
-    <ul id="mobileMenu" class="lg:hidden hidden flex flex-col mt-4 space-y-3">
-      <a href="loginJWT.html" class="font-bold hover:text-purple-700">Login</a>
-      <a href="register.html" class="font-bold hover:text-purple-700">Register</a>
-      <a href="#" class="font-bold hover:text-purple-700">Home</a>
-      <a href="#" class="font-bold hover:text-purple-700">About</a>
-      <a href="#" class="font-bold hover:text-purple-700">Contact</a>
-    </ul>
   </nav>
 
   <!-- Banner -->
-  <div class="text-center text-white py-24 px-6 bg-cover bg-center"
-    style="background-image: url('https://images.unsplash.com/photo-1603574670812-d24560880210?auto=format&fit=crop&w=1920&q=80');"
-    data-aos="fade-up">
-
-    <h1 class="text-4xl font-bold drop-shadow-md">Master Full Stack Development with Expert Mentorship</h1>
-    <p class="mt-3 text-lg">Join our mentoring program to enhance your skills and advance your career.</p>
-
-    <a href="#" class="mt-4 inline-block bg-white text-gray-800 px-5 py-2 rounded shadow hover:bg-gray-200">
-      Start Your Learning Journey
-    </a>
+  <div class="banner" data-aos="fade-up">
+    <h1>Master Full Stack Development with Expert Mentorship</h1>
+    <p>Join our mentoring program to enhance your skills and advance your career.</p>
+    <a href="#" class="btn btn-light mt-3">Start Your Learning Journey</a>
   </div>
 
-  <!-- Vision & Mission -->
-  <div class="py-16 bg-gray-100 text-center cursor-pointer" data-aos="fade-up">
-    <div class="max-w-6xl mx-auto">
-      <h2 class="text-3xl font-bold mb-10">Our Vision & Mission</h2>
-
-      <div class="grid md:grid-cols-2 gap-10">
-        <div data-aos="fade-right">
-          <h5 class="text-xl font-semibold mb-2">Vision</h5>
+  <!-- Vision and Mission -->
+  <div class="section text-center bg-light" data-aos="fade-up">
+    <div class="container">
+      <h2 class="mb-4">Our Vision & Mission</h2>
+      <div class="row">
+        <div class="col-md-6" data-aos="fade-right">
+          <h5>Vision</h5>
           <p>To be the leading mentorship platform that empowers developers to achieve excellence in full stack development.</p>
         </div>
-
-        <div data-aos="fade-left">
-          <h5 class="text-xl font-semibold mb-2">Mission</h5>
+        <div class="col-md-6" data-aos="fade-left">
+          <h5>Mission</h5>
           <p>Our mission is to provide hands-on, personalized learning experiences that bridge the gap between academics and industry needs.</p>
         </div>
       </div>
@@ -116,36 +195,28 @@
   </div>
 
   <!-- Why Choose Us -->
-  <div class="py-16 text-center" data-aos="fade-up">
-    <div class="max-w-6xl mx-auto">
-      <h2 class="text-3xl font-bold mb-10">Why Choose Us</h2>
-
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
-        <!-- 1 -->
-        <div data-aos="zoom-in">
-          <h6 class="font-semibold">Personalized Learning</h6>
-          <img src="https://cdn-icons-png.flaticon.com/512/3135/3135789.png" class="w-20 mx-auto my-3">
+  <div class="section text-center" data-aos="fade-up">
+    <div class="container">
+      <h2 class="mb-4">Why Choose Us</h2>
+      <div class="row">
+        <div class="col-md-3 col-6 mb-4" data-aos="zoom-in">
+          <h6>Personalized Learning</h6>
+          <img src="https://cdn-icons-png.flaticon.com/512/3135/3135789.png" width="80" class="mb-2" />
           <p>Custom learning paths tailored to your goals.</p>
         </div>
-
-        <!-- 2 -->
-        <div data-aos="zoom-in" data-aos-delay="100">
-          <h6 class="font-semibold">Real-World Projects</h6>
-          <img src="https://cdn-icons-png.flaticon.com/512/3135/3135822.png" class="w-20 mx-auto my-3">
+        <div class="col-md-3 col-6 mb-4" data-aos="zoom-in" data-aos-delay="100">
+          <h6>Real-World Projects</h6>
+          <img src="https://cdn-icons-png.flaticon.com/512/3135/3135822.png" width="80" class="mb-2" />
           <p>Build projects aligned with industry needs.</p>
         </div>
-
-        <!-- 3 -->
-        <div data-aos="zoom-in" data-aos-delay="200">
-          <h6 class="font-semibold">Flexible Mentorship</h6>
-          <img src="https://cdn-icons-png.flaticon.com/512/3135/3135768.png" class="w-20 mx-auto my-3">
+        <div class="col-md-3 col-6 mb-4" data-aos="zoom-in" data-aos-delay="200">
+          <h6>Flexible Mentorship</h6>
+          <img src="https://cdn-icons-png.flaticon.com/512/3135/3135768.png" width="80" class="mb-2" />
           <p>Learn at your own pace with 1-on-1 guidance.</p>
         </div>
-
-        <!-- 4 -->
-        <div data-aos="zoom-in" data-aos-delay="300">
-          <h6 class="font-semibold">Industry Expertise</h6>
-          <img src="https://cdn-icons-png.flaticon.com/512/3135/3135785.png" class="w-20 mx-auto my-3">
+        <div class="col-md-3 col-6 mb-4" data-aos="zoom-in" data-aos-delay="300">
+          <h6>Industry Expertise</h6>
+          <img src="https://cdn-icons-png.flaticon.com/512/3135/3135785.png" width="80" class="mb-2" />
           <p>Mentors with real industry experience and insights.</p>
         </div>
       </div>
@@ -153,27 +224,23 @@
   </div>
 
   <!-- Mentors -->
-  <div class="py-16 text-center" data-aos="fade-up">
-    <div class="max-w-6xl mx-auto">
-      <h2 class="text-3xl font-bold mb-10">Meet Our Mentors</h2>
-
-      <div class="grid grid-cols-2 md:grid-cols-3 gap-10 justify-center">
-
-        <div class="cursor-pointer transform transition hover:-translate-y-2" data-aos="flip-left">
-          <img src="https://randomuser.me/api/portraits/men/32.jpg" class="w-48 h-48 object-cover rounded-full mx-auto mb-4">
-          <h6 class="font-semibold">Rahul Sharma</h6>
+  <div class="section text-center" data-aos="fade-up">
+    <div class="container">
+      <h2 class="mb-4">Meet Our Mentors</h2>
+      <div class="row justify-content-center">
+        <div class="col-md-3 col-6 mentor-card" data-aos="flip-left">
+          <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Mentor 1" />
+          <h6>Rahul Sharma</h6>
           <p>Senior Full Stack Developer with 10+ years of experience in Java & Angular.</p>
         </div>
-
-        <div class="cursor-pointer transform transition hover:-translate-y-2" data-aos="flip-left" data-aos-delay="100">
-          <img src="https://randomuser.me/api/portraits/women/44.jpg" class="w-48 h-48 object-cover rounded-full mx-auto mb-4">
-          <h6 class="font-semibold">Priya Singh</h6>
+        <div class="col-md-3 col-6 mentor-card" data-aos="flip-left" data-aos-delay="100">
+          <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Mentor 2" />
+          <h6>Priya Singh</h6>
           <p>Cloud DevOps Engineer with hands-on AWS & Docker deployment knowledge.</p>
         </div>
-
-        <div class="cursor-pointer transform transition hover:-translate-y-2" data-aos="flip-left" data-aos-delay="200">
-          <img src="https://randomuser.me/api/portraits/men/65.jpg" class="w-48 h-48 object-cover rounded-full mx-auto mb-4">
-          <h6 class="font-semibold">Arjun Patel</h6>
+        <div class="col-md-3 col-6 mentor-card" data-aos="flip-left" data-aos-delay="200">
+          <img src="https://randomuser.me/api/portraits/men/65.jpg" alt="Mentor 3" />
+          <h6>Arjun Patel</h6>
           <p>Back-end Specialist with expertise in Spring Boot and system architecture.</p>
         </div>
       </div>
@@ -181,51 +248,39 @@
   </div>
 
   <!-- Footer -->
-  <footer class="bg-gray-200 py-12">
-    <div class="max-w-6xl mx-auto grid md:grid-cols-3 gap-10 px-6">
-      <div>
-        <h5 class="font-bold text-lg mb-2">Transflower Learning</h5>
-        <p>Empowering future developers through mentorship and practical skills.</p>
-      </div>
-
-      <div>
-        <h6 class="font-bold mb-3">Quick Links</h6>
-        <div class="space-y-1">
-          <a href="#" class="text-gray-700 hover:underline">About</a><br />
-          <a href="#" class="text-gray-700 hover:underline">Courses</a><br />
-          <a href="#" class="text-gray-700 hover:underline">Privacy Policy</a><br />
-          <a href="#" class="text-gray-700 hover:underline">Contact</a>
+  <footer class="footer">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4">
+          <h5>Transflower Learning</h5>
+          <p>Empowering future developers through mentorship and practical skills.</p>
         </div>
-      </div>
-
-      <div>
-        <h6 class="font-bold mb-3">Contact Us</h6>
-        <p>Email: support@transflower.in</p>
-        <p>Phone: +91 98765 43210</p>
-        <div class="mt-3 space-x-4 text-xl text-gray-600">
-          <i class="fab fa-linkedin"></i>
-          <i class="fab fa-twitter"></i>
-          <i class="fab fa-youtube"></i>
+        <div class="col-md-4">
+          <h6>Quick Links</h6>
+          <a href="#">About</a><br />
+          <a href="#">Courses</a><br />
+          <a href="#">Privacy Policy</a><br />
+          <a href="#">Contact</a>
+        </div>
+        <div class="col-md-4">
+          <h6>Contact Us</h6>
+          <p>Email: support@transflower.in</p>
+          <p>Phone: +91 98765 43210</p>
+          <div class="social-icons">
+            <i class="fab fa-linkedin"></i>
+            <i class="fab fa-twitter"></i>
+            <i class="fab fa-youtube"></i>
+          </div>
         </div>
       </div>
     </div>
   </footer>
 
-  <!-- JS: Menu + Dropdown -->
-  <script>
-    document.getElementById("menuBtn").onclick = () => {
-      document.getElementById("mobileMenu").classList.toggle("hidden");
-    };
-
-    document.getElementById("dropdownBtn").onclick = () => {
-      document.getElementById("dropdownMenu").classList.toggle("hidden");
-    };
-  </script>
-
-  <!-- AOS -->
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-  <script>AOS.init({ duration: 1000, once: true });</script>
-
+  <script>
+    AOS.init({ duration: 1000, once: true });
+  </script>
 </body>
-
 </html>

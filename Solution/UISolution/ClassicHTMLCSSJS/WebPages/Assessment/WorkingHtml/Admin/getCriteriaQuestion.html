@@ -1,156 +1,215 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Subject Question Bank</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Subject Question Bank</title>
 
-  <script src="../Script/Tailwind.min.js"></script>
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-</head>
-<body class="bg-gray-100 min-h-screen">
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
 
-  <div class="container mx-auto mt-8 px-4">
-    <h2 class="text-2xl font-bold text-center mb-6">Subject Question Bank</h2>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-    <!-- SUBJECT TABS -->
-    <div id="subjectsTabs" class="flex gap-3 overflow-x-auto mb-4 py-2"></div>
+    <style>
+      .subject-tabs,
+      .criteria-tabs {
+        display: flex;
+        gap: 12px;
+        overflow-x: auto;
+        padding: 10px 0;
+        white-space: nowrap;
+      }
 
-    <!-- CRITERIA TABS -->
-    <div id="criteriasTabs" class="flex gap-3 overflow-x-auto mb-3 py-2"></div>
+      .subject-tab,
+      .criteria-tab {
+        cursor: pointer;
+        padding: 10px 18px;
+        border-radius: 20px;
+        background: #e9ecef;
+        transition: 0.3s;
+        font-size: 15px;
+        font-weight: 500;
+      }
 
-    <!-- TITLE -->
-    <h4 id="criteriaTitle" class="mb-3 text-blue-700 font-bold text-lg">
-      Select a subject
-    </h4>
+      .subject-tab:hover,
+      .criteria-tab:hover {
+        background: #d1dce4;
+      }
 
-    <!-- QUESTIONS -->
-    <div id="questionList" class="space-y-3"></div>
-  </div>
+      .subject-tab.active {
+        background: #0d6efd;
+        color: white;
+      }
 
-  <script>
-    const SUBJECT_API = "http://localhost:5238/api/QuestionBank/questionCount";
+      .criteria-tab.activeCriteria {
+        background: #0d6efd;
+        color: white;
+      }
 
-    $(document).ready(function () {
-      loadSubjects();
-    });
+      .question-card {
+        padding: 12px;
+        border-radius: 10px;
+        background: #ffffff;
+        box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+        margin-bottom: 10px;
+      }
+    </style>
+  </head>
 
-    // --------------------------- LOAD SUBJECTS ---------------------------
-    function loadSubjects() {
-      $.ajax({
-        url: SUBJECT_API,
-        method: "GET",
-        success: function (subjects) {
-          $("#subjectsTabs").empty();
+  <body class="bg-light">
+    <div class="container mt-4">
+      <h2 class="text-center mb-4">Subject Question Bank</h2>
 
-          subjects.forEach((sub) => {
-            let tab = $(`
-              <div class="subject-tab px-4 py-2 rounded-full bg-gray-200 cursor-pointer text-sm font-medium transition-colors">
-                ${sub.subject.title} (${sub.questionCount})
-              </div>
-            `);
+      <!-- SUBJECT TABS -->
+      <div id="subjectsTabs" class="subject-tabs mb-4"></div>
 
-            tab.click(function () {
-              $(".subject-tab").removeClass("bg-blue-600 text-white");
-              $(this).addClass("bg-blue-600 text-white");
+      <!-- CRITERIA TABS -->
+      <div id="criteriasTabs" class="criteria-tabs mb-3"></div>
 
-              loadCriteria(sub.subject.id, sub.subject.title);
-              $("#criteriaTitle").text(`Select criteria for: ${sub.subject.title}`);
-            });
+      <!-- TITLE -->
+      <h4 id="criteriaTitle" class="mb-3 text-primary fw-bold">
+        Select a subject
+      </h4>
 
-            $("#subjectsTabs").append(tab);
-          });
-        },
-        error: function () {
-          alert("Failed to load subjects");
-        },
+      <!-- QUESTIONS -->
+      <div id="questionList"></div>
+    </div>
+
+    <script>
+       SUBJECT_API = "http://localhost:5238/api/QuestionBank/questionCount";
+
+      $(document).ready(function () {
+        loadSubjects();
       });
-    }
 
-    // --------------------------- LOAD CRITERIA ---------------------------
-    function loadCriteria(subjectId, subjectName) {
-      const CRITERIA_API = `http://localhost:5238/api/concepts/questioncount/${subjectId}`;
+      // --------------------------- LOAD SUBJECTS ---------------------------
 
-      $.ajax({
+      function loadSubjects() {
+        $.ajax({
+          url: SUBJECT_API,
+          method: "GET",
+          success: function (subjects) {
+            $("#subjectsTabs").empty();
+
+            subjects.forEach((sub) => {
+              let tab = $(`
+                <div class="subject-tab">
+                  ${sub.subject.title} (${sub.questionCount})
+                </div>
+              `);
+
+              tab.click(function () {
+                $(".subject-tab").removeClass("active");
+                $(this).addClass("active");
+
+                loadCriteria(sub.subject.id, sub.subject.title);
+                $("#criteriaTitle").text(`Select criteria for: ${sub.subject.title}`);
+              });
+
+              $("#subjectsTabs").append(tab);
+            });
+          },
+          error: function () {
+            alert("Failed to load subjects");
+          },
+        });
+      }
+
+      // --------------------------- LOAD CRITERIA ---------------------------
+function loadCriteria(subjectId, subjectName) {
+     CRITERIA_API = `http://localhost:5238/api/concepts/questioncount/${subjectId}`;
+
+    $.ajax({
         url: CRITERIA_API,
         method: "GET",
         success: function (criteria) {
-          $("#criteriasTabs").empty();
-          $("#questionList").empty();
-          $("#criteriaTitle").text(`Criteria for: ${subjectName}`);
+            $("#criteriasTabs").empty();
+            $("#questionList").empty();
+            $("#criteriaTitle").text(`Criteria for: ${subjectName}`);
 
-          if (!criteria || criteria.length === 0) {
-            $("#criteriasTabs").html(`
-              <div class="text-red-600 font-bold">No criteria available for this subject.</div>
-            `);
-            return;
-          }
+            // ❗ If NO criteria found
+            if (!criteria || criteria.length === 0) {
+                $("#criteriasTabs").html(`
+                    <div class="text-danger fw-bold">No criteria available for this subject.</div>
+                `);
 
-          criteria.forEach((c) => {
-            let tab = $(`
-              <div class="criteria-tab px-4 py-2 rounded-full bg-gray-200 cursor-pointer text-sm font-medium transition-colors">
-                ${c.concept.title} (${c.questionCount})
-              </div>
-            `);
+                return;
+            }
 
-            tab.click(function () {
-              $(".criteria-tab").removeClass("bg-blue-600 text-white");
-              $(this).addClass("bg-blue-600 text-white");
+            // If criteria exists
+            criteria.forEach((c) => {
+                let tab = $(`
+                    <div class="criteria-tab">${c.concept.title}(${c.questionCount})</div>
+                `);
 
-              loadQuestions(subjectId, c.concept.id, c.concept.title);
+                tab.click(function () {
+                    $(".criteria-tab").removeClass("activeCriteria");
+                    $(this).addClass("activeCriteria");
+
+                    loadQuestions(subjectId, c.concept.id, c.concept.title);
+                });
+
+                $("#criteriasTabs").append(tab);
             });
-
-            $("#criteriasTabs").append(tab);
-          });
         },
         error: function () {
-          alert("Failed to load criteria");
+            alert("Failed to load criteria");
         },
-      });
-    }
+    });
+}
 
-    // --------------------------- LOAD QUESTIONS ---------------------------
-    function loadQuestions(subjectId, criteriaId, criteriaTitle) {
-      const QUESTION_API = `http://localhost:5238/api/questionbank/questions/subjects/${subjectId}/concepts/${criteriaId}`;
 
-      $.ajax({
-        url: QUESTION_API,
-        method: "GET",
-        success: function (questions) {
-          $("#criteriaTitle").text(`${criteriaTitle} - Question Bank`);
-          $("#questionList").empty();
+      // --------------------------- LOAD QUESTIONS ---------------------------
 
-          if (!questions || questions.length === 0) {
-            $("#questionList").html(`<p>No questions available.</p>`);
-            return;
-          }
+      function loadQuestions(subjectId, criteriaId, criteriaTitle) {
+         QUESTION_API = `http://localhost:5238/api/questionbank/questions/subjects/${subjectId}/concepts/${criteriaId}`;
 
-          questions.forEach((q, i) => {
-            let card = $(`
-              <div class="p-4 bg-white rounded-lg shadow cursor-pointer hover:shadow-md transition" onclick="QuestionDisplay(${q.questionId})">
-                <strong>Q ${i+1}: ${q.question}</strong>
-              </div>
+        $.ajax({
+          url: QUESTION_API,
+          method: "GET",
+          success: function (questions) {
+            $("#criteriaTitle").text(`${criteriaTitle} - Question Bank`);
+            $("#questionList").empty();
+
+            if (!questions || questions.length === 0) {
+              $("#questionList").html("<p>No questions available.</p>");
+              return;
+            }
+
+            let i = 1;
+            questions.forEach((q) => {
+              let card = $(`
+                <div class="question-card" onclick="QuestionDisplay(${q.questionId})">
+                  <strong>Q ${i}: ${q.question}</strong>
+                </div>
+              `);
+              i++;
+
+              $("#questionList").append(card);
+            });
+          },
+           error: function () {
+            $("#questionList").html(`
+                <div class="p-3 mt-2 text-center text-danger fw-bold" 
+                     style="background:#ffe6e6;border-radius:10px;">
+                    Error loading questions.
+                </div>
             `);
-
-            $("#questionList").append(card);
-          });
         },
-        error: function () {
-          $("#questionList").html(`
-            <div class="p-3 mt-2 text-center text-red-600 font-bold bg-red-100 rounded-lg">
-              Error loading questions.
-            </div>
-          `);
-        },
-      });
-    }
+    });
+      }
 
-    // --------------------------- LOAD QUESTION DETAILS ---------------------------
-    function QuestionDisplay(questionId) {
-      $("#content").load("QuestionDetails.html", function () {
-        QuestionDetails(questionId);
-      });
-    }
-  </script>
-</body>
+      // --------------------------- LOAD QUESTION DETAILS ---------------------------
+
+      function QuestionDisplay(questionId) {
+        $("#content").load("QuestionDetails.html", function () {
+          QuestionDetails(questionId);
+        });
+      }
+    </script>
+  </body>
 </html>

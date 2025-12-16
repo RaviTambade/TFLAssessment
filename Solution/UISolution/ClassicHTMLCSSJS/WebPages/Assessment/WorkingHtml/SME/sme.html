@@ -1,10 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
   <title>SME Dashboard</title>
-  <script src="../Script/Tailwind.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <style>
     body {
@@ -56,23 +54,10 @@
     }
   </style>
 </head>
-
 <body>
-
-  <!-- Top bar -->
-  <div class="fixed top-0 right-0 mt-2 flex items-center gap-2 bg-transparent text-black font-semibold p-2 z-50">
-    Hello:
-    <button id="emailTrigger" class="cursor-pointer bg-transparent p-0 m-0 font-inherit">
-      <span id="userEmail"></span>
-    </button>
-
-    <!-- dropdown menu -->
-    <div id="dropdownMenu"
-      class="absolute left-1 mt-40 w-80 bg-white border border-gray-200 rounded shadow-lg hidden">
-      <div class="px-4 py-2 hover:bg-gray-100 cursor-pointer" id="profile">My Profile</div>
-      <div class="px-4 py-2 hover:bg-gray-100 cursor-pointer" id="settings">Settings</div>
-      <div class="px-4 py-2 hover:bg-gray-100 cursor-pointer" id="logoutBtn">Logout</div>
-    </div>
+  <div style="position: fixed; top: 0; right: 0; background: #2a76c1; color: white; padding: 10px 20px; z-index: 1; display: flex; align-items: center; gap: 10px;">
+    Hello: <span id="userEmail"></span>
+    <button id="logoutBtn" style="background-color: #e74c3c; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer;">Logout</button>
   </div>
 
 
@@ -85,44 +70,9 @@
   </div>
 
   <div class="main-content" id="content">
-<<<<<<< HEAD
-    <div>
-      <h2>Welcome,<span id="userName"></span></h2>
-    </div>
-    <div id="subjectContainer"></div>
-    <br>
-    <br>
-
-    <!-- Load Expert Data Button -->
-    <button id="loadSubjectsBtn">Load My Expert Subjects</button>
-
-    <!-- Subjects List -->
-    <div id="subjectsBox" class="box" style="display:none;"></div>
-
-    <!-- Concepts List -->
-    <div id="conceptsBox" class="box" style="display:none;"></div>
-
-    <!-- Questions List -->
-    <div id="questionsBox" class="box" style="display:none;"></div>
-
-    <!-- Preview Section -->
-    <div id="previewSection" style="display:none;">
-      <h3>Preview</h3>
-      <div id="preview-box"></div>
-      <br>
-      <button id="submitPreviewBtn">Done</button>
-    </div>
-
-
-=======
     <h2>Welcome,<span id="userName"></span></h2>
->>>>>>> 2a81a862673f993c89fe1b23ffb1e8d6f9b24007
   </div>
-
-
-  <script src="script/sme.js">
-  </script>
-
+  <script src="script/sme.js"></script>
+  
 </body>
-
 </html>

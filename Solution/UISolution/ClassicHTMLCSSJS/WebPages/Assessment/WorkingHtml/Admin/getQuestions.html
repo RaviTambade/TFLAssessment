@@ -11,30 +11,66 @@
       rel="stylesheet"
     />
 
-    <!-- Tailwind CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-
-
+    <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <style>
+      /* Horizontal Tab Styles */
+      .subject-tabs {
+        display: flex;
+        gap: 12px;
+        overflow-x: auto;
+        padding: 10px 0;
+        white-space: nowrap;
+      }
+
+      .subject-tab {
+        cursor: pointer;
+        padding: 10px 18px;
+        border-radius: 20px;
+        background: #e9ecef;
+        transition: 0.3s;
+        font-size: 15px;
+        font-weight: 500;
+      }
+
+      .subject-tab:hover {
+        background: #d1dce4;
+      }
+
+      .subject-tab.active {
+        background: #0d6efd;
+        color: white;
+      }
+
+      .question-card {
+        padding: 12px;
+        border-radius: 10px;
+        background: #ffffff;
+        box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+        margin-bottom: 10px;
+      }
+    </style>
   </head>
 
-  <body>
-    <div class="container mt-6 mt-5">
+  <body class="bg-light">
+    <div class="container mt-4">
       <h2 class="text-center mb-4">Subject Question Bank</h2>
 
-      <div
-        id="subjectsTabs"
-        class="subject-tabs mb-4 flex gap-3 overflow-x-auto py-2 whitespace-nowrap"
-      ></div>
+      <!-- HORIZONTAL SUBJECT TABS -->
+      <div id="subjectsTabs" class="subject-tabs mb-4"></div>
 
+      <!-- SUBJECT NAME -->
       <h4 id="subjectTitle" class="mb-3 text-primary fw-bold">
         Select a subject
       </h4>
+
+      <!-- QUESTION LIST -->
       <div id="questionList"></div>
     </div>
 
     <script>
-    
+      // API for subject list
       SUBJECT_API = "http://localhost:5238/api/QuestionBank/questionCount";
 
       $(document).ready(function () {
@@ -50,19 +86,14 @@
 
             subjects.forEach((sub) => {
               let tab = $(`
-                    <div class="subject-tab cursor-pointer px-4 py-2 rounded-full bg-[#e9ecef] text-[15px] font-medium transition hover:bg-[#d1dce4]">
+                    <div class="subject-tab">
                         ${sub.subject.title} (${sub.questionCount})
                     </div>
                 `);
 
               tab.click(function () {
-                $(".subject-tab")
-                  .removeClass("bg-[#0d6efd] text-white")
-                  .addClass("bg-[#e9ecef] text-black");
-
-                $(this)
-                  .removeClass("bg-[#e9ecef] text-black")
-                  .addClass("bg-[#0d6efd] text-white");
+                $(".subject-tab").removeClass("active");
+                $(this).addClass("active");
 
                 loadQuestions(sub.subject.id, sub.subject.title);
               });
@@ -91,10 +122,10 @@
               return;
             }
 
-            let i = 1;
+           let i = 1;
             questions.forEach((q) => {
               let card = $(`
-                    <div class="question-card p-3 rounded-lg bg-white shadow-md mb-2 cursor-pointer" onclick="QuestionDisplay(${q.questionId})">
+                    <div class="question-card" onclick="QuestionDisplay(${q.questionId})">
                         <strong>Q ${i}: ${q.question}</strong>
                     </div>
                 `);

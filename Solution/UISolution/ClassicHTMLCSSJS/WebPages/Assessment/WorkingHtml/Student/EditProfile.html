@@ -5,93 +5,98 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Customer Profile</title>
 
-    <!-- Tailwind -->
-    <script src="https://cdn.tailwindcss.com"></script>
-
+    <!-- Bootstrap CSS -->
     <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
       rel="stylesheet"
     />
-  </head>
 
-  <body class="bg-gradient-to-br from-[#e3f2fd] to-[#bbdefb] font-[Poppins]">
-    <div class="w-full flex justify-center px-4">
-      <div
-        class="w-full max-w-[700px] mt-[60px] bg-white rounded-[15px] p-[30px] shadow-[0_6px_20px_rgba(0,0,0,0.1)]"
-      >
-    
-        <div class="text-center mb-[25px]">
+    <style>
+      body {
+        background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+        font-family: "Poppins", sans-serif;
+      }
+      .profile-container {
+        max-width: 700px;
+        margin: 60px auto;
+        background: #fff;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+      }
+      .profile-header {
+        text-align: center;
+        margin-bottom: 25px;
+      }
+      .profile-header img {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 3px solid #0d47a1;
+      }
+      .profile-header h3 {
+        margin-top: 15px;
+        font-weight: 600;
+        color: #0d47a1;
+      }
+      .info-label {
+        font-weight: 600;
+        color: #333;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="profile-container">
+        <div class="profile-header">
           <img
             src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
             alt="User Avatar"
-            class="w-[120px] h-[120px] rounded-full object-cover border-[3px] border-[#0d47a1] mx-auto"
           />
-
-          <h3
-            id="profileName"
-            class="mt-[15px] font-semibold text-[#0d47a1]"
-          ></h3>
-
-          <p class="text-gray-500" id="profileRole">User Role: User</p>
+          <h3 id="profileName"></h3>
+          <p class="text-muted" id="profileRole">User Role: User</p>
         </div>
 
-    
         <form id="editProfileForm">
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label class="font-semibold text-[#333]">Aadhar ID</label>
-              <input
-                type="text"
-                id="profileAadhar"
-                class="w-full mt-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-blue-600"
-              />
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label class="info-label">Aadhar ID</label>
+              <input type="text" id="profileAadhar" class="form-control" />
             </div>
 
-            <div>
-              <label class="font-semibold text-[#333]">First Name</label>
-              <input
-                type="text"
-                id="profileFirstName"
-                class="w-full mt-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-blue-600"
-              />
+            <div class="col-md-6 mb-3">
+              <label class="info-label">First Name</label>
+              <input type="text" id="profileFirstName" class="form-control" />
             </div>
 
-            <div>
-              <label class="font-semibold text-[#333]">Last Name</label>
-              <input
-                type="text"
-                id="profileLastName"
-                class="w-full mt-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-blue-600"
-              />
+            <div class="col-md-6 mb-3">
+              <label class="info-label">Last Name</label>
+              <input type="text" id="profileLastName" class="form-control" />
             </div>
 
-            <div>
-              <label class="font-semibold text-[#333]">Email</label>
+            <div class="col-md-6 mb-3">
+              <label class="info-label">Email</label>
               <input
                 type="email"
                 id="profileEmail"
+                class="form-control"
                 readonly
-                class="w-full mt-1 px-3 py-2 bg-gray-100 border border-gray-300 rounded-md cursor-not-allowed"
               />
             </div>
 
-            <div>
-              <label class="font-semibold text-[#333]">Contact Number</label>
-              <input
-                type="text"
-                id="profileContact"
-                class="w-full mt-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-blue-600"
-              />
+            <div class="col-md-6 mb-3">
+              <label class="info-label">Contact Number</label>
+              <input type="text" id="profileContact" class="form-control" />
             </div>
           </div>
 
- 
-          <div class="text-center mt-6">
+          <div class="text-center mt-4">
             <button
               type="button"
               id="editBtn"
+              class="btn btn-primary"
               onclick="toggleEdit()"
-              class="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700"
             >
               Update Profile
             </button>
@@ -101,26 +106,30 @@
     </div>
 
     <script>
-      userProfileIdData = localStorage.getItem("userId");
+       userProfileIdData = localStorage.getItem("userId");
 
       // Load profile data
-      document.addEventListener("DOMContentLoaded", function () {
-        fetch(`http://localhost:5238/api/UserProfile/${userProfileIdData}`)
-          .then((res) => res.json())
-          .then((data) => {
+      $(document).ready(function () {
+        $.ajax({
+          url: `http://localhost:5238/api/UserProfile/${userProfileIdData}`,
+          method: "GET",
+          success: function (data) {
             if (!data) {
               alert("Profile Not Found!!");
               return;
             }
 
+            // Fill input fields with data
             document.getElementById("profileFirstName").value = data.firstname;
             document.getElementById("profileLastName").value = data.lastname;
             document.getElementById("profileAadhar").value = data.aadharId;
             document.getElementById("profileEmail").value = data.email;
-            document.getElementById("profileContact").value =
-              data.contactNumber;
-          })
-          .catch((err) => console.error("Error fetching profile:", err));
+            document.getElementById("profileContact").value = data.contactNumber;
+          },
+          error: function (xhr, status, error) {
+            console.error("Error fetching profile:", error);
+          },
+        });
       });
 
       function toggleEdit() {
@@ -134,25 +143,24 @@
           password: "",
         };
 
-        fetch(
-          `http://localhost:5238/api/UserProfile/${userProfileIdData}`,
-          {
-            method: "PUT",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(updatedData),
-          }
-        )
-          .then((res) => res.json())
-          .then((response) => {
+        $.ajax({
+          url: `http://localhost:5238/api/UserProfile/${userProfileIdData}`,
+          method: "PUT",
+          contentType: "application/json",
+          data: JSON.stringify(updatedData),
+          success: function (response) {
             if (response == false) {
               alert("Profile Not Edit!!");
               return;
             } else {
-              alert("Data edited successfully");
-              location.reload();
+              alert("data edited successfully");
+              $("#content").load("profile.html ");
             }
-          })
-          .catch((err) => console.error("Error editing profile:", err));
+          },
+          error: function (xhr, status, error) {
+            console.error("Error fetching profile:", error);
+          },
+        });
       }
     </script>
   </body>
