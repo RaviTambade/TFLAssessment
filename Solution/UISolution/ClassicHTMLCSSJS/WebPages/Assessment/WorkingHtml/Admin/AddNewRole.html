@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add New Role</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    body {
+      background: #f0f4ff;
+      font-family: "Poppins", sans-serif;
+    }
+    .role-card {
+      max-width: 500px;
+      margin: 80px auto;
+      padding: 30px;
+      border-radius: 15px;
+      background: #fff;
+      box-shadow: 0px 6px 22px rgba(0, 0, 0, 0.1);
+    }
+    .role-card h3 {
+      text-align: center;
+      color: #0d47a1;
+      margin-bottom: 25px;
+    }
+  </style>
+
+</head>
+<body>
+
+  <div class="container">
+    <div class="role-card">
+      <h3>Add New Role</h3>
+
+      <form id="addRoleForm">
+        
+        <div class="mb-3">
+          <label class="form-label">Role Name</label>
+          <input type="text" class="form-control" id="roleName" placeholder="Enter role (e.g., Admin, SME, Student)" required>
+        </div>
+
+        <div class="d-grid mt-4">
+          <button type="submit" class="btn btn-primary">Add Role</button>
+        </div>
+
+      </form>
+
+      <p class="text-center mt-3 text-success" id="successMsg" style="display:none;">
+        Role added successfully!
+      </p>
+      <p class="text-center mt-3 text-danger" id="errorMsg" style="display:none;">
+        An error occurred. Try again.
+      </p>
+
+    </div>
+  </div>
+
+  <!-- Bootstrap JS + jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    $("#addRoleForm").submit(function (event) {
+      event.preventDefault();
+
+      const roleName = $("#roleName").val().trim();
+
+      if (roleName.length === 0) {
+        alert("Role name cannot be empty!");
+        return;
+      }
+
+      $.ajax({
+        url: " http://localhost:5238/api/Role/roles",
+        method: "POST",
+        contentType: "application/json",
+        data: JSON.stringify({ name: roleName }),
+
+        success: function () {
+          $("#successMsg").show();
+          $("#errorMsg").hide();
+          $("#roleName").val("");
+        },
+
+        error: function () {
+          $("#successMsg").hide();
+          $("#errorMsg").show();
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>

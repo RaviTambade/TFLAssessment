@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Candidate Tests</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 30px;
+        }
+
+        table {
+            width: 80%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            padding: 10px;
+            border: 1px solid #ccc;
+            text-align: left;
+        }
+
+        button {
+            padding: 5px 12px;
+            margin-right: 5px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button.startBtn {
+            background-color: #28a745;
+        }
+
+        #detailsBox {
+            padding: 15px;
+            border: 1px solid #ccc;
+            background-color: #f9f9f9;
+            display: none;
+            width: 80%;
+        }
+
+        h3 {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Test To Appear</h2>
+
+    <table id="testTable">
+        <thead>
+            <tr>
+                <th>Test Name</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Fetched rows go here -->
+        </tbody>
+    </table>
+
+    <div id="detailsBox">
+        <h3>Test Details</h3>
+        <p><strong>Test Name:</strong> <span id="dTestName"></span></p>
+        <p><strong>Passing Level:</strong> <span id="dPassingLevel"></span></p>
+        <p><strong>Duration:</strong> <span id="dDuration"></span></p>
+        <p><strong>Scheduled Start:</strong> <span id="dStart"></span></p>
+        <p><strong>Scheduled End:</strong> <span id="dEnd"></span></p>
+        <p><strong>Status:</strong> <span id="dStatus"></span></p>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            const empId = localStorage.getItem("userId");
+
+            if (!empId) {
+                alert("User not logged in. Redirecting to login...");
+                window.location.href = "WorkingHtml/login.html";
+                return;
+            }
+
+            $.ajax({
+                url: `http://localhost:5238/api/Assessment/alltestbyempid/${empId}`,
+                method: 'GET',
+                success: function (data) {
+                    data.forEach(test => {
+                        $('#testTable tbody').append(`
+                            <tr>
+                                <td>${test.testName}</td>
+                                <td>
+                                    <button class="detailsBtn" data-test='${JSON.stringify(test)}'>Details</button>
+                                    <button class="startBtn" data-id="${test.id}">Start Test</button>
+                                </td>
+                            </tr>
+                        `);
+                    });
+
+                    $(".detailsBtn").click(function () {
+                        const test = $(this).data('test');
+
+                        $("#dTestName").text(test.testName);
+                        $("#dPassingLevel").text(test.passingLevel);
+                        $("#dDuration").text(test.duration);
+                        $("#dStart").text(new Date(test.scheduledStart).toLocaleString());
+                        $("#dEnd").text(new Date(test.scheduledEnd).toLocaleString());
+                        $("#dStatus").text(test.status);
+
+                        $("#detailsBox").slideDown();
+                    });
+
+                    $(".startBtn").click(function () {
+                        // const testId = $(this).data("id");
+                        const testRow = $(this).closest("tr");
+                        const testData = JSON.parse(testRow.find(".detailsBtn").attr("data-test"));
+                        const testId = testData.id;
+                        
+                        const scheduledStart = new Date(testData.scheduledStart);
+                        const now = new Date();
+
+                        // Optional: add a buffer of ±2 minutes (120000 ms)
+                        const buffer = 2 * 60 * 1000;
+
+                        if (Math.abs(now - scheduledStart) <= buffer) {
+                            const userId = localStorage.getItem("userId");
+                            if (!userId) {
+                                alert("User not logged in!");
+                                return;
+                            }
+                            const duration = testData.duration;
+                            // Redirect to test appear page with query params
+                            window.location.href = `testappearJWT.html?userid=${userId}&testid=${testId}&duration=${duration}`;
+                        } else {
+                            alert("You can only start the test at the scheduled time.");
+                        }
+                    });
+
+                },
+                error: function () {
+                    alert("Failed to load data.");
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>

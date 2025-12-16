@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register Page</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f6f9;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .register-container {
+      background-color: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      width: 350px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: bold;
+    }
+
+    input,
+    select {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      box-sizing: border-box;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="register-container">
+    <h2>User Registration</h2>
+    <form id="registerForm">
+      <label for="aadharid">Aadhar ID*</label>
+      <input type="text" id="aadharid" name="aadharid" required>
+
+      <label for="firstname">First Name</label>
+      <input type="text" id="firstname" name="firstname">
+
+      <label for="lastname">Last Name</label>
+      <input type="text" id="lastname" name="lastname">
+
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email">
+
+      <label for="contactnumber">Contact Number</label>
+      <input type="text" id="contactnumber" name="contactnumber"  maxlength="10">
+
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password">
+
+      <!-- <label for="userRole">User Role</label>
+      <select id="userRole" name="userRole">
+        <option value="">Select Role</option>
+        <option value="Admin">Admin</option>
+        <option value="User">User</option>
+      </select> -->
+
+      <button type="submit">Register</button>
+    </form>
+  </div>
+
+  <script>
+    document.getElementById("registerForm").addEventListener("submit", async function (event) {
+      event.preventDefault(); // stop page reload
+
+      const userData = {
+        aadharid: document.getElementById("aadharid").value,
+        firstname: document.getElementById("firstname").value,
+        lastname: document.getElementById("lastname").value,
+        email: document.getElementById("email").value,
+        contactnumber: document.getElementById("contactnumber").value,
+        password: document.getElementById("password").value
+        // userRole: document.getElementById("userRole").value,
+      };
+
+      try {
+        const response = await fetch("http://localhost:5238/api/Auth/register", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(userData)
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          alert("✅ Registration successful! Redirecting to login...");
+          window.location.href = "loginJWT.html";
+        } else {
+          const errorData = await response.json();
+          alert("❌ Registration failed: " + errorData.message);
+        }
+
+      } catch (error) {
+        document.getElementById("message").innerText = "⚠️ Server error!";
+        console.error(error);
+      }
+
+      console.log("User Registration Data:", userData);
+     
+    });
+  </script>
+
+
+</body>
+
+</html>

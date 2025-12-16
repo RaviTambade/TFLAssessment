@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin - Manage SME Subjects</title>
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <style>
+      body {
+        background: #f5f5f5;
+      }
+      .card {
+        border-radius: 12px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container mt-4">
+      <h2 class="text-center mb-4">📘 Admin – Manage SME Subjects</h2>
+
+      <div class="card p-3 shadow-sm">
+        <h5>User SME Assignment</h5>
+
+        <table class="table table-bordered mt-3">
+          <thead class="table-light">
+            <tr>
+              <th>Name</th>
+              <th>SME Subject</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+
+          <tbody id="userTableBody">
+            <!-- Table rows will be loaded dynamically -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <script>
+      allSubjects = [];
+      currentUserId = null; // Track selected user
+
+      $(document).ready(function () {
+        loadSubjects();
+      });
+
+      // Load all subjects
+      function loadSubjects() {
+        $.ajax({
+          url: "http://localhost:5238/api/subject/subjects",
+          method: "GET",
+          success: function (subjects) {
+            allSubjects = subjects;
+            loadUsers();
+          },
+          error: function () {
+            alert("Error loading subjects!");
+          },
+        });
+      }
+
+      // Load users & display comma-separated subjects
+      function loadUsers() {
+        $.ajax({
+          url: "http://localhost:5238/api/UserProfile/SmeUser",
+          method: "GET",
+          success: function (users) {
+            let body = "";
+
+            users.forEach((user) => {
+              let subjectText = "No Subject Assigned";
+
+              if (user.subjects && user.subjects.length > 0) {
+                if (Array.isArray(user.subjects)) {
+                  subjectText = user.subjects.map((s) => s.title).join(", ");
+                } else {
+                  subjectText = user.subjects;
+                }
+              }
+
+              body += `
+                    <tr>
+                       <td>  <a href="#" onclick="loadProfilePage(${user.userId})">
+                            ${user.firstname} ${user.lastname}
+                        </a>
+                        </td>
+                        <td>${subjectText}</td>
+                        <td>
+                            <button class="btn btn-primary btn-sm" onclick='openSubjectSelector(${JSON.stringify(
+                              user
+                            )})'>
+                                Assign Subjects
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            });
+
+            $("#userTableBody").html(body);
+          },
+          error: function () {
+            alert("Error loading users!");
+          },
+        });
+      }
+      function openSubjectSelector(user) {
+        currentUserId = user.id;
+
+        let assignedSubjects = Array.isArray(user.subjects)
+          ? user.subjects.map((s) => s.title)
+          : [];
+
+        let checkboxHTML = `
+    <div id="subjectSelector" class="card p-3 mb-3 shadow-sm">
+      <h5>Assign SME Subjects to: <b>${user.firstname} ${user.lastname}</b></h5>
+      <div class="row">
+  `;
+
+        allSubjects.forEach((sub) => {
+          checkboxHTML += `
+      <div class="col-md-3">
+        <input type="checkbox" class="form-check-input subject-check"
+            data-id="${sub.id}"
+            ${assignedSubjects.includes(sub.title) ? "checked" : ""}>
+        <label class="form-check-label">${sub.title}</label>
+      </div>
+    `;
+        });
+
+        $("#subjectSelector").remove();
+        $(".container").append(checkboxHTML);
+
+        // ✅ Bind once here
+        $(".subject-check")
+          .off("change")
+          .on("change", function () {
+            let subjectId = $(this).data("id");
+            let isChecked = $(this).is(":checked");
+
+            let url = isChecked
+              ? `http://localhost:5238/api/Membership/assignsubject/${currentUserId}/addsubject/${subjectId}`
+              : `http://localhost:5238/api/Membership/assignsubject/${currentUserId}/removesubject/${subjectId}`;
+
+            $.ajax({
+              url: url,
+              method: "POST",
+              success: function () {
+                console.log((isChecked ? "Added " : "Removed ") + subjectId);
+                loadUsers();
+              },
+              error: function () {
+                alert("Error updating subject!");
+              },
+            });
+          });
+      }
+
+function loadProfilePage(userId) {
+    $("#content").load("../publicProfile.html", function () {
+        loadUserProfile(userId);   // Call API after HTML is inserted
+    });
+}
+
+    </script>
+  </body>
+</html>
