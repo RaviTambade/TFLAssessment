@@ -20,6 +20,7 @@ select * from testschedules;
 select * from user_session;
 select * from userroles;
 select * from users;
+select * from assessments;
 
 desc subjects;
 desc questionbank;
