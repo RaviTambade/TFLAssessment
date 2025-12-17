@@ -87,68 +87,58 @@
                 return;
             }
 
+            //load assessment//
             $.ajax({
-                url: `http://localhost:5238/api/Assessment/GetAssesmentHistory/${empId}`,
+                url: ` http://localhost:5238/api/Assessment/GetAssesmentHistory/${empId}`,
+                //  url: `http://localhost:5238/api/Assessment/alltestbyempid/${empId}`,
                 method: 'GET',
                 success: function (data) {
+                    console.log("data",data)
                     data.forEach(test => {
                         $('#testTable tbody').append(`
                             <tr>
-                                <td>${test.assessmentName}</td>
-                                <td class="border p-2">${new Date(test.assessmentDate).toLocaleDateString()}</td>
-                                    <td class="border p-2">${test.score ?? "Not Attempted"}</td> 
-                                    <td class="border p-2 text-center">
-                                        <button class="detailsBtn" data-test='${JSON.stringify(test)}'>Details</button> 
-                                    </td> 
+                                    <td>${test.assessmentName}</td>
+                                    <td>${new Date(test.assessmentDate).toLocaleDateString()}</td>
+                                    <td>${test.score ?? "Not Attempted"}</td> 
+                                    <td>
+                                        <button class="detailsBtn"data-assessmentid="${test.assesmsntId}">Details
+                                        </button>
+                                    </td>                                       
                             </tr>
                         `);
                     });
-
-                    $(".detailsBtn").click(function () {
-                        const test = $(this).data('test');
-
-                        $("#dAssessmentName").text(test.AssessmentName);
-                        $("#dPassingLevel").text(test.passingLevel);
-                        $("#dDuration").text(test.duration);
-                        $("#dStart").text(new Date(test.scheduledStart).toLocaleString());
-                        $("#dEnd").text(new Date(test.scheduledEnd).toLocaleString());
-                        $("#dStatus").text(test.status);
-
-                        $("#detailsBox").slideDown();
-                    });
-
-                    // $(".startBtn").click(function () {
-                    //     // const testId = $(this).data("id");
-                    //     const testRow = $(this).closest("tr");
-                    //     const testData = JSON.parse(testRow.find(".detailsBtn").attr("data-test"));
-                    //     const testId = testData.id;
-                        
-                    //     const scheduledStart = new Date(testData.scheduledStart);
-                    //     const now = new Date();
-
-                    //     // Optional: add a buffer of ±2 minutes (120000 ms)
-                    //     const buffer = 2 * 60 * 1000;
-
-                    //     if (Math.abs(now - scheduledStart) <= buffer) {
-                    //         const userId = localStorage.getItem("userId");
-                    //         if (!userId) {
-                    //             alert("User not logged in!");
-                    //             return;
-                    //         }
-                    //         const duration = testData.duration;
-                    //         // Redirect to test appear page with query params
-                    //         window.location.href = `testappearJWT.html?userid=${userId}&testid=${testId}&duration=${duration}`;
-                    //     } else {
-                    //         alert("You can only start the test at the scheduled time.");
-                    //     }
-                    // });
-
                 },
-                error: function () {
-                    alert("Failed to load data.");
-                }
             });
+            
+        
+        $(document).on("click", ".detailsBtn", function () {
+            console.log("1234567890-1234567890-");
+            var assessmentid = $(this).data("assessmentid");
+            console.log =("assessmentId",assessmentid);
+            
+             $.ajax({
+            url: `http://localhost:5238/api/Assessment/GetAssessmentEmployeeDetails/${assessmentid}/${empId}`,
+            type: "GET",
+            success: function (data) {
+
+                const test = Array.isArray(data) ? data[0] : data;
+
+                $("#dAssessmentName").text(test.testName);
+                $("#dPassingLevel").text(test.passingLevel);
+                $("#dDuration").text(test.duration);
+                $("#dStart").text(test.scheduledStart ? new Date(test.scheduledStart).toLocaleString() : "N/A");
+                $("#dEnd").text(test.scheduledEnd ? new Date(test.scheduledEnd).toLocaleString() : "N/A");
+                $("#dStatus").text(test.status);
+
+                $("#detailsBox").slideDown();
+            },
+            error: function () {
+                alert("Failed to load details");
+            }
         });
+    });
+
+});
     </script>
 
 </body>
