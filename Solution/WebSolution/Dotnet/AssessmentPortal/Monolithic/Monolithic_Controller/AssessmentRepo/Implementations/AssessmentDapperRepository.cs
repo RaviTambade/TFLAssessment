@@ -886,6 +886,7 @@ public async Task<List<CandidateAssesmentHistory>> GetAssesmentHistory(int candi
 
     const string query = @"
         SELECT 
+            ctr.assessmentid as AssesmsntId,
             t.Name,
             ctr.score,
             DATE(ctr.teststarttime) AS Date
@@ -915,12 +916,15 @@ public async Task<List<CandidateAssesmentHistory>> GetAssesmentHistory(int candi
         int score = reader.IsDBNull("score")
             ? 0
             : reader.GetInt32("score");
-
+        int assesmsntId=reader.IsDBNull("AssesmsntId")
+            ? 0
+            : reader.GetInt32("AssesmsntId");
         CandidateAssesmentsHistory.Add(new CandidateAssesmentHistory
         {
             AssessmentName = assessmentName,
             AssessmentDate = assessmentDate,
-            Score = score
+            Score = score,
+            AssesmsntId=assesmsntId
         });
     }
 
