@@ -881,54 +881,129 @@ public class AssessmentDapperRepository : IAssessmentRepository
         return tests;
     }
 public async Task<List<CandidateAssesmentHistory>> GetAssesmentHistory(int candidateid)
-{
-    List<CandidateAssesmentHistory> CandidateAssesmentsHistory = new List<CandidateAssesmentHistory>();
-
-    const string query = @"
-        SELECT 
-            ctr.assessmentid as AssesmsntId,
-            t.Name,
-            ctr.score,
-            DATE(ctr.teststarttime) AS Date
-        FROM candidatetestresults ctr
-        JOIN tests t ON ctr.id = t.id
-        WHERE ctr.candidateid = @candidateId;";
-
-    using MySqlConnection connection = new MySqlConnection(_connectionString);
-    using MySqlCommand command = new MySqlCommand(query, connection);
-
-    command.Parameters.AddWithValue("@candidateId", candidateid);
-
-    await connection.OpenAsync();
-    using MySqlDataReader reader = command.ExecuteReader();
-
-    while (reader.Read())
     {
-        string assessmentName = reader.IsDBNull("Name")
-            ? string.Empty
-            : reader["Name"].ToString();
+        List<CandidateAssesmentHistory> CandidateAssesmentsHistory = new();
 
-        DateTime? assessmentDate = reader.IsDBNull("Date")
-            ? (DateTime?)null
-            : reader.GetDateTime("Date");
+        const string query = @"
+        SELECT 
+    t.name,
+    ctr.score, 
+    DATE(ctr.teststarttime) AS Date,
+    a.id AS assessment_id
+    FROM candidatetestresults ctr
+    JOIN assessments a 
+    ON ctr.assessmentid = a.id
+    JOIN tests t 
+    ON a.test_id = t.id
+    WHERE ctr.candidateid = @candidateid
+    ;
+    ";
 
-        int score = reader.IsDBNull("score")
-            ? 0
-            : reader.GetInt32("score");
-        int assesmsntId=reader.IsDBNull("AssesmsntId")
-            ? 0
-            : reader.GetInt32("AssesmsntId");
-        CandidateAssesmentsHistory.Add(new CandidateAssesmentHistory
+        using MySqlConnection connection = new MySqlConnection(_connectionString);
+        using MySqlCommand command = new MySqlCommand(query, connection);
+
+        command.Parameters.AddWithValue("@candidateId", candidateid);
+
+        await connection.OpenAsync();
+        using MySqlDataReader reader = command.ExecuteReader();
+
+        while (reader.Read())
         {
-            AssessmentName = assessmentName,
-            AssessmentDate = assessmentDate,
-            Score = score,
-            AssesmsntId=assesmsntId
-        });
+            string assessmentName = reader.IsDBNull("Name")
+                ? string.Empty
+                : reader["Name"].ToString();
+
+            DateTime? assessmentDate = reader.IsDBNull("Date")
+                ? (DateTime?)null
+                : reader.GetDateTime("Date");
+
+            int score = reader.IsDBNull("score")
+                ? 0
+                : reader.GetInt32("score");
+            int assesmsntId = reader.IsDBNull("assessment_id")
+                ? 0
+                : reader.GetInt32("assessment_id");
+            CandidateAssesmentsHistory.Add(new CandidateAssesmentHistory
+            {
+                AssessmentName = assessmentName,
+                AssessmentDate = assessmentDate,
+                Score = score,
+                AssesmsntId = assesmsntId
+            });
+        }
+
+        return CandidateAssesmentsHistory;
     }
 
-    return CandidateAssesmentsHistory;
-}
+    public async Task<List<TestEmployeeDetails>> GetAssessmentEmployeeDetails(int assessmentId, int candidateId)
+    {
+       
+        List<TestEmployeeDetails> employeeDetails = new List<TestEmployeeDetails>();
+        string query = @" SELECT 
+    a.id AS AssessmentId,
+    t.name AS AssessmentName,
+    t.passinglevel,
+    t.duration,
+    a.scheduledstart,
+    a.scheduledend,
+    a.status
+    FROM assessments a
+    JOIN tests t 
+    ON a.test_id = t.id
+    JOIN candidatetestresults ctr
+    ON ctr.assessmentid = a.id
+    WHERE a.id = @AssessmentId AND ctr.candidateid=@CandidateId;";
+
+        using MySqlConnection connection = new MySqlConnection(_connectionString);
+        using MySqlCommand command = new MySqlCommand(query, connection);
+        command.Parameters.AddWithValue("@AssessmentId", assessmentId);
+        command.Parameters.AddWithValue("@CandidateId", candidateId);
+        try
+        {
+            await connection.OpenAsync();
+            using MySqlDataReader reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                
+                int AssessmentId = int.Parse(reader["AssessmentId"].ToString());
+                //    int candidateId = int.Parse(reader["Candidate_Id"].ToString());
+                string assessmentName = reader["AssessmentName"].ToString();
+                string passinglevel = reader["passinglevel"].ToString();
+                TimeSpan duration = TimeSpan.Parse(reader["duration"].ToString());
+                DateTime? scheduledStart = reader.IsDBNull("scheduledstart")
+                    ? (DateTime?)null
+                    : reader.GetDateTime("scheduledstart");
+
+                DateTime? scheduledEnd = reader.IsDBNull("scheduledend")
+                    ? (DateTime?)null
+                    : reader.GetDateTime("scheduledend");
+                string status = reader["status"].ToString();
+
+                TestEmployeeDetails testempdetails = new TestEmployeeDetails();
+                testempdetails.Id = AssessmentId;
+                // testempdetails.CandidateId=candidateId;
+                testempdetails.TestName = assessmentName;
+                testempdetails.PassingLevel = passinglevel;
+                testempdetails.Duration = duration;
+                testempdetails.ScheduledStart = scheduledStart;
+                testempdetails.ScheduledEnd = scheduledEnd;
+                testempdetails.Status = status;
+
+                employeeDetails.Add(testempdetails);
+            }
+
+        }
+        catch (Exception e)
+        {
+
+            throw;
+        }
+        finally
+        {
+            await connection.CloseAsync();
+        }
+        return employeeDetails;
+    }
 
 
 

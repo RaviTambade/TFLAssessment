@@ -8,7 +8,7 @@ public class TestEmployeeDetails
     public string PassingLevel { get; set; }    
     // Use TimeSpan for MySQL TIME type
     public TimeSpan? Duration { get; set; }
-    public DateTime ScheduledStart { get; set; }
-    public DateTime ScheduledEnd { get; set; }
+    public DateTime? ScheduledStart { get; set; }
+    public DateTime? ScheduledEnd { get; set; }
     public string Status { get; set; }
 }

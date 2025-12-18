@@ -50,5 +50,7 @@ public interface IAssessmentRepository
   public Task<List<CandidateAssesmentHistory>> GetAssesmentHistory(int candidateid);
   public  Task<List<ConceptWithCorrectAns>> GetConceptwiseCorrectAnswer(int candidateid);
 
+  public  Task<List<TestEmployeeDetails>> GetAssessmentEmployeeDetails(int assessmentId, int candidateId);
+
 }
 

@@ -420,16 +420,18 @@ public async Task<IActionResult> GetSmeTestList([FromQuery] int smeId)
     return Ok(tests);
 }
 //  http://localhost:5238/api/Assessment/GetAssesmentHistory/1
- [HttpGet("GetAssesmentHistory/{candidateid}")]
+    [HttpGet("GetAssesmentHistory/{candidateid}")]
     public async Task<IActionResult> GetAssesmentHistory(int candidateid)
     {
-        if (candidateid <= 0){
+        if (candidateid <= 0)
+        {
             _logger.LogError("Invalid candidateid ID provided at {DT}", DateTime.UtcNow.ToLongTimeString());
             return BadRequest(new { message = "Invalid candidateid  provided." });
         }
 
         List<CandidateAssesmentHistory> history = await _svc.GetAssesmentHistory(candidateid);
-        if (history == null || history.Count == 0){
+        if (history == null || history.Count == 0)
+        {
             _logger.LogWarning("No test details found for employee at {DT}", DateTime.UtcNow.ToLongTimeString());
             return NotFound(new { message = "No Assignments details found for the employee." });
         }
@@ -454,5 +456,21 @@ public async Task<IActionResult> GetSmeTestList([FromQuery] int smeId)
         _logger.LogInformation("Get all test by employee method invoked at  {DT}", DateTime.UtcNow.ToLongTimeString());
         return Ok(conceptAnswer);
     }
+
+    //   http://localhost:5238/api/Assessment/GetAssessmentEmployeeDetails/1
+    [HttpGet("GetAssessmentEmployeeDetails/{assessmentId}/{candidateId}")]
+    public async Task<IActionResult> GetAssessmentEmployeeDetails(int assessmentId, int candidateId)
+    {
+        List<TestEmployeeDetails> details =
+            await _svc.GetAssessmentEmployeeDetails(assessmentId, candidateId);
+
+        if (details == null || details.Count == 0)
+        {
+            return NotFound("No employees found for this assessment.");
+        }
+
+        return Ok(details);
+    }
+
 
 }
