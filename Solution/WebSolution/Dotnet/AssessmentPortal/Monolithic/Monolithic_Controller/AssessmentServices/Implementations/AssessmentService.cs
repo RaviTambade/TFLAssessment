@@ -160,5 +160,10 @@ public class AssessmentService : IAssessmentService
             return  await _repository.GetAssesmentHistory(candidateid);
 
     }
+    public async Task<List<ConceptWithCorrectAns>> GetConceptwiseCorrectAnswer(int candidateid){
+                   return  await _repository.GetConceptwiseCorrectAnswer(candidateid);
+
+    }
+
    
 }

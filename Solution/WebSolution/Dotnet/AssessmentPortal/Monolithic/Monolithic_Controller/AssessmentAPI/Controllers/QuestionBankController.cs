@@ -154,7 +154,7 @@ public class QuestionBankController : ControllerBase
         _logger.LogInformation("Get questions by subject ID {SubjectId} and concept ID {ConceptId} method invoked at {DT}", subjectId, conceptId, DateTime.UtcNow.ToLongTimeString());
         return Ok(questions);
     }
-
+     //http://localhost:5238/api/questionbank/questions/subjects/concepts
     [HttpGet("questions/subjects/concepts")]
     public async Task<IActionResult> GetQuestionsWithSubjectAndConcept()
     {   

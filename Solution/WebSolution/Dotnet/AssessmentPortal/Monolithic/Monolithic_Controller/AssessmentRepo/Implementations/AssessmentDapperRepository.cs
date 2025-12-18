@@ -882,7 +882,7 @@ public class AssessmentDapperRepository : IAssessmentRepository
     }
 public async Task<List<CandidateAssesmentHistory>> GetAssesmentHistory(int candidateid)
 {
-    List<CandidateAssesmentHistory> CandidateAssesmentsHistory = new();
+    List<CandidateAssesmentHistory> CandidateAssesmentsHistory = new List<CandidateAssesmentHistory>();
 
     const string query = @"
         SELECT 
@@ -892,8 +892,7 @@ public async Task<List<CandidateAssesmentHistory>> GetAssesmentHistory(int candi
             DATE(ctr.teststarttime) AS Date
         FROM candidatetestresults ctr
         JOIN tests t ON ctr.id = t.id
-        WHERE ctr.candidateid = @candidateId;
-    ";
+        WHERE ctr.candidateid = @candidateId;";
 
     using MySqlConnection connection = new MySqlConnection(_connectionString);
     using MySqlCommand command = new MySqlCommand(query, connection);
@@ -929,6 +928,51 @@ public async Task<List<CandidateAssesmentHistory>> GetAssesmentHistory(int candi
     }
 
     return CandidateAssesmentsHistory;
+}
+
+
+
+
+
+public async Task<List<ConceptWithCorrectAns>> GetConceptwiseCorrectAnswer(int candidateid)
+{
+    List<ConceptWithCorrectAns> conceptWithCorrectAns = new  List<ConceptWithCorrectAns>();
+
+    const string query = @"
+        SELECT 
+            c.id AS concept_id,
+            c.title AS concept_name,
+            COUNT(qb.id) AS total_questions,
+            SUM(CASE 
+                    WHEN ca.answerkey = qb.answerkey THEN 1 
+                    ELSE 0 
+                END) AS correct_answers
+        FROM candidateanswers ca
+        JOIN questionbank qb ON ca.testquestionid = qb.id
+        JOIN concepts c ON qb.conceptid = c.id
+        WHERE ca.candidateid = @candidateId
+        GROUP BY c.id, c.title;";
+
+    using MySqlConnection connection = new(_connectionString);
+    using MySqlCommand command = new(query, connection);
+
+    command.Parameters.AddWithValue("@candidateId", candidateid);
+
+    await connection.OpenAsync();
+    using MySqlDataReader reader = command.ExecuteReader();
+
+    while (await reader.ReadAsync())
+    {
+        conceptWithCorrectAns.Add(new ConceptWithCorrectAns
+        {
+            ConceptId = reader.GetInt32("concept_id"),
+            ConceptName = reader.GetString("concept_name"),
+            TotalQuestions = reader.GetInt32("total_questions"),
+            CorrectAnswers = reader.GetInt32("correct_answers")
+        });
+    }
+
+    return conceptWithCorrectAns;
 }
 
 }

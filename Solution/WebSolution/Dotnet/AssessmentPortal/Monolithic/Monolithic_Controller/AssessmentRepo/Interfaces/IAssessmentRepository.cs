@@ -47,7 +47,8 @@ public interface IAssessmentRepository
   public  Task<List<Subject>> GetSubjectBySME(int smeid);
   
   public  Task<List<TestDetails>> GetSmeTestList(int smeId);
-       public Task<List<CandidateAssesmentHistory>> GetAssesmentHistory(int candidateid);
+  public Task<List<CandidateAssesmentHistory>> GetAssesmentHistory(int candidateid);
+  public  Task<List<ConceptWithCorrectAns>> GetConceptwiseCorrectAnswer(int candidateid);
 
 }
 
