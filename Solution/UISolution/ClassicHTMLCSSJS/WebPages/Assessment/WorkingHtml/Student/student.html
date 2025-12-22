@@ -72,6 +72,8 @@
   <div class="sidebar">
     <h3>Student Panel</h3>
     <a href="#" id="TestList">Assessment history</a>
+     <a href="#" id="GetTestList">Assigned Test</a>
+
     <a href="#" id="Profile">Your Profile</a>
     <!-- <a href="#" id="createTestWithQuestionsLink">Create Test With Questions</a> -->
   </div>
@@ -162,7 +164,9 @@
       $("#TestList").click(function (e) {
         $("#content").load("getAllAssessment.html"); 
       });
-
+         $("#GetTestList").click(function (e) {
+        $("#content").load("getAllTest.html"); 
+      });
        $("#Profile").click(function (e) {
         $("#content").load("profile.html"); 
       });
