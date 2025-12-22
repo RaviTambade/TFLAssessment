@@ -355,22 +355,28 @@ public class AssessmentDapperRepository : IAssessmentRepository
         }
         return tests;
     }
-
-
-
-    public async Task<List<Employee>> GetAllEmployees()
+public async Task<List<Employee>> GetAllEmployees()
+{
+    using (IDbConnection con = new MySqlConnection(_connectionString))
     {
-        await Task.Delay(100);
-        List<Employee> employees = new List<Employee>();
-        using (IDbConnection con = new MySqlConnection(_connectionString))
-        {
-            var emp = con.Query<Employee>("SELECT * FROM employees");
+        var sql = @"
+            SELECT 
+              *
+            FROM employees e
+            JOIN userroles ur ON ur.userid = e.userid
+            JOIN roles r ON r.id = ur.roleid
+            WHERE r.name = @role;
+        ";
 
-            employees = emp as List<Employee>;
+        var employees = (await con.QueryAsync<Employee>(
+            sql,
+            new { role = "student" }
+        )).ToList();
 
-        }
         return employees;
     }
+}
+
 
     public async Task<Employee> GetEmployeeById(int userId)
     {
