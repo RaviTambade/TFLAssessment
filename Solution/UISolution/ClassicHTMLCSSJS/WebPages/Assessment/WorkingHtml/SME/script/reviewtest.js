@@ -9,7 +9,7 @@
     $("#revDuration").text(testData.duration);
     $("#revSubject").text(testData.subjectTitle);
     $("#revSME").text(testData.smeName);
-    $("#revDate").text(testData.scheduledDate);
+    $("#revDate").text(testData.createdDate);
     $("#revLevel").text(testData.passingLevel);
     $("#revQuestions").html(testData.questions.map(q => `<li>${q.title}</li>`).join(""));
 
@@ -19,13 +19,15 @@
         name: testData.name,
         duration: testData.duration,
         smeId: parseInt(testData.smeId),
-        // scheduledDate: new Date(testData.scheduledDate).toISOString(),
-        scheduledDate: testData.scheduledDate,
+        scheduledDate: new Date().toISOString(),
         passingLevel: parseInt(testData.passingLevel),
         questionIds: testData.questions.map(q => q.id),
-        creationDate: new Date().toISOString(),
+        // creationDate: new Date().toISOString(),
+        creationDate: testData.createdDate,
         modificationDate: new Date().toISOString()
       };
+
+      console.log(payload);
 
       const token = localStorage.getItem("token");
 

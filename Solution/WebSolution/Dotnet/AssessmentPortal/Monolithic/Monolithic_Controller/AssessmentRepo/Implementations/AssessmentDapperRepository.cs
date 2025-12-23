@@ -435,6 +435,7 @@ public async Task<List<Employee>> GetAllEmployees()
 
     public async Task<int> CreateTestWithQuestionsAsync(CreateTestWithQuestions createTestWithQuestions)
     {
+        Console.WriteLine(createTestWithQuestions.CreationDate);
         await Task.Delay(100);
         int testId = 0;
         string query = @"
@@ -455,9 +456,9 @@ public async Task<List<Employee>> GetAllEmployees()
                     SubjectId = createTestWithQuestions.SubjectId,
                     Duration = createTestWithQuestions.Duration,
                     SmeId = createTestWithQuestions.SmeId,
-                    CreationDate = DateTime.UtcNow,
-                    ModificationDate = DateTime.UtcNow,
-                    ScheduledDate = createTestWithQuestions.ScheduledDate,
+                    CreationDate = createTestWithQuestions.CreationDate,
+                    ModificationDate = createTestWithQuestions.CreationDate,
+                    ScheduledDate = createTestWithQuestions.CreationDate,
                     PassingLevel = createTestWithQuestions.PassingLevel
                 });
 

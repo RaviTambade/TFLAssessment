@@ -15,11 +15,26 @@
     })();
 
    selectedQuestions = [];
-   getSubjectsUrl = "http://localhost:5238/api/assessment/subjects";
+  //  getSubjectsUrl = "http://localhost:5238/api/assessment/subjects";
+   var userId = localStorage.getItem("userId")
+   getSubjectsUrl = `http://localhost:5238/api/subject/GetSmeSubjects/${userId}`; // userId is smeId
 
   $(document).ready(function () {
+    const currentDate = new Date();
+
     const editMode = new URLSearchParams(window.location.search).get("edit") === "true";
     const savedData = JSON.parse(sessionStorage.getItem("testReviewData"));
+
+     // Convert to local datetime format: YYYY-MM-DDTHH:mm
+    const year = currentDate.getFullYear();
+    const month = String(currentDate.getMonth() + 1).padStart(2, "0");
+    const day = String(currentDate.getDate()).padStart(2, "0");
+    const hours = String(currentDate.getHours()).padStart(2, "0");
+    const minutes = String(currentDate.getMinutes()).padStart(2, "0");
+
+    const formattedDateTime = `${year}-${month}-${day}T${hours}:${minutes}`;
+      
+    $("#createdDate").val(formattedDateTime);
 
     // Load subjects
     $.get(getSubjectsUrl, function (subjects) {
@@ -29,7 +44,7 @@
       if (editMode && savedData) {
         $("#testName").val(savedData.name);
         $("#duration").val(savedData.duration);
-        $("#scheduledDate").val(savedData.scheduledDate);
+        $("#createdDate").val(savedData.createdDate);
         $("#passingLevel").val(savedData.passingLevel);
         $("#subjectSelect").val(savedData.subjectId).trigger("change");
 
@@ -55,7 +70,6 @@
       const subjectId = $(this).val();
       selectedQuestions = [];
       if (subjectId) {
-        loadSMEs(subjectId);
         loadQuestions(subjectId);
       } else {
         resetSME();
@@ -71,19 +85,7 @@
       $("#questionsList").html(`<p class="no-questions">Please select a subject to view questions.</p>`);
     }
 
-    function loadSMEs(subjectId) {
-      $.get(`http://localhost:5238/api/Assessment/getsme/${subjectId}`, function (smes) {
-        if (smes.length === 0) {
-          $("#smeSelect").html(`<option value="">No SMEs available</option>`).prop("disabled", true);
-          return;
-        }
-        $("#smeSelect").html(`<option value="">-- Select SME --</option>` +
-          smes.map(sme => `<option value="${sme.id}">${sme.firstName} ${sme.lastName}</option>`).join("")
-        ).prop("disabled", false);
-
-        $(document).trigger("smeloaded");
-      });
-    }
+    $("#smeName").val(localStorage.getItem("userName"));
 
     function loadQuestions(subjectId) {
       $.get(`http://localhost:5238/api/Assessment/allquestionsbysubject/${subjectId}`, function (questions) {
@@ -123,12 +125,13 @@
       const subjectTitle = $("#subjectSelect option:selected").text();
       const name = $("#testName").val();
       const duration = $("#duration").val();
-      const smeId = $("#smeSelect").val();
-      const smeName = $("#smeSelect option:selected").text();
-      const scheduledDate = $("#scheduledDate").val();
+      const smeId = parseInt(localStorage.getItem("userId"));
+      const smeName = localStorage.getItem("userName");
+      const createdDate = $("#createdDate").val();
       const passingLevel = $("#passingLevel").val();
-
-      if (!subjectId || !name || !duration || !scheduledDate || !smeId || selectedQuestions.length === 0) {
+     
+      console.log(`Details ${smeId},  ${smeName}, ${createdDate}, ${passingLevel}` );
+      if (!subjectId || !name || !duration || !createdDate || !smeId || selectedQuestions.length === 0) {
         alert("Please fill all fields and select at least one question.");
         return;
       }
@@ -140,7 +143,7 @@
         duration,
         smeId,
         smeName,
-        scheduledDate,
+        createdDate,
         passingLevel,
         questions: selectedQuestions
       };

@@ -74,6 +74,7 @@ public async Task<IActionResult> DeleteSubject(int id)
     return StatusCode(500, "An error occurred while deleting the subject.");
 }
 
+//http://localhost:5238/api/subject/GetSmeSubjects/smeId 
 [HttpGet("GetSmeSubjects/{smeId}")]
     public async Task<IActionResult> GetSmeSubjects(int smeId)
     {

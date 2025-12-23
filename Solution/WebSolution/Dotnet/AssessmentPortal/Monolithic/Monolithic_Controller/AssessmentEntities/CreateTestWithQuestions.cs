@@ -6,6 +6,7 @@ public class CreateTestWithQuestions
     public string Duration { get; set; } // Format: "00:30:00"
     public int SmeId { get; set; }
     public DateTime ScheduledDate { get; set; }
+    public DateTime CreationDate { get; set; }
     public int PassingLevel { get; set; }
     public List<int> QuestionIds { get; set; }  // Selected question IDs
 }

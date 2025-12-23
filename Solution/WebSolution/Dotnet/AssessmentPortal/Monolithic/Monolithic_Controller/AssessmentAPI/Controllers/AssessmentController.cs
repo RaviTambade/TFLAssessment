@@ -197,6 +197,8 @@ public class AssessmentController : ControllerBase
     [Authorize(Roles = "sme")]
     public async Task<IActionResult> AddTest([FromBody] CreateTestWithQuestions request)
     {
+        // Console.WriteLine($"CreatedDate: {request.CreatedDate}, SubjectId: {request.SubjectId}, Name {request.Name}, Duration {request.Duration}, SmeId {request.SmeId}, ScheduledDate {request.ScheduledDate}, CreatedDate {request.CreatedDate}, PassingLevel {request.PassingLevel}");
+        // Console.WriteLine(request.SubjectId, request.CreatedDate);
         var testId = await _svc.CreateTestWithQuestionsAsync(request);
         // var AssessmentId = await _svc.CreateTestWithQuestionsAsync(request);
         if (testId == 0)
