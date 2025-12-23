@@ -1,0 +1,89 @@
+<!-- <button id="btnAllQuestionAnswers">AllQuestionAns</button>
+
+<script>
+
+    $(document).on("click", "#AllQuestionAns", function () {
+
+        if (!assessmentId) {
+            alert("Please select an assessment first");
+            return;
+        }
+        // Redirect WITH required params
+        window.location.href = `correctAnswerJWT.html?testid=${testId}&userid=${candidateId}&assessmentId=${assessmentId}`;
+        console.log("Received assessmentId:", assessmentId);
+        // Now call your API
+        $.ajax({
+            url: `http://localhost:5238/api/candidateanswer/assessmentanswers/candidates/${candidateId}/tests/${testId}/results`,
+            method: "GET",
+            success: function (data) {
+                console.log(data);
+            }
+        });
+    });
+
+    $("#btnAllQuestionAnswers").on("click", function () {
+
+        alert("Please select an assessment first");
+        function getQueryParam(param) {
+            return new URLSearchParams(window.location.search).get(param);
+        }
+
+        const assessmentId = getQueryParam("assessmentId");
+        const candidateId = getQueryParam("userid");
+        const testId = getQueryParam("testid");
+
+
+        if (!assessmentId || !candidateId || !testId) {
+            alert("Missing assessment, candidate, or test information");
+            return;
+        }
+        
+        function loadAllQuestionsAndAnswers(assessmentId, candidateId, testId) {
+        
+        let questionsUrl = `${remoteWeb}/api/questionbank/questions/tests/${testId}`;
+        let answersUrl = `${candidateAnswerWeb}/api/candidateanswer/assessmentanswers/candidates/${candidateId}/tests/${assessmentid}/results`;
+
+        $("#questions-container").show().html("Loading questions...");
+        $.when(
+            $.getJSON(questionsUrl),
+            $.getJSON(answersUrl)
+        )
+            .done(function (questionsData, answersData) {
+
+                const questions = questionsData[0];
+                const answers = answersData[0];
+                const container = $("#questions-container");
+                container.empty();
+
+                questions.forEach((q, index) => {
+
+                    const answer = answers.find(a => a.testQuestionId === q.id);
+
+                    const userAnswer = answer?.candidateAnswer?.toLowerCase() || null;
+                    const correctAnswer = answer?.correctAnswer?.toLowerCase() || null;
+
+                    const getOptionClass = (key) => {
+                        if (!userAnswer || !correctAnswer) return "";
+                        if (key === correctAnswer) return "correct";
+                        if (key === userAnswer && key !== correctAnswer) return "incorrect";
+                        return "";
+                    };
+
+                    const html = `
+                <div class="question-card">
+                    <div class="question-title">${index + 1}. ${q.title}</div>
+                    <div class="option ${getOptionClass('a')}">A. ${q.a}</div>
+                    <div class="option ${getOptionClass('b')}">B. ${q.b}</div>
+                    <div class="option ${getOptionClass('c')}">C. ${q.c}</div>
+                    <div class="option ${getOptionClass('d')}">D. ${q.d}</div>
+                </div>
+            `;
+                    container.append(html);
+                });
+            });
+        }
+            .fail(function () {
+                $("#questions-container").html("Error loading questions or answers.");
+            });
+    });
+</script> -->

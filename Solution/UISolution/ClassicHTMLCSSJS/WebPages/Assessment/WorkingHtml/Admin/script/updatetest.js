@@ -53,7 +53,7 @@
                 const fullName = emp.firstName + ' ' + emp.lastName;
                 html += `
                   <tr>
-                    <td><input type="checkbox" class="emp-checkbox" value="${emp.id}"></td>
+                    <td><input type="checkbox" class="emp-checkbox" value="${emp.userId}"></td>
                     <td>${fullName}</td>
                     <td>${emp.email}</td>
                     <td>${emp.contact}</td>
@@ -108,6 +108,8 @@
             // remarks: remarks || "No remark"
           };
       
+          console.log("Candidate IDs:", selectedIds.join(", "));
+
           $.ajax({
             url: "http://localhost:5238/api/Assessment/addemployees",
             type: "POST",

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Candidate Assessments</title>
@@ -16,7 +17,8 @@
             margin-bottom: 20px;
         }
 
-        th, td {
+        th,
+        td {
             padding: 10px;
             border: 1px solid #ccc;
             text-align: left;
@@ -49,6 +51,7 @@
         }
     </style>
 </head>
+
 <body>
 
     <h2>Assessments To Appear</h2>
@@ -75,27 +78,30 @@
         <p><strong>Scheduled Start:</strong> <span id="dStart"></span></p>
         <p><strong>Scheduled End:</strong> <span id="dEnd"></span></p>
         <p><strong>Status:</strong> <span id="dStatus"></span></p>
+
+        <button id="btnAllQuestionAnswers">AllQuestionAns</button>
     </div>
+    <div id="questions-container" style="display:none;"></div>
 
     <script>
         $(document).ready(function () {
-            const empId = localStorage.getItem("userId");
+        const empId = localStorage.getItem("userId");
+        var selectedTestId;
+        if (!empId) {
+            alert("User not logged in. Redirecting to login...");
+            window.location.href = "WorkingHtml/login.html";
+            return;
+        }
 
-            if (!empId) {
-                alert("User not logged in. Redirecting to login...");
-                window.location.href = "WorkingHtml/login.html";
-                return;
-            }
-
-            //load assessment//
-            $.ajax({
-                url: ` http://localhost:5238/api/Assessment/GetAssesmentHistory/${empId}`,
-                //  url: `http://localhost:5238/api/Assessment/alltestbyempid/${empId}`,
-                method: 'GET',
-                success: function (data) {
-                    console.log("data",data)
-                    data.forEach(test => {
-                        $('#testTable tbody').append(`
+        //load assessment//
+        $.ajax({
+            url: ` http://localhost:5238/api/Assessment/GetAssesmentHistory/${empId}`,
+            //  url: `http://localhost:5238/api/Assessment/alltestbyempid/${empId}`,
+            method: 'GET',
+            success: function (data) {
+                console.log("data", data)
+                data.forEach(test => {
+                    $('#testTable tbody').append(`
                             <tr>
                                     <td>${test.assessmentName}</td>
                                     <td>${new Date(test.assessmentDate).toLocaleDateString()}</td>
@@ -106,40 +112,57 @@
                                     </td>                                       
                             </tr>
                         `);
-                    });
-                },
-            });
-            
-        
-        $(document).on("click", ".detailsBtn", function () {
-            console.log("1234567890-1234567890-");
-            var assessmentid = $(this).data("assessmentid");
-            console.log =("assessmentId",assessmentid);
-            
-             $.ajax({
-            url: `http://localhost:5238/api/Assessment/GetAssessmentEmployeeDetails/${assessmentid}/${empId}`,
-            type: "GET",
-            success: function (data) {
-
-                const test = Array.isArray(data) ? data[0] : data;
-
-                $("#dAssessmentName").text(test.testName);
-                $("#dPassingLevel").text(test.passingLevel);
-                $("#dDuration").text(test.duration);
-                $("#dStart").text(test.scheduledStart ? new Date(test.scheduledStart).toLocaleString() : "N/A");
-                $("#dEnd").text(test.scheduledEnd ? new Date(test.scheduledEnd).toLocaleString() : "N/A");
-                $("#dStatus").text(test.status);
-
-                $("#detailsBox").slideDown();
+                });
             },
-            error: function () {
-                alert("Failed to load details");
-            }
         });
-    });
 
-});
+
+        $(document).on("click", ".detailsBtn", function () {
+            var assessmentid = $(this).data("assessmentid");
+            console.log("assessmentId", assessmentid);
+
+            $.ajax({
+                url: `http://localhost:5238/api/Assessment/GetAssessmentEmployeeDetails/${assessmentid}/${empId}`,
+                type: "GET",
+                success: function (data) {
+
+                    const test = Array.isArray(data) ? data[0] : data;
+                    console.log("TEST", test);
+                    selectedTestId = test.testId; 
+
+                    $("#dAssessmentName").text(test.testName);
+                    $("#dPassingLevel").text(test.passingLevel);
+                    $("#dDuration").text(test.duration);
+                    $("#dStart").text(test.scheduledStart ? new Date(test.scheduledStart).toLocaleString() : "N/A");
+                    $("#dEnd").text(test.scheduledEnd ? new Date(test.scheduledEnd).toLocaleString() : "N/A");
+                    $("#dStatus").text(test.status);
+
+                    $("#detailsBox").slideDown();
+                },
+                error: function () {
+                    alert("Failed to load details");
+                }
+            });
+        });
+
+
+        $("#btnAllQuestionAnswers").on("click", function () {
+            console.log("empId", empId);
+            console.log("selectedTestId", selectedTestId);
+            if (!empId || !selectedTestId) {
+                alert("Assessment data not loaded yet");
+                return;
+            }
+        
+            window.location.href =
+                `correctAnswerJWT.html?userid=${empId}&testid=${selectedTestId}`;
+        });
+
+
+        
+    });
     </script>
 
 </body>
+
 </html>
