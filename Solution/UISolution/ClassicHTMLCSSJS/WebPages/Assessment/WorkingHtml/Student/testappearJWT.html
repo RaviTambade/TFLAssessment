@@ -125,8 +125,21 @@
     let remainingTime = 60; // fallback if duration not provided
     if (durationParam) {
       const [hh, mm, ss] = durationParam.split(":").map(Number);
-      remainingTime = (hh * 3600) + (mm * 60) + ss;
+      // remainingTime = (hh * 3600) + (mm * 60) + ss;
+            remainingTime = (hh * 3600) + (mm * 60) + ss;
+
     }
+    function formatTime(seconds) {
+  const hours = Math.floor(seconds / 3600);
+  const minutes = Math.floor((seconds % 3600) / 60);
+  const secs = seconds % 60;
+
+  return (
+    String(hours).padStart(2, '0') + ':' +
+    String(minutes).padStart(2, '0') + ':' +
+    String(secs).padStart(2, '0')
+  );
+}
 
     // --- Global Variables ---
     var current = 0;
@@ -451,8 +464,9 @@
 
         var testTimeLimit = () => {
             intervalId = setInterval(() => {
-              $("#stopWatch").html(remainingTime);
-            
+              // $("#stopWatch").html(remainingTime);
+            $("#stopWatch").html(formatTime(remainingTime));
+
               if (remainingTime === 0) {
                 clearInterval(intervalId);
               
