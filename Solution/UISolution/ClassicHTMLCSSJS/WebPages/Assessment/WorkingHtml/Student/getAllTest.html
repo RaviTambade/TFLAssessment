@@ -123,11 +123,11 @@
                         const scheduledStart = new Date(testData.scheduledStart);
                         const now = new Date();
 
-                        // Optional: add a buffer of ±2 minutes (120000 ms)
-                        const buffer = 2 * 60 * 1000;
+                        // Optional: add a buffer of ±5 minutes (600000 ms)
+                        const buffer = 5 * 60 * 1000;
 
-                        if (Math.abs(now - scheduledStart) <= buffer) {
-                            const userId = localStorage.getItem("userId");
+                        if (now.getTime() >= scheduledStart.getTime() &&
+                             now.getTime() <= scheduledStart.getTime() + buffer) {                            const userId = localStorage.getItem("userId");
                             if (!userId) {
                                 alert("User not logged in!");
                                 return;
