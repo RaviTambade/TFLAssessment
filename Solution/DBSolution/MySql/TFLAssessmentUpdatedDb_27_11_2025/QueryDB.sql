@@ -43,397 +43,753 @@ desc userroles;
 desc users;
 
 
--- Fetch full test details including SME (employee) information for the given test ID.
-SELECT t.id,t.name AS TestName, t.smeid AS subjectExpertId, t.subjectid AS subjectId, 
-t.creationdate AS creationDate,t.modificationdate AS modificationDate,
-t.scheduleddate AS scheduledDate,t.status,t.passinglevel,e.firstName, e.lastName
-FROM   tests t
-LEFT JOIN employees e ON t.smeid = e.id 
-WHERE t.id = 1;
 
--- Retrieve all tests created within the specified date range.
-SELECT * FROM tests WHERE creationDate BETWEEN '2025-11-01' AND '2025-11-22';
+== AssessmentDapper Repository==
+-- get assessmets details--  
+SELECT t.id,t.name AS TestName, t.smeid AS subjectExpertId, t.subjectid AS subjectId, t.creationdate AS creationDate,t.modificationdate AS modificationDate,
+                t.scheduleddate AS scheduledDate,t.status,t.passinglevel,e.firstName, e.lastName
+                FROM   tests t
+                LEFT JOIN employees e ON t.smeid = e.id 
+                WHERE t.id = 1;
+ 
+-- creating a test-- 
+-- plz check sampledb file insert into test data 
+        
+-- Get all tests created betn Fromdate to Todate-- 
+select * from tests where creationDate  between '2025-11-01' and '2025-12-25';
 
--- Retrieve all tests assigned to the specified SME.
-select * from tests where smeid = 3;
+-- Get all tests created by subjectmatterexpert--  
+select * from tests where smeid=3;
 
--- Delete a specific question from a test using test ID and question bank ID.
-DELETE FROM testquestions WHERE testid = 1 AND questionbankid = 1;
+-- # add question to the tests-- 
+-- plz check sampledb insert into testquestions
 
--- Delete testquestions by their  id
-DELETE FROM testquestions WHERE id = @Id;
+-- adding questions to tests 
+INSERT INTO testquestions(testid, questionbankid) VALUES (58,48);
 
--- Update the duration of a test for the given assessment ID.
-UPDATE tests SET duration = "00:10:00" WHERE id = 1;
+-- remove question from test--    
+DELETE FROM testquestions WHERE testid = 5 AND questionbankid = 12;
 
--- Update the scheduled date of a test for the given assessment ID.
-UPDATE tests SET scheduleddate = "2025-11-21 00:00:00" WHERE id = 8;
+-- delete testquestion row --
+-- we should add delete column to testquestions--    
+DELETE FROM testquestions WHERE id = 50;
 
--- Fetch complete test details along with SME info, subject skill, and employee (SME) name.
-SELECT tests.*, subjects.title AS skill, employees.firstname, employees.lastname
-FROM tests
-INNER JOIN subjectmatterexperts ON subjectmatterexperts.id = tests.smeid
-INNER JOIN subjects ON subjects.id = subjectmatterexperts.subjectid
-INNER JOIN employees ON employees.id = subjectmatterexperts.employeeid;
+-- change test duration--
+update tests set duration=25 where id=56;
 
--- get employee by their userid
-SELECT * FROM employees WHERE userId=6;
+-- reschedule assessment-- 
+update assessments set scheduledstart= '2025-12-26' where id=54;
 
--- get subject concept by their id
-select * from concepts WHERE subjectid=1;
+-- Get all test -- 
+-- colums to be remove from below query modificationdate,scheduledate--  
+select tests.*,subjects.title as skill,employees.firstname,employees.lastname from tests 
+                        inner join subjectmatterexperts on subjectmatterexperts.id=tests.smeid
+                        inner join subjects on subjects.id=subjectmatterexperts.subjectid
+                        inner join employees on  employees.id=subjectmatterexperts.employeeid ;
+                        
+-- Get all employees with role --
+SELECT e.userId, e.firstname, e.lastname, e.email
+            FROM employees e
+            JOIN userroles ur ON ur.userid = e.userid
+            JOIN roles r ON r.id = ur.roleid
+            WHERE r.name = 'student'; 
+            
+-- Get all Employee by Id --
+SELECT * FROM employees WHERE userId=4;
 
--- get all questions by subject id
-SELECT id AS QuestionBankId,title,a,b,c,d FROM questionbank WHERE subjectid = 1;	
+-- Get all subjects --
+select * from subjects;
 
--- Retrieve SME details (employee info) for the given subject ID.
+-- get all concept--
+select * from concepts;
+
+-- get concept by subject --
+select * from concepts WHERE subjectid=3;
+
+-- create test with questions --  
+
+
+-- Get all questions by subjectid --
+ 
+SELECT 
+                id AS QuestionBankId,
+                title,
+                a,
+                b,
+                c,
+                d
+            FROM questionbank
+            WHERE subjectid = 3;  
+            
+-- get sme for specific subject--  
 SELECT sme.id, e.userId, e.firstName, e.lastName, e.email, e.contact
-FROM employees e
-INNER JOIN subjectmatterexperts sme ON e.id = sme.employeeid
-WHERE sme.subjectid = 1;
+            FROM employees e
+            INNER JOIN subjectmatterexperts sme ON e.id = sme.employeeid
+            WHERE sme.subjectid = 6;
 
--- Retrieve all tests scheduled within the specified date range.
-SELECT * FROM tests WHERE scheduleddate BETWEEN '2025-11-01' AND '2025-11-22';
+-- get all tests by fromdate to todate--
+SELECT * FROM tests WHERE scheduleddate BETWEEN '2025-12-02' AND '2025-12-22';
 
--- select test details by testid
-SELECT * FROM tests WHERE id = 1;
-
-
--- Fetch all questions linked to a specific test, including options and answer details.
+-- get all questions -- 
+SELECT * FROM tests WHERE id = 2; 
 SELECT q.id AS QuestionId, q.subjectid AS SubjectId, q.title, q.a, q.b, q.c, q.d, q.answerkey, q.conceptid
-FROM questionbank q
-INNER JOIN testquestions tq ON q.id = tq.questionbankid
-WHERE tq.testid = 1;
-
-
--- Retrieve all questions from the question bank that belong to the specified concept.
+                      FROM questionbank q
+                      INNER JOIN testquestions tq ON q.id = tq.questionbankid
+                      WHERE tq.testid = 3;
+                      
+-- Get Questions by conceptId --
 SELECT q.id AS QuestionId, q.subjectid AS SubjectId, q.title, q.a, q.b, q.c, q.d, q.answerkey, q.conceptid
-FROM questionbank q
-WHERE q.conceptid = 1;
+            FROM questionbank q
+            WHERE q.conceptid = 4; 
 
--- Update a question's text, options, and answer key in the question bank for the given question ID.
+-- update question --
 UPDATE questionbank 
-SET title = 'What is Java?', 
-    a = 'Programming Language', 
-    b = 'Coffee', 
-    c = 'Animal', 
-    d = 'Car', 
-    answerkey = 'a'
-WHERE id = 10;
+            SET title = @Title, a = @A, b = @B, c = @C, d = @D, answerkey = @AnswerKey 
+            WHERE id = 2;
+            
+-- update assessment status --  
+UPDATE assessments SET status = @Status WHERE id = 3;
 
--- Mark the test as completed for the specified test ID.
-UPDATE tests 
-SET status = 'COMPLETED' 
-WHERE id = 5;
+-- add employee to assessment --
+-- plz check sampledb insert into assessment 
+ 
+-- Get test count by status --
+select count(id) as testcount from tests where status= 'created';
 
-
--- Retrieve a candidate's test scores with subject title and test ID for the specified year.
-SELECT candidatetestresults.score, subjects.title, tests.id
-FROM candidatetestresults
-INNER JOIN tests ON tests.id = candidatetestresults.testid
-INNER JOIN subjects ON subjects.id = tests.subjectid
-WHERE candidatetestresults.candidateid =6
-  AND YEAR(teststarttime) = 2025;
-
--- Fetch user details along with assigned role information for login authentication using email and password.
-SELECT u.id AS UserId, u.aadharid, u.firstname, u.lastname, u.email, u.contactnumber, u.password,
-       ur.id AS UserRoleId, ur.roleid, r.name AS RoleName, r.lob
-FROM users u
-LEFT JOIN userroles ur ON u.id = ur.userid
-LEFT JOIN roles r ON ur.roleid = r.id
-WHERE u.email = "ravi.tambade@example.com" AND u.password = "12345";
-
--- Check whether a user exists by validating the provided email and password.
-SELECT COUNT(*) 
-FROM users 
-WHERE email = "ravi.tambade@example.com" AND password = "12345";
-
--- Update the user's password for the account matching the specified email.
-UPDATE users 
-SET password = "12345" 
-WHERE email = "ravi.tambade@example.com";
-
--- Retrieve all answers submitted by a candidate for the specified test.
-SELECT * FROM candidateanswers 
-WHERE candidateid =6
-AND testquestionid IN (SELECT id FROM testquestions WHERE testid = 9);
-
--- Fetch candidate answers along with correct answers for all questions in a specific test.
-SELECT 
-    ca.testquestionid,
-    ca.answerkey AS CandidateAnswer,
-    qb.answerkey AS CorrectAnswer
-FROM candidateanswers ca
-JOIN testquestions tq ON ca.testquestionid = tq.id
-JOIN questionbank qb ON tq.questionbankid = qb.id
-WHERE ca.candidateid = 5 AND tq.testid = 1;
-
--- Retrieve all concepts belonging to the specified subject.
-SELECT * FROM concepts WHERE subjectid = 1;
-
--- Get the count of questions grouped by concept for a given subject.
-SELECT COUNT(q.title) AS questionCount, e.title, e.id AS conceptid
-FROM questionbank q
-JOIN concepts e ON e.id = q.conceptid
-WHERE q.subjectid = 1
-GROUP BY q.conceptid;
-
--- Retrieve interview candidate details along with SME subject and candidate name.
-SELECT interviews.candidateid, employees.firstname, employees.lastname, subjects.title
-FROM interviews
-INNER JOIN employees ON interviews.candidateid = employees.id
-INNER JOIN subjectmatterexperts ON interviews.smeid = subjectmatterexperts.id
-INNER JOIN subjects ON subjectmatterexperts.subjectid = subjects.id;
-
-
--- Retrieve interview details for a specific candidate along with their name and SME subject.
-SELECT interviews.candidateid, employees.firstname, employees.lastname, subjects.title
-FROM interviews
-INNER JOIN employees ON interviews.candidateid = employees.id
-INNER JOIN subjectmatterexperts ON interviews.smeid = subjectmatterexperts.id
-INNER JOIN subjects ON subjectmatterexperts.subjectid = subjects.id
-WHERE interviews.candidateid = 6;
-
--- Update the interview date for the specified interview ID.
-UPDATE interviews 
-SET interviewdate = '2025-11-21'
-WHERE id = 2;
-
--- Update the interview time for the specified interview ID.
-UPDATE interviews 
-SET interviewtime = '15:30:00' 
-WHERE id = 12;
-
--- change interviwer
-update interviews set smeid =1 where  id =1;
-
--- Delete the interview record for the specified interview ID. cancel interview
-DELETE FROM interviews WHERE id = 1;
-
-
--- Remove the SME assignment for the given employee and subject.
-DELETE FROM subjectmatterexperts WHERE employeeid = 3 AND subjectid = 1;
-
--- Retrieve all questions for a specific subject along with subject details.
-SELECT questionbank.id AS questionid, questionbank.title AS question, 
-       subjects.title AS subject, subjects.id AS subjectid
-FROM questionbank, subjects 
-WHERE questionbank.subjectid = subjects.id 
-  AND subjects.id = 1;
-
--- Retrieve questions for the given subject and concept along with subject and concept details.
-SELECT questionbank.id, questionbank.id AS questionid, questionbank.title, 
-       subjects.title AS subject, concepts.title AS concept
-FROM questionbank, subjects, concepts
-WHERE questionbank.subjectid = subjects.id 
-  AND questionbank.conceptid = concepts.id
-  AND subjects.id = 1 
-  AND concepts.id = 1;
-
-
--- Retrieve all questions along with their associated subject and concept details.
-SELECT questionbank.id, questionbank.title, subjects.title AS subject, concepts.title AS concept
-FROM questionbank, subjects, concepts
-WHERE questionbank.subjectid = subjects.id 
-  AND questionbank.conceptid = concepts.id;
-
--- Retrieve the concept title for a specific question within the given subject.
-SELECT concepts.title
-FROM concepts
-INNER JOIN questionbank ON questionbank.conceptid = concepts.id
-INNER JOIN subjects ON questionbank.subjectid = concepts.subjectid
-WHERE subjects.title = "corejava"
-  AND questionbank.id = 1;
-
-
--- Retrieve all questions assigned to a test along with their full details from the question bank.
-SELECT 
-    testquestions.id AS testquestionid, 
-    questionbank.id AS questionbankid,
-    questionbank.subjectid,
-    questionbank.title,
-    questionbank.a,
-    questionbank.b,
-    questionbank.c,
-    questionbank.d,
-    questionbank.conceptid
-FROM questionbank 
-INNER JOIN testquestions 
-    ON testquestions.questionbankid = questionbank.id 
-WHERE testquestions.testid = 1;
-
-
--- Get the count of questions grouped by subject along with subject details.
-SELECT COUNT(q.title) AS questionCount, s.title, s.id AS subjectId
-FROM questionbank q
-JOIN subjects s ON s.id = q.subjectid
-GROUP BY q.subjectid;
-
--- Retrieve candidate test results with candidate details, subject name, and test name for a specific test.
-SELECT 
-    candidatetestresults.testid, 
-    candidatetestresults.score, 
-    candidatetestresults.candidateid,
-    employees.firstname, 
-    employees.lastname, 
-    subjects.title AS subject, 
-    tests.name AS testname 
-FROM candidatetestresults 
-INNER JOIN employees ON employees.id = candidatetestresults.candidateid 
-INNER JOIN tests ON candidatetestresults.testid = tests.id 
-INNER JOIN subjects ON tests.subjectid = subjects.id 
-WHERE candidatetestresults.testid = 1;
-
-
--- Retrieve the list of candidates who attempted a specific test along with their names.
-SELECT candidatetestresults.testid, candidatetestresults.candidateid, 
-       employees.firstname, employees.lastname
-FROM candidatetestresults 
-INNER JOIN employees 
-    ON employees.id = candidatetestresults.candidateid
-WHERE candidatetestresults.testid = 2;
-
-
--- Retrieve all test scores of a candidate along with corresponding test names.
-SELECT cr.testid AS Id, cr.score AS Score, t.name AS TestName
-FROM candidatetestresults cr
-JOIN tests t ON cr.testid = t.id 
-WHERE candidateid = 6;
-
-
--- Retrieve candidates who passed a specific test along with their scores and personal details.
-SELECT tests.id, candidatetestresults.candidateid, candidatetestresults.score, 
-       tests.passinglevel, employees.firstname, employees.lastname
-FROM tests
-INNER JOIN candidatetestresults
-    ON tests.id = candidatetestresults.testid
-INNER JOIN employees
-    ON candidatetestresults.candidateid = employees.id
-WHERE candidatetestresults.score >= tests.passinglevel 
-  AND tests.id = 2;
-
-
--- Retrieve candidates who failed a specific test along with their scores and personal details.
-SELECT tests.id, candidatetestresults.candidateid, candidatetestresults.score, 
-       tests.passinglevel, employees.firstname, employees.lastname
-FROM tests
-INNER JOIN candidatetestresults
-    ON tests.id = candidatetestresults.testid
-INNER JOIN employees
-    ON candidatetestresults.candidateid = employees.id
-WHERE candidatetestresults.score <= tests.passinglevel 
-  AND tests.id = 2;
-
-
--- Retrieve candidates' test scores and details for all tests under a specific subject.
-SELECT tests.id, tests.subjectid, candidatetestresults.candidateid, 
-       employees.firstname, employees.lastname, candidatetestresults.score, subjects.title
-FROM tests
-INNER JOIN candidatetestresults
-    ON tests.id = candidatetestresults.testid
-INNER JOIN employees
-    ON candidatetestresults.candidateid = employees.id
-INNER JOIN subjects
-    ON tests.subjectid = subjects.id
-WHERE tests.subjectid = 1;
-
-
--- Retrieve all test names and corresponding scores for a given candidate.
-SELECT t.Name AS TestName, ctr.score AS Score
-FROM candidatetestresults ctr
-JOIN tests t ON ctr.testid = t.id
-WHERE ctr.candidateid = 6;
-
--- Retrieve all roles assigned to a specific user by their user ID.
-SELECT r.id AS id, r.name AS rolename
-FROM roles r
-JOIN userroles ur ON ur.roleid = r.id
-JOIN users u ON u.id = ur.userid
-WHERE u.id = 5;
-
--- Retrieve all employees who are assigned the role of 'SME'.
-SELECT e.id, e.userId, e.firstname, e.lastname
-FROM employees e
-JOIN userroles ur ON ur.userid = e.userId
-JOIN roles r ON r.id = ur.roleid
-WHERE r.name = 'sme';
-
--- Retrieve users who have all of the specified roles, grouping by user and ensuring they match the total role count.
-SELECT u.id, u.firstname, u.lastname
-FROM users u
-JOIN userroles ur ON u.id = ur.userid
-WHERE ur.roleid IN (2,3)
-GROUP BY u.id, u.firstname, u.lastname
-HAVING COUNT(DISTINCT ur.roleid) = 2;
-
-
--- all active user count
-SELECT COUNT(DISTINCT user_id) as activeuser
-FROM user_session
-WHERE session_status = "ACTIVE";
-
--- all active user 
-SELECT 
-    u.id AS user_id,
-    u.firstname,
-    u.lastname,
-    u.email,
-    GROUP_CONCAT(DISTINCT r.name ORDER BY r.name) AS roles
-FROM user_session us
-JOIN employees u ON u.id = us.user_id
-LEFT JOIN userroles ur ON ur.userid = u.id
-LEFT JOIN roles r ON r.id = ur.roleid
-WHERE us.session_status = 'ACTIVE'
-GROUP BY u.id, u.firstname, u.lastname;
-
--- all unique user count use appliaction
-SELECT COUNT(DISTINCT user_id) AS allUserCount
-FROM user_session;
-
--- all unique user use appliaction
-SELECT 
-    u.id AS user_id,
-    u.firstname,
-    u.lastname,
-    u.email,
-    GROUP_CONCAT(DISTINCT r.name) AS roles
-FROM user_session us
-JOIN employees u ON u.id = us.user_id
-LEFT JOIN userroles ur ON ur.userid = u.id
-LEFT JOIN roles r ON r.id = ur.roleid
-GROUP BY u.id, u.firstname, u.lastname, u.email;
-
- -- top 10 user using application
-  SELECT 
-    us.user_id,
-    e.firstname,
-    e.lastname,
-    GROUP_CONCAT(DISTINCT r.name) AS roles,
-    SEC_TO_TIME(
-        MAX(TIMESTAMPDIFF(SECOND, us.login_time, COALESCE(us.logout_time, NOW())))
-    ) AS longest_session
-FROM user_session us
-JOIN employees e ON e.id = us.user_id
-LEFT JOIN userroles ur ON ur.userid = e.id
-LEFT JOIN roles r ON r.id = ur.roleid
-GROUP BY us.user_id, e.firstname, e.lastname
-ORDER BY longest_session DESC
-LIMIT 10;
-
--- count total schedule test
-select count(id) as testcount from tests where status="scheduled";
-
--- detalis of total shedule test
+-- Get all test by status --  
 select 
-    t.id,
+                    t.id,
+                    t.name,
+                    s.title,
+                    t.duration,
+                    MAX(ts.scheduledstart) as scheduledstart,
+                    MAX(ts.scheduledend) as scheduledend
+                from tests t
+                left join assessments ts on t.id = ts.test_id
+                left join subjects s on s.id = t.subjectid
+                where t.status = 'created'
+                group by t.id, t.name, s.title, t.duration;  
+                
+-- get subjectmatterexpert by subject--
+SELECT s.id, s.title
+        FROM subjectmatterexperts sme
+        JOIN subjects s ON sme.subjectId = s.id
+        WHERE sme.employeeId = 3; 
+        
+-- get sme test list--
+SELECT Name AS test_name,duration FROM tests WHERE smeid = 3; 
+
+-- get assessment history --
+ SELECT 
     t.name,
-    s.title,
+    ctr.score, 
+    DATE(ctr.teststarttime) AS Date,
+    a.id AS assessment_id
+    FROM candidatetestresults ctr
+    JOIN assessments a 
+    ON ctr.assessmentid = a.id
+    JOIN tests t 
+    ON a.test_id = t.id
+    WHERE ctr.candidateid = 6
+    ;
+    
+    -- get assessment Employee details--
+     SELECT 
+    a.id AS AssessmentId,
+    t.name AS AssessmentName,
+    t.passinglevel,
     t.duration,
-    MAX(ts.scheduledstart) as scheduledstart,
-    MAX(ts.scheduledend) as scheduledend
-from tests t
-left join testschedules ts on t.id = ts.testid
-left join subjects s on s.id = t.subjectid
-where t.status = 'scheduled'
-group by t.id, t.name, s.title, t.duration;
+    a.scheduledstart,
+    a.scheduledend,
+    a.status
+    FROM assessments a
+    JOIN tests t 
+    ON a.test_id = t.id
+    JOIN candidatetestresults ctr
+    ON ctr.assessmentid = a.id
+    WHERE a.id = 50 AND ctr.candidateid= 4;
+    
+-- concept wise correct answer--
+SELECT 
+            c.id AS concept_id,
+            c.title AS concept_name,
+            COUNT(qb.id) AS total_questions,
+            SUM(CASE 
+                    WHEN ca.answerkey = qb.answerkey THEN 1 
+                    ELSE 0 
+                END) AS correct_answers
+        FROM candidateanswers ca
+        JOIN questionbank qb ON ca.testquestionid = qb.id
+        JOIN concepts c ON qb.conceptid = c.id
+        WHERE ca.candidateid = 4
+        GROUP BY c.id, c.title;  
+     
+== AuthRepository ==
+
+-- Get User With Roles By Email
+
+SELECT u.id AS UserId, u.aadharid, u.firstname, u.lastname, u.email, u.contactnumber, u.password,
+        ur.id AS UserRoleId, ur.roleid, r.name AS RoleName, r.lob
+        FROM users u
+        LEFT JOIN userroles ur ON u.id = ur.userid
+        LEFT JOIN roles r ON ur.roleid = r.id
+        WHERE u.email = "ravi.tambade@example.com" AND u.password="12345";
+
+
+-- Check Old Password
+
+SELECT COUNT(*) 
+	FROM users 
+	WHERE email = "ravi.tambade@example.com" AND password = 12345;
+
+-- Update Password
+-- existing query
+UPDATE users SET password = "123456" WHERE email ="ravi.tambade@example.com";
+
+-- new query
+UPDATE users SET password = 12345 WHERE id = 7;
+
+
+== CandidateAnswer Repository ==
+
+
+-- Get Candidate Answers
+
+SELECT * FROM candidateanswers WHERE candidateid = 6 AND testquestionid IN (SELECT testquestions.id FROM testquestions inner join assessments on assessments.test_id=testquestions.testid where assessments.id=1);
+
+
+-- Get Candidate testquestionid ,CandidateAnswer,CorrectAnswer
+
+		SELECT 
+                ca.testquestionid,
+                ca.answerkey AS CandidateAnswer,
+                qb.answerkey AS CorrectAnswer
+                FROM candidateanswers ca
+                JOIN testquestions tq ON ca.testquestionid = tq.id
+                JOIN questionbank qb ON tq.questionbankid = qb.id
+                JOIN assessments a ON a.test_id = tq.testid
+                WHERE ca.candidateid = 6 AND a.id = 1 ;
+
+
+-- Get Candidate Test Details id and firstname
+-- Query candidate
+
+SELECT id, firstname FROM employees WHERE id = 5;
+
+--  Query test
+
+SELECT tests.id, tests.name AS TestName, tests.passinglevel, tests.scheduleddate FROM tests Inner join assessments on assessments.test_id= tests.id WHERE assessments.id = 1;
+
+--  tests.scheduleddate change it with assessments.scheduleddate
+
+
+== ConceptRepository ==
+
+
+-- Update Concept
+update questionbank set conceptid=1 where id=1;
+
+-- Update Subject
+update concepts set subjectid= 2 where id= 1;
+
+
+
+-- GetConceptBySubjectId
+
+ SELECT * FROM concepts where subjectid=1;
+
+-- getConceptQuestionCount
+
+ select count(q.title) as questionCount, e.title ,e.id as conceptid 
+            from questionbank q
+            join concepts e on e.id=q.conceptid 
+            where q.subjectid=3
+            group by(q.conceptid)
+
+-- Subject Repository
+
+-- to shows all the rows and columns form the subject table (Full data for subject)
+ select * from subjects;
+
+-- This query Insert the data which is passed in the value to the table 
+INSERT INTO subjects (title) VALUES ("Python");   -- (@title = "Python"
+
+-- This query deletes the row from the subjects table where the id is 9.
+DELETE FROM subjects WHERE id = 9;   -- (@id = 9)
+
+
+-- This query retrieves the IDs and titles of subjects that the employee with employeeId = 3 is an expert in, by joining the subjectmatterexperts table with the subjects table.
+SELECT s.id, s.title
+FROM subjectmatterexperts sme
+JOIN subjects s ON sme.subjectId = s.id
+WHERE sme.employeeId = 3; -- (@smeId = 3)
+
+
+
+
+== User Session Repository ==
+
+
+-- This query creates a new session record for user ID 2, setting the login time to the current time and marking the session as ACTIVE.
+INSERT INTO user_session (user_id, login_time, session_status)
+        VALUES (2, NOW(), 'ACTIVE'); -- (@UserId = 2)
+
+
+--  This query updates the active session for user ID 2 by setting the logout time to the current time and changing the session status to INACTIVE.
+UPDATE user_session
+        SET logout_time = NOW(), session_status = 'INACTIVE'
+        WHERE user_id = 2 AND session_status = 'ACTIVE';    -- (@UserId = 2)
+
+-- This query retrieves all session records for user ID 2, showing the session ID, login time, logout time, and status, and orders them from the most recent login to the oldest.
+SELECT id, user_id, login_time, logout_time, session_status
+                     FROM user_session
+                     WHERE user_id = 2       -- (@UserId=2)
+                     ORDER BY login_time DESC;
+
+
+
+
+== Question Bank  Repository ==
+
+
+-- this queary to shows all the rows and columns form the question Bank table.
+select * from questionbank;
+
+-- This query retrieves all questions from the questionbank that belong to the subject with id = 4, showing each question’s ID and title, along with the subject’s ID and title.
+SELECT 
+    questionbank.id AS questionid,
+    questionbank.title AS question,
+    subjects.title AS subject,
+    subjects.id AS subjectid
+FROM
+    questionbank,
+    subjects	
+WHERE
+    questionbank.subjectid = subjects.id
+        AND subjects.id = 4;      -- (@subjectId = 4)
+
+-- It joins the questionbank table with both subjects and concepts to get the corresponding titles.
+SELECT 
+    questionbank.id,
+    questionbank.id AS questionid, questionbank.title,
+    subjects.title AS subject, concepts.title AS concept
+FROM
+    questionbank,
+    subjects,
+    concepts
+WHERE
+    questionbank.subjectid = subjects.id
+        AND questionbank.conceptid = concepts.id
+        AND subjects.id = 4    -- (@SubjectsId = 4)
+        AND concepts.id = 8;    -- (@ConceptId = 8)
+
+
+-- It joins the questionbank table with subjects and concepts to get the related titles.
+SELECT 
+    questionbank.id,
+    questionbank.id AS questionid,
+    questionbank.title,
+    questionbank.a AS optionA,
+    questionbank.b AS optionB,
+    questionbank.c AS optionC,
+    questionbank.d AS optionD,
+    subjects.title AS subject,
+    concepts.title AS concept
+FROM
+    questionbank,
+    subjects,
+    concepts
+WHERE
+    questionbank.subjectid = subjects.id
+        AND questionbank.conceptid = concepts.id
+        AND subjects.id = 4    -- @SubjectId = 4
+        AND concepts.id = 8;    -- @conceptid = 8
+
+
+-- It joins questionbank with subjects and concepts to show the related subject and concept names along with the full question details.
+SELECT 
+    questionbank.id,
+    questionbank.id AS questionid,
+    questionbank.title,
+    subjects.title AS subject,
+    concepts.title AS concept,
+    questionbank.a AS optionA,
+    questionbank.b AS optionB,
+    questionbank.c AS optionC,
+    questionbank.d AS optionD,
+    questionbank.answerkey AS result
+FROM
+    questionbank,
+    subjects,
+    concepts
+WHERE
+    questionbank.subjectid = subjects.id
+        AND questionbank.conceptid = concepts.id
+        AND subjects.id = 4      --  (@SubjectId = 4)
+        AND concepts.id = 8 ;     --  (@conceptid = 8)
+
+-- It joins questionbank with subjects and concepts to include the subject and concept names.
+ SELECT 
+    questionbank.id,
+    questionbank.id AS questionid,
+    questionbank.title,
+    subjects.title AS subject,
+    concepts.title AS concept,
+    questionbank.a AS optionA,
+    questionbank.b AS optionB,
+    questionbank.c AS optionC,
+    questionbank.d AS optionD,
+    questionbank.answerkey
+FROM
+    questionbank,
+    subjects,
+    concepts
+WHERE
+    questionbank.subjectid = subjects.id
+        AND questionbank.conceptid = concepts.id
+        AND subjects.id = 4
+        AND concepts.id = 8
+        AND questionbank.id = 17;  -- (@questionId = 17)
+
+-- This query retrieves all questions from the questionbank table, along with their corresponding subject and concept titles, by joining questionbank with the subjects and concepts tables.
+SELECT 
+    questionbank.id,
+    questionbank.title,
+    subjects.title AS subject,
+    concepts.title AS concept
+FROM
+    questionbank,
+    subjects,
+    concepts
+WHERE
+    questionbank.subjectid = subjects.id
+        AND questionbank.conceptid = concepts.id;
+
+-- This query updates the question with id = 2 in the questionbank table, setting its correct answer (answerkey) to 'a'.
+update questionbank set answerkey="a" where id=2;      -- (@AnswerKey ="a" & @Id = 2)
+
+
+-- This query retrieves all columns for the question in the questionbank table with id = 2.
+select * from questionbank where id= 18 ;    -- @QuestionId = 2;
+
+-- This query updates the question with id = 65 in the questionbank table
+UPDATE questionbank 
+SET 
+    title = "What is the primary purpose of React?",     -- @title
+    a = "To style web pages using CSS",                  -- @A
+    b = "To manage server-side databases",               -- @B
+    c = "To build user interfaces, especially single-page applications",   -- @C
+    d = "To perform unit testing of JavaScript code",    -- @D
+    answerkey = "c"      -- @AnswerKey 
+WHERE
+    id = 18;       -- @Id
+
+-- This query updates the question with id = 18 in the questionbank table
+UPDATE questionbank 
+SET 
+    conceptid = 9,  -- @ConceptId
+    subjectid = 4   -- @SubjectId
+WHERE
+    id = 18 ;      -- @Id;
+
+-- It retrieves the title of the concept associated with the question whose ID is @QuestionId, only if that question belongs to the subject titled "@subject"
+SELECT 
+    concepts.title
+FROM
+    concepts
+        INNER JOIN
+    questionbank ON questionbank.conceptid = concepts.id
+        INNER JOIN 	
+    subjects ON questionbank.subjectid = concepts.subjectid
+WHERE
+    subjects.title = "REACT"
+        AND questionbank.id = 27;
+
+-- This query retrieves the test_id from the assessments table for the row where id = 4.
+SELECT test_id FROM assessments WHERE id = 4;
+
+-- This query retrieves all questions that are part of the test with testid = 2, including details from the questionbank table.
+SELECT 
+                testquestions.id AS testquestionid, 
+                questionbank.id AS questionbankid,
+                questionbank.subjectid,
+                questionbank.title,
+                questionbank.a,
+                questionbank.b,
+                questionbank.c,
+                questionbank.d,
+                questionbank.conceptid
+            FROM questionbank 
+            INNER JOIN testquestions 
+                ON testquestions.questionbankid = questionbank.id 
+            WHERE testquestions.testid = 2;
+
+-- This query counts how many questions exist for each subject in the questionbank table.
+SELECT 
+    COUNT(q.title) AS questionCount, s.title, s.id AS subjectId
+FROM
+    questionbank q
+        JOIN
+    subjects s ON s.id = q.subjectid
+GROUP BY (subjectid);
+
+=== UserAnalyticsRepository ===
+
+------ Get Total Online Seconds -------
+
+SELECT 
+TIMESTAMPDIFF(SECOND, login_time, COALESCE(logout_time, NOW())) AS DurationSeconds
+                    FROM user_session where user_id=1;
+
+----- Get Active Users Count -------
+
+SELECT COUNT(DISTINCT user_id) as activeuser
+                    FROM user_session
+                    WHERE session_status = 'ACTIVE';
+
+----- Get User Count-----
+
+  SELECT COUNT(DISTINCT user_id) AS allUserCount
+                        FROM user_session;
+
+------ fetch top 10 users with their role and longest session time-------
+
+SELECT 
+            us.user_id,
+            e.firstname,
+            e.lastname,
+            e.email,
+            GROUP_CONCAT(DISTINCT r.name) AS roles,
+            SEC_TO_TIME(
+                MAX(TIMESTAMPDIFF(SECOND, us.login_time, COALESCE(us.logout_time, NOW())))
+            ) AS longest_session
+        FROM user_session us
+        JOIN employees e ON e.id = us.user_id
+        LEFT JOIN userroles ur ON ur.userid = e.id
+        LEFT JOIN roles r ON r.id = ur.roleid
+        GROUP BY us.user_id, e.firstname, e.lastname
+        ORDER BY longest_session DESC
+        LIMIT 10;
+
+----- show average session duration for current month------
+
+SELECT 
+			 TIME_FORMAT(
+                                SEC_TO_TIME(
+                                    AVG(
+                                        TIMESTAMPDIFF(
+                                            SECOND,
+                                            login_time,
+                                            COALESCE(logout_time, NOW())
+                                        )
+                                    )
+                                ),
+                                '%H:%i:%s'
+                            ) AS AvgSessionDuration
+                        FROM user_session
+                        WHERE MONTH(login_time) = MONTH(CURRENT_DATE())
+                        AND YEAR(login_time) = YEAR(CURRENT_DATE());
+
+ -- Get active users along with their roles--
+                        
+SELECT 
+                    u.id AS user_id,
+                    u.firstname,
+                    u.lastname,
+                    u.email,
+                    GROUP_CONCAT(DISTINCT r.name ORDER BY r.name) AS roles
+                FROM user_session us
+                JOIN employees u ON u.id = us.user_id
+                LEFT JOIN userroles ur ON ur.userid = u.id
+                LEFT JOIN roles r ON r.id = ur.roleid
+                WHERE us.session_status = 'ACTIVE'
+                GROUP BY u.id, u.firstname, u.lastname;
+
+
+ == UserProfileRepository ==
+
+-- Get user by contact number --
+           
+select id,firstname,lastname,email,contactnumber 
+from users where contactnumber=9000000000;
+
+-- To get all roles assign to user--
+
+select r.id as id, r.name as rolename from roles r 
+                            join userroles ur on ur.roleid=r.id 
+                            join users u on u.id=ur.userid
+                            where  u.id=1;
+
+-- update users personal details using their ID--------
+
+update users  set aadharid=258963148, firstname="Pranita",
+ lastname="Mane", contactnumber=90000000111 where id=8;
+
+
+-- update users personal details for perticular user--------
+
+ update employees  set firstname="Pranita", lastname="Mane",
+ contact=9000000008 where userId=8;
+
+-- To get all employee whose role is SME--
+
+ select e.id,e.userId, e.firstname, e.lastname
+                            from employees e
+                            join userroles ur on ur.userid=e.userId
+                            join roles r on r.id=ur.roleid where r.name='sme';
+
+-- Get subject by SME ID--
+
+select s.title as subjectname
+from subjects s  join subjectmatterexperts sme on sme.subjectid=s.id where sme.employeeid=1;
+
+
+============== interviewRepository.cs =============
+-- get all interview candidates
+select interviews.candidateid,employees.firstname,employees.lastname,subjects.title
+                        from interviews 
+                        inner join employees on  interviews.candidateid= employees.id
+                        inner join subjectmatterexperts on interviews.smeid = subjectmatterexperts.id
+                        inner join subjects on subjectmatterexperts.subjectid=subjects.id;
+
+
+-- Get Interviewed Candidates Subjects
+select interviews.candidateid,employees.firstname,employees.lastname,subjects.title
+                        from interviews inner join employees on  interviews.candidateid= employees.id
+                        inner join subjectmatterexperts on interviews.smeid = subjectmatterexperts.id
+                        inner join subjects on subjectmatterexperts.subjectid=subjects.id
+                        where interviews.candidateid=5;
+
+-- to update interview date  
+update interviews set interviewdate ="2024-03-01"  where  id =5;
+
+-- to update interview time 
+update interviews set interviewtime ="09:40:30"  where  id =1;
+
+-- to update interview date and time both
+update interviews set interviewdate ="2025-10-07",interviewtime ="03:40PM"  where  id =7;
+
+-- to change interviewer
+update interviews set smeid =1  where  id =6;
+
+-- to cancel interview
+delete from interviews where id =7;
+
+
+
+== MembershipRepository.cs==
+-- to get all employees
+select * from employees;
+
+-- to update user role
+insert into userroles(userid,roleid) values(19,3);
+
+
+-- get employee by userid
+select * from employees where userId=4;
+
+-- to add new employee
+insert into employees(firstname,lastname,email,contact) values("shreyas","shreyas","shreyas.pandit@example.com",2783264876);
+
+-- to delete user role
+delete from userroles where userid=3;
+
+-- to delete sme subject
+delete from subjectmatterexperts where employeeid=3;
+
+
+-- to assign subject
+insert into subjectmatterexperts(employeeid, subjectid) values(23, 6);
+
+
+-- remove assign subject
+
+delete from subjectmatterexperts where employeeid=23 and subjectid= 6;
+
+-- get assign subject
+select id from subjectmatterexperts where employeeid=4 and subjectid= 6;
+
+============== interviewRepository.cs =============
+-- get all interview candidates
+select interviews.candidateid,employees.firstname,employees.lastname,subjects.title
+                        from interviews 
+                        inner join employees on  interviews.candidateid= employees.id
+                        inner join subjectmatterexperts on interviews.smeid = subjectmatterexperts.id
+                        inner join subjects on subjectmatterexperts.subjectid=subjects.id;
+
+
+-- Get Interviewed Candidates Subjects
+select interviews.candidateid,employees.firstname,employees.lastname,subjects.title
+                        from interviews inner join employees on  interviews.candidateid= employees.id
+                        inner join subjectmatterexperts on interviews.smeid = subjectmatterexperts.id
+                        inner join subjects on subjectmatterexperts.subjectid=subjects.id
+                        where interviews.candidateid=5;
+
+-- to update interview date  
+update interviews set interviewdate ="2024-03-01"  where  id =5;
+
+-- to update interview time 
+update interviews set interviewtime ="09:40:30"  where  id =1;
+
+-- to update interview date and time both
+update interviews set interviewdate ="2025-10-07",interviewtime ="03:40PM"  where  id =7;
+
+-- to change interviewer
+update interviews set smeid =1  where  id =6;
+
+-- to cancel interview
+delete from interviews where id =7;
+
+
+
+== MembershipRepository.cs==
+-- to get all employees
+select * from employees;
+
+-- to update user role
+insert into userroles(userid,roleid) values(19,3);
+
+
+-- get employee by userid
+select * from employees where userId=4;
+
+-- to add new employee
+insert into employees(firstname,lastname,email,contact) values("shreyas","shreyas","shreyas.pandit@example.com",2783264876);
+
+-- to delete user role
+delete from userroles where userid=3;
+
+-- to delete sme subject
+delete from subjectmatterexperts where employeeid=3;
+
+
+-- to assign subject
+insert into subjectmatterexperts(employeeid, subjectid) values(23, 6);
+
+
+-- remove assign subject
+
+delete from subjectmatterexperts where employeeid=23 and subjectid= 6;
+
+-- get assign subject
+select id from subjectmatterexperts where employeeid=4 and subjectid= 6;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
