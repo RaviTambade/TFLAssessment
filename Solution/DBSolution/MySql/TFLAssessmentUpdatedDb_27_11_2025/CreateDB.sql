@@ -1,8 +1,5 @@
 CREATE DATABASE IF NOT EXISTS assessmentdb;
 USE assessmentdb;
-
-
-
 DROP TABLE IF EXISTS users;
 CREATE TABLE users (
   id INT NOT NULL AUTO_INCREMENT,
@@ -210,15 +207,40 @@ CREATE TABLE testschedules (
   CONSTRAINT fk_testsched_test FOREIGN KEY (testid) REFERENCES tests(id)
 );
 
+
+
+
+
+DROP TABLE IF EXISTS assessments;
+CREATE TABLE assessments (
+  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  test_id INT,
+  candidate_id INT,
+  status ENUM('created','scheduled','cancelled','conducted') DEFAULT 'created',
+  createdby INT,
+  createdon DATETIME,
+  modifiedby INT,
+  modifiedon DATETIME,
+  scheduledstart DATETIME,
+  scheduledend DATETIME,
+  deletedby INT,
+  deleted  ENUM('yes','no')  DEFAULT 'no',
+   FOREIGN KEY (test_id) REFERENCES tests(id),
+   FOREIGN KEY (candidate_id) REFERENCES employees(id)
+);
+
 DROP TABLE IF EXISTS candidateanswers;
 CREATE TABLE candidateanswers (
   id INT NOT NULL AUTO_INCREMENT,
+	assessmentid INT,
   candidateid INT DEFAULT NULL,
   testquestionid INT DEFAULT NULL,
   answerkey CHAR(1) DEFAULT NULL,
   PRIMARY KEY (id),
+  KEY fk_candidateanswers_assessmentid(assessmentid),
   KEY fk_emp_candidateid (candidateid),
   KEY fk_tstqt_testquestionid (testquestionid),
+  CONSTRAINT fk_candidateanswers_assessmentid FOREIGN KEY (assessmentid) REFERENCES assessments(id) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT fk_emp_candidateid FOREIGN KEY (candidateid) REFERENCES employees (id) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT fk_tstqt_testquestionid FOREIGN KEY (testquestionid) REFERENCES testquestions (id) ON DELETE CASCADE ON UPDATE CASCADE
 );
@@ -226,17 +248,20 @@ CREATE TABLE candidateanswers (
 DROP TABLE IF EXISTS candidatetestresults;
 CREATE TABLE candidatetestresults (
   id INT NOT NULL AUTO_INCREMENT,
-  testid INT DEFAULT NULL,
+  assessmentid INT DEFAULT NULL,
   score INT DEFAULT NULL,
   teststarttime DATETIME DEFAULT NULL,
   testendtime DATETIME DEFAULT NULL,
   candidateid INT DEFAULT NULL,
   PRIMARY KEY (id),
   KEY fk_employees_candid (candidateid),
-  KEY fk_test_testid (testid),
+  KEY fk_test_assessmentid(assessmentid),
   CONSTRAINT fk_employees_candid FOREIGN KEY (candidateid) REFERENCES employees (id) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT fk_test_testid FOREIGN KEY (testid) REFERENCES tests (id) ON DELETE CASCADE ON UPDATE CASCADE
-);
+CONSTRAINT fk_testresults_assessment FOREIGN KEY (assessmentid) REFERENCES assessments(id));
+
+
+
+
 
 -----------------------------------------------------------
 -- 5. REMAINING TABLES
@@ -268,32 +293,8 @@ CREATE TABLE user_session (
 );
 
 
-DROP TABLE IF EXISTS Assessments;
-CREATE TABLE Assessments (
-  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  test_id INT,
-  candidate_id INT,
-  status ENUM('created','scheduled','cancelled','conducted') DEFAULT 'created',
-  createdby INT,
-  createdon DATETIME,
-  modifiedby INT,
-  modifiedon DATETIME,
-  scheduledstart DATETIME,
-  scheduledend DATETIME,
-  deletedby INT,
-  deleted  ENUM('yes','no')  DEFAULT 'no',
-   FOREIGN KEY (test_id) REFERENCES tests(id),
-   FOREIGN KEY (candidate_id) REFERENCES employees(id)
-);
 
 
-ALTER TABLE candidatetestresults 
-DROP FOREIGN KEY fk_test_testid;
 
-alter table candidatetestresults 
-CHANGE COLUMN testid assessmentid INT;
 
-ALTER TABLE candidatetestresults 
-ADD CONSTRAINT fk_testresults_assessment
-FOREIGN KEY (assessmentid) REFERENCES assessments(id);
 

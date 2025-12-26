@@ -277,79 +277,6 @@ INSERT INTO testassessmentcriterias(testid, conceptid)VALUES(4,5);
 INSERT INTO testassessmentcriterias(testid, conceptid)VALUES(7,8);
 INSERT INTO testassessmentcriterias(testid, conceptid)VALUES(8,8);
 
-
-
--- First Candidate Answser sheet
-INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(1,1,'b');
-INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(1,2,'c');
-INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(1,3,'a');
-INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(1,4,'a');
-INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(1,5,'b');
-INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(1,6,'c');
-INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(1,7,'d');
-INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(1,8,'d');
-INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(1,9,'a');
-INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(1,10,'a');
-
-
-INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(1,11,'c');
-INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(1,12,'b');
-INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(1,13,'b');
-INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(1,14,'b');
-INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(1,15,'a');
-INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(1,16,'a');
-INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(1,17,'a');
-INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(1,18,'d');
-INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(1,19,'b');
-INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(1,20,'b');
-
-INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(4,2,'N');
-INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(4,3,'N');
-INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(4,4,'N');
-INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(4,5,'N');
-INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(4,6,'N');
-INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(4,7,'N');
-INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(4,8,'N');
-INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(4,9,'b');
-INSERT INTO candidateanswers(candidateid, testquestionid,answerkey)VALUES(4,10,'N');
-
-
--- =========================================================================================================================
-
-
-INSERT INTO candidatetestresults VALUES
-(1,1,2,'2015-11-05 14:29:36','2025-08-06 23:39:59',2),
-(2,1,2,'2015-11-05 14:29:36','2025-08-28 16:16:24',1),
-(3,1,10,'2015-11-06 14:29:36','2015-11-06 16:29:36',5),
-(4,1,9,'2015-11-05 14:29:36','2015-11-05 16:29:36',3),
-(5,3,8,'2015-11-07 14:29:36','2015-11-07 16:29:36',4),
-(7,2,8,'2015-11-07 14:29:36','2015-11-07 16:29:36',7),
-(8,5,10,'2015-11-08 14:29:36','2015-11-08 16:29:36',8),
-(9,2,1,'2025-07-24 23:46:41','2025-07-24 23:47:26',6),
-(10,3,2,'2025-08-06 18:16:38',NULL,1),
-(11,1,2,'2025-08-28 16:12:03','2025-08-28 16:16:24',1),
-(12,1,2,'2025-09-03 13:14:46',NULL,1),
-(13,1,2,'2025-09-03 13:18:38',NULL,1),
-(14,1,2,'2025-09-03 15:19:04',NULL,1),
-(15,1,2,'2025-09-03 17:24:38',NULL,1),
-(16,1,NULL,'2025-09-11 10:33:58',NULL,1),
-(17,5,0,'2025-10-07 19:09:08','2025-10-07 19:09:54',6);
-
-
-INSERT INTO employeeperformance VALUES
-(1,1,'poor','good','good','poor'),
-(2,2,'poor','good','good','very good'),
-(3,3,'poor','good','good','poor'),
-(4,4,'poor','good','good','poor'),
-(5,5,'poor','good','good','poor'),
-(6,6,'poor','good','good','poor'),
-(7,7,'poor','good','good','poor'),
-(8,8,'poor','good','good','poor');
-
-
-INSERT INTO user_session VALUES
-(1, 1, '2025-11-20 15:40:51', '2025-11-20 15:42:04', 'LOGGED_OUT');
-
 INSERT INTO Assessments 
 (test_id, candidate_id, status, createdby, createdon, scheduledstart, scheduledend)
 VALUES
@@ -368,5 +295,60 @@ VALUES
 INSERT INTO Assessments 
 (test_id, candidate_id, status, createdby, createdon, scheduledstart, scheduledend)
 VALUES
-(13, 4, 'conducted', 1, NOW(), '2025-01-25 14:00:00', '2025-01-25 16:00:00');
+(4, 4, 'conducted', 1, NOW(), '2025-01-25 14:00:00', '2025-01-25 16:00:00');
+
+
+
+
+-- First Candidate Answser sheet
+INSERT INTO candidateanswers(assessmentid,candidateid, testquestionid,answerkey)VALUES(1,1,1,'b');
+INSERT INTO candidateanswers(assessmentid,candidateid, testquestionid,answerkey)VALUES(1,1,2,'c');
+INSERT INTO candidateanswers(assessmentid,candidateid, testquestionid,answerkey)VALUES(2,1,3,'a');
+INSERT INTO candidateanswers(assessmentid,candidateid, testquestionid,answerkey)VALUES(2,1,4,'a');
+INSERT INTO candidateanswers(assessmentid,candidateid, testquestionid,answerkey)VALUES(3,1,5,'b');
+INSERT INTO candidateanswers(assessmentid,candidateid, testquestionid,answerkey)VALUES(3,1,6,'c');
+INSERT INTO candidateanswers(assessmentid,candidateid, testquestionid,answerkey)VALUES(4,1,7,'d');
+INSERT INTO candidateanswers(assessmentid,candidateid, testquestionid,answerkey)VALUES(4,1,8,'d');
+INSERT INTO candidateanswers(assessmentid,candidateid, testquestionid,answerkey)VALUES(1,1,9,'a');
+INSERT INTO candidateanswers(assessmentid,candidateid, testquestionid,answerkey)VALUES(1,1,10,'a');
+
+
+-- =========================================================================================================================
+
+INSERT INTO user_session VALUES
+(1, 1, '2025-11-20 15:40:51', '2025-11-20 15:42:04', 'LOGGED_OUT');
+
+
+
+
+INSERT INTO candidatetestresults VALUES
+(1,1,2,'2015-11-05 14:29:36','2025-08-06 23:39:59',2),
+(2,1,2,'2015-11-05 14:29:36','2025-08-28 16:16:24',1),
+(3,1,10,'2015-11-06 14:29:36','2015-11-06 16:29:36',5),
+(4,1,9,'2015-11-05 14:29:36','2015-11-05 16:29:36',3),
+(5,3,8,'2015-11-07 14:29:36','2015-11-07 16:29:36',4),
+(7,2,8,'2015-11-07 14:29:36','2015-11-07 16:29:36',7),
+(8,2,10,'2015-11-08 14:29:36','2015-11-08 16:29:36',8),
+(9,2,1,'2025-07-24 23:46:41','2025-07-24 23:47:26',6),
+(10,3,2,'2025-08-06 18:16:38',NULL,1),
+(11,1,2,'2025-08-28 16:12:03','2025-08-28 16:16:24',1),
+(12,1,2,'2025-09-03 13:14:46',NULL,1),
+(13,1,2,'2025-09-03 13:18:38',NULL,1),
+(14,1,2,'2025-09-03 15:19:04',NULL,1),
+(15,1,2,'2025-09-03 17:24:38',NULL,1),
+(16,1,NULL,'2025-09-11 10:33:58',NULL,1),
+(17,1,0,'2025-10-07 19:09:08','2025-10-07 19:09:54',6);
+
+
+INSERT INTO employeeperformance VALUES
+(1,1,'poor','good','good','poor'),
+(2,2,'poor','good','good','very good'),
+(3,3,'poor','good','good','poor'),
+(4,4,'poor','good','good','poor'),
+(5,5,'poor','good','good','poor'),
+(6,6,'poor','good','good','poor'),
+(7,7,'poor','good','good','poor'),
+(8,8,'poor','good','good','poor');
+
+
 

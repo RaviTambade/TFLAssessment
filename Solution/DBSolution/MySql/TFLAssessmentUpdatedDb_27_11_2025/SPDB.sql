@@ -342,7 +342,7 @@ BEGIN
         a.scheduledend,
         a.status
     FROM 
-        assessment a
+        assessments a
     JOIN 
         tests t ON a.test_id = t.id
     WHERE 
