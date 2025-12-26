@@ -17,10 +17,11 @@ namespace Transflower.TFLAssessment.Repositories
             _connectionString = _configuration.GetConnectionString("DefaultConnection") ?? throw new ArgumentNullException("connectionString");
         }
 
-        public async Task<bool> InsertCandidateAnswers(int candidateId, List<CandidateAnswer> answers)
+
+        public async Task<bool> InsertCandidateAnswers(int candidateId,int assessmentId, List<CandidateAnswer> answers)
         {
             bool status = false;
-            string query = "INSERT INTO candidateanswers (candidateid, testquestionid, answerkey) VALUES (@CandidateId, @TestQuestionId, @AnswerKey)";
+            string query = "INSERT INTO candidateanswers (assessmentId,candidateid, testquestionid, answerkey) VALUES (@AssessmentId,@CandidateId, @TestQuestionId, @AnswerKey)";
             using (MySqlConnection connection = new MySqlConnection(_connectionString))
             {
                 try
@@ -29,7 +30,8 @@ namespace Transflower.TFLAssessment.Repositories
                     foreach (var answer in answers)
                     {
                         using (MySqlCommand command = new MySqlCommand(query, connection))
-                        {
+                        { 
+                             command.Parameters.AddWithValue("@AssessmentId", assessmentId);
                             command.Parameters.AddWithValue("@CandidateId", candidateId);
                             command.Parameters.AddWithValue("@TestQuestionId", answer.TestQuestionId);
                             command.Parameters.AddWithValue("@AnswerKey", answer.AnswerKey);

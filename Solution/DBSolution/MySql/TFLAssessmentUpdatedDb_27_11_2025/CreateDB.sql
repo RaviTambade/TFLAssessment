@@ -232,7 +232,7 @@ CREATE TABLE assessments (
 DROP TABLE IF EXISTS candidateanswers;
 CREATE TABLE candidateanswers (
   id INT NOT NULL AUTO_INCREMENT,
-	assessmentid INT,
+	assessmentid INT NOT NULL,
   candidateid INT DEFAULT NULL,
   testquestionid INT DEFAULT NULL,
   answerkey CHAR(1) DEFAULT NULL,

@@ -3,7 +3,7 @@ namespace Transflower.TFLAssessment.Entities;
 public class TestEmployeeDetails
 {
     public int Id { get; set; }
-    // public int CandidateId { get; set; }
+    public int assessmentid { get; set; }
     public string TestName { get; set; }
     public string PassingLevel { get; set; }    
     // Use TimeSpan for MySQL TIME type

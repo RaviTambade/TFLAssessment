@@ -19,10 +19,10 @@ public class CandidateAnswerController : ControllerBase
     }
 
     // Insert candidate answers of the test .
-    [HttpPost("assessmentanswers/candidates/{candidateId}")]
-    public async Task<IActionResult> InsertCandidateAnswers(int candidateId, [FromBody] List<CandidateAnswer> answers)
+    [HttpPost("assessmentanswers/candidates/{candidateId}/assessments/{assessmentId}")]
+    public async Task<IActionResult> InsertCandidateAnswers(int candidateId,int assessmentId,[FromBody] List<CandidateAnswer> answers)
     {
-        bool status = await _service.InsertCandidateAnswers(candidateId, answers);
+        bool status = await _service.InsertCandidateAnswers(candidateId, assessmentId,answers);
         if (!status)
         {
             _logger.LogError("Failed to insert candidate answers for candidate ID: {CandidateId}", candidateId);

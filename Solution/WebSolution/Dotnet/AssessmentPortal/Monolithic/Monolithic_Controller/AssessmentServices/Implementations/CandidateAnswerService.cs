@@ -13,9 +13,10 @@ namespace Transflower.TFLAssessment.Services
             _repository = repository;
         }
 
-        public Task<bool> InsertCandidateAnswers(int candidateId, List<CandidateAnswer> answers)
+
+        public Task<bool> InsertCandidateAnswers(int candidateId, int assessmentId,List<CandidateAnswer> answers)
         {
-            return _repository.InsertCandidateAnswers(candidateId, answers);
+            return _repository.InsertCandidateAnswers(candidateId,assessmentId, answers);
         }
         public Task<List<CandidateAnswer>> GetCandidateAnswers(int candidateId, int testId)
         {

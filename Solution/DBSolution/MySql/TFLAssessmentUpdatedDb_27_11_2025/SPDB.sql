@@ -332,8 +332,8 @@ DELIMITER $$
 CREATE PROCEDURE GetTestEmployeeDetailsByCandidate(IN candidate INT)
 BEGIN
     SELECT 
-        t.id,
-        a.id,
+        t.id  AS Id,
+        a.id AS assessmentid,
         a.candidate_id,
         t.name AS testname,
         t.passinglevel,
