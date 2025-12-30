@@ -1,23 +1,13 @@
-Perfect 👍
-Now you’ll see **three parallel career journeys** — **Frontend**, **Full-Stack**, and **DevOps** — all **running on the same TFL engine**, but diverging by **skills, signals, risks, and readiness criteria**.
-
-This is exactly how a **real capability graph** works.
-
----
-
 # 🎓 STUDENT JOURNEY SIMULATIONS
 
 ## Frontend • Full-Stack • DevOps
 
----
 
 # 🟦 1️⃣ FRONTEND DEVELOPER JOURNEY
 
 ### Target Role
 
 **Frontend Engineer (React / Angular)**
-
----
 
 ## 🗓️ Phase 1: UI Foundations (Days 1–15)
 
@@ -43,8 +33,6 @@ This is exactly how a **real capability graph** works.
 
 📊 Readiness: **15%**
 
----
-
 ## 🗓️ Phase 2: Component Thinking (Days 16–35)
 
 ### Focus Skills
@@ -69,7 +57,6 @@ This is exactly how a **real capability graph** works.
 
 📊 Readiness: **35%**
 
----
 
 ## 🗓️ Phase 3: Performance & UX (Days 36–55)
 
@@ -94,7 +81,6 @@ This is exactly how a **real capability graph** works.
 
 📊 Readiness: **50%**
 
----
 
 ## 🗓️ Phase 4: Integration Reality (Days 56–75)
 
@@ -114,7 +100,6 @@ This is exactly how a **real capability graph** works.
 
 📊 Readiness: **65%**
 
----
 
 ## 🗓️ Phase 5: Production UI (Days 76–90)
 
@@ -134,9 +119,6 @@ This is exactly how a **real capability graph** works.
 
 🟢 **Final Readiness: 70% (Employable)**
 
----
-
----
 
 # 🟩 2️⃣ FULL-STACK DEVELOPER JOURNEY
 
@@ -144,7 +126,6 @@ This is exactly how a **real capability graph** works.
 
 **Full-Stack Developer**
 
----
 
 ## 🗓️ Phase 1: Dual Foundations (Days 1–20)
 
@@ -155,8 +136,6 @@ This is exactly how a **real capability graph** works.
 * Databases
 
 📊 Readiness: **20%**
-
----
 
 ## 🗓️ Phase 2: API + UI Integration (Days 21–40)
 
@@ -174,8 +153,6 @@ This is exactly how a **real capability graph** works.
 
 📊 Readiness: **40%**
 
----
-
 ## 🗓️ Phase 3: State & Async Reality (Days 41–60)
 
 ### Focus Skills
@@ -192,8 +169,6 @@ This is exactly how a **real capability graph** works.
 
 📊 Readiness: **55%**
 
----
-
 ## 🗓️ Phase 4: Architecture Awareness (Days 61–75)
 
 ### Focus Skills
@@ -203,8 +178,6 @@ This is exactly how a **real capability graph** works.
 * Basic microservices
 
 📊 Readiness: **65%**
-
----
 
 ## 🗓️ Phase 5: Production Readiness (Days 76–90)
 
@@ -216,17 +189,11 @@ This is exactly how a **real capability graph** works.
 
 🟢 **Final Readiness: 75% (Job-Ready)**
 
----
-
----
-
 # 🟧 3️⃣ DEVOPS ENGINEER JOURNEY
 
 ### Target Role
 
 **DevOps / Cloud Engineer**
-
----
 
 ## 🗓️ Phase 1: System Foundations (Days 1–15)
 
@@ -244,8 +211,6 @@ This is exactly how a **real capability graph** works.
 
 📊 Readiness: **20%**
 
----
-
 ## 🗓️ Phase 2: Automation Thinking (Days 16–35)
 
 ### Focus Skills
@@ -262,8 +227,6 @@ This is exactly how a **real capability graph** works.
 
 📊 Readiness: **40%**
 
----
-
 ## 🗓️ Phase 3: Containerization (Days 36–55)
 
 ### Focus Skills
@@ -279,7 +242,6 @@ This is exactly how a **real capability graph** works.
 
 📊 Readiness: **55%**
 
----
 
 ## 🗓️ Phase 4: Orchestration & Cloud (Days 56–75)
 
@@ -297,8 +259,6 @@ This is exactly how a **real capability graph** works.
 
 📊 Readiness: **65%**
 
----
-
 ## 🗓️ Phase 5: Reliability Engineering (Days 76–90)
 
 ### Focus Skills
@@ -308,8 +268,6 @@ This is exactly how a **real capability graph** works.
 * Incident handling
 
 🟢 **Final Readiness: 70% (Deployable)**
-
----
 
 # 🧠 CROSS-ROLE INSIGHT (VERY IMPORTANT)
 
@@ -321,8 +279,6 @@ This is exactly how a **real capability graph** works.
 
 👉 **This is why roles need different journeys.**
 
----
-
 # 🔥 CORE TFL PRINCIPLE (Don’t Miss This)
 
 > **Same student.
@@ -330,8 +286,6 @@ This is exactly how a **real capability graph** works.
 > Different graphs.**
 
 Curriculum is not linear — **readiness is role-relative**.
-
----
 
 ## 🚀 What do you want next?
 
