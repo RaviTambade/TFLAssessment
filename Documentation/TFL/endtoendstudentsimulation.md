@@ -1,6 +1,6 @@
 # End-to-End Student Journey Simulation
 
-What follows is an **end-to-end student journey simulation** in **Transflower Learning Framework (TFL)**, covering:
+**Transflower Learning Framework (TFL)**'s **end-to-end student journey simulation**  covers:
 
 * Data flow
 * Decision points
@@ -9,7 +9,6 @@ What follows is an **end-to-end student journey simulation** in **Transflower Le
 * Employer readiness signals
 
 This is exactly how we would **explain TFL to stakeholders, mentors, and employers**.
-
 
 ## (TFL Career OS in Action)
 

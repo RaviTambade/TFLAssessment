@@ -339,11 +339,11 @@ This roadmap engine:
 
 ## 🔜 Natural Evolution Options
 
-1️⃣ **Placement probability model (ML-ready)**
-2️⃣ **Employer matching algorithm**
-3️⃣ **Career deviation detection**
-4️⃣ **AI mentor explanation engine**
-5️⃣ **End-to-end student journey simulation**
+- 1️⃣ **Placement probability model (ML-ready)**
+- 2️⃣ **Employer matching algorithm**
+- 3️⃣ **Career deviation detection**
+- 4️⃣ **AI mentor explanation engine**
+- 5️⃣ **End-to-end student journey simulation**
 
 
 
