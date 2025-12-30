@@ -1,23 +1,23 @@
 Excellent.
-This is one of the **most realistic and most ignored problems in education** — and TFL can solve it **better than any traditional system**.
 
-I’ll walk you through a **Dropout → Recovery Path simulation** that shows:
+
+---
+
+# 🚨 DROPOUT → RECOVERY PATH (TFL MODEL)
+
+Dropout is one of the **most realistic and most ignored problems in education** — and TFL can solve it **better than any traditional system**.
+
+**Dropout → Recovery Path simulation** that shows:
 
 * **why** students drop out
 * **how** TFL detects it early
 * **how** recovery is *engineered*, not motivational
 * **how job-readiness is rescued**
 
----
-
-# 🚨 DROPOUT → RECOVERY PATH (TFL MODEL)
-
----
-
 ## 🧑‍🎓 Student Snapshot (Before Dropout)
 
 ```
-Name            : Rohan
+Name            : Ganesh Shinde
 Target Role     : Full-Stack Developer
 Background      : CS Graduate
 Current Phase   : System Layer
@@ -27,17 +27,14 @@ Timeline        : Day 42
 📊 **Current Job Readiness**: 48%
 📈 **Trend**: Declining
 
----
-
 ## 🔥 1️⃣ WHY STUDENTS ACTUALLY DROP OUT (Truth)
 
 Not because of:
-❌ Laziness
-❌ Lack of interest
+- ❌ Laziness
+- ❌ Lack of interest
 
 But because of **cognitive overload + invisible failure**.
 
----
 
 ## 🔍 2️⃣ EARLY DROPOUT SIGNALS (Detected by TFL)
 
@@ -59,7 +56,6 @@ But because of **cognitive overload + invisible failure**.
 | Confidence        | ↓↓    |
 | Completion Rate   | ↓     |
 
----
 
 ### 🧠 AI Insight (Critical)
 
@@ -67,7 +63,6 @@ But because of **cognitive overload + invisible failure**.
 
 ⚠️ **This is the most common dropout zone in software careers.**
 
----
 
 ## 🛑 3️⃣ DROPOUT EVENT (Day 45)
 
@@ -82,14 +77,10 @@ Traditional systems say:
 
 ❌ End of story.
 
----
-
 ## 🔄 4️⃣ TFL RECOVERY ENGINE ACTIVATES
 
 TFL **never asks “why did you quit?”**
 It asks **“where did the graph break?”**
-
----
 
 ## 🧩 5️⃣ ROOT CAUSE ANALYSIS (Graph-Based)
 
@@ -107,8 +98,6 @@ Failure Handling   → Missing
 > “Student understands *what async is*,
 > but cannot *reason when it fails*.”
 
----
-
 ## 🔧 6️⃣ RECOVERY PATH DESIGN (NOT FULL RESET)
 
 ### ❌ What TFL DOES NOT DO
@@ -116,8 +105,6 @@ Failure Handling   → Missing
 * Restart course
 * Add more videos
 * Give motivation talks
-
----
 
 ### ✅ What TFL DOES
 
@@ -130,8 +117,6 @@ ONLY ONE SKILL → Async Programming
 
 Everything else is paused.
 
----
-
 ### 🔹 Step 2: Confidence Rebuild (Micro-Wins)
 
 **Recovery Lab**
@@ -139,13 +124,11 @@ Everything else is paused.
 > Convert ONE blocking API → async
 > (no database, no auth, no UI)
 
-✔ Single file
-✔ Single endpoint
-✔ Immediate feedback
+- ✔ Single file
+- ✔ Single endpoint
+- ✔ Immediate feedback
 
 📈 **Confidence Signal Restored**
-
----
 
 ### 🔹 Step 3: Failure-First Learning
 
@@ -165,7 +148,6 @@ Scenarios:
 
 🧠 **Mental model forms here**
 
----
 
 ### 🔹 Step 4: Visual Debugging
 
@@ -178,8 +160,6 @@ Thread Timeline
 ```
 
 💡 *“Oh… this is why it hung.”*
-
----
 
 ## 🔄 7️⃣ RE-ENTRY POINT (Day 60)
 
@@ -196,8 +176,6 @@ Re-entry Phase: System Layer (Controlled)
 | Debugging         | 38%    | 55%    |
 | Confidence        | Low    | Medium |
 
----
-
 ## 🧭 8️⃣ GUIDED PATH (No Free Roaming)
 
 ```
@@ -209,8 +187,6 @@ Microservices (temporarily locked)
 
 📌 **This prevents second dropout.**
 
----
-
 ## 🏁 9️⃣ RECOVERY COMPLETION (Day 90)
 
 ```
@@ -221,8 +197,6 @@ Risk Level: Medium-Low
 ### Mentor Insight
 
 > “Student recovered, still needs production exposure.”
-
----
 
 ## 🧠 1️⃣0️⃣ WHAT MAKES THIS POWERFUL
 
@@ -238,8 +212,6 @@ Dropout → Lost student
 Dropout → Signal → Diagnosis → Repair → Re-entry
 ```
 
----
-
 ## 🔥 CORE TFL PRINCIPLE (Very Important)
 
 > **Dropout is not failure.
@@ -248,28 +220,21 @@ Dropout → Signal → Diagnosis → Repair → Re-entry
 If many students drop at the same node →
 👉 **curriculum design problem**, not student problem.
 
----
-
 ## 🧑‍🏫 Mentor Dashboard (Recovery View)
 
 ```
-Student: Rohan
+Student: Ganesh Shinde
 Status: Recovered
 Weak Area: Async Debugging
 Next Focus: Logging under load
 Confidence: Stabilizing
 ```
 
----
 
-## 🚀 WHAT NEXT?
+More depth:
 
-We can go even deeper:
-
-1️⃣ **Second-dropout prevention logic**
-2️⃣ **Skill decay after inactivity**
-3️⃣ **AI mentor decision rules**
-4️⃣ **Recovery paths per role (FE / DevOps)**
-5️⃣ **Real SQL + graph schema for recovery tracking**
-
-Tell me the next layer you want to design 🧱
+- 1️⃣ **Second-dropout prevention logic**
+- 2️⃣ **Skill decay after inactivity**
+- 3️⃣ **AI mentor decision rules**
+- 4️⃣ **Recovery paths per role (FE / DevOps)**
+- 5️⃣ **Real SQL + graph schema for recovery tracking**

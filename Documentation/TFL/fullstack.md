@@ -295,4 +295,3 @@ Curriculum is not linear — **readiness is role-relative**.
 4️⃣ AI mentor recommendation rules
 5️⃣ Visual dashboard mockups
 
-Say the next step 👌

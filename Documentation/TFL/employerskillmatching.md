@@ -1,5 +1,3 @@
- 
-
 # Employer Matching Simulation
 
 ### *Transflower Learning Framework (TFL)*
@@ -140,13 +138,13 @@ Employer Match Score: 78%
 Status: 🟡 PARTIALLY READY
 
 Strengths:
-✔ OOP Concepts
-✔ REST APIs
-✔ Git
+- ✔ OOP Concepts
+- ✔ REST APIs
+- ✔ Git
 
 Gaps:
-⚠ SQL Joins & Indexing
-⚠ System Design Thinking
+- ⚠ SQL Joins & Indexing
+- ⚠ System Design Thinking
 
 Suggested Recovery Path:
 → 2 SQL mini-projects
@@ -202,7 +200,6 @@ JRI =
 * **Trainable**
 * **Not Yet Ready**
 
-
 ## 11. Why This Fits Your Mentorship Philosophy 👨‍🏫
 
 Based on your past work:
@@ -227,35 +224,19 @@ If you want, I can help you:
 4. Simulate **multiple employer personas**
 5. Add **AI-driven employer behavior**
 
-Just tell me the next layer you want to design.
-
 🌱 **TFL doesn’t prepare students for exams.
 It prepares them for reality.**
 
 
-Excellent 👍
-Below is a **production-ready, mentor-designed MySQL Physical Database Schema** for the
-**Employer Matching Simulation (EMS)** module inside the **Transflower Learning Framework (TFL)**.
-
-I’ll design this as if **real employers, mentors, students, assessments, and matching analytics** are going to use it.
-
----
-
 # EMS – MySQL Physical Database Schema
-
-### Transflower Learning Framework
-
----
 
 ## 1. Design Principles (Why this schema works)
 
-✔ Skill-first (not marks-first)
-✔ Employer-driven job definitions
-✔ Evidence-based matching (projects + assessments)
-✔ Supports analytics, ranking, simulation & re-attempts
-✔ Clean separation of **definition**, **measurement**, **matching**
-
----
+- ✔ Skill-first (not marks-first)
+- ✔ Employer-driven job definitions
+- ✔ Evidence-based matching (projects + assessments)
+- ✔ Supports analytics, ranking, simulation & re-attempts
+- ✔ Clean separation of **definition**, **measurement**, **matching**
 
 ## 2. Core EMS Modules
 
@@ -269,8 +250,6 @@ Project Evidence
 Employer Matching Engine
 Simulation Results & Insights
 ```
-
----
 
 ## 3. Master Tables
 
@@ -286,8 +265,6 @@ CREATE TABLE employers (
 );
 ```
 
----
-
 ### 3.2 Job Roles
 
 ```sql
@@ -302,8 +279,6 @@ CREATE TABLE job_roles (
 );
 ```
 
----
-
 ### 3.3 Skills Master
 
 ```sql
@@ -314,8 +289,6 @@ CREATE TABLE skills (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 ```
-
----
 
 ## 4. Employer Job Role Skill Blueprint
 
@@ -336,8 +309,6 @@ CREATE TABLE job_role_skills (
 
 📌 This is where **employers think**.
 
----
-
 ## 5. Student Skill Measurement Layer
 
 ### 5.1 Students
@@ -352,7 +323,6 @@ CREATE TABLE students (
 );
 ```
 
----
 
 ### 5.2 Student Skill Profile (Aggregated)
 
@@ -371,8 +341,6 @@ CREATE TABLE student_skills (
 ```
 
 📌 This is **TFL’s intelligence layer**.
-
----
 
 ## 6. Evidence Tables (Proof, not claims)
 
@@ -400,8 +368,6 @@ CREATE TABLE student_assessment_results (
 );
 ```
 
----
-
 ### 6.2 Project Evidence
 
 ```sql
@@ -426,8 +392,6 @@ CREATE TABLE student_projects (
 );
 ```
 
----
-
 ## 7. Employer Matching Simulation Engine
 
 ### 7.1 Matching Runs (Simulation Instance)
@@ -441,8 +405,6 @@ CREATE TABLE matching_runs (
     FOREIGN KEY (job_role_id) REFERENCES job_roles(job_role_id)
 );
 ```
-
----
 
 ### 7.2 Student Matching Results
 
@@ -461,8 +423,6 @@ CREATE TABLE employer_matching_results (
 );
 ```
 
----
-
 ## 8. Skill Gap Analysis (Actionable Output)
 
 ```sql
@@ -480,8 +440,6 @@ CREATE TABLE skill_gap_analysis (
 
 📌 This enables **recovery paths** instead of rejection.
 
----
-
 ## 9. Recovery & Recommendation Engine
 
 ```sql
@@ -494,8 +452,6 @@ CREATE TABLE recovery_recommendations (
 );
 ```
 
----
-
 ## 10. Mentor & Employer Insight Views (Optional)
 
 You can later add:
@@ -503,8 +459,6 @@ You can later add:
 * `vw_employer_rankings`
 * `vw_student_job_readiness`
 * `vw_skill_demand_heatmap`
-
----
 
 ## 11. How This Fits TFL Philosophy 🧠
 
@@ -515,23 +469,20 @@ You can later add:
 | Static syllabus | Dynamic employer demand |
 | Certificates    | Proof & evidence        |
 
----
-
 ## 12. What I Can Build Next for You
 
 You are now at **engine-building level** 🚀
 Next logical layers:
 
-1️⃣ **Stored Procedure for Match Score Calculation**
-2️⃣ **Weighted Skill Match SQL Queries**
-3️⃣ **Employer Dashboard SQL Views**
-4️⃣ **Skill Readiness Index (SRI) Formula in SQL**
-5️⃣ **AI-assisted employer persona simulation**
-
-Tell me the next step and I’ll design it **mentor-grade, production-ready**.
+- 1️⃣ **Stored Procedure for Match Score Calculation**
+- 2️⃣ **Weighted Skill Match SQL Queries**
+- 3️⃣ **Employer Dashboard SQL Views**
+- 4️⃣ **Skill Readiness Index (SRI) Formula in SQL**
+- 5️⃣ **AI-assisted employer persona simulation**
 
 
-Perfect 👍
+# EMS – Sample Dataset (MySQL)
+
 Below is a **clean, realistic SAMPLE DATASET** for the **EMS MySQL schema**, designed to **demonstrate the full Employer → Job → Skill → Student → Matching flow** in **Transflower Learning Framework**.
 
 This dataset is **small but complete**—ideal for:
@@ -541,12 +492,6 @@ This dataset is **small but complete**—ideal for:
 * Stored procedure testing
 * Mentor dashboards
 
----
-
-# EMS – Sample Dataset (MySQL)
-
----
-
 ## 1️⃣ Employers
 
 ```sql
@@ -555,7 +500,6 @@ INSERT INTO employers (employer_name, industry, company_size) VALUES
 ('CloudVerse Pvt Ltd', 'Cloud & DevOps', 'Startup');
 ```
 
----
 
 ## 2️⃣ Job Roles
 
@@ -564,8 +508,6 @@ INSERT INTO job_roles (employer_id, role_name, experience_level, description) VA
 (1, 'Junior Full-Stack Developer', 'Fresher', 'Backend + frontend fundamentals'),
 (2, 'Cloud Support Engineer', 'Junior', 'Cloud operations and automation');
 ```
-
----
 
 ## 3️⃣ Skills Master
 
@@ -583,8 +525,6 @@ INSERT INTO skills (skill_name, category) VALUES
 ('Problem Solving', 'Core Skill');
 ```
 
----
-
 ## 4️⃣ Job Role Skill Blueprint
 
 ### Junior Full-Stack Developer
@@ -601,8 +541,6 @@ INSERT INTO job_role_skills
 (1, 10,'Strong', 15, TRUE);         -- Problem Solving
 ```
 
----
-
 ### Cloud Support Engineer
 
 ```sql
@@ -614,8 +552,6 @@ INSERT INTO job_role_skills
 (2, 10,'Strong', 30, TRUE);         -- Problem Solving
 ```
 
----
-
 ## 5️⃣ Students
 
 ```sql
@@ -624,9 +560,6 @@ INSERT INTO students (student_name, email, graduation_year) VALUES
 ('Sneha Kulkarni', 'sneha@tfl.com', 2025),
 ('Rahul Deshmukh', 'rahul@tfl.com', 2024);
 ```
-
----
-
 ## 6️⃣ Student Skill Profiles
 
 ```sql
@@ -656,8 +589,6 @@ INSERT INTO student_skills
 (3, 10,85, 'Strong', 88, NOW());
 ```
 
----
-
 ## 7️⃣ Assessments
 
 ```sql
@@ -668,8 +599,6 @@ INSERT INTO assessments (skill_id, assessment_type, max_score) VALUES
 (5, 'SQL', 100),
 (10,'ProblemSolving', 100);
 ```
-
----
 
 ## 8️⃣ Student Assessment Results
 
@@ -683,8 +612,6 @@ INSERT INTO student_assessment_results
 (3, 5, 85);
 ```
 
----
-
 ## 9️⃣ Projects
 
 ```sql
@@ -693,8 +620,6 @@ INSERT INTO projects (project_name, complexity_level, skill_id) VALUES
 ('SQL Optimization Project', 'High', 5),
 ('Cloud VM Setup', 'Medium', 8);
 ```
-
----
 
 ## 🔟 Student Projects
 
@@ -705,9 +630,6 @@ INSERT INTO student_projects
 (1, 2, 7.0, '2025-01-20'),
 (3, 3, 9.0, '2024-12-15');
 ```
-
----
-
 ## 1️⃣1️⃣ Matching Run
 
 ```sql
@@ -715,8 +637,6 @@ INSERT INTO matching_runs (job_role_id, simulation_mode) VALUES
 (1, 'PrePlacement'),
 (2, 'Practice');
 ```
-
----
 
 ## 1️⃣2️⃣ Employer Matching Results
 
@@ -732,8 +652,6 @@ INSERT INTO employer_matching_results
 (2, 3, TRUE, 85.0, 88.0, 'Employable', 1);
 ```
 
----
-
 ## 1️⃣3️⃣ Skill Gap Analysis
 
 ```sql
@@ -742,8 +660,6 @@ INSERT INTO skill_gap_analysis
 (2, 5, 'Intermediate', 'Beginner', 'High'),
 (2, 4, 'Intermediate', 'Beginner', 'Medium');
 ```
-
----
 
 ## 1️⃣4️⃣ Recovery Recommendations
 
@@ -754,47 +670,39 @@ INSERT INTO recovery_recommendations
 (2, 'Build REST API with pagination & filters', 10);
 ```
 
----
-
 # ✅ What This Dataset Enables Immediately
 
-✔ Employer-wise ranking
-✔ Mandatory skill failure detection
-✔ Skill gap visibility
-✔ Recovery & reattempt simulation
-✔ Mentor dashboard analytics
-
----
+- ✔ Employer-wise ranking
+- ✔ Mandatory skill failure detection
+- ✔ Skill gap visibility
+- ✔ Recovery & reattempt simulation
+- ✔ Mentor dashboard analytics
 
 ## 🔜 Next Mentor-Level Steps (Your Choice)
 
-1️⃣ **Advanced SQL Queries (Employer Ranking, Gap Heatmaps)**
-2️⃣ **Stored Procedure: Calculate Match Score**
-3️⃣ **Skill Readiness Index (Weighted Formula)**
-4️⃣ **Employer Dashboard Views**
-5️⃣ **AI-based Employer Persona Simulation**
+- 1️⃣ **Advanced SQL Queries (Employer Ranking, Gap Heatmaps)**
+- 2️⃣ **Stored Procedure: Calculate Match Score**
+- 3️⃣ **Skill Readiness Index (Weighted Formula)**
+- 4️⃣ **Employer Dashboard Views**
+- 5️⃣ **AI-based Employer Persona Simulation**
 
-Tell me **which one next**, and we’ll build it like a **real product**, not a demo.
 
-Excellent choice 👍
+
+
+# Employer Dashboard – EMS (TFL)
+
 An **Employer Dashboard** is where EMS truly becomes *industry-real*, not academic.
 
-Below is a **mentor-grade Employer Dashboard design** for **Transflower Learning Framework (TFL)**, covering:
+**mentor-grade Employer Dashboard design** for **Transflower Learning Framework (TFL)**, covering:
 
 1. 🎯 Dashboard sections & KPIs
 2. 📊 SQL Views powering each widget
 3. 🧠 What an employer *understands* from each widget
-4. 🧩 How this aligns with your mentorship philosophy
-
----
-
-# Employer Dashboard – EMS (TFL)
+4. 🧩 How this aligns with Transflower's mentorship philosophy
 
 > **Purpose**
 > Help employers answer **one question clearly**:
 > *“Whom should I hire, whom can I train, and whom should I avoid—for THIS role?”*
-
----
 
 ## 1️⃣ Employer Dashboard – High-Level Layout
 
@@ -829,8 +737,6 @@ Below is a **mentor-grade Employer Dashboard design** for **Transflower Learning
 -----------------------------------------------------
 ```
 
----
-
 ## 2️⃣ KPI Tiles (Top Summary)
 
 ### KPIs Shown
@@ -840,8 +746,6 @@ Below is a **mentor-grade Employer Dashboard design** for **Transflower Learning
 * Trainable Count
 * Not Ready Count
 * Avg Match Score
-
----
 
 ### SQL View – Employer KPI Summary
 
@@ -865,8 +769,6 @@ GROUP BY mr.run_id, jr.role_name;
 
 > “Out of 30 candidates, only 6 are immediately usable.”
 
----
-
 ## 3️⃣ Candidate Ranking Table (Core Hiring Panel)
 
 ### Columns
@@ -877,8 +779,6 @@ GROUP BY mr.run_id, jr.role_name;
 * Final Score
 * Readiness Status
 * Mandatory Skill Pass
-
----
 
 ### SQL View – Ranked Candidates
 
@@ -901,13 +801,9 @@ ORDER BY emr.run_id, emr.rank_position;
 
 > “Rank is not marks. Rank is *risk vs readiness*.”
 
----
-
 ## 4️⃣ Skill Gap Heatmap (Reality Check)
 
 Shows **which skills are failing across candidates**.
-
----
 
 ### SQL View – Skill Gap Heatmap
 
@@ -932,7 +828,6 @@ GROUP BY emr.run_id, sk.skill_name;
 
 This also helps **institutions improve curriculum**.
 
----
 
 ## 5️⃣ Skill Demand vs Supply (Expectation Mismatch)
 
@@ -941,7 +836,6 @@ Compares:
 * Employer required proficiency
 * Average student proficiency
 
----
 
 ### SQL View – Skill Demand vs Supply
 
@@ -963,8 +857,6 @@ GROUP BY jr.role_name, sk.skill_name, jrs.min_proficiency_level;
 
 > “Students know syntax, not depth.”
 
----
-
 ## 6️⃣ Hire / Train / Reject Panel (Decision Engine)
 
 ### Classification Logic
@@ -972,8 +864,6 @@ GROUP BY jr.role_name, sk.skill_name, jrs.min_proficiency_level;
 * **Employable** → Hire
 * **Trainable** → Internship / Bootcamp
 * **Not Ready** → Reject
-
----
 
 ### SQL View – Hiring Recommendations
 
@@ -997,8 +887,6 @@ JOIN students s ON emr.student_id = s.student_id;
 
 > “I don’t reject people. I classify risk.”
 
----
-
 ## 7️⃣ Drill-Down: Candidate Skill Profile (Popup / Detail View)
 
 When employer clicks a candidate:
@@ -1009,8 +897,6 @@ When employer clicks a candidate:
 * Consistency index
 
 (SQL already exists via `student_skills`, `student_projects`)
-
----
 
 ## 8️⃣ Why This Dashboard is Powerful (Mentor Perspective)
 
@@ -1026,8 +912,6 @@ This matches **your long-standing belief**:
 > *Industry doesn’t hire degrees.
 > It hires capability, confidence, and consistency.*
 
----
-
 ## 9️⃣ Natural Next Enhancements 🚀
 
 You are now at **real hiring-system level**.
@@ -1040,24 +924,15 @@ Next layers I recommend (in order):
 4️⃣ **Employer persona simulation (Startup vs MNC)**
 5️⃣ **Visual dashboard wireframe (mentor-friendly UI)**
 
-Tell me **which one next**, and I’ll design it **as if TFL is going live**.
 
 
-Excellent 👌
-A **mentor-friendly visual dashboard** must **reduce cognitive load**, **tell a story**, and **support decision-making**, not just show charts.
-
-Below is a **clean, industry-real wireframe** for the **Employer Dashboard in TFL EMS**, written the way **you would explain it to mentors and employers**.
-
----
 
 # Employer Dashboard – Visual Wireframe
 
-### Transflower Learning Framework (Mentor-Friendly UI)
+A **mentor-friendly visual dashboard** must **reduce cognitive load**, **tell a story**, and **support decision-making**, not just show charts.
 
 > **Design Philosophy**
 > “An employer should understand the situation in **30 seconds**.”
-
----
 
 ## 1️⃣ Overall Screen Layout (Desktop First)
 
@@ -1084,9 +959,6 @@ Below is a **clean, industry-real wireframe** for the **Employer Dashboard in TF
 │                HIRE / TRAIN / REJECT PANEL                    │
 └───────────────────────────────────────────────────────────────┘
 ```
-
----
-
 ## 2️⃣ KPI Strip (Top – Executive Summary)
 
 ### Wireframe
@@ -1105,8 +977,6 @@ Below is a **clean, industry-real wireframe** for the **Employer Dashboard in TF
 * **Not Ready** → do not waste hiring cycles
 
 📌 No percentages here — **absolute clarity**.
-
----
 
 ## 3️⃣ Candidate Ranking Table (Hiring Backbone)
 
@@ -1131,8 +1001,6 @@ Below is a **clean, industry-real wireframe** for the **Employer Dashboard in TF
 
 👉 Clicking a row opens **Candidate Skill Profile Drawer**
 
----
-
 ## 4️⃣ Skill Gap Heatmap (Where Students Fail)
 
 ### Wireframe
@@ -1155,8 +1023,6 @@ Below is a **clean, industry-real wireframe** for the **Employer Dashboard in TF
 
 This panel **guides curriculum correction**.
 
----
-
 ## 5️⃣ Skill Demand vs Supply (Expectation Reality)
 
 ### Wireframe
@@ -1178,8 +1044,6 @@ Student Avg Score:     ████████████░  74%
 * Employer expectations shown as **baseline line**
 
 📌 This prevents “students know everything” illusion.
-
----
 
 ## 6️⃣ Hire / Train / Reject Panel (Decision Zone)
 
@@ -1211,7 +1075,6 @@ Student Avg Score:     ████████████░  74%
 
 Trainable candidates link to **Skill Gap + Recovery Plan**.
 
----
 
 ## 7️⃣ Candidate Skill Profile (Slide-In Drawer)
 
@@ -1233,8 +1096,6 @@ When clicking a candidate:
 └───────────────────────────────────────────┘
 ```
 
----
-
 ## 8️⃣ Why This UI Works for Mentors & Employers
 
 | Problem            | UI Solution            |
@@ -1244,8 +1105,6 @@ When clicking a candidate:
 | Students confused  | Clear gap visibility   |
 | Mentors overloaded | Actionable insights    |
 
----
-
 ## 9️⃣ Optional Enhancements (Later)
 
 * 🔍 Filter by college / batch
@@ -1253,7 +1112,7 @@ When clicking a candidate:
 * 🧠 AI “Why this candidate?” explanation
 * 📤 Export hiring report (PDF)
 
----
+
 
 ## 10️⃣ Mentor Takeaway 🌱
 
@@ -1266,8 +1125,6 @@ This dashboard:
 > *This is not a dashboard.*
 > *This is a learning mirror.*
 
----
-
 ### Next natural step?
 
 If you want, I can:
@@ -1276,37 +1133,29 @@ If you want, I can:
 3️⃣ Map **each widget → SQL view → API endpoint**
 4️⃣ Add **mentor coaching dashboard (parallel view)**
 
-Just tell me where you want to take TFL next 🚀
 
 
 
-Excellent direction 👌
-A **Mentor Coaching Dashboard** is the *heart* of Transflower Learning Framework — this is where **employers evaluate**, but **mentors transform**.
-
-Below is a **parallel, mentor-first dashboard design** that **runs alongside the Employer Dashboard**, using the *same data* but answering **very different questions**.
-
----
 
 # Mentor Coaching Dashboard – Parallel View
+A **Mentor Coaching Dashboard** is the *heart* of Transflower Learning Framework — this is where **employers evaluate**, but **mentors transform**.
 
-### Transflower Learning Framework (TFL)
+It is a  **parallel, mentor-first dashboard design** that **runs alongside the Employer Dashboard**, using the *same data* but answering **very different questions**.
 
 > **Employer asks:** “Whom can I hire?”
 > **Mentor asks:** “Whom can I uplift, and how fast?”
-
----
 
 ## 1️⃣ Mentor Dashboard – High-Level Layout
 
 ```
 ┌───────────────────────────────────────────────────────────────┐
 │  Mentor Console | Batch: 2025 | Track: Full-Stack             │
-│  Employer Lens: TechNova – Jr Full-Stack                       │
+│  Employer Lens: TechNova – Jr Full-Stack                      │
 └───────────────────────────────────────────────────────────────┘
 
-┌─────────────── COACHING KPIs ────────────────┐
-│ 🟢 Ready Soon   🟡 Needs Push   🔴 At Risk     │
-│      6              12              6        │
+┌─────────────── COACHING KPIs ───────────────┐
+│ 🟢 Ready Soon   🟡 Needs Push   🔴 At Risk │
+│      6              12              6       │
 └─────────────────────────────────────────────┘
 
 ┌───────────────────────────────────────────────────────────────┐
@@ -1314,15 +1163,13 @@ Below is a **parallel, mentor-first dashboard design** that **runs alongside the
 └───────────────────────────────────────────────────────────────┘
 
 ┌───────────────────────┐ ┌───────────────────────────────────┐
-│  SKILL GAP CLUSTERS   │ │  RECOVERY PLAN TRACKER             │
+│  SKILL GAP CLUSTERS   │ │  RECOVERY PLAN TRACKER            │
 └───────────────────────┘ └───────────────────────────────────┘
 
 ┌───────────────────────────────────────────────────────────────┐
 │               INTERVENTION & FOLLOW-UP PANEL                  │
 └───────────────────────────────────────────────────────────────┘
 ```
-
----
 
 ## 2️⃣ Mentor Coaching KPIs (Not Hiring KPIs)
 
@@ -1345,8 +1192,6 @@ Below is a **parallel, mentor-first dashboard design** that **runs alongside the
 
 📌 **Mentor focuses on trajectory, not status.**
 
----
-
 ## 3️⃣ Student Coaching Priority List (Mentor Action Table)
 
 ### Wireframe
@@ -1365,8 +1210,6 @@ Below is a **parallel, mentor-first dashboard design** that **runs alongside the
 
 * Sorted by **mentor impact potential**
 * Shows *what to coach next*
-
----
 
 ## 4️⃣ Skill Gap Clusters (Batch-Level Diagnosis)
 
@@ -1390,8 +1233,6 @@ Below is a **parallel, mentor-first dashboard design** that **runs alongside the
 
 This enables **batch-level interventions**.
 
----
-
 ## 5️⃣ Recovery Plan Tracker (Coaching Execution)
 
 ### Wireframe
@@ -1407,8 +1248,6 @@ This enables **batch-level interventions**.
 ```
 
 📌 Mentor sees **execution**, not just advice.
-
----
 
 ## 6️⃣ Intervention & Follow-Up Panel (Mentor Power)
 
@@ -1429,8 +1268,6 @@ Each action:
 * Tracks student response
 * Improves future readiness prediction
 
----
-
 ## 7️⃣ Parallel Mapping: Employer View vs Mentor View
 
 | Employer Dashboard    | Mentor Coaching Dashboard  |
@@ -1442,8 +1279,6 @@ Each action:
 | Final decision        | Continuous improvement     |
 
 📌 **Same data, different wisdom.**
-
----
 
 ## 8️⃣ Why This Matches Your Teaching Philosophy
 
@@ -1459,8 +1294,6 @@ This dashboard:
 * Makes mentors **data-driven**
 * Turns LMS into **learning intelligence system**
 
----
-
 ## 9️⃣ Technical Mapping (So it’s Buildable)
 
 Each mentor widget maps cleanly:
@@ -1473,7 +1306,6 @@ Each mentor widget maps cleanly:
 | Recovery Tracker | `recovery_recommendations`      |
 | Follow-ups       | (future) `mentor_interventions` |
 
----
 
 ## 🔜 Natural Next Evolution 🚀
 
@@ -1485,28 +1317,16 @@ Next high-impact options:
 3️⃣ **Student-facing coaching dashboard**
 4️⃣ **Employer ↔ Mentor feedback loop**
 5️⃣ **AI mentor assistant (what to coach next)**
+ 
 
-Tell me the next layer, and we’ll keep building TFL like a **real-world transformation engine** 🌱
-
-
-
-
-Perfect 👌
+# Student Coaching Dashboard
 A **Student-Facing Coaching Dashboard** is where TFL becomes *personally transformative*.
 This dashboard must **motivate**, **guide**, and **remove confusion** — not intimidate students.
 
 Below is a **mentor-designed, student-friendly dashboard** that complements the **Employer** and **Mentor** dashboards you already designed.
 
----
-
-# Student Coaching Dashboard
-
-### Transflower Learning Framework (TFL)
-
 > **Student’s core question:**
 > *“What should I do next to become job-ready?”*
-
----
 
 ## 1️⃣ Student Dashboard – Overall Layout
 
@@ -1516,25 +1336,23 @@ Below is a **mentor-designed, student-friendly dashboard** that complements the 
 │  Your Coach: Ravi Sir | Next Review: 14 days                  │
 └───────────────────────────────────────────────────────────────┘
 
-┌─────────────── READINESS STRIP ────────────────┐
+┌─────────────── READINESS STRIP ──────────────────┐
 │  🟢 Ready Skills   🟡 Improving   🔴 Focus Now  │
-│      4                 2              1       │
-└───────────────────────────────────────────────┘
+│      4                 2              1          │
+└──────────────────────────────────────────────────┘
 
 ┌───────────────────────────────────────────────────────────────┐
-│               YOUR JOB READINESS SCORE                         │
+│               YOUR JOB READINESS SCORE                        │
 └───────────────────────────────────────────────────────────────┘
 
 ┌───────────────────────┐ ┌───────────────────────────────────┐
-│  SKILL PROGRESS MAP   │ │  FOCUS SKILLS (NEXT 14 DAYS)       │
+│  SKILL PROGRESS MAP   │ │  FOCUS SKILLS (NEXT 14 DAYS)      │
 └───────────────────────┘ └───────────────────────────────────┘
 
 ┌───────────────────────────────────────────────────────────────┐
-│             YOUR COACHING PLAN & TASKS                         │
+│             YOUR COACHING PLAN & TASKS                        │
 └───────────────────────────────────────────────────────────────┘
 ```
-
----
 
 ## 2️⃣ Job Readiness Score (Motivation Anchor)
 
@@ -1557,8 +1375,6 @@ Below is a **mentor-designed, student-friendly dashboard** that complements the 
 
 📌 Students compete **with themselves**, not others.
 
----
-
 ## 3️⃣ Skill Progress Map (Visual, Non-Scary)
 
 ### Wireframe
@@ -1577,8 +1393,6 @@ Problem Solving    ████████████ 88%   🟢
 * Traffic-light colors
 * Bars, not grades
 * Icons instead of labels like “fail”
-
----
 
 ## 4️⃣ Focus Skills – “What Should I Do Now?”
 
@@ -1600,8 +1414,6 @@ Problem Solving    ████████████ 88%   🟢
 
 📌 Students always know **today’s priority**.
 
----
-
 ## 5️⃣ Coaching Plan & Tasks (Action-Oriented)
 
 ### Wireframe
@@ -1612,9 +1424,9 @@ Problem Solving    ████████████ 88%   🟢
 ┌────────────┬───────────────┬────────────┬──────────┐
 │ Task       │ Skill         │ Progress   │ Status   │
 ├────────────┼───────────────┼────────────┼──────────┤
-│ SQL MiniProj│ SQL           │ ████░░░░░░ │ In Prog. │
-│ REST Case  │ REST API       │ ███░░░░░░░ │ In Prog. │
-│ OOP Review │ OOP            │ ██████████ │ Done    │
+│ SQL MiniProj│ SQL          │ ████░░░░░░ │ In Prog. │
+│ REST Case  │ REST API      │ ███░░░░░░░ │ In Prog. │
+│ OOP Review │ OOP           │ ██████████ │ Done     │
 └────────────┴───────────────┴────────────┴──────────┘
 ```
 
@@ -1622,8 +1434,6 @@ Problem Solving    ████████████ 88%   🟢
 
 > *Don’t tell students what they lack.*
 > *Tell them what to do next.*
-
----
 
 ## 6️⃣ Mentor Feedback & Encouragement
 
@@ -1641,7 +1451,6 @@ Once SQL crosses 75%, you’ll be employable."
 
 📌 Personal feedback builds **trust + discipline**.
 
----
 
 ## 7️⃣ Growth Timeline (Confidence Builder)
 
@@ -1658,7 +1467,6 @@ Target     ████████████ 85%
 
 Students **see progress**, not pressure.
 
----
 
 ## 8️⃣ Employer Readiness Preview (Optional, Limited)
 
@@ -1677,8 +1485,6 @@ To become Employable:
 
 📌 This prepares students **without scaring them**.
 
----
-
 ## 9️⃣ Why This Dashboard Works for Students
 
 | Student Problem        | Dashboard Solution |
@@ -1688,7 +1494,6 @@ To become Employable:
 | “What next?”           | Coaching plan      |
 | “Sir, will I get job?” | Readiness preview  |
 
----
 
 ## 10️⃣ Parallel Dashboard Harmony
 
@@ -1700,7 +1505,6 @@ To become Employable:
 
 All three dashboards speak **different languages**, but share **one truth**.
 
----
 
 ## 🌱 Mentor Takeaway
 
@@ -1713,7 +1517,6 @@ This dashboard turns:
 > *A good system teaches.*
 > *A great system transforms.*
 
----
 
 ## 🔜 Next Natural Step 🚀
 
@@ -1725,4 +1528,3 @@ If you want, we can now:
 5️⃣ Connect **daily learning plan generator**
 
 Tell me where you want to go next — TFL is becoming something powerful 🌟
-
