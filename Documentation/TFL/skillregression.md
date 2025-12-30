@@ -1,5 +1,4 @@
-Excellent.
-This is the **missing piece that makes TFL a living system instead of a one-time course**.
+## TFL a living system instead of a one-time course**.
 
 Most platforms ask:
 
@@ -11,7 +10,6 @@ TFL asks:
 
 That’s **Skill Regression Detection**.
 
----
 
 # 🔁 SKILL REGRESSION DETECTION (TFL MODEL)
 
@@ -23,7 +21,6 @@ I’ll explain this in **5 clear layers**:
 4️⃣ Recovery actions (what TFL does)
 5️⃣ Why this is critical for job-readiness
 
----
 
 ## 🔶 1️⃣ What is Skill Regression? (Truth)
 
@@ -43,8 +40,6 @@ A student may:
 
 📌 **Regression is invisible in traditional tests.**
 
----
-
 ## 🔶 2️⃣ Where Regression Happens Most
 
 Regression usually occurs in **high-cognitive-load skills**:
@@ -61,14 +56,12 @@ Regression usually occurs in **high-cognitive-load skills**:
 Why?
 Because these skills require **continuous practice + context**.
 
----
 
 ## 🔶 3️⃣ Regression Signals (What TFL Observes)
 
 TFL does **not rely on exams**.
 It watches **behavior + performance drift**.
 
----
 
 ### 🧠 A. Performance Drift Signal
 
@@ -84,7 +77,6 @@ Drift: -16%
 
 ⚠️ Signal triggered.
 
----
 
 ### 🔁 B. Time-to-Completion Increase
 
@@ -96,7 +88,6 @@ Now: 50 minutes
 
 📌 Skill exists, but **mental access slowed**.
 
----
 
 ### ❌ C. Error Pattern Reappearance
 
@@ -111,7 +102,6 @@ Now reappearing:
 
 📌 This is **strong regression evidence**.
 
----
 
 ### 🚫 D. Avoidance Behavior
 
@@ -125,7 +115,6 @@ This means:
 
 > “I know *about* it, but don’t trust myself.”
 
----
 
 ## 🔶 4️⃣ Regression Detection Logic (Simple but Powerful)
 
@@ -140,8 +129,6 @@ Skill Stability =
 
 If stability drops below **Safe Threshold** → regression.
 
----
-
 ### 📊 Example
 
 ```
@@ -154,13 +141,9 @@ Error Recurrence: High
 Stability Score: 46 (UNSTABLE)
 ```
 
----
-
 ## 🔶 5️⃣ Regression Classification
 
 TFL classifies regression into **3 types**:
-
----
 
 ### 🟡 Type 1: Soft Regression (Common)
 
@@ -174,8 +157,6 @@ TFL classifies regression into **3 types**:
 - 1 refresher lab
 - 1 guided problem
 ```
-
----
 
 ### 🟠 Type 2: Structural Regression
 
@@ -191,8 +172,6 @@ TFL classifies regression into **3 types**:
 - Visual debugging
 ```
 
----
-
 ### 🔴 Type 3: Critical Regression
 
 * Can’t perform previously mastered tasks
@@ -205,8 +184,6 @@ TFL classifies regression into **3 types**:
 - Mentor intervention
 - Narrowed learning scope
 ```
-
----
 
 ## 🔶 6️⃣ Regression → Job Readiness Impact
 
@@ -229,8 +206,6 @@ Logging ↓
 
 Traditional systems **never catch this**.
 
----
-
 ## 🔶 7️⃣ Automatic Recovery Actions (No Shame, No Reset)
 
 TFL **never says “you forgot”**.
@@ -239,7 +214,6 @@ It says:
 
 > “This skill needs maintenance.”
 
----
 
 ### 🔁 Recovery Actions by Skill Type
 
@@ -251,7 +225,6 @@ It says:
 | Microservices | Service failure simulation         |
 | Frontend      | Performance regression lab         |
 
----
 
 ## 🔶 8️⃣ Mentor Dashboard (Regression View)
 
@@ -266,7 +239,6 @@ Risk: Medium
 
 Mentor intervenes **before failure**, not after.
 
----
 
 ## 🔥 CORE TFL PRINCIPLE (Very Important)
 
@@ -279,7 +251,6 @@ TFL treats skills as:
 * decaying
 * maintainable
 
----
 
 ## 🔗 How This Connects Everything
 
@@ -292,7 +263,6 @@ Without regression detection:
 
 > Job readiness scores become lies.
 
----
 
 ## 🚀 What should we design next?
 

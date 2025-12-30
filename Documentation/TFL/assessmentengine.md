@@ -114,13 +114,13 @@ AI builds tests based on mentor inputs:
                 Assessment Config
                        |
         ┌──────── Question Intelligence Engine ────────┐
-        │                                                │
-        │  Skill Ontology + Curriculum Graph             │
-        │  Bloom’s Taxonomy Mapper                        │
-        │  Difficulty Estimator                           │
-        │  Question Template Engine                       │
-        │                                                │
-        └───────────────┬────────────────────────────────┘
+        │                                              │
+        │  Skill Ontology + Curriculum Graph           │
+        │  Bloom’s Taxonomy Mapper                     │
+        │  Difficulty Estimator                        │
+        │  Question Template Engine                    │
+        │                                              │
+        └───────────────┬──────────────────────────────┘
                         |
                 AI Generation Layer
              (LLM + Rules + Validation)
