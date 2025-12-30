@@ -35,9 +35,9 @@ This is exactly how we would **explain TFL to stakeholders, mentors, and employe
 
 ## 🧠 STEP 1: Quarterly Career Roadmap Generated
 
-📅 **Quarter:** Q2-2025
-🎯 **Target Role:** Junior Backend Developer
-🏷️ **Theme:** *“From learner to deployable engineer”*
+- 📅 **Quarter:** Q2-2025
+- 🎯 **Target Role:** Junior Backend Developer
+- 🏷️ **Theme:** *“From learner to deployable engineer”*
 
 **System Output**
 
@@ -135,8 +135,8 @@ Goal: Remove SQL as a blocker
 | Quick quiz         | Assessment | 5m   |
 | Revise OOP concept | Confidence | 5m   |
 
-📌 Student completes 90%
-📌 Feedback: *“JOINs make sense now”*
+- 📌 Student completes 90%
+- 📌 Feedback: *“JOINs make sense now”*
 
 ## 📈 STEP 5: Progress Tracking + Signals
 
@@ -276,11 +276,10 @@ Why?
 
 ## 🧠 What This Simulation Proves
 
-✔ Learning is **guided, not random**
-✔ Mentors intervene **with data, not guesswork**
-✔ Students gain **confidence + proof**
-✔ Employers see **signals, not resumes**
-
+- ✔ Learning is **guided, not random**
+- ✔ Mentors intervene **with data, not guesswork**
+- ✔ Students gain **confidence + proof**
+- ✔ Employers see **signals, not resumes**
 
 ## 🧩 TFL System Layers (Summary)
 
@@ -307,11 +306,11 @@ And adjusts **every day** until the answer is *yes*.
 
 ## 🔜 Where We Can Go Next (Very Powerful)
 
-1️⃣ **Placement probability scoring model**
-2️⃣ **Dropout prediction & recovery simulation**
-3️⃣ **AI mentor explanation engine**
-4️⃣ **Employer shortlisting walkthrough**
-5️⃣ **Full ER diagram for Career OS**
+- 1️⃣ **Placement probability scoring model**
+- 2️⃣ **Dropout prediction & recovery simulation**
+- 3️⃣ **AI mentor explanation engine**
+- 4️⃣ **Employer shortlisting walkthrough**
+- 5️⃣ **Full ER diagram for Career OS**
 
 We are no longer designing a platform,
 We are designing **futures** 🌱
