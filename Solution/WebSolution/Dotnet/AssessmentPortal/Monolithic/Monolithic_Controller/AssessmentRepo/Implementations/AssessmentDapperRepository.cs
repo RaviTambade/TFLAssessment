@@ -321,7 +321,7 @@ _filePath = Path.Combine(Directory.GetCurrentDirectory(),"Data","Time.json");
             {
                 int id = int.Parse(reader["id"].ToString());
                 string TestName = reader["Name"].ToString();
-                // TimeOnly duration=TimeOnly.Parse(reader["duration"]);
+                // int duration=int.Parse(reader["duration"].ToString());
                 int subjectId = int.Parse(reader["subjectid"].ToString());
                 int subjectExpertId = int.Parse(reader["smeid"].ToString());
                 DateTime creationDate = DateTime.Parse(reader["creationdate"].ToString());
@@ -336,6 +336,7 @@ _filePath = Path.Combine(Directory.GetCurrentDirectory(),"Data","Time.json");
                 test.Id = id;
                 test.TestName = TestName;
                 test.SubjectId = subjectId;
+                //  test.Duration = duration;
                 test.SubjectExpertId = subjectExpertId;
                 test.CreationDate = creationDate;
                 test.ModificationDate = modificationDate;
@@ -689,8 +690,8 @@ public async Task<List<Employee>> GetAllEmployees()
             {
 
                 var query =
-                "INSERT INTO assessments (test_id, candidate_id, status,createdOn, createdby, scheduledstart, scheduledend) " +
-                "VALUES (@test_id, @candidate_id, @status,@createdOn, @createdBy, @scheduledstart, @scheduledend)";
+                "INSERT INTO assessments (test_id, candidate_id, status,createdOn, createdby,modifiedby,modifiedon, scheduledstart, scheduledend) " +
+                "VALUES (@test_id, @candidate_id, @status,@createdOn, @createdBy,@modifiedby,@modifiedon, @scheduledstart, @scheduledend)";
                 var parameters = new
                 {
                     test_id = request.TestId,
@@ -698,6 +699,8 @@ public async Task<List<Employee>> GetAllEmployees()
                     status = request.Status,
                     createdOn = DateTime.Now,
                     createdBy = request.CreatedBy,
+                    modifiedby =request.CreatedBy,
+                    modifiedon =DateTime.Now,
                     scheduledstart = request.ScheduledStart,
                     scheduledend = request.ScheduledEnd
                 };

@@ -40,7 +40,7 @@
       $("#testTable").hide();
 
       const apiUrl = `${apiBase}/from/${fromDate}/to/${toDate}`;
-
+// http://localhost:5238/api/Assessment/getalltest/from/${fromDate}/to/${toDate}
       $.ajax({
         url: apiUrl,
         method: "GET",
@@ -54,6 +54,7 @@
             $("#error").text("No tests found in the selected date range.");
             return;
           }
+          console.log("*1234567890987654321")
           console.log("Fetched tests:", data);
 
           data.forEach(test => {
@@ -61,6 +62,8 @@
               <td>${test.name}</td>
               <td>${new Date(test.scheduledDate).toLocaleString()}</td>
               <td>${test.status}</td>
+              <td>${test.duration}</td>
+            
               
               <td>
                 <button onclick="updateTest(${test.id})" style="margin-right:5px; background:orange;">Update Status</button>
@@ -100,3 +103,5 @@
       // Navigate to update page or open modal with that test ID
       window.location.href = `updatetest.html?id=${id}`;  
     }
+
+    
