@@ -473,6 +473,31 @@ public async Task<IActionResult> GetSmeTestList([FromQuery] int smeId)
 
         return Ok(details);
     }
+    //http://localhost:5238/api/Assessment/buffer
+    [HttpGet("buffer")]
+    public async Task<IActionResult> GetBufferTime()
+    {
+        var result = await _svc.GetBufferTimeAsync();
+Console.WriteLine("something",result);
+        return Ok(result);
+    }
+
+
+    
+[HttpPost("update-buffer-time")]
+public async Task<IActionResult> UpdateBufferTime([FromBody] TimeConfigUpdateRequest request)
+{
+    if (request.BufferTime < 0)
+        return BadRequest(new { message = "BufferTime cannot be negative." });
+
+    bool result = await _svc.UpdateBufferTimeAsync(request.BufferTime);
+
+    if (result)
+        return Ok(new { message = "BufferTime updated successfully." });
+
+    return StatusCode(500, new { message = "Failed to update BufferTime." });
+}
+
 
 
 }

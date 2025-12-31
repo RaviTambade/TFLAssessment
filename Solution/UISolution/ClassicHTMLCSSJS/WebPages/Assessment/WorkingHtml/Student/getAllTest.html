@@ -76,76 +76,92 @@
     </div>
 
     <script>
+        
+
         $(document).ready(function () {
-            const empId = localStorage.getItem("userId");
+    const empId = localStorage.getItem("userId");
 
-            if (!empId) {
-                alert("User not logged in. Redirecting to login...");
-                window.location.href = "WorkingHtml/login.html";
-                return;
-            }
+    if (!empId) {
+        alert("User not logged in. Redirecting to login...");
+        window.location.href = "WorkingHtml/login.html";
+        return;
+    }
 
-            $.ajax({
-                url: `http://localhost:5238/api/Assessment/alltestbyempid/${empId}`,
-                method: 'GET',
-                success: function (data) {
-                    data.forEach(test => {
-                        $('#testTable tbody').append(`
-                            <tr>
-                                <td>${test.testName}</td>
-                                <td>
-                                    <button class="detailsBtn" data-test='${JSON.stringify(test)}'>Details</button>
-                                    <button class="startBtn" data-id="${test.id}">Start Test</button>
-                                </td>
-                            </tr>
-                        `);
-                    });
+    // Fetch buffer time first
+    let buffer = 0;
+    $.ajax({
+        url: "http://localhost:5238/api/Assessment/buffer",
+        method: "GET",
+        success: function (data) {
+            // Convert minutes to milliseconds
+            buffer = data.bufferTime * 60 * 1000;
+            console.log("buffer",buffer);
+        },
+        error: function () {
+            alert("Failed to load buffer time. Using default 5 minutes.");
+            buffer = 5 * 60 * 1000;
+        }
+    });
 
-                    $(".detailsBtn").click(function () {
-                        const test = $(this).data('test');
+    // Now fetch tests
+    $.ajax({
+        url: `http://localhost:5238/api/Assessment/alltestbyempid/${empId}`,
+        method: 'GET',
+        success: function (data) {
+            data.forEach(test => {
+                $('#testTable tbody').append(`
+                    <tr>
+                        <td>${test.testName}</td>
+                        <td>
+                            <button class="detailsBtn" data-test='${JSON.stringify(test)}'>Details</button>
+                            <button class="startBtn" data-id="${test.id}">Start Test</button>
+                        </td>
+                    </tr>
+                `);
+            });
 
-                        $("#dTestName").text(test.testName);
-                        $("#dPassingLevel").text(test.passingLevel);
-                        $("#dDuration").text(test.duration);
-                        $("#dStart").text(new Date(test.scheduledStart).toLocaleString());
-                        $("#dEnd").text(new Date(test.scheduledEnd).toLocaleString());
-                        $("#dStatus").text(test.status);
+            $(".detailsBtn").click(function () {
+                const test = $(this).data('test');
 
-                        $("#detailsBox").slideDown();
-                    });
+                $("#dTestName").text(test.testName);
+                $("#dPassingLevel").text(test.passingLevel);
+                $("#dDuration").text(test.duration);
+                $("#dStart").text(new Date(test.scheduledStart).toLocaleString());
+                $("#dEnd").text(new Date(test.scheduledEnd).toLocaleString());
+                $("#dStatus").text(test.status);
 
-                    $(".startBtn").click(function () {
-                        // const testId = $(this).data("id");
-                        const testRow = $(this).closest("tr");
-                        const testData = JSON.parse(testRow.find(".detailsBtn").attr("data-test"));
-                        const testId = testData.id;
-                        
-                        const scheduledStart = new Date(testData.scheduledStart);
-                        const now = new Date();
+                $("#detailsBox").slideDown();
+            });
 
-                        // Optional: add a buffer of ±5 minutes (600000 ms)
-                        const buffer = 5 * 60 * 1000;
+            $(".startBtn").click(function () {
+                const testRow = $(this).closest("tr");
+                const testData = JSON.parse(testRow.find(".detailsBtn").attr("data-test"));
+                const testId = testData.id;
 
-                        if (now.getTime() >= scheduledStart.getTime() &&
-                             now.getTime() <= scheduledStart.getTime() + buffer) {                            const userId = localStorage.getItem("userId");
-                            if (!userId) {
-                                alert("User not logged in!");
-                                return;
-                            }
-                            const duration = testData.duration;
-                            // Redirect to test appear page with query params
-                            window.location.href = `testappearJWT.html?userid=${userId}&testid=${testId}&duration=${duration}`;
-                        } else {
-                            alert("You can only start the test at the scheduled time.");
-                        }
-                    });
+                const scheduledStart = new Date(testData.scheduledStart);
+                const now = new Date();
+            console.log("buffer",buffer);
 
-                },
-                error: function () {
-                    alert("Failed to load data.");
+                if (now.getTime() >= scheduledStart.getTime() &&
+                    now.getTime() <= scheduledStart.getTime() + buffer) {
+
+                    const userId = localStorage.getItem("userId");
+                    if (!userId) {
+                        alert("User not logged in!");
+                        return;
+                    }
+                    const duration = testData.duration;
+                    window.location.href = `testappearJWT.html?userid=${userId}&testid=${testId}&duration=${duration}`;
+                } else {
+                    alert("You can only start the test at the scheduled time.");
                 }
             });
-        });
+        },
+        error: function () {
+            alert("Failed to load data.");
+        }
+    });
+});
     </script>
 
 </body>

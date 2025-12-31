@@ -44,6 +44,10 @@ function getRole() {
     $("#content").load("UserAnalytics.html");
   });
 
+   $("#AssessmentSetting").click(function (e) {
+    $("#content").load("AssessmentSetting.html");
+  });
+  
 
 // Load content dynamically into #content
 $(document).ready(function () {

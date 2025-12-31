@@ -1,5 +1,6 @@
 using  Transflower.TFLAssessment.Entities;
 using Transflower.TFLAssessment.Entities.Models;
+using Transflower.TFLAssessment.Helpers;
 namespace Transflower.TFLAssessment.Repositories.Interfaces;
 
 public interface IAssessmentRepository
@@ -51,6 +52,10 @@ public interface IAssessmentRepository
   public  Task<List<ConceptWithCorrectAns>> GetConceptwiseCorrectAnswer(int candidateid);
 
   public  Task<List<TestEmployeeDetails>> GetAssessmentEmployeeDetails(int assessmentId, int candidateId);
+  public  Task<TimeConfig> GetBufferTimeAsync();
+ 
+  public Task<bool> UpdateBufferTimeAsync(int bufferTime);
+
 
 }
 

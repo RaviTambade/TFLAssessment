@@ -6,16 +6,18 @@ using Transflower.TFLAssessment.Repositories.Interfaces;
 using Transflower.TFLAssessment.Entities.Models;
 using Transflower.TFLAssessment.Handler;
 using Dapper;
-
+using Transflower.TFLAssessment.Helpers;
 namespace Transflower.TFLAssessment.Repositories;
-
+using System.Text.Json;
 public class AssessmentDapperRepository : IAssessmentRepository
 {
     private readonly IConfiguration _configuration;
     private readonly string _connectionString;
+     private readonly string _filePath;
 
     public AssessmentDapperRepository(IConfiguration configuration)
     {
+_filePath = Path.Combine(Directory.GetCurrentDirectory(),"Data","Time.json");
         _configuration = configuration;
         _connectionString = _configuration.GetConnectionString("DefaultConnection") ?? throw new ArgumentNullException("connectionString");
         SqlMapper.AddTypeHandler(new SqlTimeOnlyTypeHandler());
@@ -1055,5 +1057,32 @@ public async Task<List<ConceptWithCorrectAns>> GetConceptwiseCorrectAnswer(int c
 
     return conceptWithCorrectAns;
 }
+ public async Task<TimeConfig> GetBufferTimeAsync()
+    {
+        if (!File.Exists(_filePath))
+            throw new FileNotFoundException("time.json not found");
+
+        var json = await File.ReadAllTextAsync(_filePath);
+
+        return JsonSerializer.Deserialize<TimeConfig>(json);
+    }
+
+ public async Task<bool> UpdateBufferTimeAsync(int bufferTime)
+    {
+        try
+        {
+            var config = new TimeConfig { BufferTime = bufferTime };
+
+            var jsonString = JsonSerializer.Serialize(config, new JsonSerializerOptions { WriteIndented = true });
+            await File.WriteAllTextAsync(_filePath, jsonString);
+
+            return true;
+        }
+        catch
+        {
+            return false;
+        }
+    }
+
 
 }

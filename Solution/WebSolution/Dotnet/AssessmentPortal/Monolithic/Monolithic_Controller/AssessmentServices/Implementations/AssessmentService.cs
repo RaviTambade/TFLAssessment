@@ -169,5 +169,13 @@ public class AssessmentService : IAssessmentService
    {
       return await _repository.GetAssessmentEmployeeDetails(assessmentId, candidateId);
    }
-   
+    public async Task<TimeConfig> GetBufferTimeAsync()
+    {
+        return await _repository.GetBufferTimeAsync();
+    }
+    public async Task<bool> UpdateBufferTimeAsync(int bufferTime)
+        {
+            return await _repository.UpdateBufferTimeAsync(bufferTime);
+        }
+
 }

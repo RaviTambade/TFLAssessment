@@ -6,7 +6,7 @@
   
 
   <!-- <ItemGroup>
-    <ProjectReference Include="..\AssessmentEntities\AssessmentEntities.csproj" />
+    <ProjectReference Include="..\AssessmentEntities\AssessmentEntities.csproj" /> 
   </ItemGroup> -->
   
     <ItemGroup>
@@ -15,6 +15,8 @@
     <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="8.0.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="8.0.0" />
     <ProjectReference Include="..\AssessmentEntities\AssessmentEntities.csproj" />
+    <ProjectReference Include="..\AssessmentHelper\AssessmentHelper.csproj" />
+
   </ItemGroup>
 
   <PropertyGroup>
