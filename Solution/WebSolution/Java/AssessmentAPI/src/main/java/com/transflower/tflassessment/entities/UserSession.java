@@ -33,6 +33,45 @@ public class UserSession {
     }
 
 
+    public long  getId(){
+        return Id;
+    }
+
+    public void setId(long id){
+        this.Id=id;
+    }
+
+      public long  getuserId(){
+        return UserId;
+    }
+
+    public void setUserId(long UserId){
+        this.UserId=UserId;
+    }
+
+    public LocalDateTime getLoginTime(){
+        return LoginTime;
+    }
+
+    public void setLoginTime(LocalDateTime LoginTime){
+        this.LoginTime=LoginTime;
+    }
+
+    public LocalDateTime getLogoutTime(){
+        return LogoutTime;
+    }
+
+    public void setLogoutTime(LocalDateTime LogoutTime){
+        this.LogoutTime=LogoutTime;
+    }
+
+    public String getSessionStatus(){
+        return SessionStatus;
+    }
+
+    public void setSessionStatus(String SessionStatus){
+        this.SessionStatus=SessionStatus;
+    }
     @Override
 
     public String toString(){
