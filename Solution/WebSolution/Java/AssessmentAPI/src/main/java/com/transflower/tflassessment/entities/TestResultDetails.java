@@ -2,7 +2,7 @@ package com.transflower.tflassessment.entities;
 
     public class TestResultDetails {
 
-    private int testId;
+    private int assessmentId;
     private String testName;
     private int candidateId;
     private String firstName;
@@ -12,12 +12,12 @@ package com.transflower.tflassessment.entities;
 
     // Getters and Setters
 
-    public int getTestId() {
-        return testId;
+    public int getAssessmentId() {
+        return assessmentId;
     }
 
-    public void setTestId(int testId) {
-        this.testId = testId;
+    public void setAssessmentId(int assessmentId) {
+        this.assessmentId = assessmentId;
     }
 
     public String getTestName() {
@@ -66,5 +66,17 @@ package com.transflower.tflassessment.entities;
 
     public void setScore(int score) {
         this.score = score;
+    }
+
+    public String toString(){
+        return "TestResultDetails{ " +
+        ",assessmentId=" + assessmentId +
+        ",testName=" + testName +
+        ",candidateId=" + candidateId +
+        ",firstname=" + firstName +
+        ",lastName=" + lastName + 
+        ",subject=" + subject + 
+        ", score=" + score ;
+
     }
 }
