@@ -7,12 +7,14 @@ import java.util.Objects;
 public class TestAssignmentRequest implements Cloneable {
 
     private int testId;
-    private List<Integer> employeeIds;
+    private List<Integer> candidateIds;
     private LocalDateTime scheduledStart;
     private LocalDateTime scheduledEnd;
     private String status;
     private LocalDateTime rescheduledOn;
-    private String remarks;
+    //private String remarks;
+    private int createdBy;
+    private LocalDateTime createdOn;
 
     // Getters and Setters
     public int getTestId() {
@@ -23,12 +25,12 @@ public class TestAssignmentRequest implements Cloneable {
         this.testId = testId;
     }
 
-    public List<Integer> getEmployeeIds() {
-        return employeeIds;
+    public List<Integer> getCandidateIds() {
+        return candidateIds;
     }
 
-    public void setEmployeeIds(List<Integer> employeeIds) {
-        this.employeeIds = employeeIds;
+    public void setCandidateIds(List<Integer> candidateIds) {
+        this.candidateIds = candidateIds;
     }
 
     public LocalDateTime getScheduledStart() {
@@ -63,25 +65,40 @@ public class TestAssignmentRequest implements Cloneable {
         this.status = status;
     }
 
-    public String getRemarks() {
-        return remarks;
+    // public String getRemarks() {
+    //     return remarks;
+    // }
+    // public void setRemarks(String remarks) {
+    //     this.remarks = remarks;
+    // }
+
+    public void setCreatedBy(int createdBy){
+        this.createdBy=createdBy;
     }
 
-    public void setRemarks(String remarks) {
-        this.remarks = remarks;
+    public int getCreatedBy(){
+        return createdBy;
     }
 
+    public void setCreatedOn(LocalDateTime createdOn){
+        this.createdOn=createdOn;
+    }
+
+    public LocalDateTime getCreatedOn(){
+        return createdOn;
+    }
     // toString
     @Override
     public String toString() {
         return "TestAssignmentRequest{" +
                 "testId=" + testId +
-                ", employeeIds=" + employeeIds +
+                ", candidateIds=" + candidateIds +
                 ", scheduledStart=" + scheduledStart +
                 ", scheduledEnd=" + scheduledEnd +
                 ", status='" + status + '\'' +
                 ", rescheduledOn=" + rescheduledOn +
-                ", remarks='" + remarks + '\'' +
+                ",createdBy="+createdBy+
+                ", createdOn='" + createdOn + '\'' +
                 '}';
     }
 
@@ -92,18 +109,19 @@ public class TestAssignmentRequest implements Cloneable {
         if (obj == null || getClass() != obj.getClass()) return false;
         TestAssignmentRequest other = (TestAssignmentRequest) obj;
         return testId == other.testId &&
-                Objects.equals(employeeIds, other.employeeIds) &&
+                Objects.equals(candidateIds, other.candidateIds) &&
                 Objects.equals(scheduledStart, other.scheduledStart) &&
                 Objects.equals(scheduledEnd, other.scheduledEnd) &&
                 Objects.equals(status, other.status) &&
                 Objects.equals(rescheduledOn, other.rescheduledOn) &&
-                Objects.equals(remarks, other.remarks);
+                Objects.equals(createdBy, other.createdBy) &&
+                Objects.equals(createdOn, other.createdOn);
     }
 
     // hashCode
     @Override
     public int hashCode() {
-        return Objects.hash(testId, employeeIds, scheduledStart, scheduledEnd, status, rescheduledOn, remarks);
+        return Objects.hash(testId, candidateIds, scheduledStart, scheduledEnd, status, rescheduledOn, createdBy,createdOn);
     }
 
     // clone
