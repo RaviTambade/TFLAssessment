@@ -17,22 +17,26 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
+import java.util.concurrent.CompletableFuture;
 
 import org.jasypt.util.text.AES256TextEncryptor;
 import org.springframework.stereotype.Repository;
 
 import com.transflower.tflassessment.entities.Assessment;
+import com.transflower.tflassessment.entities.CandidateAssessmentHistory;
 import com.transflower.tflassessment.entities.CandidateTestDetails;
+import com.transflower.tflassessment.entities.ConceptWithCorrectAns;
+import com.transflower.tflassessment.entities.Concepts;
 import com.transflower.tflassessment.entities.CreateTestRequest;
 import com.transflower.tflassessment.entities.CreateTestWithQuestions;
 import com.transflower.tflassessment.entities.Employee;
-import com.transflower.tflassessment.entities.EvaluationCriteria;
 import com.transflower.tflassessment.entities.Question;
 import com.transflower.tflassessment.entities.QuestionBank;
 import com.transflower.tflassessment.entities.Subject;
 import com.transflower.tflassessment.entities.SubjectQuestion;
 import com.transflower.tflassessment.entities.Test;
 import com.transflower.tflassessment.entities.TestAssignmentRequest;
+import com.transflower.tflassessment.entities.TestDetails;
 import com.transflower.tflassessment.entities.TestEmployeeDetails;
 import com.transflower.tflassessment.entities.TestStatusUpdate;
 import com.transflower.tflassessment.entities.TestWithQuestions;
@@ -64,7 +68,7 @@ public class AssessmentRepositoryImpl implements AssessmentRepository {
             System.out.println("Error in connecting to database");
         }}
     @Override
-    public Assessment getDetails(int assessmentId) {
+    public CompletableFuture<Assessment> getDetails(int assessmentId) {
         Assessment assessment = null;
 
         String query = "SELECT t.id, t.name AS TestName, t.smeid AS subjectExpertId, "
@@ -113,11 +117,11 @@ public class AssessmentRepositoryImpl implements AssessmentRepository {
             System.out.println("Error fetching assessment: " + e.getMessage());
         }
 
-        return assessment;
+        return CompletableFuture.completedFuture(assessment);
     }
 
     @Override
-    public List<Assessment> getAll(LocalDateTime fromDate, LocalDateTime toDate) {
+    public CompletableFuture<List<Assessment>> getAll(LocalDateTime fromDate, LocalDateTime toDate) {
         List<Assessment> assessments = new ArrayList<>();
 
         String query = "SELECT * FROM tests WHERE creationDate BETWEEN ? AND ?";
@@ -153,11 +157,11 @@ public class AssessmentRepositoryImpl implements AssessmentRepository {
             System.out.println("Error " + e.getMessage());
         }
 
-        return assessments;
+        return CompletableFuture.completedFuture(assessments);
     }
 
 // getSmeBySubject
-    public List<Employee> getSmeBySubject(int subjectId) {
+    public CompletableFuture<List<Employee>> getSmeBySubject(int subjectId) {
         List<Employee> smeList = new ArrayList<>();
 
         String query = "SELECT sme.id, e.userId, e.firstName, e.lastName, e.email, e.contact "
@@ -188,12 +192,12 @@ public class AssessmentRepositoryImpl implements AssessmentRepository {
             ex.printStackTrace();
         }
 
-        return smeList;
+        return CompletableFuture.completedFuture(smeList);
     }
 
     //getAllTests
     @Override
-    public List<Assessment> getAllTests() {
+    public CompletableFuture<List<Assessment>> getAllTests() {
         List<Assessment> tests = new ArrayList<>();
 
         String query
@@ -230,11 +234,11 @@ public class AssessmentRepositoryImpl implements AssessmentRepository {
             e.printStackTrace();
         }
 
-        return tests;
+        return CompletableFuture.completedFuture(tests);
     }
 
 // getTestDetails
-    public TestWithQuestions getTestDetails(int testId) {
+    public CompletableFuture<TestWithQuestions> getTestDetails(int testId) {
         TestWithQuestions test = null;
 
         String testQuery = "SELECT * FROM tests WHERE id = ?";
@@ -280,7 +284,7 @@ public class AssessmentRepositoryImpl implements AssessmentRepository {
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        return test;
+        return CompletableFuture.completedFuture(test);
 
     }
 
@@ -882,5 +886,83 @@ public List<SubjectQuestion> getAllQuestionsBySubject(int subjectId) {
     }
 
     return subjectQuestionsList;
+}
+
+@Override
+public CompletableFuture<List<Concepts>> getConcepts() {
+    // TODO Auto-generated method stub
+    throw new UnsupportedOperationException("Unimplemented method 'getConcepts'");
+}
+
+@Override
+public CompletableFuture<List<Concepts>> getConceptsBySubject(int subjectId) {
+    // TODO Auto-generated method stub
+    throw new UnsupportedOperationException("Unimplemented method 'getConceptsBySubject'");
+}
+
+@Override
+public CompletableFuture<Integer> createTestWithQuestionsAsync(CreateTestWithQuestions createTestWithQuestions) {
+    // TODO Auto-generated method stub
+    throw new UnsupportedOperationException("Unimplemented method 'createTestWithQuestionsAsync'");
+}
+
+@Override
+public CompletableFuture<List<Question>> getQuestionsByConceptId(int ConceptId) {
+    // TODO Auto-generated method stub
+    throw new UnsupportedOperationException("Unimplemented method 'getQuestionsByConceptId'");
+}
+
+@Override
+public CompletableFuture<Integer> GetTestCountByStatus(String status) {
+    // TODO Auto-generated method stub
+    throw new UnsupportedOperationException("Unimplemented method 'GetTestCountByStatus'");
+}
+
+@Override
+public CompletableFuture<List<TestDetails>> GetAllTestByStatus(String status) {
+    // TODO Auto-generated method stub
+    throw new UnsupportedOperationException("Unimplemented method 'GetAllTestByStatus'");
+}
+
+@Override
+public CompletableFuture<List<Subject>> GetSubjectBySME(int smeid) {
+    // TODO Auto-generated method stub
+    throw new UnsupportedOperationException("Unimplemented method 'GetSubjectBySME'");
+}
+
+@Override
+public CompletableFuture<List<TestDetails>> GetSmeTestList(int smeId) {
+    // TODO Auto-generated method stub
+    throw new UnsupportedOperationException("Unimplemented method 'GetSmeTestList'");
+}
+
+@Override
+public CompletableFuture<List<CandidateAssessmentHistory>> GetAssesmentHistory(int candidateid) {
+    // TODO Auto-generated method stub
+    throw new UnsupportedOperationException("Unimplemented method 'GetAssesmentHistory'");
+}
+
+@Override
+public CompletableFuture<List<ConceptWithCorrectAns>> GetConceptwiseCorrectAnswer(int candidateid) {
+    // TODO Auto-generated method stub
+    throw new UnsupportedOperationException("Unimplemented method 'GetConceptwiseCorrectAnswer'");
+}
+
+@Override
+public CompletableFuture<List<TestEmployeeDetails>> GetAssessmentEmployeeDetails(int assessmentId, int candidateId) {
+    // TODO Auto-generated method stub
+    throw new UnsupportedOperationException("Unimplemented method 'GetAssessmentEmployeeDetails'");
+}
+
+@Override
+public CompletableFuture<TimeConfig> GetBufferTimeAsync() {
+    // TODO Auto-generated method stub
+    throw new UnsupportedOperationException("Unimplemented method 'GetBufferTimeAsync'");
+}
+
+@Override
+public CompletableFuture<Boolean> UpdateBufferTimeAsync(int bufferTime) {
+    // TODO Auto-generated method stub
+    throw new UnsupportedOperationException("Unimplemented method 'UpdateBufferTimeAsync'");
 }
 }

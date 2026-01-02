@@ -147,5 +147,10 @@ public class Question {
         return "Question{id =" + id + " , subjectId = " + subjectId + " , title" + title + " , A" + A + "B" + B + " , C" + C + ", D" + D + " ,answerKey " + answerKey + " , conceptId" + conceptId + "}";
     }
 
+    public void setEvaluationCriteriaId(int int1) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'setEvaluationCriteriaId'");
+    }
+
 
 }
