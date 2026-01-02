@@ -19,7 +19,7 @@ public class UserSessionResponseDto {
         
     }
 
-    public  UserSessionResponseDto(long SessionId,long UserId,LocalDateTime LoginTime,LocalDateTime Logouttime,boolean Session_status){
+    public  UserSessionResponseDto(long SessionId,long UserId,LocalDateTime LoginTime,LocalDateTime LogoutTime,boolean Session_status){
             this.SessionId=SessionId;
             this.UserId=UserId;
             this.LoginTime=LoginTime;
