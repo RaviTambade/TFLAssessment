@@ -2,58 +2,58 @@ package com.transflower.tflassessment.entities;
 
 public class Concepts {
 
-    private int Id;
-    private String Title;
-    private int SubjectId;
+    private int id;
+    private String title;
+    private int subjectId;
 
     public Concepts(){
 
     }
 
-    public Concepts(int Id , String Title , int SubjectId)
+    public Concepts(int id , String title , int subjectId)
     {
-       this.Id = Id;
-       this.Title = Title;
-       this.SubjectId = SubjectId; 
+       this.id = id;
+       this.title = title;
+       this.subjectId = subjectId; 
     }
 
     public int getId()
     {
-        return this.Id;
+        return this.id;
     }
 
-    public void setId(int Id)
+    public void setId(int id)
     {
-        this.Id = Id;
+        this.id = id;
     }
 
     public String getTitle()
     {
-        return this.Title;
+        return this.title;
     }
 
-    public void setTitle(String Title)
+    public void setTitle(String title)
     {
-        this.Title = Title;
+        this.title = title;
     }
 
     public int getSubjectId()
     {
-        return this.SubjectId;
+        return this.subjectId;
     }
 
-    public void setSubjectId(int SubjectId)
+    public void setSubjectId(int subjectId)
     {
-        this.SubjectId = SubjectId;
+        this.subjectId = subjectId;
     }
 
     @Override
     public String toString()
     {
         return "Concepts{"+
-        "Id="+Id+
-        ",Title="+Title+
-        ",SubjectId="+SubjectId+'\''+
+        "Id="+id+
+        ",Title="+title+
+        ",SubjectId="+subjectId+'\''+
         '}';
     }
 }

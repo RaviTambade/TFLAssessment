@@ -2,71 +2,71 @@ package com.transflower.tflassessment.entities;
 
 public class ConceptWithCorrectAns {
     
-    private int ConceptId;
-    private String ConceptName;
-    private int TotalQuestions;
-    private int CorrectAnswers;
+    private int conceptId;
+    private String conceptName;
+    private int totalQuestions;
+    private int correctAnswers;
 
     public ConceptWithCorrectAns(){
 
     }
 
-    public ConceptWithCorrectAns(int ConceptId,String ConceptName,int TotalQuestions,int CorrectAnswers)
+    public ConceptWithCorrectAns(int conceptId,String conceptName,int totalQuestions,int correctAnswers)
     {
-        this.ConceptId = ConceptId;
-        this.ConceptName = ConceptName;
-        this.TotalQuestions = TotalQuestions;
-        this.CorrectAnswers = CorrectAnswers;
+        this.conceptId = conceptId;
+        this.conceptName = conceptName;
+        this.totalQuestions = totalQuestions;
+        this.correctAnswers = correctAnswers;
     }
 
     public int getConceptId()
     {
-        return this.ConceptId;
+        return this.conceptId;
     }
 
-    public void setConceptId(int ConceptId)
+    public void setConceptId(int conceptId)
     {
-        this.ConceptId = ConceptId;
+        this.conceptId = conceptId;
     }
 
     public String getConceptName()
     {
-        return this.ConceptName;
+        return this.conceptName;
     }
 
-    public void setConceptName(String ConceptName)
+    public void setConceptName(String conceptName)
     {
-        this.ConceptName = ConceptName;
+        this.conceptName = conceptName;
     }
 
     public int getTotalQuestions()
     {
-        return this.TotalQuestions;
+        return this.totalQuestions;
     }
 
-    public void setTotalQuestions(int TotalQuestions)
+    public void setTotalQuestions(int totalQuestions)
     {
-        this.TotalQuestions = TotalQuestions;
+        this.totalQuestions = totalQuestions;
     }
 
     public int getCorrectAnswers()
     {
-        return this.CorrectAnswers;
+        return this.correctAnswers;
     }
 
-    public void setCorrectAnswers(int CorrectAnswers)
+    public void setCorrectAnswers(int correctAnswers)
     {
-        this.CorrectAnswers = CorrectAnswers;
+        this.correctAnswers = correctAnswers;
     }
 
     @Override
     public String toString()
          {
         return "ConceptWithCorrectAns{"+
-        "ConceptId="+ConceptId+
-        ",ConceptName="+ConceptName+
-        ",TotalQuestions="+TotalQuestions+
-        ",CorrectAnswers="+CorrectAnswers+'\''+
+        "ConceptId="+conceptId+
+        ",ConceptName="+conceptName+
+        ",TotalQuestions="+totalQuestions+
+        ",CorrectAnswers="+correctAnswers+'\''+
         '}';
     }
 }
