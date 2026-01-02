@@ -1,86 +1,85 @@
 package com.transflower.tflassessment.entities;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 public class UserSession {
     
-    private long Id;
-    private long UserId;
-    private LocalDateTime LoginTime;
-    private LocalDateTime LogoutTime;
-    private String SessionStatus;
+    private long id;
+    private long userId;
+    private LocalDateTime loginTime;
+    private LocalDateTime logoutTime;
+    private String sessionStatus;
 
 
 
     public UserSession(){
-        this.Id=0;
-        this.UserId=0;
-        this.LoginTime=null;
-        this.LogoutTime=null;
-        this.SessionStatus=null;
+        this.id=0;
+        this.userId=0;
+        this.loginTime=null;
+        this.logoutTime=null;
+        this.sessionStatus=null;
         
 
     }
 
-    public UserSession(long Id,long UserId,LocalDateTime LoginTime,LocalDateTime Logouttime,String SessionStatus ){
+    public UserSession(long id,long userId,LocalDateTime loginTime,LocalDateTime logoutTime,String sessionStatus ){
 
-        this.Id=Id;
-        this.UserId=UserId;
-        this.LoginTime=LoginTime;
-        this.LogoutTime=LogoutTime;
-        this.SessionStatus=SessionStatus;
+        this.id=id;
+        this.userId=userId;
+        this.loginTime=loginTime;
+        this.logoutTime=logoutTime;
+        this.sessionStatus=sessionStatus;
     }
 
 
     public long  getId(){
-        return Id;
+        return id;
     }
 
     public void setId(long id){
-        this.Id=id;
+        this.id=id;
     }
 
       public long  getuserId(){
-        return UserId;
+        return userId;
     }
 
-    public void setUserId(long UserId){
-        this.UserId=UserId;
+    public void setUserId(long userId){
+        this.userId=userId;
     }
 
     public LocalDateTime getLoginTime(){
-        return LoginTime;
+        return loginTime;
     }
 
-    public void setLoginTime(LocalDateTime LoginTime){
-        this.LoginTime=LoginTime;
+    public void setLoginTime(LocalDateTime loginTime){
+        this.loginTime=loginTime;
     }
 
     public LocalDateTime getLogoutTime(){
-        return LogoutTime;
+        return logoutTime;
     }
 
-    public void setLogoutTime(LocalDateTime LogoutTime){
-        this.LogoutTime=LogoutTime;
+    public void setLogoutTime(LocalDateTime logoutTime){
+        this.logoutTime=logoutTime;
     }
 
     public String getSessionStatus(){
-        return SessionStatus;
+        return sessionStatus;
     }
 
-    public void setSessionStatus(String SessionStatus){
-        this.SessionStatus=SessionStatus;
+    public void setSessionStatus(String sessionStatus){
+        this.sessionStatus=sessionStatus;
     }
     @Override
 
     public String toString(){
         return "UserSession{" +
-        "Id =" + Id +
-        ",UserId=" + UserId +
-        ", LoginTime =" + LoginTime + 
-        ",LogoutTime=" + LogoutTime +
-        ",SessionStatus=" + SessionStatus;
+        "Id =" + id +
+        ",UserId=" + userId +
+        ", LoginTime =" + loginTime + 
+        ",LogoutTime=" + logoutTime +
+        ",SessionStatus=" + sessionStatus;
     }
     
 }

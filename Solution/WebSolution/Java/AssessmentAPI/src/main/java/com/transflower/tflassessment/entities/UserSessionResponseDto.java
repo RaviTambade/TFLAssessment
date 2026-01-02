@@ -4,76 +4,76 @@ import java.time.LocalDateTime;
 
 public class UserSessionResponseDto {
     
-    private long SessionId;
-    private long UserId;
-    private LocalDateTime LoginTime;
-    private LocalDateTime LogoutTime;
-    private boolean Session_status;
+    private long sessionId;
+    private long userId;
+    private LocalDateTime loginTime;
+    private LocalDateTime logoutTime;
+    private boolean session_Status;
 
     public UserSessionResponseDto(){
-        this.SessionId=0;
-        this.UserId=0;
-        this.LoginTime=null;
-        this.LogoutTime=null;
-        this.Session_status=false;
+        this.sessionId=0;
+        this.userId=0;
+        this.loginTime=null;
+        this.logoutTime=null;
+        this.session_Status=false;
         
     }
 
-    public  UserSessionResponseDto(long SessionId,long UserId,LocalDateTime LoginTime,LocalDateTime LogoutTime,boolean Session_status){
-            this.SessionId=SessionId;
-            this.UserId=UserId;
-            this.LoginTime=LoginTime;
-            this.LogoutTime=LogoutTime;
-            this.Session_status=Session_status;
+    public  UserSessionResponseDto(long sessionId,long userId,LocalDateTime loginTime,LocalDateTime logoutTime,boolean session_Status){
+            this.sessionId=sessionId;
+            this.userId=userId;
+            this.loginTime=loginTime;
+            this.logoutTime=logoutTime;
+            this.session_Status=session_Status;
     }
 
 
 
     public long getSessionId(){
-        return SessionId;   
+        return sessionId;   
     } 
 
-    public void SetSessionId(long SessionId){
-        this.SessionId=SessionId;
+    public void SetSessionId(long sessionId){
+        this.sessionId=sessionId;
     }
 
     public long getUserId(){
-        return UserId;
+        return userId;
     }
-    public void  setUserId(long UserId){
-        this.UserId=UserId;
+    public void  setUserId(long userId){
+        this.userId=userId;
     }
 
       public LocalDateTime getLoginTime(){
-        return LoginTime;
+        return loginTime;
     }
 
-    public void setLoginTime(LocalDateTime LoginTime){
-        this.LoginTime=LoginTime;
+    public void setLoginTime(LocalDateTime loginTime){
+        this.loginTime=loginTime;
     }
 
     public LocalDateTime getLogoutTime(){
-        return LogoutTime;
+        return logoutTime;
     }
 
-    public void setLogoutTime(LocalDateTime LogoutTime){
-        this.LogoutTime=LogoutTime;
+    public void setLogoutTime(LocalDateTime logoutTime){
+        this.logoutTime=logoutTime;
     }
 
     public boolean getSession_status(){
-        return Session_status;
+        return session_Status;
     }
-    public void setSession_status(boolean Session_status){
-        this.Session_status=Session_status;
+    public void setSession_status(boolean session_Status){
+        this.session_Status=session_Status;
     }
 
     public String tostring(){
         return "UserSessionResponseDto{" +
-        "SessionId=" + SessionId +
-        ",userId=" + UserId +
-        ", LoginTime =" + LoginTime + 
-        ",LogoutTime=" + LogoutTime +
-        ",Session_status=" + Session_status;
+        "SessionId=" + sessionId +
+        ",userId=" + userId +
+        ", LoginTime =" + loginTime + 
+        ",LogoutTime=" + logoutTime +
+        ",Session_status=" + session_Status;
 
     }
     }
