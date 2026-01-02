@@ -3,7 +3,7 @@
 import java.util.Objects;
 
 public class AppearedCandidate {
-    private int testId;
+    private int assessmentid;
     private int candidateId;
     private String firstName;
     private String lastName;
@@ -13,20 +13,20 @@ public class AppearedCandidate {
     }
     public AppearedCandidate(int testId, int candidateId, String firstName,String lastname)
     {
-        this.testId=testId;
+        this.assessmentid=testId;
         this.candidateId=candidateId;
         this.firstName=firstName;
         this.lastName=lastName;
     }
 
-    public int getTestId()
+    public int getAssessmentId()
     {
-        return testId;
+        return assessmentid;
 
     }
-    public void setTestId(int testId)
+    public void setAssessmentId(int testId)
     {
-        this.testId=testId;
+        this.assessmentid=assessmentid;
     }
     public int getCandidateId()
     {
@@ -56,7 +56,7 @@ public class AppearedCandidate {
     public String toString()
     {
         return "AppearedCandidate{"+
-                 "testId=" + testId +
+                 "testId=" + assessmentid +
                  "candidateId="+candidateId +
                  ", firstName = ' "+ firstName +
                  " ',lastName =' " + lastName +
@@ -67,7 +67,7 @@ public class AppearedCandidate {
         if (this == obj ) return true;
         if(obj == null || getClass() != obj.getClass())return false;
         AppearedCandidate other=(AppearedCandidate )obj;
-        return testId == other.testId &&
+        return assessmentid == other.assessmentid &&
                  candidateId == other.candidateId &&
                  Objects.equals(firstName,other.firstName)&&
                  Objects.equals(lastName,other.lastName);
@@ -75,7 +75,7 @@ public class AppearedCandidate {
       @Override
       public int hashCode()
       {
-        return Objects.hash(testId,candidateId,firstName,lastName);
+        return Objects.hash(assessmentid,candidateId,firstName,lastName);
       }
 
       @Override

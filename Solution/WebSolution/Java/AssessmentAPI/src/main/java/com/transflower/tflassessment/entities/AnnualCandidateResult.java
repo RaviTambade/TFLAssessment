@@ -56,6 +56,7 @@ public class AnnualCandidateResult {
     public String toString()
     {
         return "AnnualCandidateResult{"+
+                "assessmentid=" +assessmentid +
                  "candidateId =" +candidateId +
                 ", score =" + score +
                 ", subjectTitle =' "+subjectTitle + '\'' +
