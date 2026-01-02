@@ -3,7 +3,7 @@ import java.util.Objects;
 
 public class FailedCandidateDetails implements Cloneable {
 
-    private int testId;
+    private int assessmentId;
     private int candidateId;
     private String firstName;
     private String lastName;
@@ -11,7 +11,7 @@ public class FailedCandidateDetails implements Cloneable {
     private int score;
 
     public FailedCandidateDetails() {
-        this.testId = 0;
+        this.assessmentId = 0;
         this.candidateId = 0;
         this.firstName = null;
         this.lastName = null;
@@ -19,8 +19,8 @@ public class FailedCandidateDetails implements Cloneable {
         this.score = 0;
     }
 
-    public FailedCandidateDetails(int testId, int candidateId, String firstName, String lastName, int passingLevel, int score) {
-        this.testId = testId;
+    public FailedCandidateDetails(int assessmentId, int candidateId, String firstName, String lastName, int passingLevel, int score) {
+        this.assessmentId = assessmentId;
         this.candidateId = candidateId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -28,12 +28,12 @@ public class FailedCandidateDetails implements Cloneable {
         this.score = score;
     }
 
-    public int getTestId() {
-        return testId;
+    public int getAssessmentId() {
+        return assessmentId;
     }
 
-    public void setTestId(int testId) {
-        this.testId = testId;
+    public void setAssessmentId(int assessmentId) {
+        this.assessmentId = assessmentId;
     }
 
     public int getCandidateId() {
@@ -78,7 +78,7 @@ public class FailedCandidateDetails implements Cloneable {
 
     @Override
     public String toString() {
-        return ("Test Id: " + testId + "Candidate Id: " + candidateId + "First Name: " + firstName + "Last Name: " + lastName + "Passing Level: " + passingLevel + "Score: " + score);
+        return ("assessmentId: " + assessmentId + "Candidate Id: " + candidateId + "First Name: " + firstName + "Last Name: " + lastName + "Passing Level: " + passingLevel + "Score: " + score);
     }
 
     @Override
@@ -90,7 +90,7 @@ public class FailedCandidateDetails implements Cloneable {
             return false;
         }
         FailedCandidateDetails fc = (FailedCandidateDetails) obj;
-        return this.testId == fc.testId
+        return this.assessmentId == fc.assessmentId
                 && this.candidateId == fc.candidateId
                 && this.firstName.equals(fc.firstName)
                 && this.lastName.equals(fc.lastName)
@@ -100,13 +100,13 @@ public class FailedCandidateDetails implements Cloneable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.testId, this.candidateId, this.firstName, this.lastName, this.passingLevel, this.score);
+        return Objects.hash(this.assessmentId, this.candidateId, this.firstName, this.lastName, this.passingLevel, this.score);
     }
 
     @Override
     public Object clone() throws CloneNotSupportedException {
         try {
-            return new FailedCandidateDetails(this.testId, this.candidateId, this.firstName, this.lastName, this.passingLevel, this.score);
+            return new FailedCandidateDetails(this.assessmentId, this.candidateId, this.firstName, this.lastName, this.passingLevel, this.score);
         } catch (Exception e) {
             System.out.println(e);
             return null;
