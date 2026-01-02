@@ -154,7 +154,7 @@ public class ResultRepositoryImpl implements ResultRepository {
     }
 
     @Override
-    public List<TestResultDetails> getTestResultDetail(int testId) {
+    public List<TestResultDetails> getTestResultDetail(int assessmentId) {
        List<TestResultDetails> resultDetails=new ArrayList<TestResultDetails>();
         String query = "SELECT "
                        +"candidatetestresults.testid," 
@@ -173,12 +173,12 @@ public class ResultRepositoryImpl implements ResultRepository {
         try
         { 
             PreparedStatement preparedStatement=connection.prepareStatement(query);
-            preparedStatement.setInt(1, testId);
+            preparedStatement.setInt(1,assessmentId );
             ResultSet resultSet=preparedStatement.executeQuery();
             while(resultSet.next())
             {
                 TestResultDetails testResultDetail=new TestResultDetails();
-                testResultDetail.setTestId(testId);
+                testResultDetail.setAssessmentId(assessmentId);
                 testResultDetail.setTestName(resultSet.getString("testname"));
                 testResultDetail.setCandidateId(resultSet.getInt("candidateid"));
                 testResultDetail.setFirstName(resultSet.getString("firstname"));
@@ -196,7 +196,7 @@ public class ResultRepositoryImpl implements ResultRepository {
     }
 
     @Override
-    public List<AppearedCandidate> getAppearedCandidates(int testId) {
+    public List<AppearedCandidate> getAppearedCandidates(int assessmentId) {
       List<AppearedCandidate> appearedCandidates = new ArrayList<AppearedCandidate>();
         String query = "select candidatetestresults.testid, candidatetestresults.candidateid, employees.firstname, employees.lastname"
                         +" from candidatetestresults" 
@@ -205,11 +205,11 @@ public class ResultRepositoryImpl implements ResultRepository {
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setInt(1, testId);
+            preparedStatement.setInt(1, assessmentId);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 AppearedCandidate appearedCandidate = new AppearedCandidate();
-                appearedCandidate.setTestId(testId);
+                appearedCandidate.setAssessmentId(assessmentId);
                 appearedCandidate.setCandidateId(resultSet.getInt("candidateid"));
                 appearedCandidate.setFirstName(resultSet.getString("firstname"));
                 appearedCandidate.setLastName(resultSet.getString("lastname"));
@@ -247,7 +247,7 @@ public class ResultRepositoryImpl implements ResultRepository {
        }
 
     @Override
-    public List<PassedCandidateDetails> getPassedCandidateResults(int testId) {
+    public List<PassedCandidateDetails> getPassedCandidateResults(int assessmentId) {
         List<PassedCandidateDetails> passedCandidateDetails = new ArrayList<PassedCandidateDetails>();
         String query = "select tests.id,candidatetestresults.candidateid,candidatetestresults.score,tests.passinglevel,employees.firstname,employees.lastname"
                         +" from tests"
@@ -257,11 +257,11 @@ public class ResultRepositoryImpl implements ResultRepository {
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setInt(1, testId);
+            preparedStatement.setInt(1, assessmentId);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 PassedCandidateDetails passedCandidateDetail = new PassedCandidateDetails();
-                passedCandidateDetail.setTestId(resultSet.getInt("id"));
+                passedCandidateDetail.setAssessmentId(resultSet.getInt("id"));
                 passedCandidateDetail.setCandidateId(resultSet.getInt("candidateid"));
                 passedCandidateDetail.setFirstName(resultSet.getString("firstname"));
                 passedCandidateDetail.setLastName(resultSet.getString("lastname"));
@@ -276,7 +276,7 @@ public class ResultRepositoryImpl implements ResultRepository {
     }
 
     @Override
-    public List<FailedCandidateDetails> getFailedCandidateResults(int testId) {
+    public List<FailedCandidateDetails> getFailedCandidateResults(int assessmentId) {
         List<FailedCandidateDetails> failedCandidateDetails = new ArrayList<FailedCandidateDetails>();
         String query = "select tests.id,candidatetestresults.candidateid,candidatetestresults.score,tests.passinglevel,employees.firstname,employees.lastname"
                 + " from tests"
@@ -286,11 +286,11 @@ public class ResultRepositoryImpl implements ResultRepository {
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setInt(1, testId);
+            preparedStatement.setInt(1, assessmentId);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 FailedCandidateDetails failedCandidateDetail = new FailedCandidateDetails();
-                failedCandidateDetail.setTestId(resultSet.getInt("id"));
+                failedCandidateDetail.setAssessmentId(resultSet.getInt("id"));
                 failedCandidateDetail.setCandidateId(resultSet.getInt("candidateid"));
                 failedCandidateDetail.setFirstName(resultSet.getString("firstname"));
                 failedCandidateDetail.setLastName(resultSet.getString("lastname"));
@@ -345,10 +345,10 @@ public List<CandidateSubjectResults> getCandidateSubjectResults(int subjectId) {
 }
 
 
-@Override
-public boolean setCandidateTestResultDetails(int candidateId, int testId){
-    return true;
-}
+// @Override
+// public boolean setCandidateTestResultDetails(int candidateId, int testId){
+//     return true;
+// }
 
 
 @Override
@@ -365,7 +365,7 @@ try(
                 TestAverageReport report = new TestAverageReport();
 
                 report.setSubjectName(rs.getString("subjectname"));
-                report.setEvaluationCriteria(rs.getString("evaluationcriteria"));
+                report.setConcept(rs.getString("concept"));
                 report.setTotalQuestionAnswered(rs.getInt("totalquestionsanswered"));
                 report.setCorrectAnswer(rs.getInt("correctanswers"));
                 report.setPercentageCorrect(rs.getDouble("percentagecorrect"));

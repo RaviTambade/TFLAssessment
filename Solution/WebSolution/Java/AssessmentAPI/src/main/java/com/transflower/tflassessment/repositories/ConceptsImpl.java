@@ -67,14 +67,14 @@ import com.transflower.tflassessment.entities.*;
 
 
     @Override
-    public CompletableFuture<Boolean> insertConcept(Concepts concept) {
+    public CompletableFuture<Boolean> insertConcept(Concepts criteria) {
         return CompletableFuture.supplyAsync(()->{
         String query = "INSERT INTO concepts(title, subjectId) VALUES (?, ?)";
         try (
             PreparedStatement statement = connection.prepareStatement(query)
         ) {
-            statement.setString(1, concept.getTitle());
-            statement.setInt(2, concept.getSubjectId());
+            statement.setString(1, criteria.getTitle());
+            statement.setInt(2, criteria.getSubjectId());
             statement.executeUpdate();
             return true;
         } catch (Exception e) {
