@@ -3,50 +3,50 @@ package com.transflower.tflassessment.entities;
 public class ChangePasswordRequest {
     
 
-    private String Email;
-    private String OldPassword;
-    private String NewPassword;
+    private String email;
+    private String oldPassword;
+    private String newPassword;
 
     public ChangePasswordRequest()
     {
 
     }
-    public ChangePasswordRequest(String Email,String OldPassword,String NewPassword)
+    public ChangePasswordRequest(String email,String oldPassword,String newPassword)
     {
-        this.Email=Email;
-        this.OldPassword=OldPassword;
-        this.NewPassword=NewPassword;
+        this.email=email;
+        this.oldPassword=oldPassword;
+        this.newPassword=newPassword;
     }
 
     public String getEmail()
     {
-        return Email;
+        return email;
     }
-    public void setEmail(String Email)
+    public void setEmail(String email)
     {
-        this.Email=Email;
+        this.email=email;
     }
     public String getOldPassword()
     {
-        return OldPassword;
+        return oldPassword;
     }
-    public void setOldPassword(String OldPassword)
+    public void setOldPassword(String oldPassword)
     {
-        this.OldPassword=OldPassword;
+        this.oldPassword=oldPassword;
     }
     public String getNewPassword()
     {
-        return NewPassword;
+        return newPassword;
     }
-    public void setNewPassword(String NewPassword)
+    public void setNewPassword(String newPassword)
     {
-        this.NewPassword=NewPassword;
+        this.newPassword=newPassword;
     }
     
  @Override 
  public String toString()
  {
-    return "ChangePasswordRequest{Email='"+ Email +"',OldPassword='"+OldPassword + " ',NewPassword='"+NewPassword +" '}";
+    return "ChangePasswordRequest{email='"+ email +"',oldPassword='"+oldPassword + " ',newPassword='"+newPassword +" '}";
  }
     
     

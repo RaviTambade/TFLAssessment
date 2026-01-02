@@ -2,10 +2,10 @@ package com.transflower.tflassessment.entities;
 
 public class CandidateAssessmentHistory {
     
-    private int assessmentid;
-    private int CandidateId;
-    private int Score;
-    private String SubjectTitle;
+    private int assessmentId;
+    private int candidateId;
+    private int score;
+    private String subjectTitle;
 
     public CandidateAssessmentHistory()
     {
@@ -13,53 +13,53 @@ public class CandidateAssessmentHistory {
     }
     public CandidateAssessmentHistory(int assessmentid,int CandidateId,int Score,String SubjectTitle)
     {
-        this.assessmentid=assessmentid;
-        this.CandidateId=CandidateId;
-        this.Score=Score;
-        this.SubjectTitle=SubjectTitle;
+        this.assessmentId=assessmentid;
+        this.candidateId=CandidateId;
+        this.score=Score;
+        this.subjectTitle=SubjectTitle;
     }
 
     public int getAssementId()
     {
-        return assessmentid;  
+        return assessmentId;  
     }
-    public void setAssessmentId(int assessmentid)
+    public void setAssessmentId(int assessmentId)
     {
-        this.assessmentid=assessmentid;
+        this.assessmentId=assessmentId;
     }
 
     public int getCandidateId()
     {
-        return CandidateId;
+        return candidateId;
     }
-    public void setCandidateId(int CandidateId)
+    public void setCandidateId(int candidateId)
     {
-        this.CandidateId=CandidateId;
+        this.candidateId=candidateId;
     }
     
     public int getScore()
     {
-        return Score;
+        return score;
     }
-    public void setScore(int Score)
+    public void setScore(int score)
     {
-        this.Score=Score;
+        this.score=score;
     }
 
     public String getSubjectTitle()
         {
-            return SubjectTitle;
+            return subjectTitle;
         }
-    public void setSubjectTitle(String SubjectTitle)
+    public void setSubjectTitle(String subjectTitle)
     {
-        this.SubjectTitle=SubjectTitle;
+        this.subjectTitle=subjectTitle;
     }
 
 
     @Override
     public String toString()
     {
-        return "CandidateAssessmentHistory{assessmentid='" + assessmentid + "', CandidateId='" + CandidateId + "', Score='" + Score + "', SubjectTitle='" + SubjectTitle + "'}";
+        return "CandidateAssessmentHistory{assessmentId='" + assessmentId + "', candidateId='" + candidateId + "', score='" + score + "', subjectTitle='" + subjectTitle + "'}";
     }
 
 }

@@ -2,43 +2,43 @@ package com.transflower.tflassessment.entities;
 
 public class ConceptQuestionCount {
 
-    private int QuestionCount;
-    private Concepts Concept;
+    private int questionCount;
+    private Concepts concept;
 
 
     public ConceptQuestionCount()
     {
 
     }
-    public ConceptQuestionCount(int QuestionCount,Concepts Concept)
+    public ConceptQuestionCount(int questionCount,Concepts concept)
     {
-        this.QuestionCount=QuestionCount;
-        this.Concept=Concept;
+        this.questionCount=questionCount;
+        this.concept=concept;
     }
 
     public int getQuestionCount()
     {
-        return QuestionCount;
+        return questionCount;
     }
-    public void setQuestionCount(int QuestionCount)
+    public void setQuestionCount(int questionCount)
     {
-        this.QuestionCount=QuestionCount;
+        this.questionCount=questionCount;
     }
     public Concepts getConcepts()
     {
-        return Concept;
+        return concept;
     }
-    public void setConcepts(Concepts Concept)
+    public void setConcepts(Concepts concept)
     {
-        this.Concept=Concept;
+        this.concept=concept;
     }
 
      @Override
         public  String toString()
         {
              return "ConceptQuestionCount{"+
-                "QuestionCount=" + QuestionCount +
-                "Concept=" + Concept + '}';
+                "questionCount=" + questionCount +
+                "Concept=" + concept + '}';
         }
     
 }

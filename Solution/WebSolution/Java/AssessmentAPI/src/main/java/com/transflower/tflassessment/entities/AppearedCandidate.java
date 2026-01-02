@@ -3,7 +3,7 @@
 import java.util.Objects;
 
 public class AppearedCandidate {
-    private int assessmentid;
+    private int assessmentId;
     private int candidateId;
     private String firstName;
     private String lastName;
@@ -13,7 +13,7 @@ public class AppearedCandidate {
     }
     public AppearedCandidate(int testId, int candidateId, String firstName,String lastname)
     {
-        this.assessmentid=assessmentid;
+        this.assessmentId=assessmentId;
         this.candidateId=candidateId;
         this.firstName=firstName;
         this.lastName=lastName;
@@ -21,12 +21,12 @@ public class AppearedCandidate {
 
     public int getAssessmentId()
     {
-        return assessmentid;
+        return assessmentId;
 
     }
     public void setAssessmentId(int testId)
     {
-        this.assessmentid=assessmentid;
+        this.assessmentId=assessmentId;
     }
     public int getCandidateId()
     {
@@ -56,7 +56,7 @@ public class AppearedCandidate {
     public String toString()
     {
         return "AppearedCandidate{"+
-                 "testId=" + assessmentid +
+                 "testId=" + assessmentId +
                  "candidateId="+candidateId +
                  ", firstName = ' "+ firstName +
                  " ',lastName =' " + lastName +
@@ -67,7 +67,7 @@ public class AppearedCandidate {
         if (this == obj ) return true;
         if(obj == null || getClass() != obj.getClass())return false;
         AppearedCandidate other=(AppearedCandidate )obj;
-        return assessmentid == other.assessmentid &&
+        return assessmentId == other.assessmentId &&
                  candidateId == other.candidateId &&
                  Objects.equals(firstName,other.firstName)&&
                  Objects.equals(lastName,other.lastName);
@@ -75,7 +75,7 @@ public class AppearedCandidate {
       @Override
       public int hashCode()
       {
-        return Objects.hash(assessmentid,candidateId,firstName,lastName);
+        return Objects.hash(assessmentId,candidateId,firstName,lastName);
       }
 
       @Override
