@@ -13,7 +13,7 @@ public class AppearedCandidate {
     }
     public AppearedCandidate(int testId, int candidateId, String firstName,String lastname)
     {
-        this.assessmentid=testId;
+        this.assessmentid=assessmentid;
         this.candidateId=candidateId;
         this.firstName=firstName;
         this.lastName=lastName;
