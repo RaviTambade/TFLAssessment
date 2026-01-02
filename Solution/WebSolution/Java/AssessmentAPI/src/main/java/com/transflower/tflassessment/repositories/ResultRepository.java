@@ -46,5 +46,5 @@ public interface ResultRepository {
 
     List<TestScoreDto> getCandidateAllScore(int candidateId);
 
-    boolean setCandidateTestResultDetails(int candidateId, int testId);
+   
 }

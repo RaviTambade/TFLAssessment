@@ -11,8 +11,25 @@ public class NewQuestion {
     private String C;
     private String D;
     private char answerKey;
-    private int evaluationCriteriaId;
+    private int conceptId;
 
+    public NewQuestion()
+    {
+
+    }
+
+    public NewQuestion(int id,int subjectId,String title,String A,String B,String C,String D,char answerKey,int conceptId)
+    {
+        this.id = id;
+        this.subjectId = subjectId;
+        this.title = title;
+        this.A = A;
+        this.B = B;
+        this.C = C;
+        this.D = D;
+        this.answerKey = answerKey;
+        this.conceptId = conceptId;
+    }
 
     public int getId(){
         return id;
@@ -76,11 +93,11 @@ public class NewQuestion {
     }
 
 
-    public int getEvaluationCriteriaId(){
-        return evaluationCriteriaId;
+    public int getConceptId(){
+        return conceptId;
     }
-    public void setEvaluationCriteriaId(int evaluationCriteriaId){
-        this.evaluationCriteriaId =evaluationCriteriaId;
+    public void setConceptId(int conceptId){
+        this.conceptId =conceptId;
     }
     
     
@@ -114,7 +131,7 @@ public class NewQuestion {
 
     @Override
      public String toString(){
-     return "LoginResponse{id ="+ id + " , subjectId = " + subjectId +" , title" + title + " , A" + A + "B" +B+ " , C" +C+ ", D" + D+ " ,answerKey " +answerKey+" , evaluationCriteriaId" +evaluationCriteriaId+ "}";
+     return "LoginResponse{id ="+ id + " , subjectId = " + subjectId +" , title" + title + " , A" + A + "B" +B+ " , C" +C+ ", D" + D+ " ,answerKey " +answerKey+" , conceptId" +conceptId+ "}";
     }
 
 }

@@ -12,6 +12,7 @@ public class CreateTestWithQuestions implements Cloneable {
     private String duration;
     private int smeId;
     private LocalDateTime scheduledDate;
+    private LocalDateTime creationDate;
     private int passingLevel;
     private List<Integer> questionIds;
 
@@ -26,12 +27,13 @@ public class CreateTestWithQuestions implements Cloneable {
         this.questionIds = new ArrayList<>();
     }
 
-    public CreateTestWithQuestions(int subjectId, String name, String duration, int smeId, LocalDateTime scheduledDate, int passingLevel, List<Integer> questionIds) {
+    public CreateTestWithQuestions(int subjectId, String name, String duration, int smeId, LocalDateTime scheduledDate,LocalDateTime creationDate, int passingLevel, List<Integer> questionIds) {
         this.subjectId = subjectId;
         this.name = name;
         this.duration = duration;
         this.smeId = smeId;
         this.scheduledDate = scheduledDate;
+        this.creationDate = creationDate;
         this.passingLevel = passingLevel;
         this.questionIds = questionIds;
     }
@@ -86,6 +88,16 @@ public class CreateTestWithQuestions implements Cloneable {
         this.scheduledDate = schDate;
     }
 
+    public LocalDateTime getCreationDate()
+    {
+        return this.creationDate;
+    }
+
+    public void setCreationDate(LocalDateTime creationDate)
+    {
+        this.creationDate = creationDate;
+    }
+
     public int getPassingLevel() {
 
         return this.passingLevel;
@@ -108,7 +120,7 @@ public class CreateTestWithQuestions implements Cloneable {
 
     @Override
 public String toString() {
-    return "CreateTestWithQuestions{subjectId='" + subjectId + "', name='" + name + "', duration='" + duration + "', smeId='" + smeId + "', scheduleDate='" + scheduledDate + "', passingLevel='" + passingLevel + "', questionIds='" + questionIds + "'}";
+    return "CreateTestWithQuestions{subjectId='" + subjectId + "', name='" + name + "', duration='" + duration + "', smeId='" + smeId + "', scheduleDate='" + scheduledDate + "',creationDate='"+creationDate+"', passingLevel='" + passingLevel + "', questionIds='" + questionIds + "'}";
 }
 
     @Override
@@ -148,7 +160,7 @@ public String toString() {
     @Override
     public Object clone() throws CloneNotSupportedException{
         try{
-            return new CreateTestWithQuestions (subjectId, name, duration, smeId, scheduledDate, passingLevel, questionIds);
+            return new CreateTestWithQuestions (subjectId, name, duration, smeId, scheduledDate,creationDate, passingLevel, questionIds);
         }catch(Exception e){
             System.out.println(e);
             return null;

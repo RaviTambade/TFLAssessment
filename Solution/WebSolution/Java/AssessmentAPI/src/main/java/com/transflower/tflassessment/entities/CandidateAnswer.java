@@ -7,17 +7,20 @@ public class CandidateAnswer {
         private int candidateId;
         private int testQuestionId;
         private String answerKey;
+        private int assessmentId;
+
 
         public CandidateAnswer()
         {
 
         }
-        public CandidateAnswer(int id, int candidateId,int testQuestionId,String answerKey)
+        public CandidateAnswer(int id, int candidateId,int testQuestionId,String answerKey ,int assessmentId)
         {  
             this.id=id;
             this.candidateId=candidateId;
             this.testQuestionId=testQuestionId;
             this.answerKey=answerKey;
+            this.assessmentId=assessmentId;
         }
         public int getId()
         {
@@ -51,6 +54,15 @@ public class CandidateAnswer {
         {
             this.answerKey=answerKey;
         }
+        public int getAssessmentId()
+        {
+            return assessmentId;
+        }
+        public void setAssessmentId(int assessmentid)
+        {
+            this.assessmentId=assessmentid;
+        }
+        
         @Override
         public  String toString()
         {
@@ -58,7 +70,7 @@ public class CandidateAnswer {
                 "id=" + id +
                 "candidateId=" + candidateId +
                 " ,testQuestionId= ' " + testQuestionId +
-                " ',answerKey= '" + answerKey + '}';
+                " ',answerKey= '" + answerKey + " ',assessmentId=' "+ assessmentId + '}';
         }
         @Override
         public boolean equals(Object obj)

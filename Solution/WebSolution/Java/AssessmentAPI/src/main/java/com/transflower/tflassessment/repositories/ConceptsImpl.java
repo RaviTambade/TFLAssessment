@@ -3,17 +3,20 @@ import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
-import java.util.Properties;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.*;
+import java.util.concurrent.CompletableFuture;
 
 import org.jasypt.util.text.AES256TextEncryptor;
 import org.springframework.stereotype.Repository;
 
-import com.transflower.tflassessment.entities.EvaluationCriteria;
+import com.transflower.tflassessment.entities.*;
 
 
 
  @Repository
- public class EvaluationCriteriaRepositoryImpl implements EvaluationCriteriaRepository {
+ public class ConceptsImpl implements Concepts {
 
     private static Connection connection;   
 
@@ -21,7 +24,7 @@ import com.transflower.tflassessment.entities.EvaluationCriteria;
         try{
              Properties props = new Properties();
        
-        try (InputStream input = EvaluationCriteriaRepositoryImpl.class.getClassLoader().getResourceAsStream("application.properties")) { 
+        try (InputStream input = ConceptsImpl.class.getClassLoader().getResourceAsStream("application.properties")) { 
             props.load(input);
         }
             String url = props.getProperty("db.url");
@@ -44,24 +47,29 @@ import com.transflower.tflassessment.entities.EvaluationCriteria;
     }
     
     @Override
-    public boolean updateSubject(int id, int subjectId)  {
-        String query = "UPDATE evaluationcriterias SET subjectId = ? WHERE id = ?";
-        try (
-            PreparedStatement statement = connection.prepareStatement(query)
-        ) {
+   
+    public CompletableFuture<Boolean> updateSubject(int id, int subjectId) {
+    return CompletableFuture.supplyAsync(() -> {
+        String query = "UPDATE concepts SET subjectId = ? WHERE id = ?";
+
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+
             statement.setInt(1, subjectId);
             statement.setInt(2, id);
-            statement.executeUpdate();
-            return true;
+            return statement.executeUpdate() > 0;
+
         } catch (Exception e) {
             e.printStackTrace();
             return false;
         }
-    }
+    });
+}
+
 
     @Override
-    public boolean insertCriteria(EvaluationCriteria criteria) {
-        String query = "INSERT INTO evaluationcriterias(title, subjectId) VALUES (?, ?)";
+    public CompletableFuture<Boolean> insertConcept(Concepts criteria) {
+        return CompletableFuture.supplyAsync(()->{
+        String query = "INSERT INTO concepts(title, subjectId) VALUES (?, ?)";
         try (
             PreparedStatement statement = connection.prepareStatement(query)
         ) {
@@ -73,10 +81,13 @@ import com.transflower.tflassessment.entities.EvaluationCriteria;
             e.printStackTrace();
             return false;
         }
+
+        });
     }
 
     @Override
-    public boolean updateCriteria(int id, int evaluationCriteriaId) {
+    public CompletableFuture<Boolean> updateConcept(int id, int evaluationCriteriaId) {
+        return CompletableFuture.supplyAsync(()->{
         String query = "UPDATE questionbank SET evaluationcriteriaid = ? WHERE id = ?";
         try (
                 PreparedStatement statement = connection.prepareStatement(query)
@@ -89,7 +100,41 @@ import com.transflower.tflassessment.entities.EvaluationCriteria;
             e.printStackTrace();
             return false;
         }
+        });
     }
+
+    @Override
+    public CompletableFuture<List<Concepts>> getConceptBySubjectId(int subjectId) {
+    return CompletableFuture.supplyAsync(() -> {
+        List<Concepts> concepts = new ArrayList<>();
+        String query = "SELECT * FROM concepts WHERE subjectId = ?";
+
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+
+            statement.setInt(1, subjectId);
+
+            try (ResultSet rs = statement.executeQuery()) {
+                while (rs.next()) {
+                    Concepts concept = new Concepts();
+                    concept.setId(rs.getInt("id"));
+                    concept.setTitle(rs.getString("title"));
+                    concept.setSubjectId(rs.getInt("subjectId"));
+                    concepts.add(concept);
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return concepts;
+    });
+}
+
+    // @Override
+    // public CompletableFuture<List<ConceptQuestionCount>> getConceptQuestionCount(int subjectId){
+    //     return null;
+    // }
 
    
 }

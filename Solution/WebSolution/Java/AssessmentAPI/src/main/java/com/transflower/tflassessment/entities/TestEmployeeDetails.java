@@ -5,7 +5,8 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class TestEmployeeDetails implements Cloneable {
-    private int id;
+    private int id; 
+    private  int assessmentId;
     private String testName;
     private String passingLevel;
     private Duration duration;
@@ -15,6 +16,7 @@ public class TestEmployeeDetails implements Cloneable {
 
     public TestEmployeeDetails() {
         this.id = 0;
+        this.assessmentId=0;
         this.testName = "";
         this.passingLevel = "";
         this.duration = Duration.ZERO;
@@ -23,9 +25,10 @@ public class TestEmployeeDetails implements Cloneable {
         this.status = "";
     }
 
-    public TestEmployeeDetails(int id, String testName, String passingLevel, Duration duration,
+    public TestEmployeeDetails(int id,  int assessmentId,String testName, String passingLevel, Duration duration,
             LocalDateTime scheduledStart, LocalDateTime scheduledEnd, String status) {
         this.id = id;
+        this.assessmentId=assessmentId;
         this.testName = testName;
         this.passingLevel = passingLevel;
         this.duration = duration;
@@ -42,6 +45,12 @@ public class TestEmployeeDetails implements Cloneable {
         this.id = id;
     }
 
+    public int getAssessmentId(){
+        return assessmentId;
+    }
+   public void setAssessmentId(int assessmentId){
+        this.assessmentId=assessmentId;
+   }
     public String getTestName() {
         return testName;
     }
@@ -94,6 +103,7 @@ public class TestEmployeeDetails implements Cloneable {
     public String toString() {
         return "TestAverageReport{" +
                 " Id=" + id +
+                ", assessmentId=" + assessmentId +
                 ",Test Name='" + testName +
                 ",Passing Level='" + passingLevel +
                 ",Duration='" + duration +
@@ -110,6 +120,7 @@ public class TestEmployeeDetails implements Cloneable {
             return false;
         TestEmployeeDetails other = (TestEmployeeDetails) obj;
         return id == other.id &&
+                Objects.equals(assessmentId,other.assessmentId)&&
                 Objects.equals(testName, other.testName) &&
                 Objects.equals(passingLevel, other.passingLevel) &&
                 Objects.equals(duration, other.duration) &&
@@ -120,7 +131,7 @@ public class TestEmployeeDetails implements Cloneable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, testName, passingLevel, duration, scheduledStart, scheduledEnd, status);
+        return Objects.hash(id,  assessmentId,testName, passingLevel, duration, scheduledStart, scheduledEnd, status);
     }
 
     @Override
@@ -135,7 +146,7 @@ public class TestEmployeeDetails implements Cloneable {
     @Override
     protected Object clone() throws CloneNotSupportedException {
         try {
-            return new TestEmployeeDetails(id, testName, passingLevel, duration, scheduledStart, scheduledEnd, status);
+            return new TestEmployeeDetails(id, assessmentId,testName, passingLevel, duration, scheduledStart, scheduledEnd, status);
         } catch (Exception e) {
             System.out.println("Clone Exception");
             return null;

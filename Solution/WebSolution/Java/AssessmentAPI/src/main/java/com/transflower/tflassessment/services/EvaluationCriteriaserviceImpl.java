@@ -7,13 +7,13 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import com.transflower.tflassessment.entities.EvaluationCriteria;
-import com.transflower.tflassessment.repositories.EvaluationCriteriaRepository;
+import com.transflower.tflassessment.repositories.Concept;
 @Service
 public class EvaluationCriteriaserviceImpl implements EvaluationCriteriaService {
 
-    private final EvaluationCriteriaRepository _repo;
+    private final Concept _repo;
     @Autowired
-    public EvaluationCriteriaserviceImpl(EvaluationCriteriaRepository repo) {
+    public EvaluationCriteriaserviceImpl(Concept repo) {
         _repo = repo;
     }
 

@@ -6,23 +6,23 @@ public class TestAverageReport implements Cloneable
 
 {
     private String subjectName;
-    private String evaluationCriteria;
+    private String concept;
     private int totalQuestionAnswered;
     private int correctAnswer;
     private double percentageCorrect;
 
     public TestAverageReport(){
         this.subjectName = "";
-        this.evaluationCriteria="";
+        this.concept="";
         this.totalQuestionAnswered = 0;
         this.correctAnswer=0;
         this.percentageCorrect=0.0;
     }
 
-    public TestAverageReport(String subjectName,String evalutionCriteria, int totalQuestionAnswered,int correctAnswer, double percentageCorrect)
+    public TestAverageReport(String subjectName,String concept, int totalQuestionAnswered,int correctAnswer, double percentageCorrect)
     {
         this.subjectName = subjectName;
-        this.evaluationCriteria=evalutionCriteria;
+        this.concept=concept;
         this.totalQuestionAnswered=totalQuestionAnswered;
         this.correctAnswer=correctAnswer;
         this.percentageCorrect=percentageCorrect;
@@ -38,12 +38,12 @@ public class TestAverageReport implements Cloneable
         this.subjectName=subjectName;
     }
 
-    public String getEvaluationCriteria() {
-        return evaluationCriteria;
+    public String getConcept() {
+        return concept;
     }
 
-    public void setEvaluationCriteria(String evalutionCriteria) {
-        this.evaluationCriteria = evalutionCriteria;
+    public void setConcept(String concept) {
+        this.concept = concept;
     }
 
     public int getTotalQuestionAnswered() {
@@ -75,7 +75,7 @@ public class TestAverageReport implements Cloneable
     {
         return "TestAverageReport{"+
         "Subject Name="+ subjectName+
-        ",Evaluation Criteria='"+ evaluationCriteria+
+        ",Concept='"+ concept+
         ",Total Question Answered='"+ totalQuestionAnswered+
         ",Correct Answer='"+ correctAnswer+
         ",Percentage Correct='"+ percentageCorrect+"'}";
@@ -88,7 +88,7 @@ public class TestAverageReport implements Cloneable
         if(obj==null || getClass() !=obj.getClass())return false;
         TestAverageReport other=(TestAverageReport) obj;
         return Objects.equals(subjectName,other.subjectName)
-         &&  Objects.equals(evaluationCriteria,other.evaluationCriteria) 
+         &&  Objects.equals(concept,other.concept) 
          && totalQuestionAnswered == other.totalQuestionAnswered 
          && correctAnswer == other.correctAnswer
           && percentageCorrect == other.percentageCorrect;
@@ -97,7 +97,7 @@ public class TestAverageReport implements Cloneable
     @Override
     public int hashCode()
     {
-        return Objects.hash(subjectName, evaluationCriteria, totalQuestionAnswered, correctAnswer, percentageCorrect);
+        return Objects.hash(subjectName, concept, totalQuestionAnswered, correctAnswer, percentageCorrect);
     }
 
     @Override
@@ -116,7 +116,7 @@ public class TestAverageReport implements Cloneable
     {
         try
         {
-            return new TestAverageReport(subjectName,evaluationCriteria,totalQuestionAnswered,correctAnswer,percentageCorrect);
+            return new TestAverageReport(subjectName,concept,totalQuestionAnswered,correctAnswer,percentageCorrect);
         }
         catch(Exception e)
         {

@@ -10,8 +10,8 @@ public class TestQuestion implements Cloneable {
     private String C;
     private String D;
     private int testId;
-    private int evaluationCriteria;
-    private String criteria;
+    private int conceptId;
+    private String concept; 
     private String answerKey;
     private int questionBankId;
 
@@ -23,13 +23,13 @@ public class TestQuestion implements Cloneable {
         this.C="";
         this.D="";
         this.testId=0;
-        this.evaluationCriteria=0;
-        this.criteria="";
+       this.conceptId=0;
+       this.concept=null;
         this.answerKey="";
         this.questionBankId=0;
     }
 
-    public TestQuestion(int id,String title,String A,String B,String C,String D,int testId,int evaluationCriteria,String criteria,String answerKey,int questionBankId){
+    public TestQuestion(int id,String title,String A,String B,String C,String D,int testId,int conceptId,String concept,String answerKey,int questionBankId){
         this.id=id;
         this.title=title;
         this.A=A;
@@ -37,8 +37,8 @@ public class TestQuestion implements Cloneable {
         this.C=C;
         this.D=D;
         this.testId=testId;
-        this.evaluationCriteria=evaluationCriteria;
-        this.criteria=criteria;
+        this.conceptId=conceptId;
+        this.concept=concept;
         this.answerKey=answerKey;
         this.questionBankId=questionBankId;
     }
@@ -92,18 +92,18 @@ public class TestQuestion implements Cloneable {
         return testId;
     }
 
-    public void setEvaluationCriteria(int evaluationCriteria){
-        this.evaluationCriteria=evaluationCriteria;
+    public void setConceptId(int conceptId){
+        this.conceptId=conceptId;
     }
-    public int getEvaluationCriteria(){
-        return evaluationCriteria;
+    public int getConceptId(){
+        return conceptId;
     }
 
-    public void setCriteria(String criteria){
-        this.criteria=criteria;
+    public void setConcept(String concept){
+      this.concept=concept;
     }
-    public String getCriteria(){
-        return criteria;
+    public String getConcept(){
+        return concept;
     }
 
     public void setAnswerKey(String answerKey){
@@ -129,15 +129,15 @@ public class TestQuestion implements Cloneable {
         +"Option C : "+C+"\t"
         +"Option D : "+D+"\t "
         +"Test Id : "+testId+"\t"
-        +"Evaluation Criteria :"+evaluationCriteria+"\t "
-        +"Criteria : "+criteria+"\t"
+        +"conceptId :"+conceptId+"\t "
+        +"concept : "+concept+"\t"
         +"Answer Key : "+answerKey+"\t "
         +"Question Bank Id : "+questionBankId;
     }
 
     @Override
     public int hashCode(){
-        return Objects.hash(id,title,A,B,C,D,testId,evaluationCriteria,criteria,answerKey,questionBankId);
+        return Objects.hash(id,title,A,B,C,D,testId,conceptId, concept,answerKey,questionBankId);
     }
 
     @Override
@@ -152,8 +152,8 @@ public class TestQuestion implements Cloneable {
                C.equals(other.C) &&
                D.equals(other.D) &&
                testId==other.testId &&
-               evaluationCriteria==other.testId &&
-               criteria.equals(other.criteria) &&
+               conceptId==other.conceptId &&
+               concept.equals(other.concept) &&
                answerKey.equals(other.answerKey) &&
                questionBankId==other.questionBankId);
     }
@@ -161,7 +161,7 @@ public class TestQuestion implements Cloneable {
     @Override
     public Object clone() throws CloneNotSupportedException{
         try{
-            return new TestQuestion(id,title,A,B,C,D,testId,evaluationCriteria,criteria,answerKey,questionBankId);
+            return new TestQuestion(id,title,A,B,C,D,testId,conceptId,concept,answerKey,questionBankId);
         }catch(Exception e){
             System.out.println(e);
             return null;

@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
+import java.util.concurrent.CompletableFuture;
 
 import org.jasypt.util.text.AES256TextEncryptor;
 import org.springframework.stereotype.Repository;
@@ -44,7 +45,7 @@ public class AssessmentIntelligenceRepositoryImpl implements AssessmentIntellige
     }
   
     @Override
-    public List<AnnualCandidateResult> getCandidateResults(int candidateId, int year) {
+    public CompletableFuture<List<AnnualCandidateResult>> getCandidateResults(int candidateId, int year) {
     
         List<AnnualCandidateResult> results = new ArrayList<AnnualCandidateResult>();
         try{
@@ -71,7 +72,7 @@ public class AssessmentIntelligenceRepositoryImpl implements AssessmentIntellige
             catch(Exception e){
                     System.out.println(e);
             }
-            return results;
+            return CompletableFuture.completedFuture(results);
     }
 
 

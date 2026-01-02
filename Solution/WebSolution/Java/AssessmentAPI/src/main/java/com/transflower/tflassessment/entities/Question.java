@@ -12,7 +12,7 @@ public class Question {
     private String C;
     private String D;
     public String answerKey;
-    private int evaluationCriteriaId;
+    private int conceptId;
 
     public Question() {
         this.id = 0;
@@ -23,12 +23,12 @@ public class Question {
         this.C = null;
         this.D = null;
         this.answerKey = null;
-        this.evaluationCriteriaId = 0;
+        this.conceptId = 0;
 
     }
 
     public Question(int id, int subjectId, String title, String a, String b, String c, String d, String answerKey,
-            int evaluationCriteriaId) {
+            int conceptId) {
         this.id = id;
         this.subjectId = subjectId;
         this.title = title;
@@ -37,7 +37,7 @@ public class Question {
         C = c;
         D = d;
         this.answerKey = answerKey;
-        this.evaluationCriteriaId = evaluationCriteriaId;
+        this.conceptId = conceptId;
     }
 
     public int getId() {
@@ -104,12 +104,12 @@ public class Question {
         this.answerKey = answerKey;
     }
 
-    public int getEvaluationCriteriaId() {
-        return evaluationCriteriaId;
+    public int getConceptId() {
+        return conceptId;
     }
 
-    public void setEvaluationCriteriaId(int evaluationCriteriaId) {
-        this.evaluationCriteriaId = evaluationCriteriaId;
+    public void setConceptId(int conceptId) {
+        this.conceptId = conceptId;
     }
 
     @Override
@@ -144,7 +144,12 @@ public class Question {
 
     @Override
     public String toString() {
-        return "Question{id =" + id + " , subjectId = " + subjectId + " , title" + title + " , A" + A + "B" + B + " , C" + C + ", D" + D + " ,answerKey " + answerKey + " , evaluationCriteriaId" + evaluationCriteriaId + "}";
+        return "Question{id =" + id + " , subjectId = " + subjectId + " , title" + title + " , A" + A + "B" + B + " , C" + C + ", D" + D + " ,answerKey " + answerKey + " , conceptId" + conceptId + "}";
+    }
+
+    public void setEvaluationCriteriaId(int int1) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'setEvaluationCriteriaId'");
     }
 
 

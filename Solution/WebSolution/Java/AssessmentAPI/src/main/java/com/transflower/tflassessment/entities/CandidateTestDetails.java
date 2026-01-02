@@ -10,6 +10,7 @@ public class CandidateTestDetails {
     private String candidateName;
 
     private int testId;
+    private int assessmentId;
 
     private String testName;
 
@@ -19,21 +20,25 @@ public class CandidateTestDetails {
 
     public CandidateTestDetails() {
 
-        this.candidateId = 0;
-        this.candidateName = null;
-        this.testId = 0;
-        this.testName = null;
-        this.testDate = null;
-        this.testPassingLevel = 0;
+        candidateId = 0;
+        candidateName = null;
+        testId = 0;
+        assessmentId=0;
+        testName = null;
+        testDate = null;
+        testPassingLevel = 0;
+
     }
 
-    public CandidateTestDetails(int candidateId, String candidateName, int testId, String testName, LocalDateTime testDate, int testPassingLevel) {
+    public CandidateTestDetails(int candidateId, String candidateName, int testId,int assessmentid, String testName, LocalDateTime testDate, int testPassingLevel) {
         this.candidateId = candidateId;
         this.candidateName = candidateName;
         this.testId = testId;
+        this.assessmentId=assessmentid;
         this.testName = testName;
         this.testDate = testDate;
         this.testPassingLevel = testPassingLevel;
+
     }
 
     public int getCandidateId() {
@@ -97,7 +102,9 @@ public class CandidateTestDetails {
 
     @Override
 public String toString() {
-    return "CandidateTestDetails{candidateId='" + candidateId + "', candidateName='" + candidateName + "', testId='" + testId + "', testName='" + testName + "', testDate='" + testDate + "', testPassingLevel='" + testPassingLevel + "'}";
+    return "CandidateTestDetails{candidateId='" + candidateId + "', candidateName='" + candidateName + 
+    "', testId='" + testId +
+    "'assessmentid='"+assessmentId +"', testName='" + testName + "', testDate='" + testDate + "', testPassingLevel='" + testPassingLevel + "'}";
 }
 
 
@@ -137,7 +144,7 @@ public String toString() {
     @Override
     protected Object clone() throws CloneNotSupportedException {
         try{
-        return new CandidateTestDetails(candidateId,candidateName,testId,testName,testDate,testPassingLevel);
+        return new CandidateTestDetails(candidateId,candidateName,testId,assessmentId,testName,testDate,testPassingLevel);
         } catch(Exception e)   
         {
             System.out.println(e);
