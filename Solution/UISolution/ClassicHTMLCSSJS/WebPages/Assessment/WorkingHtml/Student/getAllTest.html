@@ -1,168 +1,352 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Candidate Tests</title>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 30px;
-        }
+  <meta charset="UTF-8">
+  <title>Candidate Tests</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        table {
-            width: 80%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
-        }
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-        th, td {
-            padding: 10px;
-            border: 1px solid #ccc;
-            text-align: left;
-        }
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
-        button {
-            padding: 5px 12px;
-            margin-right: 5px;
-            background-color: #007BFF;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        button.startBtn {
-            background-color: #28a745;
-        }
-
-        #detailsBox {
-            padding: 15px;
-            border: 1px solid #ccc;
-            background-color: #f9f9f9;
-            display: none;
-            width: 80%;
-        }
-
-        h3 {
-            margin-bottom: 10px;
-        }
-    </style>
-</head>
-<body>
-
-    <h2>Assessment To Appear</h2>
-
-    <table id="testTable">
-        <thead>
-            <tr>
-                <th>Assessment Name</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            <!-- Fetched rows go here -->
-        </tbody>
-    </table>
-
-    <div id="detailsBox">
-        <h3>Assessment Details</h3>
-        <p><strong>Assessment Name:</strong> <span id="dTestName"></span></p>
-        <p><strong>Passing Level:</strong> <span id="dPassingLevel"></span></p>
-        <p><strong>Duration:</strong> <span id="dDuration"></span></p>
-        <p><strong>Scheduled Start:</strong> <span id="dStart"></span></p>
-        <p><strong>Scheduled End:</strong> <span id="dEnd"></span></p>
-        <p><strong>Status:</strong> <span id="dStatus"></span></p>
-    </div>
-
-    <script>
-        
-
-        $(document).ready(function () {
-    const empId = localStorage.getItem("userId");
-
-    if (!empId) {
-        alert("User not logged in. Redirecting to login...");
-        window.location.href = "WorkingHtml/login.html";
-        return;
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+    th, td { padding: 10px; border: 1px solid #ccc; text-align: center; }
+    #detailsBox { display: none; margin-bottom: 20px; }
+    #testContainer { display: none; }
+    #stopWatch { font-size: 26px; font-weight: bold; }
+    .sidebar {
+    width: 250px; /* fixed width */
+    float: left;
+    background-color: #2c3e50;
+    height: 100vh;
+}
+body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f4f6f8;
     }
 
-    // Fetch buffer time first
-    let buffer = 0;
-    $.ajax({
-        url: "http://localhost:5238/api/Assessment/buffer",
-        method: "GET",
-        success: function (data) {
-            // Convert minutes to milliseconds
-            buffer = data.bufferTime * 60 * 1000;
-            console.log("buffer",buffer);
-        },
-        error: function () {
-            alert("Failed to load buffer time. Using default 5 minutes.");
-            buffer = 5 * 60 * 1000;
-        }
+    .card {
+      /* border-radius: 1rem; */
+      display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #f4f6f8;
+  margin-top:100px;
+  margin-right: 150px;
+
+    }
+
+    .card-header {
+      border-radius: 1rem 1rem 0 0;
+    }
+
+    .form-check-input {
+      margin-top: 0.4rem;
+    }
+
+    .progress-bar {
+      transition: width 0.4s ease-in-out;
+    }
+
+    #stopWatch {
+      font-size: 2.5rem;
+      font-weight: bold;
+      color: #27ae60;
+    }
+
+    #lblresult {
+      font-size: 1.2rem;
+      color: #2c3e50;
+    }
+
+.main-content {
+    margin-left: 250px; /* same as sidebar width */
+    padding: 20px;
+}
+
+  </style>
+</head>
+<body class="bg-light">
+
+<div class="container">
+
+  <h2 class="mb-3">Available Assessments</h2>
+  <table id="testTable" class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Assessment Name</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <div id="detailsBox" class="border p-3 bg-white">
+    <h4>Assessment Details</h4>
+    <p><b>Name:</b> <span id="dTestName"></span></p>
+    <p><b>Duration:</b> <span id="dDuration"></span></p>
+    <p><b>Start:</b> <span id="dStart"></span></p>
+    <p><b>End:</b> <span id="dEnd"></span></p>
+    <p><b>Status:</b> <span id="dStatus"></span></p>
+  </div>
+</div>
+
+  <!-- Test Container -->
+  <div id="testContainer" class="card shadow">
+    <div class="card-header bg-primary text-white text-center">
+      <h4>Objective Test</h4>
+    </div>
+    <div class="card-body">
+      <div class="text-center mb-3">
+        <div id="stopWatch">00:00:00</div>
+      </div>
+
+      <h5 id="pTitle" class="mb-3"></h5>
+
+      <div class="form-check">
+        <input type="radio" name="answer" id="a" class="form-check-input">
+        <label class="form-check-label" for="a" id="lblOptionA"></label>
+      </div>
+      <div class="form-check">
+        <input type="radio" name="answer" id="b" class="form-check-input">
+        <label class="form-check-label" for="b" id="lblOptionB"></label>
+      </div>
+      <div class="form-check">
+        <input type="radio" name="answer" id="c" class="form-check-input">
+        <label class="form-check-label" for="c" id="lblOptionC"></label>
+      </div>
+      <div class="form-check mb-3">
+        <input type="radio" name="answer" id="d" class="form-check-input">
+        <label class="form-check-label" for="d" id="lblOptionD"></label>
+      </div>
+
+      <div class="d-flex justify-content-center gap-2 mb-3">
+        <button id="btnFirst" class="btn btn-secondary" disabled>First</button>
+        <button id="btnPrevious" class="btn btn-secondary" disabled>Previous</button>
+        <button id="btnNext" class="btn btn-secondary" disabled>Next</button>
+        <button id="btnLast" class="btn btn-secondary" disabled>Last</button>
+      </div>
+
+      <div class="d-flex justify-content-center gap-2 mb-3">
+        <!-- <button id="btnStart" class="btn btn-success">Start</button> -->
+        <button id="btnSubmit" class="btn btn-warning" disabled>Submit</button>
+        <button id="btnResult" class="btn btn-info text-white">Show Result</button>
+      </div>
+
+      <div class="progress mb-3">
+        <div class="progress-bar bg-success" id="progress1" role="progressbar" style="width: 0%">0%</div>
+      </div>
+
+      <p id="lblresult" class="text-center fw-bold"></p>
+    </div>
+  </div>
+
+
+<script>
+$(document).ready(function () {
+  const remoteWeb = "http://localhost:5238";
+  const candidateId = localStorage.getItem("userId");
+  if (!candidateId) {
+    alert("User not logged in. Redirecting...");
+    window.location.href = "login.html";
+    return;
+  }
+
+  let buffer = 5 * 60 * 1000; // default buffer 5 minutes
+  let questions = [];
+  let current = 0;
+  let remainingTime = 0;
+  let intervalId;
+  let testId;
+
+  // Load buffer time
+  $.get(`${remoteWeb}/api/Assessment/buffer`, (data) => {
+    buffer = data.bufferTime * 60 * 1000;
+  }).fail(() => console.log("Failed to fetch buffer, using default 5 min"));
+
+  // Load tests
+  $.get(`${remoteWeb}/api/Assessment/alltestbyempid/${candidateId}`, (data) => {
+    data.forEach(test => {
+      $('#testTable tbody').append(`
+        <tr>
+          <td>${test.testName}</td>
+          <td>
+            <button class="detailsBtn" data-test='${JSON.stringify(test)}'>Details</button>
+            <button class="startBtn" data-id='${test.id}'>Start</button>
+          </td>
+        </tr>
+      `);
     });
 
-    // Now fetch tests
-    $.ajax({
-        url: `http://localhost:5238/api/Assessment/alltestbyempid/${empId}`,
-        method: 'GET',
-        success: function (data) {
-            data.forEach(test => {
-                $('#testTable tbody').append(`
-                    <tr>
-                        <td>${test.testName}</td>
-                        <td>
-                            <button class="detailsBtn" data-test='${JSON.stringify(test)}'>Details</button>
-                            <button class="startBtn" data-id="${test.id}">Start Test</button>
-                        </td>
-                    </tr>
-                `);
-            });
-
-            $(".detailsBtn").click(function () {
-                const test = $(this).data('test');
-
-                $("#dTestName").text(test.testName);
-                $("#dPassingLevel").text(test.passingLevel);
-                $("#dDuration").text(test.duration);
-                $("#dStart").text(new Date(test.scheduledStart).toLocaleString());
-                $("#dEnd").text(new Date(test.scheduledEnd).toLocaleString());
-                $("#dStatus").text(test.status);
-
-                $("#detailsBox").slideDown();
-            });
-
-            $(".startBtn").click(function () {
-                const testRow = $(this).closest("tr");
-                const testData = JSON.parse(testRow.find(".detailsBtn").attr("data-test"));
-                const testId = testData.id;
-
-                const scheduledStart = new Date(testData.scheduledStart);
-                const now = new Date();
-            console.log("buffer",buffer);
-
-                if (now.getTime() >= scheduledStart.getTime() &&
-                    now.getTime() <= scheduledStart.getTime() + buffer) {
-
-                    const userId = localStorage.getItem("userId");
-                    if (!userId) {
-                        alert("User not logged in!");
-                        return;
-                    }
-                    const duration = testData.duration;
-                    window.location.href = `testappearJWT.html?userid=${userId}&testid=${testId}&duration=${duration}`;
-                } else {
-                    alert("You can only start the test at the scheduled time.");
-                }
-            });
-        },
-        error: function () {
-            alert("Failed to load data.");
-        }
+    $(".detailsBtn").click(function () {
+      const test = $(this).data("test");
+      testId = test.id;
+      $("#dTestName").text(test.testName);
+      $("#dDuration").text(test.duration);
+      $("#dStart").text(new Date(test.scheduledStart).toLocaleString());
+      $("#dEnd").text(new Date(test.scheduledEnd).toLocaleString());
+      $("#dStatus").text(test.status);
+      $("#detailsBox").slideDown();
     });
+$(".startBtn").click(function () {
+    const testData = JSON.parse($(this).closest("tr").find(".detailsBtn").attr("data-test"));
+    testId = testData.id;
+    const now = new Date();
+    const scheduledStart = new Date(testData.scheduledStart);
+
+    if (now >= scheduledStart && now <= scheduledStart.getTime() + buffer) {
+  $("#testContainer").show();   
+       $(".sidebar").hide();
+         $(".container").hide();
+
+        remainingTime = toSeconds(testData.duration);
+
+        // Hide the test table and details
+        $("#testTable, #detailsBox").hide();
+
+        // Instead of showing #testContainer, we directly load questions here
+        loadQuestions();
+        startTimer();
+
+        // Enable submit button
+        $("#btnSubmit").prop("disabled", false);
+        $("#btnStart").prop("disabled", true);
+
+    } else {
+        alert("You can only start the test at the scheduled time.");
+    }
 });
-    </script>
+
+  }).fail(() => alert("Failed to load tests"));
+
+  // Convert HH:MM:SS to seconds
+  function toSeconds(t) {
+    const [h,m,s] = t.split(":").map(Number);
+    return h*3600 + m*60 + s;
+  }
+
+  function formatTime(sec) {
+    const h = Math.floor(sec / 3600);
+    const m = Math.floor((sec % 3600) / 60);
+    const s = sec % 60;
+    return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+  }
+
+  // Load questions
+  function loadQuestions() {
+    $.get(`${remoteWeb}/api/questionbank/questions/tests/${testId}`, (data) => {
+      questions = data.map(q => ({ ...q, answer: "No" }));
+      current = 0;
+      showQuestion(current);
+      activateNavigation(false);
+      loadProgressBar();
+    });
+  }
+
+  function showQuestion(index) {
+    const q = questions[index];
+    $("#pTitle").text(q.title);
+    $("#lblOptionA").text(q.a);
+    $("#lblOptionB").text(q.b);
+    $("#lblOptionC").text(q.c);
+    $("#lblOptionD").text(q.d);
+
+    $("[name='answer']").prop("checked", false);
+    if(q.answer !== "No") $("#" + q.answer).prop("checked", true);
+  }
+
+  function loadProgressBar() {
+    const answered = questions.filter(q => q.answer !== "No").length;
+    const percentage = Math.round((answered / questions.length) * 100);
+    $("#progress1").css("width", percentage + "%").text(percentage + "%");
+  }
+
+  function activateNavigation(status) {
+    $("#btnNext, #btnPrevious, #btnFirst, #btnLast").prop("disabled", status);
+  }
+
+  function startTimer() {
+    intervalId = setInterval(() => {
+      $("#stopWatch").text(formatTime(remainingTime));
+      if (remainingTime <= 0) {
+        clearInterval(intervalId);
+        $("input[name='answer']").prop("disabled", true);
+        $("#btnStart, #btnSubmit").prop("disabled", true);
+        autoSubmitTest();
+      }
+      remainingTime--;
+    }, 1000);
+  }
+
+  function autoSubmitTest() {
+    const answers = questions.map(q => ({ TestQuestionId: q.id, AnswerKey: q.answer }));
+    $.ajax({
+      url: `${remoteWeb}/api/candidateanswer/assessmentanswers/candidates/${candidateId}`,
+      type: "POST",
+      contentType: "application/json",
+      data: JSON.stringify(answers)
+    }).done(() => console.log("Auto-submitted answers"))
+      .fail(err => console.error(err));
+
+    const endTime = getCurrentDateTime();
+    $.ajax({
+      url: `${remoteWeb}/api/result/setendtime/${candidateId}/tests/${testId}`,
+      type: "PUT",
+      contentType: "application/json",
+      data: JSON.stringify(endTime)
+    }).done(() => window.location.href = `correctAnswerJWT.html?userid=${candidateId}&testid=${testId}`);
+  }
+
+  function getCurrentDateTime() {
+    const d = new Date();
+    return {
+      year: d.getFullYear(),
+      month: d.getMonth() + 1,
+      day: d.getDate(),
+      hour: d.getHours(),
+      minutes: d.getMinutes(),
+      seconds: d.getSeconds()
+    };
+  }
+
+  // // Button handlers
+  // $("#btnStart").click(() => {
+  //   loadQuestions();
+  //   startTimer();
+  //   $("#btnStart").prop("disabled", true);
+  //   $("#btnSubmit").prop("disabled", false);
+  // });
+
+  $("#btnSubmit").click(() => {
+    clearInterval(intervalId);
+    autoSubmitTest();
+  });
+
+  $("input[name='answer']").click(function () {
+    const selected = $(this).attr("id");
+    questions[current].answer = selected;
+    loadProgressBar();
+  });
+
+  $("#btnNext").click(() => { current++; if(current >= questions.length-1) $("#btnNext").prop("disabled", true); showQuestion(current); $("#btnPrevious").prop("disabled", false); });
+  $("#btnPrevious").click(() => { current--; if(current <= 0) $("#btnPrevious").prop("disabled", true); showQuestion(current); $("#btnNext").prop("disabled", false); });
+  $("#btnFirst").click(() => { current=0; showQuestion(current); $("#btnPrevious").prop("disabled", true); $("#btnNext").prop("disabled", false); });
+  $("#btnLast").click(() => { current=questions.length-1; showQuestion(current); $("#btnNext").prop("disabled", true); $("#btnPrevious").prop("disabled", false); });
+
+  $("#btnResult").click(() => {
+    $.get(`${remoteWeb}/api/result/candidates/${candidateId}/tests/${testId}/score`, (data) => {
+      $("#lblresult").text("Your Score: " + data);
+    });
+  });
+
+  
+
+});
+</script>
 
 </body>
 </html>
