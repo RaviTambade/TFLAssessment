@@ -10,6 +10,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
+import java.util.concurrent.CompletableFuture;
 
 import org.jasypt.util.text.AES256TextEncryptor;
 import org.springframework.stereotype.Repository;
@@ -110,4 +111,35 @@ public class SubjectRepositoryImpl implements SubjectRepository {
         }
     }
 
+    @Override
+    public  CompletableFuture<List<SubjectModel>> getSubjectByEmployeeId(int smeId){
+        return CompletableFuture.supplyAsync(() ->{
+        List<SubjectModel> subjects = new ArrayList<>();
+
+         String query =
+                "SELECT s.id, s.title " +
+                "FROM subjectmatterexperts sme " +
+                "JOIN subjects s ON sme.subjectId = s.id " +
+                "WHERE sme.employeeId = ?";
+
+
+                     try ( PreparedStatement statement = connection.prepareStatement(query)){
+
+                            statement .setInt(1,smeId);
+                             ResultSet rs= statement.executeQuery();   
+                       while (rs.next()){
+                            SubjectModel subject= new SubjectModel();
+                            subject.setId(rs.getInt("id"));
+                            subject.setTitle(rs.getString("title"));
+                            
+                            subjects.add(subject);
+                       }    
+                            
+                     } catch (SQLException e) {
+                        e.printStackTrace();
+                     }
+                     return subjects;
+    });
+
+}
 }
