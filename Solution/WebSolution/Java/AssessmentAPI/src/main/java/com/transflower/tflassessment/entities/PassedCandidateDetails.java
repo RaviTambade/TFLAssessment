@@ -3,19 +3,34 @@ package com.transflower.tflassessment.entities;
 import java.util.Objects;
 
 public class PassedCandidateDetails {
-    private int testId ;
+    private int assessmentId ;
     private int candidateId ;
     private String firstName ;
     private String lastName ;
     private int passingLevel ;
     private int score ;
 
-    public int getTestId(){
-        return testId;
+    public PassedCandidateDetails()
+    {
+
     }
 
-    public void setTestId(int testId){
-        this.testId =testId;
+    public PassedCandidateDetails(int assessmentId,int candidateId,String firstName,String lastName,int passingLevel,int score)
+    {
+        this.assessmentId = assessmentId;
+        this.candidateId = candidateId;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.passingLevel = passingLevel;
+        this.score = score;
+    }
+
+    public int getAssessmentId(){
+        return assessmentId;
+    }
+
+    public void setAssessmentId(int assessmentId){
+        this.assessmentId =assessmentId;
     }
     
 
@@ -93,7 +108,7 @@ public class PassedCandidateDetails {
 
     @Override
      public String toString(){
-     return "PassedCandidateDetails{testId  ="+ testId + " , candidateId = " + candidateId +" , firstName" + firstName + " , lastName" + lastName+ "passingLevel" +passingLevel+  " ,score " +score+ "}";
+     return "PassedCandidateDetails{assessmentId  ="+ assessmentId + " , candidateId = " + candidateId +" , firstName" + firstName + " , lastName" + lastName+ "passingLevel" +passingLevel+  " ,score " +score+ "}";
     }
 }
 
