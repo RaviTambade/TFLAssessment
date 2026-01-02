@@ -3,7 +3,7 @@ package com.transflower.tflassessment.entities;
 import java.util.Objects;
 
 public class AnnualCandidateResult {
-
+    private int assessmentid;
     private int candidateId;
     private int score;
     private String subjectTitle;
@@ -19,6 +19,14 @@ public class AnnualCandidateResult {
         this.candidateId = candidateId;
         this.score = score;
         this.subjectTitle = subjectTitle;
+    }
+    public int getAssessmentId()
+    {
+         return assessmentid;
+    }
+    public void setAssessmentId(int assessmentid)
+    {
+        this.assessmentid=assessmentid;
     }
     public int getCandidateId() {
         return candidateId;
