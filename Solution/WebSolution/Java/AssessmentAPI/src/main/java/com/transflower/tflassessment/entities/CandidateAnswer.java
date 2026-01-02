@@ -3,7 +3,7 @@ import java.util.*;
 
 public class CandidateAnswer {
     
-     private int id;     
+        private int id;     
         private int candidateId;
         private int testQuestionId;
         private String answerKey;

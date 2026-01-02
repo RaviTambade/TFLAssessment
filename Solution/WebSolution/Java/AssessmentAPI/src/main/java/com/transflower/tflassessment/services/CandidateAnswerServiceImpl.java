@@ -21,8 +21,8 @@ public class CandidateAnswerServiceImpl implements CandidateAnswerService {
     }
 
     @Override
-    public CompletableFuture<Boolean> insertCandidateAnswer(int candidateId, List<CandidateAnswer> answers) {
-        return CompletableFuture.supplyAsync(() -> _repo.insertCandidateAnswer(candidateId, answers));
+    public CompletableFuture<Boolean> insertCandidateAnswer(int candidateId, List<CandidateAnswer> answers,int assessmentId) {
+        return CompletableFuture.supplyAsync(() -> _repo.insertCandidateAnswer(candidateId, answers,assessmentId));
     }
 
     @Override

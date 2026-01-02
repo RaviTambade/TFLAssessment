@@ -23,11 +23,12 @@ public class CandidateAnswerController {
     private CandidateAnswerService svc;
 
     // Insert candidate answers asynchronously
-    @PostMapping("/assessmentanswers/candidates/{candidateId}")
+    @PostMapping("/assessmentanswers/candidates/{candidateId}/assessmentId/{assessmentId}")
     public CompletableFuture<Boolean> insertCandidateAnswers(
             @PathVariable("candidateId") int candidateId,
+            @PathVariable("assessmentId") int assessmentId,
             @RequestBody List<CandidateAnswer> answers) {
-        return svc.insertCandidateAnswer(candidateId, answers);
+        return svc.insertCandidateAnswer(candidateId, answers,assessmentId);
     }
 
     // Fetch candidate answers asynchronously

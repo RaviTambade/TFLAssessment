@@ -1,10 +1,10 @@
-package com.transflower.tflassessment.services;
+// package com.transflower.tflassessment.services;
 
 
-import com.transflower.tflassessment.entities.User;
-import java.util.concurrent.CompletableFuture;
-public interface AuthService {
+// import com.transflower.tflassessment.entities.User;
+// import java.util.concurrent.CompletableFuture;
+// public interface AuthService {
 
-    public CompletableFuture<User> getUserWithRolesByEmail(String email, String password);
+//     public CompletableFuture<User> getUserWithRolesByEmail(String email, String password);
 
-}
+// }

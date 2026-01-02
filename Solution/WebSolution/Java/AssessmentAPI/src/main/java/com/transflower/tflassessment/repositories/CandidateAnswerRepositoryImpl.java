@@ -48,8 +48,8 @@ public class CandidateAnswerRepositoryImpl implements CandidateAnswerRepository 
 
     
     @Override
-    public boolean insertCandidateAnswer(int candidateId, List<CandidateAnswer> answers) {
-        String query = "INSERT INTO candidateanswers (candidateid, testquestionid, answerkey) VALUES (?, ?, ?)";
+    public boolean insertCandidateAnswer(int candidateId, List<CandidateAnswer> answers,int assessmentId) {
+        String query = "INSERT INTO candidateanswers (candidateid, testquestionid, answerkey,assessmentid) VALUES (?, ?, ?,?)";
         boolean status = false;
         try  {
             for (CandidateAnswer ans : answers) {
@@ -57,6 +57,7 @@ public class CandidateAnswerRepositoryImpl implements CandidateAnswerRepository 
                 preparedStatement.setInt(1, candidateId);
                 preparedStatement.setInt(2, ans.getTestQuestionId());
                 preparedStatement.setString(3, ans.getAnswerKey());
+                preparedStatement.setInt(4,assessmentId);
                 preparedStatement.executeUpdate();
             }
             status = true;

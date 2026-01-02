@@ -7,7 +7,7 @@ import com.transflower.tflassessment.entities.CandidateTestDetails;
 
 public interface CandidateAnswerRepository {
 
-    boolean insertCandidateAnswer(int candidateId, List<CandidateAnswer> answer);
+    boolean insertCandidateAnswer(int candidateId, List<CandidateAnswer> answer,int assessmentId);
 
     List<CandidateAnswer> getCandidateAnswer(int CandidateId, int TestId);
 

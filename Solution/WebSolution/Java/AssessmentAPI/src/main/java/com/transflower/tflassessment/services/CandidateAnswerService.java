@@ -10,7 +10,7 @@ import com.transflower.tflassessment.entities.CandidateTestDetails;
 public interface CandidateAnswerService {
     
     
-    CompletableFuture<Boolean> insertCandidateAnswer(int candidateId, List<CandidateAnswer> answers);
+    CompletableFuture<Boolean> insertCandidateAnswer(int candidateId, List<CandidateAnswer> answers,int assessmentId);
 
     CompletableFuture<List<CandidateAnswer>> getCandidateAnswer(int candidateId, int testId);
 
