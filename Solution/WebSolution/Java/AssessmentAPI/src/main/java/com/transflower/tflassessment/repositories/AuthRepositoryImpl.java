@@ -5,6 +5,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
+import java.util.concurrent.CompletableFuture;
 
 import org.jasypt.util.text.AES256TextEncryptor;
 import org.springframework.stereotype.Repository;
@@ -40,7 +41,8 @@ public class AuthRepositoryImpl implements AuthRepository {
     }
   
   @Override
-  public User getUserWithRolesByEmail(String email, String password) {
+  public CompletableFuture <User> getUserWithRolesByEmail(String email, String password) {
+    return CompletableFuture.supplyAsync(() ->{
     User user = new User();
     List<UserRole> userRoles=new ArrayList<UserRole>();
     try {
@@ -99,9 +101,98 @@ public class AuthRepositoryImpl implements AuthRepository {
        
 
     return user;
+  });
   }
 
+  // changes 
+
+  @Override
+  public CompletableFuture <Boolean> addUser(User user)
+  {
+     return CompletableFuture.supplyAsync(() ->{
+    String query = """
+        INSERT INTO users
+        (aadharid, firstname, lastname, email, contactnumber, password)
+        VALUES (?, ?, ?, ?, ?, ?)
+    """;
+  
+   
+
+   try(PreparedStatement statement=connection.prepareStatement(query)) {
+     statement.setString(1, user.getAadharId());
+    statement.setString(2, user.getFirstName());
+    statement.setString(3, user.getLastName());
+    statement.setString(4, user.getEmail());
+    statement.setString(5, user.getContactNumber());
+    statement.setString(6, user.getPassword());
+
+    int rowsAffected=statement.executeUpdate();
+    return rowsAffected > 0;
+   } catch (Exception e) {
+    System.out.println("DB Error"+e.getMessage());
+    return false;
+   }
+  });
 
 }
+
+@Override
+public CompletableFuture<Boolean> checkOldPassword(String email, String oldPassword) {
+  return CompletableFuture.supplyAsync(() ->{
+
+    String query = """
+        SELECT COUNT(*)
+        FROM users
+        WHERE email = ? AND password = ?
+    """;
+
+    try (PreparedStatement statement = connection.prepareStatement(query)) {
+
+        statement.setString(1, email);
+        statement.setString(2, oldPassword);
+
+        ResultSet rs = statement.executeQuery();
+        if (rs.next()) {
+            int count = rs.getInt(1);
+            System.out.println("Counter: " + count);
+            return count == 1;   // Found → correct password
+        }
+
+    } catch (Exception e) {
+        System.out.println("DB Error: " + e.getMessage());
+    }
+
+    return false;
+});
+}
+
+@Override
+public CompletableFuture<Boolean> updatePassword (String email, String newPassword) {
+return CompletableFuture.supplyAsync(() -> {
+    String query = """
+        UPDATE users
+        SET password = ?
+        WHERE email = ?
+    """;
+
+    try (PreparedStatement statement = connection.prepareStatement(query)) {
+
+        statement.setString(1, newPassword);
+        statement.setString(2, email);
+
+        int rows = statement.executeUpdate();
+        return rows > 0;
+
+    } catch (Exception e) {
+        System.out.println("DB Error: " + e.getMessage());
+        return false;
+    }
+  });
+}
+
+}
+
+
+
 
   

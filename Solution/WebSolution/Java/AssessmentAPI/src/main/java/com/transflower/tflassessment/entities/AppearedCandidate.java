@@ -11,7 +11,7 @@ public class AppearedCandidate {
     public AppearedCandidate(){
 
     }
-    public AppearedCandidate(int testId, int candidateId, String firstName,String lastname)
+    public AppearedCandidate(int assessmentId, int candidateId, String firstName,String lastName)
     {
         this.assessmentId=assessmentId;
         this.candidateId=candidateId;
@@ -24,7 +24,7 @@ public class AppearedCandidate {
         return assessmentId;
 
     }
-    public void setAssessmentId(int testId)
+    public void setAssessmentId(int assessmentId)
     {
         this.assessmentId=assessmentId;
     }

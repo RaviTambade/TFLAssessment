@@ -14,7 +14,7 @@ public class CandidateAnswer {
         {
 
         }
-        public CandidateAnswer(int id, int candidateId,int testQuestionId,String answerKey ,int assessmentid)
+        public CandidateAnswer(int id, int candidateId,int testQuestionId,String answerKey ,int assessmentId)
         {  
             this.id=id;
             this.candidateId=candidateId;
