@@ -53,7 +53,7 @@ public class AssessmentIntelligenceRepositoryImpl implements AssessmentIntellige
         Statement statement = connection.createStatement();
         String query = "SELECT candidatetestresults.score, subjects.title, tests.id " +
                         "FROM candidatetestresults " +
-                        "JOIN tests ON (tests.id = candidatetestresults.testid) " +
+                        "JOIN tests ON (tests.id = candidatetestresults.assessmentid) " +
                         "JOIN subjects ON (subjects.id = tests.subjectid) " +
                         "WHERE candidatetestresults.candidateid = " + candidateId + 
                         " AND YEAR(teststarttime) = " + year;
