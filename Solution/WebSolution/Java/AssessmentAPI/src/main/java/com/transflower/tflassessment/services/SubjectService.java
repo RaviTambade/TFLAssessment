@@ -1,15 +1,15 @@
-// package com.transflower.tflassessment.services;
+package com.transflower.tflassessment.services;
 
-// import java.util.List;
-// import java.util.concurrent.CompletableFuture;
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
-// import com.transflower.tflassessment.entities.SubjectModel;
+import com.transflower.tflassessment.entities.SubjectModel;
 
-// public interface SubjectService {
+public interface SubjectService {
 
-//     public CompletableFuture<List<SubjectModel>> getAllSubjects();
+    public CompletableFuture<List<SubjectModel>> getAllSubjects();
 
-//      public CompletableFuture<Integer> addSubject(SubjectModel subject);
+     public CompletableFuture<Integer> addSubject(SubjectModel subject);
     
-//     public CompletableFuture<Integer> deleteSubject(int subjectId);
-// }
+    public CompletableFuture<Integer> deleteSubject(int subjectId);
+}
