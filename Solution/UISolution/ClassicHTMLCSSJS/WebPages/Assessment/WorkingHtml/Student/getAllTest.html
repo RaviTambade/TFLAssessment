@@ -115,8 +115,9 @@
                     });
 
                     $(".startBtn").click(function () {
-    const testRow = $(this).closest("tr");
-    const testData = JSON.parse(testRow.find(".detailsBtn").attr("data-test"));
+
+                const testRow = $(this).closest("tr");
+                const testData = JSON.parse(testRow.find(".detailsBtn").attr("data-test"));
 
     const testId = testData.id;
     const assessmentId = testData.assessmentid;

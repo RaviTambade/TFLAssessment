@@ -610,7 +610,7 @@ public class QuestionBankRepository : IQuestionBankRepository
 
     public async Task<List<Question>> GetQuestions(int assessment)
     {
-        
+
         int testId = await GetTestIdByAssessmentId(assessment);
         Console.WriteLine("Test Id in Question Bank Repository: " + testId);
         
