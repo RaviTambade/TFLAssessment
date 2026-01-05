@@ -22,6 +22,7 @@ public class CandidateAnswerController : ControllerBase
     [HttpPost("assessmentanswers/candidates/{candidateId}/assessments/{assessmentId}")]
     public async Task<IActionResult> InsertCandidateAnswers(int candidateId,int assessmentId,[FromBody] List<CandidateAnswer> answers)
     {
+        Console.WriteLine("test");
         bool status = await _service.InsertCandidateAnswers(candidateId, assessmentId,answers);
         if (!status)
         {

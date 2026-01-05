@@ -608,10 +608,11 @@ public class QuestionBankRepository : IQuestionBankRepository
         return testId;
     }
 
-    public async Task<List<Question>> GetQuestions(int testId)
+    public async Task<List<Question>> GetQuestions(int assessment)
     {
-        int id = await GetTestIdByAssessmentId(testId);
-        Console.WriteLine("Test Id in Question Bank Repository: " + id);
+        
+        int testId = await GetTestIdByAssessmentId(assessment);
+        Console.WriteLine("Test Id in Question Bank Repository: " + testId);
         
         List<Question> questions = new List<Question>();
         string query = @"
@@ -633,7 +634,7 @@ public class QuestionBankRepository : IQuestionBankRepository
         using (MySqlConnection connection = new MySqlConnection(_connectionString))
         using (MySqlCommand command = new MySqlCommand(query, connection))
         {
-            command.Parameters.AddWithValue("@TestId", id);
+            command.Parameters.AddWithValue("@TestId", testId);
             try
             {
                 await connection.OpenAsync();
@@ -652,6 +653,7 @@ public class QuestionBankRepository : IQuestionBankRepository
                         D = reader["d"].ToString(),
                         ConceptId = Convert.ToInt32(reader["conceptid"])
                     };
+                    Console.WriteLine(question);
                     questions.Add(question);
                 }
             }

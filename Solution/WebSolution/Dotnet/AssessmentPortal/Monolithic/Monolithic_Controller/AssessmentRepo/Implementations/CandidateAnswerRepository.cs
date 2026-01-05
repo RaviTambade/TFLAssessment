@@ -24,6 +24,7 @@ namespace Transflower.TFLAssessment.Repositories
             string query = "INSERT INTO candidateanswers (assessmentId,candidateid, testquestionid, answerkey) VALUES (@AssessmentId,@CandidateId, @TestQuestionId, @AnswerKey)";
             using (MySqlConnection connection = new MySqlConnection(_connectionString))
             {
+                
                 try
                 {
                     await connection.OpenAsync();

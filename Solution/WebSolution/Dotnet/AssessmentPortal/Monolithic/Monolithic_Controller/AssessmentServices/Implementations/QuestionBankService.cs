@@ -58,9 +58,9 @@ public class QuestionBankService:IQuestionBankService
         return await _repository.GetQuestion(questionId);
     }
 
-    public async Task<List<Question>> GetQuestions(int testId)
+    public async Task<List<Question>> GetQuestions(int assessmentId)
     { 
-       return await _repository.GetQuestions(testId);
+       return await _repository.GetQuestions(assessmentId);
     }
 
     public async Task<bool> UpdateQuestionOptions(int id,Question options)

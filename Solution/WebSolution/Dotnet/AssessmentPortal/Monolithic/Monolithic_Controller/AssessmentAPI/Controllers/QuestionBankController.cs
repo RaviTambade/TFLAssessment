@@ -81,17 +81,17 @@ public class QuestionBankController : ControllerBase
 
          
     //Get questions by testid .
-    [HttpGet("questions/tests/{testId}")]
-    public async Task<IActionResult> GetQuestions(int testId)
+    [HttpGet("questions/tests/{assessmentId}")]
+    public async Task<IActionResult> GetQuestions(int assessmentId)
     {   
-        
-        List<Question> questions =await _svc.GetQuestions(testId);
+        Console.WriteLine(assessmentId);
+        List<Question> questions =await _svc.GetQuestions(assessmentId);
         if (questions == null || questions.Count == 0)
         {
-            _logger.LogWarning("No questions found for test ID {Id} at {DT}", testId, DateTime.UtcNow.ToLongTimeString());
-            return NotFound($"No questions found for test ID {testId}.");
+            _logger.LogWarning("No questions found for assessment ID {Id} at {DT}", assessmentId, DateTime.UtcNow.ToLongTimeString());
+            return NotFound($"No questions found for assessment ID {assessmentId}.");
         }
-        _logger.LogInformation("Get questions by test ID {Id} method invoked at {DT}", testId, DateTime.UtcNow.ToLongTimeString());
+        _logger.LogInformation("Get questions by assessment ID {Id} method invoked at {DT}", assessmentId, DateTime.UtcNow.ToLongTimeString());
         return Ok(questions);
     }
 
