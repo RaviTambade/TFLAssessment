@@ -19,7 +19,7 @@ public class Concepts {
 
     public int getId()
     {
-        return this.id;
+        return id;
     }
 
     public void setId(int id)
@@ -29,7 +29,7 @@ public class Concepts {
 
     public String getTitle()
     {
-        return this.title;
+        return title;
     }
 
     public void setTitle(String title)
@@ -39,7 +39,7 @@ public class Concepts {
 
     public int getSubjectId()
     {
-        return this.subjectId;
+        return subjectId;
     }
 
     public void setSubjectId(int subjectId)
