@@ -120,6 +120,12 @@
     console.log("testId",testId);
     const candidateId = getQueryParam("userid");
     const durationParam = getQueryParam("duration"); // format: "HH:mm:ss"
+    const assessmentId=getQueryParam("assessmentid");
+              console.log("testId",testId);
+             console.log("candidateId",candidateId);
+              console.log("durationParam",durationParam);
+              console.log("assessmentId",assessmentId);
+
 
     // --- Convert duration to seconds ---
     let remainingTime = 60; // fallback if duration not provided
@@ -228,11 +234,9 @@
           })
           console.log(finalCandidateAnswers);
 
-        //5238
-          // let assessmentAnswersUrl = "http://localhost:5299/api/candidateanswer/assessmentanswers/candidates/"+candidateId; // we need to change add test id also
-          
-          let assessmentAnswersUrl = "http://localhost:5238/api/candidateanswer/assessmentanswers/candidates/"+candidateId; // we need to change add test id also
-          
+        
+                    let assessmentAnswersUrl = `http://localhost:5238/api/candidateanswer/assessmentanswers/candidates/${candidateId}/assessments/${assessmentId}`;
+
           $.ajax({
             url: assessmentAnswersUrl,
             type: 'POST',
@@ -499,8 +503,7 @@
             finalCandidateAnswers.push({ "TestQuestionId": questionId, "AnswerKey": answer });
           });
         
-          // let assessmentAnswersUrl = "http://localhost:5299/api/candidateanswer/assessmentanswers/candidates/" + candidateId;
-          let assessmentAnswersUrl = "http://localhost:5238/api/candidateanswer/assessmentanswers/candidates/" + candidateId;
+          let assessmentAnswersUrl = "http://localhost:5238/api/candidateanswer/assessmentanswers/candidates/{candidateId}/assessments/{assessmentId}";
         
           // Submit answers
           $.ajax({
@@ -533,7 +536,7 @@
             
               //Redirect to Test Over page after 2 seconds
               setTimeout(() => {
-                window.location.href = `correctAnswerJWT.html?userid=${candidateId}&testid=${testId}`; 
+                // window.location.href = `correctAnswerJWT.html?userid=${candidateId}&testid=${testId}`; 
               }, 2000);
             },
             error: function (xhr, status, error) {
