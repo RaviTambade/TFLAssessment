@@ -94,5 +94,5 @@ public class CandidateAnswerController : ControllerBase
         }
         return Ok(details);
     }
-    
+       
 }
