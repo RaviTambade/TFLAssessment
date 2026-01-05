@@ -118,6 +118,21 @@ public class QuestionDetails {
         this.result=result;
     }
 
+    public QuestionDetails( int id,int questionId ,String question,String subject,String criteria){
+        this.id=id;
+        this.questionId=questionId;
+        this.question=question;
+        this.subject=subject;
+        this.criteria=criteria;
+    }
+
+    public QuestionDetails(int id, String question, String subject, String criteria){
+        this.id=id;   
+        this.question=question;
+        this.subject=subject;
+        this.criteria=criteria;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj)
