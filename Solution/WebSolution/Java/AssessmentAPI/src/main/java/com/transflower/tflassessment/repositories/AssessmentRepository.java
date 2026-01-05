@@ -1,30 +1,32 @@
-// package com.transflower.tflassessment.repositories;
+package com.transflower.tflassessment.repositories;
 
-// import java.time.LocalDateTime;
-// import java.util.Date;
-// import java.util.List;
-// import java.util.concurrent.CompletableFuture;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
-// import com.transflower.tflassessment.entities.*;
-// public interface AssessmentRepository {
+import com.transflower.tflassessment.entities.Assessment;
+import com.transflower.tflassessment.entities.Concepts;
+import com.transflower.tflassessment.entities.Employee;
+import com.transflower.tflassessment.entities.Subject;
+public interface AssessmentRepository<TimeConfig> {
 
-//     public CompletableFuture<Assessment> getDetails(int assessmentId);
+    public CompletableFuture<Assessment> getDetails(int assessmentId);
 
-//     CompletableFuture<List<Assessment>> getAll(LocalDateTime fromDate, LocalDateTime toDate);
+    public CompletableFuture<List<Assessment>> getAll(LocalDateTime fromDate, LocalDateTime toDate);
 
-//     public CompletableFuture<List<Assessment>> getAllTests();
+    public CompletableFuture<List<Assessment>> getAllTests();
 
-//     public CompletableFuture<List<Assessment>> getAllBySubjectMatterExpert(int smeId);
+    public CompletableFuture<List<Employee>> getAllEmployees();
 
-//     public CompletableFuture<List<Employee>> getAllEmployees();
+    public CompletableFuture<Employee> getEmployeeById(int userId);
 
-//     public CompletableFuture<Employee> getEmployeeById(int userId);
+    public CompletableFuture<List<Subject>> getAllSubjects();
 
-//     public CompletableFuture<List<Subject>> getAllSubjects();
+    public CompletableFuture<List<Concepts>> getConcepts();
 
-//     public CompletableFuture<List<Concepts>> getConcepts();
+    public CompletableFuture<List<Concepts>> getConceptsBySubject(int subjectId);
 
-//     public CompletableFuture<List<Concepts>> getConceptsBySubject(int subjectId);
+    public CompletableFuture<List<Assessment>> getAllBySubjectMatterExpert(int smeId);
 
 //     public CompletableFuture<Boolean> createTest(CreateTestRequest request);
 //     public CompletableFuture<Boolean> addQuestion(int assessmentId, int questionId);
@@ -72,4 +74,4 @@
 //     CompletableFuture<TimeConfig> GetBufferTimeAsync();
 
 //     CompletableFuture<Boolean> UpdateBufferTimeAsync(int bufferTime);
-// }
+}

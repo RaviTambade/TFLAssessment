@@ -1,164 +1,167 @@
-// package com.transflower.tflassessment.repositories;
+package com.transflower.tflassessment.repositories;
 
-// import java.io.InputStream;
-// import java.sql.CallableStatement;
-// import java.sql.Connection;
-// import java.sql.DriverManager;
-// import java.sql.PreparedStatement;
-// import java.sql.ResultSet;
-// import java.sql.SQLException;
-// import java.sql.Statement;
-// import java.sql.Time;
-// import java.sql.Timestamp;
-// import java.time.Duration;
-// import java.time.LocalDateTime;
-// import java.time.LocalTime;
-// import java.util.ArrayList;
-// import java.util.Date;
-// import java.util.List;
-// import java.util.Properties;
-// import java.util.concurrent.CompletableFuture;
+import java.io.InputStream;
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.Time;
+import java.sql.Timestamp;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Properties;
+import java.util.concurrent.CompletableFuture;
 
-// import org.jasypt.util.text.AES256TextEncryptor;
-// import org.springframework.stereotype.Repository;
+import org.jasypt.util.text.AES256TextEncryptor;
+import org.springframework.stereotype.Repository;
 
-// import com.transflower.tflassessment.entities.Assessment;
-// import com.transflower.tflassessment.entities.CandidateAssessmentHistory;
-// import com.transflower.tflassessment.entities.CandidateTestDetails;
-// import com.transflower.tflassessment.entities.ConceptWithCorrectAns;
-// import com.transflower.tflassessment.entities.Concepts;
-// import com.transflower.tflassessment.entities.CreateTestRequest;
-// import com.transflower.tflassessment.entities.CreateTestWithQuestions;
-// import com.transflower.tflassessment.entities.Employee;
-// import com.transflower.tflassessment.entities.Question;
-// import com.transflower.tflassessment.entities.QuestionBank;
-// import com.transflower.tflassessment.entities.Subject;
-// import com.transflower.tflassessment.entities.SubjectQuestion;
-// import com.transflower.tflassessment.entities.Test;
-// import com.transflower.tflassessment.entities.TestAssignmentRequest;
-// import com.transflower.tflassessment.entities.TestDetails;
-// import com.transflower.tflassessment.entities.TestEmployeeDetails;
-// import com.transflower.tflassessment.entities.TestStatusUpdate;
-// import com.transflower.tflassessment.entities.TestWithQuestions;
-// @Repository
-// public class AssessmentRepositoryImpl implements AssessmentRepository {
+import com.transflower.tflassessment.entities.Assessment;
+import com.transflower.tflassessment.entities.CandidateAssessmentHistory;
+import com.transflower.tflassessment.entities.CandidateTestDetails;
+import com.transflower.tflassessment.entities.ConceptWithCorrectAns;
+import com.transflower.tflassessment.entities.Concepts;
+import com.transflower.tflassessment.entities.CreateTestRequest;
+import com.transflower.tflassessment.entities.CreateTestWithQuestions;
+import com.transflower.tflassessment.entities.Employee;
+import com.transflower.tflassessment.entities.Question;
+import com.transflower.tflassessment.entities.QuestionBank;
+import com.transflower.tflassessment.entities.Subject;
+import com.transflower.tflassessment.entities.SubjectQuestion;
+import com.transflower.tflassessment.entities.Test;
+import com.transflower.tflassessment.entities.TestAssignmentRequest;
+import com.transflower.tflassessment.entities.TestDetails;
+import com.transflower.tflassessment.entities.TestEmployeeDetails;
+import com.transflower.tflassessment.entities.TestStatusUpdate;
+import com.transflower.tflassessment.entities.TestWithQuestions;
 
-//     private static Connection connection;
+@Repository
+public class AssessmentRepositoryImpl implements AssessmentRepository {
 
-//     static {
-//         try(InputStream input=AssessmentRepositoryImpl.class.getClassLoader().getResourceAsStream("application.properties")){
-//             Properties props=new Properties();
-//             props.load(input);
+    private static Connection connection;
 
-//             String url=props.getProperty("db.url");
-//             String user=props.getProperty("db.username");
-//             String enpass=props.getProperty("db.password");
-//             AES256TextEncryptor textEncryptor=new AES256TextEncryptor();
-//             textEncryptor.setPassword("TransFlower");
-//             String pass = textEncryptor.decrypt(enpass.replace("ENC(", "").replace(")", ""));
-//             // ix3jGci+cQ5VXBXcnfDeGfETyVy1yWkUxsdJPXiPt/x2J+3B079VBAJnSj6TeDWv
-//             String driver = props.getProperty("db.driver");
+    static {
+        try (InputStream input = AssessmentRepositoryImpl.class.getClassLoader().getResourceAsStream("application.properties")) {
+            Properties props = new Properties();
+            props.load(input);
 
-//             Class.forName(driver);
-//             connection = DriverManager.getConnection(url, user, pass);
+            String url = props.getProperty("db.url");
+            String user = props.getProperty("db.username");
+            String enpass = props.getProperty("db.password");
+            AES256TextEncryptor textEncryptor = new AES256TextEncryptor();
+            textEncryptor.setPassword("TransFlower");
+            String pass = textEncryptor.decrypt(enpass.replace("ENC(", "").replace(")", ""));
+            // ix3jGci+cQ5VXBXcnfDeGfETyVy1yWkUxsdJPXiPt/x2J+3B079VBAJnSj6TeDWv
+            String driver = props.getProperty("db.driver");
 
-//             System.out.println("Connection Established");
-//         } catch (Exception e) {
-//             System.out.println(e);
-//             System.out.println("Error in connecting to database");
-//         }}
-//     @Override
-//     public CompletableFuture<Assessment> getDetails(int assessmentId) {
-//         Assessment assessment = null;
+            Class.forName(driver);
+            connection = DriverManager.getConnection(url, user, pass);
 
-//         String query = "SELECT t.id, t.name AS TestName, t.smeid AS subjectExpertId, "
-//                 + "t.subjectid AS subjectId, t.creationdate AS creationDate, "
-//                 + "t.modificationdate AS modificationDate, t.scheduleddate AS scheduledDate, "
-//                 + "t.status, t.passinglevel, e.firstname, e.lastname, t.duration "
-//                 + "FROM tests t "
-//                 + "LEFT JOIN employees e ON t.smeid = e.id "
-//                 + "WHERE t.id = ?";
+            System.out.println("Connection Established");
+        } catch (Exception e) {
+            System.out.println(e);
+            System.out.println("Error in connecting to database");
+        }
+    }
 
-//         try (PreparedStatement stmt = connection.prepareStatement(query)) {
-//             stmt.setInt(1, assessmentId);
+    @Override
+    public CompletableFuture<Assessment> getDetails(int assessmentId) {
+        Assessment assessment = null;
 
-//             try (ResultSet rs = stmt.executeQuery()) {
-//                 if (rs.next()) {
-//                     assessment = new Assessment();
-//                     assessment.setId(rs.getInt("id"));
-//                     assessment.setTestName(rs.getString("TestName"));
-//                     assessment.setSubjectExpertId(rs.getInt("subjectExpertId"));
-//                     assessment.setSubjectId(rs.getInt("subjectId"));
+        String query = "SELECT t.id, t.name AS TestName, t.smeid AS subjectExpertId, "
+                + "t.subjectid AS subjectId, t.creationdate AS creationDate, "
+                + "t.modificationdate AS modificationDate, t.scheduleddate AS scheduledDate, "
+                + "t.status, t.passinglevel, e.firstname, e.lastname, t.duration "
+                + "FROM tests t "
+                + "LEFT JOIN employees e ON t.smeid = e.id "
+                + "WHERE t.id = ?";
 
-//                     Timestamp creationTs = rs.getTimestamp("creationDate");
-//                     if (creationTs != null) {
-//                         assessment.setCreationDate(creationTs.toLocalDateTime());
-//                     }
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setInt(1, assessmentId);
 
-//                     Timestamp modificationTs = rs.getTimestamp("modificationDate");
-//                     if (modificationTs != null) {
-//                         assessment.setModificationDate(modificationTs.toLocalDateTime());
-//                     }
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    assessment = new Assessment();
+                    assessment.setId(rs.getInt("id"));
+                    assessment.setTestName(rs.getString("TestName"));
+                    assessment.setSubjectExpertId(rs.getInt("subjectExpertId"));
+                    assessment.setSubjectId(rs.getInt("subjectId"));
 
-//                     Timestamp scheduleTs = rs.getTimestamp("scheduledDate");
-//                     if (scheduleTs != null) {
-//                         assessment.setScheduleDate(scheduleTs.toLocalDateTime());
-//                     }
+                    Timestamp creationTs = rs.getTimestamp("creationDate");
+                    if (creationTs != null) {
+                        assessment.setCreationDate(creationTs.toLocalDateTime());
+                    }
 
-//                     assessment.setStatus(rs.getString("status"));
-//                     assessment.setPassingLevel(rs.getInt("passinglevel"));
-//                     assessment.setFirstName(rs.getString("firstname"));
-//                     assessment.setLastName(rs.getString("lastname"));
-//                     assessment.setDuration(rs.getTimestamp("duration"));
-//                 }
-//             }
+                    Timestamp modificationTs = rs.getTimestamp("modificationDate");
+                    if (modificationTs != null) {
+                        assessment.setModificationDate(modificationTs.toLocalDateTime());
+                    }
 
-//         } catch (SQLException e) {
-//             System.out.println("Error fetching assessment: " + e.getMessage());
-//         }
+                    Timestamp scheduleTs = rs.getTimestamp("scheduledDate");
+                    if (scheduleTs != null) {
+                        assessment.setScheduleDate(scheduleTs.toLocalDateTime());
+                    }
 
-//         return CompletableFuture.completedFuture(assessment);
-//     }
+                    assessment.setStatus(rs.getString("status"));
+                    assessment.setPassingLevel(rs.getInt("passinglevel"));
+                    assessment.setFirstName(rs.getString("firstname"));
+                    assessment.setLastName(rs.getString("lastname"));
+                    assessment.setDuration(rs.getTimestamp("duration"));
+                }
+            }
 
-//     @Override
-//     public CompletableFuture<List<Assessment>> getAll(LocalDateTime fromDate, LocalDateTime toDate) {
-//         List<Assessment> assessments = new ArrayList<>();
+        } catch (SQLException e) {
+            System.out.println("Error fetching assessment: " + e.getMessage());
+        }
 
-//         String query = "SELECT * FROM tests WHERE creationDate BETWEEN ? AND ?";
+        return CompletableFuture.completedFuture(assessment);
+    }
 
-//         try (PreparedStatement stmt = connection.prepareStatement(query)) {
-//             stmt.setTimestamp(1, Timestamp.valueOf(fromDate));
-//             stmt.setTimestamp(2, Timestamp.valueOf(toDate));
+    @Override
+    public CompletableFuture<List<Assessment>> getAll(LocalDateTime fromDate, LocalDateTime toDate) {
+        List<Assessment> assessments = new ArrayList<>();
 
-//             try (ResultSet rs = stmt.executeQuery()) {
-//                 while (rs.next()) {
-//                     Assessment assessment = new Assessment();
-//                     assessment.setId(rs.getInt("id"));
-//                     assessment.setSubjectExpertId(rs.getInt("smeid"));
-//                     assessment.setSubjectId(rs.getInt("subjectid"));
+        String query = "SELECT * FROM tests WHERE creationDate BETWEEN ? AND ?";
 
-//                     Timestamp modDate = rs.getTimestamp("modificationdate");
-//                     if (modDate != null) {
-//                         assessment.setModificationDate(modDate.toLocalDateTime());
-//                     }
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setTimestamp(1, Timestamp.valueOf(fromDate));
+            stmt.setTimestamp(2, Timestamp.valueOf(toDate));
 
-//                     Timestamp schedDate = rs.getTimestamp("scheduleddate");
-//                     if (schedDate != null) {
-//                         assessment.setScheduleDate(schedDate.toLocalDateTime());
-//                     }
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    Assessment assessment = new Assessment();
+                    assessment.setId(rs.getInt("id"));
+                    assessment.setSubjectExpertId(rs.getInt("smeid"));
+                    assessment.setSubjectId(rs.getInt("subjectid"));
 
-//                     assessment.setStatus(rs.getString("status"));
+                    Timestamp modDate = rs.getTimestamp("modificationdate");
+                    if (modDate != null) {
+                        assessment.setModificationDate(modDate.toLocalDateTime());
+                    }
 
-//                     assessments.add(assessment);
-//                 }
-//             }
+                    Timestamp schedDate = rs.getTimestamp("scheduleddate");
+                    if (schedDate != null) {
+                        assessment.setScheduleDate(schedDate.toLocalDateTime());
+                    }
 
-//         } catch (SQLException e) {
-//             System.out.println("Error " + e.getMessage());
-//         }
+                    assessment.setStatus(rs.getString("status"));
 
-//         return CompletableFuture.completedFuture(assessments);
-//     }
+                    assessments.add(assessment);
+                }
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error " + e.getMessage());
+        }
+
+        return CompletableFuture.completedFuture(assessments);
+    }
 
 // // getSmeBySubject
 //     public CompletableFuture<List<Employee>> getSmeBySubject(int subjectId) {
@@ -195,55 +198,243 @@
 //         return CompletableFuture.completedFuture(smeList);
 //     }
 
-//     //getAllTests
-//     @Override
-//     public CompletableFuture<List<Assessment>> getAllTests() {
-//         List<Assessment> tests = new ArrayList<>();
+    //getAllTests
+    @Override
+    public CompletableFuture<List<Assessment>> getAllTests() {
+        List<Assessment> tests = new ArrayList<>();
 
-//         String query
-//                 = "SELECT tests.*, subjects.title AS skill, employees.firstname, employees.lastname "
-//                 + "FROM tests "
-//                 + "INNER JOIN subjectmatterexperts ON subjectmatterexperts.id = tests.smeid "
-//                 + "INNER JOIN subjects ON subjects.id = subjectmatterexperts.subjectid "
-//                 + "INNER JOIN employees ON employees.id = subjectmatterexperts.employeeid";
+        String query
+                = "SELECT tests.*, subjects.title AS skill, employees.firstname, employees.lastname "
+                + "FROM tests "
+                + "INNER JOIN subjectmatterexperts ON subjectmatterexperts.id = tests.smeid "
+                + "INNER JOIN subjects ON subjects.id = subjectmatterexperts.subjectid "
+                + "INNER JOIN employees ON employees.id = subjectmatterexperts.employeeid";
 
-//         try (
-//                 PreparedStatement stmt = connection.prepareStatement(query); ResultSet rs = stmt.executeQuery()) {
+        try (
+                PreparedStatement stmt = connection.prepareStatement(query); ResultSet rs = stmt.executeQuery()) {
 
-//             while (rs.next()) {
-//                 Assessment test = new Assessment();
+            while (rs.next()) {
+                Assessment test = new Assessment();
 
-//                 test.setId(rs.getInt("id"));
-//                 test.setTestName(rs.getString("name"));
-//                 test.setSubjectId(rs.getInt("subjectid"));
-//                 test.setSubjectExpertId(rs.getInt("smeid"));
+                test.setId(rs.getInt("id"));
+                test.setTestName(rs.getString("name"));
+                test.setSubjectId(rs.getInt("subjectid"));
+                test.setSubjectExpertId(rs.getInt("smeid"));
 
-//                 test.setCreationDate(rs.getTimestamp("creationdate").toLocalDateTime());
-//                 test.setModificationDate(rs.getTimestamp("modificationdate").toLocalDateTime());
-//                 test.setScheduleDate(rs.getTimestamp("scheduleddate").toLocalDateTime());
+                test.setCreationDate(rs.getTimestamp("creationdate").toLocalDateTime());
+                test.setModificationDate(rs.getTimestamp("modificationdate").toLocalDateTime());
+                test.setScheduleDate(rs.getTimestamp("scheduleddate").toLocalDateTime());
 
-//                 test.setStatus(rs.getString("status"));
-//                 test.setSubject(rs.getString("skill"));
-//                 test.setFirstName(rs.getString("firstname"));
-//                 test.setLastName(rs.getString("lastname"));
+                test.setStatus(rs.getString("status"));
+                test.setSubject(rs.getString("skill"));
+                test.setFirstName(rs.getString("firstname"));
+                test.setLastName(rs.getString("lastname"));
 
-//                 tests.add(test);
-//             }
+                tests.add(test);
+            }
 
-//         } catch (SQLException e) {
-//             e.printStackTrace();
-//         }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
-//         return CompletableFuture.completedFuture(tests);
-//     }
+        return CompletableFuture.completedFuture(tests);
+    }
 
+    // getAllEmployees
+    @Override
+    public CompletableFuture<List<Employee>> getAllEmployees(){
+        List<Employee> employees = new ArrayList<>();
+        String query = "SELECT * FROM employees";
+
+        try (
+                Statement stmt = connection.createStatement(); ResultSet rs = stmt.executeQuery(query)) {
+
+            while (rs.next()) {
+                Employee emp = new Employee();
+                emp.setId(rs.getInt("id"));
+                emp.setFirstName(rs.getString("firstname"));
+                emp.setLastName(rs.getString("lastname"));
+                emp.setEmail(rs.getString("email"));
+                emp.setContact(rs.getString("contact"));
+                employees.add(emp);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return CompletableFuture.completedFuture(employees);
+    }
+
+
+    // getEmployeeById 
+    @Override
+    public CompletableFuture<Employee> getEmployeeById(int userId) {
+        Employee employee = null;
+
+        String query = "SELECT * FROM employees WHERE id = ?";
+
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setInt(1, userId);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    employee = new Employee();
+                    employee.setId(rs.getInt("id"));
+                    employee.setFirstName(rs.getString("firstname"));
+                    employee.setLastName(rs.getString("lastname"));
+                    employee.setEmail(rs.getString("email"));
+                    employee.setContact(rs.getString("contact"));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return CompletableFuture.completedFuture(employee);
+    }
+
+//getAllSubjects
+    @Override
+    public CompletableFuture<List<Subject>> getAllSubjects() {
+        List<Subject> subjects = new ArrayList<>();
+        String query = "SELECT * FROM subjects";
+
+        try (PreparedStatement stmt = connection.prepareStatement(query); ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                Subject subject = new Subject();
+                subject.setId(rs.getInt("id"));
+                subject.setTitle(rs.getString("title"));
+
+                subjects.add(subject);
+            }
+
+        } catch (SQLException e) {
+            System.err.println("Error fetching subjects: " + e.getMessage());
+        }
+
+        return CompletableFuture.completedFuture(subjects);
+    }
+
+    //getConcepts
+    @Override
+    public CompletableFuture<List<Concepts>> getConcepts() {
+        List<Concepts> concepts = new ArrayList<>();
+        String query = "SELECT * FROM Concepts";
+
+        try (Statement stmt = connection.createStatement(); ResultSet rs = stmt.executeQuery(query)) {
+
+            while (rs.next()) {
+                Concepts concept = new Concepts();
+                concept.setId(rs.getInt("id"));
+                concept.setTitle(rs.getString("title"));
+                concept.setSubjectId(rs.getInt("subjectid"));
+
+                concepts.add(concept);
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error fetching evaluation criterias: " + e.getMessage());
+        }
+
+        return CompletableFuture.completedFuture(concepts);
+    }
+
+    // getConceptsBySubject
+    @Override
+     public CompletableFuture<List<Concepts>> getConceptsBySubject(int subjectId){
+        List<Concepts> concepts = new ArrayList<>();
+
+        String query = "SELECT * FROM Concepts WHERE subjectid = ?";
+
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setInt(1, subjectId);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    Concepts concept = new Concepts();
+                    concept.setId(rs.getInt("id"));
+                    concept.setTitle(rs.getString("title"));
+                    concept.setSubjectId(rs.getInt("subjectid"));
+
+                    concepts.add(concept);
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("error" + e.getMessage());
+        }
+
+        return CompletableFuture.completedFuture(concepts);
+    }
+
+    //getAllBySubjectMatterExpert
+    @Override
+
+    public CompletableFuture<List<Assessment>> getAllBySubjectMatterExpert(int smeId) {
+
+        List<Assessment> assessments = new ArrayList<>();
+
+        try {
+
+            String query = "SELECT * FROM tests WHERE smeid = ?";
+
+            PreparedStatement stmt = connection.prepareStatement(query);
+
+            stmt.setInt(1, smeId);
+
+            ResultSet rs = stmt.executeQuery();
+
+            LocalDateTime l1;
+
+            while (rs.next()) {
+
+                Assessment assessment = new Assessment();
+
+                assessment.setId(rs.getInt("id"));
+
+                assessment.setTestName(rs.getString("name"));
+
+                assessment.setDuration(rs.getTimestamp("duration"));
+
+                assessment.setSubjectId(rs.getInt("subjectid"));
+
+                //assessment.setFirstName(rs.getString("firstname"));
+
+                //assessment.setLastName(rs.getString("lastname"));
+
+                assessment.setSubjectExpertId(rs.getInt("smeid"));
+
+                assessment.setModificationDate(rs.getTimestamp("modificationdate").toLocalDateTime());
+
+                assessment.setCreationDate(rs.getTimestamp("creationdate").toLocalDateTime());
+
+                assessment.setScheduleDate(rs.getTimestamp("scheduleddate").toLocalDateTime());
+
+                assessment.setPassingLevel(rs.getInt("passinglevel"));
+
+                assessment.setStatus(rs.getString("status"));
+
+                // set other fields as needed
+                assessments.add(assessment);
+
+            }
+
+        } catch (SQLException e) {
+
+            e.printStackTrace();
+
+        }
+
+        return CompletableFuture.completedFuture(assessments);
+
+    }
 // // getTestDetails
 //     public CompletableFuture<TestWithQuestions> getTestDetails(int testId) {
 //         TestWithQuestions test = null;
 
 //         String testQuery = "SELECT * FROM tests WHERE id = ?";
 //         String queryQuestions = "SELECT q.id AS QuestionId, q.subjectid AS SubjectId, q.title, q.a, q.b, q.c, q.d, "
-//                 + "q.answerkey, q.evaluationcriteriaid "
+//                 + "q.answerkey, q.Conceptsid "
 //                 + "FROM questionbank q "
 //                 + "INNER JOIN testquestions tq ON q.id = tq.questionbankid "
 //                 + "WHERE tq.testid = ?";
@@ -276,7 +467,7 @@
 //                     q.setC(rs2.getString("c"));
 //                     q.setD(rs2.getString("d"));
 //                     q.setAnswerKey(rs2.getString("answerkey"));
-//                     q.setEvaluationCriteriaId(rs2.getInt("evaluationcriteriaid"));
+//                     q.setConceptsId(rs2.getInt("Conceptsid"));
 //                     questions.add(q);
 //                 }
 //                 // test.setQuesitions(questions);
@@ -288,193 +479,14 @@
 
 //     }
 
-// //getAllBySubjectMatterExpert
-//     @Override
 
-//     public List<Assessment> getAllBySubjectMatterExpert(int subId) {
 
-//         List<Assessment> assessments = new ArrayList<>();
+    
 
-//         try {
 
-//             String query = "SELECT * FROM tests WHERE subjectid = ?;";
 
-//             PreparedStatement stmt = connection.prepareStatement(query);
 
-//             stmt.setInt(1, subId);
 
-//             ResultSet rs = stmt.executeQuery();
-
-//             LocalDateTime l1;
-
-//             while (rs.next()) {
-
-//                 Assessment assessment = new Assessment();
-
-//                 assessment.setId(rs.getInt("id"));
-
-//                 assessment.setTestName(rs.getString("name"));
-
-//                 assessment.setDuration(rs.getTimestamp("duration"));
-
-//                 assessment.setSubjectId(rs.getInt("subjectid"));
-
-//                 assessment.setFirstName(rs.getString("firstname"));
-
-//                 assessment.setLastName(rs.getString("lastname"));
-
-//                 assessment.setSubjectExpertId(rs.getInt("smeid"));
-
-//                 assessment.setModificationDate(rs.getTimestamp("modificationdate").toLocalDateTime());
-
-//                 assessment.setCreationDate(rs.getTimestamp("creationdate").toLocalDateTime());
-
-//                 assessment.setScheduleDate(rs.getTimestamp("scheduleddate").toLocalDateTime());
-
-//                 assessment.setPassingLevel(rs.getInt("passinglevel"));
-
-//                 assessment.setStatus(rs.getString("status"));
-
-//                 // set other fields as needed
-//                 assessments.add(assessment);
-
-//             }
-
-//         } catch (SQLException e) {
-
-//             e.printStackTrace();
-
-//         }
-
-//         return assessments;
-
-//     }
-
-//     // getAllEmployees
-//     @Override
-//     public List<Employee> getAllEmployees() {
-//         List<Employee> employees = new ArrayList<>();
-//         String query = "SELECT * FROM employees";
-
-//         try (
-//                 Statement stmt = connection.createStatement(); ResultSet rs = stmt.executeQuery(query)) {
-
-//             while (rs.next()) {
-//                 Employee emp = new Employee();
-//                 emp.setId(rs.getInt("id"));
-//                 emp.setFirstName(rs.getString("firstname"));
-//                 emp.setLastName(rs.getString("lastname"));
-//                 emp.setEmail(rs.getString("email"));
-//                 emp.setContact(rs.getString("contact"));
-//                 employees.add(emp);
-//             }
-
-//         } catch (SQLException e) {
-//             e.printStackTrace();
-//         }
-//         return employees;
-//     }
-
-// // getEmployeeById 
-//     @Override
-//     public Employee getEmployeeById(int userId) {
-//         Employee employee = null;
-
-//         String query = "SELECT * FROM employees WHERE id = ?";
-
-//         try (PreparedStatement stmt = connection.prepareStatement(query)) {
-//             stmt.setInt(1, userId);
-
-//             try (ResultSet rs = stmt.executeQuery()) {
-//                 if (rs.next()) {
-//                     employee = new Employee();
-//                     employee.setId(rs.getInt("id"));
-//                     employee.setFirstName(rs.getString("firstname"));
-//                     employee.setLastName(rs.getString("lastname"));
-//                     employee.setEmail(rs.getString("email"));
-//                     employee.setContact(rs.getString("contact"));
-//                 }
-//             }
-//         } catch (SQLException e) {
-//             e.printStackTrace();
-//         }
-
-//         return employee;
-//     }
-
-// //getAllSubjects
-//     @Override
-//     public List<Subject> getAllSubjects() {
-//         List<Subject> subjects = new ArrayList<>();
-//         String query = "SELECT * FROM subjects";
-
-//         try (PreparedStatement stmt = connection.prepareStatement(query); ResultSet rs = stmt.executeQuery()) {
-
-//             while (rs.next()) {
-//                 Subject subject = new Subject();
-//                 subject.setId(rs.getInt("id"));
-//                 subject.setTitle(rs.getString("title"));
-
-//                 subjects.add(subject);
-//             }
-
-//         } catch (SQLException e) {
-//             System.err.println("Error fetching subjects: " + e.getMessage());
-//         }
-
-//         return subjects;
-//     }
-
-// //getEvaluationCriterias
-//     @Override
-//     public List<EvaluationCriteria> getEvaluationCriterias() {
-//         List<EvaluationCriteria> evaluationCriterias = new ArrayList<>();
-//         String query = "SELECT * FROM evaluationcriterias";
-
-//         try (Statement stmt = connection.createStatement(); ResultSet rs = stmt.executeQuery(query)) {
-
-//             while (rs.next()) {
-//                 EvaluationCriteria evaluationCriteria = new EvaluationCriteria();
-//                 evaluationCriteria.setId(rs.getInt("id"));
-//                 evaluationCriteria.setTitle(rs.getString("title"));
-//                 evaluationCriteria.setSubjectId(rs.getInt("subjectid"));
-
-//                 evaluationCriterias.add(evaluationCriteria);
-//             }
-
-//         } catch (SQLException e) {
-//             System.out.println("Error fetching evaluation criterias: " + e.getMessage());
-//         }
-
-//         return evaluationCriterias;
-//     }
-
-// // getEvaluationCriteriasBySubject
-//     @Override
-//     public List<EvaluationCriteria> getEvaluationCriteriasBySubject(int subjectId) {
-//         List<EvaluationCriteria> criterias = new ArrayList<>();
-
-//         String query = "SELECT * FROM evaluationcriterias WHERE subjectid = ?";
-
-//         try (PreparedStatement stmt = connection.prepareStatement(query)) {
-//             stmt.setInt(1, subjectId);
-
-//             try (ResultSet rs = stmt.executeQuery()) {
-//                 while (rs.next()) {
-//                     EvaluationCriteria criteria = new EvaluationCriteria();
-//                     criteria.setId(rs.getInt("id"));
-//                     criteria.setTitle(rs.getString("title"));
-//                     criteria.setSubjectId(rs.getInt("subjectid"));
-
-//                     criterias.add(criteria);
-//                 }
-//             }
-//         } catch (SQLException e) {
-//             System.err.println("error" + e.getMessage());
-//         }
-
-//         return criterias;
-//     }
 
 //     // addQuestion
 //     @Override
@@ -589,63 +601,63 @@
 
 //     }
 
-//     // getQuestionsByEvaluationCriteriaId 
-//    @Override
-// public List<Question> getQuestionsByEvaluationCriteriaId(int evaluationCriteriaId) {
-//     List<Question> questions = new ArrayList<>();
-//     String query = "SELECT q.id, q.subjectid, q.title, q.a, q.b, q.c, q.d, q.answerkey, q.evaluationcriteriaid " +
-//                    "FROM questionbank q WHERE q.evaluationcriteriaid = ?";
+//     // getQuestionsByConceptsId 
+//     @Override
+//     public List<Question> getQuestionsByConceptsId(int ConceptsId) {
+//         List<Question> questions = new ArrayList<>();
+//         String query = "SELECT q.id, q.subjectid, q.title, q.a, q.b, q.c, q.d, q.answerkey, q.Conceptsid "
+//                 + "FROM questionbank q WHERE q.Conceptsid = ?";
 
-//     try (PreparedStatement stmt = connection.prepareStatement(query)) {
-//         stmt.setInt(1, evaluationCriteriaId);
+//         try (PreparedStatement stmt = connection.prepareStatement(query)) {
+//             stmt.setInt(1, ConceptsId);
 
-//         try (ResultSet rs = stmt.executeQuery()) {
-//             while (rs.next()) {
-//                 Question question = new Question();
-//                 question.setId(rs.getInt("id"));
-//                 question.setSubjectId(rs.getInt("subjectid"));
-//                 question.setTitle(rs.getString("title"));
-//                 question.setA(rs.getString("a"));
-//                 question.setB(rs.getString("b"));
-//                 question.setC(rs.getString("c"));
-//                 question.setD(rs.getString("d"));
-//                 question.setAnswerKey(rs.getString("answerkey"));
-//                 question.setEvaluationCriteriaId(rs.getInt("evaluationcriteriaid"));
+//             try (ResultSet rs = stmt.executeQuery()) {
+//                 while (rs.next()) {
+//                     Question question = new Question();
+//                     question.setId(rs.getInt("id"));
+//                     question.setSubjectId(rs.getInt("subjectid"));
+//                     question.setTitle(rs.getString("title"));
+//                     question.setA(rs.getString("a"));
+//                     question.setB(rs.getString("b"));
+//                     question.setC(rs.getString("c"));
+//                     question.setD(rs.getString("d"));
+//                     question.setAnswerKey(rs.getString("answerkey"));
+//                     question.setConceptsId(rs.getInt("Conceptsid"));
 
-//                 questions.add(question);
+//                     questions.add(question);
+//                 }
 //             }
+//         } catch (SQLException e) {
+//             System.out.println("Error fetching questions: " + e.getMessage());
 //         }
-//     } catch (SQLException e) {
-//         System.out.println("Error fetching questions: " + e.getMessage());
+//         return questions;
 //     }
-//     return questions;
-//    }
+
 //     //updateQuestion
 //     @Override
-// public boolean updateQuestion(Question question) {
-//     try {
-//         String query = "UPDATE questionbank "
-//                      + "SET title = ?, a = ?, b = ?, c = ?, d = ?, answerkey = ? "
-//                      + "WHERE id = ?";
+//     public boolean updateQuestion(Question question) {
+//         try {
+//             String query = "UPDATE questionbank "
+//                     + "SET title = ?, a = ?, b = ?, c = ?, d = ?, answerkey = ? "
+//                     + "WHERE id = ?";
 
-//         PreparedStatement prepareStatement = connection.prepareStatement(query);
+//             PreparedStatement prepareStatement = connection.prepareStatement(query);
 
-//         prepareStatement.setString(1, question.getTitle());
-//         prepareStatement.setString(2, question.getA());
-//         prepareStatement.setString(3, question.getB());
-//         prepareStatement.setString(4, question.getC());
-//         prepareStatement.setString(5, question.getD());
-//         prepareStatement.setString(6, question.getAnswerKey());
-//         prepareStatement.setInt(7, question.getId());
+//             prepareStatement.setString(1, question.getTitle());
+//             prepareStatement.setString(2, question.getA());
+//             prepareStatement.setString(3, question.getB());
+//             prepareStatement.setString(4, question.getC());
+//             prepareStatement.setString(5, question.getD());
+//             prepareStatement.setString(6, question.getAnswerKey());
+//             prepareStatement.setInt(7, question.getId());
 
-//         int rowsUpdated = prepareStatement.executeUpdate();
-//         return rowsUpdated > 0;
-//     } catch (Exception e) {
-//         System.out.println("Error updating question: " + e.getMessage());
+//             int rowsUpdated = prepareStatement.executeUpdate();
+//             return rowsUpdated > 0;
+//         } catch (Exception e) {
+//             System.out.println("Error updating question: " + e.getMessage());
+//         }
+//         return false;
 //     }
-//     return false;
-// }
-
 
 //     // updateTestStatus
 //     @Override
@@ -718,7 +730,7 @@
 //                         .plusSeconds(localTime.getSecond());
 //                 testEmployeeDetails = new TestEmployeeDetails(set.getInt("candidateid"), set.getString("testname"),
 //                         set.getString("passinglevel"), duration, l1, l2, set.getString("status"));
-//                          testEmployeeDetailsList.add(testEmployeeDetails);
+//                 testEmployeeDetailsList.add(testEmployeeDetails);
 //             }
 //             return testEmployeeDetailsList;
 
@@ -750,11 +762,12 @@
 //         }
 //         return status;
 //     }
+
 //     @Override
 //     public boolean reschedule(int assessmentId, Date date) {
-//         String query =  "UPDATE tests JOIN subjects ON tests.subjectid = subjects.id SET tests.scheduleddate = ? WHERE tests.id = ?";
+//         String query = "UPDATE tests JOIN subjects ON tests.subjectid = subjects.id SET tests.scheduleddate = ? WHERE tests.id = ?";
 
-//          try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+//         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 //             preparedStatement.setDate(1, new java.sql.Date(date.getTime()));
 //             preparedStatement.setInt(2, assessmentId);
 //             int rowsAffected = preparedStatement.executeUpdate();
@@ -765,8 +778,7 @@
 //         }
 //     }
 
-
-//  @Override
+//     @Override
 //     public boolean removeQuestion(int assessmentId, int questionId) {
 //         String sql = "DELETE FROM testquestions WHERE testid = ? AND questionbankid = ?;";
 
@@ -780,189 +792,191 @@
 //             return false;
 //         }
 //     }
-// @Override
-// public boolean createTest(CreateTestRequest request) {
-//     String insertTestSQL = "INSERT INTO tests " +
-//             "(name, subject_id, duration, subject_expert_id, creation_date, modification_date, scheduled_date, passing_level, status) " +
-//             "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-//     try (PreparedStatement preparedStatement = connection.prepareStatement(insertTestSQL)) {
-//         LocalDateTime now = LocalDateTime.now();
+//     @Override
+//     public boolean createTest(CreateTestRequest request) {
+//         String insertTestSQL = "INSERT INTO tests "
+//                 + "(name, subject_id, duration, subject_expert_id, creation_date, modification_date, scheduled_date, passing_level, status) "
+//                 + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-//         preparedStatement.setString(1, request.getName());
-//         preparedStatement.setInt(2, request.getSubjectId());
-//         preparedStatement.setString(3, request.getDuration());
-//         preparedStatement.setInt(4, request.getSubjectExpertId());
+//         try (PreparedStatement preparedStatement = connection.prepareStatement(insertTestSQL)) {
+//             LocalDateTime now = LocalDateTime.now();
 
-//         preparedStatement.setTimestamp(5, Timestamp.valueOf(now));
-//         preparedStatement.setTimestamp(6, Timestamp.valueOf(now));
-//         preparedStatement.setTimestamp(7, Timestamp.valueOf(request.getScheduledDate()));
+//             preparedStatement.setString(1, request.getName());
+//             preparedStatement.setInt(2, request.getSubjectId());
+//             preparedStatement.setString(3, request.getDuration());
+//             preparedStatement.setInt(4, request.getSubjectExpertId());
 
-//         preparedStatement.setInt(8, request.getPassingLevel());
-//         preparedStatement.setString(9, "created");  // default status
+//             preparedStatement.setTimestamp(5, Timestamp.valueOf(now));
+//             preparedStatement.setTimestamp(6, Timestamp.valueOf(now));
+//             preparedStatement.setTimestamp(7, Timestamp.valueOf(request.getScheduledDate()));
 
-//         int rowsAffected = preparedStatement.executeUpdate();
-//         return rowsAffected > 0;
+//             preparedStatement.setInt(8, request.getPassingLevel());
+//             preparedStatement.setString(9, "created");  // default status
 
-//     } catch (SQLException e) {
-//         e.printStackTrace();
-//         return false;  
-//     }}
+//             int rowsAffected = preparedStatement.executeUpdate();
+//             return rowsAffected > 0;
 
-// @Override
-// public int createTestWithQuestions(CreateTestWithQuestions createTestWithQuestions) {
-//     int testId = -1;
-//     String insertTestSQL = "INSERT INTO tests " +
-//             "(name, smeid, subjectid, creationdate, modificationdate, scheduleddate, passinglevel, duration) " +
-//             "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-
-//     try (PreparedStatement preparedStatement = connection.prepareStatement(insertTestSQL, Statement.RETURN_GENERATED_KEYS)) {
-//         LocalDateTime now = LocalDateTime.now();
-
-//         preparedStatement.setString(1, createTestWithQuestions.getName());
-//         preparedStatement.setInt(2, createTestWithQuestions.getSmeId());
-//         preparedStatement.setInt(3, createTestWithQuestions.getSubjectId());
-//         preparedStatement.setTimestamp(4, Timestamp.valueOf(now));
-//         preparedStatement.setTimestamp(5, Timestamp.valueOf(now));
-//         preparedStatement.setTimestamp(6, Timestamp.valueOf(createTestWithQuestions.getScheduledDate()));
-//         preparedStatement.setInt(7, createTestWithQuestions.getPassingLevel());
-//         preparedStatement.setString(8, createTestWithQuestions.getDuration());
-
-//         int rowsAffected = preparedStatement.executeUpdate();
-
-//         if (rowsAffected > 0) {
-//             try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
-//                 if (generatedKeys.next()) {
-//                     testId = generatedKeys.getInt(1);
-//                 }
-//             }
+//         } catch (SQLException e) {
+//             e.printStackTrace();
+//             return false;
 //         }
-
-//         // Insert questions into testquestions table
-//         if (testId > 0 && createTestWithQuestions.getQuestionIds() != null) {
-//             String insertQuestionSQL = "INSERT INTO testquestions (testid, questionbankid) VALUES (?, ?)";
-//             try (PreparedStatement stmt = connection.prepareStatement(insertQuestionSQL)) {
-//                 for (Integer questionId : createTestWithQuestions.getQuestionIds()) {
-//                     stmt.setInt(1, testId);
-//                     stmt.setInt(2, questionId);
-//                     stmt.addBatch();
-//                 }
-//                 stmt.executeBatch();
-//             }
-//         }
-//     } catch (SQLException e) {
-//         System.out.println("Error creating test with questions: " + e.getMessage());
 //     }
 
-//     return testId;
-// }
+//     @Override
+//     public int createTestWithQuestions(CreateTestWithQuestions createTestWithQuestions) {
+//         int testId = -1;
+//         String insertTestSQL = "INSERT INTO tests "
+//                 + "(name, smeid, subjectid, creationdate, modificationdate, scheduleddate, passinglevel, duration) "
+//                 + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
-// @Override
-// public List<SubjectQuestion> getAllQuestionsBySubject(int subjectId) {
-//     List<SubjectQuestion> subjectQuestionsList = new ArrayList<>();
+//         try (PreparedStatement preparedStatement = connection.prepareStatement(insertTestSQL, Statement.RETURN_GENERATED_KEYS)) {
+//             LocalDateTime now = LocalDateTime.now();
 
-//     String query = "SELECT q.id AS questionId, q.title AS question, q.subjectid, s.title AS subject " +
-//             "FROM questionbank q " +
-//             "INNER JOIN subjects s ON q.subjectid = s.id " +
-//             "WHERE q.subjectid = ?";
+//             preparedStatement.setString(1, createTestWithQuestions.getName());
+//             preparedStatement.setInt(2, createTestWithQuestions.getSmeId());
+//             preparedStatement.setInt(3, createTestWithQuestions.getSubjectId());
+//             preparedStatement.setTimestamp(4, Timestamp.valueOf(now));
+//             preparedStatement.setTimestamp(5, Timestamp.valueOf(now));
+//             preparedStatement.setTimestamp(6, Timestamp.valueOf(createTestWithQuestions.getScheduledDate()));
+//             preparedStatement.setInt(7, createTestWithQuestions.getPassingLevel());
+//             preparedStatement.setString(8, createTestWithQuestions.getDuration());
 
-//     try (PreparedStatement stmt = connection.prepareStatement(query)) {
-//         stmt.setInt(1, subjectId);
+//             int rowsAffected = preparedStatement.executeUpdate();
 
-//         try (ResultSet rs = stmt.executeQuery()) {
-//             while (rs.next()) {
-//                 SubjectQuestion subjectQuestion = new SubjectQuestion();
-
-//                 subjectQuestion.setQuestionId(rs.getInt("questionId"));
-//                 subjectQuestion.setQuestion(rs.getString("question"));
-//                 subjectQuestion.setSubjectId(rs.getInt("subjectid"));
-//                 subjectQuestion.setSubject(rs.getString("subject"));
-
-//                 subjectQuestionsList.add(subjectQuestion);
+//             if (rowsAffected > 0) {
+//                 try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
+//                     if (generatedKeys.next()) {
+//                         testId = generatedKeys.getInt(1);
+//                     }
+//                 }
 //             }
+
+//             // Insert questions into testquestions table
+//             if (testId > 0 && createTestWithQuestions.getQuestionIds() != null) {
+//                 String insertQuestionSQL = "INSERT INTO testquestions (testid, questionbankid) VALUES (?, ?)";
+//                 try (PreparedStatement stmt = connection.prepareStatement(insertQuestionSQL)) {
+//                     for (Integer questionId : createTestWithQuestions.getQuestionIds()) {
+//                         stmt.setInt(1, testId);
+//                         stmt.setInt(2, questionId);
+//                         stmt.addBatch();
+//                     }
+//                     stmt.executeBatch();
+//                 }
+//             }
+//         } catch (SQLException e) {
+//             System.out.println("Error creating test with questions: " + e.getMessage());
 //         }
-//     } catch (SQLException e) {
-//         System.out.println("Error fetching questions by subject: " + e.getMessage());
+
+//         return testId;
 //     }
 
-//     return subjectQuestionsList;
-// }
+//     @Override
+//     public List<SubjectQuestion> getAllQuestionsBySubject(int subjectId) {
+//         List<SubjectQuestion> subjectQuestionsList = new ArrayList<>();
 
-// @Override
-// public CompletableFuture<List<Concepts>> getConcepts() {
-//     // TODO Auto-generated method stub
-//     throw new UnsupportedOperationException("Unimplemented method 'getConcepts'");
-// }
+//         String query = "SELECT q.id AS questionId, q.title AS question, q.subjectid, s.title AS subject "
+//                 + "FROM questionbank q "
+//                 + "INNER JOIN subjects s ON q.subjectid = s.id "
+//                 + "WHERE q.subjectid = ?";
 
-// @Override
-// public CompletableFuture<List<Concepts>> getConceptsBySubject(int subjectId) {
-//     // TODO Auto-generated method stub
-//     throw new UnsupportedOperationException("Unimplemented method 'getConceptsBySubject'");
-// }
+//         try (PreparedStatement stmt = connection.prepareStatement(query)) {
+//             stmt.setInt(1, subjectId);
 
-// @Override
-// public CompletableFuture<Integer> createTestWithQuestionsAsync(CreateTestWithQuestions createTestWithQuestions) {
-//     // TODO Auto-generated method stub
-//     throw new UnsupportedOperationException("Unimplemented method 'createTestWithQuestionsAsync'");
-// }
+//             try (ResultSet rs = stmt.executeQuery()) {
+//                 while (rs.next()) {
+//                     SubjectQuestion subjectQuestion = new SubjectQuestion();
 
-// @Override
-// public CompletableFuture<List<Question>> getQuestionsByConceptId(int ConceptId) {
-//     // TODO Auto-generated method stub
-//     throw new UnsupportedOperationException("Unimplemented method 'getQuestionsByConceptId'");
-// }
+//                     subjectQuestion.setQuestionId(rs.getInt("questionId"));
+//                     subjectQuestion.setQuestion(rs.getString("question"));
+//                     subjectQuestion.setSubjectId(rs.getInt("subjectid"));
+//                     subjectQuestion.setSubject(rs.getString("subject"));
 
-// @Override
-// public CompletableFuture<Integer> GetTestCountByStatus(String status) {
-//     // TODO Auto-generated method stub
-//     throw new UnsupportedOperationException("Unimplemented method 'GetTestCountByStatus'");
-// }
+//                     subjectQuestionsList.add(subjectQuestion);
+//                 }
+//             }
+//         } catch (SQLException e) {
+//             System.out.println("Error fetching questions by subject: " + e.getMessage());
+//         }
 
-// @Override
-// public CompletableFuture<List<TestDetails>> GetAllTestByStatus(String status) {
-//     // TODO Auto-generated method stub
-//     throw new UnsupportedOperationException("Unimplemented method 'GetAllTestByStatus'");
-// }
+//         return subjectQuestionsList;
+//     }
 
-// @Override
-// public CompletableFuture<List<Subject>> GetSubjectBySME(int smeid) {
-//     // TODO Auto-generated method stub
-//     throw new UnsupportedOperationException("Unimplemented method 'GetSubjectBySME'");
-// }
+//     @Override
+//     public CompletableFuture<List<Concepts>> getConcepts() {
+//         // TODO Auto-generated method stub
+//         throw new UnsupportedOperationException("Unimplemented method 'getConcepts'");
+//     }
 
-// @Override
-// public CompletableFuture<List<TestDetails>> GetSmeTestList(int smeId) {
-//     // TODO Auto-generated method stub
-//     throw new UnsupportedOperationException("Unimplemented method 'GetSmeTestList'");
-// }
+//     @Override
+//     public CompletableFuture<List<Concepts>> getConceptsBySubject(int subjectId) {
+//         // TODO Auto-generated method stub
+//         throw new UnsupportedOperationException("Unimplemented method 'getConceptsBySubject'");
+//     }
 
-// @Override
-// public CompletableFuture<List<CandidateAssessmentHistory>> GetAssesmentHistory(int candidateid) {
-//     // TODO Auto-generated method stub
-//     throw new UnsupportedOperationException("Unimplemented method 'GetAssesmentHistory'");
-// }
+//     @Override
+//     public CompletableFuture<Integer> createTestWithQuestionsAsync(CreateTestWithQuestions createTestWithQuestions) {
+//         // TODO Auto-generated method stub
+//         throw new UnsupportedOperationException("Unimplemented method 'createTestWithQuestionsAsync'");
+//     }
 
-// @Override
-// public CompletableFuture<List<ConceptWithCorrectAns>> GetConceptwiseCorrectAnswer(int candidateid) {
-//     // TODO Auto-generated method stub
-//     throw new UnsupportedOperationException("Unimplemented method 'GetConceptwiseCorrectAnswer'");
-// }
+//     @Override
+//     public CompletableFuture<List<Question>> getQuestionsByConceptId(int ConceptId) {
+//         // TODO Auto-generated method stub
+//         throw new UnsupportedOperationException("Unimplemented method 'getQuestionsByConceptId'");
+//     }
 
-// @Override
-// public CompletableFuture<List<TestEmployeeDetails>> GetAssessmentEmployeeDetails(int assessmentId, int candidateId) {
-//     // TODO Auto-generated method stub
-//     throw new UnsupportedOperationException("Unimplemented method 'GetAssessmentEmployeeDetails'");
-// }
+//     @Override
+//     public CompletableFuture<Integer> GetTestCountByStatus(String status) {
+//         // TODO Auto-generated method stub
+//         throw new UnsupportedOperationException("Unimplemented method 'GetTestCountByStatus'");
+//     }
 
-// @Override
-// public CompletableFuture<TimeConfig> GetBufferTimeAsync() {
-//     // TODO Auto-generated method stub
-//     throw new UnsupportedOperationException("Unimplemented method 'GetBufferTimeAsync'");
-// }
+//     @Override
+//     public CompletableFuture<List<TestDetails>> GetAllTestByStatus(String status) {
+//         // TODO Auto-generated method stub
+//         throw new UnsupportedOperationException("Unimplemented method 'GetAllTestByStatus'");
+//     }
 
-// @Override
-// public CompletableFuture<Boolean> UpdateBufferTimeAsync(int bufferTime) {
-//     // TODO Auto-generated method stub
-//     throw new UnsupportedOperationException("Unimplemented method 'UpdateBufferTimeAsync'");
-// }
-// }
+//     @Override
+//     public CompletableFuture<List<Subject>> GetSubjectBySME(int smeid) {
+//         // TODO Auto-generated method stub
+//         throw new UnsupportedOperationException("Unimplemented method 'GetSubjectBySME'");
+//     }
+
+//     @Override
+//     public CompletableFuture<List<TestDetails>> GetSmeTestList(int smeId) {
+//         // TODO Auto-generated method stub
+//         throw new UnsupportedOperationException("Unimplemented method 'GetSmeTestList'");
+//     }
+
+//     @Override
+//     public CompletableFuture<List<CandidateAssessmentHistory>> GetAssesmentHistory(int candidateid) {
+//         // TODO Auto-generated method stub
+//         throw new UnsupportedOperationException("Unimplemented method 'GetAssesmentHistory'");
+//     }
+
+//     @Override
+//     public CompletableFuture<List<ConceptWithCorrectAns>> GetConceptwiseCorrectAnswer(int candidateid) {
+//         // TODO Auto-generated method stub
+//         throw new UnsupportedOperationException("Unimplemented method 'GetConceptwiseCorrectAnswer'");
+//     }
+
+//     @Override
+//     public CompletableFuture<List<TestEmployeeDetails>> GetAssessmentEmployeeDetails(int assessmentId, int candidateId) {
+//         // TODO Auto-generated method stub
+//         throw new UnsupportedOperationException("Unimplemented method 'GetAssessmentEmployeeDetails'");
+//     }
+
+//     @Override
+//     public CompletableFuture<TimeConfig> GetBufferTimeAsync() {
+//         // TODO Auto-generated method stub
+//         throw new UnsupportedOperationException("Unimplemented method 'GetBufferTimeAsync'");
+//     }
+
+//     @Override
+//     public CompletableFuture<Boolean> UpdateBufferTimeAsync(int bufferTime) {
+//         // TODO Auto-generated method stub
+//         throw new UnsupportedOperationException("Unimplemented method 'UpdateBufferTimeAsync'");
+//     }
+}
