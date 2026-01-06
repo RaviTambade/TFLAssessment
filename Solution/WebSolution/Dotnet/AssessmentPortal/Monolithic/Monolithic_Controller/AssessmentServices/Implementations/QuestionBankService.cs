@@ -1,9 +1,9 @@
 using Transflower.TFLAssessment.Entities;
 using Transflower.TFLAssessment.Services.Interfaces;
-using  Transflower.TFLAssessment.Repositories.Interfaces;
+using Transflower.TFLAssessment.Repositories.Interfaces;
 namespace Transflower.TFLAssessment.Services;
 
-public class QuestionBankService:IQuestionBankService
+public class QuestionBankService : IQuestionBankService
 {
     private readonly IQuestionBankRepository _repository;
     public QuestionBankService(IQuestionBankRepository repository)
@@ -11,71 +11,73 @@ public class QuestionBankService:IQuestionBankService
         _repository = repository;
     }
 
-    public async Task<List<QuestionTitle>> GetAllQuestions(){
-      return await _repository.GetAllQuestions();
+    public async Task<List<QuestionTitle>> GetAllQuestions()
+    {
+        return await _repository.GetAllQuestions();
     }
 
     public async Task<List<SubjectQuestion>> GetQuestionsBySubject(int id)
     {
         return await _repository.GetQuestionsBySubject(id);
-        
+
     }
 
-    public async Task<List<QuestionDetails>> GetQuestionsBySubjectAndConcept(int subjectId,int conceptId)
+    public async Task<List<QuestionDetails>> GetQuestionsBySubjectAndConcept(int subjectId, int conceptId)
     {
         return await _repository.GetQuestionsBySubjectAndConcept(subjectId, conceptId);
-       
+
     }
     public async Task<List<QuestionDetails>> GetQuestionsBySubjectAndConceptWithOptions(int subjectId, int conceptId)
     {
-                return await _repository.GetQuestionsBySubjectAndConceptWithOptions(subjectId, conceptId);
+        return await _repository.GetQuestionsBySubjectAndConceptWithOptions(subjectId, conceptId);
 
     }
     public async Task<List<QuestionDetails>> GetQuestionsBySubjectAndConceptWithOptionsAndAnswer(int subjectId, int conceptId)
     {
-                return await _repository.GetQuestionsBySubjectAndConceptWithOptionsAndAnswer(subjectId, conceptId);
+        return await _repository.GetQuestionsBySubjectAndConceptWithOptionsAndAnswer(subjectId, conceptId);
 
     }
-    public async Task<List<QuestionDetails>> GetQuestionsBySubjectAndConceptAndQuestionId(int subjectId,int conceptId,int questionId)
+    public async Task<List<QuestionDetails>> GetQuestionsBySubjectAndConceptAndQuestionId(int subjectId, int conceptId, int questionId)
     {
-                return await _repository.GetQuestionsBySubjectAndConceptAndQuestionId(subjectId, conceptId, questionId);
+        return await _repository.GetQuestionsBySubjectAndConceptAndQuestionId(subjectId, conceptId, questionId);
 
     }
 
-    
-      public async Task<List<QuestionDetails>> GetQuestionsWithSubjectAndConcept()
+
+    public async Task<List<QuestionDetails>> GetQuestionsWithSubjectAndConcept()
     {
         return await _repository.GetQuestionsWithSubjectAndConcept();
-       
+
     }
 
-    public async Task<bool> UpdateAnswer(int id, char answerKey){
-       return await _repository.UpdateAnswer(id,answerKey);
+    public async Task<bool> UpdateAnswer(int id, char answerKey)
+    {
+        return await _repository.UpdateAnswer(id, answerKey);
     }
 
     public async Task<Question> GetQuestion(int questionId)
-    {   
+    {
         return await _repository.GetQuestion(questionId);
     }
 
     public async Task<List<Question>> GetQuestions(int assessmentId)
-    { 
-       return await _repository.GetQuestions(assessmentId);
+    {
+        return await _repository.GetQuestions(assessmentId);
     }
 
-    public async Task<bool> UpdateQuestionOptions(int id,Question options)
-    { 
-       return await _repository.UpdateQuestionOptions(id,options);
-      
+    public async Task<bool> UpdateQuestionOptions(int id, Question options)
+    {
+        return await _repository.UpdateQuestionOptions(id, options);
+
     }
 
 
     //update only evaluationcriteriaid
-    public async Task<bool> UpdateSubjectConcept(int questionId,Question question)
+    public async Task<bool> UpdateSubjectConcept(int questionId, Question question)
     {
-        return await _repository.UpdateSubjectConcept(questionId,question);
-        
-       
+        return await _repository.UpdateSubjectConcept(questionId, question);
+
+
     }
 
 
@@ -85,13 +87,13 @@ public class QuestionBankService:IQuestionBankService
         {
             throw new ArgumentNullException(nameof(question), "Question cannot be null");
         }
-       return await _repository.InsertQuestion(question);
+        return await _repository.InsertQuestion(question);
     }
 
-    
+
     public async Task<string> GetConcept(string subject, int questionId)
     {
-        return await _repository.GetConcept(subject,questionId);
+        return await _repository.GetConcept(subject, questionId);
     }
 
 
@@ -99,5 +101,11 @@ public class QuestionBankService:IQuestionBankService
     {
         return await _repository.GetSubjectQuestionCount();
     }
+    public async Task<List<Question>> GetQuestionsByConceptAndLevel(int subjectId, int conceptId, string difficultyLevel)
+    {
+        return await _repository.GetQuestionsByConceptAndLevel(subjectId, conceptId, difficultyLevel);
+    }
+
+
 }
 
