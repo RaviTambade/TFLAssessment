@@ -495,8 +495,9 @@ public async Task<List<Employee>> GetAllEmployees()
                 b,
                 c,
                 d
-            FROM questionbank
-            WHERE subjectid = @subjectId";
+            FROM questionbank qb
+            join subject_concepts sc on sc.subject_concept_id=qb.subject_concept_id
+            WHERE sc.subject_id = @subjectId";
 
         using (IDbConnection con = new MySqlConnection(_connectionString))
         {

@@ -59,7 +59,9 @@ public class QuestionBankRepository : IQuestionBankRepository
     {
 
         List<SubjectQuestion> questions = new List<SubjectQuestion>();
-        string query = @"select questionbank.id as questionid, questionbank.title as question, subjects.title as subject, subjects.id as subjectid from questionbank, subjects where questionbank.subjectid=subjects.id and subjects.id=@SubjectId";
+        string query = @" select qb.id as questionid, qb.title as question, s.title as subject, s.id as subjectid from questionbank qb join subject_concepts sc
+on qb.subject_concept_id=sc.subject_concept_id  JOIN  subjects s on s.id=sc.subject_id
+where sc.subject_id=3;";
         MySqlConnection connection = new MySqlConnection(_connectionString);
         MySqlCommand command = new MySqlCommand(query, connection);
         command.Parameters.AddWithValue("@SubjectId", id);
