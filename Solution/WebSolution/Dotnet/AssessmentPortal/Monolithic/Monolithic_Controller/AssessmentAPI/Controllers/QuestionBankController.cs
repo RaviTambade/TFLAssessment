@@ -208,4 +208,26 @@ public class QuestionBankController : ControllerBase
         return Ok(subjectQuestionCount);
     }
 
+   
+    // GET: api/questions/by-concept
+   [HttpGet("conceptId/{conceptId}/subjectId/{subjectId}/difficultyLevel/{difficultyLevel}")]
+public async Task<IActionResult> GetQuestionsByConceptAndLevel(int conceptId, int subjectId, string difficultyLevel)
+{
+    if (subjectId <= 0 || conceptId <= 0 || string.IsNullOrEmpty(difficultyLevel))
+    {
+        return BadRequest("Invalid parameters.");
+    }
+
+    var questions = await _svc.GetQuestionsByConceptAndLevel(
+        subjectId, conceptId, difficultyLevel);
+
+    if (questions == null || questions.Count == 0)
+    {
+        return NotFound("No questions found.");
+    }
+
+    return Ok(questions);
 }
+
+}
+

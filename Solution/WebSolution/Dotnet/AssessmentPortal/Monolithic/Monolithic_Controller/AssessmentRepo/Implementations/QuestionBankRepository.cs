@@ -60,8 +60,8 @@ public class QuestionBankRepository : IQuestionBankRepository
 
         List<SubjectQuestion> questions = new List<SubjectQuestion>();
         string query = @" select qb.id as questionid, qb.title as question, s.title as subject, s.id as subjectid from questionbank qb join subject_concepts sc
-             on qb.subject_concept_id=sc.subject_concept_id  JOIN  subjects s on s.id=sc.subject_id
-            where sc.subject_id=3;";
+on qb.subject_concept_id=sc.subject_concept_id  JOIN  subjects s on s.id=sc.subject_id
+where sc.subject_id=@SubjectId;";
         MySqlConnection connection = new MySqlConnection(_connectionString);
         MySqlCommand command = new MySqlCommand(query, connection);
         command.Parameters.AddWithValue("@SubjectId", id);
@@ -148,7 +148,7 @@ public class QuestionBankRepository : IQuestionBankRepository
     }
 
 
-     public async Task<List<QuestionDetails>> GetQuestionsBySubjectAndConceptWithOptions(int subjectId, int conceptId)
+    public async Task<List<QuestionDetails>> GetQuestionsBySubjectAndConceptWithOptions(int subjectId, int conceptId)
     {
 
         List<QuestionDetails> questions = new List<QuestionDetails>();
@@ -174,10 +174,10 @@ public class QuestionBankRepository : IQuestionBankRepository
                 string strQuestion = reader["title"].ToString();
                 string subject = reader["subject"].ToString();
                 string criteria = reader["concept"].ToString();
-                string optionA=reader["optionA"].ToString();
-                string optionB=reader["optionB"].ToString();
-                string optionC=reader["optionC"].ToString();
-                string optionD=reader["optionD"].ToString();
+                string optionA = reader["optionA"].ToString();
+                string optionB = reader["optionB"].ToString();
+                string optionC = reader["optionC"].ToString();
+                string optionD = reader["optionD"].ToString();
 
 
 
@@ -238,11 +238,11 @@ public class QuestionBankRepository : IQuestionBankRepository
                 string strQuestion = reader["title"].ToString();
                 string subject = reader["subject"].ToString();
                 string criteria = reader["concept"].ToString();
-                string optionA=reader["optionA"].ToString();
-                string optionB=reader["optionB"].ToString();
-                string optionC=reader["optionC"].ToString();
-                string optionD=reader["optionD"].ToString();
-                string result=reader["result"].ToString();
+                string optionA = reader["optionA"].ToString();
+                string optionB = reader["optionB"].ToString();
+                string optionC = reader["optionC"].ToString();
+                string optionD = reader["optionD"].ToString();
+                string result = reader["result"].ToString();
 
 
 
@@ -259,7 +259,7 @@ public class QuestionBankRepository : IQuestionBankRepository
                 question.B = optionB;
                 question.C = optionC;
                 question.D = optionD;
-                question.result=result;
+                question.result = result;
                 questions.Add(question);
             }
             await reader.CloseAsync();
@@ -274,7 +274,7 @@ public class QuestionBankRepository : IQuestionBankRepository
         }
         return questions;
     }
-    public async Task<List<QuestionDetails>> GetQuestionsBySubjectAndConceptAndQuestionId(int subjectId,int conceptId,int questionId)
+    public async Task<List<QuestionDetails>> GetQuestionsBySubjectAndConceptAndQuestionId(int subjectId, int conceptId, int questionId)
     {
 
         List<QuestionDetails> questions = new List<QuestionDetails>();
@@ -300,7 +300,7 @@ public class QuestionBankRepository : IQuestionBankRepository
                 Console.WriteLine("strQuestion" + strQuestion);
                 string subject = reader["subject"].ToString();
                 string criteria = reader["concept"].ToString();
-    
+
                 QuestionDetails question = new QuestionDetails();
                 question.Id = id;
                 question.QuestionId = qid;
@@ -615,7 +615,7 @@ public class QuestionBankRepository : IQuestionBankRepository
 
         int testId = await GetTestIdByAssessmentId(assessment);
         Console.WriteLine("Test Id in Question Bank Repository: " + testId);
-        
+
         List<Question> questions = new List<Question>();
         string query = @"
             SELECT 
@@ -674,7 +674,7 @@ public class QuestionBankRepository : IQuestionBankRepository
            select count(q.title) as questionCount, s.title ,s.id as subjectId from questionbank q
             join subjects s on s.id=q.subjectid group by(subjectid);";
 
-        List<SubjectQuestionCount>subjectQuestionCounts = new List<SubjectQuestionCount>();
+        List<SubjectQuestionCount> subjectQuestionCounts = new List<SubjectQuestionCount>();
         using (MySqlConnection connection = new MySqlConnection(_connectionString))
         using (MySqlCommand command = new MySqlCommand(query, connection))
         {
@@ -691,7 +691,7 @@ public class QuestionBankRepository : IQuestionBankRepository
                     questionCount.QuestionCount = Convert.ToInt32(reader["questionCount"]);
                     subject.Id = Convert.ToInt32(reader["subjectId"]);
                     subject.Title = reader["title"].ToString();
-                    questionCount.subject=subject;
+                    questionCount.subject = subject;
                     subjectQuestionCounts.Add(questionCount);
                 }
             }
@@ -703,6 +703,54 @@ public class QuestionBankRepository : IQuestionBankRepository
 
         return subjectQuestionCounts;
     }
+    public async Task<List<Question>> GetQuestionsByConceptAndLevel(int subjectId, int conceptId, string difficultyLevel)
+    {
+        string query = @"
+        SELECT 
+            q.id,
+            q.title
+        FROM questionbank q
+        JOIN subject_concepts sc 
+            ON q.subject_concept_id = sc.subject_concept_id
+        WHERE sc.concept_id = @conceptId
+          AND sc.subject_id = @subjectId
+          AND q.difficulty_level = @difficultyLevel;";
+
+        List<Question> questions = new List<Question>();
+
+        using (MySqlConnection connection = new MySqlConnection(_connectionString))
+        using (MySqlCommand command = new MySqlCommand(query, connection))
+        {
+            command.Parameters.AddWithValue("@conceptId", conceptId);
+            command.Parameters.AddWithValue("@subjectId", subjectId);
+            command.Parameters.AddWithValue("@difficultyLevel", difficultyLevel);
+
+            try
+            {
+                await connection.OpenAsync();
+                var reader = await command.ExecuteReaderAsync();
+                {
+                    while (await reader.ReadAsync())
+                    {
+                        Question question = new Question
+                        {
+                            Id = Convert.ToInt32(reader["id"]),
+                            Title = reader["title"].ToString()
+                        };
+
+                        questions.Add(question);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+
+        return questions;
+    }
+
 
 }
 
