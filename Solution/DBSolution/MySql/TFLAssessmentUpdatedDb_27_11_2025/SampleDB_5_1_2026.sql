@@ -6427,7 +6427,18 @@ INSERT INTO questionbank (subject_concept_id,title, a, b, c, d, answerkey, diffi
 (146,'Which tool is used to detect expensive queries in real-time production system?','Query Profiler / Execution Plan','Backup tool','Data dictionary','Transaction log','A','Expert','Sanika Bhor'),
 (146,'Which trade-off is accepted when creating multiple indexes for performance?','Increased storage and slower writes','Slower reads','Reduced consistency','Ignore constraints','A','Expert','Sanika Bhor');
 
-
+INSERT INTO questionbank 
+(subject_concept_id, title, a, b, c, d, answerkey, difficulty_level, created_by)
+VALUES
+(146,
+ 'Which security feature ensures that users can only see rows they are authorized to access?',
+ 'Column-level privileges',
+ 'Row-Level Security (RLS)',
+ 'Data masking',
+ 'Table partitioning',
+ 'B',
+ 'Expert',
+ 'Sanika Bhor');
 
 
 
