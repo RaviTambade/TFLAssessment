@@ -164,7 +164,7 @@
       //rest api urls Monolithic
       var remoteWeb = "http://localhost:5238"
 
-      var questionUrl = "http://localhost:5238/api/questionbank/questions/tests/"+testId;
+      var questionUrl = "http://localhost:5238/api/questionbank/questions/tests/"+assessmentId;
       var startTimeUrl = "http://localhost:5238/api/result/setstarttime/"+candidateId+"/tests/"+testId;
       var candidateanswersurl = remoteWeb + "/answersheet/candidates/";
       var endTimeUrl = "http://localhost:5238/api/result/setendtime/"+candidateId+"/tests/"+testId;
@@ -233,9 +233,8 @@
             finalCandidateAnswers.push({ "TestQuestionId": questionId, "AnswerKey": answer });
           })
           console.log(finalCandidateAnswers);
-
         
-                    let assessmentAnswersUrl = `http://localhost:5238/api/candidateanswer/assessmentanswers/candidates/${candidateId}/assessments/${assessmentId}`;
+          let assessmentAnswersUrl = `http://localhost:5238/api/candidateanswer/assessmentanswers/candidates/${candidateId}/assessments/${assessmentId}`;
 
           $.ajax({
             url: assessmentAnswersUrl,
@@ -263,7 +262,7 @@
               console.log(response);
 
               setTimeout(() => {
-                window.location.href = `correctAnswerJWT.html?userid=${candidateId}&testid=${testId}`; 
+                window.location.href = `correctAnswerJWT.html?userid=${candidateId}&testid=${assessmentId}`; 
               }, 1000);
             },
             error: function (xhr, status, error) {
