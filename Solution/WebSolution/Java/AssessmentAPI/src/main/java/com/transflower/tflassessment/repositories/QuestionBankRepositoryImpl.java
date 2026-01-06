@@ -101,7 +101,7 @@ public class QuestionBankRepositoryImpl implements QuestionBankRepository {
     }
 
     @Override
-    public List<QuestionDetails> getQuestionsBySubjectAndConcept(int subjectId, int conceptId) {
+    public List<QuestionDetails> getQuestionsBySubjectAndConcept(int subject_concept_id , int conceptId) {
         List<QuestionDetails> questions = new ArrayList<>();
         String query = "SELECT questionbank.id, questionbank.id as questionid, questionbank.title, subjects.title AS subject, concepts.title AS concept " +
                        "FROM questionbank, subjects, concepts " +
@@ -111,7 +111,7 @@ public class QuestionBankRepositoryImpl implements QuestionBankRepository {
         try (
              PreparedStatement statement = connection.prepareStatement(query)) {
 
-            statement.setInt(1, subjectId);
+            statement.setInt(1, subject_concept_id);
             statement.setInt(2, conceptId);
             ResultSet resultSet = statement.executeQuery();
 
@@ -134,9 +134,13 @@ public class QuestionBankRepositoryImpl implements QuestionBankRepository {
     @Override
     public List<QuestionDetails> getQuestionsWithSubjectAndConcept() {
         List<QuestionDetails> questions = new ArrayList<>();
-        String query = "SELECT questionbank.id, questionbank.title, subjects.title AS subject, concepts.title AS concept " +
-                       "FROM questionbank, subjects, concepts " +
-                       "WHERE questionbank.subjectid = subjects.id AND questionbank.conceptid = concepts.id";
+        String query = 
+    "SELECT qb.id, sc.subject_concept_id, qb.title, " +
+    "s.title AS subject, c.title AS concept " +
+    "FROM questionbank qb " +
+    "JOIN subject_concepts sc ON qb.subject_concept_id = sc.subject_concept_id " +
+    "JOIN subjects s ON s.id = sc.subject_id " +
+    "JOIN concepts c ON c.id = sc.concept_id";
 
         try (
             PreparedStatement statement = connection.prepareStatement(query);
@@ -144,10 +148,11 @@ public class QuestionBankRepositoryImpl implements QuestionBankRepository {
 
             while (resultSet.next()) {
                 int id = resultSet.getInt("id");
-                String question = resultSet.getString("question");
+                int subject_concept_id = resultSet.getInt("subject_concept_id");
+                String question=resultSet.getString("title");
                 String subject = resultSet.getString("subject");
-                String criteria = resultSet.getString("criteria");
-                questions.add(new QuestionDetails(id, question, subject, criteria));
+                String concept = resultSet.getString("concept");
+                questions.add(new QuestionDetails(id, subject_concept_id, question, subject, concept));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -165,7 +170,7 @@ public class QuestionBankRepositoryImpl implements QuestionBankRepository {
     String query = " SELECT" + 
                 "testquestions.id AS testquestionid, \r\n" + 
                 "questionbank.id AS questionbankid,\r\n" + 
-                "questionbank.subjectid,\r\n" + 
+                "questionbank.subject_concept_id,\r\n" + 
                 "questionbank.title,\r\n" + 
                 "questionbank.a,\r\n" + 
                 "questionbank.b,\r\n" + 
@@ -186,7 +191,7 @@ public class QuestionBankRepositoryImpl implements QuestionBankRepository {
             while (resultSet.next()) {
                 Question question = new Question();
                 question.setId(resultSet.getInt("testquestionid")); 
-                question.setSubjectId(resultSet.getInt("subjectid"));
+                question.setsubject_concept_id(resultSet.getInt("subject_concept_id"));
                 question.setTitle(resultSet.getString("title"));
                 question.setA(resultSet.getString("a"));
                 question.setB(resultSet.getString("b"));
@@ -240,7 +245,7 @@ public class QuestionBankRepositoryImpl implements QuestionBankRepository {
             if (result.next()) {
                 question = new Question();
                 question.setId(questionId);
-                question.setSubjectId(result.getInt("subjectid"));
+                question.setsubject_concept_id(result.getInt("subject_concept_id"));
                 question.setTitle(result.getString("title"));
                 question.setA(result.getString("a"));
                 question.setB(result.getString("b"));
@@ -291,7 +296,7 @@ public class QuestionBankRepositoryImpl implements QuestionBankRepository {
              PreparedStatement statement = connection.prepareStatement(query)) {
 
             statement.setInt(1, question.getConceptId());
-            statement.setInt(2, question.getSubjectId());
+            statement.setInt(2, question.getsubject_concept_id());
             statement.setInt(3, questionId);
 
             return statement.executeUpdate() > 0;

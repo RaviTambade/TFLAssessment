@@ -6,7 +6,8 @@ public class QuestionDetails {
 
     private int id;
     private String question;
-    private int questionId;
+    private int subject_concept_id;
+       private int questionId;
     private String subject;
     private String criteria;
     private String A;
@@ -30,6 +31,13 @@ public class QuestionDetails {
 
     public void setQuestion(String question) {
         this.question = question;
+    }
+    public int getSubject_concept_id(){
+        return subject_concept_id;
+    }
+
+    public void setSubject_concept_id(int subject_concept_id){
+        this.subject_concept_id=subject_concept_id;
     }
 
     public int getQuestionId(){
@@ -95,6 +103,7 @@ public class QuestionDetails {
      public QuestionDetails() {
         id = 0;
         question = null;
+        subject_concept_id=0;
         questionId=0;
         subject = null;
         criteria = null;
@@ -105,9 +114,10 @@ public class QuestionDetails {
         result=null;
     }
 
-    public QuestionDetails(int id,String question,int questionId,String subject,String criteria,String A,String B,String C,String D,String result) {
+    public QuestionDetails(int id,String question, int subject_concept_id,int questionId,String subject,String criteria,String A,String B,String C,String D,String result) {
         this.id = id;
         this.question = question;
+        this.subject_concept_id=subject_concept_id; 
         this.questionId=questionId;
         this.subject = subject;
         this.criteria = criteria;
@@ -118,9 +128,9 @@ public class QuestionDetails {
         this.result=result;
     }
 
-    public QuestionDetails( int id,int questionId ,String question,String subject,String criteria){
+    public QuestionDetails( int id, int subject_concept_id, String question,String subject,String criteria){
         this.id=id;
-        this.questionId=questionId;
+        this.subject_concept_id=subject_concept_id;
         this.question=question;
         this.subject=subject;
         this.criteria=criteria;
@@ -162,7 +172,7 @@ public class QuestionDetails {
 
     @Override
     public String toString() {
-        return "QuestionDetails{id=" + id + ",question=" + question + "questionId="+questionId+"',subject=" + subject + ",criteria=" + criteria+
+        return "QuestionDetails{id=" + id + ",question=" + question +  ",subject_concept_id=" + subject_concept_id + "questionId="+questionId+"',subject=" + subject + ",criteria=" + criteria+
                 "A= "+A+"B= "+B+"C= "+C+"D= "+D+"Result = "+result
                 + "}";
     }

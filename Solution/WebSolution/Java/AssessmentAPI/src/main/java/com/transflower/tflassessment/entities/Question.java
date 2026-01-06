@@ -5,7 +5,7 @@ import java.util.Objects;
 public class Question {
 
     private int id;
-    private int subjectId;
+    private int subject_concept_id;
     private String title;
     private String A;
     private String B;
@@ -16,7 +16,7 @@ public class Question {
 
     public Question() {
         this.id = 0;
-        this.subjectId = 0;
+        this.subject_concept_id = 0;
         this.title = null;
         this.A = null;
         this.B = null;
@@ -27,10 +27,10 @@ public class Question {
 
     }
 
-    public Question(int id, int subjectId, String title, String a, String b, String c, String d, String answerKey,
+    public Question(int id, int subject_concept_id, String title, String a, String b, String c, String d, String answerKey,
             int conceptId) {
         this.id = id;
-        this.subjectId = subjectId;
+        this.subject_concept_id = subject_concept_id;
         this.title = title;
         A = a;
         B = b;
@@ -48,12 +48,12 @@ public class Question {
         this.id = id;
     }
 
-    public int getSubjectId() {
-        return subjectId;
+    public int getsubject_concept_id() {
+        return subject_concept_id;
     }
 
-    public void setSubjectId(int subjectId) {
-        this.subjectId = subjectId;
+    public void setsubject_concept_id(int subject_concept_id) {
+        this.subject_concept_id = subject_concept_id;
     }
 
     public String getTitle() {
@@ -144,8 +144,9 @@ public class Question {
 
     @Override
     public String toString() {
-        return "Question{id =" + id + " , subjectId = " + subjectId + " , title" + title + " , A" + A + "B" + B + " , C" + C + ", D" + D + " ,answerKey " + answerKey + " , conceptId" + conceptId + "}";
+        return "Question{id =" + id + " , subject_concept_id = " + subject_concept_id + " , title" + title + " , A" + A + "B" + B + " , C" + C + ", D" + D + " ,answerKey " + answerKey + " , conceptId" + conceptId + "}";
     }
+
 
     public void setEvaluationCriteriaId(int int1) {
         // TODO Auto-generated method stub

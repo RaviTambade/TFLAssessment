@@ -14,7 +14,7 @@ public interface QuestionBankRepository {
 
     public List<SubjectQuestion> getQuestionsBySubject(int id);
 
-    public List<QuestionDetails> getQuestionsBySubjectAndConcept(int subjectId, int conceptId);
+    public List<QuestionDetails> getQuestionsBySubjectAndConcept(int subject_concept_id, int conceptId);
 
     public List<QuestionDetails> getQuestionsWithSubjectAndConcept();
 
