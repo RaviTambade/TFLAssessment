@@ -13,6 +13,7 @@ public class CreateTestRequest implements Cloneable {
     private LocalDateTime modificationDate;
     private LocalDateTime scheduledDate;
     private int passingLevel;
+    private String status;
 
     public CreateTestRequest() {
 
@@ -24,10 +25,11 @@ public class CreateTestRequest implements Cloneable {
         this.modificationDate = null;
         this.scheduledDate = null;
         this.passingLevel = 0;
+        this.status=null;
 
     }
 
-    public CreateTestRequest(int subjectId, String name, String duration, int subjectExpertId, LocalDateTime creationDate, LocalDateTime modificationDate, LocalDateTime scheduledDate, int passingLevel) {
+    public CreateTestRequest(int subjectId, String name, String duration, int subjectExpertId, LocalDateTime creationDate, LocalDateTime modificationDate, LocalDateTime scheduledDate, int passingLevel,String status) {
         this.subjectId = subjectId;
         this.name = name;
         this.duration = duration;
@@ -36,6 +38,7 @@ public class CreateTestRequest implements Cloneable {
         this.modificationDate = modificationDate;
         this.scheduledDate = scheduledDate;
         this.passingLevel = passingLevel;
+        this.status=status;
     }
 
     public int getSubjectId() {
@@ -118,6 +121,16 @@ public class CreateTestRequest implements Cloneable {
         this.passingLevel = passLevel;
     }
 
+     public String getStatus() {
+
+        return this.status;
+    }
+
+    public void setStatus(String status) {
+
+        this.status = status;
+    }
+    
     @Override
 public String toString() {
     return "CreateTestRequest{subjectId='" + subjectId + "', name='" + name + "', duration='" + duration + "', subjectExpertId='" + subjectExpertId + "', creationDate='" + creationDate + "', modificationDate='" + modificationDate + "', scheduledDate='" + scheduledDate + "', passingLevel='" + passingLevel + "'}";
@@ -145,7 +158,7 @@ public String toString() {
 
     @Override
     public int hashCode() {
-        return Objects.hash(subjectId, name, duration, subjectExpertId, creationDate, modificationDate, scheduledDate, passingLevel
+        return Objects.hash(subjectId, name, duration, subjectExpertId, creationDate, modificationDate, scheduledDate, passingLevel,status
         );
     }
 
@@ -162,7 +175,7 @@ public String toString() {
     protected Object clone() throws CloneNotSupportedException {
        try{
        
-        return new CreateTestRequest( subjectId,name,duration,subjectExpertId,creationDate,modificationDate,scheduledDate,passingLevel);
+        return new CreateTestRequest( subjectId,name,duration,subjectExpertId,creationDate,modificationDate,scheduledDate,passingLevel,status);
        }catch (Exception e)
        {
         System.out.println(e);

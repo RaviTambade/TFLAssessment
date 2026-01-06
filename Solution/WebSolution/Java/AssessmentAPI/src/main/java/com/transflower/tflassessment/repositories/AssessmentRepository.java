@@ -1,13 +1,11 @@
 package com.transflower.tflassessment.repositories;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
-import com.transflower.tflassessment.entities.Assessment;
-import com.transflower.tflassessment.entities.Concepts;
-import com.transflower.tflassessment.entities.Employee;
-import com.transflower.tflassessment.entities.Subject;
+import com.transflower.tflassessment.entities.*;
 public interface AssessmentRepository<TimeConfig> {
 
     public CompletableFuture<Assessment> getDetails(int assessmentId);
@@ -28,24 +26,31 @@ public interface AssessmentRepository<TimeConfig> {
 
     public CompletableFuture<List<Assessment>> getAllBySubjectMatterExpert(int smeId);
 
-//     public CompletableFuture<Boolean> createTest(CreateTestRequest request);
-//     public CompletableFuture<Boolean> addQuestion(int assessmentId, int questionId);
+    public CompletableFuture<Boolean> createTest(CreateTestRequest request);
+    
+    public CompletableFuture<Boolean> addQuestion(int assessmentId, int questionId);
 
-//     public CompletableFuture<Boolean> addQuestions(int assessmentId, List<QuestionBank> questions);
+    //public CompletableFuture<Boolean> addQuestions(int assessmentId, List<QuestionBank> questions);
 
-//     public CompletableFuture<Boolean> changeDuration(int assessmentId, String duration);
+    public CompletableFuture<Boolean> removeQuestion(int assessmentId, int questionId);
+    
+    public CompletableFuture<Boolean> changeDuration(int assessmentId, String duration);
 
-//   public CompletableFuture<Boolean> reschedule(int assessmentId, Date date);
-//   public CompletableFuture<Boolean> removeQuestion(int assessmentId, int questionId);
-//   public CompletableFuture<Boolean> removeQuestions(int[] testQuestions);
-//   public CompletableFuture<Integer> createTestWithQuestionsAsync(CreateTestWithQuestions createTestWithQuestions);
-//   public CompletableFuture<List<SubjectQuestions>> getAllQuestionsBySubject(int subjectId);
+    public CompletableFuture<Boolean> reschedule(int assessmentId, LocalDateTime date);
 
-//     public CompletableFuture<List<Employee>> getSmeBySubject(int subjectId);
+   public CompletableFuture<Boolean> removeQuestions(int[] testQuestions);
 
-//     public CompletableFuture<List<Test>> getAllTests(Date fromDate, Date toDate);
+   public CompletableFuture<Integer> createTestWithQuestions(CreateTestWithQuestions createTestWithQuestions);
 
-//     public CompletableFuture<TestWithQuestions> getTestDetails(int testId);
+   public CompletableFuture<List<SubjectQuestions>> getAllQuestionsBySubject(int subjectId);
+
+   public CompletableFuture<List<Test>> getAllTests(Date fromDate, Date toDate);
+
+    public CompletableFuture<TestWithQuestions> getTestDetails(int testId);
+
+//   public CompletableFuture<List<Employee>> getSmeBySubject(int subjectId);
+
+
 
 //     public CompletableFuture<List<Question>> getQuestionsByConceptId(int ConceptId);
 

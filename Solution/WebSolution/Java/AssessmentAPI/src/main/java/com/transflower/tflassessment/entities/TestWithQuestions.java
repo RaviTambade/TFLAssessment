@@ -184,4 +184,12 @@ public class TestWithQuestions {
         this.modificationDate = modificationDate;
     }
 
+    public List<Question> getQuestions() {
+    return questions;
+    }
+
+    public void setQuestions(List<Question> questions) {
+    this.questions = questions;
+    }
+
 }

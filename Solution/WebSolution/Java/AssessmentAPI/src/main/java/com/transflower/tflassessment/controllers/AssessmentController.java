@@ -82,67 +82,67 @@ public class AssessmentController {
         return svc.getAllBySubjectMatterExpert(smeId);
     }
 
-    // @PostMapping("/api/assessment/createtest")
-    // public CompletableFuture<Boolean> createTest(@RequestBody CreateTestRequest request) {
-    //     return svc.createTest(request);
-    // }
+    @PostMapping("/api/assessment/createtest")
+    public CompletableFuture<Boolean> createTest(@RequestBody CreateTestRequest request) {
+        return svc.createTest(request);
+    }
 
-    // @PostMapping("/api/assessment/addquestion/assessments/{assessmentId}/questions/{questionId}")
-    // public CompletableFuture<Boolean> addQuestion(@PathVariable("assessmentId") int assessmentId, @PathVariable("questionId") int questionId) {
-    //     return svc.addQuestion(assessmentId, questionId);
-    // }
+    @PostMapping("/api/assessment/addquestion/assessments/{assessmentId}/questions/{questionId}")
+    public CompletableFuture<Boolean> addQuestion(@PathVariable("assessmentId") int assessmentId, @PathVariable("questionId") int questionId) {
+        return svc.addQuestion(assessmentId, questionId);
+    }
 
     // @PostMapping("/api/assessment/addmultiplequestions/assessments/{assessmentId}")
     // public CompletableFuture<Boolean> addQuestions(@PathVariable("assessmentId") int assessmentId, @RequestBody List<QuestionBank> questions) {
     //     return svc.addQuestions(assessmentId, questions);
     // }
 
-    // @DeleteMapping("/api/assessment/{assessmentId}/questions/{questionId}")
-    // public CompletableFuture<Boolean> removeQuestion(@PathVariable("assessmentId") int assessmentId,  @PathVariable("questionId") int questionId) {
-    //     return svc.removeQuestion(assessmentId, questionId);
-    // }
+    @DeleteMapping("/api/assessment/{assessmentId}/questions/{questionId}")
+    public CompletableFuture<Boolean> removeQuestion(@PathVariable("assessmentId") int assessmentId,  @PathVariable("questionId") int questionId) {
+        return svc.removeQuestion(assessmentId, questionId);
+    }
 
-    // @PutMapping("/api/assessment/{assessmentId}/duration/{duration}")
-    // public CompletableFuture<Boolean> changeDuration(@PathVariable("assessmentId") int assessmentId, @PathVariable("duration") String duration) {
-    //     return svc.changeDuration(assessmentId, duration);
-    // }
+    @PutMapping("/api/assessment/{assessmentId}/duration/{duration}")
+    public CompletableFuture<Boolean> changeDuration(@PathVariable("assessmentId") int assessmentId, @PathVariable("duration") String duration) {
+        return svc.changeDuration(assessmentId, duration);
+    }
 
-    // @PutMapping("/api/assessment/{assessmentId}/reschedule/{date}")
-    // public CompletableFuture<Boolean> reschedule(@PathVariable("assessmentId") int assessmentId,@PathVariable("date") Date date) {
-    //     return svc.reschedule(assessmentId, date);
-    // }
+    @PutMapping("/api/assessment/{assessmentId}/reschedule/{date}")
+    public CompletableFuture<Boolean> reschedule(@PathVariable("assessmentId") int assessmentId,@PathVariable("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime date) {
+        return svc.reschedule(assessmentId, date);
+    }
 
-    // @DeleteMapping("/api/assessment/deletequestions")
-    // public CompletableFuture<Boolean> removeQuestions(@RequestBody int[] testQuestions) {
-    //     return svc.removeQuestions(testQuestions);
-    // }
+    @DeleteMapping("/api/assessment/deletequestions")
+    public CompletableFuture<Boolean> removeQuestions(@RequestBody int[] testQuestions) {
+        return svc.removeQuestions(testQuestions);
+    }
 
-    // @PostMapping("/api/assessment/addtest")
-    // public CompletableFuture<Integer> createTestWithQuestions(@RequestBody CreateTestWithQuestions createTestWithQuestions) {
-    //     return svc.createTestWithQuestions(createTestWithQuestions);
-    // }
+    @PostMapping("/api/assessment/addtest")
+    public CompletableFuture<Integer> createTestWithQuestions(@RequestBody CreateTestWithQuestions createTestWithQuestions) {
+        return svc.createTestWithQuestions(createTestWithQuestions);
+    }
 
-    // @GetMapping("/api/assessment/allquestionsbysubject/{subjectId}")
-    // public CompletableFuture<List<SubjectQuestion>> getAllQuestionsBySubject(@PathVariable("subjectId") int subjectId) {
-    //     return svc.getAllQuestionsBySubject(subjectId);
-    // }
+    @GetMapping("/api/assessment/allquestionsbysubject/{subjectId}")
+    public CompletableFuture<List<SubjectQuestion>> getAllQuestionsBySubject(@PathVariable("subjectId") int subjectId) {
+        return svc.getAllQuestionsBySubject(subjectId);
+    }
+
+    @GetMapping("/api/assessment/getalltest/from/{fromDate}/to/{toDate}")
+    public CompletableFuture<List<Test>> getAllTests(
+            @PathVariable("fromDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date fromDate,
+               @PathVariable("toDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date toDate) {
+        return svc.getAllTests(fromDate, toDate);
+    }
+
+    @GetMapping("/api/assessment/testdetails/{testId}")
+    public CompletableFuture<TestWithQuestions> getTestDetails(@PathVariable("testId") int testId) {
+        return svc.getTestDetails(testId);
+    }
 
     // @GetMapping("/api/assessment/getsme/{subjectId}")
     // public CompletableFuture<List<Employee>> getSmeBySubject(@PathVariable("subjectId") int subjectId) {
     //     return svc.getSmeBySubject(subjectId);
-    // }
-
-    // @GetMapping("/api/assessment/getalltest/from/{fromDate}/to/{toDate}")
-    // public CompletableFuture<List<Test>> getAllTests(
-    //         @PathVariable("fromDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date fromDate,
-    //            @PathVariable("toDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date toDate) {
-    //     return svc.getAllTests(fromDate, toDate);
-    // }
-
-    // @GetMapping("/api/assessment/testdetails/{testId}")
-    // public CompletableFuture<TestWithQuestions> getTestDetails(@PathVariable("testId") int testId) {
-    //     return svc.getTestDetails(testId);
-    // }
+    // }    
 
     // @GetMapping("/api/assessment/questionsbycriteria/{ConceptsId}")
     // public CompletableFuture<List<Question>> getQuestionsByConceptsId(

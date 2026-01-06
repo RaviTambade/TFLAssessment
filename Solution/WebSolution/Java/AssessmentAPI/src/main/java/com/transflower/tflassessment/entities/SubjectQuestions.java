@@ -10,6 +10,7 @@ public class SubjectQuestions implements Cloneable {
     private String B;
     private String C;
     private String D;
+    private int subjectId;
 
     // Getters and Setters
     public int getQuestionBankId() {
@@ -60,6 +61,14 @@ public class SubjectQuestions implements Cloneable {
         this.D = D;
     }
 
+    public int getSubjectId() {
+    return subjectId;
+    }
+
+    public void setSubjectId(int subjectId) {
+        this.subjectId = subjectId;
+    }
+
     @Override
     public String toString() {
         return "SubjectQuestions{" +
@@ -69,6 +78,7 @@ public class SubjectQuestions implements Cloneable {
                 ", B='" + B + '\'' +
                 ", C='" + C + '\'' +
                 ", D='" + D + '\'' +
+                ", subjectId='" + D + '\'' +
                 '}';
     }
 
@@ -82,12 +92,13 @@ public class SubjectQuestions implements Cloneable {
                 Objects.equals(A, other.A) &&
                 Objects.equals(B, other.B) &&
                 Objects.equals(C, other.C) &&
-                Objects.equals(D, other.D);
+                Objects.equals(D, other.D) &&
+                Objects.equals(subjectId, other.subjectId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(questionBankId, title, A, B, C, D);
+        return Objects.hash(questionBankId, title, A, B, C, D,subjectId);
     }
 
     @Override

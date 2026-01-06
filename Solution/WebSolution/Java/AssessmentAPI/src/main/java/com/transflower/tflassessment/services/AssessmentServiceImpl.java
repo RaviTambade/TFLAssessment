@@ -1,15 +1,15 @@
 package com.transflower.tflassessment.services;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+
 import com.transflower.tflassessment.entities.*;
-import com.transflower.tflassessment.entities.Assessment;
-import com.transflower.tflassessment.entities.Employee;
 import com.transflower.tflassessment.repositories.AssessmentRepository;
 
 @Service
@@ -77,17 +77,17 @@ public class AssessmentServiceImpl implements AssessmentService {
     }
        
 
-    // @Async("asyncExecutor")
-    // @Override
-    // public CompletableFuture<Boolean> createTest(CreateTestRequest request) {
-    //     return _repo.createTest(request);
-    // }
+    @Async("asyncExecutor")
+    @Override
+    public CompletableFuture<Boolean> createTest(CreateTestRequest request) {
+        return _repo.createTest(request);
+    }
 
-    // @Async("asyncExecutor")
-    // @Override
-    // public CompletableFuture<Boolean> addQuestion(int assessmentId, int questionId) {
-    //     return _repo.addQuestion(assessmentId, questionId);
-    // }
+    @Async("asyncExecutor")
+    @Override
+    public CompletableFuture<Boolean> addQuestion(int assessmentId, int questionId) {
+        return _repo.addQuestion(assessmentId, questionId);
+    }
 
     // @Async("asyncExecutor")
     // @Override
@@ -95,47 +95,60 @@ public class AssessmentServiceImpl implements AssessmentService {
     //     return _repo.addQuestions(assessmentId, questions);
     // }
 
-    // @Async("asyncExecutor")
-    // @Override
-    // public CompletableFuture<Boolean> changeDuration(int assessmentId, String duration) {
-    //     return _repo.changeDuration(assessmentId, duration);
-    // }
+    @Async("asyncExecutor")
+    @Override
+    public CompletableFuture<Boolean> removeQuestion(int assessmentId, int questionId) {
+        return _repo.removeQuestion(assessmentId, questionId);
+    }
 
-    // @Async("asyncExecutor")
-    // @Override
-    // public CompletableFuture<Boolean> reschedule(int assessmentId, Date date) {
-    //     return _repo.reschedule(assessmentId, date);
-    // }
+    @Async("asyncExecutor")
+    @Override
+    public CompletableFuture<Boolean> changeDuration(int assessmentId, String duration) {
+        return _repo.changeDuration(assessmentId, duration);
+    }
 
-    // @Async("asyncExecutor")
-    // @Override
-    // public CompletableFuture<Boolean> removeQuestion(int assessmentId, int questionId) {
-    //     return _repo.removeQuestion(assessmentId, questionId);
-    // }
+    @Async("asyncExecutor")
+    @Override
+    public CompletableFuture<Boolean> reschedule(int assessmentId, LocalDateTime date) {
+        return _repo.reschedule(assessmentId, date);
+    }
 
-    // @Async("asyncExecutor")
-    // @Override
-    // public CompletableFuture<Boolean> removeQuestions(int[] testQuestions) {
-    //     return _repo.removeQuestions(testQuestions);
-    // }
+    @Async("asyncExecutor")
+    @Override
+    public CompletableFuture<Boolean> removeQuestions(int[] testQuestions) {
+        return _repo.removeQuestions(testQuestions);
+    }
 
+    @Async("asyncExecutor")
+    @Override
+    public CompletableFuture<Integer> createTestWithQuestions(CreateTestWithQuestions createTestWithQuestions) {
+        return _repo.createTestWithQuestions(createTestWithQuestions);
+    }
+
+    @Async("asyncExecutor")
+    @Override
+    public CompletableFuture<List<SubjectQuestion>> getAllQuestionsBySubject(int subjectId) {
+        return _repo.getAllQuestionsBySubject(subjectId);
+    }
+    
+    @Async("asyncExecutor")
+    @Override
+    public CompletableFuture<List<Test>> getAllTests(Date fromDate, Date toDate) {
+        return _repo.getAllTests(fromDate, toDate);
+    }
+
+    @Async("asyncExecutor")
+    @Override
+    public CompletableFuture<TestWithQuestions> getTestDetails(int testId) {
+        return _repo.getTestDetails(testId);
+    }
+    
     // @Async("asyncExecutor")
     // @Override
     // public CompletableFuture<List<Employee>> getSmeBySubject(int subjectId) {
     //     return _repo.getSmeBySubject(subjectId);
     // }
 
-    // @Async("asyncExecutor")
-    // @Override
-    // public CompletableFuture<List<Test>> getAllTests(Date fromDate, Date toDate) {
-    //     return _repo.getAllTests(fromDate, toDate);
-    // }
-
-    // @Async("asyncExecutor")
-    // @Override
-    // public CompletableFuture<TestWithQuestions> getTestDetails(int testId) {
-    //     return _repo.getTestDetails(testId);
-    // }
 
     // @Async("asyncExecutor")
     // @Override
@@ -167,15 +180,7 @@ public class AssessmentServiceImpl implements AssessmentService {
     //     return _repo.getAllTestByEmpId(empId);
     // }
 
-    // @Async("asyncExecutor")
-    // @Override
-    // public CompletableFuture<Integer> createTestWithQuestions(CreateTestWithQuestions createTestWithQuestions) {
-    //     return _repo.createTestWithQuestions(createTestWithQuestions);
-    // }
+    
 
-    // @Async("asyncExecutor")
-    // @Override
-    // public CompletableFuture<List<SubjectQuestion>> getAllQuestionsBySubject(int subjectId) {
-    //     return _repo.getAllQuestionsBySubject(subjectId);
-    // }
+   
 }
