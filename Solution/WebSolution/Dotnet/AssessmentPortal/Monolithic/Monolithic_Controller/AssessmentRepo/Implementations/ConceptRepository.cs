@@ -111,7 +111,7 @@ namespace Transflower.TFLAssessment.Repositories;
     public async Task<List<Concepts>> GetConceptBySubjectId(int subjectId)
     {
         List<Concepts> concepts = new List<Concepts>();
-        string query = @" SELECT * FROM concepts where subjectid=@subjectId;";
+        string query = @"SELECT c.id,c.title FROM concepts c JOIN subject_concepts sc On c.id= sc.concept_id where subject_id=@subjectId";
 
         MySqlConnection connection = new MySqlConnection(_connectionString);
         MySqlCommand command = new MySqlCommand(query, connection);
@@ -127,8 +127,7 @@ namespace Transflower.TFLAssessment.Repositories;
 
                 Concepts concept = new Concepts();
                 concept.Id = int.Parse(reader["id"].ToString());
-                concept.Title = reader["Title"].ToString();
-                concept.SubjectId = int.Parse(reader["subjectid"].ToString());
+                concept.Title = reader["title"].ToString();
 
                 concepts.Add(concept);
             }
