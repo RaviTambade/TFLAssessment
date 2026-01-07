@@ -17,6 +17,8 @@ public interface IQuestionBankRepository{
     public Task<bool> InsertQuestion(NewQuestion question);
     public Task<string> GetConcept(string subject, int questionId);
     public Task<List<SubjectQuestionCount>> GetSubjectQuestionCount();
-    public Task<List<Question>> GetQuestionsByConceptAndLevel(int subjectId, int conceptId, string difficultyLevel);
+    public Task<List<QuestionConcept>> GetQuestionsByConceptAndLevel(int subjectId, int conceptId, string difficultyLevel);
+    
+
 
 }

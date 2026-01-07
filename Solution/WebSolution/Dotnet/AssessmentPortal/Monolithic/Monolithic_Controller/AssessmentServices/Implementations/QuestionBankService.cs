@@ -101,10 +101,12 @@ public class QuestionBankService : IQuestionBankService
     {
         return await _repository.GetSubjectQuestionCount();
     }
-    public async Task<List<Question>> GetQuestionsByConceptAndLevel(int subjectId, int conceptId, string difficultyLevel)
+    public async Task<List<QuestionConcept>> GetQuestionsByConceptAndLevel(int subjectId, int conceptId, string difficultyLevel)
     {
         return await _repository.GetQuestionsByConceptAndLevel(subjectId, conceptId, difficultyLevel);
     }
+    
+    
 
 
 }

@@ -703,20 +703,23 @@ where sc.subject_id=@SubjectId;";
 
         return subjectQuestionCounts;
     }
-    public async Task<List<Question>> GetQuestionsByConceptAndLevel(int subjectId, int conceptId, string difficultyLevel)
+    public async Task<List<QuestionConcept>> GetQuestionsByConceptAndLevel(int subjectId, int conceptId, string difficultyLevel)
     {
         string query = @"
         SELECT 
-            q.id,
-            q.title
-        FROM questionbank q
-        JOIN subject_concepts sc 
-            ON q.subject_concept_id = sc.subject_concept_id
-        WHERE sc.concept_id = @conceptId
-          AND sc.subject_id = @subjectId
-          AND q.difficulty_level = @difficultyLevel;";
+    q.id,
+    q.title,
+    c.title AS ConceptTitle
+    FROM questionbank q
+    JOIN subject_concepts sc 
+    ON q.subject_concept_id = sc.subject_concept_id
+    JOIN concepts c 
+    ON c.id = sc.concept_id
+    WHERE sc.concept_id = @conceptId
+    AND sc.subject_id = @subjectId
+    AND q.difficulty_level = @difficultyLevel;";
 
-        List<Question> questions = new List<Question>();
+        List<QuestionConcept> questions = new List<QuestionConcept>();
 
         using (MySqlConnection connection = new MySqlConnection(_connectionString))
         using (MySqlCommand command = new MySqlCommand(query, connection))
@@ -732,10 +735,12 @@ where sc.subject_id=@SubjectId;";
                 {
                     while (await reader.ReadAsync())
                     {
-                        Question question = new Question
+                        QuestionConcept question = new QuestionConcept
                         {
                             Id = Convert.ToInt32(reader["id"]),
-                            Title = reader["title"].ToString()
+                            Title = reader["title"].ToString(),
+                            ConceptTitle=reader["title"].ToString()
+
                         };
 
                         questions.Add(question);
@@ -750,7 +755,6 @@ where sc.subject_id=@SubjectId;";
 
         return questions;
     }
-
 
 }
 
