@@ -1,154 +1,236 @@
-    function getToken() {
-      return localStorage.getItem("token");
-    }
-    
-    function getRole() {
-      return localStorage.getItem("role");
-    }
-    
-    // Redirect unauthorized users
-    (function checkAuth() {
-      if (!getToken() || getRole() !== "sme") {
-        alert("Access denied.");
-        window.location.href = "/WorkingHtml/login.html";
-      }
-    })();
+// ================= AUTH =================
+function getToken() {
+  return localStorage.getItem("token");
+}
+function getRole() {
+  return localStorage.getItem("role");
+}
+(function checkAuth() {
+  if (!getToken() || getRole() !== "sme") {
+    alert("Access denied.");
+    window.location.href = "/WorkingHtml/login.html";
+  }
+})();
 
-   selectedQuestions = [];
-  //  getSubjectsUrl = "http://localhost:5238/api/assessment/subjects";
-   var userId = localStorage.getItem("userId")
-   getSubjectsUrl = `http://localhost:5238/api/subject/GetSmeSubjects/${userId}`; // userId is smeId
+// ================= STATE =================
+let selectedConcepts = new Set();
+let selectedQuestions = [];
+let selectedDifficulty = null;
 
-  $(document).ready(function () {
-    const currentDate = new Date();
+// ================= INIT =================
+$(document).ready(function () {
 
-    const editMode = new URLSearchParams(window.location.search).get("edit") === "true";
-    const savedData = JSON.parse(sessionStorage.getItem("testReviewData"));
+  $("#smeName").val(localStorage.getItem("userName"));
 
-     // Convert to local datetime format: YYYY-MM-DDTHH:mm
-    const year = currentDate.getFullYear();
-    const month = String(currentDate.getMonth() + 1).padStart(2, "0");
-    const day = String(currentDate.getDate()).padStart(2, "0");
-    const hours = String(currentDate.getHours()).padStart(2, "0");
-    const minutes = String(currentDate.getMinutes()).padStart(2, "0");
+  // Set created date
+  const now = new Date();
+  $("#createdDate").val(now.toISOString().slice(0, 16));
 
-    const formattedDateTime = `${year}-${month}-${day}T${hours}:${minutes}`;
-      
-    $("#createdDate").val(formattedDateTime);
+  const userId = localStorage.getItem("userId");
+  const getSubjectsUrl = `http://localhost:5238/api/subject/GetSmeSubjects/${userId}`;
 
-    // Load subjects
-    $.get(getSubjectsUrl, function (subjects) {
-      $("#subjectSelect").html('<option value="">-- Select Subject --</option>' +
-        subjects.map(s => `<option value="${s.id}">${s.title}</option>`).join(""));
+  // ================= LOAD SUBJECTS =================
+  $.get(getSubjectsUrl, function (subjects) {
+    $("#subjectSelect").html(
+      '<option value="">-- Select Subject --</option>' +
+      subjects.map(s => `<option value="${s.id}">${s.title}</option>`).join("")
+    );
+  });
 
-      if (editMode && savedData) {
-        $("#testName").val(savedData.name);
-        $("#duration").val(savedData.duration);
-        $("#createdDate").val(savedData.createdDate);
-        $("#passingLevel").val(savedData.passingLevel);
-        $("#subjectSelect").val(savedData.subjectId).trigger("change");
+  // ================= SUBJECT CHANGE =================
+  $("#subjectSelect").on("change", function () {
+    const subjectId = $(this).val();
 
-        $(document).on("smeloaded", function () {
-          $("#smeSelect").val(savedData.smeId);
-        });
+    $("#conceptContainer").empty();
+    $("#questionsList").html(`<p class="no-questions">Select concepts and difficulty.</p>`);
+    selectedConcepts.clear();
+    selectedDifficulty = null;
+    $("input[name='difficulty']").prop("checked", false);
+    updateLoadButtonState();
 
-        $(document).on("questionsloaded", function () {
-          selectedQuestions = [];
-          $("#questionsList .question-checkbox").each(function () {
-            const id = Number($(this).val());
-            const title = $(this).siblings("span").text().trim();
-            if (savedData.questions.some(q => q.id === id)) {
-              $(this).prop("checked", true);
-              selectedQuestions.push({ id, title });
-            }
-          });
-        });
-      }
-    });
+    if (!subjectId) return;
 
-    $("#subjectSelect").change(function () {
-      const subjectId = $(this).val();
-      selectedQuestions = [];
-      if (subjectId) {
-        loadQuestions(subjectId);
-      } else {
-        resetSME();
-        resetQuestions();
-      }
-    });
-
-    function resetSME() {
-      $("#smeSelect").html(`<option value="">-- Please select a subject first --</option>`).prop("disabled", true);
-    }
-
-    function resetQuestions() {
-      $("#questionsList").html(`<p class="no-questions">Please select a subject to view questions.</p>`);
-    }
-
-    $("#smeName").val(localStorage.getItem("userName"));
-
-    function loadQuestions(subjectId) {
-      $.get(`http://localhost:5238/api/Assessment/allquestionsbysubject/${subjectId}`, function (questions) {
-        if (questions.length === 0) {
-          $("#questionsList").html("<p class='no-questions'>No questions available for this subject.</p>");
-          return;
-        }
-
-        $("#questionsList").html(
-          questions.map(q =>
-            `<div class="question-card">
-              <input type="checkbox" class="question-checkbox" value="${q.questionBankId}" />
-              <span>${q.title}</span>
-            </div>`
-          ).join("")
-        );
-
-        $(document).trigger("questionsloaded");
-
-        $(".question-checkbox").on("change", function () {
-          const id = Number($(this).val());
-          const title = $(this).siblings("span").text().trim();
-
-          if ($(this).is(":checked")) {
-            if (!selectedQuestions.some(q => q.id === id)) {
-              selectedQuestions.push({ id, title });
-            }
-          } else {
-            selectedQuestions = selectedQuestions.filter(q => q.id !== id);
-          }
-        });
-      });
-    }
-
-    $("#submitBtn").click(function () {
-      const subjectId = $("#subjectSelect").val();
-      const subjectTitle = $("#subjectSelect option:selected").text();
-      const name = $("#testName").val();
-      const duration = $("#duration").val();
-      const smeId = parseInt(localStorage.getItem("userId"));
-      const smeName = localStorage.getItem("userName");
-      const createdDate = $("#createdDate").val();
-      const passingLevel = $("#passingLevel").val();
-     
-      console.log(`Details ${smeId},  ${smeName}, ${createdDate}, ${passingLevel}` );
-      if (!subjectId || !name || !duration || !createdDate || !smeId || selectedQuestions.length === 0) {
-        alert("Please fill all fields and select at least one question.");
+    $.get(`http://localhost:5238/api/Concepts/${subjectId}`, function (concepts) {
+      if (!concepts.length) {
+        $("#conceptContainer").html("<p>No concepts available</p>");
         return;
       }
 
-      const reviewData = {
-        subjectId,
-        subjectTitle,
-        name,
-        duration,
-        smeId,
-        smeName,
-        createdDate,
-        passingLevel,
-        questions: selectedQuestions
-      };
+      concepts.forEach(c => {
+        const card = $(`<div class="concept-card" data-id="${c.id}">${c.title}</div>`);
 
-      sessionStorage.setItem("testReviewData", JSON.stringify(reviewData));
-      window.location.href = "reviewtest.html";
+        card.on("click", function () {
+          const id = Number($(this).data("id"));
+
+          if (selectedConcepts.has(id)) {
+            selectedConcepts.delete(id);
+            $(this).removeClass("selected");
+          } else {
+            selectedConcepts.add(id);
+            $(this).addClass("selected");
+          }
+
+          updateLoadButtonState();
+        });
+
+        $("#conceptContainer").append(card);
+      });
     });
   });
+
+  // ================= DIFFICULTY CHANGE =================
+  $("input[name='difficulty']").on("change", function () {
+    selectedDifficulty = $(this).val();
+    updateLoadButtonState();
+  });
+
+  // ================= LOAD QUESTIONS =================
+  $("#loadQuestionsBtn").on("click", function () {
+    const subjectId = $("#subjectSelect").val();
+    $("#questionsList").empty();
+
+    selectedConcepts.forEach(conceptId => {
+      // const url = `http://localhost:5238/api/Questions/conceptId/${conceptId}/subjectId/${subjectId}/difficultyLevel/${selectedDifficulty}`;
+ const url = `http://localhost:5238/api/questionbank/conceptId/${conceptId}/subjectId/${subjectId}/difficultyLevel/${selectedDifficulty}`;
+      $.get(url, function (questions) {
+        renderQuestions(questions);
+        updateViewButtonState();
+      });
+    });
+  });
+
+  // ================= SUBMIT =================
+  $("#submitBtn").on("click", function () {
+    if (selectedQuestions.length === 0) {
+      alert("Please select at least one question.");
+      return;
+    }
+
+    const reviewData = {
+      name: $("#testName").val(),
+      duration: $("#duration").val(),
+      subjectId: $("#subjectSelect").val(),
+      subjectTitle: $("#subjectSelect option:selected").text(),
+      smeId: Number(localStorage.getItem("userId")),
+      smeName: localStorage.getItem("userName"),
+      createdDate: $("#createdDate").val(),
+      passingLevel: $("#passingLevel").val(),
+      difficulty: selectedDifficulty,
+      questions: selectedQuestions
+    };
+
+    sessionStorage.setItem("testReviewData", JSON.stringify(reviewData));
+    window.location.href = "reviewtest.html";
+  });
+
+function updateLoadButtonState() {
+  $("#loadQuestionsBtn").prop(
+    "disabled",
+    !($("#subjectSelect").val() && selectedConcepts.size && selectedDifficulty)
+  );
+}
+
+function updateViewButtonState() {
+  $("#viewSelectedBtn").prop(
+    "disabled",
+    !($("#subjectSelect").val() && selectedConcepts.size && selectedDifficulty && selectedQuestions)
+  );
+}
+function toggleQuestion(id, title, checkbox) {
+    if (checkbox.checked) {
+        selectedQuestions.push({ id, title });
+    } else {
+        selectedQuestions = selectedQuestions.filter(q => q.id !== id);
+    }
+
+    $("#viewSelectedBtn").toggle(selectedQuestions.length > 0);
+}
+
+function renderQuestions(questions) {
+  questions.forEach(question => {
+
+    // Prevent duplicate DOM cards
+    if ($(`#q-${question.id}`).length) return;
+
+    // Safe check (question is defined)
+    const isChecked = selectedQuestions.some(x => x.id === question.id);
+
+    const card = $(`
+      <div class="question-card" id="q-${question.id}">
+        <input type="checkbox" ${isChecked ? "checked" : ""}>
+        <span>${question.title}</span>
+      </div>
+    `);
+
+    card.find("input").on("change", function () {
+      if (this.checked) {
+        if (!selectedQuestions.some(x => x.id === question.id)) {
+          selectedQuestions.push({ id: question.id, title: question.title });
+        }
+      } else {
+        selectedQuestions = selectedQuestions.filter(x => x.id !== question.id);
+      }
+
+      $("#viewSelectedBtn").toggle(selectedQuestions.length > 0);
+    });
+
+    $("#questionsList").append(card);
+  });
+}
+
+
+$("#viewSelectedBtn").click(function () {
+    let html = "";
+    console.log("hiiiiiiiiiiiiiiiiiiiiiiiiiiiii");
+        console.log("selectedQuestions",selectedQuestions.length);
+                console.log("selectedQuestions",selectedQuestions);
+
+
+
+    selectedQuestions.forEach(q => {
+          console.log("hiiiiiiiiiiiiiiiiiiiiiiiiiiiii");
+
+          html += `
+          <div class="selected-item">
+            <input type="checkbox"
+                   checked
+                   data-id="${q.id}">
+            ${q.title}
+          </div>
+        `;
+    });
+
+    $("#selectedQuestionsList").html(html);
+    $("#selectedQuestionsModal").show();
+});
+function removeFromSelection(id, checkbox) {
+    if (!checkbox.checked) {
+        selectedQuestions = selectedQuestions.filter(q => q.id !== id);
+    }
+
+    if (selectedQuestions.length === 0) {
+        $("#selectedQuestionsModal").hide();
+        $("#viewSelectedBtn").hide();
+    }
+}
+$("#selectedQuestionsList").on("change", "input[type='checkbox']", function () {
+    const id = Number($(this).data("id"));
+
+    // 1️⃣ Remove from selectedQuestions array
+    selectedQuestions = selectedQuestions.filter(q => q.id !== id);
+
+    // 2️⃣ Uncheck in main question list
+    $(`#q-${id} input[type='checkbox']`).prop("checked", false);
+
+    // 3️⃣ Re-render selected list
+    if (selectedQuestions.length === 0) {
+        $("#selectedQuestionsModal").hide();
+        $("#viewSelectedBtn").hide();
+    } else {
+        $("#viewSelectedBtn").show();
+        $("#viewSelectedBtn").click(); // refresh modal
+    }
+});
+
+
+});

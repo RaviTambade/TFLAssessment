@@ -210,6 +210,7 @@ public class QuestionBankController : ControllerBase
 
    
     // GET: api/questions/by-concept
+   // http://localhost:5238/api/questionbank/conceptId/1/subjectId/1/difficultyLevel/Beginner
    [HttpGet("conceptId/{conceptId}/subjectId/{subjectId}/difficultyLevel/{difficultyLevel}")]
 public async Task<IActionResult> GetQuestionsByConceptAndLevel(int conceptId, int subjectId, string difficultyLevel)
 {
@@ -228,6 +229,8 @@ public async Task<IActionResult> GetQuestionsByConceptAndLevel(int conceptId, in
 
     return Ok(questions);
 }
+
+
 
 }
 
