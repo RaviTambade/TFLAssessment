@@ -20,7 +20,6 @@ let selectedDifficulty = null;
 // ================= INIT =================
 $(document).ready(function () {
 
-  $("#smeName").val(localStorage.getItem("userName"));
 
   // Set created date
   const now = new Date();
