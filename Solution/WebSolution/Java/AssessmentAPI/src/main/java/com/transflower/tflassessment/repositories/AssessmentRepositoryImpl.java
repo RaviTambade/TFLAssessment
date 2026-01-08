@@ -698,7 +698,7 @@ public class AssessmentRepositoryImpl implements AssessmentRepository {
     return CompletableFuture.supplyAsync(()->{
     TestWithQuestions test = null;
     Question question=new Question();
-
+        String title;
     String testQuery = "SELECT * FROM tests WHERE id = ?";
     String queryQuestions =" SELECT q.id AS QuestionId, q.subject_concept_id AS SubjectId,q.title, q.a,"+
     " q.b, q.c, q.d,q.answerkey"+
@@ -724,17 +724,19 @@ public class AssessmentRepositoryImpl implements AssessmentRepository {
     while (rs2.next()) {
     Question q = new Question();
     q.setId(rs2.getInt("QuestionId"));
-    q.setSubjectId(rs2.getInt("SubjectId"));
+    q.setsubject_concept_id(rs2.getInt("SubjectId"));
     q.setTitle(rs2.getString("title"));
     q.setA(rs2.getString("a"));
     q.setB(rs2.getString("b"));
     q.setC(rs2.getString("c"));
     q.setD(rs2.getString("d"));
     q.setAnswerKey(rs2.getString("answerkey"));
-   // q.setConceptId(rs2.getInt("Conceptsid"));
     questions.add(q);
+    title=q.getTitle();
+    System.out.println("**************************"+title+"*******************************");
     }
-    // test.setQuesitions(questions);
+    test.setQuestions(questions);
+    System.out.println("**************************"+questions+"*******************************");
     }
     } catch (SQLException ex) {
     ex.printStackTrace();
