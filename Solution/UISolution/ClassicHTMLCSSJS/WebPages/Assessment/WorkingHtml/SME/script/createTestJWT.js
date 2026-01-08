@@ -22,8 +22,12 @@ $(document).ready(function () {
 
 
   // Set created date
-  const now = new Date();
-  $("#createdDate").val(now.toISOString().slice(0, 16));
+const now = new Date();
+  const local = new Date(now.getTime() - now.getTimezoneOffset() * 60000)
+    .toISOString()
+    .slice(0, 16);
+
+  $("#createdDate").val(local);
 
   const userId = localStorage.getItem("userId");
   const getSubjectsUrl = `http://localhost:5238/api/subject/GetSmeSubjects/${userId}`;
