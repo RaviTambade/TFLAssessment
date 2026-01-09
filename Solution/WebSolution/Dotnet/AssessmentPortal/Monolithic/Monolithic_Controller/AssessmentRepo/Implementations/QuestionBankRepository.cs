@@ -739,7 +739,7 @@ where sc.subject_id=@SubjectId;";
                         {
                             Id = Convert.ToInt32(reader["id"]),
                             Title = reader["title"].ToString(),
-                            ConceptTitle=reader["title"].ToString()
+                            ConceptTitle=reader["ConceptTitle"].ToString()
 
                         };
 

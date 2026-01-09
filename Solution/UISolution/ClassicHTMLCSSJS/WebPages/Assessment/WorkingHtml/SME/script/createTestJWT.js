@@ -96,7 +96,9 @@ const now = new Date();
       // const url = `http://localhost:5238/api/Questions/conceptId/${conceptId}/subjectId/${subjectId}/difficultyLevel/${selectedDifficulty}`;
  const url = `http://localhost:5238/api/questionbank/conceptId/${conceptId}/subjectId/${subjectId}/difficultyLevel/${selectedDifficulty}`;
       $.get(url, function (questions) {
-        renderQuestions(questions);
+        // renderQuestions(questions);
+          renderQuestions(questions, conceptId);
+
         updateViewButtonState();
       });
     });
@@ -149,7 +151,7 @@ function toggleQuestion(id, title, checkbox) {
     $("#viewSelectedBtn").toggle(selectedQuestions.length > 0);
 }
 
-function renderQuestions(questions) {
+function renderQuestions(questions,conceptId) {
   questions.forEach(question => {
 
     // Prevent duplicate DOM cards
@@ -168,10 +170,16 @@ function renderQuestions(questions) {
     card.find("input").on("change", function () {
       if (this.checked) {
         if (!selectedQuestions.some(x => x.id === question.id)) {
-          selectedQuestions.push({ id: question.id, title: question.title });
+          selectedQuestions.push({ id: question.id, 
+            title: question.title,
+           conceptTitle: question.conceptTitle ?? "",
+            difficulty: selectedDifficulty });
+             localStorage.setItem("selectedQuestions",JSON.stringify(selectedQuestions));
         }
       } else {
         selectedQuestions = selectedQuestions.filter(x => x.id !== question.id);
+       localStorage.setItem("selectedQuestions",JSON.stringify(selectedQuestions));
+
       }
 
       $("#viewSelectedBtn").toggle(selectedQuestions.length > 0);
