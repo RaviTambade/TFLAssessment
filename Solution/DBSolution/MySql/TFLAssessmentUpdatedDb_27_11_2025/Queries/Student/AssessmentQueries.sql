@@ -1,31 +1,36 @@
 -- ****************************************************NEW QUERIES"*********************************************************
 
 -- 1. Student Profile
+-- GET /api/student/profile/{candidateId}
 SELECT e.id, e.firstname, e.lastname, e.email, e.contact
 FROM employees e
 WHERE e.id = 7;
 
 -- 2. Total tests attempted by student
+-- GET /api/student/{candidateId}/assessments/attempted/count
 SELECT COUNT(*) AS total_tests_attempted
 FROM assessments
 WHERE candidate_id =4
 AND status = 'conducted';
 
 -- 3. Upcoming scheduled tests
+-- GET /api/student/assessments/upcoming/{candidateId}
 SELECT t.name, ts.scheduledstart, ts.scheduledend, s.title AS subject
 FROM testschedules ts
 JOIN tests t ON ts.testid = t.id
 JOIN subjects s ON t.subjectid = s.id
 WHERE ts.candidateid =7
 AND ts.status = 'scheduled';
-
+	
 -- 4. Assessment count by status
+-- -- GET /api/student/{candidateId}/assessments/status-summary
 SELECT status, COUNT(*) AS total
 FROM assessments
 WHERE candidate_id = 7
 GROUP BY status;
 
 -- 5. Test-wise scores
+-- GET /api/student/results/{candidateId}
 SELECT t.name, ctr.score, ctr.teststarttime, ctr.testendtime
 FROM candidatetestresults ctr
 JOIN assessments a ON ctr.assessmentid = a.id
@@ -33,6 +38,7 @@ JOIN tests t ON a.test_id = t.id
 WHERE ctr.candidateid = 4;
 
 -- 6. Pass / Fail status
+-- GET /api/student/{candidateId}/test-results/pass-fail
 SELECT t.name,
        ctr.score,
        t.passinglevel,
@@ -46,6 +52,7 @@ JOIN tests t ON a.test_id = t.id
 WHERE ctr.candidateid = 4;
 
 -- 7. Average, highest, lowest score
+-- GET /api/student/{candidateId}/test-results/statistics
 SELECT 
   AVG(score) AS avg_score,
   MAX(score) AS highest_score,
@@ -54,6 +61,7 @@ FROM candidatetestresults
 WHERE candidateid = 4;
 
 -- 8. Concept-wise accuracy
+-- GET /api/student/performance/concepts/{candidateId}
 SELECT 
   c.id AS concept_id,
   c.title AS concept_name,
@@ -75,6 +83,7 @@ WHERE ca.candidateid = 4
 GROUP BY c.id, c.title;
 
 -- 9. Performance by difficulty
+-- GET /api/student/performance/difficulty/{candidateId}
 SELECT 
   qb.difficulty_level,
   COUNT(*) AS total_questions,
@@ -86,6 +95,7 @@ WHERE ca.candidateid = 4
 GROUP BY qb.difficulty_level;
 
 -- 10. Incorrectly answered questions
+-- GET /api/student/results/{candidateId}/incorrect-answers
 SELECT 
   qb.title AS question,
   qb.answerkey AS correct_answer,
@@ -97,6 +107,7 @@ WHERE ca.candidateid = 4
 AND ca.answerkey <> qb.answerkey;
 
 -- 11. Interview ratings & comments
+-- GET /api/student/interviews/feedback
 SELECT 
   c.title AS concept,
   ir.ratings,
