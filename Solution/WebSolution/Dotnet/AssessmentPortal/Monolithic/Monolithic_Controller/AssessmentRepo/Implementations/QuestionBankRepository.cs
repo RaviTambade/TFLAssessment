@@ -618,20 +618,19 @@ where sc.subject_id=@SubjectId;";
 
         List<Question> questions = new List<Question>();
         string query = @"
-            SELECT 
+           SELECT 
                 testquestions.id AS testquestionid, 
                 questionbank.id AS questionbankid,
-                questionbank.subjectid,
                 questionbank.title,
                 questionbank.a,
                 questionbank.b,
                 questionbank.c,
                 questionbank.d,
-                questionbank.conceptid
+                questionbank.subject_concept_id
             FROM questionbank 
             INNER JOIN testquestions 
                 ON testquestions.questionbankid = questionbank.id 
-            WHERE testquestions.testid = @TestId";
+            WHERE testquestions.testid =@TestId";
 
         using (MySqlConnection connection = new MySqlConnection(_connectionString))
         using (MySqlCommand command = new MySqlCommand(query, connection))
@@ -647,13 +646,13 @@ where sc.subject_id=@SubjectId;";
                     Question question = new Question
                     {
                         Id = Convert.ToInt32(reader["testquestionid"]), // Use testquestions.id
-                        SubjectId = Convert.ToInt32(reader["subjectid"]),
+                        // SubjectId = Convert.ToInt32(reader["subjectid"]),
                         Title = reader["title"].ToString(),
                         A = reader["a"].ToString(),
                         B = reader["b"].ToString(),
                         C = reader["c"].ToString(),
                         D = reader["d"].ToString(),
-                        ConceptId = Convert.ToInt32(reader["conceptid"])
+                        // ConceptId = Convert.ToInt32(reader["conceptid"])
                     };
                     Console.WriteLine(question);
                     questions.Add(question);

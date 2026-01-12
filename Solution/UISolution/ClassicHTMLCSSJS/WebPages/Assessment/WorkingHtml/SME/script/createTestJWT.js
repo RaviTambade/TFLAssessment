@@ -19,7 +19,8 @@ let selectedDifficulty = null;
 
 // ================= INIT =================
 $(document).ready(function () {
-
+const params = new URLSearchParams(window.location.search);
+const isEditMode = params.get("edit") === "true";
 
   // Set created date
 const now = new Date();
@@ -38,6 +39,9 @@ const now = new Date();
       '<option value="">-- Select Subject --</option>' +
       subjects.map(s => `<option value="${s.id}">${s.title}</option>`).join("")
     );
+      if (isEditMode) {
+    restoreFormData();
+  }
   });
 
   // ================= SUBJECT CHANGE =================
@@ -116,6 +120,7 @@ const now = new Date();
       duration: $("#duration").val(),
       subjectId: $("#subjectSelect").val(),
       subjectTitle: $("#subjectSelect option:selected").text(),
+concepts: Array.from(selectedConcepts),
       smeId: Number(localStorage.getItem("userId")),
       smeName: localStorage.getItem("userName"),
       createdDate: $("#createdDate").val(),
@@ -123,7 +128,7 @@ const now = new Date();
       difficulty: selectedDifficulty,
       questions: selectedQuestions
     };
-
+console.log("conceptconcept",reviewData.concepts);
     sessionStorage.setItem("testReviewData", JSON.stringify(reviewData));
     window.location.href = "reviewtest.html";
   });
@@ -242,6 +247,36 @@ $("#selectedQuestionsList").on("change", "input[type='checkbox']", function () {
         $("#viewSelectedBtn").click(); // refresh modal
     }
 });
+function restoreFormData() {
+  const savedData = JSON.parse(sessionStorage.getItem("testReviewData"));
+  if (!savedData) return;
+console.log(savedData,"savedData");
+  // Basic fields
+  $("#testName").val(savedData.name);
+  $("#duration").val(savedData.duration);
+  $("#createdDate").val(savedData.createdDate);
+  $("#passingLevel").val(savedData.passingLevel);
+$("conceptContainer").val(savedData.concept);
+  // Subject
+  $("#subjectSelect").val(savedData.subjectId).trigger("change");
+
+  //concepts
+  $("#conceptContainer").val(savedData.concept).trigger("change");
+
+
+  // Difficulty
+  selectedDifficulty = savedData.difficulty;
+  $(`input[name="difficulty"][value="${selectedDifficulty}"]`)
+    .prop("checked", true);
+
+  // Restore selected questions
+  selectedQuestions = savedData.questions || [];
+
+  // Enable buttons
+  updateLoadButtonState();
+  updateViewButtonState();
+}
+
 
 
 });
