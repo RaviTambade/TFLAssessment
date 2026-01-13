@@ -329,10 +329,10 @@ CALL spgetaveragereportbytestid(1);
 
 
 
-DROP PROCEDURE IF Exists GetTestEmployeeDetailsByCandidate;
+DROP PROCEDURE IF Exists getAssessmentEmployeeDetailsByCandidate;
 DELIMITER $$
 
-CREATE PROCEDURE GetTestEmployeeDetailsByCandidate(IN candidate INT)
+CREATE PROCEDURE getAssessmentEmployeeDetailsByCandidate(IN candidate INT)
 BEGIN
     SELECT 
         t.id  AS Id,
@@ -354,6 +354,6 @@ END $$
 
 DELIMITER ;
 
-CALL GetTestEmployeeDetailsByCandidate(4);
+CALL getAssessmentEmployeeDetailsByCandidate(6);
 
 

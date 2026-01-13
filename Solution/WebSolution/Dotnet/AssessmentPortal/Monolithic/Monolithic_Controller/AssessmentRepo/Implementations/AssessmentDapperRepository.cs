@@ -719,7 +719,7 @@ public async Task<List<Employee>> GetAllEmployees()
         using (IDbConnection con = new MySqlConnection(_connectionString))
         {
             var result = await con.QueryAsync<TestEmployeeDetails>(
-                "GetTestEmployeeDetailsByCandidate",
+                "getAssessmentEmployeeDetailsByCandidate",
                 new { candidate = empId },
                 commandType: CommandType.StoredProcedure
             );
