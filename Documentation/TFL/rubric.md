@@ -8,7 +8,6 @@ You can use this for:
 * Project reviews
 * Mentor dashboards
 
-
 ## 🎓 Transflower Student Assessment Rubric
 
 ### Topic: Layered Architecture (ASP.NET / Backend Systems)
@@ -43,8 +42,6 @@ Level 4 – Ownership       → Implements independently & explains impact
 - ✔ UI contains no business rules
 - ✔ Business layer is framework-agnostic
 - ✔ Data logic isolated
-
-
 
 ## 2️⃣ Code Organization & Project Structure
 
@@ -92,8 +89,6 @@ Web → Application → Domain ← Infrastructure
 
 - ✔ Rules live in **Business / Domain Layer**
 - ❌ Controllers are thin
-
-
 
 ## 5️⃣ Scalability & Maintainability Thinking
 
@@ -184,3 +179,6 @@ If you want next:
 * 🔹 Add **real interview mapping**
 
 Just guide me 👍
+
+
+
