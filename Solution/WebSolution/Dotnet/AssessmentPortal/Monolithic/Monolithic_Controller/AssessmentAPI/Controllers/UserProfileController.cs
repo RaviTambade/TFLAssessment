@@ -24,7 +24,7 @@ public class UserProfileController : ControllerBase
     public async Task<IActionResult> GetUserProfileById(int id)
     {
         User UserProfile = await _svc.GetUserProfileById(id);
-        if (UserProfile == null)
+        if  (UserProfile == null)
         {
             return NotFound("No user found.");
         }

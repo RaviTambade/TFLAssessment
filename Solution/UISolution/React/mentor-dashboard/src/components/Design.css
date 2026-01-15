@@ -1,3 +1,5 @@
+
+/* for MentorData component */
 .MentorData-container {
   border: 1px solid #461e78;
   padding: 16px;
@@ -20,6 +22,7 @@
   justify-content: space-between;
   margin-bottom: 8px;
 }
+<<<<<<< HEAD
 
 
 /* Learner Skill Analytics Card  */
@@ -85,4 +88,109 @@
 
 .LearnerAnalytics-insights li {
   margin-bottom: 4px;
+=======
+<<<<<<< HEAD
+/* 6 th mentor action panel*/
+
+.mentor-container {
+  width: 520px;
+  background-color: #7e889a;         
+  border: 1px solid black;
+  border-radius: 8px;
+  padding: 16px;
+  font-family: "Segoe UI", Arial, sans-serif;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+
+.mentor-title {
+  font-size: 16px;
+ text-align: center;
+  font-weight: 600;
+  color:black;
+  padding-bottom: 8px;
+
+  margin-bottom: 12px;
+}
+
+
+.mentor-body strong {
+  color: #502c2c;
+}
+
+.mentor-body ul {
+  list-style: none;
+  padding-left: 0;
+  margin-top: 8px;
+}
+
+.mentor-body li {
+  margin: 6px 0;
+  color:black;
+}
+
+
+.mentor-buttons {
+  display: flex;
+  gap: 30px;
+  margin-top: 16px;
+}
+
+.mentor-buttons button {
+  padding: 8px 16px;
+  border-radius: 6px;
+  border: none;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+
+.mentor-buttons button:first-child {
+  background-color: #1565c0;
+  color:white;
+}
+
+.mentor-buttons button:last-child {
+  background-color: #1565c0;
+  color:  white;
+}
+
+
+.mentor-buttons button:hover {
+  opacity: 0.9;
+=======
+
+/* for Skillhealth component */
+.SkillHealth-container {
+  border: 1px solid #ddd;
+  padding: 16px;
+  margin: 20px;
+  border-radius: 8px;
+  width: 350px;
+  background-color: #fafafa;
+}
+
+.SkillHealth-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 12px;
+}
+
+.SkillHealth-list .skill {
+  margin: 6px 0;
+}
+
+.skill.strong {
+  color: green;
+}
+
+.skill.average {
+  color: orange;
+}
+
+.skill.weak {
+  color: red;
+>>>>>>> d294a7c5caf271b44233125ddce5b0e6933d26d2
+>>>>>>> 940cb8e027459769acc5958ce23618cab88d950b
 }
