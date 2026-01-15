@@ -1,3 +1,5 @@
+
+/* for MentorData component */
 .MentorData-container {
   border: 1px solid #461e78;
   padding: 16px;
@@ -19,4 +21,36 @@
   display: flex;
   justify-content: space-between;
   margin-bottom: 8px;
+}
+
+/* for Skillhealth component */
+.SkillHealth-container {
+  border: 1px solid #ddd;
+  padding: 16px;
+  margin: 20px;
+  border-radius: 8px;
+  width: 350px;
+  background-color: #fafafa;
+}
+
+.SkillHealth-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 12px;
+}
+
+.SkillHealth-list .skill {
+  margin: 6px 0;
+}
+
+.skill.strong {
+  color: green;
+}
+
+.skill.average {
+  color: orange;
+}
+
+.skill.weak {
+  color: red;
 }
