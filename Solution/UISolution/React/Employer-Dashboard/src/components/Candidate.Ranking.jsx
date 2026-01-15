@@ -1,4 +1,19 @@
-import "../Styles/CandidateSkill.css"
+import "../Styles/Candidate.Ranking.css"
+function checkEmployebillity(Readiness)
+{
+    if(Readiness=="Employable")
+    {
+        return "🟢 Employable"
+    }
+    else if(Readiness=="Trainable")
+    {
+        return "🟡 Trainable"
+    }
+    else
+    {
+        return "🔴 Not Ready"
+    }
+}
 function CandidateRankingTable() {
   const candidateRank = [
     {
@@ -52,7 +67,7 @@ function CandidateRankingTable() {
               <td>{rank.Candidate}</td>
               <td>{rank["Match%"]}</td>
               <td>{rank["Final%"]}</td>
-              <td>{rank.Readiness}</td>
+              <td>{checkEmployebillity(rank.Readiness)}</td>
               <td>{rank.Risk}</td>
             </tr>
           ))}
