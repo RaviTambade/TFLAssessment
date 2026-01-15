@@ -1,3 +1,5 @@
+
+/* for MentorData component */
 .MentorData-container {
   border: 1px solid #461e78;
   padding: 16px;
@@ -21,50 +23,34 @@
   margin-bottom: 8px;
 }
 
-
-/*css for PublishAssessment*/
-.publish-container {
-  border: 1px solid #ccc;
-  padding: 20px;
-  width: 520px;
-  font-family: Arial, sans-serif;
-  background-color: #fff;
+/* for Skillhealth component */
+.SkillHealth-container {
+  border: 1px solid #ddd;
+  padding: 16px;
+  margin: 20px;
+  border-radius: 8px;
+  width: 350px;
+  background-color: #fafafa;
 }
 
-.publish-title {
-  text-align: center;
+.SkillHealth-title {
+  font-size: 18px;
   font-weight: bold;
-  margin-bottom: 15px;
+  margin-bottom: 12px;
 }
 
-.publish-info div {
-  margin-bottom: 8px;
+.SkillHealth-list .skill {
+  margin: 6px 0;
 }
 
-.publish-buttons {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 20px;
+.skill.strong {
+  color: green;
 }
 
-.publish-buttons button {
-  padding: 8px 18px;
-  border: none;
-  cursor: pointer;
-  font-weight: bold;
+.skill.average {
+  color: orange;
 }
 
-.publish-btn {
-  background-color: #007bff;
-  color: white;
-}
-
-.schedule-btn {
-  background-color: #6c757d;
-  color: white;
-}
-
-.cancel-btn {
-  background-color: #dc3545;
-  color: white;
+.skill.weak {
+  color: red;
 }

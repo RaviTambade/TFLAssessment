@@ -1,6 +1,6 @@
 import MentorData from "./components/MentorData";
 import TestData from "./components/TestData";
-import PublishAssessment from "./components/PublishAssessment";
+import SkillHealthSnapshot from "./components/SkillHealthSnapshot";
 
 function App() {
   return (
@@ -13,15 +13,12 @@ function App() {
     <div>
         <TestData />
       </div>
-      
-      <h2>PUBLISH ASSESSMENT</h2>
-      <PublishAssessment />
-      
-      
-      </>
 
-
-     
+      <h2>SKILL HEALTH SNAPSHOT</h2>
+      <div>
+        <SkillHealthSnapshot/>
+      </div>
+      </>    
   );
 }
 
