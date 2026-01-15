@@ -196,14 +196,3 @@ As **Chief Mentor**, you:
 * An **employer-aligned employability engine**
 * A **co-mentor collaborative environment**
 
-
-
-If you want, I can **design a full ASCII diagram combining**:
-
-* **TFL layers**
-* **Co-Mentor Application workflow**
-* **Student → Evidence → Placement → Employer**
-
-It would be a **complete blueprint showing the entire Career OS from mentor perspective**.
-
-Do you want me to do that next?
