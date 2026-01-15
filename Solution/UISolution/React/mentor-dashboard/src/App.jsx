@@ -1,5 +1,6 @@
 import MentorData from "./components/MentorData";
 import TestData from "./components/TestData";
+import MentorRecommendation from "./components/MentorRecommendation";
 
 function App() {
   return (
@@ -11,7 +12,13 @@ function App() {
     <h2>TEST DATA</h2>
     <div>
         <TestData />
-      </div></>
+      </div>
+      <h2>MENTOR ACTION DATA</h2>
+      <div>
+        <MentorRecommendation/>
+      </div>
+      </>
+    
   );
 }
 
