@@ -54,3 +54,51 @@
 .skill.weak {
   color: red;
 }
+
+
+/*css for PublishAssessment*/
+.publish-container {
+  border: 1px solid #ccc;
+  padding: 20px;
+  width: 520px;
+  font-family: Arial, sans-serif;
+  background-color: #fff;
+}
+
+.publish-title {
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.publish-info div {
+  margin-bottom: 8px;
+}
+
+.publish-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.publish-buttons button {
+  padding: 8px 18px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.publish-btn {
+  background-color: #007bff;
+  color: white;
+}
+
+.schedule-btn {
+  background-color: #6c757d;
+  color: white;
+}
+
+.cancel-btn {
+  background-color: #dc3545;
+  color: white;
+}
