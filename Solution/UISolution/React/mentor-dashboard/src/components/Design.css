@@ -23,6 +23,7 @@
   margin-bottom: 8px;
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 
 /* Learner Skill Analytics Card  */
@@ -90,6 +91,8 @@
   margin-bottom: 4px;
 =======
 <<<<<<< HEAD
+=======
+>>>>>>> c51a13ea15937fd40a01825cac8dc07b09d18571
 /* 6 th mentor action panel*/
 
 .mentor-container {
@@ -159,7 +162,6 @@
 
 .mentor-buttons button:hover {
   opacity: 0.9;
-=======
 
 /* for Skillhealth component */
 .SkillHealth-container {
@@ -191,6 +193,58 @@
 
 .skill.weak {
   color: red;
+<<<<<<< HEAD
 >>>>>>> d294a7c5caf271b44233125ddce5b0e6933d26d2
 >>>>>>> 940cb8e027459769acc5958ce23618cab88d950b
+=======
+>>>>>>> c51a13ea15937fd40a01825cac8dc07b09d18571
+}
+
+
+/*css for PublishAssessment*/
+.publish-container {
+  border: 1px solid #ccc;
+  padding: 20px;
+  width: 520px;
+  font-family: Arial, sans-serif;
+  background-color: #fff;
+}
+
+.publish-title {
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.publish-info div {
+  margin-bottom: 8px;
+}
+
+.publish-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.publish-buttons button {
+  padding: 8px 18px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.publish-btn {
+  background-color: #007bff;
+  color: white;
+}
+
+.schedule-btn {
+  background-color: #6c757d;
+  color: white;
+}
+
+.cancel-btn {
+  background-color: #dc3545;
+  color: white;
+}
 }
