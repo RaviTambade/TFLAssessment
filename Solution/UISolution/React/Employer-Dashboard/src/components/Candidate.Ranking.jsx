@@ -1,0 +1,65 @@
+import "../Styles/Candidate.Ranking.css"
+function CandidateRankingTable() {
+  const candidateRank = [
+    {
+      id: 1,
+      Candidate: "Amit Patil",
+      "Match%": 82,
+      "Final%": 86,
+      Readiness: "Employable",
+      Risk: "Low",
+    },
+    {
+      id: 2,
+      Candidate: "Rahul D.",
+      "Match%": 78,
+      "Final%": 81,
+      Readiness: "Employable",
+      Risk: "Low",
+    },
+    {
+      id: 3,
+      Candidate: "Sneha K.",
+      "Match%": 71,
+      "Final%": 74,
+      Readiness: "Trainable",
+      Risk: "Med",
+    },
+    {
+      id: 4,
+      Candidate: "Neha S.",
+      "Match%": 64,
+      "Final%": 66,
+      Readiness: "Not Ready",
+      Risk: "High",
+    },
+  ];
+  return (
+    <>
+      <div>
+        <table className="CandidateRank">
+          <tr>
+            <th>#</th>
+            <th>Candidate</th>
+            <th>Match%</th>
+            <th>FInal%</th>
+            <th>Readiness</th>
+            <th>Risk</th>
+          </tr>
+          {candidateRank.map((rank) => (
+            <tr>
+              <td>{rank.id}</td>
+              <td>{rank.Candidate}</td>
+              <td>{rank["Match%"]}</td>
+              <td>{rank["Final%"]}</td>
+              <td>{rank.Readiness}</td>
+              <td>{rank.Risk}</td>
+            </tr>
+          ))}
+        </table>
+      </div>
+    </>
+  );
+}
+
+export default CandidateRankingTable;
