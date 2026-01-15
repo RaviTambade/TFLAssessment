@@ -16,9 +16,10 @@ public class SubjectController : ControllerBase
     public SubjectController(ISubjectService service)
     {
         // Initialize with some sample data
-       _svc = service;  
-       
+        _svc = service;
+
     }
+    
     
     // GET: get all subjects
     //http://localhost:5238/api/subject/subjects
