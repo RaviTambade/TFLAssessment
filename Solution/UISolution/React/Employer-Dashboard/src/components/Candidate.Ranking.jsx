@@ -1,4 +1,4 @@
-import "../Styles/Candidate.Ranking.css"
+import "../Styles/CandidateSkill.css"
 function CandidateRankingTable() {
   const candidateRank = [
     {
