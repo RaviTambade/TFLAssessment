@@ -52,7 +52,7 @@ function CandidateRankingTable() {
   return (
     <>
       <div>
-        <table className="CandidateRank">
+        <table className="CandidateRank" border={1}>
           <tr>
             <th>#</th>
             <th>Candidate</th>
