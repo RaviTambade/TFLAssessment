@@ -1,4 +1,4 @@
-const { useEffect } = require("react");
+
 
 const skills=[
     {name:"c#",value:78},
