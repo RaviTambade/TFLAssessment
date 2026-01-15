@@ -1,0 +1,22 @@
+.MentorData-container {
+  border: 1px solid #461e78;
+  padding: 16px;
+  width: 700px;
+  font-family: Arial, sans-serif;
+  background-color: #3b5085;
+}
+
+.MentorData-title {
+  font-size: 20px;
+  font-weight: bold;
+  border-bottom: 1px solid #130b2f;
+  padding-bottom: 8px;
+  margin-bottom: 12px;
+}
+
+.MentorData-info,
+.MentorData-stats {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
