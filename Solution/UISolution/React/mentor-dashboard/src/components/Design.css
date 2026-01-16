@@ -22,53 +22,7 @@
   justify-content: space-between;
   margin-bottom: 8px;
 }
-/* Learner Skill Analytics Card  */
 
-.LearnerAnalytics-container {
-  width: 650px;
-  margin: 30px auto;
-  border: 2px solid #333;
-  padding: 16px;
-  font-family: Arial, Helvetica, sans-serif;
-  background-color: #ffffff;
-}
-
-/* ---------- Title ---------- */
-.LearnerAnalytics-title {
-  text-align: center;
-  font-weight: bold;
-  font-size: 18px;
-  padding-bottom: 10px;
-  border-bottom: 2px solid #333;
-}
-
-/* ---------- Learner Info ---------- */
-.LearnerAnalytics-info {
-  display: flex;
-  justify-content: space-between;
-  margin: 12px 0;
-  font-size: 14px;
-}
-
-/* ---------- Table ---------- */
-.LearnerAnalytics-table table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 10px;
-}
-
-.LearnerAnalytics-table th,
-.LearnerAnalytics-table td {
-  border: 1px solid #333;
-  padding: 8px;
-  text-align: left;
-  font-size: 14px;
-}
-
-.LearnerAnalytics-table th {
-  background-color: #f2f2f2;
-  font-weight: bold;
-}
 
 /* ---------- AI Insights ---------- */
 .LearnerAnalytics-insights {
