@@ -469,7 +469,7 @@ This dashboard *trains mindset*, not just skills.
 
 
 
-
+```
 
 // Folder Structure
 // src/
@@ -578,6 +578,8 @@ export default function Header() {
     </div>
   );
 }
+
+```
 
 ## ✅ What’s now achieved
 
