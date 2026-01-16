@@ -1,4 +1,4 @@
-import "./Design.css";
+import "./LearnerSkillAnalytics.css";
 
 function LearnerSkillAnalytics() {
   const learnerData = {
@@ -22,17 +22,11 @@ function LearnerSkillAnalytics() {
 
   return (
     <div className="LearnerAnalytics-container">
-      <div className="LearnerAnalytics-title">
-        Learner Skill Analytics
-      </div>
+      <div className="LearnerAnalytics-title">Learner Skill Analytics</div>
 
       <div className="LearnerAnalytics-info">
-        <div>
-          <strong>Learner:</strong> {learnerData.learnerName}
-        </div>
-        <div>
-          <strong>Layer:</strong> {learnerData.layer}
-        </div>
+        <div><strong>Learner:</strong> {learnerData.learnerName}</div>
+        <div><strong>Layer:</strong> {learnerData.layer}</div>
       </div>
 
       <div className="LearnerAnalytics-table">

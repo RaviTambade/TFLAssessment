@@ -24,22 +24,7 @@
 }
 
 
-/* ---------- AI Insights ---------- */
-.LearnerAnalytics-insights {
-  margin-top: 14px;
-  padding-top: 10px;
-  border-top: 2px solid #333;
-  font-size: 14px;
-}
 
-.LearnerAnalytics-insights ul {
-  margin-top: 6px;
-  padding-left: 20px;
-}
-
-.LearnerAnalytics-insights li {
-  margin-bottom: 4px;
-}
 /* 6 th mentor action panel*/
 
 .mentor-container {
