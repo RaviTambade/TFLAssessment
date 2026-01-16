@@ -1,8 +1,3 @@
-Excellent choice — this is the **heart of EMS** ❤️
-I’ve now created a **Candidate Profile component** and integrated it cleanly into the existing React + Bootstrap dashboard.
-
----
-
 ## ✅ What the CandidateProfile component delivers
 
 This screen answers **every employer’s real question**:
@@ -18,7 +13,6 @@ This screen answers **every employer’s real question**:
 * Overall readiness percentage
   👉 *Immediate hiring confidence*
 
----
 
 #### 2️⃣ Skill Scorecard
 
@@ -26,7 +20,6 @@ This screen answers **every employer’s real question**:
 * Visual block indicators (easy to replace with charts later)
 * Microsoft-role-aligned thinking
 
----
 
 #### 3️⃣ Project Evidence
 
@@ -35,7 +28,6 @@ This screen answers **every employer’s real question**:
 * Technology stack used
   👉 *Replaces certificates with proof*
 
----
 
 #### 4️⃣ Learning Timeline
 
@@ -43,7 +35,6 @@ This screen answers **every employer’s real question**:
 * Shows discipline, consistency, and velocity
   👉 *Something resumes can never show*
 
----
 
 ## 🗂️ Updated Component Structure
 
@@ -61,7 +52,6 @@ src/
 └── index.js
 ```
 
----
 
 ## 🏢 How this looks in a real company demo
 
@@ -74,7 +64,6 @@ src/
   * Interview focus points
 * Interview becomes **validation**, not discovery
 
----
 
 ## 🚀 Natural Next Steps (Very Important)
 
@@ -94,7 +83,6 @@ I strongly recommend this exact order:
 
 5. **Role-based views (HR vs Tech Lead)**
 
----
 
 ### Mentor Closing (Transflower Style)
 
@@ -109,6 +97,3 @@ Tell me the next step:
 * Convert this into a **student learning lab**?
 
 We’re building this exactly like a **real product team would**.
-
-
-
