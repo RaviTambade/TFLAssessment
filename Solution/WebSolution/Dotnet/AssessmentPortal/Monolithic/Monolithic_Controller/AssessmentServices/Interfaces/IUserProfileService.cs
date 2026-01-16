@@ -8,4 +8,5 @@ namespace Transflower.TFLAssessment.Services.Interfaces;
 
 public interface IUserProfileService : IUserProfileRepository
 {
+    
 }
