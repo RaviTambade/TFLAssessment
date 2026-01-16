@@ -22,9 +22,6 @@
   justify-content: space-between;
   margin-bottom: 8px;
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
-
 
 /* Learner Skill Analytics Card  */
 
@@ -89,10 +86,7 @@
 
 .LearnerAnalytics-insights li {
   margin-bottom: 4px;
-=======
-<<<<<<< HEAD
-=======
->>>>>>> c51a13ea15937fd40a01825cac8dc07b09d18571
+}
 /* 6 th mentor action panel*/
 
 .mentor-container {
@@ -193,11 +187,6 @@
 
 .skill.weak {
   color: red;
-<<<<<<< HEAD
->>>>>>> d294a7c5caf271b44233125ddce5b0e6933d26d2
->>>>>>> 940cb8e027459769acc5958ce23618cab88d950b
-=======
->>>>>>> c51a13ea15937fd40a01825cac8dc07b09d18571
 }
 
 
