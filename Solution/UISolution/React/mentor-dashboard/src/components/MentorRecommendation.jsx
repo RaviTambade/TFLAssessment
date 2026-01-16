@@ -1,41 +1,42 @@
-import "./Design.css";
-function MentorRecommendation(){
+import "./MentorReccomendation.css";
+function MentorRecommendation() {
 
-    const MentorRecommendation={
-        title:"Mentor Action Recommendations",
-        SuggestedActions:[
+    const MentorRecommendation = {
+        title: "Mentor Action Recommendations",
+        SuggestedActions: [
             "Assign DI-focused micro-assessment",
             "Pair with peer for code walkthrough ",
             "Recommend Layer 3 reinforcement module "
 
         ],
 
-       buttons: [
+        buttons: [
             " Assign Assessment",
             "Schedule Mentoring Session"
         ]
     };
 
-    return(
+    return (
         <div className="mentor-container">
             <div className="mentor-title">
                 {MentorRecommendation.title}
+                
             </div>
             <div className="mentor-body">
                 <strong> suggested Actions:   </strong>
 
                 <ul>
-                    {MentorRecommendation.SuggestedActions.map((action,index)=>
-                    <li key={index}> {action}</li>
+                    {MentorRecommendation.SuggestedActions.map((action, index) =>
+                        <li key={index}> {action}</li>
                     )}
                 </ul>
             </div>
             <div className="mentor-buttons">
-                {MentorRecommendation.buttons.map((label,index)=>(
+                {MentorRecommendation.buttons.map((label, index) => (
                     <button key={index}>{label}</button>
                 ))}
 
-                
+
             </div>
 
 
