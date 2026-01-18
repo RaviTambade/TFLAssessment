@@ -18,7 +18,8 @@ function EmployerDashboard() {
     rankings: [
       { name: "Nirjala Naik", score: "62%", status: "Trainable" },
       { name: "Sahil Kamble", score: "88%", status: "Employable" },
-      { name: "Sanika Bhor", score: "95%", status: "Employable" }
+      { name: "Sanika Bhor", score: "95%", status: "Employable" },
+      { name: "Nirjala ", score: "95%", status: "Employable" }
     ],
 
     actions: ["Hire", "Train", "Reject"]
