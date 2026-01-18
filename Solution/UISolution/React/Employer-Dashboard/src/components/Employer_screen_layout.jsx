@@ -1,4 +1,4 @@
-import "./Employer_screen.css";
+import "../Styles/Employer_screen.css";
 
 function EmployerDashboard() {
 
