@@ -15,6 +15,8 @@ function App() {
         <Sidebar />
         <div className="flex-grow-1 p-3">
           <Routes>
+            <Route path="/dashboard" element={<MentorData />} />
+            <Route path="/" element={<MentorData />} />
             <Route path="/learner-skill-analytics" element={<LearnerSkillAnalytics />} />
             <Route path="/mentor-data" element={<MentorData />} />
             <Route path="/test-data" element={<TestData />} />
