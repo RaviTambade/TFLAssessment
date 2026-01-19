@@ -1,5 +1,4 @@
-import "./Design.css";
-
+ 
 function SkillHealthSnapshot(){
 
     //hard coded list data

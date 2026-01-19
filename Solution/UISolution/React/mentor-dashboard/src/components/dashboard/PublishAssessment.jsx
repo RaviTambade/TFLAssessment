@@ -1,5 +1,4 @@
-import "./Design.css";
-
+ 
 function PublishAssessment() {
   // 🔒 Hard-coded data (no API for now)
   const assessmentData = {

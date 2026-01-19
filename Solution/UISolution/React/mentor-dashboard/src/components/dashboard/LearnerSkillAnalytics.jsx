@@ -1,4 +1,3 @@
-import "./LearnerSkillAnalytics.css";
 
 function LearnerSkillAnalytics() {
   const learnerData = {

@@ -1,5 +1,4 @@
-import "./MentorReccomendation.css";
-function MentorRecommendation() {
+ function MentorRecommendation() {
 
     const MentorRecommendation = {
         title: "Mentor Action Recommendations",
