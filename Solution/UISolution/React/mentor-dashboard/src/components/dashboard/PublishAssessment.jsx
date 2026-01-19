@@ -1,7 +1,6 @@
 
 
 function PublishAssessment() {
-  // 🔒 Hard-coded data (no API for now)
   const assessmentData = {
     name: "ASP.NET Core – Layer 3 Diagnostic",
     assignedTo: "Sejal kulkarni",

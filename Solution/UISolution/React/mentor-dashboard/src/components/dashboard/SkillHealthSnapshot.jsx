@@ -1,26 +1,39 @@
-import React from 'react';
+import React from "react";
 
 function SkillHealthCard() {
   const skills = [
-    { name:"strong:", value: "Programming Basics"},
-     {   name:"average:",value: "Web Architecture"},
-      {  name:"weak:", value: "Dependency Injection, LINQ"} 
+    { level: "Strong", topic: "Programming Basics", percent: 85 },
+    { level: "Average", topic: "Web Architecture", percent: 55 },
+    { level: "Weak", topic: "Dependency Injection, LINQ", percent: 30 },
   ];
 
   return (
-    <div className="card mb-3">
+    <div className="card mb-2">
       <div className="card-header">Skill Health</div>
+
       <div className="card-body">
         {skills.map((skill, idx) => (
-          <div key={idx} className="mb-2">
-            <strong>{skill.name}</strong>
-            <div className="progress">
-              <div
-                className="progress-bar"
-                role="progressbar"
-                style={{ width: `${skill.value}%` }}
-              >{skill.value}%</div>
+          <div key={idx} className="mb-3">
+        
+            <div className="d-flex justify-content-between">
+              <strong>{skill.level}:</strong>
+              <span>{skill.topic}</span>
             </div>
+
+            <div className="d-flex align-items-center gap-2 mt-1">
+              <span style={{ width: "35px" }}>
+                {skill.percent}%
+              </span>
+
+              <div className="progress flex-grow-1" style={{ height: "6px" }}>
+                <div
+                  className="progress-bar"
+                  role="progressbar"
+                  style={{ width: `${skill.percent}%` }}
+                />
+              </div>
+            </div>
+
           </div>
         ))}
       </div>
@@ -29,46 +42,3 @@ function SkillHealthCard() {
 }
 
 export default SkillHealthCard;
-
-
-
-// import "../layout/Sidebar";
-
-// function SkillHealthSnapshot(){
-
-//     //hard coded list data
-//     const skillHealth={
-//         strong:"Programming Basics",
-//         average: "Web Architecture",
-//         weak: "Dependency Injection, LINQ" 
-
-//     };
-
-//     return (
-//         <div className="SkillHealth-container">
-        
-//         <div className="SkillHealth-title">
-//              📊 Skill Health Snapshot
-//             </div>
-
-//         <div className="SkillHealth-list">
-//             <div className="skill strong">
-//             • <strong>Strong:</strong> {skillHealth.strong}
-//         </div>
-
-//         <div className="skill average">
-//            • <strong>Average:</strong>{skillHealth.average}
-//             </div>
-
-//             <div className="skill Weak">
-//            • <strong>Weak:</strong>{skillHealth.weak}
-//             </div>
-
-//         </div>
-//         </div>
-            
-//     );
-// }
-// export default SkillHealthSnapshot;
-            
-    

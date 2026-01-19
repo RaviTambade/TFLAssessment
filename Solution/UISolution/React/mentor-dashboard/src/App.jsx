@@ -1,29 +1,28 @@
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+
+import Sidebar from './components/layout/Sidebar';
 import MentorData from "./components/dashboard/MentorData";
 import TestData from "./components/dashboard/TestData";
 import SkillHealthSnapshot from "./components/dashboard/SkillHealthSnapshot";
 import PublishAssessment from "./components/dashboard/PublishAssessment";
 import MentorRecommendation from "./components/dashboard/MentorRecommendation";
-
 import LearnerSkillAnalytics from "./components/dashboard/LearnerSkillAnalytics";
-
 
 function App() {
   return (
-    <Router>
+     <Router>
       <div className="d-flex">
         <Sidebar />
         <div className="flex-grow-1 p-3">
           <Routes>
-            <Route path="/" element={<StudentDashboard />} />
-            <Route path="/dashboard" element={<StudentDashboard />} />
-            <Route path="/projects" element={<Projects />} />
-            <Route path="/assessments" element={<Assessments />} />
-            <Route path="/mentor-feedback" element={<MentorFeedback />} />
-            <Route path="/skill-health" element={<SkillHealth />} />
-            <Route path="/learning-path" element={<LearningPath />} />
-            <Route path="/career-readiness" element={<CareerReadiness />} />
+            <Route path="/learner-skill-analytics" element={<LearnerSkillAnalytics />} />
+            <Route path="/mentor-data" element={<MentorData />} />
+            <Route path="/test-data" element={<TestData />} />
+            <Route path="/skill-health-snapshot" element={<SkillHealthSnapshot />} />
+            <Route path="/publish-assessment" element={<PublishAssessment />} />
+            <Route path="/mentor-recommendation" element={<MentorRecommendation />} />
           </Routes>
-
         </div>
       </div>
     </Router>
