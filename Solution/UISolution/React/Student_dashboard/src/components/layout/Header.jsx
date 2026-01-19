@@ -8,7 +8,7 @@ function Header() {
     readiness: '68%',
     confidence: 'Medium',
   };
-
+  //Destructure
   const { student_pic, studentName, targetRole, readiness, confidence } = studentData;
 
   return (
@@ -17,7 +17,7 @@ function Header() {
       <div>
         <h4 className="m-0">Welcome, {studentName}</h4>
         <p className="m-0">
-          <strong>Target Role:</strong> {targetRole}y | 
+          <strong>Target Role:</strong> {targetRole} | 
           <strong> Readiness:</strong> {readiness} | 
           <strong> Confidence:</strong> {confidence}
         </p>
