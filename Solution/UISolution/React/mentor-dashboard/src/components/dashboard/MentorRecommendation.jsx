@@ -1,4 +1,4 @@
-import "./MentorReccomendation.css";
+
 function MentorRecommendation() {
 
     const MentorRecommendation = {
@@ -17,12 +17,11 @@ function MentorRecommendation() {
     };
 
     return (
-        <div className="mentor-container">
-            <div className="mentor-title">
+        <div className="card mb-3">
+            <div className="card-header">
                 {MentorRecommendation.title}
-                
             </div>
-            <div className="mentor-body">
+            <div className="card-body">
                 <strong> suggested Actions:   </strong>
 
                 <ul>

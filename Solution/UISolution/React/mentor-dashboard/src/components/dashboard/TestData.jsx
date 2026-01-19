@@ -1,4 +1,4 @@
-import "./Design.css";
+
 
 function TestData(){
 
