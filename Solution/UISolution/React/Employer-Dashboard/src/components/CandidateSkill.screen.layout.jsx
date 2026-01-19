@@ -1,4 +1,4 @@
-
+import "../Styles/CandidateSkill.css"
 
 const skills=[
     {name:"c#",value:78},
@@ -11,7 +11,7 @@ const skills=[
 
 const CandidateSkill=()=>{
     return(
-        <div className="profile-card">
+        <div className="profile-card ">
             <h2 className="title">Sahil Kamble - Skill Profile</h2>
 
             <div className="skills">
