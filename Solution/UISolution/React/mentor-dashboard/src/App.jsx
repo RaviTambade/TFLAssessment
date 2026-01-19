@@ -5,41 +5,28 @@ import PublishAssessment from "./components/dashboard/PublishAssessment";
 import MentorRecommendation from "./components/dashboard/MentorRecommendation";
 
 import LearnerSkillAnalytics from "./components/dashboard/LearnerSkillAnalytics";
+
+
 function App() {
   return (
-    <>
-      <h2>MENTOR DATA</h2>
-      <div>
-        <MentorData />
-      </div>
-      <h2>TEST DATA</h2>
-      <div>
-        <TestData />
-      </div>
-      <div>
-        <h2>LEARNER SKILL ANALYTICS</h2>
-        <div>
-          <LearnerSkillAnalytics />
-        </div>
+    <Router>
+      <div className="d-flex">
+        <Sidebar />
+        <div className="flex-grow-1 p-3">
+          <Routes>
+            <Route path="/" element={<StudentDashboard />} />
+            <Route path="/dashboard" element={<StudentDashboard />} />
+            <Route path="/projects" element={<Projects />} />
+            <Route path="/assessments" element={<Assessments />} />
+            <Route path="/mentor-feedback" element={<MentorFeedback />} />
+            <Route path="/skill-health" element={<SkillHealth />} />
+            <Route path="/learning-path" element={<LearningPath />} />
+            <Route path="/career-readiness" element={<CareerReadiness />} />
+          </Routes>
 
-        <h2>MENTOR ACTION DATA</h2>
-        <div>
-          <MentorRecommendation />
-        </div>
-
-        <h2>SKILL HEALTH SNAPSHOT</h2>
-        <div>
-          <SkillHealthSnapshot />
-        </div>
-
-        <h2>PUBLISH ASSESSMENT</h2>
-        <PublishAssessment />
-        <h2>Mentor Recommendation</h2>
-        <div>
-          <MentorRecommendation />
         </div>
       </div>
-    </>
+    </Router>
   );
 }
 
