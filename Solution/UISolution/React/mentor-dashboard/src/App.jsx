@@ -1,10 +1,10 @@
-import MentorData from "./components/MentorData";
-import TestData from "./components/TestData";
-import SkillHealthSnapshot from "./components/SkillHealthSnapshot";
-import PublishAssessment from "./components/PublishAssessment";
-import MentorRecommendation from "./components/MentorRecommendation";
+import MentorData from "./components/dashboard/MentorData";
+import TestData from "./components/dashboard/TestData";
+import SkillHealthSnapshot from "./components/dashboard/SkillHealthSnapshot";
+import PublishAssessment from "./components/dashboard/PublishAssessment";
+import MentorRecommendation from "./components/dashboard/MentorRecommendation";
 
-import LearnerSkillAnalytics from "./components/LearnerSkillAnalytics";
+import LearnerSkillAnalytics from "./components/dashboard/LearnerSkillAnalytics";
 function App() {
   return (
     <>
