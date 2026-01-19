@@ -1,5 +1,5 @@
 
-
+ 
 function LearnerSkillAnalytics() {
   const learnerData = {
     learnerName: "Sanika Kulkarni",
@@ -20,48 +20,68 @@ function LearnerSkillAnalytics() {
     ]
   };
 
+  const getStatusBadge = (status) => {
+    if (status === "strong") {
+      return <span className="badge bg-success">Strong</span>;
+    }
+    if (status === "stable") {
+      return <span className="badge bg-primary">Stable</span>;
+    }
+    return <span className="badge bg-warning text-dark">Needs Support</span>;
+  };
+
   return (
-    <div className="LearnerAnalytics-container">
-      <div className="LearnerAnalytics-title">Learner Skill Analytics</div>
-
-      <div className="LearnerAnalytics-info">
-        <div><strong>Learner:</strong> {learnerData.learnerName}</div>
-        <div><strong>Layer:</strong> {learnerData.layer}</div>
+    <div className="card mb-4 shadow-sm">
+      {/* Header */}
+      <div className="card-header bg-dark text-white">
+        Learner Skill Analytics
       </div>
 
-      <div className="LearnerAnalytics-table">
-        <table>
-          <thead>
-            <tr>
-              <th>Skill</th>
-              <th>Mastery</th>
-              <th>Status</th>
-            </tr>
-          </thead>
+      {/* Body */}
+      <div className="card-body">
+        {/* Learner Info */}
+        <div className="row mb-3">
+          <div className="col-md-6">
+            <strong>Learner:</strong> {learnerData.learnerName}
+          </div>
+          <div className="col-md-6">
+            <strong>Layer:</strong> {learnerData.layer}
+          </div>
+        </div>
 
-          <tbody>
-            {learnerData.skills.map((skill, index) => (
-              <tr key={index}>
-                <td>{skill.skillName}</td>
-                <td>{skill.mastery}</td>
-                <td className={`status-${skill.status}`}>
-                  {skill.status === "strong" && "Strong"}
-                  {skill.status === "stable" && "Stable"}
-                  {skill.status === "warning" && "⚠ Needs Support"}
-                </td>
+        {/* Skills Table */}
+        <div className="table-responsive mb-3">
+          <table className="table table-bordered table-hover align-middle">
+            <thead className="table-secondary">
+              <tr>
+                <th>Skill</th>
+                <th>Mastery</th>
+                <th>Status</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+            </thead>
+            <tbody>
+              {learnerData.skills.map((skill, index) => (
+                <tr key={index}>
+                  <td>{skill.skillName}</td>
+                  <td>{skill.mastery}</td>
+                  <td>{getStatusBadge(skill.status)}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
 
-      <div className="LearnerAnalytics-insights">
-        <strong>AI Insights:</strong>
-        <ul>
-          {learnerData.insights.map((point, index) => (
-            <li key={index}>{point}</li>
-          ))}
-        </ul>
+        {/* Insights */}
+        <div>
+          <h6 className="fw-bold">AI Insights</h6>
+          <ul className="list-group list-group-flush">
+            {learnerData.insights.map((point, index) => (
+              <li key={index} className="list-group-item">
+                {point}
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
     </div>
   );

@@ -17,7 +17,7 @@ public class AssessmentDapperRepository : IAssessmentRepository
 
     public AssessmentDapperRepository(IConfiguration configuration)
     {
-_filePath = Path.Combine(Directory.GetCurrentDirectory(),"Data","Time.json");
+     _filePath = Path.Combine(Directory.GetCurrentDirectory(),"Data","Time.json");
         _configuration = configuration;
         _connectionString = _configuration.GetConnectionString("DefaultConnection") ?? throw new ArgumentNullException("connectionString");
         SqlMapper.AddTypeHandler(new SqlTimeOnlyTypeHandler());

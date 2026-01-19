@@ -1,4 +1,3 @@
-
 function MentorRecommendation() {
 
     const MentorRecommendation = {
@@ -32,7 +31,7 @@ function MentorRecommendation() {
             </div>
             <div className="mentor-buttons">
                 {MentorRecommendation.buttons.map((label, index) => (
-                    <button key={index}>{label}</button>
+                    <button key={index} className="btn btn-outline-primary me-2">{label}</button>
                 ))}
 
 

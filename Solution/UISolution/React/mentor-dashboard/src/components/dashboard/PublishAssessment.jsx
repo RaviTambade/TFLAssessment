@@ -1,5 +1,4 @@
 
-
 function PublishAssessment() {
   const assessmentData = {
     name: "ASP.NET Core – Layer 3 Diagnostic",
