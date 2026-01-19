@@ -1,16 +1,12 @@
-import './App.css'
-import CandidateRankingTable from "./components/Candidate.Ranking"
-import CandidateSkill from './components/CandidateSkill.screen.layout'
+import Employer_screen_layout from "./components/Employer_screen_layout";
+import CandidateRankingTable from "./components/Candidate.Ranking";
 
 function App() {
- 
-
   return (
-    <>
-      <CandidateRankingTable/>
-      <CandidateSkill/>
-    </>
-  )
+    <div>
+      <Employer_screen_layout />
+       <CandidateRankingTable/>
+    </div>
+  );
 }
-
-export default App
+export default App;
