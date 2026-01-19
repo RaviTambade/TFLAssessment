@@ -33,11 +33,7 @@ function MentorRecommendation() {
                 {MentorRecommendation.buttons.map((label, index) => (
                     <button key={index} className="btn btn-outline-primary me-2">{label}</button>
                 ))}
-
-
             </div>
-
-
         </div>
     )
 }
