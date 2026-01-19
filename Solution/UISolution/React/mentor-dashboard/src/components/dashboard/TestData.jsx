@@ -1,4 +1,3 @@
-import "./Design.css";
 
 function TestData(){
 
@@ -11,8 +10,9 @@ function TestData(){
 
     return(
         
-        <div className="MentorData-container">
-            <div className="MentorData-info">
+        <div className="card mb-3">
+            <div className="card-header">Test Data</div>
+            <div className="card-body">
                 <p><strong>Active Tests : </strong>{testData.ActiveTest}</p>
                 <p><strong>Pending Review : </strong>{testData.PendingReview}</p>
                 <p><strong>Skill Gap : </strong>{testData.SkillGap}</p>

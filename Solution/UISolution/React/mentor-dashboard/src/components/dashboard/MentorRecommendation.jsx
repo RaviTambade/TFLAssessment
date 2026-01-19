@@ -1,4 +1,4 @@
-import "./MentorReccomendation.css";
+
 function MentorRecommendation() {
 
     const MentorRecommendation = {

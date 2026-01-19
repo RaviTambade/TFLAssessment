@@ -11,7 +11,7 @@ function Sidebar() {
                 <li className='nav-item'><Link className='nav-link' to='/assessments'>Assessments</Link></li>
                 <li className='nav-item'><Link className='nav-link' to='/mentorfeedback'>Mentor Feedback</Link></li>
                 <li className='nav-item'><Link className='nav-link' to='/learningpath'>Learning Path</Link></li>
-                <li className='nav-item'><Link className='nav-link' to='/portfolio'>Portfolio</Link></li>
+                <li className='nav-item'><Link className='nav-link' to='/testdata'>Test Data</Link></li>
                 <li className='nav-item'><Link className='nav-link' to='/skill-health'>Skill Health</Link></li>
                 <li className='nav-item'><Link className='nav-link' to='/careerreadiness'>Career Readiness</Link></li>
             </ul>
