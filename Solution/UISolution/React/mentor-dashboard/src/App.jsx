@@ -7,7 +7,8 @@ import SkillHealthSnapshot from "./components/dashboard/SkillHealthSnapshot";
 import PublishAssessment from "./components/dashboard/PublishAssessment";
 import MentorRecommendation from "./components/dashboard/MentorRecommendation";
 import LearnerSkillAnalytics from "./components/dashboard/LearnerSkillAnalytics";
-
+import Sidebar from "./components/layout/Sidebar";
+import MentorDashboard from "./components/dashboard/MentorData";
 function App() {
   return (
      <Router>
@@ -18,6 +19,7 @@ function App() {
             <Route path="/" element={<MentorDashboard />} />
             <Route path="/dashboard" element={<MentorDashboard />} />
             <Route path="/mentor-recommendation" element={<MentorRecommendation />} />
+            <Route path="/testdata" element={<TestData />} />
           </Routes>
         </div>
       </div>
