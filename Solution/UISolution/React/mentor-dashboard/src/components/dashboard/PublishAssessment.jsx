@@ -1,52 +1,43 @@
- 
 function PublishAssessment() {
-  // 🔒 Hard-coded data (no API for now)
-  const assessmentData = {
-    name: "ASP.NET Core – Layer 3 Diagnostic",
-    assignedTo: "Sejal kulkarni",
-    startDate: "15 Jan 2025",
-    endDate: "16 Jan 2025",
-    attemptsAllowed: 1,
-    feedbackImmediate: true,
-    feedbackMentorReview: true,
-  };
+  const PublishAssessment={
+    Title:"Publish Assessment",
+        AssessmentName:"ASP.NET Core – Layer 3 Diagnostic",
+        AssignedTo:"Sejal kulkarni",
+        StarDate:"15 Jan 2025",
+        EndDate:"16 Jan 2025",
+        AttemptsAllowed: "1",
+        FeedbackMode:" Immediate ✓ Mentor Review ✓",
+        Buttons:[
+            "Publish","Schedule","Cancel"
+        ]
+    }
+  return(
 
-  return (
-    <div className="publish-container">
+    <div className="card mb-3 center">
+        <div className="class-header">
+          {PublishAssessment.Title}
+            <div className="card-body">
+               <div className="mb-1"> <strong>Assessment Name: </strong>{PublishAssessment.AssessmentName} </div> 
+               <div className="mb-1"> <strong>Assigned To: </strong>{PublishAssessment.AssignedTo}</div>
+               <div className="mb-1"> <strong>Start Date: </strong>{PublishAssessment.StarDate}</div>
+               <div className="mb-1"> <strong>End Date: </strong>{PublishAssessment.EndDate}</div>
+               <div className="mb-1"> <strong>Attempts Allowed: </strong>{PublishAssessment.AttemptsAllowed}</div>
+               <div className="mb-1"> <strong>Feedback Mode: </strong>{PublishAssessment.FeedbackMode}</div>
+               <div className="mb-1"> <button className="btn btn-success ">Publish</button>
+               
+               <button className="btn btn-secondary">Schedule</button>
 
-      <div className="publish-title">
-        ─────────────── Publish Assessment ───────────────
-      </div>
-
-      <div className="publish-info">
-        <div>
-          <strong>Assessment Name:</strong> {assessmentData.name}
+               <button className="btn btn-danger">Cancel</button>
+               
+               </div>
+               
+                
+                
+                
+                
+                
+            </div>
         </div>
-        <div>
-          <strong>Assigned To:</strong> {assessmentData.assignedTo}
-        </div>
-        <div>
-          <strong>Start Date:</strong> {assessmentData.startDate}
-        </div>
-        <div>
-          <strong>End Date:</strong> {assessmentData.endDate}
-        </div>
-        <div>
-          <strong>Attempts Allowed:</strong> {assessmentData.attemptsAllowed}
-        </div>
-        <div>
-          <strong>Feedback Mode:</strong> 
-          {assessmentData.feedbackImmediate && " Immediate ✓"} 
-          {assessmentData.feedbackMentorReview && " Mentor Review ✓"}
-        </div>
-      </div>
-
-      <div className="publish-buttons">
-        <button className="publish-btn">Publish</button>
-        <button className="schedule-btn">Schedule</button>
-        <button className="cancel-btn">Cancel</button>
-      </div>
-
     </div>
   );
 }

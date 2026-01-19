@@ -1,4 +1,3 @@
- 
 function SkillHealthSnapshot(){
 
     //hard coded list data

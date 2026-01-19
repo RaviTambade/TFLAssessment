@@ -1,4 +1,4 @@
- function MentorRecommendation() {
+function MentorRecommendation() {
 
     const MentorRecommendation = {
         title: "Mentor Action Recommendations",
@@ -16,12 +16,11 @@
     };
 
     return (
-        <div className="mentor-container">
-            <div className="mentor-title">
+        <div className="card mb-3">
+            <div className="card-header">
                 {MentorRecommendation.title}
-                
             </div>
-            <div className="mentor-body">
+            <div className="card-body">
                 <strong> suggested Actions:   </strong>
 
                 <ul>
@@ -32,13 +31,9 @@
             </div>
             <div className="mentor-buttons">
                 {MentorRecommendation.buttons.map((label, index) => (
-                    <button key={index}>{label}</button>
+                    <button key={index} className="btn btn-outline-primary me-2">{label}</button>
                 ))}
-
-
             </div>
-
-
         </div>
     )
 }
