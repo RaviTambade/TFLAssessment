@@ -21,7 +21,7 @@ function App() {
             <Route path="/skill-health-snapshot" element={<SkillHealthSnapshot />} />
             <Route path="/publish-assessment" element={<PublishAssessment />} />
             <Route path="/mentor-recommendation" element={<MentorRecommendation />} />
-            <Route path="/testdata" element={<TestData />} />
+
           </Routes>
         </div>
       </div>
