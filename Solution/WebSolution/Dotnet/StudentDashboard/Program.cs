@@ -1,11 +1,21 @@
 using StudentDashboard.Entities;
+
 var builder = WebApplication.CreateBuilder(args);
+
+// Swagger
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
 app.UseHttpsRedirection();
 
-app.MapGet("/assessment", () =>
+// Swagger UI
+app.UseSwagger();
+app.UseSwaggerUI();
+
+// Assessment Summary API
+app.MapGet("/api/AssessmentSummary", () =>
 {
     var assessment = new Assessment
     {
@@ -16,9 +26,23 @@ app.MapGet("/assessment", () =>
 
     return Results.Ok(assessment);
 })
-.WithName("GetAssessment")
+.WithName("GetAssessmentSummary")
+.WithOpenApi();
+
+// Confidence Meter API
+app.MapGet("/api/ConfidenceMeter", () =>
+{
+    var metrics = new List<ConfidenceMetric>
+    {
+        new ConfidenceMetric { Name = "Concept Understanding", Value = 70 },
+        new ConfidenceMetric { Name = "Coding Comfort", Value = 60 },
+        new ConfidenceMetric { Name = "Debugging Skills", Value = 65 },
+        new ConfidenceMetric { Name = "Interview Readiness", Value = 40 }
+    };
+
+    return Results.Ok(metrics);
+})
+.WithName("GetConfidenceMeter")
 .WithOpenApi();
 
 app.Run();
-
-
