@@ -11,6 +11,17 @@ function Sidebar() {
                     <Link className="nav-link text-white" to="/skills-analytics">Skills Analytics</Link>
 
                 </li>
+                <li><Link className="nav-link text-white" to="/employer-assist">Employer Assist</Link></li>
+                <li><Link className='nav-link text-white' to="/employer-confidence">Employer Confidence</Link></li>
+
+                <li className="nav-item">
+                    <Link className="nav-link text-white" to="/skill-drill-down">Skill Drill Down</Link>
+                </li>
+
+                <li className="nav-item">
+                    <Link className="nav-link text-white" to="/project-evidence">Project Evidence</Link>
+                </li>
+
             </ul>
         </div>
     );
