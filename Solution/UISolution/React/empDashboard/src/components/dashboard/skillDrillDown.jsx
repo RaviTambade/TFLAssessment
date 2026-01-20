@@ -6,7 +6,7 @@ const skill={
     OOPPrinciples:"(Applied)",
     LINQ:"(Hands-on)" ,
     ASPdotnet:"(Project-based)" ,
-    azureBasics:"(Deployed) "
+    azureBasics:"(Project-based)"
 }
 
 function SkillDrillDown() {

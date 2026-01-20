@@ -27,7 +27,12 @@ function ProjectEvidence() {
             </div>
 
         <h6> Deployment:{projectEvidence.deployment} </h6>
+
+        <div className="d-flex">
+        <button className="btn btn-outline-primary me-2">View Demo</button>
+        <button className="btn btn-outline-primary me-2">View Code</button>
         </div>
+    </div>
     );
 }
 
