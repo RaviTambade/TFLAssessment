@@ -1,5 +1,3 @@
-
-
 const skills=[
     {name:"c#",value:78},
     { name: "OOP", value: 85 },
@@ -9,7 +7,7 @@ const skills=[
     { name: "Problem Solv.", value: 88 }
 ];
 
-const CandidateSkill=()=>{
+const CandidateSkills=()=>{
     return(
         <div className="profile-card">
             <h2 className="title">Sahil Kamble - Skill Profile</h2>
@@ -45,4 +43,4 @@ const CandidateSkill=()=>{
     )
 }
 
-export default CandidateSkill;
+export default CandidateSkills;
