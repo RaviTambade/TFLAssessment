@@ -27,6 +27,7 @@ function App() {
             <Route path="/candidate-List-View" element={<CandidateListView />} />
             <Route path="/candidate-Scorecard-View" element={<CandidateScorecardView />} />
             <Route path="/learningTimeline" element={<LearningTimeline />} />
+             <Route path="/RecommendationView" element={<RecommendationView />} />
             <Route path="/RecommendationView" element={<RecommendationView />} />
             <Route path="/" element={<LoginPage/>} />
             <Route path="/dashboard" element={<DashboardPage/>} />
