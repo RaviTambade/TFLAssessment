@@ -20,9 +20,6 @@ function App() {
           <Routes>
             <Route path="/learningTimeline" element={<LearningTimeline />} />
              <Route path="/RecommendationView" element={<RecommendationView />} />
-
-
-
             <Route path="/" element={<LoginPage/>} />
             <Route path="/dashboard" element={<DashboardPage/>} />
             <Route path="/employer-assist" element={<EmployerAssist/>}/>
