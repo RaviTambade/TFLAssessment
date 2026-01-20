@@ -2,7 +2,7 @@ import React from 'react';
 import Header from '../components/layout/Header';
 import MentorRecommendation from '../components/dashboard/LearnerSkillAnalytics';
 
-function MentorRecommendationPage() {
+function LearnerSkillAnalytics() {
     return (
         <div>
             <Header />
@@ -10,3 +10,4 @@ function MentorRecommendationPage() {
         </div>
     );
 }
+export default LearnerSkillAnalytics;

@@ -23,9 +23,9 @@ function PublishAssessment() {
                <div className="mb-1"> <strong>End Date: </strong>{PublishAssessment.EndDate}</div>
                <div className="mb-1"> <strong>Attempts Allowed: </strong>{PublishAssessment.AttemptsAllowed}</div>
                <div className="mb-1"> <strong>Feedback Mode: </strong>{PublishAssessment.FeedbackMode}</div>
-               <div className="mb-1"> <button className="btn btn-success ">Publish</button>
+               <div className="mb-1"> <button className="btn btn-success me-3">Publish</button>
                
-               <button className="btn btn-secondary">Schedule</button>
+               <button className="btn btn-secondary me-3">Schedule</button>
 
                <button className="btn btn-danger">Cancel</button>
                
