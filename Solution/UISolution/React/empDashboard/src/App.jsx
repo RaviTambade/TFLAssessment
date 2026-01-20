@@ -1,6 +1,8 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Sidebar from './components/layout/Sidebar';
+import LoginPage from './pages/loginPage';
+import DashboardPage from './pages/dashboardPage';
 
 
 function App() {
@@ -10,7 +12,8 @@ function App() {
         <Sidebar />
         <div className="flex-grow-1 p-3">
           <Routes>
-            {/* <Route path="/" element={<StudentDashboard />} /> */}
+            <Route path="/" element={<LoginPage/>} />
+            <Route path="/dashboard" element={<DashboardPage/>} />
     
           </Routes>
 
