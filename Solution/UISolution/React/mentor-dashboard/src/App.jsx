@@ -1,45 +1,33 @@
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+
+import Sidebar from './components/layout/Sidebar';
 import MentorData from "./components/dashboard/MentorData";
 import TestData from "./components/dashboard/TestData";
 import SkillHealthSnapshot from "./components/dashboard/SkillHealthSnapshot";
 import PublishAssessment from "./components/dashboard/PublishAssessment";
 import MentorRecommendation from "./components/dashboard/MentorRecommendation";
-
 import LearnerSkillAnalytics from "./components/dashboard/LearnerSkillAnalytics";
 function App() {
   return (
-    <>
-      <h2>MENTOR DATA</h2>
-      <div>
-        <MentorData />
-      </div>
-      <h2>TEST DATA</h2>
-      <div>
-        <TestData />
-      </div>
-      <div>
-        <h2>LEARNER SKILL ANALYTICS</h2>
-        <div>
-          <LearnerSkillAnalytics />
-        </div>
+     <Router>
+      <div className="d-flex">
+        <Sidebar />
+        <div className="flex-grow-1 p-3">
+          <Routes>
+            <Route path="/dashboard" element={<MentorData />} />
+            <Route path="/" element={<MentorData />} />
+            <Route path="/learner-skill-analytics" element={<LearnerSkillAnalytics />} />
+            <Route path="/mentor-data" element={<MentorData />} />
+            <Route path="/test-data" element={<TestData />} />
+            <Route path="/skill-health-snapshot" element={<SkillHealthSnapshot />} />
+            <Route path="/publish-assessment" element={<PublishAssessment />} />
+            <Route path="/mentor-recommendation" element={<MentorRecommendation />} />
 
-        <h2>MENTOR ACTION DATA</h2>
-        <div>
-          <MentorRecommendation />
-        </div>
-
-        <h2>SKILL HEALTH SNAPSHOT</h2>
-        <div>
-          <SkillHealthSnapshot />
-        </div>
-
-        <h2>PUBLISH ASSESSMENT</h2>
-        <PublishAssessment />
-        <h2>Mentor Recommendation</h2>
-        <div>
-          <MentorRecommendation />
+          </Routes>
         </div>
       </div>
-    </>
+    </Router>
   );
 }
 

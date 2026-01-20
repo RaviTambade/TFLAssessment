@@ -1,0 +1,60 @@
+.profile-card {
+  width: 420px;
+  border: 2px solid #333;
+  padding: 16px;
+  font-family: Arial, sans-serif;
+  background: #fff;
+ 
+}
+
+.title {
+  text-align: center;
+  margin-bottom: 14px;
+  font-size: 18px;
+}
+
+.skills {
+  margin-bottom: 16px;
+}
+
+.skill-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.skill-name {
+  width: 110px;
+  font-size: 14px;
+}
+
+.bar-wrapper {
+  flex: 1;
+  height: 10px;
+  background: #e0e0e0;
+  margin: 0 8px;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.bar-fill {
+  height: 100%;
+  background: #444;
+}
+
+.skill-value {
+  width: 50px;
+  font-size: 13px;
+}
+
+.warning {
+  color: #d9534f;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  border-top: 1px solid #aaa;
+  padding-top: 10px;
+}

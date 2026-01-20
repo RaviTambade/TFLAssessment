@@ -1,40 +1,44 @@
-import "./Design.css";
+import React from "react";
 
-function SkillHealthSnapshot(){
+function SkillHealthCard() {
+  const skills = [
+    { level: "Strong", topic: "Programming Basics", percent: 85 },
+    { level: "Average", topic: "Web Architecture", percent: 55 },
+    { level: "Weak", topic: "Dependency Injection, LINQ", percent: 30 },
+  ];
 
-    //hard coded list data
-    const skillHealth={
-        strong:"Programming Basics",
-        average: "Web Architecture",
-        weak: "Dependency Injection, LINQ" 
+  return (
+    <div className="card mb-2">
+      <div className="card-header">Skill Health</div>
 
-    };
-
-    return (
-        <div className="SkillHealth-container">
+      <div className="card-body">
+        {skills.map((skill, idx) => (
+          <div key={idx} className="mb-3">
         
-        <div className="SkillHealth-title">
-             📊 Skill Health Snapshot
+            <div className="d-flex justify-content-between">
+              <strong>{skill.level}:</strong>
+              <span>{skill.topic}</span>
             </div>
 
-        <div className="SkillHealth-list">
-            <div className="skill strong">
-            • <strong>Strong:</strong> {skillHealth.strong}
-        </div>
+            <div className="d-flex align-items-center gap-2 mt-1">
+              <span style={{ width: "35px" }}>
+                {skill.percent}%
+              </span>
 
-        <div className="skill average">
-           • <strong>Average:</strong>{skillHealth.average}
+              <div className="progress flex-grow-1" style={{ height: "6px" }}>
+                <div
+                  className="progress-bar"
+                  role="progressbar"
+                  style={{ width: `${skill.percent}%` }}
+                />
+              </div>
             </div>
 
-            <div className="skill Weak">
-           • <strong>Weak:</strong>{skillHealth.weak}
-            </div>
-
-        </div>
-        </div>
-            
-    );
+          </div>
+        ))}
+      </div>
+    </div>
+  );
 }
-export default SkillHealthSnapshot;
-            
-    
+
+export default SkillHealthCard;
