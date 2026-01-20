@@ -9,10 +9,9 @@ import LoginPage from './pages/loginPage';
 import DashboardPage from './pages/dashboardPage';
 import EmployerAssist from './components/dashboard/employerAssist';
 import EmployerConfidence from './components/dashboard/employerConfidence';
-
 import SkillDrillDownPage from './pages/skillDrillDownPage';
 import ProjectEvidencePage from './pages/projectEvidencePage';
-
+import SkillsAnalyticsPage from './pages/skillsAnalyticsPage';
 function App() {
   return (
     <Router>

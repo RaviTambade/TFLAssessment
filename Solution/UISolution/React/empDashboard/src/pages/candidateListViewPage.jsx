@@ -1,9 +1,9 @@
-// import Header from "../components/layout/header";
+import Header from "../components/layout/Header";
 
 function CandidateListViewPage(){
     return(
     <div>
-        {/* <Header/> */}
+        <Header/>
         <candidateListView/>
     </div>
     )
