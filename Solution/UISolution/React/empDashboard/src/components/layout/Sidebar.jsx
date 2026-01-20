@@ -20,6 +20,10 @@ function Sidebar() {
                     <Link className="nav-link text-white" to="/project-evidence">Project Evidence</Link>
                 </li>
 
+                <li className="nav-item">
+                    <Link className="nav-link text-white" to="/Employer Shortlist">Employer Shortlist</Link>
+                </li>
+
             </ul>
         </div>
     );

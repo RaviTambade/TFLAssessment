@@ -8,6 +8,8 @@ import EmployerConfidence from './components/dashboard/employerConfidence';
 
 import SkillDrillDownPage from './pages/skillDrillDownPage';
 import ProjectEvidencePage from './pages/projectEvidencePage';
+import EmployerShortlistPage from './pages/EmployerShortlisPage';
+
 
 function App() {
   return (
@@ -22,6 +24,7 @@ function App() {
             <Route path="/employer-confidence" element={<EmployerConfidence/>}/>
             <Route path="/skill-drill-down" element={<SkillDrillDownPage />} />
             <Route path="/project-evidence" element={<ProjectEvidencePage />} />
+            <Route path="/Employer Shortlist" element={<EmployerShortlistPage />} />
           </Routes>
 
         </div>
