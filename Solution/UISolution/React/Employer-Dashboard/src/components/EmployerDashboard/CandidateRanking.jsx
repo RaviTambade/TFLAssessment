@@ -1,4 +1,3 @@
-import "../Styles/Candidate.Ranking.css"
 function checkEmployebillity(Readiness)
 {
     if(Readiness=="Employable")
@@ -14,7 +13,8 @@ function checkEmployebillity(Readiness)
         return "🔴 Not Ready"
     }
 }
-function CandidateRankingTable() {
+
+function CandidateRanking() {
   const candidateRank = [
     {
       id: 1,
@@ -77,4 +77,4 @@ function CandidateRankingTable() {
   );
 }
 
-export default CandidateRankingTable;
+export default CandidateRanking;

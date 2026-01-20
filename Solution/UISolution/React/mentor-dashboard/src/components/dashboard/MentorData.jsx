@@ -10,7 +10,6 @@ function MentorData() {
     learners: 86
   };
 
-
   return (
     <div className="container my-4">
       <div className="card shadow-sm">
