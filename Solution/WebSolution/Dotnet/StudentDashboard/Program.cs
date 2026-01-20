@@ -1,22 +1,24 @@
+using StudentDashboard.Entities;
 var builder = WebApplication.CreateBuilder(args);
-
-// Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-
 
 var app = builder.Build();
 
-
-
 app.UseHttpsRedirection();
 
-
-app.MapGet("/weatherforecast", () =>
+app.MapGet("/assessment", () =>
 {
-    
+    var assessment = new Assessment
+    {
+        Title = "Web API",
+        Score = 72,
+        Feedback = "Good REST knowledge, improve error handling"
+    };
+
+    return Results.Ok(assessment);
 })
-.WithName("GetWeatherForecast")
+.WithName("GetAssessment")
 .WithOpenApi();
 
 app.Run();
+
 
