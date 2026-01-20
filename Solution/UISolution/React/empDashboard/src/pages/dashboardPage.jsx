@@ -4,8 +4,10 @@ import Dashboard from "../components/dashboard/dashboard";
 function DashboardPage()
 {
     return(
-        // <Header/>
+        <div>
+        <Header/>
         <Dashboard/>
+        </div>
     )
 }
 export default DashboardPage;
