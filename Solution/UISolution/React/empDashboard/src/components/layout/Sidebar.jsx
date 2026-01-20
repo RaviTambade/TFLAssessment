@@ -8,9 +8,18 @@ function Sidebar() {
             <ul className="nav flex-column">
                 <li className="nav-item">
                     <Link className="nav-link text-white" to="/dashboard">Dashboard</Link>
-                    <Link className="nav-link text-white" to="/employer-assist">Employer Assist</Link>
-                    <Link className='nav-link text-white' to="/employer-confidence">Employer Confidence</Link>
                 </li>
+                <li><Link className="nav-link text-white" to="/employer-assist">Employer Assist</Link></li>
+                <li><Link className='nav-link text-white' to="/employer-confidence">Employer Confidence</Link></li>
+
+                <li className="nav-item">
+                    <Link className="nav-link text-white" to="/skill-drill-down">Skill Drill Down</Link>
+                </li>
+
+                <li className="nav-item">
+                    <Link className="nav-link text-white" to="/project-evidence">Project Evidence</Link>
+                </li>
+
             </ul>
         </div>
     );

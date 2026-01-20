@@ -4,6 +4,8 @@ import Sidebar from './components/layout/Sidebar';
 import EmployerAssist from './components/dashboard/employerAssist';
 import EmployerConfidence from './components/dashboard/employerConfidence';
 
+import SkillDrillDownPage from './pages/skillDrillDownPage';
+import ProjectEvidencePage from './pages/projectEvidencePage';
 
 function App() {
   return (
@@ -15,7 +17,8 @@ function App() {
             {/* <Route path="/" element={<StudentDashboard />} /> */}
             <Route path="/employer-assist" element={<EmployerAssist/>}/>
             <Route path="/employer-confidence" element={<EmployerConfidence/>}/>
-    
+            <Route path="/skill-drill-down" element={<SkillDrillDownPage />} />
+            <Route path="/project-evidence" element={<ProjectEvidencePage />} />
           </Routes>
 
         </div>
