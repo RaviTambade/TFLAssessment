@@ -5,7 +5,7 @@ import KPIStrip from "./components/EmployerDashboard/KPIStrip";
 import CandidateSkills from "./components/EmployerDashboard/CandidateSkills";
 import CandidateRanking from "./components/EmployerDashboard/CandidateRanking";
 import DashboardPanels from "./components/EmployerDashboard/DashboardPanels";
-// import EmployerDashboard from "./components/EmployerDashboard/EmployerDashboard";
+ import EmployerDashboard from "./components/EmployerDashboard/EmployerDashboard";
 // import CandidateTable from "./components/EmployerDashboard/CandidateTable";
 
 function App() {
@@ -21,7 +21,7 @@ function App() {
             <Route path="/candidate-ranking" element={<CandidateRanking />} />
             <Route path="/dashboard-panel" element={<DashboardPanels />} />
             {/* <Route path="/candidate-table" element={<CandidateTable />} /> */}
-            {/* <Route path="/employer-dashboard" element={<EmployerDashboard />} /> */}
+             <Route path="/employer-dashboard" element={<EmployerDashboard />} /> 
             <Route path="*" element={<h2>Page Not Found</h2>} />
           </Routes>
         </div>
