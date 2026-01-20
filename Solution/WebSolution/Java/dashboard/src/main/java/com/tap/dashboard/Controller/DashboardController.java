@@ -33,8 +33,13 @@ public class DashboardController {
     }
 
     @GetMapping("/azureBasics") 
-    public String azureBasics(){
-       String azureBasics="(Project-based)";
-       return  azureBasics;
+    public String azureBasics() {
+       String azureBasics = "(Project-based)";
+       return azureBasics;
     }
-}
+
+
+    
+    }
+
+    
