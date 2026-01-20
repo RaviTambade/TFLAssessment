@@ -26,7 +26,6 @@ function App() {
           <Routes>
             <Route path="/candidate-List-View" element={<CandidateListView />} />
             <Route path="/candidate-Scorecard-View" element={<CandidateScorecardView />} />
-            <Route path="/" element={<SkillDrillDownPage />} />
             <Route path="/learningTimeline" element={<LearningTimeline />} />
             <Route path="/RecommendationView" element={<RecommendationView />} />
             <Route path="/" element={<LoginPage/>} />
