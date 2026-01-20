@@ -5,13 +5,17 @@ import CandidateListView from "./components/dashboard/candidateListView";
 import CandidateScorecardView from "./components/dashboard/candidateScorecardView";
 import LearningTimeline from './components/dashboard/learningTimeline';
 import RecommendationView from './components/dashboard/RecommendationView'
+import SkillDrillDownPage from './pages/skillDrillDownPage';
+import ProjectEvidencePage from './pages/projectEvidencePage';
 import LoginPage from './pages/loginPage';
 import DashboardPage from './pages/dashboardPage';
 import EmployerAssist from './components/dashboard/employerAssist';
 import EmployerConfidence from './components/dashboard/employerConfidence';
-import SkillDrillDownPage from './pages/skillDrillDownPage';
-import ProjectEvidencePage from './pages/projectEvidencePage';
 import SkillsAnalyticsPage from './pages/skillsAnalyticsPage';
+import EmployerShortlistPage from './pages/EmployerShortlisPage';
+
+
+
 function App() {
   return (
     <Router>
@@ -31,6 +35,7 @@ function App() {
             <Route path="/employer-confidence" element={<EmployerConfidence/>}/>
             <Route path="/skill-drill-down" element={<SkillDrillDownPage />} />
             <Route path="/project-evidence" element={<ProjectEvidencePage />} />
+            <Route path="/Employer Shortlist" element={<EmployerShortlistPage />} />
           </Routes>
         </div>
       </div>
