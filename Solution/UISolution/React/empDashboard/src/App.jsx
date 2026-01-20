@@ -1,8 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Sidebar from './components/layout/Sidebar';
-
-
+import SkillsAnalyticsPage from './pages/skillsAnalyticsPage';
 function App() {
   return (
     <Router>
@@ -10,7 +9,7 @@ function App() {
         <Sidebar />
         <div className="flex-grow-1 p-3">
           <Routes>
-            {/* <Route path="/" element={<StudentDashboard />} /> */}
+            { <Route path="/skills-analytics" element={<SkillsAnalyticsPage />} /> }
     
           </Routes>
 
