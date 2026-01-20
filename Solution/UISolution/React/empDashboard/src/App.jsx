@@ -3,6 +3,8 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Sidebar from './components/layout/Sidebar';
 import CandidateListView from "./components/dashboard/candidateListView";
 import CandidateScorecardView from "./components/dashboard/candidateScorecardView";
+import LearningTimeline from './components/dashboard/learningTimeline';
+import RecommendationView from './components/dashboard/RecommendationView'
 import LoginPage from './pages/loginPage';
 import DashboardPage from './pages/dashboardPage';
 import EmployerAssist from './components/dashboard/employerAssist';
@@ -22,6 +24,8 @@ function App() {
             <Route path="/candidate-List-View" element={<CandidateListView />} />
             <Route path="/candidate-Scorecard-View" element={<CandidateScorecardView />} />
             <Route path="/" element={<SkillDrillDownPage />} />
+            <Route path="/learningTimeline" element={<LearningTimeline />} />
+            <Route path="/RecommendationView" element={<RecommendationView />} />
             <Route path="/" element={<LoginPage/>} />
             <Route path="/dashboard" element={<DashboardPage/>} />
             <Route path="/employer-assist" element={<EmployerAssist/>}/>
