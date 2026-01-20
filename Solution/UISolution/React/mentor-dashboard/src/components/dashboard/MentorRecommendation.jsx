@@ -17,11 +17,11 @@ function MentorRecommendation() {
 
     return (
         <div className="card mb-3">
-            <div className="card-header">
+            <div className="card-header bg-dark text-white">
                 {MentorRecommendation.title}
             </div>
             <div className="card-body">
-                <strong> suggested Actions:   </strong>
+                <strong> Suggested Actions:   </strong>
 
                 <ul>
                     {MentorRecommendation.SuggestedActions.map((action, index) =>
