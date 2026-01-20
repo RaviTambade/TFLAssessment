@@ -1,18 +1,18 @@
 import React from "react";
 
-function candidateListView() {
+function CandidateListView() {
     const candidateList = {
         title: "Candidates – Junior Developer Role",
         candidates: [
             { name: "Nirjala Naik", readiness: 82, skills: "C#, SQL, APIs" },
-            { name: "Sahil Kamble", readiness: 72, skills: "OOP, LINQ" },
-            { name: "Sanika Bhor", readiness: 92, skills: "ASP.NET, Azure" },
+            { name: "Sahil Kamble", readiness: 92, skills: "OOP, LINQ" },
+            { name: "Sanika Bhor", readiness: 89, skills: "ASP.NET, Azure" },
         ],
     };
 
     return (
         <div className="card mb-3">
-            <div className="card-header fw-bold">{candidateList.title}</div>
+            <div className="card-header fw-bold bg-dark text-white">{candidateList.title}</div>
 
             <div className="card-body p-0">
                 <table className="table table-bordered mb-0 text-center">
@@ -54,4 +54,4 @@ function candidateListView() {
     );
 }
 
-export default candidateListView;
+export default CandidateListView;

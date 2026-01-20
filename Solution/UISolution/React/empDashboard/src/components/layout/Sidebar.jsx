@@ -7,9 +7,20 @@ function Sidebar() {
             <h5>Menu</h5>
             <ul className="nav flex-column">
                 <li className="nav-item">
-                    <Link className="nav-link text-white" to="/dashboard">Dashboard</Link>
-                    <Link className="nav-link text-white" to="/candidateListView">Candidate List View</Link>
+                    <Link className="nav-link text-white" to="/candidate-List-View">Candidate List View</Link>
                 </li>
+                <li className="nav-item">
+                    <Link className="nav-link text-white" to="/candidate-Scorecard-View">Candidate Scored View</Link>
+                </li>
+
+                <li className="nav-item">
+                    <Link className="nav-link text-white" to="/skill-drill-down">Skill Drill Down</Link>
+                </li>
+
+                <li className="nav-item">
+                    <Link className="nav-link text-white" to="/project-evidence">Project Evidence</Link>
+                </li>
+
             </ul>
         </div>
     );

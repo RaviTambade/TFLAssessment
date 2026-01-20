@@ -1,8 +1,5 @@
-<<<<<<< HEAD:Solution/UISolution/React/Employer-Dashboard/src/components/EmployerDashboard/CandidateSkills.jsx
-=======
 import "../Styles/CandidateSkill.css"
 
->>>>>>> eb938207b888ce3fcf8d7cfa395c83bf7dfe5a25:Solution/UISolution/React/Employer-Dashboard/src/components/CandidateSkill.screen.layout.jsx
 const skills=[
     {name:"c#",value:78},
     { name: "OOP", value: 85 },

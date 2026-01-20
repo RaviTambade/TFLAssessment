@@ -1,8 +1,8 @@
-function candidateListViewPage(){
+function CandidateListViewPage(){
     return(
     <div>
         <candidateListView/>
     </div>
     )
 }
-export default candidateListViewPage;
+export default CandidateListViewPage;
