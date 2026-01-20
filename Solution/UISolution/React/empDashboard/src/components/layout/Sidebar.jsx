@@ -8,6 +8,13 @@ function Sidebar() {
             <ul className="nav flex-column">
                 <li className="nav-item">
                     <Link className="nav-link text-white" to="/dashboard">Dashboard</Link>
+                    <Link className="nav-link text-white" to="/skills-analytics">Skills Analytics</Link>
+
+                    <Link className="nav-link text-white" to="/LearningTimeline">LearningTimeline</Link>
+                </li>
+
+                <li className="nav-item">
+                    <Link className="nav-link text-white" to="/RecommendationView">RecommendationView</Link>
                 </li>
                 <li><Link className="nav-link text-white" to="/employer-assist">Employer Assist</Link></li>
                 <li><Link className='nav-link text-white' to="/employer-confidence">Employer Confidence</Link></li>
