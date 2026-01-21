@@ -1,12 +1,24 @@
 import React from 'react';
-
+import { useEffect } from 'react';
+import { useState } from 'react';
+import { getConfidenceMeter } from '../../Services/ConfidenceMeterService';
 function ConfidenceMeter() {
-  const metrics = [
-    { name: 'Concept Understanding', value: 70 },
-    { name: 'Coding Comfort', value: 60 },
-    { name: 'Debugging Skills', value: 65 },
-    { name: 'Interview Readiness', value: 40 },
-  ];
+//   const metrics = [
+//     { name: 'Concept Understanding', value: 70 },
+//     { name: 'Coding Comfort', value: 60 },
+//     { name: 'Debugging Skills', value: 65 },
+//     { name: 'Interview Readiness', value: 40 },
+//   ];
+ const [metrics,setMetrics]=useState([]);
+
+  useEffect(()=>
+  {
+    getConfidenceMeter().then((data)=>
+    {
+      setMetrics(data);
+    });
+    
+  });
 
   return (
     <div className="card mb-3">
@@ -27,5 +39,4 @@ function ConfidenceMeter() {
     </div>
   );
 }
-
 export default ConfidenceMeter;

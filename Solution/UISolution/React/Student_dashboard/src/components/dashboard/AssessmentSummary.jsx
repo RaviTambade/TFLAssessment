@@ -1,18 +1,30 @@
 import React from 'react';
-
+import { useEffect } from 'react';
+import { useState } from 'react';
+import { getAssessmentSummary } from '../../Services/AssessmentSummaryService';
 function AssessmentSummary() {
-  const assessments = [
+  // const assessments = [
+  //   {
+  //     title: 'Web API',
+  //     score: 72,
+  //     feedback: 'Good REST knowledge, improve error handling',
+  //   },
+  //   {
+  //     title: 'OOP Concepts',
+  //     score: 70,
+  //     feedback: 'Focus on inheritance and polymorphism',
+  //   },
+  // ];
+   const [assessments,setAssessments]=useState([]);
+  
+    useEffect(()=>
     {
-      title: 'Web API',
-      score: 72,
-      feedback: 'Good REST knowledge, improve error handling',
-    },
-    {
-      title: 'OOP Concepts',
-      score: 70,
-      feedback: 'Focus on inheritance and polymorphism',
-    },
-  ];
+      getAssessmentSummary().then((data)=>
+      {
+        setAssessments(data);
+      });
+      
+    });
   return (
     <div>
       {assessments.map((assessment, idx) => (
