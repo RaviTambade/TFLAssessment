@@ -4,7 +4,7 @@ const EmployerAssistPage=()=>{
     return(
         <div>
         {/* <Header/> */}
-        <EmployerAssist/>
+        <EmployerAssist />
         </div>
 
     )

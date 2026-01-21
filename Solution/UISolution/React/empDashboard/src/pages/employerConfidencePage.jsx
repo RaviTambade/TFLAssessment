@@ -3,7 +3,7 @@ import EmployerConfidence from "../components/dashboard/employerConfidence";
 const EmployerConfidencePage=()=>{
     return(
         <div>
-            <Header/>
+            {/* <Header/> */}
             <EmployerConfidence/>
         </div>
     )

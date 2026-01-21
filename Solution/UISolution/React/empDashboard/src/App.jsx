@@ -9,10 +9,11 @@ import SkillDrillDownPage from './pages/skillDrillDownPage';
 import ProjectEvidencePage from './pages/projectEvidencePage';
 import LoginPage from './pages/loginPage';
 import DashboardPage from './pages/dashboardPage';
-import EmployerAssist from './components/dashboard/employerAssist';
-import EmployerConfidence from './components/dashboard/employerConfidence';
 import SkillsAnalyticsPage from './pages/skillsAnalyticsPage';
 import EmployerShortlistPage from './pages/EmployerShortlisPage';
+import EmployerAssistPage from './pages/employerAssistPage';
+import EmployerConfidencePage from './pages/employerConfidencePage';
+
 
 
 
@@ -26,16 +27,16 @@ function App() {
           <Routes>
             <Route path="/candidate-List-View" element={<CandidateListView />} />
             <Route path="/candidate-Scorecard-View" element={<CandidateScorecardView />} />
-            <Route path="/learningTimeline" element={<LearningTimeline />} />
-             <Route path="/RecommendationView" element={<RecommendationView />} />
-            <Route path="/RecommendationView" element={<RecommendationView />} />
+           <Route path="/learning-timeline" element={<LearningTimeline />} />
+            <Route path="/recommendation-View" element={<RecommendationView />} />
             <Route path="/" element={<LoginPage/>} />
             <Route path="/dashboard" element={<DashboardPage/>} />
-            <Route path="/employer-assist" element={<EmployerAssist/>}/>
-            <Route path="/employer-confidence" element={<EmployerConfidence/>}/>
+            <Route path="/employer-assist" element={<EmployerAssistPage/>}/>
+            <Route path="/employer-confidence" element={<EmployerConfidencePage/>}/>
             <Route path="/skill-drill-down" element={<SkillDrillDownPage />} />
             <Route path="/project-evidence" element={<ProjectEvidencePage />} />
-            <Route path="/Employer Shortlist" element={<EmployerShortlistPage />} />
+            <Route path="/employer-Shortlist" element={<EmployerShortlistPage />} />
+
           </Routes>
         </div>
       </div>

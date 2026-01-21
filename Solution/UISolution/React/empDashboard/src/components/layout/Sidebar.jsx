@@ -6,8 +6,8 @@ function Sidebar() {
         <div className="bg-dark p-3 text-white" style={{ width: '220px', minHeight: '100vh' }}>
             <h5>Menu</h5>
             <ul className="nav flex-column">
-                <li className="nav-item"><Link className="nav-link text-white" to="/LearningTimeline">LearningTimeline</Link></li>
-                <li className="nav-item"> <Link className="nav-link text-white" to="/RecommendationView">RecommendationView</Link></li>
+                <li className="nav-item"><Link className="nav-link text-white" to="/learning-Timeline">LearningTimeline</Link></li>
+                <li className="nav-item"> <Link className="nav-link text-white" to="/recommendation-View">RecommendationView</Link></li>
                 <li className="nav-item"><Link className="nav-link text-white" to="/dashboard"> Dashboard </Link> </li>
                 <li className="nav-item"><Link className="nav-link text-white" to="/employer-assist">Employer Assist</Link></li>
                 <li className="nav-item"><Link className="nav-link text-white" to="/candidate-List-View">Candidate List </Link> </li>
@@ -15,7 +15,7 @@ function Sidebar() {
                 <li className="nav-item"><Link className="nav-link text-white" to="/employer-confidence"> Employer Confidence</Link></li>
                 <li className="nav-item"><Link className="nav-link text-white" to="/skill-drill-down">Skill Drill Down</Link></li>
                 <li className="nav-item"><Link className="nav-link text-white" to="/project-evidence">Project Evidence </Link></li>
-                <li className="nav-item"><Link className="nav-link text-white" to="/Employer Shortlist">Employer Shortlist</Link></li>
+                <li className="nav-item"><Link className="nav-link text-white" to="/employer-Shortlist">Employer Shortlist</Link></li>
 
             </ul>
         </div>
