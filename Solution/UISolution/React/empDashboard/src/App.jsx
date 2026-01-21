@@ -11,7 +11,9 @@ import LoginPage from './pages/loginPage';
 import DashboardPage from './pages/dashboardPage';
 import SkillsAnalyticsPage from './pages/skillsAnalyticsPage';
 import EmployerShortlistPage from './pages/EmployerShortlisPage';
-
+import EmployerConfidencePage from './pages/employerConfidencePage';
+import EmployerAssistPage from './pages/employerAssistPage';
+import EmployerConfidencePage from './pages/employerConfidencePage';
 
 
 function App() {
@@ -24,15 +26,16 @@ function App() {
           <Routes>
             <Route path="/candidate-List-View" element={<CandidateListView />} />
             <Route path="/candidate-Scorecard-View" element={<CandidateScorecardView />} />
-            <Route path="/learning-Timeline" element={<LearningTimeline />} />
+           <Route path="/learning-timeline" element={<LearningTimeline />} />
             <Route path="/recommendation-View" element={<RecommendationView />} />
             <Route path="/" element={<LoginPage/>} />
             <Route path="/dashboard" element={<DashboardPage/>} />
-            <Route path="/employer-assist" element={<EmployerAssistPage/>}/>
+            {/* <Route path="/employer-assist" element={<EmployerAssistPage/>}/> */}
             <Route path="/employer-confidence" element={<EmployerConfidencePage/>}/>
             <Route path="/skill-drill-down" element={<SkillDrillDownPage />} />
             <Route path="/project-evidence" element={<ProjectEvidencePage />} />
-            <Route path="/employer-Shortlist" element={<EmployerShortlistPage />} />
+            <Route path="/employer-shortlist" element={<EmployerShortlistPage />} />
+            <Route path="/skill-analytics" element={<SkillsAnalyticsPage />} />
 
           </Routes>
         </div>

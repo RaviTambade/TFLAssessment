@@ -26,22 +26,31 @@ app.UseSwagger();
 app.UseSwaggerUI();
 
 // Assessment Summary API
-app.MapGet("/api/AssessmentSummary", () =>
+app.MapGet("/api/assessmentSummary", () =>
 {
-    var assessment = new Assessment
+    var assessments = new List<Assessment>
     {
-        Title = "Web API",
-        Score = 72,
-        Feedback = "Good REST knowledge, improve error handling"
+        new Assessment
+        {
+            Title = "Web API",
+            Score = 72,
+            Feedback = "Good REST knowledge, improve error handling"
+        },
+        new Assessment
+        {
+            Title = "OOP Concepts",
+            Score = 70,
+            Feedback = "Focus on inheritance and polymorphism"
+        }
     };
 
-    return Results.Ok(assessment);
-})
-.WithName("GetAssessmentSummary")
-.WithOpenApi();
+    return Results.Ok(assessments);
+});
+
+
 
 // Confidence Meter API
-app.MapGet("/api/ConfidenceMeter", () =>
+app.MapGet("/api/confidenceMeter", () =>
 {
     var metrics = new List<ConfidenceMetric>
     {
@@ -52,9 +61,8 @@ app.MapGet("/api/ConfidenceMeter", () =>
     };
 
     return Results.Ok(metrics);
-})
-.WithName("GetConfidenceMeter")
-.WithOpenApi();
+});
+
 
 
 
@@ -65,8 +73,8 @@ app.MapGet("/api/projectprogesscard", () =>
     List<Tasks> taskOfProject1 = new List<Tasks>();
     List<Tasks> taskOfProject2 = new List<Tasks>();
 
-    NewProject project1 = new NewProject("E-Commerce App", 5, taskOfProject1);
-    NewProject project2 = new NewProject("Chatbot App", 5, taskOfProject2);
+    NewProject project1 = new NewProject("E-Commerce App", 55, taskOfProject1);
+    NewProject project2 = new NewProject("Chatbot App", 77, taskOfProject2);
 
 
     Tasks task1 = new Tasks("API Design");

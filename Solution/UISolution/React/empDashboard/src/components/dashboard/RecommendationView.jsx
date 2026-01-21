@@ -1,19 +1,37 @@
+import { useEffect, useState } from "react";
+
 function RecommendationView() {
-  const hiringInsights = {
-    title: "Hiring Insights",
-    recommendedRole: "Junior .NET Developer",
-    interviewFocus: [
-      "API Design",
-      "Exception Handling",
-      "SQL Optimization"
-    ],
-    onboardingReadiness: "High",
-    actions: ["Shortlist", "Schedule Interview"]
-  };
+  const [hiringInsights, setHiringInsights] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch("http://localhost:8080/dashboard/recommendationview")
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to fetch recommendation data");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setHiringInsights(data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching recommendation:", error);
+        setLoading(false);
+      });
+  }, []);
+
+  if (loading) {
+    return <div className="text-center">Loading recommendations...</div>;
+  }
+
+  if (!hiringInsights) {
+    return <div className="text-danger">No recommendation data available</div>;
+  }
 
   return (
     <div className="card shadow-sm mb-4" style={{ maxWidth: "500px" }}>
-
       <div className="card-header bg-dark text-white fw-bold">
         {hiringInsights.title}
       </div>
@@ -40,14 +58,19 @@ function RecommendationView() {
           </span>
         </p>
 
-      
         <div className="d-flex justify-content-end gap-2">
-          <button className="btn btn-outline-primary btn-sm">
-            Shortlist
-          </button>
-          <button className="btn btn-primary btn-sm">
-            Schedule Interview
-          </button>
+          {hiringInsights.actions.map((action, index) => (
+            <button
+              key={index}
+              className={`btn btn-sm ${
+                action === "Shortlist"
+                  ? "btn-outline-primary"
+                  : "btn-primary"
+              }`}
+            >
+              {action}
+            </button>
+          ))}
         </div>
       </div>
     </div>
