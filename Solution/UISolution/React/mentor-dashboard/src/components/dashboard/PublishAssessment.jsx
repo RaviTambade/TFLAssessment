@@ -1,16 +1,15 @@
+import { useEffect, useState } from "react";
+
 function PublishAssessment() {
-  const PublishAssessment = {
-    Title: "Publish Assessment",
-    AssessmentName: "ASP.NET Core – Layer 3 Diagnostic",
-    AssignedTo: "Sejal kulkarni",
-    StarDate: "15 Jan 2025",
-    EndDate: "16 Jan 2025",
-    AttemptsAllowed: "1",
-    FeedbackMode: " Immediate ✓ Mentor Review ✓",
-    Buttons: [
-      "Publish", "Schedule", "Cancel"
-    ]
-  }
+  const [publishAssessment,setPublishAssessment]=useState(null);
+
+  useEffect(()=>{
+    getPublishAssessment().then((data)=>{
+      setPublishAssessment(data);
+    });
+  },[]);
+
+  if(!publishAssessment) return <p>No Data Available</p>
   return (
 
     <div className="card mb-3 center">
