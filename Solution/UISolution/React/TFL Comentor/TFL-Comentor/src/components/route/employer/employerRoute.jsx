@@ -1,7 +1,7 @@
-const EmpPages = () =>{
+const Emproute = () =>{
     return(
         <div>Employer Pages Component</div>
     )
 };
 
-export default EmpPages;
+export default Emproute;
