@@ -31,6 +31,7 @@ public class DashboardController {
 
     @GetMapping("/projectevidence")
       public Map<String, String> getProjectEvidence() {
+          <Map<String, String> projectEvidence = new HashMap<>();
           projectEvidence.put("project", "Order Management System");
           projectEvidence.put("deployment", "Azure App Service");
           projectEvidence.put("gitActivity", "75");
@@ -44,7 +45,6 @@ public class DashboardController {
           empconfidence.add("✔ Code reviewed");
           empconfidence.add("✔ Deployment validated");
           empconfidence.add("✔ Assessment proctored");
-
          return empconfidence;
       }
 
