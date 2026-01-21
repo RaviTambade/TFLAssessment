@@ -27,6 +27,9 @@ function Sidebar() {
         <li className="nav-item">
           <Link className="nav-link text-white" to="/career-readiness">Career Readiness</Link>
         </li>
+         <li className="nav-item">
+          <Link className="nav-link text-white" to="/project-progess">Project Progress</Link>
+        </li>
       </ul>
     </div>
   );

@@ -1,13 +1,27 @@
 import React from 'react';
+import { useEffect } from 'react';
+import { useState } from 'react';
+import { getSkillHealthCard } from '../../Services/skillHealthCardService';
 
 function SkillHealthCard() {
-  const skills = [
-    { name: 'C#', value: 80 },
-    { name: 'OOP', value: 65 },
-    { name: 'ASP.NET', value: 55 },
-    { name: 'SQL', value: 75 },
-    { name: 'Cloud Basics', value: 40 }
-  ];
+  // const skills = [
+  //   { name: 'C#', value: 80 },
+  //   { name: 'OOP', value: 65 },
+  //   { name: 'ASP.NET', value: 55 },
+  //   { name: 'SQL', value: 75 },
+  //   { name: 'Cloud Basics', value: 40 }
+  // ];
+
+  const [skills,setSkills]=useState([]);
+
+  useEffect(()=>
+  {
+    getSkillHealthCard().then((data)=>
+    {
+      setSkills(data);
+    });
+    
+  });
 
   return (
     <div className="card mb-3">
