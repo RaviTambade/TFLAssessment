@@ -1,16 +1,29 @@
 import React from 'react';
 
 function AssessmentSummary() {
-  const assessment = { title: 'Web API', score: 72, feedback: 'Good REST knowledge, improve error handling' };
-
+  const assessments = [
+    {
+      title: 'Web API',
+      score: 72,
+      feedback: 'Good REST knowledge, improve error handling',
+    },
+    {
+      title: 'OOP Concepts',
+      score: 70,
+      feedback: 'Focus on inheritance and polymorphism',
+    },
+  ];
   return (
-    <div className="card mb-3">
-      <div className="card-header">Assessment Summary</div>
-      <div className="card-body">
-        <p><strong>{assessment.title}</strong></p>
-        <p>Score: {assessment.score}%</p>
-        <p>Feedback: {assessment.feedback}</p>
-      </div>
+    <div>
+      {assessments.map((assessment, idx) => (
+        <div key={idx} className="card mb-3">
+          <div className="card-header">{assessment.title}</div>
+          <div className="card-body">
+            <p>Score: {assessment.score}%</p>
+            <p>Feedback: {assessment.feedback}</p>
+          </div>
+        </div>
+      ))}
     </div>
   );
 }

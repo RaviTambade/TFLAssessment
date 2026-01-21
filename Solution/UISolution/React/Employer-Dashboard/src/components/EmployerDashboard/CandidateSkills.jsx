@@ -1,4 +1,6 @@
+
 import "../Styles/CandidateSkill.css"
+
 
 const skills=[
     {name:"c#",value:78},

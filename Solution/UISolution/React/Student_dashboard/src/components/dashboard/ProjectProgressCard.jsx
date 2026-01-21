@@ -5,12 +5,6 @@ import {getProjectProgressCard }from "../../Services/projectProgressCardService"
 function ProjectProgressCard() {
 
   const [projects, setProjects]=useState([]);
-
-  // const projects = [
-  //   { name: 'E-Commerce App', completion: 65, tasks: ['API Design', 'DB Setup', 'Exception Handling', 'Deployment'] },
-  //   { name: 'Chatbot App', completion: 40, tasks: ['NLP Design', 'Integration', 'Testing'] }
-  // ];
-
   useEffect(()=>{
     getProjectProgressCard().then((data) => {
       setProjects(data)
