@@ -1,5 +1,6 @@
 package com.tap.dashboard.Controller;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -27,27 +28,45 @@ public class DashboardController {
         return skill;
     }
 
-    @GetMapping("project/evidence/project")
-      public String project(){
-         String project="Order Management System";
-         return  project;
+    @GetMapping("/projectevidence")
+      public Map<String, String> getProjectEvidence() {
+          Map<String, String> projectEvidence = new HashMap<>();
+          projectEvidence.put("project", "Order Management System");
+          projectEvidence.put("deployment", "Azure App Service");
+          projectEvidence.put("gitActivity", "75");
+          return projectEvidence;
       }
-    
-   @GetMapping("project/evidence/description")
-      public String deployment(){
-         String deployment="Azure App Service";
-         return  deployment;
+   
+      @GetMapping("/employerconfidence")
+      public List<String> getEmployerConfidence() {
+          List <String> empconfidence = new ArrayList<>();
+          empconfidence.add("✔ Project verified by mentor");
+          empconfidence.add("✔ Code reviewed");
+          empconfidence.add("✔ Deployment validated");
+          empconfidence.add("✔ Assessment proctored");
+
+         return empconfidence;
       }
 
-   @GetMapping("project/evidence/gitactivity")
-      public int gitActivity(){
-         int gitActivity=75;
-         return  gitActivity;
+      @GetMapping("/employershortlist")
+      public Map<String, String> getEmployerShortlist() {
+           Map<String, String> empShortlist=new HashMap<>();
+           empShortlist.put("Ananya","Ananya (82%)");
+           empShortlist.put("Rohit","Rohit (76%)");
+           empShortlist.put("Sneha","Sneha (offer)");
+           empShortlist.put("Karan","Karan (68%)");
+
+          return empShortlist;
       }
 
-   @GetMapping("candidate/list")
-      public List<String> candidateList(){
-         List<String> candidateList = Arrays.asList("John Doe", "Jane Smith", "Bob Johnson");
-         return  candidateList;
+      @GetMapping("/skillanalytics")
+      public List<Map<String, Object>> getSkillAnalytics(){
+        List<Map<String, Object>> skillAnalytics = new ArrayList<>();
+        skillAnalytics.add(Map.of("skill","C#","ready",4,"nearReady",2));
+        skillAnalytics.add(Map.of("skill","ASP .NET Core","ready",3,"nearReady",3));
+        skillAnalytics.add(Map.of("skill","React","ready",2,"nearReady",4));
+        skillAnalytics.add(Map.of("skill","SQL","ready",4,"nearReady",3));
+        skillAnalytics.add(Map.of("skill","Azure","ready",2,"nearReady",3));
+        return skillAnalytics;
       }
 }

@@ -1,6 +1,24 @@
-import React from "react";
+import React,{useEffect,useState} from "react";
 
-const EmployerShortlist = () => {
+function EmployerShortlist() {
+
+    const[name,preparation]=useState([null]);
+
+    useEffect(() => {
+        fetch("http://localhost:8080/dashboard/employershortlist")
+          .then(response => response.json())
+          .then(data => {
+            preparation(data);
+          })
+          .catch(error => {
+            console.error("Error fetching employer shortlist data:", error);
+          });
+    }, []);
+
+    if(!name){
+        return <div>Loading shortlisted candidates...</div>;
+    }
+    
     return (
         <div>
             
@@ -16,12 +34,12 @@ const EmployerShortlist = () => {
                     </thead>
                     <tbody>
                         <tr>
-                            <td>Ananya (82%)</td>
-                            <td>Rohit (78%)</td>
-                            <td>Sneha (Offer)</td>
+                            <td>{name.Ananya}</td>
+                            <td>{name.Rohit}</td>
+                            <td>{name.Sneha}</td>
                         </tr>
                         <tr>
-                            <td>Kunal (75%)</td>
+                            <td>{name.Karan}</td>
                             <td></td>
                             <td></td>
                         </tr>
