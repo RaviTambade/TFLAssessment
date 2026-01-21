@@ -8,8 +8,6 @@ import MentorFeedback from './pages/MentorFeedback';
 import CareerReadiness from './pages/CareerReadiness';
 import SkillHealth from './pages/SkillHealth';
 import LearningPath from './pages/LearningPath';
-import ProjectProgress from './pages/ProjectProgress';
-
 function App() {
   return (
     <Router>
@@ -25,7 +23,6 @@ function App() {
             <Route path="/skill-health" element={<SkillHealth />} />
             <Route path="/learning-path" element={<LearningPath />} />
             <Route path="/career-readiness" element={<CareerReadiness />} />
-            <Route path="/project-progess" element={<ProjectProgress />} />
           </Routes>
 
         </div>
