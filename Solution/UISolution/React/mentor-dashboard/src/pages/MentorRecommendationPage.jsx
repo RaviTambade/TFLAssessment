@@ -10,3 +10,4 @@ function MentorRecommendationPage() {
         </div>
     );
 }
+export default MentorRecommendationPage;

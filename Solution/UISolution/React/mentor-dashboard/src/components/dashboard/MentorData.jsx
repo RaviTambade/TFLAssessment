@@ -1,14 +1,19 @@
-
+import { useEffect,useState } from "react";
+import { getMentorData } from "../../service/MentorDataService";
 
 function MentorData() {
+  const [mentorData,setMentorData]=useState(null);
+  const [loading,setLoading]=useState(true);
 
-  // 🔒 Hard-coded data (no API for now)
-  const mentorData = {
-    mentorName: "Ravi Tambade",
-    role: "Lead Mentor",
-    activeCohorts: 3,
-    learners: 86
-  };
+  useEffect(()=>{
+    getMentorData().then((data)=>{
+      setMentorData(data);
+      setLoading(false);
+    });
+  },[]);
+
+    if(loading) return<p>Loading...</p>;
+    if(!mentorData) return <p>No data available</p>;
 
   return (
     <div className="container my-4">
