@@ -8,7 +8,6 @@ import MentorFeedback from './pages/MentorFeedback';
 import CareerReadiness from './pages/CareerReadiness';
 import SkillHealth from './pages/SkillHealth';
 import LearningPath from './pages/LearningPath';
-
 function App() {
   return (
     <Router>

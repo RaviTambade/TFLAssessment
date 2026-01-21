@@ -2,7 +2,7 @@ import React from 'react';
 
 function Header() {
   const studentData = {
-    student_pic: '/src/assets/nirjala.jpg',
+    student_pic: '/src/assets/icon.jpg',
     studentName: 'Nirjala',
     targetRole: 'Full Stack Developer',
     readiness: '68%',
@@ -13,7 +13,7 @@ function Header() {
 
   return (
     <div className="mb-4 d-flex align-items-center gap-3">
-      <img src={student_pic} height={50} width={50} alt="Student" />
+      <img src={student_pic} height={80} width={80} alt="Student" />
       <div>
         <h4 className="m-0">Welcome, {studentName}</h4>
         <p className="m-0">

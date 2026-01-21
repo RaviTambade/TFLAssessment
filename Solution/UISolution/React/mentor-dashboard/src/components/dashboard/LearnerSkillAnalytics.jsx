@@ -1,24 +1,17 @@
+import React, { useEffect, useState } from "react";
+import { getLearnerSkill } from "/src/service/LearningSkillAnalyticsService";
 
- 
 function LearnerSkillAnalytics() {
-  const learnerData = {
-    learnerName: "Sanika Kulkarni",
-    layer: "3 - System Understanding",
 
-    skills: [
-      { skillName: "Programming Basics", mastery: "85%", status: "strong" },
-      { skillName: "MVC Flow", mastery: "78%", status: "stable" },
-      { skillName: "Dependency Injection", mastery: "42%", status: "warning" },
-      { skillName: "LINQ", mastery: "35%", status: "warning" },
-      { skillName: "Asynchronous Programming", mastery: "25%", status: "warning" }
-    ],
+  const [learnerData, setLernerData] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-    insights: [
-      "Conceptual clarity is good",
-      "Struggles with lifetime selection",
-      "Needs scenario-based practice"
-    ]
-  };
+  useEffect(() => {
+    getLearnerSkill().then((data) => {
+      setLernerData(data);
+      setLoading(false);
+    });
+  }, []);
 
   const getStatusBadge = (status) => {
     if (status === "strong") {
@@ -30,6 +23,8 @@ function LearnerSkillAnalytics() {
     return <span className="badge bg-warning text-dark">Needs Support</span>;
   };
 
+  if (loading) return <p>Loading...</p>;
+  if (!learnerData) return <p>No data available.</p>;
   return (
     <div className="card mb-4 shadow-sm">
       {/* Header */}

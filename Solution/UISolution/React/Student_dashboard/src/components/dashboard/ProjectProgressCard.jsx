@@ -1,11 +1,15 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import {getProjectProgressCard }from "../../Services/projectProgressCardService";
+
 
 function ProjectProgressCard() {
-  const projects = [
-    { name: 'E-Commerce App', completion: 65, tasks: ['API Design', 'DB Setup', 'Exception Handling', 'Deployment'] },
-    { name: 'Chatbot App', completion: 40, tasks: ['NLP Design', 'Integration', 'Testing'] }
-  ];
 
+  const [projects, setProjects]=useState([]);
+  useEffect(()=>{
+    getProjectProgressCard().then((data) => {
+      setProjects(data)
+    });
+  });
   return (
     <div className="card mb-3">
       <div className="card-header">Project Progress</div>
@@ -16,7 +20,7 @@ function ProjectProgressCard() {
             <ul>
               {project.tasks.map((task, tIdx) => (
                 <li key={tIdx}>
-                  <input type="checkbox" checked={tIdx < project.completion / 25} readOnly /> {task}
+                  <input type="checkbox" checked={tIdx < project.completion / 25} readOnly /> {task.taskName}
                 </li>
               ))}
             </ul>
