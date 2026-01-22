@@ -1,18 +1,13 @@
 import React, { useEffect, useState } from "react";
-
+import { getSkillDrillDownData } from "../../services/employer/skillDrillDownService";
 function SkillDrillDown() {
 
   const [skill, setSkill] = useState(null);
 
   useEffect(() => {
-    fetch("http://localhost:8080/dashboard/drilldown")
-      .then(response => response.json())
-      .then(data => {
-        setSkill(data);
-      })
-      .catch(error => {
-        console.error("Error fetching skill data:", error);
-      });
+    getSkillDrillDownData().then((data) => {  
+      setSkill(data);
+    });
   }, []);
 
   if (!skill) {
@@ -37,3 +32,15 @@ function SkillDrillDown() {
 }
 
 export default SkillDrillDown;
+
+
+// useEffect(() => {
+//   fetch("http://localhost:8080/dashboard/drilldown")
+//     .then(response => response.json())
+//     .then(data => {
+//       setSkill(data);
+//     })
+//     .catch(error => {
+//       console.error("Error fetching skill data:", error);
+//     });
+// }, []);

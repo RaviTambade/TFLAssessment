@@ -15,7 +15,6 @@ import EmployerConfidencePage from '../../pages/employer/employerConfidencePage'
 import EmployerAssistPage from '../../pages/employer/employerAssistPage';
 
 
-
 function EmployerRoute() {
   return (
     <Router>
@@ -26,12 +25,12 @@ function EmployerRoute() {
           <Routes>
             <Route path="/candidate-List-View" element={<CandidateListView />} />
             <Route path="/candidate-Scorecard-View" element={<CandidateScorecardView />} />
-           <Route path="/learning-timeline" element={<LearningTimeline />} />
+            <Route path="/learning-timeline" element={<LearningTimeline />} />
             <Route path="/recommendation-View" element={<RecommendationView />} />
-            <Route path="/" element={<LoginPage/>} />
-            <Route path="/dashboard" element={<DashboardPage/>} />
-            {<Route path="/employer-assist" element={<EmployerAssistPage/>}/> }
-            {<Route path="/employer-confidence" element={<EmployerConfidencePage/>}/> }
+            <Route path="/" element={<LoginPage />} />
+            <Route path="/dashboard" element={<DashboardPage />} />
+            <Route path="/employer-assist" element={<EmployerAssistPage/>}/>
+            <Route path="/employer-confidence" element={<EmployerConfidencePage/>}/>
             <Route path="/skill-drill-down" element={<SkillDrillDownPage />} />
             <Route path="/project-evidence" element={<ProjectEvidencePage />} />
             <Route path="/employer-shortlist" element={<EmployerShortlistPage />} />
