@@ -31,7 +31,7 @@ public class DashboardController {
 
     @GetMapping("/projectevidence")
       public Map<String, String> getProjectEvidence() {
-          <Map<String, String> projectEvidence = new HashMap<>();
+          Map<String, String> projectEvidence = new HashMap<>();
           projectEvidence.put("project", "Order Management System");
           projectEvidence.put("deployment", "Azure App Service");
           projectEvidence.put("gitActivity", "75");
