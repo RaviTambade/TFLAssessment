@@ -1,7 +1,30 @@
-const Mentorroute = () =>{
-    return(
-        <div>Mentor Pages Component</div>
-    )
-};
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
-export default Mentorroute;
+import Sidebar from './components/layout/Sidebar';
+import MentorData from "./components/dashboard/MentorData";
+import TestData from "./components/dashboard/TestData";
+import SkillHealthSnapshot from "./components/dashboard/SkillHealthSnapshot";
+import PublishAssessment from "./components/dashboard/PublishAssessment";
+import MentorRecommendation from "./components/dashboard/MentorRecommendation";
+import LearnerSkillAnalytics from "./components/dashboard/LearnerSkillAnalytics";
+function App() {
+  return (
+     <Router>
+      <div className="d-flex">
+        <Sidebar />
+        <div className="flex-grow-1 p-3">
+          <Routes>
+  
+            <Route path="/skill-health-snapshot" element={<SkillHealthSnapshot />} />
+            <Route path="/publish-assessment" element={<PublishAssessment />} />
+            <Route path="/mentor-recommendation" element={<MentorRecommendation />} />
+
+          </Routes>
+        </div>
+      </div>
+    </Router>
+  );
+}
+
+export default App;
