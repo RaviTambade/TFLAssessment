@@ -1,19 +1,19 @@
+import { useEffect, useState } from "react";
+import { getMentorData } from "../../services/mentor/MentorDataService";
+
 function MentorRecommendation() {
+    const [mentorData, setMentorData] = useState(null);
+    const [loading, setLoading] = useState(true);
 
-    const MentorRecommendation = {
-        title: "Mentor Action Recommendations",
-        SuggestedActions: [
-            "Assign DI-focused micro-assessment",
-            "Pair with peer for code walkthrough ",
-            "Recommend Layer 3 reinforcement module "
+    useEffect(() => {
+        getMentorData().then((data) => {
+            setMentorData(data);
+            setLoading(false);
+        });
+    }, []);
 
-        ],
-
-        buttons: [
-            " Assign Assessment",
-            "Schedule Mentoring Session"
-        ]
-    };
+    if (loading) return <p>Loading...</p>;
+    if (!mentorData) return <p>No data available</p>;
 
     return (
         <div className="card mb-3">

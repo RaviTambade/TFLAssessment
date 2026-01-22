@@ -1,5 +1,6 @@
 import { useEffect,useState } from "react";
-import { getMentorData } from "../../service/MentorDataService";
+// import { getMentorData } from "/src/components/dashboard/mentor/MentorData";
+import { getMentorData } from "../../services/mentor/MentorDataService";
 
 function MentorData() {
   const [mentorData,setMentorData]=useState(null);

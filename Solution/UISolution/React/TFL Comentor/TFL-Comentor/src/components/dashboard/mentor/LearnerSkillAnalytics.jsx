@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { getLearnerSkill } from "/src/service/LearningSkillAnalyticsService";
+// import { getLearnerSkill } from "/src/components/services/mentor/LearningSkillAnalyticsService";
+import { getLearnerSkill } from "../../services/mentor/LearningSkillAnalyticsService";
 
 function LearnerSkillAnalytics() {
 

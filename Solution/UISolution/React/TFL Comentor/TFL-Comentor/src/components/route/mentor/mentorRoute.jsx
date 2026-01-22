@@ -1,34 +1,33 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import React from "react";
+import { Routes, Route, Navigate } from "react-router-dom";
 
-import Sidebar from './components/layout/Sidebar';
-import MentorData from "./components/dashboard/MentorData";
-import TestData from "./components/dashboard/TestData";
-import SkillHealthSnapshot from "./components/dashboard/SkillHealthSnapshot";
-import PublishAssessment from "./components/dashboard/PublishAssessment";
-import MentorRecommendation from "./components/dashboard/MentorRecommendation";
-import LearnerSkillAnalytics from "./components/dashboard/LearnerSkillAnalytics";
-function App() {
-  return (
-     <Router>
-      <div className="d-flex">
-        <Sidebar />
-        <div className="flex-grow-1 p-3">
-          <Routes>
-            <Route path="/dashboard" element={<MentorData />} />
-            <Route path="/" element={<MentorData />} />
-            <Route path="/learner-skill-analytics" element={<LearnerSkillAnalytics />} />
-            <Route path="/mentor-data" element={<MentorData />} />
-            <Route path="/test-data" element={<TestData />} />
-            <Route path="/skill-health-snapshot" element={<SkillHealthSnapshot />} />
-            <Route path="/publish-assessment" element={<PublishAssessment />} />
-            <Route path="/mentor-recommendation" element={<MentorRecommendation />} />
+import MentorSidebar from "../../layout/mentor/MentorSidebar";
 
-          </Routes>
+import MentorDataPage from "../../pages/mentor/MentorDataPage";
+import TestDataPage from "../../pages/mentor/TestDataPage";
+import SkillHealthSnapshotPage from "../../pages/mentor/SkillHealthSnapshotPage";
+import PublishAssessmentPage from "../../pages/mentor/PublishAssessmentPage";
+import MentorRecommendationPage from "../../pages/mentor/MentorRecommendationPage";
+import LearnerSkillAnalyticsPage from "../../pages/mentor/LearnerSkillAnalyticsPage";
+
+function MentorRoutes() {
+    return (
+        <div className="d-flex">
+            <MentorSidebar />
+
+            <div className="flex-grow-1 p-3">
+                <Routes>
+                    <Route path="/mentor" element={<Navigate to="/mentor/dashboard" replace />} />
+                    <Route path="/mentor/dashboard" element={<MentorDataPage />} />
+                    <Route path="/mentor/learner-skill-analytics" element={<LearnerSkillAnalyticsPage />} />
+                    <Route path="/mentor/test-data" element={<TestDataPage />} />
+                    <Route path="/mentor/skill-health-snapshot" element={<SkillHealthSnapshotPage />} />
+                    <Route path="/mentor/publish-assessment" element={<PublishAssessmentPage />} />
+                    <Route path="/mentor/mentor-recommendation" element={<MentorRecommendationPage />} />
+                </Routes>
+            </div>
         </div>
-      </div>
-    </Router>
-  );
+    );
 }
 
-export default App;
+export default MentorRoutes;
