@@ -1,26 +1,18 @@
 
 import { useEffect, useState } from "react";
+import { getLearningTimeline } from "../../services/employer/LearningTimelineService";
 
 function LearningTimeline() {
+
   const [timeline, setTimeline] = useState([]);
-  const [loading, setLoading] = useState(true);
-
+  
   useEffect(() => {
-    fetch("http://localhost:8080/dashboard/learningtimeline")
-      .then((response) => response.json())
-      .then((data) => {
-        setTimeline(data);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error("Error fetching timeline:", error);
-        setLoading(false);
-      });
-  }, []);
+    getLearningTimeline().then((data) => {
+      setTimeline(data);
+    });
+  });
+ 
 
-  if (loading) {
-    return <div className="text-center">Loading timeline...</div>;
-  }
 
   return (
     <div className="card shadow-sm mb-4">
