@@ -1,7 +1,7 @@
 import React from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
-import { getSkillHealthCard } from '../../Services/skillHealthCardService';
+import { getSkillHealthCard } from '../../Services/student/skillHealthCardService';
 
 function SkillHealthCard() {
   // const skills = [

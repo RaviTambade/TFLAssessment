@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {getProjectProgressCard }from "../../Services/projectProgressCardService";
+import {getProjectProgressCard }from "../../Services/student/projectProgressCardService";
 
 
 function ProjectProgressCard() {

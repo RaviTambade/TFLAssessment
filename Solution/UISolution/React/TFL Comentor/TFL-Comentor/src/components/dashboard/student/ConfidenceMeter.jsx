@@ -1,7 +1,7 @@
 import React from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
-import { getConfidenceMeter } from '../../Services/ConfidenceMeterService';
+import { getConfidenceMeter } from '../../Services/student/ConfidenceMeterService';
 function ConfidenceMeter() {
 //   const metrics = [
 //     { name: 'Concept Understanding', value: 70 },
