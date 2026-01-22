@@ -1,7 +1,7 @@
 import React from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
-import { getAssessmentSummary } from '../../Services/AssessmentSummaryService';
+import { getAssessmentSummary } from '../../Services/student/AssessmentSummaryService';
 function AssessmentSummary() {
   // const assessments = [
   //   {

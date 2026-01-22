@@ -1,6 +1,6 @@
 import React from 'react';
-import Header from '../components/layout/Header';
-import ConfidenceMeter from '../components/dashboard/ConfidenceMeter';
+import Header from '../../layout/student/StudentHeader';
+import ConfidenceMeter from '../../dashboard/student/ConfidenceMeter';
 
 function CareerReadiness() {
   return (

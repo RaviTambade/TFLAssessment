@@ -1,6 +1,6 @@
 import React from 'react';
-import Header from '../components/layout/Header';
-import ProjectProgressCard from '../components/dashboard/ProjectProgressCard';
+import Header from '../../layout/student/StudentHeader';
+import ProjectProgressCard from '../../dashboard/student/ProjectProgressCard';
 
 function Projects() {
  
