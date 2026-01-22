@@ -1,18 +1,28 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { getSkillHealthSnapshot } from "../../../components/services/mentor/SkillHealthSnapshotService";
 
 function SkillHealthCard() {
-  const skills = [
-    { level: "Strong", topic: "Programming Basics", percent: 85 },
-    { level: "Average", topic: "Web Architecture", percent: 55 },
-    { level: "Weak", topic: "Dependency Injection, LINQ", percent: 30 },
-  ];
+  const [skillHealthSnapshot,setSkillHealthSnapshot]=useState(null);
+   const [loading, setLoading] = useState(true);
+
+  useEffect(()=>{
+    getSkillHealthSnapshot().then((data)=>{
+      setSkillHealthSnapshot(data);
+      setLoading(false);
+
+    })
+
+  },[])
+
+    if (loading) return <p>Loading...</p>;
+  if (!skillHealthSnapshot) return <p>No data available.</p>;
 
   return (
     <div className="card mb-2">
       <div className="card-header">Skill Health</div>
 
       <div className="card-body">
-        {skills.map((skill, idx) => (
+        {skillHealthSnapshot.map((skill, idx) => (
           <div key={idx} className="mb-3">
         
             <div className="d-flex justify-content-between">

@@ -1,10 +1,16 @@
+import { useEffect,useState } from "react";
+import { getTestData } from "../../../components/services/mentor/TestDataService";
+
 function TestData() {
-  const testData = {
-    ActiveTest: 6,
-    PendingReview: 12,
-    SkillGap: 18,
-    Alert: 3,
-  };
+  const [testData,setTestData]=useState([]);
+ 
+
+  useEffect(()=>{
+      getTestData().then((data)=>{
+        setTestData(data);
+      }
+    )
+  })
 
   return (
     <div className="container mt-4">
