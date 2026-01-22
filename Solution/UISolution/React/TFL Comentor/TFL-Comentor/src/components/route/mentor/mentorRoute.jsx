@@ -17,6 +17,7 @@ function MentorRoutes() {
             <Route path="/skill-health-snapshot" element={<SkillHealthSnapshot />} />
             <Route path="/publish-assessment" element={<PublishAssessment />} />
             <Route path="/test-data" element={<TestData />} />
+            <Route path="/" element={<TestData />} />
 
           </Routes>
         </div>
