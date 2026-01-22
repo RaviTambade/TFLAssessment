@@ -2,7 +2,6 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import MentorRoutes from "../src/components/route/mentor/mentorRoute"
 import Sidebar from "./components/layout/Sidebar";
 import EmployerRoute from './components/route/employer/employerRoute'
-import './App.css'
 
 function App() {
 

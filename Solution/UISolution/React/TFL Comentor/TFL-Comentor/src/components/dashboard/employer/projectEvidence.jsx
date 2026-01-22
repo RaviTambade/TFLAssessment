@@ -1,19 +1,14 @@
 import React, { useEffect, useState } from "react";
+import { getProjectEvidenceData } from "../../services/employer/projectEvidenceService";
 
 function ProjectEvidence() {
    const [key,value] = useState(null);
 
-   useEffect(() => {
-    fetch("http://localhost:8080/dashboard/projectevidence")
-      .then(response => response.json())
-      .then(data => {
-        value(data);
-      })
-      .catch(error => {
-        console.error("Error fetching project evidence data:", error);
-      });
-
-    }, []);
+  useEffect(() => {
+    getProjectEvidenceData().then((data) => {  
+      value(data);
+    });
+  }, []);
 
      if (!key) {
     return <div>Loading project evidence...</div>;

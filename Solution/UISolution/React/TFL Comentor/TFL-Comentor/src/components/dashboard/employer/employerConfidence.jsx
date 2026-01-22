@@ -1,17 +1,13 @@
 import React, {useState, useEffect } from "react";
+import { getEmployerConfidenceData } from "../../services/employer/employerConfidenceService";
 
 
 function EmployerConfidence(){
     const [parameter,setParameter]=useState([null]);
 
     useEffect(() => {
-        fetch("http://localhost:8080/dashboard/employerconfidence")
-          .then(response => response.json())        
-            .then(data => {
-                setParameter(data);
-            })
-            .catch(error => {
-                console.error("Error fetching employer confidence data:", error);
+        getEmployerConfidenceData().then((data)=>{
+            setParameter(data)
             });
     }, []);
 
