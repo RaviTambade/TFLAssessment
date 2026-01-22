@@ -1,12 +1,10 @@
-import "../components/dashboard/PublishAssessment"
-import Header from "../components/layout/Header";
-import "../components/layout/Sidebar"
-import Sidebar from "../components/layout/Sidebar";
+import "../../../components/dashboard/mentor/PublishAssessment"
+import "../../../components/layout/mentor/header"
 
 function PublishAssessmentPage(){
    <div> 
     <Header/>
-    <PublishAssessmentPage/>
+    <PublishAssessment/>
    </div>
 }
 

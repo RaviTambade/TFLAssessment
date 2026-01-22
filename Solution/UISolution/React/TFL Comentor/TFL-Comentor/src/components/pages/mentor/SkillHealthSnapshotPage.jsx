@@ -1,7 +1,7 @@
-import SkillHealthSnapshot from "../components/dashboard/SkillHealthSnapshot";
-import Header from "../components/layout/Header";
+import SkillHealthSnapshot from "../../../components/dashboard/mentor/SkillHealthSnapshot";
+import "../../../components/layout/mentor/header"
 
-function SkillHealthSnapshot()
+function SkillHealthSnapshotPage()
 {
     return(
         <div>
@@ -10,4 +10,4 @@ function SkillHealthSnapshot()
         </div>
     )
 }
-export default SkillHealthSnapshot;
+export default SkillHealthSnapshotPage;
