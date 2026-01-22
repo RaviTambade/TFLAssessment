@@ -1,6 +1,6 @@
 import React from 'react';
-import Header from '../components/layout/Header';
-import AssessmentSummary from '../components/dashboard/AssessmentSummary';
+import Header from '../../layout/student/StudentHeader';
+import AssessmentSummary from '../../dashboard/student/AssessmentSummary';
 
 function Assessments() {
   return (
