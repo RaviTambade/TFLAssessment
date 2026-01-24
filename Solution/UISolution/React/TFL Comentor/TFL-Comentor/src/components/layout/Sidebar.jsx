@@ -1,22 +1,43 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from "react";
+import StudentRoute from "../route/student/studentRoute";
+import MentorRoutes from "../route/mentor/mentorRoute";
+import EmployerRoute from "../route/employer/employerRoute";
 
 function Sidebar() {
+  const [role, setRole] = useState("");
+
+  const renderComponent = () => {
+    switch (role) {
+      case "student":
+        return <StudentRoute />;
+      case "mentor":
+        return <MentorRoutes />;
+      case "sme":
+        return;
+      case "employer":
+        return <EmployerRoute />;
+      default:
+        return;
+    }
+  };
+
   return (
-    <div className="bg-dark p-3 text-white" style={{ width: '220px', minHeight: '100vh' }}>
-      <h5>Sidebar</h5>
-      <ul className="nav flex-column">
-        <li className="nav-item">
-          <Link className="nav-link text-white" to="/student">Student</Link>
-        </li>
-        <li className="nav-item">
-          <Link className="nav-link text-white" to="/mentor">Mentor</Link>
-        </li>
-        <li className="nav-item">
-          <Link className="nav-link text-white" to="/employeer">Employer</Link>
-        </li>
-        
-      </ul>
+    <div className="container mt-3">
+      <label className="form-label">Select a role to continue</label>
+
+      <select
+        className="form-select"
+        value={role}
+        onChange={(e) => setRole(e.target.value)}
+      >
+        <option value="">-- Select Role --</option>
+        <option value="student">Student</option>
+        <option value="mentor">Mentor</option>
+        <option value="sme">SME</option>
+        <option value="employer">Employer</option>
+      </select>
+
+      <div className="mt-4">{renderComponent()}</div>
     </div>
   );
 }

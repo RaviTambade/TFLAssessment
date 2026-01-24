@@ -1,9 +1,10 @@
 import EmployerConfidence from "../../dashboard/employer/employerConfidence";
+import Header from "../../layout/employer/Header";
 
 const EmployerConfidencePage=()=>{
     return(
         <div>
-            {/* <Header/> */}
+            <Header />
             <EmployerConfidence/>
         </div>
     )

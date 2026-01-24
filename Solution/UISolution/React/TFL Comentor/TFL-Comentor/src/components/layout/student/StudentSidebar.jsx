@@ -7,25 +7,25 @@ function Sidebar() {
       <h5>Student Dashboard</h5>
       <ul className="nav flex-column">
         <li className="nav-item">
-          <Link className="nav-link text-white" to="/student/dashboard">Dashboard</Link>
+          <Link className="nav-link text-white" to="/dashboard">Dashboard</Link>
         </li>
         <li className="nav-item">
-          <Link className="nav-link text-white" to="/student/projects">Projects</Link>
+          <Link className="nav-link text-white" to="/projects">Projects</Link>
         </li>
         <li className="nav-item">
-          <Link className="nav-link text-white" to="/student/assessments">Assessments</Link>
+          <Link className="nav-link text-white" to="/assessments">Assessments</Link>
         </li>
         <li className="nav-item">
-          <Link className="nav-link text-white" to="/student/mentor-feedback">Mentor Feedback</Link>
+          <Link className="nav-link text-white" to="/mentor-feedback">Mentor Feedback</Link>
         </li>
         <li className="nav-item">
-          <Link className="nav-link text-white" to="/student/learning-path">Learning Path</Link>
+          <Link className="nav-link text-white" to="/learning-path">Learning Path</Link>
         </li>
         <li className="nav-item">
-          <Link className="nav-link text-white" to="/student/skill-health">Skill Health</Link>
+          <Link className="nav-link text-white" to="/skill-health">Skill Health</Link>
         </li>
         <li className="nav-item">
-          <Link className="nav-link text-white" to="/student/career-readiness">Career Readiness</Link>
+          <Link className="nav-link text-white" to="/career-readiness">Career Readiness</Link>
         </li>
       </ul>
     </div>
