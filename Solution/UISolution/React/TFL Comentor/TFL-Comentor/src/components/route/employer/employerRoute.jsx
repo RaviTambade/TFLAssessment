@@ -17,10 +17,8 @@ import EmployerAssistPage from '../../pages/employer/employerAssistPage';
 
 function EmployerRoute() {
   return (
-    <Router>
       <div className="d-flex">
         <Sidebar />
-
         <div className="flex-grow-1 p-3">
           <Routes>
             <Route path="/candidate-List-View" element={<CandidateListView />} />
@@ -39,7 +37,6 @@ function EmployerRoute() {
           </Routes>
         </div>
       </div>
-    </Router>
   );
 }
 

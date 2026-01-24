@@ -1,10 +1,11 @@
+import CandidateScorecardView from "../../dashboard/employer/candidateScorecardView";
 import Header from "../components/layout/Header";
 
 function CandidateScorecardViewPage(){
     return(
     <div>
         <Header/>
-        <candidateListView/>
+        <CandidateScorecardView />
     </div>
     )
 }

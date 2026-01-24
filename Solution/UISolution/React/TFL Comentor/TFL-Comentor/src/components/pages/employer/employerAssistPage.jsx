@@ -1,9 +1,10 @@
 import EmployerAssist from "../../dashboard/employer/employerAssist";
+import Header from "../../layout/employer/Header";
 
 const EmployerAssistPage=()=>{
     return(
         <div>
-        {/* <Header/> */}
+        <Header />
         <EmployerAssist />
         </div>
 
