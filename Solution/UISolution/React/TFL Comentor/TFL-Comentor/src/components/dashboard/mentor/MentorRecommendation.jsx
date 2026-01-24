@@ -2,39 +2,41 @@ import { useEffect, useState } from "react";
 import { getMentorData } from "../../services/mentor/MentorDataService";
 
 function MentorRecommendation() {
-    const [mentorData, setMentorData] = useState(null);
+    const [mentorRecommendation, setMentorRecommendation] = useState(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         getMentorData().then((data) => {
-            setMentorData(data);
+            setMentorRecommendation(data);
             setLoading(false);
         });
     }, []);
 
     if (loading) return <p>Loading...</p>;
-    if (!mentorData) return <p>No data available</p>;
+    if (!mentorRecommendation) return <p>No data available</p>;
 
     return (
         <div className="card mb-3">
             <div className="card-header bg-dark text-white">
-                {MentorRecommendation.title}
+                {mentorRecommendation.title || "Mentor Recommendation"}
             </div>
             <div className="card-body">
-                <strong> Suggested Actions:   </strong>
-
+                <strong>Suggested Actions:</strong>
                 <ul>
-                    {MentorRecommendation.SuggestedActions.map((action, index) =>
-                        <li key={index}> {action}</li>
-                    )}
+                    {mentorRecommendation.SuggestedActions?.map((action, index) => (
+                        <li key={index}>{action}</li>
+                    )) || <li>No actions available</li>}
                 </ul>
             </div>
             <div className="mentor-buttons">
-                {MentorRecommendation.buttons.map((label, index) => (
-                    <button key={index} className="btn btn-outline-primary me-2">{label}</button>
-                ))}
+                {mentorRecommendation.buttons?.map((label, index) => (
+                    <button key={index} className="btn btn-outline-primary me-2">
+                        {label}
+                    </button>
+                )) || null}
             </div>
         </div>
-    )
+    );
 }
+
 export default MentorRecommendation;
