@@ -29,6 +29,7 @@ function Sidebar() {
         className="form-select"
         value={role}
         onChange={(e) => setRole(e.target.value)}
+        
       >
         <option value="">-- Select Role --</option>
         <option value="student">Student</option>
