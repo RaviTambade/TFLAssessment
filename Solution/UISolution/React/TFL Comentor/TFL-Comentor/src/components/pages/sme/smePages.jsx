@@ -1,7 +1,9 @@
 const SmePages = () =>{
-    return(
-        <div>SME Pages Component</div>
-    )
+    return (
+      <div>
+        <h5>Work in Progress</h5>
+      </div>
+    );
 };
 
 export default SmePages;
