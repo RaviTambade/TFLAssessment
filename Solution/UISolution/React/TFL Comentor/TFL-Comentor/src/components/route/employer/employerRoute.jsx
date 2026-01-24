@@ -26,7 +26,7 @@ function EmployerRoute() {
             <Route path="/learning-timeline" element={<LearningTimeline />} />
             <Route path="/recommendation-View" element={<RecommendationView />} />
             <Route path="/" element={<LoginPage />} />
-            <Route path="/dashboard" element={<DashboardPage />} />
+            {/* <Route path="/dashboard" element={<DashboardPage />} /> */}
             <Route path="/employer-assist" element={<EmployerAssistPage/>}/>
             <Route path="/employer-confidence" element={<EmployerConfidencePage/>}/>
             <Route path="/skill-drill-down" element={<SkillDrillDownPage />} />
