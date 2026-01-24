@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getPublishAssessment } from "../../../components/services/mentor/PublishAssessmentService";
+import { getPublishAssessment } from "../../services/mentor/PublishAssessmentService";
 
 function PublishAssessment() {
   const [publishAssessment,setPublishAssessment]=useState(null);

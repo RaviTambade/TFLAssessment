@@ -1,5 +1,5 @@
-import SkillHealthSnapshot from "../../../components/dashboard/mentor/SkillHealthSnapshot";
-import "../../../components/layout/mentor/header"
+import SkillHealthSnapshot from "../../dashboard/mentor/SkillHealthSnapshot";
+import Header from "../../layout/mentor/MentorHeader";
 
 function SkillHealthSnapshotPage()
 {
