@@ -4,7 +4,6 @@ import Sidebar from "./components/layout/Sidebar";
 import StudentRoute from "./components/route/student/studentRoute";
 
 function App() {
-
   return (
       <div className="d-flex">
         <div className="flex-grow-1 p-3">

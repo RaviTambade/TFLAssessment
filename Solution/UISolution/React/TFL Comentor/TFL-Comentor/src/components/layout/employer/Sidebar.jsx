@@ -8,7 +8,7 @@ function Sidebar() {
             <ul className="nav flex-column">
                 <li className="nav-item"><Link className="nav-link text-white" to="/learning-Timeline">LearningTimeline</Link></li>
                 <li className="nav-item"> <Link className="nav-link text-white" to="/recommendation-View">RecommendationView</Link></li>
-                <li className="nav-item"><Link className="nav-link text-white" to="/dashboard"> Dashboard </Link> </li>
+                {/* <li className="nav-item"><Link className="nav-link text-white" to="/dashboard"> Dashboard </Link> </li> */}
                 <li className="nav-item"><Link className="nav-link text-white" to="/employer-assist">Employer Assist</Link></li>
                 <li className="nav-item"><Link className="nav-link text-white" to="/candidate-List-View">Candidate List </Link> </li>
                 <li className="nav-item"><Link className="nav-link text-white" to="/candidate-Scorecard-View">Candidate Scorecard</Link></li>

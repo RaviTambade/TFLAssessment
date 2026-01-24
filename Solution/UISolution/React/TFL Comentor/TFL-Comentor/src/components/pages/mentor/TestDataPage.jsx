@@ -1,5 +1,5 @@
-import TestData from "../../../components/dashboard/mentor/TestData";
-import "../../../components/layout/mentor/header"
+import TestData from "../../dashboard/mentor/TestData";
+import Header from "../../layout/mentor/MentorHeader";
 
 function TestDataPage()
 {

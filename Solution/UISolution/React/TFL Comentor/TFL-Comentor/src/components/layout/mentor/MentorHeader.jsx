@@ -2,8 +2,8 @@ import React from "react";
 
 function Header() {
   const studentData = {
-      studentPic:"/src/assets/mentor.jpg",
-      studentName: 'Sanika',
+      studentPic:"/src/assets/icon.jpg",
+      studentName: 'Nirjala',
       targetRole: 'Full Stack Developer',
       readiness: '68%',
       confidence: 'Medium',
