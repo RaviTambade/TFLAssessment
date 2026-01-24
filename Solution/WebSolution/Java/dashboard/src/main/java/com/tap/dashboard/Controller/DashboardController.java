@@ -31,7 +31,7 @@ public class DashboardController {
 
     @GetMapping("/projectevidence")
       public Map<String, String> getProjectEvidence() {
-          <Map<String, String> projectEvidence = new HashMap<>();
+          Map<String, String> projectEvidence = new HashMap<>();
           projectEvidence.put("project", "Order Management System");
           projectEvidence.put("deployment", "Azure App Service");
           projectEvidence.put("gitActivity", "75");
@@ -123,5 +123,54 @@ public class DashboardController {
         return response;
         }
 
-}
+
+         @GetMapping("/candidate-scorecard")
+         public Map<String, Object> getCandidateScorecard() {
+
+             Map<String, Object> response = new HashMap<>();
+
+             response.put("candidateName", "Nirjala Naik");
+             response.put("roleFit", "Junior .NET Developer");
+             response.put("overallReadiness", 82);
+
+             Map<String, Integer> metrics = new HashMap<>();
+             metrics.put("skillDepth", 80);
+             metrics.put("projectQuality", 70);
+             metrics.put("problemSolving", 80);
+             metrics.put("learningConsistency", 90);
+
+             response.put("metrics", metrics);
+
+             return response;
+         }
     
+      @GetMapping("/employer-assist")
+    public Map<String, Object> getEmployerAssistData() {
+
+        Map<String, Object> response = new HashMap<>();
+
+        response.put("title", "Employer Interview Assist");
+
+        response.put("strengthAreas", Arrays.asList(
+                "Strong problem-solving skills",
+                "Consistent learning mindset",
+                "Hands-on project experience",
+                "Good understanding of REST APIs"
+        ));
+
+        response.put("suggestedQuestions", Arrays.asList(
+                "Explain a challenging bug you fixed recently",
+                "How do you design RESTful APIs?",
+                "How do you approach learning a new technology?",
+                "Describe a project you built end-to-end"
+        ));
+
+        response.put("riskAreas", Arrays.asList(
+                "Limited production deployment exposure",
+                "Needs deeper system design knowledge"
+        ));
+
+        return response;
+    }    
+
+}

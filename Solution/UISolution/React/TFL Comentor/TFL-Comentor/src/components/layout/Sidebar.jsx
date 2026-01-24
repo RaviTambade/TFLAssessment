@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import StudentRoute from "../route/student/studentRoute";
+import MentorRoutes from "../route/mentor/mentorRoute";
+import EmployerRoute from "../route/employer/employerRoute";
 
 function Sidebar() {
   const [role, setRole] = useState("");
@@ -9,11 +11,11 @@ function Sidebar() {
       case "student":
         return <StudentRoute />;
       case "mentor":
-        return <MentorDashboard />;
+        return <MentorRoutes />;
       case "sme":
-        return <SmeDashboard />;
+        return;
       case "employer":
-        return <EmployerDashboard />;
+        return <EmployerRoute />;
       default:
         return;
     }
