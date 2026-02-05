@@ -1,4 +1,3 @@
-
 const express = require('express');
 const cors = require('cors');
 const app = express();
@@ -55,7 +54,7 @@ var fs=require('fs');
 //     })
 // });
 
-const router=require("./routes/routes");
+const router=require("./routes/mentorRoutes");
 app.use('/',router);
 
 app.listen(PORT, () => {
