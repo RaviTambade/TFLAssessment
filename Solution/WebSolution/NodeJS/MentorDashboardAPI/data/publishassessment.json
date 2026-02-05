@@ -1,0 +1,12 @@
+{
+    "Title": "Publish Assessment",
+    "AssessmentName": "ASP.NET Core – Layer 3 Diagnostic",
+    "AssignedTo": "Sejal kulkarni",
+    "StarDate": "15 Jan 2025",
+    "EndDate": "16 Jan 2025",
+    "AttemptsAllowed": "1",
+    "FeedbackMode": " Immediate ✓ Mentor Review ✓",
+    "Buttons": [
+      "Publish", "Schedule", "Cancel"
+    ]
+    }
