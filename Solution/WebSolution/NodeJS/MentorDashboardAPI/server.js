@@ -1,3 +1,4 @@
+
 const express = require('express');
 const cors = require('cors');
 const app = express();
@@ -6,38 +7,11 @@ const PORT = 8000;
 var fs=require('fs');
 
 
-app.get("/api/publish-assessment",(req,res)=>{
-var fileName="./data/publishAssessment.json";
-var readPublishAssessment=function(err,data){
-    if(err){
-        throw err;
-    }
-    else{
-        // console.log(data);
-        res.send(data);
-    }
-}
-fs.readFile(fileName,readPublishAssessment);
-})
+
 
 
 // app.get("/api/learnerskill", (req, res) => {
-//     res.json({
-//         learnerName: "Nirjala Naik",
-//         layer: "3 - System Understanding",
-//         skills: [
-//             { skillName: "Programming Basics", mastery: "85%", status: "strong" },
-//             { skillName: "MVC Flow", mastery: "78%", status: "stable" },
-//             { skillName: "Dependency Injection", mastery: "42%", status: "warning" },
-//             { skillName: "LINQ", mastery: "35%", status: "warning" },
-//             { skillName: "Asynchronous Programming", mastery: "25%", status: "warning" }
-//         ],
-//         insights: [
-//             "Conceptual clarity is good",
-//             "Struggles with lifetime selection",
-//             "Needs scenario-based practice"
-//         ]
-//     });
+//     res.json();
 // });
 
 // app.get("/api/mentordata", (req, res) => {
@@ -81,6 +55,8 @@ fs.readFile(fileName,readPublishAssessment);
 //     })
 // });
 
+const router=require("./routes/routes");
+app.use('/',router);
 
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
