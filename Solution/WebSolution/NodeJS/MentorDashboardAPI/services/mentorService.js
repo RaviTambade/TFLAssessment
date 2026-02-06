@@ -1,13 +1,24 @@
 module.exports = function mentorService(mentorRepository) {
     return {
 
-        readPublishAssessment(newData) {
-            callback(newData);
+        readPublishAssessment(callback) {
+            mentorRepository.readPublishAssessment(callback);
         },
 
-        readLearnerSkill(newData) {
-            callback(newData);
+        readLearnerSkill(callback) {
+            mentorRepository.readLearnerSkill(callback);
+        },
+         readMentorRecommendation(callback) {
+            mentorRepository.readMentorRecommendation(callback);
+        },
+         readSkillHealth(callback) {
+            mentorRepository.readSkillHealth(callback);
+        },
+         readMentorData(callback) {
+            mentorRepository.readMentorData(callback);
+        },
+         readTestData(callback) {
+            mentorRepository.readTestData(callback);
         }
-    }
-
-}
+    };
+};
