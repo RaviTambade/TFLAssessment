@@ -190,12 +190,12 @@ The system supports:
 
 To protect quality and values, it does NOT:
 
-🚫 Replace mentors
-🚫 Make hiring decisions
-🚫 Fully automate grading
-🚫 Act as autonomous AI judge
-🚫 Promote exam-centric culture
-🚫 Rank students blindly
+- 🚫 Replace mentors
+- 🚫 Make hiring decisions
+- 🚫 Fully automate grading
+- 🚫 Act as autonomous AI judge
+- 🚫 Promote exam-centric culture
+- 🚫 Rank students blindly
 
 
 ## 🎯 6. Stakeholder Scope
@@ -223,11 +223,11 @@ To protect quality and values, it does NOT:
 
 TFLAssessment aims to:
 
-✔️ Build industry-ready professionals
-✔️ Create evidence-based mentoring
-✔️ Standardize evaluation quality
-✔️ Enable scalable learning
-✔️ Strengthen Transflower’s ecosystem
+- ✔️ Build industry-ready professionals
+- ✔️ Create evidence-based mentoring
+- ✔️ Standardize evaluation quality
+- ✔️ Enable scalable learning
+- ✔️ Strengthen Transflower’s ecosystem
 
 
 
