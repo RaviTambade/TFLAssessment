@@ -1,0 +1,11 @@
+{
+        "title": "Mentor Action Recommendations",
+        "SuggestedActions": [
+            "Assign DI-focused micro-assessment",
+            "Pair with peer for code walkthrough ",
+            "Recommend Layer 3 reinforcement module "
+        ],
+        "buttons":[
+            " Assign Assessment",
+            "Schedule Mentoring Session"
+        ]}
