@@ -271,3 +271,4 @@ Architecture supports **incremental intelligence**.
 > *Most platforms test what students remember.*
 > **TFLAssessment measures what learners can become.**
 
+<a href="https://github.com/RaviTambade/TFLAssessment/blob/main/Documentation/gettingstarted.md">Let us get started</a>
