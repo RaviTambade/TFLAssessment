@@ -27,7 +27,7 @@ public class SubjectController {
         this.svc = svc;
     }
 
-    @GetMapping("/subjects")
+    @GetMapping("/subjects")        
     public CompletableFuture<List<SubjectModel>> getAllSubjects() {
         return svc.getAllSubjects();
     }
