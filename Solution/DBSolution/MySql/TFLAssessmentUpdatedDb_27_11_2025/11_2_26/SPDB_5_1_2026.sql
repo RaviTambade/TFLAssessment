@@ -355,6 +355,6 @@ BEGIN
 END $$
 
 DELIMITER ;
-CALL GetTestEmployeeDetailsByCandidate(4);
+CALL GetAssessmentEmployeeDetailsByCandidate(4);
 
 
