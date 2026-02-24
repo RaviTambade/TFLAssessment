@@ -420,20 +420,23 @@ public async Task<List<Employee>> GetAllEmployees()
 
         return concepts;
     }
-
-    public async Task<List<Concepts>> GetConceptsBySubject(int subjectId)
+ public async Task<List<SubjectConcepts>> GetConceptsBySubject(int subjectId)
     {
-        await Task.Delay(100);
-        List<Concepts> concepts = new List<Concepts>();
-        using (IDbConnection con = new MySqlConnection(_connectionString))
-        {
-            var conceptList = con.Query<Concepts>("select * from concepts WHERE subjectid=@SubjectId", new { subjectId });
+        using var con = new MySqlConnection(_connectionString);
 
-            concepts = conceptList as List<Concepts>;
+        var result = await con.QueryAsync<SubjectConcepts>(
+            @"SELECT 
+                sc.concept_id AS ConceptId,
+                sc.subject_id AS SubjectId,
+                sc.subject_concept_id AS SubjectConceptId,
+                c.title AS Title
+              FROM subject_concepts sc
+              INNER JOIN concepts c ON sc.concept_id = c.id
+              WHERE sc.subject_id = @subject_id",
+            new { subject_id = subjectId }
+        );
 
-        }
-
-        return concepts;
+        return result.ToList();
     }
 
     public async Task<int> CreateTestWithQuestionsAsync(CreateTestWithQuestions createTestWithQuestions)
