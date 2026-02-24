@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Login</title>
@@ -8,7 +9,8 @@
     body {
       margin: 0;
       font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(to right, #B22222, #FF8C00); /* Red to Orange gradient */
+      background: linear-gradient(to right, #B22222, #FF8C00);
+      /* Red to Orange gradient */
       height: 100vh;
       display: flex;
       justify-content: center;
@@ -68,8 +70,21 @@
       margin-top: 15px;
       color: red;
     }
+      .forgot-link {
+    display: inline-block;
+    padding: 10px 20px;
+    color: gray;
+    text-decoration: none;
+    margin-top: 15px;
+    transition: 0.3s;
+  }
+  .forgot-link:hover {
+    color: #0056b3;
+  }
+
   </style>
 </head>
+
 <body>
   <div class="login-container">
     <h2>Login</h2>
@@ -92,38 +107,40 @@
 
         const loginData = {
           email: $("#email").val(),
-          password: $("#password").val()
+          password: $("#password").val(),
+          resetPassword: false
         };
-      
+
         $.ajax({
           url: "http://localhost:5238/api/Auth/login",
           type: "POST",
           contentType: "application/json",
           data: JSON.stringify(loginData),
           success: function (response) {
-                  console.log("responseresponseresponse:", response);
+            console.log("responseresponseresponse:", response);
 
             const token = response.token;
             const user = response.user;
             const role = user.userRoles[0].role.name.toLowerCase();
-            
-             if (!user.id) {
+
+            if (!user.id) {
               $("#error").text("User ID is missing in the response.");
               return; // stop further execution
             }
 
             localStorage.setItem("token", token);
-            localStorage.setItem("userId", user.id); 
+            localStorage.setItem("userId", user.id);
             localStorage.setItem("userEmail", user.email);
             localStorage.setItem("role", role);
-           localStorage.setItem("userName", user.firstname);
+            localStorage.setItem("userName", user.firstname);
+
 
             if (role === "admin") {
               window.location.href = "Admin/admin.html";
             } else if (role === "sme") {
               window.location.href = "SME/sme.html";
             } else if (role === "student") {
-              
+
               window.location.href = "Student/student.html";
             } else {
               $("#error").text("Role not recognized.");
@@ -138,4 +155,5 @@
 
   </script>
 </body>
+
 </html>

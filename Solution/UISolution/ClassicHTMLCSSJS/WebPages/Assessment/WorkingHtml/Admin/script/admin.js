@@ -10,7 +10,7 @@ function getRole() {
 (function checkAuth() {
   if (!getToken() || getRole() !== "admin") {
     alert("Access denied.");
-    window.location.href = "loginJWT.html";
+    // window.location.href = "loginJWT.html";
   }
 })();
 

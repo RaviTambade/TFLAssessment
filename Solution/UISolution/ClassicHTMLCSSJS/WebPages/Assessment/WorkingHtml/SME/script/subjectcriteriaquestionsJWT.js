@@ -8,33 +8,44 @@ var questionApiBase = "http://localhost:5238/api/questionbank/questions";
 $(document).ready(function () {
 
     /* ---------------------------
-       LOAD SUBJECTS ON PAGE LOAD
+       LOAD SME'S EXPERT SUBJECTS ONLY
     ---------------------------- */
-    $.ajax({
-        url: subjectsApi,
-        type: 'GET',
-        success: function (data) {
+    var smeId = localStorage.getItem("userId");
+    var token = localStorage.getItem("token");
 
-            console.log("Subjects API:", data); // DEBUG
+    var lstSubject = $('#ddlSubjects').empty().append('<option value="">Loading...</option>');
 
-            subjects = data;
+    if (!smeId || !token) {
+        lstSubject.empty().append('<option value="">Please log in</option>');
+        console.error("SME not logged in");
+    } else {
+        $.ajax({
+            url: `http://localhost:5238/api/Assessment/subjectBySme/${smeId}`,
+            type: 'GET',
+            headers: { "Authorization": "Bearer " + token },
+            success: function (data) {
+                console.log("SME Subjects API:", data);
+                subjects = data || [];
 
-            var lstSubject = $('#ddlSubjects')
-                .empty()
-                .append('<option value="">Select subject</option>');
-
-            data.forEach(s => {
-                lstSubject.append(
-                    $('<option></option>')
-                        .val(s.id || s.subjectId)   // SAFE FIELD MATCH
-                        .text(s.title || s.name)
-                );
-            });
-        },
-        error: function (xhr) {
-            console.error("Subjects Error:", xhr.responseText);
-        }
-    });
+                if (subjects.length === 0) {
+                    lstSubject.empty().append('<option value="">No expert subjects found</option>');
+                } else {
+                    lstSubject.empty().append('<option value="">Select subject</option>');
+                    subjects.forEach(s => {
+                        lstSubject.append(
+                            $('<option></option>')
+                                .val(s.id || s.subjectId)
+                                .text(s.title || s.name)
+                        );
+                    });
+                }
+            },
+            error: function (xhr) {
+                console.error("Subjects Error:", xhr.responseText);
+                lstSubject.empty().append('<option value="">Failed to load subjects</option>');
+            }
+        });
+    }
 
 
     /* ---------------------------
