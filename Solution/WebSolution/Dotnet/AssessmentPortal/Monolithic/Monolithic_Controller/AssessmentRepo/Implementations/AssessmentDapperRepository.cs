@@ -363,7 +363,7 @@ public async Task<List<Employee>> GetAllEmployees()
     using (IDbConnection con = new MySqlConnection(_connectionString))
     {
         var sql = @"
-            SELECT e.userId, e.firstname, e.lastname, e.email
+            SELECT e.userId, e.firstname, e.lastname, e.email, e.contact
             FROM employees e
             JOIN userroles ur ON ur.userid = e.userid
             JOIN roles r ON r.id = ur.roleid
@@ -420,8 +420,7 @@ public async Task<List<Employee>> GetAllEmployees()
 
         return concepts;
     }
-
-   public async Task<List<SubjectConcepts>> GetConceptsBySubject(int subjectId)
+ public async Task<List<SubjectConcepts>> GetConceptsBySubject(int subjectId)
     {
         using var con = new MySqlConnection(_connectionString);
 

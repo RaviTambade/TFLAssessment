@@ -97,18 +97,22 @@ where sc.subject_id=@SubjectId;";
         return questions;
     }
 
-    public async Task<List<QuestionDetails>> GetQuestionsBySubjectAndConcept(int subjectId, int conceptId)
+     public async Task<List<QuestionDetails>> GetQuestionsBySubjectAndConcept(int subjectId, int conceptId)
     {
 
         List<QuestionDetails> questions = new List<QuestionDetails>();
-        string query = @"select questionbank.id,questionbank.id as questionid,  questionbank.title, subjects.title as subject ,concepts.title as concept
-                            from questionbank, subjects,concepts
-                            where questionbank.subjectid=subjects.id and questionbank.conceptid=concepts.id
-                            and subjects.id=@SubjectId and concepts.id=@conceptid";
+        string query = @" SELECT q.id AS question_id, q.title AS question, s.title AS subjects
+                          FROM questionbank q
+                          INNER JOIN subject_concepts sc 
+                          ON q.subject_concept_id = sc.subject_concept_id
+                          INNER JOIN subjects s 
+                          ON sc.subject_id = s.id
+                          WHERE sc.subject_id = @subjectid
+                          AND sc.concept_id = @conceptid ";
 
         MySqlConnection connection = new MySqlConnection(_connectionString);
         MySqlCommand command = new MySqlCommand(query, connection);
-        command.Parameters.AddWithValue("@SubjectId", subjectId);
+        command.Parameters.AddWithValue("@subjectid", subjectId);
         command.Parameters.AddWithValue("@conceptid", conceptId);
 
 
@@ -118,19 +122,19 @@ where sc.subject_id=@SubjectId;";
             MySqlDataReader reader = command.ExecuteReader();
             while (await reader.ReadAsync())
             {
-                int id = int.Parse(reader["id"].ToString());
-                int qid = int.Parse(reader["questionid"].ToString());
-                string strQuestion = reader["title"].ToString();
-                string subject = reader["subject"].ToString();
-                string criteria = reader["concept"].ToString();
+                int id = int.Parse(reader["question_id"].ToString());
+                
+                string strQuestion = reader["question"].ToString();
+                string subject = reader["subjects"].ToString();
+               
 
                 QuestionDetails question = new QuestionDetails();
 
                 question.Id = id;
-                question.QuestionId = qid;
+               
                 question.Question = strQuestion;
                 question.Subject = subject;
-                question.Criteria = criteria;
+               
 
                 questions.Add(question);
             }

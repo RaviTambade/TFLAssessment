@@ -93,7 +93,8 @@ public class AssessmentController : ControllerBase
         return Ok(concepts);
     }
 
-   //http://localhost:5238/api/assessment/concepts/subjects/1
+    
+    //http://localhost:5238/api/assessment/concepts/subjects/1
     [HttpGet("concepts/subjects/{subjectId}")]
     public async Task<ActionResult<List<SubjectConcepts>>> GetConceptsBySubject(int subjectId)
     {
@@ -113,7 +114,6 @@ public class AssessmentController : ControllerBase
 
         return Ok(concepts);
     }
-
 
 
     //http://localhost:5238/api/assessment/subjectexperts/2
