@@ -153,7 +153,8 @@ $(document).on("change", ".subjectRadio", function () {
                         <input type="checkbox" class="conceptCheckbox" value="${concept.id}">
                         ${concept.title}
                     </label><br>`
-                );
+                  );
+                  console.log("concept", concept.id)
             });
 
             $("#questionsBox").hide();

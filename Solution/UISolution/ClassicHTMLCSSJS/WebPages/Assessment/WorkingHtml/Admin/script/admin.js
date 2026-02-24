@@ -10,7 +10,7 @@ function getRole() {
 (function checkAuth() {
   if (!getToken() || getRole() !== "admin") {
     alert("Access denied.");
-    window.location.href = "loginJWT.html";
+    // window.location.href = "loginJWT.html";
   }
 })();
 
@@ -32,13 +32,13 @@ function getRole() {
     $("#content").load("addNewRole.html");
   });
 
-  $("#getQuestions").click(function (e) {
-    $("#content").load("getQuestions.html");
-  });
+  // $("#getQuestions").click(function (e) {
+  //   $("#content").load("getQuestions.html");
+  // });
 
-  $("#getCriteriaQuestion").click(function (e) {
-    $("#content").load("getCriteriaQuestion.html");
-  });
+  // $("#getCriteriaQuestion").click(function (e) {
+  //   $("#content").load("getCriteriaQuestion.html");
+  // });
 
   $("#UserAnalytics").click(function (e) {
     $("#content").load("UserAnalytics.html");

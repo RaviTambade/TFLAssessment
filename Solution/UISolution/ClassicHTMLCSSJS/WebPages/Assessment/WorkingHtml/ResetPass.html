@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Reset Password</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 50px;
+        }
+
+        .container {
+            width: 300px;
+            margin: auto;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 10px;
+            width: 100%;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .message {
+            margin-top: 20px;
+            font-weight: bold;
+            color: green;
+            display: none;
+        }
+
+        .error {
+            color: red;
+            margin-top: 20px;
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Reset Password</h2>
+
+        <label for="email">Email:</label>
+        <input type="text" id="email" placeholder="Enter your email">
+
+        <label for="oldPassword">Old Password:</label>
+        <input type="password" id="password" placeholder="Enter old password">
+
+        <label for="newPassword">New Password:</label>
+        <input type="password" id="newPassword" placeholder="Enter new password">
+
+        <button id="saveBtn">Save</button>
+
+        <div class="message">Password is set successfully!</div>
+        <div class="error"></div>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            $("#saveBtn").click(function () {
+                var email = $("#email").val();
+                var oldpass = $("#password").val();
+                var newpass = $("#newPassword").val();
+                // Email regex pattern
+                var emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,}$/;
+
+                // Step 1: Check all fields
+                if (!email || !oldpass || !newpass) {
+                    $(".error").text("Please fill in all fields.").show();
+                    $(".message").hide();
+                    return;
+                }
+
+                // Step 2: Validate email format
+                if (!email.match(emailPattern)) {
+                    $(".error").text("Please enter a valid email address.").show();
+                    $(".message").hide();
+                    return;
+                }
+
+                $.ajax({
+                    url: "http://localhost:5238/api/Auth/change-password",
+                    type: "POST",
+                    contentType: "application/json",
+                    data: JSON.stringify({
+                        email: email,
+                        oldPassword: oldpass,
+                        newPassword: newpass
+                    }),
+                    success: function (response) {
+                        $(".message").text("Password updated successfully!").show();
+                        $(".error").hide();
+                    },
+                    error: function (xhr) {
+                        $(".error").text(xhr.responseText || "Old password is incorrect.").show();
+                        $(".message").hide();
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
