@@ -247,15 +247,3 @@ Reflection + Reallocation
 
 That builds discipline.
 
-# 🚀 If You Want Next
-
-I can generate:
-
-* 📋 Project Allocation Rubrics Template
-* 📊 Student Skill Tracking Dashboard Design
-* 🧠 AI-based allocation algorithm design
-* 📅 12-week mentorship sprint plan
-* 🧩 Sample real industry-style project brief
-* 🏆 Evaluation and grading framework
-
-Tell me what we design next, Ravi 👨‍🏫

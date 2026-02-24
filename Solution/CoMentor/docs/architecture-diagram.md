@@ -1,11 +1,7 @@
 
+# 🏗 TFL CoMentor – Microservices Architecture
 
 
-
-
-
-
-# 🏗 TFL CoMentor – Microservices Architecture (ASCII Diagram)
 Below is a **clean ASCII Architecture Diagram** for  **TFL CoMentor Solution**.
 
 
@@ -137,7 +133,7 @@ Since you prefer mentor-style explanation:
 This makes microservices intuitive for freshers.
 
 
-# 🔐 Database Isolation Principle
+# 🔐 Database Isolation Principle (Very Important For Students)
 
 Each service:
 
