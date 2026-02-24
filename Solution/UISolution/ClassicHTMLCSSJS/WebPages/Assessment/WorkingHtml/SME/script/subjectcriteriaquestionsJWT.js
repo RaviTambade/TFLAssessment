@@ -1,104 +1,136 @@
+var subjects;
+var questionsList;
 
-    var subjects;
-    var questionsList;
-    var subjectsApi = "http://localhost:5238/api/assessment/subjects";
-    var criteriaApi = "http://localhost:5238/api/assessment/concepts";
+var subjectsApi = "http://localhost:5238/api/assessment/subjects";
+var conceptApi = "http://localhost:5238/api/assessment/concepts";
+var questionApiBase = "http://localhost:5238/api/questionbank/questions";
 
-    $(document).ready(function () {
-      $.ajax({
+$(document).ready(function () {
+
+    /* ---------------------------
+       LOAD SUBJECTS ON PAGE LOAD
+    ---------------------------- */
+    $.ajax({
         url: subjectsApi,
         type: 'GET',
-        contentType: 'application/json',
         success: function (data) {
-          subjects = data;
-        //   var lstSubject = $("#ddlSubjects");
-            var lstSubject = $('#ddlSubjects').empty().append('<option value="" disabled selected>Select subject</option>');
-          for (var i = 0; i < subjects.length; i++) {
-            lstSubject.append($('<option></option>').val(subjects[i].id).html(subjects[i].title));
-          }
 
-          var apiCriteriasBySubject = criteriaApi + "/subjects/" + subjects[0].id;
-          $.ajax({
-            url: apiCriteriasBySubject,
-            type: 'GET',
-            contentType: 'application/json',
-            success: function (data) {
-              criterias = data;
-            //   var lstCriteria = $("#ddlCriteria");
-            var lstCriteria =  $('#ddlCriteria').empty().append('<option value="" disabled selected>Select criteria</option>');
+            console.log("Subjects API:", data); // DEBUG
 
-              for (var i = 0; i < criterias.length; i++) {
-                lstCriteria.append($('<option></option>').val(criterias[i].id).html(criterias[i].title));
-              }
-            },
-            error: function (xhr, status, error) {
-              console.error(xhr.responseText);
-            }
-          });
+            subjects = data;
+
+            var lstSubject = $('#ddlSubjects')
+                .empty()
+                .append('<option value="">Select subject</option>');
+
+            data.forEach(s => {
+                lstSubject.append(
+                    $('<option></option>')
+                        .val(s.id || s.subjectId)   // SAFE FIELD MATCH
+                        .text(s.title || s.name)
+                );
+            });
         },
-        error: function (xhr, status, error) {
-          console.error(xhr.responseText);
+        error: function (xhr) {
+            console.error("Subjects Error:", xhr.responseText);
         }
-      });
-
-      $("#ddlSubjects").change(function () {
-        $('#questions').empty();
-        $('#ddlCriteria').empty();
-        $('#errorMessage').empty();
-
-        var subjectId = $("#ddlSubjects").val();
-        var questionsApi = "http://localhost:5238/api/questionbank/questions/subjects/" + subjectId;
-
-        $.get(questionsApi, function (data) {
-          questionsList = data;
-          questionsList.map((question) => {
-            $('#questions').append(
-              `<div class='question-card'>
-                  <strong>ID:</strong> ${question.questionId}<br/>
-                  <strong>Question:</strong> ${question.question}<br/>
-                  <strong>Subject:</strong> ${question.subject}
-               </div>`
-            );
-          });
-
-          var apiCriteriasBySubject = criteriaApi + "/subjects/" + subjectId;
-          $.ajax({
-            url: apiCriteriasBySubject,
-            type: 'GET',
-            contentType: 'application/json',
-            success: function (data) {
-              var lstCriteria = $("#ddlCriteria");
-              for (var i = 0; i < data.length; i++) {
-                lstCriteria.append($('<option></option>').val(data[i].id).html(data[i].title));
-              }
-            }
-          });
-        }).fail(function (xhr) {
-          $('#errorMessage').text("No questions found for selected subject.");
-        });
-      });
-
-      $("#ddlCriteria").change(function () {
-        $('#questions').empty();
-        $('#errorMessage').empty();
-
-        var subjectId = $("#ddlSubjects").val();
-        var criteriaId = $("#ddlCriteria").val();
-        var apiQuestionBySubjectCriteria = "http://localhost:5238/api/questionbank/questions/subjects/" + subjectId + "/concepts/" + criteriaId;
-
-        $.get(apiQuestionBySubjectCriteria, function (data) {
-          questionsList = data;
-          questionsList.map((question) => {
-            $('#questions').append(
-              `<div class='question-card'>
-                  <strong>ID:</strong> ${question.id}<br/>
-                  <strong>Question:</strong> ${question.question}<br/>
-                  <strong>Subject:</strong> ${question.subject}
-               </div>`
-            );
-          });
-        }).fail(function () {
-          $('#errorMessage').text("No questions found for selected criteria.");
-        });
-      });
     });
+
+
+    /* ---------------------------
+       WHEN SUBJECT CHANGES
+       LOAD CONCEPTS
+    ---------------------------- */
+    $("#ddlSubjects").change(function () {
+
+        $('#questions').empty();
+        $('#ddlCriteria').empty().append('<option value="">Select concept</option>');
+        $('#errorMessage').empty();
+
+        var subjectId = $(this).val();
+
+        console.log("Selected Subject:", subjectId); // DEBUG
+
+        if (!subjectId) return;
+
+        $.ajax({
+            url: `${conceptApi}/subjects/${subjectId}`,
+            type: 'GET',
+            success: function (data) {
+
+                console.log("Concept API:", data); // DEBUG
+
+                var lstConcept = $('#ddlCriteria');
+
+                data.forEach(c => {
+                    lstConcept.append(
+                        $('<option></option>')
+                            .val(c.id || c.conceptId) // FIXED
+                            .text(c.title || c.name)
+                    );
+                });
+            },
+            error: function (xhr) {
+                console.error("Concept Error:", xhr.responseText);
+            }
+        });
+    });
+
+
+    /* ---------------------------
+       WHEN CONCEPT CHANGES
+       LOAD QUESTIONS
+    ---------------------------- */
+    $("#ddlCriteria").change(function () {
+
+        $('#questions').empty();
+        $('#errorMessage').empty();
+
+        var subjectId = $("#ddlSubjects").val();
+        var conceptId = $(this).val();
+
+        console.log("Selected:", subjectId, conceptId); // DEBUG
+
+        if (!subjectId || !conceptId) {
+            $('#errorMessage').text("Please select subject and concept.");
+            return;
+        }
+
+        var apiUrl =
+            `${questionApiBase}/subjects/${subjectId}/concepts/${conceptId}`;
+
+        console.log("Calling:", apiUrl);
+
+        $.ajax({
+            url: apiUrl,
+            type: "GET",
+            success: function (data) {
+
+                console.log("Questions API:", data);
+
+                questionsList = data;
+
+                if (!data || data.length === 0) {
+                    $('#errorMessage').text("No questions found.");
+                    return;
+                }
+
+                data.forEach(q => {
+                    $('#questions').append(`
+                        <div class='question-card'>
+                            <strong>ID:</strong> ${q.id}<br/>
+                            <strong>Question:</strong> ${q.question || q.title}<br/>
+                            <strong>Subject:</strong> ${q.subject || ""}
+                        </div>
+                    `);
+                });
+            },
+            error: function (xhr) {
+                console.error("Question Error:", xhr.responseText);
+                $('#errorMessage').text("No questions found for selected concept.");
+            }
+        });
+
+    });
+
+});

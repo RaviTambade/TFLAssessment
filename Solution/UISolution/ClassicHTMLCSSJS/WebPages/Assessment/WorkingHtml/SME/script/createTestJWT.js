@@ -31,7 +31,7 @@ const now = new Date();
   $("#createdDate").val(local);
 
   const userId = localStorage.getItem("userId");
-  const getSubjectsUrl = `http://localhost:5238/api/subject/GetSmeSubjects/${userId}`;
+  const getSubjectsUrl = `http://localhost:5238/api/assessment/subjects`;
 
   // ================= LOAD SUBJECTS =================
   $.get(getSubjectsUrl, function (subjects) {

@@ -32,13 +32,13 @@ function getRole() {
     $("#content").load("addNewRole.html");
   });
 
-  $("#getQuestions").click(function (e) {
-    $("#content").load("getQuestions.html");
-  });
+  // $("#getQuestions").click(function (e) {
+  //   $("#content").load("getQuestions.html");
+  // });
 
-  $("#getCriteriaQuestion").click(function (e) {
-    $("#content").load("getCriteriaQuestion.html");
-  });
+  // $("#getCriteriaQuestion").click(function (e) {
+  //   $("#content").load("getCriteriaQuestion.html");
+  // });
 
   $("#UserAnalytics").click(function (e) {
     $("#content").load("UserAnalytics.html");

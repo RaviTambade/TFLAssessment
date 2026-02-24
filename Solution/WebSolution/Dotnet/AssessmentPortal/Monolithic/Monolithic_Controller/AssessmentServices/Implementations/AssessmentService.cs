@@ -51,7 +51,7 @@ public class AssessmentService : IAssessmentService
       return await _repository.GetConcepts();
    }
 
-   public async Task<List<Concepts>> GetConceptsBySubject(int subjectId)
+   public async Task<List<SubjectConcepts>> GetConceptsBySubject(int subjectId)
    {
       return await _repository.GetConceptsBySubject(subjectId);
    }
