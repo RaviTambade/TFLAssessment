@@ -18,7 +18,7 @@ public interface IAssessmentRepository
 
   public Task<List<Concepts>> GetConcepts();
 
-  public Task<List<Concepts>> GetConceptsBySubject(int subjectId);
+  public Task<List<SubjectConcepts>> GetConceptsBySubject(int subjectId);
 
   public Task<bool> CreateTest(CreateTestRequest request);
   public Task<bool> AddQuestion(int AssessmentId, int questionId);

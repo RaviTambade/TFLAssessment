@@ -2,11 +2,9 @@ using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Authorization;
-
 using Transflower.TFLAssessment.Entities;
 using  Transflower.TFLAssessment.Services.Interfaces;
 using Transflower.TFLAssessment.Entities.Models;
-
 namespace Transflower.TFLAssessment.Controllers;
 
 //Controller is now responsible to handle HTTP Requests
@@ -95,12 +93,24 @@ public class AssessmentController : ControllerBase
         return Ok(concepts);
     }
 
-    //http://localhost:5238/api/assessment/concepts/subjects/1
+   //http://localhost:5238/api/assessment/concepts/subjects/1
     [HttpGet("concepts/subjects/{subjectId}")]
-    public async Task<IActionResult> GetConceptsBySubject(int subjectId)
+    public async Task<ActionResult<List<SubjectConcepts>>> GetConceptsBySubject(int subjectId)
     {
-        List<Concepts> concepts = await _svc.GetConceptsBySubject(subjectId);
-        _logger.LogInformation("Get  evaluation Concepts by subject method invoked at  {DT}", DateTime.UtcNow.ToLongTimeString());
+        _logger.LogInformation(
+            "Get evaluation Concepts by subject method invoked at {DT} for SubjectId={SubjectId}", 
+            DateTime.UtcNow.ToLongTimeString(),
+            subjectId
+        );
+
+        var concepts = await _svc.GetConceptsBySubject(subjectId);
+
+        if (concepts == null || !concepts.Any())
+        {
+            _logger.LogWarning("No concepts found for SubjectId={SubjectId}", subjectId);
+            return NotFound(new { Message = $"No concepts found for subjectId {subjectId}" });
+        }
+
         return Ok(concepts);
     }
 
