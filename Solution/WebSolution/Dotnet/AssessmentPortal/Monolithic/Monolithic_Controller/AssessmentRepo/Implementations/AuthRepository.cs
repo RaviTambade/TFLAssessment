@@ -112,17 +112,6 @@ public class AuthRepository : IAuthRepository
         
         }
         finally
-
-
-
-
-
-
-
-
-
-
-        
         {
             await connection.CloseAsync();
         }
@@ -170,4 +159,7 @@ public async Task<bool> UpdatePassword(string email, string newPassword)
         }
     }
 }
+
+
+
 }
