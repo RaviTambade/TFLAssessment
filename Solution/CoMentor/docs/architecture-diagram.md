@@ -137,7 +137,7 @@ Since you prefer mentor-style explanation:
 This makes microservices intuitive for freshers.
 
 
-# 🔐 Database Isolation Principle (Very Important For Students)
+# 🔐 Database Isolation Principle
 
 Each service:
 
