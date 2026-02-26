@@ -1,12 +1,13 @@
-Excellent 👏 Ravi — this will help your students visualize **real-world microservice architecture** clearly.
 
-Below is a **clean ASCII Architecture Diagram** for your **TFL CoMentor Solution**.
 
-I’ve structured it in a way that you can directly use in classroom explanation.
 
----
+
+
+
 
 # 🏗 TFL CoMentor – Microservices Architecture (ASCII Diagram)
+Below is a **clean ASCII Architecture Diagram** for  **TFL CoMentor Solution**.
+
 
 ```
                                      ┌──────────────────────────────┐
