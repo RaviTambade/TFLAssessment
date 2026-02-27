@@ -1,49 +1,69 @@
+-- Create the database only if it does not already exist
 CREATE DATABASE IF NOT EXISTS membership_db;
+
+-- Select the database to work with
 USE membership_db;
 
+-- Stores all registered users in the system
 CREATE TABLE users (
-    user_id BIGINT PRIMARY KEY AUTO_INCREMENT,
-    first_name VARCHAR(100),
-    last_name VARCHAR(100),
-    email VARCHAR(150) NOT NULL UNIQUE,
-    password_hash VARCHAR(255) NOT NULL,
-    status VARCHAR(20) DEFAULT 'ACTIVE',
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    user_id BIGINT PRIMARY KEY AUTO_INCREMENT,     -- Unique identifier for each user
+    first_name VARCHAR(100),                       -- User's first name
+    last_name VARCHAR(100),                        -- User's last name
+    email VARCHAR(150) NOT NULL UNIQUE,            -- Unique email for login/identification
+    password_hash VARCHAR(255) NOT NULL,           -- Encrypted password (never store plain text)
+    status VARCHAR(20) DEFAULT 'ACTIVE',           -- Account status (ACTIVE, INACTIVE, BLOCKED, etc.)
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP -- Record creation timestamp
 );
 
+-- Stores different roles available in the system (e.g., ADMIN, MENTOR, SME)
 CREATE TABLE roles (
-    role_id BIGINT PRIMARY KEY AUTO_INCREMENT,
-    role_name VARCHAR(50) NOT NULL UNIQUE
+    role_id BIGINT PRIMARY KEY AUTO_INCREMENT,      -- Unique role identifier
+    role_name VARCHAR(50) NOT NULL UNIQUE           -- Role name (must be unique)
 );
 
+-- Maps users to roles (a user can have multiple roles)
 CREATE TABLE user_roles (
-    id BIGINT PRIMARY KEY AUTO_INCREMENT,
-    user_id BIGINT NOT NULL,
-    role_id BIGINT NOT NULL,
-    UNIQUE(user_id, role_id),
-    FOREIGN KEY (user_id) REFERENCES users(user_id),
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,               -- Unique mapping ID
+    user_id BIGINT NOT NULL,                            -- Reference to users table
+    role_id BIGINT NOT NULL,                            -- Reference to roles table
+    UNIQUE(user_id, role_id),                           -- Prevent duplicate role assignments for the same user
+    FOREIGN KEY (user_id) REFERENCES users(user_id),    -- Foreign key constraints
     FOREIGN KEY (role_id) REFERENCES roles(role_id)
 );
 
+-- Stores active login sessions and JWT tokens
 CREATE TABLE user_sessions (
-    session_id BIGINT PRIMARY KEY AUTO_INCREMENT,
-    user_id BIGINT NOT NULL,
-    jwt_token TEXT,
-    expiry_time DATETIME,
+    session_id BIGINT PRIMARY KEY AUTO_INCREMENT,      -- Unique session ID
+    user_id BIGINT NOT NULL,                           -- Associated user
+    jwt_token TEXT,                                    -- JWT token issued for session
+    expiry_time DATETIME,                              -- Token expiration date and time
     FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
 
+-- Stores additional information for users with Mentor role
 CREATE TABLE mentor_profiles (
-    mentor_id BIGINT PRIMARY KEY AUTO_INCREMENT,
-    user_id BIGINT NOT NULL UNIQUE,
-    bio TEXT,
-    experience_years INT,
+    mentor_id BIGINT PRIMARY KEY AUTO_INCREMENT,        -- Unique mentor profile ID
+    user_id BIGINT NOT NULL UNIQUE,                     -- One-to-one relationship with users table
+    bio TEXT,                                           -- Mentor biography/description
+    experience_years INT,                               -- Years of experience
     FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
 
+-- Stores additional information for Subject Matter Experts
 CREATE TABLE sme_profiles (
-    sme_id BIGINT PRIMARY KEY AUTO_INCREMENT,
-    user_id BIGINT NOT NULL UNIQUE,
-    expertise_area VARCHAR(200),
-    FOREIGN KEY (user_id) REFERENCES users(user_id)
+    sme_id BIGINT PRIMARY KEY AUTO_INCREMENT,          -- Unique SME profile ID
+    user_id BIGINT NOT NULL UNIQUE,                    -- One-to-one relationship with users table
+    subject_id BIGINT NOT NULL,                        -- Subject expertise reference
+    FOREIGN KEY (user_id) REFERENCES users(user_id),    -- Enforce referential integrity
+    FOREIGN KEY (subject_id) REFERENCES subjects(subject_id)
+);
+
+-- Stores subjects available in the platform (e.g., Java, Python, Data Structures)
+CREATE TABLE subjects (
+    subject_id BIGINT PRIMARY KEY AUTO_INCREMENT,                                -- Unique subject identifier
+    name VARCHAR(150) NOT NULL UNIQUE,                                           -- Subject name (must be unique)
+    description TEXT,                                                            -- Subject description/details
+    status VARCHAR(20) DEFAULT 'ACTIVE',                                         -- Subject status (ACTIVE/INACTIVE)
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,                              -- Creation timestamp
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP   -- Auto-update timestamp on modification
 );
