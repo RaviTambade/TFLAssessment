@@ -35,28 +35,32 @@ VALUES
 
 -- Map users to their respective roles
 INSERT INTO user_roles (user_id, role_id) VALUES
-(1, 1),  -- Ravi → ADMIN
-(2, 3),  -- Kajal → STUDENT
-(3, 3),  -- Arnav → SME
-(4, 3),  -- Tejas → MENTOR
-(5, 3),
-(6, 3),
-(7, 3),
-(8, 3),
-(9, 3),
-(10, 4),
-(11, 2),
-(12, 3),
-(13, 3),
-(14, 3),
-(15, 3),
-(16, 3),
-(17, 3),
-(18, 3),
-(19, 3),
-(20, 3),
-(21, 3),
-(22, 3);
+(1, 1),   -- Ravi Tambade  → ADMIN (Full system access)
+
+(2, 3),   -- Kajal Ghule   → STUDENT (Regular platform user)
+(3, 3),   -- Sarthak Kadam → STUDENT
+(4, 3),   -- Nikita Bansode → STUDENT
+(5, 3),   -- Rutuja Mokale → STUDENT
+(6, 3),   -- Pranita Mane  → STUDENT
+(7, 3),   -- Sahil Kamble  → STUDENT
+(8, 3),   -- Nirjala Naik  → STUDENT
+(9, 3),   -- Chaitrali Patil → STUDENT
+
+(10, 4),  -- Arnav Tolahunase → SME (Subject Matter Expert - Java)
+
+(11, 2),  -- Tejas Naukudkar → MENTOR (Guides students)
+
+(12, 3),  -- Sai Jagdale → STUDENT
+(13, 3),  -- Samruddhi Rasal → STUDENT
+(14, 3),  -- Yash Gawade → STUDENT
+(15, 3),  -- Shrutik Dhaundkar → STUDENT
+(16, 3),  -- Sumit Bhor → STUDENT
+(17, 3),  -- Sanika Bhor → STUDENT
+(18, 3),  -- Sachin Kharat → STUDENT
+(19, 3),  -- Abhay Rathod → STUDENT
+(20, 3),  -- Prajwal Salunke → STUDENT
+(21, 3),  -- Vibhavari Borale → STUDENT
+(22, 3);  -- Tanvi Sonawane → STUDENT
 
 -- Create mentor profile for user who has MENTOR role
 INSERT INTO mentor_profiles (user_id, bio, experience_years)
