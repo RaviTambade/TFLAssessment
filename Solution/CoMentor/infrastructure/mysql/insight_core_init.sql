@@ -21,7 +21,7 @@ CREATE TABLE candidate_test_results (
 );
 
 CREATE TABLE rankings (
-    ranking_id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
     candidate_id BIGINT NOT NULL,
     rank_position INT,
     category VARCHAR(100),
@@ -29,8 +29,16 @@ CREATE TABLE rankings (
 );
 
 CREATE TABLE performance_snapshots (
-    snapshot_id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
     candidate_id BIGINT NOT NULL,
     snapshot_date DATETIME,
     performance_json JSON
 );
+
+CREATE TABLE performance_level (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    difficulty_level ENUM('Beginner', 'Intermediate', 'Advanced') NOT NULL UNIQUE,
+    marks_per_question DECIMAL(5,2) NOT NULL
+);
+
+
