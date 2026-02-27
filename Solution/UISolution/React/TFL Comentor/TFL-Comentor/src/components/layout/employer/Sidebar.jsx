@@ -17,7 +17,7 @@ function Sidebar() {
                 <li className="nav-item"><Link className="nav-link text-white" to="/project-evidence">Project Evidence </Link></li>
                 <li className="nav-item"><Link className="nav-link text-white" to="/employer-shortlist">Employer Shortlist</Link></li>
                 <li className="nav-item"><Link className="nav-link text-white" to="/skill-analytics">Skill Analytics</Link></li>
-                <li className="nav-item"><Link className="nav-link text-white" to="/employer-Shortlist">Employer Shortlist</Link></li>
+      
 
             </ul>
         </div>
