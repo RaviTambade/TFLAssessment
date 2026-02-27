@@ -48,14 +48,7 @@ CREATE TABLE question_bank (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE question_subject_concept_map (
-    id BIGINT PRIMARY KEY AUTO_INCREMENT,
-    question_id BIGINT NOT NULL,
-    subject_concept_id BIGINT NOT NULL, -- external reference
-    UNIQUE(question_id, subject_concept_id),
-    FOREIGN KEY (question_id) REFERENCES question_bank(question_id),
-    FOREIGN KEY(subject_concept_id) REFERENCES subject_concepts(id)
-);
+
 
 CREATE TABLE problem_statements (
     problem_id BIGINT PRIMARY KEY AUTO_INCREMENT,
@@ -104,4 +97,12 @@ CREATE TABLE mcq_options (
     FOREIGN KEY (question_id) 
         REFERENCES question_bank(question_id)
         ON DELETE CASCADE
+);
+CREATE TABLE question_subject_concept_map (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    question_id BIGINT NOT NULL,
+    subject_concept_id BIGINT NOT NULL, -- external reference
+    UNIQUE(question_id, subject_concept_id),
+    FOREIGN KEY (question_id) REFERENCES question_bank(question_id),
+    FOREIGN KEY(subject_concept_id) REFERENCES subject_concepts(id)
 );

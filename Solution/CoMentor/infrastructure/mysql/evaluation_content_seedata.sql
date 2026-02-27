@@ -572,20 +572,20 @@ public class SecurityConfig {
 });'),
 
 -- DATABASE CODE REVIEW
-(44, 'SQL',
+(38, 'SQL',
 'SELECT * FROM orders WHERE YEAR(order_date)=2023;'),
 
-(49, 'SQL',
+(47, 'SQL',
 'CREATE INDEX idx_user ON users(name);'),
 
-(55, 'SQL',
+(52, 'SQL',
 'BEGIN;
 UPDATE accounts SET balance=balance-100 WHERE id=1;
 -- Missing COMMIT
 '),
 
 -- DOTNET
-(60, 'C#',
+(59, 'C#',
 'public class Service {
     private Repository repo;
     public Service(){
@@ -594,7 +594,7 @@ UPDATE accounts SET balance=balance-100 WHERE id=1;
 }'),
 
 -- SYSTEM DESIGN / ADVANCED
-(65, 'Java',
+(64, 'Java',
 'class Cache {
     Map<String,String> map = new HashMap<>();
 }'),
@@ -607,7 +607,7 @@ UPDATE accounts SET balance=balance-100 WHERE id=1;
     }
 }'),
 
-(78, 'Java',
+(79, 'Java',
 'class SharedCounter {
     int count = 0;
     public void increment(){
@@ -680,23 +680,47 @@ VALUES
 'Build scalable distributed logging system.',
 'Scalability, fault tolerance, logging strategy, documentation');
 
-INSERT INTO question_subject_concept_map
-(question_id, subject_concept_id)
-VALUES
-(1,1),(2,1),(3,1),(4,1),(5,1),
-(6,1),(7,1),(8,1),(9,1),(10,1),
-(11,1),(12,1),(13,1),(14,1),(15,1),
-(16,1),(17,1),(18,1),(19,1),(20,1),
-(21,1),(22,1),(23,1),(24,1),(25,1),
-(26,2),(27,2),(28,2),(29,2),(30,2),
-(31,2),(32,2),(33,2),(34,2),(35,2),
-(36,2),(37,2),(38,2),(39,2),
-(40,8),(41,8),(42,8),(43,8),(44,8),
-(45,8),(46,8),(47,8),(48,8),(49,8),
-(50,8),(51,8),(52,8),(53,8),(54,8),
-(55,3),(56,3),(57,3),(58,3),(59,3),
-(60,3),
-(61,7),(62,7),(63,7),(64,7),(65,7),
-(66,1),(67,1),(68,1),(69,1),(70,1),
-(71,1),(72,1),(73,1),(74,1),(75,1),
-(76,1),(77,1),(78,1),(79,1);
+INSERT INTO question_subject_concept_map (question_id, subject_concept_id) VALUES
+-- JAVA Questions (Subject 1: starts at bridge ID 45)
+(1, 53),   -- JVM Purpose -> JVM
+(2, 53),   -- JVM Memory Areas -> JVM
+(3, 84),   -- Garbage Collection Working -> Garbage Collection (Corrected)
+(4, 53),   -- JVM Tuning -> JVM
+(5, 53),   -- Build JVM Demo -> JVM
+(6, 67),   -- Inheritance Concept -> Inheritance (Corrected)
+(7, 68),   -- Polymorphism Types -> Polymorphism (Corrected)
+(8, 80),   -- OOP Scenario -> Classes
+(9, 63),   -- OOP Refactor -> SOLID
+(10, 80),  -- OOP Mini Project -> Classes
+(11, 48),  -- Exception Basics -> Exception Handling
+(21, 86),  -- Spring Boot MVC -> Spring Boot MVC
+(22, 87),  -- REST API Creation -> Spring Boot API
+(23, 62),  -- Dependency Injection -> Dependency Injection
+(24, 87),  -- Spring Security Fix -> Spring Boot API
+(25, 87),  -- Ecommerce Backend -> Spring Boot API
+
+-- NODEJS / JavaScript (Subject 2: starts at bridge ID 89)
+(26, 89),  -- Async Programming -> Async/Await
+(27, 89),  -- Promise Usage -> Async/Await
+(31, 100), -- Express Basics -> Express JS
+(32, 101), -- Middleware Use -> Middleware
+(33, 100), -- CRUD API Build -> Express JS
+(35, 128), -- Node Auth System -> JWT Authentication
+(36, 94),  -- Event Loop -> NodeJS Runtime
+(37, 92),  -- File System Module -> File System (fs)
+
+-- RDBMS (Subject 8: starts at bridge ID 129)
+(40, 129), -- Primary Key -> Keys and Constraints
+(41, 129), -- Foreign Key -> Keys and Constraints
+(42, 134), -- Normalization Goal -> Normalization
+(43, 134), -- 3NF Example -> Normalization
+(45, 136), -- Join Types -> Joins
+(47, 145), -- Query Optimization -> Performance and Optimization
+(50, 144), -- ACID Properties -> Transactions and ACID
+
+-- .NET (Subject 3: starts at bridge ID 1)
+(55, 9),   -- .NET CLR -> CLR
+(56, 6),   -- LINQ Query -> LINQ
+(57, 7),   -- Entity Framework -> Entity Framework
+(58, 15),  -- Middleware Pipeline -> Middleware
+(60, 36);  -- Hospital API -> Web API
