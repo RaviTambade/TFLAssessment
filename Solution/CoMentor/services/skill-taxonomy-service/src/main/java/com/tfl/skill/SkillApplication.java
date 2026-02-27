@@ -1,7 +1,13 @@
 package com.tfl.skill;
 
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
 public class SkillApplication {
-    public static void main(String[] args) {
-        System.out.println("Skill Taxonomy Service placeholder");
-    }
+
+	public static void main(String[] args) {
+		SpringApplication.run(SkillApplication.class, args);
+	}
+
 }
