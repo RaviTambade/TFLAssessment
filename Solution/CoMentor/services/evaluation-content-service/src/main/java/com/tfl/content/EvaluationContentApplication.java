@@ -1,13 +1,12 @@
-package com.tfl.skill;
-
+package com.tfl.content;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class SkillApplication {
+public class EvaluationContentApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(SkillApplication.class, args);
+		SpringApplication.run(EvaluationContentApplication.class, args);
 	}
 
 }
