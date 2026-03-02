@@ -64,31 +64,6 @@ INSERT INTO user_roles (user_id, role_id) VALUES
 (21, 3),  -- Vibhavari Borale  → STUDENT
 (22, 3);  -- Tanvi Sonawane    → STUDENT
 
--- Create mentor profile for user who has MENTOR role
-INSERT INTO mentor_profiles (user_id, bio, experience_years)
-VALUES
-(2, 'Software Engineering Mentor', 4),      -- Kajal Ghule
-(11, 'Senior Backend Mentor', 5);           -- Tejas Naukudkar
-
--- Subjects
-INSERT INTO subjects (name, description) VALUES
-('C Programming', 'Structured programming using C'),
-('Data Structures', 'Core data structures and algorithms'),
-('Databases', 'SQL and relational database systems');
-
-
--- Create SME profile for user who has SME role
-INSERT INTO sme_profiles (user_id, subject_id)
-VALUES
-(9, 1),   -- Chaitrali Patil (Subject 1)
-(10, 2);  -- Arnav Tolahunase (Subject 2)
-
-INSERT INTO student_profiles (user_id)
-VALUES
-(3),(4),(5),(6),(7),(8),
-(12),(13),(14),(15),(16),
-(17),(18),(19),(20),(21),(22);
-
 -- Insert login sessions 
 INSERT INTO user_sessions (user_id, user_login, user_logout) VALUES
 -- 1 Ravi (Admin - Active)
@@ -138,5 +113,35 @@ INSERT INTO user_sessions (user_id, user_login, user_logout) VALUES
 -- 22 Tanvi (Active)
 (22, DATE_SUB(NOW(), INTERVAL 30 MINUTE), NULL);
 
+-- Subjects
+INSERT INTO subjects (name, description) VALUES
+('Java', 'Object-oriented programming language used for application development'),
+('NodeJs', 'JavaScript runtime environment for server-side development'),
+('DotNet', 'Microsoft framework for building desktop and web applications'),
+('Python', 'High-level programming language used for web, AI, and data science'),
+('C', 'Procedural programming language used for system programming'),
+('C++', 'Object-oriented programming language used for system and application development'),
+('ReactJS', 'JavaScript library for building interactive user interfaces'),
+('RDBMS', 'Relational Database Management System for storing and managing data');
 
+-- Create admin profile for user who has admin role
+INSERT INTO admin_profiles (user_id)
+VALUES (1);  -- Ravi Tambade
 
+-- Create mentor profile for user who has MENTOR role
+INSERT INTO mentor_profiles (user_id, bio, experience_years)
+VALUES
+(2, 'Software Engineering Mentor', 4),      -- Kajal Ghule
+(11, 'Senior Backend Mentor', 5);           -- Tejas Naukudkar
+
+-- Create SME profile for user who has SME role
+INSERT INTO sme_profiles (user_id, subject_id)
+VALUES
+(9, 1),   -- Chaitrali Patil (Subject 1)
+(10, 2);  -- Arnav Tolahunase (Subject 2)
+
+INSERT INTO student_profiles (user_id)
+VALUES
+(3),(4),(5),(6),(7),(8),
+(12),(13),(14),(15),(16),
+(17),(18),(19),(20),(21),(22);

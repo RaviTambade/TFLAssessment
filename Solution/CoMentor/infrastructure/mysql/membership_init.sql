@@ -19,7 +19,7 @@ CREATE TABLE users (
 -- Stores different roles available in the system (e.g., ADMIN, MENTOR, SME)
 CREATE TABLE roles (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,      -- Unique role identifier
-    role_name VARCHAR(50) NOT NULL UNIQUE           -- Role name (must be unique)
+    role_name VARCHAR(50) NOT NULL          -- Role name
 );
 
 -- Maps users to roles (a user can have multiple roles)
@@ -42,6 +42,16 @@ CREATE TABLE user_sessions (
     FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
 
+-- Stores subjects available in the platform (e.g., Java, Python, Data Structures)
+CREATE TABLE subjects (
+    subject_id BIGINT PRIMARY KEY AUTO_INCREMENT,                                -- Unique subject identifier
+    name VARCHAR(150) NOT NULL UNIQUE,                                           -- Subject name (must be unique)
+    description TEXT,                                                            -- Subject description/details
+    status VARCHAR(20) DEFAULT 'ACTIVE',                                         -- Subject status (ACTIVE/INACTIVE)
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,                              -- Creation timestamp
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP   -- Auto-update timestamp on modification
+);
+
 -- Mentor profile details
 CREATE TABLE mentor_profiles (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,      -- Mentor profile ID
@@ -50,15 +60,6 @@ CREATE TABLE mentor_profiles (
     experience_years INT,                      -- Years of experience
     created_on DATETIME DEFAULT CURRENT_TIMESTAMP, -- Creation time
     FOREIGN KEY (user_id) REFERENCES users(user_id)
-);
-
-CREATE TABLE subjects (
-    subject_id BIGINT PRIMARY KEY AUTO_INCREMENT,                                -- Unique subject identifier
-    name VARCHAR(150) NOT NULL UNIQUE,                                           -- Subject name (must be unique)
-    description TEXT,                                                            -- Subject description/details
-    status VARCHAR(20) DEFAULT 'ACTIVE',                                         -- Subject status (ACTIVE/INACTIVE)
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,                              -- Creation timestamp
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP   -- Auto-update timestamp on modification
 );
 
 -- SME profile details
@@ -85,16 +86,6 @@ CREATE TABLE admin_profiles (
     user_id BIGINT NOT NULL UNIQUE,              -- Linked user (1:1)
     created_on DATETIME DEFAULT CURRENT_TIMESTAMP, -- Creation time
     FOREIGN KEY (user_id) REFERENCES users(user_id)
-);
-
--- Stores subjects available in the platform (e.g., Java, Python, Data Structures)
-CREATE TABLE subjects (
-    subject_id BIGINT PRIMARY KEY AUTO_INCREMENT,                                -- Unique subject identifier
-    name VARCHAR(150) NOT NULL UNIQUE,                                           -- Subject name (must be unique)
-    description TEXT,                                                            -- Subject description/details
-    status VARCHAR(20) DEFAULT 'ACTIVE',                                         -- Subject status (ACTIVE/INACTIVE)
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,                              -- Creation timestamp
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP   -- Auto-update timestamp on modification
 );
 
 
