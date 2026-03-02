@@ -72,54 +72,54 @@ INSERT INTO sme_profiles (user_id, expertise_area)
 VALUES
 (10, 'Java');
 
--- Insert login sessions with JWT tokens and expiry times
-INSERT INTO user_sessions (user_id, jwt_token, expiry_time) VALUES
--- 1 Ravi (Admin)
-(1, 'jwt_token_ravi_admin', DATE_ADD(NOW(), INTERVAL 2 HOUR)),
--- 2 Kajal
-(2, 'jwt_token_kajal_1', DATE_ADD(NOW(), INTERVAL 1 HOUR)),
--- 3 Sarthak
-(3, 'jwt_token_sarthak_1', DATE_ADD(NOW(), INTERVAL 45 MINUTE)),
--- 4 Nikita
-(4, 'jwt_token_nikita_1', DATE_ADD(NOW(), INTERVAL 30 MINUTE)),
--- 5 Rutuja
-(5, 'jwt_token_rutuja_1', DATE_ADD(NOW(), INTERVAL 1 HOUR)),
--- 6 Pranita
-(6, 'jwt_token_pranita_1', DATE_ADD(NOW(), INTERVAL 2 HOUR)),
--- 7 Sahil
-(7, 'jwt_token_sahil_1', DATE_ADD(NOW(), INTERVAL 1 HOUR)),
--- 8 Nirjala
-(8, 'jwt_token_nirjala_1', DATE_ADD(NOW(), INTERVAL 1 HOUR)),
--- 9 Chaitrali (Active + Old expired)
-(9, 'jwt_token_chaitrali_active', DATE_ADD(NOW(), INTERVAL 2 HOUR)),
-(9, 'jwt_token_chaitrali_old', DATE_SUB(NOW(), INTERVAL 1 HOUR)),
--- 10 Arnav (Multi-device login)
-(10, 'jwt_token_arnav_laptop', DATE_ADD(NOW(), INTERVAL 2 HOUR)),
-(10, 'jwt_token_arnav_mobile', DATE_ADD(NOW(), INTERVAL 1 HOUR)),
--- 11 Tejas (Expired)
-(11, 'jwt_token_tejas_old', DATE_SUB(NOW(), INTERVAL 30 MINUTE)),
+-- Insert login sessions 
+INSERT INTO user_sessions (user_id, login_time, logout_time) VALUES
+-- 1 Ravi (Admin - Active)
+(1, DATE_SUB(NOW(), INTERVAL 30 MINUTE), NULL),
+-- 2 Kajal (Logged out)
+(2, DATE_SUB(NOW(), INTERVAL 2 HOUR), DATE_SUB(NOW(), INTERVAL 1 HOUR)),
+-- 3 Sarthak (Active)
+(3, DATE_SUB(NOW(), INTERVAL 45 MINUTE), NULL),
+-- 4 Nikita (Logged out)
+(4, DATE_SUB(NOW(), INTERVAL 3 HOUR), DATE_SUB(NOW(), INTERVAL 2 HOUR)),
+-- 5 Rutuja (Active)
+(5, DATE_SUB(NOW(), INTERVAL 1 HOUR), NULL),
+-- 6 Pranita (Active)
+(6, DATE_SUB(NOW(), INTERVAL 20 MINUTE), NULL),
+-- 7 Sahil (Logged out)
+(7, DATE_SUB(NOW(), INTERVAL 2 HOUR), DATE_SUB(NOW(), INTERVAL 30 MINUTE)),
+-- 8 Nirjala (Active)
+(8, DATE_SUB(NOW(), INTERVAL 10 MINUTE), NULL),
+-- 9 Chaitrali (One active + one old session)
+(9, DATE_SUB(NOW(), INTERVAL 3 HOUR), DATE_SUB(NOW(), INTERVAL 2 HOUR)),
+(9, DATE_SUB(NOW(), INTERVAL 25 MINUTE), NULL),
+-- 10 Arnav (Multi-device active sessions)
+(10, DATE_SUB(NOW(), INTERVAL 1 HOUR), NULL),
+(10, DATE_SUB(NOW(), INTERVAL 15 MINUTE), NULL),
+-- 11 Tejas (Expired session)
+(11, DATE_SUB(NOW(), INTERVAL 4 HOUR), DATE_SUB(NOW(), INTERVAL 3 HOUR)),
 -- 12 Sai (Expired)
-(12, 'jwt_token_sai_old', DATE_SUB(NOW(), INTERVAL 1 HOUR)),
+(12, DATE_SUB(NOW(), INTERVAL 2 HOUR), DATE_SUB(NOW(), INTERVAL 1 HOUR)),
 -- 13 Samruddhi (Expired)
-(13, 'jwt_token_samruddhi_old', DATE_SUB(NOW(), INTERVAL 2 HOUR)),
--- 14 Yash
-(14, 'jwt_token_yash_evening', DATE_ADD(NOW(), INTERVAL 3 HOUR)),
--- 15 Shrutik
-(15, 'jwt_token_shrutik_evening', DATE_ADD(NOW(), INTERVAL 3 HOUR)),
--- 16 Sumit
-(16, 'jwt_token_sumit_evening', DATE_ADD(NOW(), INTERVAL 2 HOUR)),
--- 17 Sanika
-(17, 'jwt_token_sanika_1', DATE_ADD(NOW(), INTERVAL 1 HOUR)),
--- 18 Sachin
-(18, 'jwt_token_sachin_1', DATE_ADD(NOW(), INTERVAL 1 HOUR)),
--- 19 Abhay
-(19, 'jwt_token_abhay_1', DATE_ADD(NOW(), INTERVAL 2 HOUR)),
--- 20 Prajwal
-(20, 'jwt_token_prajwal_1', DATE_ADD(NOW(), INTERVAL 2 HOUR)),
--- 21 Vibhavari
-(21, 'jwt_token_vibhavari_1', DATE_ADD(NOW(), INTERVAL 1 HOUR)),
--- 22 Tanvi
-(22, 'jwt_token_tanvi_1', DATE_ADD(NOW(), INTERVAL 1 HOUR));
+(13, DATE_SUB(NOW(), INTERVAL 5 HOUR), DATE_SUB(NOW(), INTERVAL 4 HOUR)),
+-- 14 Yash (Active)
+(14, DATE_SUB(NOW(), INTERVAL 40 MINUTE), NULL),
+-- 15 Shrutik (Active)
+(15, DATE_SUB(NOW(), INTERVAL 1 HOUR), NULL),
+-- 16 Sumit (Active)
+(16, DATE_SUB(NOW(), INTERVAL 35 MINUTE), NULL),
+-- 17 Sanika (Active)
+(17, DATE_SUB(NOW(), INTERVAL 50 MINUTE), NULL),
+-- 18 Sachin (Logged out)
+(18, DATE_SUB(NOW(), INTERVAL 3 HOUR), DATE_SUB(NOW(), INTERVAL 2 HOUR)),
+-- 19 Abhay (Active)
+(19, DATE_SUB(NOW(), INTERVAL 20 MINUTE), NULL),
+-- 20 Prajwal (Active)
+(20, DATE_SUB(NOW(), INTERVAL 15 MINUTE), NULL),
+-- 21 Vibhavari (Logged out)
+(21, DATE_SUB(NOW(), INTERVAL 2 HOUR), DATE_SUB(NOW(), INTERVAL 1 HOUR)),
+-- 22 Tanvi (Active)
+(22, DATE_SUB(NOW(), INTERVAL 30 MINUTE), NULL);
 
 -- Subjects
 INSERT INTO subjects (name, description) VALUES
