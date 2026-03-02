@@ -9,6 +9,7 @@ CREATE TABLE users (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,     -- Unique identifier for each user
     first_name VARCHAR(100),                       -- User's first name
     last_name VARCHAR(100),                        -- User's last name
+    contact INT,                                   -- Contact number (can be used for communication or verification)
     email VARCHAR(150) NOT NULL UNIQUE,            -- Unique email for login/identification
     password_hash VARCHAR(255) NOT NULL,           -- Encrypted password (never store plain text)
     status VARCHAR(20) DEFAULT 'ACTIVE',           -- Account status (ACTIVE, INACTIVE, BLOCKED, etc.)
@@ -41,22 +42,40 @@ CREATE TABLE user_sessions (
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
--- Stores additional information for users with Mentor role
+-- Mentor profile details
 CREATE TABLE mentor_profiles (
-    id BIGINT PRIMARY KEY AUTO_INCREMENT,        -- Unique mentor profile ID
-    user_id BIGINT NOT NULL UNIQUE,                     -- One-to-one relationship with users table
-    bio TEXT,                                           -- Mentor biography/description
-    experience_years INT,                               -- Years of experience
-    FOREIGN KEY (user_id) REFERENCES users(id)
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,      -- Mentor profile ID
+    user_id BIGINT NOT NULL UNIQUE,            -- Linked user (1:1)
+    bio TEXT,                                  -- Mentor description
+    experience_years INT,                      -- Years of experience
+    created_on DATETIME DEFAULT CURRENT_TIMESTAMP, -- Creation time
+    FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
 
--- Stores additional information for Subject Matter Experts
+-- SME profile details
 CREATE TABLE sme_profiles (
-    id BIGINT PRIMARY KEY AUTO_INCREMENT,          -- Unique SME profile ID
-    user_id BIGINT NOT NULL UNIQUE,                    -- One-to-one relationship with users table
-    subject_id BIGINT NOT NULL,                        -- Subject expertise reference
-    FOREIGN KEY (user_id) REFERENCES users(id),    -- Enforce referential integrity
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,      -- SME profile ID
+    user_id BIGINT NOT NULL UNIQUE,            -- Linked user (1:1)
+    subject_id BIGINT NOT NULL,                -- Subject reference
+    created_on DATETIME DEFAULT CURRENT_TIMESTAMP, -- Creation time
+    FOREIGN KEY (user_id) REFERENCES users(user_id),
     FOREIGN KEY (subject_id) REFERENCES subjects(subject_id)
+);
+
+-- Student profile details
+CREATE TABLE student_profiles (
+    student_id BIGINT PRIMARY KEY AUTO_INCREMENT, -- Student profile ID
+    user_id BIGINT NOT NULL UNIQUE,               -- Linked user (1:1)
+    created_on DATETIME DEFAULT CURRENT_TIMESTAMP, -- Creation time
+    FOREIGN KEY (user_id) REFERENCES users(user_id)
+);
+
+-- Admin profile details
+CREATE TABLE admin_profiles (
+    admin_id BIGINT PRIMARY KEY AUTO_INCREMENT,  -- Admin profile ID
+    user_id BIGINT NOT NULL UNIQUE,              -- Linked user (1:1)
+    created_on DATETIME DEFAULT CURRENT_TIMESTAMP, -- Creation time
+    FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
 
 -- Stores subjects available in the platform (e.g., Java, Python, Data Structures)
