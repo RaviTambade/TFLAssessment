@@ -7,7 +7,7 @@ INSERT INTO skill_levels (level_name, description) VALUES
 ('Advanced', 'System design and optimization');
 
 -- Subjects
-INSERT INTO subjects (name, description) VALUES
+/*INSERT INTO subjects (name, description) VALUES
 ('Java', 'Object-oriented programming language used for application development'),
 ('NodeJs', 'JavaScript runtime environment for server-side development'),
 ('DotNet', 'Microsoft framework for building desktop and web applications'),
@@ -16,7 +16,7 @@ INSERT INTO subjects (name, description) VALUES
 ('C++', 'Object-oriented programming language used for system and application development'),
 ('ReactJS', 'JavaScript library for building interactive user interfaces'),
 ('RDBMS', 'Relational Database Management System for storing and managing data');
-
+*/
 
 -- Concepts
 INSERT INTO concepts (name, description, level_id) VALUES
@@ -132,7 +132,7 @@ INSERT INTO concepts (name, description, level_id) VALUES
 
 -- Subject ↔ Concept Mapping
 
-INSERT INTO subject_concepts (subject_id, concept_id)
+/*INSERT INTO subject_concepts (subject_id, concept_id)
 VALUES
 (3,1),  -- Multithreading
 (3, 2),  -- Reflection
@@ -156,8 +156,8 @@ VALUES
 (3, 20),(3, 21),(3, 22),(3, 23),(3, 24),(3, 25),(3, 26),(3, 27),(3, 28),(3, 29),(3, 30),(3, 31),(3, 32),(3, 33),(3, 34),(3, 35),(3, 36),(3, 37),
 (3, 38),(3, 39),(3, 40),(3, 41),(3, 42),(3, 43),(3, 44);
 
-
-INSERT INTO subject_concepts (subject_id, concept_id)
+*/
+/*INSERT INTO subject_concepts (subject_id, concept_id)
 VALUES
 (1,1),  -- Multithreading
 (1, 2),  -- Reflection
@@ -180,9 +180,9 @@ VALUES
 (1, 20),
 (1, 21),(1, 22),(1, 23),(1, 24),(1, 25),(1, 26),(1, 52),(1, 29),(1, 30),(1, 31),(1, 32),(1, 33),(1, 34),(1, 35),(1, 36),(1, 37),(1, 38),(1, 39),(1, 40),(1, 41),
 (1, 42),(1, 43),(1, 53),(1, 54),(1, 55);
+*/
 
-
-INSERT INTO subject_concepts (subject_id, concept_id)
+/*INSERT INTO subject_concepts (subject_id, concept_id)
 VALUES
 (2,56),  -- Multithreading
 (2, 57),  -- Reflection
@@ -205,9 +205,9 @@ VALUES
 (2, 32),
 (2, 33),(2, 34),(2, 35),(2, 36),(2, 37),(2, 38),(2, 39),(2, 66),(2, 67),(2, 68),(2, 79),(2, 69),(2, 70),(2, 71),(2, 72),(2, 73),(2, 74),(2, 75),(2, 76),(2, 77),
 (2, 78);
+*/
 
-
-INSERT INTO subject_concepts (subject_id, concept_id)
+/*INSERT INTO subject_concepts (subject_id, concept_id)
 VALUES
 (8,80), 
 (8, 81), 
@@ -227,7 +227,7 @@ VALUES
 (8, 95),
 (8, 96),
 (8, 97);
-
+*/
 
 
 -- Concept Prerequisites
@@ -254,3 +254,30 @@ INSERT INTO concept_prerequisites (concept_id, prerequisite_concept_id) VALUES
 (51, 49), -- Triggers require Stored Procedures
 (54, 53), -- Performance Optimization requires Indexes
 (55, 53); -- Security requires Database Design Fundamentals
+
+ INSERT INTO runtimes (name) VALUES
+('NodeJS'),
+('Java'),
+('.NET'),
+('Python'),
+('C/C++'),
+('Go');
+ INSERT INTO languages (title, runtimeid) VALUES
+('JavaScript', 1),   -- NodeJS
+('Java', 2),         -- Java
+('C#', 3),           -- .NET
+('Python', 4);       -- Python
+ INSERT INTO layers (name) VALUES
+('Frontend'),
+('Backend'),
+('Database'),
+('AI'),
+('Testing'),
+('DevOps');
+ INSERT INTO technology_map (techName, langId, layerId) VALUES
+('Spring Boot', 2, 2),     -- Java, Backend
+('React', 1, 1),           -- JavaScript, Frontend
+('MySQL', 2, 3),           -- Java, Database
+('NodeJS', 1, 2),          -- JavaScript, Backend
+('Docker', 2, 6),          -- Java, DevOps
+('TensorFlow', 4, 4);      -- Python, AI
