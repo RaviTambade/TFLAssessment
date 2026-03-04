@@ -35,11 +35,10 @@ import com.transflower.tflassessment.demo.entities.CreateTestRequest;
 
 public class AssessmentRepositoryImpl implements AssessmentRepository {
 
-<<<<<<< HEAD:Solution/others/Java/tflassessment-demo/src/main/java/com/transflower/tflassessment/demo/repositories/AssessmentRepositoryImpl.java
     private String URL = "jdbc:mysql://localhost:3306/assessmentdb";
     private String USERNAME = "root";
     private String PASSWORD = "password";
-=======
+
     private static Connection connection;
 
     static {
@@ -53,7 +52,6 @@ public class AssessmentRepositoryImpl implements AssessmentRepository {
             System.out.println("Connection Failed: " + e.getMessage());
         }
     }
->>>>>>> 225aebaeb2d10af2964dfd4eb6bcae59ce4c9dda:Solution/Java/tflassessment-demo/src/main/java/com/transflower/tflassessment/demo/repositories/AssessmentRepositoryImpl.java
 
     @Override
     public Assessment getDetails(int assessmentId) {

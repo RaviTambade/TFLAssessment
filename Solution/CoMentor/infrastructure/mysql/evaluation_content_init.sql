@@ -77,16 +77,23 @@ CREATE TABLE runtimes (
         ON DELETE CASCADE
 );
 
+CREATE TABLE question_type (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    question_type VARCHAR(50) NOT NULL UNIQUE,
+    marks INT NOT NULL
+);
 CREATE TABLE question_bank (
     question_id BIGINT PRIMARY KEY AUTO_INCREMENT,
     title VARCHAR(255) NOT NULL,
     description TEXT NOT NULL,
-    question_type VARCHAR(50) NOT NULL,
+    question_type_id BIGINT NOT NULL,
     difficulty_level VARCHAR(50),
     status VARCHAR(20) DEFAULT 'ACTIVE',
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT fk_question_marking
+        FOREIGN KEY (question_type_id)
+        REFERENCES question_type(id)
 );
-
 CREATE TABLE problem_statements (
     problem_id BIGINT PRIMARY KEY AUTO_INCREMENT,
     question_id BIGINT NOT NULL UNIQUE,
