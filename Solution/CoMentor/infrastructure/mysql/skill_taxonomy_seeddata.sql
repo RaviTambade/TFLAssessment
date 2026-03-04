@@ -85,17 +85,17 @@ INSERT INTO technology_map (techName, langId, layerId) VALUES
 ('TensorFlow', 4, 8);
 
 -- Technology Concepts
-INSERT INTO technology_concepts (technology_concepts_id, techid, concept_id) VALUES
-(1, 1, 4),   -- Spring Boot -> OOP
-(2, 1, 9),   -- Spring Boot -> REST
-(3, 3, 9),   -- Express -> REST
-(4, 4, 4),   -- Django -> OOP
-(5, 5, 2),   -- React -> Control Statements
-(6, 8, 8),   -- Hibernate -> JDBC
-(7, 9, 6),   -- Docker -> Multithreading (infra concept)
-(8, 10, 6),  -- TensorFlow -> Multithreading
-(9, 2, 4),   -- ASP.NET -> OOP
-(10, 7, 1);  -- Flutter -> Variables
+INSERT INTO technology_concepts ( techid, concept_id) VALUES
+( 1, 4),   -- Spring Boot -> OOP
+( 1, 9),   -- Spring Boot -> REST
+( 3, 9),   -- Express -> REST
+( 4, 4),   -- Django -> OOP
+( 5, 2),   -- React -> Control Statements
+( 8, 8),   -- Hibernate -> JDBC
+( 9, 6),   -- Docker -> Multithreading (infra concept)
+( 10, 6),  -- TensorFlow -> Multithreading
+( 2, 4),   -- ASP.NET -> OOP
+( 7, 1);  -- Flutter -> Variables
 
 
 -- Concepts
