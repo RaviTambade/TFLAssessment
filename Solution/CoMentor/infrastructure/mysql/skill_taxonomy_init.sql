@@ -2,20 +2,20 @@ CREATE DATABASE IF NOT EXISTS skill_taxonomy_db;
 USE skill_taxonomy_db;
 
 CREATE TABLE skill_levels (
-    level_id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
     level_name VARCHAR(50) NOT NULL UNIQUE,
     description TEXT
 );
 
 CREATE TABLE concepts (
-    concept_id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(150) NOT NULL,
     description TEXT,
     level_id BIGINT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     CONSTRAINT fk_concept_level
-        FOREIGN KEY (level_id) REFERENCES skill_levels(level_id)
+        FOREIGN KEY (level_id) REFERENCES skill_levels(id)
 );
 
 CREATE TABLE concept_prerequisites (
@@ -23,54 +23,55 @@ CREATE TABLE concept_prerequisites (
     concept_id BIGINT NOT NULL,
     prerequisite_concept_id BIGINT NOT NULL,
     UNIQUE(concept_id, prerequisite_concept_id),
-    FOREIGN KEY (concept_id) REFERENCES concepts(concept_id),
-    FOREIGN KEY (prerequisite_concept_id) REFERENCES concepts(concept_id)
+    FOREIGN KEY (concept_id) REFERENCES concepts(id),
+    FOREIGN KEY (prerequisite_concept_id) REFERENCES concepts(id)
 );
 
 CREATE TABLE runtimes (
-    runtimeid INT AUTO_INCREMENT PRIMARY KEY,
+    id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(50) NOT NULL
 );
  CREATE TABLE languages (
-    langid INT AUTO_INCREMENT PRIMARY KEY,
+    id INT AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(50) NOT NULL,
     runtimeid INT,
-    FOREIGN KEY (runtimeid) REFERENCES runtimes(runtimeid)
+    FOREIGN KEY (runtimeid) REFERENCES runtimes(id)
 );
  CREATE TABLE layers (
-    layerid INT AUTO_INCREMENT PRIMARY KEY,
+    id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(50) NOT NULL
 );
  CREATE TABLE technology_map (
-    techId INT AUTO_INCREMENT PRIMARY KEY,
+    id INT AUTO_INCREMENT PRIMARY KEY,
     techName VARCHAR(100) NOT NULL,
     langId INT NOT NULL,
     layerId INT NOT NULL,
     
     CONSTRAINT fk_language
-        FOREIGN KEY (langId) REFERENCES languages(langid)
+        FOREIGN KEY (langId) REFERENCES languages(id)
         ON DELETE CASCADE
         ON UPDATE CASCADE,
 
     CONSTRAINT fk_layer
-        FOREIGN KEY (layerId) REFERENCES layers(layerid)
+        FOREIGN KEY (layerId) REFERENCES layers(id)
         ON DELETE CASCADE
         ON UPDATE CASCADE
 );
+
  CREATE TABLE technology_concepts (
-    technology_concepts_id INT PRIMARY KEY,
+     id INT AUTO_INCREMENT PRIMARY KEY,
 
     techid INT NOT NULL,
     concept_id BIGINT NOT NULL,
 
     CONSTRAINT FK_Tech
         FOREIGN KEY (techid)
-        REFERENCES technology_map(techId)
+        REFERENCES technology_map(id)
         ON DELETE CASCADE,
 
     CONSTRAINT FK_Concept
         FOREIGN KEY (concept_id)
-        REFERENCES concepts(concept_id)
+        REFERENCES concepts(id)
         ON DELETE CASCADE
 );
 
