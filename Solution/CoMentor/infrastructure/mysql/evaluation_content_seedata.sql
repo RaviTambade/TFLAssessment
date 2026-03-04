@@ -1,5 +1,102 @@
 USE evaluation_content_db;
 
+-- Skill Levels
+INSERT INTO skill_levels (level_name, description) VALUES
+('Beginner', 'Basic foundational concepts'),
+('Intermediate', 'Applied programming concepts'),
+('Advanced', 'System design and optimization');
+
+-- Concepts
+INSERT INTO concepts (name, description, level_id) VALUES
+('Variables and Data Types', 'Understanding primitive and reference data types', 1),
+('Control Statements', 'If-else, loops and branching', 1),
+('Functions and Methods', 'Reusable blocks of code', 2),
+('Object-Oriented Programming', 'Encapsulation, Abstraction, Inheritance, Polymorphism', 3),
+('Exception Handling', 'Handling runtime errors gracefully', 3),
+('Multithreading', 'Concurrent execution of threads', 1),
+('Collections Framework', 'List, Set, Map implementations', 2),
+('JDBC Connectivity', 'Connecting Java applications with databases', 3),
+('REST API Design', 'Designing RESTful web services', 1),
+('Microservices Architecture', 'Distributed service-based architecture', 2);
+
+-- Concept Prerequisites
+INSERT INTO concept_prerequisites (concept_id, prerequisite_concept_id) VALUES
+(2,1),   -- Control Statements requires Variables
+(3,2),   -- Functions requires Control Statements
+(4,3),   -- OOP requires Functions
+(5,3),   -- Exception Handling requires Functions
+(6,4),   -- Multithreading requires OOP
+(7,4),   -- Collections requires OOP
+(8,7),   -- JDBC requires Collections
+(9,4),   -- REST requires OOP
+(10,9),  -- Microservices requires REST
+(10,6);  -- Microservices requires Multithreading
+
+-- Runtimes
+INSERT INTO runtimes (name) VALUES
+('JVM'),
+('.NET CLR'),
+('Node.js'),
+('Python Interpreter'),
+('Go Runtime'),
+('Ruby MRI'),
+('PHP Engine'),
+('Android Runtime'),
+('Deno'),
+('Kotlin Native');
+
+-- Languages
+INSERT INTO languages (title, runtimeid) VALUES
+('Java', 1),
+('C#', 2),
+('JavaScript', 3),
+('Python', 4),
+('Go', 5),
+('Ruby', 6),
+('PHP', 7),
+('Kotlin', 1),
+('TypeScript', 3),
+('Dart', 8);
+
+-- Layers
+INSERT INTO layers (name) VALUES
+('Frontend'),
+('Backend'),
+('Database'),
+('DevOps'),
+('Mobile'),
+('Cloud'),
+('Security'),
+('AI/ML'),
+('Testing'),
+('Data Engineering');
+
+-- Technology Map
+INSERT INTO technology_map (techName, langId, layerId) VALUES
+('Spring Boot', 1, 2),
+('ASP.NET Core', 2, 2),
+('Express.js', 3, 2),
+('Django', 4, 2),
+('React', 3, 1),
+('Angular', 9, 1),
+('Flutter', 10, 5),
+('Hibernate', 1, 3),
+('Docker', 5, 4),
+('TensorFlow', 4, 8);
+
+-- Technology Concepts
+INSERT INTO technology_concepts ( techid, concept_id) VALUES
+( 1, 4),   -- Spring Boot -> OOP
+( 1, 9),   -- Spring Boot -> REST
+( 3, 9),   -- Express -> REST
+( 4, 4),   -- Django -> OOP
+( 5, 2),   -- React -> Control Statements
+( 8, 8),   -- Hibernate -> JDBC
+( 9, 6),   -- Docker -> Multithreading (infra concept)
+( 10, 6),  -- TensorFlow -> Multithreading
+( 2, 4),   -- ASP.NET -> OOP
+( 7, 1);  -- Flutter -> Variables
+
  INSERT INTO question_type (question_type, marks) VALUES
 ('MCQ',2),
 ('PROBLEM_STATEMENT',10),
