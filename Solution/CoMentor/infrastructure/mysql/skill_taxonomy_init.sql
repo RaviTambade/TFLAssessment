@@ -76,33 +76,33 @@ CREATE TABLE runtimes (
         ON UPDATE CASCADE
 );
 
-CREATE TABLE runtimes (
-    runtimeid INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(50) NOT NULL
-);
- CREATE TABLE languages (
-    langid INT AUTO_INCREMENT PRIMARY KEY,
-    title VARCHAR(50) NOT NULL,
-    runtimeid INT,
-    FOREIGN KEY (runtimeid) REFERENCES runtimes(runtimeid)
-);
- CREATE TABLE layers (
-    layerid INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(50) NOT NULL
-);
- CREATE TABLE technology_map (
-    techId INT AUTO_INCREMENT PRIMARY KEY,
-    techName VARCHAR(100) NOT NULL,
-    langId INT NOT NULL,
-    layerId INT NOT NULL,
+-- CREATE TABLE runtimes (
+--     runtimeid INT AUTO_INCREMENT PRIMARY KEY,
+--     name VARCHAR(50) NOT NULL
+-- );
+--  CREATE TABLE languages (
+--     langid INT AUTO_INCREMENT PRIMARY KEY,
+--     title VARCHAR(50) NOT NULL,
+--     runtimeid INT,
+--     FOREIGN KEY (runtimeid) REFERENCES runtimes(runtimeid)
+-- );
+--  CREATE TABLE layers (
+--     layerid INT AUTO_INCREMENT PRIMARY KEY,
+--     name VARCHAR(50) NOT NULL
+-- );
+--  CREATE TABLE technology_map (
+--     techId INT AUTO_INCREMENT PRIMARY KEY,
+--     techName VARCHAR(100) NOT NULL,
+--     langId INT NOT NULL,
+--     layerId INT NOT NULL,
     
-    CONSTRAINT fk_language
-        FOREIGN KEY (langId) REFERENCES languages(langid)
-        ON DELETE CASCADE
-        ON UPDATE CASCADE,
+--     CONSTRAINT fk_language
+--         FOREIGN KEY (langId) REFERENCES languages(langid)
+--         ON DELETE CASCADE
+--         ON UPDATE CASCADE,
 
-    CONSTRAINT fk_layer
-        FOREIGN KEY (layerId) REFERENCES layers(layerid)
-        ON DELETE CASCADE
-        ON UPDATE CASCADE
-);
+--     CONSTRAINT fk_layer
+--         FOREIGN KEY (layerId) REFERENCES layers(layerid)
+--         ON DELETE CASCADE
+--         ON UPDATE CASCADE
+-- );
