@@ -99,11 +99,8 @@ CREATE TABLE sme_profiles (
     user_id BIGINT UNIQUE,                       -- Linked user (1:1)
     expertise_title VARCHAR(150),                -- Title or designation of expertise
     years_experience INT,                        -- Years of professional experience
-    primary_domain VARCHAR(100),                 -- Main domain of expertise
-    secondary_domain VARCHAR(100),               -- Secondary domain
     certifications TEXT,                         -- List of certifications
     availability_status ENUM('AVAILABLE','BUSY','OFFLINE'), -- Current availability
-    proficiency_level ENUM('Beginner','Intermediate','Advanced','Expert'), -- Skill proficiency
     FOREIGN KEY (user_id) REFERENCES users(user_id) -- Link to users table
 );
 -- =====================================================
@@ -162,7 +159,6 @@ CREATE TABLE employer_profiles (
     company_id BIGINT,                             -- Associated company
     job_title VARCHAR(120),                        -- Employer job title
     department VARCHAR(120),                       -- Department name
-    hiring_authority BOOLEAN DEFAULT FALSE,        -- Indicates hiring decision authority
     work_email VARCHAR(120),                       -- Official company email
     work_phone VARCHAR(20),                        -- Official contact number
     FOREIGN KEY (user_id) REFERENCES users(user_id), -- Link to users table

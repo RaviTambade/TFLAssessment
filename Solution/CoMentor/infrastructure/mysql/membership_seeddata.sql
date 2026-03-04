@@ -100,10 +100,10 @@ INSERT INTO mentor_profiles (user_id, experience_years, specialization) VALUES
 -- SME PROFILES
 -- =============================
 INSERT INTO sme_profiles
-(user_id, expertise_title, years_experience, primary_domain, secondary_domain, certifications, availability_status, proficiency_level)
+(user_id, expertise_title, years_experience, certifications, availability_status)
 VALUES
-(9,'Senior Java Architect',8,'Java','Spring Boot','Oracle Certified','AVAILABLE','Expert'),
-(10,'NodeJS Expert',6,'NodeJS','ReactJS','AWS Certified Developer','BUSY','Advanced');
+(9,'Senior Java Architect',8,'Oracle Certified','AVAILABLE'),
+(10,'NodeJS Expert',6,'AWS Certified Developer','BUSY');
 
 -- =============================
 -- STUDENT PROFILES (ALL 36 STUDENTS)
@@ -210,8 +210,8 @@ VALUES
 -- EMPLOYER PROFILES
 -- =============================
 INSERT INTO employer_profiles
-(user_id, company_id, job_title, department, hiring_authority, work_email, work_phone)
+(user_id, company_id, job_title, department, work_email, work_phone)
 VALUES
-(37,1,'HR Manager','Human Resources',TRUE,'hr@tfl.com','9000000001'),
-(38,2,'Technical Hiring Lead','Engineering',TRUE,'hiring@technova.com','9000000002'),
-(39,3,'Recruitment Manager','Talent Acquisition',TRUE,'jobs@cloudmatrix.com','9000000003');
+(37,1,'HR Manager','Human Resources','hr@tfl.com','9000000001'),
+(38,2,'Technical Hiring Lead','Engineering','hiring@technova.com','9000000002'),
+(39,3,'Recruitment Manager','Talent Acquisition','jobs@cloudmatrix.com','9000000003');
