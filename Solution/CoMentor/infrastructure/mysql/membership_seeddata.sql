@@ -85,6 +85,51 @@ INSERT INTO user_roles (user_id, role_id) VALUES
 (33,3),(34,3),(35,3),(36,3),
 (37,5),(38,5),(39,5);
 
+-- =============================
+-- USER PROFILES
+-- =============================
+INSERT INTO user_profiles
+(user_id, gender, date_of_birth, bio, city, state, country, linkedin_url, github_url)
+VALUES
+(1,'Male','1985-05-10','System Administrator','Pune','Maharashtra','India',NULL,NULL),
+(2,'Female','1998-03-12','Mentor - Software Engineering','Pune','Maharashtra','India',NULL,NULL),
+(3,'Male','2003-01-15','Computer Engineering Student','Pune','Maharashtra','India',NULL,NULL),
+(4,'Female','2003-02-20','Aspiring Developer','Pune','Maharashtra','India',NULL,NULL),
+(5,'Female','2003-03-18','Tech Enthusiast','Pune','Maharashtra','India',NULL,NULL),
+(6,'Female','2003-04-25','Full Stack Learner','Pune','Maharashtra','India',NULL,NULL),
+(7,'Male','2003-05-10','Backend Developer','Pune','Maharashtra','India',NULL,NULL),
+(8,'Female','2003-06-11','Frontend Learner','Pune','Maharashtra','India',NULL,NULL),
+(9,'Female','1995-07-12','Java SME','Mumbai','Maharashtra','India',NULL,NULL),
+(10,'Male','1994-08-14','NodeJS SME','Bangalore','Karnataka','India',NULL,NULL),
+(11,'Male','1997-09-15','Cloud Mentor','Pune','Maharashtra','India',NULL,NULL),
+(12,'Male','2003-01-10','Student','Pune','Maharashtra','India',NULL,NULL),
+(13,'Female','2003-02-11','Student','Pune','Maharashtra','India',NULL,NULL),
+(14,'Male','2003-03-12','Student','Pune','Maharashtra','India',NULL,NULL),
+(15,'Male','2003-04-13','Student','Pune','Maharashtra','India',NULL,NULL),
+(16,'Male','2003-05-14','Student','Pune','Maharashtra','India',NULL,NULL),
+(17,'Female','2003-06-15','Student','Pune','Maharashtra','India',NULL,NULL),
+(18,'Male','2003-07-16','Student','Pune','Maharashtra','India',NULL,NULL),
+(19,'Male','2003-08-17','Student','Pune','Maharashtra','India',NULL,NULL),
+(20,'Male','2003-09-18','Student','Pune','Maharashtra','India',NULL,NULL),
+(21,'Female','2003-10-19','Student','Pune','Maharashtra','India',NULL,NULL),
+(22,'Female','2003-11-20','Student','Pune','Maharashtra','India',NULL,NULL),
+(23,'Male','2003-12-21','Student','Pune','Maharashtra','India',NULL,NULL),
+(24,'Male','2003-01-22','Student','Pune','Maharashtra','India',NULL,NULL),
+(25,'Male','2003-02-23','Student','Pune','Maharashtra','India',NULL,NULL),
+(26,'Male','2003-03-24','Student','Pune','Maharashtra','India',NULL,NULL),
+(27,'Female','2003-04-25','Student','Pune','Maharashtra','India',NULL,NULL),
+(28,'Female','2003-05-26','Student','Pune','Maharashtra','India',NULL,NULL),
+(29,'Female','2003-06-27','Student','Pune','Maharashtra','India',NULL,NULL),
+(30,'Female','2003-07-28','Student','Pune','Maharashtra','India',NULL,NULL),
+(31,'Female','2003-08-29','Student','Pune','Maharashtra','India',NULL,NULL),
+(32,'Male','2003-09-30','Student','Pune','Maharashtra','India',NULL,NULL),
+(33,'Male','2003-10-10','Student','Pune','Maharashtra','India',NULL,NULL),
+(34,'Male','2003-11-11','Student','Pune','Maharashtra','India',NULL,NULL),
+(35,'Female','2003-12-12','Student','Pune','Maharashtra','India',NULL,NULL),
+(36,'Female','2003-12-15','Student','Pune','Maharashtra','India',NULL,NULL),
+(37,'Male','1980-01-01','HR Manager','Pune','Maharashtra','India',NULL,NULL),
+(38,'Female','1982-02-02','Tech Hiring Lead','Mumbai','Maharashtra','India',NULL,NULL),
+(39,'Male','1984-03-03','Recruitment Manager','Bangalore','Karnataka','India',NULL,NULL);
 
 -- =============================
 -- ADMIN PROFILE
@@ -98,6 +143,8 @@ INSERT INTO admin_profiles (user_id) VALUES (1);
 INSERT INTO mentor_profiles (user_id, experience_years, specialization) VALUES
 (2,4,'Software Engineering'),
 (11,5,'Backend & Cloud');
+
+
 
 
 -- =============================
