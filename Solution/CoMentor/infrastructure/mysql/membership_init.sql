@@ -60,7 +60,6 @@ CREATE TABLE user_profiles (
     country VARCHAR(100),                         -- User country
     linkedin_url VARCHAR(255),                    -- LinkedIn profile link
     github_url VARCHAR(255),                      -- GitHub profile link
-    portfolio_url VARCHAR(255),                   -- Personal portfolio link
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- Profile creation timestamp
     FOREIGN KEY (user_id) REFERENCES users(user_id)  -- Link to users table
 );
@@ -98,9 +97,8 @@ CREATE TABLE sme_profiles (
     sme_id BIGINT PRIMARY KEY AUTO_INCREMENT,    -- Unique SME profile ID
     user_id BIGINT UNIQUE,                       -- Linked user (1:1)
     expertise_title VARCHAR(150),                -- Title or designation of expertise
-    years_experience INT,                        -- Years of professional experience
-    certifications TEXT,                         -- List of certifications
     availability_status ENUM('AVAILABLE','BUSY','OFFLINE'), -- Current availability
+    assigned_on DATETIME DEFAULT CURRENT_TIMESTAMP, -- Timestamp when the SME started their role
     FOREIGN KEY (user_id) REFERENCES users(user_id) -- Link to users table
 );
 -- =====================================================
@@ -129,11 +127,10 @@ CREATE TABLE student_profiles (
     degree VARCHAR(100),                          -- Degree program
     branch VARCHAR(100),                          -- Field of study
     graduation_year INT,                          -- Expected graduation year
-    current_skill VARCHAR(50),                    -- Current skill level
-    placement_status ENUM('PLACED','NOT_PLACED') DEFAULT 'NOT_PLACED', -- Placement status
-    placed_company_id BIGINT,                     -- Company where student is placed
+    expertise_level ENUM('BEGINNER','INTERMEDIATE','ADVANCED') DEFAULT 'BEGINNER', -- Current skill level
+    employability_status ENUM('Intern','Student','Working') DEFAULT 'Student', -- Placement status
+    assigned_on DATETIME DEFAULT CURRENT_TIMESTAMP, -- Timestamp when the student got placed
     FOREIGN KEY (user_id) REFERENCES users(user_id), -- Link to users table
-    FOREIGN KEY (placed_company_id) REFERENCES companies(company_id) -- Link to company
 );
 
 -- =====================================================
@@ -158,9 +155,18 @@ CREATE TABLE employer_profiles (
     user_id BIGINT UNIQUE,                         -- Linked user
     company_id BIGINT,                             -- Associated company
     job_title VARCHAR(120),                        -- Employer job title
-    department VARCHAR(120),                       -- Department name
     work_email VARCHAR(120),                       -- Official company email
     work_phone VARCHAR(20),                        -- Official contact number
+    created_on DATETIME DEFAULT CURRENT_TIMESTAMP, -- Employer profile creation time
     FOREIGN KEY (user_id) REFERENCES users(user_id), -- Link to users table
+    FOREIGN KEY (company_id) REFERENCES companies(company_id) -- Link to companies table
+);
+
+CREATE TABLE alumini_profiles(
+    alumini_id BIGINT PRIMARY KEY AUTO_INCREMENT, -- Unique alumini profile ID
+    student_id BIGINT UNIQUE,                        -- Linked student profile
+    company_id BIGINT,                             -- Associated company
+    job_title VARCHAR(120),                        -- Job title at the company
+    FOREIGN KEY (student_id) REFERENCES student_profiles(student_id), -- Link to student profiles
     FOREIGN KEY (company_id) REFERENCES companies(company_id) -- Link to companies table
 );
