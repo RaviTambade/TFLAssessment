@@ -77,31 +77,6 @@ CREATE TABLE user_sessions (
 );
 
 -- =====================================================
--- MENTOR PROFILES TABLE
--- Stores additional information for mentors
--- =====================================================
-CREATE TABLE mentor_profiles (
-    mentor_id BIGINT PRIMARY KEY AUTO_INCREMENT, -- Unique mentor profile ID
-    user_id BIGINT NOT NULL UNIQUE,              -- Linked user (1:1 relationship)
-    experience_years INT,                        -- Years of mentoring experience
-    specialization VARCHAR(150),                 -- Area of expertise
-    created_on DATETIME DEFAULT CURRENT_TIMESTAMP, -- Profile creation time
-    FOREIGN KEY (user_id) REFERENCES users(user_id) -- Link to users table
-);
-
--- =====================================================
--- SME PROFILES TABLE
--- Stores information about Subject Matter Experts
--- =====================================================
-CREATE TABLE sme_profiles (
-    sme_id BIGINT PRIMARY KEY AUTO_INCREMENT,    -- Unique SME profile ID
-    user_id BIGINT UNIQUE,                       -- Linked user (1:1)
-    expertise_title VARCHAR(150),                -- Title or designation of expertise
-    availability_status ENUM('AVAILABLE','BUSY','OFFLINE'), -- Current availability
-    assigned_on DATETIME DEFAULT CURRENT_TIMESTAMP, -- Timestamp when the SME started their role
-    FOREIGN KEY (user_id) REFERENCES users(user_id) -- Link to users table
-);
--- =====================================================
 -- COMPANIES TABLE
 -- Stores company information for hiring and collaboration
 -- =====================================================
@@ -130,8 +105,51 @@ CREATE TABLE student_profiles (
     expertise_level ENUM('BEGINNER','INTERMEDIATE','ADVANCED') DEFAULT 'BEGINNER', -- Current skill level
     employability_status ENUM('Intern','Student','Working') DEFAULT 'Student', -- Placement status
     assigned_on DATETIME DEFAULT CURRENT_TIMESTAMP, -- Timestamp when the student got placed
-    FOREIGN KEY (user_id) REFERENCES users(user_id), -- Link to users table
+    FOREIGN KEY (user_id) REFERENCES users(user_id) -- Link to users table
 );
+
+-- =====================================================
+-- MENTOR PROFILES TABLE
+-- Stores additional information for mentors
+-- =====================================================
+CREATE TABLE mentor_profiles (
+    mentor_id BIGINT PRIMARY KEY AUTO_INCREMENT, -- Unique mentor profile ID
+    user_id BIGINT NOT NULL UNIQUE,              -- Linked user (1:1 relationship)
+    experience_years INT,                        -- Years of mentoring experience
+    specialization VARCHAR(150),                 -- Area of expertise
+    created_on DATETIME DEFAULT CURRENT_TIMESTAMP, -- Profile creation time
+    FOREIGN KEY (user_id) REFERENCES users(user_id) -- Link to users table
+);
+
+-- =====================================================
+-- ALUMNI PROFILES TABLE
+-- Stores information about Alumnis
+-- =====================================================
+CREATE TABLE alumni_profiles(
+    alumni_id BIGINT PRIMARY KEY AUTO_INCREMENT, -- Unique alumni profile ID
+    student_id BIGINT UNIQUE,                        -- Linked student profile
+    company_id BIGINT,                             -- Associated company
+    job_title VARCHAR(120),                        -- Job title at the company
+    placed_on DATE DEFAULT (CURRENT_DATE), -- Timestamp when the student got placed
+    FOREIGN KEY (student_id) REFERENCES student_profiles(student_id), -- Link to student profiles
+    FOREIGN KEY (company_id) REFERENCES companies(company_id) -- Link to companies table
+);
+
+-- =====================================================
+-- SME PROFILES TABLE
+-- Stores information about Subject Matter Experts
+-- =====================================================
+CREATE TABLE sme_profiles (
+    sme_id BIGINT PRIMARY KEY AUTO_INCREMENT,    -- Unique SME profile ID
+    alumni_id BIGINT UNIQUE,                       -- Linked alumni (1:1)
+    expertise_title VARCHAR(150),                -- Title or designation of expertise
+    availability_status ENUM('AVAILABLE','BUSY','OFFLINE'), -- Current availability
+    assigned_on DATETIME DEFAULT CURRENT_TIMESTAMP, -- Timestamp when the SME started their role
+    FOREIGN KEY (alumni_id) REFERENCES alumni_profiles(alumni_id) -- Link to alumni profiles table
+);
+
+
+
 
 -- =====================================================
 -- ADMIN PROFILES TABLE
@@ -162,11 +180,5 @@ CREATE TABLE employer_profiles (
     FOREIGN KEY (company_id) REFERENCES companies(company_id) -- Link to companies table
 );
 
-CREATE TABLE alumini_profiles(
-    alumini_id BIGINT PRIMARY KEY AUTO_INCREMENT, -- Unique alumini profile ID
-    student_id BIGINT UNIQUE,                        -- Linked student profile
-    company_id BIGINT,                             -- Associated company
-    job_title VARCHAR(120),                        -- Job title at the company
-    FOREIGN KEY (student_id) REFERENCES student_profiles(student_id), -- Link to student profiles
-    FOREIGN KEY (company_id) REFERENCES companies(company_id) -- Link to companies table
-);
+
+
