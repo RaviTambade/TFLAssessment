@@ -19,19 +19,6 @@ INSERT INTO concepts (name, description, level_id) VALUES
 ('REST API Design', 'Designing RESTful web services', 1),
 ('Microservices Architecture', 'Distributed service-based architecture', 2);
 
--- Concept Prerequisites
-INSERT INTO concept_prerequisites (concept_id, prerequisite_concept_id) VALUES
-(2,1),   -- Control Statements requires Variables
-(3,2),   -- Functions requires Control Statements
-(4,3),   -- OOP requires Functions
-(5,3),   -- Exception Handling requires Functions
-(6,4),   -- Multithreading requires OOP
-(7,4),   -- Collections requires OOP
-(8,7),   -- JDBC requires Collections
-(9,4),   -- REST requires OOP
-(10,9),  -- Microservices requires REST
-(10,6);  -- Microservices requires Multithreading
-
 -- Runtimes
 INSERT INTO runtimes (name) VALUES
 ('JVM'),
