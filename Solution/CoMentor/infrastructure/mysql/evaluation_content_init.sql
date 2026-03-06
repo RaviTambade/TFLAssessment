@@ -137,6 +137,9 @@ CREATE TABLE mcq_options (
         ON DELETE CASCADE
 );
 
+ALTER TABLE mcq_options
+ADD COLUMN IF NOT EXISTS correct_option CHAR(1);
+
 CREATE TABLE question_technology_concept_maps (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
     question_id BIGINT NOT NULL,
