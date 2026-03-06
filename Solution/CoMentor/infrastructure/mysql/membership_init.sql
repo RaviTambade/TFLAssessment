@@ -180,5 +180,19 @@ CREATE TABLE employer_profiles (
     FOREIGN KEY (company_id) REFERENCES companies(company_id) -- Link to companies table
 );
 
-
+-- =====================================================
+-- MENTOR_MENTEE TABLE
+-- Mapping between mentors and students
+-- =====================================================
+CREATE TABLE mentor_mentee (
+    mentor_mentee_id BIGINT PRIMARY KEY AUTO_INCREMENT, -- Unique mapping ID
+    mentor_id BIGINT NOT NULL,      -- Reference to mentor_profiles
+    student_id BIGINT NOT NULL,     -- Reference to student_profiles
+    assigned_on DATETIME DEFAULT CURRENT_TIMESTAMP, -- When mentor was assigned
+    -- Foreign keys
+    FOREIGN KEY (mentor_id) REFERENCES mentor_profiles(mentor_id),
+    FOREIGN KEY (student_id) REFERENCES student_profiles(student_id),
+    -- Prevent duplicate mentor-student assignment
+    UNIQUE (mentor_id, student_id)
+);
 

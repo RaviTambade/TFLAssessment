@@ -206,3 +206,22 @@ VALUES
 (37,1,'HR Manager','hr@tfl.com','9000000001'),
 (38,2,'Technical Hiring Lead','hiring@technova.com','9000000002'),
 (39,3,'Recruitment Manager','jobs@cloudmatrix.com','9000000003');
+
+-- =============================
+-- MENTOR_MENTEE
+-- =============================
+INSERT INTO mentor_mentee (mentor_id, student_id) VALUES
+(1,1),
+(1,2),
+(1,3),
+(1,4),
+(1,5),
+(1,6),
+(1,7),
+
+(2,8),
+(2,9),
+(2,10),
+(2,11),
+(2,12),
+(2,13);
