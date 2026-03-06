@@ -170,3 +170,23 @@ INSERT INTO question_technology_concept_maps (question_id,technology_concepts_id
 (11,1),(12,7),(13,6),(14,2),(15,4),
 (16,1),(17,6),(18,2),(19,6),(20,7),
 (21,1),(22,2),(23,6),(24,7),(25,2);
+
+UPDATE mcq_options
+SET correct_option = 'A'
+WHERE question_id = 1;
+
+UPDATE mcq_options
+SET correct_option = 'A'
+WHERE question_id = 2;
+
+UPDATE mcq_options
+SET correct_option = 'A'
+WHERE question_id = 3;
+
+UPDATE mcq_options
+SET correct_option = 'A'
+WHERE question_id = 4;
+
+UPDATE mcq_options
+SET correct_option = 'A'
+WHERE question_id = 5;
