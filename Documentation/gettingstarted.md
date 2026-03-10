@@ -1,9 +1,4 @@
-# 📘 TFLAssessment Platform
-
-### *AI-Driven Skill & Placement Readiness System*
-
-**Transflower Learning Framework (TFL)**
-
+# *AI-Driven Skill & Placement Readiness System*
 
 ## 📌 Overview
 
