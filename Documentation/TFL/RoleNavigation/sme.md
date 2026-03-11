@@ -2,55 +2,97 @@ SME
 │
 └── Dashboard
     │
-    ├── Manage Tests
+    ├── Tests
     │   │
-    │   ├── Create Test
-    │   │   │
-    │   │   ├── Test Form
-    │   │   └── Summary
+    │   ├── Create Test 
+    │   │       
     │   │
     │   └── Test History
     │       │
-    │       └── Previous Tests
-    │           └── Test Details
+    │       ├── Existing Tests
+    │       │   │
+    │       │   ├── View Test
+    │       │   │
+    │       │   ├── Edit Test
+    │       │   │   ├── Update Test Info
+    │       │   │   ├── Add / Remove Questions
+    │       │   │   └── Update Settings
+    │       │   │
+    │       │   ├── Delete Test
+    │       │   │
+    │       │   └── Duplicate Test
+    │       │
+    │       └── Test Summary
     │
-    ├── Manage Questions
+    ├── Question Bank
     │   │
     │   ├── MCQ
     │   │   │
-    │   │   ├── View Questions
+    │   │   ├── Existing MCQ
+    │   │   │   ├── View MCQ
+    │   │   │   ├── Update MCQ
+    │   │   │   └── Delete MCQ
     │   │   │
-    │   │   └── Add Questions
-    │   │       └── Question Detail Form
+    │   │   └── Add MCQ
+    │   │       
     │   │
     │   ├── Code Snippet
     │   │   │
-    │   │   ├── View Questions
+    │   │   ├── Existing Code Snippets
+    │   │   │   ├── View
+    │   │   │   ├── Update
+    │   │   │   └── Delete
     │   │   │
-    │   │   └── Add Questions
-    │   │       └── Question Detail Form
+    │   │   └── Add Code Snippet
+    │   │       
     │   │
     │   ├── Problem Statement
     │   │   │
-    │   │   ├── View Questions
+    │   │   ├── Existing Problems
+    │   │   │   ├── View
+    │   │   │   ├── Update
+    │   │   │   └── Delete
     │   │   │
-    │   │   └── Add Questions
-    │   │       └── Question Detail Form
+    │   │   └── Add Problem
     │   │
     │   ├── Mock Questions
     │   │   │
-    │   │   ├── View Questions
+    │   │   ├── Existing Mock Questions
+    │   │   │   ├── View
+    │   │   │   ├── Update
+    │   │   │   └── Delete
     │   │   │
-    │   │   └── Add Questions
-    │   │       └── Question Detail Form
+    │   │   └── Add Mock Question
     │   │
-    │   ├── Mini Project
+    │   ├── Mini Projects
     │   │   │
-    │   │   ├── View Problem Statement
+    │   │   ├── Existing Projects
+    │   │   │   ├── View
+    │   │   │   ├── Update
+    │   │   │   └── Delete
     │   │   │
-    │   │   └── Add Problem Statement
-    │   │       └── Question Detail Form
+    │   │   └── Add Mini Project
     │   │
-    │   └── Summary
+    │   └── Question Summary
+    │
+    ├── Results & Analytics
+    │   │
+    │   ├── Completed Tests
+    │   │   └── Select Test
+    │   │
+    │   └── Test Analytics
+    │       ├── Student Performance 
+    │       └── Question Difficulty 
+    │
+    ├── Manage Concepts
+    │   │
+    │   ├── Existing Concepts
+    │   │   ├── View Concept
+    │   │   ├── Update Concept
+    │   │   └── Delete Concept
+    │   │
+    │   └── Add Concept
     │
     └── Profile
+        ├── View Profile
+        └── Edit Profile
