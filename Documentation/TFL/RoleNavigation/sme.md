@@ -2,55 +2,27 @@ SME
 │
 └── Dashboard
     │
-    ├── Manage Tests
-    │   │
-    │   ├── Create Test
-    │   │   │
-    │   │   ├── Test Form
-    │   │   └── Summary
-    │   │
-    │   └── Test History
-    │       │
-    │       └── Previous Tests
-    │           └── Test Details
+    ├── ManageTests
+    │   ├── CreateTest
+    │   └── TestHistory
     │
-    ├── Manage Questions
+    ├── ManageQuestions
     │   │
-    │   ├── MCQ
-    │   │   │
-    │   │   ├── View Questions
-    │   │   │
-    │   │   └── Add Questions
-    │   │       └── Question Detail Form
-    │   │
-    │   ├── Code Snippet
-    │   │   │
-    │   │   ├── View Questions
-    │   │   │
-    │   │   └── Add Questions
-    │   │       └── Question Detail Form
-    │   │
-    │   ├── Problem Statement
-    │   │   │
-    │   │   ├── View Questions
-    │   │   │
-    │   │   └── Add Questions
-    │   │       └── Question Detail Form
-    │   │
-    │   ├── Mock Questions
-    │   │   │
-    │   │   ├── View Questions
-    │   │   │
-    │   │   └── Add Questions
-    │   │       └── Question Detail Form
-    │   │
-    │   ├── Mini Project
-    │   │   │
-    │   │   ├── View Problem Statement
-    │   │   │
-    │   │   └── Add Problem Statement
-    │   │       └── Question Detail Form
-    │   │
-    │   └── Summary
+    │   ├── ManageMCQ
+    │   ├── ManageCodeSnippet
+    │   ├── ManageProblemStatement
+    │   ├── ManageMockQuestions
+    │   ├── ManageMiniProjects
+    │   └── ManageQuestionSummary
+    │
+    ├── ResultsAnalytics
+    │   └── CompletedTests
+    │
+    ├── ManageConcepts
+    │   ├── ExistingConcepts
+    │   ├── ManageRuntime
+    │   └── AddConcept
     │
     └── Profile
+        ├── ViewProfile
+        └── EditProfile
