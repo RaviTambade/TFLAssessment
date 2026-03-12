@@ -521,55 +521,59 @@ Upload Resources
 │
 ├── /mentor/mentees
 │     └── GET /api/mentor/mentee
-│     └── POST /api/mentor/mentee
-│
+│     
 │     ├── /mentor/mentees/search
 │     │     └── GET /api/mentor/mentee/students-name
 │
 │     ├── /mentor/mentees/filter
 │     │     └── GET /api/mentor/mentees?technology={tech}
+│      
+│     ├── /mentor/mentees/delete
+│     │     └── DELETE /api/mentor/mentee/[studentID] (Delete Mentees)
+│
+│     ├── /mentor/mentees/filter
+│     │     └── POST /api/mentor/mentee (Add Mentees)
 │
 │     └── /mentor/mentees/:studentId
-│           │
-│           ├── delete-mentee
-│           │     └── DELETE /api/mentor/mentee/[studentID]
 │           │
 │           ├── profile
 │           │     └── GET /api/mentor/mentee/student-profile
 │           │
-│           ├── learning-path
-│           │     └── GET /api/mentor/mentee/[studentID]/learning-path
-│           │
-│           ├── skills
-│           │     └── GET /api/mentor/mentee/[studentID]/student-skills
-│           │
-│           ├── sme-feedback
-│           │     └── GET /api/mentor/mentee/[studentID]/SMEfeedback
-│           │
-│           ├── employer-feedback
-│           │     └── GET /api/mentor/mentee/[studentID]/employer-feedback
-│           │
-│           ├── assignments
+│           ├── performance
 │           │     │
-│           │     ├── completed
-│           │     │     └── GET /api/mentor/mentee/[studentID]/assignment?status=completed
+│           │     ├── learning-path
+│           │     │     └── GET /api/mentor/mentee/[studentID]/learning-path
 │           │     │
-│           │     ├── scheduled
-│           │     │     └── GET /api/mentor/mentee/[studentID]/assignments?status=scheduled
+│           │     ├── skills
+│           │     │     └── GET /api/mentor/mentee/[studentID]/student-skills
 │           │     │
-│           │     └── score-analysis
-│           │           └── GET /api/mentor/mentee/[studentID]/assignments-score
-│           │
-│           ├── sessions
+│           │     ├── sme-feedback
+│           │     │     └── GET /api/mentor/mentee/[studentID]/SMEfeedback
 │           │     │
-│           │     ├── attended
-│           │     │     └── GET /api/mentor/mentee/[studentID]/sessions/attended
+│           │     ├── employer-feedback
+│           │     │     └── GET /api/mentor/mentee/[studentID]/employer-feedback
 │           │     │
-│           │     └── assigned
-│           │           └── GET /api/mentor/mentee/[studentID]/sessions/assigned
-│           │
-│           ├── notes
-│           │     └── GET /api/mentor/mentee/[studentID]/notes/viewed
+│           │     ├── assignments
+│           │     │     │
+│           │     │     ├── completed
+│           │     │     │     └── GET /api/mentor/mentee/[studentID]/assignment?status=completed
+│           │     │     │
+│           │     │     ├── scheduled
+│           │     │     │     └── GET /api/mentor/mentee/[studentID]/assignments?status=scheduled
+│           │     │     │
+│           │     │     └── score-analysis
+│           │     │           └── GET /api/mentor/mentee/[studentID]/assignments-score
+│           │     │
+│           │     ├── sessions
+│           │     │     │
+│           │     │     ├── attended
+│           │     │     │     └── GET /api/mentor/mentee/[studentID]/sessions/attended
+│           │     │     │
+│           │     │     └── assigned
+│           │     │           └── GET /api/mentor/mentee/[studentID]/sessions/assigned
+│           │     │
+│           │     └── notes
+│           │           └── GET /api/mentor/mentee/[studentID]/notes/viewed
 │           │
 │           └── feedback
 │                 └── POST /api/mentor/mentee/[studentID]/feedback
