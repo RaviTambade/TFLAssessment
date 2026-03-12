@@ -1,8 +1,12 @@
-# Employer API Documentation
+# 🚀 Employer API Documentation
 
-## Employer Dashboard
+This document describes the **Employer Module APIs** used for managing dashboards, employer profiles, company profiles, jobs, candidates, and interviews.
 
-### Dashboard APIs
+---
+
+# 📊 Employer Dashboard
+
+## 📌 Dashboard APIs
 
 ```
 GET /api/employer/dashboard/summary
@@ -11,7 +15,7 @@ GET /api/employer/dashboard/candidate-stats
 GET /api/employer/dashboard/interview-stats
 ```
 
-### JSON DATA
+### 📄 Sample JSON Response
 
 ```json
 {
@@ -25,15 +29,91 @@ GET /api/employer/dashboard/interview-stats
 
 ---
 
-# Company Profile
+# 👤 Employer Profile
 
-## 1. Get Company Profile
+## Employer Profile APIs
+
+### 1️⃣ Get Employer Profile
+
+```
+GET /api/employer/profile
+```
+
+### 📄 JSON DATA
+
+```json
+{
+  "fullName": "John Doe",
+  "email": "john.doe@company.com",
+  "phoneNumber": "+91-9876543210",
+  "designation": "HR Manager",
+  "profilePhoto": "profile.jpg",
+  "companyName": "TechInfo Soln"
+}
+```
+
+---
+
+### 2️⃣ Create Employer Profile
+
+```
+POST /api/employer/profile
+```
+
+---
+
+### 3️⃣ Update Employer Profile (Full Update)
+
+```
+PUT /api/employer/profile
+```
+
+---
+
+### 4️⃣ Partially Update Employer Profile
+
+Use this API when updating **only specific fields** like name, phone, designation etc.
+
+```
+PATCH /api/employer/profile
+```
+
+### Example JSON
+
+```json
+{
+  "phoneNumber": "+91-9000000000",
+  "designation": "Senior HR Manager"
+}
+```
+
+---
+
+### 5️⃣ Upload Profile Photo
+
+```
+POST /api/employer/profile/photo
+```
+
+---
+
+### 6️⃣ Delete Profile Photo
+
+```
+DELETE /api/employer/profile/photo
+```
+
+---
+
+# 🏢 Company Profile
+
+## 1️⃣ Get Company Profile
 
 ```
 GET /api/employer/company
 ```
 
-### JSON DATA
+### 📄 JSON DATA
 
 ```json
 {
@@ -50,7 +130,7 @@ GET /api/employer/company
 
 ---
 
-## 2. Create Company Profile
+## 2️⃣ Create Company Profile
 
 ```
 POST /api/employer/company
@@ -58,7 +138,7 @@ POST /api/employer/company
 
 ---
 
-## 3. Update Company Profile
+## 3️⃣ Update Company Profile (Full Update)
 
 ```
 PUT /api/employer/company
@@ -66,15 +146,26 @@ PUT /api/employer/company
 
 ---
 
-## 4. Partially Update Profile
+## 4️⃣ Partially Update Company Profile
+
+Used when updating **specific fields like website, location, description etc.**
 
 ```
 PATCH /api/employer/company
 ```
 
+### Example JSON
+
+```json
+{
+  "website": "https://techinfo.com",
+  "location": "Mumbai"
+}
+```
+
 ---
 
-## 5. Delete Company Profile
+## 5️⃣ Delete Company Profile
 
 ```
 DELETE /api/employer/company
@@ -82,9 +173,9 @@ DELETE /api/employer/company
 
 ---
 
-# Jobs
+# 💼 Job Management
 
-## 1. Post Job
+## 1️⃣ Post Job
 
 ```
 POST /api/employer/jobs
@@ -92,13 +183,13 @@ POST /api/employer/jobs
 
 ---
 
-## 2. Get All Jobs
+## 2️⃣ Get All Jobs
 
 ```
 GET /api/employer/jobs?status=open
 ```
 
-### JSON DATA
+### 📄 JSON DATA
 
 ```json
 {
@@ -112,13 +203,13 @@ GET /api/employer/jobs?status=open
 
 ---
 
-## 3. Get Job Details
+## 3️⃣ Get Job Details
 
 ```
 GET /api/employer/jobs/{jobId}
 ```
 
-### JSON DATA
+### 📄 JSON DATA
 
 ```json
 {
@@ -133,7 +224,7 @@ GET /api/employer/jobs/{jobId}
 
 ---
 
-## 4. Update Job
+## 4️⃣ Update Job
 
 ```
 PUT /api/employer/jobs/{jobId}
@@ -141,7 +232,7 @@ PUT /api/employer/jobs/{jobId}
 
 ---
 
-## 5. Delete Job
+## 5️⃣ Delete Job
 
 ```
 DELETE /api/employer/jobs/{jobId}
@@ -149,7 +240,7 @@ DELETE /api/employer/jobs/{jobId}
 
 ---
 
-## 6. Change Job Status
+## 6️⃣ Change Job Status
 
 ```
 PATCH /api/employer/jobs/{jobId}/status
@@ -157,13 +248,13 @@ PATCH /api/employer/jobs/{jobId}/status
 
 ---
 
-## 7. Get Appeared Candidates for Job
+## 7️⃣ Get Appeared Candidates for Job
 
 ```
 GET /api/employer/jobs/{jobId}/applications
 ```
 
-### JSON DATA
+### 📄 JSON DATA
 
 ```json
 {
@@ -176,13 +267,13 @@ GET /api/employer/jobs/{jobId}/applications
 
 ---
 
-## 8. Get Shortlisted Candidates
+## 8️⃣ Qualified Candidates
 
 ```
 GET /api/employer/jobs/{jobId}/candidates?status=shortlisted
 ```
 
-### JSON DATA
+### 📄 JSON DATA
 
 ```json
 {
@@ -194,13 +285,13 @@ GET /api/employer/jobs/{jobId}/candidates?status=shortlisted
 
 ---
 
-## 9. Get Appeared Student / Candidate Count
+## 9️⃣ Get Appeared Student / Candidate Count
 
 ```
 GET /api/employer/jobs/{jobId}/candidate/count
 ```
 
-### JSON DATA
+### 📄 JSON DATA
 
 ```json
 {
@@ -211,15 +302,15 @@ GET /api/employer/jobs/{jobId}/candidate/count
 
 ---
 
-# Candidates
+# 👨‍💻 Candidate Management
 
-## 1. Get All Candidates
+## 1️⃣ Get All Candidates
 
 ```
 GET /api/employer/candidates
 ```
 
-### JSON DATA
+### 📄 JSON DATA
 
 ```json
 {
@@ -233,13 +324,13 @@ GET /api/employer/candidates
 
 ---
 
-## 2. Search Candidates
+## 2️⃣ Search Candidates
 
 ```
 GET /api/employer/candidates/search
 ```
 
-### Search Examples
+### 🔍 Search Examples
 
 Search by Name
 
@@ -261,13 +352,13 @@ Search by Experience
 
 ---
 
-## 3. Get Candidates by Skill
+## 3️⃣ Get Candidates by Skill
 
 ```
 GET /api/employer/candidates/skills
 ```
 
-### JSON DATA
+### 📄 JSON DATA
 
 ```json
 {
@@ -279,13 +370,13 @@ GET /api/employer/candidates/skills
 
 ---
 
-## 4. Get Candidate Profile
+## 4️⃣ Get Candidate Profile
 
 ```
-GET /api/employer/candidates
+GET /api/employer/candidates/{candidateId}
 ```
 
-### JSON DATA
+### 📄 JSON DATA
 
 ```json
 {
@@ -301,13 +392,13 @@ GET /api/employer/candidates
 
 ---
 
-## 5. Get Candidate Skill Summary
+## 5️⃣ Get Candidate Skill Summary
 
 ```
 GET /api/employer/candidates/{candidateId}/skills
 ```
 
-### JSON DATA
+### 📄 JSON DATA
 
 ```json
 {
@@ -321,15 +412,15 @@ GET /api/employer/candidates/{candidateId}/skills
 
 ---
 
-# Interview
+# 🎯 Interview Management
 
-## 1. Interview Pipeline
+## 1️⃣ Interview Pipeline
 
 ```
 GET /api/employer/candidates/{studentId}/pipeline
 ```
 
-### JSON DATA
+### 📄 JSON DATA
 
 ```json
 {
@@ -348,7 +439,7 @@ GET /api/employer/candidates/{studentId}/pipeline
 
 ---
 
-## 2. Schedule Interview
+## 2️⃣ Schedule Interview
 
 ```
 POST /api/employer/interview
@@ -356,13 +447,13 @@ POST /api/employer/interview
 
 ---
 
-## 3. Get Interview Total Info
+## 3️⃣ Get Interview Summary
 
 ```
 GET /api/employer/interviews/summary
 ```
 
-### JSON DATA
+### 📄 JSON DATA
 
 ```json
 {
@@ -375,13 +466,13 @@ GET /api/employer/interviews/summary
 
 ---
 
-## 4. Upcoming Interviews
+## 4️⃣ Upcoming Interviews
 
 ```
 GET /api/employer/interviews/upcoming
 ```
 
-### JSON DATA
+### 📄 JSON DATA
 
 ```json
 {
@@ -395,13 +486,13 @@ GET /api/employer/interviews/upcoming
 
 ---
 
-## 5. Today's Interviews
+## 5️⃣ Today's Interviews
 
 ```
 GET /api/employer/interviews/today
 ```
 
-### JSON DATA
+### 📄 JSON DATA
 
 ```json
 {
@@ -414,13 +505,13 @@ GET /api/employer/interviews/today
 
 ---
 
-## 6. Interview Feedback
+## 6️⃣ Interview Feedback
 
 ```
 GET /api/employer/interviews/results
 ```
 
-### JSON DATA
+### 📄 JSON DATA
 
 ```json
 [
@@ -435,7 +526,7 @@ GET /api/employer/interviews/results
 
 ---
 
-## 7. Reschedule Interview
+## 7️⃣ Reschedule Interview
 
 ```
 PUT /api/employer/interviews/{interviewId}
@@ -443,7 +534,7 @@ PUT /api/employer/interviews/{interviewId}
 
 ---
 
-## 8. Cancel Interview
+## 8️⃣ Cancel Interview
 
 ```
 DELETE /api/employer/interviews/{interviewId}
@@ -451,13 +542,13 @@ DELETE /api/employer/interviews/{interviewId}
 
 ---
 
-## 9. Shortlisted Candidates
+## 9️⃣ Selected Candidates
 
 ```
 GET /api/employer/interviews/shortlisted
 ```
 
-### JSON DATA
+### 📄 JSON DATA
 
 ```json
 [
@@ -469,3 +560,5 @@ GET /api/employer/interviews/shortlisted
   }
 ]
 ```
+
+---
