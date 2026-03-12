@@ -639,6 +639,9 @@ Upload Resources
 │
 └── /mentor/profile
       │
+      ├── /mentor/profile/details (this profile will be seen by other roles)
+      │     └── GET /api/mentors/{mentorId}
+      │
       ├── /mentor/profile/details
       │     └── GET /api/mentor/profile
       │
