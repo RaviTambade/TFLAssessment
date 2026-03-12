@@ -12,17 +12,16 @@ SME
     │   ├── ManageCodeSnippet
     │   ├── ManageProblemStatement
     │   ├── ManageMockQuestions
-    │   ├── ManageMiniProjects
-    │   └── ManageQuestionSummary
+    │   └── ManageMiniProjects
     │
     ├── ResultsAnalytics
     │   └── CompletedTests
     │
     ├── ManageConcepts
-    │   ├── ExistingConcepts
-    │   ├── ManageRuntime
-    │   └── AddConcept
+    │   └── ExistingConcepts
+    │
+    ├── Manage Runtime
+    │   └── ExistingConcepts
     │
     └── Profile
-        ├── ViewProfile
-        └── EditProfile
+      
