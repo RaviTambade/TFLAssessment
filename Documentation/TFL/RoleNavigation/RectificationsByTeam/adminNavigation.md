@@ -1,6 +1,6 @@
-#Admin Panel
+# Admin Panel
 
-## 2. Dashboard Module 
+## 1. Dashboard Module 
 
 ### GET `/dashboard/overview`
 
@@ -18,7 +18,7 @@
   }
 }
 ```
-## 3. Assessment Module 
+## 2. Assessment Module 
 
 ### GET `/assessments/statistics`
 
@@ -45,8 +45,10 @@
     }
   ]
 }
-
+```
+ 
 ### POST `/assessments`
+
 ```json
 {
   "title": "Java Backend Assessment",
@@ -148,7 +150,7 @@
 }
 ```
 
-## 4. Session Module 
+## 3. Session Module 
 
 ### GET `/sessions/statistics`
 ```json
@@ -205,9 +207,9 @@
     }
   ]
 }
+```
 
-
-## 5. User Module 
+## 4. User Module 
 
 ### GET `/users`
 
@@ -485,7 +487,7 @@
 }
 ```
 
-## 6. Settings Module 
+## 5. Settings Module 
 
 ### GET `/settings`
 
