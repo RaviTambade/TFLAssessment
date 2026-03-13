@@ -110,16 +110,16 @@
 
 | Test Case ID | Test Scenario | Preconditions | Test Steps | Expected Result |
 |---------------|---------------|---------------|------------|----------------|
-| TC_PROJECT_54 | Verify mentor can view all assigned projects | Mentor logged into system | 1. Send request to `GET /api/mentor/projects` | API returns list of all projects with **project name, status, team members** |
-| TC_PROJECT_55 | Verify mentor can view running projects | Mentor logged in | 1. Send request to `GET /api/mentor/projects?status=running` | System returns only projects with status **running** |
-| TC_PROJECT_56 | Verify mentor can view completed projects | Mentor logged in | 1. Send request to `GET /api/mentor/projects?status=completed` | System returns only projects with status **completed** |
-| TC_PROJECT_57 | Verify invalid project status filter | Mentor logged in | 1. Send request to `GET /api/mentor/projects?status=invalid` | System returns empty list or validation error |
-| TC_PROJECT_58 | Verify mentor can view project details | Mentor logged in and project exists | 1. Call `GET /api/mentor/projects/details` with valid projectId | API returns **project description, technologies used, repository link** |
-| TC_PROJECT_59 | Verify invalid project ID in details API | Mentor logged in | 1. Call `GET /api/mentor/projects/details` with invalid projectId | System returns **error message or 404 response** |
-| TC_PROJECT_60 | Verify mentor can add student to project | Mentor logged in and project exists | 1. Send `POST /api/mentor/projects/{projectId}/students` with studentId | Student added to project team successfully |
-| TC_PROJECT_61 | Verify mentor can remove student from project | Mentor logged in and student exists in project | 1. Call `DELETE /api/mentor/projects/{projectId}/students/{studentId}` | Student removed from project team |
-| TC_PROJECT_62 | Verify mentor can submit project feedback | Mentor logged in and project exists | 1. Send `POST /api/mentor/projects/{projectId}/feedback` with feedback JSON | Feedback stored successfully |
-| TC_PROJECT_63 | Verify mentor can schedule project meeting | Mentor logged in and project exists | 1. Send `POST /api/mentor/projects/{projectId}/meeting` with meeting date and time | Meeting scheduled successfully |
+| TC_54 | Verify mentor can view all assigned projects | Mentor logged into system | 1. Send request to `GET /api/mentor/projects` | API returns list of all projects with **project name, status, team members** |
+| TC_55 | Verify mentor can view running projects | Mentor logged in | 1. Send request to `GET /api/mentor/projects?status=running` | System returns only projects with status **running** |
+| TC_56 | Verify mentor can view completed projects | Mentor logged in | 1. Send request to `GET /api/mentor/projects?status=completed` | System returns only projects with status **completed** |
+| TC_57 | Verify invalid project status filter | Mentor logged in | 1. Send request to `GET /api/mentor/projects?status=invalid` | System returns empty list or validation error |
+| TC_58 | Verify mentor can view project details | Mentor logged in and project exists | 1. Call `GET /api/mentor/projects/details` with valid projectId | API returns **project description, technologies used, repository link** |
+| TC_59 | Verify invalid project ID in details API | Mentor logged in | 1. Call `GET /api/mentor/projects/details` with invalid projectId | System returns **error message or 404 response** |
+| TC_60 | Verify mentor can add student to project | Mentor logged in and project exists | 1. Send `POST /api/mentor/projects/{projectId}/students` with studentId | Student added to project team successfully |
+| TC_61 | Verify mentor can remove student from project | Mentor logged in and student exists in project | 1. Call `DELETE /api/mentor/projects/{projectId}/students/{studentId}` | Student removed from project team |
+| TC_62 | Verify mentor can submit project feedback | Mentor logged in and project exists | 1. Send `POST /api/mentor/projects/{projectId}/feedback` with feedback JSON | Feedback stored successfully |
+| TC_63 | Verify mentor can schedule project meeting | Mentor logged in and project exists | 1. Send `POST /api/mentor/projects/{projectId}/meeting` with meeting date and time | Meeting scheduled successfully |
 
 # Mentor Session API Test Cases
 
@@ -161,9 +161,9 @@ GET /api/mentor/resources
 | Test Case ID | Scenario | Precondition | Test Steps | Expected Result |
 |--------------|----------|--------------|-------------|----------------|
 | TC_71 | Fetch learning resources | Mentor logged in | Call API with token | Resources list returned |
-| TC_RES_002 | Verify resources categorized | Mentor logged in | Call API | Resources categorized as recordings, notes, diagrams |
-| TC_72 | Fetch resources without authentication | User not logged in | Call API without token | 401 Unauthorized |
-| TC_73 | Verify resource response fields | Mentor logged in | Call API | Response contains title, type, and file link |
+| TC_72 | Verify resources categorized | Mentor logged in | Call API | Resources categorized as recordings, notes, diagrams |
+| TC_73 | Fetch resources without authentication | User not logged in | Call API without token | 401 Unauthorized |
+| TC_74 | Verify resource response fields | Mentor logged in | Call API | Response contains title, type, and file link |
 
 ---
 
@@ -175,11 +175,11 @@ GET /api/mentor/resources
 
 | Test Case ID | Scenario | Precondition | Test Steps | Expected Result |
 |--------------|----------|--------------|-------------|----------------|
-| TC_74 | Fetch mentor profile with valid mentorId | Mentor exists in system | Call API with existing mentorId | Mentor profile details returned |
-| TC_75 | Fetch mentor profile with invalid mentorId | Mentor does not exist | Call API with non-existing mentorId | 404 Not Found |
-| TC_76 | Fetch mentor profile without authentication | User not logged in | Call API without token | 401 Unauthorized |
-| TC_77 | Verify response fields | Mentor profile available | Call API | Response contains name, email, expertise, experience |
-| TC_78 | Verify role access | User logged in as admin/student | Login and call API | Mentor profile visible |
+| TC_75 | Fetch mentor profile with valid mentorId | Mentor exists in system | Call API with existing mentorId | Mentor profile details returned |
+| TC_76 | Fetch mentor profile with invalid mentorId | Mentor does not exist | Call API with non-existing mentorId | 404 Not Found |
+| TC_77 | Fetch mentor profile without authentication | User not logged in | Call API without token | 401 Unauthorized |
+| TC_78 | Verify response fields | Mentor profile available | Call API | Response contains name, email, expertise, experience |
+| TC_79 | Verify role access | User logged in as admin/student | Login and call API | Mentor profile visible |
 
 ---
 
@@ -187,10 +187,10 @@ GET /api/mentor/resources
 
 | Test Case ID | Scenario | Precondition | Test Steps | Expected Result |
 |--------------|----------|--------------|-------------|----------------|
-| TC_79 | Fetch logged-in mentor profile | Mentor logged in | Login as mentor and call API | Mentor profile returned |
-| TC_80 | Call API without login | User not authenticated | Send request without token | 401 Unauthorized |
-| TC_81 | Verify mentor-specific fields | Mentor logged in | Call API | Response includes mentorId, expertise, bio |
-| TC_82 | Verify response time | Mentor logged in | Call API | Response time < 2 seconds |
+| TC_80 | Fetch logged-in mentor profile | Mentor logged in | Login as mentor and call API | Mentor profile returned |
+| TC_81 | Call API without login | User not authenticated | Send request without token | 401 Unauthorized |
+| TC_82 | Verify mentor-specific fields | Mentor logged in | Call API | Response includes mentorId, expertise, bio |
+| TC_83 | Verify response time | Mentor logged in | Call API | Response time < 2 seconds |
 
 ---
 
@@ -198,8 +198,7 @@ GET /api/mentor/resources
 
 | Test Case ID | Scenario | Precondition | Test Steps | Expected Result |
 |--------------|----------|--------------|-------------|----------------|
-| TC_83 | Update mentor profile with valid data | Mentor logged in | Send PUT request with valid fields | Profile updated successfully |
-| TC_84 | Update mentor profile with missing fields | Mentor logged in | Send request without required fields | 400 Bad Request |
+| TC_84 | Update mentor profile with valid data | Mentor logged in | Send PUT request with valid fields | Profile updated successfully |
 | TC_85 | Update profile without authentication | User not logged in | Call API without token | 401 Unauthorized |
 | TC_86 | Update profile with invalid data type | Mentor logged in | Send string instead of number | Validation error |
 | TC_87 | Verify database update | Mentor logged in | Update profile then check DB | Data updated in DB |
