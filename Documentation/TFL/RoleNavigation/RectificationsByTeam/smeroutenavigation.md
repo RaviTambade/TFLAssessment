@@ -14,8 +14,7 @@
     │   ├── /sme/lectures/list
     │   └── /sme/lectures/:lectureId
     │       ├── /view
-    │       ├── /edit
-    │       └── /delete
+    │       └── /edit
     │
     ├── /sme/assignments
     │   ├── /sme/assignments/create
@@ -23,7 +22,6 @@
     │   └── /sme/assignments/:assignmentId
     │       ├── /view
     │       ├── /edit
-    │       ├── /delete
     │       └── /submissions 
     ├── /sme/tests
     │   │
@@ -44,11 +42,8 @@
     │   │       ├── /view
     │   │       │   └── View Test Details
     │   │       │
-    │   │       ├── /edit
-    │   │       │   └── Edit Test
-    │   │       │
-    │   │       └── /delete
-    │   │           └── Delete Confirmation
+    │   │       └── /edit
+    │   │           └── Edit Test
     │   │
     │   └── /sme/tests/:testId
     │       └── Test Details Page
@@ -62,8 +57,7 @@
     │   │   │
     │   │   └── /sme/questions/mcq/:mcqId
     │   │       ├── /view
-    │   │       ├── /edit
-    │   │       └── /delete
+    │   │       └── /edit
     │   │
     │   ├── /sme/questions/code
     │   │   │
@@ -72,8 +66,7 @@
     │   │   │
     │   │   └── /sme/questions/code/:codeId
     │   │       ├── /view
-    │   │       ├── /edit
-    │   │       └── /delete
+    │   │       └── /edit
     │   │
     │   ├── /sme/questions/problem
     │   │   │
@@ -82,8 +75,7 @@
     │   │   │
     │   │   └── /sme/questions/problem/:problemId
     │   │       ├── /view
-    │   │       ├── /edit
-    │   │       └── /delete
+    │   │       └── /edit
     │   │
     │   ├── /sme/questions/mock
     │   │   │
@@ -92,8 +84,7 @@
     │   │   │
     │   │   └── /sme/questions/mock/:mockId
     │   │       ├── /view
-    │   │       ├── /edit
-    │   │       └── /delete
+    │   │       └── /edit
     │   │
     │   ├── /sme/questions/miniproject
     │   │   │
@@ -102,8 +93,7 @@
     │   │   │
     │   │   └── /sme/questions/miniproject/:projectId
     │   │       ├── /view
-    │   │       ├── /edit
-    │   │       └── /delete
+    │   │       └── /edit
     │   │
     │   └── /sme/questions/summary
     │       └── Question Bank Overview
@@ -115,8 +105,7 @@
     │   │
     │   └── /sme/concepts/:conceptId
     │       ├── /view
-    │       ├── /edit
-    │       └── /delete
+    │       └── /edit
     │
     ├── /sme/analytics
     │   │
