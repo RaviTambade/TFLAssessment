@@ -631,7 +631,7 @@ Helps track **student participation rate**.
 
 ---
 
-# User Story: View Passed Students
+# User Story: View Pass Students
 
 🧑‍🔬 **User Story**
 
