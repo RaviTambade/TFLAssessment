@@ -6,21 +6,21 @@
 
 ---
 
-# 🎓 1️⃣ Lecture Management
+# 🎓 1️⃣ Session Management
 ---
 
-# User Story: Create Lecture
+# User Story: Create Session
 
 **🧑‍🔬 User Story**
 
 As an **SME**
-I want to **create a lecture**
+I want to **create a Session**
 So that students can access learning material for a topic.
 
 **🔗 API Endpoint**
 
 ```
-POST /api/sme/lectures
+POST /api/sme/Sessions
 ```
 
 **Example Request**
@@ -36,10 +36,10 @@ POST /api/sme/lectures
 
 **✅ Acceptance Criteria**
 
-* SME can enter lecture title
-* SME can enter lecture description
+* SME can enter Session title
+* SME can enter Session description
 * SME can attach video/content link
-* Lecture should be stored successfully
+* Session should be stored successfully
 
 **🎯 Business Value**
 
@@ -47,25 +47,25 @@ Provides **structured learning material** for students.
 
 ---
 
-# User Story: View Lecture List
+# User Story: View Session List
 
 **🧑‍🔬 User Story**
 
 As an **SME**
-I want to **view all lectures**
+I want to **view all Sessions**
 So that I can manage uploaded learning materials.
 
 **🔗 API Endpoint**
 
 ```
-GET /api/sme/lectures
+GET /api/sme/Sessions
 ```
 
 **✅ Acceptance Criteria**
 
-* System returns list of lectures
-* Each lecture shows title and creation date
-* SME can select a lecture to view details
+* System returns list of Sessions
+* Each Session shows title and creation date
+* SME can select a Session to view details
 
 **🎯 Business Value**
 
@@ -73,23 +73,23 @@ Helps SMEs **manage educational content efficiently**.
 
 ---
 
-# User Story: View Lecture Details
+# User Story: View Session Details
 
 **🧑‍🔬 User Story**
 
 As an **SME**
-I want to **view lecture details**
-So that I can review the lecture content.
+I want to **view Session details**
+So that I can review the Session content.
 
 **🔗 API Endpoint**
 
 ```
-GET /api/sme/lectures/{lectureId}
+GET /api/sme/Sessions/{SessionId}
 ```
 
 **✅ Acceptance Criteria**
 
-* System displays lecture title
+* System displays Session title
 * System displays description
 * System displays video/content link
 * System shows related concept
@@ -100,30 +100,30 @@ Ensures **content quality and verification**.
 
 ---
 
-# User Story: Search Lecture
+# User Story: Search Session
 
 **🧑‍🔬 User Story**
 
 As an **SME**
-I want to **search lectures**
-So that I can quickly find a specific lecture.
+I want to **search Sessions**
+So that I can quickly find a specific Session.
 
 **🔗 API Endpoint**
 
 ```
-GET /api/sme/lectures/search?keyword={keyword}
+GET /api/sme/Sessions/search?keyword={keyword}
 ```
 
 **Example**
 
 ```
-GET /api/sme/lectures/search?keyword=algorithm
+GET /api/sme/Sessions/search?keyword=algorithm
 ```
 
 **✅ Acceptance Criteria**
 
 * System should allow keyword search
-* Results should show matching lectures
+* Results should show matching Sessions
 * Search should be fast and accurate
 
 **🎯 Business Value**
@@ -132,18 +132,18 @@ Improves **content discoverability**.
 
 ---
 
-# User Story: Update Lecture
+# User Story: Update Session
 
 **🧑‍🔬 User Story**
 
 As an **SME**
-I want to **update lecture content**
+I want to **update Session content**
 So that outdated information can be corrected.
 
 **🔗 API Endpoint**
 
 ```
-PUT /api/sme/lectures/{lectureId}
+PUT /api/sme/Sessions/{SessionId}
 ```
 
 **Example**
@@ -151,7 +151,7 @@ PUT /api/sme/lectures/{lectureId}
 ```json
 {
  "title": "Advanced Algorithms",
- "description": "Updated lecture with more examples"
+ "description": "Updated Session with more examples"
 }
 ```
 
@@ -168,29 +168,29 @@ Keeps **learning content updated**.
 
 ---
 
-# 📝 2️⃣ Assignment Management
+# 📝 2️⃣ Hands-on Management
 
 ---
 
-# User Story: Create Assignment
+# User Story: Create Hands-on
 
 **🧑‍🔬 User Story**
 
 As an **SME**
-I want to **create an assignment**
-So that students can practice concepts learned in lectures.
+I want to **create an Hands-on**
+So that students can practice concepts learned in Sessions.
 
 **🔗 API Endpoint**
 
 ```
-POST /api/sme/assignments
+POST /api/sme/Hands-ons
 ```
 
 **Example Request**
 
 ```json
 {
- "title": "Sorting Algorithms Assignment",
+ "title": "Sorting Algorithms Hands-on",
  "description": "Implement bubble sort and quick sort",
  "deadline": "2026-04-01"
 }
@@ -198,7 +198,7 @@ POST /api/sme/assignments
 
 **✅ Acceptance Criteria**
 
-* SME can enter assignment title
+* SME can enter Hands-on title
 * SME can add description
 * SME can set submission deadline
 
@@ -208,43 +208,43 @@ Encourages **hands-on student learning**.
 
 ---
 
-# User Story: View Assignment List
+# User Story: View Hands-on List
 
 **🧑‍🔬 User Story**
 
 As an **SME**
-I want to **view all assignments**
-So that I can manage assignments easily.
+I want to **view all Hands-ons**
+So that I can manage Hands-ons easily.
 
 **🔗 API Endpoint**
 
 ```
-GET /api/sme/assignments
+GET /api/sme/Hands-ons
 ```
 
 **✅ Acceptance Criteria**
 
-* System returns assignment list
-* Each assignment shows title and deadline
+* System returns Hands-on list
+* Each Hands-on shows title and deadline
 
 **🎯 Business Value**
 
-Allows **centralized assignment management**.
+Allows **centralized Hands-on management**.
 
 ---
 
-# User Story: View Assignment Details
+# User Story: View Hands-on Details
 
 **🧑‍🔬 User Story**
 
 As an **SME**
-I want to **view assignment details**
-So that I can review assignment instructions.
+I want to **view Hands-on details**
+So that I can review Hands-on instructions.
 
 **🔗 API Endpoint**
 
 ```
-GET /api/sme/assignments/{assignmentId}
+GET /api/sme/Hands-ons/{Hands-onId}
 ```
 
 **✅ Acceptance Criteria**
@@ -255,22 +255,22 @@ GET /api/sme/assignments/{assignmentId}
 
 **🎯 Business Value**
 
-Ensures **clear assignment instructions**.
+Ensures **clear Hands-on instructions**.
 
 ---
 
-# User Story: Update Assignment
+# User Story: Update Hands-on
 
 **🧑‍🔬 User Story**
 
 As an **SME**
-I want to **edit assignment details**
+I want to **edit Hands-on details**
 So that corrections can be made.
 
 **🔗 API Endpoint**
 
 ```
-PUT /api/sme/assignments/{assignmentId}
+PUT /api/sme/Hands-ons/{Hands-onId}
 ```
 
 **✅ Acceptance Criteria**
@@ -281,11 +281,11 @@ PUT /api/sme/assignments/{assignmentId}
 
 **🎯 Business Value**
 
-Maintains **accurate assignment information**.
+Maintains **accurate Hands-on information**.
 
 ---
 
-# User Story: View Assignment Submissions
+# User Story: View Hands-on Submissions
 
 **🧑‍🔬 User Story**
 
@@ -296,7 +296,7 @@ So that I can review student work.
 **🔗 API Endpoint**
 
 ```
-GET /api/sme/assignments/{assignmentId}/submissions
+GET /api/sme/Hands-ons/{Hands-onId}/submissions
 ```
 
 **✅ Acceptance Criteria**
@@ -311,18 +311,18 @@ Allows **tracking student work**.
 
 ---
 
-# User Story: Evaluate Assignment
+# User Story: Evaluate Hands-on
 
 **🧑‍🔬 User Story**
 
 As an **SME**
-I want to **evaluate assignments submitted by students**
+I want to **evaluate Hands-ons submitted by students**
 So that I can give marks and feedback.
 
 **🔗 API Endpoint**
 
 ```
-POST /api/sme/assignments/{assignmentId}/evaluate
+POST /api/sme/Hands-ons/{Hands-onId}/evaluate
 ```
 
 **Example**
@@ -357,7 +357,7 @@ Supports **student performance evaluation**.
 
 As an **SME**
 I want to **view all concepts**
-So that I can organize lectures and questions.
+So that I can organize Sessions and questions.
 
 **🔗 API Endpoint**
 
@@ -382,7 +382,7 @@ Helps **structure the curriculum**.
 
 As an **SME**
 I want to **add a new concept**
-So that lectures and questions can be categorized.
+So that Sessions and questions can be categorized.
 
 **🔗 API Endpoint**
 
@@ -428,7 +428,7 @@ GET /api/sme/concepts/{conceptId}
 
 * System shows concept name
 * System shows description
-* System shows related lectures
+* System shows related Sessions
 
 **🎯 Business Value**
 
@@ -715,7 +715,7 @@ So that I can understand strengths and weaknesses.
 🔗 **API Endpoint**
 
 ```
-GET /api/sme/analytics/tests/{testId}/student-performance
+GET /api/sme/analytics/assessment/{assessmentid}/student-performance/{studentid}
 ```
 
 ✅ **Acceptance Criteria**
@@ -910,7 +910,7 @@ GET /api/sme/questions?type={type}
 
 **Acceptance Criteria**
 
-* System filters questions by type (MCQ, Coding, etc.)
+* System filters questions by type (MCQ, Code Snippets, Problem Statements, Mock Questions, Mini Project.)
 
 ---
 
@@ -940,7 +940,7 @@ Example
 
 **✅ Acceptance Criteria**
 
-* SME should be able to select the **question type (MCQ, Coding, etc.)**
+* SME should be able to select the **question type (MCQ, Code Snippets, Problem Statements, Mock Questions, Mini Project.)**
 * SME should be able to enter the **question text**
 * System should **validate that required fields are filled**
 
