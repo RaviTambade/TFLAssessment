@@ -327,6 +327,9 @@ POST /api/student/mentorship/session
 ---
 
 ## 👨‍🎓 User Story: Post a Question
+**As a Student**  
+I want to post my technical or career-related questions on the discussion board  
+So that mentors, SMEs and peers can help me resolve my doubts and learn faster.
 
 ### 🔗 API Endpoint
 
@@ -343,6 +346,10 @@ POST /api/student/questions
 
 ## 👨‍🎓 User Story: View Discussions
 
+**As a Student**  
+I want to view all recent discussions and questions posted by others
+So that I can learn from existing conversations and avoid asking duplicate questions.
+
 ### 🔗 API Endpoint
 
 ```http
@@ -357,6 +364,10 @@ GET /api/student/questions
 ---
 
 ## 👨‍🎓 User Story: View Question Details
+
+**As a Student**  
+I want to open a specific question and see all its answers
+So that I can deeply understand the solutions and reasoning shared by mentors and peers.
 
 ### 🔗 API Endpoint
 
@@ -377,6 +388,11 @@ GET /api/student/questions/{questionId}
 
 ## 👨‍🎓 User Story: View My Projects
 
+**As a Student**  
+I want to view all my submitted projects and their review status
+So that I can track my portfolio progress and mentor feedback.
+​
+
 ### 🔗 API Endpoint
 
 ```http
@@ -392,6 +408,10 @@ GET /api/student/projects
 ---
 
 ## 👨‍🎓 User Story: Submit Project
+
+**As a Student**  
+I want to submit my completed project with GitHub link and tech stack
+So that mentors can review my real-world development work and provide feedback.
 
 ### 🔗 API Endpoint
 
@@ -422,6 +442,10 @@ POST /api/student/projects
 
 ## 👨‍🎓 User Story: View Job Opportunities
 
+**As a Student**  
+I want to browse available job opportunities matching my skills
+So that I can find relevant developer roles from partner companies.
+
 ### 🔗 API Endpoint
 
 ```http
@@ -438,6 +462,10 @@ GET /api/student/jobs
 
 ## 👨‍🎓 User Story: Apply for Job
 
+**As a Student**  
+I want to apply for a job opportunity with my profile and projects
+So that employers can review my qualifications and shortlist me for interviews.
+
 ### 🔗 API Endpoint
 
 ```http
@@ -453,6 +481,10 @@ POST /api/student/jobs/{jobId}/apply
 
 ## 👨‍🎓 User Story: View My Applications
 
+**As a Student**  
+I want to track the status of all my job applications
+So that I can follow up on pending opportunities and prepare for interviews.
+
 ### 🔗 API Endpoint
 
 ```http
@@ -467,6 +499,10 @@ GET /api/student/applications
 ---
 
 ## 👨‍🎓 User Story: View Job Offers
+
+**As a Student**  
+I want to see job offers I've received from employers
+So that I can review salary, role details and decide which to accept.
 
 ### 🔗 API Endpoint
 
@@ -487,6 +523,10 @@ GET /api/student/offers
 ---
 
 ## 👨‍🎓 User Story: View Learning Progress
+
+**As a Student**  
+I want to see my overall learning dashboard with metrics
+So that I can track my skill growth and identify improvement areas.
 
 ### 🔗 API Endpoint
 
@@ -519,6 +559,10 @@ GET /api/student/progress
 ---
 
 ## 👨‍🎓 User Story: View Notifications
+
+**As a Student**  
+I want to see all my notifications from platform activities
+So that I stay updated on mentor feedback, new assignments and job opportunities.
 
 ### 🔗 API Endpoint
 
