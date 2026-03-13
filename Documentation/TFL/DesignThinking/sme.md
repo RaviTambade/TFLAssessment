@@ -2,55 +2,44 @@ SME
 │
 └── Dashboard
     │
-    ├── Manage Tests
-    │   │
-    │   ├── Create Test
-    │   │   │
-    │   │   ├── Test Form
-    │   │   └── Summary
-    │   │
-    │   └── Test History
-    │       │
-    │       └── Previous Tests
-    │           └── Test Details
     │
-    ├── Manage Questions
+    ├── Lectures
     │   │
-    │   ├── MCQ
-    │   │   │
-    │   │   ├── View Questions
-    │   │   │
-    │   │   └── Add Questions
-    │   │       └── Question Detail Form
+    │   ├── LectureList
+    │   ├── CreateLecture
+    │   │   └── LectureForm
+    │   ├── LectureDetails
+    │   └── EditLecture
+    │
+    ├── Assignments
     │   │
-    │   ├── Code Snippet
-    │   │   │
-    │   │   ├── View Questions
-    │   │   │
-    │   │   └── Add Questions
-    │   │       └── Question Detail Form
+    │   ├── AssignmentList
+    │   ├── CreateAssignment
+    │   │   └── AssignmentForm
+    │   ├── AssignmentDetails
+    │   ├── EditAssignment
+    │   └── AssignmentSubmissions
+    │
+    ├── ManageTests
+    │   ├── CreateTest
+    │   └── TestHistory
+    │
+    ├── ManageQuestions
     │   │
-    │   ├── Problem Statement
-    │   │   │
-    │   │   ├── View Questions
-    │   │   │
-    │   │   └── Add Questions
-    │   │       └── Question Detail Form
-    │   │
-    │   ├── Mock Questions
-    │   │   │
-    │   │   ├── View Questions
-    │   │   │
-    │   │   └── Add Questions
-    │   │       └── Question Detail Form
-    │   │
-    │   ├── Mini Project
-    │   │   │
-    │   │   ├── View Problem Statement
-    │   │   │
-    │   │   └── Add Problem Statement
-    │   │       └── Question Detail Form
-    │   │
-    │   └── Summary
+    │   ├── ManageMCQ
+    │   ├── ManageCodeSnippet
+    │   ├── ManageProblemStatement
+    │   ├── ManageMockQuestions
+    │   └── ManageMiniProjects
+    │
+    ├── ResultsAnalytics
+    │   └── CompletedTests
+    │
+    ├── ManageConcepts
+    │   └── ExistingConcepts
+    │
+    ├── Manage Runtime
+    │   └── ExistingRuntime
     │
     └── Profile
+      
