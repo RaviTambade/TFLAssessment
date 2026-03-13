@@ -129,3 +129,36 @@
 
 ---
 
+# Employer Use Cases
+
+| UseCase ID      | Use Case                                                                                                                |
+| --------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| US_EMPLOYER_100 | As an Employer, I want to view my company profile so that I can see the company information displayed on the platform.  |
+| US_EMPLOYER_101 | As an Employer, I want to add company alumni so that candidates can see previous employees associated with the company. |
+| US_EMPLOYER_102 | As an Employer, I want to view company alumni so that I can track alumni associated with my organization.               |
+| US_EMPLOYER_103 | As an Employer, I want to add a referral candidate so that referred candidates can be considered for recruitment.       |
+| US_EMPLOYER_104 | As an Employer, I want to view my profile information so that I can verify my personal details.                         |
+| US_EMPLOYER_105 | As an Employer, I want to create my employer profile so that my information is stored in the system.                    |
+| US_EMPLOYER_106 | As an Employer, I want to update my profile information so that I can keep my details updated.                          |
+| US_EMPLOYER_107 | As an Employer, I want to delete my profile so that my account information can be removed from the platform.            |
+| US_EMPLOYER_108 | As an Employer, I want to post a job so that candidates can apply for available positions.                              |
+| US_EMPLOYER_109 | As an Employer, I want to view job details so that I can check the information of a specific job posting.               |
+| US_EMPLOYER_110 | As an Employer, I want to view all posted jobs so that I can track my job listings.                                     |
+| US_EMPLOYER_111 | As an Employer, I want to edit job details so that I can update job requirements or descriptions.                       |
+| US_EMPLOYER_112 | As an Employer, I want to close a job posting so that candidates cannot apply once the position is filled.              |
+| US_EMPLOYER_113 | As an Employer, I want to view the list of all jobs so that I can manage them efficiently.                              |
+| US_EMPLOYER_114 | As an Employer, I want to check job status so that I can see whether a job is active or inactive.                       |
+| US_EMPLOYER_115 | As an Employer, I want to view all job applications so that I can review candidates who applied.                        |
+| US_EMPLOYER_116 | As an Employer, I want to view qualified candidates so that I can move them to the interview stage.                     |
+| US_EMPLOYER_117 | As an Employer, I want to view candidates in the candidate pool so that I can explore potential candidates.             |
+| US_EMPLOYER_118 | As an Employer, I want to search candidates so that I can find candidates based on skills or qualifications.            |
+| US_EMPLOYER_119 | As an Employer, I want to shortlist candidates so that they can be considered for interviews.                           |
+| US_EMPLOYER_120 | As an Employer, I want to view interview summary so that I can analyze interview activities.                            |
+| US_EMPLOYER_121 | As an Employer, I want to view upcoming interviews so that I can prepare for scheduled interviews.                      |
+| US_EMPLOYER_122 | As an Employer, I want to view today's interviews so that I can track the interviews scheduled today.                   |
+| US_EMPLOYER_123 | As an Employer, I want to reschedule interviews so that interview timing can be adjusted if required.                   |
+| US_EMPLOYER_124 | As an Employer, I want to view interview results so that I can evaluate candidate performance.                          |
+| US_EMPLOYER_125 | As an Employer, I want to view qualified candidates after interviews so that I can proceed with hiring decisions.       |
+
+---
+
