@@ -948,41 +948,40 @@ Example
 
 ---
 
-# User Story: Approve Question
+# User Story: Submit Question for Review
 
 **As an SME**
-I want to **approve, deactivate, or put a question on hold**
-So that I can control whether the question is ready for use, temporarily paused, or removed from assessments.
+I want to submit a created question for mentor review
+So that the mentor can approve, put on hold, or deactivate the question before it is used in assessments.
 
 🔗 **API Endpoint**
 
 ```
-PUT /api/sme/questions/{questionId}/status
+POST /api/sme/questions/{questionId}/submit
 ```
 
 **Example Request**
 
 ```json
 {
- "status": "APPROVED"
+ "questionId": 101,
+ "status": "PENDING_REVIEW"
 }
 ```
 
 ✅ **Acceptance Criteria**
 
-* SME should be able to **change the status of a question**
-* SME should be able to set status as **Approved, Hold, or Deactivated**
-* When status is **Approved**, the question should be **available for test creation**
-* When status is **Hold**, the question should **not appear in test selection**
-* When status is **Deactivated**, the question should be **removed from active question bank usage**
-* System should **store the updated status successfully**
-* System should **record the date and SME who updated the status**
+* SME should be able to create a question in Draft state
+* SME should be able to submit the question for mentor review
+* System should change question status from Draft to Pending Review
+* Submitted questions should be visible in the mentor review list
+* SME should not be able to approve or deactivate the question
 
 
 
 🎯 **Business Value**
 
-Provides **better control over question lifecycle and quality management** in the question bank.
+Ensures **quality control by allowing mentor** review before questions are used in tests.
 
 ---
 
