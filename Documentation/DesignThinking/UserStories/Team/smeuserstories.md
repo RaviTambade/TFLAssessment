@@ -952,7 +952,7 @@ Example
 
 **As an SME**
 I want to submit a created question for mentor review
-So that the mentor can approve, put on hold, or deactivate the question before it is used in assessments.
+So that the mentor can approve, put on hold, or deactivate the question before it is used in tests.
 
 🔗 **API Endpoint**
 
