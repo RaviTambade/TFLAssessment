@@ -1,8 +1,33 @@
-# Admin Panel
+# 🚀 TFLCoMentor — Admin API Documentation
 
-## 1. Dashboard Module 
+> **Base URL:** `https://yourdomain.com/api/admin`  
+> **Auth:** All endpoints require `Authorization: Bearer <token>` header  
+> **Format:** All requests and responses are `application/json`
 
-### GET `/dashboard/overview`
+---
+
+## 📋 Table of Contents
+
+- [Dashboard](#-dashboard)
+- [Assessment Management](#-assessment-management)
+- [Session Management](#-session-management)
+- [User Management](#-user-management)
+- [System Settings](#-system-settings)
+- [API Pattern Reference](#-api-pattern-reference)
+
+---
+
+## 📊 Dashboard
+
+### Get Platform Overview
+
+```
+GET /api/admin/dashboard/overview
+```
+
+Returns platform-wide statistics including user counts, assessment counts, and role breakdown.
+
+**Response**
 
 ```json
 {
@@ -14,22 +39,40 @@
     "Student": 1044,
     "Mentor": 87,
     "SME": 24,
-    "Employer": 45
+    "Employer": 45,
+    "Admin": 3
   }
 }
 ```
-## 2. Assessment Module 
 
-### GET `/assessments/statistics`
+---
+
+## 📝 Assessment Management
+
+### Get Assessment Statistics
+
+```
+GET /api/admin/assessments/statistics
+```
+
+**Response**
 
 ```json
 {
   "ongoingAssessments": 12,
-  "unassignedAssessments": 5,
-  
+  "unassignedAssessments": 5
 }
 ```
-### GET `/assessments`
+
+---
+
+### Get All Assessments
+
+```
+GET /api/admin/assessments
+```
+
+**Response**
 
 ```json
 {
@@ -46,8 +89,16 @@
   ]
 }
 ```
- 
-### POST `/assessments`
+
+---
+
+### Create Assessment
+
+```
+POST /api/admin/assessments
+```
+
+**Request Body**
 
 ```json
 {
@@ -59,6 +110,8 @@
 }
 ```
 
+**Response**
+
 ```json
 {
   "testId": 10,
@@ -68,7 +121,16 @@
 }
 ```
 
-### POST `/assessments/{assessmentId}/assign`
+---
+
+### Assign Assessment to Students
+
+```
+POST /api/admin/assessments/{assessmentId}/assign
+```
+
+**Request Body**
+
 ```json
 {
   "studentIds": [12, 45, 67],
@@ -76,6 +138,9 @@
   "scheduleTime": "10:00"
 }
 ```
+
+**Response**
+
 ```json
 {
   "assigned": 3,
@@ -89,7 +154,16 @@
 }
 ```
 
-### GET `/assessments/{assessmentId}/summary`
+---
+
+### Get Assessment Summary
+
+```
+GET /api/admin/assessments/{assessmentId}/summary
+```
+
+**Response**
+
 ```json
 {
   "testId": 5,
@@ -100,12 +174,20 @@
   "missed": 5,
   "pending": 3,
   "averageScore": 68.4,
-  "highestScore": 95.0,
-  "lowestScore": 32.0
+  "highestScore": 95,
+  "lowestScore": 32
 }
 ```
 
-### GET `/assessments/{assessmentId}/students`
+---
+
+### Get Students of an Assessment
+
+```
+GET /api/admin/assessments/{assessmentId}/students
+```
+
+**Response**
 
 ```json
 [
@@ -117,27 +199,36 @@
     "score": 78.5,
     "timeTakenMinutes": 74,
     "attemptDate": "2026-03-15T10:45:00Z"
-  },
-  {
-    "studentId": 22,
-    "name": "Sneha Patil",
-    "email": "sneha@example.com",
-    "status": "Missed",
-    "score": null,
-    "timeTakenMinutes": null,
-    "attemptDate": null
   }
 ]
 ```
 
-### PUT `/assessments/{assessmentId}/students/{studentId}/reschedule`
+**Student Status Values**
+
+| Value | Description |
+|---|---|
+| `Attempted` | Student completed the assessment |
+| `Missed` | Student did not attempt by deadline |
+| `Pending` | Assessment is scheduled but not yet attempted |
+
+---
+
+### Reschedule Student Assessment
+
+```
+PUT /api/admin/assessments/{assessmentId}/students/{studentId}/reschedule
+```
+
+**Request Body**
+
 ```json
 {
   "newScheduleDate": "2026-04-01",
-  "newScheduleTime": "10:00",
-
+  "newScheduleTime": "10:00"
 }
 ```
+
+**Response**
 
 ```json
 {
@@ -150,9 +241,18 @@
 }
 ```
 
-## 3. Session Module 
+---
 
-### GET `/sessions/statistics`
+## 🔐 Session Management
+
+### Get Session Statistics
+
+```
+GET /api/admin/sessions/statistics
+```
+
+**Response**
+
 ```json
 {
   "activeSessions": 85,
@@ -162,70 +262,61 @@
 }
 ```
 
-### GET `/sessions/logs`
+---
 
-```json
-{
-   [
-    {
-      "sessionId": 301,
-      "userId": 42,
-      "name": "Rahul Sharma",
-      "role": "Student",
-      "loginTime": "2026-03-10T10:20:00Z",
-      "logoutTime": "2026-03-10T11:10:00Z",
-      "sessionDuration": "50 mins",
-      "status": "Inactive"
-    }
-  ]
-}
+### Get All Session Logs
+
+```
+GET /api/admin/sessions/logs
 ```
 
-### GET `/sessions/logs/{studentId}`
+Supports optional query filters: `?role=Student`, `?date=2026-03-10`, `?status=Inactive`
+
+**Response**
+
+```json
+[
+  {
+    "sessionId": 301,
+    "userId": 42,
+    "name": "Rahul Sharma",
+    "role": "Student",
+    "loginTime": "2026-03-10T10:20:00Z",
+    "logoutTime": "2026-03-10T11:10:00Z",
+    "sessionDuration": "50 mins",
+    "status": "Inactive"
+  }
+]
+```
+
+**Session Status Values**
+
+| Value | Description |
+|---|---|
+| `Active` | User is currently logged in (`logoutTime` is null) |
+| `Inactive` | Session has ended |
+
+---
+
+### Get Session Logs by User
+
+```
+GET /api/admin/sessions/logs/{userId}
+```
+
+**Response**
 
 ```json
 {
   "userId": 42,
   "name": "Rahul Sharma",
-  "email": "rahul@example.com",
-  "role": "Student",
   "totalSessions": 18,
   "logs": [
     {
       "sessionId": 301,
       "loginTime": "2026-03-10T10:20:00Z",
       "logoutTime": "2026-03-10T11:10:00Z",
-      "sessionDuration": "50 mins",
-      "status": "Inactive"
-    },
-    {
-      "sessionId": 298,
-      "loginTime": "2026-03-09T09:00:00Z",
-      "logoutTime": "2026-03-09T09:45:00Z",
-      "sessionDuration": "45 mins",
-      "status": "Inactive"
-    }
-  ]
-}
-```
-
-## 4. User Module 
-
-### GET `/users`
-
-```json
-{
-   [
-    {
-      "userId": 101,
-      "firstName": "Rahul",
-      "lastName": "Sharma",
-      "email": "rahul@example.com",
-      "contact": "9876543210",
-      "roles": ["Student"],
-      "status": "ACTIVE",
-      "emailVerified": true,
-      "createdAt": "2025-08-01T00:00:00Z"
+      "sessionDuration": "50 mins"
     }
   ]
 }
@@ -233,110 +324,56 @@
 
 ---
 
-### GET `/users` — Filter by Role 
+## 👥 User Management
 
-#### `GET /api/admin/users?role=Student`
+### Get All Users
 
-```json
-{
-  
-   [
-    {
-      "userId": 101,
-      "firstName": "Rahul",
-      "lastName": "Sharma",
-      "email": "rahul@example.com",
-      "contact": "9876543210",
-      "status": "ACTIVE",
-      "studentProfile": {
-        "collegeName": "MIT Pune",
-        "degree": "B.Tech",
-        "branch": "Computer Science",
-        "graduationYear": 2026,
-        "expertiseLevel": "INTERMEDIATE",
-        "employabilityStatus": "Student"
-      }
-    }
-  ]
-}
+```
+GET /api/admin/users
 ```
 
-#### `GET /api/admin/users?role=Mentor`
+Supports query filters: `?role=Student`, `?status=ACTIVE`, `?search=rahul`, `?page=1&limit=20`
+
+**Response**
 
 ```json
-{
-
-   [
-    {
-      "userId": 202,
-      "firstName": "Anjali",
-      "lastName": "Desai",
-      "email": "anjali@example.com",
-      "contact": "9812345678",
-      "status": "ACTIVE",
-      "mentorProfile": {
-        "experienceYears": 6,
-        "specialization": "Full Stack Development",
-        "createdOn": "2025-06-01T00:00:00Z"
-      }
-    }
-  ]
-}
+[
+  {
+    "userId": 101,
+    "firstName": "Rahul",
+    "lastName": "Sharma",
+    "email": "rahul@example.com",
+    "contact": "9876543210",
+    "roles": ["Student"],
+    "status": "ACTIVE",
+    "createdAt": "2025-08-01T00:00:00Z"
+  }
+]
 ```
 
-#### `GET /api/admin/users?role=SME`
+---
 
-```json
-{
-  [
-    {
-      "userId": 303,
-      "firstName": "Vikram",
-      "lastName": "Nair",
-      "email": "vikram@example.com",
-      "contact": "9823456789",
-      "status": "ACTIVE",
-      "smeProfile": {
-        "expertiseTitle": "Backend Architect",
-        "availabilityStatus": "AVAILABLE",
-        "assignedOn": "2025-09-01T00:00:00Z",
-        "company": "TechCorp India",
-        "jobTitle": "Senior Engineer"
-      }
-    }
-  ]
-}
+### Filter Users by Role
+
+```
+GET /api/admin/users?role=Student
+GET /api/admin/users?role=Mentor
+GET /api/admin/users?role=SME
+GET /api/admin/users?role=Employer
 ```
 
-#### `GET /api/admin/users?role=Employer`
-```json
-{
-   [
-    {
-      "userId": 404,
-      "firstName": "Meera",
-      "lastName": "Shah",
-      "email": "meera@infosys.com",
-      "contact": "9834567890",
-      "status": "ACTIVE",
-      "employerProfile": {
-        "jobTitle": "HR Manager",
-        "workEmail": "meera.hr@infosys.com",
-        "workPhone": "+91-2012345678",
-        "company": {
-          "companyId": 10,
-          "companyName": "Infosys Ltd.",
-          "industry": "IT Services",
-          "companySize": "10000+",
-          "headquartersCity": "Bengaluru"
-        }
-      }
-    }
-  ]
-}
+Returns the same response structure as **Get All Users**, filtered by the specified role. Each role includes additional role-specific profile fields in the response.
+
+---
+
+### Get Role Summary
+
+```
+GET /api/admin/users/role-summary
 ```
 
-### GET `/users/role-summary`
+**Response**
+
 ```json
 {
   "total": 1200,
@@ -348,7 +385,15 @@
 }
 ```
 
-### POST `/users`
+---
+
+### Create User
+
+```
+POST /api/admin/users
+```
+
+**Request Body**
 
 ```json
 {
@@ -361,135 +406,89 @@
 }
 ```
 
-```json
-{
-  "userId": 1205,
-  "firstName": "Priya",
-  "lastName": "Nair",
-  "email": "priya@example.com",
-  "role": "Student",
-  "status": "ACTIVE",
-  "createdAt": "2026-03-12T10:00:00Z"
-}
+---
+
+### Get User Details
+
+```
+GET /api/admin/users/{userId}
 ```
 
-### GET `/users/{userId}`
-```json
-{
-  "userId": 101,
-  "firstName": "Rahul",
-  "lastName": "Sharma",
-  "email": "rahul@example.com",
-  "contact": "9876543210",
-  "status": "ACTIVE",
-  "emailVerified": true,
-  "roles": ["Student"],
-  "profile": {
-    "gender": "Male",
-    "dateOfBirth": "2001-05-14",
-    "city": "Pune",
-    "state": "Maharashtra",
-    "country": "India",
-    "linkedinUrl": "https://linkedin.com/in/rahul",
-    "githubUrl": "https://github.com/rahul"
-  },
-  "studentProfile": {
-    "collegeName": "MIT Pune",
-    "degree": "B.Tech",
-    "branch": "Computer Science",
-    "graduationYear": 2026,
-    "expertiseLevel": "INTERMEDIATE",
-    "employabilityStatus": "Student"
-  },
-  "lastLogin": "2026-03-10T10:20:00Z"
-}
+Returns full user profile including role-specific details (student academic info, mentor specialization, employer company, etc.).
+
+---
+
+### Update User
+
+```
+PUT /api/admin/users/{userId}
 ```
 
-### PUT `/users/{userId}`
+Updates basic user information such as name, contact, and email.
 
-```json
-{
-  "firstName": "Rahul",
-  "lastName": "Sharma",
-  "contact": "9876543210",
-  "profile": {
-    "city": "Mumbai",
-    "state": "Maharashtra",
-    "linkedinUrl": "https://linkedin.com/in/rahul-updated"
-  }
-}
+---
+
+### Update User Roles
+
+```
+PUT /api/admin/users/{userId}/roles
 ```
 
-```json
-{
-  "success": true,
-  "userId": 101,
-  "updatedAt": "2026-03-12T11:00:00Z"
-}
-```
+**Request Body**
 
-### PUT `/users/{userId}/roles`
 ```json
 {
   "roles": ["Student", "Mentor"]
 }
 ```
-```json
-{
-  "userId": 101,
-  "name": "Rahul Sharma",
-  "roles": ["Student", "Mentor"],
-  "updatedAt": "2026-03-12T11:00:00Z"
-}
-```
 
-### PUT `/users/{userId}/status`
-```json
-{
-  "status": "INACTIVE",
-}
-```
+> Replaces all existing roles. Send the complete new list of roles for the user.
 
-```json
-{
-  "userId": 101,
-  "name": "Rahul Sharma",
-  "status": "INACTIVE",
-  "updatedAt": "2026-03-12T11:30:00Z"
-}
-```
 ---
 
-### GET `/users/{userId}/assessments`
+### Change User Status
+
+```
+PUT /api/admin/users/{userId}/status
+```
+
+**Request Body**
+
 ```json
 {
-  "userId": 101,
-  "name": "Rahul Sharma",
-  "totalAssigned": 5,
-  "assessments": [
-    {
-      "testId": 5,
-      "title": "Java Backend Assessment",
-      "status": "Attempted",
-      "score": 78.5,
-      "attemptDate": "2026-03-15T10:45:00Z",
-      "timeTakenMinutes": 74
-    },
-    {
-      "testId": 6,
-      "title": "React Frontend Quiz",
-      "status": "Pending",
-      "score": null,
-      "attemptDate": null,
-      "timeTakenMinutes": null
-    }
-  ]
+  "status": "INACTIVE"
 }
 ```
 
-## 5. Settings Module 
+**Status Values**
 
-### GET `/settings`
+| Value | Description |
+|---|---|
+| `ACTIVE` | User can log in and use the platform |
+| `INACTIVE` | User account is disabled |
+| `BLOCKED` | User is permanently blocked |
+
+---
+
+### Get User Assessments
+
+```
+GET /api/admin/users/{userId}/assessments
+```
+
+Returns all assessments assigned to the specified user along with their attempt status and scores.
+
+---
+
+## ⚙️ System Settings
+
+### Get System Settings
+
+```
+GET /api/admin/settings
+```
+
+**Response**
 
 ```json
 {
@@ -502,50 +501,118 @@
 }
 ```
 
-### PUT `/settings`
+---
+
+### Update System Settings
+
+```
+PUT /api/admin/settings
+```
+
+**Request Body**
+
 ```json
 {
   "platformName": "EduPortal v2",
   "maxSessionDurationMinutes": 90,
   "allowSelfRegistration": false,
-  "defaultRole": "Student",
   "maintenanceMode": false
 }
 ```
-```json
-{
-  "success": true,
-  "updatedAt": "2026-03-12T12:00:00Z"
-}
-```
+
 ---
-### GET `/settings/roles`
+
+### Get All Roles
+
+```
+GET /api/admin/settings/roles
+```
+
+**Response**
+
 ```json
 [
-  { "roleId": 1, "roleName": "Student",  "description": "Platform learner" },
-  { "roleId": 2, "roleName": "Mentor",   "description": "Guides students" },
-  { "roleId": 3, "roleName": "SME",      "description": "Subject Matter Expert" },
-  { "roleId": 4, "roleName": "Employer", "description": "Hires students" },
-  { "roleId": 5, "roleName": "Admin",    "description": "Platform administrator" }
+  { "roleId": 1, "roleName": "Student" },
+  { "roleId": 2, "roleName": "Mentor" },
+  { "roleId": 3, "roleName": "SME" },
+  { "roleId": 4, "roleName": "Employer" },
+  { "roleId": 5, "roleName": "Admin" }
 ]
 ```
+
 ---
-### POST `/settings/roles`
+
+### Create Role
+
+```
+POST /api/admin/settings/roles
+```
+
+**Request Body**
 
 ```json
 {
   "roleName": "Evaluator",
-  "description": "Reviews and grades submitted assessments"
+  "description": "Reviews and grades assessments"
 }
 ```
 
-```json
-{
-  "roleId": 6,
-  "roleName": "Evaluator",
-  "description": "Reviews and grades submitted assessments"
-}
+---
 
+## 🗺️ API Pattern Reference
 
+All admin APIs follow this consistent pattern:
 
+```
+/api/admin/{module}/{resource}
+```
 
+### Complete Endpoint Map
+
+| Method | Endpoint | Description |
+|---|---|---|
+| `GET` | `/api/admin/dashboard/overview` | Platform statistics |
+| `GET` | `/api/admin/assessments/statistics` | Assessment counts |
+| `GET` | `/api/admin/assessments` | List all assessments |
+| `POST` | `/api/admin/assessments` | Create assessment |
+| `POST` | `/api/admin/assessments/{id}/assign` | Assign to students |
+| `GET` | `/api/admin/assessments/{id}/summary` | Assessment summary |
+| `GET` | `/api/admin/assessments/{id}/students` | Students of assessment |
+| `PUT` | `/api/admin/assessments/{id}/students/{sid}/reschedule` | Reschedule for student |
+| `GET` | `/api/admin/sessions/statistics` | Session statistics |
+| `GET` | `/api/admin/sessions/logs` | All session logs |
+| `GET` | `/api/admin/sessions/logs/{userId}` | User session logs |
+| `GET` | `/api/admin/users` | List all users |
+| `POST` | `/api/admin/users` | Create user |
+| `GET` | `/api/admin/users/role-summary` | Role count summary |
+| `GET` | `/api/admin/users/{userId}` | User details |
+| `PUT` | `/api/admin/users/{userId}` | Update user |
+| `PUT` | `/api/admin/users/{userId}/roles` | Update user roles |
+| `PUT` | `/api/admin/users/{userId}/status` | Change user status |
+| `GET` | `/api/admin/users/{userId}/assessments` | User assessments |
+| `GET` | `/api/admin/settings` | Get settings |
+| `PUT` | `/api/admin/settings` | Update settings |
+| `GET` | `/api/admin/settings/roles` | List roles |
+| `POST` | `/api/admin/settings/roles` | Create role |
+
+---
+
+### Recommended Full Platform API Structure
+
+For a scalable, microservice-ready backend, structure all APIs by role:
+
+```
+/api/admin/*       → Admin panel operations
+/api/student/*     → Student-facing features
+/api/mentor/*      → Mentor-facing features
+/api/sme/*         → SME-facing features
+/api/employer/*    → Employer-facing features
+```
+
+This keeps each module independently deployable and easy to maintain as the platform grows.
+
+---
+
+> 📌 **Platform:** TFLCoMentor  
+> **Stack:** React Frontend · .NET Backend · MySQL Microservices  
+> **Maintained by:** TFLCoMentor Engineering Team
