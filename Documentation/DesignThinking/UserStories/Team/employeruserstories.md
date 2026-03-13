@@ -1,77 +1,110 @@
-# 🚀 Employer Module – User Stories & Acceptance Criteria
+# 🏢 Employer Module — User Stories & REST APIs
 
-This document defines the **User Stories and Acceptance Criteria** for the Employer module, including Dashboard, Profile Management, Job Management, Candidate Management, and Interview Management.
+This document describes the **User Stories and REST APIs** for the **Employer Module**.  
+It covers the following sections:
+
+- 🏢 Company Profile  
+- 👤 Employer Profile  
+- 💼 Job Management  
+- 👥 Candidate Pool  
+- 🎤 Interview Module  
 
 ---
 
-# 📊 Employer Dashboard
+# 🏢 1. Company Profile
 
-## User Story 1 — View Employer Dashboard
+## 📌 User Story 1 — View Company Profile
 
-### User Story
+**User Story**
 
-As an **Employer**, I want to **view my dashboard summary** so that I can **see overall recruitment activity such as jobs, candidates, and interviews**.
+As an Employer, I want to view my company profile so that I can see the company information displayed on the platform.
 
-### Acceptance Criteria
+**Acceptance Criteria**
 
-* Employer must be authenticated.
-* System should return dashboard summary.
-* Dashboard must show:
-
-  * Total jobs posted
-  * Appeared candidates
-  * Shortlisted candidates
-  * Interviews scheduled
-  * Candidates hired
+- Employer must be authenticated  
+- System should return company profile details  
+- Profile must include company name, founded year, about, website, and logo  
 
 **API**
 
 ```
-GET /api/employer/dashboard/summary
+GET /api/employer/company/profile
 ```
 
 ---
 
-## User Story 2 — View Recruitment Statistics
+## 📌 User Story 2 — Add Company Alumni
 
-### User Story
+**User Story**
 
-As an **Employer**, I want to **view recruitment statistics** so that I can **analyze hiring progress**.
+As an Employer, I want to add company alumni so that candidates can see previous employees associated with the company.
 
-### Acceptance Criteria
+**Acceptance Criteria**
 
-* Employer must be logged in.
-* System should provide recruitment statistics.
-* Statistics should include job and candidate insights.
+- Employer must be authenticated  
+- System should allow adding alumni name  
+- Alumni should be saved under company profile  
 
 **API**
 
 ```
-GET /api/employer/dashboard/stats
+POST /api/employer/company/alumni
+```
+
+**Body**
+
+```
+{
+  "name": "Rahul Sharma"
+}
 ```
 
 ---
 
-# 👤 Employer Profile
+## 📌 User Story 3 — View Company Alumni
 
-## User Story 3 — View Employer Profile
+**User Story**
 
-### User Story
+As an Employer, I want to view company alumni so that I can track alumni associated with my organization.
 
-As an **Employer**, I want to **view my profile information** so that I can **confirm my account details**.
+**API**
 
-### Acceptance Criteria
+```
+GET /api/employer/company/alumni
+```
 
-* Employer must be authenticated.
-* System should return profile details.
-* Profile should include:
+---
 
-  * Full name
-  * Email
-  * Phone number
-  * Designation
-  * Profile photo
-  * Company name
+## 📌 User Story 4 — Add Referral
+
+**User Story**
+
+As an Employer, I want to add a referral candidate so that referred candidates can be considered for recruitment.
+
+**API**
+
+```
+POST /api/employer/company/referral
+```
+
+**Body**
+
+```
+{
+ "candidateName": "Amit Patel",
+ "email": "amit@gmail.com"
+}
+```
+
+---
+
+# 👤 2. Employer Profile
+
+## 📌 User Story 5 — View Employer Profile
+
+**User Story**
+
+As an Employer, I want to view my profile information so that I can verify my personal details.
 
 **API**
 
@@ -81,23 +114,11 @@ GET /api/employer/profile
 
 ---
 
-## User Story 4 — Create Employer Profile
+## 📌 User Story 6 — Create Employer Profile
 
-### User Story
+**User Story**
 
-As an **Employer**, I want to **create my profile** so that I can **start using the recruitment platform**.
-
-### Acceptance Criteria
-
-* Employer must submit profile information.
-* Required fields:
-
-  * Full name
-  * Email
-  * Phone number
-  * Designation
-  * Company name
-* System should create profile successfully.
+As an Employer, I want to create my employer profile so that my information is stored in the system.
 
 **API**
 
@@ -107,148 +128,43 @@ POST /api/employer/profile
 
 ---
 
-## User Story 5 — Update Employer Profile
+## 📌 User Story 7 — Update Employer Profile
 
-### User Story
+**User Story**
 
-As an **Employer**, I want to **update my profile information** so that **my details remain accurate**.
-
-### Acceptance Criteria
-
-* Employer must be authenticated.
-* System should allow updating profile fields.
-* Only modified fields should be updated.
+As an Employer, I want to edit my profile information so that I can keep my details updated.
 
 **API**
 
 ```
-PATCH /api/employer/profile
-```
-
-### Example
-
-```json
-{
-  "phoneNumber": "+91-9000000000",
-  "designation": "Senior HR Manager"
-}
+PUT /api/employer/profile
 ```
 
 ---
 
-## User Story 6 — Upload Profile Photo
+## 📌 User Story 8 — Delete Employer Profile
 
-### User Story
+**User Story**
 
-As an **Employer**, I want to **upload a profile photo** so that **my profile appears professional**.
-
-### Acceptance Criteria
-
-* Employer must be authenticated.
-* System should accept an image file.
-* Profile photo should be stored and linked to profile.
+As an Employer, I want to delete my profile so that my account information can be removed from the platform.
 
 **API**
 
 ```
-POST /api/employer/profile/photo
+DELETE /api/employer/profile
 ```
 
 ---
 
-# 🏢 Company Profile
+# 💼 3. Job Management
 
-## User Story 7 — View Company Profile
+## 📝 Post Job
 
-### User Story
+### 📌 User Story 9 — Post a Job
 
-As an **Employer**, I want to **view my company profile** so that **I can verify company information**.
+**User Story**
 
-### Acceptance Criteria
-
-* Employer must be authenticated.
-* System should return company details.
-
-**API**
-
-```
-GET /api/employer/company
-```
-
----
-
-## User Story 8 — Create Company Profile
-
-### User Story
-
-As an **Employer**, I want to **create my company profile** so that **candidates can learn about my organization**.
-
-### Acceptance Criteria
-
-* Employer must submit company details.
-* Required fields:
-
-  * Company name
-  * Industry
-  * Location
-  * Website
-* System should save company profile.
-
-**API**
-
-```
-POST /api/employer/company
-```
-
----
-
-## User Story 9 — Update Company Profile
-
-### User Story
-
-As an **Employer**, I want to **update company information** so that **the company profile remains accurate**.
-
-### Acceptance Criteria
-
-* Employer must be authenticated.
-* System should allow partial updates.
-
-**API**
-
-```
-PATCH /api/employer/company
-```
-
-### Example
-
-```json
-{
-  "website": "https://techinfo.com",
-  "location": "Mumbai"
-}
-```
-
----
-
-# 💼 Job Management
-
-## User Story 10 — Post a Job
-
-### User Story
-
-As an **Employer**, I want to **post a job opening** so that **candidates can apply**.
-
-### Acceptance Criteria
-
-* Employer must be authenticated.
-* Job posting should include:
-
-  * Job title
-  * Description
-  * Skills required
-  * Experience
-  * Location
-* System should create job successfully.
+As an Employer, I want to post a job so that candidates can apply for available positions.
 
 **API**
 
@@ -258,17 +174,25 @@ POST /api/employer/jobs
 
 ---
 
-## User Story 11 — View Posted Jobs
+### 📌 User Story 10 — View Job Details
 
-### User Story
+**User Story**
 
-As an **Employer**, I want to **view all my posted jobs** so that **I can manage them**.
+As an Employer, I want to view job details so that I can check the information of a specific job posting.
 
-### Acceptance Criteria
+**API**
 
-* Employer must be authenticated.
-* System should return job list.
-* Jobs should include application counts.
+```
+GET /api/employer/jobs/{jobId}
+```
+
+---
+
+### 📌 User Story 11 — View Posted Jobs
+
+**User Story**
+
+As an Employer, I want to view all posted jobs so that I can track my job listings.
 
 **API**
 
@@ -278,16 +202,11 @@ GET /api/employer/jobs
 
 ---
 
-## User Story 12 — Update Job Details
+### 📌 User Story 12 — Edit Job Details
 
-### User Story
+**User Story**
 
-As an **Employer**, I want to **edit job details** so that **I can update requirements**.
-
-### Acceptance Criteria
-
-* Employer must be authenticated.
-* System should update job information.
+As an Employer, I want to edit job details so that I can update job requirements or descriptions.
 
 **API**
 
@@ -297,37 +216,66 @@ PUT /api/employer/jobs/{jobId}
 
 ---
 
-## User Story 13 — Close Job Posting
+### 📌 User Story 13 — Close Job Posting
 
-### User Story
+**User Story**
 
-As an **Employer**, I want to **change job status** so that **I can close hiring when the position is filled**.
-
-### Acceptance Criteria
-
-* Employer must be authenticated.
-* Job status should be updated.
+As an Employer, I want to close a job posting so that candidates cannot apply once the position is filled.
 
 **API**
 
 ```
-PATCH /api/employer/jobs/{jobId}/status
+PATCH /api/employer/jobs/{jobId}/close
 ```
 
 ---
 
-# 👨‍💻 Candidate Management
+## 📊 Manage Job
 
-## User Story 14 — View Candidate Applications
+### 📌 User Story 14 — View Job List
 
-### User Story
+**User Story**
 
-As an **Employer**, I want to **view candidates who applied for a job** so that **I can evaluate them**.
+As an Employer, I want to view the list of all jobs so that I can manage them efficiently.
 
-### Acceptance Criteria
+**API**
 
-* Employer must be authenticated.
-* System should return candidate list.
+```
+GET /api/employer/jobs/list
+```
+
+---
+
+### 📌 User Story 15 — Check Job Status
+
+**User Story**
+
+As an Employer, I want to check job status so that I can see whether a job is active or inactive.
+
+**API**
+
+```
+GET /api/employer/jobs/status
+```
+
+Example Response
+
+```
+{
+ "jobId": 101,
+ "status": "Active"
+}
+```
+
+---
+
+## 📥 Job Applications
+
+### 📌 User Story 16 — View All Applications
+
+**User Story**
+
+As an Employer, I want to view all job applications so that I can review candidates who applied.
 
 **API**
 
@@ -337,71 +285,85 @@ GET /api/employer/jobs/{jobId}/applications
 
 ---
 
-## User Story 15 — Search Candidates
+### 📌 User Story 17 — View Qualified Applications
 
-### User Story
+**User Story**
 
-As an **Employer**, I want to **search candidates by skill or experience** so that **I can find suitable talent**.
-
-### Acceptance Criteria
-
-* System should support filtering by:
-
-  * Name
-  * Skill
-  * Experience
+As an Employer, I want to view qualified candidates so that I can move them to the interview stage.
 
 **API**
 
 ```
-GET /api/employer/candidates/search
-```
-
-### Example
-
-```
-/search?skill=react
+GET /api/employer/jobs/{jobId}/applications/qualified
 ```
 
 ---
 
-# 🎯 Interview Management
+# 👥 4. Candidate Pool
 
-## User Story 16 — Schedule Interview
+### 📌 User Story 18 — View All Candidates
 
-### User Story
+**User Story**
 
-As an **Employer**, I want to **schedule an interview with a candidate** so that **I can assess their skills**.
-
-### Acceptance Criteria
-
-* Employer must be authenticated.
-* Interview must include:
-
-  * Candidate
-  * Job
-  * Date
-  * Time
-  * Mode
+As an Employer, I want to view candidates in the candidate pool so that I can explore potential candidates.
 
 **API**
 
 ```
-POST /api/employer/interview
+GET /api/employer/candidates
 ```
 
 ---
 
-## User Story 17 — View Upcoming Interviews
+### 📌 User Story 19 — Search Candidates
 
-### User Story
+**User Story**
 
-As an **Employer**, I want to **see upcoming interviews** so that **I can prepare**.
+As an Employer, I want to search candidates so that I can find candidates based on skills or qualifications.
 
-### Acceptance Criteria
+**API**
 
-* Employer must be authenticated.
-* System should return upcoming interviews.
+```
+GET /api/employer/candidates/search?skill=java
+```
+
+---
+
+### 📌 User Story 20 — Shortlist Candidates
+
+**User Story**
+
+As an Employer, I want to shortlist candidates so that they can be considered for interviews.
+
+**API**
+
+```
+POST /api/employer/candidates/{candidateId}/shortlist
+```
+
+---
+
+# 🎤 5. Interview Module
+
+### 📌 User Story 21 — View Interview Summary
+
+**User Story**
+
+As an Employer, I want to view interview summary so that I can analyze interview activities.
+
+**API**
+
+```
+GET /api/employer/interviews/summary
+```
+
+---
+
+### 📌 User Story 22 — View Upcoming Interviews
+
+**User Story**
+
+As an Employer, I want to view upcoming interviews so that I can prepare for scheduled interviews.
 
 **API**
 
@@ -411,21 +373,74 @@ GET /api/employer/interviews/upcoming
 
 ---
 
-## User Story 18 — Cancel Interview
+### 📌 User Story 23 — View Today's Interviews
 
-### User Story
+**User Story**
 
-As an **Employer**, I want to **cancel an interview** so that **I can reschedule if necessary**.
-
-### Acceptance Criteria
-
-* Employer must be authenticated.
-* System should remove scheduled interview.
+As an Employer, I want to view today's interviews so that I can track the interviews scheduled today.
 
 **API**
 
 ```
-DELETE /api/employer/interviews/{interviewId}
+GET /api/employer/interviews/today
 ```
 
 ---
+
+### 📌 User Story 24 — Reschedule Interview
+
+**User Story**
+
+As an Employer, I want to reschedule interviews so that interview timing can be adjusted if required.
+
+**API**
+
+```
+PATCH /api/employer/interviews/{interviewId}/reschedule
+```
+
+---
+
+### 📌 User Story 25 — View Interview Results
+
+**User Story**
+
+As an Employer, I want to view interview results so that I can evaluate candidate performance.
+
+**API**
+
+```
+GET /api/employer/interviews/results
+```
+
+---
+
+### 📌 User Story 26 — View Qualified Candidates
+
+**User Story**
+
+As an Employer, I want to view qualified candidates after interviews so that I can proceed with hiring decisions.
+
+**API**
+
+```
+GET /api/employer/interviews/qualified
+```
+
+---
+
+# 📊 Summary
+
+| Module | User Stories |
+|------|------|
+| 🏢 Company Profile | 4 |
+| 👤 Employer Profile | 4 |
+| 💼 Job Management | 9 |
+| 👥 Candidate Pool | 3 |
+| 🎤 Interview | 6 |
+
+**Total User Stories: 26**
+
+---
+
+✅ This document defines the **Employer module functionality and corresponding REST APIs** for the recruitment platform.
