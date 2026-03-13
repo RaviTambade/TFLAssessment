@@ -1,23 +1,23 @@
 # 🚀 Employer API Documentation
 
-This document describes the **Employer Module APIs** used for managing dashboards, employer profiles, company profiles, jobs, candidates, and interviews.
+This document describes the **Employer Module APIs** used for managing
+dashboards, employer profiles, company profiles, jobs, candidates, and
+interviews.
 
----
+------------------------------------------------------------------------
 
 # 📊 Employer Dashboard
 
 ## 📌 Dashboard APIs
 
-```
-GET /api/employer/dashboard/summary
-GET /api/employer/dashboard/stats
-GET /api/employer/dashboard/candidate-stats
-GET /api/employer/dashboard/interview-stats
-```
+    GET /api/employer/dashboard/summary
+    GET /api/employer/dashboard/stats
+    GET /api/employer/dashboard/candidate-stats
+    GET /api/employer/dashboard/interview-stats
 
 ### 📄 Sample JSON Response
 
-```json
+``` json
 {
   "totalJobs": 12,
   "appearedCandidates": 6,
@@ -27,538 +27,385 @@ GET /api/employer/dashboard/interview-stats
 }
 ```
 
----
+------------------------------------------------------------------------
 
 # 👤 Employer Profile
 
-## Employer Profile APIs
+## 1️⃣ Get Employer Profile
 
-### 1️⃣ Get Employer Profile
-
-```
-GET /api/employer/profile
-```
+    GET /api/employer/profile
 
 ### 📄 JSON DATA
 
-```json
+``` json
 {
   "fullName": "John Doe",
-  "email": "john.doe@company.com",
+  "emailId": "john.doe@company.com",
   "phoneNumber": "+91-9876543210",
   "designation": "HR Manager",
-  "profilePhoto": "profile.jpg",
   "companyName": "TechInfo Soln"
 }
 ```
 
----
+------------------------------------------------------------------------
 
-### 2️⃣ Create Employer Profile
+## 2️⃣ Create Employer Profile
 
-```
-POST /api/employer/profile
-```
+    POST /api/employer/profile
 
----
+------------------------------------------------------------------------
 
-### 3️⃣ Update Employer Profile (Full Update)
+## 3️⃣ Update Employer Profile (Full Update)
 
-```
-PUT /api/employer/profile
-```
+    PUT /api/employer/profile
 
----
+------------------------------------------------------------------------
 
-### 4️⃣ Partially Update Employer Profile
+## 4️⃣ Partially Update Employer Profile
 
-Use this API when updating **only specific fields** like name, phone, designation etc.
+    PATCH /api/employer/profile
 
-```
-PATCH /api/employer/profile
-```
+Example JSON
 
-### Example JSON
-
-```json
+``` json
 {
   "phoneNumber": "+91-9000000000",
   "designation": "Senior HR Manager"
 }
 ```
 
----
-
-### 5️⃣ Upload Profile Photo
-
-```
-POST /api/employer/profile/photo
-```
-
----
-
-### 6️⃣ Delete Profile Photo
-
-```
-DELETE /api/employer/profile/photo
-```
-
----
+------------------------------------------------------------------------
 
 # 🏢 Company Profile
 
 ## 1️⃣ Get Company Profile
 
-```
-GET /api/employer/company
-```
+    GET /api/employer/company
 
 ### 📄 JSON DATA
 
-```json
+``` json
 {
-  "companyId": 10,
-  "name": "TechInfo Soln",
-  "industry": "Software development",
-  "website": "http://techinfo.com",
-  "location": "Pune",
-  "description": "We build enterprise software",
+  "companyName": "TechInfo Soln",
   "foundedYear": 2015,
-  "companySize": "100-1000"
+  "aboutUs": "We build enterprise software",
+  "websiteUrl": "http://techinfo.com",
+  "logo": "logo.png"
 }
 ```
 
----
+------------------------------------------------------------------------
 
 ## 2️⃣ Create Company Profile
 
-```
-POST /api/employer/company
-```
+    POST /api/employer/company
 
----
+------------------------------------------------------------------------
 
 ## 3️⃣ Update Company Profile (Full Update)
 
-```
-PUT /api/employer/company
-```
+    PUT /api/employer/company
 
----
+------------------------------------------------------------------------
 
 ## 4️⃣ Partially Update Company Profile
 
-Used when updating **specific fields like website, location, description etc.**
+    PATCH /api/employer/company
 
-```
-PATCH /api/employer/company
-```
+Example JSON
 
-### Example JSON
-
-```json
+``` json
 {
-  "website": "https://techinfo.com",
-  "location": "Mumbai"
+  "websiteUrl": "https://techinfo.com",
+  "aboutUs": "Global software development company"
 }
 ```
 
----
+------------------------------------------------------------------------
 
 ## 5️⃣ Delete Company Profile
 
-```
-DELETE /api/employer/company
+    DELETE /api/employer/company
+
+------------------------------------------------------------------------
+
+## Company Logo
+
+### Upload Logo
+
+    POST /api/employer/company/logo
+
+### Delete Logo
+
+    DELETE /api/employer/company/logo
+
+------------------------------------------------------------------------
+
+## Alumni
+
+### Add Alumni
+
+    POST /api/employer/company/alumni
+
+Example
+
+``` json
+{
+  "name": "Rahul Sharma"
+}
 ```
 
----
+------------------------------------------------------------------------
+
+### Get Alumni List
+
+    GET /api/employer/company/alumni
+
+------------------------------------------------------------------------
+
+### Delete Alumni
+
+    DELETE /api/employer/company/alumni/{alumniId}
+
+------------------------------------------------------------------------
+
+## Referral
+
+### Add Referral
+
+    POST /api/employer/company/referral
+
+Example
+
+``` json
+{
+  "referralEmail": "referral@techinfo.com"
+}
+```
+
+------------------------------------------------------------------------
+
+### Get Referral
+
+    GET /api/employer/company/referral
+
+------------------------------------------------------------------------
 
 # 💼 Job Management
 
 ## 1️⃣ Post Job
 
-```
-POST /api/employer/jobs
+    POST /api/employer/jobs
+
+Example JSON
+
+``` json
+{
+  "jobTitle": "Backend Developer",
+  "jobDescription": "Node.js developer required",
+  "location": "Pune",
+  "workMode": "Hybrid",
+  "compensation": "8 LPA"
+}
 ```
 
----
+------------------------------------------------------------------------
 
 ## 2️⃣ Get All Jobs
 
-```
-GET /api/employer/jobs?status=open
-```
+    GET /api/employer/jobs
 
-### 📄 JSON DATA
-
-```json
-{
-  "jobId": 12,
-  "title": "Full Stack developer",
-  "location": "Pune",
-  "applications": 45,
-  "status": "open"
-}
-```
-
----
+------------------------------------------------------------------------
 
 ## 3️⃣ Get Job Details
 
-```
-GET /api/employer/jobs/{jobId}
-```
+    GET /api/employer/jobs/{jobId}
 
-### 📄 JSON DATA
-
-```json
-{
-  "jobId": 11,
-  "title": "Full Stack developer",
-  "description": "MERN Stack developer",
-  "experience": "1-3 years",
-  "skills": ["React", "Node"],
-  "location": "Pune"
-}
-```
-
----
+------------------------------------------------------------------------
 
 ## 4️⃣ Update Job
 
-```
-PUT /api/employer/jobs/{jobId}
-```
+    PUT /api/employer/jobs/{jobId}
 
----
+------------------------------------------------------------------------
 
 ## 5️⃣ Delete Job
 
-```
-DELETE /api/employer/jobs/{jobId}
-```
+    DELETE /api/employer/jobs/{jobId}
 
----
+------------------------------------------------------------------------
 
 ## 6️⃣ Change Job Status
 
-```
-PATCH /api/employer/jobs/{jobId}/status
-```
+    PATCH /api/employer/jobs/{jobId}/status
 
----
+Example
 
-## 7️⃣ Get Appeared Candidates for Job
-
-```
-GET /api/employer/jobs/{jobId}/applications
-```
-
-### 📄 JSON DATA
-
-```json
+``` json
 {
-  "applicationId": 13,
+  "status": "Closed"
+}
+```
+
+------------------------------------------------------------------------
+
+# 📄 Job Applications
+
+## Get All Applicants
+
+    GET /api/employer/jobs/{jobId}/applications
+
+Example JSON
+
+``` json
+{
   "candidateId": 2,
   "candidateName": "Rahul Sharma",
-  "status": "appeared"
+  "status": "Applied"
 }
 ```
 
----
+------------------------------------------------------------------------
 
-## 8️⃣ Qualified Candidates
+## Get Qualified Candidates
 
-```
-GET /api/employer/jobs/{jobId}/candidates?status=shortlisted
-```
+    GET /api/employer/jobs/{jobId}/candidates?status=qualified
 
-### 📄 JSON DATA
+------------------------------------------------------------------------
 
-```json
-{
-  "candidateId": 20,
-  "candidateName": "Ganesh",
-  "status": "shortlisted"
-}
-```
-
----
-
-## 9️⃣ Get Appeared Student / Candidate Count
-
-```
-GET /api/employer/jobs/{jobId}/candidate/count
-```
-
-### 📄 JSON DATA
-
-```json
-{
-  "total": 100,
-  "shortlisted": 50
-}
-```
-
----
-
-# 👨‍💻 Candidate Management
+# 👨‍💻 Candidate Pool
 
 ## 1️⃣ Get All Candidates
 
-```
-GET /api/employer/candidates
-```
+    GET /api/employer/candidates
 
-### 📄 JSON DATA
+Example JSON
 
-```json
+``` json
 {
   "candidateId": 10,
   "name": "Tejas",
   "email": "tejas@123.com",
-  "skill": ["React"],
+  "skills": ["React"],
   "experience": "4 years"
 }
 ```
 
----
+------------------------------------------------------------------------
 
 ## 2️⃣ Search Candidates
 
-```
-GET /api/employer/candidates/search
-```
+    GET /api/employer/candidates/search
 
-### 🔍 Search Examples
+Examples
 
-Search by Name
+Search by name
 
-```
-/search?name=rahul
-```
+    /search?name=rahul
 
-Search by Skill
+Search by skill
 
-```
-/search?skill=react
-```
+    /search?skill=react
 
-Search by Experience
+Search by experience
 
-```
-/search?experience=2
-```
+    /search?experience=2
 
----
+------------------------------------------------------------------------
 
-## 3️⃣ Get Candidates by Skill
+## 3️⃣ Shortlist Candidate
 
-```
-GET /api/employer/candidates/skills
-```
+    POST /api/employer/candidates/{candidateId}/shortlist
 
-### 📄 JSON DATA
+------------------------------------------------------------------------
 
-```json
-{
-  "studentId": 120,
-  "name": "Garthak",
-  "skill": "C#"
-}
-```
+## 4️⃣ Get Shortlisted Candidates
 
----
+    GET /api/employer/candidates/shortlisted
 
-## 4️⃣ Get Candidate Profile
+------------------------------------------------------------------------
 
-```
-GET /api/employer/candidates/{candidateId}
-```
+## 5️⃣ Get Candidate Profile
 
-### 📄 JSON DATA
+    GET /api/employer/candidates/{candidateId}
 
-```json
-{
-  "studentId": 20,
-  "name": "",
-  "email": "",
-  "education": "B.Tech Computer",
-  "skills": ["Java", "Spring Boot"],
-  "projects": ["Ecommerce App", "Student Management"],
-  "resume": "system"
-}
-```
-
----
-
-## 5️⃣ Get Candidate Skill Summary
-
-```
-GET /api/employer/candidates/{candidateId}/skills
-```
-
-### 📄 JSON DATA
-
-```json
-{
-  "skill": ["React", "Java", "MySQL"],
-  "proficiency": {
-    "React": "Advance",
-    "MySQL": "Intermediate"
-  }
-}
-```
-
----
+------------------------------------------------------------------------
 
 # 🎯 Interview Management
 
-## 1️⃣ Interview Pipeline
+## 1️⃣ Interview Summary
 
-```
-GET /api/employer/candidates/{studentId}/pipeline
-```
+    GET /api/employer/interviews/summary
 
-### 📄 JSON DATA
+Example JSON
 
-```json
-{
-  "candidateId": 11,
-  "jobId": 12,
-  "stages": [
-    "Applied",
-    "Assessment",
-    "Technical Interview",
-    "HR Interview",
-    "Offer"
-  ],
-  "currentStage": "Technical Interview"
-}
-```
-
----
-
-## 2️⃣ Schedule Interview
-
-```
-POST /api/employer/interview
-```
-
----
-
-## 3️⃣ Get Interview Summary
-
-```
-GET /api/employer/interviews/summary
-```
-
-### 📄 JSON DATA
-
-```json
+``` json
 {
   "totalInterviews": 40,
   "upcoming": 12,
-  "completed": 20,
-  "shortlisted": 6
+  "today": 5,
+  "completed": 20
 }
 ```
 
----
+------------------------------------------------------------------------
 
-## 4️⃣ Upcoming Interviews
+## 2️⃣ Schedule Interview
 
-```
-GET /api/employer/interviews/upcoming
-```
+    POST /api/employer/interviews
 
-### 📄 JSON DATA
+Example
 
-```json
+``` json
 {
-  "interviewId": 50,
-  "candidateName": "Garthak",
-  "jobTitle": "Tester",
-  "date": "2026-03-15",
-  "time": "11:00"
-}
-```
-
----
-
-## 5️⃣ Today's Interviews
-
-```
-GET /api/employer/interviews/today
-```
-
-### 📄 JSON DATA
-
-```json
-{
-  "interviewId": 100,
-  "candidateName": "Samruddhi",
+  "candidateId": 12,
+  "jobId": 3,
+  "date": "2026-03-20",
   "time": "10:30",
   "mode": "Online"
 }
 ```
 
----
+------------------------------------------------------------------------
 
-## 6️⃣ Interview Feedback
+## 3️⃣ Upcoming Interviews
 
-```
-GET /api/employer/interviews/results
-```
+    GET /api/employer/interviews/upcoming
 
-### 📄 JSON DATA
+------------------------------------------------------------------------
 
-```json
-[
-  {
-    "interviewId": 22,
-    "candidateName": "",
-    "result": "Selected",
-    "feedback": "Strong in MySQL"
-  }
-]
-```
+## 4️⃣ Today's Interviews
 
----
+    GET /api/employer/interviews/today
 
-## 7️⃣ Reschedule Interview
+------------------------------------------------------------------------
 
-```
-PUT /api/employer/interviews/{interviewId}
+## 5️⃣ Update Interview Status
+
+    PATCH /api/employer/interviews/{interviewId}/status
+
+Example
+
+``` json
+{
+  "status": "Completed"
+}
 ```
 
----
+------------------------------------------------------------------------
 
-## 8️⃣ Cancel Interview
+## 6️⃣ Reschedule Interview
 
-```
-DELETE /api/employer/interviews/{interviewId}
-```
+    PUT /api/employer/interviews/{interviewId}
 
----
+------------------------------------------------------------------------
 
-## 9️⃣ Selected Candidates
+## 7️⃣ Cancel Interview
 
-```
-GET /api/employer/interviews/shortlisted
-```
+    DELETE /api/employer/interviews/{interviewId}
 
-### 📄 JSON DATA
+------------------------------------------------------------------------
 
-```json
-[
-  {
-    "candidateId": 101,
-    "candidateName": "",
-    "jobTitle": "",
-    "status": ""
-  }
-]
-```
+## 8️⃣ Qualified Candidates
 
----
+    GET /api/employer/interviews/qualified
