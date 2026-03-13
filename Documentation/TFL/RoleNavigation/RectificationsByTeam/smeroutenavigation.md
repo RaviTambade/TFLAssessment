@@ -9,6 +9,22 @@
 │
 └── /sme/dashboard
     │
+    ├── /sme/lectures
+    │   ├── /sme/lectures/create
+    │   ├── /sme/lectures/list
+    │   └── /sme/lectures/:lectureId
+    │       ├── /view
+    │       ├── /edit
+    │       └── /delete
+    │
+    ├── /sme/assignments
+    │   ├── /sme/assignments/create
+    │   ├── /sme/assignments/list
+    │   └── /sme/assignments/:assignmentId
+    │       ├── /view
+    │       ├── /edit
+    │       ├── /delete
+    │       └── /submissions 
     ├── /sme/tests
     │   │
     │   ├── /sme/tests/create
@@ -341,9 +357,12 @@ PUT /api/sme/profile
 ```
 /api/sme
 │
+├── /lectures
+├── /assignments
 ├── /tests
 ├── /questions
 ├── /concepts
+├── /runtimes
 ├── /analytics
 └── /profile
 ```
