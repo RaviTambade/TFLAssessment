@@ -917,8 +917,8 @@ GET /api/sme/questions?type={type}
 # User Story: Add Question
 
 **As an SME**
-I want to add a new question
-So that it can be used in assessments.
+I want add new questions to be saved as Draft
+So that mentor can review and finalize them before using them in tests.
 
 **API**
 
@@ -931,18 +931,58 @@ Example
 ```json
 {
  "type":"MCQ",
- "question":"What is encapsulation?",
- "options":["OOP concept","Database","Loop","Algorithm"],
- "correctAnswer":"OOP concept"
+ "question":"What is polymorphism?",
+ "options":["OOP concept","Database","Loop","Variable"],
+ "correctAnswer":"OOP concept",
+ "status":"DRAFT"
 }
 ```
 
 
 **✅ Acceptance Criteria**
 
-* SME should be able to select the **question type (MCQ, Code Snippets, Problem Statements, Mock Questions, Mini Project.)**
-* SME should be able to enter the **question text**
-* System should **validate that required fields are filled**
+* When SME creates a question, its default status should be Draft
+* Draft questions should not appear in test question selection
+* Mentor should be able to edit draft questions
+* System should store question successfully
+
+---
+
+# User Story: Approve Question
+
+**As an SME**
+I want to **approve, deactivate, or put a question on hold**
+So that I can control whether the question is ready for use, temporarily paused, or removed from assessments.
+
+🔗 **API Endpoint**
+
+```
+PUT /api/sme/questions/{questionId}/status
+```
+
+**Example Request**
+
+```json
+{
+ "status": "APPROVED"
+}
+```
+
+✅ **Acceptance Criteria**
+
+* SME should be able to **change the status of a question**
+* SME should be able to set status as **Approved, Hold, or Deactivated**
+* When status is **Approved**, the question should be **available for test creation**
+* When status is **Hold**, the question should **not appear in test selection**
+* When status is **Deactivated**, the question should be **removed from active question bank usage**
+* System should **store the updated status successfully**
+* System should **record the date and SME who updated the status**
+
+
+
+🎯 **Business Value**
+
+Provides **better control over question lifecycle and quality management** in the question bank.
 
 ---
 
@@ -981,6 +1021,38 @@ PUT /api/sme/questions/{questionId}
 * SME should be able to **edit the question text**
 * SME should be able to **modify options**
 
+---
+
+
+# User Story: View Questions by Status
+
+🧑‍🔬 **User Story**
+
+**As an SME**
+I want to **filter questions by status**
+So that I can easily manage Draft, Approved, Confused, and Deactivated questions.
+
+🔗 **API Endpoint**
+
+```
+GET /api/sme/questions?status={status}
+```
+
+Example
+
+```
+GET /api/sme/questions?status=DRAFT
+```
+
+✅ **Acceptance Criteria**
+
+* SME can filter questions by status
+* System should display **Draft / Approved / Confused / Deactivated**
+* Results should be displayed quickly
+
+🎯 **Business Value**
+
+Improves **question bank management efficiency**.
 
 ---
 
