@@ -443,7 +443,7 @@ POST /api/student/projects
 ## 👨‍🎓 User Story: View Job Opportunities
 
 **As a Student**  
-I want to browse available job opportunities matching my skills
+I want to browse available job opportunities matching my skills 
 So that I can find relevant developer roles from partner companies.
 
 ### 🔗 API Endpoint
