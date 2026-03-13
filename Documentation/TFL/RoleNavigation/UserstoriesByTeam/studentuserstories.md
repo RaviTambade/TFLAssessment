@@ -1,14 +1,22 @@
-# User stories revised by Team for Student role
 
-Below are *Agile User Stories mapped to each Student REST API endpoint* for the *TFLCoMentor Student Portal*.
-This makes the system *clear for product managers, developers, testers, and students learning full-stack architecture*.
+# 🎓 Student User Stories Documentation
+## TFLCoMentor Student Portal
 
-Structure used:
+Below are **Agile User Stories mapped to each Student REST API endpoint** for the **TFLCoMentor Student Portal**.
 
-* 👨‍🎓 *User Story*
-* 🔗 *API Endpoint*
-* ✅ *Acceptance Criteria*
-* 🎯 *Business Value*
+This documentation helps:
+
+- 👨‍💻 Developers understand system functionality
+- 📋 Product managers track feature requirements
+- 🧪 Testers validate expected behaviour
+- 🎓 Students learn full-stack architecture
+
+### Structure Used
+
+* 👨‍🎓 **User Story**
+* 🔗 **API Endpoint**
+* ✅ **Acceptance Criteria**
+* 🎯 **Business Value**
 
 ---
 
@@ -16,44 +24,44 @@ Structure used:
 
 ---
 
-# User Story: View Profile
+## 👨‍🎓 User Story: View Profile
 
-*As a Student*
-I want to view my profile information
+**As a Student**  
+I want to view my profile information  
 So that I can verify my personal and professional details.
 
-*API*
+### 🔗 API Endpoint
 
-http
+```http
 GET /api/student/profile
+```
 
+### ✅ Acceptance Criteria
 
-*Acceptance Criteria*
-
-* System should display name,user role ,skills, GitHub, Gmail and LinkedIn
+* System should display name, user role, skills, GitHub, Gmail and LinkedIn
 * Student should see profile completion status
 
-*Business Value*
+### 🎯 Business Value
 
-Helps students *maintain a professional developer profile*.
+Helps students **maintain a professional developer profile**.
 
 ---
 
-# User Story: Update Profile
+## 👨‍🎓 User Story: Update Profile
 
-*As a Student*
-I want to update my profile
+**As a Student**  
+I want to update my profile  
 So that employers and mentors see accurate information.
 
-*API*
+### 🔗 API Endpoint
 
-http
+```http
 PUT /api/student/profile
+```
 
+### Example Request
 
-Example
-
-json
+```json
 {
  "name":"Rahul Patil",
  "about":"Full stack developer",
@@ -61,9 +69,9 @@ json
  "github":"github.com/rahul",
  "linkedin":"linkedin.com/rahul"
 }
+```
 
-
-*Acceptance Criteria*
+### ✅ Acceptance Criteria
 
 * Student can update skills
 * Student can update portfolio links
@@ -71,19 +79,19 @@ json
 
 ---
 
-# User Story: Change Password
+## 👨‍🎓 User Story: Change Password
 
-*As a Student*
-I want to change my password
+**As a Student**  
+I want to change my password  
 So that my account remains secure.
 
-*API*
+### 🔗 API Endpoint
 
-http
+```http
 PUT /api/student/profile/password
+```
 
-
-*Acceptance Criteria*
+### ✅ Acceptance Criteria
 
 * Old password must be verified
 * New password must meet security rules
@@ -94,67 +102,67 @@ PUT /api/student/profile/password
 
 ---
 
-# User Story: View Enrolled Courses
+## 👨‍🎓 User Story: View Enrolled Courses
 
-*As a Student*
-I want to see my list of courses and corresponding SME who assigned it
+**As a Student**  
+I want to see my list of courses and corresponding SME who assigned it  
 So that I can continue my learning journey.
 
-*API*
+### 🔗 API Endpoint
 
-http
+```http
 GET /api/student/courses
+```
 
-
-*Acceptance Criteria*
+### ✅ Acceptance Criteria
 
 * System should list courses assigned to the student
-* Include course progress percentage , enrolled date 
-
+* Include course progress percentage
+* Show enrolled date
 
 ---
 
-# User Story: View Assignments and Labs
+## 👨‍🎓 User Story: View Assignments and Labs
 
-*As a Student*  
+**As a Student**  
 I want to view assignments and labs for a course  
 So that I can understand the tasks I need to complete and practice coding exercises.
 
-*API*
+### 🔗 API Endpoint
 
-http
+```http
 GET /api/student/courses/{courseId}/tasks
+```
 
+### ✅ Acceptance Criteria
 
-*Acceptance Criteria*
-
-* System should list both assignments and lab exercises for the course
+* System should list both assignments and lab exercises
 * Show assignment title and lab title
-* Show due date for assignments
-* Show submission status for assignments
-* Student should be able to access instructions and resources for labs
+* Show due date
+* Show submission status
+* Student should access lab instructions and resources
 
-*Business Value*
+### 🎯 Business Value
 
-Helps students *manage coursework and practice activities from a single learning interface*, improving productivity and clarity.
+Helps students **manage coursework and practice activities from a single learning interface**.
 
 ---
 
-# User Story: Submit Assignment
+## 👨‍🎓 User Story: Submit Assignment
 
-*As a Student*  
+**As a Student**  
 I want to submit my assignment using links or uploaded files  
 So that mentors can review my work and provide feedback.
 
-*API*
+### 🔗 API Endpoint
 
-http
+```http
 POST /api/student/courses/{courseId}/assignments/{assignmentId}/submit
+```
 
+### Example Request
 
-Example
-
-json
+```json
 {
  "submissionType":"file",
  "files":[
@@ -162,99 +170,103 @@ json
    "code.zip"
  ]
 }
+```
 
+### ✅ Acceptance Criteria
 
-*Acceptance Criteria*
+* Student can submit via **GitHub link**
+* Student can **upload files**
+* System stores submission timestamp
+* System prevents late submission (if deadline configured)
+* Mentor can review submission
 
-* Student should be able to submit assignment via *GitHub link or project URL*
-* Student should be able to *upload files*
-* System should store submission with timestamp
-* System should prevent submission after deadline (if configured)
-* Mentor should be able to review the submission
+### 🎯 Business Value
 
-*Business Value*
+Allows students to **submit real development work like GitHub repositories or project demos**.
 
-Allows students to *submit real development work such as GitHub repositories, project demos, or documents*, enabling proper evaluation by mentors.
+---
 
 # 🧪 3️⃣ Assessment APIs
 
 ---
 
-# User Story: View Scheduled Assessments
+## 👨‍🎓 User Story: View Scheduled Assessments
 
-*As a Student*
-I want to see upcoming assessments
+**As a Student**  
+I want to see upcoming assessments  
 So that I can prepare for them.
 
-*API*
+### 🔗 API Endpoint
 
-http
+```http
 GET /api/student/assessments/scheduled
+```
 
+### ✅ Acceptance Criteria
 
-*Acceptance Criteria*
-
-* Show assessment date, time and it's duration
-* Show status : missed or scheduled or completed
-* Show assessment technology
+* Show assessment date
+* Show assessment time
+* Show assessment duration
+* Show status (scheduled / missed / completed)
+* Show technology
 
 ---
 
-# User Story: Start Assessment
+## 👨‍🎓 User Story: Start Assessment
 
-*As a Student*
-I want to start an assessment
+**As a Student**  
+I want to start an assessment  
 So that my skills can be evaluated.
 
-*API*
+### 🔗 API Endpoint
 
-http
+```http
 GET /api/student/assessments/{assessmentId}
+```
 
+### ✅ Acceptance Criteria
 
-*Acceptance Criteria*
-
-* System should load questions
+* System loads questions
 * Timer should start
 
 ---
 
-# User Story: Submit Assessment
+## 👨‍🎓 User Story: Submit Assessment
 
-*As a Student*
-I want to submit my answers
+**As a Student**  
+I want to submit my answers  
 So that the system can evaluate my performance.
 
-*API*
+### 🔗 API Endpoint
 
-http
+```http
 POST /api/student/assessments/{assessmentId}/submit
+```
 
-
-*Acceptance Criteria*
+### ✅ Acceptance Criteria
 
 * Answers should be stored
-* System should calculate score
+* System calculates score
 
 ---
 
-# User Story: View Assessment Result
+## 👨‍🎓 User Story: View Assessment Result
 
-*As a Student*
-I want to see my assessment results
+**As a Student**  
+I want to see my assessment results  
 So that I can understand my strengths and weaknesses.
 
-*API*
+### 🔗 API Endpoint
 
-http
+```http
 GET /api/student/assessments/{assessmentId}/result
+```
 
-
-*Acceptance Criteria*
+### ✅ Acceptance Criteria
 
 * Display score
 * Display correct vs incorrect answers
-* Display assesment Statistics
+* Display assessment statistics
 
 ---
 
@@ -262,109 +274,97 @@ GET /api/student/assessments/{assessmentId}/result
 
 ---
 
-# User Story: View Assigned Mentor
+## 👨‍🎓 User Story: View Assigned Mentor
 
-*As a Student*
-I want to see my assigned mentor
+**As a Student**  
+I want to see my assigned mentor  
 So that I can seek guidance.
 
-*API*
+### 🔗 API Endpoint
 
-http
+```http
 GET /api/student/mentor
+```
 
-
-*Acceptance Criteria*
+### ✅ Acceptance Criteria
 
 * Show mentor name
 * Show mentor expertise
 
 ---
 
-# User Story: Schedule Mentorship Session
+## 👨‍🎓 User Story: Schedule Mentorship Session
 
-*As a Student*
-I want to schedule a session with my mentor
+**As a Student**  
+I want to schedule a session with my mentor  
 So that I can discuss learning challenges.
 
-*API*
+### 🔗 API Endpoint
 
-http
+```http
 POST /api/student/mentorship/session
+```
 
+### Example
 
-Example
-
-json
+```json
 {
  "mentorId":4,
  "date":"2026-03-20",
  "time":"15:00"
 }
+```
 
+### ✅ Acceptance Criteria
 
-*Acceptance Criteria*
-
-* Session should appear in mentor calendar
+* Session appears in mentor calendar
 * Student receives confirmation
 
 ---
 
-# 💬 5️⃣ Discussion / Question APIs
+# 💬 5️⃣ Discussion APIs
 
 ---
 
-# User Story: Post a Question
+## 👨‍🎓 User Story: Post a Question
 
-*As a Student*
-I want to post a question in the discussion forum
-So that mentors and SMEs can help me.
+### 🔗 API Endpoint
 
-*API*
-
-http
+```http
 POST /api/student/questions
+```
 
+### ✅ Acceptance Criteria
 
-*Acceptance Criteria*
-
-* Question should appear in discussion board
+* Question appears in discussion board
 * Mentors and SMEs can respond
 
 ---
 
-# User Story: View Discussions
+## 👨‍🎓 User Story: View Discussions
 
-*As a Student*
-I want to browse discussion questions
-So that I can learn from others.
+### 🔗 API Endpoint
 
-*API*
-
-http
+```http
 GET /api/student/questions
+```
 
-
-*Acceptance Criteria*
+### ✅ Acceptance Criteria
 
 * Show recent discussions
-* Show number of replies
+* Show reply count
 
 ---
 
-# User Story: View Question Details
+## 👨‍🎓 User Story: View Question Details
 
-*As a Student*
-I want to view a specific question
-So that I can read answers.
+### 🔗 API Endpoint
 
-*API*
-
-http
+```http
 GET /api/student/questions/{questionId}
+```
 
-
-*Acceptance Criteria*
+### ✅ Acceptance Criteria
 
 * Show question
 * Show answers
@@ -375,19 +375,15 @@ GET /api/student/questions/{questionId}
 
 ---
 
-# User Story: View My Projects
+## 👨‍🎓 User Story: View My Projects
 
-*As a Student*
-I want to see my projects
-So that I can track my development work.
+### 🔗 API Endpoint
 
-*API*
-
-http
+```http
 GET /api/student/projects
+```
 
-
-*Acceptance Criteria*
+### ✅ Acceptance Criteria
 
 * Show project title
 * Show technology stack
@@ -395,32 +391,28 @@ GET /api/student/projects
 
 ---
 
-# User Story: Submit Project
+## 👨‍🎓 User Story: Submit Project
 
-*As a Student*
-I want to submit my project
-So that mentors can review my work.
+### 🔗 API Endpoint
 
-*API*
-
-http
+```http
 POST /api/student/projects
+```
 
+### Example
 
-Example
-
-json
+```json
 {
  "title":"E-Commerce API",
  "technology":["NodeJS","MongoDB"],
  "github":"github.com/student/project"
 }
+```
 
+### ✅ Acceptance Criteria
 
-*Acceptance Criteria*
-
-* Project should be stored
-* Mentor should receive notification
+* Project stored in system
+* Mentor notified
 
 ---
 
@@ -428,19 +420,15 @@ json
 
 ---
 
-# User Story: View Job Opportunities
+## 👨‍🎓 User Story: View Job Opportunities
 
-*As a Student*
-I want to see available jobs
-So that I can apply for suitable positions.
+### 🔗 API Endpoint
 
-*API*
-
-http
+```http
 GET /api/student/jobs
+```
 
-
-*Acceptance Criteria*
+### ✅ Acceptance Criteria
 
 * Show job title
 * Show company name
@@ -448,57 +436,45 @@ GET /api/student/jobs
 
 ---
 
-# User Story: Apply for Job
+## 👨‍🎓 User Story: Apply for Job
 
-*As a Student*
-I want to apply for a job
-So that I can participate in hiring process.
+### 🔗 API Endpoint
 
-*API*
-
-http
+```http
 POST /api/student/jobs/{jobId}/apply
+```
 
+### ✅ Acceptance Criteria
 
-*Acceptance Criteria*
-
-* Application should be stored
-* Employer should receive notification
+* Application stored
+* Employer notified
 
 ---
 
-# User Story: View My Applications
+## 👨‍🎓 User Story: View My Applications
 
-*As a Student*
-I want to track my job applications
-So that I know my hiring status.
+### 🔗 API Endpoint
 
-*API*
-
-http
+```http
 GET /api/student/applications
+```
 
-
-*Acceptance Criteria*
+### ✅ Acceptance Criteria
 
 * Show applied jobs
 * Show application status
 
 ---
 
-# User Story: View Job Offers
+## 👨‍🎓 User Story: View Job Offers
 
-*As a Student*
-I want to see job offers
-So that I can accept or decline them.
+### 🔗 API Endpoint
 
-*API*
-
-http
+```http
 GET /api/student/offers
+```
 
-
-*Acceptance Criteria*
+### ✅ Acceptance Criteria
 
 * Show company name
 * Show salary
@@ -510,30 +486,26 @@ GET /api/student/offers
 
 ---
 
-# User Story: View Learning Progress
+## 👨‍🎓 User Story: View Learning Progress
 
-*As a Student*
-I want to see my progress dashboard
-So that I can understand my learning growth.
+### 🔗 API Endpoint
 
-*API*
-
-http
+```http
 GET /api/student/progress
+```
 
+### Example Response
 
-Example Response
-
-json
+```json
 {
  "skills":32,
  "projects":4,
  "assessmentsCompleted":18,
  "growthScore":78
 }
+```
 
-
-*Acceptance Criteria*
+### ✅ Acceptance Criteria
 
 * Show skill count
 * Show project count
@@ -546,28 +518,24 @@ json
 
 ---
 
-# User Story: View Notifications
+## 👨‍🎓 User Story: View Notifications
 
-*As a Student*
-I want to receive notifications
-So that I stay informed about platform activities.
+### 🔗 API Endpoint
 
-*API*
-
-http
+```http
 GET /api/student/notifications
+```
 
+### Notification Sources
 
-Notification Sources
-
-
+```
 SME
 Admin
 Mentor
 Employer
+```
 
-
-*Acceptance Criteria*
+### ✅ Acceptance Criteria
 
 * Show notification message
 * Show notification source
@@ -577,9 +545,7 @@ Employer
 
 # 🧠 Complete TFLCoMentor Ecosystem Flow
 
-The *student portal connects the entire platform*:
-
-text
+```
 Student joins platform
         │
         ▼
@@ -599,12 +565,12 @@ Projects
         │
         ▼
 Employer hiring
-
+```
 
 Platforms like:
 
-* LinkedIn
-* Coursera
-* HackerRank
+- LinkedIn
+- Coursera
+- HackerRank
 
-follow *very similar learning → assessment → hiring pipelines*.
+follow **very similar learning → assessment → hiring pipelines**.
