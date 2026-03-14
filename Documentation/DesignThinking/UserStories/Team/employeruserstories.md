@@ -4,10 +4,10 @@ This document describes the **User Stories and REST APIs** for the
 **Employer Module**.\
 It covers the following sections:
 
--   🏢 Company Profile\
--   👤 Employer Profile\
--   💼 Job Management\
--   👥 Candidate Pool\
+-   🏢 Company Profile
+-   👤 Employer Profile
+-   💼 Job Management
+-   👥 Candidate Pool
 -   🎤 Interview Module
 
 ------------------------------------------------------------------------
