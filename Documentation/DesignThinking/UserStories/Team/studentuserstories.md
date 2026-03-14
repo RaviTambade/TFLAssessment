@@ -24,7 +24,7 @@ This documentation helps:
 
 ---
 
-## 👨‍🎓 User Story: View Profile
+## 👨‍🎓 User Story 1: View Profile
 
 **As a Student**  
 I want to view my profile information  
@@ -47,7 +47,7 @@ Helps students **maintain a professional developer profile**.
 
 ---
 
-## 👨‍🎓 User Story: Update Profile
+## 👨‍🎓 User Story 2: Update Profile
 
 **As a Student**  
 I want to update my profile  
@@ -79,7 +79,7 @@ PUT /api/student/profile
 
 ---
 
-## 👨‍🎓 User Story: Change Password
+## 👨‍🎓 User Story 3: Change Password
 
 **As a Student**  
 I want to change my password  
@@ -102,7 +102,7 @@ PUT /api/student/profile/password
 
 ---
 
-## 👨‍🎓 User Story: View Enrolled Courses
+## 👨‍🎓 User Story 4: View Enrolled Courses
 
 **As a Student**  
 I want to see my list of courses and corresponding SME who assigned it  
@@ -122,7 +122,7 @@ GET /api/student/courses
 
 ---
 
-## 👨‍🎓 User Story: View Assignments and Labs
+## 👨‍🎓 User Story 5: View Assignments and Labs
 
 **As a Student**  
 I want to view assignments and labs for a course  
@@ -148,7 +148,7 @@ Helps students **manage coursework and practice activities from a single learnin
 
 ---
 
-## 👨‍🎓 User Story: Submit Assignment
+## 👨‍🎓 User Story 6: Submit Assignment
 
 **As a Student**  
 I want to submit my assignment using links or uploaded files  
@@ -190,7 +190,7 @@ Allows students to **submit real development work like GitHub repositories or pr
 
 ---
 
-## 👨‍🎓 User Story: View Scheduled Assessments
+## 👨‍🎓 User Story 7: View Scheduled Assessments
 
 **As a Student**  
 I want to see upcoming assessments  
@@ -212,7 +212,7 @@ GET /api/student/assessments/scheduled
 
 ---
 
-## 👨‍🎓 User Story: Start Assessment
+## 👨‍🎓 User Story 8: Start Assessment
 
 **As a Student**  
 I want to start an assessment  
@@ -231,7 +231,7 @@ GET /api/student/assessments/{assessmentId}
 
 ---
 
-## 👨‍🎓 User Story: Submit Assessment
+## 👨‍🎓 User Story 9: Submit Assessment
 
 **As a Student**  
 I want to submit my answers  
@@ -250,7 +250,7 @@ POST /api/student/assessments/{assessmentId}/submit
 
 ---
 
-## 👨‍🎓 User Story: View Assessment Result
+## 👨‍🎓 User Story 10: View Assessment Result
 
 **As a Student**  
 I want to see my assessment results  
@@ -274,7 +274,7 @@ GET /api/student/assessments/{assessmentId}/result
 
 ---
 
-## 👨‍🎓 User Story: View Assigned Mentor
+## 👨‍🎓 User Story 11: View Assigned Mentor
 
 **As a Student**  
 I want to see my assigned mentor  
@@ -293,7 +293,7 @@ GET /api/student/mentor
 
 ---
 
-## 👨‍🎓 User Story: Schedule Mentorship Session
+## 👨‍🎓 User Story 12: Schedule Mentorship Session
 
 **As a Student**  
 I want to schedule a session with my mentor  
@@ -326,7 +326,7 @@ POST /api/student/mentorship/session
 
 ---
 
-## 👨‍🎓 User Story: Post a Question
+## 👨‍🎓 User Story 13: Post a Question
 **As a Student**  
 I want to post my technical or career-related questions on the discussion board  
 So that mentors, SMEs and peers can help me resolve my doubts and learn faster.
@@ -344,7 +344,7 @@ POST /api/student/questions
 
 ---
 
-## 👨‍🎓 User Story: View Discussions
+## 👨‍🎓 User Story 14: View Discussions
 
 **As a Student**  
 I want to view all recent discussions and questions posted by others  
@@ -363,7 +363,7 @@ GET /api/student/questions
 
 ---
 
-## 👨‍🎓 User Story: View Question Details
+## 👨‍🎓 User Story 15: View Question Details
 
 **As a Student**  
 I want to open a specific question and see all its answers  
@@ -386,7 +386,7 @@ GET /api/student/questions/{questionId}
 
 ---
 
-## 👨‍🎓 User Story: View My Projects
+## 👨‍🎓 User Story 16: View My Projects
 
 **As a Student**  
 I want to view all my submitted projects and their review status  
@@ -407,7 +407,7 @@ GET /api/student/projects
 
 ---
 
-## 👨‍🎓 User Story: Submit Project
+## 👨‍🎓 User Story 17: Submit Project
 
 **As a Student**  
 I want to submit my completed project with GitHub link and tech stack  
@@ -440,7 +440,7 @@ POST /api/student/projects
 
 ---
 
-## 👨‍🎓 User Story: View Job Opportunities
+## 👨‍🎓 User Story 18: View Job Opportunities
 
 **As a Student**  
 I want to browse available job opportunities matching my skills  
@@ -460,7 +460,7 @@ GET /api/student/jobs
 
 ---
 
-## 👨‍🎓 User Story: Apply for Job
+## 👨‍🎓 User Story 19: Apply for Job
 
 **As a Student**  
 I want to apply for a job opportunity with my profile and projects  
@@ -479,7 +479,7 @@ POST /api/student/jobs/{jobId}/apply
 
 ---
 
-## 👨‍🎓 User Story: View My Applications
+## 👨‍🎓 User Story 20: View My Applications
 
 **As a Student**  
 I want to track the status of all my job applications  
@@ -498,7 +498,7 @@ GET /api/student/applications
 
 ---
 
-## 👨‍🎓 User Story: View Job Offers
+## 👨‍🎓 User Story 21: View Job Offers
 
 **As a Student**  
 I want to see job offers I've received from employers  
@@ -522,7 +522,7 @@ GET /api/student/offers
 
 ---
 
-## 👨‍🎓 User Story: View Learning Progress
+## 👨‍🎓 User Story 22: View Learning Progress
 
 **As a Student**  
 I want to see my overall learning dashboard with metrics  
@@ -558,7 +558,7 @@ GET /api/student/progress
 
 ---
 
-## 👨‍🎓 User Story: View Notifications
+## 👨‍🎓 User Story 23: View Notifications
 
 **As a Student**  
 I want to see all my notifications from platform activities  
