@@ -9,17 +9,17 @@
 │
 └── /sme/dashboard
     │
-    ├── /sme/lectures
-    │   ├── /sme/lectures/create
-    │   ├── /sme/lectures/list
-    │   └── /sme/lectures/:lectureId
+    ├── /sme/session
+    │   ├── /sme/session/create
+    │   ├── /sme/session/list
+    │   └── /sme/session/:lectureId
     │       ├── /view
     │       └── /edit
     │
-    ├── /sme/assignments
-    │   ├── /sme/assignments/create
-    │   ├── /sme/assignments/list
-    │   └── /sme/assignments/:assignmentId
+    ├── /sme/hands_on
+    │   ├── /sme/hands_on/create
+    │   ├── /sme/hands_on/list
+    │   └── /sme/hands_on/:assignmentId
     │       ├── /view
     │       ├── /edit
     │       └── /submissions 
@@ -346,8 +346,8 @@ PUT /api/sme/profile
 ```
 /api/sme
 │
-├── /lectures
-├── /assignments
+├── /session
+├── /hands_on
 ├── /tests
 ├── /questions
 ├── /concepts

@@ -3,22 +3,22 @@ SME
 └── Dashboard
     │
     │
-    ├── Lectures
+    ├── session
     │   │
-    │   ├── LectureList
-    │   ├── CreateLecture
-    │   │   └── LectureForm
-    │   ├── LectureDetails
-    │   └── EditLecture
+    │   ├── sessionList
+    │   ├── CreateSession
+    │   │   └── SessionForm
+    │   ├── SessionDetails
+    │   └── EditSession
     │
-    ├── Assignments
+    ├── hands_on
     │   │
-    │   ├── AssignmentList
-    │   ├── CreateAssignment
-    │   │   └── AssignmentForm
-    │   ├── AssignmentDetails
-    │   ├── EditAssignment
-    │   └── AssignmentSubmissions
+    │   ├── hands_onList
+    │   ├── Creathands_on
+    │   │   └── hands_onForm
+    │   ├── hands_onDetails
+    │   ├── Edithands_on
+    │   └──hands_onSubmissions
     │
     ├── ManageTests
     │   ├── CreateTest
