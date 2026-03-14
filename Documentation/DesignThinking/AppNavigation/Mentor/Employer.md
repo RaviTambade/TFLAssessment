@@ -28,8 +28,7 @@ Employer
 │   │
 │   ├── Manage Job
 │   │   ├── Job List
-│   │   ├── Job Status
-│   │   └── Job Action
+│   │   └── Job Status
 │   │
 │   └── Job Applications
 │       ├── All Applicants
@@ -38,8 +37,7 @@ Employer
 ├── Candidate Pool
 │   ├── All Candidates
 │   ├── Search Candidates
-│   ├── Shortlist Candidates
-│   └── Interview Pipeline
+│   └── Shortlist Candidates
 │
 └── Interview
     ├── Interview Summary
@@ -47,4 +45,3 @@ Employer
     ├── Today's Interviews
     ├── Interview Status
     └── Qualified Candidates
-

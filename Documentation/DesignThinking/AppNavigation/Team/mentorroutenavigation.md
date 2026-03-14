@@ -531,7 +531,7 @@ Upload Resources
 │     ├── /mentor/mentees/delete
 │     │     └── DELETE /api/mentor/mentee/[studentID] (Delete Mentees)
 │
-│     ├── /mentor/mentees/filter
+│     ├── /mentor/mentees/add
 │     │     └── POST /api/mentor/mentee (Add Mentees)
 │
 │     └── /mentor/mentees/:studentId
