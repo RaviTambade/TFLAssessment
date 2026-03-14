@@ -40,10 +40,11 @@ Employer
 │   └── Shortlist Candidates
 │
 └── Interview
-    ├── Interview Summary
-    ├── Upcoming Interviews
-    ├── Today's Interviews
-    ├── Interview Status
-    ├── Qualified Candidates
-    ├── Reschedule Interview
-    └── Interview Result/Feedback
+     ├── Interview Summary
+     ├── Schedule Interview
+     ├── Upcoming Interviews
+     ├── Today's Interviews
+     ├── Schedule Interview
+     ├── Reschedule Interview
+     ├── Interview Result
+     └── Interview Feedback  

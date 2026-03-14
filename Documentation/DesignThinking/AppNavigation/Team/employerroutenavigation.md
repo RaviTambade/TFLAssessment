@@ -394,18 +394,148 @@ Example
 
 ------------------------------------------------------------------------
 
-## 6️⃣ Reschedule Interview
 
-    PUT /api/employer/interviews/{interviewId}
-
-------------------------------------------------------------------------
-
-## 7️⃣ Cancel Interview
-
-    DELETE /api/employer/interviews/{interviewId}
-
-------------------------------------------------------------------------
-
-## 8️⃣ Qualified Candidates
+## 6️⃣ Qualified Candidates
 
     GET /api/employer/interviews/qualified
+
+# 🔄 Reschedule Interview
+
+## 1️⃣ Reschedule Interview
+
+PUT /api/employer/interviews/{interviewId}/reschedule
+
+### 📄 Example JSON
+
+``` json
+{
+  "date": "2026-03-25",
+  "time": "14:00",
+  "mode": "Online"
+}
+```
+
+------------------------------------------------------------------------
+
+## 2️⃣ Get Rescheduled Interview Details
+
+GET /api/employer/interviews/{interviewId}/reschedule
+
+### 📄 Example JSON
+
+``` json
+{
+  "interviewId": 22,
+  "candidateId": 12,
+  "jobId": 3,
+  "date": "2026-03-25",
+  "time": "14:00",
+  "mode": "Online",
+  "status": "Rescheduled"
+}
+```
+
+------------------------------------------------------------------------
+
+# 🏆 Interview Result
+
+## 1️⃣ Submit Interview Result
+
+POST /api/employer/interviews/{interviewId}/result
+
+### 📄 Example JSON
+
+``` json
+{
+  "candidateId": 12,
+  "jobId": 3,
+  "result": "Selected"
+}
+```
+
+### Possible Values
+
+-   Selected
+-   Rejected
+-   On Hold
+
+------------------------------------------------------------------------
+
+## 2️⃣ Get Interview Result
+
+GET /api/employer/interviews/{interviewId}/result
+
+### 📄 Example JSON
+
+``` json
+{
+  "interviewId": 22,
+  "candidateName": "Rahul Sharma",
+  "jobTitle": "Backend Developer",
+  "result": "Selected"
+}
+```
+
+------------------------------------------------------------------------
+
+## 3️⃣ Update Interview Result
+
+PUT /api/employer/interviews/{interviewId}/result
+
+### 📄 Example JSON
+
+``` json
+{
+  "result": "On Hold"
+}
+```
+
+------------------------------------------------------------------------
+
+# 📝 Interview Feedback
+
+## 1️⃣ Submit Interview Feedback
+
+POST /api/employer/interviews/{interviewId}/feedback
+
+### 📄 Example JSON
+
+``` json
+{
+  "candidateId": 12,
+  "feedback": "Candidate demonstrated strong Node.js knowledge and good problem solving skills.",
+  "rating": 4
+}
+```
+
+------------------------------------------------------------------------
+
+## 2️⃣ Get Interview Feedback
+
+GET /api/employer/interviews/{interviewId}/feedback
+
+### 📄 Example JSON
+
+``` json
+{
+  "interviewId": 22,
+  "candidateName": "Rahul Sharma",
+  "feedback": "Strong backend knowledge with good communication.",
+  "rating": 4
+}
+```
+
+------------------------------------------------------------------------
+
+## 3️⃣ Update Interview Feedback
+
+PUT /api/employer/interviews/{interviewId}/feedback
+
+### 📄 Example JSON
+
+``` json
+{
+  "feedback": "Technically strong but needs improvement in system design.",
+  "rating": 3
+}
+```
