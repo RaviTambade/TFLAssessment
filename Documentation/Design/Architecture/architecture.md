@@ -94,7 +94,7 @@ Below is the **Enterprise-Level ASCII Architecture Diagram for the TFLAssessment
 └──────────────────────────────────────────────────────────────┘
 ```
 
-# 🔍 Architecture Highlights (Mentor Perspective)
+# 🔍 Architecture Highlights
 
 ### 1️⃣ Layered & Microservices-Based
 
@@ -122,8 +122,6 @@ Below is the **Enterprise-Level ASCII Architecture Diagram for the TFLAssessment
 
 * Direct pipeline to recruiters
 * Verified skill reports
-
-
 
 # 🎯 This architecture enables:
 

@@ -1,20 +1,9 @@
 Below are **Agile User Stories mapped to each SME (Subject Matter Expert) REST API endpoint** for the **TFLCoMentor SME Portal**.
 This helps **developers, testers, product owners, and students understand the purpose of each API clearly**.
 
-Structure used:
-
-* 🧑‍🔬 **User Story**
-* 🔗 **API Endpoint**
-* ✅ **Acceptance Criteria**
-* 🎯 **Business Value**
-
----
-
 # 🧑‍🔬 1️⃣ Test Management APIs
 
 SMEs are responsible for **creating assessments used by students, mentors, and employers**.
-
----
 
 # User Story: Create a Test
 
@@ -50,8 +39,6 @@ Example Request
 
 Creates **structured assessments for evaluating student knowledge**.
 
----
-
 # User Story: View Test List
 
 **As an SME**
@@ -69,7 +56,6 @@ GET /api/sme/tests
 * System should return list of tests
 * Include title, difficulty, and creation date
 
----
 
 # User Story: View Test Details
 
@@ -89,8 +75,6 @@ GET /api/sme/tests/{testId}
 * Display total marks
 * Display number of questions
 
----
-
 # User Story: Update Test
 
 **As an SME**
@@ -109,8 +93,6 @@ PUT /api/sme/tests/{testId}
 * SME can modify difficulty
 * Changes should update immediately
 
----
-
 # User Story: Delete Test
 
 **As an SME**
@@ -128,13 +110,9 @@ DELETE /api/sme/tests/{testId}
 * Test should be removed from test library
 * System should prevent deletion if students attempted the test
 
----
-
 # 📚 2️⃣ Question Bank APIs
 
 SMEs maintain the **core knowledge repository of the platform**.
-
----
 
 # User Story: View Question Bank
 
@@ -168,8 +146,6 @@ miniproject
 
 * Questions should be filterable by type
 * Questions should show difficulty level
-
----
 
 # User Story: Add a Question
 
@@ -205,8 +181,6 @@ Example
 * Question should be stored in question bank
 * Question should be tagged by type and difficulty
 
----
-
 # User Story: View Question Details
 
 **As an SME**
@@ -223,8 +197,6 @@ GET /api/sme/questions/{questionId}
 
 * System should display question text
 * System should display options and correct answer
-
----
 
 # User Story: Update Question
 
@@ -243,8 +215,6 @@ PUT /api/sme/questions/{questionId}
 * SME can modify question text
 * SME can modify options or difficulty
 
----
-
 # User Story: Delete Question
 
 **As an SME**
@@ -262,13 +232,10 @@ DELETE /api/sme/questions/{questionId}
 * Question should be removed
 * System should prevent deletion if used in active tests
 
----
 
 # 🧩 3️⃣ Test Question Mapping APIs
 
 When creating tests, SMEs **select questions from the question bank**.
-
----
 
 # User Story: Add Questions to Test
 
@@ -295,11 +262,7 @@ Example Request
 * Questions should be linked to test
 * Total marks should update automatically
 
----
-
 # 👤 4️⃣ SME Profile APIs
-
----
 
 # User Story: View SME Profile
 
@@ -318,8 +281,6 @@ GET /api/sme/profile
 * Profile should show expertise areas
 * Profile should show tests created
 
----
-
 # User Story: Update SME Profile
 
 **As an SME**
@@ -337,7 +298,6 @@ PUT /api/sme/profile
 * SME can update skills
 * SME can update experience
 
----
 
 # 🧠 Role of SME in TFLCoMentor Ecosystem
 
@@ -365,8 +325,6 @@ This is similar to **assessment systems used in modern learning platforms** like
 * Udacity
 * HackerRank
 
----
-
 # 🧩 Complete TFLCoMentor Role Architecture
 
 The platform is designed with **clear role-based routing**:
@@ -381,7 +339,6 @@ The platform is designed with **clear role-based routing**:
 
 This ensures:
 
-✔ modular architecture
-✔ scalable system design
-✔ easier development and maintenance
-
+- ✔ modular architecture
+- ✔ scalable system design
+- ✔ easier development and maintenance

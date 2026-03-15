@@ -1,11 +1,4 @@
-
-
-This is aligned with your philosophy:
-
-
- 
-
-# ✅ **TFLAssessment – AI Workflow (ASCII Diagram)**
+# ✅ **TFLAssessment – AI Workflow**
 
 👉 *“AI suggests. Mentors decide.”*
 

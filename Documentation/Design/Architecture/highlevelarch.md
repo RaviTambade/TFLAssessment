@@ -1,6 +1,6 @@
 # 🌐 TFLCoMentor Platform Architecture
 
-A  **Complete High-Level ASCII Architecture Diagram for TFLCoMentor Platform**.
+A  **Complete High-Level Architecture Diagram for TFLCoMentor Platform**.
 This diagram is useful for **understanding  full-stack architecture, system thinking, and platform design**.
 
 It shows the **5 portals, backend services, core engines, and database layer**.
@@ -31,7 +31,6 @@ It shows the **5 portals, backend services, core engines, and database layer**.
     ┌─────────────────────────────────────────────────────────────────────────────┐
     │                              ROLE PORTALS                                   │
     └─────────────────────────────────────────────────────────────────────────────┘
-
         ┌──────────────┐     ┌──────────────┐     ┌──────────────┐
         │  STUDENT     │     │   MENTOR     │     │     SME      │
         │   PORTAL     │     │   PORTAL     │     │   PORTAL     │
@@ -39,7 +38,6 @@ It shows the **5 portals, backend services, core engines, and database layer**.
                │                    │                    │
                │                    │                    │
                ▼                    ▼                    ▼
-
         ┌──────────────┐     ┌──────────────┐     ┌──────────────┐
         │ LEARNING     │     │ MENTORSHIP   │     │ CONTENT      │
         │ MODULE       │     │ MODULE       │     │ MANAGEMENT   │
@@ -56,7 +54,6 @@ It shows the **5 portals, backend services, core engines, and database layer**.
         └──────┬───────┘     └──────┬───────┘
                │                    │
                ▼                    ▼
-
         ┌──────────────┐     ┌──────────────┐
         │ HIRING       │     │ PLATFORM     │
         │ ENGINE       │     │ MANAGEMENT   │
@@ -152,8 +149,6 @@ It shows the **5 portals, backend services, core engines, and database layer**.
 ```
 
 
-# 🧠 How to Explain This to Students
-
 This architecture shows **how a real learning platform works internally**
 
 Students can clearly understand:
@@ -187,10 +182,6 @@ Hiring Engine
 MySQL / PostgreSQL
 ```
 
-# 🎓 Why This Architecture is Powerful for Teaching
-
-Students learn:
-
 * Platform thinking
 * Modular backend design
 * Role-based architecture
@@ -198,5 +189,3 @@ Students learn:
 * Scalable enterprise architecture
 
 This is **exactly how modern SaaS learning platforms are built**.
-
- 

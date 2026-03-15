@@ -1,7 +1,5 @@
 
- 
-
-# 🧠 TFLCoMentor Skill Graph Architecture (ASCII)
+# 🧠 TFLCoMentor Skill Graph Architecture
   
 ### **🧠 TFLCoMentor Skill Graph Architecture**, which is the **intelligence layer of the platform**.
  
@@ -31,7 +29,6 @@ This allows the platform to **measure real employability instead of just marks**
                                   │
                                   │
                                   ▼
-
                    ┌──────────────────────────┐
                    │    SKILL_DEPENDENCIES    │
                    │--------------------------│
@@ -41,7 +38,6 @@ This allows the platform to **measure real employability instead of just marks**
                                │
                                │
                                ▼
-
                    ┌──────────────────────────┐
                    │      LEARNING_PATH       │
                    │--------------------------│
@@ -51,7 +47,6 @@ This allows the platform to **measure real employability instead of just marks**
                    └───────────┬──────────────┘
                                │
                                ▼
-
                    ┌──────────────────────────┐
                    │    LEARNING_PATH_SKILL   │
                    │--------------------------│
@@ -61,7 +56,6 @@ This allows the platform to **measure real employability instead of just marks**
                    └───────────┬──────────────┘
                                │
                                ▼
-
                    ┌──────────────────────────┐
                    │     STUDENT_SKILLS       │
                    │--------------------------│
@@ -72,7 +66,6 @@ This allows the platform to **measure real employability instead of just marks**
                    └───────────┬──────────────┘
                                │
                                ▼
-
                    ┌──────────────────────────┐
                    │     SKILL_EVIDENCE       │
                    │--------------------------│
@@ -84,7 +77,6 @@ This allows the platform to **measure real employability instead of just marks**
                    └───────────┬──────────────┘
                                │
                                ▼
-
          ┌────────────────────────────────────────────┐
          │           SKILL EVIDENCE SOURCES           │
          │--------------------------------------------│
@@ -243,7 +235,6 @@ Skill Graph → Calculate Growth
        ▼
 Employers → Hire Talent
 ```
-
 
 ✅ This **Skill Graph Architecture** is what makes **TFLCoMentor look like a next-generation employability platform**.
 

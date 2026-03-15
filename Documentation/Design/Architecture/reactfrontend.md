@@ -1,7 +1,4 @@
-
- 
-
-# 🚀 TFLCoMentor React Frontend Architecture (ASCII)
+# 🚀 TFLCoMentor React Frontend Architecture
  
 Now let’s design the **🚀 TFLCoMentor Frontend Component Architecture (React)**.
 
@@ -28,7 +25,6 @@ The goal is to create:
                     └──────────────┬──────────────┘
                                    │
                                    ▼
-
                      ┌─────────────────────────┐
                      │       APP LAYOUT        │
                      │-------------------------│
@@ -39,7 +35,6 @@ The goal is to create:
                      └──────────┬──────────────┘
                                 │
                                 ▼
-
       ┌──────────────────────────────────────────────────────────┐
       │                ROLE BASED DASHBOARDS                     │
       └──────────────────────────────────────────────────────────┘
@@ -49,7 +44,6 @@ The goal is to create:
       └─────┬───────┘  └─────┬───────┘  └─────┬───────┘
             │                │                │
             ▼                ▼                ▼
-
       StudentDashboard   MentorDashboard   SMEDashboard
       StudentProfile     MentorProfile     TestManagement
       LearningCourses    Mentees           QuestionBank
@@ -64,7 +58,6 @@ The goal is to create:
                        └─────┬───────┘
                              │
                              ▼
-
                       EmployerDashboard
                       CompanyProfile
                       JobPosting
@@ -78,7 +71,6 @@ The goal is to create:
                        └─────┬───────┘
                              │
                              ▼
-
                         AdminDashboard
                         UserManagement
                         AssessmentManagement
@@ -218,9 +210,6 @@ HiringPipeline
 └── OfferStage
 ```
 
-
-
-# 🎓 Why This Architecture Is Important 
 
 Students will learn:
 

@@ -21,7 +21,6 @@ This architecture shows **how the entire platform works from UI → API Gateway 
                                   │
                                   │
                                   ▼
-
                        ┌──────────────────────┐
                        │      API GATEWAY     │
                        │----------------------│
@@ -35,7 +34,6 @@ This architecture shows **how the entire platform works from UI → API Gateway 
               ┌────────────────────┼────────────────────┐
               │                    │                    │
               ▼                    ▼                    ▼
-
       ┌───────────────┐   ┌─────────────────┐   ┌────────────────┐
       │ Auth Service  │   │ User Service    │   │ Notification   │
       │---------------│   │-----------------|   │ Service        │
@@ -58,7 +56,6 @@ This architecture shows **how the entire platform works from UI → API Gateway 
              │                       │                    │
              │                       │                    │
              ▼                       ▼                    ▼
-
       ┌───────────────┐   ┌───────────────────┐   ┌─────────────────┐
       │ Learning      │   │ Assessment        │   │ Mentorship      │
       │ Service       │   │ Service           │   │ Service         │
@@ -70,7 +67,6 @@ This architecture shows **how the entire platform works from UI → API Gateway 
              │                      │                      │
              │                      │                      │
              ▼                      ▼                      ▼
-
       ┌───────────────┐   ┌───────────────────┐   ┌─────────────────┐
       │ Project       │   │ Placement         │   │ Hiring Pipeline │
       │ Service       │   │ Service           │   │ Service         │
@@ -84,7 +80,6 @@ This architecture shows **how the entire platform works from UI → API Gateway 
              └──────────────┬───────┴──────────────┬───────┘
                             │                      │
                             ▼                      ▼
-
                  ┌──────────────────────┐
                  │   EVENT BUS / MQ     │
                  │----------------------│
@@ -94,7 +89,6 @@ This architecture shows **how the entire platform works from UI → API Gateway 
                             │
                             │
                             ▼
-
                ┌──────────────────────────────┐
                │         DATA LAYER           │
                │------------------------------│
@@ -105,7 +99,6 @@ This architecture shows **how the entire platform works from UI → API Gateway 
                               │
                               │
                               ▼
-
                     ┌─────────────────────┐
                     │  FILE STORAGE       │
                     │---------------------│
@@ -155,20 +148,12 @@ Notification Sent to Mentor
 | Hiring       | Interview pipeline      |
 | Notification | Email/SMS               |
 
-
-
-# 🎓 Why This Architecture Is Powerful for Students
-
-Students learn:
-
+Collaboraters learn:
 - ✔ Full stack architecture
 - ✔ Microservices design
 - ✔ API gateway pattern
 - ✔ Event-driven architecture
 - ✔ Skill-based hiring systems
-
- 
- 
 
 ### **Complete TFLCoMentor Database ER Diagram (30+ Tables)**
 
@@ -188,4 +173,3 @@ Notifications
 ```
 
 Students will **immediately understand how the platform database works**.
- 

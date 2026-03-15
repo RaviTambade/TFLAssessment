@@ -1,4 +1,4 @@
-# 🚀 Complete TFLCoMentor Database ER Diagram (ASCII)
+# 🚀 Complete TFLCoMentor Database ER Diagram 
  Below is the **Complete TFLCoMentor Database Architecture (ER Diagram – ASCII)** designed for **understanding  backend architecture** and for **developers implementing the platform**.
 
 This diagram shows how **Students, Mentors, SMEs, Employers, Assessments, Projects, Skills, and Hiring Pipeline** connect together.
@@ -52,7 +52,6 @@ This diagram shows how **Students, Mentors, SMEs, Employers, Assessments, Projec
         └────────────────────┬───────────────────┘
                              │
                              ▼
-
                      ┌───────────────────┐
                      │       SKILLS      │
                      │-------------------│
@@ -64,7 +63,6 @@ This diagram shows how **Students, Mentors, SMEs, Employers, Assessments, Projec
                                 │
                                 │
                                 ▼
-
                      ┌────────────────────┐
                      │     COURSES        │
                      │--------------------│
@@ -75,7 +73,6 @@ This diagram shows how **Students, Mentors, SMEs, Employers, Assessments, Projec
                      └─────────┬──────────┘
                                │
                                ▼
-
                      ┌─────────────────────┐
                      │   COURSE_ASSIGNMENT │
                      │---------------------│
@@ -86,7 +83,6 @@ This diagram shows how **Students, Mentors, SMEs, Employers, Assessments, Projec
                      └─────────┬───────────┘
                                │
                                ▼
-
                      ┌─────────────────────┐
                      │  STUDENT_ASSIGNMENT │
                      │---------------------│
@@ -98,7 +94,6 @@ This diagram shows how **Students, Mentors, SMEs, Employers, Assessments, Projec
                      └─────────┬───────────┘
                                │
                                ▼
-
                ┌────────────────────────────────┐
                │        ASSESSMENTS             │
                │--------------------------------│
@@ -109,7 +104,6 @@ This diagram shows how **Students, Mentors, SMEs, Employers, Assessments, Projec
                └──────────────┬─────────────────┘
                               │
                               ▼
-
                ┌────────────────────────────────┐
                │        QUESTIONS               │
                │--------------------------------│
@@ -121,7 +115,6 @@ This diagram shows how **Students, Mentors, SMEs, Employers, Assessments, Projec
                └──────────────┬─────────────────┘
                               │
                               ▼
-
                ┌────────────────────────────────┐
                │       TEST_QUESTIONS           │
                │--------------------------------│
@@ -131,7 +124,6 @@ This diagram shows how **Students, Mentors, SMEs, Employers, Assessments, Projec
                └──────────────┬─────────────────┘
                               │
                               ▼
-
                ┌────────────────────────────────┐
                │      STUDENT_ASSESSMENT        │
                │--------------------------------│
@@ -143,7 +135,6 @@ This diagram shows how **Students, Mentors, SMEs, Employers, Assessments, Projec
                └──────────────┬─────────────────┘
                               │
                               ▼
-
                ┌────────────────────────────────┐
                │           PROJECTS             │
                │--------------------------------│
@@ -154,7 +145,6 @@ This diagram shows how **Students, Mentors, SMEs, Employers, Assessments, Projec
                └──────────────┬─────────────────┘
                               │
                               ▼
-
                ┌────────────────────────────────┐
                │       PROJECT_REVIEWS          │
                │--------------------------------│
@@ -166,7 +156,6 @@ This diagram shows how **Students, Mentors, SMEs, Employers, Assessments, Projec
                └──────────────┬─────────────────┘
                               │
                               ▼
-
                ┌────────────────────────────────┐
                │           JOBS                 │
                │--------------------------------│
@@ -177,7 +166,6 @@ This diagram shows how **Students, Mentors, SMEs, Employers, Assessments, Projec
                └──────────────┬─────────────────┘
                               │
                               ▼
-
                ┌────────────────────────────────┐
                │        APPLICATIONS            │
                │--------------------------------│
@@ -188,7 +176,6 @@ This diagram shows how **Students, Mentors, SMEs, Employers, Assessments, Projec
                └──────────────┬─────────────────┘
                               │
                               ▼
-
                ┌────────────────────────────────┐
                │         INTERVIEWS             │
                │--------------------------------│
@@ -199,7 +186,6 @@ This diagram shows how **Students, Mentors, SMEs, Employers, Assessments, Projec
                └──────────────┬─────────────────┘
                               │
                               ▼
-
                ┌────────────────────────────────┐
                │        NOTIFICATIONS           │
                │--------------------------------│
@@ -303,9 +289,6 @@ SME       → Test Creation + Question Bank
 Employer  → Jobs + Hiring
 Admin     → Platform Monitoring
 ```
-
-
-# 🧠 Why This Architecture Is Very Powerful
 
 Students learn:
 
