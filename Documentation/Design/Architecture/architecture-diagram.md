@@ -114,9 +114,7 @@ Client → API Gateway
 ```
 
 
-# 🧠 How You Can Explain This To Students
-
-Since you prefer mentor-style explanation:
+# Mentor Explaination
 
 ### 🏢 Analogy: Engineering College System
 

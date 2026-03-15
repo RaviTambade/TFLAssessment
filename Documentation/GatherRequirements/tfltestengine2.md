@@ -2,7 +2,6 @@
 
 The **Transflower Test Engine** is not just an evaluation tool—it’s a **strategic platform** for workforce intelligence. By blending assessments with data analytics and, eventually, **AI-driven recommendations**, it will enable a culture of **self-improvement, transparency, and capability-based growth**.
 
-
 ## Transflower's  Online Assessment Platform
 
  An assessment typically refers to the process of evaluating someone's knowledge, skills, or abilities in a particular subject or domain. In the context of an online assessment platform, assessments are often conducted through quizzes, tests, exams, or other forms of evaluations administered electronically over the internet.
@@ -50,12 +49,5 @@ The **Transflower Test Engine** is not just an evaluation tool—it’s a **stra
 10. **Testing and Quality Assurance:**
     - Conduct rigorous testing (unit tests, integration tests, user acceptance tests) to ensure the application functions reliably and meets user expectations.
     - Address any bugs, performance issues, or usability concerns identified during testing.
-
-Building an online assessment application requires collaboration between developers, educators, and stakeholders to create a robust, user-friendly platform that supports effective teaching and learning.
-
- - <a href="./Documentation/assessmentscenarios.md">Requirements </a>
- - <a href="./Documentation/productbacklog.md">User Stories </a>
- - <a href="./Documentation/assessmenttestcases.md">Test cases </a>
- - <a href="./Documentation/assessmentendpoints.md">Application EndPoints </a>
 
 An online assessment platform provides a flexible and scalable solution for conducting assessments efficiently, securely, and accurately, whether in educational settings, certification programs, or employment evaluations.
