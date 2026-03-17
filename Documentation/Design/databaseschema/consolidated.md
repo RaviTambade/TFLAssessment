@@ -444,3 +444,102 @@ Stores overall performance metrics of each student.
 | performance_level_id   | BIGINT (FK)     | References performance level |
 
 ---
+
+## 🏆 61. Ranking Table
+
+Stores ranking details of students.
+
+| Column Name      | Data Type | Description                   |
+| ---------------- | --------- | ----------------------------- |
+| id (PK)          | INT       | Unique ranking ID             |
+| student_id (FK)  | INT       | References users.user_id      |
+| test_id          | INT       | Test identifier (logical use) |
+| rank_position    | INT       | Rank of the student           |
+| total_candidates | INT       | Total participants            |
+| languages        | VARCHAR   | Languages used                |
+| generated_at     | TIMESTAMP | Ranking generation time       |
+
+---
+
+## 📈 62. Performance_Snapshot Table
+
+Stores performance history.
+
+| Column Name      | Data Type | Description                 |
+| ---------------- | --------- | --------------------------- |
+| id (PK)          | INT       | Unique snapshot ID          |
+| student_id (FK)  | INT       | References users.user_id    |
+| snapshot_date    | DATE      | Date of snapshot            |
+| performance_json | JSON      | Performance data (flexible) |
+
+---
+
+## 📊 63. Performance_Level Table
+
+Defines score ranges.
+
+| Column Name | Data Type    | Description       |
+| ----------- | ------------ | ----------------- |
+| id (PK)     | INT          | Unique level ID   |
+| level_name  | VARCHAR(100) | Level name        |
+| min_score   | INT          | Minimum score     |
+| max_score   | INT          | Maximum score     |
+| description | TEXT         | Level description |
+
+---
+## 🧑‍💻 64. Users Table
+
+Stores all user information.
+
+| Column Name    | Data Type    | Description                 |
+| -------------- | ------------ | --------------------------- |
+| user_id (PK)   | INT          | Unique user ID              |
+| first_name     | VARCHAR(100) | User's first name           |
+| last_name      | VARCHAR(100) | User's last name            |
+| contact        | VARCHAR(15)  | Contact number              |
+| email          | VARCHAR(150) | Unique email address        |
+| password_hash  | TEXT         | Encrypted password          |
+| status         | ENUM         | ACTIVE / INACTIVE / BLOCKED |
+| email_verified | BOOLEAN      | Email verification status   |
+| created_at     | TIMESTAMP    | Record creation time        |
+| updated_at     | TIMESTAMP    | Last updated time           |
+
+---
+
+## 🛡️ 65. Roles Table
+
+Defines system roles.
+
+| Column Name  | Data Type    | Description      |
+| ------------ | ------------ | ---------------- |
+| role_id (PK) | INT          | Unique role ID   |
+| role_name    | VARCHAR(100) | Name of the role |
+| description  | TEXT         | Role description |
+
+---
+
+## 🔗 66. User_Role Table
+
+Maps users to roles (Many-to-Many).
+
+| Column Name  | Data Type | Description              |
+| ------------ | --------- | ------------------------ |
+| id (PK)      | INT       | Unique mapping ID        |
+| user_id (FK) | INT       | References users.user_id |
+| role_id (FK) | INT       | References roles.role_id |
+| assigned_at  | TIMESTAMP | Role assigned time       |
+
+---
+
+## 🎓 67. Tap_Alumni Table
+
+Tracks placed students.
+
+| Column Name     | Data Type    | Description              |
+| --------------- | ------------ | ------------------------ |
+| id (PK)         | INT          | Unique record ID         |
+| student_id (FK) | INT          | References users.user_id |
+| placed_on       | DATE         | Placement date           |
+| job_title       | VARCHAR(150) | Job title                |
+
+---
