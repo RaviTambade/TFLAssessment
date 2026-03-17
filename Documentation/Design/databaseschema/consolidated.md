@@ -69,9 +69,11 @@ Stores student Hands-on submissions.
 
 ---
 
-## 29. mentoring_sessions
+# 29. Mentoring_Sessions Table
 
+## mentoring_sessions
 Stores mentoring session details.
+
 
 | Field | Type | Description |
 |------|------|-------------|
@@ -86,7 +88,8 @@ Stores mentoring session details.
 
 ---
 
-## 30. learning_resources
+# 30. Learning Resources Table
+##  learning_resources
 
 Stores learning materials like videos, PDFs, and links.
 
@@ -104,8 +107,8 @@ Stores learning materials like videos, PDFs, and links.
 
 ---
 
-## 31. mentor_reviews
-
+# 31. Mentor Reviews Table
+##  mentor_reviews
 Stores feedback given to mentors by students.
 
 | Field | Type | Description |
@@ -120,8 +123,8 @@ Stores feedback given to mentors by students.
 
 ---
 
-## 32. learning_paths
-
+# 32. Learning Paths Table
+## learning_paths
 Stores structured learning paths for students.
 
 | Field | Type | Description |
@@ -240,7 +243,8 @@ Stores structured learning paths for students.
 
 
 
-## 53. mini_projects
+# 53. Mini Projects Table
+## mini_projects
 
 Stores mini project details linked to questions.
 
@@ -253,8 +257,8 @@ Stores mini project details linked to questions.
 
 ---
 
-## 54. mock_questions
-
+## 54. Mock Questions Table
+##  mock_questions
 Stores mock/test-related questions.
 
 | Field | Type | Description |
