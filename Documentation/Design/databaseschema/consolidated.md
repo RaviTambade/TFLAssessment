@@ -1126,42 +1126,33 @@ Maps questions to technology concepts.
 
 
 ---
-# Shared Assessment Tables Schema
 
-## Table Definitions
 
 ### `languages`
 | Field | Type | Description |
 |-------|------|-------------|
-| language_id | PK |  |
-| language_name | VARCHAR |  |
-| runtime_id | FK |  |
-
----
+| language_id | PK | Primary key, auto-incrementing identifier for each language |
+| language_name | VARCHAR | Name of the programming language (e.g., "Python", "JavaScript") |
+| runtime_id | FK | Foreign key referencing the runtime environment this language supports |
 
 ### `sme_runtime`
 | Field | Type | Description |
 |-------|------|-------------|
-| sme_runtime_id | PK |  |
-| sme_id | FK |  |
-| runtime_id | FK |  |
-
----
+| sme_runtime_id | PK | Primary key, unique identifier for SME-runtime association |
+| sme_id | FK | Foreign key referencing the Subject Matter Expert (SME) |
+| runtime_id | FK | Foreign key referencing the runtime environment assigned to SME |
 
 ### `mcq_answer_options`
 | Field | Type | Description |
 |-------|------|-------------|
-| mcq_answer_options_id | PK |  |
-| option_text | VARCHAR |  |
-| correct_answer | VARCHAR |  |
-| question_id | FK |  |
-
----
+| mcq_answer_options_id | PK | Primary key, unique identifier for each answer option |
+| option_text | VARCHAR | The text displayed for this multiple-choice answer option |
+| correct_answer | VARCHAR | Boolean/text flag indicating if this is the correct answer (e.g., "true"/"false") |
+| question_id | FK | Foreign key referencing the parent MCQ question |
 
 ### `question_concept_mapping`
 | Field | Type | Description |
 |-------|------|-------------|
-| question_concept_mapping_id | PK |  |
-| question_id | FK |  |
-| concept_id | FK |  |
-
+| question_concept_mapping_id | PK | Primary key, unique identifier for each question-concept mapping |
+| question_id | FK | Foreign key referencing the specific question |
+| concept_id | FK | Foreign key referencing the learning concept/knowledge area |
