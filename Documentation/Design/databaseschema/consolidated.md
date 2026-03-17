@@ -381,6 +381,66 @@ Stores student Hands-on submissions.
 | created_at | DATETIME     | Timestamp of creation            |
 
 ---
+
+
+## 18. Sessions Table
+Stores all session-related information.
+
+| Column Name        | Data Type     | Description |
+|-------------------|--------------|-------------|
+| session_id (PK)   | INT          | Unique session ID |
+| title             | VARCHAR(255) | Session title |
+| description       | TEXT         | Session description |
+| mentor_id         | INT          | ID of the mentor |
+| session_date      | DATETIME     | Date and time of session |
+| session_url       | VARCHAR(500) | Link to access session |
+| created_at        | TIMESTAMP    | Record creation time |
+| updated_at        | TIMESTAMP    | Last updated time |
+| duration          | INT          | Duration in minutes |
+| session_type      | VARCHAR(50)  | Type (Live / Recorded / Workshop) |
+
+---
+
+## 19. Runtimes Table
+Stores runtime environments.
+
+| Column Name        | Data Type     | Description |
+|-------------------|--------------|-------------|
+| runtime_id (PK)   | INT          | Unique runtime ID |
+| runtime_name      | VARCHAR(100) | Name of runtime |
+
+---
+
+## 20. Session_Resources Table
+Stores session resources like PDFs, videos, etc.
+
+| Column Name              | Data Type     | Description |
+|--------------------------|--------------|-------------|
+| session_resource_id (PK) | INT          | Unique resource ID |
+| session_id (FK)          | INT          | Linked session ID |
+| resource_type            | VARCHAR(50)  | Type (PDF, Video, Link) |
+| resource_url             | VARCHAR(500) | Resource URL |
+| resource_size            | INT          | File size |
+| uploaded_by              | INT          | User who uploaded |
+| upload_date              | DATETIME     | Upload timestamp |
+| status                   | VARCHAR(50)  | Active / Inactive |
+
+---
+
+## 21. Hands_On_Results Table
+Stores student performance data.
+
+| Column Name              | Data Type     | Description |
+|--------------------------|--------------|-------------|
+| hands_on_result_id (PK)  | INT          | Unique result ID |
+| student_id (FK)          | INT          | Student ID |
+| hands_on_id (FK)         | INT          | Hands-on session ID |
+| score                    | INT          | Marks obtained |
+| status                   | VARCHAR(50)  | Completed / Pending |
+| submitted_at             | DATETIME     | Submission time |
+
+---
+
 # 29. Mentoring_Sessions Table
 
 ## mentoring_sessions
@@ -1063,5 +1123,6 @@ Maps questions to technology concepts.
 | UNIQUE(question_id, technology_concepts_id) | Prevents duplicate mappings |
 | FK: question_id | References question_bank(question_id) ON DELETE CASCADE |
 | FK: technology_concepts_id | References technology_concepts(id) ON DELETE CASCADE |
+
 
 ---
