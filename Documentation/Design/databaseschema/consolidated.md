@@ -1,6 +1,90 @@
 //Place all the md files here
 
+# 🎓 Student Database Schema
 
+---
+
+## 🎓 Student Table
+Stores student basic information.
+
+### Table: Student
+
+| Field | Data Type | Description |
+|-------|----------|-------------|
+| id | INT (PK) | Primary key |
+| first_name | VARCHAR | First name |
+| last_name | VARCHAR | Last name |
+| gender | VARCHAR | Gender |
+| date_of_birth | DATE | Student birthday |
+| email | VARCHAR | Email address |
+| password | VARCHAR | Password |
+| phone_number | VARCHAR | Contact number |
+| registration_number | VARCHAR | Registration number |
+| created_at | DATETIME | Record created time |
+| updated_at | DATETIME | Record updated time |
+
+---
+
+## 📘 Academic Information Table
+Stores academic details of students.
+
+### Table: Academic_Information
+
+| Field | Data Type | Description |
+|-------|----------|-------------|
+| id | INT (PK) | Primary key |
+| person_id | INT (FK) | Reference to student |
+| professional_id | INT (FK) | Reference to professional |
+| course_name | VARCHAR | Course name |
+| specialization | VARCHAR | Specialization |
+| enrollment_year | INT | Year of enrollment |
+| passing_year | INT | Year of passing |
+| percentage | DECIMAL | Percentage |
+| cgpa | DECIMAL | CGPA |
+| college_name | VARCHAR | College name |
+| university_name | VARCHAR | University name |
+
+---
+
+## 🧾 Personal Information Table
+Stores personal details of students.
+
+### Table: Personal_Information
+
+| Field | Data Type | Description |
+|-------|----------|-------------|
+| id | INT (PK) | Primary key |
+| first_name | VARCHAR | First name |
+| last_name | VARCHAR | Last name |
+| gender | VARCHAR | Gender |
+| date_of_birth | DATE | Date of birth |
+| phone_number | VARCHAR | Phone number |
+| email | VARCHAR | Email |
+| address | VARCHAR | Address |
+| city | VARCHAR | City |
+| state | VARCHAR | State |
+| country | VARCHAR | Country |
+| pincode | VARCHAR | Postal code |
+
+---
+
+## 💼 Professional Information Table
+Stores professional details of students.
+
+### Table: Professional_Information
+
+| Field | Data Type | Description |
+|-------|----------|-------------|
+| id | INT (PK) | Primary key |
+| company_name | VARCHAR | Company name |
+| job_title | VARCHAR | Job title |
+| employment_type | VARCHAR | Employment type |
+| start_date | DATE | Job start date |
+| end_date | DATE | Job end date |
+| is_current_job | BOOLEAN | Current job or not |
+| experience_years | INT | Total experience |
+| location | VARCHAR | Job location |
+| skills | TEXT | Skills |
 
 
 # 5. Learning Track Table
