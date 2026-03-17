@@ -67,6 +67,174 @@ Stores student Hands-on submissions.
 
 ---
 
+# 📘 Role Wise Tables
+
+## 12) Assessment
+
+### i) Student
+
+| Field Name       | Data Type      | Description                        |
+|-----------------|---------------|------------------------------------|
+| id              | BIGINT (PK)   | Unique identifier                  |
+| test_id         | BIGINT (FK)   | Reference to test                  |
+| candidate_id    | BIGINT (FK)   | Reference to candidate             |
+| status          | VARCHAR(50)   | Current status of assessment       |
+| created_by      | BIGINT (FK)   | User who created the record        |
+| created_on      | DATETIME      | Timestamp of creation              |
+| modify_by       | BIGINT (FK)   | User who last modified the record  |
+| modify_on       | DATETIME      | Timestamp of last modification     |
+| schedule_start  | DATETIME      | Scheduled start time               |
+| schedule_end    | DATETIME      | Scheduled end time                 |
+
+### ii) Admin
+
+| Field Name  | Data Type    | Description                  |
+|------------|-------------|------------------------------|
+| id         | BIGINT (PK) | Unique identifier            |
+| test_id    | BIGINT (FK) | Reference to test            |
+| student_id | BIGINT (FK) | Reference to student         |
+| start_time | DATETIME    | Actual start time            |
+| end_time   | DATETIME    | Actual end time              |
+| status     | VARCHAR(50) | Current status of assessment |
+
+---
+
+## 13) Notification
+
+### i) Student
+
+| Field Name  | Data Type    | Description                        |
+|------------|-------------|------------------------------------|
+| id         | BIGINT (PK) | Unique identifier                  |
+| student_id | BIGINT (FK) | Reference to student               |
+| message    | TEXT        | Notification message content       |
+| source     | VARCHAR(100)| Origin/source of the notification  |
+| created_at | DATETIME    | Timestamp of creation              |
+
+---
+
+## 14) SME Account
+
+### i) SME
+
+| Field Name  | Data Type     | Description                  |
+|------------|--------------|------------------------------|
+| sme_id     | BIGINT (PK)  | Unique identifier for SME    |
+| name       | VARCHAR(255) | Full name of the SME         |
+| email      | VARCHAR(255) | Email address                |
+| password   | VARCHAR(255) | Hashed password              |
+| created_at | DATETIME     | Timestamp of account creation|
+
+---
+
+## 15) Concepts
+
+### i) SME
+
+| Field Name  | Data Type     | Description                     |
+|------------|--------------|----------------------------------|
+| concept_id | BIGINT (PK)  | Unique identifier for concept    |
+| name       | VARCHAR(255) | Name of the concept              |
+| description| TEXT         | Detailed description of concept  |
+| status     | VARCHAR(50)  | Current status of the concept    |
+| created_at | DATETIME     | Timestamp of creation            |
+
+---
+
+# 📘 Module Wise
+
+## 12) Assessment
+
+| Field Name      | Data Type    | Description                         |
+|----------------|-------------|-------------------------------------|
+| assessment_id  | BIGINT (PK) | Unique identifier for assessment    |
+| test_id        | BIGINT (FK) | Reference to test                   |
+| candidate_id   | BIGINT (FK) | Reference to candidate              |
+| attempt_number | INT         | Attempt count for the assessment    |
+| start_time     | DATETIME    | Actual start time                   |
+| end_time       | DATETIME    | Actual end time                     |
+| status         | VARCHAR(50) | Current status of assessment        |
+
+---
+
+## 13) Notification
+
+> Not present
+
+---
+
+## 14) SME Account
+
+> Not present
+
+---
+
+## 15) Concepts
+
+| Field Name  | Data Type    | Description                          |
+|------------|-------------|--------------------------------------|
+| concept_id | BIGINT (PK) | Unique identifier for concept        |
+| skill_id   | BIGINT (FK) | Reference to associated skill        |
+| title      | VARCHAR(255)| Title of the concept                 |
+| description| TEXT        | Detailed description of concept      |
+| level_id   | BIGINT (FK) | Reference to difficulty/level        |
+| created_at | DATETIME    | Timestamp of creation                |
+| updated_at | DATETIME    | Timestamp of last update             |
+
+---
+
+# 📘 Final
+
+## 12) Assessment
+
+| Field Name      | Data Type    | Description                       |
+|----------------|-------------|-----------------------------------|
+| assessment_id  | BIGINT (PK) | Unique identifier for assessment  |
+| test_id        | BIGINT (FK) | Reference to test                 |
+| student_id     | BIGINT (FK) | Reference to student              |
+| created_by     | BIGINT (FK) | User who created the record       |
+| created_on     | DATETIME    | Timestamp of creation             |
+| modify_by      | BIGINT (FK) | User who last modified the record |
+| modify_on      | DATETIME    | Timestamp of last modification    |
+| schedule_start | DATETIME    | Scheduled start time              |
+| schedule_end   | DATETIME    | Scheduled end time                |
+| status         | VARCHAR(50) | Current status of assessment      |
+
+---
+
+## 13) Notification
+
+| Field Name       | Data Type     | Description                        |
+|-----------------|---------------|------------------------------------|
+| notification_id | BIGINT (PK)   | Unique identifier for notification |
+| user_id         | BIGINT (FK)   | Reference to user                  |
+| message         | TEXT          | Notification message content       |
+| source          | VARCHAR(100)  | Origin/source of the notification  |
+| created_at      | DATETIME      | Timestamp of creation              |
+
+---
+
+## 14) SME Account
+
+| Field Name     | Data Type    | Description                        |
+|---------------|-------------|-------------------------------------|
+| sme_id        | BIGINT (PK) | Unique identifier for SME account   |
+| user_id       | BIGINT (FK) | Reference to user                   |
+| technology_id | BIGINT (FK) | Reference to associated technology  |
+
+---
+
+## 15) Concept
+
+| Field Name  | Data Type     | Description                      |
+|------------|--------------|----------------------------------|
+| concept_id | BIGINT (PK)  | Unique identifier for concept    |
+| name       | VARCHAR(255) | Name of the concept              |
+| description| TEXT         | Detailed description of concept  |
+| status     | VARCHAR(50)  | Current status of the concept    |
+| created_at | DATETIME     | Timestamp of creation            |
+
+---
 # 29. Mentoring_Sessions Table
 
 ## mentoring_sessions
@@ -430,174 +598,6 @@ Stores student performance based on specific concepts/topics.
 ## 60. Student_performance Table
 
 
-# 📘 Role Wise Tables
-
-## 12) Assessment
-
-### i) Student
-
-| Field Name       | Data Type      | Description                        |
-|-----------------|---------------|------------------------------------|
-| id              | BIGINT (PK)   | Unique identifier                  |
-| test_id         | BIGINT (FK)   | Reference to test                  |
-| candidate_id    | BIGINT (FK)   | Reference to candidate             |
-| status          | VARCHAR(50)   | Current status of assessment       |
-| created_by      | BIGINT (FK)   | User who created the record        |
-| created_on      | DATETIME      | Timestamp of creation              |
-| modify_by       | BIGINT (FK)   | User who last modified the record  |
-| modify_on       | DATETIME      | Timestamp of last modification     |
-| schedule_start  | DATETIME      | Scheduled start time               |
-| schedule_end    | DATETIME      | Scheduled end time                 |
-
-### ii) Admin
-
-| Field Name  | Data Type    | Description                  |
-|------------|-------------|------------------------------|
-| id         | BIGINT (PK) | Unique identifier            |
-| test_id    | BIGINT (FK) | Reference to test            |
-| student_id | BIGINT (FK) | Reference to student         |
-| start_time | DATETIME    | Actual start time            |
-| end_time   | DATETIME    | Actual end time              |
-| status     | VARCHAR(50) | Current status of assessment |
-
----
-
-## 13) Notification
-
-### i) Student
-
-| Field Name  | Data Type    | Description                        |
-|------------|-------------|------------------------------------|
-| id         | BIGINT (PK) | Unique identifier                  |
-| student_id | BIGINT (FK) | Reference to student               |
-| message    | TEXT        | Notification message content       |
-| source     | VARCHAR(100)| Origin/source of the notification  |
-| created_at | DATETIME    | Timestamp of creation              |
-
----
-
-## 14) SME Account
-
-### i) SME
-
-| Field Name  | Data Type     | Description                  |
-|------------|--------------|------------------------------|
-| sme_id     | BIGINT (PK)  | Unique identifier for SME    |
-| name       | VARCHAR(255) | Full name of the SME         |
-| email      | VARCHAR(255) | Email address                |
-| password   | VARCHAR(255) | Hashed password              |
-| created_at | DATETIME     | Timestamp of account creation|
-
----
-
-## 15) Concepts
-
-### i) SME
-
-| Field Name  | Data Type     | Description                     |
-|------------|--------------|----------------------------------|
-| concept_id | BIGINT (PK)  | Unique identifier for concept    |
-| name       | VARCHAR(255) | Name of the concept              |
-| description| TEXT         | Detailed description of concept  |
-| status     | VARCHAR(50)  | Current status of the concept    |
-| created_at | DATETIME     | Timestamp of creation            |
-
----
-
-# 📘 Module Wise
-
-## 12) Assessment
-
-| Field Name      | Data Type    | Description                         |
-|----------------|-------------|-------------------------------------|
-| assessment_id  | BIGINT (PK) | Unique identifier for assessment    |
-| test_id        | BIGINT (FK) | Reference to test                   |
-| candidate_id   | BIGINT (FK) | Reference to candidate              |
-| attempt_number | INT         | Attempt count for the assessment    |
-| start_time     | DATETIME    | Actual start time                   |
-| end_time       | DATETIME    | Actual end time                     |
-| status         | VARCHAR(50) | Current status of assessment        |
-
----
-
-## 13) Notification
-
-> Not present
-
----
-
-## 14) SME Account
-
-> Not present
-
----
-
-## 15) Concepts
-
-| Field Name  | Data Type    | Description                          |
-|------------|-------------|--------------------------------------|
-| concept_id | BIGINT (PK) | Unique identifier for concept        |
-| skill_id   | BIGINT (FK) | Reference to associated skill        |
-| title      | VARCHAR(255)| Title of the concept                 |
-| description| TEXT        | Detailed description of concept      |
-| level_id   | BIGINT (FK) | Reference to difficulty/level        |
-| created_at | DATETIME    | Timestamp of creation                |
-| updated_at | DATETIME    | Timestamp of last update             |
-
----
-
-# 📘 Final
-
-## 12) Assessment
-
-| Field Name      | Data Type    | Description                       |
-|----------------|-------------|-----------------------------------|
-| assessment_id  | BIGINT (PK) | Unique identifier for assessment  |
-| test_id        | BIGINT (FK) | Reference to test                 |
-| student_id     | BIGINT (FK) | Reference to student              |
-| created_by     | BIGINT (FK) | User who created the record       |
-| created_on     | DATETIME    | Timestamp of creation             |
-| modify_by      | BIGINT (FK) | User who last modified the record |
-| modify_on      | DATETIME    | Timestamp of last modification    |
-| schedule_start | DATETIME    | Scheduled start time              |
-| schedule_end   | DATETIME    | Scheduled end time                |
-| status         | VARCHAR(50) | Current status of assessment      |
-
----
-
-## 13) Notification
-
-| Field Name       | Data Type     | Description                        |
-|-----------------|---------------|------------------------------------|
-| notification_id | BIGINT (PK)   | Unique identifier for notification |
-| user_id         | BIGINT (FK)   | Reference to user                  |
-| message         | TEXT          | Notification message content       |
-| source          | VARCHAR(100)  | Origin/source of the notification  |
-| created_at      | DATETIME      | Timestamp of creation              |
-
----
-
-## 14) SME Account
-
-| Field Name     | Data Type    | Description                        |
-|---------------|-------------|-------------------------------------|
-| sme_id        | BIGINT (PK) | Unique identifier for SME account   |
-| user_id       | BIGINT (FK) | Reference to user                   |
-| technology_id | BIGINT (FK) | Reference to associated technology  |
-
----
-
-## 15) Concept
-
-| Field Name  | Data Type     | Description                      |
-|------------|--------------|----------------------------------|
-| concept_id | BIGINT (PK)  | Unique identifier for concept    |
-| name       | VARCHAR(255) | Name of the concept              |
-| description| TEXT         | Detailed description of concept  |
-| status     | VARCHAR(50)  | Current status of the concept    |
-| created_at | DATETIME     | Timestamp of creation            |
-
----
 
 ### 📌 Description
 Stores overall performance metrics of each student.
