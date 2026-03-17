@@ -237,6 +237,120 @@ Stores structured learning paths for students.
 | salary_min | Structured |
 | salary_max | Structured |
 ---
+# 41. Job Application Table
+
+Stores job applications made by students.
+
+## Table: Job_Application (Original)
+
+| Field | Description |
+|------|-------------|
+| id | Primary key |
+| job_id | Foreign key referencing Job |
+| student_id | Foreign key referencing Student |
+| status | Application status |
+| updated_at | Last updated timestamp |
+| applied_at | Application timestamp |
+
+## Proposed Changes
+
+| Column Name | Change |
+|------------|--------|
+| id | No change |
+| job_id | No change |
+| student_id | No change |
+| status | Standardized status values |
+| updated_at | Retained |
+| applied_at | Retained |
+
+---
+
+# 42. Shortlisted Candidates Table
+
+Stores shortlisted students for jobs.
+
+## Table: Shortlisted_Candidates (Original)
+
+| Field | Description |
+|------|-------------|
+| shortlisted_id | Primary key |
+| student_id | Foreign key referencing Student |
+| job_id | Foreign key referencing Job |
+| employer_id | Foreign key referencing Employer |
+| shortlisted_at | Timestamp |
+
+## Proposed Changes
+
+| Column Name | Change |
+|------------|--------|
+| shortlisted_id | No change |
+| student_id | No change |
+| job_id | No change |
+| employer_id | No change |
+| shortlisted_at | Add time precision |
+
+---
+
+# 43. Interview Table
+
+Stores interview scheduling and outcomes.
+
+## Table: Interview (Original)
+
+| Field | Description |
+|------|-------------|
+| interview_id | Primary key |
+| application_id | Foreign key referencing Job Application |
+| employer_id | Foreign key referencing Employer |
+| scheduled_at | Scheduled date & time |
+| rescheduled_at | Rescheduled timestamp |
+| mode | Interview mode (video, in-person, phone) |
+| status | Interview status |
+| result | Result notes |
+| outcome | Final outcome |
+| created_at | Creation timestamp |
+
+## Proposed Changes
+
+| Column Name | Change |
+|------------|--------|
+| interview_id | No change |
+| application_id | No change |
+| employer_id | No change |
+| scheduled_at | Standard datetime format |
+| rescheduled_at | Retained |
+| mode | Enum (video, in-person, phone) |
+| status | Enum (scheduled, completed, cancelled, rescheduled) |
+| result | Structured notes |
+| outcome | Enum (selected, not selected, hold, pending) |
+| created_at | Retained |
+
+---
+
+# 44. User Logs Table
+
+Tracks user login/logout activity.
+
+## Table: User_Logs (Original)
+
+| Field | Description |
+|------|-------------|
+| log_id | Primary key |
+| user_id | Foreign key referencing User |
+| user_login | Login timestamp |
+| user_logout | Logout timestamp |
+
+## Proposed Changes
+
+| Column Name | Change |
+|------------|--------|
+| log_id | No change |
+| user_id | No change |
+| user_login | Retained |
+| user_logout | Retained |
+| session_duration | Added (derived field) |
+
+---
 
 
 
