@@ -1,8 +1,6 @@
 //Place all the md files here
 
 
-
-
 # 5. Learning Track Table
 
 Stores learning track information.
