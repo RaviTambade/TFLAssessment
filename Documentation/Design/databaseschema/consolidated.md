@@ -152,6 +152,66 @@ Stores student Hands-on submissions.
 | submitted_at | Submission timestamp |
 
 ---
+## 9. student_answer Table
+
+*Stores student responses for assessments*
+
+| Column Name            | Data Type | Description               |
+| ---------------------- | --------- | ------------------------- |
+| id (PK)                | INT       | Unique answer ID          |
+| assessment_id (FK)     | INT       | Assessment reference      |
+| question_id (FK)       | INT       | Question reference        |
+| student_id (FK)        | INT       | Student reference         |
+| submitted_code         | TEXT      | Code submitted by student |
+| submitted_answer       | TEXT      | Answer submitted          |
+| submitted_at           | TIMESTAMP | Submission time           |
+
+---
+
+## 10. student_assessment_result Table
+
+*Stores final result of assessment*
+
+| Column Name        | Data Type   | Description            |
+| ------------------ | ----------- | ---------------------- |
+| id (PK)            | INT         | Unique result ID       |
+| student_id (FK)    | INT         | Student reference      |
+| assessment_id (FK) | INT         | Assessment reference   |
+| score              | FLOAT       | Marks scored           |
+| percentile         | FLOAT       | Percentile ranking     |
+| time_taken_minutes | INT         | Time taken to complete |
+
+---
+
+## 11. mentor_mentee Table
+
+*Stores mentor-student mapping*
+
+| Column Name     | Data Type | Description       |
+| --------------- | --------- | ----------------- |
+| id (PK)         | INT       | Unique mapping ID |
+| mentor_id (FK)  | INT       | Mentor reference  |
+| student_id (FK) | INT       | Student reference |
+| assigned_on     | DATE      | Assignment date   |
+
+---
+
+ ## 12. mentor_appointment Table
+
+*Stores mentor appointment details*
+
+| Column Name                | Data Type | Description                       |
+| -------------------------- | --------- | --------------------------------- |
+| id (PK)                    | INT       | Unique appointment ID             |
+| student_id (FK)            | INT       | Student reference                 |
+| mentor_id (FK)             | INT       | Mentor reference                  |
+| appointment_date           | DATE      | Date of appointment               |
+| start_time                 | TIME      | Start time                        |
+| status                     | ENUM      | SCHEDULED / CANCELLED / COMPLETED |
+| meeting_link               | VARCHAR   | Online meeting link               |
+| agenda                     | TEXT      | Meeting purpose                   |
+| created_at                 | TIMESTAMP | Record creation time              |
+| updated_at                 | TIMESTAMP | Last updated time                 |
 
 # 📘 Role Wise Tables
 
