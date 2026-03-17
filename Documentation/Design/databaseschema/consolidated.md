@@ -1,5 +1,9 @@
 //Place all the md files here
-# 3. Learning Track Table
+
+
+
+
+# 5. Learning Track Table
 
 Stores learning track information.
 
@@ -19,7 +23,7 @@ Stores learning track information.
 
 ---
 
-# 4. Student Learning Track Table
+# 6. Student Learning Track Table
 
 Mapping between students and learning tracks.
 
@@ -32,7 +36,8 @@ Mapping between students and learning tracks.
 | learningTrackId | Foreign key referencing Learning Track |
 | progressId | Progress tracking id |
 | enrolledDate | Enrollment date |
-# 5. Hands-on Table (Hands-on)
+
+# 7. Hands-on Table (Hands-on)
 
 Stores hands-on Hands-ons.
 
@@ -48,7 +53,7 @@ Stores hands-on Hands-ons.
 
 ---
 
-# 6. Hands-on Submission Table
+# 8. Hands-on Submission Table
 
 Stores student Hands-on submissions.
 
@@ -63,6 +68,74 @@ Stores student Hands-on submissions.
 | submitted_at | Submission timestamp |
 
 ---
+
+## 29. mentoring_sessions
+
+Stores mentoring session details.
+
+| Field | Type | Description |
+|------|------|-------------|
+| session_id | INT (PK) | Unique session ID |
+| mentor_id | INT (FK) | Mentor reference |
+| session_name | VARCHAR(255) | Session title |
+| topic | VARCHAR(255) | Session topic |
+| meeting_link | VARCHAR(255) | Meeting URL |
+| session_date | DATE | Date of session |
+| session_time | TIME | Time of session |
+| status | ENUM('upcoming','completed','cancelled') | Session status |
+
+---
+
+## 30. learning_resources
+
+Stores learning materials like videos, PDFs, and links.
+
+| Field | Type | Description |
+|------|------|-------------|
+| resource_id | INT (PK) | Unique resource ID |
+| title | VARCHAR(255) | Resource title |
+| description | TEXT | Resource details |
+| resource_url | VARCHAR(255) | Resource link |
+|type| ENUM('md_file,recorded_sessions')|Type of the resource|
+| session_id | INT (FK) | Linked session |
+| uploaded_by | BIGINT (FK) | Uploaded by user |
+| created_at | DATETIME | Upload timestamp |
+| status | ENUM('active','inactive') | Resource status |
+
+---
+
+## 31. mentor_reviews
+
+Stores feedback given to mentors by students.
+
+| Field | Type | Description |
+|------|------|-------------|
+| review_id | BIGINT (PK) | Unique review ID |
+| mentor_id | BIGINT (FK) | Mentor reference |
+| student_id | BIGINT (FK) | Student reference |
+| rating | INT | Rating (1–5) |
+| review_text | TEXT | Feedback text |
+| created_at | TIMESTAMP | Review time |
+| status | ENUM('ACTIVE','HIDDEN') | Review status |
+
+---
+
+## 32. learning_paths
+
+Stores structured learning paths for students.
+
+| Field | Type | Description |
+|------|------|-------------|
+| id | BIGINT (PK) | Unique learning path ID |
+| mentor_id | BIGINT | Mentor reference |
+| learning_track_id | BIGINT | Track/technology reference |
+| title | VARCHAR(200) | Learning path name |
+| description | TEXT | Path details |
+| duration | INT | Duration |
+| total_modules | INT | Number of modules |
+| status | ENUM('ACTIVE','INACTIVE') | Path status |
+| created_at | TIMESTAMP | Created time |
+| updated_at | TIMESTAMP | Last updated time |
 
 
 # 37. Company_Alumni Table
@@ -165,3 +238,29 @@ Stores student Hands-on submissions.
 | salary_max | Structured |
 ---
 
+
+
+## 53. mini_projects
+
+Stores mini project details linked to questions.
+
+| Field | Type | Description |
+|------|------|-------------|
+| project_id | BIGINT (PK) | Unique project ID |
+| question_id | BIGINT (FK, UNIQUE) | Linked question |
+| project_description | TEXT | Description of the project |
+| evaluation_criteria | TEXT | Criteria to evaluate project |
+
+---
+
+## 54. mock_questions
+
+Stores mock/test-related questions.
+
+| Field | Type | Description |
+|------|------|-------------|
+| mock_id | BIGINT (PK) | Unique mock ID |
+| question_id | BIGINT (FK, UNIQUE) | Linked question |
+| mock_category | VARCHAR(100) | Category of mock |
+
+---
