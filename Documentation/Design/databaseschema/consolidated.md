@@ -860,3 +860,208 @@ Tracks placed students.
 
 ---
 
+# 27. Tests Table (SME Role)
+
+Stores test information created by SMEs.
+
+## Table: tests
+
+| Field | Description |
+|------|-------------|
+| test_id | Unique test identifier (Primary Key) |
+| sme_id | Foreign key referencing SME |
+| title | Test title |
+| duration | Duration of the test |
+| difficulty | Difficulty level (Easy, Medium, Hard) |
+| created_at | Test creation timestamp |
+
+## Proposed Schema (Module-wise Assessment Orchestrator)
+
+| Column Name | Description |
+|------------|------------|
+| testid | Unique test identifier (Primary Key) |
+| title | Test title |
+| description | Test description |
+| duration_minutes | Duration in minutes |
+| created_by | External user ID |
+| status | Status (default: DRAFT) |
+| created_at | Timestamp of creation |
+
+---
+
+# 28. Test Questions Table (SME Role)
+
+Maps questions to tests.
+
+## Table: test_questions
+
+| Field | Description |
+|------|-------------|
+| test_question_id | Unique identifier (Primary Key) |
+| test_id | Foreign key referencing test |
+| question_id | Foreign key referencing question |
+
+## Proposed Schema (Module-wise Assessment Orchestrator)
+
+| Column Name | Description |
+|------------|------------|
+| id | Unique identifier (Primary Key) |
+| testid | Foreign key referencing tests |
+| question_id | Foreign key referencing question |
+| sequence_order | Order of question in test |
+
+## Constraints
+
+| Constraint | Description |
+|-----------|-------------|
+| UNIQUE(testid, question_id) | Prevents duplicate questions in same test |
+| FK: testid | References tests(testid) |
+
+---
+
+# 29. Mentor Information Table
+
+Stores mentor profile details.
+
+## Table: mentor_information
+
+| Field | Description |
+|------|-------------|
+| mentor_id | Unique mentor identifier (Primary Key) |
+| user_id | Linked user ID |
+| experience_years | Years of experience |
+| specialization | Area of expertise |
+| created_on | Profile creation timestamp |
+| bio | Mentor biography |
+| linkedin_profile | LinkedIn profile URL |
+
+## Proposed Schema (Module-wise Membership)
+
+| Column Name | Description |
+|------------|------------|
+| mentor_id | Unique mentor profile ID (Primary Key) |
+| user_id | Linked user (1:1 relationship) |
+| experience_years | Years of mentoring experience |
+| specialization | Area of expertise |
+| created_on | Profile creation timestamp |
+
+## Constraints
+
+| Constraint | Description |
+|-----------|-------------|
+| UNIQUE(user_id) | Ensures one mentor profile per user |
+| FK: user_id | References users(user_id) |
+
+---
+
+# 30. (Reserved / Not Defined)
+
+*No schema provided.*
+
+---
+
+# 33. Student Learning Progress Table
+
+Stores module-wise learning progress of students.
+
+## Table: student_learning_progress
+
+| Field | Description |
+|------|-------------|
+| id | Unique progress identifier (Primary Key) |
+| student_id | Foreign key referencing student |
+| module_id | Foreign key referencing learning module |
+| status | Progress status (e.g., In Progress, Completed) |
+| completed_at | Timestamp when module was completed |
+
+---
+
+# 34. Projects Table
+
+Stores project details assigned by mentors.
+
+## Table: projects
+
+| Field | Description |
+|------|-------------|
+| project_id | Unique project identifier (Primary Key) |
+| mentor_id | Foreign key referencing mentor |
+| project_name | Name of the project |
+| description | Project details |
+| repository_url | Git repository link |
+| status | Project status (e.g., Active, Completed) |
+| created_at | Project creation timestamp |
+
+---
+
+# 35. Student Project Table (Mapping Table)
+
+Maps students to projects.
+
+## Table: student_project
+
+| Field | Description |
+|------|-------------|
+| id | Unique identifier (Primary Key) |
+| project_id | Foreign key referencing project |
+| student_id | Foreign key referencing student |
+
+---
+
+# 36. Companies Table
+
+Stores company information.
+
+## Table: companies
+
+| Field | Description |
+|------|-------------|
+| company_id | Unique company identifier (Primary Key) |
+| company_name | Name of the company |
+| website | Official website URL |
+| industry | Industry type (e.g., IT, Finance) |
+| company_type | Type (Service-based, Product-based, Startup) |
+| company_size | Size range (e.g., 1-10, 11-50, 100+) |
+| description | Company overview |
+| logo_url | URL of company logo |
+| founded_year | Year company was founded |
+| created_at | Record creation timestamp |
+| updated_at | Last update timestamp |
+
+---
+
+# 55. Skill Level Table (Module-wise)
+
+Defines different skill levels.
+
+## Table: skill_level
+
+| Field | Description |
+|------|-------------|
+| id | Unique identifier (Primary Key) |
+| level_name | Skill level (Beginner, Intermediate, Advanced) |
+| description | Description of the skill level |
+
+---
+
+# 56. Question Technology Concept Map Table
+
+Maps questions to technology concepts.
+
+## Table: question_technology_concept_map
+
+| Field | Description |
+|------|-------------|
+| id | Unique identifier (Primary Key) |
+| question_id | Foreign key referencing question_bank |
+| technology_concepts_id | Foreign key referencing technology_concepts |
+
+## Constraints
+
+| Constraint | Description |
+|-----------|-------------|
+| UNIQUE(question_id, technology_concepts_id) | Prevents duplicate mappings |
+| FK: question_id | References question_bank(question_id) ON DELETE CASCADE |
+| FK: technology_concepts_id | References technology_concepts(id) ON DELETE CASCADE |
+
+---
