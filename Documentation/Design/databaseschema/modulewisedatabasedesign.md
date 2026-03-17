@@ -1,5 +1,4 @@
-#  **Designing the database schema for an assessment platform** 
-
+#  **Database Design  Part 1** 
 
 > First design the **data model**, then the **application logic** will naturally follow. 💡
 
