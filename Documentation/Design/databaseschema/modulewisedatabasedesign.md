@@ -346,13 +346,13 @@ The mentor is designing the database from **Application Design Phase perspective
 
 Main modules discussed:
 
-1️⃣ Skill Taxonomy
-2️⃣ Technology Mapping
-3️⃣ Question Bank
-4️⃣ Test Management
-5️⃣ Assessment & Candidate Answers
-6️⃣ Auto Grading
-7️⃣ Analytics
+- 1️⃣ Skill Taxonomy
+- 2️⃣ Technology Mapping
+- 3️⃣ Question Bank
+- 4️⃣ Test Management
+- 5️⃣ Assessment & Candidate Answers
+- 6️⃣ Auto Grading
+- 7️⃣ Analytics
 
 
 
@@ -637,10 +637,10 @@ Used for **learning analytics**.
 
 The mentor was emphasizing:
 
-✔ Always think **Application Design → Database Design**
-✔ Identify **modules first**
-✔ Then identify **tables**
-✔ Then identify **columns**
+- ✔ Always think **Application Design → Database Design**
+- ✔ Identify **modules first**
+- ✔ Then identify **tables**
+- ✔ Then identify **columns**
 
 Typical thinking process:
 
@@ -869,10 +869,10 @@ Meaning:
 
 When designing a system:
 
-1️⃣ Identify **entities**
-2️⃣ Convert entities → **tables**
-3️⃣ Define **columns**
-4️⃣ Define **relationships**
+- 1️⃣ Identify **entities**
+- 2️⃣ Convert entities → **tables**
+- 3️⃣ Define **columns**
+- 4️⃣ Define **relationships**
 
 Example thinking process:
 
@@ -933,9 +933,9 @@ This is **real system design thinking**, not just coding.
 
 Your mentor’s discussion is actually covering **three important architecture layers together**:
 
-1️⃣ **Database Design (tables, PK–FK)**
-2️⃣ **Analytics & Snapshot Data (JSON / performance tracking)**
-3️⃣ **User & Membership Management Module**
+- 1️⃣ **Database Design (tables, PK–FK)**
+- 2️⃣ **Analytics & Snapshot Data (JSON / performance tracking)**
+- 3️⃣ **User & Membership Management Module**
 
 
 # 1️⃣ Performance Snapshot Table (Analytics Module)
@@ -1314,9 +1314,9 @@ That is **real software architecture thinking**.
 
 You captured a **very rich system design discussion**. Your mentor was actually explaining **three deep ideas** at the same time:
 
-1️⃣ **Profile data modeling**
-2️⃣ **Multiple roles for one user**
-3️⃣ **Role-based dashboards and sessions**
+- 1️⃣ **Profile data modeling**
+- 2️⃣ **Multiple roles for one user**
+- 3️⃣ **Role-based dashboards and sessions**
 
 # 1️⃣ Core Identity Table (Login)
 
