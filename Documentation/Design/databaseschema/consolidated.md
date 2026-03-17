@@ -1128,21 +1128,21 @@ Maps questions to technology concepts.
 ---
 
 
-### `languages`
+### `21. Languages`
 | Field | Type | Description |
 |-------|------|-------------|
 | language_id | PK | Primary key, auto-incrementing identifier for each language |
 | language_name | VARCHAR | Name of the programming language (e.g., "Python", "JavaScript") |
 | runtime_id | FK | Foreign key referencing the runtime environment this language supports |
 
-### `sme_runtime`
+### `22. Sme_runtime`
 | Field | Type | Description |
 |-------|------|-------------|
 | sme_runtime_id | PK | Primary key, unique identifier for SME-runtime association |
 | sme_id | FK | Foreign key referencing the Subject Matter Expert (SME) |
 | runtime_id | FK | Foreign key referencing the runtime environment assigned to SME |
 
-### `mcq_answer_options`
+### `23. Mcq_answer_options`
 | Field | Type | Description |
 |-------|------|-------------|
 | mcq_answer_options_id | PK | Primary key, unique identifier for each answer option |
@@ -1150,7 +1150,7 @@ Maps questions to technology concepts.
 | correct_answer | VARCHAR | Boolean/text flag indicating if this is the correct answer (e.g., "true"/"false") |
 | question_id | FK | Foreign key referencing the parent MCQ question |
 
-### `question_concept_mapping`
+### `24. Question_concept_mapping`
 | Field | Type | Description |
 |-------|------|-------------|
 | question_concept_mapping_id | PK | Primary key, unique identifier for each question-concept mapping |
