@@ -1,4 +1,4 @@
-From your mentoring discussion, you are **guiding students to design the TFLCoMentor Employability Database** step-by-step while teaching core **database design thinking**:
+#  **Guiding students to design the TFLCoMentor Employability Database** step-by-step
 
 * Master tables
 * Detail tables
@@ -8,7 +8,6 @@ From your mentoring discussion, you are **guiding students to design the TFLCoMe
 
 Let me **organize your discussion into a clean database design** so students can clearly understand it.
 
----
 
 # TFLCoMentor Employability Platform – Database Design (Mentor Notes)
 
@@ -36,7 +35,7 @@ Students should learn:
 
 > Store **essential employability related data only**.
 
----
+
 
 # 2️⃣ Domain Table
 
@@ -57,7 +56,6 @@ Examples:
 | domain_id (PK) | INT     |
 | domain_name    | VARCHAR |
 
----
 
 # 3️⃣ Many-to-Many Relationship
 
@@ -74,7 +72,7 @@ So we create a **junction table**.
 | company_id (FK)        | INT  |
 | domain_id (FK)         | INT  |
 
----
+
 
 # 4️⃣ Alumni Table
 
@@ -96,7 +94,7 @@ Mentor concept:
 > This helps answer questions like
 > **“Which companies currently employ our students?”**
 
----
+
 
 # 5️⃣ Referral Table
 
@@ -126,7 +124,7 @@ JOIN queries work correctly only with
 Primary Key – Foreign Key relationships
 ```
 
----
+
 
 # 6️⃣ Employer Table
 
@@ -152,8 +150,6 @@ This design allows tracking:
 
 > A person who worked in **multiple companies over time**.
 
----
-
 # 7️⃣ Job Table
 
 Employers post job openings.
@@ -174,7 +170,6 @@ Employers post job openings.
 | closing_date     | DATETIME |
 | status           | VARCHAR  |
 
----
 
 # 8️⃣ Job Application Table
 
@@ -198,8 +193,6 @@ Example statuses:
 * Selected
 * Rejected
 
----
-
 # 9️⃣ Key Database Concepts You Taught Students
 
 ### Master Table
@@ -213,8 +206,6 @@ Company
 Domain
 ```
 
----
-
 ### Detail Table
 
 Dependent on master.
@@ -227,8 +218,6 @@ Employer
 Alumni
 ```
 
----
-
 ### Junction Table
 
 Used for **many-to-many relationships**.
@@ -238,8 +227,6 @@ Example:
 ```
 CompanyDomain
 ```
-
----
 
 ### Golden Rule of Database Design
 
@@ -264,7 +251,6 @@ Because relational databases work through:
 Primary Key → Foreign Key
 ```
 
----
 
 # Final Architecture (Simplified ER Structure)
 
@@ -301,19 +287,12 @@ Domain
 * Job applications
 * Employer network
 
----
 
-If you want, I can also show **a very powerful next step for mentoring students**:
-
-### 🚀 TFLCoMentor **Complete ER Diagram (Visual Architecture)**
-
-which will make your students understand the **whole platform database in 2 minutes.**
 
 
 Your mentoring discussion is actually **teaching students how a real hiring pipeline works**, and how to convert that into **database tables with proper timestamps, relationships, and workflow**.
 I’ll organize the remaining part of the design clearly so students can implement it in **MySQL schema**.
 
----
 
 # TFLCoMentor – Hiring Workflow Database Design
 
@@ -335,7 +314,6 @@ Selected / Rejected
 
 Each step becomes a **separate table or status update**.
 
----
 
 # 1️⃣ JobApplication Table
 
@@ -373,7 +351,6 @@ time1
 
 Consistency matters in **database design**.
 
----
 
 # 2️⃣ ShortlistedCandidates Table
 
@@ -394,7 +371,6 @@ This table answers:
 
 > Which candidates were shortlisted by which employer?
 
----
 
 # 3️⃣ Interview Table
 
@@ -413,7 +389,6 @@ Interviews are scheduled after shortlisting.
 | created_on          | DATETIME                   |
 | updated_on          | DATETIME                   |
 
----
 
 # 4️⃣ InterviewResult Table
 
@@ -438,7 +413,6 @@ Interview → Result
 
 Separating tables allows **multiple interview rounds**.
 
----
 
 # 5️⃣ Mentor Recommendation Layer (Important Concept)
 
@@ -476,7 +450,6 @@ Purpose:
 
 Maintain **quality and brand reputation of the platform**.
 
----
 
 # 6️⃣ Users Table (Common Table)
 
@@ -497,7 +470,6 @@ All people in the system are **Users**.
 | created_on    | DATETIME |
 | updated_on    | DATETIME |
 
----
 
 # 7️⃣ Roles Table
 
@@ -517,8 +489,6 @@ Mentor
 Employer
 SME
 ```
-
----
 
 # 8️⃣ User Activity Logs (Domain Naming Concept)
 
@@ -556,7 +526,6 @@ Assessment Completed
 Job Applied
 ```
 
----
 
 # Final Hiring Pipeline Architecture
 
@@ -580,7 +549,7 @@ Users
   └── MentorRecommendation
 ```
 
----
+
 
 # Mentor Wisdom You Taught Students
 
@@ -600,7 +569,6 @@ candidate_user_id
 company_id
 ```
 
----
 
 ### 2️⃣ Use Consistent Timestamp Fields
 
@@ -613,8 +581,6 @@ applied_at
 scheduled_at
 ```
 
----
-
 ### 3️⃣ Database Should Follow Business Domain
 
 Example:
@@ -624,28 +590,6 @@ UserSession (technical term) ❌
 UserActivityLog (domain term) ✔
 ```
 
----
-
-# If you want, I can also show the **complete final TFLCoMentor database schema with ~25 tables** that will cover:
-
-* Skill taxonomy
-* Assessments
-* Mentoring
-* Jobs
-* Employers
-* Alumni
-* Learning growth
-
-This becomes a **real-world employability platform database architecture**.
-
-
-
-What you captured in this mentoring discussion is actually a **very realistic picture of how database design happens in real software companies**. 😊
-There is **brainstorming, confusion, elimination of duplicates, normalization, and finally clarity**.
-
-Let me summarize the **core architectural lesson from your discussion** so your students can clearly understand it.
-
----
 
 # 1️⃣ Real Engineering Meetings Look Chaotic (But Productive)
 
@@ -668,7 +612,6 @@ So students should understand:
 
 👉 **Confusion is part of architecture design**
 
----
 
 # 2️⃣ First Step: Collect All Possible Tables
 
@@ -713,8 +656,6 @@ At this stage:
 ❌ Many tables are **duplicated**
 ❌ Many tables are **role-based instead of domain-based**
 
----
-
 # 3️⃣ Second Step: Remove Duplicate Tables
 
 During the session you identified duplicates like:
@@ -731,8 +672,6 @@ Better design:
 ```
 CompanyAlumniMapping
 ```
-
----
 
 ### Example 2
 
@@ -764,8 +703,6 @@ Both represent:
 AssessmentResults
 ```
 
----
-
 # 4️⃣ Third Step: Identify Common Tables
 
 You correctly explained **Common Tables vs Role Tables**.
@@ -784,7 +721,6 @@ Questions
 Assessments
 ```
 
----
 
 ### Role-specific Tables
 
@@ -798,7 +734,6 @@ JobApplications
 MentorSessions
 ```
 
----
 
 # 5️⃣ Profile Table Concept (Very Important)
 
@@ -821,8 +756,6 @@ phone
 role
 ```
 
----
-
 ### StudentProfile
 
 ```
@@ -833,8 +766,6 @@ degree
 branch
 ```
 
----
-
 ### MentorProfile
 
 ```
@@ -843,8 +774,6 @@ user_id
 experience
 expertise
 ```
-
----
 
 ### EmployerProfile
 
@@ -876,7 +805,6 @@ Roles
 LearningPaths
 ```
 
----
 
 ### Detail Table
 
@@ -890,7 +818,6 @@ JobApplications → depends on Job
 InterviewResults → depends on Interview
 ```
 
----
 
 # 7️⃣ Final Clean Architecture
 
@@ -913,7 +840,6 @@ Employer Domain
 Growth Engine
 ```
 
----
 
 # 8️⃣ One Important Lesson You Gave Students
 
@@ -941,7 +867,7 @@ MentoringSessions
 
 Because **database represents business domain, not technology implementation**.
 
----
+
 
 # 9️⃣ Final Thinking Model for Students
 
@@ -958,7 +884,6 @@ Step 6  → Create tables
 
 Not the other way around.
 
----
 
 # 🌱 Your Mentoring Style
 
@@ -984,29 +909,7 @@ How architects think
 
 That is **real industry preparation**. 👏
 
----
-
-If you want, I can also create a **very powerful teaching artifact for your students**:
-
-### 🔷 **TFLCoMentor – Complete Platform ER Diagram (35 tables)**
-
-This diagram will show:
-
-```
-Users → Students → Learning → Assessments
-Users → Mentors → Sessions
-Users → Employers → Jobs → Interviews
-Students → Skills → Jobs
-```
-
-Students will instantly understand **the whole employability ecosystem architecture**.
-
-
-
-
-What happened in this part of your mentoring session is actually a **very good architecture exercise**. I will organize it clearly so students can understand what was achieved in that discussion.
-
----
+-
 
 # 1️⃣ Concept Prerequisite Design Decision
 
@@ -1053,7 +956,6 @@ This is called **Self Referencing Foreign Key**.
 
 Very common in **learning systems**.
 
----
 
 # 2️⃣ Student Performance vs Learning Progress
 
@@ -1065,7 +967,6 @@ Students asked:
 
 You correctly identified they are **different concepts**.
 
----
 
 ## Learning Progress
 
@@ -1097,8 +998,6 @@ Example:
 Java Track → 30% completed
 ```
 
----
-
 ## Student Performance
 
 Tracks **assessment results and capability level**.
@@ -1128,8 +1027,6 @@ Average Score = 82%
 Performance Level = Advanced
 ```
 
----
-
 ### Key Difference
 
 | Learning Progress                | Performance                 |
@@ -1139,8 +1036,6 @@ Performance Level = Advanced
 | % completed                      | Score / rating              |
 
 Both are required in an **Employability Platform**.
-
----
 
 # 3️⃣ Final Entity Count
 
@@ -1164,8 +1059,6 @@ UserLogs
 UserActivity
 ```
 
----
-
 ### Learning Domain
 
 ```
@@ -1176,8 +1069,6 @@ LearningResources
 SessionResources
 LearningProgress
 ```
-
----
 
 ### Assessment Domain
 
@@ -1190,8 +1081,6 @@ StudentAnswers
 AssessmentResults
 ```
 
----
-
 ### Mentoring Domain
 
 ```
@@ -1201,7 +1090,6 @@ MentorMenteeMapping
 SessionFeedback
 ```
 
----
 
 ### Employer Domain
 
@@ -1215,7 +1103,6 @@ Interviews
 InterviewResults
 ```
 
----
 
 ### Skill / Growth Engine
 
@@ -1227,7 +1114,6 @@ StudentSkills
 JobSkills
 ```
 
----
 
 # 4️⃣ Next Step You Assigned Students
 
@@ -1272,7 +1158,7 @@ JobApplications
      |-- job_id → Jobs
 ```
 
----
+
 
 # 5️⃣ Important Teaching Point You Made
 
@@ -1291,7 +1177,6 @@ Domain understanding
 
 This is exactly how **real architects design systems**.
 
----
 
 # 6️⃣ Classroom Collaboration Technique You Used
 
@@ -1319,7 +1204,6 @@ Ownership
 Architecture thinking
 ```
 
----
 
 # 🌱 What Your Session Actually Achieved
 
@@ -1333,16 +1217,10 @@ By the end of the session students learned:
 
 That is exactly what happens in **real product companies**.
 
----
 
-If you want, I can also help you create a **visual architecture diagram of the 67 entities of TFLCoMentor**.
-
-It will show the complete platform structure like:
 
 ```
 Students → Learning → Assessments → Skills → Jobs → Employers
 ```
 
 Students will instantly understand the **entire employability ecosystem architecture**.
-
-
