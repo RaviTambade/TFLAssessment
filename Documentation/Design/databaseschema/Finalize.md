@@ -346,3 +346,309 @@ Stores all user information.
 | time_schedule_at| DATETIME | Schedule     |
 | status          | VARCHAR  | Status       |
 | concept_id      | BIGINT   | Concept      |
+# 📘 Final Ordered Tables with Sequence (Continued)
+
+---
+
+## 🟦 27. Table: layers
+**Description:** Stores layer information.
+
+| Column Name | Data Type | Description |
+|-------------|-----------|-------------|
+| id | BIGINT (PK) | Unique identifier |
+| layers | VARCHAR(50) | Name of the layer |
+
+---
+
+## 🟦 28. Table: frameworks
+
+| Column Name | Data Type | Description |
+|-------------|-----------|-------------|
+| id | INT (PK) | Unique ID |
+| name | VARCHAR(100) | Framework name |
+| layer_id   | (FK)     | 
+| created_at | DATETIME | Created |
+| updated_at | DATETIME | Updated |
+
+---
+
+## 🟦 29. Table: frameworks_concepts
+
+| Column Name | Data Type | Description |
+|-------------|-----------|-------------|
+| id | INT (PK) | Unique ID |
+| framework_id | INT (FK) | Framework |
+| concept_id | INT (FK) | Concept |
+
+---
+
+## 🟦 30. Table: questions_concepts
+
+| Column Name | Data Type | Description |
+|-------------|-----------|-------------|
+| question_concept_mapping_id | BIGINT (PK) | Unique ID |
+| question_id | BIGINT (FK) | Question |
+| concept_id | BIGINT (FK) | Concept |
+
+---
+
+## 🟦 31. Table: question_framework_concepts
+
+| Column Name | Data Type | Description |
+|-------------|-----------|-------------|
+| id | BIGINT (PK) | Unique ID |
+| question_id | BIGINT (FK) | Question |
+| framework_concepts_id | BIGINT (FK) | Mapping |
+
+---
+
+## 🟦 32. Table: hands_on
+**Description:** Stores hands-on exercises.
+
+| Column Name | Data Type | Description |
+|-------------|-----------|-------------|
+| id | BIGINT (PK) | Primary key |
+| question_id | BIGINT (FK) | Reference to question |
+| user_id | BIGINT (FK) | Reference to user |
+| description | TEXT | Hands-on description |
+| duration | INT | Estimated timespan |
+| created_at | DATETIME | Creation time |
+
+---
+
+## 🟦 33. Table: hands_on_submission
+**Description:** Stores student submissions.
+
+| Column Name | Data Type | Description |
+|-------------|-----------|-------------|
+| id | BIGINT (PK) | Primary key |
+| hands_on_id | BIGINT (FK) | Reference to hands_on |
+| user_id | BIGINT (FK) | Reference to user |
+| github_link | VARCHAR(255) | GitHub submission link |
+| submitted_at | DATETIME | Submission time |
+
+---
+
+## 🟦 34. Table: hands_on_results
+
+| Column Name | Data Type | Description |
+|-------------|-----------|-------------|
+| id | INT (PK) | Unique ID |
+| user_id | INT (FK) | User |
+| hands_on_id | INT (FK) | Hands-on |
+| score | INT | Marks |
+| sme_id | BIGINT (FK) | SME reference |
+| status | VARCHAR(50) | Completed / Pending |
+| submitted_at | DATETIME | Submission time |
+
+---
+
+## 🟦 35. Table: problem_statement_answer
+
+| Column Name | Data Type | Description |
+|-------------|-----------|-------------|
+| id | BIGINT (PK) | Unique ID |
+| answer | TEXT | Submitted answer |
+| question_id | BIGINT (FK) | Reference to problem_statement |
+| submitted_at | DATETIME | Submission time |
+
+---
+
+## 🟦 36. Table: assessments
+
+| Column Name | Data Type | Description |
+|-------------|-----------|-------------|
+| id | BIGINT (PK) | Unique ID |
+| test_id | BIGINT (FK) | Test |
+| student_id | BIGINT (FK) | Student |
+| created_by | BIGINT (FK) | Creator |
+| created_on | DATETIME | Created |
+| modify_by | BIGINT (FK) | Modifier |
+| modify_on | DATETIME | Modified |
+| schedule_start | DATETIME | Start |
+| schedule_end | DATETIME | End |
+| status | VARCHAR(50) | Status |
+
+---
+
+## 🟦 37. Table: student_assessment_result
+
+| Column Name | Data Type | Description |
+|-------------|-----------|-------------|
+| id | INT (PK) | Unique ID |
+| student_id | INT (FK) | Student reference |
+| assessment_id | INT (FK) | Assessment reference |
+| score | FLOAT | Marks scored |
+| percentile | FLOAT | Percentile |
+| time_taken_minutes | INT | Time taken |
+
+---
+
+## 🟦 38. Table: mentor_appointment
+
+| Column Name | Data Type | Description |
+|-------------|-----------|-------------|
+| id | INT (PK) | Unique ID |
+| student_id | INT (FK) | Student |
+| mentor_id | INT (FK) | Mentor |
+| appointment_date | DATE | Date |
+| start_time | TIME | Start time |
+| status | ENUM | SCHEDULED / CANCELLED / COMPLETED |
+| meeting_link | VARCHAR(255) | Meeting link |
+| agenda | TEXT | Purpose |
+| created_at | TIMESTAMP | Created |
+| updated_at | TIMESTAMP | Updated |
+
+---
+
+## 🟦 39. Table: mentor_feedbacks
+
+| Column Name | Data Type | Description |
+|-------------|-----------|-------------|
+| id | BIGINT (PK) | Unique ID |
+| mentor_id | BIGINT (FK) | Mentor |
+| student_id | BIGINT (FK) | Student |
+| rating | INT | Rating |
+| review_text | TEXT | Feedback |
+| created_at | TIMESTAMP | Created |
+| status | ENUM | ACTIVE / HIDDEN |
+
+---
+
+## 🟦 40. Table: learning_paths
+
+| Column Name | Data Type | Description |
+|-------------|-----------|-------------|
+| id | BIGINT (PK) | Unique ID |
+| mentor_id | BIGINT (FK) | Mentor |
+| learning_track_id | BIGINT (FK) | Track |
+| title | VARCHAR(200) | Title |
+| description | TEXT | Details |
+| duration | INT | Duration |
+| total_modules | INT | Modules |
+| status | ENUM | ACTIVE / INACTIVE |
+| created_at | TIMESTAMP | Created |
+| updated_at | TIMESTAMP | Updated |
+
+---
+
+## 🟦 41. Table: learning_path_progress
+
+| Column Name | Data Type | Description |
+|-------------|-----------|-------------|
+| id | BIGINT (PK) | Unique ID |
+| student_id | BIGINT (UNIQUE) | Student |
+| overall_score | DECIMAL(6,2) | Score |
+| average_percentage | DECIMAL(6,2) | Avg |
+| improvement_rate | DECIMAL(5,2) | Improvement |
+| performance_level_id | BIGINT (FK) | Level |
+| min_score | INT | Min |
+| max_score | INT | Max |
+
+---
+
+## 🟦 42. Table: student_concept_progress
+
+| Column Name | Data Type | Description |
+|-------------|-----------|-------------|
+| id | BIGINT (PK) | Unique ID |
+| student_id | BIGINT (FK) | Student |
+| concept_id | BIGINT (FK) | Concept |
+| status | VARCHAR(50) | Progress |
+| initiated_at | DATETIME | Start |
+| completed_at | DATETIME | End |
+
+---
+
+## 🟦 43. Table: projects
+
+| Column Name | Data Type | Description |
+|-------------|-----------|-------------|
+| project_id | BIGINT (PK) | Unique ID |
+| mentor_id | BIGINT (FK) | Mentor |
+| project_name | VARCHAR(255) | Name |
+| description | TEXT | Details |
+| repository_url | VARCHAR(255) | Repo |
+| status | VARCHAR(50) | Status |
+| created_at | TIMESTAMP | Created |
+
+---
+
+## 🟦 44. Table: project_members
+
+| Column Name | Data Type | Description |
+|-------------|-----------|-------------|
+| id | BIGINT (PK) | Unique ID |
+| project_id | BIGINT (FK) | Project |
+| student_id | BIGINT (FK) | Student |
+| joined_date | DATETIME | Joining date |
+
+---
+
+## 🟦 45. Table: alumni
+
+| Column Name | Data Type | Description |
+|-------------|-----------|-------------|
+| alumni_id | BIGINT (PK) | Unique ID |
+| company_id | BIGINT (FK) | Company |
+| user_id | BIGINT (FK) | User |
+| added_at | DATETIME | Added time |
+
+---
+
+## 🟦 46. Table: company_alumni
+
+| Column Name | Data Type | Description |
+|-------------|-----------|-------------|
+| company_id | BIGINT (FK) | Company |
+| alumni_id | BIGINT (FK) | Alumni |
+| added_at | DATETIME | Added time |
+
+---
+
+## 🟦 47. Table: referrals
+
+| Column Name | Data Type | Description |
+|-------------|-----------|-------------|
+| id | BIGINT (PK) | Unique ID |
+| company_id | BIGINT (FK) | Company |
+| user_id | BIGINT (FK) | Candidate |
+| alumni_id | BIGINT (FK) | Alumni |
+
+---
+
+## 🟦 48. Table: shortlisted_candidates
+
+| Column Name | Data Type | Description |
+|-------------|-----------|-------------|
+| id | BIGINT (PK) | Unique ID |
+| user_id | BIGINT (FK) | User |
+| job_id | BIGINT (FK) | Job |
+| shortlisted_at | DATETIME | Time |
+| round_level | VARCHAR(50) | Interview round |
+
+---
+
+## 🟦 49. Table: notification
+
+| Column Name | Data Type | Description |
+|-------------|-----------|-------------|
+| id | BIGINT (PK) | Unique ID |
+| user_id | BIGINT (FK) | User reference |
+| message | TEXT | Notification message |
+| source | VARCHAR(100) | Source |
+| created_at | DATETIME | Created time |
+
+---
+
+## 🟦 50. Table: sme_runtime
+
+| Column Name | Data Type | Description |
+|-------------|-----------|-------------|
+| sme_runtime_id | BIGINT (PK) | Unique ID |
+| user_id | BIGINT (FK) | SME reference |
+| runtime_id | BIGINT (FK) | Runtime reference |
+
+---
+
+# ✅ End of Schema

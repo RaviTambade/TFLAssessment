@@ -113,13 +113,7 @@ Mapping between students and learning tracks.
 
 ## Table: student_learning_track
 
-| Field | Description |
-|------|-------------|
-| id | Primary key |
-| studentID | Foreign key referencing Student |
-| learningTrackId | Foreign key referencing Learning Track |
-| progressId | Progress tracking id |
-| enrolledDate | Enrollment date |
+54
 
 # 7. Hands-on Table (Hands-on)
 
@@ -495,22 +489,7 @@ Stores feedback given to mentors by students.
 
 ---
 
-# 32. Learning Paths Table
-## learning_paths
-Stores structured learning paths for students.
-
-| Field | Type | Description |
-|------|------|-------------|
-| id | BIGINT (PK) | Unique learning path ID |
-| mentor_id | BIGINT | Mentor reference |
-| learning_track_id | BIGINT | Track/technology reference |
-| title | VARCHAR(200) | Learning path name |
-| description | TEXT | Path details |
-| duration | INT | Duration |
-| total_modules | INT | Number of modules |
-| status | ENUM('ACTIVE','INACTIVE') | Path status |
-| created_at | TIMESTAMP | Created time |
-| updated_at | TIMESTAMP | Last updated time |
+0
 
 
 # 37. Company_Alumni Table
