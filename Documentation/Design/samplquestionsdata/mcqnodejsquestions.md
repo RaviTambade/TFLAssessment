@@ -952,6 +952,7 @@ D. Allows handling multiple concurrent requests efficiently
 
 ---
 
+# ASYNC PROGRAMMING
 
 # request response lifecycle (Node.js + MERN) — Assessment MCQs
  
@@ -1138,3 +1139,623 @@ C. Creating database
 D. Compiling code
 
 ✅ Answer: B
+1. What is asynchronous programming in Node.js?
+A. Executing code line by line  
+B. Blocking execution until task completes  
+C. Non-blocking execution allowing multiple tasks  
+D. Running only one task at a time  
+
+✅ Answer: C
+
+---
+
+2. In a Node.js Express server, which of the following mechanisms is commonly used to handle asynchronous operations like database queries?
+A. Threads  
+B. Promises and async/await  
+C. HTML rendering  
+D. CSS  
+
+✅ Answer: B
+
+---
+
+3. In Node.js, what is a callback function in the context of handling asynchronous operations like file reading or API calls?
+A. A function executed immediately  
+B. A function passed to another function to be executed later  
+C. A function that blocks execution  
+D. A built-in Node.js function  
+
+✅ Answer: B
+
+---
+
+4. In Node.js, which function is typically used to simulate delayed asynchronous operations such as API response delays?
+A. setTimeout()  
+B. require()  
+C. console.log()  
+D. module.exports  
+
+✅ Answer: A
+
+---
+
+5. In Node.js backend development, what does a Promise represent when fetching data from a MongoDB database?
+A. Immediate result  
+B. Future completion of an async operation  
+C. A synchronous function  
+D. A database schema  
+
+✅ Answer: B
+
+---
+
+6. When handling API responses in Node.js using Promises, how many states can a Promise have?
+A. 2  
+B. 3  
+C. 4  
+D. 5  
+
+✅ Answer: B
+
+---
+
+7. In a Node.js Express API, which method is used to handle successful Promise resolution when fetching data?
+A. .catch()  
+B. .then()  
+C. .finally()  
+D. .resolve()  
+
+✅ Answer: B
+
+---
+
+8. In modern Node.js backend development, what is the purpose of using the async keyword in a function?
+A. Makes code synchronous  
+B. Automatically returns a Promise  
+C. Stops execution  
+D. Runs multiple threads  
+
+✅ Answer: B
+
+---
+
+9. In Node.js architecture, what is the role of the Event Loop when handling multiple API requests?
+A. Stores database data  
+B. Manages execution of asynchronous callbacks  
+C. Handles UI rendering  
+D. Executes only synchronous code  
+
+✅ Answer: B
+
+---
+
+10. In Node.js, when both a resolved Promise and a ```setTimeout``` callback are present, which one executes first in the event loop?
+A. setTimeout  
+B. Promise (microtask queue)  
+C. Both simultaneously  
+D. Random  
+
+✅ Answer: B
+
+---
+
+11. In a Node.js server, which of the following executes before moving to the next phase of the event loop?
+A. setTimeout  
+B. setImmediate  
+C. process.nextTick  
+D. HTTP request  
+
+✅ Answer: C
+
+---
+
+12. In real-world MERN applications, what is ```process.nextTick()``` typically used for?
+A. Scheduling database calls  
+B. Executing a callback immediately after current operation  
+C. Delaying execution  
+D. Handling UI updates  
+
+✅ Answer: B
+
+---
+
+13. In a MERN stack application, how are MongoDB queries typically handled in Node.js?
+A. Synchronously  
+B. Using async/await or Promises  
+C. Using only callbacks  
+D. Using threads  
+
+✅ Answer: B
+
+---
+
+14. In an Express.js route handler, what does ```await``` do when calling a database function?
+A. Blocks entire server  
+B. Waits for Promise resolution inside async function  
+C. Creates new thread  
+D. Skips execution  
+
+✅ Answer: B
+
+---
+
+15. In a MERN application, how are HTTP requests typically handled on the backend?
+A. Synchronously  
+B. Asynchronously using event-driven architecture  
+C. Sequentially  
+D. Manually  
+
+✅ Answer: B
+
+---
+
+16. What is the execution model used by Node.js servers handling concurrent client requests?
+A. Multi-threaded blocking  
+B. Single-threaded event-driven  
+C. Distributed processing  
+D. Sequential execution  
+
+✅ Answer: B
+
+---
+
+17. In Node.js event loop phases, which phase handles timers like ```setTimeout```?
+A. Poll  
+B. Timers phase  
+C. Check  
+D. Close  
+
+✅ Answer: B
+
+---
+
+18. In Node.js, what is considered blocking code in a backend server?
+A. Async API call  
+B. Code that stops event loop execution  
+C. Promise resolution  
+D. HTTP request  
+
+✅ Answer: B
+
+---
+
+19. In Node.js streams (used in file upload/download APIs), what is backpressure?
+A. Server crash  
+B. Mechanism to handle data flow overload  
+C. API failure  
+D. Timeout  
+
+✅ Answer: B
+
+---
+
+20. In Node.js internals, what is the role of ```libuv``` in handling asynchronous operations?
+A. Handles frontend rendering  
+B. Provides event loop and async I/O  
+C. Manages MongoDB  
+D. Handles routing  
+
+✅ Answer: B
+
+# 📘 Node.js File I/O MCQs
+
+
+
+### 1. Which module is primarily used for file I/O in Node.js?
+
+A. http
+B. fs
+C. path
+D. os
+
+**Correct option:** B fs
+
+---
+
+### 2. What is the default behavior of `fs.readFile()`?
+
+A. Blocking
+B. Non-blocking
+C. Streaming
+D. Synchronous
+
+**Correct option:** B Non-blocking
+
+---
+
+### 3. Which method reads files synchronously?
+
+A. fs.readFile()
+B. fs.read()
+C. fs.readFileSync()
+D. fs.syncRead()
+
+**Correct option:** C fs.readFileSync()
+
+---
+
+### 4. What is a major drawback of synchronous file operations in Node.js?
+
+A. Memory leak
+B. Callback hell
+C. Blocks event loop
+D. Data corruption
+
+**Correct option:** C Blocks event loop
+
+---
+
+### 5. Which flag is used to append data to a file?
+
+A. 'r'
+B. 'w'
+C. 'a'
+D. 'x'
+
+**Correct option:** C 'a'
+
+---
+
+### 6. What does `fs.writeFile()` do if the file already exists?
+
+A. Throws error
+B. Appends content
+C. Overwrites file
+D. Ignores write
+
+**Correct option:** C Overwrites file
+
+---
+
+### 7. What is the purpose of `fs.createReadStream()`?
+
+A. Read entire file at once
+B. Read file in chunks
+C. Write file
+D. Delete file
+
+**Correct option:** B Read file in chunks
+
+---
+
+### 8. Which event is emitted when a readable stream finishes?
+
+A. close
+B. finish
+C. end
+D. done
+
+**Correct option:** C end
+
+---
+
+### 9. What is the advantage of using streams over buffers?
+
+A. Faster CPU
+B. Less memory usage
+C. Better syntax
+D. No callbacks
+
+**Correct option:** B Less memory usage
+
+---
+
+### 10. Which method checks if a file exists?
+
+A. fs.exists()
+B. fs.check()
+C. fs.stat()
+D. fs.access()
+
+**Correct option:** D fs.access()
+
+---
+
+### 11. Which method is used to rename a file?
+
+A. fs.move()
+B. fs.rename()
+C. fs.changeName()
+D. fs.update()
+
+**Correct option:** B fs.rename()
+
+---
+
+### 12. What does `fs.stat()` return?
+
+A. File content
+B. File metadata
+C. File path
+D. File stream
+
+**Correct option:** B File metadata
+
+---
+
+### 13. Which encoding is default for `fs.readFile()` if not specified?
+
+A. utf16
+B. ascii
+C. buffer
+D. utf8
+
+**Correct option:** C buffer
+
+---
+
+### 14. Which approach avoids callback hell in file operations?
+
+A. Nested callbacks
+B. Promises / async-await
+C. Loops
+D. JSON
+
+**Correct option:** B Promises / async-await
+
+---
+
+### 15. Which module helps in handling file paths?
+
+A. fs
+B. path
+C. os
+D. util
+
+**Correct option:** B path
+
+---
+
+### 16. What is the purpose of `fs.createWriteStream()`?
+
+A. Write file in chunks
+B. Read file
+C. Delete file
+D. Compress file
+
+**Correct option:** A Write file in chunks
+
+---
+
+### 17. What is the role of buffers in file I/O?
+
+A. Store entire file permanently
+B. Temporary binary storage
+C. Compress files
+D. Encrypt files
+
+**Correct option:** B Temporary binary storage
+
+---
+
+### 18. What happens if no callback is provided to `fs.readFile()`?
+
+A. File is read synchronously
+B. Throws error
+C. Returns promise
+D. Returns buffer
+
+**Correct option:** B Throws error
+
+---
+
+### 19. What type of I/O model does Node.js primarily use?
+
+A. Blocking I/O
+B. Multi-threaded blocking
+C. Event-driven non-blocking I/O
+D. Synchronous polling
+
+**Correct option:** C Event-driven non-blocking I/O
+
+---
+
+### 20. Which component handles asynchronous I/O in Node.js internally?
+
+A. V8 Engine
+B. Libuv
+C. Express
+D. npm
+
+**Correct option:** B Libuv
+
+
+# 📘 Configuration Management in Node.js - MCQs
+
+### 1. Which object is used to access environment variables in Node.js?
+
+* A. env.process  
+* B. process.env  
+* C. config.env  
+* D. node.env  
+  **Answer:** B  
+
+---
+
+### 2. Which file is used to store environment variables?
+
+* A. config.json  
+* B. .env  
+* C. package.json  
+* D. index.js  
+  **Answer:** B  
+
+---
+
+### 3. Which package is used to load environment variables from `.env` file?
+
+* A. express  
+* B. dotenv  
+* C. config  
+* D. http  
+  **Answer:** B  
+
+---
+
+### 4. What does NODE_ENV represent?
+
+* A. Node version  
+* B. Environment type  
+* C. API key  
+* D. Port number  
+  **Answer:** B  
+
+---
+
+### 5. What is the main purpose of configuration management?
+
+* A. UI design  
+* B. Managing application settings  
+* C. Writing APIs  
+* D. Debugging  
+  **Answer:** B  
+
+---
+
+### 6. Why should sensitive data not be hardcoded?
+
+* A. It increases memory  
+* B. It reduces speed  
+* C. Security risk  
+* D. No effect  
+  **Answer:** C  
+
+---
+
+### 7. Which command is used to install dotenv?
+
+* A. npm start  
+* B. npm install dotenv  
+* C. node dotenv  
+* D. npm run dotenv  
+  **Answer:** B  
+
+---
+
+### 8. Where should `.env` file be placed?
+
+* A. node_modules  
+* B. public  
+* C. Root directory  
+* D. config folder  
+  **Answer:** C  
+
+---
+
+### 9. Which method loads environment variables using dotenv?
+
+* A. dotenv.load()  
+* B. dotenv.env()  
+* C. require('dotenv').config()  
+* D. config.load()  
+  **Answer:** C  
+
+---
+
+### 10. Which file is used to ignore `.env` in Git?
+
+* A. package.json  
+* B. .gitignore  
+* C. README.md  
+* D. config.json  
+  **Answer:** B  
+
+---
+
+### 11. Which environment is used for production?
+
+* A. development  
+* B. testing  
+* C. production  
+* D. debug  
+  **Answer:** C  
+
+---
+
+### 12. Which environment is used during development?
+
+* A. production  
+* B. development  
+* C. staging  
+* D. release  
+  **Answer:** B  
+
+---
+
+### 13. Which of the following is a valid environment variable?
+
+* A. PORT=3000  
+* B. PORT:3000  
+* C. PORT->3000  
+* D. PORT-3000  
+  **Answer:** A  
+
+---
+
+### 14. How to access PORT value in Node.js?
+
+* A. process.PORT  
+* B. env.PORT  
+* C. process.env.PORT  
+* D. config.PORT  
+  **Answer:** C  
+
+---
+
+### 15. What is the benefit of configuration management?
+
+* A. Security  
+* B. Flexibility  
+* C. Easy environment switching  
+* D. All of the above  
+  **Answer:** D  
+
+---
+
+### 16. Which file contains project dependencies?
+
+* A. config.json  
+* B. .env  
+* C. package.json  
+* D. index.html  
+  **Answer:** C  
+
+---
+
+### 17. Which format is commonly used for config files?
+
+* A. JSON  
+* B. XML  
+* C. TXT  
+* D. CSV  
+  **Answer:** A  
+
+---
+
+### 18. What should be kept in `.gitignore`?
+
+* A. index.js  
+* B. .env  
+* C. package.json  
+* D. README.md  
+  **Answer:** B  
+
+---
+
+### 19. Configuration helps in:
+
+* A. Managing settings  
+* B. Securing data  
+* C. Switching environments  
+* D. All of the above  
+  **Answer:** D  
+
+---
+
+### 20. Which is NOT a configuration value?
+
+* A. API key  
+* B. Database URL  
+* C. Port number  
+* D. HTML tag  
+  **Answer:** D  
