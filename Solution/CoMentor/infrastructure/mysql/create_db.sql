@@ -56,7 +56,7 @@ CREATE TABLE users (
 CREATE TABLE questions (
     question_id BIGINT PRIMARY KEY AUTO_INCREMENT,
     description TEXT,
-    question_type ENUM('MCQ','PROBLEM STATEMENT','HANDS_ON'),
+    question_type ENUM('MCQ','PROBLEM_STATEMENT','HANDS_ON'),
     difficulty_level ENUM('BIGINNER','INTERMEDIATE','ADVANCE'),
     created_at DATETIME,
     status BOOLEAN
