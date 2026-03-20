@@ -952,4 +952,202 @@ D. Allows handling multiple concurrent requests efficiently
 
 ---
 
+# ASYNC PROGRAMMING
 
+1. What is asynchronous programming in Node.js?
+A. Executing code line by line  
+B. Blocking execution until task completes  
+C. Non-blocking execution allowing multiple tasks  
+D. Running only one task at a time  
+
+✅ Answer: C
+
+---
+
+2. In a Node.js Express server, which of the following mechanisms is commonly used to handle asynchronous operations like database queries?
+A. Threads  
+B. Promises and async/await  
+C. HTML rendering  
+D. CSS  
+
+✅ Answer: B
+
+---
+
+3. In Node.js, what is a callback function in the context of handling asynchronous operations like file reading or API calls?
+A. A function executed immediately  
+B. A function passed to another function to be executed later  
+C. A function that blocks execution  
+D. A built-in Node.js function  
+
+✅ Answer: B
+
+---
+
+4. In Node.js, which function is typically used to simulate delayed asynchronous operations such as API response delays?
+A. setTimeout()  
+B. require()  
+C. console.log()  
+D. module.exports  
+
+✅ Answer: A
+
+---
+
+5. In Node.js backend development, what does a Promise represent when fetching data from a MongoDB database?
+A. Immediate result  
+B. Future completion of an async operation  
+C. A synchronous function  
+D. A database schema  
+
+✅ Answer: B
+
+---
+
+6. When handling API responses in Node.js using Promises, how many states can a Promise have?
+A. 2  
+B. 3  
+C. 4  
+D. 5  
+
+✅ Answer: B
+
+---
+
+7. In a Node.js Express API, which method is used to handle successful Promise resolution when fetching data?
+A. .catch()  
+B. .then()  
+C. .finally()  
+D. .resolve()  
+
+✅ Answer: B
+
+---
+
+8. In modern Node.js backend development, what is the purpose of using the async keyword in a function?
+A. Makes code synchronous  
+B. Automatically returns a Promise  
+C. Stops execution  
+D. Runs multiple threads  
+
+✅ Answer: B
+
+---
+
+9. In Node.js architecture, what is the role of the Event Loop when handling multiple API requests?
+A. Stores database data  
+B. Manages execution of asynchronous callbacks  
+C. Handles UI rendering  
+D. Executes only synchronous code  
+
+✅ Answer: B
+
+---
+
+10. In Node.js, when both a resolved Promise and a ```setTimeout``` callback are present, which one executes first in the event loop?
+A. setTimeout  
+B. Promise (microtask queue)  
+C. Both simultaneously  
+D. Random  
+
+✅ Answer: B
+
+---
+
+11. In a Node.js server, which of the following executes before moving to the next phase of the event loop?
+A. setTimeout  
+B. setImmediate  
+C. process.nextTick  
+D. HTTP request  
+
+✅ Answer: C
+
+---
+
+12. In real-world MERN applications, what is ```process.nextTick()``` typically used for?
+A. Scheduling database calls  
+B. Executing a callback immediately after current operation  
+C. Delaying execution  
+D. Handling UI updates  
+
+✅ Answer: B
+
+---
+
+13. In a MERN stack application, how are MongoDB queries typically handled in Node.js?
+A. Synchronously  
+B. Using async/await or Promises  
+C. Using only callbacks  
+D. Using threads  
+
+✅ Answer: B
+
+---
+
+14. In an Express.js route handler, what does ```await``` do when calling a database function?
+A. Blocks entire server  
+B. Waits for Promise resolution inside async function  
+C. Creates new thread  
+D. Skips execution  
+
+✅ Answer: B
+
+---
+
+15. In a MERN application, how are HTTP requests typically handled on the backend?
+A. Synchronously  
+B. Asynchronously using event-driven architecture  
+C. Sequentially  
+D. Manually  
+
+✅ Answer: B
+
+---
+
+16. What is the execution model used by Node.js servers handling concurrent client requests?
+A. Multi-threaded blocking  
+B. Single-threaded event-driven  
+C. Distributed processing  
+D. Sequential execution  
+
+✅ Answer: B
+
+---
+
+17. In Node.js event loop phases, which phase handles timers like ```setTimeout```?
+A. Poll  
+B. Timers phase  
+C. Check  
+D. Close  
+
+✅ Answer: B
+
+---
+
+18. In Node.js, what is considered blocking code in a backend server?
+A. Async API call  
+B. Code that stops event loop execution  
+C. Promise resolution  
+D. HTTP request  
+
+✅ Answer: B
+
+---
+
+19. In Node.js streams (used in file upload/download APIs), what is backpressure?
+A. Server crash  
+B. Mechanism to handle data flow overload  
+C. API failure  
+D. Timeout  
+
+✅ Answer: B
+
+---
+
+20. In Node.js internals, what is the role of ```libuv``` in handling asynchronous operations?
+A. Handles frontend rendering  
+B. Provides event loop and async I/O  
+C. Manages MongoDB  
+D. Handles routing  
+
+✅ Answer: B
