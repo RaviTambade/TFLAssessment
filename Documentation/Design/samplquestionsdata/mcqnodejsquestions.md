@@ -1,7 +1,7 @@
 Quetions with mcq and answers
 # MySQL Database Connectivity in Node.js - MCQ Quiz
 
-## 🟢 Beginner Level (1–7)
+
 
 ### 1. Which package is commonly used to connect MySQL with Node.js?
 
@@ -73,7 +73,7 @@ Quetions with mcq and answers
 
 ---
 
-## 🟡 Intermediate Level (8–14)
+
 
 ### 8. What does the callback function in `connection.query()` return?
 
@@ -147,7 +147,6 @@ Quetions with mcq and answers
 
 ---
 
-## 🔴 Advanced Level (15–20)
 
 ### 15. What does `mysql2/promise` provide?
 
@@ -459,5 +458,228 @@ d. User logs in → Static page load
 
 ---
 
+# Middleware in Event-Driven Node.js (MERN Context)
+
+---
+
+## 1.
+**In Node.js, middleware primarily operates within which programming paradigm?**  
+A. Object-Oriented  
+B. Functional  
+C. Event-Driven  
+D. Procedural  
+
+✅ **Answer:** C  
+
+---
+
+## 2.
+**How does middleware align with Node.js's event loop?**  
+A. It blocks the event loop  
+B. It runs synchronously only  
+C. It participates in handling asynchronous request events  
+D. It replaces the event loop  
+
+✅ **Answer:** C  
+
+---
+
+## 3.
+**What is the consequence of performing heavy synchronous computation inside middleware?**  
+A. Faster response  
+B. Improved scalability  
+C. Blocking the event loop  
+D. Automatic parallel execution  
+
+✅ **Answer:** C  
+
+---
+
+## 4.
+**Which real-world middleware use case best demonstrates event-driven design?**  
+A. Static HTML rendering  
+B. Logging each incoming request asynchronously  
+C. Writing hardcoded responses  
+D. Restarting server on each request  
+
+✅ **Answer:** B  
+
+---
+
+## 5.
+**In Express, middleware execution flow is best described as:**  
+A. Parallel execution  
+B. Event queue processing  
+C. Sequential pipeline triggered by events  
+D. Random execution  
+
+✅ **Answer:** C  
+
+---
+
+## 6.
+**Which scenario best illustrates non-blocking middleware?**  
+A. Reading file using fs.readFileSync  
+B. Making async DB call with await  
+C. Using while(true) loop  
+D. CPU-intensive encryption inline  
+
+✅ **Answer:** B  
+
+---
+
+## 7.
+**In a MERN stack app, where is middleware primarily used?**  
+A. MongoDB layer  
+B. React frontend only  
+C. Express/Node backend  
+D. Browser DOM  
+
+✅ **Answer:** C  
+
+---
+
+## 8.
+**How does middleware help in handling API authentication in MERN apps?**  
+A. It modifies MongoDB schema  
+B. It intercepts requests before route handlers  
+C. It renders UI components  
+D. It compiles React code  
+
+✅ **Answer:** B  
+
+---
+
+## 9.
+**What role does middleware play in request lifecycle?**  
+A. Only starts request  
+B. Only ends response  
+C. Intercepts, modifies, or terminates flow  
+D. Only logs errors  
+
+✅ **Answer:** C  
+
+---
+
+## 10.
+**Which pattern is used when multiple middleware functions process a request?**  
+A. Singleton  
+B. Observer  
+C. Chain of Responsibility  
+D. Factory  
+
+✅ **Answer:** C  
+
+---
+
+## 11.
+**In event-driven systems, middleware can be compared to:**  
+A. Database triggers  
+B. Event listeners  
+C. UI components  
+D. CSS rules  
+
+✅ **Answer:** B  
+
+---
+
+## 12.
+**What happens if asynchronous middleware forgets to handle errors properly?**  
+A. Automatic retry  
+B. Silent failure or unhandled promise rejection  
+C. Immediate server restart  
+D. Data auto-correction  
+
+✅ **Answer:** B  
+
+---
+
+## 13.
+**Which middleware design improves scalability in Node.js apps?**  
+A. Blocking synchronous logic  
+B. Stateless middleware  
+C. Global variables  
+D. Nested callbacks  
+
+✅ **Answer:** B  
+
+---
+
+## 14.
+**In MERN applications, logging middleware is typically used for:**  
+A. Styling UI  
+B. Monitoring API usage and debugging  
+C. Compiling React  
+D. Managing database schema  
+
+✅ **Answer:** B  
+
+---
+
+## 15.
+**How does middleware contribute to microservices architecture?**  
+A. Couples services tightly  
+B. Handles cross-cutting concerns like auth/logging  
+C. Replaces APIs  
+D. Eliminates need for backend  
+
+✅ **Answer:** B  
+
+---
+
+## 16.
+**Which of the following is a real-world middleware example?**  
+A. JWT authentication validation  
+B. HTML rendering  
+C. CSS animation  
+D. Browser caching  
+
+✅ **Answer:** A  
+
+---
+
+## 17.
+**What is the impact of improper middleware ordering?**  
+A. No effect  
+B. Performance boost  
+C. Logical errors in request handling  
+D. Automatic correction  
+
+✅ **Answer:** C  
+
+---
+
+## 18.
+**How does middleware handle errors in an event-driven architecture?**  
+A. Ignores them  
+B. Uses special error-handling middleware  
+C. Stops Node.js runtime  
+D. Logs only  
+
+✅ **Answer:** B  
+
+---
+
+## 19.
+**Which concept ensures middleware does not retain user-specific state across requests?**  
+A. Coupling  
+B. Statelessness  
+C. Inheritance  
+D. Encapsulation  
+
+✅ **Answer:** B  
+
+---
+
+## 20.
+**In a production MERN app, which middleware combination is most realistic?**  
+A. Logging + Authentication + Error Handling  
+B. Only static serving  
+C. Only routing  
+D. Only database queries  
+
+✅ **Answer:** A  
+
+---
 
 
