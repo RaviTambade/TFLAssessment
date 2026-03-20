@@ -83,7 +83,7 @@ Stores all user information.
 | user_id (FK)  | INT      | References Users(id)   |
 | first_name    | VARCHAR  | First name             |
 | last_name     | VARCHAR  | Last name              |
-| gender        | VARCHAR  | Gender                 |
+| gender        | ENUM     | Male / female          |
 | date_of_birth | DATE     | Date of birth          |
 | email         | VARCHAR  | Email                  |
 | address       | VARCHAR  | Address                |
@@ -205,8 +205,8 @@ Stores all user information.
 |------------------|----------|--------------------|
 | question_id (PK) | BIGINT   | Question ID        |
 | description      | TEXT     | Question text      |
-| question_type    | ENUM     | Type               |
-| difficulty_level | VARCHAR  | Difficulty         |
+| question_type    | ENUM     | MCQ/PROBLEM_STATEMENT/HANDS_ON|
+| difficulty_level | ENUM     | BEGINNER/INTERMEDIATE/ADVANCE|
 | created_at       | DATETIME| Created time       |
 | status           | Boolean  |    TRUE/FALSE          |
 
@@ -255,7 +255,6 @@ Stores all user information.
 | title       | VARCHAR  | Test title         |
 | duration    | INT      | Duration (minutes) |
 | description | TEXT     | Description        |
-| difficulty  | ENUM  | Easy/Medium/Hard   |
 | created_at  | DATETIME | Created DATETIME  |
 | status      | BOOLEN  | True / False     |
 
