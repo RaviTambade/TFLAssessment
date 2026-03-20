@@ -1137,191 +1137,8 @@ D. Allows handling multiple concurrent requests efficiently
 
 # ASYNC PROGRAMMING
 
-# request response lifecycle (Node.js + MERN) — Assessment MCQs
- 
-## Questions
+---
 
-Node.js Request-Response Lifecycle
-
-1.
-What is the role of Node.js in a web server?
-A. Stores data
-B. Handles client requests and responses
-C. Designs UI
-D. Compiles code
-
-✅ Answer: B
-
-2.
-Which module is used to create a server in Node.js?
-A. fs
-B. http
-C. path
-D. os
-
-✅ Answer: B
-
-3.
-What method is used to create a server?
-A. create()
-B. http.createServer()
-C. server.start()
-D. initServer()
-
-✅ Answer: B
-
-4.
-What are the parameters of http.createServer() callback?
-A. req, res
-B. req, data
-C. res, data
-D. input, output
-
-✅ Answer: A
-
-5.
-What does req represent?
-A. Server response
-B. Client request
-C. Database
-D. URL
-
-✅ Answer: B
-
-6.
-What does res represent?
-A. Client request
-B. Server response
-C. File system
-D. API
-
-✅ Answer: B
-
-7.
-Which method sends response to client?
-A. res.send()
-B. res.write()
-C. res.end()
-D. res.close()
-
-✅ Answer: C
-
-8.
-What happens if res.end() is not called?
-A. Server stops
-B. Request hangs
-C. Data deleted
-D. Error fixed
-
-✅ Answer: B
-
-9.
-Which object contains URL and method info?
-A. res
-B. req
-C. server
-D. http
-
-✅ Answer: B
-
-10.
-Which event is triggered when request is received?
-A. start
-B. request
-C. load
-D. connect
-
-✅ Answer: B
-
-11.
-What is middleware in Node.js?
-A. Database
-B. Function between request and response
-C. Server
-D. File
-
-✅ Answer: B
-
-12.
-Which framework simplifies request-response handling?
-A. Django
-B. Laravel
-C. Express.js
-D. Spring
-
-✅ Answer: C
-
-13.
-What does app.get() handle?
-A. POST requests
-B. GET requests
-C. DELETE requests
-D. PUT requests
-
-✅ Answer: B
-
-14.
-What does app.post() handle?
-A. GET requests
-B. POST requests
-C. PATCH requests
-D. OPTIONS
-
-✅ Answer: B
-
-15.
-Which method sets HTTP headers?
-A. res.header()
-B. res.setHeader()
-C. res.getHeader()
-D. res.writeHeader()
-
-✅ Answer: B
-
-16.
-What is the first step in lifecycle?
-A. Server response
-B. Client sends request
-C. Middleware runs
-D. Routing
-
-✅ Answer: B
-
-17.
-What is the last step in lifecycle?
-A. Request received
-B. Middleware runs
-C. Server sends response
-D. Server starts
-
-✅ Answer: C
-
-18.
-Which port is commonly used for Node.js apps?
-A. 80
-B. 8080
-C. 3000
-D. 5000
-
-✅ Answer: C
-
-19.
-What does app.listen() do?
-A. Stops server
-B. Starts server
-C. Deletes data
-D. Reads file
-
-✅ Answer: B
-
-20.
-What is routing in Node.js?
-A. Storing data
-B. Handling different URLs
-C. Creating database
-D. Compiling code
-
-✅ Answer: B
 1. What is asynchronous programming in Node.js?
 A. Executing code line by line  
 B. Blocking execution until task completes  
@@ -2838,3 +2655,228 @@ D) Compiling code
 
 **Answer: A**
 
+---
+
+# Node.js Request-Response Lifecycle MCQs
+
+---
+
+### 1. What is the role of Node.js in a web server?  
+
+A. Stores data  
+B. Handles client requests and responses  
+C. Designs UI  
+D. Compiles code  
+
+**Answer: B**
+
+---
+
+### 2. Which module is used to create a server in Node.js?  
+
+A. fs  
+B. http  
+C. path  
+D. os  
+
+**Answer: B**
+
+---
+
+### 3. What method is used to create a server?  
+
+A. create()  
+B. http.createServer()  
+C. server.start()  
+D. initServer()  
+
+**Answer: B**
+
+---
+
+### 4. What are the parameters of http.createServer() callback?  
+
+A. req, res  
+B. req, data  
+C. res, data  
+D. input, output  
+
+**Answer: A**
+
+---
+
+### 5. What does req represent?  
+
+A. Server response  
+B. Client request  
+C. Database  
+D. URL  
+
+**Answer: B**
+
+---
+
+### 6. What does res represent?  
+
+A. Client request  
+B. Server response  
+C. File system  
+D. API  
+
+**Answer: B**
+
+---
+
+### 7. Which method sends response to client?  
+
+A. res.send()  
+B. res.write()  
+C. res.end()  
+D. res.close()  
+
+**Answer: C**
+
+---
+
+### 8. What happens if res.end() is not called?  
+
+A. Server stops  
+B. Request hangs  
+C. Data deleted  
+D. Error fixed  
+
+**Answer: B**
+
+---
+
+### 9. Which object contains URL and method info?  
+
+A. res  
+B. req  
+C. server  
+D. http  
+
+**Answer: B**
+
+---
+
+### 10. Which event is triggered when request is received?  
+
+A. start  
+B. request  
+C. load  
+D. connect  
+
+**Answer: B**
+
+---
+
+### 11. What is middleware in Node.js?  
+
+A. Database  
+B. Function between request and response  
+C. Server  
+D. File  
+
+**Answer: B**
+
+---
+
+### 12. Which framework simplifies request-response handling?  
+
+A. Django  
+B. Laravel  
+C. Express.js  
+D. Spring  
+
+**Answer: C**
+
+---
+
+### 13. What does app.get() handle?  
+
+A. POST requests  
+B. GET requests  
+C. DELETE requests  
+D. PUT requests  
+
+**Answer: B**
+
+---
+
+### 14. What does app.post() handle?  
+
+A. GET requests  
+B. POST requests  
+C. PATCH requests  
+D. OPTIONS  
+
+**Answer: B**
+
+---
+
+### 15. Which method sets HTTP headers?  
+
+A. res.header()  
+B. res.setHeader()  
+C. res.getHeader()  
+D. res.writeHeader()  
+
+**Answer: B**
+
+---
+
+### 16. What is the first step in lifecycle?  
+
+A. Server response  
+B. Client sends request  
+C. Middleware runs  
+D. Routing  
+
+**Answer: B**
+
+---
+
+### 17. What is the last step in lifecycle?  
+
+A. Request received  
+B. Middleware runs  
+C. Server sends response  
+D. Server starts  
+
+**Answer: C**
+
+---
+
+### 18. Which port is commonly used for Node.js apps?  
+
+A. 80  
+B. 8080  
+C. 3000  
+D. 5000  
+
+**Answer: C**
+
+---
+
+### 19. What does app.listen() do?  
+
+A. Stops server  
+B. Starts server  
+C. Deletes data  
+D. Reads file  
+
+**Answer: B**
+
+---
+
+### 20. What is routing in Node.js?  
+
+A. Storing data  
+B. Handling different URLs  
+C. Creating database  
+D. Compiling code  
+
+**Answer: B**
+
+---
