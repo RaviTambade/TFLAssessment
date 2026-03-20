@@ -1559,6 +1559,178 @@ D. npm
 
 **Correct option:** B Libuv
 
+<<<<<<< HEAD
+# Node.js Routing (Express) - MCQ Quiz
+
+---
+
+### 1. What is routing in Node.js (using Express)?
+
+* A. Managing database
+* B. Handling HTTP requests at specific endpoints
+* C. File processing
+* D. Authentication  
+  **Answer:** B
+
+---
+
+### 2. Which framework is most commonly used for routing in Node.js?
+
+* A. http
+* B. fs
+* C. Express.js
+* D. path  
+  **Answer:** C
+
+---
+
+### 3. Which method defines a GET route in Express?
+
+* A. app.fetch()
+* B. app.get()
+* C. app.request()
+* D. app.route()  
+  **Answer:** B
+
+---
+
+### 4. Which method defines a POST route?
+
+* A. app.send()
+* B. app.create()
+* C. app.post()
+* D. app.push()  
+  **Answer:** C
+
+---
+
+### 5. Which object contains route parameters?
+
+* A. req.body
+* B. req.params
+* C. req.query
+* D. res.params  
+  **Answer:** B
+
+---
+
+### 6. How are route parameters defined?
+
+* A. /user?id=1
+* B. /user/{id}
+* C. /user/:id
+* D. /user=id  
+  **Answer:** C
+
+---
+
+### 7. What does req.query contain?
+
+* A. Route params
+* B. Query string parameters
+* C. Request body
+* D. Headers  
+  **Answer:** B
+
+---
+
+### 8. Which method handles DELETE requests?
+
+* A. app.remove()
+* B. app.delete()
+* C. app.destroy()
+* D. app.erase()  
+  **Answer:** B
+
+---
+
+### 9. Middleware in Express is:
+
+* A. A database
+* B. A function that has access to req, res, and next
+* C. A server
+* D. A route  
+  **Answer:** B
+
+---
+
+### 10. Which function is used to pass control to next middleware?
+
+* A. next()
+* B. continue()
+* C. pass()
+* D. forward()  
+  **Answer:** A
+
+---
+
+### 11. What is the purpose of app.use()?
+
+* A. Define routes only
+* B. Register middleware
+* C. Delete routes
+* D. Send response  
+  **Answer:** B
+
+---
+
+### 12. What does express.Router() return?
+
+* A. HTTP server
+* B. Router instance (mini app)
+* C. Database object
+* D. Middleware only  
+  **Answer:** B
+
+---
+
+### 13. Which status code represents a successful HTTP request?
+
+* A. 404
+* B. 500
+* C. 200
+* D. 301  
+  **Answer:** C
+
+---
+
+### 14. What is a wildcard route in Express?
+
+* A. Route with parameters
+* B. Route using * to match multiple paths
+* C. Static route
+* D. POST route  
+  **Answer:** B
+
+---
+
+### 15. Which method sends a response to client?
+
+* A. res.send()
+* B. res.request()
+* C. res.return()
+* D. res.output()  
+  **Answer:** A
+
+---
+
+### 16. What is route chaining?
+
+* A. Linking databases
+* B. Using multiple routes for same path via .route()
+* C. Nested routing
+* D. Middleware chaining  
+  **Answer:** B
+
+---
+
+### 17. Which is correct usage of route chaining?
+
+```js
+app.route('/user')
+  .get(...)
+  .post(...)
+=======
 
 # 📘 Configuration Management in Node.js - MCQs
 
@@ -1960,3 +2132,37 @@ D. Numbers
 ✅ **Answer: B**
 
 ---
+
+### 18. What does this callback do?
+
+```js
+fs.readFile('file.txt', (err, data) => {});
+```
+
+A. Deletes file
+B. Reads file asynchronously
+C. Writes file
+D. Creates file
+✅ **Answer: B**
+
+---
+
+### 19. Callback functions are:
+
+A. Always synchronous
+B. Always blocking
+C. Can be async or sync
+D. Only loops
+✅ **Answer: C**
+
+---
+
+### 20. What is the purpose of callback in Node.js?
+
+A. Styling
+B. Event handling
+C. Variable declaration
+D. Loop control
+✅ **Answer: B**
+
+
