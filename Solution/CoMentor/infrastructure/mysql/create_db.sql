@@ -47,7 +47,7 @@ CREATE TABLE users (
     id INT PRIMARY KEY AUTO_INCREMENT,
     contact VARCHAR(15),
     password TEXT,
-    status ENUM('ACTIVE','INACTIVE','BLOCKED'),
+    status BOOLEAN('ACTIVE','INACTIVE'),
     created_at DATETIME,
     updated_at DATETIME
 );
@@ -56,7 +56,7 @@ CREATE TABLE users (
 CREATE TABLE questions (
     question_id BIGINT PRIMARY KEY AUTO_INCREMENT,
     description TEXT,
-    question_type ENUM('MCQ','CODING','SUBJECTIVE'),
+    question_type ENUM('MCQ','PROBLEM STATEMENT','HANDS_ON'),
     difficulty_level VARCHAR(50),
     created_at DATETIME,
     status BOOLEAN
@@ -68,7 +68,7 @@ CREATE TABLE personal_informations (
     user_id INT,
     first_name VARCHAR(100),
     last_name VARCHAR(100),
-    gender VARCHAR(20),
+    gender ENUM('MALE','FEMALE'),
     date_of_birth DATE,
     email VARCHAR(255),
     address VARCHAR(255),
@@ -116,7 +116,7 @@ CREATE TABLE professional_informations (
     user_id INT,
     company_name VARCHAR(255),
     job_title VARCHAR(100),
-    employment_type VARCHAR(100),
+    employment_type ENUM( 'FULL_TIME', 'PART_TIME', 'INTERNSHIP'),
     start_date DATE,
     end_date DATE,
     is_current_job BOOLEAN,
@@ -190,7 +190,7 @@ CREATE TABLE tests (
     title VARCHAR(255),
     duration INT,
     description TEXT,
-    difficulty ENUM('Easy','Medium','Hard'),
+    difficulty ENUM('BIGINNER','INTERMEDIATE','ADVANCE'),
     created_at DATETIME,
     status BOOLEAN
 );
@@ -418,7 +418,7 @@ CREATE TABLE shortlisted_candidates (
 CREATE TABLE notifications (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
     user_id BIGINT,
-    notification_categories_id BIGINT,
+    notification_categories_id BIGINT,00
     message TEXT,
     created_at DATETIME
 );
