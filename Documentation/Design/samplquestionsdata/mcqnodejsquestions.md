@@ -682,4 +682,274 @@ D. Only database queries
 
 ---
 
+## Async/Await MCQs - Node.js (MERN Backend)
+
+### 1.
+In a Node.js Express backend, an API handler is declared using async. What is the primary behavior of this function?
+
+A. It automatically returns a Promise representing the asynchronous operation  
+B. It disables callbacks  
+C. It blocks the event loop until execution completes  
+D. It executes synchronously  
+
+**Answer: A**
+
+---
+
+### 2.
+In a Node.js application, how does the await keyword interact with a Promise returned from a database query?
+
+A. It executes the Promise in parallel  
+B. It blocks the entire Node.js process  
+C. It pauses execution of the current async function until the Promise resolves, without blocking the event loop  
+D. It converts asynchronous code into synchronous code globally  
+
+**Answer: C**
+
+---
+
+### 3.
+Why must await be used only inside functions declared with async in Node.js?
+
+A. Because JavaScript syntax enforces that async functions return Promises  
+B. Because await requires access to the Promise resolution mechanism provided by async functions  
+C. Because Node.js does not support await globally  
+D. Because await blocks execution  
+
+**Answer: B**
+
+---
+
+### 4.
+Consider a service-layer function in a MERN backend:
+
+```js
+async function getUserId() {
+  return 42;
+}
+```
+
+What does this function return when invoked?
+
+A. 42  
+B. Error  
+C. undefined  
+D. Promise that resolves to 42  
+
+**Answer: D**
+
+---
+
+### 5.
+In a Node.js API, what occurs when a Promise rejection inside an async function is not handled using try-catch?
+
+A. The function retries automatically  
+B. The event loop stops  
+C. An unhandled promise rejection error may occur  
+D. The error is ignored  
+
+**Answer: C**
+
+---
+
+### 6.
+In a backend service using async/await, which syntax correctly waits for an asynchronous operation?
+
+A. await => fetchData()  
+B. await fetchData()  
+C. await(fetchData)  
+D. await: fetchData()  
+
+**Answer: B**
+
+---
+
+### 7.
+Why is async/await preferred over Promise chaining (.then()) in modern Node.js applications?
+
+A. It eliminates the event loop  
+B. It increases execution speed  
+C. It removes the need for Promises  
+D. It simplifies asynchronous control flow and improves readability  
+
+**Answer: D**
+
+---
+
+### 8.
+In an async function, if no explicit return value is provided, what is returned?
+
+A. undefined  
+B. null  
+C. Promise resolved with undefined  
+D. Error  
+
+**Answer: C**
+
+---
+
+### 9.
+What will be the output of the following Node.js code?
+
+```js
+async function initServer() {
+  console.log("Server initialized");
+}
+initServer();
+```
+
+A. Server initialized  
+B. Promise  
+C. Nothing  
+D. Error  
+
+**Answer: A**
+
+---
+
+### 10.
+How does async/await contribute to handling asynchronous operations in a MERN stack backend?
+
+A. It removes database latency  
+B. It makes operations synchronous  
+C. It provides structured handling of non-blocking operations  
+D. It eliminates API calls  
+
+**Answer: C**
+
+---
+
+### 11.
+In an Express.js route handler interacting with MongoDB, why is async/await commonly used?
+
+A. To improve frontend rendering  
+B. To manage non-blocking database operations in a readable manner  
+C. To avoid JSON parsing  
+D. To reduce HTTP requests  
+
+**Answer: B**
+
+---
+
+### 12.
+What is the role of try-catch when using async/await in a Node.js API?
+
+A. Improves performance  
+B. Converts async code to sync  
+C. Handles rejected Promises and prevents application crashes  
+D. Avoids database queries  
+
+**Answer: C**
+
+---
+
+### 13.
+Why are MongoDB queries handled asynchronously in a Node.js environment?
+
+A. Node.js uses non-blocking I/O via the event loop  
+B. MongoDB runs in frontend  
+C. MongoDB is synchronous  
+D. JavaScript cannot handle synchronous operations  
+
+**Answer: A**
+
+---
+
+### 14.
+Identify the issue in this Express route:
+
+```js
+router.get("/users", async (req, res) => {
+  const users = await User.find();
+  res.json(users);
+});
+```
+
+A. Invalid await usage  
+B. Missing error handling for Promise rejection  
+C. Syntax error  
+D. Incorrect response format  
+
+**Answer: B**
+
+---
+
+### 15.
+What does Promise.all() return in a Node.js application?
+
+A. Error only  
+B. Boolean  
+C. Array of resolved values from all Promises  
+D. First resolved value  
+
+**Answer: C**
+
+---
+
+### 16.
+What is a key advantage of async/await in REST API development?
+
+A. Eliminates latency  
+B. Provides clean and maintainable asynchronous control flow  
+C. Avoids database usage  
+D. Increases CPU speed  
+
+**Answer: B**
+
+---
+
+### 17.
+In a Node.js backend service, what is the performance issue in the following code?
+
+```js
+for (let i = 0; i < 5; i++) {
+  await fetchUser(i);
+}
+```
+
+A. Syntax error  
+B. Parallel execution overload  
+C. Sequential execution leading to performance bottleneck  
+D. Memory leak  
+
+**Answer: C**
+
+---
+
+### 18.
+What is the optimal way to execute multiple independent asynchronous operations in Node.js?
+
+A. Sequential await  
+B. Promise.all() with mapping  
+C. Nested callbacks  
+D. setInterval()  
+
+**Answer: B**
+
+---
+
+### 19.
+How does Node.js internally manage async/await operations?
+
+A. Using the event loop and callback queue  
+B. Using multithreading  
+C. Using GPU acceleration  
+D. Using database threads  
+
+**Answer: A**
+
+---
+
+### 20.
+Why is non-blocking I/O critical in Node.js backend systems?
+
+A. Improves UI design  
+B. Avoids APIs  
+C. Enables multithreading  
+D. Allows handling multiple concurrent requests efficiently  
+
+**Answer: D**
+
+---
+
 
