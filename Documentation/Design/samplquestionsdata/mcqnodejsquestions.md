@@ -2348,14 +2348,13 @@ C. Variable declaration
 D. Loop control  
 ✅ **Answer: B**
 
+---
 
 # 📘 Package.json in Node.js - MCQs
 
 # package.json MCQs (Beginner → Intermediate → Advanced)
 
 ---
-
-## 🟢 Beginner Level
 
 ### 1. What is `package.json` in Node.js?
 A. A JavaScript file  
@@ -2437,8 +2436,6 @@ D. Scripts
 
 ---
 
-## 🟡 Intermediate Level
-
 ### 9. What is `"devDependencies"` used for?
 A. Production packages  
 B. Development tools  
@@ -2508,8 +2505,6 @@ D. Skips file
 **Correct Answer:** B  
 
 ---
-
-## 🔴 Advanced Level
 
 ### 16. What is `"peerDependencies"` used for?
 A. Auto install packages  
