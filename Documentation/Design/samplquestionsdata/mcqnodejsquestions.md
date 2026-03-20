@@ -1761,220 +1761,202 @@ D. npm
   **Answer:** D  
 
  ---
-## Callback Function MCQs (Node.js)
+#  Callback Function MCQs (Node.js)
+
 
 ### 1. What is a callback function?
-
-A. Function inside loop
-B. Function passed as argument
-C. Function returning value
-D. Function without name
+A. Function inside loop  
+B. Function passed as argument  
+C. Function returning value  
+D. Function without name  
 ✅ **Answer: B**
 
 ---
 
-### 2. When is a callback executed?
+### 2. Callback functions are mainly used for:
+A. Styling  
+B. Asynchronous operations  
+C. Database creation  
+D. Variables  
+✅ **Answer: B**
 
-A. Before function call
-B. During compilation
-C. After main function completes
-D. Never
+---
+
+### 3. What is the purpose of callback in Node.js?
+A. Styling  
+B. Event handling  
+C. Variable declaration  
+D. Loop control  
+✅ **Answer: B**
+
+---
+
+### 4. Callback functions are:
+A. Always synchronous  
+B. Always blocking  
+C. Can be async or sync  
+D. Only loops  
 ✅ **Answer: C**
 
 ---
 
-### 3. Callback functions are mainly used for:
 
-A. Styling
-B. Asynchronous operations
-C. Database creation
-D. Variables
-✅ **Answer: B**
-
----
-
-### 4. What is the correct callback syntax?
-
-A. function(data, err)
-B. function(err, data)
-C. function()
-D. function(data)
-✅ **Answer: B**
-
----
-
-### 5. Which parameter comes first in Node.js callback?
-
-A. Data
-B. Error
-C. Function
-D. Result
-✅ **Answer: B**
-
----
-
-### 6. What happens if error is null?
-
-A. Program stops
-B. Callback not executed
-C. Operation successful
-D. Error occurs
+### 5. When is a callback executed?
+A. Before function call  
+B. During compilation  
+C. After main function completes  
+D. Never  
 ✅ **Answer: C**
 
 ---
 
-### 7. Identify callback:
+### 6. What is asynchronous callback?
+A. Runs immediately  
+B. Runs after delay/event  
+C. Runs once  
+D. Runs before function  
+✅ **Answer: B**
 
+---
+
+### 7. What happens if error is null?
+A. Program stops  
+B. Callback not executed  
+C. Operation successful  
+D. Error occurs  
+✅ **Answer: C**
+
+---
+
+### 8. Callback function avoids:
+A. Errors  
+B. Blocking execution  
+C. Variables  
+D. Loops  
+✅ **Answer: B**
+
+---
+
+### 9. Callback functions help Node.js to be:
+A. Blocking  
+B. Non-blocking  
+C. Slow  
+D. Synchronous  
+✅ **Answer: B**
+
+---
+
+
+### 10. What is the correct callback syntax?
+A. function(data, err)  
+B. function(err, data)  
+C. function()  
+D. function(data)  
+✅ **Answer: B**
+
+---
+
+### 11. Which parameter comes first in Node.js callback?
+A. Data  
+B. Error  
+C. Function  
+D. Result  
+✅ **Answer: B**
+
+---
+
+### 12. Identify callback:
 ```js
 function test(cb) {
   cb();
 }
 ```
-
-A. test
-B. cb
-C. function
-D. none
+A. test  
+B. cb  
+C. function  
+D. none  
 ✅ **Answer: B**
 
 ---
 
-### 8. What is callback hell?
 
-A. Callback error
-B. Deeply nested callbacks
-C. Missing callback
-D. Fast execution
-✅ **Answer: B**
-
----
-
-### 9. Which is example of callback?
-
-A. setTimeout(() => console.log("Hi"), 1000);
-B. let a = 5;
-C. return 10;
-D. console.log("Hello");
+### 13. Which is example of callback?
+A. setTimeout(() => console.log("Hi"), 1000);  
+B. let a = 5;  
+C. return 10;  
+D. console.log("Hello");  
 ✅ **Answer: A**
 
 ---
 
-### 10. Callback functions help Node.js to be:
-
-A. Blocking
-B. Non-blocking
-C. Slow
-D. Synchronous
-✅ **Answer: B**
-
----
-
-### 11. What is asynchronous callback?
-
-A. Runs immediately
-B. Runs after delay/event
-C. Runs once
-D. Runs before function
-✅ **Answer: B**
-
----
-
-### 12. Which function uses callback?
-
-A. fs.readFile()
-B. let x = 10
-C. console.log()
-D. Math.random()
+### 14. Which function uses callback?
+A. fs.readFile()  
+B. let x = 10  
+C. console.log()  
+D. Math.random()  
 ✅ **Answer: A**
 
 ---
 
-### 13. What is the output?
+### 15. What does this callback do?
+```js
+fs.readFile('file.txt', (err, data) => {});
+```
+A. Deletes file  
+B. Reads file asynchronously  
+C. Writes file  
+D. Creates file  
+✅ **Answer: B**
 
+---
+
+### 16. What is the output?
 ```js
 console.log("1");
 setTimeout(() => console.log("2"), 0);
 console.log("3");
 ```
-
-A. 1 2 3
-B. 1 3 2
-C. 2 1 3
-D. 3 2 1
+A. 1 2 3  
+B. 1 3 2  
+C. 2 1 3  
+D. 3 2 1  
 ✅ **Answer: B**
 
 ---
 
-### 14. Callback function avoids:
 
-A. Errors
-B. Blocking execution
-C. Variables
-D. Loops
+### 17. What is callback hell?
+A. Callback error  
+B. Deeply nested callbacks  
+C. Missing callback  
+D. Fast execution  
 ✅ **Answer: B**
 
 ---
 
-### 15. Which is drawback of callback?
-
-A. Easy syntax
-B. Callback hell
-C. Fast execution
-D. Less code
-✅ **Answer: B**
-
----
-
-### 16. What is nested callback?
-
-A. Callback inside callback
-B. Function inside loop
-C. Function inside object
-D. Variable inside function
+### 18. What is nested callback?
+A. Callback inside callback  
+B. Function inside loop  
+C. Function inside object  
+D. Variable inside function  
 ✅ **Answer: A**
 
 ---
 
-### 17. Which is alternative to callbacks?
-
-A. Arrays
-B. Promises
-C. Strings
-D. Numbers
+### 19. Which is drawback of callback?
+A. Easy syntax  
+B. Callback hell  
+C. Fast execution  
+D. Less code  
 ✅ **Answer: B**
 
 ---
 
-### 18. What does this callback do?
-
-```js
-fs.readFile('file.txt', (err, data) => {});
-```
-
-A. Deletes file
-B. Reads file asynchronously
-C. Writes file
-D. Creates file
+### 20. Which is alternative to callbacks?
+A. Arrays  
+B. Promises  
+C. Strings  
+D. Numbers  
 ✅ **Answer: B**
 
 ---
-
-### 19. Callback functions are:
-
-A. Always synchronous
-B. Always blocking
-C. Can be async or sync
-D. Only loops
-✅ **Answer: C**
-
----
-
-### 20. What is the purpose of callback in Node.js?
-
-A. Styling
-B. Event handling
-C. Variable declaration
-D. Loop control
-✅ **Answer: B**
-
-
