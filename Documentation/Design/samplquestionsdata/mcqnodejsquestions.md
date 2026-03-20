@@ -1373,3 +1373,204 @@ C. Express
 D. npm
 
 **Correct option:** B Libuv
+
+
+# 📘 Configuration Management in Node.js - MCQs
+
+### 1. Which object is used to access environment variables in Node.js?
+
+* A. env.process  
+* B. process.env  
+* C. config.env  
+* D. node.env  
+  **Answer:** B  
+
+---
+
+### 2. Which file is used to store environment variables?
+
+* A. config.json  
+* B. .env  
+* C. package.json  
+* D. index.js  
+  **Answer:** B  
+
+---
+
+### 3. Which package is used to load environment variables from `.env` file?
+
+* A. express  
+* B. dotenv  
+* C. config  
+* D. http  
+  **Answer:** B  
+
+---
+
+### 4. What does NODE_ENV represent?
+
+* A. Node version  
+* B. Environment type  
+* C. API key  
+* D. Port number  
+  **Answer:** B  
+
+---
+
+### 5. What is the main purpose of configuration management?
+
+* A. UI design  
+* B. Managing application settings  
+* C. Writing APIs  
+* D. Debugging  
+  **Answer:** B  
+
+---
+
+### 6. Why should sensitive data not be hardcoded?
+
+* A. It increases memory  
+* B. It reduces speed  
+* C. Security risk  
+* D. No effect  
+  **Answer:** C  
+
+---
+
+### 7. Which command is used to install dotenv?
+
+* A. npm start  
+* B. npm install dotenv  
+* C. node dotenv  
+* D. npm run dotenv  
+  **Answer:** B  
+
+---
+
+### 8. Where should `.env` file be placed?
+
+* A. node_modules  
+* B. public  
+* C. Root directory  
+* D. config folder  
+  **Answer:** C  
+
+---
+
+### 9. Which method loads environment variables using dotenv?
+
+* A. dotenv.load()  
+* B. dotenv.env()  
+* C. require('dotenv').config()  
+* D. config.load()  
+  **Answer:** C  
+
+---
+
+### 10. Which file is used to ignore `.env` in Git?
+
+* A. package.json  
+* B. .gitignore  
+* C. README.md  
+* D. config.json  
+  **Answer:** B  
+
+---
+
+### 11. Which environment is used for production?
+
+* A. development  
+* B. testing  
+* C. production  
+* D. debug  
+  **Answer:** C  
+
+---
+
+### 12. Which environment is used during development?
+
+* A. production  
+* B. development  
+* C. staging  
+* D. release  
+  **Answer:** B  
+
+---
+
+### 13. Which of the following is a valid environment variable?
+
+* A. PORT=3000  
+* B. PORT:3000  
+* C. PORT->3000  
+* D. PORT-3000  
+  **Answer:** A  
+
+---
+
+### 14. How to access PORT value in Node.js?
+
+* A. process.PORT  
+* B. env.PORT  
+* C. process.env.PORT  
+* D. config.PORT  
+  **Answer:** C  
+
+---
+
+### 15. What is the benefit of configuration management?
+
+* A. Security  
+* B. Flexibility  
+* C. Easy environment switching  
+* D. All of the above  
+  **Answer:** D  
+
+---
+
+### 16. Which file contains project dependencies?
+
+* A. config.json  
+* B. .env  
+* C. package.json  
+* D. index.html  
+  **Answer:** C  
+
+---
+
+### 17. Which format is commonly used for config files?
+
+* A. JSON  
+* B. XML  
+* C. TXT  
+* D. CSV  
+  **Answer:** A  
+
+---
+
+### 18. What should be kept in `.gitignore`?
+
+* A. index.js  
+* B. .env  
+* C. package.json  
+* D. README.md  
+  **Answer:** B  
+
+---
+
+### 19. Configuration helps in:
+
+* A. Managing settings  
+* B. Securing data  
+* C. Switching environments  
+* D. All of the above  
+  **Answer:** D  
+
+---
+
+### 20. Which is NOT a configuration value?
+
+* A. API key  
+* B. Database URL  
+* C. Port number  
+* D. HTML tag  
+  **Answer:** D  
