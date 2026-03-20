@@ -207,6 +207,189 @@ Quetions with mcq and answers
   **Answer:** B
 
 ---
+# 📘 Express.js MCQ Questions
+
+## 🟢 Multiple Choice Questions
+
+### 1. What is Express.js primarily used for?
+A) Frontend UI design  
+B) Database management  
+C) Building web applications using Node.js  
+D) Operating system development  
+**Answer: C**
+
+---
+
+### 2. Which command is used to install Express.js in a project?
+A) node install express  
+B) npm get express  
+C) npm install express  
+D) install express  
+**Answer: C**
+
+---
+
+### 3. How do you create an Express application instance?
+A) createApp()  
+B) express()  
+C) new app()  
+D) initExpress()  
+**Answer: B**
+
+---
+
+### 4. In Express.js, what is middleware?
+A) A database connection layer  
+B) A function that handles UI rendering  
+C) A function executed during the request-response cycle  
+D) A server configuration file  
+**Answer: C**
+
+---
+
+### 5. Which object is used to access request data in Express.js?
+A) res  
+B) req  
+C) app  
+D) router  
+**Answer: B**
+
+---
+
+### 6. Which method is used to define a route for HTTP GET requests?
+A) app.fetch()  
+B) app.get()  
+C) app.route()  
+D) app.request()  
+**Answer: B**
+
+---
+
+### 7. What is the purpose of `res.send()` in Express.js?
+A) To receive client data  
+B) To send a response to the client  
+C) To terminate the server  
+D) To log messages  
+**Answer: B**
+
+---
+
+### 8. What is the role of the `next()` function in middleware?
+A) Ends the response  
+B) Calls the next middleware function  
+C) Restarts the server  
+D) Sends response to client  
+**Answer: B**
+
+---
+
+### 9. Which method is used to serve static files in Express.js?
+A) app.static()  
+B) express.static()  
+C) staticFiles()  
+D) app.files()  
+**Answer: B**
+
+---
+
+### 10. Which port is commonly used by default in Express applications?
+A) 80  
+B) 5000  
+C) 3000  
+D) 8080  
+**Answer: C**
+
+---
+
+### 11. What is the purpose of Express Router?
+A) To connect to database  
+B) To manage routes in a modular way  
+C) To handle HTTP requests only  
+D) To start the server  
+**Answer: B**
+
+---
+
+### 12. Which method is used to send JSON data in Express.js?
+A) res.sendJSON()  
+B) res.output()  
+C) res.json()  
+D) res.data()  
+**Answer: C**
+
+---
+
+### 13. What does `app.use()` do in Express.js?
+A) Starts the application  
+B) Registers middleware functions  
+C) Stops the server  
+D) Creates routes only  
+**Answer: B**
+
+---
+
+### 14. Which of the following can be used to parse JSON request bodies?
+A) body-parser middleware  
+B) express.json()  
+C) Both A and B  
+D) None of the above  
+**Answer: C**
+
+---
+
+### 15. What is CORS in Express.js?
+A) A database query language  
+B) A security mechanism for cross-origin requests  
+C) A routing method  
+D) A template engine  
+**Answer: B**
+
+---
+
+### 16. Which method handles HTTP POST requests in Express.js?
+A) app.put()  
+B) app.send()  
+C) app.post()  
+D) app.write()  
+**Answer: C**
+
+---
+
+### 17. What does HTTP status code 404 represent?
+A) Success  
+B) Unauthorized  
+C) Not Found  
+D) Internal Server Error  
+**Answer: C**
+
+---
+
+### 18. Which package is commonly used for handling file uploads in Express.js?
+A) multer  
+B) fileUpload  
+C) upload-handler  
+D) express-file  
+**Answer: A**
+
+---
+
+### 19. Why are environment variables used in Express applications?
+A) To store UI components  
+B) To manage configuration settings securely  
+C) To handle routing  
+D) To define middleware  
+**Answer: B**
+
+---
+
+### 20. Which package helps improve security by setting HTTP headers in Express.js?
+A) secure.js  
+B) helmet  
+C) protect  
+D) safety  
+**Answer: B**
+
+---
 # Event-Driven Programming (Node.js + MERN) — Assessment MCQs
 ## Questions
 
