@@ -2349,3 +2349,214 @@ D. Loop control
 ✅ **Answer: B**
 
 
+# 📘 Package.json in Node.js - MCQs
+
+# package.json MCQs (Beginner → Intermediate → Advanced)
+
+---
+
+## 🟢 Beginner Level
+
+### 1. What is `package.json` in Node.js?
+A. A JavaScript file  
+B. A configuration file for npm  
+C. A database file  
+D. A server file  
+
+**Correct Answer:** B  
+
+---
+
+### 2. Which command creates a `package.json` file?
+A. npm create  
+B. npm init  
+C. npm install  
+D. node init  
+
+**Correct Answer:** B  
+
+---
+
+### 3. Which field defines the project name?
+A. id  
+B. project  
+C. name  
+D. title  
+
+**Correct Answer:** C  
+
+---
+
+### 4. What does the `"version"` field represent?
+A. Node version  
+B. Package version  
+C. OS version  
+D. npm version  
+
+**Correct Answer:** B  
+
+---
+
+### 5. Which field defines the entry point of the app?
+A. start  
+B. main  
+C. index  
+D. entry  
+
+**Correct Answer:** B  
+
+---
+
+### 6. Which command installs dependencies?
+A. npm start  
+B. npm run  
+C. npm install  
+D. npm get  
+
+**Correct Answer:** C  
+
+---
+
+### 7. What does `"scripts"` do?
+A. Stores variables  
+B. Defines command shortcuts  
+C. Installs packages  
+D. Runs server  
+
+**Correct Answer:** B  
+
+---
+
+### 8. What does `"dependencies"` contain?
+A. Dev tools  
+B. Production packages  
+C. OS files  
+D. Scripts  
+
+**Correct Answer:** B  
+
+---
+
+## 🟡 Intermediate Level
+
+### 9. What is `"devDependencies"` used for?
+A. Production packages  
+B. Development tools  
+C. Database  
+D. OS modules  
+
+**Correct Answer:** B  
+
+---
+
+### 10. What does `"private": true` do?
+A. Encrypts project  
+B. Prevents publishing  
+C. Hides code  
+D. Locks dependencies  
+
+**Correct Answer:** B  
+
+---
+
+### 11. What does `"author"` field store?
+A. Version  
+B. Developer info  
+C. License  
+D. Scripts  
+
+**Correct Answer:** B  
+
+---
+
+### 12. What does `"license"` specify?
+A. Owner  
+B. Legal permission  
+C. Version  
+D. Script  
+
+**Correct Answer:** B  
+
+---
+
+### 13. What is `package-lock.json` used for?
+A. Store scripts  
+B. Lock dependency versions  
+C. Install packages  
+D. Run server  
+
+**Correct Answer:** B  
+
+---
+
+### 14. What does `"engines"` field define?
+A. Scripts  
+B. Node/npm version compatibility  
+C. Dependencies  
+D. Files  
+
+**Correct Answer:** B  
+
+---
+
+### 15. What happens if `"main"` is not defined?
+A. Error  
+B. Defaults to `index.js`  
+C. Stops execution  
+D. Skips file  
+
+**Correct Answer:** B  
+
+---
+
+## 🔴 Advanced Level
+
+### 16. What is `"peerDependencies"` used for?
+A. Auto install packages  
+B. Define compatible versions required by host  
+C. Replace dependencies  
+D. Remove packages  
+
+**Correct Answer:** B  
+
+---
+
+### 17. What does `"optionalDependencies"` mean?
+A. Required packages  
+B. Can fail without breaking install  
+C. Dev-only  
+D. Locked packages  
+
+**Correct Answer:** B  
+
+---
+
+### 18. What does `"type": "module"` do?
+A. Enables CommonJS  
+B. Enables ES Modules  
+C. Disables imports  
+D. Runs scripts  
+
+**Correct Answer:** B  
+
+---
+
+### 19. What is `"bin"` field used for?
+A. Install modules  
+B. Define CLI executables  
+C. Run scripts  
+D. Build app  
+
+**Correct Answer:** B  
+
+---
+
+### 20. What does `"exports"` do?
+A. Export files  
+B. Control module access and entry points  
+C. Install packages  
+D. Run scripts  
+
+**Correct Answer:** B  
+
+---
