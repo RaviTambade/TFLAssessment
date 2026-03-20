@@ -711,3 +711,810 @@
 * C. Mobile apps  
 * D. OS  
 *corrected_answer:* A  
+
+#  Polymorphism 
+
+### 1. Which supports runtime polymorphism in Polymorphism? (Beginner)
+
+* A. Method Overloading  
+* B. Method Overriding  
+* C. Constructors  
+* D. Static Methods  
+  **corrected_answer:** B  
+
+---
+
+### 2. In Polymorphism, which binding happens at runtime? (Beginner)
+
+* A. Static Binding  
+* B. Early Binding  
+* C. Dynamic Binding  
+* D. Compile Binding  
+  **corrected_answer:** C  
+
+---
+
+### 3. Which is an example of compile-time polymorphism in Polymorphism? (Beginner)
+
+* A. Method Overriding  
+* B. Method Overloading  
+* C. Inheritance  
+* D. Abstraction  
+  **corrected_answer:** B  
+
+---
+
+### 4. Which method is resolved at runtime in Polymorphism? (Intermediate)
+
+* A. Static method  
+* B. Private method  
+* C. Overridden method  
+* D. Final method  
+  **corrected_answer:** C  
+
+---
+
+### 5. In Polymorphism, parent reference pointing to child object is called? (Beginner)
+
+* A. Encapsulation  
+* B. Inheritance  
+* C. Polymorphism  
+* D. Abstraction  
+  **corrected_answer:** C  
+
+---
+
+### 6. Which concept reduces large if-else blocks in Polymorphism? (Intermediate)
+
+* A. Loop  
+* B. Polymorphism  
+* C. Variable  
+* D. Constant  
+  **corrected_answer:** B  
+
+---
+
+### 7. Which keyword prevents overriding in Polymorphism? (Intermediate)
+
+* A. static  
+* B. final  
+* C. abstract  
+* D. private  
+  **corrected_answer:** B  
+
+---
+
+### 8. Which improves flexibility using Polymorphism? (Beginner)
+
+* A. Loop  
+* B. Polymorphism  
+* C. Variable  
+* D. Constant  
+  **corrected_answer:** B  
+
+---
+
+### 9. Which is runtime decision in Polymorphism? (Intermediate)
+
+* A. Overloading  
+* B. Overriding  
+* C. Constructor  
+* D. Static  
+  **corrected_answer:** B  
+
+---
+
+### 10. Which design pattern uses Polymorphism? (Advanced)
+
+* A. Singleton  
+* B. Strategy  
+* C. Builder  
+* D. Adapter  
+  **corrected_answer:** B  
+
+---
+
+### 11. What is dynamic method dispatch in Polymorphism? (Advanced)
+
+* A. Compile-time resolution  
+* B. Runtime method resolution  
+* C. Static call  
+* D. Constructor call  
+  **corrected_answer:** B  
+
+---
+
+### 12. Which supports extensibility in Polymorphism? (Intermediate)
+
+* A. Loop  
+* B. Constant  
+* C. Polymorphism  
+* D. Variable  
+  **corrected_answer:** C  
+
+---
+
+### 13. Which method is executed if not overridden? (Beginner)
+
+* A. Child method  
+* B. Parent method  
+* C. Interface method  
+* D. None  
+  **corrected_answer:** B  
+
+---
+
+### 14. Which allows behavior change without modifying code? (Intermediate)
+
+* A. Encapsulation  
+* B. Polymorphism  
+* C. Loop  
+* D. Constant  
+  **corrected_answer:** B  
+
+---
+
+### 15. Which binding is dynamic? (Beginner)
+
+* A. Compile-time  
+* B. Runtime  
+* C. Static  
+* D. Early  
+  **corrected_answer:** B  
+
+---
+
+### 16. Which improves maintainability in Polymorphism? (Intermediate)
+
+* A. Loop  
+* B. Constant  
+* C. Polymorphism  
+* D. Switch  
+  **corrected_answer:** C  
+
+---
+
+### 17. Which avoids tight coupling? (Advanced)
+
+* A. Loop  
+* B. Constant  
+* C. Polymorphism  
+* D. Array  
+  **corrected_answer:** C  
+
+---
+
+### 18. Which allows runtime decision making? (Intermediate)
+
+* A. Overloading  
+* B. Overriding  
+* C. Constructor  
+* D. Static  
+  **corrected_answer:** B  
+
+---
+
+### 19. Which is core benefit of Polymorphism? (Beginner)
+
+* A. Loop  
+* B. Constant  
+* C. Flexibility  
+* D. Array  
+  **corrected_answer:** C  
+
+---
+
+### 20. Which uses same method name with different parameters? (Beginner)
+
+* A. Overriding  
+* B. Overloading  
+* C. Inheritance  
+* D. Abstraction  
+  **corrected_answer:** B  
+
+---
+
+#  Interfaces 
+
+### 1. Which keyword is used to implement Interfaces? (Beginner)
+
+* A. extends  
+* B. implements  
+* C. inherit  
+* D. override  
+  **corrected_answer:** B  
+
+---
+
+### 2. Interfaces support which type of inheritance? (Beginner)
+
+* A. Single  
+* B. Multiple  
+* C. Hybrid  
+* D. None  
+  **corrected_answer:** B  
+
+---
+
+### 3. In Interfaces, methods are by default: (Beginner)
+
+* A. private  
+* B. protected  
+* C. public  
+* D. static  
+  **corrected_answer:** C  
+
+---
+
+### 4. Interfaces are mainly used for? (Beginner)
+
+* A. Looping  
+* B. Contract definition  
+* C. Memory allocation  
+* D. Variable storage  
+  **corrected_answer:** B  
+
+---
+
+### 5. Can Interfaces have constructors? (Beginner)
+
+* A. Yes  
+* B. No  
+* C. Only static  
+* D. Only private  
+  **corrected_answer:** B  
+
+---
+
+### 6. Interface variables are: (Intermediate)
+
+* A. Mutable  
+* B. Final  
+* C. Private  
+* D. Local  
+  **corrected_answer:** B  
+
+---
+
+### 7. Interfaces provide: (Beginner)
+
+* A. Partial abstraction  
+* B. Full abstraction  
+* C. No abstraction  
+* D. Encapsulation  
+  **corrected_answer:** B  
+
+---
+
+### 8. Which supports loose coupling in Interfaces? (Intermediate)
+
+* A. Interface  
+* B. Loop  
+* C. Variable  
+* D. Constant  
+  **corrected_answer:** A  
+
+---
+
+### 9. Interfaces can extend? (Intermediate)
+
+* A. Classes  
+* B. Interfaces  
+* C. Objects  
+* D. Constructors  
+  **corrected_answer:** B  
+
+---
+
+### 10. Which supports multiple inheritance using Interfaces? (Intermediate)
+
+* A. Class  
+* B. Interface  
+* C. Object  
+* D. Constructor  
+  **corrected_answer:** B  
+
+---
+
+### 11. Interfaces improve? (Intermediate)
+
+* A. Coupling  
+* B. Flexibility  
+* C. Errors  
+* D. Complexity  
+  **corrected_answer:** B  
+
+---
+
+### 12. Which is correct for Interfaces? (Intermediate)
+
+* A. Have constructors  
+* B. Cannot have methods  
+* C. Define abstract methods  
+* D. Cannot extend  
+  **corrected_answer:** C  
+
+---
+
+### 13. Interfaces ensure? (Intermediate)
+
+* A. Loop execution  
+* B. Contract enforcement  
+* C. Memory usage  
+* D. Calculation  
+  **corrected_answer:** B  
+
+---
+
+### 14. Interfaces are used in? (Advanced)
+
+* A. Design patterns  
+* B. Looping  
+* C. Arrays  
+* D. Variables  
+  **corrected_answer:** A  
+
+---
+
+### 15. Interfaces help in? (Intermediate)
+
+* A. Tight coupling  
+* B. Loose coupling  
+* C. Loop  
+* D. Variable  
+  **corrected_answer:** B  
+
+---
+
+### 16. Interfaces are best for? (Intermediate)
+
+* A. Implementation  
+* B. Contract design  
+* C. Looping  
+* D. Storage  
+  **corrected_answer:** B  
+
+---
+
+### 17. Interfaces allow behavior extension? (Advanced)
+
+* A. Yes  
+* B. No  
+* C. Only static  
+* D. Only private  
+  **corrected_answer:** A  
+
+---
+
+### 18. Interfaces support which architecture? (Advanced)
+
+* A. Monolithic  
+* B. Decoupled  
+* C. Static  
+* D. Loop-based  
+  **corrected_answer:** B  
+
+---
+
+### 19. Interfaces improve testability? (Advanced)
+
+* A. Yes  
+* B. No  
+* C. Only runtime  
+* D. Only compile-time  
+  **corrected_answer:** A  
+
+---
+
+### 20. Interfaces are core for flexibility? (Beginner)
+
+* A. Yes  
+* B. No  
+* C. Only static  
+* D. Only abstract  
+  **corrected_answer:** A  
+
+---
+#  Abstract Classes 
+
+### 1. Can we create an object of Abstract Class? (Beginner)
+
+* A. Yes  
+* B. No  
+* C. Only once  
+* D. Only static  
+  **corrected_answer:** B  
+
+---
+
+### 2. Abstract class can have? (Beginner)
+
+* A. Only abstract methods  
+* B. Only concrete methods  
+* C. Both  
+* D. None  
+  **corrected_answer:** C  
+
+---
+
+### 3. Abstract method has? (Beginner)
+
+* A. Body  
+* B. No body  
+* C. Static body  
+* D. Private body  
+  **corrected_answer:** B  
+
+---
+
+### 4. Abstract class supports? (Beginner)
+
+* A. Full abstraction  
+* B. Partial abstraction  
+* C. No abstraction  
+* D. Loop  
+  **corrected_answer:** B  
+
+---
+
+### 5. Abstract class is declared using? (Beginner)
+
+* A. final  
+* B. static  
+* C. abstract  
+* D. class  
+  **corrected_answer:** C  
+
+---
+
+### 6. Abstract class can have constructor? (Intermediate)
+
+* A. Yes  
+* B. No  
+* C. Only static  
+* D. Only private  
+  **corrected_answer:** A  
+
+---
+
+### 7. Abstract class is used for? (Beginner)
+
+* A. Loop  
+* B. Base class  
+* C. Variable  
+* D. Array  
+  **corrected_answer:** B  
+
+---
+
+### 8. Abstract methods must be? (Intermediate)
+
+* A. static  
+* B. final  
+* C. overridden  
+* D. private  
+  **corrected_answer:** C  
+
+---
+
+### 9. Abstract class improves? (Intermediate)
+
+* A. Performance  
+* B. Code reuse  
+* C. Loop  
+* D. Storage  
+  **corrected_answer:** B  
+
+---
+
+### 10. Abstract class can extend? (Intermediate)
+
+* A. Interface  
+* B. Class  
+* C. Both  
+* D. None  
+  **corrected_answer:** C  
+
+---
+
+### 11. Abstract class cannot be? (Beginner)
+
+* A. Extended  
+* B. Instantiated  
+* C. Used  
+* D. Inherited  
+  **corrected_answer:** B  
+
+---
+
+### 12. Abstract class supports inheritance? (Beginner)
+
+* A. Yes  
+* B. No  
+* C. Only static  
+* D. Only multiple  
+  **corrected_answer:** A  
+
+---
+
+### 13. Abstract class methods can be? (Intermediate)
+
+* A. private  
+* B. public  
+* C. protected  
+* D. All  
+  **corrected_answer:** D  
+
+---
+
+### 14. Abstract class is best for? (Intermediate)
+
+* A. Loop  
+* B. Partial implementation  
+* C. Variable  
+* D. Constant  
+  **corrected_answer:** B  
+
+---
+
+### 15. Abstract class is used in? (Advanced)
+
+* A. Design patterns  
+* B. Loop  
+* C. Storage  
+* D. Array  
+  **corrected_answer:** A  
+
+---
+
+### 16. Abstract class helps in? (Intermediate)
+
+* A. Tight coupling  
+* B. Code reuse  
+* C. Loop  
+* D. Variable  
+  **corrected_answer:** B  
+
+---
+
+### 17. Abstract class ensures? (Intermediate)
+
+* A. Full abstraction  
+* B. Partial abstraction  
+* C. No abstraction  
+* D. Loop  
+  **corrected_answer:** B  
+
+---
+
+### 18. Abstract method must be implemented in? (Beginner)
+
+* A. Parent  
+* B. Child  
+* C. Interface  
+* D. Object  
+  **corrected_answer:** B  
+
+---
+
+### 19. Abstract class improves? (Advanced)
+
+* A. Maintainability  
+* B. Loop  
+* C. Variable  
+* D. Constant  
+  **corrected_answer:** A  
+
+---
+
+### 20. Abstract class provides? (Advanced)
+
+* A. Flexibility  
+* B. Loop  
+* C. Constant  
+* D. Array  
+  **corrected_answer:** A  
+
+---
+
+#  Method Overloading 
+
+### 1. Method overloading occurs when? (Beginner)
+
+* A. Same name, different parameters  
+* B. Same name, same parameters  
+* C. Different name  
+* D. Static method  
+  **corrected_answer:** A  
+
+---
+
+### 2. Method overloading is? (Beginner)
+
+* A. Runtime  
+* B. Compile-time  
+* C. Dynamic  
+* D. Late binding  
+  **corrected_answer:** B  
+
+---
+
+### 3. Overloaded methods differ by? (Beginner)
+
+* A. Name  
+* B. Parameters  
+* C. Return only  
+* D. Keyword  
+  **corrected_answer:** B  
+
+---
+
+### 4. Can constructors be overloaded? (Beginner)
+
+* A. Yes  
+* B. No  
+* C. Only static  
+* D. Only private  
+  **corrected_answer:** A  
+
+---
+
+### 5. Can return type alone overload method? (Intermediate)
+
+* A. Yes  
+* B. No  
+* C. Sometimes  
+* D. Only static  
+  **corrected_answer:** B  
+
+---
+
+### 6. Method overloading improves? (Beginner)
+
+* A. Readability  
+* B. Loop  
+* C. Storage  
+* D. Errors  
+  **corrected_answer:** A  
+
+---
+
+### 7. Method overloading occurs in? (Beginner)
+
+* A. Same class  
+* B. Different class  
+* C. Interface  
+* D. Abstract class  
+  **corrected_answer:** A  
+
+---
+
+### 8. Overloading supports? (Intermediate)
+
+* A. Runtime polymorphism  
+* B. Compile-time polymorphism  
+* C. Dynamic binding  
+* D. Late binding  
+  **corrected_answer:** B  
+
+---
+
+### 9. Which is early binding? (Intermediate)
+
+* A. Overloading  
+* B. Overriding  
+* C. Runtime  
+* D. Dynamic  
+  **corrected_answer:** A  
+
+---
+
+### 10. Overloaded methods must have? (Beginner)
+
+* A. Same parameters  
+* B. Different parameters  
+* C. Same body  
+* D. Same object  
+  **corrected_answer:** B  
+
+---
+
+### 11. Overloading improves? (Intermediate)
+
+* A. Flexibility  
+* B. Complexity  
+* C. Errors  
+* D. Bugs  
+  **corrected_answer:** A  
+
+---
+
+### 12. Which is compile-time decision? (Intermediate)
+
+* A. Overloading  
+* B. Overriding  
+* C. Runtime  
+* D. Dynamic  
+  **corrected_answer:** A  
+
+---
+
+### 13. Overloading cannot change? (Intermediate)
+
+* A. Parameters  
+* B. Name  
+* C. Method body  
+* D. Signature  
+  **corrected_answer:** B  
+
+---
+
+### 14. Which supports same method name? (Beginner)
+
+* A. Overloading  
+* B. Loop  
+* C. Variable  
+* D. Array  
+  **corrected_answer:** A  
+
+---
+
+### 15. Overloading is used in? (Advanced)
+
+* A. Design  
+* B. Loop  
+* C. Storage  
+* D. Array  
+  **corrected_answer:** A  
+
+---
+
+### 16. Overloading improves? (Advanced)
+
+* A. Maintainability  
+* B. Loop  
+* C. Constant  
+* D. Variable  
+  **corrected_answer:** A  
+
+---
+
+### 17. Overloading supports? (Advanced)
+
+* A. Static binding  
+* B. Dynamic binding  
+* C. Runtime  
+* D. Late  
+  **corrected_answer:** A  
+
+---
+
+### 18. Overloading requires? (Beginner)
+
+* A. Different parameters  
+* B. Same parameters  
+* C. Same body  
+* D. Same object  
+  **corrected_answer:** A  
+
+---
+
+### 19. Overloading is resolved at? (Intermediate)
+
+* A. Runtime  
+* B. Compile-time  
+* C. Dynamic  
+* D. Late  
+  **corrected_answer:** B  
+
+---
+
+### 20. Overloading improves? (Advanced)
+
+* A. Code clarity  
+* B. Loop  
+* C. Variable  
+* D. Constant  
+  **corrected_answer:** A  
+
+---
