@@ -2139,30 +2139,30 @@ D. Numbers
 fs.readFile('file.txt', (err, data) => {});
 ```
 
-A. Deletes file
-B. Reads file asynchronously
-C. Writes file
-D. Creates file
+A. Deletes file  
+B. Reads file asynchronously  
+C. Writes file  
+D. Creates file  
 ✅ **Answer: B**
 
 ---
 
 ### 19. Callback functions are:
 
-A. Always synchronous
-B. Always blocking
-C. Can be async or sync
-D. Only loops
+A. Always synchronous  
+B. Always blocking  
+C. Can be async or sync  
+D. Only loops  
 ✅ **Answer: C**
 
 ---
 
 ### 20. What is the purpose of callback in Node.js?
 
-A. Styling
-B. Event handling
-C. Variable declaration
-D. Loop control
+A. Styling  
+B. Event handling  
+C. Variable declaration  
+D. Loop control  
 ✅ **Answer: B**
 
 
