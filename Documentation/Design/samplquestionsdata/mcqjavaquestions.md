@@ -1,3 +1,757 @@
+# 📘 Java Reflection MCQ Quiz
+
+---
+
+## 🟢 BEGINNER LEVEL
+
+### 1. What is Java Reflection?
+* A. Compile-time API  
+* B. Runtime API  
+* C. Database API  
+* D. UI API  
+**Answer:** B  
+
+---
+
+### 2. Which package contains Reflection classes?
+* A. java.util  
+* B. java.io  
+* C. java.lang.reflect  
+* D. java.sql  
+**Answer:** C  
+
+---
+
+### 3. Which class represents a class in Reflection?
+* A. Object  
+* B. Class  
+* C. Method  
+* D. Field  
+**Answer:** B  
+
+---
+
+### 4. How to get Class object?
+* A. Class.forName()  
+* B. getClass()  
+* C. .class  
+* D. All of the above  
+**Answer:** D  
+
+---
+
+### 5. Which method returns class name?
+* A. getName()  
+* B. getClass()  
+* C. getMethod()  
+* D. getField()  
+**Answer:** A  
+
+---
+
+## 🟡 INTERMEDIATE LEVEL
+
+### 6. getMethods() returns?
+* A. Private methods  
+* B. Public methods only  
+* C. All methods  
+* D. Static methods  
+**Answer:** B  
+
+---
+
+### 7. getDeclaredMethods() returns?
+* A. Public only  
+* B. All methods of class  
+* C. Parent methods  
+* D. Static methods only  
+**Answer:** B  
+
+---
+
+### 8. How to access private field?
+* A. field.get()  
+* B. setAccessible(true)  
+* C. accessPrivate()  
+* D. getPrivate()  
+**Answer:** B  
+
+---
+
+### 9. Method.invoke() requires?
+* A. Object instance  
+* B. Parameters  
+* C. Both  
+* D. None  
+**Answer:** C  
+
+---
+
+### 10. Constructor class is in?
+* A. java.lang  
+* B. java.lang.reflect  
+* C. java.util  
+* D. java.io  
+**Answer:** B  
+
+---
+
+### 11. Which method gets specific method?
+* A. getMethod(name, params)  
+* B. getMethods()  
+* C. findMethod()  
+* D. method()  
+**Answer:** A  
+
+---
+
+### 12. Which method gets specific field?
+* A. getField(name)  
+* B. getFields()  
+* C. findField()  
+* D. field()  
+**Answer:** A  
+
+---
+
+## 🔴 ADVANCED LEVEL
+
+### 13. Which method returns superclass?
+* A. getSuperClass()  
+* B. getSuperclass()  
+* C. superClass()  
+* D. parentClass()  
+**Answer:** B  
+
+---
+
+### 14. Which method returns interfaces?
+* A. getInterfaces()  
+* B. getInterface()  
+* C. interfaces()  
+* D. fetchInterfaces()  
+**Answer:** A  
+
+---
+
+### 15. Dynamic proxy is in?
+* A. java.lang.reflect  
+* B. java.util  
+* C. java.io  
+* D. java.sql  
+**Answer:** A  
+
+---
+
+### 16. Which class for proxy?
+* A. Proxy  
+* B. DynamicProxy  
+* C. Handler  
+* D. ReflectProxy  
+**Answer:** A  
+
+---
+
+### 17. InvocationHandler is used for?
+* A. Proxy method handling  
+* B. Field handling  
+* C. Class loading  
+* D. Compilation  
+**Answer:** A  
+
+---
+
+### 18. Which method creates proxy?
+* A. newProxyInstance()  
+* B. createProxy()  
+* C. proxyInstance()  
+* D. makeProxy()  
+**Answer:** A  
+
+---
+
+### 19. Reflection can access static members?
+* A. Yes  
+* B. No  
+* C. Only public  
+* D. Only private  
+**Answer:** A  
+
+---
+
+### 20. Which method gets return type?
+* A. getReturnType()  
+* B. returnType()  
+* C. getType()  
+* D. type()  
+**Answer:** A  
+
+---
+---
+
+# 🟢 Java Virtual Machine (JVM)
+
+## 🟢 BEGINNER LEVEL
+
+### 1. What is JVM?
+* A. Compiler  
+* B. Runtime Environment  
+* C. Database  
+* D. IDE  
+**Answer:** B  
+
+---
+
+### 2. JVM stands for?
+* A. Java Variable Machine  
+* B. Java Virtual Machine  
+* C. Just Virtual Machine  
+* D. Java Verified Machine  
+**Answer:** B  
+
+---
+
+### 3. JVM is part of?
+* A. JDK  
+* B. JRE  
+* C. OS  
+* D. Compiler  
+**Answer:** B  
+
+---
+
+### 4. Which file JVM executes?
+* A. .java  
+* B. .class  
+* C. .exe  
+* D. .jar  
+**Answer:** B  
+
+---
+
+### 5. JVM converts bytecode into?
+* A. Source code  
+* B. Machine code  
+* C. Assembly  
+* D. Script  
+**Answer:** B  
+
+---
+
+## 🟡 INTERMEDIATE LEVEL
+
+### 6. JVM is platform?
+* A. Dependent  
+* B. Independent  
+* C. Both  
+* D. None  
+**Answer:** B  
+
+---
+
+### 7. ClassLoader is part of?
+* A. JVM  
+* B. OS  
+* C. Compiler  
+* D. IDE  
+**Answer:** A  
+
+---
+
+### 8. Which memory area stores objects?
+* A. Stack  
+* B. Heap  
+* C. Method Area  
+* D. PC Register  
+**Answer:** B  
+
+---
+
+### 9. Stack stores?
+* A. Objects  
+* B. Methods & local variables  
+* C. Classes  
+* D. Files  
+**Answer:** B  
+
+---
+
+### 10. JVM architecture includes?
+* A. ClassLoader  
+* B. Runtime Data Area  
+* C. Execution Engine  
+* D. All of the above  
+**Answer:** D  
+
+---
+
+## 🔴 ADVANCED LEVEL
+
+### 11. Which component executes bytecode?
+* A. Interpreter  
+* B. JIT Compiler  
+* C. Both  
+* D. None  
+**Answer:** C  
+
+---
+
+### 12. PC Register stores?
+* A. Data  
+* B. Address of instruction  
+* C. Objects  
+* D. Variables  
+**Answer:** B  
+
+---
+
+### 13. Native Method Stack is for?
+* A. Java methods  
+* B. Native methods  
+* C. Objects  
+* D. Classes  
+**Answer:** B  
+
+---
+
+### 14. Method Area stores?
+* A. Objects  
+* B. Class metadata  
+* C. Variables  
+* D. Threads  
+**Answer:** B  
+
+---
+
+### 15. JVM is written in?
+* A. Java  
+* B. C/C++  
+* C. Python  
+* D. Assembly  
+**Answer:** B  
+
+---
+
+### 16. JIT stands for?
+* A. Just In Time  
+* B. Java In Time  
+* C. Join In Time  
+* D. Just Internal Tool  
+**Answer:** A  
+
+---
+
+### 17. JVM manages?
+* A. Memory  
+* B. Execution  
+* C. Garbage Collection  
+* D. All  
+**Answer:** D  
+
+---
+
+### 18. Bytecode verifier checks?
+* A. Syntax  
+* B. Security  
+* C. Memory  
+* D. UI  
+**Answer:** B  
+
+---
+
+### 19. JVM is?
+* A. Hardware  
+* B. Software  
+* C. OS  
+* D. Compiler  
+**Answer:** B  
+
+---
+
+### 20. JVM enables?
+* A. Portability  
+* B. Compilation  
+* C. Linking  
+* D. Editing  
+**Answer:** A  
+
+---
+
+# 🟢 JVM Garbage Collection
+
+## 🟢 BEGINNER LEVEL
+
+### 1. What is Garbage Collection?
+* A. Memory allocation  
+* B. Memory cleanup  
+* C. Compilation  
+* D. Execution  
+**Answer:** B  
+
+---
+
+### 2. GC removes?
+* A. Active objects  
+* B. Unused objects  
+* C. Methods  
+* D. Classes  
+**Answer:** B  
+
+---
+
+### 3. GC is automatic?
+* A. Yes  
+* B. No  
+* C. Sometimes  
+* D. Manual  
+**Answer:** A  
+
+---
+
+### 4. System.gc() does?
+* A. Force GC  
+* B. Suggest GC  
+* C. Stop GC  
+* D. Disable GC  
+**Answer:** B  
+
+---
+
+### 5. Memory cleaned by GC?
+* A. Stack  
+* B. Heap  
+* C. Method Area  
+* D. Register  
+**Answer:** B  
+
+---
+
+## 🟡 INTERMEDIATE LEVEL
+
+### 6. Which algorithm used?
+* A. Mark and Sweep  
+* B. Copying  
+* C. Generational  
+* D. All  
+**Answer:** D  
+
+---
+
+### 7. Young generation contains?
+* A. Old objects  
+* B. New objects  
+* C. Classes  
+* D. Methods  
+**Answer:** B  
+
+---
+
+### 8. Old generation stores?
+* A. New objects  
+* B. Long-lived objects  
+* C. Methods  
+* D. Threads  
+**Answer:** B  
+
+---
+
+### 9. Minor GC works on?
+* A. Old gen  
+* B. Young gen  
+* C. Both  
+* D. Stack  
+**Answer:** B  
+
+---
+
+### 10. Major GC works on?
+* A. Young  
+* B. Old  
+* C. Stack  
+* D. Thread  
+**Answer:** B  
+
+---
+
+## 🔴 ADVANCED LEVEL
+
+### 11. Stop-the-world means?
+* A. Pause execution  
+* B. Stop JVM  
+* C. Delete objects  
+* D. Compile code  
+**Answer:** A  
+
+---
+
+### 12. GC roots include?
+* A. Stack refs  
+* B. Static fields  
+* C. Threads  
+* D. All  
+**Answer:** D  
+
+---
+
+### 13. Which GC is low pause?
+* A. Serial  
+* B. G1  
+* C. Parallel  
+* D. CMS  
+**Answer:** B  
+
+---
+
+### 14. Memory leak in Java?
+* A. No references  
+* B. Unused but referenced  
+* C. Stack overflow  
+* D. Compile error  
+**Answer:** B  
+
+---
+
+### 15. finalize() is?
+* A. Constructor  
+* B. Destructor-like  
+* C. Method call  
+* D. Interface  
+**Answer:** B  
+
+---
+
+### 16. GC runs on?
+* A. Stack  
+* B. Heap  
+* C. Register  
+* D. File  
+**Answer:** B  
+
+---
+
+### 17. Reference types include?
+* A. Strong  
+* B. Weak  
+* C. Soft  
+* D. All  
+**Answer:** D  
+
+---
+
+### 18. Which avoids memory leaks?
+* A. Nulling refs  
+* B. Closing resources  
+* C. Using GC  
+* D. All  
+**Answer:** D  
+
+---
+
+### 19. CMS stands for?
+* A. Concurrent Mark Sweep  
+* B. Compact Memory System  
+* C. Class Memory System  
+* D. None  
+**Answer:** A  
+
+---
+
+### 20. G1 stands for?
+* A. Garbage First  
+* B. Generation First  
+* C. Graph First  
+* D. None  
+**Answer:** A  
+
+---
+
+# 🟢 javac, java, Maven
+
+## 🟢 BEGINNER LEVEL
+
+### 1. javac is?
+* A. Compiler  
+* B. Interpreter  
+* C. IDE  
+* D. OS  
+**Answer:** A  
+
+---
+
+### 2. java command is?
+* A. Compiler  
+* B. Runtime launcher  
+* C. Editor  
+* D. Debugger  
+**Answer:** B  
+
+---
+
+### 3. Maven is?
+* A. Compiler  
+* B. Build tool  
+* C. OS  
+* D. IDE  
+**Answer:** B  
+
+---
+
+### 4. javac converts?
+* A. Bytecode to machine  
+* B. Source to bytecode  
+* C. Source to machine  
+* D. Bytecode to source  
+**Answer:** B  
+
+---
+
+### 5. java runs?
+* A. .java  
+* B. .class  
+* C. .exe  
+* D. .jar  
+**Answer:** B  
+
+---
+
+## 🟡 INTERMEDIATE LEVEL
+
+### 6. Maven uses?
+* A. pom.xml  
+* B. build.gradle  
+* C. config.xml  
+* D. app.xml  
+**Answer:** A  
+
+---
+
+### 7. pom stands for?
+* A. Project Object Model  
+* B. Program Object Model  
+* C. Project Output Model  
+* D. None  
+**Answer:** A  
+
+---
+
+### 8. Dependency means?
+* A. Library  
+* B. File  
+* C. Class  
+* D. Package  
+**Answer:** A  
+
+---
+
+### 9. mvn compile does?
+* A. Run code  
+* B. Compile  
+* C. Clean  
+* D. Install  
+**Answer:** B  
+
+---
+
+### 10. mvn clean does?
+* A. Delete target  
+* B. Compile  
+* C. Run  
+* D. Install  
+**Answer:** A  
+
+---
+
+## 🔴 ADVANCED LEVEL
+
+### 11. mvn install does?
+* A. Compile  
+* B. Package  
+* C. Install in repo  
+* D. Run  
+**Answer:** C  
+
+---
+
+### 12. Maven repository types?
+* A. Local  
+* B. Central  
+* C. Remote  
+* D. All  
+**Answer:** D  
+
+---
+
+### 13. java uses?
+* A. JVM  
+* B. JRE  
+* C. Both  
+* D. None  
+**Answer:** C  
+
+---
+
+### 14. javac is part of?
+* A. JRE  
+* B. JDK  
+* C. JVM  
+* D. OS  
+**Answer:** B  
+
+---
+
+### 15. Maven lifecycle includes?
+* A. Compile  
+* B. Test  
+* C. Package  
+* D. All  
+**Answer:** D  
+
+---
+
+### 16. mvn package creates?
+* A. .class  
+* B. .jar/.war  
+* C. .exe  
+* D. .xml  
+**Answer:** B  
+
+---
+
+### 17. Plugins in Maven?
+* A. Extend features  
+* B. Compile code  
+* C. Run code  
+* D. All  
+**Answer:** D  
+
+---
+
+### 18. Surefire plugin is for?
+* A. Compile  
+* B. Test  
+* C. Package  
+* D. Clean  
+**Answer:** B  
+
+---
+
+### 19. Dependency scope example?
+* A. compile  
+* B. test  
+* C. runtime  
+* D. All  
+**Answer:** D  
+
+---
+
+### 20. mvn test does?
+* A. Run tests  
+* B. Compile  
+* C. Package  
+* D. Clean  
+**Answer:** A  
+
+---
 # Arrays 
 
 ### 1. What is the default value of an int array element? (Beginner)
@@ -1516,5 +2270,814 @@
 * C. Variable  
 * D. Constant  
   **corrected_answer:** A  
+
+---
+
+#  Constructor Chaining (`this()`, `super()`)
+
+### 1. What is constructor chaining in Java? (Beginner)
+
+* A. Calling multiple methods  
+* B. Calling one constructor from another  
+* C. Calling static variables  
+* D. Calling main method  
+  **corrected_answer:** B  
+
+---
+
+### 2. Which keyword is used to call another constructor in the same class? (Beginner)
+
+* A. super  
+* B. this  
+* C. new  
+* D. static  
+  **corrected_answer:** B  
+
+---
+
+### 3. Which keyword is used to call a parent class constructor? (Beginner)
+
+* A. parent  
+* B. base  
+* C. super  
+* D. this  
+  **corrected_answer:** C  
+
+---
+
+### 4. Where must `this()` be placed inside a constructor? (Beginner)
+
+* A. Anywhere in constructor  
+* B. At the end  
+* C. As the first statement  
+* D. Outside the constructor  
+  **corrected_answer:** C  
+
+---
+
+### 5. Where must `super()` be placed? (Beginner)
+
+* A. At the end of constructor  
+* B. Anywhere  
+* C. First statement in constructor  
+* D. Outside class  
+  **corrected_answer:** C  
+
+---
+
+### 6. If `super()` is not written explicitly, what happens? (Beginner)
+
+* A. Compilation error  
+* B. JVM automatically inserts it  
+* C. Constructor is skipped  
+* D. Program terminates  
+  **corrected_answer:** B  
+
+---
+
+### 7. Can both `this()` and `super()` be used in the same constructor? (Beginner)
+
+* A. Yes  
+* B. No  
+* C. Only in static methods  
+* D. Only in abstract classes  
+  **corrected_answer:** B  
+
+---
+
+### 8. What happens if both `this()` and `super()` are written in a constructor? (Intermediate)
+
+* A. Executes normally  
+* B. Compilation error  
+* C. Runtime error  
+* D. Logical error  
+  **corrected_answer:** B  
+
+---
+
+### 9. What is the main purpose of `this()` in constructor chaining? (Intermediate)
+
+* A. Access static variables  
+* B. Call another constructor of the same class  
+* C. Call parent constructor  
+* D. Initialize arrays  
+  **corrected_answer:** B  
+
+---
+
+### 10. Which constructor is executed first in inheritance? (Intermediate)
+
+* A. Child class constructor  
+* B. Parent class constructor  
+* C. Random order  
+* D. Static block only  
+  **corrected_answer:** B  
+
+---
+
+### 11. What is the execution flow of constructor chaining in inheritance? (Intermediate)
+
+* A. Child → Parent  
+* B. Parent → Child  
+* C. Random  
+* D. Only child executes  
+  **corrected_answer:** B  
+
+---
+
+### 12. If a parent class has only parameterized constructor, what is required? (Intermediate)
+
+* A. Nothing  
+* B. Explicit call to `super(parameters)`  
+* C. Use of `this()`  
+* D. Default constructor is created automatically  
+  **corrected_answer:** B  
+
+---
+
+### 13. What is a key benefit of constructor chaining? (Intermediate)
+
+* A. Improves UI  
+* B. Reduces code duplication  
+* C. Increases memory usage  
+* D. Slows execution  
+  **corrected_answer:** B  
+
+---
+
+### 14. Constructor chaining helps in: (Intermediate)
+
+* A. Loop execution  
+* B. Code reusability and cleaner initialization  
+* C. Database connection  
+* D. Thread management  
+  **corrected_answer:** B  
+
+---
+
+### 15. Why must `this()` or `super()` be the first statement in a constructor? (Advance)
+
+* A. JVM requirement for proper initialization  
+* B. Improves performance  
+* C. Reduces memory  
+* D. Avoids loops  
+  **corrected_answer:** A  
+
+---
+
+### 16. What happens if constructor chaining creates a loop? (Advance)
+
+* A. Compilation error  
+* B. Runtime infinite recursion  
+* C. Program runs normally  
+* D. JVM ignores it  
+  **corrected_answer:** B  
+
+---
+
+### 17. Which scenario best represents use of `super()`? (Advance)
+
+* A. Calling method in same class  
+* B. Accessing static variables  
+* C. Initializing parent class properties  
+* D. Creating threads  
+  **corrected_answer:** C  
+
+---
+
+### 18. Which scenario best represents use of `this()`? (Advance)
+
+* A. Calling parent constructor  
+* B. Calling another constructor in same class  
+* C. Accessing database  
+* D. Handling exceptions  
+  **corrected_answer:** B  
+
+---
+
+### 19. What is a limitation of constructor chaining? (Advance)
+
+* A. Cannot be used in classes  
+* B. Cannot call multiple constructors at once  
+* C. Cannot use variables  
+* D. Cannot create objects  
+  **corrected_answer:** B  
+
+---
+
+### 20. Best practice for constructor chaining is: (Advance)
+
+* A. Avoid it completely  
+* B. Use for structured and reusable initialization  
+* C. Use only in main method  
+* D. Use randomly  
+  **corrected_answer:** B  
+
+---
+
+
+#  Object Cloning (Cloneable)
+
+### 1. What is object cloning in Java? (Beginner)
+
+* A. Creating reference copy  
+* B. Creating exact copy of object  
+* C. Deleting object  
+* D. Moving object  
+  **corrected_answer:** B  
+
+---
+
+### 2. Which interface is used for cloning in Java? (Beginner)
+
+* A. Serializable  
+* B. Cloneable  
+* C. Comparable  
+* D. Iterable  
+  **corrected_answer:** B  
+
+---
+
+### 3. Which method is used to clone an object? (Beginner)
+
+* A. copy()  
+* B. duplicate()  
+* C. clone()  
+* D. create()  
+  **corrected_answer:** C  
+
+---
+
+### 4. Where is `clone()` method defined? (Beginner)
+
+* A. Object class  
+* B. String class  
+* C. System class  
+* D. Cloneable interface  
+  **corrected_answer:** A  
+
+---
+
+### 5. What happens if Cloneable is not implemented? (Beginner)
+
+* A. Compilation error  
+* B. Runtime exception  
+* C. No issue  
+* D. Warning only  
+  **corrected_answer:** B  
+
+---
+
+### 6. Which exception occurs during improper cloning? (Intermediate)
+
+* A. IOException  
+* B. NullPointerException  
+* C. CloneNotSupportedException  
+* D. SQLException  
+  **corrected_answer:** C  
+
+---
+
+### 7. Object cloning creates: (Beginner)
+
+* A. Same reference  
+* B. New object instance  
+* C. Static object  
+* D. Null object  
+  **corrected_answer:** B  
+
+---
+
+### 8. What type of copy is default cloning? (Intermediate)
+
+* A. Deep copy  
+* B. Shallow copy  
+* C. Reference copy  
+* D. Static copy  
+  **corrected_answer:** B  
+
+---
+
+### 9. In shallow copy, what is copied? (Intermediate)
+
+* A. Only primitive values  
+* B. Only objects  
+* C. References of objects  
+* D. Nothing  
+  **corrected_answer:** C  
+
+---
+
+### 10. Deep copy means: (Intermediate)
+
+* A. Copy reference  
+* B. Copy memory address  
+* C. Copy all nested objects  
+* D. Copy static data  
+  **corrected_answer:** C  
+
+---
+
+### 11. Which keyword is commonly used with clone method? (Intermediate)
+
+* A. static  
+* B. final  
+* C. protected  
+* D. override  
+  **corrected_answer:** D  
+
+---
+
+### 12. Cloneable is: (Beginner)
+
+* A. Class  
+* B. Interface  
+* C. Method  
+* D. Package  
+  **corrected_answer:** B  
+
+---
+
+### 13. What is main benefit of cloning? (Intermediate)
+
+* A. Faster object creation  
+* B. Avoid object creation  
+* C. Delete objects  
+* D. Share memory  
+  **corrected_answer:** A  
+
+---
+
+### 14. Cloning is used to: (Beginner)
+
+* A. Copy object state  
+* B. Destroy object  
+* C. Modify class  
+* D. Create loop  
+  **corrected_answer:** A  
+
+---
+
+### 15. Which type of cloning avoids shared references? (Advanced)
+
+* A. Shallow copy  
+* B. Deep copy  
+* C. Static copy  
+* D. Lazy copy  
+  **corrected_answer:** B  
+
+---
+
+### 16. Cloning improves: (Intermediate)
+
+* A. Flexibility  
+* B. Looping  
+* C. Errors  
+* D. Complexity  
+  **corrected_answer:** A  
+
+---
+
+### 17. Which concept is related to cloning? (Advanced)
+
+* A. Object copying  
+* B. Looping  
+* C. Threading  
+* D. Exception handling  
+  **corrected_answer:** A  
+
+---
+
+### 18. What happens if object has reference variables in shallow copy? (Advanced)
+
+* A. Independent copy  
+* B. Shared reference  
+* C. Error  
+* D. Null values  
+  **corrected_answer:** B  
+
+---
+
+### 19. Which improves safety in cloning? (Advanced)
+
+* A. Shallow copy  
+* B. Deep copy  
+* C. Static copy  
+* D. Lazy loading  
+  **corrected_answer:** B  
+
+---
+
+### 20. Best practice for cloning complex objects is: (Advanced)
+
+* A. Use shallow copy  
+* B. Use deep copy  
+* C. Avoid cloning  
+* D. Use static objects  
+  **corrected_answer:** B  
+
+---
+
+#  Generics (`<T>`)
+
+### 1. What are Generics in Java? (Beginner)
+
+* A. Methods without return type  
+* B. Classes with fixed data type  
+* C. Parameterized types  
+* D. Static variables  
+  **corrected_answer:** C  
+
+---
+
+### 2. What does `<T>` represent in Generics? (Beginner)
+
+* A. Thread  
+* B. Type parameter  
+* C. Template method  
+* D. Temporary variable  
+  **corrected_answer:** B  
+
+---
+
+### 3. Why are Generics used? (Beginner)
+
+* A. Improve UI  
+* B. Provide type safety  
+* C. Reduce memory  
+* D. Increase errors  
+  **corrected_answer:** B  
+
+---
+
+### 4. Generics help to avoid: (Beginner)
+
+* A. Compilation  
+* B. Type casting  
+* C. Looping  
+* D. Variables  
+  **corrected_answer:** B  
+
+---
+
+### 5. Where can Generics be used? (Beginner)
+
+* A. Classes only  
+* B. Methods only  
+* C. Classes, methods, interfaces  
+* D. Variables only  
+  **corrected_answer:** C  
+
+---
+
+### 6. What is type safety in Generics? (Intermediate)
+
+* A. Runtime checking  
+* B. Compile-time type checking  
+* C. Memory allocation  
+* D. Loop validation  
+  **corrected_answer:** B  
+
+---
+
+### 7. Which collection uses Generics? (Beginner)
+
+* A. Array  
+* B. ArrayList  
+* C. Thread  
+* D. File  
+  **corrected_answer:** B  
+
+---
+
+### 8. What happens without Generics in collections? (Intermediate)
+
+* A. No errors  
+* B. Requires type casting  
+* C. Faster execution  
+* D. No memory use  
+  **corrected_answer:** B  
+
+---
+
+### 9. Which symbol is used in Generics? (Beginner)
+
+* A. ()  
+* B. {}  
+* C. <>  
+* D. []  
+  **corrected_answer:** C  
+
+---
+
+### 10. What is a bounded type parameter? (Intermediate)
+
+* A. Fixed type  
+* B. Restricted type using extends  
+* C. Dynamic variable  
+* D. Static type  
+  **corrected_answer:** B  
+
+---
+
+### 11. Generics work at: (Intermediate)
+
+* A. Runtime  
+* B. Compile-time  
+* C. Both  
+* D. Memory level  
+  **corrected_answer:** B  
+
+---
+
+### 12. What is type erasure in Generics? (Advanced)
+
+* A. Removing types at compile-time  
+* B. Adding types at runtime  
+* C. Memory deletion  
+* D. Object creation  
+  **corrected_answer:** A  
+
+---
+
+### 13. Which wildcard represents unknown type? (Intermediate)
+
+* A. *  
+* B. ?  
+* C. #  
+* D. &  
+  **corrected_answer:** B  
+
+---
+
+### 14. Which wildcard allows any type? (Intermediate)
+
+* A. ?  
+* B. <T>  
+* C. extends  
+* D. super  
+  **corrected_answer:** A  
+
+---
+
+### 15. What does `? extends` mean? (Advanced)
+
+* A. Lower bound  
+* B. Upper bound  
+* C. Exact type  
+* D. Static type  
+  **corrected_answer:** B  
+
+---
+
+### 16. What does `? super` mean? (Advanced)
+
+* A. Upper bound  
+* B. Lower bound  
+* C. Exact type  
+* D. Static type  
+  **corrected_answer:** B  
+
+---
+
+### 17. Generics improve: (Intermediate)
+
+* A. Type safety  
+* B. Looping  
+* C. Memory leak  
+* D. Errors  
+  **corrected_answer:** A  
+
+---
+
+### 18. Which avoids ClassCastException? (Intermediate)
+
+* A. Loop  
+* B. Generics  
+* C. Thread  
+* D. File  
+  **corrected_answer:** B  
+
+---
+
+### 19. Generics support: (Advanced)
+
+* A. Reusability  
+* B. Looping  
+* C. Static memory  
+* D. Compilation delay  
+  **corrected_answer:** A  
+
+---
+
+### 20. Best practice for Generics is: (Advanced)
+
+* A. Avoid usage  
+* B. Use raw types  
+* C. Use proper type parameters  
+* D. Use only Object type  
+  **corrected_answer:** C  
+
+---
+
+#  Serialization (`Serializable`)
+
+### 1. What is serialization in Java? (Beginner)
+
+* A. Converting object to byte stream  
+* B. Converting byte stream to object  
+* C. Deleting object  
+* D. Copying object  
+  **corrected_answer:** A  
+
+---
+
+### 2. Which interface is used for serialization? (Beginner)
+
+* A. Cloneable  
+* B. Serializable  
+* C. Comparable  
+* D. Iterable  
+  **corrected_answer:** B  
+
+---
+
+### 3. What is deserialization? (Beginner)
+
+* A. Object to byte stream  
+* B. Byte stream to object  
+* C. Object deletion  
+* D. Memory allocation  
+  **corrected_answer:** B  
+
+---
+
+### 4. Which package contains serialization classes? (Beginner)
+
+* A. java.util  
+* B. java.io  
+* C. java.lang  
+* D. java.sql  
+  **corrected_answer:** B  
+
+---
+
+### 5. Which class is used to write an object to a file? (Beginner)
+
+* A. FileWriter  
+* B. ObjectOutputStream  
+* C. BufferedWriter  
+* D. PrintWriter  
+  **corrected_answer:** B  
+
+---
+
+### 6. Which class is used to read an object from a file? (Beginner)
+
+* A. FileReader  
+* B. ObjectInputStream  
+* C. Scanner  
+* D. BufferedReader  
+  **corrected_answer:** B  
+
+---
+
+### 7. Serialization is mainly used for: (Beginner)
+
+* A. Loop execution  
+* B. Data persistence  
+* C. Threading  
+* D. Compilation  
+  **corrected_answer:** B  
+
+---
+
+### 8. What happens if a class does not implement Serializable? (Intermediate)
+
+* A. Compilation error  
+* B. Runtime exception  
+* C. No issue  
+* D. Warning only  
+  **corrected_answer:** B  
+
+---
+
+### 9. Which exception occurs during serialization failure? (Intermediate)
+
+* A. IOException  
+* B. NotSerializableException  
+* C. NullPointerException  
+* D. SQLException  
+  **corrected_answer:** B  
+
+---
+
+### 10. Serialization allows objects to be: (Beginner)
+
+* A. Executed  
+* B. Stored and transferred  
+* C. Deleted  
+* D. Compiled  
+  **corrected_answer:** B  
+
+---
+
+### 11. Which stream is used for object output? (Intermediate)
+
+* A. DataOutputStream  
+* B. ObjectOutputStream  
+* C. FileOutputStream  
+* D. BufferedOutputStream  
+  **corrected_answer:** B  
+
+---
+
+### 12. Which stream is used for object input? (Intermediate)
+
+* A. DataInputStream  
+* B. ObjectInputStream  
+* C. FileInputStream  
+* D. BufferedInputStream  
+  **corrected_answer:** B  
+
+---
+
+### 13. Serialization is useful for: (Intermediate)
+
+* A. UI design  
+* B. Saving object state  
+* C. Loop execution  
+* D. Thread creation  
+  **corrected_answer:** B  
+
+---
+
+### 14. Deserialization helps to: (Beginner)
+
+* A. Delete object  
+* B. Reconstruct object from stream  
+* C. Compile object  
+* D. Execute object  
+  **corrected_answer:** B  
+
+---
+
+### 15. Which supports object transfer over network? (Advanced)
+
+* A. Loop  
+* B. Serialization  
+* C. Variable  
+* D. Array  
+  **corrected_answer:** B  
+
+---
+
+### 16. Serialization is commonly used in: (Advanced)
+
+* A. Networking  
+* B. Looping  
+* C. Compilation  
+* D. Variables  
+  **corrected_answer:** A  
+
+---
+
+### 17. Which improves data sharing between systems? (Advanced)
+
+* A. Loop  
+* B. Serialization  
+* C. Variable  
+* D. Constant  
+  **corrected_answer:** B  
+
+---
+
+### 18. Serialization converts object into: (Beginner)
+
+* A. Text file only  
+* B. Byte stream  
+* C. Integer  
+* D. String only  
+  **corrected_answer:** B  
+
+---
+
+### 19. Which is required for object serialization? (Intermediate)
+
+* A. Implement Serializable interface  
+* B. Extend Thread class  
+* C. Use static keyword  
+* D. Use final keyword  
+  **corrected_answer:** A  
+
+---
+
+### 20. Best practice for serialization is: (Advanced)
+
+* A. Avoid using streams  
+* B. Handle exceptions properly  
+* C. Use only static objects  
+* D. Avoid interfaces  
+  **corrected_answer:** B  
 
 ---
