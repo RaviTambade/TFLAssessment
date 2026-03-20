@@ -26,7 +26,7 @@ CREATE TABLE companies (
     company_name VARCHAR(255),
     website VARCHAR(255),
     industry VARCHAR(100),
-    company_type VARCHAR(100),
+    company_type ENUM(  'STARTUP','PRODUCT_BASE','SERVICE_BASE'),
     company_size VARCHAR(100),
     description TEXT,
     created_at DATETIME,
@@ -57,7 +57,7 @@ CREATE TABLE questions (
     question_id BIGINT PRIMARY KEY AUTO_INCREMENT,
     description TEXT,
     question_type ENUM('MCQ','PROBLEM_STATEMENT','HANDS_ON'),
-    difficulty_level ENUM('BIGINNER','INTERMEDIATE','ADVANCE'),
+    difficulty_level ENUM('BEGINNER','INTERMEDIATE','ADVANCE'),
     created_at DATETIME,
     status BOOLEAN
 );
