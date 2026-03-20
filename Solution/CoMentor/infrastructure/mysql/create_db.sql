@@ -26,7 +26,7 @@ CREATE TABLE companies (
     company_name VARCHAR(255),
     website VARCHAR(255),
     industry VARCHAR(100),
-    company_type ENUM(  'STARTUP','PRODUCT_BASE','SERVICE_BASE'),
+    company_type ENUM(  'STARTUP','PRODUCT','SERVICE'),
     company_size VARCHAR(100),
     description TEXT,
     created_at DATETIME,
@@ -72,8 +72,7 @@ CREATE TABLE personal_informations (
     date_of_birth DATE,
     email VARCHAR(255),
     address VARCHAR(255),
-    city VARCHAR(100),
-    state VARCHAR(100),
+    pincode VARCHAR(10)  
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
@@ -190,7 +189,6 @@ CREATE TABLE tests (
     title VARCHAR(255),
     duration INT,
     description TEXT,
-    difficulty ENUM('BIGINNER','INTERMEDIATE','ADVANCE'),
     created_at DATETIME,
     status BOOLEAN
 );
