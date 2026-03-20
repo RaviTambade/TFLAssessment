@@ -2555,3 +2555,286 @@ D. Run scripts
 **Correct Answer:** B  
 
 ---
+
+# 📘node modules Node.js - MCQs
+
+# node modules MCQs (Beginner → Intermediate → Advanced)
+
+    
+### 1. What is a module in Node.js?
+
+A) A database
+
+B) A reusable piece of code
+
+C) A server
+
+D) A browser
+
+**Answer:** B
+
+---
+
+### 2. Which keyword is used to import a module?
+
+A) include
+
+B) require
+
+C) importFile
+
+D) using
+
+**Answer: B**
+
+---
+
+### 3. Which object is used to export a module?
+
+A) module.export
+
+B) module.exports
+
+C) export.module
+
+D) exports.module
+
+**Answer: B**
+
+---
+
+### 4. Which module is used to work with files?
+
+A) http
+
+B) fs
+
+C) url
+D) os
+
+**Answer: B**
+
+---
+
+### 5. Which module is used to create a server?
+
+A) fs
+
+B) http
+
+C) path
+
+D) events
+
+**Answer: B**
+
+---
+
+### 6. Which module handles file paths?
+
+A) fs
+
+B) path
+
+C) url
+
+D) os
+
+**Answer: B**
+
+---
+
+### 7. Which module provides OS-related information?
+
+A) fs
+
+B) path
+
+C) os
+
+D) http
+
+**Answer: C**
+
+---
+
+### 8. Which module is used to handle events?
+
+A) events
+
+B) http
+
+C) fs
+
+D) url
+
+**Answer: A**
+
+---
+
+### 9. What is a built-in module?
+
+A) Installed manually
+
+B) Already included in Node.js
+
+C) Created by user
+
+D) Database
+
+**Answer: B**
+
+---
+
+### 10. Which is a built-in module?
+
+A) express
+
+B) lodash
+
+C) http
+
+D) react
+
+**Answer: C**
+
+---
+
+### 11. What is a third-party module?
+
+A) Built-in module
+
+B) Installed using npm
+
+C) Created by OS
+
+D) Server module
+
+**Answer: B**
+
+---
+
+### 12. Which command installs a module?
+
+A) npm add
+
+B) npm install
+
+C) npm get
+
+D) npm run
+
+**Answer: B**
+
+---
+
+### 13. Where are installed modules stored?
+
+A)root folder
+
+B)node_modules
+
+C)src folder
+
+D)config folder
+
+**Answer: B**
+
+---
+
+### 14. What is require() used for?
+
+A) Delete module
+
+B) Import module
+
+C) Run server
+
+D) Create file
+
+**Answer: B**
+
+---
+
+### 15. Which module is used to handle URLs?
+
+A) fs
+
+B) url
+
+C) os
+
+D) path
+
+**Answer: B**
+
+---
+
+### 16. Which module helps create custom events?
+
+A) events
+
+B) fs
+
+C) http
+
+D) path
+
+**Answer: A**
+
+---
+
+### 17. What is a local module?
+
+A) Built-in
+
+B) Installed module
+
+C) User-created module
+
+D) OS module
+
+**Answer: C**
+
+---
+
+### 18. Which syntax exports a function?
+
+A) export function
+
+B) module.exports = function(){}
+
+C) require function
+
+D) include function
+
+**Answer: B**
+
+---
+
+### 19. Which module is used to read/write files?
+
+A) fs
+
+B) http
+
+C) os
+
+D) url
+
+**Answer: A**
+
+---
+
+### 20. Modules help in:
+
+A) Making code reusable
+
+B) Slowing code
+
+C) Deleting data
+
+D) Compiling code
+
+**Answer: A**
+
