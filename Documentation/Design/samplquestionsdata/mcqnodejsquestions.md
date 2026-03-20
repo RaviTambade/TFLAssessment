@@ -1151,3 +1151,225 @@ C. Manages MongoDB
 D. Handles routing  
 
 ✅ Answer: B
+
+# 📘 Node.js File I/O MCQs
+
+
+
+### 1. Which module is primarily used for file I/O in Node.js?
+
+A. http
+B. fs
+C. path
+D. os
+
+**Correct option:** B fs
+
+---
+
+### 2. What is the default behavior of `fs.readFile()`?
+
+A. Blocking
+B. Non-blocking
+C. Streaming
+D. Synchronous
+
+**Correct option:** B Non-blocking
+
+---
+
+### 3. Which method reads files synchronously?
+
+A. fs.readFile()
+B. fs.read()
+C. fs.readFileSync()
+D. fs.syncRead()
+
+**Correct option:** C fs.readFileSync()
+
+---
+
+### 4. What is a major drawback of synchronous file operations in Node.js?
+
+A. Memory leak
+B. Callback hell
+C. Blocks event loop
+D. Data corruption
+
+**Correct option:** C Blocks event loop
+
+---
+
+### 5. Which flag is used to append data to a file?
+
+A. 'r'
+B. 'w'
+C. 'a'
+D. 'x'
+
+**Correct option:** C 'a'
+
+---
+
+### 6. What does `fs.writeFile()` do if the file already exists?
+
+A. Throws error
+B. Appends content
+C. Overwrites file
+D. Ignores write
+
+**Correct option:** C Overwrites file
+
+---
+
+### 7. What is the purpose of `fs.createReadStream()`?
+
+A. Read entire file at once
+B. Read file in chunks
+C. Write file
+D. Delete file
+
+**Correct option:** B Read file in chunks
+
+---
+
+### 8. Which event is emitted when a readable stream finishes?
+
+A. close
+B. finish
+C. end
+D. done
+
+**Correct option:** C end
+
+---
+
+### 9. What is the advantage of using streams over buffers?
+
+A. Faster CPU
+B. Less memory usage
+C. Better syntax
+D. No callbacks
+
+**Correct option:** B Less memory usage
+
+---
+
+### 10. Which method checks if a file exists?
+
+A. fs.exists()
+B. fs.check()
+C. fs.stat()
+D. fs.access()
+
+**Correct option:** D fs.access()
+
+---
+
+### 11. Which method is used to rename a file?
+
+A. fs.move()
+B. fs.rename()
+C. fs.changeName()
+D. fs.update()
+
+**Correct option:** B fs.rename()
+
+---
+
+### 12. What does `fs.stat()` return?
+
+A. File content
+B. File metadata
+C. File path
+D. File stream
+
+**Correct option:** B File metadata
+
+---
+
+### 13. Which encoding is default for `fs.readFile()` if not specified?
+
+A. utf16
+B. ascii
+C. buffer
+D. utf8
+
+**Correct option:** C buffer
+
+---
+
+### 14. Which approach avoids callback hell in file operations?
+
+A. Nested callbacks
+B. Promises / async-await
+C. Loops
+D. JSON
+
+**Correct option:** B Promises / async-await
+
+---
+
+### 15. Which module helps in handling file paths?
+
+A. fs
+B. path
+C. os
+D. util
+
+**Correct option:** B path
+
+---
+
+### 16. What is the purpose of `fs.createWriteStream()`?
+
+A. Write file in chunks
+B. Read file
+C. Delete file
+D. Compress file
+
+**Correct option:** A Write file in chunks
+
+---
+
+### 17. What is the role of buffers in file I/O?
+
+A. Store entire file permanently
+B. Temporary binary storage
+C. Compress files
+D. Encrypt files
+
+**Correct option:** B Temporary binary storage
+
+---
+
+### 18. What happens if no callback is provided to `fs.readFile()`?
+
+A. File is read synchronously
+B. Throws error
+C. Returns promise
+D. Returns buffer
+
+**Correct option:** B Throws error
+
+---
+
+### 19. What type of I/O model does Node.js primarily use?
+
+A. Blocking I/O
+B. Multi-threaded blocking
+C. Event-driven non-blocking I/O
+D. Synchronous polling
+
+**Correct option:** C Event-driven non-blocking I/O
+
+---
+
+### 20. Which component handles asynchronous I/O in Node.js internally?
+
+A. V8 Engine
+B. Libuv
+C. Express
+D. npm
+
+**Correct option:** B Libuv
