@@ -954,6 +954,191 @@ D. Allows handling multiple concurrent requests efficiently
 
 # ASYNC PROGRAMMING
 
+# request response lifecycle (Node.js + MERN) — Assessment MCQs
+ 
+## Questions
+
+Node.js Request-Response Lifecycle
+
+1.
+What is the role of Node.js in a web server?
+A. Stores data
+B. Handles client requests and responses
+C. Designs UI
+D. Compiles code
+
+✅ Answer: B
+
+2.
+Which module is used to create a server in Node.js?
+A. fs
+B. http
+C. path
+D. os
+
+✅ Answer: B
+
+3.
+What method is used to create a server?
+A. create()
+B. http.createServer()
+C. server.start()
+D. initServer()
+
+✅ Answer: B
+
+4.
+What are the parameters of http.createServer() callback?
+A. req, res
+B. req, data
+C. res, data
+D. input, output
+
+✅ Answer: A
+
+5.
+What does req represent?
+A. Server response
+B. Client request
+C. Database
+D. URL
+
+✅ Answer: B
+
+6.
+What does res represent?
+A. Client request
+B. Server response
+C. File system
+D. API
+
+✅ Answer: B
+
+7.
+Which method sends response to client?
+A. res.send()
+B. res.write()
+C. res.end()
+D. res.close()
+
+✅ Answer: C
+
+8.
+What happens if res.end() is not called?
+A. Server stops
+B. Request hangs
+C. Data deleted
+D. Error fixed
+
+✅ Answer: B
+
+9.
+Which object contains URL and method info?
+A. res
+B. req
+C. server
+D. http
+
+✅ Answer: B
+
+10.
+Which event is triggered when request is received?
+A. start
+B. request
+C. load
+D. connect
+
+✅ Answer: B
+
+11.
+What is middleware in Node.js?
+A. Database
+B. Function between request and response
+C. Server
+D. File
+
+✅ Answer: B
+
+12.
+Which framework simplifies request-response handling?
+A. Django
+B. Laravel
+C. Express.js
+D. Spring
+
+✅ Answer: C
+
+13.
+What does app.get() handle?
+A. POST requests
+B. GET requests
+C. DELETE requests
+D. PUT requests
+
+✅ Answer: B
+
+14.
+What does app.post() handle?
+A. GET requests
+B. POST requests
+C. PATCH requests
+D. OPTIONS
+
+✅ Answer: B
+
+15.
+Which method sets HTTP headers?
+A. res.header()
+B. res.setHeader()
+C. res.getHeader()
+D. res.writeHeader()
+
+✅ Answer: B
+
+16.
+What is the first step in lifecycle?
+A. Server response
+B. Client sends request
+C. Middleware runs
+D. Routing
+
+✅ Answer: B
+
+17.
+What is the last step in lifecycle?
+A. Request received
+B. Middleware runs
+C. Server sends response
+D. Server starts
+
+✅ Answer: C
+
+18.
+Which port is commonly used for Node.js apps?
+A. 80
+B. 8080
+C. 3000
+D. 5000
+
+✅ Answer: C
+
+19.
+What does app.listen() do?
+A. Stops server
+B. Starts server
+C. Deletes data
+D. Reads file
+
+✅ Answer: B
+
+20.
+What is routing in Node.js?
+A. Storing data
+B. Handling different URLs
+C. Creating database
+D. Compiling code
+
+✅ Answer: B
 1. What is asynchronous programming in Node.js?
 A. Executing code line by line  
 B. Blocking execution until task completes  
@@ -1374,6 +1559,7 @@ D. npm
 
 **Correct option:** B Libuv
 
+<<<<<<< HEAD
 # Node.js Routing (Express) - MCQ Quiz
 
 ---
@@ -1544,3 +1730,424 @@ D. npm
 app.route('/user')
   .get(...)
   .post(...)
+=======
+
+# 📘 Configuration Management in Node.js - MCQs
+
+### 1. Which object is used to access environment variables in Node.js?
+
+* A. env.process  
+* B. process.env  
+* C. config.env  
+* D. node.env  
+  **Answer:** B  
+
+---
+
+### 2. Which file is used to store environment variables?
+
+* A. config.json  
+* B. .env  
+* C. package.json  
+* D. index.js  
+  **Answer:** B  
+
+---
+
+### 3. Which package is used to load environment variables from `.env` file?
+
+* A. express  
+* B. dotenv  
+* C. config  
+* D. http  
+  **Answer:** B  
+
+---
+
+### 4. What does NODE_ENV represent?
+
+* A. Node version  
+* B. Environment type  
+* C. API key  
+* D. Port number  
+  **Answer:** B  
+
+---
+
+### 5. What is the main purpose of configuration management?
+
+* A. UI design  
+* B. Managing application settings  
+* C. Writing APIs  
+* D. Debugging  
+  **Answer:** B  
+
+---
+
+### 6. Why should sensitive data not be hardcoded?
+
+* A. It increases memory  
+* B. It reduces speed  
+* C. Security risk  
+* D. No effect  
+  **Answer:** C  
+
+---
+
+### 7. Which command is used to install dotenv?
+
+* A. npm start  
+* B. npm install dotenv  
+* C. node dotenv  
+* D. npm run dotenv  
+  **Answer:** B  
+
+---
+
+### 8. Where should `.env` file be placed?
+
+* A. node_modules  
+* B. public  
+* C. Root directory  
+* D. config folder  
+  **Answer:** C  
+
+---
+
+### 9. Which method loads environment variables using dotenv?
+
+* A. dotenv.load()  
+* B. dotenv.env()  
+* C. require('dotenv').config()  
+* D. config.load()  
+  **Answer:** C  
+
+---
+
+### 10. Which file is used to ignore `.env` in Git?
+
+* A. package.json  
+* B. .gitignore  
+* C. README.md  
+* D. config.json  
+  **Answer:** B  
+
+---
+
+### 11. Which environment is used for production?
+
+* A. development  
+* B. testing  
+* C. production  
+* D. debug  
+  **Answer:** C  
+
+---
+
+### 12. Which environment is used during development?
+
+* A. production  
+* B. development  
+* C. staging  
+* D. release  
+  **Answer:** B  
+
+---
+
+### 13. Which of the following is a valid environment variable?
+
+* A. PORT=3000  
+* B. PORT:3000  
+* C. PORT->3000  
+* D. PORT-3000  
+  **Answer:** A  
+
+---
+
+### 14. How to access PORT value in Node.js?
+
+* A. process.PORT  
+* B. env.PORT  
+* C. process.env.PORT  
+* D. config.PORT  
+  **Answer:** C  
+
+---
+
+### 15. What is the benefit of configuration management?
+
+* A. Security  
+* B. Flexibility  
+* C. Easy environment switching  
+* D. All of the above  
+  **Answer:** D  
+
+---
+
+### 16. Which file contains project dependencies?
+
+* A. config.json  
+* B. .env  
+* C. package.json  
+* D. index.html  
+  **Answer:** C  
+
+---
+
+### 17. Which format is commonly used for config files?
+
+* A. JSON  
+* B. XML  
+* C. TXT  
+* D. CSV  
+  **Answer:** A  
+
+---
+
+### 18. What should be kept in `.gitignore`?
+
+* A. index.js  
+* B. .env  
+* C. package.json  
+* D. README.md  
+  **Answer:** B  
+
+---
+
+### 19. Configuration helps in:
+
+* A. Managing settings  
+* B. Securing data  
+* C. Switching environments  
+* D. All of the above  
+  **Answer:** D  
+
+---
+
+### 20. Which is NOT a configuration value?
+
+* A. API key  
+* B. Database URL  
+* C. Port number  
+* D. HTML tag  
+  **Answer:** D  
+
+ ---
+## Callback Function MCQs (Node.js)
+
+### 1. What is a callback function?
+
+A. Function inside loop
+B. Function passed as argument
+C. Function returning value
+D. Function without name
+✅ **Answer: B**
+
+---
+
+### 2. When is a callback executed?
+
+A. Before function call
+B. During compilation
+C. After main function completes
+D. Never
+✅ **Answer: C**
+
+---
+
+### 3. Callback functions are mainly used for:
+
+A. Styling
+B. Asynchronous operations
+C. Database creation
+D. Variables
+✅ **Answer: B**
+
+---
+
+### 4. What is the correct callback syntax?
+
+A. function(data, err)
+B. function(err, data)
+C. function()
+D. function(data)
+✅ **Answer: B**
+
+---
+
+### 5. Which parameter comes first in Node.js callback?
+
+A. Data
+B. Error
+C. Function
+D. Result
+✅ **Answer: B**
+
+---
+
+### 6. What happens if error is null?
+
+A. Program stops
+B. Callback not executed
+C. Operation successful
+D. Error occurs
+✅ **Answer: C**
+
+---
+
+### 7. Identify callback:
+
+```js
+function test(cb) {
+  cb();
+}
+```
+
+A. test
+B. cb
+C. function
+D. none
+✅ **Answer: B**
+
+---
+
+### 8. What is callback hell?
+
+A. Callback error
+B. Deeply nested callbacks
+C. Missing callback
+D. Fast execution
+✅ **Answer: B**
+
+---
+
+### 9. Which is example of callback?
+
+A. setTimeout(() => console.log("Hi"), 1000);
+B. let a = 5;
+C. return 10;
+D. console.log("Hello");
+✅ **Answer: A**
+
+---
+
+### 10. Callback functions help Node.js to be:
+
+A. Blocking
+B. Non-blocking
+C. Slow
+D. Synchronous
+✅ **Answer: B**
+
+---
+
+### 11. What is asynchronous callback?
+
+A. Runs immediately
+B. Runs after delay/event
+C. Runs once
+D. Runs before function
+✅ **Answer: B**
+
+---
+
+### 12. Which function uses callback?
+
+A. fs.readFile()
+B. let x = 10
+C. console.log()
+D. Math.random()
+✅ **Answer: A**
+
+---
+
+### 13. What is the output?
+
+```js
+console.log("1");
+setTimeout(() => console.log("2"), 0);
+console.log("3");
+```
+
+A. 1 2 3
+B. 1 3 2
+C. 2 1 3
+D. 3 2 1
+✅ **Answer: B**
+
+---
+
+### 14. Callback function avoids:
+
+A. Errors
+B. Blocking execution
+C. Variables
+D. Loops
+✅ **Answer: B**
+
+---
+
+### 15. Which is drawback of callback?
+
+A. Easy syntax
+B. Callback hell
+C. Fast execution
+D. Less code
+✅ **Answer: B**
+
+---
+
+### 16. What is nested callback?
+
+A. Callback inside callback
+B. Function inside loop
+C. Function inside object
+D. Variable inside function
+✅ **Answer: A**
+
+---
+
+### 17. Which is alternative to callbacks?
+
+A. Arrays
+B. Promises
+C. Strings
+D. Numbers
+✅ **Answer: B**
+
+---
+
+### 18. What does this callback do?
+
+```js
+fs.readFile('file.txt', (err, data) => {});
+```
+
+A. Deletes file
+B. Reads file asynchronously
+C. Writes file
+D. Creates file
+✅ **Answer: B**
+
+---
+
+### 19. Callback functions are:
+
+A. Always synchronous
+B. Always blocking
+C. Can be async or sync
+D. Only loops
+✅ **Answer: C**
+
+---
+
+### 20. What is the purpose of callback in Node.js?
+
+A. Styling
+B. Event handling
+C. Variable declaration
+D. Loop control
+✅ **Answer: B**
+
+
+>>>>>>> d7a2cde4f3abe88eb469656570f5d1e0e7ea2890
