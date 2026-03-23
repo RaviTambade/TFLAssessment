@@ -266,7 +266,7 @@ CREATE TABLE assessments (
     assigned_by BIGINT,
     assigned_at DATETIME,
     scheduled_at DATETIME,
-    status BOOLEAN
+    status ENUM('Assigned', 'Pending', 'Completed') NOT NULL DEFAULT 'Pending'
 );
 
 -- 29. Student Assessment Results
