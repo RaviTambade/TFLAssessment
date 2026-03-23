@@ -68,6 +68,8 @@ CREATE TABLE personal_informations (
     user_id INT,
     first_name VARCHAR(100),
     last_name VARCHAR(100),
+    full_name VARCHAR(255) 
+        GENERATED ALWAYS AS (CONCAT(first_name, ' ', last_name)) STORED,
     gender ENUM('MALE','FEMALE'),
     date_of_birth DATE,
     email VARCHAR(255),
