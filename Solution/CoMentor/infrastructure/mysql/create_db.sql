@@ -186,14 +186,16 @@ CREATE TABLE sme_runtimes (
 
 -- 20. Tests
 CREATE TABLE tests (
-    id BIGINT PRIMARY KEY AUTO_INCREMENT,
-    sme_id BIGINT,
-    title VARCHAR(255),
-    duration INT,
-    description TEXT,
-    created_at DATETIME,
-    status BOOLEAN
-);
+  id BIGINT NOT NULL AUTO_INCREMENT,
+  sme_id BIGINT DEFAULT NULL,
+  title VARCHAR(255) DEFAULT NULL,
+  duration INT DEFAULT NULL,
+  description TEXT,
+  difficulty ENUM('BEGINNER','INTERMEDIATE','ADVANCE') DEFAULT NULL,
+  created_at DATETIME DEFAULT NULL,
+  status BOOLEAN DEFAULT TRUE,
+  PRIMARY KEY (id)
+) ENGINE=InnoDB;
 
 -- 21. Test Questions
 CREATE TABLE test_questions (
