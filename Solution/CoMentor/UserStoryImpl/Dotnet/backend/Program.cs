@@ -4,6 +4,14 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseMySql(
+        builder.Configuration.GetConnectionString("DefaultConnection"),
+        new MySqlServerVersion(new Version(8, 0, 45)) 
+    )
+);
+
+
 // ✅ Add Controllers
 builder.Services.AddControllers();
 
@@ -12,16 +20,11 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // ✅ Database Connection
-builder.Services.AddDbContext<TflcomentorDbContext>(options =>
-    options.UseMySql(
-        builder.Configuration.GetConnectionString("DefaultConnection"),
-        ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("DefaultConnection"))
-    )
-);
+
 
 // ✅ Dependency Injection
-builder.Services.AddScoped<IAssessmentRepository, AssessmentRepository>();
-builder.Services.AddScoped<IAssessmentService, AssessmentService>();
+ builder.Services.AddScoped<IAssessmentRepository, AssessmentRepository>();
+ builder.Services.AddScoped<IAssessmentService, AssessmentService>();
 
 var app = builder.Build();
 

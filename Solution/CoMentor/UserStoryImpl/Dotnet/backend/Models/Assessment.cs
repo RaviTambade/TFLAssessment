@@ -17,5 +17,5 @@ public partial class Assessment
 
     public DateTime? ScheduledAt { get; set; }
 
-    public bool? Status { get; set; }
+    public string Status { get; set; } = null!;
 }

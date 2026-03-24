@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace backend.Models;
 
@@ -16,12 +15,9 @@ public partial class Test
 
     public string? Description { get; set; }
 
+    public string? Difficulty { get; set; }
+
     public DateTime? CreatedAt { get; set; }
 
     public bool? Status { get; set; }
-    
-
-    
-    [Column("difficulty_level")]
-     public string? difficultylevel { get; set; }
 }

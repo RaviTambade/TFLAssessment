@@ -11,7 +11,7 @@ public partial class Concept
 
     public string? Description { get; set; }
 
-    public bool? Status { get; set; }
+    public string Status { get; set; } = null!;
 
-    public DateTime? CreatedAt { get; set; }
+    public DateTime CreatedAt { get; set; }
 }

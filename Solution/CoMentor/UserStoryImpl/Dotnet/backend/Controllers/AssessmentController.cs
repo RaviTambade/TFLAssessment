@@ -12,7 +12,7 @@ public class AssessmentController : ControllerBase
         _service = service;
     }
 
-    [HttpGet]
+    [HttpGet("all")]
     public async Task<IActionResult> GetAll()
     {
         var data = await _service.GetAssessments();
