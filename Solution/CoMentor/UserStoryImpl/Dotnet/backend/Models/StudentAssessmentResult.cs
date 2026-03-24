@@ -11,9 +11,9 @@ public partial class StudentAssessmentResult
 
     public int? AssessmentId { get; set; }
 
-    public float? Score { get; set; }
+    public float Score { get; set; }
 
-    public float? Percentile { get; set; }
+    public float Percentile { get; set; }
 
     public int? TimeTakenMinutes { get; set; }
 }
