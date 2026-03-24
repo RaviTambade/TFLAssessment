@@ -1,4 +1,34 @@
-Assessment-related Web API endpoints:
+# Introduction: Assessment Web API
+
+The **Assessment Web API** provides a set of RESTful endpoints designed to manage assessments and their associated questions within the platform. Assessments play a central role in evaluating a learner’s understanding of specific skills, concepts, and technologies defined in the system.
+
+Through these APIs, clients such as **student portals, mentor dashboards, and administrative tools** can create, retrieve, update, and delete assessments as well as manage the questions that belong to each assessment.
+
+The API follows standard **REST principles** where:
+
+* **Resources** are represented using clear URL paths.
+* **HTTP methods** such as `GET`, `POST`, `PUT`, and `DELETE` represent operations on those resources.
+* **Nested resources** are used to represent relationships between entities, such as questions belonging to a specific assessment.
+
+For example:
+
+* `/assessments` represents the collection of all assessments.
+* `/assessments/{assessmentId}` represents a specific assessment.
+* `/assessments/{assessmentId}/questions` represents the questions associated with that assessment.
+
+These endpoints enable the system to support key assessment management activities such as:
+
+* Creating and maintaining assessments
+* Managing questions within assessments
+* Retrieving assessment structures for test delivery
+* Updating assessment content
+* Removing obsolete assessments or questions
+
+By organizing endpoints in this way, the API ensures **clear resource hierarchy, maintainability, and scalability**, making it easy for client applications to interact with the assessment management system.
+
+The following section describes the available endpoints for managing assessments and their related questions.
+
+##  Assessment-related Web API endpoints:
 
 1. **Retrieve List of Assessments**:
    - URL: `/assessments`
