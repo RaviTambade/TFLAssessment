@@ -152,7 +152,6 @@
 * **System intelligence**: Probability model, risk flags, skill analytics.
 * **Employer alignment**: Shortlisting, fit scoring, placement pipeline.
 
----
 
 
                               +---------------------+
@@ -256,9 +255,6 @@
      | Placed / Interview  |
      | Pipeline / Pending  |
      +---------------------+
-
-
-
 
 # 🌸 Transflower Career OS — Real-Time Loop
 
@@ -1085,7 +1081,7 @@ Day 4 → Continuous Loop
 
    * Real-time updates keep mentors and system synchronized with student progress.
 
----
+
 
 ✅ **This ASCII animation gives a “live Career OS view”**:
 
@@ -1093,16 +1089,3 @@ Day 4 → Continuous Loop
 * Students progress **daily**, with feedback loops and placement alignment.
 * The system **continuously adapts**, making TFL a **fully operational Career OS**.
 
----
-
-If you want, I can now **draw a “full combined Career OS map”** showing:
-
-* **TFL layers**
-* **Multi-student flows**
-* **Mentor interventions**
-* **Placement probability trends**
-* **Employer matching**
-
-All in **one mega ASCII diagram**, essentially a **complete blueprint for the Transflower Career OS system**.
-
-Do you want me to create that next?

@@ -15,11 +15,11 @@ That’s **Skill Regression Detection**.
 
 I’ll explain this in **5 clear layers**:
 
-1️⃣ What regression really is
-2️⃣ Signals that indicate regression
-3️⃣ Detection logic (how the system knows)
-4️⃣ Recovery actions (what TFL does)
-5️⃣ Why this is critical for job-readiness
+- 1️⃣ What regression really is
+- 2️⃣ Signals that indicate regression
+- 3️⃣ Detection logic (how the system knows)
+- 4️⃣ Recovery actions (what TFL does)
+- 5️⃣ Why this is critical for job-readiness
 
 
 ## 🔶 1️⃣ What is Skill Regression? (Truth)
@@ -266,10 +266,10 @@ Without regression detection:
 
 ## 🚀 What should we design next?
 
-1️⃣ **Skill decay timelines per role**
-2️⃣ **Auto-maintenance curriculum** (skill gym)
-3️⃣ **Employer-facing “skill freshness” badge**
-4️⃣ **AI mentor rules for regression prevention**
-5️⃣ **SQL / Graph schema for regression tracking**
+- 1️⃣ **Skill decay timelines per role**
+- 2️⃣ **Auto-maintenance curriculum** (skill gym)
+- 3️⃣ **Employer-facing “skill freshness” badge**
+- 4️⃣ **AI mentor rules for regression prevention**
+- 5️⃣ **SQL / Graph schema for regression tracking**
 
 Say the next layer — we’re building something rare here 🧠✨
