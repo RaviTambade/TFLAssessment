@@ -12,8 +12,6 @@ public class AssessmentRepository : IAssessmentRepository
         _context = context;
     }
 
-
-   
     public async Task<List<AssessmentDto>> GetAllAssessments()
     {
         var data = await (from a in _context.Assessments

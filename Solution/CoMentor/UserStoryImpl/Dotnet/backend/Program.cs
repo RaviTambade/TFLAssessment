@@ -28,6 +28,10 @@ builder.Services.AddScoped<IAssessmentService, AssessmentService>();
  
 builder.Services.AddScoped<IAssessmentAssignRepository, AssessmentAssignRepository>();
 builder.Services.AddScoped<IAssessmentAssignService, AssessmentAssignService>();
+ builder.Services.AddScoped<IAssessmentRepository, AssessmentRepository>();
+ builder.Services.AddScoped<IAssessmentService, AssessmentService>();
+ builder.Services.AddScoped<IResultRepository, ResultRepository>();
+builder.Services.AddScoped<IResultService, ResultService>();
 
 var app = builder.Build();
 
