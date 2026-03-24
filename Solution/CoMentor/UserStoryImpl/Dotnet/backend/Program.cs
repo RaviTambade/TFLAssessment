@@ -23,8 +23,11 @@ builder.Services.AddSwaggerGen();
 
 
 // ✅ Dependency Injection
- builder.Services.AddScoped<IAssessmentRepository, AssessmentRepository>();
- builder.Services.AddScoped<IAssessmentService, AssessmentService>();
+builder.Services.AddScoped<IAssessmentRepository, AssessmentRepository>();
+builder.Services.AddScoped<IAssessmentService, AssessmentService>();
+ 
+builder.Services.AddScoped<IAssessmentAssignRepository, AssessmentAssignRepository>();
+builder.Services.AddScoped<IAssessmentAssignService, AssessmentAssignService>();
 
 var app = builder.Build();
 
@@ -35,7 +38,11 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+// app.UseHttpsRedirection();
+if (!app.Environment.IsDevelopment())
+{
+    app.UseHttpsRedirection();
+}
 
 app.UseAuthorization();
 
