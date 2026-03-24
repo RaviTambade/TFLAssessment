@@ -1,4 +1,4 @@
-package com.tap.tflcomentor.Backend.Entity;
+package com.transflower.tflcomentor.Backend.Entity;
 
 import java.time.LocalDateTime;
 

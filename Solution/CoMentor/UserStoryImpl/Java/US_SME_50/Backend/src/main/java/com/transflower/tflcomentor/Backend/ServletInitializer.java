@@ -1,4 +1,4 @@
-package com.tap.tflcomentor.Backend;
+package com.transflower.tflcomentor.Backend;
 
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
