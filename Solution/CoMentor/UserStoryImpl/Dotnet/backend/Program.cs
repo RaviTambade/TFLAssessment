@@ -25,6 +25,8 @@ builder.Services.AddSwaggerGen();
 // ✅ Dependency Injection
  builder.Services.AddScoped<IAssessmentRepository, AssessmentRepository>();
  builder.Services.AddScoped<IAssessmentService, AssessmentService>();
+ builder.Services.AddScoped<IResultRepository, ResultRepository>();
+builder.Services.AddScoped<IResultService, ResultService>();
 
 var app = builder.Build();
 
