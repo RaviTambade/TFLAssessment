@@ -7,7 +7,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
-import com.transflower.tflcomentor.Entities.ViewQuestionsByType;
+import com.transflower.tflcomentor.Entities.ViewQuestionsByStatus;
 
 @Repository
 public class JdbcQuestionRepository implements QuestionRepository {
@@ -19,7 +19,7 @@ public class JdbcQuestionRepository implements QuestionRepository {
     }
 
     @Override
-    public List<ViewQuestionsByType> findByType(String questionType) {
+    public List<ViewQuestionsByStatus> findByType(String questionType) {
         String sql = """
                 SELECT question_id, question_type, description
                 FROM questions
@@ -30,9 +30,9 @@ public class JdbcQuestionRepository implements QuestionRepository {
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, questionType);
             try (ResultSet rs = statement.executeQuery()) {
-                List<ViewQuestionsByType> results = new java.util.ArrayList<>();
+                List<ViewQuestionsByStatus> results = new java.util.ArrayList<>();
                 while (rs.next()) {
-                    ViewQuestionsByType view = new ViewQuestionsByType();
+                    ViewQuestionsByStatus view = new ViewQuestionsByStatus();
                     view.setQuestionId(rs.getInt("question_id"));
                     view.setQuestionType(rs.getString("question_type"));
                     view.setQuestionText(rs.getString("description"));

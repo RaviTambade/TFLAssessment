@@ -2,8 +2,8 @@ package com.transflower.tflcomentor.Repositories;
 
 import java.util.List;
 
-import com.transflower.tflcomentor.Entities.ViewQuestionsByType;
+import com.transflower.tflcomentor.Entities.ViewQuestionsByStatus;
 
 public interface QuestionRepository {
-    List<ViewQuestionsByType> findByType(String questionType);
+    List<ViewQuestionsByStatus> findByType(String questionType);
 }
