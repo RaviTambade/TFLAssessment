@@ -5,7 +5,7 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 
 // Import connection
-const connection = require("./config/db");
+const connection = require("./Config/db");
 
 // Import layers (Repository → Service → Controller)
 const UserProfileRepository = require("./Repositories/userProfileRepository");
