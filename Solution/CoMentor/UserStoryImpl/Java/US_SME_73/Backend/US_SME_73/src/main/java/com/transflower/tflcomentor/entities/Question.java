@@ -2,7 +2,7 @@ package com.transflower.tflcomentor.entities;
 
 import java.time.LocalDateTime;
 
-public class ViewQuestion {
+public class Question {
 
     private Long questionId;
     private String description;

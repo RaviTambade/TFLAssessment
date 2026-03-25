@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 
 import com.transflower.tflcomentor.dtos.ViewConceptsQuestionDto;
 import com.transflower.tflcomentor.dtos.ViewQuestionDto;
-import com.transflower.tflcomentor.entities.Concept;
 import com.transflower.tflcomentor.services.ViewQuestionService;
 
 @RestController
