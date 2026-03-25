@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.transflower.tflcomentor.Dtos.ViewQuestionByType;
+import com.transflower.tflcomentor.Dtos.ViewQuestionByStatus;
 import com.transflower.tflcomentor.Entities.ViewQuestionsByStatus;
 import com.transflower.tflcomentor.Repositories.QuestionRepository;
 
@@ -18,15 +18,16 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public List<ViewQuestionByType> getQuestionsByType(String type) {
+    public List<ViewQuestionByStatus> getQuestionsByStatus(String status) {
 
-        List<ViewQuestionsByStatus> entities = questionRepository.findByType(type);
+        List<ViewQuestionsByStatus> entities = questionRepository.findByStatus(status);
 
         return entities.stream()
-            .map(q -> new ViewQuestionByType(
+            .map(q -> new ViewQuestionByStatus(
                     q.getQuestionId(),
                     q.getQuestionType(),
-                    q.getQuestionText()
+                    q.getQuestionText(),
+                    q.getQuestionStatus()
             ))
             .toList();
     }

@@ -1,26 +1,22 @@
-// write entities for viewing questions by question type 
-//i am using jdbc 
-package com.transflower.tflcomentor.Entities;
+package com.transflower.tflcomentor.Dtos;
 
-public class ViewQuestionsByType {
+public class ViewQuestionByStatus {
     private int questionId;
     private String questionType;
-    private String questiondifficultyLevel;
     private String questionText;
     private String questionStatus;
 
-    public ViewQuestionsByType() {
-    }
+    // Constructors
+    public ViewQuestionByStatus() {}
 
-    public ViewQuestionsByType(int questionId, String questionType, String questionText, String questiondifficultyLevel, String questionStatus) {
+    public ViewQuestionByStatus(int questionId, String questionType, String questionText, String questionStatus) {
         this.questionId = questionId;
         this.questionType = questionType;
         this.questionText = questionText;
-        this.questiondifficultyLevel = questiondifficultyLevel;
         this.questionStatus = questionStatus;
-
     }
 
+    // Getters and Setters
     public int getQuestionId() {
         return questionId;
     }
@@ -45,14 +41,6 @@ public class ViewQuestionsByType {
         this.questionText = questionText;
     }
 
-    public String getQuestiondifficultyLevel() {
-        return questiondifficultyLevel;
-    }
-
-    public void setQuestiondifficultyLevel(String questiondifficultyLevel) {
-        this.questiondifficultyLevel = questiondifficultyLevel;
-    }
-
     public String getQuestionStatus() {
         return questionStatus;
     }
@@ -60,4 +48,5 @@ public class ViewQuestionsByType {
     public void setQuestionStatus(String questionStatus) {
         this.questionStatus = questionStatus;
     }
+
 }
