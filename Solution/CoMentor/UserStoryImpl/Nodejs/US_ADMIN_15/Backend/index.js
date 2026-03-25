@@ -2,11 +2,11 @@ const express = require("express");
 const cors = require("cors");
 const bodyparser = require('body-parser');
 
-const Connection = require('./connectivity/db');
-const UserRepository = require('./repositories/user-repository');
-const UserService = require('./services/user-service');
-const UserController = require('./controllers/user-controller');
-const UserRouterFactory = require('./routers/user-router');
+const Connection = require('./Connectivity/db');
+const UserRepository = require('./Repositories/userrepository');
+const UserService = require('./Services/userservice');
+const UserController = require('./Controllers/usercontroller');
+const UserRouterFactory = require('./Routers/userrouter');
 
 // Dependency injection setup
 const repo = new UserRepository(Connection);
