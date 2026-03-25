@@ -31,5 +31,3 @@ app.use('/api/v1/users', userRouter);
 
 app.listen(3898);
 console.log('Server is running on port 3898');
-
-
