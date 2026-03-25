@@ -1,14 +1,15 @@
 import { useEffect, useMemo, useState } from "react";
-import { fetchQuestionsByStatus } from "@/api/questions";
+import { fetchQuestionsByType } from "@/api/questions";
 import type { Question } from "@/types/question";
 
-const QUESTION_STATUSES = [
-  "ACTIVE",
-  "INACTIVE",
-  "DRAFT",
+const QUESTION_TYPES = [
+  "MCQ",
+  "PROBLEM_STATEMENT",
+  "HANDS_ON",
 ];
-const QuestionByStatus = () => {
-  const [selectedStatus, setSelectedStatus] = useState(QUESTION_STATUSES[0]);
+
+const QuestionByType = () => {
+  const [selectedType, setSelectedType] = useState(QUESTION_TYPES[0]);
   const [questions, setQuestions] = useState<Question[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -25,7 +26,7 @@ const QuestionByStatus = () => {
       setLoading(true);
       setError(null);
       try {
-        const data = await fetchQuestionsByStatus(selectedStatus);
+        const data = await fetchQuestionsByType(selectedType);
         if (isMounted) {
           setQuestions(data);
         }
@@ -47,7 +48,7 @@ const QuestionByStatus = () => {
     return () => {
       isMounted = false;
     };
-  }, [selectedStatus]);
+  }, [selectedType]);
 
   return (
     <section className="py-12 bg-gradient-to-b from-orange-50/40 to-background">
@@ -56,37 +57,39 @@ const QuestionByStatus = () => {
         {/* Header */}
         <div className="mb-8">
           <h1 className="text-3xl sm:text-4xl font-extrabold text-foreground tracking-tight">
-            View Questions By Status
+            View Questions By Type
           </h1>
           <p className="text-sm sm:text-base text-muted-foreground mt-2">
-            Select a status to load questions.
+            Select a category to load questions.
           </p>
         </div>
 
         {/* Radio Buttons */}
         <div className="mb-8">
           <label className="text-sm font-semibold text-foreground mb-3 block">
-            Question Status
+            Question Type
           </label>
 
           <div className="flex flex-wrap gap-4">
-            {QUESTION_STATUSES.map((status) => (
+            {QUESTION_TYPES.map((type) => (
               <label
-                key={status}
+                key={type}
                 className={`flex items-center gap-2 px-4 py-2 rounded-lg border cursor-pointer transition
                   ${
-                    selectedStatus === status ? "border-orange-400 bg-orange-100 text-orange-600" : "border-border hover:border-orange-300"
+                    selectedType === type
+                      ? "border-orange-400 bg-orange-100 text-orange-600"
+                      : "border-border hover:border-orange-300"
                   }`}
               >
                 <input
                   type="radio"
-                  name="questionStatus"
-                  value={status}
-                  checked={selectedStatus === status}
-                  onChange={() => setSelectedStatus(status)}
+                  name="questionType"
+                  value={type}
+                  checked={selectedType === type}
+                  onChange={() => setSelectedType(type)}
                   className="accent-orange-500"
                 />
-                <span className="text-sm font-medium">{status}</span>
+                <span className="text-sm font-medium">{type}</span>
               </label>
             ))}
           </div>
@@ -115,7 +118,7 @@ const QuestionByStatus = () => {
         {questions.length > 0 && (
           <div className="group rounded-xl border border-border bg-card p-5 shadow-sm">
             <h2 className="text-lg font-semibold text-foreground mb-4">
-             {selectedStatus.replaceAll("_", " ")} Questions
+              {selectedType.replaceAll("_", " ")} Questions
             </h2>
 
             <ul className="space-y-3">
@@ -137,5 +140,4 @@ const QuestionByStatus = () => {
   );
 };
 
-export default QuestionByStatus;
-                      
+export default QuestionByType;
