@@ -5,18 +5,18 @@ const bodyparser = require('body-parser');
 
 
 const Connection = require('./connectivity/db');
-const RolesRepository = require('./repositories/roles-repository');
-const RolesService = require('./services/roles-services');
-const RolesController = require('./controllers/roles-controller');
-const RolesRouterFactory = require('./routers/roles-router');
+const RolesRepository = require('./repositories/rolesRepository');
+const RolesService = require('./services/rolesServices');
+const RolesController = require('./controllers/rolesController');
+const RolesRouterFactory = require('./routers/rolesRouter');
 
 
 // Dependency injection setup
-
 const repo = new RolesRepository(Connection);
 const service = new RolesService(repo);
 const controller = new RolesController(service);
 const rolesRouter = RolesRouterFactory(controller);
+
 
 // Express app setup
 var app = express();
