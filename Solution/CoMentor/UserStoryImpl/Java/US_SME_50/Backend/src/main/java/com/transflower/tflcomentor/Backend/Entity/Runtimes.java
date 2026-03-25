@@ -1,15 +1,15 @@
 package com.transflower.tflcomentor.Backend.Entity;
 
-    public class RuntimesEntity {
+    public class Runtimes {
         private int id ;
         private String runtimeName;
 
-        public RuntimesEntity(){
+        public Runtimes(){
             this.id = 0;
             this.runtimeName = " ";
         }
 
-        public RuntimesEntity(int id, String runtimeName) {
+        public Runtimes(int id, String runtimeName) {
             this.id = id;
             this.runtimeName = runtimeName;
         }   
@@ -28,6 +28,11 @@ package com.transflower.tflcomentor.Backend.Entity;
         
         public void setRuntimeName(String runtimeName) {
             this.runtimeName = runtimeName;
+        }
+
+        @Override
+        public String toString() {
+            return "Runtimes [id=" + id + ", runtimeName=" + runtimeName + "]";
         }
     }
     

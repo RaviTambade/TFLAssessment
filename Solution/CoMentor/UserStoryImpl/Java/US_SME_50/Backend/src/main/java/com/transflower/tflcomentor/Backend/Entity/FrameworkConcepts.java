@@ -1,17 +1,17 @@
 package com.transflower.tflcomentor.Backend.Entity;
 
-public class FrameworkConceptsEntity {
+public class FrameworkConcepts {
     private int id ;
     private int frameworkId;
     private int conceptId;
 
-    public FrameworkConceptsEntity(){
+    public FrameworkConcepts(){
         this.id = 0;
         this.frameworkId = 0;
         this.conceptId = 0;
     }
     
-    public FrameworkConceptsEntity(int id, int frameworkId, int conceptId) {
+    public FrameworkConcepts(int id, int frameworkId, int conceptId) {
         this.id = id;
         this.frameworkId = frameworkId;
         this.conceptId = conceptId;
@@ -38,6 +38,11 @@ public class FrameworkConceptsEntity {
     }
     public void setConceptId(int conceptId) {
         this.conceptId = conceptId;
+    }
+
+    @Override
+    public String toString() {
+        return "FrameworkConcepts [id=" + id + ", frameworkId=" + frameworkId + ", conceptId=" + conceptId + "]";
     }
 }
     

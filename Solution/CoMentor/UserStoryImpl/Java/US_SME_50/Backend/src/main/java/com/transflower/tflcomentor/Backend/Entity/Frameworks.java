@@ -1,15 +1,15 @@
 package com.transflower.tflcomentor.Backend.Entity;
 
-public class FrameworksEntity {
+public class Frameworks {
     private int id ;
     private String runtimeName;
 
-    public FrameworksEntity(){
+    public Frameworks(){
         this.id = 0;
         this.runtimeName = " ";
     }
 
-    public FrameworksEntity(int id, String runtimeName) {
+    public Frameworks(int id, String runtimeName) {
         this.id = id;
         this.runtimeName = runtimeName;
     }   
@@ -28,5 +28,10 @@ public class FrameworksEntity {
     
     public void setRuntimeName(String runtimeName) {
         this.runtimeName = runtimeName;
+    }
+
+    @Override
+    public String toString() {
+        return "Frameworks [id=" + id + ", runtimeName=" + runtimeName + "]";
     }
 }

@@ -1,17 +1,17 @@
 package com.transflower.tflcomentor.Backend.Entity;
 
-public class LanguagesEntity {
+public class Languages {
     private int id ;
     private String languageName;
     private int runtimeId;
 
-    public LanguagesEntity(){
+    public Languages(){
         this.id = 0;
         this.languageName = " ";
         this.runtimeId = 0;
     }
 
-    public LanguagesEntity(int id, String languageName, int runtimeId) {
+    public Languages(int id, String languageName, int runtimeId) {
         this.id = id;
         this.languageName = languageName;
         this.runtimeId = runtimeId;
@@ -38,5 +38,10 @@ public class LanguagesEntity {
     }
     public void setRuntimeId(int runtimeId) {
         this.runtimeId = runtimeId;
+    }
+
+    @Override
+    public String toString() {
+        return "Languages [id=" + id + ", languageName=" + languageName + ", runtimeId=" + runtimeId + "]";
     }
 }

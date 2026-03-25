@@ -2,7 +2,7 @@ package com.transflower.tflcomentor.Backend.Entity;
 
 import java.time.LocalDateTime;
 
-public class ConceptsEntity {
+public class Concepts{
     private int id;
     private String name;
     private String description;
@@ -10,7 +10,7 @@ public class ConceptsEntity {
     private LocalDateTime createdAt;
     private enum Status{active,inactive}
 
-    public ConceptsEntity(){
+    public Concepts(){
       this.id = 0;
         this.name = " ";
         this.description = " ";
@@ -18,7 +18,7 @@ public class ConceptsEntity {
         this.createdAt = LocalDateTime.now();  
     }
 
-    public ConceptsEntity(int id, String name, String description, Status status, LocalDateTime createdAt){
+    public Concepts(int id, String name, String description, Status status, LocalDateTime createdAt){
         this.id = id;
         this.name = name;
         this.description = description;
