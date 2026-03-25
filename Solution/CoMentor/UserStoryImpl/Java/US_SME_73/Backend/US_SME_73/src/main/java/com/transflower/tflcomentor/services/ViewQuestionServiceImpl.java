@@ -10,19 +10,19 @@ import com.transflower.tflcomentor.dtos.AllQuestionsDto;
 import com.transflower.tflcomentor.dtos.ViewConceptsQuestionDto;
 import com.transflower.tflcomentor.dtos.ViewQuestionDto;
 import com.transflower.tflcomentor.entities.Concept;
-import com.transflower.tflcomentor.entities.ViewQuestion;
-import com.transflower.tflcomentor.repositories.ViewQuestionRepository;
+import com.transflower.tflcomentor.entities.Question;
+import com.transflower.tflcomentor.repositories.IViewQuestionRepository;
 
 @Service
 public class ViewQuestionServiceImpl implements ViewQuestionService {
 
     @Autowired
-    private ViewQuestionRepository questionRepository;
+    private IViewQuestionRepository questionRepository;
 
     @Override
     public ViewQuestionDto getQuestionById(Long questionId) {
 
-        ViewQuestion question = questionRepository.findById(questionId);
+        Question question = questionRepository.findById(questionId);
 
         if (question == null) return null;
 
@@ -35,10 +35,10 @@ public class ViewQuestionServiceImpl implements ViewQuestionService {
      @Override
     public List<AllQuestionsDto> getAllQuestions() {
 
-        List<ViewQuestion> questions = questionRepository.findAll();
+        List<Question> questions = questionRepository.findAll();
         List<AllQuestionsDto> dtoList = new ArrayList<>();
 
-        for (ViewQuestion question : questions) {
+        for (Question question : questions) {
             dtoList.add(new AllQuestionsDto(
                     question.getDescription(),
                     question.getQuestionType()
@@ -55,10 +55,10 @@ public class ViewQuestionServiceImpl implements ViewQuestionService {
 
     @Override
     public List<ViewConceptsQuestionDto> getQuestionsByConceptId(Long conceptId) {
-        List<ViewQuestion> questions = questionRepository.findByConceptId(conceptId);
+        List<Question> questions = questionRepository.findByConceptId(conceptId);
         List<ViewConceptsQuestionDto> dtoList = new ArrayList<>();
 
-        for (ViewQuestion question : questions) {
+        for (Question question : questions) {
             dtoList.add(new ViewConceptsQuestionDto(
                     question.getDescription(),
                     question.getQuestionType()

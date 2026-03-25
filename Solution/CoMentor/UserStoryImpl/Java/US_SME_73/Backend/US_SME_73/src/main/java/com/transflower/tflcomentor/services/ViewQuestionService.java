@@ -7,7 +7,7 @@ import com.transflower.tflcomentor.entities.*;
 import com.transflower.tflcomentor.dtos.ViewConceptsQuestionDto;
 import com.transflower.tflcomentor.dtos.AllQuestionsDto;
 import com.transflower.tflcomentor.dtos.ViewQuestionDto;
-import com.transflower.tflcomentor.repositories.ViewQuestionRepository;
+import com.transflower.tflcomentor.repositories.IViewQuestionRepository;
 
 public interface ViewQuestionService {
     ViewQuestionDto getQuestionById(Long questionId);
