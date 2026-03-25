@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.transflower.tflcomentor.dtos.AllQuestionsDto;
+import com.transflower.tflcomentor.dtos.ViewConceptsQuestionDto;
 import com.transflower.tflcomentor.dtos.ViewQuestionDto;
+import com.transflower.tflcomentor.entities.Concept;
 import com.transflower.tflcomentor.entities.ViewQuestion;
 import com.transflower.tflcomentor.repositories.ViewQuestionRepository;
 
@@ -38,6 +40,26 @@ public class ViewQuestionServiceImpl implements ViewQuestionService {
 
         for (ViewQuestion question : questions) {
             dtoList.add(new AllQuestionsDto(
+                    question.getDescription(),
+                    question.getQuestionType()
+            ));
+        }
+
+        return dtoList;
+    }
+
+    @Override
+    public List<Concept> getAllConcepts() {
+        return questionRepository.findAllConcepts();
+    }
+
+    @Override
+    public List<ViewConceptsQuestionDto> getQuestionsByConceptId(Long conceptId) {
+        List<ViewQuestion> questions = questionRepository.findByConceptId(conceptId);
+        List<ViewConceptsQuestionDto> dtoList = new ArrayList<>();
+
+        for (ViewQuestion question : questions) {
+            dtoList.add(new ViewConceptsQuestionDto(
                     question.getDescription(),
                     question.getQuestionType()
             ));
