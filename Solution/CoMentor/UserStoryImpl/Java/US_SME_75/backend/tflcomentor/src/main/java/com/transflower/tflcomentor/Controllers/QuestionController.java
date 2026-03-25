@@ -8,21 +8,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.transflower.tflcomentor.Services.QuestionService;
-import com.transflower.tflcomentor.Dtos.ViewQuestionByStatus;
+import com.transflower.tflcomentor.Dtos.QuestionDto;
+import com.transflower.tflcomentor.Services.IQuestionService;
 
 @RestController
 @RequestMapping("/api/questions")
 public class QuestionController {
 
-    private final QuestionService questionService;
+    private final IQuestionService questionService;
 
-    public QuestionController(QuestionService questionService) {
+    public QuestionController(IQuestionService questionService) {
         this.questionService = questionService;
     }
 
     @GetMapping
-    public ResponseEntity<List<ViewQuestionByStatus>> getByStatus(@RequestParam("status") String status) {
+    public ResponseEntity<List<QuestionDto>> getByStatus(@RequestParam("status") String status) {
 
         if (status == null || status.trim().isEmpty()) {
             return ResponseEntity.badRequest().build();
@@ -35,7 +35,7 @@ public class QuestionController {
             normalizedStatus = "false";
         }
 
-        List<ViewQuestionByStatus> results = questionService.getQuestionsByStatus(normalizedStatus);
+        List<QuestionDto> results = questionService.getQuestionsByStatus(normalizedStatus);
 
         return ResponseEntity.ok(results);
     }
