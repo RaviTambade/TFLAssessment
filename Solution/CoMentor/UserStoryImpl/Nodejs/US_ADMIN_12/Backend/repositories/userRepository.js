@@ -4,7 +4,7 @@ class userRepository {
     }
 
     getAllUsers(callback) {
-        const query = "SELECT user_id, CONCAT(personal_informations.first_name, ' ', personal_informations.last_name) AS full_name FROM personal_informations";
+        const query = "call GetUserlistWithRole();";
         this.connection.query(query, callback);
     }
 }
