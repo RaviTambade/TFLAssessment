@@ -1,20 +1,19 @@
 const mysql = require("mysql2");
 
-const dbConfig = {
-  host: "192.168.1.149",
-  user: "root",
-  password: "password",
-  database: "tflcomentor_db",
-};
+function createDbConnection(dbConfig) {
+  // The concrete connection is created here so callers can inject config from outside.
+  const connection = mysql.createConnection(dbConfig);
 
-const connection = mysql.createConnection(dbConfig);
+  connection.connect((err) => {
+    if (err) {
+      console.error("MySQL connection failed:", err.message);
+      return;
+    }
 
-connection.connect((err, conn) => {
-  if (err) {
-    console.error("MySQL connection failed:", err.message);
-    return;
-  }
-  console.log("MySQL connected");
-});
+    console.log("MySQL connected");
+  });
 
-module.exports = connection;
+  return connection;
+}
+
+module.exports = createDbConnection;
