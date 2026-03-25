@@ -217,9 +217,9 @@ const UpdateQuestion = () => {
                                                             value={editData.difficultyLevel ?? q.difficultyLevel}
                                                             onChange={handleChange}
                                                         >
-                                                            <option value="BEGINNER">Beginner</option>
-                                                            <option value="INTERMEDIATE">Intermediate</option>
-                                                            <option value="ADVANCE">Advance</option>
+                                                            <option value="BEGINNER">BEGINNER</option>
+                                                            <option value="INTERMEDIATE">INTERMEDIATE</option>
+                                                            <option value="ADVANCE">ADVANCE</option>
                                                         </select>
                                                     ) : q.difficultyLevel}
                                                 </td>

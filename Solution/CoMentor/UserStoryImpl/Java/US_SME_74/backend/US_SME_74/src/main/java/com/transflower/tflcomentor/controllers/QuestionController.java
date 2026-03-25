@@ -4,8 +4,9 @@ import java.util.List;
 
 import org.springframework.web.bind.annotation.*;
 
+import com.transflower.tflcomentor.dtos.QuestionDto;
 import com.transflower.tflcomentor.entities.Question;
-import com.transflower.tflcomentor.services.internal.QuestionService;
+import com.transflower.tflcomentor.services.QuestionService;
 
 @RestController
 @RequestMapping("/api")
@@ -16,16 +17,18 @@ public class QuestionController {
 
     public QuestionController(QuestionService service) {
         this.service = service;
+
     }
 
     @GetMapping("/questions")
-    public List<Object> fetchAllQuestions() {
-        return service.getAllQuestionsFromApi();
+    public List<QuestionDto> getAllQuestions() {
+        List<Question> questions = service.getAllQuestions();
+        return questions.stream().map(QuestionDto::new).toList();
     }
 
     @GetMapping("/questions/{id}")
     public Object fetchQuestionById(@PathVariable Long id) {
-        return service.getQuestionByIdFromApi(id);
+        return service.getQuestionById(id);
     }
 
     @PutMapping("/questions/{id}")
