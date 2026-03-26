@@ -4,20 +4,11 @@ class UserRepository {
     this.connection = connection;
   }
 
-  inactivateUser(id, callback) {
-    const sql = "UPDATE Users SET status = 'INACTIVE' WHERE id = ?";
-    this.connection.query(sql, [ id], callback);
+  changeUserStatus(id, status, callback) {
+    const sql = "UPDATE Users SET status = ? WHERE id = ?";
+    this.connection.query(sql, [status, id], callback);
   }
 
-  blockUser(id, callback) {
-    const sql = "UPDATE Users SET status = 'BLOCKED' WHERE id = ?";
-    this.connection.query(sql, [ id], callback);
-  }
-
-  activateUser(id, callback) {
-    const sql = "UPDATE Users SET status = 'ACTIVE' WHERE id = ?";
-    this.connection.query(sql, [ id], callback);
-  }
 }
 
 module.exports = UserRepository;

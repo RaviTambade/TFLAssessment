@@ -20,13 +20,23 @@ const App: React.FC = () => {
     setError(null);
     setResponse(null);
 
-    const endpoint = `http://localhost:3899/api/users/${action}User`;
+    const endpoint = `http://localhost:3899/api/users/changeUserStatus`;
+    
+    // Map action to status value
+    const statusMap: Record<string, string> = {
+      activate: 'active',
+      inactivate: 'inactive',
+      block: 'blocked',
+    };
+    
+    const status = statusMap[action];
 
     try {
       const result = await axios.put(
         endpoint,
         {
           id: userId,
+          status: status,
         },
         {
           headers: {
