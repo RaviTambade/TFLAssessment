@@ -1,6 +1,6 @@
 
-CREATE DATABASE IF NOT EXISTS tflcomentor_db4;
-USE tflcomentor_db4;
+CREATE DATABASE IF NOT EXISTS tflcomentor_db;
+USE tflcomentor_db;
 
 -- 1. Layers
 CREATE TABLE layers (
