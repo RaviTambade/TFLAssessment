@@ -17,7 +17,6 @@ public class QuestionController {
 
     public QuestionController(QuestionService service) {
         this.service = service;
-
     }
 
     @GetMapping("/questions")

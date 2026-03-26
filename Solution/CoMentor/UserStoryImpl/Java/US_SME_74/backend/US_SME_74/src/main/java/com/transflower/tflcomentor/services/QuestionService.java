@@ -12,12 +12,10 @@ import com.transflower.tflcomentor.repositories.QuestionRepository;
 public class QuestionService {
 
     private final QuestionRepository repository;
-  
 
-    // Constructor Injection
     public QuestionService(QuestionRepository repository) {
         this.repository = repository;
-  
+
     }
 
     // // GET /api/sme/allquestions
@@ -29,7 +27,6 @@ public class QuestionService {
     //             .collectList()
     //             .block();
     // }
-
     // // GET /api/sme/questions/{id}
     // public Object getQuestionByIdFromApi(Long id) {
     //     return webClient.get()
@@ -38,13 +35,13 @@ public class QuestionService {
     //             .bodyToMono(Object.class)
     //             .block();
     // }
-     public List<Question> getAllQuestions() {
+    public List<Question> getAllQuestions() {
         return repository.findAll();
     }
 
     public Question getQuestionById(Long id) {
         return repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Question not found")); 
+                .orElseThrow(() -> new RuntimeException("Question not found"));
     }
 
     public Question updateQuestion(Long id, Question updatedQuestion) {
@@ -55,7 +52,6 @@ public class QuestionService {
         question.setQuestionType(updatedQuestion.getQuestionType());
         question.setDifficultyLevel(updatedQuestion.getDifficultyLevel());
         question.setStatus(updatedQuestion.getStatus());
-
         return repository.save(question);
     }
 }
