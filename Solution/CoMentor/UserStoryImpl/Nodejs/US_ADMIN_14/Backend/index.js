@@ -13,10 +13,9 @@ const RolesRouterFactory = require('./routers/rolesRouter');
 
 // Dependency injection setup
 const repo = new RolesRepository(Connection);
-const service = new RolesService(repo);
+const service = new RolesService(repo, Connection);
 const controller = new RolesController(service);
 const rolesRouter = RolesRouterFactory(controller);
-
 
 // Express app setup
 var app = express();
