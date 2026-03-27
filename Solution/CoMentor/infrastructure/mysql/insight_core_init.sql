@@ -45,7 +45,7 @@ CREATE TABLE rankings (
 
 CREATE TABLE performance_snapshots (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
-    candidate_id BIGINT NOT NULL,
+    cam ndidate_id BIGINT NOT NULL,
     snapshot_date DATETIME,
     performance_json JSON
 );
