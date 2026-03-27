@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Code2 } from "lucide-react";
 
 const AddRuntime: React.FC = () => {
   const [name, setName] = useState("");
@@ -17,35 +18,63 @@ const AddRuntime: React.FC = () => {
       });
 
       if (response.ok) {
-        setMessage(" Runtime added successfully");
-        setName(""); // clear input
+        setMessage("Runtime added successfully");
+        setName("");
       } else {
-        setMessage(" Failed to add runtime");
+        setMessage("Failed to add runtime");
       }
     } catch (error) {
       console.error(error);
-      setMessage(" Server error");
+      setMessage("Server error");
     }
   };
 
   return (
-    <div style={{ textAlign: "center", marginTop: "50px" }}>
-      <h2>Add Runtime</h2>
+    <div className="min-h-screen p-10" style={{ backgroundColor: "#fde8e8" }}>
+      
+      {/* Title */}
+      <div className="text-center mb-10">
+        <h1 className="text-5xl font-bold text-gray-900">
+           Add Runtime
+        </h1>
+        <p className="text-gray-500 mt-2">
+          Enter a runtime name and add it
+        </p>
+      </div>
 
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          placeholder="Enter Runtime Name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          required
-        />
-        <br /><br />
+      {/* Card */}
+      <div className="max-w-xl mx-auto bg-white rounded-3xl shadow-lg p-8 text-center border border-red-100">
 
-        <button type="submit">Add</button>
-      </form>
+        <form onSubmit={handleSubmit}>
+          
+          {/* Input */}
+          <div className="flex items-center gap-2 border border-red-200 rounded-lg px-4 py-2 mb-6">
+            <Code2 className="text-red-600" size={20} />
+            <input
+              type="text"
+              placeholder="Enter Runtime Name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
+              className="w-full outline-none"
+            />
+          </div>
 
-      {message && <p>{message}</p>}
+          {/* Button */}
+          <button
+            type="submit"
+            className="bg-red-600 hover:bg-red-700 text-white px-8 py-3 rounded-lg text-lg font-semibold shadow-md hover:scale-105 transition"
+          >
+            Add Runtime
+          </button>
+        </form>
+
+        {/* Message */}
+        {message && (
+          <p className="mt-6 text-gray-700 font-medium">{message}</p>
+        )}
+
+      </div>
     </div>
   );
 };
