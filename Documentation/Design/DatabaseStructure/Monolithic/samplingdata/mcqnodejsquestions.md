@@ -1139,427 +1139,489 @@ D. Allows handling multiple concurrent requests efficiently
 
 ---
 
-1. What is asynchronous programming in Node.js?
+### 1.  
+What is asynchronous programming in Node.js?
+
 A. Executing code line by line  
 B. Blocking execution until task completes  
 C. Non-blocking execution allowing multiple tasks  
 D. Running only one task at a time  
 
-✅ Answer: C
+**Answer:** C  
 
 ---
 
-2. In a Node.js Express server, which of the following mechanisms is commonly used to handle asynchronous operations like database queries?
+### 2.  
+In a Node.js Express server, which of the following mechanisms is commonly used to handle asynchronous operations like database queries?
+
 A. Threads  
 B. Promises and async/await  
 C. HTML rendering  
 D. CSS  
 
-✅ Answer: B
+**Answer:** B  
 
 ---
 
-3. In Node.js, what is a callback function in the context of handling asynchronous operations like file reading or API calls?
+### 3.  
+In Node.js, what is a callback function in the context of handling asynchronous operations like file reading or API calls?
+
 A. A function executed immediately  
 B. A function passed to another function to be executed later  
 C. A function that blocks execution  
 D. A built-in Node.js function  
 
-✅ Answer: B
+**Answer:** B  
 
 ---
 
-4. In Node.js, which function is typically used to simulate delayed asynchronous operations such as API response delays?
+### 4.  
+In Node.js, which function is typically used to simulate delayed asynchronous operations such as API response delays?
+
 A. setTimeout()  
 B. require()  
 C. console.log()  
 D. module.exports  
 
-✅ Answer: A
+**Answer:** A  
 
 ---
 
-5. In Node.js backend development, what does a Promise represent when fetching data from a MongoDB database?
+### 5.  
+In Node.js backend development, what does a Promise represent when fetching data from a MongoDB database?
+
 A. Immediate result  
 B. Future completion of an async operation  
 C. A synchronous function  
 D. A database schema  
 
-✅ Answer: B
+**Answer:** B  
 
 ---
 
-6. When handling API responses in Node.js using Promises, how many states can a Promise have?
+### 6.  
+When handling API responses in Node.js using Promises, how many states can a Promise have?
+
 A. 2  
 B. 3  
 C. 4  
 D. 5  
 
-✅ Answer: B
+**Answer:** B  
 
 ---
 
-7. In a Node.js Express API, which method is used to handle successful Promise resolution when fetching data?
+### 7.  
+In a Node.js Express API, which method is used to handle successful Promise resolution when fetching data?
+
 A. .catch()  
 B. .then()  
 C. .finally()  
 D. .resolve()  
 
-✅ Answer: B
+**Answer:** B  
 
 ---
 
-8. In modern Node.js backend development, what is the purpose of using the async keyword in a function?
+### 8.  
+In modern Node.js backend development, what is the purpose of using the async keyword in a function?
+
 A. Makes code synchronous  
 B. Automatically returns a Promise  
 C. Stops execution  
 D. Runs multiple threads  
 
-✅ Answer: B
+**Answer:** B  
 
 ---
 
-9. In Node.js architecture, what is the role of the Event Loop when handling multiple API requests?
+### 9.  
+In Node.js architecture, what is the role of the Event Loop when handling multiple API requests?
+
 A. Stores database data  
 B. Manages execution of asynchronous callbacks  
 C. Handles UI rendering  
 D. Executes only synchronous code  
 
-✅ Answer: B
+**Answer:** B  
 
 ---
 
-10. In Node.js, when both a resolved Promise and a ```setTimeout``` callback are present, which one executes first in the event loop?
+### 10.  
+In Node.js, when both a resolved Promise and a `setTimeout` callback are present, which one executes first in the event loop?
+
 A. setTimeout  
 B. Promise (microtask queue)  
 C. Both simultaneously  
 D. Random  
 
-✅ Answer: B
+**Answer:** B  
 
 ---
 
-11. In a Node.js server, which of the following executes before moving to the next phase of the event loop?
+### 11.  
+In a Node.js server, which of the following executes before moving to the next phase of the event loop?
+
 A. setTimeout  
 B. setImmediate  
 C. process.nextTick  
 D. HTTP request  
 
-✅ Answer: C
+**Answer:** C  
 
 ---
 
-12. In real-world MERN applications, what is ```process.nextTick()``` typically used for?
+### 12.  
+In real-world MERN applications, what is `process.nextTick()` typically used for?
+
 A. Scheduling database calls  
 B. Executing a callback immediately after current operation  
 C. Delaying execution  
 D. Handling UI updates  
 
-✅ Answer: B
+**Answer:** B  
 
 ---
 
-13. In a MERN stack application, how are MongoDB queries typically handled in Node.js?
+### 13.  
+In a MERN stack application, how are MongoDB queries typically handled in Node.js?
+
 A. Synchronously  
 B. Using async/await or Promises  
 C. Using only callbacks  
 D. Using threads  
 
-✅ Answer: B
+**Answer:** B  
 
 ---
 
-14. In an Express.js route handler, what does ```await``` do when calling a database function?
+### 14.  
+In an Express.js route handler, what does `await` do when calling a database function?
+
 A. Blocks entire server  
 B. Waits for Promise resolution inside async function  
 C. Creates new thread  
 D. Skips execution  
 
-✅ Answer: B
+**Answer:** B  
 
 ---
 
-15. In a MERN application, how are HTTP requests typically handled on the backend?
+### 15.  
+In a MERN application, how are HTTP requests typically handled on the backend?
+
 A. Synchronously  
 B. Asynchronously using event-driven architecture  
 C. Sequentially  
 D. Manually  
 
-✅ Answer: B
+**Answer:** B  
 
 ---
 
-16. What is the execution model used by Node.js servers handling concurrent client requests?
+### 16.  
+What is the execution model used by Node.js servers handling concurrent client requests?
+
 A. Multi-threaded blocking  
 B. Single-threaded event-driven  
 C. Distributed processing  
 D. Sequential execution  
 
-✅ Answer: B
+**Answer:** B  
 
 ---
 
-17. In Node.js event loop phases, which phase handles timers like ```setTimeout```?
+### 17.  
+In Node.js event loop phases, which phase handles timers like `setTimeout`?
+
 A. Poll  
 B. Timers phase  
 C. Check  
 D. Close  
 
-✅ Answer: B
+**Answer:** B  
 
 ---
 
-18. In Node.js, what is considered blocking code in a backend server?
+### 18.  
+In Node.js, what is considered blocking code in a backend server?
+
 A. Async API call  
 B. Code that stops event loop execution  
 C. Promise resolution  
 D. HTTP request  
 
-✅ Answer: B
+**Answer:** B  
 
 ---
 
-19. In Node.js streams (used in file upload/download APIs), what is backpressure?
+### 19.  
+In Node.js streams (used in file upload/download APIs), what is backpressure?
+
 A. Server crash  
 B. Mechanism to handle data flow overload  
 C. API failure  
 D. Timeout  
 
-✅ Answer: B
+**Answer:** B  
 
 ---
 
-20. In Node.js internals, what is the role of ```libuv``` in handling asynchronous operations?
+### 20.  
+In Node.js internals, what is the role of `libuv` in handling asynchronous operations?
+
 A. Handles frontend rendering  
 B. Provides event loop and async I/O  
 C. Manages MongoDB  
 D. Handles routing  
 
-✅ Answer: B
+**Answer:** B  
+
+---
 
 # 📘 Node.js File I/O MCQs
 
+---
 
+### 1.  
+Which module is primarily used for file I/O in Node.js?
 
-### 1. Which module is primarily used for file I/O in Node.js?
+A. http  
+B. fs  
+C. path  
+D. os  
 
-A. http
-B. fs
-C. path
-D. os
-
-**Correct option:** B fs
+**Answer:** B  
 
 ---
 
-### 2. What is the default behavior of `fs.readFile()`?
+### 2.  
+What is the default behavior of `fs.readFile()`?
 
-A. Blocking
-B. Non-blocking
-C. Streaming
-D. Synchronous
+A. Blocking  
+B. Non-blocking  
+C. Streaming  
+D. Synchronous  
 
-**Correct option:** B Non-blocking
-
----
-
-### 3. Which method reads files synchronously?
-
-A. fs.readFile()
-B. fs.read()
-C. fs.readFileSync()
-D. fs.syncRead()
-
-**Correct option:** C fs.readFileSync()
+**Answer:** B  
 
 ---
 
-### 4. What is a major drawback of synchronous file operations in Node.js?
+### 3.  
+Which method reads files synchronously?
 
-A. Memory leak
-B. Callback hell
-C. Blocks event loop
-D. Data corruption
+A. fs.readFile()  
+B. fs.read()  
+C. fs.readFileSync()  
+D. fs.syncRead()  
 
-**Correct option:** C Blocks event loop
-
----
-
-### 5. Which flag is used to append data to a file?
-
-A. 'r'
-B. 'w'
-C. 'a'
-D. 'x'
-
-**Correct option:** C 'a'
+**Answer:** C  
 
 ---
 
-### 6. What does `fs.writeFile()` do if the file already exists?
+### 4.  
+What is a major drawback of synchronous file operations in Node.js?
 
-A. Throws error
-B. Appends content
-C. Overwrites file
-D. Ignores write
+A. Memory leak  
+B. Callback hell  
+C. Blocks event loop  
+D. Data corruption  
 
-**Correct option:** C Overwrites file
-
----
-
-### 7. What is the purpose of `fs.createReadStream()`?
-
-A. Read entire file at once
-B. Read file in chunks
-C. Write file
-D. Delete file
-
-**Correct option:** B Read file in chunks
+**Answer:** C  
 
 ---
 
-### 8. Which event is emitted when a readable stream finishes?
+### 5.  
+Which flag is used to append data to a file?
 
-A. close
-B. finish
-C. end
-D. done
+A. 'r'  
+B. 'w'  
+C. 'a'  
+D. 'x'  
 
-**Correct option:** C end
-
----
-
-### 9. What is the advantage of using streams over buffers?
-
-A. Faster CPU
-B. Less memory usage
-C. Better syntax
-D. No callbacks
-
-**Correct option:** B Less memory usage
+**Answer:** C  
 
 ---
 
-### 10. Which method checks if a file exists?
+### 6.  
+What does `fs.writeFile()` do if the file already exists?
 
-A. fs.exists()
-B. fs.check()
-C. fs.stat()
-D. fs.access()
+A. Throws error  
+B. Appends content  
+C. Overwrites file  
+D. Ignores write  
 
-**Correct option:** D fs.access()
-
----
-
-### 11. Which method is used to rename a file?
-
-A. fs.move()
-B. fs.rename()
-C. fs.changeName()
-D. fs.update()
-
-**Correct option:** B fs.rename()
+**Answer:** C  
 
 ---
 
-### 12. What does `fs.stat()` return?
+### 7.  
+What is the purpose of `fs.createReadStream()`?
 
-A. File content
-B. File metadata
-C. File path
-D. File stream
+A. Read entire file at once  
+B. Read file in chunks  
+C. Write file  
+D. Delete file  
 
-**Correct option:** B File metadata
-
----
-
-### 13. Which encoding is default for `fs.readFile()` if not specified?
-
-A. utf16
-B. ascii
-C. buffer
-D. utf8
-
-**Correct option:** C buffer
+**Answer:** B  
 
 ---
 
-### 14. Which approach avoids callback hell in file operations?
+### 8.  
+Which event is emitted when a readable stream finishes?
 
-A. Nested callbacks
-B. Promises / async-await
-C. Loops
-D. JSON
+A. close  
+B. finish  
+C. end  
+D. done  
 
-**Correct option:** B Promises / async-await
-
----
-
-### 15. Which module helps in handling file paths?
-
-A. fs
-B. path
-C. os
-D. util
-
-**Correct option:** B path
+**Answer:** C  
 
 ---
 
-### 16. What is the purpose of `fs.createWriteStream()`?
+### 9.  
+What is the advantage of using streams over buffers?
 
-A. Write file in chunks
-B. Read file
-C. Delete file
-D. Compress file
+A. Faster CPU  
+B. Less memory usage  
+C. Better syntax  
+D. No callbacks  
 
-**Correct option:** A Write file in chunks
-
----
-
-### 17. What is the role of buffers in file I/O?
-
-A. Store entire file permanently
-B. Temporary binary storage
-C. Compress files
-D. Encrypt files
-
-**Correct option:** B Temporary binary storage
+**Answer:** B  
 
 ---
 
-### 18. What happens if no callback is provided to `fs.readFile()`?
+### 10.  
+Which method checks if a file exists?
 
-A. File is read synchronously
-B. Throws error
-C. Returns promise
-D. Returns buffer
+A. fs.exists()  
+B. fs.check()  
+C. fs.stat()  
+D. fs.access()  
 
-**Correct option:** B Throws error
-
----
-
-### 19. What type of I/O model does Node.js primarily use?
-
-A. Blocking I/O
-B. Multi-threaded blocking
-C. Event-driven non-blocking I/O
-D. Synchronous polling
-
-**Correct option:** C Event-driven non-blocking I/O
+**Answer:** D  
 
 ---
 
-### 20. Which component handles asynchronous I/O in Node.js internally?
+### 11.  
+Which method is used to rename a file?
 
-A. V8 Engine
-B. Libuv
-C. Express
-D. npm
+A. fs.move()  
+B. fs.rename()  
+C. fs.changeName()  
+D. fs.update()  
 
-**Correct option:** B Libuv
+**Answer:** B  
 
-<<<<<<< HEAD
+---
+
+### 12.  
+What does `fs.stat()` return?
+
+A. File content  
+B. File metadata  
+C. File path  
+D. File stream  
+
+**Answer:** B  
+
+---
+
+### 13.  
+Which encoding is default for `fs.readFile()` if not specified?
+
+A. utf16  
+B. ascii  
+C. buffer  
+D. utf8  
+
+**Answer:** C  
+
+---
+
+### 14.  
+Which approach avoids callback hell in file operations?
+
+A. Nested callbacks  
+B. Promises / async-await  
+C. Loops  
+D. JSON  
+
+**Answer:** B  
+
+---
+
+### 15.  
+Which module helps in handling file paths?
+
+A. fs  
+B. path  
+C. os  
+D. util  
+
+**Answer:** B  
+
+---
+
+### 16.  
+What is the purpose of `fs.createWriteStream()`?
+
+A. Write file in chunks  
+B. Read file  
+C. Delete file  
+D. Compress file  
+
+**Answer:** A  
+
+---
+
+### 17.  
+What is the role of buffers in file I/O?
+
+A. Store entire file permanently  
+B. Temporary binary storage  
+C. Compress files  
+D. Encrypt files  
+
+**Answer:** B  
+
+---
+
+### 18.  
+What happens if no callback is provided to `fs.readFile()`?
+
+A. File is read synchronously  
+B. Throws error  
+C. Returns promise  
+D. Returns buffer  
+
+**Answer:** B  
+
+---
+
+### 19.  
+What type of I/O model does Node.js primarily use?
+
+A. Blocking I/O  
+B. Multi-threaded blocking  
+C. Event-driven non-blocking I/O  
+D. Synchronous polling  
+
+**Answer:** C  
+
+---
+
+### 20.  
+Which component handles asynchronous I/O in Node.js internally?
+
+A. V8 Engine  
+B. Libuv  
+C. Express  
+D. npm  
+
+**Answer:** B  
+
+---
 # Node.js Routing (Express) - MCQ Quiz
 
 ---
@@ -1724,13 +1786,43 @@ D. npm
 
 ---
 
-### 17. Which is correct usage of route chaining?
+### 17. What is the default port if not specified in an Express app?
+- A. 3000  
+- B. 8080  
+- C. 5000  
+- D. 80  
 
-```js
-app.route('/user')
-  .get(...)
-  .post(...)
-=======
+**Answer:** A  
+
+---
+
+### 18. Which middleware is used to parse JSON request bodies in Express?
+- A. express.json()  
+- B. express.parse()  
+- C. bodyParser.urlencoded()  
+- D. req.json()  
+
+**Answer:** A  
+
+---
+
+### 19. Which object is used to send HTTP status codes in Express?
+- A. req.status()  
+- B. res.status()  
+- C. app.status()  
+- D. next.status()  
+
+**Answer:** B  
+
+---
+
+### 20. What does next() do in Express middleware?
+- A. Ends the request  
+- B. Sends response  
+- C. Passes control to the next middleware function  
+- D. Restarts server  
+
+**Answer:** C  
 
 # 📘 Configuration Management in Node.js - MCQs
 
@@ -2427,6 +2519,7 @@ A) http
 B) fs
 
 C) url
+
 D) os
 
 **Answer: B**

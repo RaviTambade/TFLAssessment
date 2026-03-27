@@ -8,7 +8,7 @@ interface QuestionDto {
     description: string;
     questionType: string;
     difficultyLevel: string;
-    status: boolean;
+    status: string;
 }
 
 // ✅ Centralized Base URL
@@ -79,36 +79,59 @@ const UpdateQuestion = () => {
     // ✅ Save Update
     const handleSave = async (id: number) => {
         try {
+            // Find the original question to get all fields
+            const originalQuestion = questions.find(q => q.questionId === id);
+            if (!originalQuestion) {
+                alert("❌ Question not found");
+                return;
+            }
+
+            // Build update payload with correct types
+            // Status is string enum (DRAFT, APPROVED, INACTIVE)
+            const updatePayload = {
+                description: editData.description !== undefined ? editData.description : originalQuestion.description,
+                questionType: editData.questionType !== undefined ? editData.questionType : originalQuestion.questionType,
+                difficultyLevel: editData.difficultyLevel !== undefined ? editData.difficultyLevel : originalQuestion.difficultyLevel,
+                status: editData.status !== undefined ? editData.status : originalQuestion.status,
+            };
+
+            console.log("📤 Sending update payload:", updatePayload);
+
             const res = await fetch(`${BASE_URL}/questions/${id}`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(editData),
+                body: JSON.stringify(updatePayload),
             });
 
-            if (!res.ok) throw new Error("Update failed");
+            if (!res.ok) {
+                const errorData = await res.json().catch(() => ({ message: "No error details" }));
+                console.error("❌ Backend error response:", errorData);
+                throw new Error(errorData.message || "Update failed with status " + res.status);
+            }
 
             alert("✅ Updated successfully");
 
+            // Refresh data based on current mode
             if (mode === "ALL") {
-                fetchQuestions();
+                await fetchQuestions();
             } else if (mode === "BY_ID") {
-                fetchById();
+                await fetchById();
             }
 
             setEditingId(null);
             setEditData({});
         } catch (err) {
-            console.error(err);
-            alert("❌ Update failed");
+            console.error("🔴 Error:", err);
+            alert("❌ Update failed: " + (err instanceof Error ? err.message : "Unknown error"));
         }
     };
 
     return (
-        <section className="bg-background w-full m-0 p-0">
-            <div className="w-full">
+        <section className="bg-background w-full m-0 py-6">
+            <div className="w-full max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
 
                 {/* TITLE */}
-                <div className="text-center mb-6">
+                <div className="text-center mb-8">
                     <h2 className="text-3xl font-bold">
                         Update{" "}
                         <span className="bg-gradient-primary bg-clip-text text-transparent">
@@ -118,7 +141,7 @@ const UpdateQuestion = () => {
                 </div>
 
                 {/* BUTTONS */}
-                <div className="flex justify-center gap-4 mb-6 flex-wrap">
+                <div className="flex justify-center gap-4 mb-8 flex-wrap">
                     <Button onClick={() => {
                         setMode("ALL");
                         fetchQuestions();
@@ -136,7 +159,7 @@ const UpdateQuestion = () => {
 
                 {/* INPUT */}
                 {mode === "BY_ID" && (
-                    <div className="flex justify-center gap-2 mb-6 flex-wrap">
+                    <div className="flex justify-center gap-2 mb-8 flex-wrap">
                         <input
                             type="number"
                             placeholder="Enter Question ID"
@@ -156,7 +179,7 @@ const UpdateQuestion = () => {
                 )}
 
                 {/* COUNT */}
-                <p className="text-center mb-4">
+                <p className="text-center mb-6 text-sm text-gray-600">
                     Total Questions: {questions.length}
                 </p>
 
@@ -168,40 +191,41 @@ const UpdateQuestion = () => {
                                 <table className="w-full border text-sm">
                                     <thead className="bg-gray-200">
                                         <tr>
-                                            <th className="px-2 py-2">ID</th>
-                                            <th className="px-2 py-2">Description</th>
-                                            <th className="px-2 py-2">Type</th>
-                                            <th className="px-2 py-2">Difficulty</th>
-                                            <th className="px-2 py-2">Status</th>
-                                            <th className="px-2 py-2">Action</th>
+                                            <th className="px-4 py-3 text-base font-semibold">ID</th>
+                                            <th className="px-4 py-3 text-base font-semibold">Description</th>
+                                            <th className="px-4 py-3 text-base font-semibold">Type</th>
+                                            <th className="px-4 py-3 text-base font-semibold">Difficulty</th>
+                                            <th className="px-4 py-3 text-base font-semibold">Status</th>
+                                            <th className="px-4 py-3 text-base font-semibold">Action</th>
                                         </tr>
                                     </thead>
 
                                     <tbody>
                                         {questions.map((q) => (
-                                            <tr key={q.questionId} className="border-t">
+                                            <tr key={q.questionId} className="border-t text-base">
 
-                                                <td className="px-2 py-2">{q.questionId}</td>
+                                                <td className="px-4 py-3">{q.questionId}</td>
 
-                                                <td className="px-2 py-2">
+                                                <td className="px-4 py-3">
                                                     {editingId === q.questionId ? (
                                                         <input
                                                             name="description"
                                                             value={editData.description ?? q.description}
                                                             onChange={handleChange}
-                                                            className="border px-2 py-1 w-full"
+                                                            className="border px-2 py-1 w-full text-base"
                                                         />
                                                     ) : (
                                                         q.description
                                                     )}
                                                 </td>
 
-                                                <td className="px-2 py-2">
+                                                <td className="px-4 py-3 text-sm">
                                                     {editingId === q.questionId ? (
                                                         <select
                                                             name="questionType"
                                                             value={editData.questionType ?? q.questionType}
                                                             onChange={handleChange}
+                                                            className="text-sm"
                                                         >
                                                             <option value="MCQ">MCQ</option>
                                                             <option value="PROBLEM_STATEMENT">Problem</option>
@@ -210,42 +234,43 @@ const UpdateQuestion = () => {
                                                     ) : q.questionType}
                                                 </td>
 
-                                                <td className="px-2 py-2">
+                                                <td className="px-4 py-3 text-sm">
                                                     {editingId === q.questionId ? (
                                                         <select
                                                             name="difficultyLevel"
                                                             value={editData.difficultyLevel ?? q.difficultyLevel}
                                                             onChange={handleChange}
+                                                            className="text-sm"
                                                         >
-                                                            <option value="BEGINNER">Beginner</option>
-                                                            <option value="INTERMEDIATE">Intermediate</option>
-                                                            <option value="ADVANCE">Advance</option>
+                                                            <option value="BEGINNER">BEGINNER</option>
+                                                            <option value="INTERMEDIATE">INTERMEDIATE</option>
+                                                            <option value="ADVANCE">ADVANCE</option>
                                                         </select>
                                                     ) : q.difficultyLevel}
                                                 </td>
 
-                                                <td className="px-2 py-2 text-center">
+                                                <td className="px-2 py-2 text-center text-sm">
                                                     {editingId === q.questionId ? (
-                                                        <input
-                                                            type="checkbox"
+                                                        <select
                                                             name="status"
-                                                            checked={
-                                                                editData.status !== undefined
-                                                                    ? editData.status
-                                                                    : q.status
-                                                            }
+                                                            value={editData.status ?? q.status}
                                                             onChange={handleChange}
-                                                        />
-                                                    ) : q.status ? "Active" : "Inactive"}
+                                                            className="text-sm"
+                                                        >
+                                                            <option value="DRAFT">DRAFT</option>
+                                                            <option value="APPROVED">APPROVED</option>
+                                                            <option value="INACTIVE">INACTIVE</option>
+                                                        </select>
+                                                    ) : q.status}
                                                 </td>
 
-                                                <td className="px-2 py-2 text-center">
+                                                <td className="px-2 py-2 text-center text-sm">
                                                     {editingId === q.questionId ? (
-                                                        <div className="flex gap-2 justify-center">
-                                                            <Button onClick={() => handleSave(q.questionId)}>
+                                                        <div className="flex gap-1 justify-center">
+                                                            <Button onClick={() => handleSave(q.questionId)} size="sm" className="text-sm px-2 py-1 h-6">
                                                                 Save
                                                             </Button>
-                                                            <Button onClick={() => setEditingId(null)}>
+                                                            <Button onClick={() => setEditingId(null)} size="sm" className="text-sm px-2 py-1 h-6">
                                                                 Cancel
                                                             </Button>
                                                         </div>
@@ -253,7 +278,7 @@ const UpdateQuestion = () => {
                                                         <Button onClick={() => {
                                                             setEditingId(q.questionId);
                                                             setEditData(q);
-                                                        }}>
+                                                        }} size="sm" className="text-sm px-3 py-2 h-9">
                                                             Edit
                                                         </Button>
                                                     )}
