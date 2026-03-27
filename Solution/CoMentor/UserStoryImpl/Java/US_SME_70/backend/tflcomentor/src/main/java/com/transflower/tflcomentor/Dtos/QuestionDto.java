@@ -1,14 +1,14 @@
 package com.transflower.tflcomentor.Dtos;
 
-public class ViewQuestionByType {
+public class QuestionDto {
     private int questionId;
     private String questionType;
     private String questionText;
 
     // Constructors
-    public ViewQuestionByType() {}
+    public QuestionDto() {}
 
-    public ViewQuestionByType(int questionId, String questionType, String questionText) {
+    public QuestionDto(int questionId, String questionType, String questionText) {
         this.questionId = questionId;
         this.questionType = questionType;
         this.questionText = questionText;
