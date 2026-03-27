@@ -24,27 +24,58 @@ public class Question {
 
     private LocalDateTime createdAt;
 
-    private Boolean status;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Status status;
 
     // --- Getters & Setters ---
-    public Long getQuestionId() { return questionId; }
-    public void setQuestionId(Long questionId) { this.questionId = questionId; }
+    public Long getQuestionId() {
+        return questionId;
+    }
 
-    public String getDescription() { return description; }
-    public void setDescription(String description) { this.description = description; }
+    public void setQuestionId(Long questionId) {
+        this.questionId = questionId;
+    }
 
-    public QuestionType getQuestionType() { return questionType; }
-    public void setQuestionType(QuestionType questionType) { this.questionType = questionType; }
+    public String getDescription() {
+        return description;
+    }
 
-    public DifficultyLevel getDifficultyLevel() { return difficultyLevel; }
-    public void setDifficultyLevel(DifficultyLevel difficultyLevel) { this.difficultyLevel = difficultyLevel; }
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-    public LocalDateTime getCreatedAt() { return createdAt; }
-    public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
+    public QuestionType getQuestionType() {
+        return questionType;
+    }
 
-    public Boolean getStatus() { return status; }
-    public void setStatus(Boolean status) { this.status = status; }
+    public void setQuestionType(QuestionType questionType) {
+        this.questionType = questionType;
+    }
 
+    public DifficultyLevel getDifficultyLevel() {
+        return difficultyLevel;
+    }
+
+    public void setDifficultyLevel(DifficultyLevel difficultyLevel) {
+        this.difficultyLevel = difficultyLevel;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+    public Status getStatus() {
+        return status;
+    }
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    
     // --- Enums inside the entity ---
     public enum QuestionType {
         MCQ, PROBLEM_STATEMENT, HANDS_ON
@@ -53,4 +84,8 @@ public class Question {
     public enum DifficultyLevel {
         BEGINNER, INTERMEDIATE, ADVANCE
     }
+    public enum Status {
+        DRAFT, APPROVED, INACTIVE
+    }
+
 }

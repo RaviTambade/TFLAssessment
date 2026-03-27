@@ -8,7 +8,7 @@ public class QuestionDto {
     private String description;
     private Question.QuestionType questionType;
     private Question.DifficultyLevel difficultyLevel;
-    private Boolean status;
+    private Question.Status status;
 
     public QuestionDto() {}
 
@@ -33,6 +33,7 @@ public class QuestionDto {
     public Question.DifficultyLevel getDifficultyLevel() { return difficultyLevel; }
     public void setDifficultyLevel(Question.DifficultyLevel difficultyLevel) { this.difficultyLevel = difficultyLevel; }
 
-    public Boolean getStatus() { return status; }
-    public void setStatus(Boolean status) { this.status = status; }
+   public Question.Status getStatus() { return status; }
+   public void setStatus(Question.Status status) { this.status = status; }
+
 }
