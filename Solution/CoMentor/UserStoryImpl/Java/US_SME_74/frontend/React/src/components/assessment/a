@@ -278,7 +278,7 @@ const UpdateQuestion = () => {
                                                         <Button onClick={() => {
                                                             setEditingId(q.questionId);
                                                             setEditData(q);
-                                                        }} size="sm" className="text-sm px-3 py-2 h-9">
+                                                        }} size="sm" className="text-sm px-2 py-1 h-6">
                                                             Edit
                                                         </Button>
                                                     )}
