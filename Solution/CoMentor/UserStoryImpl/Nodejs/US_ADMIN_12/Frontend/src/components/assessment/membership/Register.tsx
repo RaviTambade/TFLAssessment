@@ -17,20 +17,63 @@ const RegisterPage = () => {
   const [contact, setContact] = useState("")
   const [password, setPassword] = useState("")
   const [confirmPassword, setConfirmPassword] = useState("")
+  const [gender, setGender] = useState("male")
+  const [dateOfBirth, setDateOfBirth] = useState("")
+  const [address, setAddress] = useState("")
+  const [pincode, setPincode] = useState("")
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [apiError, setApiError] = useState<string | null>(null)
+  const [apiSuccess, setApiSuccess] = useState<string | null>(null)
 
-  const handleRegister = (e: React.FormEvent) => {
+  const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault()
 
-    console.log({
-      firstName,
-      lastName,
-      email,
+    setApiError(null)
+    setApiSuccess(null)
+
+    if (password !== confirmPassword) {
+      setApiError("Passwords do not match")
+      return
+    }
+
+    const payload = {
       contact,
       password,
-      confirmPassword
-    })
+      first_name: firstName,
+      last_name: lastName,
+      gender,
+      date_of_birth: dateOfBirth,
+      email,
+      address,
+      pincode,
+    }
 
-        navigate("/login")
+    try {
+      setIsSubmitting(true)
+
+      const res = await fetch("http://localhost:4001/api/users/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      })
+
+      const data = await res.json().catch(() => ({}))
+
+      if (!res.ok) {
+        const message = data?.message || data?.error || `Request failed (${res.status})`
+        setApiError(message)
+        return
+      }
+
+      setApiSuccess(data?.message || "Registration successful")
+
+      // navigate to login after short delay
+      setTimeout(() => navigate("/models/membership/Login"), 1000)
+    } catch (err: any) {
+      setApiError(err?.message || "Network error")
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -64,6 +107,14 @@ const RegisterPage = () => {
           <CardContent className="p-6 sm:p-8">
 
             <form onSubmit={handleRegister} className="space-y-4">
+
+              {apiError && (
+                <div className="text-sm text-destructive">{apiError}</div>
+              )}
+
+              {apiSuccess && (
+                <div className="text-sm text-success">{apiSuccess}</div>
+              )}
 
               {/* First Name */}
               <div className="space-y-2">
@@ -121,6 +172,60 @@ const RegisterPage = () => {
                 />
               </div>
 
+              {/* Gender */}
+              <div className="space-y-2">
+                <Label htmlFor="gender">Gender</Label>
+
+                <select
+                  id="gender"
+                  value={gender}
+                  onChange={(e) => setGender(e.target.value)}
+                  className="w-full rounded-md border px-3 py-2 bg-transparent"
+                >
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+
+              {/* Date of Birth */}
+              <div className="space-y-2">
+                <Label htmlFor="dob">Date of Birth</Label>
+
+                <Input
+                  id="dob"
+                  type="date"
+                  value={dateOfBirth}
+                  onChange={(e) => setDateOfBirth(e.target.value)}
+                />
+              </div>
+
+              {/* Address */}
+              <div className="space-y-2">
+                <Label htmlFor="address">Address</Label>
+
+                <Input
+                  id="address"
+                  type="text"
+                  placeholder="Enter your address"
+                  value={address}
+                  onChange={(e) => setAddress(e.target.value)}
+                />
+              </div>
+
+              {/* Pincode */}
+              <div className="space-y-2">
+                <Label htmlFor="pincode">Pincode</Label>
+
+                <Input
+                  id="pincode"
+                  type="text"
+                  placeholder="Enter pincode"
+                  value={pincode}
+                  onChange={(e) => setPincode(e.target.value)}
+                />
+              </div>
+
               {/* Password */}
               <div className="space-y-2">
                 <Label htmlFor="password">Password</Label>
@@ -155,8 +260,9 @@ const RegisterPage = () => {
                 variant="hero"
                 size="lg"
                 className="w-full"
+                disabled={isSubmitting}
               >
-                Register
+                {isSubmitting ? "Registering..." : "Register"}
               </Button>
 
             </form>
