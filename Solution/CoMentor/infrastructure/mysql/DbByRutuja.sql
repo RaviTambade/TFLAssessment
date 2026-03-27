@@ -1,6 +1,6 @@
 
-CREATE DATABASE IF NOT EXISTS tflcomentor_db4;
-USE tflcomentor_db4;
+CREATE DATABASE IF NOT EXISTS tflcomentor_db;
+USE tflcomentor_db;
 
 -- 1. Layers
 CREATE TABLE layers (
@@ -230,54 +230,31 @@ CREATE TABLE mcq_options (
     FOREIGN KEY (question_id) REFERENCES questions(question_id) 
 );
 
--- 23. Hands On
-CREATE TABLE hands_on (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    question_id INT,
-    user_id INT NULL,
-    description TEXT,
-    duration INT,
-    created_at DATETIME,
-    FOREIGN KEY (question_id) REFERENCES questions(question_id) ,
-    FOREIGN KEY (user_id) REFERENCES users(id)
-);
-
--- 24. Hands On Submissions
+-- 23. Hands On Submissions
 CREATE TABLE hands_on_submissions (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    hands_on_id INT,
+    question_id INT,
     user_id INT,
     github_link VARCHAR(255),
     submitted_at DATETIME,
-    FOREIGN KEY (hands_on_id) REFERENCES hands_on(id) ,
+    FOREIGN KEY (question_id) REFERENCES questions(question_id),
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
--- 25. Hands On Results
+-- 24. Hands On Results
 CREATE TABLE hands_on_results (
     id INT PRIMARY KEY AUTO_INCREMENT,
     user_id INT,
-    hands_on_id INT,
+    question_id INT,
     score INT,
     sme_id INT NULL,
     status BOOLEAN,
     FOREIGN KEY (user_id) REFERENCES users(id),
-    FOREIGN KEY (hands_on_id) REFERENCES hands_on(id) ,
+    FOREIGN KEY (question_id) REFERENCES questions(question_id) ,
     FOREIGN KEY (sme_id) REFERENCES users(id) 
 );
 
--- 26. Problem Statements
-CREATE TABLE problem_statements (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    question_id INT,
-    description TEXT,
-    duration INT,
-    CONSTRAINT fk_problem_question
-        FOREIGN KEY (question_id)
-        REFERENCES questions(question_id)
-);
-
--- 27. Problem Statement Answers
+-- 25. Problem Statement Answers
 CREATE TABLE problem_statement_answers (
     id INT PRIMARY KEY AUTO_INCREMENT,
     answer TEXT,
@@ -288,7 +265,7 @@ CREATE TABLE problem_statement_answers (
         REFERENCES questions(question_id)
 );
 
--- 28. Assessments
+-- 26. Assessments
 CREATE TABLE assessments (
     id INT PRIMARY KEY AUTO_INCREMENT,
     test_id INT,
@@ -308,7 +285,7 @@ CREATE TABLE assessments (
         REFERENCES users(id)
 );
 
--- 29. Student Assessment Results
+-- 27. Student Assessment Results
 CREATE TABLE student_assessment_results (
     id INT PRIMARY KEY AUTO_INCREMENT,
     student_id INT,
@@ -324,7 +301,7 @@ CREATE TABLE student_assessment_results (
         REFERENCES assessments(id)
 );
 
--- 30. Mentor Appointments
+-- 28. Mentor Appointments
 CREATE TABLE mentor_appointments (
     id INT PRIMARY KEY AUTO_INCREMENT,
     student_id INT,
@@ -344,7 +321,7 @@ CREATE TABLE mentor_appointments (
         REFERENCES users(id)
 );
 
--- 31. Mentor Feedbacks
+-- 29. Mentor Feedbacks
 CREATE TABLE mentor_feedbacks (
     id INT PRIMARY KEY AUTO_INCREMENT,
     mentor_id INT,
@@ -361,7 +338,7 @@ CREATE TABLE mentor_feedbacks (
         REFERENCES users(id)
 );
 
--- 32. Mentor Counselings
+-- 30. Mentor Counselings
 CREATE TABLE mentor_counselings (
     id INT PRIMARY KEY AUTO_INCREMENT,
     mentor_id INT,
@@ -379,7 +356,7 @@ CREATE TABLE mentor_counselings (
         REFERENCES users(id)
 );
 
--- 33. Learning Paths
+-- 31. Learning Paths
 CREATE TABLE learning_paths (
     id INT PRIMARY KEY AUTO_INCREMENT,
     mentor_id INT,
@@ -395,7 +372,7 @@ CREATE TABLE learning_paths (
         REFERENCES users(id)        
 );
 
--- 34. Learning Path Progress
+-- 32. Learning Path Progress
 CREATE TABLE learning_path_progress (
     id INT PRIMARY KEY AUTO_INCREMENT,
     student_id INT,
@@ -414,7 +391,7 @@ CREATE TABLE learning_path_progress (
     UNIQUE(student_id, learning_path_id)
 );
 
--- 35. Student Concept Progress
+-- 33. Student Concept Progress
 CREATE TABLE student_concept_progress (
     id INT PRIMARY KEY AUTO_INCREMENT,
     student_id INT,
@@ -430,7 +407,7 @@ CREATE TABLE student_concept_progress (
         REFERENCES concepts(id)
 );
 
--- 36. Projects
+-- 34. Projects
 CREATE TABLE projects (
     project_id INT PRIMARY KEY AUTO_INCREMENT,
     mentor_id INT,
@@ -444,7 +421,7 @@ CREATE TABLE projects (
         REFERENCES users(id)
 );
 
--- 37. Project Members
+-- 35. Project Members
 CREATE TABLE project_members (
     id INT PRIMARY KEY AUTO_INCREMENT,
     project_id INT,
@@ -458,7 +435,7 @@ CREATE TABLE project_members (
         REFERENCES users(id)
 );
 
--- 38. Job Descriptions
+-- 36. Job Descriptions
 CREATE TABLE job_descriptions (
     job_id INT PRIMARY KEY AUTO_INCREMENT,
     employer_id INT,
@@ -471,7 +448,7 @@ CREATE TABLE job_descriptions (
         REFERENCES users(id)
 );
 
--- 39. Job Applications
+-- 37. Job Applications
 CREATE TABLE job_applications (
     id INT PRIMARY KEY AUTO_INCREMENT,
     job_id INT,
@@ -487,7 +464,7 @@ CREATE TABLE job_applications (
         REFERENCES users(id)
 );
 
--- 40. Interviews
+-- 38. Interviews
 CREATE TABLE interviews (
     interview_id INT PRIMARY KEY AUTO_INCREMENT,
     application_id INT,
@@ -503,7 +480,7 @@ CREATE TABLE interviews (
         REFERENCES job_applications(id)
 );
 
--- 41. Shortlisted Candidates
+-- 39. Shortlisted Candidates
 CREATE TABLE shortlisted_candidates (
     id INT PRIMARY KEY AUTO_INCREMENT,
     user_id INT,
@@ -518,7 +495,7 @@ CREATE TABLE shortlisted_candidates (
         REFERENCES job_descriptions(job_id)
 );
 
--- 43. Notification Categories
+-- 40. Notification Categories
 CREATE TABLE notification_categories (
     id INT PRIMARY KEY AUTO_INCREMENT,
     category VARCHAR(100) NOT NULL,
@@ -526,7 +503,7 @@ CREATE TABLE notification_categories (
     UNIQUE(category)
 );
 
--- 42. Notifications
+-- 41. Notifications
 CREATE TABLE notifications (
     id INT PRIMARY KEY AUTO_INCREMENT,
     user_id INT,
@@ -542,7 +519,7 @@ CREATE TABLE notifications (
 );
 
 
--- 44. User Logs
+-- 42. User Logs
 CREATE TABLE user_logs (
     id INT PRIMARY KEY AUTO_INCREMENT,
     user_id INT,
@@ -553,7 +530,7 @@ CREATE TABLE user_logs (
         REFERENCES users(id)
 );
 
--- 45. Performance Snapshots
+-- 43. Performance Snapshots
 CREATE TABLE performance_snapshots (
     id INT PRIMARY KEY AUTO_INCREMENT,
     student_id INT,
@@ -565,7 +542,7 @@ CREATE TABLE performance_snapshots (
     UNIQUE(student_id, snapshot_date)
 );
 
--- 46. Learning Resources
+-- 44. Learning Resources
 CREATE TABLE learning_resources (
     id INT PRIMARY KEY AUTO_INCREMENT,
     title VARCHAR(255) NOT NULL,
@@ -580,7 +557,7 @@ CREATE TABLE learning_resources (
         REFERENCES users(id)
 );
 
--- 47. Oral Question Answers
+-- 45. Oral Question Answers
 CREATE TABLE oral_question_answers (
     id INT PRIMARY KEY AUTO_INCREMENT,
     questions TEXT,
@@ -597,7 +574,7 @@ CREATE TABLE oral_question_answers (
         REFERENCES users(id)
 );
 
--- 48. Oral Assessments
+-- 46. Oral Assessments
 CREATE TABLE oral_assessments (
     id INT PRIMARY KEY AUTO_INCREMENT,
     student_id INT,
