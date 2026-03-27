@@ -2,17 +2,17 @@
 //i am using jdbc 
 package com.transflower.tflcomentor.Entities;
 
-public class ViewQuestionsByStatus {
+public class Questions {
     private int questionId;
     private String questionType;
     private String questiondifficultyLevel;
     private String questionText;
     private String questionStatus;
 
-    public ViewQuestionsByStatus() {
+    public Questions() {
     }
 
-    public ViewQuestionsByStatus(int questionId, String questionType, String questionText, String questiondifficultyLevel, String questionStatus) {
+    public Questions(int questionId, String questionType, String questionText, String questiondifficultyLevel, String questionStatus) {
         this.questionId = questionId;
         this.questionType = questionType;
         this.questionText = questionText;
