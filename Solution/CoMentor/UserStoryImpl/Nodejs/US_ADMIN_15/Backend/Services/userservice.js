@@ -4,15 +4,8 @@ class UserService {
     this.repo = repo;
   }
 
-  inactivateUser(id, callback) {
-    this.repo.inactivateUser(id, callback);
-  }
-
-  blockUser(id, callback) {
-    this.repo.blockUser(id, callback);
-  }
-  activateUser(id, callback){
-    this.repo.activateUser(id, callback);
+  changeUserStatus(id, status, callback) {
+    this.repo.changeUserStatus(id, status, callback);
   }
 }
 

@@ -1,5 +1,6 @@
 package com.transflower.tflcomentor.repositories;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
 import com.transflower.tflcomentor.entities.Question;
@@ -15,9 +16,14 @@ import com.transflower.tflcomentor.dtos.ViewQuestionDto;
 @Repository
 public class ViewQuestionRepository implements IViewQuestionRepository {
 
-    private final String URL = "jdbc:mysql://192.168.1.149:3306/tflcomentor_db";
-    private final String USERNAME = "root";
-    private final String PASSWORD = "password";
+        @Value("${spring.datasource.url}")
+        private String url;
+
+        @Value("${spring.datasource.username}")
+        private String username;
+
+        @Value("${spring.datasource.password}")
+        private String password;
 
     @Override
     public Question findById(Long questionId) {
@@ -25,7 +31,8 @@ public class ViewQuestionRepository implements IViewQuestionRepository {
         String sql = "SELECT * FROM questions WHERE question_id = ?";
 
         try (
-                Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD); PreparedStatement ps = conn.prepareStatement(sql)) {
+                Connection conn = DriverManager.getConnection(url, username, password);
+                PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setLong(1, questionId);
 
@@ -53,7 +60,9 @@ public class ViewQuestionRepository implements IViewQuestionRepository {
         String sql = "SELECT * FROM questions";
 
         try (
-                Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD); PreparedStatement ps = conn.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
+                Connection conn = DriverManager.getConnection(url, username, password);
+                PreparedStatement ps = conn.prepareStatement(sql);
+                ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
                 Question q = new Question();
@@ -74,7 +83,9 @@ public class ViewQuestionRepository implements IViewQuestionRepository {
         String sql = "SELECT * FROM concepts";
 
         try (
-                Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD); PreparedStatement ps = conn.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
+                Connection conn = DriverManager.getConnection(url, username, password);
+                PreparedStatement ps = conn.prepareStatement(sql);
+                ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
                 Concept c = new Concept();
@@ -102,7 +113,8 @@ public class ViewQuestionRepository implements IViewQuestionRepository {
                     """;
 
         try (
-                Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD); PreparedStatement ps = conn.prepareStatement(sql);) {
+                Connection conn = DriverManager.getConnection(url, username, password);
+                PreparedStatement ps = conn.prepareStatement(sql);) {
             ps.setLong(1, conceptId);
             ResultSet rs = ps.executeQuery();
 

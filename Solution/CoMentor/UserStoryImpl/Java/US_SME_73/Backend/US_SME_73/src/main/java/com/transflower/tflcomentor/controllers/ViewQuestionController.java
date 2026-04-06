@@ -11,6 +11,7 @@ import com.transflower.tflcomentor.dtos.ViewQuestionDto;
 import com.transflower.tflcomentor.services.ViewQuestionService;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:8080") // Allow requests from the frontend
 @RequestMapping("/api")
 public class ViewQuestionController {
 
