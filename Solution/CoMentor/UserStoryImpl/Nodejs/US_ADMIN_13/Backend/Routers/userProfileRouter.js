@@ -21,6 +21,13 @@ module.exports = (controller) => {
    * Response:
    *   - Contains user profile with personal, academic, and professional information
    */
+  router.get("/", (req, res) => {
+    res.json({
+      success: true,
+      message: "User Profile Service is running",
+    });
+  });
+
   router.get("/getUserProfile/:id", (req, res) => {
     controller.getUserProfile(req, res);
   });

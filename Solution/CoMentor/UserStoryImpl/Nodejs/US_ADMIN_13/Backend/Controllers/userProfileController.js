@@ -12,9 +12,7 @@ class UserProfileController {
   constructor(service) {
     this.service = service;
   }
-
-  
-   
+ 
   getUserProfile(req, res) {
     const userId = req.params.id;
 
@@ -36,8 +34,6 @@ class UserProfileController {
       res.json(response);
     });
   }
-
-  
 
 }
 
