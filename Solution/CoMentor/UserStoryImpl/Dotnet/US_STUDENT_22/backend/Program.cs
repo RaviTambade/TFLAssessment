@@ -21,20 +21,22 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 
 // ✅ Dependency Injection
-builder.Services.AddScoped<IAssessmentRepository, AssessmentRepository>();
-builder.Services.AddScoped<IAssessmentService, AssessmentService>();
 
 // 🔥 ADD THIS LINE
 builder.Services.AddScoped<IAssessmentsUpcomingService, AssessmentsUpcomingService>();
 builder.Services.AddScoped<IAssessmentUpcomingRepository, AssessmentUpcomingRepository>();
  
-builder.Services.AddScoped<IAssessmentAssignRepository, AssessmentAssignRepository>();
-builder.Services.AddScoped<IAssessmentAssignService, AssessmentAssignService>();
- builder.Services.AddScoped<IAssessmentRepository, AssessmentRepository>();
- builder.Services.AddScoped<IAssessmentService, AssessmentService>();
- builder.Services.AddScoped<IResultRepository, ResultRepository>();
-builder.Services.AddScoped<IResultService, ResultService>();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll",
+        policy =>
+        {
+            policy.AllowAnyOrigin()
+                  .AllowAnyMethod()
+                  .AllowAnyHeader();
+        });
+});
 var app = builder.Build();
 
 // // ✅ Enable Swagger UI
@@ -45,11 +47,11 @@ var app = builder.Build();
 // }
 
 // app.UseHttpsRedirection();
-if (!app.Environment.IsDevelopment())
-{
-    app.UseHttpsRedirection();
-}
-
+// if (!app.Environment.IsDevelopment())
+// {
+//     app.UseHttpsRedirection();
+// }
+app.UseCors("AllowAll");
 app.UseAuthorization();
 
 app.MapControllers();
