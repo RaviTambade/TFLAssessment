@@ -12,7 +12,7 @@ public class AssessmentStatisticsController : ControllerBase
         _service = service;
     }
 
-    // ✅ GET: api/AssessmentStatistics
+    //GET: api/AssessmentStatistics
     [HttpGet]
     public async Task<IActionResult> GetAssessmentStatistics()
     {
