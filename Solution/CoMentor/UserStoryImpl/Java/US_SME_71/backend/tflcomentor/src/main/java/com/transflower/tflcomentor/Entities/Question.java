@@ -1,15 +1,36 @@
-// write entities for viewing questions by question type 
-//i am using jdbc 
+// Hibernate entity for managing questions 
 package com.transflower.tflcomentor.Entities;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "questions")
 public class Question {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "question_id")
     private int questionId;
+    
+    @Column(name = "question_type")
     private String questionType;
+    
+    @Column(name = "difficulty_level")
     private String questiondifficultyLevel;
+    
+    @Column(name = "description")
     private String questionText;
+    
+    @Column(name = "status")
     private String questionStatus;
 
     public Question() {
+    }
+
+    public Question(String questionType, String questionText, String questiondifficultyLevel, String questionStatus) {
+        this.questionType = questionType;
+        this.questionText = questionText;
+        this.questiondifficultyLevel = questiondifficultyLevel;
+        this.questionStatus = questionStatus;
     }
 
     public Question(int questionId, String questionType, String questionText, String questiondifficultyLevel, String questionStatus) {
