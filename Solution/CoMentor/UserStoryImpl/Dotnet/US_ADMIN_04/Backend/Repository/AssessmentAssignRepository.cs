@@ -35,16 +35,21 @@ public class AssessmentAssignRepository : IAssessmentAssignRepository
 
     public async Task AssignAssessment(AssignAssessmentDto dto)
     {
-        var assessment = new Assessment
-        {
-            TestId = dto.TestId,
-            StudentId = dto.StudentId,
-            AssignedAt = DateTime.Now,
-            ScheduledAt = dto.ScheduledAt,
-            Status = "Assigned"
-        };
+        var assessments = new List<Assessment>();
 
-        _context.Assessments.Add(assessment);
+        foreach (var studentId in dto.StudentIds)
+        {
+            assessments.Add(new Assessment
+            {
+                TestId = dto.TestId,
+                StudentId = studentId,
+                AssignedAt = DateTime.Now,
+                ScheduledAt = dto.ScheduledAt,
+                Status = "Assigned"
+            });
+        }
+
+        await _context.Assessments.AddRangeAsync(assessments);
         await _context.SaveChangesAsync();
     }
 
