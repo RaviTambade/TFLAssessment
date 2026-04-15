@@ -27,19 +27,58 @@ public class QuestionRepository implements IQuestionRepository {
         Class.forName(driver);
         return DriverManager.getConnection(url, username, password);
     }
+public Long insertQuestion(Question q) {
 
-    public void insertQuestion(Question q) {
-        String sql = "INSERT INTO questions(description, question_type, difficulty_level, status, created_at) VALUES (?, ?, ?, 'DRAFT', NOW())";
-        try (Connection conn = getConnection(); 
-        PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setString(1, q.getDescription());
-            stmt.setString(2, q.getQuestionType());
-            stmt.setString(3, q.getDifficultyLevel());
-            stmt.executeUpdate();
-        } catch (Exception e) {
-            e.printStackTrace();
+    Long questionId = null;
+
+    String sql = "INSERT INTO questions(description, question_type, difficulty_level, status, created_at) VALUES (?, ?, ?, 'DRAFT', NOW())";
+
+    try (Connection conn = getConnection();
+         PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+
+        stmt.setString(1, q.getDescription());
+        stmt.setString(2, q.getQuestionType());
+        stmt.setString(3, q.getDifficultyLevel());
+
+        stmt.executeUpdate();
+
+        ResultSet rs = stmt.getGeneratedKeys();
+        if (rs.next()) {
+            questionId = rs.getLong(1);
         }
+
+    } catch (Exception e) {
+        e.printStackTrace();
     }
+
+    return questionId;
+}
+
+public void insertMcqOptions(Long questionId,
+                            String optionA,
+                            String optionB,
+                            String optionC,
+                            String optionD,
+                            String correctAnswer) {
+
+    String sql = "INSERT INTO mcq_options(option_a, option_b, option_c, option_d, correct_answer, question_id) VALUES (?, ?, ?, ?, ?, ?)";
+
+    try (Connection conn = getConnection();
+         PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+        stmt.setString(1, optionA);
+        stmt.setString(2, optionB);
+        stmt.setString(3, optionC);
+        stmt.setString(4, optionD);
+        stmt.setString(5, correctAnswer);
+        stmt.setLong(6, questionId);
+
+        stmt.executeUpdate();
+
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+}
 
     public List<Question> getAllQuestions() {
         List<Question> list = new ArrayList<>();

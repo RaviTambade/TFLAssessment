@@ -19,7 +19,7 @@ public class QuestionController {
     @PostMapping("/create")
     public String createQuestion(@RequestBody QuestionDto dto) {
         service.createQuestion(dto);
-        return "Question Created (DRAFT)";
+        return "Question + Options Saved!";
     }
 
     @GetMapping("/all")

@@ -6,6 +6,8 @@ import com.transflower.tflcomentor.dtos.QuestionDto;
 import java.util.List;
 
 public interface IQuestionService {
+
+    
     void createQuestion(QuestionDto dto);
     List<Question> getAllQuestions();
     List<Question> getDraftQuestions();

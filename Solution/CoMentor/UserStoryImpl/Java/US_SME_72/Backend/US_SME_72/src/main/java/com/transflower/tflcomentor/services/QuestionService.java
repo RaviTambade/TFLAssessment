@@ -17,11 +17,24 @@ public class QuestionService implements IQuestionService {
 
     public void createQuestion(QuestionDto dto) {
 
+
         Question q = new Question();
         q.setDescription(dto.getDescription());
         q.setQuestionType(dto.getQuestionType());
         q.setDifficultyLevel(dto.getDifficultyLevel());
-        repository.insertQuestion(q);
+        Long questionId = repository.insertQuestion(q);
+
+    
+        if (questionId != null) {
+            repository.insertMcqOptions(
+                questionId,
+                dto.getOptionA(),
+                dto.getOptionB(),
+                dto.getOptionC(),
+                dto.getOptionD(),
+                dto.getCorrectAnswer()
+            );
+        }
     }
 
     public List<Question> getAllQuestions() {
