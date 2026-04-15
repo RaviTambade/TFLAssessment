@@ -2,7 +2,6 @@
 
 const express = require("express");
 const cors = require("cors");
-const bodyParser = require("body-parser");
 
 // Import connection
 const connection = require("./Config/db");
@@ -25,16 +24,28 @@ const userProfileController = new UserProfileController(userProfileService);
 // Layer 4: Router (Route Definitions) - depends on controller
 const router = userProfileRouter(userProfileController);
 
-// ============================================
+
 // EXPRESS APP SETUP
-// ============================================
 
 const app = express();
 
 // Middleware
 app.use(cors());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+
+// Only parse JSON for requests with JSON content-type and non-GET methods.
+app.use((req, res, next) => {
+  if (req.method === "GET" || req.method === "HEAD") {
+    return next();
+  }
+
+  if (req.is("application/json")) {
+    express.json()(req, res, next);
+  } else {
+    next();
+  }
+});
+
+app.use(express.urlencoded({ extended: true }));
 
 // Routes
 app.use("/api/userprofile", router);
@@ -61,10 +72,13 @@ app.use((req, res) => {
 // Error handler middleware
 app.use((err, req, res, next) => {
   console.error("Error:", err);
-  res.status(500).json({
+  const statusCode = err.statusCode || err.status || 500;
+  const message = err.message || "Internal server error";
+
+  res.status(statusCode).json({
     success: false,
-    error: "Internal server error",
-    statusCode: 500,
+    error: message,
+    statusCode,
   });
 });
 
