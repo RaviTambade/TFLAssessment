@@ -9,7 +9,9 @@ export default function AssignAssessment() {
   const [searchStudent, setSearchStudent] = useState("");
   const [searchTest, setSearchTest] = useState("");
 
-  const [selectedStudent, setSelectedStudent] = useState<number | null>(null);
+  // ✅ CHANGED: multiple students
+  const [selectedStudents, setSelectedStudents] = useState<number[]>([]);
+
   const [selectedTest, setSelectedTest] = useState<number | null>(null);
 
   const [date, setDate] = useState("");
@@ -46,7 +48,17 @@ export default function AssignAssessment() {
     }
   };
 
-  /* ================= FILTER SAFE ================= */
+  /* ================= TOGGLE STUDENTS (NEW) ================= */
+
+  const toggleStudent = (id: number) => {
+    setSelectedStudents(prev =>
+      prev.includes(id)
+        ? prev.filter(x => x !== id)
+        : [...prev, id]
+    );
+  };
+
+  /* ================= FILTER ================= */
 
   const filteredStudents = students.filter(s =>
     (s?.fullName ?? "").toLowerCase().includes(searchStudent.toLowerCase())
@@ -60,13 +72,13 @@ export default function AssignAssessment() {
 
   const handleAssign = async () => {
     try {
-      if (!selectedStudent || !selectedTest) {
-        alert("Please select student and test");
+      if (selectedStudents.length === 0 || !selectedTest) {
+        alert("Please select students and test");
         return;
       }
 
       const dto = {
-        studentId: selectedStudent,
+        studentIds: selectedStudents,   // ✅ CHANGED
         testId: selectedTest,
         scheduledAt: new Date(`${date}T${time}:00`).toISOString(),
         status
@@ -83,9 +95,7 @@ export default function AssignAssessment() {
 
       const text = await res.text();
 
-      if (!res.ok) {
-        throw new Error(text);
-      }
+      if (!res.ok) throw new Error(text);
 
       alert("Assessment Assigned Successfully");
       reset();
@@ -96,12 +106,14 @@ export default function AssignAssessment() {
     }
   };
 
+  /* ================= RESET ================= */
+
   const reset = () => {
     setStep(0);
     setStatus("");
     setSearchStudent("");
     setSearchTest("");
-    setSelectedStudent(null);
+    setSelectedStudents([]); // ✅ CHANGED
     setSelectedTest(null);
     setDate("");
     setTime("");
@@ -156,11 +168,11 @@ export default function AssignAssessment() {
           </div>
         )}
 
-        {/* STEP 2 - STUDENT (SINGLE SELECT) */}
+        {/* STEP 2 - STUDENTS (MULTI SELECT) */}
         {step === 2 && (
           <div className="bg-white p-5 mt-4 rounded shadow border border-orange-200">
 
-            <h2 className="font-bold mb-2">Select Student</h2>
+            <h2 className="font-bold mb-2">Select Students</h2>
 
             <input
               placeholder="Search students..."
@@ -173,10 +185,9 @@ export default function AssignAssessment() {
               {filteredStudents.map(s => (
                 <label key={s.id} className="flex gap-2 border p-2 mb-2 rounded">
                   <input
-                    type="radio"
-                    name="student"
-                    checked={selectedStudent === s.id}
-                    onChange={() => setSelectedStudent(s.id)}
+                    type="checkbox"   // ✅ CHANGED
+                    checked={selectedStudents.includes(s.id)}
+                    onChange={() => toggleStudent(s.id)}
                   />
                   {s.fullName}
                 </label>
@@ -185,7 +196,7 @@ export default function AssignAssessment() {
 
             <button
               onClick={() => setStep(3)}
-              disabled={!selectedStudent}
+              disabled={selectedStudents.length === 0} // ✅ CHANGED
               className="bg-orange-600 text-white w-full mt-3 py-2 rounded"
             >
               Next
@@ -272,8 +283,13 @@ export default function AssignAssessment() {
             <p><b>Date:</b> {date}</p>
             <p><b>Time:</b> {time}</p>
 
-            <p className="mt-3 font-semibold">Student:</p>
-            <p>{students.find(s => s.id === selectedStudent)?.fullName}</p>
+            <p className="mt-3 font-semibold">Students:</p>
+            <p>
+              {students
+                .filter(s => selectedStudents.includes(s.id))
+                .map(s => s.fullName)
+                .join(", ")}
+            </p>
 
             <p className="mt-3 font-semibold">Test:</p>
             <p>{tests.find(t => t.id === selectedTest)?.title}</p>
