@@ -1,0 +1,47 @@
+[
+  {
+    "id": 1,
+    "mentor_id": 4,
+    "project_name": "TFLAssessment",
+    "description": "Assessment platform for conducting online tests, evaluating performance, and generating results",
+    "repository_url": "https://github.com/RaviTambade/TFLAssessment.git",
+    "status": "PENDING", 
+    "created_at": "2026-04-14T10:00:00"
+  },
+  {
+    "id": 2,
+    "mentor_id": 4,
+    "project_name": "E-Krushi-Project",
+    "description": "Digital agriculture platform providing farmers with crop guidance, market prices, and smart farming solutions",
+    "repository_url": "https://github.com/RaviTambade/E-Krushi-Project.git",
+    "status": "IN_PROGRESS",
+    "created_at": "2026-04-14T10:00:00"
+  },
+  {
+    "id": 3,
+    "mentor_id": 4,
+    "project_name": "TFLGreenhouseAutomation",
+    "description": "Automation system for monitoring and controlling greenhouse environment like temperature, humidity, and irrigation",
+    "repository_url": "https://github.com/RaviTambade/TFLGreenhouseAutomation.git",
+    "status": "IN_PROGRESS",
+    "created_at": "2026-04-14T10:00:00"
+  },
+  {
+    "id": 4,
+    "mentor_id": 4,
+    "project_name": "EAgroServices",
+    "description": "Online platform offering agricultural services like equipment rental, soil testing, and advisory support",
+    "repository_url": "https://github.com/RaviTambade/EAgroServices.git",
+    "status": "PENDING",
+    "created_at": "2026-04-14T10:00:00"
+  },
+  {
+    "id": 5,
+    "mentor_id": 4,
+    "project_name": "InventoryManagement",
+    "description": "System to manage stock, track inventory levels, and generate reports for business operations",
+    "repository_url": "https://github.com/RaviTambade/InventoryManagement.git",
+    "status": "COMPLETED",
+    "created_at": "2026-04-14T10:00:00"
+  }
+]
