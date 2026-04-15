@@ -3,6 +3,7 @@ package com.transflower.tflcomentor.services;
 import com.transflower.tflcomentor.entities.Question;
 import com.transflower.tflcomentor.repositories.IQuestionRepository;
 import com.transflower.tflcomentor.dtos.QuestionDto;
+import com.transflower.tflcomentor.dtos.QuestionListDto;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -64,5 +65,25 @@ public class QuestionService implements IQuestionService {
 
     public void rejectAllQuestions() {
         repository.rejectAllQuestions();
+    }
+
+    @Override
+    public List<QuestionListDto> getDraftQuestionList() {
+        return repository.getDraftQuestionList();
+    }
+
+    @Override
+    public List<QuestionListDto> getRecentQuestionList() {
+        return repository.getRecentQuestionList();
+    }
+
+    @Override
+    public QuestionDto getQuestionDetails(Long id) {
+        return repository.getQuestionDetails(id);
+    }
+
+    @Override
+    public void updateQuestion(Long id, QuestionDto dto) {
+        repository.updateQuestion(id, dto);
     }
 }

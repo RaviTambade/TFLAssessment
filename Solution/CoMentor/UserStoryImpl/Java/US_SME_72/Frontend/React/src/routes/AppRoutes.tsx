@@ -2,11 +2,13 @@ import React from "react";
 import { Routes, Route } from "react-router-dom";
 import Navbar from "../components/Navbar";
 
-// Evaluation Content
+// Components
 import EvaluationContentMenu from "../components/assessment/EvaluationContentMenu";
 import Assessment from "../components/assessment/ComponentButtons";
 import SMEInsertQuestion from "../components/assessment/SMEInsertQuestion";
 import MentorReviewQuestion from "../components/assessment/MentorReviewQuestion";
+import QuestionDetails from "../components/assessment/QuestionDetails";
+import UpdateQuestion from "@/components/assessment/UpdateQuestion";
 
 function AppRoutes() {
   return (
@@ -15,17 +17,20 @@ function AppRoutes() {
 
       <main className="pt-20">
         <Routes>
-          {/* Main Menu */}
+
+          {/* ✅ Question Details */}
+          <Route path="/evaluationcontent/questiondetails/:id" element={<QuestionDetails />} />
+          <Route path="/evaluationcontent/update/:id" element={<UpdateQuestion />} />
+
+          {/* ✅ Edit Route */}
+          <Route path="/evaluationcontent/edit/:id" element={<UpdateQuestion />} />
+
+          {/* Other Routes */}
           <Route path="/evaluationcontent/componentmenu" element={<EvaluationContentMenu />} />
-
-          {/* SME */}
           <Route path="/evaluationcontent/insertquestion" element={<SMEInsertQuestion />} />
-
-          {/* Mentor */}
           <Route path="/evaluationcontent/reviewquestion" element={<MentorReviewQuestion />} />
-
-          {/* Other */}
           <Route path="/evaluationcontent/components" element={<Assessment />} />
+
         </Routes>
       </main>
     </div>

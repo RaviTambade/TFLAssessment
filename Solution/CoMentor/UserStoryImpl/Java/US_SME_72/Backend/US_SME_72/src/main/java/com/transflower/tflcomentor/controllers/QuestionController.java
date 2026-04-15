@@ -1,6 +1,7 @@
 package com.transflower.tflcomentor.controllers;
 
 import com.transflower.tflcomentor.dtos.QuestionDto;
+import com.transflower.tflcomentor.dtos.QuestionListDto;
 import com.transflower.tflcomentor.entities.Question;
 import com.transflower.tflcomentor.services.IQuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +11,11 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/questions")
-@CrossOrigin(origins = "http://localhost:8080")
+@CrossOrigin(
+    origins = "http://localhost:8080",
+    allowedHeaders = "*",
+    methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE, RequestMethod.OPTIONS}
+)
 public class QuestionController {
 
     @Autowired
@@ -60,4 +65,26 @@ public class QuestionController {
     public List<Question> getRecentQuestions() {
         return service.getRecentQuestions();
     }
+
+
+    @GetMapping("/draft-list")
+    public List<QuestionListDto> getDraftList() {
+        return service.getDraftQuestionList();
+    }
+
+    @GetMapping("/recent-list")
+    public List<QuestionListDto> getRecentList() {
+        return service.getRecentQuestionList();
+    }
+
+    @GetMapping("/{id}")
+    public QuestionDto getDetails(@PathVariable Long id) {
+        return service.getQuestionDetails(id);
+    }
+
+    @PutMapping("/{id}")
+    public String updateQuestion(@PathVariable Long id, @RequestBody QuestionDto dto) {
+        service.updateQuestion(id, dto);
+        return "Question Updated Successfully";
+}
 }
