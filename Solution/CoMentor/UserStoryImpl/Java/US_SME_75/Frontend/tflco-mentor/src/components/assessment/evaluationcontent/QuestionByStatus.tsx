@@ -1,6 +1,14 @@
 import { useEffect, useMemo, useState } from "react";
 import { fetchQuestionsByStatus } from "@/api/questions";
 import type { Question } from "@/types/question";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationPrevious,
+  PaginationNext,
+} from "@/components/ui/pagination";
 
 const QUESTION_STATUSES = [
   "ACTIVE",
@@ -9,6 +17,8 @@ const QUESTION_STATUSES = [
 ];
 const QuestionByStatus = () => {
   const [selectedStatus, setSelectedStatus] = useState(QUESTION_STATUSES[0]);
+  const [page, setPage] = useState(0);
+  const [totalPages, setTotalPages] = useState(0);
   const [questions, setQuestions] = useState<Question[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -25,9 +35,10 @@ const QuestionByStatus = () => {
       setLoading(true);
       setError(null);
       try {
-        const data = await fetchQuestionsByStatus(selectedStatus);
+        const data = await fetchQuestionsByStatus(selectedStatus, page, 10);
         if (isMounted) {
-          setQuestions(data);
+          setQuestions(data.content);
+          setTotalPages(data.totalPages);
         }
       } catch (err) {
         if (isMounted) {
@@ -35,6 +46,7 @@ const QuestionByStatus = () => {
             err instanceof Error ? err.message : "Failed to load questions"
           );
           setQuestions([]);
+          setTotalPages(0);
         }
       } finally {
         if (isMounted) {
@@ -47,7 +59,7 @@ const QuestionByStatus = () => {
     return () => {
       isMounted = false;
     };
-  }, [selectedStatus]);
+  }, [selectedStatus, page]);
 
   return (
     <section className="py-12 bg-gradient-to-b from-orange-50/40 to-background">
@@ -83,7 +95,10 @@ const QuestionByStatus = () => {
                   name="questionStatus"
                   value={status}
                   checked={selectedStatus === status}
-                  onChange={() => setSelectedStatus(status)}
+                  onChange={() => {
+                    setSelectedStatus(status);
+                    setPage(0);
+                  }}
                   className="accent-orange-500"
                 />
                 <span className="text-sm font-medium">{status}</span>
@@ -114,9 +129,14 @@ const QuestionByStatus = () => {
         {/* Questions */}
         {questions.length > 0 && (
           <div className="group rounded-xl border border-border bg-card p-5 shadow-sm">
-            <h2 className="text-lg font-semibold text-foreground mb-4">
-             {selectedStatus.replaceAll("_", " ")} Questions
-            </h2>
+            <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+              <h2 className="text-lg font-semibold text-foreground">
+                {selectedStatus.split("_").join(" ")} Questions
+              </h2>
+              <p className="text-sm text-muted-foreground">
+                Page {page + 1} of {Math.max(totalPages, 1)}
+              </p>
+            </div>
 
             <ul className="space-y-3">
               {questions.map((question) => (
@@ -130,6 +150,38 @@ const QuestionByStatus = () => {
                 </li>
               ))}
             </ul>
+
+            <Pagination className="mt-6">
+              <PaginationContent>
+                <PaginationItem>
+                  <PaginationPrevious
+                    href="#"
+                    onClick={(event) => {
+                      event.preventDefault();
+                      setPage((current) => Math.max(current - 1, 0));
+                    }}
+                    className={page === 0 ? "opacity-50 pointer-events-none" : ""}
+                  />
+                </PaginationItem>
+
+                <PaginationItem>
+                  <span className="px-3 py-2 text-sm font-medium">
+                    Page {page + 1} of {Math.max(totalPages, 1)}
+                  </span>
+                </PaginationItem>
+
+                <PaginationItem>
+                  <PaginationNext
+                    href="#"
+                    onClick={(event) => {
+                      event.preventDefault();
+                      setPage((current) => Math.min(current + 1, totalPages - 1));
+                    }}
+                    className={page >= totalPages - 1 ? "opacity-50 pointer-events-none" : ""}
+                  />
+                </PaginationItem>
+              </PaginationContent>
+            </Pagination>
           </div>
         )}
       </div>
