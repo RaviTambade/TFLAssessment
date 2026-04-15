@@ -1,0 +1,17 @@
+﻿using System;
+using System.Collections.Generic;
+
+namespace Backend.Models;
+
+public partial class ProblemStatementAnswer
+{
+    public long Id { get; set; }
+
+    public string? Answer { get; set; }
+
+    public long? QuestionId { get; set; }
+
+    public DateTime? SubmittedAt { get; set; }
+
+    public virtual Question? Question { get; set; }
+}
