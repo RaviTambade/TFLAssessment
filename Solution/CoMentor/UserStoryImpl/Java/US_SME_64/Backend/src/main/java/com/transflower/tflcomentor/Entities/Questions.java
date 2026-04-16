@@ -6,7 +6,7 @@ public class Questions {
     private String question_type;
     private String difficulty_level;
     private String created_at;
-    private boolean status;
+    private String status;
 
     public Questions() {
         this.question_id = 0;
@@ -14,12 +14,12 @@ public class Questions {
         this.question_type = "";
         this.difficulty_level = "";
         this.created_at = "";
-        this.status = false;
+        this.status = "";
 
     }
 
     public Questions(long question_id, String description, String question_type, String difficulty_level,
-            String created_at, boolean status) {
+            String created_at, String status) {
         this.question_id = question_id;
         this.description = description;
         this.question_type = question_type;
@@ -68,11 +68,10 @@ public class Questions {
         this.created_at = created_at;
     }
 
-    public boolean isStatus() {
+    public String getStatus() {
         return status;
     }
-
-    public void setStatus(boolean status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 
@@ -85,7 +84,7 @@ public class Questions {
     }
 }
 
-// As an SME, I want to analyze question difficulty so that I can improve the
+//US_SME_64: As an SME, I want to analyze question difficulty so that I can improve the
 // quality of assessments.
 
 
