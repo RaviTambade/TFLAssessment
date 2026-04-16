@@ -1,7 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 
-const createDbConnection = require("./Connectivity/db");
+const createDbConnection = require("./connectivity/db");
 const SessionsRepository = require("./Repositories/sessionsrepository");
 const SessionsService = require("./Services/sessionsservice");
 const SessionsController = require("./Controllers/sessionscontrollers");
