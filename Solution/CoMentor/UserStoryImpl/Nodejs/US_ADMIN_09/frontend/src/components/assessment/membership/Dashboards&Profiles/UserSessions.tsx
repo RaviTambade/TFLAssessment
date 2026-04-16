@@ -99,7 +99,7 @@ const UserSessions = () => {
         
         const mappedSessions: SessionRow[] = sessionsArray.map((item: any) => ({
           id: item.sessionId || item.id,
-          name: item.fullName || item.name,
+          name: item.fullName || item.name || "",
           login: formatDateTime(item.loginTime || item.login),
           logout: formatDateTime(item.logoutTime),
           status: item.logoutTime ? "Inactive" : "Active"
@@ -135,7 +135,9 @@ const UserSessions = () => {
 
   // 🔥 Filter logic
   const filteredSessions = useMemo(() => {
-    return sessions.filter(s => s.name.toLowerCase().includes(searchTerm.toLowerCase()));
+    return sessions.filter((s) =>
+      (s.name || "").toLowerCase().includes((searchTerm || "").toLowerCase())
+    );
   }, [searchTerm, sessions]);
 
   return (
