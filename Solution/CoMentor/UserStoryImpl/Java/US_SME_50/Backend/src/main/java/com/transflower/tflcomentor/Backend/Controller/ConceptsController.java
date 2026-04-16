@@ -22,12 +22,12 @@ public class ConceptsController {
     @Autowired
     private IConceptsService conceptsService;
 
-    @GetMapping("/get")
+    @GetMapping("/")
     public List<Concepts> getAllConcepts(){
         return conceptsService.getAllConcepts();
     }
 
-    @GetMapping("/get/{framework}")
+    @GetMapping("/frameworks/{framework}")
     public List<Concepts> getAllConceptsforFramework(@PathVariable String framework) {
         return conceptsService.getAllConceptsforFramework(framework);
     }
@@ -37,7 +37,7 @@ public class ConceptsController {
         return conceptsService.getAllRuntimes();
     }
 
-    @GetMapping("/languages/{runtimeId}")
+    @GetMapping("/languages/runtime/{runtimeId}")
     public List<Languages> getAllLanguages(@PathVariable int runtimeId) {
         return conceptsService.getAllLanguages(runtimeId);
     }
@@ -46,13 +46,18 @@ public class ConceptsController {
     public List<Layers> getAllLayers() {
         return conceptsService.getAllLayers();
     }
-
-    @GetMapping("/frameworks/{languageId}")
-    public List<Frameworks> getAllFrameworks(@PathVariable int languageId) {
-        return conceptsService.getAllFrameworks(languageId);
+    
+    @GetMapping("/layers/{layerId}")
+    public List<Layers> getByLayerId(@PathVariable int layerId) {
+        return conceptsService.getAllLayers();
     }
 
-    @GetMapping("/frameworks/{languageId}/{layerId}")
+    @GetMapping("/frameworks/{languageId}")
+    public List<Frameworks> getAllFrameworksByLanguageId(@PathVariable int languageId) {
+        return conceptsService.getAllFrameworksByLanguageId(languageId);
+    }
+
+    @GetMapping("/frameworks/languages/{languageId}/layers/{layerId}")
     public List<Frameworks> getAllFrameworksByLanguageAndLayer(@PathVariable int languageId, @PathVariable int layerId) {
         return conceptsService.getAllFrameworksByLanguageAndLayer(languageId, layerId);
     }
