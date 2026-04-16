@@ -1,14 +1,14 @@
-package com.transflower.tflcomentor.Backend.DTO;
+package com.transflower.tflcomentor.Backend.dto;
 
-public class Language {
+public class LanguageDTO {
     private int id;
     private String languageName;
     private int runtimeId;
 
     // Constructors
-    public Language() {}
+    public LanguageDTO() {}
 
-    public Language(int id, String languageName, int runtimeId) {
+    public LanguageDTO(int id, String languageName, int runtimeId) {
         this.id = id;
         this.languageName = languageName;
         this.runtimeId = runtimeId;

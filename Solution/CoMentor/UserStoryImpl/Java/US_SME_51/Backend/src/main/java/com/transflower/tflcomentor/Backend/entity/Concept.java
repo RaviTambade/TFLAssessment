@@ -1,4 +1,4 @@
-package com.transflower.tflcomentor.Backend.Entity;
+package com.transflower.tflcomentor.Backend.entity;
 
 import java.time.LocalDateTime;
 
@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name="concepts")
-public class Concepts{
+public class Concept{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -17,10 +17,10 @@ public class Concepts{
     private LocalDateTime createdAt;
 
     // Constructors, getters, and setters
-    public Concepts() {
+    public Concept() {
     }
 
-    public Concepts(String name, String description, String status) {
+    public Concept(String name, String description, String status) {
         this.name = name;
         this.description = description;
         this.status = status;

@@ -1,17 +1,18 @@
-package com.transflower.tflcomentor.Backend.DTO;
+package com.transflower.tflcomentor.Backend.dto;
 
-public class Framework {
+public class RuntimeDTO {
     private int id;
     private String runtimeName;
 
-    public Framework() {
-    }
+    // Constructors
+    public RuntimeDTO() {}
 
-    public Framework(int id, String runtimeName) {
+    public RuntimeDTO(int id, String runtimeName) {
         this.id = id;
         this.runtimeName = runtimeName;
     }
 
+    // Getters and Setters
     public int getId() {
         return id;
     }
@@ -26,5 +27,9 @@ public class Framework {
 
     public void setRuntimeName(String runtimeName) {
         this.runtimeName = runtimeName;
+    }
+
+    public String toString() {
+        return "Runtime{id=" + id + ", runtimeName='" + runtimeName + "'}";
     }
 }

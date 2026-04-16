@@ -1,13 +1,13 @@
-package com.transflower.tflcomentor.Backend.DTO;
+package com.transflower.tflcomentor.Backend.dto;
 
-public class Layer {
+public class LayerDTO {
     private int id;
     private String layerName;
 
-    public Layer() {
+    public LayerDTO() {
     }
 
-    public Layer(int id, String layerName) {
+    public LayerDTO(int id, String layerName) {
         this.id = id;
         this.layerName = layerName;
     }

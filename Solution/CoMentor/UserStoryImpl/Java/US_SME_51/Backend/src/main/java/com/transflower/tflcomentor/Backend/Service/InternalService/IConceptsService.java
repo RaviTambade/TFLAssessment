@@ -1,10 +1,10 @@
-package com.transflower.tflcomentor.Backend.Service.InternalService;
+package com.transflower.tflcomentor.Backend.service.internalService;
 
 import org.springframework.stereotype.Service;
 
-import com.transflower.tflcomentor.Backend.Entity.Concepts;
+import com.transflower.tflcomentor.Backend.entity.Concept;
 
 @Service
 public interface IConceptsService {
-    public Concepts addConcepts(Concepts concepts);
+    public Concept addConcepts(Concept concepts);
 }
