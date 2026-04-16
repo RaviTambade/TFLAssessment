@@ -1,4 +1,4 @@
-package com.transflower.tflcomentor;
+package com.transflower.tflcomentor.evaluationcontentmanagement;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

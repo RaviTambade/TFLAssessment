@@ -1,22 +1,26 @@
-package com.transflower.tflcomentor.services;
+package com.transflower.tflcomentor.evaluationcontentmanagement.service.Impl;
 
-import com.transflower.tflcomentor.entities.Question;
-import com.transflower.tflcomentor.repositories.IQuestionRepository;
-import com.transflower.tflcomentor.dtos.QuestionDto;
-import com.transflower.tflcomentor.dtos.QuestionListDto;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.transflower.tflcomentor.evaluationcontentmanagement.dto.request.QuestionRequestDto;
+import com.transflower.tflcomentor.evaluationcontentmanagement.dto.response.QuestionListResponseDto;
+import com.transflower.tflcomentor.evaluationcontentmanagement.dto.response.QuestionResponseDto;
+import com.transflower.tflcomentor.evaluationcontentmanagement.entity.Question;
+import com.transflower.tflcomentor.evaluationcontentmanagement.repository.QuestionRepository;
+import com.transflower.tflcomentor.evaluationcontentmanagement.service.QuestionService;
+
 import java.util.List;
 
+
 @Service
-public class QuestionService implements IQuestionService {
+public class QuestionServiceImpl implements QuestionService {
 
     @Autowired
-    private IQuestionRepository repository;
+    private QuestionRepository repository;
 
-    public void createQuestion(QuestionDto dto) {
+    public void createQuestion(QuestionRequestDto dto) {
 
 
         Question q = new Question();
@@ -46,7 +50,7 @@ public class QuestionService implements IQuestionService {
         return repository.getDraftQuestions();
     }
 
-    @Override
+   
     public List<Question> getRecentQuestions() {
         return repository.getRecentQuestions();
     }
@@ -67,23 +71,22 @@ public class QuestionService implements IQuestionService {
         repository.rejectAllQuestions();
     }
 
-    @Override
-    public List<QuestionListDto> getDraftQuestionList() {
+    public List<QuestionListResponseDto> getDraftQuestionList() {
         return repository.getDraftQuestionList();
     }
 
-    @Override
-    public List<QuestionListDto> getRecentQuestionList() {
+
+    public List<QuestionListResponseDto> getRecentQuestionList() {
         return repository.getRecentQuestionList();
     }
 
-    @Override
-    public QuestionDto getQuestionDetails(Long id) {
+    
+    public QuestionResponseDto getQuestionDetails(Long id) {
         return repository.getQuestionDetails(id);
     }
 
-    @Override
-    public void updateQuestion(Long id, QuestionDto dto) {
+   
+    public void updateQuestion(Long id, QuestionRequestDto dto) {
         repository.updateQuestion(id, dto);
     }
 }

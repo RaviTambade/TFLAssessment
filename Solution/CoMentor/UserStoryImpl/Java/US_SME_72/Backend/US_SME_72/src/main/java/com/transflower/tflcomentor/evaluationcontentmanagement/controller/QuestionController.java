@@ -1,9 +1,11 @@
-package com.transflower.tflcomentor.controllers;
+package com.transflower.tflcomentor.evaluationcontentmanagement.controller;
 
-import com.transflower.tflcomentor.dtos.QuestionDto;
-import com.transflower.tflcomentor.dtos.QuestionListDto;
-import com.transflower.tflcomentor.entities.Question;
-import com.transflower.tflcomentor.services.IQuestionService;
+import com.transflower.tflcomentor.evaluationcontentmanagement.entity.Question;
+import com.transflower.tflcomentor.evaluationcontentmanagement.service.QuestionService;
+
+import com.transflower.tflcomentor.evaluationcontentmanagement.dto.request.QuestionRequestDto;
+import com.transflower.tflcomentor.evaluationcontentmanagement.dto.response.QuestionResponseDto;
+import com.transflower.tflcomentor.evaluationcontentmanagement.dto.response.QuestionListResponseDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,37 +21,37 @@ import java.util.List;
 public class QuestionController {
 
     @Autowired
-    private IQuestionService service;
+    private QuestionService service;
 
-    @PostMapping("/create")
-    public String createQuestion(@RequestBody QuestionDto dto) {
+    @PostMapping
+        public String createQuestion(@RequestBody QuestionRequestDto dto) {
         service.createQuestion(dto);
         return "Question + Options Saved!";
     }
 
-    @GetMapping("/all")
+    @GetMapping
     public List<Question> getAll() {
         return service.getAllQuestions();
     }
 
-    @GetMapping("/draft")
+    @GetMapping("/drafts")
     public List<Question> getDraft() {
         return service.getDraftQuestions();
     }
 
-    @PutMapping("/approve/{id}")
+    @PutMapping("/{id}/approve")
     public String approve(@PathVariable Long id) {
         service.approveQuestion(id);
         return "Approved";
     }
 
-    @PutMapping("/reject/{id}")
+    @PutMapping("/{id}/reject")
     public String reject(@PathVariable Long id) {
         service.rejectQuestion(id);
         return "Rejected";
     }
 
-    @PutMapping("/approve-all")
+    @PutMapping("/{id}/approve-all")
     public String approveAll() {
         service.approveAllQuestions();
         return "All Approved";
@@ -67,23 +69,23 @@ public class QuestionController {
     }
 
 
-    @GetMapping("/draft-list")
-    public List<QuestionListDto> getDraftList() {
+    @GetMapping("/drafts/list")
+    public List<QuestionListResponseDto> getDraftList() {
         return service.getDraftQuestionList();
     }
 
-    @GetMapping("/recent-list")
-    public List<QuestionListDto> getRecentList() {
+    @GetMapping("/recent/list")
+    public List<QuestionListResponseDto> getRecentList() {
         return service.getRecentQuestionList();
     }
 
     @GetMapping("/{id}")
-    public QuestionDto getDetails(@PathVariable Long id) {
+    public QuestionResponseDto getDetails(@PathVariable Long id) {
         return service.getQuestionDetails(id);
     }
 
     @PutMapping("/{id}")
-    public String updateQuestion(@PathVariable Long id, @RequestBody QuestionDto dto) {
+    public String updateQuestion(@PathVariable Long id, @RequestBody QuestionRequestDto dto) {
         service.updateQuestion(id, dto);
         return "Question Updated Successfully";
 }

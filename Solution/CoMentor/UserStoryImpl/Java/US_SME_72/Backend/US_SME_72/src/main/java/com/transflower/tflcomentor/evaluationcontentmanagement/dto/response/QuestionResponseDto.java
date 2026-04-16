@@ -1,28 +1,19 @@
-package com.transflower.tflcomentor.entities;
+package com.transflower.tflcomentor.evaluationcontentmanagement.dto.response;
 
-import java.time.LocalDateTime;
+public class QuestionResponseDto {
 
-public class Question {
     private Long questionId;
     private String description;
     private String questionType;
     private String difficultyLevel;
     private String status;
-    private LocalDateTime createdAt;
 
-    public Question() {
-    }
+    private String optionA;
+    private String optionB;
+    private String optionC;
+    private String optionD;
+    private String correctAnswer;
 
-    public Question(Long questionId, String description, String questionType,
-            String difficultyLevel, String status) {
-        this.questionId = questionId;
-        this.description = description;
-        this.questionType = questionType;
-        this.difficultyLevel = difficultyLevel;
-        this.status = status;
-    }
-
-    // Getters and Setters
     public Long getQuestionId() {
         return questionId;
     }
@@ -63,11 +54,43 @@ public class Question {
         this.status = status;
     }
 
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
+    public String getOptionA() {
+        return optionA;
     }
 
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
+    public void setOptionA(String optionA) {
+        this.optionA = optionA;
+    }
+
+    public String getOptionB() {
+        return optionB;
+    }
+
+    public void setOptionB(String optionB) {
+        this.optionB = optionB;
+    }
+
+    public String getOptionC() {
+        return optionC;
+    }
+
+    public void setOptionC(String optionC) {
+        this.optionC = optionC;
+    }
+
+    public String getOptionD() {
+        return optionD;
+    }
+
+    public void setOptionD(String optionD) {
+        this.optionD = optionD;
+    }
+
+    public String getCorrectAnswer() {
+        return correctAnswer;
+    }
+
+    public void setCorrectAnswer(String correctAnswer) {
+        this.correctAnswer = correctAnswer;
     }
 }

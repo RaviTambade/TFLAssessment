@@ -1,13 +1,13 @@
-package com.transflower.tflcomentor.dtos;
+package com.transflower.tflcomentor.evaluationcontentmanagement.dto.response;
 
-public class QuestionListDto {
+public class QuestionListResponseDto {
 
     private Long questionId;
     private String description;
 
-    public QuestionListDto() {}
+    public QuestionListResponseDto() {}
 
-    public QuestionListDto(Long questionId, String description) {
+    public QuestionListResponseDto(Long questionId, String description) {
         this.questionId = questionId;
         this.description = description;
     }

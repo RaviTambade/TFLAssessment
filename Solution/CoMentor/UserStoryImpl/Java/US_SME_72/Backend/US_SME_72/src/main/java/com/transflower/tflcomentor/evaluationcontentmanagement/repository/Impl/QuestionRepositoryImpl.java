@@ -1,8 +1,11 @@
-package com.transflower.tflcomentor.repositories;
+package com.transflower.tflcomentor.evaluationcontentmanagement.repository.Impl;
 
-import com.transflower.tflcomentor.dtos.QuestionDto;
-import com.transflower.tflcomentor.dtos.QuestionListDto;
-import com.transflower.tflcomentor.entities.Question;
+import com.transflower.tflcomentor.evaluationcontentmanagement.dto.request.QuestionRequestDto;
+import com.transflower.tflcomentor.evaluationcontentmanagement.dto.response.QuestionListResponseDto;
+import com.transflower.tflcomentor.evaluationcontentmanagement.dto.response.QuestionResponseDto;
+import com.transflower.tflcomentor.evaluationcontentmanagement.entity.Question;
+import com.transflower.tflcomentor.evaluationcontentmanagement.repository.QuestionRepository;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
@@ -11,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class QuestionRepository implements IQuestionRepository {
+public class QuestionRepositoryImpl implements QuestionRepository {
 
     @Value("${spring.datasource.url}")
     private String url;
@@ -191,14 +194,14 @@ public void insertMcqOptions(Long questionId,
         return list;
     }
 
-    public List<QuestionListDto> getDraftQuestionList() {
-    List<QuestionListDto> list = new ArrayList<>();
+    public List<QuestionListResponseDto> getDraftQuestionList() {
+    List<QuestionListResponseDto> list = new ArrayList<>();
     String sql = "SELECT question_id, description FROM questions WHERE status='DRAFT'";
     try (Connection conn = getConnection();
          PreparedStatement stmt = conn.prepareStatement(sql);
          ResultSet rs = stmt.executeQuery()) {
         while (rs.next()) {
-            list.add(new QuestionListDto(
+            list.add(new QuestionListResponseDto(
                 rs.getLong("question_id"),
                 rs.getString("description")
             ));
@@ -210,14 +213,14 @@ public void insertMcqOptions(Long questionId,
     return list;
 }
 
-public List<QuestionListDto> getRecentQuestionList() {
-    List<QuestionListDto> list = new ArrayList<>();
+public List<QuestionListResponseDto> getRecentQuestionList() {
+    List<QuestionListResponseDto> list = new ArrayList<>();
     String sql = "SELECT question_id, description FROM questions WHERE created_at >= NOW() - INTERVAL 2 DAY ORDER BY created_at DESC";
     try (Connection conn = getConnection();
          PreparedStatement stmt = conn.prepareStatement(sql);
          ResultSet rs = stmt.executeQuery()) {
         while (rs.next()) {
-            list.add(new QuestionListDto(
+            list.add(new QuestionListResponseDto(
                 rs.getLong("question_id"),
                 rs.getString("description")
             ));
@@ -228,8 +231,8 @@ public List<QuestionListDto> getRecentQuestionList() {
     return list;
 }
 
-public QuestionDto getQuestionDetails(Long id) {
-    QuestionDto dto = new QuestionDto();
+public QuestionResponseDto getQuestionDetails(Long id) {
+    QuestionResponseDto dto = new QuestionResponseDto();
     try (Connection conn = getConnection()) {
         String qSql = "SELECT * FROM questions WHERE question_id=?";
         PreparedStatement qStmt = conn.prepareStatement(qSql);
@@ -260,7 +263,7 @@ public QuestionDto getQuestionDetails(Long id) {
 }
 
 @Override
-public void updateQuestion(Long id, QuestionDto dto) {
+public void updateQuestion(Long id, QuestionRequestDto dto) {
 
     String sql = "UPDATE questions SET description=?, question_type=?, difficulty_level=? WHERE question_id=?";
 
