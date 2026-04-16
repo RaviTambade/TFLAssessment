@@ -18,7 +18,7 @@ type SessionRow = {
   status: string;
 };
 
-const API_BASE_3000 = "http://localhost:3000/api/admin/logs";
+const API_BASE_3000 = "http://localhost:3000/api/v1/sessions";
 const API_BASE_3899 = "http://localhost:3899/api/admin/sessions/logs";
 
 const UserSessions = () => {
@@ -77,9 +77,9 @@ const UserSessions = () => {
       try {
         // 1. Fetch Stats from Port 3000
         const [countRes, loginsRes, avgRes] = await Promise.all([
-          fetch(`${API_BASE_3000}/analytics/sessions/active/count`),
-          fetch(`${API_BASE_3000}/analytics/login-activity/last-24-hours`),
-          fetch(`${API_BASE_3000}/analytics/sessions/average-duration`)
+          fetch(`${API_BASE_3000}/active-count`),
+          fetch(`${API_BASE_3000}/logins-24h`),
+          fetch(`${API_BASE_3000}/average-time`)
         ]);
 
         const countData = await countRes.json();
@@ -120,7 +120,7 @@ const UserSessions = () => {
   // 🔥 FETCH ACTIVE USERS LIST (Port 3000)
   const fetchActiveUsersList = async () => {
     try {
-      const res = await fetch(`${API_BASE_3000}/analytics/users/active`);
+      const res = await fetch(`${API_BASE_3000}/active-users`);
       const raw = await res.json();
       const data = raw[0] || [];
       const cleaned: ApiActiveUser[] = data.map((u: any) => ({
