@@ -18,8 +18,8 @@ type SessionRow = {
   status: string;
 };
 
-const API_BASE_3000 = "http://localhost:3000/api/admin/logs";
-const API_BASE_3899 = "http://localhost:3899/api/admin/sessions/logs";
+const API_BASE_3000 = "http://localhost:3000/api/v1/sessions";
+const API_BASE_3899 = "http://localhost:3899/api/v1/sessions";
 
 const UserSessions = () => {
   // States for Port 3000 (Stats & Active List)
@@ -45,6 +45,7 @@ const UserSessions = () => {
   const getDuration = (loginTime?: string) => {
     if (!loginTime) return "N/A";
     const login = new Date(loginTime).getTime();
+
     const now = new Date().getTime();
     let diff = Math.floor((now - login) / 1000);
     const hours = Math.floor(diff / 3600);
@@ -77,9 +78,9 @@ const UserSessions = () => {
       try {
         // 1. Fetch Stats from Port 3000
         const [countRes, loginsRes, avgRes] = await Promise.all([
-          fetch(`${API_BASE_3000}/analytics/sessions/active/count`),
-          fetch(`${API_BASE_3000}/analytics/login-activity/last-24-hours`),
-          fetch(`${API_BASE_3000}/analytics/sessions/average-duration`)
+          fetch(`${API_BASE_3000}/active-count`),
+          fetch(`${API_BASE_3000}/logins-24h`),
+          fetch(`${API_BASE_3000}/average-time`)
         ]);
 
         const countData = await countRes.json();
@@ -99,7 +100,7 @@ const UserSessions = () => {
         
         const mappedSessions: SessionRow[] = sessionsArray.map((item: any) => ({
           id: item.sessionId || item.id,
-          name: item.fullName || item.name,
+          name: item.fullName || item.name || "",
           login: formatDateTime(item.loginTime || item.login),
           logout: formatDateTime(item.logoutTime),
           status: item.logoutTime ? "Inactive" : "Active"
@@ -120,7 +121,7 @@ const UserSessions = () => {
   // 🔥 FETCH ACTIVE USERS LIST (Port 3000)
   const fetchActiveUsersList = async () => {
     try {
-      const res = await fetch(`${API_BASE_3000}/analytics/users/active`);
+      const res = await fetch(`${API_BASE_3000}/active-users`);
       const raw = await res.json();
       const data = raw[0] || [];
       const cleaned: ApiActiveUser[] = data.map((u: any) => ({
@@ -135,7 +136,9 @@ const UserSessions = () => {
 
   // 🔥 Filter logic
   const filteredSessions = useMemo(() => {
-    return sessions.filter(s => s.name.toLowerCase().includes(searchTerm.toLowerCase()));
+    return sessions.filter((s) =>
+      (s.name || "").toLowerCase().includes((searchTerm || "").toLowerCase())
+    );
   }, [searchTerm, sessions]);
 
   return (

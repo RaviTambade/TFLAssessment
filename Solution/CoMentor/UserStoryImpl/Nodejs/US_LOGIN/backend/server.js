@@ -1,24 +1,26 @@
 const express=require("express");
 const cors=require("cors");
 const bodyParser = require("body-parser");
-const userLoginService = require("./services/userLoginService");
-const userLoginController = require("./controllers/userLoginController");
-const userLoginRoutes = require("./routers/userLoginRoutes");
-const userLoginRepository = require("./repository/userLoginRepository");
 
+const userLoginService = require("./services/authservice");
+const AuthenticationController = require("./controllers/authenticationcontroller");
+const userLoginRoutes = require("./routers/authroutes");
+const userLoginRepository = require("./repository/authrepository");
+const Connection = require("./connectivity/db");
 var app=express();
 
-const Connection = require("./connectivity/db");
+
 const repo = new userLoginRepository(Connection);
 const srv = new userLoginService(repo);
-const controller = new userLoginController(srv);
-const userLoginRouter = userLoginRoutes(controller);
+const authController = new AuthenticationController(srv);
+const authRoutes = userLoginRoutes(authController);
 
 
+//middleware
 app.use(cors());
 app.use(bodyParser.json());
 
-app.use("/api/authentication/", userLoginRouter);
+//routes
+app.use("/api/authentication/", authRoutes);
 
-app.listen(4000);
-console.log("server listenin on port 4000");
+app.listen(4000,()=>{console.log("server listening on port 4000")});
