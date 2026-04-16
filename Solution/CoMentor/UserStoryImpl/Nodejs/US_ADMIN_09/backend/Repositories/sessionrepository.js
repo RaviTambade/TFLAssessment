@@ -42,7 +42,7 @@ class SessionRepository {
     getActiveUsers() {
         const query = `
             SELECT 
-                p.full_name,
+               concat( p.first_name,' ', p.last_name) as full_name,
                 l.login_time,
                 TIMESTAMPDIFF(SECOND, l.login_time, NOW()) AS active_seconds,
                 'ACTIVE' AS status
