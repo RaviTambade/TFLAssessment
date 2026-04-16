@@ -14,15 +14,15 @@ public class AssessmentAssignController : ControllerBase
     [HttpGet("tests")]
     public async Task<IActionResult> GetTests()
     {
-        var data = await _service.GetTests();
-        return Ok(data);
+        var tests = await _service.GetTests();
+        return Ok(tests);
     }
 
     [HttpGet("students")]
     public async Task<IActionResult> GetStudents()
     {
-        var data = await _service.GetStudents();
-        return Ok(data);
+        var students = await _service.GetStudents();
+        return Ok(students);
     }
 
     [HttpPost ("assigned")]
