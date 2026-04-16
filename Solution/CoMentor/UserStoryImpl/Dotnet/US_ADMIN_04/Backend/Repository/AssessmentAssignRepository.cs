@@ -10,16 +10,19 @@ public class AssessmentAssignRepository : IAssessmentAssignRepository
         _context = context;
     }
 
-    public async Task<List<TestDto>> GetTests()
-    {
-        return await _context.Tests
-            .Select(t => new TestDto
-            {
-                Id = t.Id,
-                Title = t.Title,
-                Duration = (int?)t.Duration
-            }).ToListAsync();
-    }
+   public async Task<List<TestDto>> GetTests()
+{
+    return await _context.Tests
+        .Select(t => new TestDto
+        {
+            Id = t.Id,
+            Title = t.Title,
+            Duration = (int?)t.Duration,
+            Description = t.Description,   
+            Difficulty = t.Difficulty     
+        })
+        .ToListAsync();
+}
 
     public async Task<List<StudentDto>> GetStudents()
     {

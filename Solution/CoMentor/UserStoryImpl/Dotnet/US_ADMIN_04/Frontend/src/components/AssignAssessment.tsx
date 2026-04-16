@@ -9,17 +9,23 @@ export default function AssignAssessment() {
   const [searchStudent, setSearchStudent] = useState("");
   const [searchTest, setSearchTest] = useState("");
 
-  // ✅ CHANGED: multiple students
   const [selectedStudents, setSelectedStudents] = useState<number[]>([]);
-
   const [selectedTest, setSelectedTest] = useState<number | null>(null);
 
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
 
-  const [step, setStep] = useState(0);
+  // ✅ Set current date & time by default
+  useEffect(() => {
+    const now = new Date();
+    const isoDate = now.toISOString().split("T")[0];
+    const isoTime = now.toTimeString().slice(0,5);
 
-  /* ================= FETCH ================= */
+    setDate(isoDate);
+    setTime(isoTime);
+  }, []);
+
+  const [step, setStep] = useState(0);
 
   useEffect(() => {
     fetchStudents();
@@ -31,8 +37,7 @@ export default function AssignAssessment() {
       const res = await fetch("http://localhost:5091/api/AssessmentAssign/students");
       const data = await res.json();
       setStudents(Array.isArray(data) ? data : []);
-    } catch (err) {
-      console.error("Student API error", err);
+    } catch {
       setStudents([]);
     }
   };
@@ -42,13 +47,10 @@ export default function AssignAssessment() {
       const res = await fetch("http://localhost:5091/api/AssessmentAssign/tests");
       const data = await res.json();
       setTests(Array.isArray(data) ? data : []);
-    } catch (err) {
-      console.error("Test API error", err);
+    } catch {
       setTests([]);
     }
   };
-
-  /* ================= TOGGLE STUDENTS (NEW) ================= */
 
   const toggleStudent = (id: number) => {
     setSelectedStudents(prev =>
@@ -58,8 +60,6 @@ export default function AssignAssessment() {
     );
   };
 
-  /* ================= FILTER ================= */
-
   const filteredStudents = students.filter(s =>
     (s?.fullName ?? "").toLowerCase().includes(searchStudent.toLowerCase())
   );
@@ -67,8 +67,6 @@ export default function AssignAssessment() {
   const filteredTests = tests.filter(t =>
     (t?.title ?? "").toLowerCase().includes(searchTest.toLowerCase())
   );
-
-  /* ================= SUBMIT ================= */
 
   const handleAssign = async () => {
     try {
@@ -78,7 +76,7 @@ export default function AssignAssessment() {
       }
 
       const dto = {
-        studentIds: selectedStudents,   // ✅ CHANGED
+        studentIds: selectedStudents,
         testId: selectedTest,
         scheduledAt: new Date(`${date}T${time}:00`).toISOString(),
         status
@@ -101,25 +99,20 @@ export default function AssignAssessment() {
       reset();
 
     } catch (err: any) {
-      console.error("Assign Error:", err.message);
       alert(err.message);
     }
   };
-
-  /* ================= RESET ================= */
 
   const reset = () => {
     setStep(0);
     setStatus("");
     setSearchStudent("");
     setSearchTest("");
-    setSelectedStudents([]); // ✅ CHANGED
+    setSelectedStudents([]);
     setSelectedTest(null);
     setDate("");
     setTime("");
   };
-
-  /* ================= UI ================= */
 
   return (
     <div className="min-h-screen bg-orange-50 flex justify-center p-6">
@@ -139,7 +132,7 @@ export default function AssignAssessment() {
           </button>
         )}
 
-        {/* STEP 1 */}
+        {/* STEP 1 - STATUS */}
         {step === 1 && (
           <div className="bg-white p-5 rounded shadow border border-orange-200">
             <h2 className="font-bold mb-3">Select Status</h2>
@@ -161,15 +154,70 @@ export default function AssignAssessment() {
             <button
               onClick={() => setStep(2)}
               disabled={!status}
-              className="bg-orange-600 text-white w-full py-2 rounded disabled:bg-gray-300"
+              className="bg-orange-600 text-white w-full py-2 rounded"
             >
               Next
             </button>
           </div>
         )}
 
-        {/* STEP 2 - STUDENTS (MULTI SELECT) */}
+        {/* STEP 2 - TEST */}
         {step === 2 && (
+          <div className="bg-white p-5 mt-4 rounded shadow border border-orange-200">
+
+            <h2 className="font-bold mb-2">Select Test</h2>
+
+            <input
+              placeholder="Search tests..."
+              className="border p-2 w-full mb-3"
+              value={searchTest}
+              onChange={(e) => setSearchTest(e.target.value)}
+            />
+
+            <div className="max-h-60 overflow-y-auto">
+              {filteredTests.map(t => (
+                <label key={t.id} className="flex flex-col border p-3 mb-2 rounded">
+                  <div className="flex items-center gap-2">
+                    <input
+                      type="radio"
+                      name="test"
+                      checked={selectedTest === t.id}
+                      onChange={() => setSelectedTest(t.id)}
+                    />
+                    <span className="font-semibold">{t.title}</span>
+                  </div>
+
+                  <div className="text-sm text-gray-600 ml-6 mt-1">
+                    ⏱ Duration: {t.duration} min
+                  </div>
+
+                  {t.difficulty && (
+                    <div className="text-sm ml-6">
+                      🎯 Difficulty: <span className="font-medium">{t.difficulty}</span>
+                    </div>
+                  )}
+
+                  {t.description && (
+                    <div className="text-sm text-gray-500 ml-6 mt-1">
+                      {t.description}
+                    </div>
+                  )}
+                </label>
+              ))}
+            </div>
+
+            <button
+              onClick={() => setStep(3)}
+              disabled={!selectedTest}
+              className="bg-orange-600 text-white w-full mt-3 py-2 rounded"
+            >
+              Next
+            </button>
+          </div>
+        )}
+
+        {/* STEP 3 - STUDENTS */}
+        {step === 3 && (
           <div className="bg-white p-5 mt-4 rounded shadow border border-orange-200">
 
             <h2 className="font-bold mb-2">Select Students</h2>
@@ -185,7 +233,7 @@ export default function AssignAssessment() {
               {filteredStudents.map(s => (
                 <label key={s.id} className="flex gap-2 border p-2 mb-2 rounded">
                   <input
-                    type="checkbox"   // ✅ CHANGED
+                    type="checkbox"
                     checked={selectedStudents.includes(s.id)}
                     onChange={() => toggleStudent(s.id)}
                   />
@@ -195,45 +243,8 @@ export default function AssignAssessment() {
             </div>
 
             <button
-              onClick={() => setStep(3)}
-              disabled={selectedStudents.length === 0} // ✅ CHANGED
-              className="bg-orange-600 text-white w-full mt-3 py-2 rounded"
-            >
-              Next
-            </button>
-          </div>
-        )}
-
-        {/* STEP 3 - TEST */}
-        {step === 3 && (
-          <div className="bg-white p-5 mt-4 rounded shadow border border-orange-200">
-
-            <h2 className="font-bold mb-2">Select Test</h2>
-
-            <input
-              placeholder="Search tests..."
-              className="border p-2 w-full mb-3"
-              value={searchTest}
-              onChange={(e) => setSearchTest(e.target.value)}
-            />
-
-            <div className="max-h-60 overflow-y-auto">
-              {filteredTests.map(t => (
-                <label key={t.id} className="flex gap-2 border p-2 mb-2 rounded">
-                  <input
-                    type="radio"
-                    name="test"
-                    checked={selectedTest === t.id}
-                    onChange={() => setSelectedTest(t.id)}
-                  />
-                  {t.title} ({t.duration} min)
-                </label>
-              ))}
-            </div>
-
-            <button
               onClick={() => setStep(4)}
-              disabled={!selectedTest}
+              disabled={selectedStudents.length === 0}
               className="bg-orange-600 text-white w-full mt-3 py-2 rounded"
             >
               Next
