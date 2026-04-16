@@ -1,3 +1,4 @@
+const Credential = require("../dtos/requests/credential");
 class AuthenticationController {
   
   constructor(userLoginService) {
@@ -5,21 +6,24 @@ class AuthenticationController {
   }
 
   userLogin = (req, res) => {
-    const username = req.body.username;
-    const password = req.body.password;
-    const role = req.body.role;
 
-    this.userLoginService.userLogin(username, password, role, (err, result) => {
+  const credentialCheck = new Credential(
+    req.body.username,
+    req.body.password,
+    req.body.role,
+  );
+
+    this.userLoginService.validate(credentialCheck, (err, result) => {
       if (err) {
         console.error("error fetching users:", err);
         return res.status(500).json({ error: "intternal server error" });
       }
 
-     if (result && result.length > 0) {
-       res.json(result);
-     } else {
-       res.status(404).json({ message: "No data found" });
-     }
+      if (result.status) {
+        res.json(result);
+      } else {
+        res.status(404).json({ message: "No data found" });
+      }
     });
   };
 }
