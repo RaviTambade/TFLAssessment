@@ -1,4 +1,4 @@
-class userLoginRepository
+class AuthenticationRepository
 {
     constructor(connection)
     {
@@ -16,4 +16,4 @@ class userLoginRepository
     }
 }
 
-module.exports = userLoginRepository;
+module.exports = AuthenticationRepository;

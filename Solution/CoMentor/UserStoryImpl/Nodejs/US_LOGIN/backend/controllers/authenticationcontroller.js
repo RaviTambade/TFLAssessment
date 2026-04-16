@@ -1,4 +1,5 @@
-class userLoginController {
+class AuthenticationController {
+  
   constructor(userLoginService) {
     this.userLoginService = userLoginService;
   }
@@ -23,4 +24,4 @@ class userLoginController {
   };
 }
 
-module.exports = userLoginController;
+module.exports = AuthenticationController;
