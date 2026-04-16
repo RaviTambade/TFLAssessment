@@ -1,15 +1,15 @@
-package com.transflower.tflcomentor.Backend.Entity;
+package com.transflower.tflcomentor.Backend.entity;
 
-public class Layers {
+public class Layer {
     private int id ;
     private String layerName;
 
-    public Layers(){
+    public Layer(){
         this.id = 0;
         this.layerName = " ";
     }
 
-    public Layers(int id, String layerName) {
+    public Layer(int id, String layerName) {
         this.id = id;
         this.layerName = layerName;
     }   

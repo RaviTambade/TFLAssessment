@@ -1,15 +1,15 @@
-package com.transflower.tflcomentor.Backend.Entity;
+package com.transflower.tflcomentor.Backend.entity;
 
-    public class Runtimes {
+    public class Runtime {
         private int id ;
         private String runtimeName;
 
-        public Runtimes(){
+        public Runtime(){
             this.id = 0;
             this.runtimeName = " ";
         }
 
-        public Runtimes(int id, String runtimeName) {
+        public Runtime(int id, String runtimeName) {
             this.id = id;
             this.runtimeName = runtimeName;
         }   

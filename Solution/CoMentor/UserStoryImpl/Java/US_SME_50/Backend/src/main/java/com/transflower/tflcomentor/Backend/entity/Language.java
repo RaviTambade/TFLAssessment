@@ -1,17 +1,17 @@
-package com.transflower.tflcomentor.Backend.Entity;
+package com.transflower.tflcomentor.Backend.entity;
 
-public class Languages {
+public class Language {
     private int id ;
     private String languageName;
     private int runtimeId;
 
-    public Languages(){
+    public Language(){
         this.id = 0;
         this.languageName = " ";
         this.runtimeId = 0;
     }
 
-    public Languages(int id, String languageName, int runtimeId) {
+    public Language(int id, String languageName, int runtimeId) {
         this.id = id;
         this.languageName = languageName;
         this.runtimeId = runtimeId;
