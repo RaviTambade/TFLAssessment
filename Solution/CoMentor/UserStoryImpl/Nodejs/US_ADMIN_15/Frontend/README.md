@@ -1,152 +1,72 @@
-# US_ADMIN_15 Frontend
+# 🎉 Transflower Learning Website  
 
-React TypeScript frontend for testing US_ADMIN_15 user management functionality.
+This repository contains the official website for **Transflower Learning**, gifted to our mentor on his **50th birthday** as a token of gratitude and respect. 🌸  
 
-## Overview
+## 🌐 About Transflower Learning  
+Transflower Learning is dedicated to **transforming education and skills development** by combining innovative teaching methods, hands-on learning, and modern technology. The goal is to inspire lifelong learning and empower individuals to thrive in their personal and professional journeys.  
 
-This frontend application allows administrators to manage user statuses by:
-- **Activating** users
-- **Inactivating** users  
-- **Blocking** users
+## 🎁 About This Gift  
+This website and domain were specially created as a **birthday gift** to celebrate **Mr. Ravi Tambade’s** incredible contributions to learning, growth, and guidance. The project is a heartfelt thank-you for years of wisdom and inspiration.  
 
-## Project Structure
+## How to Edit this Project?
 
-```
-src/
-├── components/
-│   ├── UserManagementForm.tsx       # Form component for user management operations
-│   ├── UserManagementForm.css
-│   ├── ResponseDisplay.tsx           # Component to display API responses
-│   └── ResponseDisplay.css
-├── services/
-│   └── api.config.ts                # API configuration and service methods
-├── hooks/
-│   └── useApi.ts                    # Custom hook for handling API calls
-├── App.tsx                          # Main application component
-├── App.css
-├── index.tsx                        # React entry point
-└── index.css
-```
+**Use your preferred IDE**
 
-## Setup & Installation
+If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
 
-### Prerequisites
-- Node.js (v16 or higher)
-- npm or yarn
+The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
 
-### Installation
+Follow these steps:
 
-1. Navigate to the frontend directory:
-```bash
-cd UserStoryImlementation/US_ADMIN_15/Frontend
+```sh
+# Step 1: Clone the repository using the project's Git URL.
+git clone <YOUR_GIT_URL>
+
+# Step 2: Navigate to the project directory.
+cd <YOUR_PROJECT_NAME>
+
+# Step 3: Install the necessary dependencies.
+npm i
+
+# Step 4: Start the development server with auto-reloading and an instant preview.
+npm run dev
 ```
 
-2. Install dependencies:
-```bash
-npm install
-```
+**Edit a file directly in GitHub**
 
-3. Ensure the backend is running on port 3899:
-```bash
-cd ../Backend
-npm install
-npm start
-```
+- Navigate to the desired file(s).
+- Click the "Edit" button (pencil icon) at the top right of the file view.
+- Make your changes and commit the changes.
 
-### Running the Frontend
+**Use GitHub Codespaces**
 
-From the Frontend directory:
-```bash
-npm start
-```
+- Navigate to the main page of your repository.
+- Click on the "Code" button (green button) near the top right.
+- Select the "Codespaces" tab.
+- Click on "New codespace" to launch a new Codespace environment.
+- Edit files directly within the Codespace and commit and push your changes once you're done.
 
-The application will open at `http://localhost:3000` and connect to the backend at `http://localhost:3899`.
+## What technologies are used for this project?
 
-## API Endpoints
+This project is built with:
 
-The frontend communicates with the following endpoints:
+- Vite
+- TypeScript
+- React
+- shadcn-ui
+- Tailwind CSS
 
-| Action | Method | Endpoint | Payload |
-|--------|--------|----------|---------|
-| Activate | PUT | `/api/users/activateUser` | `{ id: "userId" }` |
-| Inactivate | PUT | `/api/users/inactivateUser` | `{ id: "userId" }` |
-| Block | PUT | `/api/users/blockUser` | `{ id: "userId" }` |
+## ⚡ Continuous Deployment (CI/CD)
 
-## Features
+This project uses **Azure Pipelines** for automated deployments:
 
-- **User-Friendly Interface**: Clean, intuitive form for entering user IDs
-- **Multiple Actions**: Three buttons for different user management operations
-- **Real-time Feedback**: Loading states and error handling
-- **Response Display**: Shows API responses in JSON format
-- **Responsive Design**: Works on desktop and mobile devices
-- **TypeScript Support**: Full type safety throughout the application
+* ✅ Any changes pushed to the **main** branch are automatically built and deployed.
+* ✅ The pipeline ensures builds and checks pass before deployment.
+* ✅ No manual deployment steps are required – just commit and push, Azure takes care of the rest.
 
-## Technologies Used
+## 🎊 Acknowledgment
 
-- **React** 18.3.1
-- **TypeScript** 4.9.5
-- **Axios** 1.13.6 (HTTP client)
-- **CSS3** (Styling with Flexbox/Grid)
+This project is a **gift of gratitude** to our mentor on his 50th birthday – honoring his vision, dedication, and passion for spreading knowledge.
 
-## Usage
+> *“A good mentor can inspire hope, ignite imagination, and instill a love of learning.”*
 
-1. Enter a User ID in the input field
-2. Click one of the action buttons:
-   - **Activate User**: Changes user status to ACTIVE
-   - **Inactivate User**: Changes user status to INACTIVE
-   - **Block User**: Changes user status to BLOCKED
-3. View the response in the right panel
-
-## Error Handling
-
-The application handles:
-- Network errors
-- Invalid user IDs
-- Server errors (5xx)
-- Client errors (4xx)
-
-All errors are displayed clearly to the user with error messages.
-
-## Development
-
-### Building
-
-```bash
-npm run build
-```
-
-Creates an optimized production build in the `build/` directory.
-
-### Testing
-
-```bash
-npm test
-```
-
-Runs the test suite (if configured).
-
-## Configuration
-
-API Base URL and endpoints are configured in `src/services/api.config.ts`. Modify if needed:
-
-```typescript
-export const API_CONFIG = {
-  BASE_URL: 'http://localhost:3899',
-  ENDPOINTS: {
-    ACTIVATE_USER: '/api/users/activateUser',
-    INACTIVATE_USER: '/api/users/inactivateUser',
-    BLOCK_USER: '/api/users/blockUser',
-  },
-};
-```
-
-## Notes
-
-- Ensure the backend server is running before starting the frontend
-- CORS is enabled on the backend to allow frontend requests
-- All API calls are PUT requests with JSON payloads
-- The backend runs on port 3899 by default
-
-## License
-
-MIT

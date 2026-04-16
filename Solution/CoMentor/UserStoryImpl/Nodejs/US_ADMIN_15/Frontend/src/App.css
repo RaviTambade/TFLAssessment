@@ -1,102 +1,42 @@
-.app-container {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-}
-
-.app-header {
-  background-color: rgba(0, 0, 0, 0.3);
-  color: white;
-  padding: 40px 20px;
-  text-align: center;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
-
-.app-header h1 {
-  margin: 0 0 10px 0;
-  font-size: 2.5rem;
-  font-weight: 700;
-}
-
-.app-header p {
-  margin: 0;
-  font-size: 1.1rem;
-  opacity: 0.9;
-}
-
-.app-content {
-  flex: 1;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
-  padding: 40px 20px;
-  max-width: 1200px;
+#root {
+  max-width: 1280px;
   margin: 0 auto;
-  width: 100%;
-}
-
-.form-section {
-  background: white;
-  border-radius: 10px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  padding: 30px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-}
-
-.response-section {
-  background: white;
-  border-radius: 10px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  padding: 30px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  overflow-y: auto;
-  max-height: 600px;
-}
-
-.loading {
+  padding: 2rem;
   text-align: center;
-  padding: 40px 20px;
-  font-size: 1.1rem;
-  color: #667eea;
-  font-weight: 600;
-  animation: pulse 1.5s ease-in-out infinite;
 }
 
-@keyframes pulse {
-  0%, 100% {
-    opacity: 1;
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
   }
-  50% {
-    opacity: 0.5;
+  to {
+    transform: rotate(360deg);
   }
 }
 
-.error-message {
-  background-color: #fee;
-  border: 2px solid #f44;
-  color: #c33;
-  padding: 15px;
-  border-radius: 5px;
-  margin-bottom: 20px;
-  font-weight: 600;
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
 }
 
-@media (max-width: 768px) {
-  .app-content {
-    grid-template-columns: 1fr;
-    padding: 20px 10px;
-  }
+.card {
+  padding: 2em;
+}
 
-  .app-header h1 {
-    font-size: 1.8rem;
-  }
-
-  .response-section {
-    max-height: none;
-  }
+.read-the-docs {
+  color: #888;
 }
