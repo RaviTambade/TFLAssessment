@@ -3,8 +3,8 @@ using System.Threading.Tasks;
 
 public interface IAssessmentAssignRepository
 {
-    Task<List<TestDto>> GetTests();
-    Task<List<StudentDto>> GetStudents();
-    Task AssignAssessment(AssignAssessmentDto dto);
+    Task<List<TestDto>> GetTestsAsync();
+    Task<List<StudentDto>> GetStudentsAsync();
+    Task AssignAssessmentAsync(AssignAssessmentDto dto);
    
 }
