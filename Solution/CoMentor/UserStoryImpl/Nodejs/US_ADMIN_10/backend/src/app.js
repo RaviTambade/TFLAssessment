@@ -33,9 +33,6 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use("/api/v1/admin/sessions", sessionRoutes(sessionController));
-
-// Optional old URL support for your current frontend:
-app.use("/api/admin/sessions", sessionRoutes(sessionController));
+app.use("/api/v1/sessions", sessionRoutes(sessionController));
 
 module.exports = app;
