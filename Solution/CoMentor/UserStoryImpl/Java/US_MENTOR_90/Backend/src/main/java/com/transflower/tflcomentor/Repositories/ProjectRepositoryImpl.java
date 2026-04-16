@@ -97,6 +97,4 @@ public class ProjectRepositoryImpl implements ProjectRepository {
 
         return project;
     }
-
-    
 }

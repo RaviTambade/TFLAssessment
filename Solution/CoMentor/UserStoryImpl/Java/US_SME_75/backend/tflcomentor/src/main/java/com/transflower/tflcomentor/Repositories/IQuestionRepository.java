@@ -1,9 +1,10 @@
 package com.transflower.tflcomentor.Repositories;
 
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import com.transflower.tflcomentor.Entities.Question;
 
 public interface IQuestionRepository {
-    List<Question> findByStatus(String questionStatus);
+    Page<Question> findByStatus(String questionStatus, Pageable pageable);
 }
