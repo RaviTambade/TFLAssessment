@@ -3,7 +3,7 @@ const cors = require("cors");
 const bodyParser = require('body-parser');
 
 const connection = require('./Connectivity/db');
-const SessionRepository = require('./Repositories/sessionRepository');
+const SessionRepository = require('./Repositories/sessionrepository');
 const SessionService = require('./Services/sessionservice');
 const SessionController = require('./Controllers/Sessioncontroller');
 const sessionRouterFactory = require('./Routers/sessionrouter');
@@ -21,5 +21,19 @@ const sessionRouter = sessionRouterFactory(sessionController);
 
 app.use('/api/admin/logs', sessionRouter);
 
-app.listen(3000);
-console.log("Server running on port 3000");
+const PORT = process.env.PORT || 3000;
+
+const server = app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
+
+server.on("error", (error) => {
+  if (error.code === "EADDRINUSE") {
+    console.error(
+      `Port ${PORT} is already in use. Try another port, for example: $env:PORT=3002; node index.js`
+    );
+    process.exit(1);
+  }
+
+  throw error;
+});

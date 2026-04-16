@@ -1,7 +1,6 @@
 package com.transflower.tflcomentor.Controllers;
 
-import java.util.List;
-
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,21 +21,27 @@ public class QuestionController {
     }
 
     @GetMapping
-    public ResponseEntity<List<QuestionDto>> getByStatus(@RequestParam("status") String status) {
+public ResponseEntity<Page<QuestionDto>> getByStatus(
+    @RequestParam("status") String status,
+    @RequestParam(defaultValue="0") int page,
+    @RequestParam(defaultValue="10")int size ) {
 
-        if (status == null || status.trim().isEmpty()) {
-            return ResponseEntity.badRequest().build();
-        }
-
-        String normalizedStatus = status.trim().toLowerCase();
-        if ("active".equals(normalizedStatus)) {
-            normalizedStatus = "true";
-        } else if ("inactive".equals(normalizedStatus)) {
-            normalizedStatus = "false";
-        }
-
-        List<QuestionDto> results = questionService.getQuestionsByStatus(normalizedStatus);
-
-        return ResponseEntity.ok(results);
+    if (status == null || status.trim().isEmpty()) {
+        return ResponseEntity.badRequest().build();
     }
+
+    String normalizedStatus = status.trim().toUpperCase();
+
+    // Validate ENUM values
+    if (!normalizedStatus.equals("ACTIVE") &&
+        !normalizedStatus.equals("INACTIVE") &&
+        !normalizedStatus.equals("DRAFT")) {
+
+        return ResponseEntity.badRequest().body(null); 
+    }
+
+    Page<QuestionDto> results = questionService.getQuestionsByStatus(normalizedStatus,page,size);
+
+   return ResponseEntity.ok(results);
+}
 }

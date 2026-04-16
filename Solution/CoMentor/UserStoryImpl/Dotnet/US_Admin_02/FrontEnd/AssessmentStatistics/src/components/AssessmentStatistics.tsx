@@ -3,6 +3,7 @@ import { getAssessmentStatistics } from "../services/assessmentService";
 import type { AssessmentStatistics } from "../models/AssessmentStatistics";
 
 const AssessmentTable = () => {
+  
   const [data, setData] = useState<AssessmentStatistics[]>([]);
   const [loading, setLoading] = useState(true);
 

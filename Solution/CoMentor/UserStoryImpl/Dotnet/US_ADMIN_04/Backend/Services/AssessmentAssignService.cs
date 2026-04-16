@@ -7,19 +7,19 @@ public class AssessmentAssignService : IAssessmentAssignService
         _repository = repository;
     }
 
-    public async Task<List<TestDto>> GetTests()
+    public async Task<List<TestDto>> GetTestsAsync()
     {
-        return await _repository.GetTests();
+        return await _repository.GetTestsAsync();
     }
 
-    public async Task<List<StudentDto>> GetStudents()
+    public async Task<List<StudentDto>> GetStudentsAsync()
     {
-        return await _repository.GetStudents();
+        return await _repository.GetStudentsAsync();
     }
 
-    public async Task AssignAssessment(AssignAssessmentDto dto)
+    public async Task AssignAssessmentAsync(AssignAssessmentDto dto)
     {
-        await _repository.AssignAssessment(dto);
+        await _repository.AssignAssessmentAsync(dto);
     }
 
     

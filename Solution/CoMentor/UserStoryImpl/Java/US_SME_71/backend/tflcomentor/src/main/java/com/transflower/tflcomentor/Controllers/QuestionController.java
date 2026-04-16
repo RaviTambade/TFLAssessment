@@ -2,8 +2,11 @@ package com.transflower.tflcomentor.Controllers;
 
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -38,5 +41,18 @@ public class QuestionController {
         List<QuestionDto> results = questionService.getQuestionsByStatus(normalizedStatus);
 
         return ResponseEntity.ok(results);
+    }
+
+    @PostMapping
+    public ResponseEntity<QuestionDto> createQuestion(@RequestBody QuestionDto questionDto) {
+        
+        if (questionDto == null || questionDto.getQuestionText() == null || questionDto.getQuestionType() == null) {
+            return ResponseEntity.badRequest().build();
+        }
+        
+        // If status is not provided, it will default to "draft" in the service
+        QuestionDto createdQuestion = questionService.createQuestion(questionDto);
+        
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdQuestion);
     }
 }

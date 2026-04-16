@@ -10,18 +10,21 @@ public class AssessmentAssignRepository : IAssessmentAssignRepository
         _context = context;
     }
 
-    public async Task<List<TestDto>> GetTests()
-    {
-        return await _context.Tests
-            .Select(t => new TestDto
-            {
-                Id = t.Id,
-                Title = t.Title,
-                Duration = (int?)t.Duration
-            }).ToListAsync();
-    }
+   public async Task<List<TestDto>> GetTestsAsync()
+{
+    return await _context.Tests
+        .Select(t => new TestDto
+        {
+            Id = t.Id,
+            Title = t.Title,
+            Duration = (int?)t.Duration,
+            Description = t.Description,   
+            Difficulty = t.Difficulty     
+        })
+        .ToListAsync();
+}
 
-    public async Task<List<StudentDto>> GetStudents()
+    public async Task<List<StudentDto>> GetStudentsAsync()
     {
         return await (from u in _context.Users
                       join p in _context.PersonalInformations
@@ -33,7 +36,7 @@ public class AssessmentAssignRepository : IAssessmentAssignRepository
                       }).ToListAsync();
     }
 
-    public async Task AssignAssessment(AssignAssessmentDto dto)
+    public async Task AssignAssessmentAsync(AssignAssessmentDto dto)
     {
         var assessments = new List<Assessment>();
 
