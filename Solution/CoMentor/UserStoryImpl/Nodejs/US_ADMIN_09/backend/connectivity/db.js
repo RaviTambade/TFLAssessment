@@ -1,20 +1,24 @@
-const mysql = require("mysql2");
+const mysql = require("mysql2");  
 
 const dbConfig = {
   host: "192.168.1.149",
   user: "root",
   password: "password",
   database: "tflcomentor_db",
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0,
 };
 
-const connection = mysql.createConnection(dbConfig);
+const pool = mysql.createPool(dbConfig);
 
-connection.connect((err, conn) => {
+pool.getConnection((err, connection) => {
   if (err) {
-    console.error("MySQL connection failed:", err.message);
+    console.error("MySQL pool connection failed:", err.message);
     return;
   }
-  console.log("MySQL connected");
+  console.log("MySQL pool connected");
+  connection.release();
 });
 
-module.exports = connection;
+module.exports = pool;

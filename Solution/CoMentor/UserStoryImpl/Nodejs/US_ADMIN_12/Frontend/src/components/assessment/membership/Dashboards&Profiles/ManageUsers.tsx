@@ -14,7 +14,15 @@ type User = {
 
 const initialUsers: User[] = []
 
-const roles = ["Student", "Mentor", "SME", "Employer"]
+const roles = [
+  { id: 1, name: "Admin" },
+  { id: 2, name: "Student" },
+  { id: 3, name: "Mentor" },
+  { id: 4, name: "SME" },
+  { id: 5, name: "Employer" },
+  { id: 6, name: "Alumni" },
+  { id: 7, name: "Unassigned" },
+]
 
 const formatDate = (value?: string) => {
   if (!value) return "—"
@@ -22,22 +30,55 @@ const formatDate = (value?: string) => {
   if (isNaN(d.getTime())) return value
   return d.toLocaleDateString()
 }
-
+ 
 const ManageUsers = () => {
 
   const [users, setUsers] = useState(initialUsers)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [editingUser, setEditingUser] = useState<number | null>(null)
+  const [editingRoles, setEditingRoles] = useState<number[]>([])
+  const [savingRolesFor, setSavingRolesFor] = useState<number | null>(null)
 
-  const updateRole = (id: number, role: string) => {
+  const getRoleIdsFromRoleString = (roleString?: string) => {
+    if (!roleString) return []
+    const names = roleString.split(/[,;|]/).map(s => s.trim()).filter(Boolean)
+    return roles.filter(r => names.includes(r.name)).map(r => r.id)
+  }
 
+  const updateLocalRoles = (id: number, roleIds: number[]) => {
+    const names = roles.filter(r => roleIds.includes(r.id)).map(r => r.name)
     const updatedUsers = users.map((user) =>
-      user.id === id ? { ...user, role } : user
+      user.id === id ? { ...user, role: names.join(', ') } : user
     )
-
     setUsers(updatedUsers)
-    setEditingUser(null)
+  }
+
+  const saveRoles = async (userId: number, roleIds: number[]) => {
+    setSavingRolesFor(userId)
+    setError(null)
+    try {
+      const res = await fetch("http://localhost:3898/api/roles/updateUserRoles", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ user_id: userId, role_ids: roleIds }),
+      })
+
+      if (!res.ok) {
+        const txt = await res.text().catch(() => '')
+        throw new Error(`HTTP ${res.status} ${txt}`)
+      }
+
+      // optimistic update locally to reflect changes in UI
+      updateLocalRoles(userId, roleIds)
+      setEditingUser(null)
+      setEditingRoles([])
+    } catch (err: any) {
+      console.error("Failed to save roles:", err)
+      setError(err.message || "Failed to save roles")
+    } finally {
+      setSavingRolesFor(null)
+    }
   }
 
   useEffect(() => {
@@ -198,22 +239,38 @@ const ManageUsers = () => {
                           }
 
                           if (editingUser === user.id) {
+                            // prefill editingRoles if not already set
+                            if (editingRoles.length === 0) {
+                              const ids = getRoleIdsFromRoleString(user.role)
+                              if (ids.length) setEditingRoles(ids)
+                            }
+
                             return (
-                              <Select
-                                defaultValue={user.role}
-                                onValueChange={(value) => updateRole(user.id, value)}
-                              >
-                                <SelectTrigger className="w-full">
-                                  <SelectValue placeholder="Change Role" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                  {roles.map((role) => (
-                                    <SelectItem key={role} value={role}>
-                                      {role}
-                                    </SelectItem>
+                              <div className="flex flex-col gap-2">
+                                <div className="flex flex-wrap gap-2">
+                                  {roles.map((r) => (
+                                    <label key={r.id} className="inline-flex items-center gap-2">
+                                      <input
+                                        type="checkbox"
+                                        checked={editingRoles.includes(r.id)}
+                                        onChange={() => {
+                                          setEditingRoles(prev => prev.includes(r.id) ? prev.filter(x => x !== r.id) : [...prev, r.id])
+                                        }}
+                                      />
+                                      <span className="text-sm">{r.name}</span>
+                                    </label>
                                   ))}
-                                </SelectContent>
-                              </Select>
+                                </div>
+
+                                <div className="flex gap-2">
+                                  <Button size="sm" variant="hero" className="flex-1" onClick={() => saveRoles(user.id, editingRoles)} disabled={savingRolesFor === user.id}>
+                                    {savingRolesFor === user.id ? 'Saving…' : 'Save'}
+                                  </Button>
+                                  <Button size="sm" variant="ghost" className="flex-1" onClick={() => { setEditingUser(null); setEditingRoles([]) }}>
+                                    Cancel
+                                  </Button>
+                                </div>
+                              </div>
                             )
                           }
 

@@ -3,7 +3,7 @@ const cors = require("cors");
 const bodyParser = require('body-parser');
 
 const connection = require('./Connectivity/db');
-const SessionRepository = require('./Repositories/sessionRepository');
+const SessionRepository = require('./Repositories/sessionrepository');
 const SessionService = require('./Services/sessionservice');
 const SessionController = require('./Controllers/Sessioncontroller');
 const sessionRouterFactory = require('./Routers/sessionrouter');

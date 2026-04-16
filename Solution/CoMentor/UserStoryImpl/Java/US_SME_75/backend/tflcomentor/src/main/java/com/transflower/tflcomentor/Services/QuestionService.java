@@ -1,12 +1,15 @@
 package com.transflower.tflcomentor.Services;
 
-import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.transflower.tflcomentor.Dtos.QuestionDto;
-import com.transflower.tflcomentor.Entities.Question;
 import com.transflower.tflcomentor.Repositories.IQuestionRepository;
+import com.transflower.tflcomentor.Entities.Question;
+
 
 @Service
 public class QuestionService implements IQuestionService {
@@ -16,19 +19,27 @@ public class QuestionService implements IQuestionService {
     public QuestionService(IQuestionRepository questionRepository) {
         this.questionRepository = questionRepository;
     }
+//     @Override
+//      public List<QuestionDto> getQuestionsByStatus(String questionStatus,int page,int size){
+// return null;
+//      }
 
-    @Override
-    public List<QuestionDto> getQuestionsByStatus(String status) {
 
-        List<Question> entities = questionRepository.findByStatus(status);
 
-        return entities.stream()
-            .map(q -> new QuestionDto(
-                    q.getQuestionId(),
-                    q.getQuestionType(),
-                    q.getQuestionText(),
-                    q.getQuestionStatus()
-            ))
-            .toList();
-    }
+   @Override
+public Page<QuestionDto> getQuestionsByStatus(String questionStatus, int page, int size) {
+
+    Pageable pageable = PageRequest.of(page, size);
+
+    Page<Question> questionPage = (Page<Question>) questionRepository.findByStatus(questionStatus, pageable);
+
+    return questionPage.map(q -> {
+        QuestionDto dto = new QuestionDto();
+        dto.setQuestionId(q.getQuestionId());
+        dto.setQuestionText(q.getQuestionText());
+        dto.setQuestionType(q.getQuestionType());
+        dto.setQuestionStatus(q.getQuestionStatus());
+        return dto;
+    });
+}
 }

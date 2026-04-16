@@ -977,6 +977,7 @@ CREATE TABLE `question_framework_concepts` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `question_id` bigint DEFAULT NULL,
   `framework_id` bigint DEFAULT NULL,
+
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -1004,7 +1005,7 @@ CREATE TABLE `questions` (
   `question_type` varchar(255) DEFAULT NULL,
   `difficulty_level` varchar(255) DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
-  `status` tinyint(1) DEFAULT NULL,
+  `status` enum('DRAFT','APPROVED','INACTIVE') NOT NULL DEFAULT 'DRAFT',
   PRIMARY KEY (`question_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=61 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
