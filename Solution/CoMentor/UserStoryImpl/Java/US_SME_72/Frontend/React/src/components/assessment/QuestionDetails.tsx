@@ -25,13 +25,13 @@ const QuestionDetails = () => {
     }, [id]);
 
     const approve = async () => {
-        await fetch(`${BASE_URL}/approve/${id}`, { method: "PUT" });
+        await fetch(`${BASE_URL}/${id}/approve`, { method: "PUT" });
         alert("Approved ✅");
         navigate("/models/evaluationcontent/reviewquestion");
     };
 
     const reject = async () => {
-        await fetch(`${BASE_URL}/reject/${id}`, { method: "PUT" });
+        await fetch(`${BASE_URL}/${id}/reject`, { method: "PUT" });
         alert("Rejected ❌");
         navigate("/models/evaluationcontent/reviewquestion");
     };

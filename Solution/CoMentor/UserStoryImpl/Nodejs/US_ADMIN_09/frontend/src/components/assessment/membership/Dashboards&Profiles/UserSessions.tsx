@@ -19,7 +19,7 @@ type SessionRow = {
 };
 
 const API_BASE_3000 = "http://localhost:3000/api/v1/sessions";
-const API_BASE_3899 = "http://localhost:3899/api/admin/sessions/logs";
+const API_BASE_3899 = "http://localhost:3899/api/v1/sessions";
 
 const UserSessions = () => {
   // States for Port 3000 (Stats & Active List)
@@ -45,6 +45,7 @@ const UserSessions = () => {
   const getDuration = (loginTime?: string) => {
     if (!loginTime) return "N/A";
     const login = new Date(loginTime).getTime();
+
     const now = new Date().getTime();
     let diff = Math.floor((now - login) / 1000);
     const hours = Math.floor(diff / 3600);
