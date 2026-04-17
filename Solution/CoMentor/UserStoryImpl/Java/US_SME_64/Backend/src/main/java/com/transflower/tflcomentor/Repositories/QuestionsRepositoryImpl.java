@@ -4,6 +4,10 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
@@ -51,7 +55,7 @@ public class QuestionsRepositoryImpl implements QuestionsRepository {
                 String questionType = rs.getString("question_type");
                 String difficultyLevel = rs.getString("difficulty_level");
                 String createdAt = rs.getString("created_at");
-                boolean status = rs.getBoolean("status");
+                String status = rs.getString("status");
 
                 return new Questions(
                         id,
@@ -66,6 +70,60 @@ public class QuestionsRepositoryImpl implements QuestionsRepository {
             e.printStackTrace();
         }
         return questions;
+    }
+
+    @Override
+    public List<Questions> getAllQuestions() {
+        List<Questions> list = new ArrayList<>();
+
+        try {
+            String query = "SELECT * FROM questions";
+            Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+
+            while (rs.next()) {
+                Questions q = new Questions(
+                        rs.getLong("question_id"),
+                        rs.getString("description"),
+                        rs.getString("question_type"),
+                        rs.getString("difficulty_level"),
+                        rs.getString("created_at"),
+                        rs.getString("status"));
+                list.add(q);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    @Override
+    public List<Questions> getQuestionsByDifficulty(String difficulty) {
+        List<Questions> list = new ArrayList<>();
+
+        try {
+            String query = "SELECT * FROM questions WHERE difficulty_level = ?";
+            PreparedStatement stmt = connection.prepareStatement(query);
+            stmt.setString(1, difficulty);
+
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Questions q = new Questions(
+                        rs.getLong("question_id"),
+                        rs.getString("description"),
+                        rs.getString("question_type"),
+                        rs.getString("difficulty_level"),
+                        rs.getString("created_at"),
+                        rs.getString("status"));
+                list.add(q);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
     }
 
 }
