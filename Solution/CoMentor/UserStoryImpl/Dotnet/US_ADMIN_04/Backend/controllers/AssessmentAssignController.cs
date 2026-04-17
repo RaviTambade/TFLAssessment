@@ -14,25 +14,17 @@ public class AssessmentAssignController : ControllerBase
     [HttpGet("tests")]
     public async Task<IActionResult> GetTestsAsync()
     {
-<<<<<<< HEAD:Solution/CoMentor/UserStoryImpl/Dotnet/US_ADMIN_04/Backend/components/AssessmentAssignController.cs
-        var tests = await _service.GetTests();
+        var tests = await _service.GetTestsAsync();
         return Ok(tests);
-=======
-        var data = await _service.GetTestsAsync();
-        return Ok(data);
->>>>>>> 69610ca5 (changes in us 4):Solution/CoMentor/UserStoryImpl/Dotnet/US_ADMIN_04/Backend/controllers/AssessmentAssignController.cs
     }
 
     [HttpGet("students")]
     public async Task<IActionResult> GetStudentsAsync()
     {
-<<<<<<< HEAD:Solution/CoMentor/UserStoryImpl/Dotnet/US_ADMIN_04/Backend/components/AssessmentAssignController.cs
-        var students = await _service.GetStudents();
+        var students = await _service.GetStudentsAsync();
         return Ok(students);
-=======
         var data = await _service.GetStudentsAsync();
         return Ok(data);
->>>>>>> 69610ca5 (changes in us 4):Solution/CoMentor/UserStoryImpl/Dotnet/US_ADMIN_04/Backend/controllers/AssessmentAssignController.cs
     }
 
     [HttpPost ("assigned")]
