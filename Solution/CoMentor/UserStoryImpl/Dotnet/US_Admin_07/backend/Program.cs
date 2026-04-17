@@ -1,37 +1,3 @@
-// var builder = WebApplication.CreateBuilder(args);
-// var app = builder.Build();
-
-// app.MapGet("/api/student-assessment-status", () =>
-// {
-//     var data = new List<object>
-//     {
-//         new
-//         {
-//             assessmentId = 1,
-//             testId = 101,
-//             testTitle = "Java Basics Test",
-//             studentId = 10,
-//             studentName = "Tejas Pawale",
-//             status = "Completed",
-//             assignedAt = DateTime.Parse("2026-04-10T10:00:00"),
-//             scheduledAt = DateTime.Parse("2026-04-11T10:00:00"),
-//             result = new
-//             {
-//                 score = 85,
-//                 percentile = 92.5,
-//                 timeTakenMinutes = 45
-//             }
-//         }
-//     };
-//     Console.WriteLine("Returning student assessment status data...");
-//     Console.WriteLine(System.Text.Json.JsonSerializer.Serialize(data));
-//     return Results.Ok(data);
-// });
-
-// app.Run();
-
-
-
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -47,10 +13,24 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services.AddScoped<IStudentAssessmentRepository, StudentAssessmentRepository>();
 builder.Services.AddScoped<IStudentAssessmentService, StudentAssessmentService>();
 
+// Add CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowReactApp", policy =>
+    {
+        policy.WithOrigins("http://localhost:5173")
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
+
 // Add Controllers
 builder.Services.AddControllers();
 
 var app = builder.Build();
+
+// CORS must come before MapControllers
+app.UseCors("AllowReactApp");
 
 // Map Controllers
 app.MapControllers();
