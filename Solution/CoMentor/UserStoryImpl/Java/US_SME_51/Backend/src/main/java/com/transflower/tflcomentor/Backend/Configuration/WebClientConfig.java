@@ -1,4 +1,4 @@
-package com.transflower.tflcomentor.Backend.Configuration;
+package com.transflower.tflcomentor.Backend.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -14,7 +14,7 @@ const SMEInsertQuestion = () => {
     correctAnswer: ""
   });
 
-  const BASE_URL = "http://localhost:8081/api/questions";
+  const BASE_URL = "http://localhost:8082/api/questions";
 
   const handleChange = (e) => {
     setFormData({
@@ -26,7 +26,7 @@ const SMEInsertQuestion = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    await fetch(`${BASE_URL}/create`, {
+    await fetch(`${BASE_URL}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"

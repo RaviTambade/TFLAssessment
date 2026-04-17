@@ -10,18 +10,21 @@ public class AssessmentAssignRepository : IAssessmentAssignRepository
         _context = context;
     }
 
-    public async Task<List<TestDto>> GetTests()
-    {
-        return await _context.Tests
-            .Select(t => new TestDto
-            {
-                Id = t.Id,
-                Title = t.Title,
-                Duration = (int?)t.Duration
-            }).ToListAsync();
-    }
+   public async Task<List<TestDto>> GetTestsAsync()
+{
+    return await _context.Tests
+        .Select(t => new TestDto
+        {
+            Id = t.Id,
+            Title = t.Title,
+            Duration = (int?)t.Duration,
+            Description = t.Description,   
+            Difficulty = t.Difficulty     
+        })
+        .ToListAsync();
+}
 
-    public async Task<List<StudentDto>> GetStudents()
+    public async Task<List<StudentDto>> GetStudentsAsync()
     {
         return await (from u in _context.Users
                       join p in _context.PersonalInformations
@@ -33,18 +36,23 @@ public class AssessmentAssignRepository : IAssessmentAssignRepository
                       }).ToListAsync();
     }
 
-    public async Task AssignAssessment(AssignAssessmentDto dto)
+    public async Task AssignAssessmentAsync(AssignAssessmentDto dto)
     {
-        var assessment = new Assessment
-        {
-            TestId = dto.TestId,
-            StudentId = dto.StudentId,
-            AssignedAt = DateTime.Now,
-            ScheduledAt = dto.ScheduledAt,
-            Status = "Assigned"
-        };
+        var assessments = new List<Assessment>();
 
-        _context.Assessments.Add(assessment);
+        foreach (var studentId in dto.StudentIds)
+        {
+            assessments.Add(new Assessment
+            {
+                TestId = dto.TestId,
+                StudentId = studentId,
+                AssignedAt = DateTime.Now,
+                ScheduledAt = dto.ScheduledAt,
+                Status = "Assigned"
+            });
+        }
+
+        await _context.Assessments.AddRangeAsync(assessments);
         await _context.SaveChangesAsync();
     }
 

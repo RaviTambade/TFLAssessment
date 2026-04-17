@@ -1,4 +1,4 @@
-package com.transflower.tflcomentor.Backend.Controller;
+package com.transflower.tflcomentor.Backend.controller;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,18 +9,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.transflower.tflcomentor.Backend.DTO.Language;
-import com.transflower.tflcomentor.Backend.DTO.Layer;
-import com.transflower.tflcomentor.Backend.DTO.Framework;
-import com.transflower.tflcomentor.Backend.DTO.Runtime;
-
-import com.transflower.tflcomentor.Backend.Entity.Concepts;
-
-import com.transflower.tflcomentor.Backend.Service.ExternalService.ExternalAPIService;
-import com.transflower.tflcomentor.Backend.Service.InternalService.IConceptsService;
+import com.transflower.tflcomentor.Backend.dto.FrameworkDTO;
+import com.transflower.tflcomentor.Backend.dto.LanguageDTO;
+import com.transflower.tflcomentor.Backend.dto.LayerDTO;
+import com.transflower.tflcomentor.Backend.dto.RuntimeDTO;
+import com.transflower.tflcomentor.Backend.entity.Concept;
+import com.transflower.tflcomentor.Backend.service.externalService.ExternalAPIService;
+import com.transflower.tflcomentor.Backend.service.internalService.IConceptsService;
 
 @RestController
-@RequestMapping("/concepts")
+@RequestMapping("/api")
 public class ConceptsController {
     @Autowired 
     private IConceptsService conceptsService;
@@ -28,28 +26,28 @@ public class ConceptsController {
     @Autowired
     private ExternalAPIService externalAPI;
 
-    @PostMapping("/add")
-    public Concepts addConcepts(@RequestBody Concepts concepts) {
+    @PostMapping("/add/concept")
+    public Concept addConcepts(@RequestBody Concept concepts) {
         return conceptsService.addConcepts(concepts);
     }
 
-    @GetMapping("/get/runtime")
-    public List<Runtime> getAllConcepts() {
+    @GetMapping("/runtimes")
+    public List<RuntimeDTO> getAllRuntime() {
         return externalAPI.getRuntime();
     }
 
-    @GetMapping("/get/languages/{runtimeId}")
-    public List<Language> getLanguages(@PathVariable int runtimeId) {
-        return externalAPI.getLanguages(runtimeId);
+    @GetMapping("/languages/runtime/{runtimeId}")
+    public List<LanguageDTO> getLanguagesByRuntime(@PathVariable int runtimeId) {
+        return externalAPI.getLanguagesByRuntime(runtimeId);
     }
 
-    @GetMapping("/get/layers")
-    public List<Layer> getLayers() {
+    @GetMapping("/layers")
+    public List<LayerDTO> getLayers() {
         return externalAPI.getLayers();
     }
 
-    @GetMapping("/get/frameworks/{languageId}/{layerId}")
-    public List<Framework> getFrameworks(@PathVariable int languageId, @PathVariable int layerId) {
-        return externalAPI.getFrameworks(languageId, layerId);
+    @GetMapping("/frameworks/language/{languageId}/layer/{layerId}")
+    public List<FrameworkDTO> getFrameworksByLanguageAndLayer(@PathVariable int languageId, @PathVariable int layerId) {
+        return externalAPI.getFrameworksByLanguageAndLayer(languageId, layerId);
     }
 }

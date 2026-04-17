@@ -9,15 +9,23 @@ export default function AssignAssessment() {
   const [searchStudent, setSearchStudent] = useState("");
   const [searchTest, setSearchTest] = useState("");
 
-  const [selectedStudent, setSelectedStudent] = useState<number | null>(null);
+  const [selectedStudents, setSelectedStudents] = useState<number[]>([]);
   const [selectedTest, setSelectedTest] = useState<number | null>(null);
 
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
 
-  const [step, setStep] = useState(0);
+ 
+  useEffect(() => {
+    const now = new Date();
+    const isoDate = now.toISOString().split("T")[0];
+    const isoTime = now.toTimeString().slice(0,5);
 
-  /* ================= FETCH ================= */
+    setDate(isoDate);
+    setTime(isoTime);
+  }, []);
+
+  const [step, setStep] = useState(0);
 
   useEffect(() => {
     fetchStudents();
@@ -29,8 +37,7 @@ export default function AssignAssessment() {
       const res = await fetch("http://localhost:5091/api/AssessmentAssign/students");
       const data = await res.json();
       setStudents(Array.isArray(data) ? data : []);
-    } catch (err) {
-      console.error("Student API error", err);
+    } catch {
       setStudents([]);
     }
   };
@@ -40,13 +47,18 @@ export default function AssignAssessment() {
       const res = await fetch("http://localhost:5091/api/AssessmentAssign/tests");
       const data = await res.json();
       setTests(Array.isArray(data) ? data : []);
-    } catch (err) {
-      console.error("Test API error", err);
+    } catch {
       setTests([]);
     }
   };
 
-  /* ================= FILTER SAFE ================= */
+  const toggleStudent = (id: number) => {
+    setSelectedStudents(prev =>
+      prev.includes(id)
+        ? prev.filter(x => x !== id)
+        : [...prev, id]
+    );
+  };
 
   const filteredStudents = students.filter(s =>
     (s?.fullName ?? "").toLowerCase().includes(searchStudent.toLowerCase())
@@ -56,17 +68,15 @@ export default function AssignAssessment() {
     (t?.title ?? "").toLowerCase().includes(searchTest.toLowerCase())
   );
 
-  /* ================= SUBMIT ================= */
-
   const handleAssign = async () => {
     try {
-      if (!selectedStudent || !selectedTest) {
-        alert("Please select student and test");
+      if (selectedStudents.length === 0 || !selectedTest) {
+        alert("Please select students and test");
         return;
       }
 
       const dto = {
-        studentId: selectedStudent,
+        studentIds: selectedStudents,
         testId: selectedTest,
         scheduledAt: new Date(`${date}T${time}:00`).toISOString(),
         status
@@ -83,15 +93,12 @@ export default function AssignAssessment() {
 
       const text = await res.text();
 
-      if (!res.ok) {
-        throw new Error(text);
-      }
+      if (!res.ok) throw new Error(text);
 
       alert("Assessment Assigned Successfully");
       reset();
 
     } catch (err: any) {
-      console.error("Assign Error:", err.message);
       alert(err.message);
     }
   };
@@ -101,13 +108,11 @@ export default function AssignAssessment() {
     setStatus("");
     setSearchStudent("");
     setSearchTest("");
-    setSelectedStudent(null);
+    setSelectedStudents([]);
     setSelectedTest(null);
     setDate("");
     setTime("");
   };
-
-  /* ================= UI ================= */
 
   return (
     <div className="min-h-screen bg-orange-50 flex justify-center p-6">
@@ -127,7 +132,7 @@ export default function AssignAssessment() {
           </button>
         )}
 
-        {/* STEP 1 */}
+        {/*STATUS */}
         {step === 1 && (
           <div className="bg-white p-5 rounded shadow border border-orange-200">
             <h2 className="font-bold mb-3">Select Status</h2>
@@ -149,52 +154,15 @@ export default function AssignAssessment() {
             <button
               onClick={() => setStep(2)}
               disabled={!status}
-              className="bg-orange-600 text-white w-full py-2 rounded disabled:bg-gray-300"
+              className="bg-orange-600 text-white w-full py-2 rounded"
             >
               Next
             </button>
           </div>
         )}
 
-        {/* STEP 2 - STUDENT (SINGLE SELECT) */}
+        {/*TEST */}
         {step === 2 && (
-          <div className="bg-white p-5 mt-4 rounded shadow border border-orange-200">
-
-            <h2 className="font-bold mb-2">Select Student</h2>
-
-            <input
-              placeholder="Search students..."
-              className="border p-2 w-full mb-3"
-              value={searchStudent}
-              onChange={(e) => setSearchStudent(e.target.value)}
-            />
-
-            <div className="max-h-60 overflow-y-auto">
-              {filteredStudents.map(s => (
-                <label key={s.id} className="flex gap-2 border p-2 mb-2 rounded">
-                  <input
-                    type="radio"
-                    name="student"
-                    checked={selectedStudent === s.id}
-                    onChange={() => setSelectedStudent(s.id)}
-                  />
-                  {s.fullName}
-                </label>
-              ))}
-            </div>
-
-            <button
-              onClick={() => setStep(3)}
-              disabled={!selectedStudent}
-              className="bg-orange-600 text-white w-full mt-3 py-2 rounded"
-            >
-              Next
-            </button>
-          </div>
-        )}
-
-        {/* STEP 3 - TEST */}
-        {step === 3 && (
           <div className="bg-white p-5 mt-4 rounded shadow border border-orange-200">
 
             <h2 className="font-bold mb-2">Select Test</h2>
@@ -208,20 +176,38 @@ export default function AssignAssessment() {
 
             <div className="max-h-60 overflow-y-auto">
               {filteredTests.map(t => (
-                <label key={t.id} className="flex gap-2 border p-2 mb-2 rounded">
-                  <input
-                    type="radio"
-                    name="test"
-                    checked={selectedTest === t.id}
-                    onChange={() => setSelectedTest(t.id)}
-                  />
-                  {t.title} ({t.duration} min)
+                <label key={t.id} className="flex flex-col border p-3 mb-2 rounded">
+                  <div className="flex items-center gap-2">
+                    <input
+                      type="radio"
+                      name="test"
+                      checked={selectedTest === t.id}
+                      onChange={() => setSelectedTest(t.id)}
+                    />
+                    <span className="font-semibold">{t.title}</span>
+                  </div>
+
+                  <div className="text-sm text-gray-600 ml-6 mt-1">
+                    ⏱ Duration: {t.duration} min
+                  </div>
+
+                  {t.difficulty && (
+                    <div className="text-sm ml-6">
+                      🎯 Difficulty: <span className="font-medium">{t.difficulty}</span>
+                    </div>
+                  )}
+
+                  {t.description && (
+                    <div className="text-sm text-gray-500 ml-6 mt-1">
+                      {t.description}
+                    </div>
+                  )}
                 </label>
               ))}
             </div>
 
             <button
-              onClick={() => setStep(4)}
+              onClick={() => setStep(3)}
               disabled={!selectedTest}
               className="bg-orange-600 text-white w-full mt-3 py-2 rounded"
             >
@@ -230,7 +216,43 @@ export default function AssignAssessment() {
           </div>
         )}
 
-        {/* STEP 4 - SCHEDULE */}
+        {/*STUDENTS */}
+        {step === 3 && (
+          <div className="bg-white p-5 mt-4 rounded shadow border border-orange-200">
+
+            <h2 className="font-bold mb-2">Select Students</h2>
+
+            <input
+              placeholder="Search students..."
+              className="border p-2 w-full mb-3"
+              value={searchStudent}
+              onChange={(e) => setSearchStudent(e.target.value)}
+            />
+
+            <div className="max-h-60 overflow-y-auto">
+              {filteredStudents.map(s => (
+                <label key={s.id} className="flex gap-2 border p-2 mb-2 rounded">
+                  <input
+                    type="checkbox"
+                    checked={selectedStudents.includes(s.id)}
+                    onChange={() => toggleStudent(s.id)}
+                  />
+                  {s.fullName}
+                </label>
+              ))}
+            </div>
+
+            <button
+              onClick={() => setStep(4)}
+              disabled={selectedStudents.length === 0}
+              className="bg-orange-600 text-white w-full mt-3 py-2 rounded"
+            >
+              Next
+            </button>
+          </div>
+        )}
+
+        {/*SCHEDULE */}
         {step === 4 && (
           <div className="bg-white p-5 mt-4 rounded shadow border border-orange-200">
 
@@ -260,7 +282,7 @@ export default function AssignAssessment() {
           </div>
         )}
 
-        {/* STEP 5 - SUMMARY */}
+        {/*SUMMARY */}
         {step === 5 && (
           <div className="bg-white p-5 mt-4 rounded shadow border border-orange-200">
 
@@ -272,8 +294,13 @@ export default function AssignAssessment() {
             <p><b>Date:</b> {date}</p>
             <p><b>Time:</b> {time}</p>
 
-            <p className="mt-3 font-semibold">Student:</p>
-            <p>{students.find(s => s.id === selectedStudent)?.fullName}</p>
+            <p className="mt-3 font-semibold">Students:</p>
+            <p>
+              {students
+                .filter(s => selectedStudents.includes(s.id))
+                .map(s => s.fullName)
+                .join(", ")}
+            </p>
 
             <p className="mt-3 font-semibold">Test:</p>
             <p>{tests.find(t => t.id === selectedTest)?.title}</p>
