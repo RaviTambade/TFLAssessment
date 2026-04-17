@@ -1,4 +1,4 @@
-package com.transflower.tflcomentor.Backend.Controller;
+package com.transflower.tflcomentor.Backend.controller;
 
 import java.util.List;
 
@@ -8,52 +8,58 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.transflower.tflcomentor.Backend.Entity.Concepts;
-import com.transflower.tflcomentor.Backend.Entity.Runtimes;
-import com.transflower.tflcomentor.Backend.Entity.Languages;
-import com.transflower.tflcomentor.Backend.Entity.Layers;
-import com.transflower.tflcomentor.Backend.Entity.Frameworks;
-import com.transflower.tflcomentor.Backend.Service.IConceptsService;
+import com.transflower.tflcomentor.Backend.entity.Concept;
+import com.transflower.tflcomentor.Backend.entity.Framework;
+import com.transflower.tflcomentor.Backend.entity.Language;
+import com.transflower.tflcomentor.Backend.entity.Layer;
+import com.transflower.tflcomentor.Backend.entity.Runtime;
+import com.transflower.tflcomentor.Backend.service.IConceptsService;
 
 @RestController
-@RequestMapping("/concepts")
+@RequestMapping("/api")
 public class ConceptsController {
 
     @Autowired
     private IConceptsService conceptsService;
 
-    @GetMapping("/get")
-    public List<Concepts> getAllConcepts(){
+    @GetMapping("/concepts")
+    public List<Concept> getAllConcepts(){
         return conceptsService.getAllConcepts();
     }
 
-    @GetMapping("/get/{framework}")
-    public List<Concepts> getAllConceptsforFramework(@PathVariable String framework) {
+    @GetMapping("/frameworks/{framework}/concepts")    
+    public List<Concept> getAllConceptsforFramework(@PathVariable String framework) {
         return conceptsService.getAllConceptsforFramework(framework);
     }
 
     @GetMapping("/runtimes")
-    public List<Runtimes> getAllRuntimes() {
+    public List<Runtime> getAllRuntimes() {
         return conceptsService.getAllRuntimes();
     }
 
-    @GetMapping("/languages/{runtimeId}")
-    public List<Languages> getAllLanguages(@PathVariable int runtimeId) {
+    
+    @GetMapping("/languages/runtime/{runtimeId}")  
+    public List<Language> getAllLanguages(@PathVariable int runtimeId) {
         return conceptsService.getAllLanguages(runtimeId);
     }
 
     @GetMapping("/layers")
-    public List<Layers> getAllLayers() {
+    public List<Layer> getAllLayers() {
         return conceptsService.getAllLayers();
     }
+    
+    // @GetMapping("/layers/{layerId}")
+    // public List<Layers> getByLayerId(@PathVariable int layerId) {
+    //     return conceptsService.getAllLayers();
+    // }
 
-    @GetMapping("/frameworks/{languageId}")
-    public List<Frameworks> getAllFrameworks(@PathVariable int languageId) {
-        return conceptsService.getAllFrameworks(languageId);
-    }
+    // @GetMapping("/frameworks/language/{languageId}")   //not working
+    // public List<Frameworks> getAllFrameworksByLanguageId(@PathVariable int languageId) {
+    //     return conceptsService.getAllFrameworksByLanguageId(languageId);
+    // }
 
-    @GetMapping("/frameworks/{languageId}/{layerId}")
-    public List<Frameworks> getAllFrameworksByLanguageAndLayer(@PathVariable int languageId, @PathVariable int layerId) {
+    @GetMapping("/frameworks/languages/{languageId}/layers/{layerId}")
+    public List<Framework> getAllFrameworksByLanguageAndLayer(@PathVariable int languageId, @PathVariable int layerId) {
         return conceptsService.getAllFrameworksByLanguageAndLayer(languageId, layerId);
     }
 }

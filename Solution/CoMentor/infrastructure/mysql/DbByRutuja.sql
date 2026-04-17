@@ -254,6 +254,7 @@ CREATE TABLE hands_on_results (
     FOREIGN KEY (sme_id) REFERENCES users(id) 
 );
 
+
 -- 25. Problem Statement Answers
 CREATE TABLE problem_statement_answers (
     id INT PRIMARY KEY AUTO_INCREMENT,
@@ -591,4 +592,29 @@ CREATE TABLE oral_assessments (
     CONSTRAINT fk_oa_concept
         FOREIGN KEY (concept_id)
         REFERENCES concepts(id)
+);
+
+CREATE TABLE mcq_answers (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+
+    student_id INT NOT NULL,
+    question_id INT NOT NULL,
+    assessment_id INT NOT NULL,
+
+    selected_option ENUM('A','B','C','D') NOT NULL,
+    answered_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT fk_mcq_student
+        FOREIGN KEY (student_id)
+        REFERENCES users(id),
+
+    CONSTRAINT fk_mcq_question
+        FOREIGN KEY (question_id)
+        REFERENCES questions(question_id),
+
+    CONSTRAINT fk_mcq_assessment
+        FOREIGN KEY (assessment_id)
+        REFERENCES assessments(id),
+
+    UNIQUE (student_id, question_id, assessment_id)
 );

@@ -1,0 +1,42 @@
+/* Base styles (plain CSS version, no Tailwind) */
+:root{
+	--max-width:1120px;
+	--accent:#ef4444;
+}
+
+html,body,#root{height:100%;}
+body{margin:0;font-family:Georgia, 'Times New Roman', serif;background:#fff;}
+
+.ctr-root{min-height:100vh;padding:28px;background:#fff;}
+.ctr-wrap{max-width:var(--max-width);margin:0 auto}
+.ctr-header{margin-bottom:18px}
+.ctr-title{font-size:40px;margin:0 0 8px 0;font-weight:700;color:#000}
+.ctr-underline{width:100px;height:6px;border-radius:9999px;background:linear-gradient(90deg,var(--accent),#fb923c)}
+
+.ctr-card{background:#fff;border-radius:12px;padding:12px;border:1px solid rgba(0,0,0,0.06);box-shadow:0 6px 20px rgba(0,0,0,0.04)}
+.ctr-loading{padding:24px;color:#666;text-align:center}
+
+.ctr-table-wrap{overflow-x:auto}
+.ctr-table{width:100%;border-collapse:collapse;font-size:13px}
+.ctr-table thead tr{background:linear-gradient(90deg,var(--accent),#fb923c);color:#fff}
+.ctr-table th{padding:8px 10px;text-align:left;font-size:12px;text-transform:uppercase;letter-spacing:0.06em}
+.ctr-table th.sr{text-align:center;width:48px}
+
+.tr-row.even{background:#fff}
+.tr-row.odd{background:#fbfbfb}
+.tr-row:hover{background:#fff6f6}
+.td{padding:8px 10px;border-bottom:1px solid rgba(0,0,0,0.04);color:#111}
+.td.center{text-align:center}
+.td.sr{text-align:center;font-weight:600;color:var(--accent)}
+.date-col{color:#666}
+
+.level-badge{display:inline-block;padding:4px 8px;border-radius:9999px;font-weight:700;font-size:12px}
+.level-ADVANCE{background:#bbf7d0;color:#065f46}
+.level-INTERMEDIATE{background:#fef3c7;color:#92400e}
+.level-BEGINNER{background:#fee2e2;color:#991b1b}
+
+@media (max-width:800px){
+	.ctr-title{font-size:28px}
+	.ctr-table th,.ctr-table td{font-size:12px}
+}
+
