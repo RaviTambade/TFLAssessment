@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { getAssessments } from "../services/api";
 import { type Assessment } from "../types/assessment";
-import AssessmentCard from "../components/AssessmentCard";
 
 const AssessmentPage = () => {
   const [data, setData] = useState<Assessment[]>([]);
@@ -56,11 +55,79 @@ const AssessmentPage = () => {
         ))}
       </div>
 
-      {/* 🔷 Cards */}
-      <div style={styles.grid}>
-        {filtered.map((item) => (
-          <AssessmentCard key={item.assessmentId} data={item} />
-        ))}
+      {/* 🔷 TABLE */}
+      <div style={styles.tableWrapper}>
+        <table style={styles.table}>
+          <thead>
+            <tr>
+             <th style={styles.th}>Student</th>
+    <th style={styles.th}>Test</th>
+    <th style={styles.th}>Assigned</th>
+    <th style={styles.th}>Scheduled</th>
+    <th style={styles.th}>Score</th>
+    <th style={styles.th}>Percentile</th>
+    <th style={styles.th}>Time</th>
+    <th style={styles.th}>Status</th>
+
+            </tr>
+          </thead>
+
+          <tbody>
+  {filtered.map((item) => (
+    <tr key={item.assessmentId}>
+      
+      <td style={styles.td}>{item.studentName}</td>
+
+      <td style={styles.td}>{item.testTitle}</td>
+
+      <td style={styles.td}>
+        {new Date(item.assignedAt).toLocaleString()}
+      </td>
+
+      <td style={styles.td}>
+        {new Date(item.scheduledAt).toLocaleString()}
+      </td>
+
+      <td style={styles.td}>
+        {item.result?.score ?? "-"}
+      </td>
+
+      <td style={styles.td}>
+        {item.result?.percentile ?? "-"}
+      </td>
+
+      <td style={styles.td}>
+        {item.result
+          ? `${item.result.timeTakenMinutes} min`
+          : "-"}
+      </td>
+
+      <td style={styles.td}>
+       <span
+  style={{
+    padding: "4px 10px",
+    borderRadius: "12px",
+    fontSize: "12px",
+    fontWeight: "bold",
+    color: "#fff",
+    background:
+      item.status === "Completed"
+        ? "green"
+        : item.status === "Pending"
+        ? "red"
+        : item.status === "Assigned"
+        ? "#ffc107"
+        : "gray",
+  }}
+>
+  {item.status}
+</span>
+      </td>
+
+    </tr>
+  ))}
+</tbody>
+        </table>
       </div>
     </div>
   );
@@ -72,16 +139,19 @@ const styles = {
     background: "#f5f5f5",
     minHeight: "100vh",
   },
+
   header: {
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
     marginBottom: "20px",
   },
+
   heading: {
     color: "#ff5722",
     fontSize: "28px",
   },
+
   button: {
     background: "#ff5722",
     color: "#fff",
@@ -90,21 +160,47 @@ const styles = {
     borderRadius: "8px",
     cursor: "pointer",
   },
+
   filterContainer: {
     display: "flex",
     gap: "10px",
     marginBottom: "20px",
   },
+
   filterButton: {
     padding: "8px 16px",
     borderRadius: "20px",
     border: "1px solid #ff5722",
     cursor: "pointer",
   },
-  grid: {
-    display: "grid",
-    gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-    gap: "20px",
+
+  tableWrapper: {
+    overflowX: "auto" as const,
+  },
+
+  table: {
+    width: "100%",
+    borderCollapse: "collapse" as const,
+    background: "#fff",
+    borderRadius: "10px",
+    overflow: "hidden",
+    boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
+  },
+
+ th: {
+  background: "#ff5722",
+  color: "#fff",   // header white
+},
+
+td: {
+  padding: "12px",
+  borderBottom: "1px solid #eee",
+  color: "#332f2f",        // ✅ BLACK text
+  fontWeight: "500",    // optional (better visibility)
+},
+
+  row: {
+    transition: "background 0.2s",
   },
 };
 
