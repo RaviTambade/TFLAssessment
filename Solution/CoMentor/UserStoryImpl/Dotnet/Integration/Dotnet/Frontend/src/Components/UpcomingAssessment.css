@@ -1,0 +1,8 @@
+.buttonStyle{
+          padding: "8px 12px",
+          cursor: "pointer",
+          backgroundColor: "#ef4444",
+          color: "white",
+          border: "none",
+          borderRadius: "6px",
+        }

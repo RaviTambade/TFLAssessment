@@ -12,7 +12,9 @@ public class AssessmentQuestionsController : ControllerBase
         _service = service;
     }
 
-    [HttpGet("{assessmentId}")]
+
+
+[HttpGet("{assessmentId}")]
 public async Task<IActionResult> GetAssessmentQuestions(int assessmentId)
 {
     var data = await _service.GetAssessmentQuestions(assessmentId);
