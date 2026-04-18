@@ -1,4 +1,4 @@
-class RegisterUserRepository{
+class AuthRepository{
     constructor(connection){
         this.connection=connection
     }
@@ -14,4 +14,4 @@ class RegisterUserRepository{
     }
 }
 
-module.exports = RegisterUserRepository;
+module.exports = AuthRepository;

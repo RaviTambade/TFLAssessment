@@ -1,4 +1,4 @@
-class RegisterUserServices{
+class AuthenticationService{
     constructor(Repository){
         this.repository = Repository;
     }
@@ -8,4 +8,4 @@ class RegisterUserServices{
     }
 }
 
-module.exports = RegisterUserServices;
+module.exports = AuthenticationService;

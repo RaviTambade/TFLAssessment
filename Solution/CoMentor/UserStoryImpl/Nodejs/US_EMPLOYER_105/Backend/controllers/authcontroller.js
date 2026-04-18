@@ -1,11 +1,11 @@
-class RegisterUserController{
-    constructor(Services){
-        this.services = Services;
+class AuthenticationController{
+    constructor(AuthenticationService){
+        this.AuthenticationService = AuthenticationService;
     }                               
 
     InsertUser(req,res){
         const user = req.body;  
-        this.services.InsertUser(user,(err,result)=>{
+        this.AuthenticationService .InsertUser(user,(err,result)=>{
             if(err){
                 console.error("Error inserting user:", err);    
                 res.status(500).json({ error: "Failed to register user" });
@@ -16,4 +16,4 @@ class RegisterUserController{
     }
 }
 
-module.exports = RegisterUserController;
+module.exports = AuthenticationController;
