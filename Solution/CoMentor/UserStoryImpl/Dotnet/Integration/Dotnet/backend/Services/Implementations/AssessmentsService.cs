@@ -25,4 +25,22 @@ public class AssessmentsService : IAssessmentsService
     {
         return await _repository.GetAllAssessments();
     }
+
+    public async Task<List<TestDto>> GetTestsAsync()
+    {
+        return await _repository.GetTestsAsync();
+    }
+
+    public async Task<List<StudentDto>> GetStudentsAsync()
+    {
+        return await _repository.GetStudentsAsync();
+    }
+
+    public async Task AssignAssessmentAsync(AssignAssessmentDto dto)
+    {
+        await _repository.AssignAssessmentAsync(dto);
+    }
+
+
+
 }

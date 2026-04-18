@@ -7,5 +7,9 @@ public interface IAssessmentsService
 {
     Task<List<UpcomingAssessmentDto>> GetAllUpcomingAssessmentsService(long userId);
     Task<List<AllAssessmentDto>> GetAssessments();
+    
+    Task<List<TestDto>> GetTestsAsync();
+    Task<List<StudentDto>> GetStudentsAsync();
+    Task AssignAssessmentAsync(AssignAssessmentDto dto);
 }
 

@@ -26,4 +26,27 @@ public class AssessmentController : ControllerBase
         var data = await _service.GetAssessments();
         return Ok(data);
     }
+
+    
+    [HttpGet("tests")]
+    public async Task<IActionResult> GetTestsAsync()
+    {
+        var tests = await _service.GetTestsAsync();
+        return Ok(tests);
+    }
+
+    [HttpGet("students")]
+    public async Task<IActionResult> GetStudentsAsync()
+    {
+        var students = await _service.GetStudentsAsync();
+        return Ok(students);
+    }
+
+    [HttpPost ("assigned")]
+    public async Task<IActionResult> AssignAssessmentAsync(AssignAssessmentDto dto)
+    {
+        await _service.AssignAssessmentAsync(dto);
+        return Ok("Assessment Assigned Successfully");
+    }
+
 }
