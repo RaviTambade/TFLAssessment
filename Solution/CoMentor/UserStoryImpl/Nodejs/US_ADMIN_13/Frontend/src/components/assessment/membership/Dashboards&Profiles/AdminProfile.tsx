@@ -1,117 +1,259 @@
-import { useEffect, useState } from "react"
+import { ChangeEvent, useEffect, useState } from "react"
 import Navbar from "../../../Navbar"
 import Footer from "../../../Footer"
 import { Avatar, AvatarFallback } from "../../../ui/avatar"
 import { Card, CardContent } from "../../../ui/card"
 import { Badge } from "../../../ui/badge"
 import { Button } from "../../../ui/button"
-import { Linkedin, Github, Mail, Phone } from "lucide-react"
+import { Github, Linkedin, Mail, Phone } from "lucide-react"
+
+type PersonalInfo = {
+  full_name: string
+  email: string
+  gender: string
+  date_of_birth: string
+  address: string
+  pincode: string
+}
+
+type ProfessionalInfo = {
+  company_name: string
+  job_title: string
+  employment_type: string
+  experience_years: number
+  location: string
+  skills: string
+  start_date: string
+  end_date: string
+  is_current_job: number
+}
+
+type AdminProfileResponse = Partial<{
+  first_name: string
+  last_name: string
+  full_name: string
+  name: string
+  email: string
+  gender: string
+  date_of_birth: string
+  dob: string
+  address: string
+  pincode: string
+  company_name: string
+  job_title: string
+  employment_type: string
+  experience_years: number | string
+  location: string
+  skills: string | string[]
+  start_date: string
+  end_date: string
+  is_current_job: number | boolean
+}>
+
+type AdminProfileApiResult = {
+  success?: boolean
+  data?: {
+    personalInfo?: AdminProfileResponse
+    professionalInfo?: AdminProfileResponse[]
+  } | AdminProfileResponse[] | AdminProfileResponse
+}
+
+const BASE_URL = "http://localhost:5000/api"
+const USER_ID = "1"
+
+const emptyPersonal: PersonalInfo = {
+  full_name: "",
+  email: "",
+  gender: "",
+  date_of_birth: "",
+  address: "",
+  pincode: ""
+}
+
+const emptyProfessional: ProfessionalInfo = {
+  company_name: "",
+  job_title: "",
+  employment_type: "",
+  experience_years: 0,
+  location: "",
+  skills: "",
+  start_date: "",
+  end_date: "",
+  is_current_job: 0
+}
 
 const Profile = () => {
-  const userId = "1"
-  const BASE_URL = "http://localhost:5000/api"
-
   const [loading, setLoading] = useState(true)
   const [isEditing, setIsEditing] = useState(false)
   const [successMsg, setSuccessMsg] = useState("")
+  const [errorMsg, setErrorMsg] = useState("")
+  const [personal, setPersonal] = useState<PersonalInfo>(emptyPersonal)
+  const [professional, setProfessional] =
+    useState<ProfessionalInfo>(emptyProfessional)
+  const [editData, setEditData] = useState<PersonalInfo>(emptyPersonal)
 
-  const [personal, setPersonal] = useState(null)
-  const [professional, setProfessional] = useState({})
-  const [editData, setEditData] = useState({})
-
-  // ✅ SAFE DATE FORMAT (FIXED)
-  const formatDate = (date) => {
+  const formatDate = (date?: string) => {
     if (!date) return "-"
+    const parsedDate = new Date(date)
 
-    const d = new Date(date)
+    if (Number.isNaN(parsedDate.getTime())) {
+      return date
+    }
 
-    if (isNaN(d.getTime())) return date
-
-    const year = d.getFullYear()
-    const month = String(d.getMonth() + 1).padStart(2, "0")
-    const day = String(d.getDate()).padStart(2, "0")
-
-    return `${year}-${month}-${day}`
+    return parsedDate.toISOString().split("T")[0]
   }
 
-  // ================= FETCH =================
+  const getProfileData = (
+    result: unknown
+  ): {
+    personalInfo: AdminProfileResponse | null
+    professionalInfo: AdminProfileResponse | null
+  } => {
+    if (!result || typeof result !== "object") {
+      return { personalInfo: null, professionalInfo: null }
+    }
+
+    const apiResult = result as AdminProfileApiResult
+
+    if (
+      apiResult.data &&
+      typeof apiResult.data === "object" &&
+      !Array.isArray(apiResult.data) &&
+      ("personalInfo" in apiResult.data || "professionalInfo" in apiResult.data)
+    ) {
+      const nestedData = apiResult.data as {
+        personalInfo?: AdminProfileResponse
+        professionalInfo?: AdminProfileResponse[]
+      }
+
+      return {
+        personalInfo: nestedData.personalInfo || null,
+        professionalInfo: nestedData.professionalInfo?.[0] || null
+      }
+    }
+
+    if (Array.isArray(apiResult.data)) {
+      return {
+        personalInfo: apiResult.data[0] || null,
+        professionalInfo: apiResult.data[0] || null
+      }
+    }
+
+    if (apiResult.data && typeof apiResult.data === "object") {
+      return {
+        personalInfo: apiResult.data as AdminProfileResponse,
+        professionalInfo: apiResult.data as AdminProfileResponse
+      }
+    }
+
+    if (Array.isArray(result)) {
+      return {
+        personalInfo: (result[0] as AdminProfileResponse) || null,
+        professionalInfo: (result[0] as AdminProfileResponse) || null
+      }
+    }
+
+    return {
+      personalInfo: result as AdminProfileResponse,
+      professionalInfo: result as AdminProfileResponse
+    }
+  }
+
+  const normalizeProfile = (
+    personalInfo: AdminProfileResponse | null,
+    professionalInfo: AdminProfileResponse | null
+  ) => {
+    const fallbackName =
+      personalInfo?.full_name ||
+      personalInfo?.name ||
+      `${personalInfo?.first_name || ""} ${personalInfo?.last_name || ""}`.trim()
+
+    const personalData: PersonalInfo = {
+      full_name: fallbackName,
+      email: personalInfo?.email || "",
+      gender: personalInfo?.gender || "",
+      date_of_birth: personalInfo?.date_of_birth || personalInfo?.dob || "",
+      address: personalInfo?.address || "",
+      pincode: personalInfo?.pincode || ""
+    }
+
+    const professionalData: ProfessionalInfo = {
+      company_name: professionalInfo?.company_name || "",
+      job_title: professionalInfo?.job_title || "",
+      employment_type: professionalInfo?.employment_type || "",
+      experience_years: Number(professionalInfo?.experience_years) || 0,
+      location: professionalInfo?.location || "",
+      skills: Array.isArray(professionalInfo?.skills)
+        ? professionalInfo.skills.join(", ")
+        : professionalInfo?.skills || "",
+      start_date: professionalInfo?.start_date || "",
+      end_date: professionalInfo?.end_date || "",
+      is_current_job: professionalInfo?.is_current_job ? 1 : 0
+    }
+
+    return { personalData, professionalData }
+  }
+
   const fetchProfile = async () => {
     try {
       setLoading(true)
+      setErrorMsg("")
 
-      const res = await fetch(`${BASE_URL}/employerprofile/${userId}`)
-      if (!res.ok) throw new Error("Failed to fetch")
-
-      const result = await res.json()
-
-      console.log("API RESULT:", result)
-
-      // ✅ FIXED: supports BOTH array and {data: []}
-      const data = Array.isArray(result)
-        ? result[0]
-        : result?.data?.[0]
-
-      if (!data) return
-
-      const fullName = `${data.first_name || ""} ${data.last_name || ""}`.trim()
-
-      // ================= PERSONAL =================
-      const personalData = {
-        full_name: fullName,
-        email: data.email || "",
-        gender: data.gender || "",
-        date_of_birth: data.date_of_birth || "",
-        address: data.address || "",
-        pincode: data.pincode || ""
+      const response = await fetch(`${BASE_URL}/adminprofile/${USER_ID}`)
+      if (!response.ok) {
+        throw new Error(`Failed to fetch profile: ${response.status}`)
       }
 
+      const result = await response.json()
+      const { personalInfo, professionalInfo } = getProfileData(result)
+
+      if (!personalInfo && !professionalInfo) {
+        throw new Error("No profile data returned by the API")
+      }
+
+      const { personalData, professionalData } = normalizeProfile(
+        personalInfo,
+        professionalInfo
+      )
+
       setPersonal(personalData)
-
-      // ================= PROFESSIONAL =================
-      setProfessional({
-        company_name: data.company_name || "",
-        job_title: data.job_title || "",
-        employment_type: data.employment_type || "",
-        experience_years: data.experience_years || 0,
-        location: data.location || "",
-        skills: data.skills || "",
-        start_date: data.start_date || "",
-        end_date: data.end_date || "",
-        is_current_job: data.is_current_job || 0
-      })
-
-      // ================= EDIT FORM =================
+      setProfessional(professionalData)
       setEditData({
         ...personalData,
-        date_of_birth: data.date_of_birth
-          ? new Date(data.date_of_birth).toISOString().split("T")[0]
+        date_of_birth: personalData.date_of_birth
+          ? formatDate(personalData.date_of_birth)
           : ""
       })
-
-    } catch (err) {
-      console.error("Fetch error:", err)
+    } catch (error) {
+      console.error("Fetch error:", error)
+      setErrorMsg("Could not load admin profile. Please check the backend API.")
     } finally {
       setLoading(false)
     }
   }
 
   useEffect(() => {
-    fetchProfile()
+    void fetchProfile()
   }, [])
 
-  // ================= INPUT =================
-  const handleChange = (e) => {
-    setEditData({ ...editData, [e.target.name]: e.target.value })
+  const handleChange = (
+    event: ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    const { name, value } = event.target
+    setEditData((previous) => ({ ...previous, [name]: value }))
   }
 
-  const handleProfessionalChange = (key, value) => {
-    setProfessional((prev) => ({ ...prev, [key]: value }))
+  const handleProfessionalChange = (
+    key: keyof ProfessionalInfo,
+    value: string | number
+  ) => {
+    setProfessional((previous) => ({ ...previous, [key]: value }))
   }
 
-  // ================= UPDATE =================
   const handleUpdate = async () => {
     try {
-      const names = editData.full_name.trim().split(" ")
+      setErrorMsg("")
+      const names = editData.full_name.trim().split(/\s+/).filter(Boolean)
       const first_name = names[0] || ""
       const last_name = names.slice(1).join(" ")
 
@@ -123,39 +265,40 @@ const Profile = () => {
         date_of_birth: editData.date_of_birth,
         address: editData.address,
         pincode: editData.pincode,
-
         company_name: professional.company_name,
         job_title: professional.job_title,
         employment_type: professional.employment_type,
         experience_years: professional.experience_years,
         location: professional.location,
-        skills: professional.skills
+        skills: professional.skills,
+        start_date: professional.start_date,
+        end_date: professional.end_date,
+        is_current_job: professional.is_current_job
       }
 
-      const res = await fetch(`${BASE_URL}/employerprofile/${userId}`, {
+      const response = await fetch(`${BASE_URL}/adminprofile/${USER_ID}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body)
       })
 
-      if (!res.ok) throw new Error("Update failed")
+      if (!response.ok) {
+        throw new Error(`Update failed: ${response.status}`)
+      }
 
       await fetchProfile()
-
       setIsEditing(false)
-      setSuccessMsg("Profile updated successfully ✅")
-
+      setSuccessMsg("Profile updated successfully.")
       setTimeout(() => setSuccessMsg(""), 3000)
-
-    } catch (err) {
-      console.error("Update error:", err)
-      alert("Update failed")
+    } catch (error) {
+      console.error("Update error:", error)
+      setErrorMsg("Profile update failed. Please verify the backend endpoint.")
     }
   }
 
-  // ================= UI =================
-  if (loading) return <div className="p-10 text-center">Loading profile...</div>
-  if (!personal) return <div className="p-10 text-center">No profile data</div>
+  if (loading) {
+    return <div className="p-10 text-center">Loading profile...</div>
+  }
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -164,26 +307,31 @@ const Profile = () => {
       <div className="flex-1 pt-24 p-6">
         <Card>
           <CardContent className="p-8 space-y-6">
-
             {successMsg && (
-              <div className="bg-green-100 text-green-700 p-2 rounded">
+              <div className="rounded bg-green-100 p-2 text-green-700">
                 {successMsg}
               </div>
             )}
 
-            <div className="flex justify-between items-center">
-              <div className="flex gap-6 items-center">
+            {errorMsg && (
+              <div className="rounded bg-red-100 p-2 text-red-700">
+                {errorMsg}
+              </div>
+            )}
+
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-6">
                 <Avatar className="h-24 w-24">
                   <AvatarFallback>
-                    {personal.full_name?.[0] || "U"}
+                    {personal.full_name?.[0] || "A"}
                   </AvatarFallback>
                 </Avatar>
 
                 <div>
-                  <h2 className="text-2xl font-bold">{personal.full_name}</h2>
+                  <h2 className="text-2xl font-bold">{personal.full_name || "Admin"}</h2>
                   <Badge className="mt-2">Admin</Badge>
 
-                  <div className="flex gap-4 mt-3">
+                  <div className="mt-3 flex gap-4">
                     <Linkedin size={20} />
                     <Github size={20} />
                     <Mail size={20} />
@@ -192,59 +340,113 @@ const Profile = () => {
                 </div>
               </div>
 
-              <Button onClick={() => setIsEditing(!isEditing)}>
+              <Button onClick={() => setIsEditing((previous) => !previous)}>
                 {isEditing ? "Close" : "Edit Profile"}
               </Button>
             </div>
 
-            {/* ================= PROFILE DATA ================= */}
-            <div className="border p-4 rounded">
+            <div className="rounded border p-4">
               <p>Company: {professional.company_name || "-"}</p>
               <p>Job Title: {professional.job_title || "-"}</p>
               <p>Employment Type: {professional.employment_type || "-"}</p>
               <p>Start Date: {formatDate(professional.start_date)}</p>
               <p>End Date: {formatDate(professional.end_date)}</p>
-              <p>Experience: {professional.experience_years || 0} years</p>
+              <p>Experience: {professional.experience_years} years</p>
               <p>Location: {professional.location || "-"}</p>
               <p>Skills: {professional.skills || "-"}</p>
 
               <hr className="my-3" />
 
-              <p>Gender: {personal.gender}</p>
+              <p>Gender: {personal.gender || "-"}</p>
               <p>DOB: {formatDate(personal.date_of_birth)}</p>
-              <p>Email: {personal.email}</p>
-              <p>Address: {personal.address}</p>
-              <p>Pincode: {personal.pincode}</p>
+              <p>Email: {personal.email || "-"}</p>
+              <p>Address: {personal.address || "-"}</p>
+              <p>Pincode: {personal.pincode || "-"}</p>
             </div>
 
-            {/* ================= EDIT ================= */}
             {isEditing && (
-              <div className="border p-4 space-y-3 rounded">
+              <div className="space-y-3 rounded border p-4">
+                <input
+                  name="full_name"
+                  value={editData.full_name}
+                  onChange={handleChange}
+                  className="w-full border p-2"
+                  placeholder="Full name"
+                />
 
-                <input name="full_name" value={editData.full_name} onChange={handleChange} className="border p-2 w-full" />
-                <input name="email" value={editData.email} onChange={handleChange} className="border p-2 w-full" />
+                <input
+                  name="email"
+                  value={editData.email}
+                  onChange={handleChange}
+                  className="w-full border p-2"
+                  placeholder="Email"
+                />
 
-                <select name="gender" value={editData.gender} onChange={handleChange} className="border p-2 w-full">
+                <select
+                  name="gender"
+                  value={editData.gender}
+                  onChange={handleChange}
+                  className="w-full border p-2"
+                >
                   <option value="">Select Gender</option>
                   <option value="MALE">Male</option>
                   <option value="FEMALE">Female</option>
                 </select>
 
-                <input type="date" name="date_of_birth" value={editData.date_of_birth} onChange={handleChange} className="border p-2 w-full" />
-                <input name="address" value={editData.address} onChange={handleChange} className="border p-2 w-full" />
-                <input name="pincode" value={editData.pincode} onChange={handleChange} className="border p-2 w-full" />
+                <input
+                  type="date"
+                  name="date_of_birth"
+                  value={editData.date_of_birth}
+                  onChange={handleChange}
+                  className="w-full border p-2"
+                />
+
+                <input
+                  name="address"
+                  value={editData.address}
+                  onChange={handleChange}
+                  className="w-full border p-2"
+                  placeholder="Address"
+                />
+
+                <input
+                  name="pincode"
+                  value={editData.pincode}
+                  onChange={handleChange}
+                  className="w-full border p-2"
+                  placeholder="Pincode"
+                />
 
                 <input
                   value={professional.company_name}
-                  onChange={(e) => handleProfessionalChange("company_name", e.target.value)}
+                  onChange={(event) =>
+                    handleProfessionalChange("company_name", event.target.value)
+                  }
+                  className="w-full border p-2"
                   placeholder="Company"
-                  className="border p-2 w-full"
+                />
+
+                <input
+                  value={professional.job_title}
+                  onChange={(event) =>
+                    handleProfessionalChange("job_title", event.target.value)
+                  }
+                  className="w-full border p-2"
+                  placeholder="Job title"
+                />
+
+                <input
+                  value={professional.location}
+                  onChange={(event) =>
+                    handleProfessionalChange("location", event.target.value)
+                  }
+                  className="w-full border p-2"
+                  placeholder="Location"
                 />
 
                 <Button onClick={handleUpdate}>Save</Button>
               </div>
             )}
-
           </CardContent>
         </Card>
       </div>
