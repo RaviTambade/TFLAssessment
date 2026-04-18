@@ -15,7 +15,7 @@ export default function AssignAssessment() {
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
 
-  // ✅ Set current date & time by default
+ 
   useEffect(() => {
     const now = new Date();
     const isoDate = now.toISOString().split("T")[0];
@@ -132,7 +132,7 @@ export default function AssignAssessment() {
           </button>
         )}
 
-        {/* STEP 1 - STATUS */}
+        {/*STATUS */}
         {step === 1 && (
           <div className="bg-white p-5 rounded shadow border border-orange-200">
             <h2 className="font-bold mb-3">Select Status</h2>
@@ -161,7 +161,7 @@ export default function AssignAssessment() {
           </div>
         )}
 
-        {/* STEP 2 - TEST */}
+        {/*TEST */}
         {step === 2 && (
           <div className="bg-white p-5 mt-4 rounded shadow border border-orange-200">
 
@@ -216,7 +216,7 @@ export default function AssignAssessment() {
           </div>
         )}
 
-        {/* STEP 3 - STUDENTS */}
+        {/*STUDENTS */}
         {step === 3 && (
           <div className="bg-white p-5 mt-4 rounded shadow border border-orange-200">
 
@@ -252,7 +252,7 @@ export default function AssignAssessment() {
           </div>
         )}
 
-        {/* STEP 4 - SCHEDULE */}
+        {/*SCHEDULE */}
         {step === 4 && (
           <div className="bg-white p-5 mt-4 rounded shadow border border-orange-200">
 
@@ -282,7 +282,7 @@ export default function AssignAssessment() {
           </div>
         )}
 
-        {/* STEP 5 - SUMMARY */}
+        {/*SUMMARY */}
         {step === 5 && (
           <div className="bg-white p-5 mt-4 rounded shadow border border-orange-200">
 

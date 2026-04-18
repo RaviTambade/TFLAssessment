@@ -7,7 +7,7 @@ class AuthenticationService
 
     validate(credential,callback)
     {
-        this.userLoginRepo.userLogin(credential.username,credential.password,credential.role,callback);
+        this.userLoginRepo.userLogin(credential,callback);
     }
 }
 

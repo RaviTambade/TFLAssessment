@@ -1,10 +1,10 @@
-package com.transflower.tflcomentor.Backend.Service.InternalService;
+package com.transflower.tflcomentor.Backend.service.internalService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.transflower.tflcomentor.Backend.Entity.Concepts;
-import com.transflower.tflcomentor.Backend.Repository.IConceptsRepository;
+import com.transflower.tflcomentor.Backend.entity.Concept;
+import com.transflower.tflcomentor.Backend.repository.IConceptsRepository;
 
 @Service
 public class ConceptsService implements IConceptsService {
@@ -13,7 +13,7 @@ public class ConceptsService implements IConceptsService {
     private IConceptsRepository conceptsRepository;
     
     @Override 
-    public Concepts addConcepts(Concepts concepts) {
+    public Concept addConcepts(Concept concepts) {
         return conceptsRepository.save(concepts);
     }
 

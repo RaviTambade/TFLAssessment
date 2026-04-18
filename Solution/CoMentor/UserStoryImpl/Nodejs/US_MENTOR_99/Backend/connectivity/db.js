@@ -1,23 +1,16 @@
+const mysql = require("mysql2/promise")
 
-//   (1) ----connection db.js 
-
-const mysql = require("mysql2");
-
+// 192.168.1.149
 const dbConfig = {
   host: "192.168.1.149",
   user: "root",
   password: "password",
   database: "tflcomentor_db",
-};
+}
 
-const connection = mysql.createConnection(dbConfig);
+// Create pool
+const pool = mysql.createPool(dbConfig)
 
-connection.connect((err, conn) => {
-  if (err) {
-    console.error("MySQL connection failed:", err.message);
-    return;
-  }
-  console.log("MySQL connected");
-});
+console.log(" MySQL  Connected")
 
-module.exports = connection;
+module.exports = pool

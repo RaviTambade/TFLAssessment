@@ -26,7 +26,7 @@ const SMEInsertQuestion = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    await fetch(`${BASE_URL}/create`, {
+    await fetch(`${BASE_URL}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
