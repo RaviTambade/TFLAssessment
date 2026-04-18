@@ -41,6 +41,9 @@ public class AssessmentsService : IAssessmentsService
         await _repository.AssignAssessmentAsync(dto);
     }
 
-
+      public async Task<List<AssessmentResultDto>> GetAssessmentResults()
+    {
+        return await _repository.GetAssessmentResults();
+    }
 
 }

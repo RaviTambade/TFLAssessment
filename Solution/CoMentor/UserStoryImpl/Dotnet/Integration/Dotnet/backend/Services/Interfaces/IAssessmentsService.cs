@@ -11,5 +11,6 @@ public interface IAssessmentsService
     Task<List<TestDto>> GetTestsAsync();
     Task<List<StudentDto>> GetStudentsAsync();
     Task AssignAssessmentAsync(AssignAssessmentDto dto);
+    Task<List<AssessmentResultDto>> GetAssessmentResults();
 }
 

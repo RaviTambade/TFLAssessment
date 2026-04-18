@@ -20,7 +20,7 @@ public class AssessmentController : ControllerBase
         return Ok(data);
     }
 
-     [HttpGet("all")]
+    [HttpGet("all")]
     public async Task<IActionResult> GetAll()
     {
         var data = await _service.GetAssessments();
@@ -48,5 +48,13 @@ public class AssessmentController : ControllerBase
         await _service.AssignAssessmentAsync(dto);
         return Ok("Assessment Assigned Successfully");
     }
+
+    [HttpGet("results")]
+    public async Task<IActionResult> GetResults()
+    {
+        var data = await _service.GetAssessmentResults();
+        return Ok(data);
+    }
+
 
 }
