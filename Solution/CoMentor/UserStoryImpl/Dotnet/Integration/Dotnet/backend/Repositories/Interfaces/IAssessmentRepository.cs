@@ -11,6 +11,8 @@ public interface IAssessmentRepository
     Task<List<TestDto>> GetTestsAsync();
     Task<List<StudentDto>> GetStudentsAsync();
     Task AssignAssessmentAsync(AssignAssessmentDto dto);
+
+    Task<List<AssessmentResultDto>> GetAssessmentResults();
     Task<List<AssessmentQuestionDto>> GetAssessmentQuestions(int assessmentId);
-     Task<bool> SaveAssessmentAnswersAsync( List<StudentAnswer>? answers);
+    Task<bool> SaveAssessmentAnswersAsync(List<StudentAnswer>? answers);
 }

@@ -112,6 +112,9 @@ public partial class AppDbContext : DbContext
     public virtual DbSet<UserLog> UserLogs { get; set; }
 
     public virtual DbSet<UserRole> UserRoles { get; set; }
+
+    public virtual DbSet<StudentAnswer> StudentAnswers { get; set; }
+
     public DbSet<AssessmentQuestionDto> AssessmentQuestionResults { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

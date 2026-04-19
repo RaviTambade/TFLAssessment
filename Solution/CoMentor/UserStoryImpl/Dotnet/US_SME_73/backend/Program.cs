@@ -1,8 +1,9 @@
-using backend.Models;
 using backend.Repositories.Interfaces;
 using backend.Repositories.Implementations;
 using backend.Services.Interfaces;
 using backend.Services.Implementations;
+
+using backend.Models;
 
 using Microsoft.EntityFrameworkCore;
 
@@ -22,14 +23,9 @@ builder.Services.AddDbContext<AppDbContext>(options =>
         ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("DefaultConnection"))
     )
 );
+builder.Services.AddScoped<IQuestionDetailsRepository, QuestionDetailsRepository>();
+builder.Services.AddScoped<IQuestionDetailsService, QuestionDetailsService>();
 
-
-// ✅ Dependency Injection
-
-
-builder.Services.AddScoped<IQuestionTypeRepository, QuestionTypeRepository>();
-builder.Services.AddScoped<IQuestionTypeService, QuestionTypeService>();
- 
 
 builder.Services.AddCors(options =>
 {
@@ -43,18 +39,6 @@ builder.Services.AddCors(options =>
 });
 var app = builder.Build();
 
-// // ✅ Enable Swagger UI
-// if (app.Environment.IsDevelopment())
-// {
-//     app.UseSwagger();
-//     app.UseSwaggerUI();
-// }
-
-// app.UseHttpsRedirection();
-// if (!app.Environment.IsDevelopment())
-// {
-//     app.UseHttpsRedirection();
-// }
 app.UseCors("AllowAll");
 app.UseAuthorization();
 

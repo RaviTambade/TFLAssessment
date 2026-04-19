@@ -1,19 +1,17 @@
 const Credential = require("../dtos/requests/credential");
 class AuthenticationController {
-  
-  constructor(userLoginService) {
-    this.userLoginService = userLoginService;
+  constructor(authenticationService) {
+    this.authenticationService = authenticationService;
   }
 
   userLogin = (req, res) => {
+    const credentialCheck = new Credential(
+      req.body.username,
+      req.body.password,
+      req.body.role,
+    );
 
-  const credentialCheck = new Credential(
-    req.body.username,
-    req.body.password,
-    req.body.role,
-  );
-
-    this.userLoginService.validate(credentialCheck, (err, result) => {
+    this.authenticationService.validate(credentialCheck, (err, result) => {
       if (err) {
         console.error("error fetching users:", err);
         return res.status(500).json({ error: "intternal server error" });

@@ -61,6 +61,27 @@ const Navbar = ({ isLoggedIn }: NavbarProps) => {
     }
   };
 
+
+      const handleUserLogLogout = async (userid:number) => {
+  try {
+    const res = await fetch(`http://localhost:4000/api/userlog/logout/${userid}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!res.ok) {
+      throw new Error("user log failed");
+    }
+
+    const data = await res.json();
+    console.log(data);
+
+  } catch (error) {
+    console.error(error);
+  }
+};
   const handleGetStartedClick = () => {
     if (location.pathname !== "/") {
       navigate("/", { state: { scrollToContact: true } });
@@ -161,6 +182,17 @@ const Navbar = ({ isLoggedIn }: NavbarProps) => {
 
                   <DropdownMenuItem
                     onClick={() => {
+
+                    try {
+                    const user = JSON.parse(localStorage.getItem("user") || "{}");
+                    if (user?.userid) {
+                      handleUserLogLogout(user.userid);
+                    }
+
+
+                  } catch (error) {
+                    console.error("Submit Error:", error);
+                  }
                       localStorage.removeItem("user");
                       navigate("/");
                       window.location.reload(); // redirect

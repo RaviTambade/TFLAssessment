@@ -43,44 +43,30 @@ public class AssessmentsService : IAssessmentsService
         await _repository.AssignAssessmentAsync(dto);
     }
 
+      public async Task<List<AssessmentResultDto>> GetAssessmentResults()
+    {
+        return await _repository.GetAssessmentResults();
+    }
+
     public async Task<List<AssessmentQuestionDto>> GetAssessmentQuestions(int assessmentId)
     {
-       
-        var questions = await _repository.GetAssessmentQuestions(assessmentId);
-        
-        return questions;
+        return await _repository.GetAssessmentQuestions(assessmentId);
     }
+
     public async Task<bool> SaveAssessmentAnswersAsync(AssessmentAnswersDto submission)
+    {
+        // Convert DTO to List<StudentAnswer>
+        var answers = submission.Answers?.Select(a => new StudentAnswer
         {
-            if (submission == null)
-            {
-                throw new ArgumentNullException(nameof(submission));
-            }
+            StudentId = submission.StudentId,
+            AssessmentId = submission.AssessmentId,
+            QuestionId = a.QuestionId,
+            SelectedOption = a.SelectedOption,
+            TimeTakenMinutes = submission.TimeTakenMinutes,
+            CreatedAt = DateTime.UtcNow
+        }).ToList();
 
-            var resultEntity = new StudentAssessmentResult
-            {
-                StudentId = submission.StudentId,
-                AssessmentId = submission.AssessmentId,
-                TimeTakenMinutes = submission.TimeTakenMinutes,
-                Score = 0,
-                Percentile = 0
-            };
-
-            var answerEntities = submission.Answers?
-                .Select(a => new StudentAnswer
-                {
-                    StudentId = submission.StudentId,
-                    AssessmentId = submission.AssessmentId,
-                    QuestionId = a.QuestionId,
-                    SelectedOption = a.SelectedOption,
-                    TimeTakenMinutes = submission.TimeTakenMinutes,
-                    CreatedAt = DateTime.UtcNow
-                })
-                .ToList();
-
-            Console.WriteLine($"[Assessment Submission] StudentId: {submission.StudentId}, AssessmentId: {submission.AssessmentId}, TimeTaken: {submission.TimeTakenMinutes}min, Answers: {answerEntities?.Count ?? 0}");
-
-            return await _repository.SaveAssessmentAnswersAsync( answerEntities);
-        }
+        return await _repository.SaveAssessmentAnswersAsync(answers);
+    }
 
 }

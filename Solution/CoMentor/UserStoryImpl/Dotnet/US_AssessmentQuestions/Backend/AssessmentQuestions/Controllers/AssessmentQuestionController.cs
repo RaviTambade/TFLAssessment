@@ -13,6 +13,7 @@ public class AssessmentQuestionsController : ControllerBase
         _service = service;
     }
 
+<<<<<<< HEAD
     [HttpGet("{assessmentId}")]
     public async Task<IActionResult> GetAssessmentQuestions(int assessmentId)
     {
@@ -36,4 +37,13 @@ public class AssessmentQuestionsController : ControllerBase
             message = "Answers received successfully."
         });
     }
+=======
+
+
+[HttpGet("{assessmentId}")]
+public async Task<IActionResult> GetAssessmentQuestions(int assessmentId)
+{
+    var data = await _service.GetAssessmentQuestions(assessmentId);
+    return Ok(data);
+>>>>>>> 13a6324ac5945008b8992fac64f918e1d73aafe0
 }
