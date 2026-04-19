@@ -4,8 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 
 public class AssessmentUpcomingRepository : IAssessmentUpcomingRepository
 {
-
-
     private readonly AppDbContext _context;
      public AssessmentUpcomingRepository(AppDbContext context)
     {
@@ -14,34 +12,16 @@ public class AssessmentUpcomingRepository : IAssessmentUpcomingRepository
 [HttpGet]
 public async Task<List<AssessmentUpcomingDto>> GetAllUpcomingAssessments(long userId)
 {
-    var data = await (
-        from a in _context.Assessments
-
-        join t in _context.Tests
-            on a.TestId equals t.Id into at
-        from t in at.DefaultIfEmpty()
-
-        join s in _context.PersonalInformations
-            on a.StudentId equals s.UserId into st
-        from s in st.DefaultIfEmpty()
-
-        join c in _context.PersonalInformations
-            on a.AssignedBy equals c.UserId into ct
-        from c in ct.DefaultIfEmpty()
-
-        join ur in _context.UserRoles
-            on a.StudentId equals ur.UserId into urt
-        from ur in urt.DefaultIfEmpty()
-
-        join r in _context.Roles
-            on ur.RoleId equals r.RoleId into rt
-        from r in rt
-            .Where(x => x.RoleName.ToLower() == "student")
-            .DefaultIfEmpty()
-
-        where a.StudentId == userId
-           && (a.Status.ToString() == "Assigned")
-
+    var data = 
+    await (
+        from a in _context.Assessments  join t in _context.Tests on a.TestId equals t.Id into at from t in at.DefaultIfEmpty()
+        join s in _context.PersonalInformations on a.StudentId equals s.UserId into st from s in st.DefaultIfEmpty()
+        join c in _context.PersonalInformations on a.AssignedBy equals c.UserId into ct from c in ct.DefaultIfEmpty()
+        join ur in _context.UserRoles on a.StudentId equals ur.UserId into urt from ur in urt.DefaultIfEmpty()
+        join r in _context.Roles on ur.RoleId equals r.RoleId into rt from r in rt 
+        .Where(x => x.RoleName.ToLower() == "student")
+        .DefaultIfEmpty()
+        where a.StudentId == userId && (a.Status.ToString() == "Assigned")
         orderby a.ScheduledAt ascending
 
         select new AssessmentUpcomingDto
@@ -59,7 +39,6 @@ public async Task<List<AssessmentUpcomingDto>> GetAllUpcomingAssessments(long us
     {
         data[i].SrNo = i + 1;
     }
-
     return data; // ✅ REQUIRED
 }
 }

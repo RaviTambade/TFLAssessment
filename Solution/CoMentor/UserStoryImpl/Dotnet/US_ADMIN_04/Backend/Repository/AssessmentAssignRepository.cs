@@ -12,8 +12,7 @@ public class AssessmentAssignRepository : IAssessmentAssignRepository
 
    public async Task<List<TestDto>> GetTests()
 {
-    return await _context.Tests
-        .Select(t => new TestDto
+    return await _context.Tests.Select(t => new TestDto
         {
             Id = t.Id,
             Title = t.Title,
@@ -26,14 +25,9 @@ public class AssessmentAssignRepository : IAssessmentAssignRepository
 
     public async Task<List<StudentDto>> GetStudents()
     {
-        return await (from u in _context.Users
-                      join p in _context.PersonalInformations
-                      on u.Id equals p.UserId
+        return await (from u in _context.Users join p in _context.PersonalInformations  on u.Id equals p.UserId
                       select new StudentDto
-                      {
-                          Id = (int)u.Id,
-                          FullName = p.FullName ?? string.Empty
-                      }).ToListAsync();
+                      {Id = (int)u.Id, FullName = p.FullName ?? string.Empty}).ToListAsync();
     }
 
     public async Task AssignAssessment(AssignAssessmentDto dto)
@@ -55,6 +49,4 @@ public class AssessmentAssignRepository : IAssessmentAssignRepository
         await _context.Assessments.AddRangeAsync(assessments);
         await _context.SaveChangesAsync();
     }
-
-    
 }
