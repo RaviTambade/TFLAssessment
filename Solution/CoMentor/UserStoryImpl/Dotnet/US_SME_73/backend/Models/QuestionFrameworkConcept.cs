@@ -10,4 +10,5 @@ public partial class QuestionFrameworkConcept
     public long? QuestionId { get; set; }
 
     public long? FrameworkId { get; set; }
+    public int FrameworkConceptId { get; set; }
 }
