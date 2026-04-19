@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using backend.Services.Interfaces;
 namespace backend.Controllers;
+using backend.DTOs;
 
 [ApiController]
 [Route("api/[controller]")]
@@ -48,5 +49,35 @@ public class AssessmentController : ControllerBase
         await _service.AssignAssessmentAsync(dto);
         return Ok("Assessment Assigned Successfully");
     }
+     [HttpGet("{assessmentId}")]
+    public async Task<IActionResult> GetAssessmentQuestions(int assessmentId)
+    {
+        var data = await _service.GetAssessmentQuestions(assessmentId);
+        return Ok(data);
+    }
+    [HttpPost("submit")]
+        public async Task<IActionResult>SaveAssessmentAnswersAsync([FromBody] AssessmentAnswersDto submission)
+        {
+            try
+            {
+                if (submission == null)
+                {
+                    return BadRequest("Invalid data");
+                }
+
+                var result = await _service.SaveAssessmentAnswersAsync(submission);
+
+                if (result)
+                {
+                    return Ok(new { message = "Assessment submitted successfully" });
+                }
+
+                return StatusCode(500, "Failed to save assessment");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
 
 }
