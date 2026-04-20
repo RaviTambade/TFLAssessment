@@ -9,6 +9,11 @@ class UsersRepository {
     this.connection.query(sql, [status, id], callback);
   }
 
+  async getUserProfileById(userId) {
+    const query = "CALL GetUserProfile(?)";
+    return this.connection.promise().query(query, [userId]);
+  }
+
 }
 
 module.exports = UsersRepository;
