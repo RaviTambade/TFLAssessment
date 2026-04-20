@@ -34,6 +34,7 @@ public class QuestionsRepositoryImpl implements QuestionsRepository {
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setLong(1, question_id);
 
+            
             ResultSet rs = statement.executeQuery();
 
             if (rs.next()) {
