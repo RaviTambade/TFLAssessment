@@ -6,6 +6,7 @@ using backend.DTOs;
 using backend.Repositories.Interfaces;  
 using backend.Services.Interfaces;
 using backend.Services.Implementations;
+using backend.Repositories.Implementations;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -33,6 +34,8 @@ builder.Services.AddScoped<IAssessmentsService, AssessmentsService>();
 builder.Services.AddScoped<IAssessmentRepository, AssessmentRepository>();
 builder.Services.AddScoped<ITestService, TestService>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IUserSessionsService, UserSessionsService>();
+builder.Services.AddScoped<IUserSessionRepository, UsersessionRepository>();
 
  
 

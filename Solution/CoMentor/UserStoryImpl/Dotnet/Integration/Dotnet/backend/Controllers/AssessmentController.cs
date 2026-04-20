@@ -17,7 +17,7 @@ public class AssessmentController : ControllerBase
     [HttpGet("user/{userId}")]
     public async Task<IActionResult> GetAll(long userId)
     {
-        var data = await _service.GetAllU pcomingAssessmentsService(userId); // Replace 0 with actual user ID if available
+        var data = await _service.GetAllUpcomingAssessmentsService(userId); // Replace 0 with actual user ID if available
         return Ok(data);
     }
 
@@ -105,4 +105,26 @@ public class AssessmentController : ControllerBase
         }
     }
 
+
+[HttpGet("total")]
+public async Task<IActionResult> GetTotalAssessments()
+{
+    var total = await _service.GetTotalAssessmentsAsync();
+
+    return Ok(new TotalAssessmentsDto
+    {
+        TotalAssessments = total
+    });
 }
+
+[HttpGet("completed")]
+public async Task<IActionResult> GetCompletedAssessments()
+{
+    var completed = await _service.GetCompletedAssessmentsAsync();
+
+    return Ok(new CompletedAssessmentsDto
+    {
+        CompletedAssessments = completed
+    });
+}
+}   

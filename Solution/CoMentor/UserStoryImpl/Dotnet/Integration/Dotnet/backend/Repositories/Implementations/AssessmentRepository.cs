@@ -202,5 +202,17 @@ public class AssessmentRepository : IAssessmentRepository
 
     }
 
+    public async Task<int> GetTotalAssessmentsAsync()
+{
+    return await _context.Assessments.CountAsync();
+}
+
+public async Task<int> GetCompletedAssessmentsAsync()
+{
+    return await _context.Assessments
+        .CountAsync(x => x.Status == "Completed");
+}
+
+
 
 }
