@@ -51,6 +51,7 @@ public class AssessmentRepository : IAssessmentRepository
             select new UpcomingAssessmentDto
             {
                 SrNo = 0,
+                AssessmentId = (int)a.Id,
                 AssessmentName = t != null ? t.Title : null,
                 ScheduledAt = a.ScheduledAt,
                 Duration = t != null ? t.Duration : null,
