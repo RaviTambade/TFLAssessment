@@ -1,10 +1,14 @@
+const UpdateUserRolesResponse = require('../dto/UpdateUserRolesResponse');
+
 class RolesService {
   constructor(repo, connection) {
     this.repo = repo;
     this.connection = connection;
   }
 
-  updateUserRoles(userId, roleIds, callback) {
+  updateUserRoles(requestDto, callback) {
+    const { userId, roleIds } = requestDto;
+
     if (!Number.isInteger(userId) || userId <= 0) {
       return callback({ status: 400, message: 'userId must be a positive integer' });
     }
@@ -34,7 +38,7 @@ class RolesService {
             if (err) {
               return this.connection.rollback(() => callback(err));
             }
-            callback(null, { message: 'User roles updated successfully' });
+            callback(null, new UpdateUserRolesResponse('User roles updated successfully'));
           });
         });
       });
