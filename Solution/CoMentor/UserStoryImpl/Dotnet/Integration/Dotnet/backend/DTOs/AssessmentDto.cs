@@ -3,6 +3,7 @@ public class UpcomingAssessmentDto
 {
     public long SrNo { get; set; }
     public string? AssessmentName { get; set; }
+    public int AssessmentId { get; set; }
     
     public DateTime? ScheduledAt { get; set; }
 
