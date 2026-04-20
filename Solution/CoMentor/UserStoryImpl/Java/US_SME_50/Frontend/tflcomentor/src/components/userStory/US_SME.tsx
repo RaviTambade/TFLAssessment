@@ -31,11 +31,12 @@ type Concept = {
   description: string;
 };
 
-const API_BASE_URL = import.meta.env.VITE_CONCEPTS_API_BASE ?? "/api/concepts";
+const API_BASE_URL = import.meta.env.VITE_CONCEPTS_API_BASE ?? "http://localhost:8585/api";
 
 console.log("API_BASE_URL:", API_BASE_URL);
 
 const US_SME = () => {
+
   // State for dropdowns
   const [runtimes, setRuntimes] = useState<Runtime[]>([]);
   const [languages, setLanguages] = useState<Language[]>([]);
@@ -59,10 +60,7 @@ const US_SME = () => {
       try {
         setIsLoading(true);
         setErrorMessage("");
-        const response = await fetch(`${API_BASE_URL}/runtimes`, {
-          method: "GET",
-          headers: { Accept: "application/json" },
-        });
+        const response = await fetch(`${API_BASE_URL}/runtimes`, {method: "GET",headers: { Accept: "application/json" }});
 
         if (!response.ok) {
           throw new Error(`Request failed with status ${response.status}`);
@@ -70,10 +68,12 @@ const US_SME = () => {
 
         const data: Runtime[] = await response.json();
         setRuntimes(Array.isArray(data) ? data : []);
-      } catch (error) {
+      }
+       catch (error) {
         setErrorMessage("Unable to load runtimes. Please verify backend API.");
         console.error("Runtimes fetch failed:", error);
-      } finally {
+      } 
+      finally {
         setIsLoading(false);
       }
     };
@@ -98,10 +98,7 @@ const US_SME = () => {
       try {
         setIsLoading(true);
         setErrorMessage("");
-        const response = await fetch(`${API_BASE_URL}/languages/${selectedRuntime.id}`, {
-          method: "GET",
-          headers: { Accept: "application/json" },
-        });
+        const response = await fetch(`${API_BASE_URL}/languages/runtime/${selectedRuntime.id}`, {method: "GET",headers: { Accept: "application/json" }});
 
         if (!response.ok) {
           throw new Error(`Request failed with status ${response.status}`);
@@ -115,10 +112,12 @@ const US_SME = () => {
         setFrameworks([]);
         setSelectedFramework(null);
         setConcepts([]);
-      } catch (error) {
+      } 
+      catch (error) {
         setErrorMessage("Unable to load languages.");
         console.error("Languages fetch failed:", error);
-      } finally {
+      }
+       finally {
         setIsLoading(false);
       }
     };
@@ -139,27 +138,30 @@ const US_SME = () => {
 
     const fetchLayers = async () => {
       try {
+      
         setIsLoading(true);
         setErrorMessage("");
-        const response = await fetch(`${API_BASE_URL}/layers`, {
-          method: "GET",
-          headers: { Accept: "application/json" },
-        });
+      
+        const response = await fetch(`${API_BASE_URL}/layers`,  {method: "GET", headers: { Accept: "application/json" }});
 
         if (!response.ok) {
           throw new Error(`Request failed with status ${response.status}`);
         }
 
         const data: Layer[] = await response.json();
+
         setLayers(Array.isArray(data) ? data : []);
         setSelectedLayer(null);
         setFrameworks([]);
         setSelectedFramework(null);
         setConcepts([]);
-      } catch (error) {
+      
+      }
+      catch (error) {
         setErrorMessage("Unable to load layers.");
         console.error("Layers fetch failed:", error);
-      } finally {
+      } 
+      finally {
         setIsLoading(false);
       }
     };
@@ -169,6 +171,7 @@ const US_SME = () => {
 
   // Fetch frameworks when layer is selected
   useEffect(() => {
+
     if (!selectedLayer || !selectedLanguage) {
       setFrameworks([]);
       setSelectedFramework(null);
@@ -181,11 +184,10 @@ const US_SME = () => {
         setIsLoading(true);
         setErrorMessage("");
         console.log(`Fetching frameworks for language ID: ${selectedLanguage.id}, layer ID: ${selectedLayer.id}`);
+
         // Use both language and layer ID for better filtering
-        const response = await fetch(`${API_BASE_URL}/frameworks/${selectedLanguage.id}/${selectedLayer.id}`, {
-          method: "GET",
-          headers: { Accept: "application/json" },
-        });
+        let apiUrl = `${API_BASE_URL}/frameworks?languageId=${selectedLanguage.id}&layerId=${selectedLayer.id}`;
+        const response = await fetch(apiUrl, {method: "GET",headers: { Accept: "application/json" }});
 
         if (!response.ok) {
           throw new Error(`Request failed with status ${response.status}`);
@@ -196,10 +198,12 @@ const US_SME = () => {
         setFrameworks(Array.isArray(data) ? data : []);
         setSelectedFramework(null);
         setConcepts([]);
-      } catch (error) {
+      } 
+      catch (error) {
         setErrorMessage("Unable to load frameworks.");
         console.error("Frameworks fetch failed:", error);
-      } finally {
+      } 
+      finally {
         setIsLoading(false);
       }
     };
@@ -218,12 +222,9 @@ const US_SME = () => {
       try {
         setIsLoading(true);
         setErrorMessage("");
-        const response = await fetch(
-          `${API_BASE_URL}/get/${encodeURIComponent(selectedFramework.runtimeName)}`,
-          {
-            method: "GET",
-            headers: { Accept: "application/json" },
-          }
+        
+        let apiUrl = `${API_BASE_URL}/frameworks/${encodeURIComponent(selectedFramework.runtimeName)}`
+        const response = await fetch(apiUrl,{method: "GET",headers: { Accept: "application/json" },}
         );
 
         if (!response.ok) {
@@ -232,10 +233,12 @@ const US_SME = () => {
 
         const data: Concept[] = await response.json();
         setConcepts(Array.isArray(data) ? data : []);
-      } catch (error) {
+      } 
+      catch (error) {
         setErrorMessage("Unable to load concepts.");
         console.error("Concepts fetch failed:", error);
-      } finally {
+      } 
+      finally {
         setIsLoading(false);
       }
     };

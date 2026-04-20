@@ -70,7 +70,7 @@ const ManageUsers = () => {
     setError(null)
 
     try {
-      const res = await fetch("http://localhost:3899/api/users/changeUserStatus", {
+      const res = await fetch("http://localhost:3899/api/users/deleteUser", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ id, status }),

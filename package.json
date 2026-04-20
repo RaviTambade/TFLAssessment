@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/RaviTambade/TFLAssessment/issues"
   },
-  "homepage": "https://github.com/RaviTambade/TFLAssessment#readme"
+  "homepage": "https://github.com/RaviTambade/TFLAssessment#readme",
+  "dependencies": {
+    "axios": "^1.13.6"
+  }
 }

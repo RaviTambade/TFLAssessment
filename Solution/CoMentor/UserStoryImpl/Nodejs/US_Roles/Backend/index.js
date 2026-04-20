@@ -6,7 +6,7 @@ const bodyparser = require('body-parser');
 
 const Connection = require('./connectivity/db');
 const RolesRepository = require('./repositories/rolesRepository');
-const RolesService = require('./services/rolesServices');
+const RolesService = require('./services/rolesservice');
 const RolesController = require('./controllers/rolesController');
 const RolesRouterFactory = require('./routers/rolesRouter');
 

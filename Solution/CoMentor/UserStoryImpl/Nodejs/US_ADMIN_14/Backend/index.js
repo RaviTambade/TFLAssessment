@@ -1,30 +1,31 @@
-const express = require("express");
-const cors = require("cors");
-const bodyparser = require('body-parser');
+const dotenv = require('dotenv');
+const express = require('express');
+const cors = require('cors');
 
-
+dotenv.config();
 
 const Connection = require('./connectivity/db');
 const RolesRepository = require('./repositories/rolesRepository');
 const RolesService = require('./services/rolesServices');
 const RolesController = require('./controllers/rolesController');
-const RolesRouterFactory = require('./routers/rolesRouter');
-
+const rolesRouter = require('./routers/rolesRouter');
+const errorHandler = require('./middlewares/errorHandler');
 
 // Dependency injection setup
 const repo = new RolesRepository(Connection);
 const service = new RolesService(repo, Connection);
 const controller = new RolesController(service);
-const rolesRouter = RolesRouterFactory(controller);
+const router = rolesRouter(controller);
 
-// Express app setup
-var app = express();
-
-// Middleware setup
+const app = express();
+app.disable('x-powered-by');
 app.use(cors());
-app.use(bodyparser.json());
+app.use(express.json());
 
-app.use("/api/roles", rolesRouter);
+app.use(['/api', '/api/v1'], router);
+app.use(errorHandler);
 
-app.listen(3898);
-console.log("Server is running on port 3898");
+const PORT = process.env.PORT || 3898;
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});
