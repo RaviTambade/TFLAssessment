@@ -1,3 +1,5 @@
+const sessionLogResponseDto = require("../dtos/responses/sessionLogResponsedto");
+
 class SessionService {
   constructor(repo) {
     this.repo = repo;
@@ -17,6 +19,11 @@ class SessionService {
 
   async getActiveUsers() {
     return await this.repo.getActiveUsers();
+  }
+  //Samruddhi
+  async getSessionLogs(name) {
+    const rows = await this.repo.getSessionLogs(name);
+    return rows.map(sessionLogResponseDto);
   }
 }
 

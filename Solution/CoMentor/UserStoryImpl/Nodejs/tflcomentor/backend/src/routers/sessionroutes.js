@@ -8,5 +8,11 @@ module.exports = (controller) => {
   router.get("/active-count", controller.getActiveSessions);
   router.get("/active-users", controller.getActiveUsers);
 
+  //Samruddhi
+  router.get("/logs", (req, res, next) => {
+    return controller.getSessionLogs(req, res, next);
+  });
+
+
   return router;
 };
