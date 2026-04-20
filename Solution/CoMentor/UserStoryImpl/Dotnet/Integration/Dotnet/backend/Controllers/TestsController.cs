@@ -89,11 +89,6 @@ public class TestsController : ControllerBase
         }
     }
 
-    /// <summary>
-    /// Get all tests associated with a specific framework
-    /// </summary>
-    /// <param name="frameworkId">The ID of the framework</param>
-    /// <returns>List of tests for the framework</returns>
     [HttpGet("framework/{frameworkId}")]
     public async Task<IActionResult> GetAllTestsByFramework(int frameworkId)
     {
@@ -114,11 +109,6 @@ public class TestsController : ControllerBase
         }
     }
 
-    /// <summary>
-    /// Get all tests associated with a specific runtime
-    /// </summary>
-    /// <param name="runtimeId">The ID of the runtime</param>
-    /// <returns>List of tests for the runtime</returns>
     [HttpGet("runtime/{runtimeId}")]
     public async Task<IActionResult> GetAllTestsByRuntime(int runtimeId)
     {
@@ -139,11 +129,6 @@ public class TestsController : ControllerBase
         }
     }
 
-    /// <summary>
-    /// Get detailed information about a specific test
-    /// </summary>
-    /// <param name="testId">The ID of the test</param>
-    /// <returns>Detailed test information including questions and metadata</returns>
     [HttpGet("details/{testId}")]
     public async Task<IActionResult> GetTestDetails(long testId)
     {
