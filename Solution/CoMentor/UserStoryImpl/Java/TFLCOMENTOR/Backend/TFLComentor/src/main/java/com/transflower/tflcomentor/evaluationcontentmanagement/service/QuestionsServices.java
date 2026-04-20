@@ -23,6 +23,7 @@ public interface QuestionsServices {
     List<QuestionListResponseDto> getDraftQuestionList();
     List<QuestionListResponseDto> getRecentQuestionList();
     QuestionResponseDto getQuestionDetailsById(Long id);
+    List<QuestionListResponseDto> getQuestionsByType(String questionType);
     void updateQuestionById(Long id, QuestionRequestDto dto);
 }
 

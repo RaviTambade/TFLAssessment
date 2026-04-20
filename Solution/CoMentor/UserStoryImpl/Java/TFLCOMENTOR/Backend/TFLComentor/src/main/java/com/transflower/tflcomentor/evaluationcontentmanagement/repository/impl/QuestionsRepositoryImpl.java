@@ -1,10 +1,8 @@
 package com.transflower.tflcomentor.evaluationcontentmanagement.repository.impl;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -13,12 +11,12 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
-import com.transflower.tflcomentor.evaluationcontentmanagement.repository.QuestionsRepository;
 import com.transflower.tflcomentor.configuration.DBConfig;
 import com.transflower.tflcomentor.evaluationcontentmanagement.dto.request.QuestionRequestDto;
 import com.transflower.tflcomentor.evaluationcontentmanagement.dto.response.QuestionListResponseDto;
 import com.transflower.tflcomentor.evaluationcontentmanagement.dto.response.QuestionResponseDto;
 import com.transflower.tflcomentor.evaluationcontentmanagement.entity.Questions;
+import com.transflower.tflcomentor.evaluationcontentmanagement.repository.QuestionsRepository;
 
 @Repository
 public class QuestionsRepositoryImpl implements QuestionsRepository {
@@ -26,6 +24,7 @@ public class QuestionsRepositoryImpl implements QuestionsRepository {
         return DBConfig.getConnection();
     }
 
+    @Override
     public Questions getQuestionById(long question_id) {
 
         try (Connection connection = getConnection()) {
@@ -158,6 +157,7 @@ public class QuestionsRepositoryImpl implements QuestionsRepository {
 
     // nirjala user story 72
 
+    @Override
      public Long insertQuestion(Questions q) {
 
         Long questionId = null;
@@ -185,6 +185,7 @@ public class QuestionsRepositoryImpl implements QuestionsRepository {
         return questionId;
     }
 
+    @Override
     public void insertMcqOptions(Long questionId,
             String optionA,
             String optionB,
@@ -232,6 +233,7 @@ public class QuestionsRepositoryImpl implements QuestionsRepository {
     //     return list;
     // }
 
+    @Override
     public List<Questions> getDraftQuestions() {
         List<Questions> list = new ArrayList<>();
         String sql = "SELECT * FROM questions WHERE status='DRAFT'";
@@ -253,6 +255,7 @@ public class QuestionsRepositoryImpl implements QuestionsRepository {
         return list;
     }
 
+    @Override
     public void approveQuestionById(Long id) {
         String sql = "UPDATE questions SET status='APPROVED' WHERE question_id=?";
         try (Connection connection = getConnection(); 
@@ -264,6 +267,7 @@ public class QuestionsRepositoryImpl implements QuestionsRepository {
         }
     }
 
+    @Override
     public void rejectQuestionById(Long id) {
         String sql = "UPDATE questions SET status='INACTIVE' WHERE question_id=?";
         try (Connection connection = getConnection(); 
@@ -275,6 +279,7 @@ public class QuestionsRepositoryImpl implements QuestionsRepository {
         }
     }
 
+    @Override
     public void approveAllQuestions() {
         String sql = "UPDATE questions SET status='APPROVED' WHERE status='DRAFT'";
         try (Connection connection = getConnection(); 
@@ -285,6 +290,7 @@ public class QuestionsRepositoryImpl implements QuestionsRepository {
         }
     }
 
+    @Override
     public void rejectAllQuestions() {
         String sql = "UPDATE questions SET status='INACTIVE' WHERE status='DRAFT'";
         try (Connection connection = getConnection(); 
@@ -320,6 +326,7 @@ public class QuestionsRepositoryImpl implements QuestionsRepository {
         return list;
     }
 
+    @Override
     public List<QuestionListResponseDto> getDraftQuestionList() {
         List<QuestionListResponseDto> list = new ArrayList<>();
         String sql = "SELECT question_id, description FROM questions WHERE status='DRAFT'";
@@ -329,7 +336,9 @@ public class QuestionsRepositoryImpl implements QuestionsRepository {
             while (rs.next()) {
                 list.add(new QuestionListResponseDto(
                         rs.getLong("question_id"),
-                        rs.getString("description")
+                        rs.getString("description"),
+                        rs.getString("question_type"),
+                        rs.getString("status")
                 ));
             }
         } catch (Exception e) {
@@ -339,6 +348,7 @@ public class QuestionsRepositoryImpl implements QuestionsRepository {
         return list;
     }
 
+    @Override
     public List<QuestionListResponseDto> getRecentQuestionList() {
         List<QuestionListResponseDto> list = new ArrayList<>();
         String sql = "SELECT question_id, description FROM questions WHERE created_at >= NOW() - INTERVAL 2 DAY ORDER BY created_at DESC";
@@ -348,7 +358,9 @@ public class QuestionsRepositoryImpl implements QuestionsRepository {
             while (rs.next()) {
                 list.add(new QuestionListResponseDto(
                         rs.getLong("question_id"),
-                        rs.getString("description")
+                        rs.getString("description"),
+                        rs.getString("question_type"),
+                        rs.getString("status")
                 ));
             }
         } catch (Exception e) {
@@ -357,6 +369,7 @@ public class QuestionsRepositoryImpl implements QuestionsRepository {
         return list;
     }
 
+    @Override
     public QuestionResponseDto getQuestionDetailsById(Long id) {
         QuestionResponseDto dto = new QuestionResponseDto();
         try (Connection connection = getConnection()) {
@@ -424,5 +437,60 @@ public class QuestionsRepositoryImpl implements QuestionsRepository {
             e.printStackTrace();
             throw new RuntimeException("Error updating question");
         }
+    }
+
+    @Override
+    public List<QuestionListResponseDto> getQuestionsByType(String questionType) {
+        String sql = """
+                SELECT question_id, question_type, description
+                FROM questions
+                WHERE question_type = ?
+                ORDER BY question_id
+                """;
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, questionType);
+            try (ResultSet rs = statement.executeQuery()) {
+                List<QuestionListResponseDto> results = new java.util.ArrayList<>();
+                while (rs.next()) {
+                    QuestionListResponseDto dto = new QuestionListResponseDto();
+                    dto.setQuestionId((long) rs.getInt("question_id"));
+                    dto.setQuestionType(rs.getString("question_type"));
+                    dto.setDescription(rs.getString("description"));
+                    results.add(dto);
+                }
+                return results;
+            }
+        } catch (Exception ex) {
+            throw new RuntimeException("Failed to fetch questions by type", ex);
+        }
+    }
+
+    @Override
+    public List<Questions> findByStatus(String questionStatus) {
+        List<Questions> list = new ArrayList<>();
+        String sql = """
+                SELECT question_id, question_type, description, difficulty_level, status
+                FROM questions
+                WHERE status = ?
+                ORDER BY question_id
+                """;
+        try (Connection connection = getConnection(); 
+        PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, questionStatus);
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                Questions q = new Questions();
+                q.setQuestionId(rs.getLong("question_id"));
+                q.setDescription(rs.getString("description"));
+                q.setQuestionType(rs.getString("question_type"));
+                q.setDifficultyLevel(rs.getString("difficulty_level"));
+                q.setStatus(rs.getString("status"));
+                list.add(q);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
     }
 }

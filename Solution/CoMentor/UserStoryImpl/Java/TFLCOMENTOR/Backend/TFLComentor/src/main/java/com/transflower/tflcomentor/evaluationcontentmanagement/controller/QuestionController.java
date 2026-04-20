@@ -102,4 +102,8 @@ public class QuestionController {
         return "Question Updated Successfully";
 }
 
+    @GetMapping("/type/{questionType}")
+    public List<QuestionListResponseDto> getQuestionsByType(@PathVariable String questionType) {
+        return service.getQuestionsByType(questionType);
+    }
 }
