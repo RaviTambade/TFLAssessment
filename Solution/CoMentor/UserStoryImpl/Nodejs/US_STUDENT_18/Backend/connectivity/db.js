@@ -5,6 +5,9 @@ const connection = mysql.createConnection({
   user: "root",
   password: "password",
   database: "tflcomentor_db",
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0,
 });
 
 connection.connect((err) => {

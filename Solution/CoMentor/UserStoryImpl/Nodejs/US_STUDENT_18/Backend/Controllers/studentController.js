@@ -1,8 +1,13 @@
+//class
+//data members
+//member functions
 class StudentController {
+
   constructor(service) {
+     //member variable
     this.service = service;
   }
-
+    //member functions 
   changePassword(req, res) {
     const { id, oldPassword, newPassword } = req.body;
 
@@ -11,9 +16,12 @@ class StudentController {
     }
 
     this.service.changePassword(id, oldPassword, newPassword, (err, result) => {
-      if (err) return res.status(500).json(err);
+      if (err) {
+        console.log(err);
+        return res.status(500).json({ message: "Server error" });
+      }
 
-      res.status(result.status).json({ message: result.message });
+      return res.status(result.status).json({ message: result.message });
     });
   }
 }
