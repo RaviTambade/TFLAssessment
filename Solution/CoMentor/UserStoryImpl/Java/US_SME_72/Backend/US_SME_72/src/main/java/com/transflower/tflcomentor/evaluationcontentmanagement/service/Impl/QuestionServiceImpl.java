@@ -55,12 +55,12 @@ public class QuestionServiceImpl implements QuestionService {
         return repository.getRecentQuestions();
     }
 
-    public void approveQuestion(Long id) {
-        repository.approveQuestion(id);
+    public void approveQuestionById(Long id) {
+        repository.approveQuestionById(id);
     }
 
-    public void rejectQuestion(Long id) {
-        repository.rejectQuestion(id);
+    public void rejectQuestionById(Long id) {
+        repository.rejectQuestionById(id);
     }
 
     public void approveAllQuestions() {
@@ -81,12 +81,12 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     
-    public QuestionResponseDto getQuestionDetails(Long id) {
-        return repository.getQuestionDetails(id);
+    public QuestionResponseDto getQuestionDetailsById(Long id) {
+        return repository.getQuestionDetailsById(id);
     }
 
    
-    public void updateQuestion(Long id, QuestionRequestDto dto) {
-        repository.updateQuestion(id, dto);
+    public void updateQuestionById(Long id, QuestionRequestDto dto) {
+        repository.updateQuestionById(id, dto);
     }
 }

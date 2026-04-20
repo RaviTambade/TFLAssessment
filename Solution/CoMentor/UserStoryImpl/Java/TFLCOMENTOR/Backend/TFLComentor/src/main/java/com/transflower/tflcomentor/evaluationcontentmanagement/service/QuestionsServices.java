@@ -25,5 +25,6 @@ public interface QuestionsServices {
     QuestionResponseDto getQuestionDetailsById(Long id);
     List<QuestionListResponseDto> getQuestionsByType(String questionType);
     void updateQuestionById(Long id, QuestionRequestDto dto);
+  
 }
 

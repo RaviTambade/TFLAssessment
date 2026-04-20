@@ -34,6 +34,7 @@ public interface QuestionsRepository {
     void rejectQuestionById(Long id);
     void approveAllQuestions();
     void rejectAllQuestions();
+    // Questions updateQuestion(Questions question);
 }
 
 

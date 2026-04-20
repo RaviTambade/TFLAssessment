@@ -7,7 +7,7 @@ const QuestionList = () => {
   const [show, setShow] = useState(false);
 
   const fetchQuestions = () => {
-    fetch("http://localhost:8081/api/sme/allquestions")
+    fetch("http://localhost:8080/api/questions")
       .then((res) => {
         if (!res.ok) throw new Error("API Error");
         return res.json();

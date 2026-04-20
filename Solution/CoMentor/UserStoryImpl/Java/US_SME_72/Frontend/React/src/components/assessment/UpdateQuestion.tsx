@@ -7,7 +7,7 @@ const UpdateQuestion = () => {
     const { id } = useParams();
     const navigate = useNavigate();
 
-    const BASE_URL = "http://localhost:8082/api/questions";
+    const BASE_URL = "http://localhost:8080/api/questions";
 
     const [formData, setFormData] = useState({
         description: "",

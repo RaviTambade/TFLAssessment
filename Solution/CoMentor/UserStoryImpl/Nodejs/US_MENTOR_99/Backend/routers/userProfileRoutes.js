@@ -1,27 +1,19 @@
-const express = require("express")
+const express = require("express");
 
 module.exports = (controller) => {
-  const router = express.Router()
+  const router = express.Router();
 
-  router.put("/:user_id/personal", (req, res) =>
-    controller.updatePersonInformation(req, res)
-  )
+  // ✅ Personal Info
+  router.put("/:user_id/personal", controller.updatePersonInformation);
 
-  router.put("/:user_id/professional", (req, res) =>
-    controller.updateProfessionalInformation(req, res)
-  )
+  // ✅ Professional Info
+  router.put("/:user_id/professional", controller.updateProfessionalInformation);
 
-  router.put("/:user_id/academic", (req, res) =>
-    controller.updateAcademicInformation(req, res)
-  )
+  // ✅ Academic Info
+  router.put("/:user_id/academic", controller.updateAcademicInformation);
 
-  router.put("/:user_id/full", (req, res) =>
-    controller.updateProfile(req, res)
-  )
+  // ✅ Full Profile Update
+  router.put("/:user_id/full", controller.updateProfile);
 
-  router.put("/:user_id", (req, res) =>
-    controller.updateProfile(req, res)
-  )
-
-  return router
-}
+  return router;
+};

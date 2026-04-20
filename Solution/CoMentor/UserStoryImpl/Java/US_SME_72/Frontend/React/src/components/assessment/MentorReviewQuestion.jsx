@@ -7,7 +7,7 @@ const MentorReviewQuestion = () => {
   const [questions, setQuestions] = useState([]);
   const navigate = useNavigate();
 
-  const BASE_URL = "http://localhost:8082/api/questions";
+  const BASE_URL = "http://localhost:8080/api/questions";
 
   const fetchDraftQuestions = async () => {
     try {

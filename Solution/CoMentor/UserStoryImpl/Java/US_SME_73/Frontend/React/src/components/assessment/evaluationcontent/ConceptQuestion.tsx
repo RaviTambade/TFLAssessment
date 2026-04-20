@@ -9,21 +9,21 @@ const ConceptQuestion = () => {
 
     // ✅ Load all concepts
     useEffect(() => {
-        fetch("http://localhost:8081/api/sme/concepts")
+        fetch("http://localhost:8080/api/concepts")
             .then((res) => res.json())
             .then((data) => setConcepts(data))
             .catch((err) => console.error(err));
     }, []);
 
     // ✅ Load questions by concept
-    const loadQuestions = (id: number) => {
-        setSelectedConcept(id);
+   const loadQuestions = (id: number) => {
+    setSelectedConcept(id);
 
-        fetch(`http://localhost:8081/api/sme/concepts/{conceptId}/questions`.replace("{conceptId}", id.toString()))
-            .then((res) => res.json())
-            .then((data) => setQuestions(data))
-            .catch((err) => console.error(err));
-    };
+    fetch(`http://localhost:8080/api/concepts/${id}/questions`)
+        .then((res) => res.json())
+        .then((data) => setQuestions(data))
+        .catch((err) => console.error(err));
+};
 
     return (
         <section className="py-16 sm:py-20 bg-background">
