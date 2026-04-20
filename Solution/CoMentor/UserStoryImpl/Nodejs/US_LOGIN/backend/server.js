@@ -1,6 +1,5 @@
 const express=require("express");
 const cors=require("cors");
-const bodyParser = require("body-parser");
 
 const userLoginService = require("./services/authservice");
 const AuthenticationController = require("./controllers/authcontroller");
@@ -17,7 +16,7 @@ const UserLogController = require("./controllers/userlogcontroller");
 const UserLogRoutes = require("./routers/userlogroutes");
 
 
-var app = express();
+const app = express();
 
 
 const repo = new userLoginRepository(Connection);
@@ -39,11 +38,17 @@ const userLogRoutes = UserLogRoutes(userLogController);
 
 //middleware
 app.use(cors());
-app.use(bodyParser.json());
+app.use(express.json());
 
 //routes
 app.use("/api/authentication/", authRoutes);
 app.use("/api/profile/", profileRoutes);
 app.use("/api/userlog/", userLogRoutes);
 
-app.listen(4000,()=>{console.log("server listening on port 4000")});
+const PORT = process.env.PORT || 3000;
+
+if (require.main === module) {
+  app.listen(PORT,()=>{console.log(`server listening on port ${PORT}`)});
+}
+
+module.exports = app;

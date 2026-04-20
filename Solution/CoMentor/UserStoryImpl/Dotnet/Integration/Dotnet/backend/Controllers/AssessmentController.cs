@@ -80,12 +80,29 @@ public class AssessmentController : ControllerBase
             }
         }
 
-    [HttpGet("results")]
-    public async Task<IActionResult> GetResults()
+    [HttpGet("{studentId}/{assessmentId}")]
+    public async Task<IActionResult> GetResultData(int studentId, int assessmentId)
     {
-        var data = await _service.GetAssessmentResults();
-        return Ok(data);
-    }
+        try
+        {
+            // ✅ Create request DTO
+            var request = new AssessmentstudenttResultDto
+            {
+                StudentId = studentId,
+                AssessmentId = assessmentId
+            };
 
+            var result = await _service.GetResultData(request);
+
+            if (result == null)
+                return NotFound("No results found.");
+
+            return Ok(result);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, ex.Message);
+        }
+    }
 
 }
