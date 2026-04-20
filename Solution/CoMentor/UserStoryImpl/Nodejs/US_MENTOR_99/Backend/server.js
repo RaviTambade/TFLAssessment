@@ -1,38 +1,38 @@
-const express = require("express")
-const cors = require("cors")
-const bodyparser = require("body-parser")
+const express = require("express");
+const cors = require("cors");
 
 // ================= DB =================
-const Connection = require("./connectivity/db")
+require("./connectivity/db"); // just initialize
 
 // ================= USER MODULE =================
-const UserRepository = require("./repositories/userProfileRepository")
-const ProfileService = require("./services/userProfileService")
-const UpdateProfileController = require("./controllers/userProfileController")
-const userRouterFactory = require("./routers/userProfileRoutes")
+const UserProfileRepository = require("./repositories/userProfileRepository");
+const UserProfileService = require("./services/userProfileService");
+const UserProfileController = require("./controllers/userProfileController");
+const userRouterFactory = require("./routers/userProfileRoutes");
 
-const userRepo = UserRepository
-const userService = new ProfileService(userRepo)
-const userController = new UpdateProfileController(userService)
+// ✅ Dependency Injection (Correct Way)
+const userRepo = new UserProfileRepository();
+const userService = new UserProfileService(userRepo);
+const userController = new UserProfileController(userService);
 
 // ================= EXPRESS APP =================
-const app = express()
+const app = express();
 
 // Middleware
-app.use(cors())
-app.use(express.json())
+app.use(cors());
+app.use(express.json());
 
 // Routes
-app.use("/api/v1/profile", userRouterFactory(userController))
+app.use("/api/v1/profile", userRouterFactory(userController));
 
 // Health check
 app.get("/", (req, res) => {
-  res.send("API is running...")
-})
+  res.send("API is running...");
+});
 
 // Server
-const PORT = 3898
+const PORT = 3898;
 
 app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`)
-})
+  console.log(`Server is running on port ${PORT}`);
+});

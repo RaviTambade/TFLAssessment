@@ -1,35 +1,35 @@
 class UserProfileService {
   constructor(profileRepository) {
-    this.profileRepository = profileRepository
+    this.profileRepository = profileRepository;
   }
 
-  async updateProfile(userId, data) {
-    return this.profileRepository.updateFullProfile(userId, data)
+  updateProfile(userId, data, callback) {
+    this.profileRepository.updateFullProfile(userId, data, callback);
   }
 
-  async update(userId, data) {
-    return this.profileRepository.updateFullProfile(userId, data)
+  update(userId, data, callback) {
+    this.profileRepository.updateFullProfile(userId, data, callback);
   }
 
-  async updateUser(userId, data) {
-    return this.profileRepository.updateFullProfile(userId, data)
+  updateUser(userId, data, callback) {
+    this.profileRepository.updateFullProfile(userId, data, callback);
   }
 
-  async updatePersonInformation(userId, data) {
-    return this.profileRepository.updatePersonInformation(userId, data)
+  updatePersonInformation(userId, data, callback) {
+    this.profileRepository.updatePersonInformation(userId, data, callback);
   }
 
-  async updateProfessionalInformation(userId, data) {
-    return this.profileRepository.updateProfessionalInformation(userId, data)
+  updateProfessionalInformation(userId, data, callback) {
+    this.profileRepository.updateProfessionalInformation(userId, data, callback);
   }
 
-  async updateAcademicInformation(userId, data) {
-    return this.profileRepository.updateAcademicInformation(userId, data)
+  updateAcademicInformation(userId, data, callback) {
+    this.profileRepository.updateAcademicInformation(userId, data, callback);
   }
 
-  async updateProfessinalInformation(userId, data) {
-    return this.profileRepository.updateProfessionalInformation(userId, data)
+  updateProfessinalInformation(userId, data, callback) {
+    this.profileRepository.updateProfessionalInformation(userId, data, callback);
   }
 }
 
-module.exports = UserProfileService
+module.exports = UserProfileService;
