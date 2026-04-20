@@ -1,22 +1,26 @@
 const express=require("express");
 const cors=require("cors");
+const bodyParser = require("body-parser");
 
 const userLoginService = require("./services/authservice");
-const AuthenticationController = require("./controllers/authcontroller");
+const AuthenticationController = require("./controllers/authcontroller_sanika_yash");
 const userLoginRoutes = require("./routers/authroutes");
 const userLoginRepository = require("./repository/authrepository");
 const Connection = require("./connectivity/db");
+
+
 const ProfileRepository = require("./repository/profilerepository");
 const ProfileService = require("./services/profileservice");
-const ProfileController = require("./controllers/profilecontroller");
+const ProfileController = require("./controllers/profilecontroller_sanika");
 const userProfileRoutes = require("./routers/profileroutes");
+
 const UserLogRepository = require("./repository/userlogrepository");
 const UserLogService = require("./services/userlogservice");
-const UserLogController = require("./controllers/userlogcontroller");
+const UserLogController = require("./controllers/userlogcontroller_sanika");
 const UserLogRoutes = require("./routers/userlogroutes");
 
 
-const app = express();
+
 
 
 const repo = new userLoginRepository(Connection);
@@ -36,9 +40,10 @@ const userLogService=new UserLogService(userLogRepository);
 const userLogController=new UserLogController(userLogService);
 const userLogRoutes = UserLogRoutes(userLogController);
 
-//middleware
+const app = express();
+
 app.use(cors());
-app.use(express.json());
+app.use(bodyParser.json());
 
 //routes
 app.use("/api/authentication/", authRoutes);
