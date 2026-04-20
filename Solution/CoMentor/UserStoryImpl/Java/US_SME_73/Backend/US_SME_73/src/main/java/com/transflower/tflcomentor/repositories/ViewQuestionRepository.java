@@ -105,11 +105,13 @@ public class ViewQuestionRepository implements IViewQuestionRepository {
     public List<Question> findByConceptId(Long conceptId) {
         List<Question> list = new ArrayList<>();
         String sql = """ 
-                    SELECT q.question_id, q.description, q.question_type 
-                    FROM questions q 
-                    JOIN question_framework_concepts qfc ON q.question_id = qfc.question_id 
-                    JOIN framework_concepts fc ON qfc.framework_id = fc.framework_id 
-                    WHERE fc.concept_id = ?
+                    SELECT q.question_id, q.description, q.question_type
+                    FROM questions q
+                    JOIN question_framework_concepts qfc 
+                        ON q.question_id = qfc.question_id
+                    JOIN framework_concepts fc 
+                        ON qfc.framework_concepts_id = fc.id
+                    WHERE fc.concept_id = ?;
                     """;
 
         try (

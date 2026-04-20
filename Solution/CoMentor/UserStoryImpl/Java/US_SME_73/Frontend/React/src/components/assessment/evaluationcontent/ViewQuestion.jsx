@@ -16,7 +16,7 @@ const ViewQuestion = () => {
             setQuestion(null);
 
             const response = await fetch(
-                `http://localhost:8081/api/sme/questions/${questionId}`
+                `http://localhost:8080/api/questions/${questionId}`
             );
 
             if (!response.ok) {

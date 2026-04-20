@@ -12,7 +12,7 @@ interface QuestionDto {
 }
 
 // ✅ Centralized Base URL
-const BASE_URL = "http://localhost:8082/api";
+const BASE_URL = "http://localhost:8080/api";
 
 const UpdateQuestion = () => {
     const [questions, setQuestions] = useState<QuestionDto[]>([]);

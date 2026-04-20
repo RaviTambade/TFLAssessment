@@ -10,34 +10,21 @@ import java.util.List;
 public interface QuestionRepository {
 
     Long insertQuestion(Question q);
-
     void insertMcqOptions(Long questionId,
             String optionA,
             String optionB,
             String optionC,
             String optionD,
             String correctAnswer);
-
     List<QuestionListResponseDto> getDraftQuestionList();
-
-    void updateQuestion(Long id, QuestionRequestDto dto);
-
+    void updateQuestionById(Long id, QuestionRequestDto dto);
     List<QuestionListResponseDto> getRecentQuestionList();
-
-    QuestionResponseDto getQuestionDetails(Long id);
-
+    QuestionResponseDto getQuestionDetailsById(Long id);
     List<Question> getAllQuestions();
-
     List<Question> getDraftQuestions();
-
     List<Question> getRecentQuestions();
-
-    void approveQuestion(Long id);
-
-    void rejectQuestion(Long id);
-
+    void approveQuestionById(Long id);
+    void rejectQuestionById(Long id);
     void approveAllQuestions();
-
     void rejectAllQuestions();
-
 }
