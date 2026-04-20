@@ -24,5 +24,6 @@ public interface QuestionsServices {
     List<QuestionListResponseDto> getRecentQuestionList();
     QuestionResponseDto getQuestionDetailsById(Long id);
     void updateQuestionById(Long id, QuestionRequestDto dto);
+  
 }
 
