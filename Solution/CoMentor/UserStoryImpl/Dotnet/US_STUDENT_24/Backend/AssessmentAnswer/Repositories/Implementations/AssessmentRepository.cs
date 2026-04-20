@@ -18,9 +18,6 @@ namespace AssessmentAnswer.Repositories.Implementations
 
         public async Task<bool> SaveAssessmentAnswersAsync( List<StudentAnswer>? answers)
         {
-            // 1. Add the summary record (Score, Time Taken, etc.)
-        
-            // 2. Add all the individual answers at once (Bulk Insert)cd
             if (answers != null && answers.Any())
             {
                 await _context.StudentAnswers.AddRangeAsync(answers);

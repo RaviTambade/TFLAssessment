@@ -1,19 +1,22 @@
-class RolesController {
+const UpdateUserRolesRequest = require('../dto/UpdateUserRolesRequest');
+const UpdateUserRolesResponse = require('../dto/UpdateUserRolesResponse');
 
-  //parameterized constructor to inject services dependency
+class RolesController {
   constructor(service) {
     this.service = service;
   }
 
+  updateUserRoles(req, res, next) {
+    const userId = Number(req.params.userId || req.body.user_id);
+    const { role_ids } = req.body;
 
-  updateUserRoles(req, res) {
-    const { user_id, role_ids } = req.body;
-    this.service.updateUserRoles(user_id, role_ids, (err, result) => {
-      if (err) return res.status(500).json(err);
-      res.json(result);
+    const requestDto = new UpdateUserRolesRequest(userId, role_ids);
+
+    this.service.updateUserRoles(requestDto, (err, result) => {
+      if (err) return next(err);
+      res.status(200).json(result);
     });
   }
-
 }
 
 module.exports = RolesController;

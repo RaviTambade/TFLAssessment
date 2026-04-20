@@ -20,7 +20,7 @@ namespace Assessment_result.Data
         // Same for assessment_result
 
         // ❗ IMPORTANT: For raw SQL DTO
-        public DbSet<AssessmentReportDto> JoinedResults { get; set; }
+        public DbSet<AssessmentReportDto> StudentAssessmentReports { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

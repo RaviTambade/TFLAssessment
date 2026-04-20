@@ -173,54 +173,32 @@ public class AssessmentRepository : IAssessmentRepository
                 ")
             .ToListAsync();
     }
-    public async Task<bool> SaveAssessmentAnswersAsync( List<StudentAnswer>? answers)
-        {
-            // 1. Add the summary record (Score, Time Taken, etc.)
-        
-            // 2. Add all the individual answers at once (Bulk Insert)cd
-            if (answers != null && answers.Any())
-            {
-                await _context.StudentAnswers.AddRangeAsync(answers);
-            }
-            
-            // 3. Save everything to the database
-            var rowsAffected = await _context.SaveChangesAsync();
+    public async Task<bool> SaveAssessmentAnswersAsync(List<StudentAnswer>? answers)
+    {
+        // 1. Add the summary record (Score, Time Taken, etc.)
 
-            return rowsAffected > 0;
+        // 2. Add all the individual answers at once (Bulk Insert)cd
+        if (answers != null && answers.Any())
+        {
+            await _context.StudentAnswers.AddRangeAsync(answers);
         }
 
-    public async Task<List<AssessmentResultDto>> GetAssessmentResults()
-    {
-       var result = await (
-    from a in _context.Assessments
+        // 3. Save everything to the database
+        var rowsAffected = await _context.SaveChangesAsync();
 
-    join sar in _context.StudentAssessmentResults
-        on new { Id = (long?)a.Id } equals new { Id = (long?)sar.AssessmentId } into sarGroup
-    from sar in sarGroup.DefaultIfEmpty()
-
-    join u in _context.Users
-        on new { Id = (long?)a.StudentId } equals new { Id = (long?)u.Id } into userGroup
-    from u in userGroup.DefaultIfEmpty()
-
-    join pi in _context.PersonalInformations
-        on u.Id equals pi.UserId into piGroup
-    from pi in piGroup.DefaultIfEmpty()
-
-    join t in _context.Tests
-        on a.TestId equals t.Id into testGroup
-    from t in testGroup.DefaultIfEmpty()
-
-    select new AssessmentResultDto
-    {
-        FullName = pi != null ? pi.FullName : null,
-        TestTitle = t != null ? t.Title : null,
-        Difficulty = t != null ? t.Difficulty : null,
-        Score = sar != null ? sar.Score : 0,
-        Percentile = sar != null ? sar.Percentile : 0,
-        ScheduledDate = a.ScheduledAt
+        return rowsAffected > 0;
     }
-).ToListAsync();
-        return result;
+
+    public async Task<AssessmentReportDto> GetResultData(int studentId, int assessmentId)
+    {
+        var results = await _context.StudentAssessmentReports
+        .FromSqlInterpolated($"CALL GetStudentAssessmentReport({studentId}, {assessmentId})")
+        .ToListAsync(); // Execution happens here
+
+        // 2. Now pick the first item from the list in C#
+        var report = results.FirstOrDefault();
+        return report;
+
     }
 
 

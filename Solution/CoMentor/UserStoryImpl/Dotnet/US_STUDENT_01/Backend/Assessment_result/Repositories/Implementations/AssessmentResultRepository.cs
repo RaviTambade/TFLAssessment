@@ -16,9 +16,13 @@ public class AssessmentResultRepository : IAssessmentResultRepository
 
     public async Task<AssessmentReportDto> GetResultData(int studentId, int assessmentId)
 {
-    return await _context.Set<AssessmentReportDto>()
-        .FromSqlRaw("CALL sp_GetAssessmentResult({0}, {1})", studentId, assessmentId)
-        .AsNoTracking()
-        .FirstOrDefaultAsync();
+    var results = await _context.StudentAssessmentReports
+    .FromSqlInterpolated($"CALL GetStudentAssessmentReport({studentId}, {assessmentId})")
+    .ToListAsync(); // Execution happens here
+
+// 2. Now pick the first item from the list in C#
+var report = results.FirstOrDefault();
+return report;
+
 }
 }

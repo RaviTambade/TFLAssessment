@@ -5,6 +5,7 @@ using backend.Models;
 using backend.Repositories.Interfaces;
 using backend.Services.Interfaces;
 using System.Linq;
+using AssessmentReportDto = backend.DTOs.AssessmentReportDto;
 
 namespace backend.Services.Implementations;
 
@@ -43,10 +44,10 @@ public class AssessmentsService : IAssessmentsService
         await _repository.AssignAssessmentAsync(dto);
     }
 
-      public async Task<List<AssessmentResultDto>> GetAssessmentResults()
-    {
-        return await _repository.GetAssessmentResults();
-    }
+    //   public async Task<List<AssessmentResultDto>> GetAssessmentResults()
+    // {
+    //     return await _repository.GetAssessmentResults();
+    // }
 
     public async Task<List<AssessmentQuestionDto>> GetAssessmentQuestions(int assessmentId)
     {
@@ -68,5 +69,23 @@ public class AssessmentsService : IAssessmentsService
 
         return await _repository.SaveAssessmentAnswersAsync(answers);
     }
+    public async Task<AssessmentReportDto> GetResultData(AssessmentstudenttResultDto request)
+{
+    var result = await _repository.GetResultData(request.StudentId, request.AssessmentId);
+
+    if (result == null)
+        return null;
+
+        return new AssessmentReportDto
+        {
+        StudentId = result.StudentId,
+        AssessmentId = result.AssessmentId,
+        Score = result.Score,
+        TotalQuestions = result.TotalQuestions,
+        CorrectAnswers = result.CorrectAnswers,
+        WrongAnswers = result.WrongAnswers,
+        Percentage = result.Percentage,
+    };
+}
 
 }
