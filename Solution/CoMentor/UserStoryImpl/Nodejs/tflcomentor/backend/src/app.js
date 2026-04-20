@@ -40,6 +40,15 @@ const userProfileRouter = require("./routers/userrouter");
 const notFoundHandler = require("./middlewares/notFoundHandler");
 const errorHandler = require("./middlewares/errorHandler");
 
+//Ajay Kale
+const EmployerProfileRepository = require("./repositories/userProfileRepository");
+const EmployerProfileService = require("./services/userProfileService");
+const EmployerProfileController = require("./controllers/userProfileControllers");
+const EmployerProfileRouter = require("./routers/userProfileRoutes");
+
+
+//Nitish Kharat
+
 
 //--------------------------------------  DEPENCENCY INJECTION  --------------------------------------
 
@@ -72,6 +81,12 @@ const service = new UsersService(userRepo);
 const controller = new UsersController(service);
 const userRouter = UsersRouterFactory(controller);
 
+//Ajay Kale  - Dependency Injection
+const employerRepo = new EmployerProfileRepository(Connection);
+const employerService = new EmployerProfileService(employerRepo);
+const employerController = new EmployerProfileController(employerService);
+const employerRoutes = EmployerProfileRouter(employerController);
+
 
 const app = express();
 
@@ -96,5 +111,8 @@ app.use("/api/v1/sessions", sessionRoutes);
 
 // Arnav Chaitrali - User Routes
 app.use("/api/v1/users", userRouter);
+
+//Ajay Kale - EmployerProfile Routes
+app.use("/api/employer-profile", employerRoutes);
 
 module.exports = app;
