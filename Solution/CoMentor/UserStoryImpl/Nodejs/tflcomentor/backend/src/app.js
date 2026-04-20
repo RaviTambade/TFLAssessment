@@ -26,6 +26,21 @@ const SessionService = require("./services/sessionservice");
 const SessionController = require("./controllers/sessioncontroller_sai_samruddhi");
 const SessionRoutes = require("./routers/sessionroutes");
 
+// Arnav Chaitrali
+const UsersRepository = require('./repositories/userrepository');
+const UsersService = require('./services/userservice');
+const UsersController = require('./controllers/usercontroller');
+const UsersRouterFactory = require('./routers/userrouter');
+
+const UserProfileRepository = require("./repositories/userrepository");
+const UserProfileService = require("./services/userservice");
+const UserProfileController = require("./controllers/usercontroller");
+const userProfileRouter = require("./routers/userrouter");
+
+const notFoundHandler = require("./middlewares/notFoundHandler");
+const errorHandler = require("./middlewares/errorHandler");
+
+
 //--------------------------------------  DEPENCENCY INJECTION  --------------------------------------
 
 // Sanika Yash - Dependency Injection
@@ -51,6 +66,12 @@ const sessionService = new SessionService(sessionRepo);
 const sessionController = new SessionController(sessionService);
 const sessionRoutes = SessionRoutes(sessionController);
 
+// Arnav - Dependency Injection
+const userRepo = new UsersRepository(Connection);
+const service = new UsersService(userRepo);
+const controller = new UsersController(service);
+const userRouter = UsersRouterFactory(controller);
+
 
 const app = express();
 
@@ -72,5 +93,8 @@ app.use("/api/userlog/", userLogRoutes);
 
 // Sai Samruddhi - Session Routes
 app.use("/api/v1/sessions", sessionRoutes);
+
+// Arnav Chaitrali - User Routes
+app.use("/api/v1/users", userRouter);
 
 module.exports = app;

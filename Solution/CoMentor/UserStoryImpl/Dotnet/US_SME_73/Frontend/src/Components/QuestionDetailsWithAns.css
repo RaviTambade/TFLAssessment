@@ -1,0 +1,138 @@
+.question-container {
+  min-height: 100vh;
+  background-color: #ffffff;
+  padding: 32px;
+}
+
+.question-wrapper {
+  max-width: 56rem;
+  margin: 0 auto;
+}
+
+.question-title {
+  font-size: 30px;
+  font-weight: bold;
+  color: #111827;
+  margin-bottom: 32px;
+}
+
+.input-card {
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 24px;
+  margin-bottom: 32px;
+}
+
+.input-wrapper {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.question-input {
+  flex: 1;
+  padding: 8px 16px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 16px;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.question-input:focus {
+  border-color: #dc2626;
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+}
+
+.get-details-btn {
+  background-color: #dc2626;
+  color: white;
+  padding: 8px 24px;
+  border-radius: 8px;
+  border: none;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  white-space: nowrap;
+}
+
+.get-details-btn:hover {
+  background-color: #b91c1c;
+}
+
+.loading-text {
+  text-align: center;
+  color: #4b5563;
+  padding: 32px;
+}
+
+.data-card {
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 32px;
+}
+
+.data-section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.data-item {
+  color: #374151;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.data-item b {
+  color: #111827;
+  font-weight: 600;
+}
+
+.section-divider {
+  border-top: 1px solid #e5e7eb;
+  padding-top: 16px;
+  margin-top: 16px;
+}
+
+.section-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: #111827;
+  margin-bottom: 16px;
+}
+
+.options-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.option-item {
+  color: #374151;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.correct-answer {
+  color: #374151;
+  font-size: 16px;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.correct-answer b {
+  color: #111827;
+  font-weight: 600;
+}
+
+.answer-text {
+  color: #374151;
+  font-size: 16px;
+  line-height: 1.5;
+}

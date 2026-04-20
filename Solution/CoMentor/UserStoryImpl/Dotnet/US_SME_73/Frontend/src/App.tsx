@@ -1,10 +1,9 @@
-import React from "react";
-import UpcomingAssessment from "./Components/UpcomingAssessment";
+import QuestionDetailsWithAns from "./Components/QuestionDetailsWithAns";
 
 const App = () => {
   return (
     <div>
-      <UpcomingAssessment />
+      <QuestionDetailsWithAns />
     </div>
   );
 };
