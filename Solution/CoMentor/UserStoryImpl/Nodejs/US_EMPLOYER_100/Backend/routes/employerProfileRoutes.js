@@ -3,9 +3,7 @@ const express = require("express");
 module.exports = (controller) => {
   const router = express.Router();
 
-  router.get("/profile/:company_id",
-    controller.getCompanyProfile.bind(controller)
-  );
+  router.get("/employerprofile/:id", (req, res) => controller.getEmployerProfile(req, res));
 
   return router;
 };
