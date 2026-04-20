@@ -1,23 +1,17 @@
 using backend.Models;
-
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Mvc;
-using backend.DTOs;
 using backend.Repositories.Interfaces;  
 using backend.Services.Interfaces;
 using backend.Services.Implementations;
-
+using backend.Repositories.Implementations;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// ✅ Add Controllers
 builder.Services.AddControllers();
 
-// ✅ Add Swagger / OpenAPI
-builder.Services.AddEndpointsApiExplorer();
-// builder.Services.AddSwaggerGen();
 
-// ✅ Database Connection
+builder.Services.AddEndpointsApiExplorer();
+
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseMySql(
         builder.Configuration.GetConnectionString("DefaultConnection"),
@@ -26,16 +20,15 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 );
 
 
-// ✅ Dependency Injection
-
-// 🔥 ADD THIS LINE
+// Register repositories and services
 builder.Services.AddScoped<IAssessmentsService, AssessmentsService>();
 builder.Services.AddScoped<IAssessmentRepository, AssessmentRepository>();
 builder.Services.AddScoped<ITestService, TestService>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IUserSessionsService, UserSessionsService>();
+builder.Services.AddScoped<IUserSessionRepository, UsersessionRepository>();
 
- 
-
+// Configure CORS to allow requests from the frontend
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll",
@@ -46,23 +39,12 @@ builder.Services.AddCors(options =>
                   .AllowAnyHeader();
         });
 });
+
 var app = builder.Build();
 
-// // ✅ Enable Swagger UI
-// if (app.Environment.IsDevelopment())
-// {
-//     app.UseSwagger();
-//     app.UseSwaggerUI();
-// }
-
-// app.UseHttpsRedirection();
-// if (!app.Environment.IsDevelopment())
-// {
-//     app.UseHttpsRedirection();
-// }
+// Configure the HTTP middleware request pipeline.
 app.UseCors("AllowAll");
 app.UseAuthorization();
-
 app.MapControllers();
 
 app.Run();

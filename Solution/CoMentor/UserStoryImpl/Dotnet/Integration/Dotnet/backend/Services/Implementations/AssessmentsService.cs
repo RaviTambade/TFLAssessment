@@ -7,7 +7,8 @@ using backend.Services.Interfaces;
 using System.Linq;
 using AssessmentReportDto = backend.DTOs.AssessmentReportDto;
 
-namespace backend.Services.Implementations;
+namespace backend.Services.Implementations
+{
 
 
 public class AssessmentsService : IAssessmentsService
@@ -24,7 +25,7 @@ public class AssessmentsService : IAssessmentsService
         return await _repository.GetAllUpcomingAssessments(userId); // Replace 0 with actual user ID if available
     }
 
-      public async Task<List<AllAssessmentDto>> GetAssessments()
+    public async Task<List<AllAssessmentDto>> GetAssessments()
     {
         return await _repository.GetAllAssessments();
     }
@@ -70,22 +71,34 @@ public class AssessmentsService : IAssessmentsService
         return await _repository.SaveAssessmentAnswersAsync(answers);
     }
     public async Task<AssessmentReportDto> GetResultData(AssessmentstudenttResultDto request)
-{
-    var result = await _repository.GetResultData(request.StudentId, request.AssessmentId);
+    {
+        var result = await _repository.GetResultData(request.StudentId, request.AssessmentId);
 
-    if (result == null)
-        return null;
+        if (result == null)
+            return null;
 
         return new AssessmentReportDto
         {
-        StudentId = result.StudentId,
-        AssessmentId = result.AssessmentId,
-        Score = result.Score,
-        TotalQuestions = result.TotalQuestions,
-        CorrectAnswers = result.CorrectAnswers,
-        WrongAnswers = result.WrongAnswers,
-        Percentage = result.Percentage,
-    };
+            StudentId = result.StudentId,
+            AssessmentId = result.AssessmentId,
+            Score = result.Score,
+            TotalQuestions = result.TotalQuestions,
+            CorrectAnswers = result.CorrectAnswers,
+            WrongAnswers = result.WrongAnswers,
+            Percentage = result.Percentage,
+        };
+    }
+
+    public async Task<int> GetTotalAssessmentsAsync()
+{
+    return await _repository.GetTotalAssessmentsAsync();
+}
+
+public async Task<int> GetCompletedAssessmentsAsync()
+{
+    return await _repository.GetCompletedAssessmentsAsync();
+}
+
 }
 
 }
