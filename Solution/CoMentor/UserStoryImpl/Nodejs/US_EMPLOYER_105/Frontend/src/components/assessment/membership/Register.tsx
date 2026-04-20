@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, type FormEvent } from "react"
 import { useNavigate } from "react-router-dom"
 
 import { Button } from "../../ui/button"
@@ -14,54 +14,77 @@ const RegisterPage = () => {
   const [lastName, setLastName] = useState("")
   const [email, setEmail] = useState("")
   const [contact, setContact] = useState("")
-
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [apiError, setApiError] = useState<string | null>(null)
   const [apiSuccess, setApiSuccess] = useState<string | null>(null)
 
-  const handleRegister = async (e: React.FormEvent) => {
+  const handleRegister = async (generatedPassword: string) => {
+    const payload = {
+      contact,
+      firstName,
+      lastName,
+      email,
+      password: generatedPassword,
+    }
+
+    const res = await fetch("http://localhost:4000/api/authentication/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    })
+
+    const data = await res.json()
+
+    if (!res.ok) {
+      throw new Error(data?.message || data?.error || "Registration failed")
+    }
+
+    return data
+  }
+
+  const handlePassword = async () => {
+    const res = await fetch("http://localhost:5121/api/auth/send-password", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email }),
+    })
+
+    const data = await res.json()
+
+    if (!res.ok) {
+      throw new Error(data?.message || data?.error || "Failed to generate password")
+    }
+
+    return typeof data === "string" ? data : data?.password
+  }
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
     setApiError(null)
     setApiSuccess(null)
 
-    const payload = {
-      contact,
-      first_name: firstName,
-      last_name: lastName,
-      email,
-    }
-
     try {
       setIsSubmitting(true)
 
-      const res = await fetch("http://localhost:4000/api/users/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
-      })
-
-      const data = await res.json().catch(() => ({}))
-
-      if (!res.ok) {
-        const message =
-          data?.message ||
-          data?.error ||
-          `Request failed (${res.status})`
-
-        setApiError(message)
-        return
+      const generatedPassword = await handlePassword()
+      if (!generatedPassword) {
+        throw new Error("Failed to generate password")
       }
 
-      setApiSuccess(data?.message || "Registration successful")
+      await handleRegister(generatedPassword)
+
+      setApiSuccess("Registration successful")
 
       setTimeout(() => {
         navigate("/models/membership/Login")
       }, 1000)
-    } catch (err: any) {
-      setApiError(err?.message || "Network error")
+    } catch (err) {
+      setApiError(err instanceof Error ? err.message : "Registration failed")
     } finally {
       setIsSubmitting(false)
     }
@@ -70,7 +93,6 @@ const RegisterPage = () => {
   return (
     <div className="min-h-screen bg-[var(--gradient-hero)] flex items-center justify-center px-4 select-none">
       <div className="w-full max-w-md">
-        {/* Heading */}
         <div className="text-center mb-8 select-none">
           <h1 className="text-3xl sm:text-4xl font-bold text-foreground mb-3">
             Create{" "}
@@ -84,14 +106,13 @@ const RegisterPage = () => {
           </p>
         </div>
 
-        {/* Card */}
         <Card className="bg-card/50 backdrop-blur-sm border border-border shadow-[var(--shadow-elegant)] select-none">
           <CardHeader>
             <CardTitle className="text-center text-xl">Register</CardTitle>
           </CardHeader>
 
           <CardContent className="p-6 sm:p-8">
-            <form onSubmit={handleRegister} className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-4">
               {apiError && (
                 <div className="text-sm text-destructive">{apiError}</div>
               )}
@@ -100,10 +121,8 @@ const RegisterPage = () => {
                 <div className="text-sm text-success">{apiSuccess}</div>
               )}
 
-              {/* First Name */}
               <div className="space-y-2">
                 <Label htmlFor="firstName">First Name</Label>
-
                 <Input
                   id="firstName"
                   type="text"
@@ -114,10 +133,8 @@ const RegisterPage = () => {
                 />
               </div>
 
-              {/* Last Name */}
               <div className="space-y-2">
                 <Label htmlFor="lastName">Last Name</Label>
-
                 <Input
                   id="lastName"
                   type="text"
@@ -128,10 +145,8 @@ const RegisterPage = () => {
                 />
               </div>
 
-              {/* Email */}
               <div className="space-y-2">
                 <Label htmlFor="email">Email</Label>
-
                 <Input
                   id="email"
                   type="email"
@@ -142,10 +157,8 @@ const RegisterPage = () => {
                 />
               </div>
 
-              {/* Contact */}
               <div className="space-y-2">
                 <Label htmlFor="contact">Contact</Label>
-
                 <Input
                   id="contact"
                   type="tel"
@@ -156,7 +169,6 @@ const RegisterPage = () => {
                 />
               </div>
 
-              {/* Register Button */}
               <Button
                 type="submit"
                 variant="hero"
@@ -168,12 +180,10 @@ const RegisterPage = () => {
               </Button>
             </form>
 
-            {/* Divider */}
             <div className="my-6">
               <Separator />
             </div>
 
-            {/* Already have account */}
             <p className="text-center text-sm text-muted-foreground">
               Already have an account?{" "}
               <button

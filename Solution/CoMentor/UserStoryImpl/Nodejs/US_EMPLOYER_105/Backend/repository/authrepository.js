@@ -7,10 +7,14 @@ class AuthRepository{
 
             console.log(user);
 
-         const query = "call RegisterUser(?,?,?,?)"
+         const query = "call RegisterUser(?,?,?,?,?)"
 
 
-        this.connection.query(query,[user.contact,user.first_name,user.last_name,user.email], callback);
+        this.connection.query(
+            query,
+            [user.contact, user.firstName, user.lastName, user.email, user.password],
+            callback
+        );
     }
 }
 
