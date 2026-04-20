@@ -7,10 +7,10 @@ const QuestionDetails = () => {
     const [q, setQ] = useState(null);
     const navigate = useNavigate();
 
-    const BASE_URL = "http://localhost:8082/api/questions";
+    const BASE_URL = "http://localhost:8080/api/questions";
 
     useEffect(() => {
-        fetch(`${BASE_URL}/${id}`)
+        fetch(`${BASE_URL}/details/${id}`)
             .then(res => {
                 if (!res.ok) {
                     throw new Error("Failed to fetch");

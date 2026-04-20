@@ -26,6 +26,12 @@ const SessionService = require("./services/sessionservice");
 const SessionController = require("./controllers/sessioncontroller_sai_samruddhi");
 const SessionRoutes = require("./routers/sessionroutes");
 
+// Arnav
+const UsersRepository = require('./repositories/userrepository');
+const UsersService = require('./services/userservice');
+const UsersController = require('./controllers/usercontroller');
+const UsersRouterFactory = require('./routers/userrouter');
+
 //--------------------------------------  DEPENCENCY INJECTION  --------------------------------------
 
 // Sanika Yash - Dependency Injection
@@ -51,12 +57,22 @@ const sessionService = new SessionService(sessionRepo);
 const sessionController = new SessionController(sessionService);
 const sessionRoutes = SessionRoutes(sessionController);
 
+// Arnav - Dependency Injection
+const userRepo = new UsersRepository(Connection);
+const service = new UsersService(userRepo);
+const controller = new UsersController(service);
+const userRouter = UsersRouterFactory(controller);
+
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 app.use(bodyParser.json());
+app.use((req, res, next) => {
+  console.log(`${req.method} ${req.originalUrl}`);
+  next();
+});
 
 //--------------------------------------  ROUTES  --------------------------------------
 
@@ -68,5 +84,8 @@ app.use("/api/userlog/", userLogRoutes);
 
 // Sai Samruddhi - Session Routes
 app.use("/api/v1/sessions", sessionRoutes);
+
+// Arnav - User Routes
+app.use("/api/v1/users", userRouter);
 
 module.exports = app;

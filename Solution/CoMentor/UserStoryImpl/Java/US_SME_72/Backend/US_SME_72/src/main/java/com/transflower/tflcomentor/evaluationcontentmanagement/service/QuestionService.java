@@ -14,12 +14,12 @@ public interface QuestionService {
     List<Question> getAllQuestions();
     List<Question> getDraftQuestions();
     List<Question> getRecentQuestions();
-    void approveQuestion(Long id);
-    void rejectQuestion(Long id);
+    void approveQuestionById(Long id);
+    void rejectQuestionById(Long id);
     void approveAllQuestions();
     void rejectAllQuestions();
     List<QuestionListResponseDto> getDraftQuestionList();
     List<QuestionListResponseDto> getRecentQuestionList();
-    QuestionResponseDto getQuestionDetails(Long id);
-    void updateQuestion(Long id, QuestionRequestDto dto);
+    QuestionResponseDto getQuestionDetailsById(Long id);
+    void updateQuestionById(Long id, QuestionRequestDto dto);
 }
