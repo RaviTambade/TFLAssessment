@@ -1,30 +1,8 @@
-/**
- * Admin Profile Repository
- * Handles all database operations for admin profiles
- * SOLID Principles:
- *   - Single Responsibility: Only handles data access
- *   - Dependency Inversion: Depends on abstraction (database connection)
- * OOPS Concepts: Encapsulation, Abstraction
- */
-
 class AdminProfileRepository {
-  /**
-   * Constructor with dependency injection
-   * @param {Connection} db - Database connection instance
-   */
   constructor(db) {
-    if (!db) {
-      throw new Error("Database connection is required");
-    }
     this.db = db;
   }
 
-  /**
-   * Retrieve admin profile by user ID
-   * @param {number} userId - Admin user ID
-   * @param {Function} callback - Callback function (err, profile)
-   * @returns {void}
-   */
   getAdminProfile(userId, callback) {
     const query = `
       SELECT 
@@ -63,12 +41,12 @@ class AdminProfileRepository {
       const firstRow = rows[0];
       const adminProfile = {
         personalInfo: {
-          userId: firstRow.user_id,
-          firstName: firstRow.first_name,
-          lastName: firstRow.last_name,
-          fullName: firstRow.full_name,
+          user_id: firstRow.user_id,
+          first_name: firstRow.first_name,
+          last_name: firstRow.last_name,
+          full_name: firstRow.full_name,
           gender: firstRow.gender,
-          dateOfBirth: firstRow.date_of_birth,
+          date_of_birth: firstRow.date_of_birth,
           email: firstRow.email,
           address: firstRow.address,
           pincode: firstRow.pincode,
@@ -77,13 +55,13 @@ class AdminProfileRepository {
           .filter((row) => row.professional_id !== null)
           .map((row) => ({
             id: row.professional_id,
-            companyName: row.company_name,
-            jobTitle: row.job_title,
-            employmentType: row.employment_type,
-            startDate: row.start_date,
-            endDate: row.end_date,
-            isCurrentJob: row.is_current_job,
-            experienceYears: row.experience_years,
+            company_name: row.company_name,
+            job_title: row.job_title,
+            employment_type: row.employment_type,
+            start_date: row.start_date,
+            end_date: row.end_date,
+            is_current_job: row.is_current_job,
+            experience_years: row.experience_years,
             location: row.location,
             skills: row.skills,
           })),
