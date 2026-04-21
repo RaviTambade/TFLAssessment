@@ -422,19 +422,23 @@ CREATE TABLE projects (
         REFERENCES users(id)
 );
 
--- 35. Project Members
-CREATE TABLE project_members (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    project_id INT,
-    student_id INT,
+-- 35. Project allocations
+CREATE TABLE project_allocations (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    project_id BIGINT NOT NULL,
+    student_id BIGINT NOT NULL,
     joined_date DATETIME DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT fk_pm_project
+    release_date DATETIME NULL,
+
+    CONSTRAINT fk_pa_project
         FOREIGN KEY (project_id)
         REFERENCES projects(project_id),
-    CONSTRAINT fk_pm_student
+
+    CONSTRAINT fk_pa_student
         FOREIGN KEY (student_id)
         REFERENCES users(id)
 );
+
 
 -- 36. Job Descriptions
 CREATE TABLE job_descriptions (
@@ -597,7 +601,7 @@ CREATE TABLE oral_assessments (
 CREATE TABLE mcq_answers (
     id INT AUTO_INCREMENT PRIMARY KEY,
 
-    student_id INT NOT NULL,
+    student_id bigint NOT NULL,
     question_id INT NOT NULL,
     assessment_id INT NOT NULL,
 
@@ -614,7 +618,7 @@ CREATE TABLE mcq_answers (
 
     CONSTRAINT fk_mcq_assessment
         FOREIGN KEY (assessment_id)
-        REFERENCES assessments(id),
-
-    UNIQUE (student_id, question_id, assessment_id)
+        REFERENCES assessments(id)
 );
+
+drop table mcq_answers;

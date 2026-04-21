@@ -40,7 +40,7 @@ public class RuntimeAssignmentsRepositoryImpl implements RuntimeAssignmentsRepos
 
         List<RuntimeAssignmentResponse> results = new ArrayList<>();
 
-        try (PreparedStatement ps = RuntimesRepositoryImpl.getConnection().prepareStatement(query)) {
+        try (PreparedStatement ps = RuntimeRepositoryImpl.getConnection().prepareStatement(query)) {
             ps.setLong(1, runtimeId);
 
             try (ResultSet rs = ps.executeQuery()) {

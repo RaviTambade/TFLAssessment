@@ -10,4 +10,5 @@ import com.transflower.tflcomentor.skilltaxonomy.dto.response.RuntimeAssignmentR
 public interface RuntimeAssignmentsRepository {
 
     List<RuntimeAssignmentResponse> findAssignmentsByRuntimeId(Long runtimeId);
+    
 }
