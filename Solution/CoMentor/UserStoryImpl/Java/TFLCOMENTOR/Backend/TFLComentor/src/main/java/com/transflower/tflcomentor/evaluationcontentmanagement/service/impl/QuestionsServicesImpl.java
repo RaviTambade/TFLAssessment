@@ -97,4 +97,9 @@ public class QuestionsServicesImpl implements QuestionsServices {
     public void updateQuestionById(Long id, QuestionRequestDto dto) {
         repository.updateQuestionById(id, dto);
     }
+
+    @Override
+    public List<QuestionListResponseDto> getQuestionsByType(String questionType) {
+        return repository.getQuestionsByType(questionType);
+    }
 }
