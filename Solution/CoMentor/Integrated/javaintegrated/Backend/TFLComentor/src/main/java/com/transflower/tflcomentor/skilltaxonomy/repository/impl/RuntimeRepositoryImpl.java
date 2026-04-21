@@ -10,8 +10,8 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Repository;
 
-import com.transflower.tflcomentor.skilltaxonomy.dto.response.RuntimeDTO;
 import com.transflower.tflcomentor.skilltaxonomy.dto.response.RuntimeSummaryResponse;
+import com.transflower.tflcomentor.skilltaxonomy.dto.response.RuntimeDTO;
 import com.transflower.tflcomentor.skilltaxonomy.entity.Runtime;
 import com.transflower.tflcomentor.skilltaxonomy.repository.RuntimeRepository;
 

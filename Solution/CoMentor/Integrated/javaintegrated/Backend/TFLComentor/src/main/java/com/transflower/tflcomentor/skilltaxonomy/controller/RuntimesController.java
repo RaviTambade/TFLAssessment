@@ -14,13 +14,14 @@ import org.springframework.web.bind.annotation.RestController;
 import com.transflower.tflcomentor.skilltaxonomy.dto.response.RuntimeDTO;
 import com.transflower.tflcomentor.skilltaxonomy.dto.response.RuntimeDetailsResponse;
 import com.transflower.tflcomentor.skilltaxonomy.dto.response.RuntimeSummaryResponse;
-import com.transflower.tflcomentor.skilltaxonomy.service.RuntimesService;
+import com.transflower.tflcomentor.skilltaxonomy.service.RuntimeService;
+
 @RestController
 @RequestMapping("/api")
 @CrossOrigin(origins = "http://localhost:8081")
 public class RuntimesController {
     @Autowired
-    private RuntimesService svc;
+    private RuntimeService svc;
     
     @GetMapping("/name/runtimes")
     public List<RuntimeDTO> getAllRuntimes() {

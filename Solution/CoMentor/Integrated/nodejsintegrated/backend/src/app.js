@@ -14,7 +14,7 @@ const ProfileService = require("./services/profileservice");
 const ProfileController = require("./controllers/profilecontroller_sanika");
 const userProfileRoutes = require("./routers/profileroutes");
 
-const UserLogRepository = require("./repositories/userlogrepository");
+const UserLogRepository = require("./repositories/loggerrepository");
 const UserLogService = require("./services/userlogservice");
 const UserLogController = require("./controllers/userlogcontroller_sanika");
 const UserLogRoutes = require("./routers/userlogroutes");
@@ -136,13 +136,6 @@ const userEditRepo = new UserProfileRepository();
 const userEditService = new UserProfileService(userRepo);
 const userEditController = new UserProfileController(userService);
 
-
-
-
-
-
-
-
 const app = express();
 
 app.use(cors());
@@ -180,7 +173,5 @@ app.use("/api/v1/profile", userRouterFactory(userController));
 
 //Tejas Naukudkar - Update Roles Routes
 app.use(['/api', '/api/v1'], updaterolesrouter);
-
-
 
 module.exports = app;

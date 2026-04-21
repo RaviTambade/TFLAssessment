@@ -21,12 +21,7 @@ public class FrameworkDto
     public string? Name { get; set; }
 }
 
-public class LayerDto
-{
-    public long Id { get; set; }
-    public string? Name { get; set; }
-    public List<FrameworkDto>? Frameworks { get; set; }
-}
+
 
 public class ConceptDto
 {

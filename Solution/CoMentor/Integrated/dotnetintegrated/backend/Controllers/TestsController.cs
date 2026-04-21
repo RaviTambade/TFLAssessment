@@ -15,15 +15,8 @@
 //         _service = service;
 //     }
 
-//     [HttpGet("runtimes")]
-//    // http://localhost:5181/api/CreateTest/runtimes
-//     public async Task<IActionResult> GetRuntimes()
-//         => Ok(await _service.GetRuntimes());
 
-//     [HttpGet("languages/{runtimeId}")]
-//     //http://localhost:5181/api/CreateTest/languages/1
-//     public async Task<IActionResult> GetLanguages(long runtimeId)
-//         => Ok(await _service.GetLanguages(runtimeId));
+
 
 //     [HttpGet("layers/{languageId}")]
 //     //http://localhost:5181/api/CreateTest/layers/1

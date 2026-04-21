@@ -13,14 +13,11 @@
 //             _repo = repo;
 //         }
 
-//         public Task<List<RuntimeDto>> GetRuntimes()
-//             => _repo.GetRuntimes();
+//         
 
-//         public Task<List<LanguageDto>> GetLanguages(long runtimeId)
-//             => _repo.GetLanguages(runtimeId);
+//         
 
-//         public Task<List<LayerDto>> GetLayers(long languageId)
-//             => _repo.GetLayers(languageId);
+//         
 
 //         public Task<List<ConceptDto>> GetConcepts(List<long> frameworkIds)
 //             => _repo.GetConcepts(frameworkIds);
