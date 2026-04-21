@@ -47,11 +47,24 @@ const EmployerProfileController = require("./controllers/userProfileControllers"
 const EmployerProfileRouter = require("./routers/userProfileRoutes");
 
 
+<<<<<<< HEAD
+// Sanika
+const RolesRepository = require("./repositories/rolesRepository");
+const RolesService = require("./services/rolesservice");
+const RolesController = require("./controllers/rolesController");
+const RolesRouterFactory = require("./routers/rolesRouter");
+
+
+
+//Nitish Kharat
+
+=======
 //Rahul Gayke
 const UserEditProfileRepository = require("./repositories/userProfileRepository");
 const UserEditProfileService = require("./services/userProfileService");
 const UserEditProfileController = require("./controllers/userProfileController");
 const userEditRouterFactory = require("./routers/userProfileRoutes");
+>>>>>>> f6865c24307a84e4649eeacc69fed5e9fed5ed3d
 
 //--------------------------------------  DEPENCENCY INJECTION  --------------------------------------
 
@@ -90,6 +103,11 @@ const employerService = new EmployerProfileService(employerRepo);
 const employerController = new EmployerProfileController(employerService);
 const employerRoutes = EmployerProfileRouter(employerController);
 
+//Sanika - Dependency Injection
+const rolerepo = new RolesRepository(Connection);
+const roleservice = new RolesService(rolerepo);
+const rolecontroller = new RolesController(roleservice);
+const rolesRouter = RolesRouterFactory(rolecontroller);
 //Rahul 
 const userEditRepo = new UserProfileRepository();
 const userEditService = new UserProfileService(userRepo);
@@ -123,6 +141,8 @@ app.use("/api/v1/users", userRouter);
 //Ajay Kale - EmployerProfile Routes
 app.use("/api/employer-profile", employerRoutes);
 
+//Sanika  - role Routes
+app.use("/api/roles", rolesRouter);
 //rahul - edit profile
 app.use("/api/v1/profile", userRouterFactory(userController));
 
