@@ -1,13 +1,14 @@
 const express=require("express");
 const cors=require("cors");
 const bodyParser = require("body-parser");
+const connection = require("./connectivity/db");
 
+//  Sanika Yash
+const AuthService = require("./services/authservice");
+const AuthController = require("./controllers/authcontroller_sanika_yash");
+const AuthRoutes = require("./routers/authroutes");
+const AuthRepository = require("./repositories/authrepository");
 const Connection = require("./connectivity/db");
-
-const userLoginService = require("./services/authservice");
-const AuthenticationController = require("./controllers/authcontroller_sanika_yash");
-const userLoginRoutes = require("./routers/authroutes");
-const userLoginRepository = require("./repositories/authrepository");
 
 const ProfileRepository = require("./repositories/profilerepository");
 const ProfileService = require("./services/profileservice");
@@ -43,7 +44,7 @@ const UpdateRolesRouter = require('./routers/updaterolesrouter');
 const UserProfileRepository = require("./repositories/userProfile.repository");
 const UserProfileService = require("./services/userProfile.service");
 const UserProfileController = require("./controllers/userProfile.controller");
-const userProfileRouter = require("./routes/userProfile.routes");
+const userProfileRouter = require("./routers/userProfile.routes");
 
 const notFoundHandler = require("./middlewares/notFoundHandler");
 const errorHandler = require("./middlewares/errorHandler");
@@ -56,10 +57,10 @@ const EmployerProfileRouter = require("./routers/userProfileRoutes");
 
 
 // Sanika
-const RolesRepository = require("./repositories/rolesRepository");
-const RolesService = require("./services/rolesservice");
-const RolesController = require("./controllers/rolesController");
-const RolesRouterFactory = require("./routers/rolesRouter");
+const RoleRepository = require("./repositories/roleRepository");
+const RoleService = require("./services/roleservice");
+const RoleController = require("./controllers/roleController");
+const RoleRouterFactory = require("./routers/roleRouter");
 
 
 
@@ -121,6 +122,7 @@ const userProfileService = new UserProfileService(userProfileRepository);
 const userProfileController = new UserProfileController(userProfileService);
 const router = userProfileRouter(userProfileController);
 
+
 //Ajay Kale  - Dependency Injection
 const employerRepo = new EmployerProfileRepository(Connection);
 const employerService = new EmployerProfileService(employerRepo);
@@ -128,10 +130,10 @@ const employerController = new EmployerProfileController(employerService);
 const employerRoutes = EmployerProfileRouter(employerController);
 
 //Sanika - Dependency Injection
-const rolerepo = new RolesRepository(Connection);
-const roleservice = new RolesService(rolerepo);
-const rolecontroller = new RolesController(roleservice);
-const rolesRouter = RolesRouterFactory(rolecontroller);
+const roleRepository = new RoleRepository(Connection);
+const roleService = new RoleService(roleRepository);
+const roleController = new RoleController(roleService);
+const roleRouter = RoleRouterFactory(roleController);
 //Rahul 
 const userEditRepo = new UserProfileRepository();
 const userEditService = new UserProfileService(userRepo);
@@ -168,11 +170,15 @@ app.use("/api/v1/user-profiles", router);
 app.use("/api/employer-profile", employerRoutes);
 
 //Sanika  - role Routes
-app.use("/api/roles", rolesRouter);
+app.use("/api/roles", roleRouter);
 //rahul - edit profile
 app.use("/api/v1/profile", userRouterFactory(userController));
 
 //Tejas Naukudkar - Update Roles Routes
 app.use(['/api', '/api/v1'], updaterolesrouter);
+
+// Error handling middleware  (User Profile handlers)
+app.use(notFoundHandler);
+app.use(errorHandler);
 
 module.exports = app;

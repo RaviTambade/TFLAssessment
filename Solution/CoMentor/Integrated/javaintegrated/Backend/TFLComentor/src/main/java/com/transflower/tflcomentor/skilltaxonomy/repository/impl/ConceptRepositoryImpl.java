@@ -26,10 +26,6 @@ import com.transflower.tflcomentor.skilltaxonomy.repository.IConceptRepository;
 public class ConceptRepositoryImpl implements IConceptRepository {
 
     private Concept concepts;
-    // private static Connection connection;
-    // private static String url="jdbc:mysql://192.168.1.149:3306/tflcomentor_db";
-    // private static String password="password";
-    // private static String username="root";
 
     public ConceptRepositoryImpl() {
         this.concepts = new Concept();
@@ -39,23 +35,12 @@ public class ConceptRepositoryImpl implements IConceptRepository {
         this.concepts = concepts;
     }
 
-    // static{
-    // try{
-    // Class.forName("com.mysql.cj.jdbc.Driver");
-    // connection=DriverManager.getConnection(url,username,password);
-    // System.out.println("Connection established successfully!");
-    // }
-    // catch(Exception e){
-    // e.printStackTrace();
-    // }
-    // }
-
-    private Connection getConnection() throws Exception {
+    private Connection getConnection() {
         return DBConfig.getConnection();
     }
 
     @Override
-    public List<Concept> getAllConcepts() throws Exception {
+    public List<Concept> getAllConcepts(){
         String query = "SELECT  DISTINCT c.id, c.name, c.description FROM concepts c";
         List<Concept> conceptsList = new ArrayList<>();
         try (Connection connection = getConnection()) {
@@ -77,7 +62,7 @@ public class ConceptRepositoryImpl implements IConceptRepository {
     }
 
     @Override
-    public List<Runtime> getAllRuntimes() throws Exception {
+    public List<Runtime> getAllRuntimes() {
         String query = "SELECT  DISTINCT r.id, r.runtime_name FROM runtimes r";
         List<Runtime> runtimesList = new ArrayList<>();
         try (Connection connection = getConnection()) {
@@ -98,7 +83,7 @@ public class ConceptRepositoryImpl implements IConceptRepository {
     }
 
     @Override
-    public List<Language> getAllLanguages(int runtimeId) throws Exception {
+    public List<Language> getAllLanguages(int runtimeId) {
 
         String query = "SELECT DISTINCT l.id, l.language, l.runtime_id FROM languages l WHERE l.runtime_id=?";
         List<Language> languagesList = new ArrayList<>();
@@ -122,7 +107,7 @@ public class ConceptRepositoryImpl implements IConceptRepository {
     }
 
     @Override
-    public List<Layer> getAllLayers() throws Exception {
+    public List<Layer> getAllLayers() {
         String query = "SELECT DISTINCT l.id, l.layers from layers l ";
 
         PreparedStatement preparedStatement;
@@ -144,7 +129,7 @@ public class ConceptRepositoryImpl implements IConceptRepository {
     }
 
     @Override
-    public List<Framework> getAllFrameworksByLanguageAndLayer(int languageId, int layerId) throws Exception {
+    public List<Framework> getAllFrameworksByLanguageAndLayer(int languageId, int layerId)  {
         String query = "SELECT DISTINCT f.id, f.name from frameworks f WHERE f.language_id = ? AND f.layer_id = ?";
 
         PreparedStatement preparedStatement;
@@ -169,7 +154,7 @@ public class ConceptRepositoryImpl implements IConceptRepository {
     }
 
     @Override
-    public List<Concept> getAllConceptsforFramework(String framework) throws Exception {
+    public List<Concept> getAllConceptsforFramework(String framework) {
         String query = "SELECT DISTINCT c.id, c.name, c.description from concepts c " +
                 "JOIN framework_concepts fc " +
                 "ON fc.concept_id=c.id " +
@@ -198,7 +183,7 @@ public class ConceptRepositoryImpl implements IConceptRepository {
     }
 
     @Override
-    public Concept findById(Long id) throws Exception {
+    public Concept findById(Long id) {
         Concept concept = null;
 
         try (Connection connection = getConnection()) {
@@ -227,7 +212,7 @@ public class ConceptRepositoryImpl implements IConceptRepository {
     }
 
     @Override
-    public boolean addConcept(Concept concept) throws Exception {
+    public boolean addConcept(Concept concept) {
         String query = "INSERT INTO concepts(name,description,status) VALUE(?,?,?)";
         try (Connection connection = getConnection()) {
             PreparedStatement ps = connection.prepareStatement(query);
