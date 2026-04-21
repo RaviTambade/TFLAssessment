@@ -1,4 +1,4 @@
-class RolesRepository {
+class RoleRepository {
     
   constructor(connection) {
     this.connection = connection;
@@ -10,25 +10,25 @@ class RolesRepository {
   }
 
 
-  insertRoles(role_name, description, callback) {
+  addNewRole(role, callback) {
     const sql = "insert into roles(role_name,description) values(?,?)";
-    this.connection.query(sql, [role_name, description], callback);
+    this.connection.query(sql, [role.roleName, role.description], callback);
   }
 
-  deleteRoles(id, callback) {
+  deleteExistingRole(id, callback) {
     const sql = "DELETE FROM roles WHERE role_id=?";
     this.connection.query(sql, [id], callback);
   }
 
-  updateRoles(id, role_name, description, callback) {
+  updateExistingRole(id, role, callback) {
     const sql = "UPDATE roles SET role_name=?, description=? WHERE role_id=?";
-    this.connection.query(sql, [role_name, description, id], callback);
+    this.connection.query(sql, [role.roleName, role.description, id], callback);
   }
 
-  getRoleByID(id, callback) {
+  getRoleById(id, callback) {
     const sql = "select * from roles where role_id =?";
     this.connection.query(sql, [id], callback);
   }
 }
 
-module.exports = RolesRepository;
+module.exports = RoleRepository;

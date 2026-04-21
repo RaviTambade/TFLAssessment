@@ -3,11 +3,11 @@ const cors=require("cors");
 const bodyParser = require("body-parser");
 const connection = require("./connectivity/db");
 
- // Sanika Yash
-const userLoginService = require("./services/authservice");
-const AuthenticationController = require("./controllers/authcontroller_sanika_yash");
-const userLoginRoutes = require("./routers/authroutes");
-const userLoginRepository = require("./repositories/authrepository");
+//  Sanika Yash
+const AuthService = require("./services/authservice");
+const AuthController = require("./controllers/authcontroller_sanika_yash");
+const AuthRoutes = require("./routers/authroutes");
+const AuthRepository = require("./repositories/authrepository");
 const Connection = require("./connectivity/db");
 
 const ProfileRepository = require("./repositories/profilerepository");
@@ -15,13 +15,13 @@ const ProfileService = require("./services/profileservice");
 const ProfileController = require("./controllers/profilecontroller_sanika");
 const userProfileRoutes = require("./routers/profileroutes");
 
-const UserLogRepository = require("./repositories/loggerrepository");
-const UserLogService = require("./services/userlogservice");
-const UserLogController = require("./controllers/userlogcontroller_sanika");
-const UserLogRoutes = require("./routers/userlogroutes");
+const LoggerRepository = require("./repositories/loggerrepository");
+const LoggerService = require("./services/loggerservices");
+const LoggerController = require("./controllers/loggercontroller");
+const LoggerRoutes = require("./routers/loggerroutes");
 
 
-// Sai Samruddhi
+//  Sai Samruddhi nantar kadhun tak
 const SessionRepository = require("./repositories/sessionrepository");
 const SessionService = require("./services/sessionservice");
 const SessionController = require("./controllers/sessioncontroller_sai_samruddhi");
@@ -57,10 +57,10 @@ const EmployerProfileRouter = require("./routers/userProfileRoutes");
 
 
 // Sanika
-const RolesRepository = require("./repositories/rolesRepository");
-const RolesService = require("./services/rolesservice");
-const RolesController = require("./controllers/rolesController");
-const RolesRouterFactory = require("./routers/rolesRouter");
+const RoleRepository = require("./repositories/roleRepository");
+const RoleService = require("./services/roleservice");
+const RoleController = require("./controllers/roleController");
+const RoleRouterFactory = require("./routers/roleRouter");
 
 
 
@@ -78,9 +78,16 @@ const userEditRouterFactory = require("./routers/userProfileRoutes");
 const AdminProfileService = require("./services/adminProfileService");
 const AdminProfileController = require("./controllers/adminProfileController");
 
+
+// USER INFORMATION MODULE
+const UserProfileRepository = require("./repositories/userinformationrepository");
+const UserProfileService = require("./services/userinformationservice");
+const UserProfileController = require("./controllers/userinformationcontroller");
+const userProfileRouter = require("./routers/userinformationroutes");
+
 //--------------------------------------  DEPENCENCY INJECTION  --------------------------------------
 
-// Sanika Yash - Dependency Injection
+
 const repo = new userLoginRepository(Connection);
 const srv = new userLoginService(repo);
 const authController = new AuthenticationController(srv);
@@ -89,15 +96,16 @@ const authRoutes = userLoginRoutes(authController);
 const profileRepository=new ProfileRepository(Connection);
 const profileService=new ProfileService(profileRepository);
 const profileController=new ProfileController(profileService);
-const profileRoutes = userProfileRoutes(profileController);
+const profileRoutes = userProfileRoutes(profileController);  
 
-const userLogRepository=new UserLogRepository(Connection);
-const userLogService=new UserLogService(userLogRepository);
-const userLogController=new UserLogController(userLogService);
-const userLogRoutes = UserLogRoutes(userLogController);
+const loggerRepository=new LoggerRepository(Connection);
+const loggerService=new LoggerService(loggerRepository);
+const loggerController=new LoggerController(loggerService);
+const loggerRoutes = LoggerRoutes(loggerController);
 
 
-// Sai Samruddhi - Dependency Injection
+
+// Sai Samruddhi - Dependency Injection he pn kadhun tak
 const sessionRepo = new SessionRepository(Connection);
 const sessionService = new SessionService(sessionRepo);
 const sessionController = new SessionController(sessionService);
@@ -129,14 +137,21 @@ const employerController = new EmployerProfileController(employerService);
 const employerRoutes = EmployerProfileRouter(employerController);
 
 //Sanika - Dependency Injection
-const rolerepo = new RolesRepository(Connection);
-const roleservice = new RolesService(rolerepo);
-const rolecontroller = new RolesController(roleservice);
-const rolesRouter = RolesRouterFactory(rolecontroller);
+const roleRepository = new RoleRepository(Connection);
+const roleService = new RoleService(roleRepository);
+const roleController = new RoleController(roleService);
+const roleRouter = RoleRouterFactory(roleController);
 //Rahul 
 const userEditRepo = new UserProfileRepository();
 const userEditService = new UserProfileService(userRepo);
-const userEditController = new UserProfileController(userService);
+const userEditController = new UserProfileController(userService); 
+
+//NEW - USER INFORMATION MODULE Dependency Injection ARNAV
+const userInformationRepo = new UserProfileRepository(connection);
+const userInformationService = new UserProfileService(userInformationRepo);
+const userInformationController = new UserProfileController(userInformationService);
+const userInformationRouter = userProfileRouter(userInformationController);
+
 
 const app = express();
 
@@ -154,9 +169,9 @@ app.use((req, res, next) => {
 // Sanika Yash - Routes
 app.use("/api/authentication/", authRoutes);
 app.use("/api/profile/", profileRoutes);
-app.use("/api/userlog/", userLogRoutes);
+app.use("/api/userlog/", loggerRoutes);
 
-// Sai Samruddhi - Session Routes
+// Sai Samruddhi - Session Routes he pn kadhun tak 
 app.use("/api/v1/sessions", sessionRoutes);
 
 // Arnav  - User Routes
@@ -169,7 +184,7 @@ app.use("/api/v1/user-profiles", router);
 app.use("/api/employer-profile", employerRoutes);
 
 //Sanika  - role Routes
-app.use("/api/roles", rolesRouter);
+app.use("/api/roles", roleRouter);
 //rahul - edit profile
 app.use("/api/v1/profile", userRouterFactory(userController));
 
@@ -179,5 +194,9 @@ app.use(['/api', '/api/v1'], updaterolesrouter);
 // Error handling middleware  (User Profile handlers)
 app.use(notFoundHandler);
 app.use(errorHandler);
+
+//NEW - USER INFORMATION MODULE Routes
+app.use("/api/v1/user-information", userInformationRouter);
+
 
 module.exports = app;

@@ -18,5 +18,9 @@ module.exports = (controller) => {
     (req, res) => controller.getSMEProfile(req, res)
   );
 
+  router.put("/update-status", (req, res) =>
+    controller.updateUserStatus(req, res)
+  );
+
   return router;
 };
