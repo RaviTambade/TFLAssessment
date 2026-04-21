@@ -28,10 +28,10 @@ const SessionController = require("./controllers/sessioncontroller_sai_samruddhi
 const SessionRoutes = require("./routers/sessionroutes");
 
 // Arnav 
-const UsersRepository = require('./repositories/userrepository');
-const UsersService = require('./services/userservice');
-const UsersController = require('./controllers/usercontroller');
-const UsersRouterFactory = require('./routers/userrouter');
+const UsersRepository = require('./repositories/userinformationrepository');
+const UsersService = require('./services/userinformationservice');
+const UsersController = require('./controllers/userinformationcontroller');
+const UsersRouterFactory = require('./routers/userinformationroutes');
 
 
 //Tejas Naukudkar
@@ -66,12 +66,6 @@ const RoleRouterFactory = require("./routers/roleRouter");
 
 //Nitish Kharat
 
-//Rahul Gayke
-const UserEditProfileRepository = require("./repositories/userProfileRepository");
-const UserEditProfileService = require("./services/userProfileService");
-const UserEditProfileController = require("./controllers/userProfileController");
-const userEditRouterFactory = require("./routers/userProfileRoutes");
-
 
 
 //SACHIN KHARAT 
@@ -79,11 +73,11 @@ const AdminProfileService = require("./services/adminProfileService");
 const AdminProfileController = require("./controllers/adminProfileController");
 
 
-// USER INFORMATION MODULE
-const UserProfileRepository = require("./repositories/userinformationrepository");
-const UserProfileService = require("./services/userinformationservice");
-const UserProfileController = require("./controllers/userinformationcontroller");
-const userProfileRouter = require("./routers/userinformationroutes");
+// // USER INFORMATION MODULE
+// // const UserProfileRepository = require("./repositories/userinformationrepository");
+// // const UserProfileService = require("./services/userinformationservice");
+// // const UserProfileController = require("./controllers/userinformationcontroller");
+// // const userProfileRouter = require("./routers/userinformationroutes");
 
 //--------------------------------------  DEPENCENCY INJECTION  --------------------------------------
 
@@ -112,10 +106,10 @@ const sessionController = new SessionController(sessionService);
 const sessionRoutes = SessionRoutes(sessionController);
 
 // Arnav - Dependency Injection
-const userRepo = new UsersRepository(Connection);
-const service = new UsersService(userRepo);
-const controller = new UsersController(service);
-const userRouter = UsersRouterFactory(controller);
+// const userRepo = new UsersRepository(Connection);
+// const service = new UsersService(userRepo);
+// const controller = new UsersController(service);
+// const userRouter = UsersRouterFactory(controller);
 
 // Tejas Naukudkar - Dependency injection 
 const updaterolesrepo = new UpdateRolesRepository(Connection);
@@ -147,10 +141,10 @@ const userEditService = new UserProfileService(userRepo);
 const userEditController = new UserProfileController(userService); 
 
 //NEW - USER INFORMATION MODULE Dependency Injection ARNAV
-const userInformationRepo = new UserProfileRepository(connection);
-const userInformationService = new UserProfileService(userInformationRepo);
-const userInformationController = new UserProfileController(userInformationService);
-const userInformationRouter = userProfileRouter(userInformationController);
+const userInformationRepo = new UsersRepository(connection);
+const userInformationService = new UsersService(userInformationRepo);
+const userInformationController = new UsersController(userInformationService);
+const userInformationRouter = UsersRouterFactory(userInformationController);
 
 
 const app = express();
@@ -174,8 +168,8 @@ app.use("/api/userlog/", loggerRoutes);
 // Sai Samruddhi - Session Routes he pn kadhun tak 
 app.use("/api/v1/sessions", sessionRoutes);
 
-// Arnav  - User Routes
-app.use("/api/v1/users", userRouter);
+// // Arnav  - User Routes
+// app.use("/api/v1/users", userRouter);
 
 //Chaitrali - User Profile Routes
 app.use("/api/v1/user-profiles", router);
@@ -185,8 +179,7 @@ app.use("/api/employer-profile", employerRoutes);
 
 //Sanika  - role Routes
 app.use("/api/roles", roleRouter);
-//rahul - edit profile
-app.use("/api/v1/profile", userRouterFactory(userController));
+
 
 //Tejas Naukudkar - Update Roles Routes
 app.use(['/api', '/api/v1'], updaterolesrouter);

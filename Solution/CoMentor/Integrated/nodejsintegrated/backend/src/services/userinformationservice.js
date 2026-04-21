@@ -100,6 +100,34 @@ class UserInformationService {
     });
   }
 
+// ✅ Update User Profile
+   updateProfile(userId, data, callback) {
+    this.repo.updateFullProfile(userId, data, callback);
+  }
+
+  update(userId, data, callback) {
+    this.repo.updateFullProfile(userId, data, callback);
+  }
+
+  updateUser(userId, data, callback) {
+    this.repo.updateFullProfile(userId, data, callback);
+  }
+
+  updatePersonInformation(userId, data, callback) {
+    this.repo.updatePersonInformation(userId, data, callback);
+  }
+
+  updateProfessionalInformation(userId, data, callback) {
+    this.repo.updateProfessionalInformation(userId, data, callback);
+  }
+
+  updateAcademicInformation(userId, data, callback) {
+    this.repo.updateAcademicInformation(userId, data, callback);
+  }
+
+  updateProfessinalInformation(userId, data, callback) {
+    this.repo.updateProfessionalInformation(userId, data, callback);
+  }
 }
 
 
