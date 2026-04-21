@@ -8,9 +8,6 @@ module.exports = (controller) => {
   // Backward compatibility for existing clients
   router.put('/deleteUser', controller.deleteUser.bind(controller));
 
-   router.get("/user-profile/:id", asyncHandler((req, res, next) => {
-    controller.getUserProfile(req, res, next);
-  }));
 
   return router;
 };
