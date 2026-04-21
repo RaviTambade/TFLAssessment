@@ -5,7 +5,7 @@ import java.util.List;
 import com.transflower.tflcomentor.evaluationcontentmanagement.dto.request.QuestionRequestDto;
 import com.transflower.tflcomentor.evaluationcontentmanagement.dto.response.QuestionListResponseDto;
 import com.transflower.tflcomentor.evaluationcontentmanagement.dto.response.QuestionResponseDto;
-import com.transflower.tflcomentor.evaluationcontentmanagement.entity.Projects;
+import com.transflower.tflcomentor.evaluationcontentmanagement.entity.Project;
 import com.transflower.tflcomentor.evaluationcontentmanagement.entity.Questions;
 
 public interface QuestionsServices {
