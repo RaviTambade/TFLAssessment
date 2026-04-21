@@ -6,21 +6,21 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.transflower.tflcomentor.evaluationcontentmanagement.entity.Questions;
-import com.transflower.tflcomentor.skilltaxonomy.dto.response.ConceptDto;
+import com.transflower.tflcomentor.evaluationcontentmanagement.dto.request.QuestionDto;
+import com.transflower.tflcomentor.evaluationcontentmanagement.entity.Question;
 import com.transflower.tflcomentor.skilltaxonomy.entity.Concept;
 import com.transflower.tflcomentor.skilltaxonomy.entity.Framework;
 import com.transflower.tflcomentor.skilltaxonomy.entity.Language;
 import com.transflower.tflcomentor.skilltaxonomy.entity.Layer;
 import com.transflower.tflcomentor.skilltaxonomy.entity.Runtime;
-import com.transflower.tflcomentor.skilltaxonomy.repository.IConceptsRepository;
+import com.transflower.tflcomentor.skilltaxonomy.repository.IConceptRepository;
 import com.transflower.tflcomentor.skilltaxonomy.service.IConceptsService;
 
 @Service
 public class ConceptsService implements IConceptsService {
 
     @Autowired
-    private IConceptsRepository conceptsRepository;
+    private IConceptRepository conceptsRepository;
 
     @Override
     public List<Concept> getAllConcepts() {
@@ -63,17 +63,7 @@ public class ConceptsService implements IConceptsService {
     }
 
     @Override
-    public List<ConceptDto> getQuestionsByConceptId(Long conceptId) {
-        List<Questions> questions = conceptsRepository.getQuestionsByConceptId(conceptId);
-        List<ConceptDto> dtoList = new ArrayList<>();
-
-        for (Questions question : questions) {
-            dtoList.add(new ConceptDto(
-                    question.getDescription(),
-                    question.getQuestionType()
-            ));
-        }
-
-        return dtoList;
+    public boolean addConcept(Concept concept) {
+        return conceptsRepository.addConcept(concept);
     }
 }

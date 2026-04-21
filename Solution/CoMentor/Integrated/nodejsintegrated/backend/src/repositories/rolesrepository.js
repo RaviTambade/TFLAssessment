@@ -9,6 +9,7 @@ class RolesRepository {
     this.connection.query(sql, callback);
   }
 
+
   insertRoles(role_name, description, callback) {
     const sql = "insert into roles(role_name,description) values(?,?)";
     this.connection.query(sql, [role_name, description], callback);
