@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import com.transflower.tflcomentor.evaluationcontentmanagement.dto.request.QuestionRequestDto;
 import com.transflower.tflcomentor.evaluationcontentmanagement.dto.response.QuestionListResponseDto;
 import com.transflower.tflcomentor.evaluationcontentmanagement.dto.response.QuestionResponseDto;
+import com.transflower.tflcomentor.evaluationcontentmanagement.entity.Projects;
 import com.transflower.tflcomentor.evaluationcontentmanagement.entity.Questions;
 import com.transflower.tflcomentor.evaluationcontentmanagement.repository.QuestionsRepository;
 import com.transflower.tflcomentor.evaluationcontentmanagement.service.QuestionsServices;
@@ -58,42 +59,52 @@ public class QuestionsServicesImpl implements QuestionsServices {
     // public List<Questions> getAllQuestions() {
     //     return repository.getAllQuestions();
     // }
+    @Override
     public List<Questions> getDraftQuestions() {
         return repository.getDraftQuestions();
     }
 
+     @Override
     public List<Questions> getRecentQuestions() {
         return repository.getRecentQuestions();
     }
 
+     @Override
     public void approveQuestionById(Long id) {
         repository.approveQuestionById(id);
     }
 
+    @Override 
     public void rejectQuestionById(Long id) {
         repository.rejectQuestionById(id);
     }
 
+     @Override
     public void approveAllQuestions() {
         repository.approveAllQuestions();
     }
 
+     @Override
     public void rejectAllQuestions() {
         repository.rejectAllQuestions();
     }
 
+ @Override
     public List<QuestionListResponseDto> getDraftQuestionList() {
         return repository.getDraftQuestionList();
     }
 
+     @Override
     public List<QuestionListResponseDto> getRecentQuestionList() {
         return repository.getRecentQuestionList();
     }
 
+     @Override
     public QuestionResponseDto getQuestionDetailsById(Long id) {
         return repository.getQuestionDetailsById(id);
     }
 
+     @Override
     public void updateQuestionById(Long id, QuestionRequestDto dto) {
         repository.updateQuestionById(id, dto);
     }
@@ -107,4 +118,6 @@ public class QuestionsServicesImpl implements QuestionsServices {
     public List<QuestionListResponseDto> findByStatus(String questionStatus) {
         return repository.findByStatus(questionStatus);
     }
+
+    
 }

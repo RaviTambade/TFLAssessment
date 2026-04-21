@@ -5,6 +5,7 @@ import java.util.List;
 import com.transflower.tflcomentor.evaluationcontentmanagement.dto.request.QuestionRequestDto;
 import com.transflower.tflcomentor.evaluationcontentmanagement.dto.response.QuestionListResponseDto;
 import com.transflower.tflcomentor.evaluationcontentmanagement.dto.response.QuestionResponseDto;
+import com.transflower.tflcomentor.evaluationcontentmanagement.entity.Projects;
 import com.transflower.tflcomentor.evaluationcontentmanagement.entity.Questions;
 
 public interface QuestionsServices {
@@ -26,6 +27,7 @@ public interface QuestionsServices {
     List<QuestionListResponseDto> getQuestionsByType(String questionType);
     List<QuestionListResponseDto> findByStatus(String questionStatus);
     void updateQuestionById(Long id, QuestionRequestDto dto);
+ 
 
   
 }
