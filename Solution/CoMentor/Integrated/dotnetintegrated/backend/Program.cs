@@ -26,7 +26,9 @@ builder.Services.AddScoped<IAssessmentRepository, AssessmentRepository>();
 builder.Services.AddScoped<ITestService, TestService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IUserSessionsService, UserSessionsService>();
-builder.Services.AddScoped<IUserSessionRepository, UsersessionRepository>();
+builder.Services.AddScoped<IUserSessionRepository, UsersessionRepository>();   
+builder.Services.AddScoped<IStudentResultService, StudentResultService>();
+builder.Services.AddScoped<IStudentResultRepository, StudentResultRepository>();
 
 // Configure CORS to allow requests from the frontend
 builder.Services.AddCors(options =>
