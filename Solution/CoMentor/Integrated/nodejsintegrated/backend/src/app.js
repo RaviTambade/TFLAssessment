@@ -2,25 +2,25 @@ const express=require("express");
 const cors=require("cors");
 const bodyParser = require("body-parser");
 
-//  Sanika Yash
+const Connection = require("./connectivity/db");
+
 const userLoginService = require("./services/authservice");
 const AuthenticationController = require("./controllers/authcontroller_sanika_yash");
 const userLoginRoutes = require("./routers/authroutes");
 const userLoginRepository = require("./repositories/authrepository");
-const Connection = require("./connectivity/db");
 
 const ProfileRepository = require("./repositories/profilerepository");
 const ProfileService = require("./services/profileservice");
 const ProfileController = require("./controllers/profilecontroller_sanika");
 const userProfileRoutes = require("./routers/profileroutes");
 
-const UserLogRepository = require("./repositories/loggerrepository");
-const UserLogService = require("./services/userlogservice");
-const UserLogController = require("./controllers/userlogcontroller_sanika");
-const UserLogRoutes = require("./routers/userlogroutes");
+const LoggerRepository = require("./repositories/loggerrepository");
+const LoggerService = require("./services/loggerservices");
+const LoggerController = require("./controllers/loggercontroller");
+const LoggerRoutes = require("./routers/loggerroutes");
 
 
-// Sai Samruddhi
+//  Sai Samruddhi nantar kadhun tak
 const SessionRepository = require("./repositories/sessionrepository");
 const SessionService = require("./services/sessionservice");
 const SessionController = require("./controllers/sessioncontroller_sai_samruddhi");
@@ -79,7 +79,7 @@ const AdminProfileController = require("./controllers/adminProfileController");
 
 //--------------------------------------  DEPENCENCY INJECTION  --------------------------------------
 
-// Sanika Yash - Dependency Injection
+
 const repo = new userLoginRepository(Connection);
 const srv = new userLoginService(repo);
 const authController = new AuthenticationController(srv);
@@ -88,15 +88,16 @@ const authRoutes = userLoginRoutes(authController);
 const profileRepository=new ProfileRepository(Connection);
 const profileService=new ProfileService(profileRepository);
 const profileController=new ProfileController(profileService);
-const profileRoutes = userProfileRoutes(profileController);
+const profileRoutes = userProfileRoutes(profileController);  
 
-const userLogRepository=new UserLogRepository(Connection);
-const userLogService=new UserLogService(userLogRepository);
-const userLogController=new UserLogController(userLogService);
-const userLogRoutes = UserLogRoutes(userLogController);
+const loggerRepository=new LoggerRepository(Connection);
+const loggerService=new LoggerService(loggerRepository);
+const loggerController=new LoggerController(loggerService);
+const loggerRoutes = LoggerRoutes(loggerController);
 
 
-// Sai Samruddhi - Dependency Injection
+
+// Sai Samruddhi - Dependency Injection he pn kadhun tak
 const sessionRepo = new SessionRepository(Connection);
 const sessionService = new SessionService(sessionRepo);
 const sessionController = new SessionController(sessionService);
@@ -134,7 +135,7 @@ const rolesRouter = RolesRouterFactory(rolecontroller);
 //Rahul 
 const userEditRepo = new UserProfileRepository();
 const userEditService = new UserProfileService(userRepo);
-const userEditController = new UserProfileController(userService);
+const userEditController = new UserProfileController(userService); 
 
 const app = express();
 
@@ -152,9 +153,9 @@ app.use((req, res, next) => {
 // Sanika Yash - Routes
 app.use("/api/authentication/", authRoutes);
 app.use("/api/profile/", profileRoutes);
-app.use("/api/userlog/", userLogRoutes);
+app.use("/api/userlog/", loggerRoutes);
 
-// Sai Samruddhi - Session Routes
+// Sai Samruddhi - Session Routes he pn kadhun tak 
 app.use("/api/v1/sessions", sessionRoutes);
 
 // Arnav  - User Routes

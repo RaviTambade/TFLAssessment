@@ -1,4 +1,5 @@
 const LoginStatus = require("../dtos/responses/LoginStatus");
+
 class AuthRepository {
   constructor(connection) {
     this.connection = connection;
@@ -48,4 +49,4 @@ class AuthRepository {
  
 }
 
-module.exports = AuthenticationRepository;
+module.exports = AuthRepository;
