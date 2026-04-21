@@ -48,6 +48,32 @@ class EmployerProfileService {
       });
     });
   }
+
+
+  getSMEProfile(userId, callback) {
+    this.repo.checkSMERole(userId, (err, isSME) => {
+      if (err) return callback(err, null);
+
+      if (!isSME) {
+        return callback(
+          new Error("Access denied: User is not an SME "),
+          null
+        );
+      }
+
+      this.repo.getProfile(userId, (err, data) => {
+        if (err) return callback(err, null);
+
+        if (!data || data.length === 0) {
+          return callback(new Error("Profile not found"), null);
+        }
+
+        callback(null, data);
+      });
+    });
+  }
+
 }
+
 
 module.exports = EmployerProfileService;

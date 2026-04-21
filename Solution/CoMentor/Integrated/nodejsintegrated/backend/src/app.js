@@ -116,7 +116,7 @@ const userEditRepo = new UserProfileRepository();
 const userEditService = new UserProfileService(userRepo);
 const userEditController = new UserProfileController(userService);
 
-//SACHIN KHARAT 
+
 
 
 
@@ -155,8 +155,6 @@ app.use("/api/roles", rolesRouter);
 //rahul - edit profile
 app.use("/api/v1/profile", userRouterFactory(userController));
 
-//SACHIN KHARAT - ADMIN ROUTES 
-app.use("/api", adminProfileRoutes);
 
 
 module.exports = app;
