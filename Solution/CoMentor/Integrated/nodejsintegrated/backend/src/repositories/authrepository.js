@@ -1,10 +1,10 @@
 const LoginStatus = require("../dtos/responses/LoginStatus");
-class AuthenticationRepository {
+class AuthRepository {
   constructor(connection) {
     this.connection = connection;
   }
 
-  userLogin(credential, callback) {
+  validate(credential, callback) {
     const sql = `select u.id
                     from users u
                     join user_roles ur on u.id= ur.user_id
@@ -33,7 +33,7 @@ class AuthenticationRepository {
     );
   }
 
-  InsertUser(user, callback) {
+  register(user, callback) {
     console.log(user);
 
     const query = "call RegisterUser(?,?,?,?,?)";
@@ -44,6 +44,8 @@ class AuthenticationRepository {
       callback,
     );
   }
+
+ 
 }
 
 module.exports = AuthenticationRepository;

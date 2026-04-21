@@ -1,7 +1,78 @@
-const db = require("../connectivity/db");
-
 class UserProfileRepository {
 
+  constructor(db) {
+    this.db = db;
+  }
+
+  deleteUser(id, status, callback) {
+    const sql = "UPDATE Users SET status = ? WHERE id = ?";
+    this.connection.query(sql, [status, id], callback);
+  }
+
+
+  getUserRole(userId, callback) {
+    const query = `SELECT r.role_name
+                  FROM user_roles ur
+                  JOIN roles r ON ur.role_id = r.role_id
+                  WHERE ur.user_id = ?
+    `;
+
+    this.db.query(query, [userId], (err, results) => {
+      if (err) return callback(err, null);
+
+      const userRole = results.length > 0 ? results[0].role_name : null;
+      callback(null, userRole);
+    });
+  }
+  getUserPersonalInformation(userId, callback) {
+    const query = `SELECT first_name, last_name, email
+                  FROM personal_informations
+                  WHERE user_id = ?
+    `;
+
+      getUserInformation(userId, query, callback);
+  }
+
+  getUserAcademicInformation(userId, callback) {
+    const query = `SELECT 
+                  FROM academic_informations
+                  WHERE user_id = ?
+    `;
+
+    getUserInformation(userId, query, callback);
+  }
+
+
+  getUserProfessionalInformation(userId, callback) {
+    const query = `SELECT 
+                  FROM professional_informations
+                  WHERE user_id = ?
+    `;
+   getUserInformation(userId, query, callback);
+  }
+
+  getUserInformation(userId, query, callback) {
+     this.db.query(query, [userId], (err, results) => {
+      if (err) return callback(err, null);
+      const userInformation = results.length > 0 ? results[0] : null;
+      callback(null, userInformation);
+    });
+
+  }
+
+  // Get Profile
+  getUserProfile(userId, callback) {
+    const query = `CALL sp_get_user_complete_profile(?)`;
+
+    this.db.query(query, [userId], (err, results) => {
+      if (err) return callback(err, null);
+      const profile = results[0];
+      callback(null, profile);
+    });
+  }
+
+
+  
   // ✅ Personal Information
   updatePersonInformation(userId, data, callback) {
     const query = `CALL sp_update_personal_information(?, ?, ?, ?, ?, ?, ?, ?);`;
@@ -119,6 +190,7 @@ class UserProfileRepository {
       return callback(null, results);
     });
   }
+
 }
 
 module.exports = UserProfileRepository;
