@@ -13,7 +13,7 @@ import java.time.ZoneId;
 
 import org.springframework.stereotype.Repository;
 
-import com.transflower.tflcomentor.evaluationcontentmanagement.entity.Questions;
+import com.transflower.tflcomentor.evaluationcontentmanagement.entity.Question;
 import com.transflower.tflcomentor.skilltaxonomy.entity.Concept;
 import com.transflower.tflcomentor.skilltaxonomy.entity.Framework;
 import com.transflower.tflcomentor.skilltaxonomy.entity.Language;
@@ -134,29 +134,6 @@ public class ConceptsRepository implements IConceptsRepository{
             return new ArrayList<>();
         }
     }
-
-    // public List<Frameworks> getAllFrameworksByLanguageId(int languageId){
-    //     String query="SELECT DISTINCT f.id, f.name from frameworks f WHERE f.language_id = ?";
-
-    //     PreparedStatement preparedStatement;
-    //     List<Frameworks> frameworksList=new ArrayList<>();
-    //     try {
-    //         preparedStatement=connection.prepareStatement(query);
-    //         preparedStatement.setInt(1, languageId);
-    //         ResultSet resultSet=preparedStatement.executeQuery();
-    //         while(resultSet.next()){
-    //             Frameworks framework=new Frameworks();
-    //             framework.setId(resultSet.getInt("id"));
-    //             framework.setRuntimeName(resultSet.getString("name"));
-    //             System.out.println("Framework found: " + framework.getRuntimeName());
-    //             frameworksList.add(framework);
-    //         }
-    //         return frameworksList;
-    //     } catch (SQLException e) {  
-    //         e.printStackTrace();  
-    //         return new ArrayList<>();
-    //     }
-    // }
      
     public List<Framework> getAllFrameworksByLanguageAndLayer(int languageId, int layerId) {
         String query="SELECT DISTINCT f.id, f.name from frameworks f WHERE f.language_id = ? AND f.layer_id = ?";
@@ -240,39 +217,21 @@ public class ConceptsRepository implements IConceptsRepository{
         return concept;
     }
 
+    @Override 
+    public boolean addConcept(Concept concept){
+        String query="INSERT INTO concepts(name,description,status) VALUE(?,?,?)";
+        try{    
+            PreparedStatement ps=connection.prepareStatement(query);
+            ps.setString(1,concept.getName());
+            ps.setString(2,concept.getDescription());
+            ps.setInt(3,concept.getStatus());
 
-     @Override
-    public List<Questions> getQuestionsByConceptId(Long conceptId) {
-        List<Questions> list = new ArrayList<>();
-        String sql = """ 
-                    SELECT q.question_id, q.description, q.question_type
-                    FROM questions q
-                    JOIN question_framework_concepts qfc 
-                        ON q.question_id = qfc.question_id
-                    JOIN framework_concepts fc 
-                        ON qfc.framework_concepts_id = fc.id
-                    WHERE fc.concept_id = ?;
-                    """;
-
-        try (
-                Connection connection = DriverManager.getConnection(url, username, password);
-                PreparedStatement statement = connection.prepareStatement(sql);) {
-            statement.setLong(1, conceptId);
-            ResultSet rs = statement.executeQuery();
-
-            while (rs.next()) {
-                Questions question = new Questions();
-                question.setQuestionId(rs.getLong("question_id"));
-                question.setDescription(rs.getString("description"));
-                question.setQuestionType(rs.getString("question_type"));
-                list.add(question);
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
+            ps.executeQuery();
+            return true;
         }
-
-        return list;
+        catch(Exception e){
+            e.printStackTrace();
+            return false;
+        } 
     }
-
 }

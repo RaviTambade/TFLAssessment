@@ -2,6 +2,7 @@ package com.transflower.tflcomentor.evaluationcontentmanagement.service;
 
 import java.util.List;
 
+import com.transflower.tflcomentor.evaluationcontentmanagement.dto.request.QuestionDto;
 import com.transflower.tflcomentor.evaluationcontentmanagement.dto.request.QuestionRequestDto;
 import com.transflower.tflcomentor.evaluationcontentmanagement.dto.response.QuestionListResponseDto;
 import com.transflower.tflcomentor.evaluationcontentmanagement.dto.response.QuestionResponseDto;
@@ -27,7 +28,7 @@ public interface QuestionsServices {
     List<QuestionListResponseDto> getQuestionsByType(String questionType);
     List<QuestionListResponseDto> findByStatus(String questionStatus);
     void updateQuestionById(Long id, QuestionRequestDto dto);
- 
+    List<QuestionDto> getQuestionsByConceptId(Long conceptId);
 
   
 }

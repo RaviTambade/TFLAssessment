@@ -1,13 +1,16 @@
 package com.transflower.tflcomentor.evaluationcontentmanagement.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.transflower.tflcomentor.evaluationcontentmanagement.dto.request.QuestionDto;
 import com.transflower.tflcomentor.evaluationcontentmanagement.dto.request.QuestionRequestDto;
 import com.transflower.tflcomentor.evaluationcontentmanagement.dto.response.QuestionListResponseDto;
 import com.transflower.tflcomentor.evaluationcontentmanagement.dto.response.QuestionResponseDto;
 import com.transflower.tflcomentor.evaluationcontentmanagement.entity.Project;
+import com.transflower.tflcomentor.evaluationcontentmanagement.entity.Question;
 import com.transflower.tflcomentor.evaluationcontentmanagement.entity.Questions;
 import com.transflower.tflcomentor.evaluationcontentmanagement.repository.QuestionsRepository;
 import com.transflower.tflcomentor.evaluationcontentmanagement.service.QuestionsServices;
@@ -117,6 +120,22 @@ public class QuestionsServicesImpl implements QuestionsServices {
     @Override
     public List<QuestionListResponseDto> findByStatus(String questionStatus) {
         return repository.findByStatus(questionStatus);
+    }
+
+ 
+    @Override
+    public List<QuestionDto> getQuestionsByConceptId(Long conceptId) {
+        List<Question> questions = repository.getQuestionsByConceptId(conceptId);
+        List<QuestionDto> dtoList = new ArrayList<>();
+
+        for (Question question : questions) {
+            dtoList.add(new QuestionDto(
+                    question.getDescription(),
+                    question.getQuestionType()
+            ));
+        }
+
+        return dtoList;
     }
 
     
