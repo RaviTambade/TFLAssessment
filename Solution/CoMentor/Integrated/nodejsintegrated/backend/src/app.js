@@ -3,11 +3,11 @@ const cors=require("cors");
 const bodyParser = require("body-parser");
 const connection = require("./connectivity/db");
 
- // Sanika Yash
-const userLoginService = require("./services/authservice");
-const AuthenticationController = require("./controllers/authcontroller_sanika_yash");
-const userLoginRoutes = require("./routers/authroutes");
-const userLoginRepository = require("./repositories/authrepository");
+//  Sanika Yash
+const AuthService = require("./services/authservice");
+const AuthController = require("./controllers/authcontroller_sanika_yash");
+const AuthRoutes = require("./routers/authroutes");
+const AuthRepository = require("./repositories/authrepository");
 const Connection = require("./connectivity/db");
 
 const ProfileRepository = require("./repositories/profilerepository");
@@ -57,10 +57,10 @@ const EmployerProfileRouter = require("./routers/userProfileRoutes");
 
 
 // Sanika
-const RolesRepository = require("./repositories/rolesRepository");
-const RolesService = require("./services/rolesservice");
-const RolesController = require("./controllers/rolesController");
-const RolesRouterFactory = require("./routers/rolesRouter");
+const RoleRepository = require("./repositories/roleRepository");
+const RoleService = require("./services/roleservice");
+const RoleController = require("./controllers/roleController");
+const RoleRouterFactory = require("./routers/roleRouter");
 
 
 
@@ -88,10 +88,10 @@ const userProfileRouter = require("./routers/userinformationroutes");
 //--------------------------------------  DEPENCENCY INJECTION  --------------------------------------
 
 // Sanika Yash - Dependency Injection
-const repo = new userLoginRepository(Connection); 
-const srv = new userLoginService(repo);
-const authController = new AuthenticationController(srv);
-const authRoutes = userLoginRoutes(authController);
+const authRepository = new AuthRepository(Connection);
+const authService = new AuthService(authRepository);
+const authController = new AuthController(authService);
+const authRoutes = AuthRoutes(authController);
 
 const profileRepository=new ProfileRepository(Connection);
 const profileService=new ProfileService(profileRepository);
@@ -136,10 +136,10 @@ const employerController = new EmployerProfileController(employerService);
 const employerRoutes = EmployerProfileRouter(employerController);
 
 //Sanika - Dependency Injection
-const rolerepo = new RolesRepository(Connection);
-const roleservice = new RolesService(rolerepo);
-const rolecontroller = new RolesController(roleservice);
-const rolesRouter = RolesRouterFactory(rolecontroller);
+const roleRepository = new RoleRepository(Connection);
+const roleService = new RoleService(roleRepository);
+const roleController = new RoleController(roleService);
+const roleRouter = RoleRouterFactory(roleController);
 //Rahul 
 const userEditRepo = new UserProfileRepository();
 const userEditService = new UserProfileService(userRepo);
@@ -183,7 +183,7 @@ app.use("/api/v1/user-profiles", router);
 app.use("/api/employer-profile", employerRoutes);
 
 //Sanika  - role Routes
-app.use("/api/roles", rolesRouter);
+app.use("/api/roles", roleRouter);
 //rahul - edit profile
 app.use("/api/v1/profile", userRouterFactory(userController));
 

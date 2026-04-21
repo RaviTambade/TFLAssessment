@@ -48,4 +48,4 @@ class AuthRepository {
  
 }
 
-module.exports = AuthenticationRepository;
+module.exports = AuthRepository;
