@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.transflower.tflcomentor.evaluationcontentmanagement.entity.Projects;
+import com.transflower.tflcomentor.evaluationcontentmanagement.entity.Project;
 import com.transflower.tflcomentor.evaluationcontentmanagement.repository.ProjectRepository;
 import com.transflower.tflcomentor.evaluationcontentmanagement.repository.QuestionsRepository;
 import com.transflower.tflcomentor.evaluationcontentmanagement.service.ProjectServices;
@@ -19,12 +19,12 @@ public class ProjectServicesImpl implements ProjectServices {
     }
 
    @Override
-    public List<Projects> getAllProjects() {
+    public List<Project> getAllProjects() {
         return repository.getAllProjects();
     }
 
     @Override
-    public Projects getProjectById(long project_id) {
+    public Project getProjectById(long project_id) {
         return repository.getProjectById(project_id);
     }
 }

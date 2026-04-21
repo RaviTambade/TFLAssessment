@@ -4,13 +4,15 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import com.transflower.tflcomentor.evaluationcontentmanagement.dto.request.QuestionDto;
 import com.transflower.tflcomentor.evaluationcontentmanagement.dto.request.QuestionRequestDto;
-import com.transflower.tflcomentor.evaluationcontentmanagement.dto.response.QuestionListResponseDto;
+import com.transflower.tflcomentor.evaluationcontentmanagement.dto.response.QuestionResponse;
 import com.transflower.tflcomentor.evaluationcontentmanagement.dto.response.QuestionResponseDto;
-import com.transflower.tflcomentor.evaluationcontentmanagement.entity.Projects;
-import com.transflower.tflcomentor.evaluationcontentmanagement.entity.Questions;
+import com.transflower.tflcomentor.evaluationcontentmanagement.entity.Project;
+import com.transflower.tflcomentor.evaluationcontentmanagement.entity.Question;
 import com.transflower.tflcomentor.evaluationcontentmanagement.service.QuestionsServices;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -22,17 +24,17 @@ public class QuestionController {
     private QuestionsServices service;
 
     @GetMapping("/{question_id}")
-    public Questions getQuestionById(@PathVariable("question_id") long question_id) {
+    public Question getQuestionById(@PathVariable("question_id") long question_id) {
         return service.getQuestionById(question_id);
     }
 
     @GetMapping
-    public List<Questions> getAllQuestions() {
+    public List<Question> getAllQuestions() {
         return service.getAllQuestions();
     }
 
     @GetMapping("/difficulty/{level}")
-    public List<Questions> getByDifficulty(@PathVariable String level) {
+    public List<Question> getByDifficulty(@PathVariable String level) {
         return service.getQuestionsByDifficulty(level);
     }
 
@@ -48,9 +50,17 @@ public class QuestionController {
     // }
 
     @GetMapping("/drafts")
-    public List<Questions> getDraft() {
+    public List<QuestionResponse> getDraft() {
         return service.getDraftQuestions();
     }
+
+
+    
+    @GetMapping("/drafts/list")
+    public List<QuestionResponse> getDraftList() {
+        return service.getDraftQuestionList();
+    }
+
 
     @PutMapping("/{id}/approve")
     public String approve(@PathVariable Long id) {
@@ -64,31 +74,26 @@ public class QuestionController {
         return "Rejected";
     }
 
-    @PutMapping("/{id}/approve-all")
-    public String approveAll() {
-        service.approveAllQuestions();
-        return "All Approved";
+    @PostMapping("/approve-selected")
+    public String approveSelected(@RequestBody List<Long> questionId) {
+        service.approveQuestions(questionId);
+        return "Selected questions approved";
     }
 
-    @PutMapping("/reject-all")
-    public String rejectAll() {
-        service.rejectAllQuestions();
-        return "All Rejected";
+    @PostMapping("/reject-selected")
+    public String rejectSelected(@RequestBody List<Long> questionId) {
+        service.rejectQuestions(questionId);
+        return "Selected questions rejected";
     }
 
     @GetMapping("/recent")
-    public List<Questions> getRecentQuestions() {
+    public List<QuestionResponse> getRecentQuestions() {
         return service.getRecentQuestions();
     }
 
 
-    @GetMapping("/drafts/list")
-    public List<QuestionListResponseDto> getDraftList() {
-        return service.getDraftQuestionList();
-    }
-
     @GetMapping("/recent/list")
-    public List<QuestionListResponseDto> getRecentList() {
+    public List<QuestionResponse> getRecentList() {
         return service.getRecentQuestionList();
     }
 
@@ -104,13 +109,19 @@ public class QuestionController {
 }
 
     @GetMapping("/type/{questionType}")
-    public List<QuestionListResponseDto> getQuestionsByType(@PathVariable String questionType) {
+    public List<QuestionResponse> getQuestionsByType(@PathVariable String questionType) {
         return service.getQuestionsByType(questionType);
     }
 
     @GetMapping("/status/{questionStatus}")
-    public List<QuestionListResponseDto> findByStatus(@PathVariable String questionStatus) {
+    public List<QuestionResponse> findByStatus(@PathVariable String questionStatus) {
         return service.findByStatus(questionStatus);
+    }
+
+    @GetMapping("/concepts/{conceptId}/questions")
+    public ResponseEntity<?> getQuestionsByConceptId(@PathVariable Long conceptId) {
+        List<QuestionDto> questions = service.getQuestionsByConceptId(conceptId);   
+        return ResponseEntity.ok(questions);
     }
 
 
