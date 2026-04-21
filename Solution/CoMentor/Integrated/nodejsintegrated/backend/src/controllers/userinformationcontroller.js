@@ -1,4 +1,4 @@
-class EmployerProfileController {
+class UserInformationController {
   constructor(service) {
     this.service = service;
   }
@@ -46,8 +46,6 @@ class EmployerProfileController {
       });
     });
   }
-}
-
   getSMEProfile(req, res) {
     const userId = parseInt(req.params.id);
     if (!userId) {
@@ -70,6 +68,36 @@ class EmployerProfileController {
     });
   }
 
+  updateUserStatus(req, res) {
+    const { id, status } = req.body;
+    const userId = parseInt(id);
+
+    if (!Number.isInteger(userId) || userId <= 0) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid user ID",
+      });
+    }
+
+    this.service.updateUserStatus(userId, status, (err, result) => {
+      if (err) {
+        return res.status(400).json({
+          success: false,
+          message: err.message,
+        });
+      }
+
+      res.json({
+        success: true,
+        message: "User status updated successfully",
+        data: result,
+      });
+    });
+  }
+}
+
+  
 
 
-module.exports = EmployerProfileController;
+
+module.exports = UserInformationController;

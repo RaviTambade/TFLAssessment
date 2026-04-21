@@ -78,10 +78,17 @@ const userEditRouterFactory = require("./routers/userProfileRoutes");
 const AdminProfileService = require("./services/adminProfileService");
 const AdminProfileController = require("./controllers/adminProfileController");
 
+
+// USER INFORMATION MODULE
+const UserProfileRepository = require("./repositories/userinformationrepository");
+const UserProfileService = require("./services/userinformationservice");
+const UserProfileController = require("./controllers/userinformationcontroller");
+const userProfileRouter = require("./routers/userinformationroutes");
+
 //--------------------------------------  DEPENCENCY INJECTION  --------------------------------------
 
 // Sanika Yash - Dependency Injection
-const repo = new userLoginRepository(Connection);
+const repo = new userLoginRepository(Connection); 
 const srv = new userLoginService(repo);
 const authController = new AuthenticationController(srv);
 const authRoutes = userLoginRoutes(authController);
@@ -138,6 +145,13 @@ const userEditRepo = new UserProfileRepository();
 const userEditService = new UserProfileService(userRepo);
 const userEditController = new UserProfileController(userService);
 
+//NEW - USER INFORMATION MODULE Dependency Injection ARNAV
+const userInformationRepo = new UserProfileRepository(connection);
+const userInformationService = new UserProfileService(userInformationRepo);
+const userInformationController = new UserProfileController(userInformationService);
+const userInformationRouter = userProfileRouter(userInformationController);
+
+
 const app = express();
 
 app.use(cors());
@@ -179,5 +193,9 @@ app.use(['/api', '/api/v1'], updaterolesrouter);
 // Error handling middleware  (User Profile handlers)
 app.use(notFoundHandler);
 app.use(errorHandler);
+
+//NEW - USER INFORMATION MODULE Routes
+app.use("/api/v1/user-information", userInformationRouter);
+
 
 module.exports = app;
