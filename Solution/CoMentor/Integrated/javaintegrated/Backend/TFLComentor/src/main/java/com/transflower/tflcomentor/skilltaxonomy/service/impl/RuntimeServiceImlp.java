@@ -10,9 +10,9 @@ import org.springframework.web.server.ResponseStatusException;
 import com.transflower.tflcomentor.skilltaxonomy.dto.response.RuntimeAssignmentResponse;
 import com.transflower.tflcomentor.skilltaxonomy.dto.response.RuntimeDetailsResponse;
 import com.transflower.tflcomentor.skilltaxonomy.dto.response.RuntimeSummaryResponse;
-import com.transflower.tflcomentor.skilltaxonomy.dto.response.RuntimesDTO;
+import com.transflower.tflcomentor.skilltaxonomy.dto.response.RuntimeDTO;
 import com.transflower.tflcomentor.skilltaxonomy.entity.Runtime;
-import com.transflower.tflcomentor.skilltaxonomy.repository.RuntimeAssignmentsRepository;
+import com.transflower.tflcomentor.skilltaxonomy.repository.RuntimeAssignmentRepository;
 import com.transflower.tflcomentor.skilltaxonomy.repository.RuntimeRepository;
 import com.transflower.tflcomentor.skilltaxonomy.service.RuntimeService;
 
@@ -23,19 +23,19 @@ public class RuntimeServiceImlp implements RuntimeService {
     private RuntimeRepository repository;
 
     @Autowired
-    private RuntimeAssignmentsRepository runtimeAssignmentsRepository;
+    private RuntimeAssignmentRepository runtimeAssignmentsRepository;
 
     // public RuntimesServiceImlp(RuntimesRepository repository) {
     //     this.repository = repository;
     // }
 
     @Override
-    public List<RuntimesDTO> getAllRuntimes() {
+    public List<RuntimeDTO> getAllRuntimes() {
         return repository.getAllRuntimes();
     }
 
     @Override
-    public boolean addRuntime(RuntimesDTO runtimedto) {
+    public boolean addRuntime(RuntimeDTO runtimedto) {
         return repository.addRuntime(runtimedto);
     }
 

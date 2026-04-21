@@ -8,10 +8,10 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import com.transflower.tflcomentor.skilltaxonomy.dto.response.RuntimeAssignmentResponse;
-import com.transflower.tflcomentor.skilltaxonomy.repository.RuntimeAssignmentsRepository;
+import com.transflower.tflcomentor.skilltaxonomy.repository.RuntimeAssignmentRepository;
 
 @Repository
-public class RuntimeAssignmentsRepositoryImpl implements RuntimeAssignmentsRepository {
+public class RuntimeAssignmentRepositoryImpl implements RuntimeAssignmentRepository {
 
     @Override
     public List<RuntimeAssignmentResponse> findAssignmentsByRuntimeId(Long runtimeId) {

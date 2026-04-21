@@ -1,6 +1,7 @@
 const express=require("express");
 const cors=require("cors");
 const bodyParser = require("body-parser");
+const connection = require("./connectivity/db");
 
 //  Sanika Yash
 const AuthService = require("./services/authservice");
@@ -43,7 +44,7 @@ const UpdateRolesRouter = require('./routers/updaterolesrouter');
 const UserProfileRepository = require("./repositories/userProfile.repository");
 const UserProfileService = require("./services/userProfile.service");
 const UserProfileController = require("./controllers/userProfile.controller");
-const userProfileRouter = require("./routes/userProfile.routes");
+const userProfileRouter = require("./routers/userProfile.routes");
 
 const notFoundHandler = require("./middlewares/notFoundHandler");
 const errorHandler = require("./middlewares/errorHandler");
@@ -120,6 +121,7 @@ const userProfileService = new UserProfileService(userProfileRepository);
 const userProfileController = new UserProfileController(userProfileService);
 const router = userProfileRouter(userProfileController);
 
+
 //Ajay Kale  - Dependency Injection
 const employerRepo = new EmployerProfileRepository(Connection);
 const employerService = new EmployerProfileService(employerRepo);
@@ -173,5 +175,9 @@ app.use("/api/v1/profile", userRouterFactory(userController));
 
 //Tejas Naukudkar - Update Roles Routes
 app.use(['/api', '/api/v1'], updaterolesrouter);
+
+// Error handling middleware  (User Profile handlers)
+app.use(notFoundHandler);
+app.use(errorHandler);
 
 module.exports = app;
