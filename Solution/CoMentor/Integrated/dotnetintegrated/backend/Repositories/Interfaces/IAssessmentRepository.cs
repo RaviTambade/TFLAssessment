@@ -5,21 +5,24 @@ using backend.Models;
 namespace backend.Repositories.Interfaces
 {
 
-public interface IAssessmentRepository
-{
-    Task<List<UpcomingAssessmentDto>> GetAllUpcomingAssessments(long userId);
-    Task<List<AllAssessmentDto>> GetAllAssessments();
-    Task<List<TestDto>> GetTestsAsync();
-    Task<List<StudentDto>> GetStudentsAsync();
-    Task AssignAssessmentAsync(AssignAssessmentDto dto);
+    public interface IAssessmentRepository
+    {
+        Task<List<UpcomingAssessmentDto>> GetAllUpcomingAssessments(long userId);
+        Task<List<AllAssessmentDto>> GetAllAssessments();
 
-    // Task<List<AssessmentResultDto>> GetAssessmentResults();
-    Task<List<AssessmentQuestionDto>> GetAssessmentQuestions(int assessmentId);
-    Task<bool> SaveAssessmentAnswersAsync(List<StudentAnswer>? answers);
-    Task<AssessmentReportDto> GetResultData(int studentId, int assessmentId);
-Task<int> GetTotalAssessmentsAsync();
-Task<int> GetCompletedAssessmentsAsync();
+        Task<List<TestDto>> GetTestsAsync();
+        Task<List<StudentDto>> GetStudentsAsync();
+        Task AssignAssessmentAsync(AssignAssessmentDto dto);
+
+        // Task<List<AssessmentResultDto>> GetAssessmentResults();
+        Task<List<AssessmentQuestionDto>> GetAssessmentQuestions(int assessmentId);
+        Task<bool> SaveAssessmentAnswersAsync(List<StudentAnswer>? answers);
+        Task<AssessmentReportDto> GetResultData(int studentId, int assessmentId);
+        Task<int> GetTotalAssessmentsAsync();
+        Task<int> GetCompletedAssessmentsAsync();
+        Task<bool> DeactivateAssessment(long id);
+        Task<bool> RestoreAssessment(long id);
 
 
-}
+    }
 }

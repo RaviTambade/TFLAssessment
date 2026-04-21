@@ -184,5 +184,45 @@ Add session tracking:
 * Add `session_id` column (UUID)
 * Track login/logout more accurately (especially for multiple devices)
 
+## **Extracted SQL queries** from your `userProfile.repository` 👇
+
+---
+
+### 👤 5. Get User Profile by ID
+
+```sql
+SELECT 
+  u.id AS user_id,
+  u.contact,
+  u.status,
+  p.first_name,
+  p.last_name,
+  p.gender,
+  p.date_of_birth,
+  p.email,
+  a.enrollment_year,
+  a.passing_year,
+  a.percentage,
+  a.college_name,
+  prof.skills
+FROM users u
+LEFT JOIN personal_informations p ON u.id = p.user_id
+LEFT JOIN academic_informations a ON u.id = a.user_id
+LEFT JOIN professional_informations prof ON u.id = prof.user_id
+WHERE u.id = ?
+```
+
+👉 **Purpose:**
+
+* Retrieves comprehensive user profile information including personal, academic, and professional details
+
+👉 **Parameter:**
+
+* `?` → `userId`
+
+👉 **Returns:**
+
+* Single user profile record or null if not found
+
  
  

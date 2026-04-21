@@ -1,9 +1,12 @@
 using backend.Models;
 using Microsoft.EntityFrameworkCore;
-using backend.Repositories.Interfaces;  
+using backend.Repositories.Interfaces; 
+using backend.Repositories.Implementations; 
 using backend.Services.Interfaces;
 using backend.Services.Implementations;
 using backend.Repositories.Implementations;
+using backend.Services;
+using backend.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,12 +26,20 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 // Register repositories and services
 builder.Services.AddScoped<IAssessmentsService, AssessmentsService>();
 builder.Services.AddScoped<IAssessmentRepository, AssessmentRepository>();
-builder.Services.AddScoped<ITestService, TestService>();
-builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IUserSessionsService, UserSessionsService>();
 builder.Services.AddScoped<IUserSessionRepository, UsersessionRepository>();   
 builder.Services.AddScoped<IStudentResultService, StudentResultService>();
 builder.Services.AddScoped<IStudentResultRepository, StudentResultRepository>();
+builder.Services.AddScoped<IUserSessionRepository, UsersessionRepository>();
+builder.Services.AddScoped<IQuestionsRepository, QuestionsRepository>();
+builder.Services.AddScoped<IQuestionsService, QuestionsService>();
+builder.Services.AddScoped<IRuntimesService, RuntimesService>();
+builder.Services.AddScoped<IRuntimesRepository, RuntimesRepository>();
+builder.Services.AddScoped<ILanguagesService, LanguagesService>();
+builder.Services.AddScoped<ILanguagesRepository, LanguagesRepository>();
+builder.Services.AddScoped<ILayersService, LayersService>();
+builder.Services.AddScoped<ILayersRepository, LayersRepository>();
+
 
 // Configure CORS to allow requests from the frontend
 builder.Services.AddCors(options =>

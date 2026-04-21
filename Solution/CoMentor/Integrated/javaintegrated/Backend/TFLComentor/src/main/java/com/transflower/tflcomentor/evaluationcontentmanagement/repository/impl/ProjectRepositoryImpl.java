@@ -9,7 +9,7 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import com.transflower.tflcomentor.configuration.DBConfig;
-import com.transflower.tflcomentor.evaluationcontentmanagement.entity.Projects;
+import com.transflower.tflcomentor.evaluationcontentmanagement.entity.Project;
 import com.transflower.tflcomentor.evaluationcontentmanagement.repository.ProjectRepository;
 
 @Repository
@@ -20,8 +20,8 @@ public class ProjectRepositoryImpl implements ProjectRepository {
     }
 
      @Override
-    public List<Projects> getAllProjects() {
-        List<Projects> projects = new ArrayList<>();
+    public List<Project> getAllProjects() {
+        List<Project> projects = new ArrayList<>();
 
         try {
             Connection connection = getConnection();
@@ -32,7 +32,7 @@ public class ProjectRepositoryImpl implements ProjectRepository {
             ResultSet rs = statement.executeQuery();
 
             while (rs.next()) {
-                Projects project = new Projects();
+                Project project = new Project();
                 project.setProject_id(rs.getInt("project_id"));
                 project.setMentor_id(rs.getInt("mentor_id"));
                 project.setProject_name(rs.getString("project_name"));
@@ -50,8 +50,8 @@ public class ProjectRepositoryImpl implements ProjectRepository {
     }
 
     @Override
-    public Projects getProjectById(long project_id) {
-        Projects project = null;
+    public Project getProjectById(long project_id) {
+        Project project = null;
 
         try {
             Connection connection = getConnection();
@@ -63,7 +63,7 @@ public class ProjectRepositoryImpl implements ProjectRepository {
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
-                project = new Projects();
+                project = new Project();
                 project.setProject_id(rs.getInt("project_id"));
                 project.setMentor_id(rs.getInt("mentor_id"));
                 project.setProject_name(rs.getString("project_name"));

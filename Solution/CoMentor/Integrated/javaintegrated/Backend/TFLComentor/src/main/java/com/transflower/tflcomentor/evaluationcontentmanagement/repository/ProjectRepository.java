@@ -2,12 +2,12 @@ package com.transflower.tflcomentor.evaluationcontentmanagement.repository;
 
 import java.util.List;
 
-import com.transflower.tflcomentor.evaluationcontentmanagement.entity.Projects;
+import com.transflower.tflcomentor.evaluationcontentmanagement.entity.Project;
 
 public interface ProjectRepository {
     
 
-     List<Projects> getAllProjects();
+     List<Project> getAllProjects();
 
-    Projects getProjectById(long project_id);
+    Project getProjectById(long project_id);
 }
