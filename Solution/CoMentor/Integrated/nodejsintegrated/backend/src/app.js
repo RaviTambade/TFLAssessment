@@ -32,6 +32,13 @@ const UsersService = require('./services/userservice');
 const UsersController = require('./controllers/usercontroller');
 const UsersRouterFactory = require('./routers/userrouter');
 
+
+//Tejas Naukudkar
+const UpdateRolesRepository = require('./repositories/updaterolesrepository');
+const UpdateRolesService = require('./services/updaterolesservices');
+const UpdateRolesController = require('./controllers/updaterolescontroller');
+const UpdateRolesRouter = require('./routers/updaterolesrouter');
+
 //Chaitrali
 const UserProfileRepository = require("./repositories/userProfile.repository");
 const UserProfileService = require("./services/userProfile.service");
@@ -101,6 +108,12 @@ const service = new UsersService(userRepo);
 const controller = new UsersController(service);
 const userRouter = UsersRouterFactory(controller);
 
+// Tejas Naukudkar - Dependency injection 
+const updaterolesrepo = new UpdateRolesRepository(Connection);
+const updaterolesservice = new UpdateRolesService(updaterolesrepo, Connection);
+const updaterolescontroller = new UpdateRolesController(updaterolesservice);
+const updaterolesrouter = UpdateRolesRouter(updaterolescontroller);
+
 //Chaitrali - Dependency Injection
 const userProfileRepository = new UserProfileRepository(connection);
 const userProfileService = new UserProfileService(userProfileRepository);
@@ -164,6 +177,9 @@ app.use("/api/employer-profile", employerRoutes);
 app.use("/api/roles", rolesRouter);
 //rahul - edit profile
 app.use("/api/v1/profile", userRouterFactory(userController));
+
+//Tejas Naukudkar - Update Roles Routes
+app.use(['/api', '/api/v1'], updaterolesrouter);
 
 
 
