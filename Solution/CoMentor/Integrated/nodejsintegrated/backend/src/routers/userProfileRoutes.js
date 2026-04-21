@@ -13,11 +13,10 @@ module.exports = (controller) => {
     router.get("/adminprofile/:userId", (req, res) =>
     controller.getAdminProfile(req, res)
   );
-  // SME Profile Route
-  // router.get(
-  //   "/smeprofile/:user_id",
-  //   (req, res) => controller.getSMEProfile(req, res)
-  // );
+  
+  router.get( "/smeprofile/:user_id",
+    (req, res) => controller.getSMEProfile(req, res)
+  );
 
   return router;
 };
