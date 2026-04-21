@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.transflower.tflcomentor.evaluationcontentmanagement.entity.Projects;
+import com.transflower.tflcomentor.evaluationcontentmanagement.entity.Project;
 import com.transflower.tflcomentor.evaluationcontentmanagement.service.ProjectServices;
 
 
@@ -23,12 +23,12 @@ public class ProjectController {
     }
 
     @GetMapping
-    public List<Projects> getAllProjects() {
+    public List<Project> getAllProjects() {
         return service.getAllProjects();
     }
 
     @GetMapping("/{id}")
-    public Projects getProjectById(@PathVariable("id") long project_id) {
+    public Project getProjectById(@PathVariable("id") long project_id) {
         return service.getProjectById(project_id);
     }
 }
