@@ -13,12 +13,12 @@ import com.transflower.tflcomentor.skilltaxonomy.entity.Runtime;
 
 @Repository
 public interface IConceptRepository {
-    List<Concept> getAllConcepts()throws Exception;
-    List<Runtime> getAllRuntimes()throws Exception;
-    List<Language> getAllLanguages(int runtimeId)throws Exception;
-    List<Layer> getAllLayers()throws Exception;
-    List<Framework> getAllFrameworksByLanguageAndLayer(int languageId, int layerId)throws Exception;
-    List<Concept> getAllConceptsforFramework(String framework)throws Exception;
-    Concept findById(Long id)throws Exception;
-    boolean addConcept(Concept concept)throws Exception;
+    List<Concept> getAllConcepts();
+    List<Runtime> getAllRuntimes();
+    List<Language> getAllLanguages(int runtimeId);
+    List<Layer> getAllLayers();
+    List<Framework> getAllFrameworksByLanguageAndLayer(int languageId, int layerId);
+    List<Concept> getAllConceptsforFramework(String framework);
+    Concept findById(Long id);
+    boolean addConcept(Concept concept);
 }
