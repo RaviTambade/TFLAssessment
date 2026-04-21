@@ -7,10 +7,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.transflower.tflcomentor.skilltaxonomy.dto.response.ConceptDto;
+import com.transflower.tflcomentor.evaluationcontentmanagement.dto.request.QuestionDto;
 import com.transflower.tflcomentor.skilltaxonomy.entity.Concept;
 import com.transflower.tflcomentor.skilltaxonomy.entity.Framework;
 import com.transflower.tflcomentor.skilltaxonomy.entity.Language;
@@ -51,16 +53,6 @@ public class ConceptsController {
     public List<Layer> getAllLayers() {
         return conceptsService.getAllLayers();
     }
-    
-    // @GetMapping("/layers/{layerId}")
-    // public List<Layers> getByLayerId(@PathVariable int layerId) {
-    //     return conceptsService.getAllLayers();
-    // }
-
-    // @GetMapping("/frameworks/language/{languageId}")   //not working
-    // public List<Frameworks> getAllFrameworksByLanguageId(@PathVariable int languageId) {
-    //     return conceptsService.getAllFrameworksByLanguageId(languageId);
-    // }
 
     @GetMapping("/frameworks/languages/{languageId}/layers/{layerId}")
     public List<Framework> getAllFrameworksByLanguageAndLayer(@PathVariable int languageId, @PathVariable int layerId) {
@@ -72,10 +64,9 @@ public class ConceptsController {
         return conceptsService.findById(id);
     }
 
-      @GetMapping("/concepts/{conceptId}/questions")
-    public ResponseEntity<?> getQuestionsByConceptId(@PathVariable Long conceptId) {
-        List<ConceptDto> questions = conceptsService.getQuestionsByConceptId(conceptId);   
-        return ResponseEntity.ok(questions);
+    @PostMapping("/addConcept")
+    public boolean addConcept(@RequestBody Concept concept) {
+        return conceptsService.addConcept(concept);
     }
 }
 

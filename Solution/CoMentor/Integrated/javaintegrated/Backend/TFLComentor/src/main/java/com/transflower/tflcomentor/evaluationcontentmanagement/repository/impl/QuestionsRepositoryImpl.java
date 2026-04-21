@@ -1,6 +1,7 @@
 package com.transflower.tflcomentor.evaluationcontentmanagement.repository.impl;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -493,5 +494,40 @@ public class QuestionsRepositoryImpl implements QuestionsRepository {
         }
         return list;
     }
+
+       @Override
+    public List<Question> getQuestionsByConceptId(Long conceptId) {
+        List<Question> list = new ArrayList<>();
+        String sql = """ 
+                    SELECT q.question_id, q.description, q.question_type
+                    FROM questions q
+                    JOIN question_framework_concepts qfc 
+                        ON q.question_id = qfc.question_id
+                    JOIN framework_concepts fc 
+                        ON qfc.framework_concepts_id = fc.id
+                    WHERE fc.concept_id = ?;
+                    """;
+
+        try (
+             Connection connection = getConnection(); 
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setLong(1, conceptId);
+            ResultSet rs = statement.executeQuery();
+
+            while (rs.next()) {
+                Question question = new Question();
+                question.setQuestionId(rs.getLong("question_id"));
+                question.setDescription(rs.getString("description"));
+                question.setQuestionType(rs.getString("question_type"));
+                list.add(question);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return list;
+    }
+
 
 }

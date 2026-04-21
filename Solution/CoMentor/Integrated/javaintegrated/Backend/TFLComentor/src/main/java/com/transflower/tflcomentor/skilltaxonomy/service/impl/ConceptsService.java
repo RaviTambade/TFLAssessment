@@ -6,8 +6,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.transflower.tflcomentor.evaluationcontentmanagement.dto.request.QuestionDto;
 import com.transflower.tflcomentor.evaluationcontentmanagement.entity.Question;
-import com.transflower.tflcomentor.skilltaxonomy.dto.response.ConceptDto;
 import com.transflower.tflcomentor.skilltaxonomy.entity.Concept;
 import com.transflower.tflcomentor.skilltaxonomy.entity.Framework;
 import com.transflower.tflcomentor.skilltaxonomy.entity.Language;
@@ -63,17 +63,7 @@ public class ConceptsService implements IConceptsService {
     }
 
     @Override
-    public List<ConceptDto> getQuestionsByConceptId(Long conceptId) {
-        List<Question> questions = conceptsRepository.getQuestionsByConceptId(conceptId);
-        List<ConceptDto> dtoList = new ArrayList<>();
-
-        for (Question question : questions) {
-            dtoList.add(new ConceptDto(
-                    question.getDescription(),
-                    question.getQuestionType()
-            ));
-        }
-
-        return dtoList;
+    public boolean addConcept(Concept concept) {
+        return conceptsRepository.addConcept(concept);
     }
 }

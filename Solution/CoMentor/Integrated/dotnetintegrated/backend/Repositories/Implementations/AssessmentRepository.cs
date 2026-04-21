@@ -65,7 +65,7 @@ public class AssessmentRepository : IAssessmentRepository
             data[i].SrNo = i + 1;
         }
 
-        return data; // ✅ REQUIRED
+        return data; 
     }
 
     [HttpGet]

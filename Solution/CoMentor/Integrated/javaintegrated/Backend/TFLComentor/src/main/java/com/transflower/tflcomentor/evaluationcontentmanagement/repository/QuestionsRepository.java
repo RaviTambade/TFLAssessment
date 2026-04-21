@@ -35,8 +35,8 @@ public interface QuestionsRepository {
     void approveQuestions(List<Long> questionId);
     void rejectQuestions(List<Long> questionId);
     // Questions updateQuestion(Questions question);
-
-
+    List<Question> getQuestionsByConceptId(Long conceptId);
+   
 }
 
 
