@@ -1,6 +1,7 @@
 using backend.Models;
 using Microsoft.EntityFrameworkCore;
-using backend.Repositories.Interfaces;  
+using backend.Repositories.Interfaces; 
+using backend.Repositories.Implementations; 
 using backend.Services.Interfaces;
 using backend.Services.Implementations;
 
@@ -24,6 +25,8 @@ builder.Services.AddScoped<IAssessmentsService, AssessmentsService>();
 builder.Services.AddScoped<IAssessmentRepository, AssessmentRepository>();
 builder.Services.AddScoped<ITestService, TestService>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IQuestionsRepository, QuestionsRepository>();
+builder.Services.AddScoped<IQuestionsService, QuestionsService>();
 
 // Configure CORS to allow requests from the frontend
 builder.Services.AddCors(options =>
