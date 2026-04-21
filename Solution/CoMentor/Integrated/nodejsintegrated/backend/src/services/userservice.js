@@ -8,7 +8,7 @@ class UsersService {
     this.repo.deleteUser(id, status, callback);
   }
 
-  async getUserProfileById(userId) {
+   async getUserProfileById(userId) {
     if (!userId || Number.isNaN(Number(userId))) {
       return {
         success: false,
@@ -18,14 +18,9 @@ class UsersService {
       };
     }
 
-    const [resultSets] = await this.repo.getUserProfileById(Number(userId));
+    const result = await this.repository.getUserProfileById(Number(userId));
 
-    let rows = resultSets;
-    if (Array.isArray(resultSets) && Array.isArray(resultSets[0])) {
-      rows = resultSets[0];
-    }
-
-    if (!rows || rows.length === 0) {
+    if (!result) {
       return {
         success: false,
         message: "User profile not found",
@@ -37,10 +32,9 @@ class UsersService {
     return {
       success: true,
       message: "User profile retrieved successfully",
-      data: UserProfileResponseDto.fromDbRow(rows[0]),
+      data: UserProfileResponseDto.fromDbRow(result),
     };
   }
-
 
 }
 

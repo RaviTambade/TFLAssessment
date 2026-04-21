@@ -26,16 +26,17 @@ const SessionService = require("./services/sessionservice");
 const SessionController = require("./controllers/sessioncontroller_sai_samruddhi");
 const SessionRoutes = require("./routers/sessionroutes");
 
-// Arnav Chaitrali
+// Arnav 
 const UsersRepository = require('./repositories/userrepository');
 const UsersService = require('./services/userservice');
 const UsersController = require('./controllers/usercontroller');
 const UsersRouterFactory = require('./routers/userrouter');
 
-const UserProfileRepository = require("./repositories/userrepository");
-const UserProfileService = require("./services/userservice");
-const UserProfileController = require("./controllers/usercontroller");
-const userProfileRouter = require("./routers/userrouter");
+//Chaitrali
+const UserProfileRepository = require("./repositories/userProfile.repository");
+const UserProfileService = require("./services/userProfile.service");
+const UserProfileController = require("./controllers/userProfile.controller");
+const userProfileRouter = require("./routes/userProfile.routes");
 
 const notFoundHandler = require("./middlewares/notFoundHandler");
 const errorHandler = require("./middlewares/errorHandler");
@@ -100,6 +101,12 @@ const service = new UsersService(userRepo);
 const controller = new UsersController(service);
 const userRouter = UsersRouterFactory(controller);
 
+//Chaitrali - Dependency Injection
+const userProfileRepository = new UserProfileRepository(connection);
+const userProfileService = new UserProfileService(userProfileRepository);
+const userProfileController = new UserProfileController(userProfileService);
+const router = userProfileRouter(userProfileController);
+
 //Ajay Kale  - Dependency Injection
 const employerRepo = new EmployerProfileRepository(Connection);
 const employerService = new EmployerProfileService(employerRepo);
@@ -144,8 +151,11 @@ app.use("/api/userlog/", userLogRoutes);
 // Sai Samruddhi - Session Routes
 app.use("/api/v1/sessions", sessionRoutes);
 
-// Arnav Chaitrali - User Routes
+// Arnav  - User Routes
 app.use("/api/v1/users", userRouter);
+
+//Chaitrali - User Profile Routes
+app.use("/api/v1/user-profiles", router);
 
 //Ajay Kale - EmployerProfile Routes
 app.use("/api/employer-profile", employerRoutes);
