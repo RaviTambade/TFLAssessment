@@ -68,7 +68,6 @@ public class AssessmentRepository : IAssessmentRepository
         return data; // ✅ REQUIRED
     }
 
-    [HttpGet]
     public async Task<List<AllAssessmentDto>> GetAllAssessments()
     {
 
@@ -83,12 +82,16 @@ public class AssessmentRepository : IAssessmentRepository
 
             join p in _context.PersonalInformations on u.Id equals p.UserId into personalGroup
             from p in personalGroup.DefaultIfEmpty()
+            // where !a.IsActive
+
             select new AllAssessmentDto
             {
+                Id = a.Id,
                 AssessmentTitle = t != null ? t.Title : "N/A",
                 FullName = p != null ? p.FirstName : "N/A",
                 DifficultyLevel = t != null ? t.Difficulty : "N/A",
-                Status = a.Status.ToString()
+                Status = a.Status,
+                IsActive = a.IsActive
             }
 ).ToListAsync();
 
@@ -99,6 +102,40 @@ public class AssessmentRepository : IAssessmentRepository
         }
 
         return data;
+    }
+
+    public async Task<bool> DeactivateAssessment(long id)
+    {
+        var assessment = await _context.Assessments.FindAsync(id);
+
+        if (assessment == null)
+            return false;
+
+        if (!assessment.IsActive)
+            return true;
+
+        assessment.IsActive = false;
+
+        await _context.SaveChangesAsync();
+
+        return true;
+    }
+
+    public async Task<bool> RestoreAssessment(long id)
+    {
+        var assessment = await _context.Assessments.FindAsync(id);
+
+        if (assessment == null)
+            return false;
+
+        if (assessment.IsActive)
+            return true;
+
+        assessment.IsActive = true;
+
+        await _context.SaveChangesAsync();
+
+        return true;
     }
 
 
@@ -203,15 +240,15 @@ public class AssessmentRepository : IAssessmentRepository
     }
 
     public async Task<int> GetTotalAssessmentsAsync()
-{
-    return await _context.Assessments.CountAsync();
-}
+    {
+        return await _context.Assessments.CountAsync();
+    }
 
-public async Task<int> GetCompletedAssessmentsAsync()
-{
-    return await _context.Assessments
-        .CountAsync(x => x.Status == "Completed");
-}
+    public async Task<int> GetCompletedAssessmentsAsync()
+    {
+        return await _context.Assessments
+            .CountAsync(x => x.Status == "Completed");
+    }
 
 
 
