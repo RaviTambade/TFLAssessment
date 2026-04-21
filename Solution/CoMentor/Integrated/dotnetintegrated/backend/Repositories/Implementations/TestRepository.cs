@@ -16,23 +16,7 @@
         
 
 
-//     public async Task<List<LayerDto>> GetLayers(long languageId)
-//         {
-//             return await _context.Layers
-//                 .Select(l => new LayerDto
-//                 {
-//                     Id = l.Id,
-//                     Name = l.Layers,
-//                     Frameworks = _context.Frameworks
-//             .Where(f => f.LayerId == l.Id && f.LanguageId == languageId)
-//                         .Select(f => new FrameworkDto
-//                         {
-//                             Id = f.Id,
-//                             Name = f.Name
-//                         }).ToList()
-//                 })
-//                 .ToListAsync();
-//         }
+
 
 //     public async Task<List<ConceptDto>> GetConcepts(List<long> frameworkIds)
 //         {

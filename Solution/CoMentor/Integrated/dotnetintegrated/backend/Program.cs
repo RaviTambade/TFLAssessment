@@ -34,6 +34,8 @@ builder.Services.AddScoped<IRuntimesService, RuntimesService>();
 builder.Services.AddScoped<IRuntimesRepository, RuntimesRepository>();
 builder.Services.AddScoped<ILanguagesService, LanguagesService>();
 builder.Services.AddScoped<ILanguagesRepository, LanguagesRepository>();
+builder.Services.AddScoped<ILayersService, LayersService>();
+builder.Services.AddScoped<ILayersRepository, LayersRepository>();
 
 
 // Configure CORS to allow requests from the frontend
