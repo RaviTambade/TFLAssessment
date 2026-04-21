@@ -176,7 +176,7 @@ app.use("/api/v1/profile", userRouterFactory(userController));
 //Tejas Naukudkar - Update Roles Routes
 app.use(['/api', '/api/v1'], updaterolesrouter);
 
-// Error handling middleware (must be after routes)
+// Error handling middleware  (User Profile handlers)
 app.use(notFoundHandler);
 app.use(errorHandler);
 
