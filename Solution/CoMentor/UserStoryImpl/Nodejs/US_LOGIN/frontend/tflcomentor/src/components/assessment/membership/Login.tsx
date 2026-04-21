@@ -67,7 +67,6 @@ const LoginPage = () => {
     console.log(data);
 
     localStorage.setItem("user", JSON.stringify(data));
-window.location.href = "/";
     // redirect after login
     // navigate("/models/evaluationcontent/components");
 
@@ -76,7 +75,28 @@ window.location.href = "/";
   }
 };
 
-  const handleSubmit = (e: React.FormEvent) => {
+
+    const handleUserLogLogin = async (userid:number) => {
+  try {
+    const res = await fetch(`http://localhost:4000/api/userlog/login/${userid}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!res.ok) {
+      throw new Error("user log failed");
+    }
+
+    const data = await res.json();
+    console.log(data);
+
+  } catch (error) {
+    console.error(error);
+  }
+};
+  const handleSubmit =async (e: React.FormEvent) => {
       e.preventDefault()
 
       if (!username.trim()) {
@@ -96,37 +116,20 @@ window.location.href = "/";
 
       console.log("Login →", { username, role, rememberMe })
 
-      // Role Based Navigation
-      // switch (role) {
-      //   case "admin":
-      //     navigate("/models/membership/admin")
-      //     break
+     try {
+await handleLogin();   // wait for login complete
 
-      //   case "sme":
-      //     navigate("/sme")
-      //     break
+    const user = JSON.parse(localStorage.getItem("user") || "{}");
 
-      //   case "mentor":
-      //     navigate("/mentor")
-      //     break
+    if (user?.userid) {
+      await handleUserLogLogin(user.userid);
+      window.location.href="/"
+    }
 
-      //   case "student":
-      //     navigate("/student")
-      //     break
 
-      //   case "employer":
-      //     navigate("/employer")
-      //     break
-
-      //   case "No Role":
-      //     navigate("/tap-program")
-      //     break
-
-      //   default:
-      //     navigate("/tap-program")
-      // }
-    
-     handleLogin(); 
+  } catch (error) {
+    console.error("Submit Error:", error);
+  }
     
     }
 

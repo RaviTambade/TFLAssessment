@@ -1,21 +1,23 @@
 const express = require('express');
 const cors = require('cors');
-const bodyparser =require('body-parser');
+const bodyParser = require('body-parser');
 
-const connection = require('./config/db');
-const userRepository = require('./Repository/RegisterUserRepository');
-const UserService = require('./Services/RegisterUserServices');
-const userController = require('./Controllers/RegisterUserController');
-const userRouterfactory = require('./Router/RegisterUserRouter');
-const repo = new userRepository(connection);
-const service = new UserService(repo);
-const controller = new userController(service);
-const userRouter = userRouterfactory(controller);
+const connection = require('./connectivity/db');
+const AuthRepository = require('./repository/authrepository');
+const AuthenticationService = require('./services/authservice');
+const AuthenticationController = require('./controllers/authcontroller');
+const authRouteFactory = require('./routers/authroutes');
+
+const repo = new AuthRepository(connection);
+const service = new AuthenticationService(repo);
+const controller = new AuthenticationController(service);
+const userRouter = authRouteFactory(controller);
 
 const app = express();
 app.use(cors());
-app.use(bodyparser.json());
-app.use('/api/users', userRouter);
+app.use(bodyParser.json());
+
+app.use('/api/authentication/', userRouter);
 
 app.listen(4000);
 console.log("Server is running on port 4000");

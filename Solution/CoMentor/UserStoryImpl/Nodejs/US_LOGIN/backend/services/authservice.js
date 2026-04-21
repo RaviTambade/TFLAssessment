@@ -1,14 +1,11 @@
-class AuthenticationService
-{
-    constructor(userLoginRepo)
-    {
-        this.userLoginRepo=userLoginRepo;
-    }
+class AuthenticationService {
+  constructor(authenticationRepository) {
+    this.authenticationRepository = authenticationRepository;
+  }
 
-    validate(credential,callback)
-    {
-        this.userLoginRepo.userLogin(credential.username,credential.password,credential.role,callback);
-    }
+  validate(credential, callback) {
+    this.authenticationRepository.userLogin(credential, callback);
+  }
 }
 
 module.exports = AuthenticationService;

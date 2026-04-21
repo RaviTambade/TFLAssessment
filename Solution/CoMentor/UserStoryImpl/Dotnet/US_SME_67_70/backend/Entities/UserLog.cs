@@ -1,0 +1,17 @@
+﻿using System;
+using System.Collections.Generic;
+
+namespace backend.Entities;
+
+public partial class UserLog
+{
+    public long Id { get; set; }
+
+    public long? UserId { get; set; }
+
+    public DateTime? LoginTime { get; set; }
+
+    public DateTime? LogoutTime { get; set; }
+
+    public virtual User? User { get; set; }
+}
