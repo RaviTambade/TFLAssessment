@@ -6,8 +6,13 @@ module.exports = (controller) => {
   // Employer Profile Route
   router.get("/employerprofile/:id",
     (req, res) => controller.getEmployerProfile(req, res)
+
   );
 
+
+    router.get("/adminprofile/:userId", (req, res) =>
+    controller.getAdminProfile(req, res)
+  );
   // SME Profile Route
   // router.get(
   //   "/smeprofile/:user_id",

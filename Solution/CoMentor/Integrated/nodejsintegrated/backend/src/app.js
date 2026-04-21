@@ -47,7 +47,6 @@ const EmployerProfileController = require("./controllers/userProfileControllers"
 const EmployerProfileRouter = require("./routers/userProfileRoutes");
 
 
-<<<<<<< HEAD
 // Sanika
 const RolesRepository = require("./repositories/rolesRepository");
 const RolesService = require("./services/rolesservice");
@@ -58,13 +57,17 @@ const RolesRouterFactory = require("./routers/rolesRouter");
 
 //Nitish Kharat
 
-=======
 //Rahul Gayke
 const UserEditProfileRepository = require("./repositories/userProfileRepository");
 const UserEditProfileService = require("./services/userProfileService");
 const UserEditProfileController = require("./controllers/userProfileController");
 const userEditRouterFactory = require("./routers/userProfileRoutes");
->>>>>>> f6865c24307a84e4649eeacc69fed5e9fed5ed3d
+
+
+
+//SACHIN KHARAT 
+const AdminProfileService = require("./services/adminProfileService");
+const AdminProfileController = require("./controllers/adminProfileController");
 
 //--------------------------------------  DEPENCENCY INJECTION  --------------------------------------
 
@@ -113,6 +116,12 @@ const userEditRepo = new UserProfileRepository();
 const userEditService = new UserProfileService(userRepo);
 const userEditController = new UserProfileController(userService);
 
+//SACHIN KHARAT 
+
+
+
+
+
 
 const app = express();
 
@@ -145,6 +154,9 @@ app.use("/api/employer-profile", employerRoutes);
 app.use("/api/roles", rolesRouter);
 //rahul - edit profile
 app.use("/api/v1/profile", userRouterFactory(userController));
+
+//SACHIN KHARAT - ADMIN ROUTES 
+app.use("/api", adminProfileRoutes);
 
 
 module.exports = app;

@@ -48,4 +48,5 @@ class EmployerProfileController {
   }
 }
 
+
 module.exports = EmployerProfileController;
