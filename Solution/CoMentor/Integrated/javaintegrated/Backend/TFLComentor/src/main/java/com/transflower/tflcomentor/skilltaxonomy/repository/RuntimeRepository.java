@@ -5,15 +5,15 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Repository;
 
-import com.transflower.tflcomentor.skilltaxonomy.dto.response.RuntimesDTO;
+import com.transflower.tflcomentor.skilltaxonomy.dto.response.RuntimeDTO;
 import com.transflower.tflcomentor.skilltaxonomy.dto.response.RuntimeSummaryResponse;
 import com.transflower.tflcomentor.skilltaxonomy.entity.Runtime;
 
 @Repository
-public interface RuntimesRepository {
+public interface RuntimeRepository {
 
-    public List<RuntimesDTO> getAllRuntimes();
-    public boolean addRuntime(RuntimesDTO runtimedto);
+    public List<RuntimeDTO> getAllRuntimes();
+    public boolean addRuntime(RuntimeDTO runtimedto);
     public List<RuntimeSummaryResponse> findAllRuntimeSummaries();
     public Optional<Runtime> findById(Long runtimeId);
     

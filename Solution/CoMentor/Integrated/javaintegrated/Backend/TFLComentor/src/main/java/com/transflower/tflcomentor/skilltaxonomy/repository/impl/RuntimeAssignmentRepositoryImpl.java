@@ -8,10 +8,10 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import com.transflower.tflcomentor.skilltaxonomy.dto.response.RuntimeAssignmentResponse;
-import com.transflower.tflcomentor.skilltaxonomy.repository.RuntimeAssignmentsRepository;
+import com.transflower.tflcomentor.skilltaxonomy.repository.RuntimeAssignmentRepository;
 
 @Repository
-public class RuntimeAssignmentsRepositoryImpl implements RuntimeAssignmentsRepository {
+public class RuntimeAssignmentRepositoryImpl implements RuntimeAssignmentRepository {
 
     @Override
     public List<RuntimeAssignmentResponse> findAssignmentsByRuntimeId(Long runtimeId) {
@@ -40,7 +40,7 @@ public class RuntimeAssignmentsRepositoryImpl implements RuntimeAssignmentsRepos
 
         List<RuntimeAssignmentResponse> results = new ArrayList<>();
 
-        try (PreparedStatement ps = RuntimesRepositoryImpl.getConnection().prepareStatement(query)) {
+        try (PreparedStatement ps = RuntimeRepositoryImpl.getConnection().prepareStatement(query)) {
             ps.setLong(1, runtimeId);
 
             try (ResultSet rs = ps.executeQuery()) {

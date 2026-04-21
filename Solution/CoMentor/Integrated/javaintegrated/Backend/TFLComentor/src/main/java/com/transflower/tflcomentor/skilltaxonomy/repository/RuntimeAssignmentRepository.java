@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import com.transflower.tflcomentor.skilltaxonomy.dto.response.RuntimeAssignmentResponse;
 
 @Repository
-public interface RuntimeAssignmentsRepository {
+public interface RuntimeAssignmentRepository {
 
     List<RuntimeAssignmentResponse> findAssignmentsByRuntimeId(Long runtimeId);
 }

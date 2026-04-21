@@ -1,11 +1,11 @@
 package com.transflower.tflcomentor.skilltaxonomy.dto.response;
 
-public class RuntimesDTO {
+public class RuntimeDTO {
     private String runtime_name;
 
-    public RuntimesDTO() {}
+    public RuntimeDTO() {}
 
-    public RuntimesDTO(String runtime_name) {
+    public RuntimeDTO(String runtime_name) {
         this.runtime_name = runtime_name;
     }
 
