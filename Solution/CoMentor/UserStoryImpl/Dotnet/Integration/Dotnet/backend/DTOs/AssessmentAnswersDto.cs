@@ -1,7 +1,9 @@
 namespace backend.DTOs;
 public class AssessmentAnswersDto
-{
-    public int StudentId { get; set; }
+{ 
+
+    public int Id {get;set ;}
+     public int StudentId { get; set; }
     public int AssessmentId { get; set; }
     public int TimeTakenMinutes { get; set; }
 

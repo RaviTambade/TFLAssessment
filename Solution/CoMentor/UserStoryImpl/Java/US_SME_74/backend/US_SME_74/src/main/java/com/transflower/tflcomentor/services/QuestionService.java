@@ -3,55 +3,46 @@ package com.transflower.tflcomentor.services;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
-import org.springframework.web.reactive.function.client.WebClient;
 
 import com.transflower.tflcomentor.entities.Question;
-import com.transflower.tflcomentor.repositories.QuestionRepository;
+import com.transflower.tflcomentor.repositories.IQuestionRepository;
 
 @Service
-public class QuestionService {
+public class QuestionService implements IQuestionService {
 
-    private final QuestionRepository repository;
+    private final IQuestionRepository repository;
 
-    public QuestionService(QuestionRepository repository) {
+    public QuestionService(IQuestionRepository repository) {
         this.repository = repository;
-
     }
 
-    // // GET /api/sme/allquestions
-    // public List<Object> getAllQuestionsFromApi() {
-    //     return webClient.get()
-    //             .uri("/sme/allquestions")
-    //             .retrieve()
-    //             .bodyToFlux(Object.class)
-    //             .collectList()
-    //             .block();
-    // }
-    // // GET /api/sme/questions/{id}
-    // public Object getQuestionByIdFromApi(Long id) {
-    //     return webClient.get()
-    //             .uri("/sme/questions/{id}", id)
-    //             .retrieve()
-    //             .bodyToMono(Object.class)
-    //             .block();
-    // }
+    // ✅ GET ALL
     public List<Question> getAllQuestions() {
         return repository.findAll();
     }
 
+    // ✅ GET BY ID
     public Question getQuestionById(Long id) {
         return repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Question not found"));
     }
 
-    public Question updateQuestion(Long id, Question updatedQuestion) {
-        Question question = repository.findById(id)
+    // ✅ INSERT
+    public Question createQuestion(Question question) {
+        return repository.insertQuestion(question);
+    }
+
+    // ✅ UPDATE
+    public Question updateQuestionById(Long id, Question updatedQuestion) {
+
+        Question existing = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Question not found"));
 
-        question.setDescription(updatedQuestion.getDescription());
-        question.setQuestionType(updatedQuestion.getQuestionType());
-        question.setDifficultyLevel(updatedQuestion.getDifficultyLevel());
-        question.setStatus(updatedQuestion.getStatus());
-        return repository.save(question);
+        existing.setDescription(updatedQuestion.getDescription());
+        existing.setQuestionType(updatedQuestion.getQuestionType());
+        existing.setDifficultyLevel(updatedQuestion.getDifficultyLevel());
+        existing.setStatus(updatedQuestion.getStatus());
+
+        return repository.updateQuestion(existing); // ✅ fixed
     }
 }

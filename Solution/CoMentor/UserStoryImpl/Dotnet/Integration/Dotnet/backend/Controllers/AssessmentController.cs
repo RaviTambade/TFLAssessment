@@ -80,12 +80,51 @@ public class AssessmentController : ControllerBase
             }
         }
 
-    [HttpGet("results")]
-    public async Task<IActionResult> GetResults()
+    [HttpGet("{studentId}/{assessmentId}")]
+    public async Task<IActionResult> GetResultData(int studentId, int assessmentId)
     {
-        var data = await _service.GetAssessmentResults();
-        return Ok(data);
+        try
+        {
+            
+            var request = new AssessmentstudenttResultDto
+            {
+                StudentId = studentId,
+                AssessmentId = assessmentId
+            };
+
+            var result = await _service.GetResultData(request);
+
+            if (result == null)
+                return NotFound("No results found.");
+
+            return Ok(result);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, ex.Message);
+        }
     }
 
 
+[HttpGet("total")]
+public async Task<IActionResult> GetTotalAssessments()
+{
+    var total = await _service.GetTotalAssessmentsAsync();
+
+    return Ok(new TotalAssessmentsDto
+    {
+        TotalAssessments = total
+    });
 }
+
+[HttpGet("completed")]
+public async Task<IActionResult> GetCompletedAssessments()
+{
+    var completed = await _service.GetCompletedAssessmentsAsync();
+
+    return Ok(new CompletedAssessmentsDto
+    {
+        CompletedAssessments = completed
+    });
+}
+}   

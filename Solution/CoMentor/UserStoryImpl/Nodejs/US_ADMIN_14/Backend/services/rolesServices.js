@@ -1,27 +1,35 @@
+const UpdateUserRolesResponse = require('../dto/UpdateUserRolesResponse');
+
 class RolesService {
   constructor(repo, connection) {
     this.repo = repo;
     this.connection = connection;
   }
 
-  updateUserRoles(user_id, role_ids, callback) {
-    if (!user_id) {
-      return callback({ message: 'user_id is required' }, null);
+  updateUserRoles(requestDto, callback) {
+    const { userId, roleIds } = requestDto;
+
+    if (!Number.isInteger(userId) || userId <= 0) {
+      return callback({ status: 400, message: 'userId must be a positive integer' });
     }
 
-    if (!Array.isArray(role_ids)) {
-      return callback({ message: 'role_ids must be an array' }, null);
+    if (!Array.isArray(roleIds)) {
+      return callback({ status: 400, message: 'role_ids must be an array' });
+    }
+
+    if (roleIds.length === 0) {
+      return callback({ status: 400, message: 'role_ids must contain at least one role id' });
     }
 
     this.connection.beginTransaction((err) => {
       if (err) return callback(err);
 
-      this.repo.deleteUserRoles(user_id, (err) => {
+      this.repo.deleteUserRoles(userId, (err) => {
         if (err) {
           return this.connection.rollback(() => callback(err));
         }
 
-        this.repo.insertUserRoles(user_id, role_ids, (err) => {
+        this.repo.insertUserRoles(userId, roleIds, (err) => {
           if (err) {
             return this.connection.rollback(() => callback(err));
           }
@@ -30,7 +38,7 @@ class RolesService {
             if (err) {
               return this.connection.rollback(() => callback(err));
             }
-            callback(null, { message: 'User roles updated successfully' });
+            callback(null, new UpdateUserRolesResponse('User roles updated successfully'));
           });
         });
       });

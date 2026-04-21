@@ -7,7 +7,7 @@ const dbConfig = {
   password: "password",
   database: "tflcomentor_db",
 }
-
+  
 // Create pool
 const pool = mysql.createPool(dbConfig)
 

@@ -1,32 +1,27 @@
 package com.transflower.tflcomentor.entities;
 
-import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
-@Entity
-@Table(name = "questions")
 public class Question {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long questionId;
-
-    @Column(columnDefinition = "TEXT")
     private String description;
-
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
     private QuestionType questionType;
-
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
     private DifficultyLevel difficultyLevel;
-
     private LocalDateTime createdAt;
-
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
     private Status status;
+
+    public Question() {
+    }
+
+    public Question(Long questionId, String description, QuestionType questionType, DifficultyLevel difficultyLevel, LocalDateTime createdAt, Status status) {
+        this.questionId = questionId;
+        this.description = description;
+        this.questionType = questionType;
+        this.difficultyLevel = difficultyLevel;
+        this.createdAt = createdAt;
+        this.status = status;
+    }
 
     // --- Getters & Setters ---
     public Long getQuestionId() {
@@ -68,14 +63,15 @@ public class Question {
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
+
     public Status getStatus() {
         return status;
     }
+
     public void setStatus(Status status) {
         this.status = status;
     }
 
-    
     // --- Enums inside the entity ---
     public enum QuestionType {
         MCQ, PROBLEM_STATEMENT, HANDS_ON
@@ -84,6 +80,7 @@ public class Question {
     public enum DifficultyLevel {
         BEGINNER, INTERMEDIATE, ADVANCE
     }
+
     public enum Status {
         DRAFT, APPROVED, INACTIVE
     }

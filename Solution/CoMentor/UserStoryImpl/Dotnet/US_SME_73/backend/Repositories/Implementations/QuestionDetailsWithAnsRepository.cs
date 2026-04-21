@@ -18,35 +18,46 @@ namespace backend.Repositories.Implementations
             QuestionDetailsDto dto = null;
 
             string query = @"
-            SELECT 
-                q.question_id,
-                q.description,
-                q.question_type,
-                q.difficulty_level,
-                q.status,
-                f.name AS framework,
-                c.name AS concept,
-                m.option_a,
-                m.option_b,
-                m.option_c,
-                m.option_d,
-                m.correct_answer,
-                psa.answer AS problem_answer
-            FROM questions q
-            LEFT JOIN question_framework_concepts qfc 
-                ON q.question_id = qfc.question_id
-            LEFT JOIN framework_concepts fc 
-                ON qfc.framework_concepts_id = fc.id
-            LEFT JOIN frameworks f 
-                ON fc.framework_id = f.id
-            LEFT JOIN concepts c 
-                ON fc.concept_id = c.id
-            LEFT JOIN mcq_options m 
-                ON q.question_id = m.question_id
-            LEFT JOIN problem_statement_answers psa 
-                ON q.question_id = psa.question_id
-            WHERE q.question_id = @question_id";
+SELECT 
+    q.question_id,
+    q.description AS question_description,
+    q.question_type,
+    q.difficulty_level,
+    q.status,
 
+    f.name AS framework_name,
+    c.name AS concept_name,
+
+    m.option_a,
+    m.option_b,
+    m.option_c,
+    m.option_d,
+    m.correct_answer,
+
+    psa.answer AS problem_answer
+
+FROM questions q
+
+LEFT JOIN question_framework_concepts qfc 
+    ON q.question_id = qfc.question_id
+
+LEFT JOIN framework_concepts fc 
+    ON qfc.framework_concepts_id = fc.id
+
+LEFT JOIN frameworks f 
+    ON fc.framework_id = f.id
+
+LEFT JOIN concepts c 
+    ON fc.concept_id = c.id
+
+LEFT JOIN mcq_options m 
+    ON q.question_id = m.question_id
+
+LEFT JOIN problem_statement_answers psa 
+    ON q.question_id = psa.question_id
+
+WHERE q.question_id = @question_id;
+";
             using (MySqlConnection con = new MySqlConnection(_configuration.GetConnectionString("DefaultConnection")))
             {
                 MySqlCommand cmd = new MySqlCommand(query, con);
@@ -60,13 +71,14 @@ namespace backend.Repositories.Implementations
                     dto = new QuestionDetailsDto
                     {
                         QuestionId = Convert.ToInt32(reader["question_id"]),
-                        Description = reader["description"]?.ToString(),
+
+                        Description = reader["question_description"]?.ToString(),
                         QuestionType = reader["question_type"]?.ToString(),
                         DifficultyLevel = reader["difficulty_level"]?.ToString(),
                         Status = reader["status"]?.ToString(),
 
-                        FrameworkName = reader["framework"]?.ToString(),
-                        ConceptName = reader["concept"]?.ToString(),
+                        FrameworkName = reader["framework_name"]?.ToString(),
+                        ConceptName = reader["concept_name"]?.ToString(),
 
                         OptionA = reader["option_a"]?.ToString(),
                         OptionB = reader["option_b"]?.ToString(),

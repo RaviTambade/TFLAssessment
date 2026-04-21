@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import "./CreateTest.css";
 
 const API_BASE = "http://localhost:5181/api/CreateTest";
 
@@ -50,58 +51,38 @@ type LayerTech = Record<string, string>;
 /* ===========================
    API HELPERS
 =========================== */
+
+
 const apiGet = async (url: string) => {
   const res = await fetch(url);
   if (!res.ok) throw new Error("API Error");
   return res.json();
 };
-const apiPost = async (url: string, body: unknown) => {
-  const res = await fetch(url, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(body),
-  });
-  if (!res.ok) throw new Error("Create Failed");
-  return res.json();
-};
+
+
+
 
 /* ===========================
    COMPONENTS
 =========================== */
-function SectionCard({ title, icon, children }: { title?: string; icon?: string; children: React.ReactNode }) {
+
+const SectionCard = ({ title, icon, children }: { title?: string; icon?: string; children: React.ReactNode }) => {
   return (
-    <div style={{
-      background: T.cardBg, borderRadius: 16, marginBottom: 20,
-      border: `1.5px solid ${T.border}`, overflow: "hidden",
-      boxShadow: "0 2px 12px rgba(229,57,53,0.07)",
-    }}>
+    <div className="section-card">
       {title && (
-        <div style={{
-          padding: "12px 20px", background: T.gradient,
-          borderBottom: `1.5px solid ${T.border}`,
-          display: "flex", alignItems: "center", gap: 8,
-        }}>
+        <div className="section-card-header">
           {icon && <span style={{ fontSize: 18 }}>{icon}</span>}
-          <span style={{ fontWeight: 700, color: T.red, fontSize: 13, letterSpacing: 0.5, textTransform: "uppercase" }}>{title}</span>
+          <span className="title">{title}</span>
         </div>
       )}
-      <div style={{ padding: 20 }}>{children}</div>
+      <div className="section-card-body">{children}</div>
     </div>
   );
 }
 
 function Pill({ label, selected, onClick }: { label: string; selected: boolean; onClick: () => void }) {
   return (
-    <button onClick={onClick} style={{
-      margin: "4px 5px", padding: "8px 18px", borderRadius: 24, cursor: "pointer",
-      border: `1.5px solid ${selected ? T.red : T.border}`,
-      background: selected ? T.headerGrad : T.white,
-      color: selected ? T.white : T.text,
-      fontSize: 13, fontWeight: selected ? 700 : 500,
-      transition: "all 0.2s",
-      boxShadow: selected ? "0 2px 8px rgba(229,57,53,0.25)" : "none",
-      fontFamily: "inherit",
-    }}>
+    <button onClick={onClick} className={`pill ${selected ? 'selected' : ''}`}>
       {label}
     </button>
   );
@@ -114,33 +95,22 @@ function StyledInput({ placeholder, value, onChange, type = "text", id, style }:
   return (
     <input id={id} type={type} placeholder={placeholder} value={value}
       onChange={(e) => onChange(e.target.value)}
-      style={{
-        padding: "10px 14px", borderRadius: 10,
-        border: `1.5px solid ${T.borderRed}`,
-        fontSize: 14, outline: "none", fontFamily: "inherit",
-        color: T.text, background: T.white, transition: "border-color 0.2s", ...style,
-      }}
-      onFocus={(e) => (e.target.style.borderColor = T.red)}
-      onBlur={(e) => (e.target.style.borderColor = T.borderRed)}
+      className="styled-input"
+      style={{ ...style }}
+      onFocus={(e) => (e.currentTarget.style.borderColor = T.red)}
+      onBlur={(e) => (e.currentTarget.style.borderColor = T.borderRed)}
     />
   );
 }
 
 function FieldError({ msg }: { msg: string }) {
-  return <p style={{ color: T.red, fontSize: 12, margin: "5px 0 0", fontWeight: 600 }}>⚠ {msg}</p>;
+  return <p className="field-error">⚠ {msg}</p>;
 }
 
 /* ===========================
    HOVER HELPER
 =========================== */
-function HoverItem({ children }: { children: (hovered: boolean) => React.ReactNode }) {
-  const [hovered, setHovered] = useState(false);
-  return (
-    <div onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}>
-      {children(hovered)}
-    </div>
-  );
-}
+// hover behavior handled via CSS classes; no wrapper needed
 
 /* ===========================
    DUAL PANEL QUESTIONS
@@ -164,118 +134,60 @@ function DualPanelQuestions({ questions, selected, onSelectionChange }: {
   const moveRight = () => { onSelectionChange([...selected, ...leftChecked]); setLeftChecked([]); };
   const moveLeft = () => { onSelectionChange(selected.filter((id) => !rightChecked.includes(id))); setRightChecked([]); };
 
-  const panelStyle: React.CSSProperties = {
-    flex: 1, border: `1.5px solid ${T.border}`, borderRadius: 12,
-    overflow: "hidden", background: T.white,
-    display: "flex", flexDirection: "column", minHeight: 300,
-  };
-
-  const panelHeader: React.CSSProperties = {
-    padding: "10px 14px", background: T.gradient,
-    borderBottom: `1.5px solid ${T.border}`,
-    fontWeight: 700, fontSize: 12, color: T.red,
-    textTransform: "uppercase", letterSpacing: 0.5,
-  };
-
-  const scrollArea: React.CSSProperties = {
-    flex: 1, overflowY: "auto", padding: "8px 6px", maxHeight: 280,
-  };
+  // panel styles moved to CSS classes
 
   return (
-    <div style={{ display: "flex", gap: 14, alignItems: "center" }}>
+  <div className="dual-panel">
       {/* LEFT PANEL */}
-      <div style={panelStyle}>
-        <div style={panelHeader}>Questions ({unselected.length})</div>
-        <div style={scrollArea}>
+      <div className="panel">
+        <div className="panel-header">Questions ({unselected.length})</div>
+        <div className="panel-scroll">
           {unselected.length === 0
             ? <p style={{ color: T.muted, fontSize: 12, padding: "12px 10px" }}>All questions moved →</p>
             : unselected.map((q) => (
-              <HoverItem key={q.id}>
-                {(hovered) => (
-                  <div
-                    onClick={() => toggleLeft(q.id)}
-                    style={{
-                      display: "flex", alignItems: "flex-start", gap: 8,
-                      padding: "7px 10px", borderRadius: 8, cursor: "pointer", marginBottom: 3,
-                      background: leftChecked.includes(q.id) ? T.lightRed : hovered ? T.lightOrange : "transparent",
-                      transition: "background 0.15s",
-                    }}
-                  >
-                    <input type="checkbox" checked={leftChecked.includes(q.id)}
-                      onChange={() => toggleLeft(q.id)} onClick={(e) => e.stopPropagation()}
-                      style={{ marginTop: 3, accentColor: T.red, cursor: "pointer", flexShrink: 0 }} />
-                    <div>
-                      <div style={{ fontSize: 13, color: T.text, fontWeight: 500, lineHeight: 1.4 }}>{q.title}</div>
-                      <div style={{ fontSize: 11, color: T.muted, marginTop: 2 }}>{q.type} · {q.level}</div>
-                    </div>
+              <div key={q.id}>
+                <div
+                  onClick={() => toggleLeft(q.id)}
+                  className={`qp-item ${leftChecked.includes(q.id) ? 'checked' : ''}`}
+                >
+                  <input type="checkbox" checked={leftChecked.includes(q.id)}
+                    onChange={() => toggleLeft(q.id)} onClick={(e) => e.stopPropagation()} />
+                  <div>
+                    <div className="title">{q.title}</div>
+                    <div className="meta">{q.type} · {q.level}</div>
                   </div>
-                )}
-              </HoverItem>
+                </div>
+              </div>
             ))
           }
         </div>
       </div>
 
       {/* ARROW BUTTONS */}
-      <div style={{ display: "flex", flexDirection: "column", gap: 10, flexShrink: 0 }}>
-        <button
-          onClick={moveRight} disabled={leftChecked.length === 0}
-          title="Move selected to right"
-          style={{
-            width: 48, height: 48, borderRadius: 10, border: "none",
-            background: leftChecked.length ? T.headerGrad : "#f0f0f0",
-            color: leftChecked.length ? T.white : "#bbb",
-            fontSize: 20, cursor: leftChecked.length ? "pointer" : "not-allowed",
-            boxShadow: leftChecked.length ? "0 2px 8px rgba(229,57,53,0.3)" : "none",
-            transition: "all 0.2s", display: "flex", alignItems: "center", justifyContent: "center",
-          }}
-        >
-          ››
-        </button>
-        <button
-          onClick={moveLeft} disabled={rightChecked.length === 0}
-          title="Remove selected from right"
-          style={{
-            width: 48, height: 48, borderRadius: 10, border: "none",
-            background: rightChecked.length ? T.headerGrad : "#f0f0f0",
-            color: rightChecked.length ? T.white : "#bbb",
-            fontSize: 20, cursor: rightChecked.length ? "pointer" : "not-allowed",
-            boxShadow: rightChecked.length ? "0 2px 8px rgba(229,57,53,0.3)" : "none",
-            transition: "all 0.2s", display: "flex", alignItems: "center", justifyContent: "center",
-          }}
-        >
-          ‹‹
-        </button>
+      <div className="arrow-buttons">
+        <button onClick={moveRight} disabled={leftChecked.length === 0}
+          title="Move selected to right" className={`arrow-btn ${leftChecked.length ? 'enabled' : ''}`}>››</button>
+        <button onClick={moveLeft} disabled={rightChecked.length === 0}
+          title="Remove selected from right" className={`arrow-btn ${rightChecked.length ? 'enabled' : ''}`}>‹‹</button>
       </div>
 
       {/* RIGHT PANEL */}
-      <div style={panelStyle}>
-        <div style={panelHeader}>Selected Questions ({selectedQuestions.length})</div>
-        <div style={scrollArea}>
+      <div className="panel">
+        <div className="panel-header">Selected Questions ({selectedQuestions.length})</div>
+        <div className="panel-scroll">
           {selectedQuestions.length === 0
             ? <p style={{ color: T.muted, fontSize: 12, padding: "12px 10px" }}>No questions selected yet.</p>
             : selectedQuestions.map((q) => (
-              <HoverItem key={q.id}>
-                {(hovered) => (
-                  <div
-                    onClick={() => toggleRight(q.id)}
-                    style={{
-                      display: "flex", alignItems: "flex-start", gap: 8,
-                      padding: "7px 10px", borderRadius: 8, cursor: "pointer", marginBottom: 3,
-                      background: rightChecked.includes(q.id) ? T.lightRed : hovered ? T.lightOrange : "transparent",
-                      transition: "background 0.15s",
-                    }}
-                  >
-                    <input type="checkbox" checked={rightChecked.includes(q.id)}
-                      onChange={() => toggleRight(q.id)} onClick={(e) => e.stopPropagation()}
-                      style={{ marginTop: 3, accentColor: T.red, cursor: "pointer", flexShrink: 0 }} />
-                    <div>
-                      <div style={{ fontSize: 13, color: T.text, fontWeight: 500, lineHeight: 1.4 }}>{q.title}</div>
-                      <div style={{ fontSize: 11, color: T.muted, marginTop: 2 }}>{q.type} · {q.level}</div>
-                    </div>
+              <div key={q.id}>
+                <div onClick={() => toggleRight(q.id)} className={`qp-item ${rightChecked.includes(q.id) ? 'checked' : ''}`}>
+                  <input type="checkbox" checked={rightChecked.includes(q.id)}
+                    onChange={() => toggleRight(q.id)} onClick={(e) => e.stopPropagation()} />
+                  <div>
+                    <div className="title">{q.title}</div>
+                    <div className="meta">{q.type} · {q.level}</div>
                   </div>
-                )}
-              </HoverItem>
+                </div>
+              </div>
             ))
           }
         </div>

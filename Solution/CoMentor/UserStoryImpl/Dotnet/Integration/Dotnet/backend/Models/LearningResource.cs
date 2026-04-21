@@ -20,4 +20,8 @@ public partial class LearningResource
     public DateTime? CreatedAt { get; set; }
 
     public bool? Status { get; set; }
+    public long? QuestionId { get; set; }
+
+    public long? LanguageId { get; set; }
+
 }
