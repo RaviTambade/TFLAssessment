@@ -24,7 +24,9 @@ public interface QuestionsServices {
     List<QuestionListResponseDto> getRecentQuestionList();
     QuestionResponseDto getQuestionDetailsById(Long id);
     List<QuestionListResponseDto> getQuestionsByType(String questionType);
+    List<QuestionListResponseDto> findByStatus(String questionStatus);
     void updateQuestionById(Long id, QuestionRequestDto dto);
+
   
 }
 

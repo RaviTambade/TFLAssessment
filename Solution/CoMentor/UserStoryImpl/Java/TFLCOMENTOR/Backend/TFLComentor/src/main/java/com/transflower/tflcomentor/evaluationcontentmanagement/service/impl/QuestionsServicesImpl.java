@@ -102,4 +102,9 @@ public class QuestionsServicesImpl implements QuestionsServices {
     public List<QuestionListResponseDto> getQuestionsByType(String questionType) {
         return repository.getQuestionsByType(questionType);
     }
+
+    @Override
+    public List<QuestionListResponseDto> findByStatus(String questionStatus) {
+        return repository.findByStatus(questionStatus);
+    }
 }

@@ -2,7 +2,6 @@ package com.transflower.tflcomentor.evaluationcontentmanagement.repository;
 
 import java.util.List;
 
-
 import com.transflower.tflcomentor.evaluationcontentmanagement.dto.request.QuestionRequestDto;
 import com.transflower.tflcomentor.evaluationcontentmanagement.dto.response.QuestionListResponseDto;
 import com.transflower.tflcomentor.evaluationcontentmanagement.dto.response.QuestionResponseDto;
@@ -29,7 +28,7 @@ public interface QuestionsRepository {
     // List<Questions> getAllQuestions();
     List<Questions> getDraftQuestions();
     List<Questions> getRecentQuestions();
-    List<Questions> findByStatus(String questionStatus);
+    List<QuestionListResponseDto> findByStatus(String questionStatus);
     void approveQuestionById(Long id);
     void rejectQuestionById(Long id);
     void approveAllQuestions();

@@ -106,4 +106,9 @@ public class QuestionController {
     public List<QuestionListResponseDto> getQuestionsByType(@PathVariable String questionType) {
         return service.getQuestionsByType(questionType);
     }
+
+    @GetMapping("/status/{questionStatus}")
+    public List<QuestionListResponseDto> findByStatus(@PathVariable String questionStatus) {
+        return service.findByStatus(questionStatus);
+    }
 }

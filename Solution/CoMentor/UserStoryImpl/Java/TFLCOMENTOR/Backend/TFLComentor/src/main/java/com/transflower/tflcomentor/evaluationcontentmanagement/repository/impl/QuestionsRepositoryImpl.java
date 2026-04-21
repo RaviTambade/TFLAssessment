@@ -468,8 +468,8 @@ public class QuestionsRepositoryImpl implements QuestionsRepository {
     }
 
     @Override
-    public List<Questions> findByStatus(String questionStatus) {
-        List<Questions> list = new ArrayList<>();
+    public List<QuestionListResponseDto> findByStatus(String questionStatus) {
+        List<QuestionListResponseDto> list = new ArrayList<>();
         String sql = """
                 SELECT question_id, question_type, description, difficulty_level, status
                 FROM questions
@@ -481,13 +481,12 @@ public class QuestionsRepositoryImpl implements QuestionsRepository {
             statement.setString(1, questionStatus);
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
-                Questions q = new Questions();
-                q.setQuestionId(rs.getLong("question_id"));
-                q.setDescription(rs.getString("description"));
-                q.setQuestionType(rs.getString("question_type"));
-                q.setDifficultyLevel(rs.getString("difficulty_level"));
-                q.setStatus(rs.getString("status"));
-                list.add(q);
+                QuestionListResponseDto dto = new QuestionListResponseDto();
+                dto.setQuestionId(rs.getLong("question_id"));
+                dto.setDescription(rs.getString("description"));
+                dto.setQuestionType(rs.getString("question_type"));
+                dto.setQuestionStatus(rs.getString("status"));
+                list.add(dto);
             }
         } catch (Exception e) {
             e.printStackTrace();
