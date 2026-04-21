@@ -4,8 +4,10 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import com.transflower.tflcomentor.evaluationcontentmanagement.dto.request.QuestionDto;
 import com.transflower.tflcomentor.evaluationcontentmanagement.dto.request.QuestionRequestDto;
 import com.transflower.tflcomentor.evaluationcontentmanagement.dto.response.QuestionListResponseDto;
 import com.transflower.tflcomentor.evaluationcontentmanagement.dto.response.QuestionResponseDto;
@@ -116,6 +118,10 @@ public class QuestionController {
         return service.findByStatus(questionStatus);
     }
 
-
+    @GetMapping("/concepts/{conceptId}/questions")
+    public ResponseEntity<?> getQuestionsByConceptId(@PathVariable Long conceptId) {
+        List<QuestionDto> questions = service.getQuestionsByConceptId(conceptId);   
+        return ResponseEntity.ok(questions);
+    }
     
 }

@@ -6,6 +6,7 @@ import com.transflower.tflcomentor.evaluationcontentmanagement.dto.request.Quest
 import com.transflower.tflcomentor.evaluationcontentmanagement.dto.response.QuestionListResponseDto;
 import com.transflower.tflcomentor.evaluationcontentmanagement.dto.response.QuestionResponseDto;
 import com.transflower.tflcomentor.evaluationcontentmanagement.entity.Project;
+import com.transflower.tflcomentor.evaluationcontentmanagement.entity.Question;
 import com.transflower.tflcomentor.evaluationcontentmanagement.entity.Questions;
 
 public interface QuestionsRepository {
@@ -36,7 +37,7 @@ public interface QuestionsRepository {
     void approveAllQuestions();
     void rejectAllQuestions();
     // Questions updateQuestion(Questions question);
-
+    List<Question> getQuestionsByConceptId(Long conceptId);
    
 }
 

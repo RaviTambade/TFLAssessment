@@ -1,13 +1,13 @@
-package com.transflower.tflcomentor.skilltaxonomy.dto.response;
+package com.transflower.tflcomentor.evaluationcontentmanagement.dto.request;
 
-public class ConceptDto {
+public class QuestionDto {
 private String description;
     private String questionType;
 
-    public ConceptDto() {
+    public QuestionDto() {
     }
 
-    public ConceptDto(String description, String questionType) {
+    public QuestionDto(String description, String questionType) {
         this.description = description;
         this.questionType = questionType;
     }
