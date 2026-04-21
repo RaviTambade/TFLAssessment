@@ -1,31 +1,3 @@
-// const smeProfileService = require("../services/smeProfileService");
-
-// console.log("SME Profile Controller loaded");
-
-// exports.getSMEProfile = (req, res) => {
-
-//     const user_id = req.params.user_id;
-
-//     console.log("API called for user_id:", user_id);
-
-//     smeProfileService.getSMEProfile(user_id, (err, result) => {
-
-//         if (err) {
-//             console.error("Error:", err);
-//             res.status(500).json(err);
-//         } else {
-//             console.log("Result:", result);
-//             res.json(result);
-//         }
-
-//     });
-
-// };
-
-
-
-
-
 const smeProfileService = require("../services/smeProfileService");
 
 // Log when controller file is loaded

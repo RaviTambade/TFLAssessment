@@ -2,7 +2,8 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using backend.DTOs;
 using backend.Models;
-namespace backend.Repositories.Interfaces;
+namespace backend.Repositories.Interfaces
+{
 
 public interface IAssessmentRepository
 {
@@ -16,4 +17,9 @@ public interface IAssessmentRepository
     Task<List<AssessmentQuestionDto>> GetAssessmentQuestions(int assessmentId);
     Task<bool> SaveAssessmentAnswersAsync(List<StudentAnswer>? answers);
     Task<AssessmentReportDto> GetResultData(int studentId, int assessmentId);
+Task<int> GetTotalAssessmentsAsync();
+Task<int> GetCompletedAssessmentsAsync();
+
+
+}
 }
