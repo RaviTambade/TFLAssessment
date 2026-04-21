@@ -6,14 +6,14 @@ import org.springframework.stereotype.Service;
 
 import com.transflower.tflcomentor.evaluationcontentmanagement.dto.response.ProjectAllocationResponseDTO;
 import com.transflower.tflcomentor.evaluationcontentmanagement.entity.ProjectAllocation;
-import com.transflower.tflcomentor.evaluationcontentmanagement.repository.ProjectAllowcationRepository;
+import com.transflower.tflcomentor.evaluationcontentmanagement.repository.ProjectAllocationRepository;
 import com.transflower.tflcomentor.evaluationcontentmanagement.service.ProjectAllowcationService;
 
 @Service
 public class ProjectAllowcationServiceImpl implements ProjectAllowcationService {
 
-    private final ProjectAllowcationRepository repository;
-    public ProjectAllowcationServiceImpl(ProjectAllowcationRepository repository) {
+    private final ProjectAllocationRepository repository;
+    public ProjectAllowcationServiceImpl(ProjectAllocationRepository repository) {
         this.repository = repository;
     }
     

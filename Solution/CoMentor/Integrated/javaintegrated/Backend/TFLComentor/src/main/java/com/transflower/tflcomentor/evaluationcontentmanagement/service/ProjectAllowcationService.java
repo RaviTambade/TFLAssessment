@@ -6,7 +6,7 @@ import com.transflower.tflcomentor.evaluationcontentmanagement.dto.response.Proj
 import com.transflower.tflcomentor.evaluationcontentmanagement.entity.ProjectAllocation;
 
 public interface  ProjectAllowcationService {
-     boolean addStudentToProject(ProjectAllocation projectAllocation);
+     boolean addStudentToProject(ProjectAllocation projectAllocations);
     boolean removeStudentFromProject(Long projectId, Long studentId);
     List<ProjectAllocationResponseDTO> getStudentByProjectId(Long projectId);
     List<ProjectAllocationResponseDTO> getAllocatedProjects();
