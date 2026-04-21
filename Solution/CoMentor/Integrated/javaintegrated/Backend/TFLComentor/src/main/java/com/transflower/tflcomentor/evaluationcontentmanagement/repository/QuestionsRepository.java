@@ -12,8 +12,6 @@ public interface QuestionsRepository {
     Question getQuestionById(long question_id);
     List<Question> getAllQuestions();
     List<Question> getQuestionsByDifficulty(String difficulty);
-    List<Question> findByType(String questionType);
-
     Long insertQuestion(Question q);
     void insertMcqOptions(Long questionId,
             String optionA,
@@ -21,7 +19,6 @@ public interface QuestionsRepository {
             String optionC,
             String optionD,
             String correctAnswer);
-    List<QuestionResponse> getDraftQuestionList();
     void updateQuestionById(Long id, QuestionRequestDto dto);
     List<QuestionResponse> getRecentQuestionList();
     QuestionResponseDto getQuestionDetailsById(Long id);
@@ -29,7 +26,7 @@ public interface QuestionsRepository {
     // List<Questions> getAllQuestions();
     List<QuestionResponse> getDraftQuestions();
     List<QuestionResponse> getRecentQuestions();
-    List<QuestionResponse> findByStatus(String questionStatus);
+    List<QuestionResponse> getQuestionsByStatus(String questionStatus);
     void approveQuestionById(Long id);
     void rejectQuestionById(Long id);
     void approveQuestions(List<Long> questionId);

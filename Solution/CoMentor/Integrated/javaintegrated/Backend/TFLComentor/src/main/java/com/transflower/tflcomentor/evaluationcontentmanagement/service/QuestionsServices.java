@@ -3,11 +3,9 @@ package com.transflower.tflcomentor.evaluationcontentmanagement.service;
 import java.util.List;
 
 import com.transflower.tflcomentor.evaluationcontentmanagement.dto.request.QuestionDto;
-import com.transflower.tflcomentor.evaluationcontentmanagement.dto.request.QuestionRequest;
 import com.transflower.tflcomentor.evaluationcontentmanagement.dto.request.QuestionRequestDto;
 import com.transflower.tflcomentor.evaluationcontentmanagement.dto.response.QuestionResponse;
 import com.transflower.tflcomentor.evaluationcontentmanagement.dto.response.QuestionResponseDto;
-import com.transflower.tflcomentor.evaluationcontentmanagement.entity.Project;
 import com.transflower.tflcomentor.evaluationcontentmanagement.entity.Question;
 
 public interface QuestionsServices {
@@ -23,11 +21,10 @@ public interface QuestionsServices {
     void rejectQuestionById(Long id);
     void approveQuestions(List<Long> questionId);
     void rejectQuestions(List<Long> questionId);
-    List<QuestionResponse> getDraftQuestionList();
     List<QuestionResponse> getRecentQuestionList();
     QuestionResponseDto getQuestionDetailsById(Long id);
     List<QuestionResponse> getQuestionsByType(String questionType);
-    List<QuestionResponse> findByStatus(String questionStatus);
+    List<QuestionResponse> getQuestionsByStatus(String questionStatus);
     void updateQuestionById(Long id, QuestionRequestDto dto);
     List<QuestionDto> getQuestionsByConceptId(Long conceptId);
 
