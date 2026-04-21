@@ -1,6 +1,6 @@
 package com.transflower.tflcomentor.evaluationcontentmanagement.entity;
 
-public class Projects {
+public class Project {
 
     private long project_id;
     private long mentor_id;
@@ -12,12 +12,12 @@ public class Projects {
 
     
 
-    public Projects()
+    public Project()
     {
 
     }
 
-    public Projects(long project_id,long mentor_id,String project_name,String description,String repository_url,String status,String created_at)
+    public Project(long project_id,long mentor_id,String project_name,String description,String repository_url,String status,String created_at)
     {
         this.project_id=project_id;
         this.mentor_id=mentor_id;
@@ -105,7 +105,7 @@ public class Projects {
         if (this == obj) return true;
         if (obj == null || getClass() != obj.getClass()) return false;
 
-        Projects project = (Projects) obj;
+        Project project = (Project) obj;
 
         return project_id == project.project_id;
     }

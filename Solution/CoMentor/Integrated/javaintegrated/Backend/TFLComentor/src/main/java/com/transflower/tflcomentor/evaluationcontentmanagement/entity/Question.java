@@ -2,7 +2,7 @@ package com.transflower.tflcomentor.evaluationcontentmanagement.entity;
 
 import java.time.LocalDateTime;
 
-public class Questions {
+public class Question {
     private Long questionId;
     private String description;
     private String questionType;
@@ -10,10 +10,10 @@ public class Questions {
     private String status;
     private LocalDateTime createdAt;
 
-    public Questions() {
+    public Question() {
     }
 
-    public Questions(Long questionId, String description, String questionType,
+    public Question(Long questionId, String description, String questionType,
             String difficultyLevel, String status) {
         this.questionId = questionId;
         this.description = description;
@@ -22,7 +22,7 @@ public class Questions {
         this.status = status;
     }
 
-    public Questions(Long questionId, String description, String questionType,
+    public Question(Long questionId, String description, String questionType,
             String difficultyLevel, LocalDateTime createdAt, String status) {
         this.questionId = questionId;
         this.description = description;

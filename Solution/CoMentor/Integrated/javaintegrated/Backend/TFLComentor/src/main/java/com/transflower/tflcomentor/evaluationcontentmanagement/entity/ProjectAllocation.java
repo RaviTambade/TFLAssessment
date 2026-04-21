@@ -2,7 +2,7 @@ package com.transflower.tflcomentor.evaluationcontentmanagement.entity;
 
 import java.time.LocalDateTime;
 
-public class ProjectAllocations {
+public class ProjectAllocation {
 
     private Long id;
     private Long projectId;
@@ -11,7 +11,7 @@ public class ProjectAllocations {
     private LocalDateTime releaseDate;
 
 
-    public ProjectAllocations() {
+    public ProjectAllocation() {
         this.id = 0L;
         this.projectId = 0L;
         this.studentId = 0L;
@@ -20,7 +20,7 @@ public class ProjectAllocations {
 
     }
 
-    public ProjectAllocations(Long id, Long projectId, Long studentId, LocalDateTime joinedDate , LocalDateTime releaseDate) {
+    public ProjectAllocation(Long id, Long projectId, Long studentId, LocalDateTime joinedDate , LocalDateTime releaseDate) {
         this.id = id;
         this.projectId = projectId;
         this.studentId = studentId;

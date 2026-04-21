@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import com.transflower.tflcomentor.evaluationcontentmanagement.dto.request.QuestionRequestDto;
 import com.transflower.tflcomentor.evaluationcontentmanagement.dto.response.QuestionListResponseDto;
 import com.transflower.tflcomentor.evaluationcontentmanagement.dto.response.QuestionResponseDto;
-import com.transflower.tflcomentor.evaluationcontentmanagement.entity.Projects;
+import com.transflower.tflcomentor.evaluationcontentmanagement.entity.Project;
 import com.transflower.tflcomentor.evaluationcontentmanagement.entity.Questions;
 import com.transflower.tflcomentor.evaluationcontentmanagement.repository.QuestionsRepository;
 import com.transflower.tflcomentor.evaluationcontentmanagement.service.QuestionsServices;
