@@ -1,8 +1,8 @@
-package com.transflower.tflcomentor.evaluationcontentmanagement.entity;
+package com.transflower.tflcomentor.evaluationcontentmanagement.dto.request;
 
 import java.time.LocalDateTime;
 
-public class Question {
+public class QuestionRequest {
     private Long questionId;
     private String description;
     private String questionType;
@@ -10,10 +10,10 @@ public class Question {
     private String status;
     private LocalDateTime createdAt;
 
-    public Question() {
+    public QuestionRequest() {
     }
 
-    public Question(Long questionId, String description, String questionType,
+    public QuestionRequest(Long questionId, String description, String questionType,
             String difficultyLevel, String status) {
         this.questionId = questionId;
         this.description = description;
@@ -22,7 +22,7 @@ public class Question {
         this.status = status;
     }
 
-    public Question(Long questionId, String description, String questionType,
+    public QuestionRequest(Long questionId, String description, String questionType,
             String difficultyLevel, LocalDateTime createdAt, String status) {
         this.questionId = questionId;
         this.description = description;

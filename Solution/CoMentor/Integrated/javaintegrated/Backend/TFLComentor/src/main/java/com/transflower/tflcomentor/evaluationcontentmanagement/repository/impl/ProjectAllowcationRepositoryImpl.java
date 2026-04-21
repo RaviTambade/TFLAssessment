@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.transflower.tflcomentor.configuration.DBConfig;
 import com.transflower.tflcomentor.evaluationcontentmanagement.dto.response.ProjectAllocationResponseDTO;
-import com.transflower.tflcomentor.evaluationcontentmanagement.entity.ProjectAllocations;
+import com.transflower.tflcomentor.evaluationcontentmanagement.entity.ProjectAllocation;
 import com.transflower.tflcomentor.evaluationcontentmanagement.repository.ProjectAllowcationRepository;
 
 @Repository
@@ -21,7 +21,7 @@ public class ProjectAllowcationRepositoryImpl implements ProjectAllowcationRepos
     }
     
     @Override
-    public boolean addStudentToProject(ProjectAllocations projectAllocations) {
+    public boolean addStudentToProject(ProjectAllocation projectAllocation) {
 
         String query = "INSERT INTO project_allocations(project_id, student_id, joined_date) VALUES (?, ?, NOW())";
 
@@ -29,8 +29,8 @@ public class ProjectAllowcationRepositoryImpl implements ProjectAllowcationRepos
             Connection connection = getConnection();
             PreparedStatement statement = connection.prepareStatement(query)
         ) {
-            statement.setLong(1, projectAllocations.getProjectId());
-            statement.setLong(2, projectAllocations.getStudentId());
+            statement.setLong(1, projectAllocation.getProjectId());
+            statement.setLong(2, projectAllocation.getStudentId());
 
             return statement.executeUpdate() > 0;
         } catch (Exception e) {

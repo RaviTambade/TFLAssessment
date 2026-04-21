@@ -13,7 +13,7 @@ import java.time.ZoneId;
 
 import org.springframework.stereotype.Repository;
 
-import com.transflower.tflcomentor.evaluationcontentmanagement.entity.Questions;
+import com.transflower.tflcomentor.evaluationcontentmanagement.entity.Question;
 import com.transflower.tflcomentor.skilltaxonomy.entity.Concept;
 import com.transflower.tflcomentor.skilltaxonomy.entity.Framework;
 import com.transflower.tflcomentor.skilltaxonomy.entity.Language;
@@ -242,8 +242,8 @@ public class ConceptsRepository implements IConceptsRepository{
 
 
      @Override
-    public List<Questions> getQuestionsByConceptId(Long conceptId) {
-        List<Questions> list = new ArrayList<>();
+    public List<Question> getQuestionsByConceptId(Long conceptId) {
+        List<Question> list = new ArrayList<>();
         String sql = """ 
                     SELECT q.question_id, q.description, q.question_type
                     FROM questions q
@@ -261,7 +261,7 @@ public class ConceptsRepository implements IConceptsRepository{
             ResultSet rs = statement.executeQuery();
 
             while (rs.next()) {
-                Questions question = new Questions();
+                Question question = new Question();
                 question.setQuestionId(rs.getLong("question_id"));
                 question.setDescription(rs.getString("description"));
                 question.setQuestionType(rs.getString("question_type"));

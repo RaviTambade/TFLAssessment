@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.transflower.tflcomentor.evaluationcontentmanagement.dto.response.ProjectAllocationResponseDTO;
-import com.transflower.tflcomentor.evaluationcontentmanagement.entity.ProjectAllocations;
+import com.transflower.tflcomentor.evaluationcontentmanagement.entity.ProjectAllocation;
 import com.transflower.tflcomentor.evaluationcontentmanagement.repository.ProjectAllowcationRepository;
 import com.transflower.tflcomentor.evaluationcontentmanagement.service.ProjectAllowcationService;
 
@@ -18,7 +18,7 @@ public class ProjectAllowcationServiceImpl implements ProjectAllowcationService 
     }
     
     @Override
-    public boolean addStudentToProject(ProjectAllocations projectAllocations) {
+    public boolean addStudentToProject(ProjectAllocation projectAllocations) {
         return repository.addStudentToProject(projectAllocations);
     }
 

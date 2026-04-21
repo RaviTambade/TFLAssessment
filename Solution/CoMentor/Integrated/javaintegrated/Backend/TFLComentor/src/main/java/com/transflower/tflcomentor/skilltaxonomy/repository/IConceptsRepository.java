@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
-import com.transflower.tflcomentor.evaluationcontentmanagement.entity.Questions;
+import com.transflower.tflcomentor.evaluationcontentmanagement.entity.Question;
 import com.transflower.tflcomentor.skilltaxonomy.entity.Concept;
 import com.transflower.tflcomentor.skilltaxonomy.entity.Framework;
 import com.transflower.tflcomentor.skilltaxonomy.entity.Language;
@@ -22,5 +22,5 @@ public interface IConceptsRepository {
     public List<Framework> getAllFrameworksByLanguageAndLayer(int languageId, int layerId);
     public List<Concept> getAllConceptsforFramework(String framework);
     public Concept findById(Long id);
-    List<Questions> getQuestionsByConceptId(Long conceptId);
+    List<Question> getQuestionsByConceptId(Long conceptId);
 }

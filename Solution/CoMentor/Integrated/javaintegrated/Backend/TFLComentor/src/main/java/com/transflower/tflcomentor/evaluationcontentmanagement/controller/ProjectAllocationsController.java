@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.transflower.tflcomentor.evaluationcontentmanagement.dto.request.ProjectAllocationRequestDTO;
 import com.transflower.tflcomentor.evaluationcontentmanagement.dto.response.ProjectAllocationResponseDTO;
-import com.transflower.tflcomentor.evaluationcontentmanagement.entity.ProjectAllocations;
+import com.transflower.tflcomentor.evaluationcontentmanagement.entity.ProjectAllocation;
 import com.transflower.tflcomentor.evaluationcontentmanagement.service.ProjectAllowcationService;
 
 @RestController
@@ -31,7 +31,7 @@ public class ProjectAllocationsController {
     return service.getStudentByProjectId(projectId);
     }
 
-    @GetMapping("/all")
+    @GetMapping
     public List<ProjectAllocationResponseDTO> getAllProjects() {
         return service.getAllocatedProjects();
     }
@@ -39,7 +39,7 @@ public class ProjectAllocationsController {
     @PostMapping("/add")
     public String addStudentToProject(@RequestBody ProjectAllocationRequestDTO request) {
 
-        ProjectAllocations allocation = new ProjectAllocations();
+        ProjectAllocation allocation = new ProjectAllocation();
         allocation.setProjectId(request.getProjectId());
         allocation.setStudentId(request.getStudentId());
 
