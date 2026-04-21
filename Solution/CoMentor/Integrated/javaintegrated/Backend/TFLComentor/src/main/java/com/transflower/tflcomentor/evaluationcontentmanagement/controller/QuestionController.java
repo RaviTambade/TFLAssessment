@@ -1,17 +1,22 @@
 package com.transflower.tflcomentor.evaluationcontentmanagement.controller;
 
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.transflower.tflcomentor.evaluationcontentmanagement.dto.request.QuestionDto;
 import com.transflower.tflcomentor.evaluationcontentmanagement.dto.request.QuestionRequestDto;
 import com.transflower.tflcomentor.evaluationcontentmanagement.dto.response.QuestionResponse;
 import com.transflower.tflcomentor.evaluationcontentmanagement.dto.response.QuestionResponseDto;
-import com.transflower.tflcomentor.evaluationcontentmanagement.entity.Project;
 import com.transflower.tflcomentor.evaluationcontentmanagement.entity.Question;
 import com.transflower.tflcomentor.evaluationcontentmanagement.service.QuestionsServices;
 
@@ -52,13 +57,6 @@ public class QuestionController {
     @GetMapping("/drafts")
     public List<QuestionResponse> getDraft() {
         return service.getDraftQuestions();
-    }
-
-
-    
-    @GetMapping("/drafts/list")
-    public List<QuestionResponse> getDraftList() {
-        return service.getDraftQuestionList();
     }
 
 
@@ -114,8 +112,8 @@ public class QuestionController {
     }
 
     @GetMapping("/status/{questionStatus}")
-    public List<QuestionResponse> findByStatus(@PathVariable String questionStatus) {
-        return service.findByStatus(questionStatus);
+    public List<QuestionResponse> getQuestionsByStatus(@PathVariable String questionStatus) {
+        return service.getQuestionsByStatus(questionStatus);
     }
 
     @GetMapping("/concepts/{conceptId}/questions")

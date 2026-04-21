@@ -9,9 +9,6 @@ import com.transflower.tflcomentor.evaluationcontentmanagement.dto.request.Quest
 import com.transflower.tflcomentor.evaluationcontentmanagement.dto.request.QuestionRequestDto;
 import com.transflower.tflcomentor.evaluationcontentmanagement.dto.response.QuestionResponse;
 import com.transflower.tflcomentor.evaluationcontentmanagement.dto.response.QuestionResponseDto;
-import com.transflower.tflcomentor.evaluationcontentmanagement.entity.Project;
-import com.transflower.tflcomentor.evaluationcontentmanagement.entity.Question;
-import com.transflower.tflcomentor.evaluationcontentmanagement.repository.QuestionsRepository;
 import com.transflower.tflcomentor.evaluationcontentmanagement.entity.Question;
 import com.transflower.tflcomentor.evaluationcontentmanagement.repository.QuestionsRepository;
 import com.transflower.tflcomentor.evaluationcontentmanagement.service.QuestionsServices;
@@ -92,12 +89,7 @@ public class QuestionsServicesImpl implements QuestionsServices {
     public void rejectQuestions(List<Long> questionIds) {
         repository.rejectQuestions(questionIds);
     }
-
-    @Override
-    public List<QuestionResponse> getDraftQuestionList() {
-        return repository.getDraftQuestionList();
-    }
-
+    
     @Override
     public List<QuestionResponse> getRecentQuestionList() {
         return repository.getRecentQuestionList();
@@ -119,8 +111,8 @@ public class QuestionsServicesImpl implements QuestionsServices {
     }
 
     @Override
-    public List<QuestionResponse> findByStatus(String questionStatus) {
-        return repository.findByStatus(questionStatus);
+    public List<QuestionResponse> getQuestionsByStatus(String questionStatus) {
+        return repository.getQuestionsByStatus(questionStatus);
     }
 
  
