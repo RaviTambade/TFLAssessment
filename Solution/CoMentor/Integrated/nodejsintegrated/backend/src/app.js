@@ -5,13 +5,9 @@ const bodyParser = require("body-parser");
 
 const AuthRepository = require("./repositories/auth");
 const UsersRepository = require('./repositories/users');
-
 const LoggerRepository = require("./repositories/logger");
-const SessionRepository = require("./repositories/session");
-
 const RoleRepository = require("./repositories/role");
 const UpdateRolesRepository = require('./repositories/updaterole');
-
 const ProfileRepository = require("./repositories/profile");
 const UserProfileRepository = require("./repositories/userProfile");
 const EmployerProfileRepository = require("./repositories/userProfile");
@@ -19,8 +15,7 @@ const EmployerProfileRepository = require("./repositories/userProfile");
 
 const AuthService = require("./services/authservice");
 const ProfileService = require("./services/profileservice");
-const LoggerService = require("./services/loggerservices");
-const SessionService = require("./services/sessionservice");
+const LoggerService = require("./services/logger");
 const UsersService = require('./services/userinformationservice');
 const RoleService = require("./services/roleservice");
 const UpdateRolesService = require('./services/updaterolesservices');
@@ -29,6 +24,7 @@ const UserProfileService = require("./services/userProfile.service");
 
 const AdminProfileService = require("./services/adminProfileService");
 const UpdateRolesController = require('./controllers/updaterolescontroller');
+const LoggerController = require("./controllers/logger")
 const UsersController = require('./controllers/userinformationcontroller');
 const UsersRouterFactory = require('./routers/userinformationroutes');
 const AdminProfileController = require("./controllers/adminProfileController");
@@ -36,27 +32,23 @@ const UserProfileController = require("./controllers/userProfile.controller");
 const EmployerProfileController = require("./controllers/userProfileControllers")
 const AuthController = require("./controllers/authcontroller_sanika_yash");
 const ProfileController = require("./controllers/profilecontroller_sanika");
-const LoggerController = require("./controllers/loggercontroller");
-const SessionController = require("./controllers/sessioncontroller_sai_samruddhi");
 const RoleController = require("./controllers/roleController");
 
 
-const LoggerRoutes = require("./routers/loggerroutes");
-const SessionRoutes = require("./routers/sessionroutes");
 const AuthRoutes = require("./routers/authroutes");
 const userProfileRoutes = require("./routers/profileroutes");
+const LoggerRoutes = require("./routers/logger");
 const RoleRouterFactory = require("./routers/roleRouter");
 const EmployerProfileRouter = require("./routers/userProfileRoutes");
 const userProfileRouter = require("./routers/userProfile.routes");
 const UpdateRolesRouter = require('./routers/updaterolesrouter');
 
 const NotFoundHandler = require("./middlewares/notFoundHandler");
-const ErrorHandler = require("./middlewares/errorHandler");
+const ErrorHandler = require("./middlewares/errorHandler"); 
 
 
 // Initialize repositories, services, and controllers for each module
 const connection = require("./connectivity/db");
-
 
 const authRepo = new AuthRepository(connection);  
 const loginsvc = new userLoginService(authRepo);
@@ -71,7 +63,7 @@ const profileRoutes = userProfileRoutes(profileController);
 const loggerRepo=new LoggerRepository(connection);
 const loggerSvc=new LoggerService(loggerRepo);
 const loggerController=new LoggerController(loggerSvc);
-const loggerRoutes = LoggerRoutes(loggerController);
+const loggerRoutes =  LoggerRoutes(loggerController);
 
 const sessionRepo = new SessionRepository(connection);
 const sessionSvc = new SessionService(sessionRepo);
@@ -106,7 +98,7 @@ const userEditController = new UserProfileController(userEditSvc);
 const userInformationRepo = new UsersRepository(connection);
 const userInformationSvc = new UsersService(userInformationRepo);
 const userInformationController = new UsersController(userInformationSvc);
-const userInformationRouter = UsersRouterFactory(userInformationController);
+const userInformationRouter = UsersRouterFactory(userInformationController); 
 
 const app = express();
 
@@ -125,10 +117,9 @@ app.use(NotFoundHandler);
 app.use(ErrorHandler);
 app.use("/api/auth/", authRoutes);
 app.use("/api/roles", roleRouter);
-
 app.use("/api/profile/", profileRoutes);
 app.use("/api/employerprofile", employerRoutes);
-app.use("/api/userprofiles", router);
+app.use("/api/userprofiles", router); 
 app.use("/api/userlog/", loggerRoutes);
 app.use("/api/usersessions", sessionRoutes);
 

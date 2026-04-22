@@ -3,14 +3,14 @@ const AvgSessionResponseDto = require("../dtos/responses/loggeravg-sessionrespon
 const ActiveSessionsResponseDto = require("../dtos/responses/loggeractive-sessionsresponsedto");
 const ActiveUsersResponseDto = require("../dtos/responses/loggeractive-usersresponsedto");
 
-class LoggerController {
-  constructor(LoggerService) {
-    this.LoggerService = LoggerService;
+class Logger {
+  constructor(Logger) {
+    this.Logger = Logger;
   }
 
   LoginEntry = (req, res) => {
     const userid = req.params.userid;
-    this.LoggerService.LoginEntry(userid, (err, result) => {
+    this.Logger.LoginEntry(userid, (err, result) => {
       if (result.affectedRows > 0) {
         res.status(200).json({ message: "log inserted sucessfully" });
         console.log("log inserted sucessfully");
@@ -22,7 +22,7 @@ class LoggerController {
 
   LogoutEntry = (req, res) => {
     const userid = req.params.userid;
-    this.LoggerService.LogoutEntry(userid, (err, result) => {
+    this.Logger.LogoutEntry(userid, (err, result) => {
       if (result.affectedRows > 0) {
         res.status(200).json({ message: "log inserted sucessfully" });
         console.log("log inserted sucessfully");
@@ -33,7 +33,7 @@ class LoggerController {
   };
 
   getLoginsLast24Hrs = (req, res) => {
-    this.LoggerService.getLoginStats((err, data) => {
+    this.Logger.getLoginStats((err, data) => {
       if (err) {
         return res.status(500).json({ message: err.message });
       }
@@ -45,7 +45,7 @@ class LoggerController {
   };
 
   getAvgSessionTime = (req, res) => {
-    this.LoggerService.getAverageSessionTime((err, data) => {
+    this.Logger.getAverageSessionTime((err, data) => {
       if (err) {
         return res.status(500).json({ message: err.message });
       }
@@ -55,7 +55,7 @@ class LoggerController {
   };
 
   getActiveSessions = (req, res) => {
-    this.LoggerService.getActiveSessions((err, data) => {
+    this.Logger.getActiveSessions((err, data) => {
       if (err) {
         return res.status(500).json({ message: err.message });
       }
@@ -67,7 +67,7 @@ class LoggerController {
   }; 
 
   getActiveUsers = (req, res) => {
-    this.LoggerService.getActiveUsers((err, data) => {
+    this.Logger.getActiveUsers((err, data) => {
       if (err) {
         return res.status(500).json({ message: err.message });
       }
@@ -81,6 +81,34 @@ class LoggerController {
       res.json(formatted);
     });
   };
+
+  getSessionLogs = (req, res) => {
+    console.log("In Controller");
+
+    const filters = new SessionRequestDto(req.query);
+
+    this.Logger.getSessionLogs(filters.name, (err, logs) => {
+      if (err) {
+        return res.status(500).json({
+          success: false,
+          message: err.message || "Unable to fetch session logs",
+        });
+      }
+
+      if (filters.name && logs.length === 0) {
+        return res.status(404).json({
+          success: false,
+          message: "NOT FOUND",
+        });
+      }
+
+      res.status(200).json({
+        success: true,
+        data: logs,
+      });
+    });
+  };
+
 }
 
-module.exports = LoggerController;
+module.exports = Logger;

@@ -6,7 +6,7 @@ class ProfileRepository {
   }
 
 
-    async getUserProfileById(userId) {
+    getUserProfileById(userId) {
     const query = `
       SELECT  u.id AS user_id, u.contact, u.status, p.first_name, p.last_name,
         p.gender, p.date_of_birth,  p.email, a.enrollment_year,
