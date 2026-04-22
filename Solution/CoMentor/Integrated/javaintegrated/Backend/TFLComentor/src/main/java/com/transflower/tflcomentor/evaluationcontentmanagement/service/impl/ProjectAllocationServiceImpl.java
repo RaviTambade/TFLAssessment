@@ -33,8 +33,8 @@ public class ProjectAllocationServiceImpl implements ProjectAllocationService {
     }
 
     @Override
-    public List<ProjectAllocationResponseDTO> getAllocatedProjects() {
-        return repository.getAllocatedProjects();
+    public List<ProjectAllocationResponseDTO> getProjectAllocationDetails() {
+        return repository.getProjectAllocationDetails();
     }
 
     @Override

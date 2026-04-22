@@ -3,6 +3,9 @@ package com.transflower.tflcomentor.configuration;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
 public class DBConfig {
 
     private static final String URL = "jdbc:mysql://192.168.1.149:3306/tflcomentor_db";

@@ -59,7 +59,7 @@ public class QuestionsRepositoryImpl implements QuestionsRepository {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return null; // fixed
+        return null;
     }
 
     @Override

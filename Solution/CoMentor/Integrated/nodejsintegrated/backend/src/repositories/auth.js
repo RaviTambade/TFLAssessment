@@ -1,33 +1,22 @@
 const LoginStatus = require("../dtos/responses/LoginStatus");
 
 class AuthRepository {
+
   constructor(connection) {
     this.connection = connection;
   }
 
   validate(credential, callback) {
-    const sql = `select u.id
-                    from users u
-                    join user_roles ur on u.id= ur.user_id
-                    join roles r on r.role_id = ur.role_id
-                    where u.contact=? AND u.password=? AND u.status="ACTIVE" AND r.role_name=?;`;
-    this.connection.query(
-      sql,
-      [credential.username, credential.password, credential.role],
-      (err, results) => {
-        if (err) {
-          return callback(err, null);
-        }
+    const sql = `SELECT u.id from users u
+                    JOIN user_roles ur ON u.id= ur.user_id JOIN roles r ON r.role_id = ur.role_id
+                    WHERE u.contact=? AND u.password=? AND u.status="ACTIVE" AND r.role_name=?;`;
+    this.connection.query( sql,[credential.username, credential.password, credential.role],
+      (err, results) => { if (err) { return callback(err, null);  }
 
-        //
         const isValidUser = results && results.length > 0;
         const userId = isValidUser ? results[0].id : null;
 
-        const loginStatus = new LoginStatus(
-          isValidUser ? true : false,
-          isValidUser ? "Login successful" : "Invalid credentials",
-          userId,
-        );
+        const loginStatus = new LoginStatus( isValidUser ? true : false, isValidUser ? "Login successful" : "Invalid credentials",userId, credential.role); 
 
         callback(null, loginStatus);
       },
@@ -36,16 +25,20 @@ class AuthRepository {
 
   register(user, callback) {
     console.log(user);
-
-    const query = "call RegisterUser(?,?,?,?,?)";
-
-    this.connection.query(
-      query,
-      [user.contact, user.firstName, user.lastName, user.email, user.password],
-      callback,
+    const query = "CALL RegisterUser(?,?,?,?,?)"; this.connection.query(query,[user.contact, user.firstName, user.lastName, user.email, user.password],callback,
     );
   }
 
+  getUserById(id, callback) {
+  this.connection.query("SELECT * FROM users WHERE id = ?", [id], (err, result) => {if (err) return callback(err);callback(null, result);}
+    );
+  }
+
+  updatePassword(id, newPassword, callback) {
+    this.connection.query( "UPDATE users SET password = ? WHERE id = ?", [newPassword, id],
+      (err, result) => {if (err) return callback(err); callback(null, result);}
+    );
+  }
  
 }
 

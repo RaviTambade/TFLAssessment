@@ -13,7 +13,6 @@ public interface ProjectAllocationService {
 
     List<ProjectAllocationResponseDTO> getStudentByProjectId(Long projectId);
 
-    List<ProjectAllocationResponseDTO> getAllocatedProjects();
-
+    List<ProjectAllocationResponseDTO> getProjectAllocationDetails();
      List<String> getProjectByStudentId(Long studentId);
 }
