@@ -32,8 +32,8 @@ public class ProjectAllocationsController {
     }
 
     @GetMapping
-    public List<ProjectAllocationResponseDTO> getAllProjects() {
-        return service.getAllocatedProjects();
+    public List<ProjectAllocationResponseDTO> getProjectAllocationDetails() {
+        return service.getProjectAllocationDetails();
     }
 
     @PostMapping("/add")

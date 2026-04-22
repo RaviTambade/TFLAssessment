@@ -13,5 +13,5 @@ public interface ProjectAllowcationService {
 
     List<ProjectAllocationResponseDTO> getStudentByProjectId(Long projectId);
 
-    List<ProjectAllocationResponseDTO> getAllocatedProjects();
+    List<ProjectAllocationResponseDTO> getProjectAllocationDetails();
 }

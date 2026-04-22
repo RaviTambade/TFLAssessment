@@ -65,11 +65,11 @@ public class ProjectAllocationRepositoryImpl implements ProjectAllocationReposit
     }
 
     @Override
-    public List<ProjectAllocationResponseDTO> getAllocatedProjects() {
+    public List<ProjectAllocationResponseDTO> getProjectAllocationDetails() {
         List<ProjectAllocationResponseDTO> allocations = new ArrayList<>();
 
         String query = """
-            SELECT 
+            SELECT
                 pa.project_id,
                 p.project_name,
                 pa.student_id,

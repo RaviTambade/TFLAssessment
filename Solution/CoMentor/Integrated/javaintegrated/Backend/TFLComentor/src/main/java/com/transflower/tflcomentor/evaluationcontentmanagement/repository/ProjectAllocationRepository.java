@@ -9,7 +9,7 @@ public interface ProjectAllocationRepository {
     boolean addStudentToProject(ProjectAllocation projectAllocation);
     boolean removeStudentFromProject(Long projectId, Long studentId);
     List<ProjectAllocationResponseDTO> getStudentByProjectId(Long projectId);
-    List<ProjectAllocationResponseDTO> getAllocatedProjects();
+    List<ProjectAllocationResponseDTO> getProjectAllocationDetails();
 
 }
  
