@@ -154,4 +154,18 @@ public class AssessmentController : ControllerBase
 
         return Ok(new { message = "Assessment restored successfully" });
     }
+
+    [HttpGet("summaries/{studentId}")]
+    public async Task<IActionResult> GetAssessmentSummariesForStudent(long studentId)
+    {
+        try
+        {
+            var summaries = await _service.GetAssessmentSummariesForStudent(studentId);
+            return Ok(summaries);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, new { message = "An error occurred while fetching assessment summaries", error = ex.Message, stackTrace = ex.StackTrace });
+        }
+    }
 }
