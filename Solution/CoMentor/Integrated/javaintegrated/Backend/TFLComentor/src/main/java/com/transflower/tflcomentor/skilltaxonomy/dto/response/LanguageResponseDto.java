@@ -1,14 +1,14 @@
 package com.transflower.tflcomentor.skilltaxonomy.dto.response;
 
-public class LanguageDto {
+public class LanguageResponseDto {
 
     private int languageId;
     private String languageName;
 
-    public LanguageDto() {
+    public LanguageResponseDto() {
     }
 
-    public LanguageDto(int languageId, String languageName) {
+    public LanguageResponseDto(int languageId, String languageName) {
         this.languageId = languageId;
         this.languageName = languageName;
     }

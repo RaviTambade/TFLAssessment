@@ -2,18 +2,18 @@ package com.transflower.tflcomentor.skilltaxonomy.dto.response;
 
 import java.util.List;
 
-public class RuntimeDetailsResponse {
+public class RuntimeDetailsResponseDto {
 
     private Long id;
     private String runtimeName;
     private Long linkedSmes;
-    private List<RuntimeAssignmentResponse> assignments;
+    private List<RuntimeAssignmentResponseDto> assignments;
 
-    public RuntimeDetailsResponse(
+    public RuntimeDetailsResponseDto(
             Long id,
             String runtimeName,
             Long linkedSmes,
-            List<RuntimeAssignmentResponse> assignments) {
+            List<RuntimeAssignmentResponseDto> assignments) {
         this.id = id;
         this.runtimeName = runtimeName;
         this.linkedSmes = linkedSmes;
@@ -32,7 +32,7 @@ public class RuntimeDetailsResponse {
         return linkedSmes;
     }
 
-    public List<RuntimeAssignmentResponse> getAssignments() {
+    public List<RuntimeAssignmentResponseDto> getAssignments() {
         return assignments;
     }
 }
