@@ -41,7 +41,8 @@ builder.Services.AddScoped<ILayersService, LayersService>();
 builder.Services.AddScoped<ILayersRepository, LayersRepository>();
 builder.Services.AddScoped<IConceptsService, ConceptsService>();
 builder.Services.AddScoped<IConceptsRepository, ConceptsRepository>();
-
+builder.Services.AddScoped<ICreateTestService, CreateTestService>();
+builder.Services.AddScoped<ICreateTestRepository, CreateTestRepository>();
 
 // Configure CORS to allow requests from the frontend
 builder.Services.AddCors(options =>

@@ -7,8 +7,6 @@ public partial class Test
 {
     public long Id { get; set; }
 
-    public long? SmeId { get; set; }
-
      public long? SmeRuntimeId { get; set; }
 
     public string? Title { get; set; }
