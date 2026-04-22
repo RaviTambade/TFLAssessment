@@ -19,7 +19,7 @@ public class AssessmentController : ControllerBase
     [HttpGet("user/{userId}")]
     public async Task<IActionResult> GetAll(long userId)
     {
-        var data = await _service.GetAllUpcomingAssessmentsService(userId); // Replace 0 with actual user ID if available
+        var data = await _service.GetAllUpcomingAssessmentsService(userId); 
         return Ok(data);
     }
 
