@@ -1,11 +1,11 @@
 const RoleRequestDto = require("../dtos/requests/RoleRequestDto");
-class RoleController {
-  constructor(roleService) {
-    this.roleService = roleService;
+class Role{
+  constructor(role) {
+    this.roleService = role;
   }
 
   getAllRoles(req, res) {
-    this.roleService.getAllRoles((err, result) => {
+    this.role.getAllRoles((err, result) => {
       if (err) return res.status(500).json(err);
       res.json(result);
     });
@@ -13,7 +13,7 @@ class RoleController {
 
   addNewRole(req, res) {
     const role = new RoleRequestDto(req.body.roleName, req.body.description);
-    this.roleService.addNewRole(role, (err, result) => {
+    this.role.addNewRole(role, (err, result) => {
       if (err) return res.status(500).json(err);
       res.json({ message: "role added successfully" });
     });
@@ -21,7 +21,7 @@ class RoleController {
 
   deleteExistingRole(req, res) {
     const id = req.params.id;
-    this.roleService.deleteExistingRole(id, (err, result) => {
+    this.role.deleteExistingRole(id, (err, result) => {
       if (err) return res.status(500).json(err);
       res.json({ message: "role deleted successfully" });
     });
@@ -30,7 +30,7 @@ class RoleController {
   updateExistingRole(req, res) {
     const id = req.params.id;
     const role = new RoleRequestDto(req.body.roleName, req.body.description);
-    this.roleService.updateExistingRole(id, role, (err, result) => {
+    this.role.updateExistingRole(id, role, (err, result) => {
       if (err) return res.status(500).json(err);
       res.json({ message: "role updated successfully" });
     });
@@ -38,11 +38,11 @@ class RoleController {
 
   getRoleById(req, res) {
     const id = req.params.id;
-    this.roleService.getRoleById(id, (err, result) => {
+    this.role.getRoleById(id, (err, result) => {
       if (err) return res.status(500).json(err);
       res.json(result);
     });
   }
 }
 
-module.exports = RoleController;
+module.exports = Role;
