@@ -4,7 +4,7 @@ namespace backend.Repositories.Interfaces
 {
     public interface IRuntimesRepository
     {
-        Task<List<RuntimeDto>> GetRuntimes();
+        Task<List<RuntimeDto>> GetRuntimesAsync();
        
     }
 }

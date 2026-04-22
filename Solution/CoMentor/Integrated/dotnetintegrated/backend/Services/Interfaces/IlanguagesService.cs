@@ -5,7 +5,7 @@ namespace backend.Services.Interfaces
     public interface ILanguagesService
     {
        
-        Task<List<LanguageDto>> GetLanguages(long runtimeId);
+        Task<List<LanguageDto>> GetLanguagesAsync(long runtimeId);
         
     }
 }

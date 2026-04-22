@@ -8,6 +8,10 @@ public class Concept{
     private String description;
     private int status ;
     private LocalDateTime createdAt;
+    private String Framework;
+    private String Language;
+    private STring Runtime;
+    
 
     public Concept(){
       this.id = 0;

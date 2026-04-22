@@ -14,7 +14,7 @@ namespace backend.Repositories
             _context = context;
         }
 
-        public async Task<List<RuntimeDto>> GetRuntimes()
+        public async Task<List<RuntimeDto>> GetRuntimesAsync()
         {
             return await _context.Runtimes
                 .Select(x => new RuntimeDto

@@ -12,7 +12,7 @@ import com.transflower.tflcomentor.skilltaxonomy.entity.Layer;
 import com.transflower.tflcomentor.skilltaxonomy.entity.Runtime;
 
 @Repository
-public interface IConceptRepository {
+public interface ConceptRepository {
     List<Concept> getAllConcepts();
     List<Runtime> getAllRuntimes();
     List<Language> getAllLanguages(int runtimeId);

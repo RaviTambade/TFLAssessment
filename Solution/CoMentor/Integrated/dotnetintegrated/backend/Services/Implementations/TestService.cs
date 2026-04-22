@@ -13,10 +13,10 @@ namespace backend.Services
             _repo = repo;
         }
 
-        public Task<List<QuestionDto>> GetQuestionsByConceptId(List<long> conceptIds, string type)
-            => _repo.GetQuestionsByConceptId(conceptIds, type);
+        public Task<List<QuestionDto>> GetQuestionsByConceptIdAsync(List<long> conceptIds, string type)
+            => _repo.GetQuestionsByConceptIdAsync(conceptIds, type);
 
-        public Task<long> CreateTest(CreateTestRequestDto dto)
-            => _repo.CreateTest(dto);
+        public Task<long> CreateTestAsync(CreateTestRequestDto dto)
+            => _repo.CreateTestAsync(dto);
     }
 }
