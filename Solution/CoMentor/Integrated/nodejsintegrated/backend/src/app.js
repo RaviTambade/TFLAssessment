@@ -2,31 +2,31 @@ const express=require("express");
 const cors=require("cors");
 const bodyParser = require("body-parser");
 
-/*
+
 const AuthRepository = require("./repositories/auth");
 const UsersRepository = require('./repositories/users');
 
 const LoggerRepository = require("./repositories/logger");
-const SessionRepository = require("./repositories/session");*/
+const SessionRepository = require("./repositories/session");
 
 const RoleRepository = require("./repositories/role");
-//const UpdateRolesRepository = require('./repositories/updaterole');
+const UpdateRolesRepository = require('./repositories/updaterole');
 
-//const ProfileRepository = require("./repositories/profile")
-//const UserProfileRepository = require("./repositories/userProfile");
-//const EmployerProfileRepository = require("./repositories/userProfile");
+const ProfileRepository = require("./repositories/profile")
+const UserProfileRepository = require("./repositories/userProfile");
+const EmployerProfileRepository = require("./repositories/userProfile");
 
-/*
+
 const AuthService = require("./services/authservice");
 const ProfileService = require("./services/profileservice");
 const LoggerService = require("./services/loggerservices");
 const SessionService = require("./services/sessionservice");
-const UsersService = require('./services/userinformationservice');*/
+const UsersService = require('./services/userinformationservice');
 const RoleService = require("./services/role");
-//const UpdateRolesService = require('./services/updaterolesservices');
-//const EmployerProfileService = require("./services/userProfileService");
-//const UserProfileService = require("./services/userProfile.service");
-/*
+const UpdateRolesService = require('./services/updaterolesservices');
+const EmployerProfileService = require("./services/userProfileService");
+const UserProfileService = require("./services/userProfile.service");
+
 const AdminProfileService = require("./services/adminProfileService");
 const UpdateRolesController = require('./controllers/updaterolescontroller');
 const UsersController = require('./controllers/userinformationcontroller');
@@ -42,14 +42,14 @@ const SessionController = require("./controllers/sessioncontroller_sai_samruddhi
 const RoleController = require("./controllers/role");
 
 
-//const LoggerRoutes = require("./routers/loggerroutes");
-//const SessionRoutes = require("./routers/sessionroutes");
-//const AuthRoutes = require("./routers/authroutes");
-//const userProfileRoutes = require("./routers/profileroutes");
+const LoggerRoutes = require("./routers/loggerroutes");
+const SessionRoutes = require("./routers/sessionroutes");
+const AuthRoutes = require("./routers/authroutes");
+const userProfileRoutes = require("./routers/profileroutes");
 const RoleRouterFactory = require("./routers/role");
-//const EmployerProfileRouter = require("./routers/userProfileRoutes");
-//const userProfileRouter = require("./routers/userProfile.routes");
-//const UpdateRolesRouter = require('./routers/updaterolesrouter');
+const EmployerProfileRouter = require("./routers/userProfileRoutes");
+const userProfileRouter = require("./routers/userProfile.routes");
+const UpdateRolesRouter = require('./routers/updaterolesrouter');
 
 const NotFoundHandler = require("./middlewares/notFoundHandler");
 const ErrorHandler = require("./middlewares/errorHandler");
@@ -58,7 +58,7 @@ const ErrorHandler = require("./middlewares/errorHandler");
 // Initialize repositories, services, and controllers for each module
 const connection = require("./connectivity/db");
 
-/*
+
 const authRepo = new AuthRepository(connection);  
 const loginsvc = new userLoginService(authRepo);
 const authcontroller = new AuthenticationController(loginService);
@@ -92,14 +92,14 @@ const router = userProfileRouter(userProfileController);
 const employerRepo = new EmployerProfileRepository(connection);
 const employerSvc = new EmployerProfileService(employerRepo);
 const employerController = new EmployerProfileController(employerSvc);
-const employerRoutes = EmployerProfileRouter(employerController);*/
+const employerRoutes = EmployerProfileRouter(employerController);
 
 const roleRepo = new RoleRepository(connection);
 const roleSvc = new RoleService(roleRepo);
 const roleController = new RoleController(roleSvc);
 const roleRouter = RoleRouterFactory(roleController);
 
-/*const userEditRepo = new UserProfileRepository();
+const userEditRepo = new UserProfileRepository();
 const userEditSvc = new UserProfileService(userEditRepo);
 const userEditController = new UserProfileController(userEditSvc); 
 
@@ -107,7 +107,7 @@ const userEditController = new UserProfileController(userEditSvc);
 const userInformationRepo = new UsersRepository(connection);
 const userInformationSvc = new UsersService(userInformationRepo);
 const userInformationController = new UsersController(userInformationSvc);
-const userInformationRouter = UsersRouterFactory(userInformationController);*/
+const userInformationRouter = UsersRouterFactory(userInformationController);
 
 const app = express();
 
@@ -121,13 +121,14 @@ app.use((req, res, next) => {
   next();
 });
 
-/*
+
 app.use(NotFoundHandler);
 app.use(ErrorHandler);
-app.use("/api/auth/", authRoutes);*/
-app.use("/api/roles", role);
+app.use("/api/auth/", authRoutes);
+app.use("/api/roles", role)
 
-/*
+
+
 app.use("/api/profile/", profileRoutes);
 app.use("/api/employerprofile", employerRoutes);
 app.use("/api/userprofiles", router);
@@ -135,6 +136,6 @@ app.use("/api/userlog/", loggerRoutes);
 app.use("/api/usersessions", sessionRoutes);
 
 app.use(['/api', '/api/v1'], updaterolesrouter);
-app.use("/api/v1/user-information", userInformationRouter);*/
+app.use("/api/v1/user-information", userInformationRouter);
 
 module.exports = app;
