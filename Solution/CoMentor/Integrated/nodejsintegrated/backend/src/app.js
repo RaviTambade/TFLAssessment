@@ -3,15 +3,15 @@ const cors=require("cors");
 const bodyParser = require("body-parser");
 
 
-const AuthRepository = require("./repositories/authrepository");
-const ProfileRepository = require("./repositories/profilerepository");
-const LoggerRepository = require("./repositories/loggerrepository");
-const SessionRepository = require("./repositories/sessionrepository");
-const UsersRepository = require('./repositories/userinformationrepository');
-const UpdateRolesRepository = require('./repositories/updaterolesrepository');
-const UserProfileRepository = require("./repositories/userProfile.repository");
-const EmployerProfileRepository = require("./repositories/userProfileRepository");
-const RoleRepository = require("./repositories/roleRepository");
+const AuthRepository = require("./repositories/auth");
+const ProfileRepository = require("./repositories/profile");
+const LoggerRepository = require("./repositories/logger");
+const SessionRepository = require("./repositories/session");
+const UsersRepository = require('./repositories/userinformation');
+const UpdateRolesRepository = require('./repositories/updaterole');
+const UserProfileRepository = require("./repositories/userProfile");
+const EmployerProfileRepository = require("./repositories/userProfile");
+const RoleRepository = require("./repositories/role");
 
 const AuthService = require("./services/authservice");
 const ProfileService = require("./services/profileservice");
@@ -54,53 +54,53 @@ const connection = require("./connectivity/db");
 
 
 const authRepo = new AuthRepository(connection);  
-const loginService = new userLoginService(authRepo);
-const authController = new AuthenticationController(loginService);
+const loginsvc = new userLoginService(authRepo);
+const authcontroller = new AuthenticationController(loginService);
 const authRoutes = userLoginRoutes(authController);
 
-const profileRepository=new ProfileRepository(connection);
-const profileService=new ProfileService(profileRepository);
-const profileController=new ProfileController(profileService);
+const profileRepo=new ProfileRepository(connection);
+const profileSvc=new ProfileService(profileRepo);
+const profileController=new ProfileController(profileSvc);
 const profileRoutes = userProfileRoutes(profileController);  
 
-const loggerRepository=new LoggerRepository(connection);
-const loggerService=new LoggerService(loggerRepository);
-const loggerController=new LoggerController(loggerService);
+const loggerRepo=new LoggerRepository(connection);
+const loggerSvc=new LoggerService(loggerRepo);
+const loggerController=new LoggerController(loggerSvc);
 const loggerRoutes = LoggerRoutes(loggerController);
 
 const sessionRepo = new SessionRepository(connection);
-const sessionService = new SessionService(sessionRepo);
-const sessionController = new SessionController(sessionService);
+const sessionSvc = new SessionService(sessionRepo);
+const sessionController = new SessionController(sessionSvc);
 const sessionRoutes = SessionRoutes(sessionController);
 
-const updaterolesrepo = new UpdateRolesRepository(connection);
-const updaterolesservice = new UpdateRolesService(updaterolesrepo, connection);
-const updaterolescontroller = new UpdateRolesController(updaterolesservice);
-const updaterolesrouter = UpdateRolesRouter(updaterolescontroller);
+const updaterolesRepo = new UpdateRolesRepository(connection);
+const updaterolesSvc = new UpdateRolesService(updaterolesRepo, connection);
+const updaterolesController = new UpdateRolesController(updaterolesSvc);
+const updaterolesRouter = UpdateRolesRouter(updaterolesController);
 
-const userProfileRepository = new UserProfileRepository(connection);
-const userProfileService = new UserProfileService(userProfileRepository);
-const userProfileController = new UserProfileController(userProfileService);
+const userProfileRepo = new UserProfileRepository(connection);
+const userProfileSvc = new UserProfileService(userProfileRepo);
+const userProfileController = new UserProfileController(userProfileSvc);
 const router = userProfileRouter(userProfileController);
 
 const employerRepo = new EmployerProfileRepository(connection);
-const employerService = new EmployerProfileService(employerRepo);
-const employerController = new EmployerProfileController(employerService);
+const employerSvc = new EmployerProfileService(employerRepo);
+const employerController = new EmployerProfileController(employerSvc);
 const employerRoutes = EmployerProfileRouter(employerController);
 
-const roleRepository = new RoleRepository(connection);
-const roleService = new RoleService(roleRepository);
-const roleController = new RoleController(roleService);
+const roleRepo = new RoleRepository(connection);
+const roleSvc = new RoleService(roleRepo);
+const roleController = new RoleController(roleSvc);
 const roleRouter = RoleRouterFactory(roleController);
 
 const userEditRepo = new UserProfileRepository();
-const userEditService = new UserProfileService(userEditRepo);
-const userEditController = new UserProfileController(userEditService); 
+const userEditSvc = new UserProfileService(userEditRepo);
+const userEditController = new UserProfileController(userEditSvc); 
 
   
 const userInformationRepo = new UsersRepository(connection);
-const userInformationService = new UsersService(userInformationRepo);
-const userInformationController = new UsersController(userInformationService);
+const userInformationSvc = new UsersService(userInformationRepo);
+const userInformationController = new UsersController(userInformationSvc);
 const userInformationRouter = UsersRouterFactory(userInformationController);
 
 const app = express();
