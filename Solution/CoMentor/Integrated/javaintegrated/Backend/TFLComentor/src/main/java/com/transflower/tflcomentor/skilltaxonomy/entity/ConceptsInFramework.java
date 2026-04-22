@@ -1,17 +1,17 @@
 package com.transflower.tflcomentor.skilltaxonomy.entity;
 
-public class FrameworkConcept {
+public class ConceptsInFramework {
     private int id ;
     private int frameworkId;
     private int conceptId;
 
-    public FrameworkConcept(){
+    public ConceptsInFramework(){
         this.id = 0;
         this.frameworkId = 0;
         this.conceptId = 0;
     }
     
-    public FrameworkConcept(int id, int frameworkId, int conceptId) {
+    public ConceptsInFramework(int id, int frameworkId, int conceptId) {
         this.id = id;
         this.frameworkId = frameworkId;
         this.conceptId = conceptId;

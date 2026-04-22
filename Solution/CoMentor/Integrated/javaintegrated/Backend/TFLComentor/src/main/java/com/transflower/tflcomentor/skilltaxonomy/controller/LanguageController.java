@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.transflower.tflcomentor.skilltaxonomy.dto.response.LanguageDto;
+import com.transflower.tflcomentor.skilltaxonomy.entity.Language;
 import com.transflower.tflcomentor.skilltaxonomy.service.LanguageService;
 
 @RestController
@@ -21,6 +22,13 @@ public class LanguageController {
     public LanguageController(LanguageService languageService) {
         this.languageService = languageService;
     }
+
+    @GetMapping("/languages/runtime/{runtimeId}")  
+        public List<Language> getAllLanguages(@PathVariable int runtimeId) {
+            return conceptsService.getAllLanguages(runtimeId);
+}
+
+
 
      @GetMapping("/{smeId}/languages")
     public ResponseEntity<List<LanguageDto>> getAssignedLanguages(@PathVariable long smeId) {

@@ -98,5 +98,4 @@ public class RuntimeRepositoryImpl implements RuntimeRepository {
             throw new RuntimeException("Failed to fetch runtime details for id=" + runtimeId, e);
         }
     }
-
 }
