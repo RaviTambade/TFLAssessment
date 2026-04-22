@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using backend.Services.Interfaces;
+using System.Threading.Tasks;
 
 namespace backend.Controllers
 {
@@ -15,19 +16,33 @@ namespace backend.Controllers
         }
 
         [HttpGet("{id}")]
-        public IActionResult QuestionDetailsWithAns(int id)
+        public async Task<IActionResult> QuestionDetailsWithAns(int id)
         {
-            var result = _service.QuestionDetailsWithAns(id);
+            var result = await _service.QuestionDetailsWithAns(id);
 
             if (result == null)
                 return NotFound("No data found");
 
             return Ok(result);
         }
+
         [HttpGet("{assessmentId}/student/{studentId}")]
         public async Task<IActionResult> GetStudentAssessmentQuestionsResultAsync(int assessmentId, int studentId)
         {
             var result = await _service.GetStudentAssessmentQuestionsResultAsync(assessmentId, studentId);
+            return Ok(result);
+        }
+
+        [HttpGet("view/{questionId}")]
+        public async Task<IActionResult> ViewQuestionDetails(int questionId)
+        {
+            var result = await _service.ViewQuestionDetails(questionId);
+
+            if (result == null)
+            {
+                return NotFound("Question not found");
+            }
+
             return Ok(result);
         }
     }

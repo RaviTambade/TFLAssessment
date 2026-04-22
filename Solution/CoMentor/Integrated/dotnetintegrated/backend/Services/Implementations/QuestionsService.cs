@@ -1,6 +1,7 @@
 using backend.DTOs;
 using backend.Repositories.Interfaces;
 using backend.Services.Interfaces;
+using System.Threading.Tasks;
 
 namespace backend.Services.Implementations
 {
@@ -13,9 +14,14 @@ namespace backend.Services.Implementations
             _repository = repository;
         }
 
-        public QuestionsDto QuestionDetailsWithAns(int questionId)
+        public async Task<QuestionsDto> QuestionDetailsWithAns(int questionId)
         {
-            return _repository.QuestionDetailsWithAns(questionId);
+            return await _repository.QuestionDetailsWithAns(questionId);
+        }
+
+        public async Task<QuestionDetailsDto> ViewQuestionDetails(int questionId)
+        {
+            return await _repository.ViewQuestionDetails(questionId);
         }
 
         public async Task<IEnumerable<AssessmentQuestionAnswersDto>> GetStudentAssessmentQuestionsResultAsync(int assessmentId, int studentId)

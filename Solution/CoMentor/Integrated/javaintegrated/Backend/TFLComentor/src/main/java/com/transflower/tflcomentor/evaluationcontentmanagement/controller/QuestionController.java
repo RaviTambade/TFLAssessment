@@ -43,9 +43,9 @@ public class QuestionController {
         return service.getQuestionsByDifficulty(level);
     }
 
-     @PostMapping()
-        public String createQuestion(@RequestBody QuestionRequestDto dto) {
-        service.createQuestion(dto);
+    @PostMapping()
+    public String create(@RequestBody QuestionRequestDto dto) {
+        service.create(dto);
         return "Question with Options Saved!";
     }
 
@@ -53,12 +53,10 @@ public class QuestionController {
     // public List<Question> getAll() {
     //     return service.getAllQuestions();
     // }
-
     @GetMapping("/drafts")
     public List<QuestionResponse> getDraft() {
         return service.getDraftQuestions();
     }
-
 
     @PutMapping("/{id}/approve")
     public String approve(@PathVariable Long id) {
@@ -85,16 +83,14 @@ public class QuestionController {
     }
 
     @GetMapping("/recent")
-    public List<QuestionResponse> getRecentQuestions() {
-        return service.getRecentQuestions();
+    public List<QuestionResponse> getQuestionsFromLastTwoDays() {
+        return service.getQuestionsFromLastTwoDays();
     }
 
-
-    @GetMapping("/recent/list")
-    public List<QuestionResponse> getRecentList() {
-        return service.getRecentQuestionList();
-    }
-
+    // @GetMapping("/recent/list")
+    // public List<QuestionResponse> getRecentList() {
+    //     return service.getRecentQuestionList();
+    // }
     @GetMapping("/details/{id}")
     public QuestionResponseDto getDetailsById(@PathVariable Long id) {
         return service.getQuestionDetailsById(id);
@@ -104,7 +100,7 @@ public class QuestionController {
     public String updateQuestion(@PathVariable Long id, @RequestBody QuestionRequestDto dto) {
         service.updateQuestionById(id, dto);
         return "Question Updated Successfully";
-}
+    }
 
     @GetMapping("/type/{questionType}")
     public List<QuestionResponse> getQuestionsByType(@PathVariable String questionType) {
@@ -118,10 +114,8 @@ public class QuestionController {
 
     @GetMapping("/concepts/{conceptId}/questions")
     public ResponseEntity<?> getQuestionsByConceptId(@PathVariable Long conceptId) {
-        List<QuestionDto> questions = service.getQuestionsByConceptId(conceptId);   
+        List<QuestionDto> questions = service.getQuestionsByConceptId(conceptId);
         return ResponseEntity.ok(questions);
     }
 
-
-    
 }
