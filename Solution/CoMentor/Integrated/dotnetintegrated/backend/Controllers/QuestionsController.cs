@@ -26,6 +26,13 @@ namespace backend.Controllers
             return Ok(result);
         }
 
+        [HttpGet("{assessmentId}/student/{studentId}")]
+        public async Task<IActionResult> GetStudentAssessmentQuestionsResultAsync(int assessmentId, int studentId)
+        {
+            var result = await _service.GetStudentAssessmentQuestionsResultAsync(assessmentId, studentId);
+            return Ok(result);
+        }
+
         [HttpGet("view/{questionId}")]
         public async Task<IActionResult> ViewQuestionDetails(int questionId)
         {
