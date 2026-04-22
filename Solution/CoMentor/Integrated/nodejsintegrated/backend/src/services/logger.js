@@ -1,45 +1,53 @@
 const sessionLogResponseDto = require("../dtos/responses/sessionLogResponsedto");
 
-class LoggerService {
-  constructor(LoggerRepository) {
-    this.LoggerRepository = LoggerRepository;
+class Logger {
+  constructor(Logger) {
+    this.Logger= Logger;
   }
 
   LoginEntry(userid, callback) {
-    this.LoggerRepository.LoginEntry(userid, callback);
+    this.Logger.LoginEntry(userid, callback);
   }
 
   LogoutEntry(userid, callback) {
-    this.LoggerRepository.LogoutEntry(userid, callback);
+    this.Logger.LogoutEntry(userid, callback);
   }
 
   getLoginStats(callback) {
-    this.LoggerRepository.getLoginsLast24Hrs((err, result) => {
+    this.Logger.getLoginsLast24Hrs((err, result) => {
       if (err) return callback(err, null);
       callback(null, result);
     });
   }
 
   getAverageSessionTime(callback) {
-    this.LoggerRepository.getAvgSessionTime((err, result) => {
+    this.Logger.getAvgSessionTime((err, result) => {
       if (err) return callback(err, null);
       callback(null, result);
     });
   }
 
   getActiveSessions(callback) {
-    this.LoggerRepository.getActiveSessionsCount((err, result) => {
+    this.Logger.getActiveSessionsCount((err, result) => {
       if (err) return callback(err, null);
       callback(null, result);
     });
   }
 
   getActiveUsers(callback) {
-    this.LoggerRepository.getActiveUsers((err, result) => {
+    this.Logger.getActiveUsers((err, result) => {
       if (err) return callback(err, null);
       callback(null, result);
     });
   }
+
+  getSessionLogs(callback) {
+    this.Logger.getActiveUsers((err, result) => {
+      if (err) return callback(err, null);
+      callback(null, result);
+    });
+  }
+
 }
 
-module.exports= LoggerService;
+module.exports= Logger;
