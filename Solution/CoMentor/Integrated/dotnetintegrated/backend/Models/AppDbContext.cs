@@ -885,17 +885,33 @@ public partial class AppDbContext : DbContext
             entity.Property(e => e.Status).HasColumnName("status");
         });
 
-        modelBuilder.Entity<QuestionFrameworkConcept>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("PRIMARY");
+       modelBuilder.Entity<QuestionFrameworkConcept>(entity =>
+{
+    entity.HasKey(e => e.Id).HasName("PRIMARY");
 
-            entity.ToTable("question_framework_concepts");
+    entity.ToTable("question_framework_concepts");
 
-            entity.Property(e => e.Id).HasColumnName("id");
-            entity.Property(e => e.FrameworkId).HasColumnName("framework_id");
-            entity.Property(e => e.QuestionId).HasColumnName("question_id");
-        });
+    entity.Property(e => e.Id)
+        .HasColumnName("id");
 
+    entity.Property(e => e.QuestionId)
+        .HasColumnName("question_id");
+
+    entity.Property(e => e.FrameworkConceptsId)
+        .HasColumnName("framework_concepts_id");
+
+    entity.HasOne(e => e.Question)
+        .WithMany()
+        .HasForeignKey(e => e.QuestionId)
+        .HasPrincipalKey(p => p.QuestionId)
+        .OnDelete(DeleteBehavior.Cascade);
+
+    entity.HasOne(e => e.FrameworkConcepts)
+        .WithMany()
+        .HasForeignKey(e => e.FrameworkConceptsId)
+        .HasPrincipalKey(p => p.Id)
+        .OnDelete(DeleteBehavior.Cascade);
+});
         modelBuilder.Entity<Referral>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PRIMARY");
@@ -1020,7 +1036,7 @@ public partial class AppDbContext : DbContext
                 .HasColumnType("enum('BIGINNER','INTERMEDIATE','ADVANCE')")
                 .HasColumnName("difficulty");
             entity.Property(e => e.Duration).HasColumnName("duration");
-            entity.Property(e => e.SmeId).HasColumnName("sme_id");
+            entity.Property(e => e.SmeRuntimeId).HasColumnName("sme_runtime_id");
             entity.Property(e => e.Status).HasColumnName("status");
             entity.Property(e => e.Title)
                 .HasMaxLength(255)
