@@ -168,4 +168,12 @@ public class AssessmentController : ControllerBase
             return StatusCode(500, new { message = "An error occurred while fetching assessment summaries", error = ex.Message, stackTrace = ex.StackTrace });
         }
     }
+
+
+    [HttpGet("student-assessments-status")]
+    public async Task<IActionResult> Get()
+    {
+        var data = await _service.GetAllAssessments();
+        return Ok(data);
+    }
 }

@@ -343,6 +343,53 @@ public class AssessmentRepository : IAssessmentRepository
 
     return data;
 }
+
+
+
+   public List<StudentAssessmentDto> GetFullData()
+{
+    var data = (from a in _context.Assessments
+
+                join t in _context.Tests 
+                    on a.TestId equals t.Id into testGroup
+                from t in testGroup.DefaultIfEmpty()
+
+                join u in _context.Users 
+                    on a.StudentId equals u.Id into userGroup
+                from u in userGroup.DefaultIfEmpty()
+
+                join p in _context.PersonalInformations 
+                    on u.Id equals p.UserId into personalGroup
+                from p in personalGroup.DefaultIfEmpty()
+
+              join r in _context.StudentAssessmentResults
+    on a.Id equals (long?)r.AssessmentId into resultGroup
+                from r in resultGroup.DefaultIfEmpty()
+
+                select new StudentAssessmentDto
+                {
+                    AssessmentId = a.Id,
+
+                    TestId = t != null ? t.Id : 0,
+                    TestTitle = t != null ? t.Title : "No Test",
+
+                    StudentId = u != null ? u.Id : 0,
+                    StudentName = p != null ? p.FullName : "Unknown",
+
+                    Status = a.Status,
+                    AssignedAt = a.AssignedAt,
+                    ScheduledAt = a.ScheduledAt,
+
+                    Result = r == null ? null : new ResultDto
+                    {
+                        Score = r.Score,
+                        Percentile = r.Percentile,
+                        TimeTakenMinutes = r.TimeTakenMinutes
+                    }
+                }).ToList();
+
+    return data;
+}
     }
 
 
