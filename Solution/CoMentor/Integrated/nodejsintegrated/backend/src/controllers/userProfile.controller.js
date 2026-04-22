@@ -1,11 +1,3 @@
-/**
- * User Profile Controller
- * Handles HTTP requests and responses for user profile operations
- * SOLID Principles:
- *   - Single Responsibility: Only handles HTTP layer concerns
- *   - Dependency Inversion: Depends on UserProfileService abstraction
- * OOPS Concepts: Encapsulation, Abstraction
- */
 
 class UserProfileController {
   constructor(service) {

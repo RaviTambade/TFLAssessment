@@ -4,29 +4,27 @@ import java.util.List;
 
 import com.transflower.tflcomentor.evaluationcontentmanagement.dto.request.QuestionDto;
 import com.transflower.tflcomentor.evaluationcontentmanagement.dto.request.QuestionRequestDto;
-import com.transflower.tflcomentor.evaluationcontentmanagement.dto.response.QuestionListResponseDto;
+import com.transflower.tflcomentor.evaluationcontentmanagement.dto.response.QuestionResponse;
 import com.transflower.tflcomentor.evaluationcontentmanagement.dto.response.QuestionResponseDto;
-import com.transflower.tflcomentor.evaluationcontentmanagement.entity.Project;
-import com.transflower.tflcomentor.evaluationcontentmanagement.entity.Questions;
+import com.transflower.tflcomentor.evaluationcontentmanagement.entity.Question;
 
 public interface QuestionsServices {
-    Questions getQuestionById(long question_id);
-      List<Questions> getAllQuestions();
-    List<Questions> getQuestionsByDifficulty(String difficulty);
+    Question getQuestionById(long question_id);
+      List<Question> getAllQuestions();
+    List<Question> getQuestionsByDifficulty(String difficulty);
 
-    void createQuestion(QuestionRequestDto dto);
-    // List<Questions> getAllQuestions();
-    List<Questions> getDraftQuestions();
-    List<Questions> getRecentQuestions();
+    void create(QuestionRequestDto dto);
+    // List<Question> getAllQuestions();
+    List<QuestionResponse> getDraftQuestions();
+    List<QuestionResponse> getQuestionsFromLastTwoDays();
     void approveQuestionById(Long id);
     void rejectQuestionById(Long id);
-    void approveAllQuestions();
-    void rejectAllQuestions();
-    List<QuestionListResponseDto> getDraftQuestionList();
-    List<QuestionListResponseDto> getRecentQuestionList();
+    void approveQuestions(List<Long> questionId);
+    void rejectQuestions(List<Long> questionId);
+    // List<QuestionResponse> getRecentQuestionList();
     QuestionResponseDto getQuestionDetailsById(Long id);
-    List<QuestionListResponseDto> getQuestionsByType(String questionType);
-    List<QuestionListResponseDto> findByStatus(String questionStatus);
+    List<QuestionResponse> getQuestionsByType(String questionType);
+    List<QuestionResponse> getQuestionsByStatus(String questionStatus);
     void updateQuestionById(Long id, QuestionRequestDto dto);
     List<QuestionDto> getQuestionsByConceptId(Long conceptId);
 

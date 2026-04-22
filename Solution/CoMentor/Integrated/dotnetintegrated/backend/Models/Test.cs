@@ -9,6 +9,8 @@ public partial class Test
 
     public long? SmeId { get; set; }
 
+     public long? SmeRuntimeId { get; set; }
+
     public string? Title { get; set; }
 
     public int? Duration { get; set; }
