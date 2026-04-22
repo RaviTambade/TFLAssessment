@@ -10,8 +10,8 @@ import java.util.Optional;
 import org.springframework.stereotype.Repository;
 
 import com.transflower.tflcomentor.configuration.DBConfig;
+import com.transflower.tflcomentor.skilltaxonomy.dto.response.RuntimeDTO;
 import com.transflower.tflcomentor.skilltaxonomy.dto.response.RuntimeSummaryResponse;
-import com.transflower.tflcomentor.skilltaxonomy.dto.response.RuntimesDTO;
 import com.transflower.tflcomentor.skilltaxonomy.entity.Runtime;
 import com.transflower.tflcomentor.skilltaxonomy.repository.RuntimeRepository;
 
@@ -19,14 +19,14 @@ import com.transflower.tflcomentor.skilltaxonomy.repository.RuntimeRepository;
 public class RuntimeRepositoryImpl implements RuntimeRepository {
 
     @Override
-    public List<RuntimesDTO> getAllRuntimes() {
-        List<RuntimesDTO> runtimesList = new ArrayList<>();
+    public List<RuntimeDTO> getAllRuntimes() {
+        List<RuntimeDTO> runtimesList = new ArrayList<>();
         String query = "SELECT runtime_name FROM runtimes";
 
         try (Connection connection = DBConfig.getConnection(); PreparedStatement ps = connection.prepareStatement(query); ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
-                RuntimesDTO rt = new RuntimesDTO();
+                RuntimeDTO rt = new RuntimeDTO();
                 rt.setRuntime_name(rs.getString("Runtime_name"));
                 runtimesList.add(rt);
             }
@@ -38,7 +38,7 @@ public class RuntimeRepositoryImpl implements RuntimeRepository {
     }
 
     @Override
-    public boolean addRuntime(RuntimesDTO runtimedto) {
+    public boolean addRuntime(RuntimeDTO runtimedto) {
         String query = "insert into runtimes (runtime_name) values(?)";
 
         try (Connection connection = DBConfig.getConnection(); PreparedStatement st = connection.prepareStatement(query)) {

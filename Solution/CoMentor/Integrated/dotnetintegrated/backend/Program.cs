@@ -27,6 +27,9 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services.AddScoped<IAssessmentsService, AssessmentsService>();
 builder.Services.AddScoped<IAssessmentRepository, AssessmentRepository>();
 builder.Services.AddScoped<IUserSessionsService, UserSessionsService>();
+builder.Services.AddScoped<IUserSessionRepository, UsersessionRepository>();   
+builder.Services.AddScoped<IStudentResultService, StudentResultService>();
+builder.Services.AddScoped<IStudentResultRepository, StudentResultRepository>();
 builder.Services.AddScoped<IUserSessionRepository, UsersessionRepository>();
 builder.Services.AddScoped<IQuestionsRepository, QuestionsRepository>();
 builder.Services.AddScoped<IQuestionsService, QuestionsService>();

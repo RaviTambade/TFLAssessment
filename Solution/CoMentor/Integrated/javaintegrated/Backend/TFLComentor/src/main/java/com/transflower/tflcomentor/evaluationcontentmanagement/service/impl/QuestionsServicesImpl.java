@@ -7,11 +7,9 @@ import org.springframework.stereotype.Service;
 
 import com.transflower.tflcomentor.evaluationcontentmanagement.dto.request.QuestionDto;
 import com.transflower.tflcomentor.evaluationcontentmanagement.dto.request.QuestionRequestDto;
-import com.transflower.tflcomentor.evaluationcontentmanagement.dto.response.QuestionListResponseDto;
+import com.transflower.tflcomentor.evaluationcontentmanagement.dto.response.QuestionResponse;
 import com.transflower.tflcomentor.evaluationcontentmanagement.dto.response.QuestionResponseDto;
-import com.transflower.tflcomentor.evaluationcontentmanagement.entity.Project;
 import com.transflower.tflcomentor.evaluationcontentmanagement.entity.Question;
-import com.transflower.tflcomentor.evaluationcontentmanagement.entity.Questions;
 import com.transflower.tflcomentor.evaluationcontentmanagement.repository.QuestionsRepository;
 import com.transflower.tflcomentor.evaluationcontentmanagement.service.QuestionsServices;
 
@@ -25,23 +23,23 @@ public class QuestionsServicesImpl implements QuestionsServices {
     }
 
     @Override
-    public Questions getQuestionById(long question_id) {
+    public Question getQuestionById(long question_id) {
         return repository.getQuestionById(question_id);
     }
 
     @Override
-    public List<Questions> getAllQuestions() {
+    public List<Question> getAllQuestions() {
         return repository.getAllQuestions();
     }
 
     @Override
-    public List<Questions> getQuestionsByDifficulty(String difficulty) {
+    public List<Question> getQuestionsByDifficulty(String difficulty) {
         return repository.getQuestionsByDifficulty(difficulty);
     }
 
     // nirjala user story 72
     public void createQuestion(QuestionRequestDto dto) {
-        Questions q = new Questions();
+        Question q = new Question();
         q.setDescription(dto.getDescription());
         q.setQuestionType(dto.getQuestionType());
         q.setDifficultyLevel(dto.getDifficultyLevel());
@@ -63,63 +61,58 @@ public class QuestionsServicesImpl implements QuestionsServices {
     //     return repository.getAllQuestions();
     // }
     @Override
-    public List<Questions> getDraftQuestions() {
+    public List<QuestionResponse> getDraftQuestions() {
         return repository.getDraftQuestions();
     }
 
-     @Override
-    public List<Questions> getRecentQuestions() {
+    @Override
+    public List<QuestionResponse> getRecentQuestions() {
         return repository.getRecentQuestions();
     }
 
-     @Override
+    @Override
     public void approveQuestionById(Long id) {
         repository.approveQuestionById(id);
     }
 
-    @Override 
+    @Override
     public void rejectQuestionById(Long id) {
         repository.rejectQuestionById(id);
     }
 
-     @Override
-    public void approveAllQuestions() {
-        repository.approveAllQuestions();
+    @Override
+    public void approveQuestions(List<Long> questionIds) {
+        repository.approveQuestions(questionIds);
     }
 
-     @Override
-    public void rejectAllQuestions() {
-        repository.rejectAllQuestions();
+    @Override
+    public void rejectQuestions(List<Long> questionIds) {
+        repository.rejectQuestions(questionIds);
     }
-
- @Override
-    public List<QuestionListResponseDto> getDraftQuestionList() {
-        return repository.getDraftQuestionList();
-    }
-
-     @Override
-    public List<QuestionListResponseDto> getRecentQuestionList() {
+    
+    @Override
+    public List<QuestionResponse> getRecentQuestionList() {
         return repository.getRecentQuestionList();
     }
 
-     @Override
+    @Override
     public QuestionResponseDto getQuestionDetailsById(Long id) {
         return repository.getQuestionDetailsById(id);
     }
 
-     @Override
+    @Override
     public void updateQuestionById(Long id, QuestionRequestDto dto) {
         repository.updateQuestionById(id, dto);
     }
 
     @Override
-    public List<QuestionListResponseDto> getQuestionsByType(String questionType) {
+    public List<QuestionResponse> getQuestionsByType(String questionType) {
         return repository.getQuestionsByType(questionType);
     }
 
     @Override
-    public List<QuestionListResponseDto> findByStatus(String questionStatus) {
-        return repository.findByStatus(questionStatus);
+    public List<QuestionResponse> getQuestionsByStatus(String questionStatus) {
+        return repository.getQuestionsByStatus(questionStatus);
     }
 
  

@@ -1,4 +1,4 @@
-class UserProfileRepository {
+class UserInformationRepository {
 
   constructor(db) {
     this.db = db;
@@ -6,7 +6,7 @@ class UserProfileRepository {
 
   deleteUser(id, status, callback) {
     const sql = "UPDATE Users SET status = ? WHERE id = ?";
-    this.connection.query(sql, [status, id], callback);
+    this.db.query(sql, [status, id], callback);
   }
 
 
@@ -90,7 +90,7 @@ class UserProfileRepository {
       data.pincode ?? null
     ];
 
-    db.query(query, values, (err, results) => {
+    this.db.query(query, values, (err, results) => {
       if (err) return callback(err, null);
       return callback(null, results);
     });
@@ -117,7 +117,7 @@ class UserProfileRepository {
       data.skills ?? null
     ];
 
-    db.query(query, values, (err, results) => {
+    this.db.query(query, values, (err, results) => {
       if (err) return callback(err, null);
       return callback(null, results);
     });
@@ -137,7 +137,7 @@ class UserProfileRepository {
       data.college_name ?? null
     ];
 
-    db.query(query, values, (err, results) => {
+    this.db.query(query, values, (err, results) => {
       if (err) return callback(err, null);
       return callback(null, results);
     });
@@ -185,7 +185,7 @@ class UserProfileRepository {
       data.college_name ?? null
     ];
 
-    db.query(query, values, (err, results) => {
+    this.db.query(query, values, (err, results) => {
       if (err) return callback(err, null);
       return callback(null, results);
     });
@@ -193,4 +193,4 @@ class UserProfileRepository {
 
 }
 
-module.exports = UserProfileRepository;
+module.exports = UserInformationRepository;

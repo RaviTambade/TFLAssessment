@@ -11,10 +11,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.transflower.tflcomentor.skilltaxonomy.dto.response.RuntimeDTO;
 import com.transflower.tflcomentor.skilltaxonomy.dto.response.RuntimeDetailsResponse;
 import com.transflower.tflcomentor.skilltaxonomy.dto.response.RuntimeSummaryResponse;
-import com.transflower.tflcomentor.skilltaxonomy.dto.response.RuntimesDTO;
 import com.transflower.tflcomentor.skilltaxonomy.service.RuntimeService;
+
 @RestController
 @RequestMapping("/api")
 @CrossOrigin(origins = "http://localhost:8081")
@@ -23,7 +24,7 @@ public class RuntimesController {
     private RuntimeService svc;
     
     @GetMapping("/name/runtimes")
-    public List<RuntimesDTO> getAllRuntimes() {
+    public List<RuntimeDTO> getAllRuntimes() {
         return svc.getAllRuntimes();
       
     }
@@ -39,7 +40,7 @@ public class RuntimesController {
     }
 
     @PostMapping("/runtimes/add")
-    public boolean addRuntime(@RequestBody RuntimesDTO dto) {
+    public boolean addRuntime(@RequestBody RuntimeDTO dto) {
         return svc.addRuntime(dto);
     }
 }

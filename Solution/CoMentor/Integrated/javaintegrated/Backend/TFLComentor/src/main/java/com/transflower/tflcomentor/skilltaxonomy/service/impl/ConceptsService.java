@@ -13,14 +13,14 @@ import com.transflower.tflcomentor.skilltaxonomy.entity.Framework;
 import com.transflower.tflcomentor.skilltaxonomy.entity.Language;
 import com.transflower.tflcomentor.skilltaxonomy.entity.Layer;
 import com.transflower.tflcomentor.skilltaxonomy.entity.Runtime;
-import com.transflower.tflcomentor.skilltaxonomy.repository.IConceptsRepository;
+import com.transflower.tflcomentor.skilltaxonomy.repository.IConceptRepository;
 import com.transflower.tflcomentor.skilltaxonomy.service.IConceptsService;
 
 @Service
 public class ConceptsService implements IConceptsService {
 
     @Autowired
-    private IConceptsRepository conceptsRepository;
+    private IConceptRepository conceptsRepository;
 
     @Override
     public List<Concept> getAllConcepts() {

@@ -120,7 +120,7 @@ public partial class AppDbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseMySql("server=192.168.1.149;port=3306;database=tflcomentor_db;user=root;password=password", Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.4.4-mysql"));
+        => optionsBuilder.UseMySql("server=localhost;port=3306;database=tflcomentor_db;user=root;password=password", Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.4.4-mysql"));
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -192,6 +192,7 @@ public partial class AppDbContext : DbContext
                 .HasColumnName("status");
             entity.Property(e => e.StudentId).HasColumnName("student_id");
             entity.Property(e => e.TestId).HasColumnName("test_id");
+            entity.Property(e => e.IsActive).HasColumnName("is_active");
         });
 
         modelBuilder.Entity<Company>(entity =>
@@ -951,16 +952,22 @@ public partial class AppDbContext : DbContext
             entity.Property(e => e.UserId).HasColumnName("user_id");
         });
 
-        modelBuilder.Entity<SmeRuntime>(entity =>
-        {
-            entity.HasKey(e => e.SmeRuntimeId).HasName("PRIMARY");
+       modelBuilder.Entity<SmeRuntime>(entity =>
+{
+    entity.HasKey(e => e.SmeRuntimeId).HasName("PRIMARY");
 
-            entity.ToTable("sme_runtimes");
+    entity.ToTable("sme_runtimes");
 
-            entity.Property(e => e.SmeRuntimeId).HasColumnName("sme_runtime_id");
-            entity.Property(e => e.RuntimeId).HasColumnName("runtime_id");
-            entity.Property(e => e.UserId).HasColumnName("user_id");
-        });
+    entity.Property(e => e.SmeRuntimeId)
+        .HasColumnName("sme_runtime_id");
+
+    entity.Property(e => e.RuntimeId)
+        .HasColumnName("runtime_id");
+
+    // ✅ FIXED LINE
+    entity.Property(e => e.UserRolesId)
+        .HasColumnName("user_roles_id");
+});
 
         modelBuilder.Entity<StudentAssessmentResult>(entity =>
         {
@@ -1018,6 +1025,8 @@ public partial class AppDbContext : DbContext
             entity.Property(e => e.Title)
                 .HasMaxLength(255)
                 .HasColumnName("title");
+            entity.Property(e => e.SmeRuntimeId)
+        .HasColumnName("sme_runtime_id");
         });
 
         modelBuilder.Entity<TestQuestion>(entity =>
@@ -1104,7 +1113,7 @@ public partial class AppDbContext : DbContext
             entity.HasNoKey(); // DTOs don't have Primary Keys
             entity.ToView(null); // Tells EF there is no physical table for this
         });
-        
+
         modelBuilder.Entity<AssessmentAnswersDto>()
                 .ToTable("studentanswers");
 
