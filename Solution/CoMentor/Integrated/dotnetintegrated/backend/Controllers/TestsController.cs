@@ -16,13 +16,6 @@
 //     }
 
 
-
-
-//     [HttpGet("layers/{languageId}")]
-//     //http://localhost:5181/api/CreateTest/layers/1
-//     public async Task<IActionResult> GetLayers(long languageId)
-//         => Ok(await _service.GetLayers(languageId));
-
 //     [HttpGet("concepts")]
 //     //http://localhost:5181/api/CreateTest/concepts?frameworkIds=1&frameworkIds=2
 //     public async Task<IActionResult> GetConcepts([FromQuery] List<long> frameworkIds)

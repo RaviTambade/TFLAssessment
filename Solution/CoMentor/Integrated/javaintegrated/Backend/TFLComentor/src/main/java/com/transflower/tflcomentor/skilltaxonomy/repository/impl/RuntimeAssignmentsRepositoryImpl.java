@@ -8,10 +8,10 @@
 // import org.springframework.stereotype.Repository;
 
 // import com.transflower.tflcomentor.skilltaxonomy.dto.response.RuntimeAssignmentResponse;
-// import com.transflower.tflcomentor.skilltaxonomy.repository.RuntimeAssignmentRepository;
+// import com.transflower.tflcomentor.skilltaxonomy.repository.RuntimeAssignmentsRepository;
 
 // @Repository
-// public class RuntimeAssignmentRepositoryImpl implements RuntimeAssignmentRepository {
+// public class RuntimeAssignmentsRepositoryImpl implements RuntimeAssignmentsRepository {
 
 //     @Override
 //     public List<RuntimeAssignmentResponse> findAssignmentsByRuntimeId(Long runtimeId) {
@@ -55,7 +55,7 @@
 //             }
 //         } catch (Exception e) {
 //             throw new RuntimeException("Failed to fetch runtime assignments for id=" + runtimeId, e);
-//         }
+//         // }
 
 //         return results;
 //     }

@@ -7,24 +7,24 @@ import org.springframework.stereotype.Service;
 import com.transflower.tflcomentor.evaluationcontentmanagement.dto.response.ProjectAllocationResponseDTO;
 import com.transflower.tflcomentor.evaluationcontentmanagement.entity.ProjectAllocation;
 import com.transflower.tflcomentor.evaluationcontentmanagement.repository.ProjectAllocationRepository;
-import com.transflower.tflcomentor.evaluationcontentmanagement.service.ProjectAllowcationService;
+import com.transflower.tflcomentor.evaluationcontentmanagement.service.ProjectAllocationService;
 
 @Service
-public class ProjectAllowcationServiceImpl implements ProjectAllowcationService {
+public class ProjectAllocationServiceImpl implements ProjectAllocationService {
 
     private final ProjectAllocationRepository repository;
-    public ProjectAllowcationServiceImpl(ProjectAllocationRepository repository) {
+    public ProjectAllocationServiceImpl(ProjectAllocationRepository repository) {
         this.repository = repository;
     }
     
     @Override
-    public boolean addStudentToProject(ProjectAllocation projectAllocations) {
-        return repository.addStudentToProject(projectAllocations);
+    public boolean addMember(ProjectAllocation projectAllocations) {
+        return repository.addMember(projectAllocations);
     }
 
     @Override
-    public boolean removeStudentFromProject(Long projectId, Long studentId) {
-        return repository.removeStudentFromProject(projectId, studentId);
+    public boolean removeMember(Long projectId, Long studentId) {
+        return repository.removeMember(projectId, studentId);
     }
 
     @Override
@@ -35,5 +35,11 @@ public class ProjectAllowcationServiceImpl implements ProjectAllowcationService 
     @Override
     public List<ProjectAllocationResponseDTO> getProjectAllocationDetails() {
         return repository.getProjectAllocationDetails();
+    }
+
+    @Override
+
+    public List<String> getProjectByStudentId(Long studentId) {
+        return repository.getProjectByStudentId(studentId);
     }
 }
