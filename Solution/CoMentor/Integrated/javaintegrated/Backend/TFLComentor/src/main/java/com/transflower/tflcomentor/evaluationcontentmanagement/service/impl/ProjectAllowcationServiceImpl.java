@@ -27,7 +27,7 @@ public class ProjectAllowcationServiceImpl implements ProjectAllowcationService 
         return repository.removeStudentFromProject(projectId, studentId);
     }
 
-      @Override
+    @Override
     public List<ProjectAllocationResponseDTO> getStudentByProjectId(Long projectId) {
         return repository.getStudentByProjectId(projectId);
     }

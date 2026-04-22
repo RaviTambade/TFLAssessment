@@ -155,7 +155,7 @@ public class QuestionsRepositoryImpl implements QuestionsRepository {
 
     // nirjala user story 72
     @Override
-    public Long insertQuestion(Question q) {
+    public Long insert(Question q) {
 
         Long questionId = null;
 
@@ -307,31 +307,31 @@ public class QuestionsRepositoryImpl implements QuestionsRepository {
         }
     }
 
+    // @Override
+    // public List<QuestionResponse> getRecentQuestions() {
+    //     List<QuestionResponse> list = new ArrayList<>();
+    //     String sql = "SELECT * FROM questions where status='DRAFT' AND created_at >= NOW() - INTERVAL 2 DAY ORDER BY created_at DESC";
+    //     try (Connection connection = getConnection(); java.sql.Statement statement = connection.createStatement(); ResultSet rs = statement.executeQuery(sql)) {
+    //         while (rs.next()) {
+    //             QuestionResponse q = new QuestionResponse();
+    //             q.setQuestionId(rs.getLong("question_id"));
+    //             q.setDescription(rs.getString("description"));
+    //             q.setQuestionType(rs.getString("question_type"));
+    //             q.setDifficultyLevel(rs.getString("difficulty_level"));
+    //             q.setQuestionStatus(rs.getString("status"));
+
+    //             list.add(q);
+    //         }
+
+    //     } catch (Exception e) {
+    //         e.printStackTrace();
+    //     }
+
+    //     return list;
+    // }
+
     @Override
-    public List<QuestionResponse> getRecentQuestions() {
-        List<QuestionResponse> list = new ArrayList<>();
-        String sql = "SELECT * FROM questions where status='DRAFT' AND created_at >= NOW() - INTERVAL 2 DAY ORDER BY created_at DESC";
-        try (Connection connection = getConnection(); java.sql.Statement statement = connection.createStatement(); ResultSet rs = statement.executeQuery(sql)) {
-            while (rs.next()) {
-                QuestionResponse q = new QuestionResponse();
-                q.setQuestionId(rs.getLong("question_id"));
-                q.setDescription(rs.getString("description"));
-                q.setQuestionType(rs.getString("question_type"));
-                q.setDifficultyLevel(rs.getString("difficulty_level"));
-                q.setQuestionStatus(rs.getString("status"));
-
-                list.add(q);
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return list;
-    }
-
-    @Override
-    public List<QuestionResponse> getRecentQuestionList() {
+    public List<QuestionResponse> getQuestionsFromLastTwoDays() {
         List<QuestionResponse> list = new ArrayList<>();
         String sql = "SELECT question_id, description FROM questions WHERE created_at >= NOW() - INTERVAL 2 DAY ORDER BY created_at DESC";
         try (Connection connection = getConnection(); PreparedStatement statement = connection.prepareStatement(sql); ResultSet rs = statement.executeQuery()) {
