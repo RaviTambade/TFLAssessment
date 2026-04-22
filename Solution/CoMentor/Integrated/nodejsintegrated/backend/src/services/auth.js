@@ -1,4 +1,4 @@
-class AuthService {
+class Auth{
   constructor(authRepository) {
     this.authRepository = authRepository;
   }
@@ -10,6 +10,13 @@ class AuthService {
   register(user, callback) {
     this.authRepository.register(user, callback);
   }
+
+  changePassword(changePassword, callback) {
+      this.authRepository.changePassword(changePassword, callback);
+  }
+ 
+
+  
 }
 
-module.exports = AuthService;
+module.exports = Auth;

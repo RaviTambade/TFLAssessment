@@ -39,6 +39,9 @@ builder.Services.AddScoped<ILanguagesService, LanguagesService>();
 builder.Services.AddScoped<ILanguagesRepository, LanguagesRepository>();
 builder.Services.AddScoped<ILayersService, LayersService>();
 builder.Services.AddScoped<ILayersRepository, LayersRepository>();
+builder.Services.AddScoped<IStudentsRepository, StudentsRepository>();
+builder.Services.AddScoped<IStudentsService, StudentsService>();
+
 builder.Services.AddScoped<IConceptsService, ConceptsService>();
 builder.Services.AddScoped<IConceptsRepository, ConceptsRepository>();
 builder.Services.AddScoped<ICreateTestService, CreateTestService>();
@@ -56,6 +59,7 @@ builder.Services.AddCors(options =>
         });
 });
 Dapper.DefaultTypeMap.MatchNamesWithUnderscores = true;
+
 
 var app = builder.Build();
 

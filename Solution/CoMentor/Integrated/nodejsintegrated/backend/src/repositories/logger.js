@@ -1,15 +1,15 @@
-class LoggerRepository {
+class Logger {
   constructor(connection) {
     this.connection = connection;
   }
 
   LoginEntry(userid, callback) {
-    const sql = "insert into user_logs (user_id,login_time) values(?,now() );";
+    const sql = "INSERT INTO user_logs (user_id,login_time) VALUES(?,now() );";
     this.connection.query(sql, [userid], callback);
   }
 
   LogoutEntry(userid, callback) {
-    const sql = "update user_logs set logout_time=now() where user_id=? and logout_time is null;";
+    const sql = "UPDATE user_logs SET logout_time=now() WHERE user_id=? AND logout_time is null;";
     this.connection.query(sql, [userid], callback);
   }
 
@@ -70,14 +70,12 @@ class LoggerRepository {
     });
   }
   
-
-    //Samruddhi
-  async getSessionLogs(name) {
+  getSessionLogs(name, callback) {
     let sql = `
       SELECT
         us.id AS session_id,
         us.user_id,
-        p.full_name AS full_name,
+        CONCAT(p.first_name,' ', p.last_name) AS full_name,
         r.role_name AS role,
         us.login_time,
         us.logout_time,
@@ -91,17 +89,20 @@ class LoggerRepository {
 
     const params = [];
 
+    // Apply filter if name is provided
     if (name) {
-      sql += ` WHERE p.full_name LIKE ? `;
+      sql += ` WHERE CONCAT(p.first_name,' ', p.last_name) LIKE ? `;
       params.push(`%${name}%`);
     }
 
     sql += ` ORDER BY us.login_time DESC `;
 
-    const [rows] = await this.db.promise().query(sql, params);
-    return rows;
+    this.connection.query(sql, params, (err, results) => {
+      if (err) return callback(err, null);
+      callback(null, results);
+    });
   }
   
 }
 
-module.exports = LoggerRepository;
+module.exports = Logger;
