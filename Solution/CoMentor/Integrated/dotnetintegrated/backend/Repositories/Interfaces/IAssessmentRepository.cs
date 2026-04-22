@@ -23,6 +23,9 @@ namespace backend.Repositories.Interfaces
         Task<bool> DeactivateAssessment(long id);
         Task<bool> RestoreAssessment(long id);
 
+        Task<List<AssessmentSummaryDto>> GetAssessmentSummariesForStudent(long studentId);
+        List<StudentAssessmentDto> GetFullData();
+
 
     }
 }

@@ -114,6 +114,11 @@ namespace backend.Services.Implementations
             return await _repository.RestoreAssessment(id);
         }
 
+        public async Task<List<AssessmentSummaryDto>> GetAssessmentSummariesForStudent(long studentId)
+        {
+            return await _repository.GetAssessmentSummariesForStudent(studentId);
+        }
+
     }
 
 }
