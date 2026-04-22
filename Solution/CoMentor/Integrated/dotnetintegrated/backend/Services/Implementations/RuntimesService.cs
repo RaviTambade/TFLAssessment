@@ -14,8 +14,8 @@ namespace backend.Services
             _repo = repo;
         }
 
-        public Task<List<RuntimeDto>> GetRuntimes()
-            => _repo.GetRuntimes();
+        public Task<List<RuntimeDto>> GetRuntimesAsync()
+            => _repo.GetRuntimesAsync();
 
        
     }

@@ -6,7 +6,7 @@ namespace backend.Repositories.Interfaces
     {
         
         
-        Task<List<ConceptDto>> GetConcepts(List<long> frameworkIds);
+        Task<List<ConceptDto>> GetConceptsAsync(List<long> frameworkIds);
        
     }
 }

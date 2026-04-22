@@ -20,7 +20,7 @@ public class ConceptsController : ControllerBase
     [HttpGet("concepts")]
     //http://localhost:5201/api/Concepts/concepts?frameworkIds=1&frameworkIds=2
     public async Task<IActionResult> GetConcepts([FromQuery] List<long> frameworkIds)
-        => Ok(await _service.GetConcepts(frameworkIds));
+        => Ok(await _service.GetConceptsAsync(frameworkIds));
 
    
 }

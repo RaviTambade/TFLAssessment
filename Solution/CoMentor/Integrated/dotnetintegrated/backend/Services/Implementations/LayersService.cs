@@ -17,8 +17,8 @@ namespace backend.Services
 
         
 
-        public Task<List<LayerDto>> GetLayers(long languageId)
-            => _repo.GetLayers(languageId);
+        public Task<List<LayerDto>> GetLayersAsync(long languageId)
+            => _repo.GetLayersAsync(languageId);
 
        
     }

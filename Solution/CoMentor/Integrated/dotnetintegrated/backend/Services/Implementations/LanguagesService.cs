@@ -16,8 +16,8 @@ namespace backend.Services
 
         
 
-        public Task<List<LanguageDto>> GetLanguages(long runtimeId)
-            => _repo.GetLanguages(runtimeId);
+        public Task<List<LanguageDto>> GetLanguagesAsync(long runtimeId)
+            => _repo.GetLanguagesAsync(runtimeId);
 
         
     }

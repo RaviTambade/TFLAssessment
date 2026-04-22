@@ -4,7 +4,7 @@ namespace backend.Services.Interfaces
 {
     public interface IRuntimesService
     {
-        Task<List<RuntimeDto>> GetRuntimes();
+        Task<List<RuntimeDto>> GetRuntimesAsync();
        
     }
 }

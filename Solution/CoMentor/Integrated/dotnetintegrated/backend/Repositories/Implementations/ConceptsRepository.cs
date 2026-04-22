@@ -19,7 +19,7 @@ namespace backend.Repositories
 
 
 
-    public async Task<List<ConceptDto>> GetConcepts(List<long> frameworkIds)
+    public async Task<List<ConceptDto>> GetConceptsAsync(List<long> frameworkIds)
         {
             return await _context.FrameworkConcepts
                 .Where(x => frameworkIds.Contains(x.FrameworkId ?? 0))

@@ -16,7 +16,7 @@ namespace backend.Repositories
         
 
 
-    public async Task<List<LayerDto>> GetLayers(long languageId)
+    public async Task<List<LayerDto>> GetLayersAsync(long languageId)
         {
             return await _context.Layers
                 .Select(l => new LayerDto

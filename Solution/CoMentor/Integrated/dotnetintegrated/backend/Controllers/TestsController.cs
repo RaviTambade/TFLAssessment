@@ -20,16 +20,16 @@ public class CreateTestController : ControllerBase
 
     [HttpGet("questions")]
     //http://localhost:5201/api/CreateTest/questions?conceptIds=1&conceptIds=2&type=MCQ
-    public async Task<IActionResult> GetQuestions(
+    public async Task<IActionResult> GetQuestionsByConceptIdAsync(
         [FromQuery] List<long> conceptIds,
         [FromQuery] string type)
-        => Ok(await _service.GetQuestionsByConceptId(conceptIds, type));
+        => Ok(await _service.GetQuestionsByConceptIdAsync(conceptIds, type));
 
     [HttpPost("create")]
     //http://localhost:5201/api/CreateTest/create
-    public async Task<IActionResult> Create([FromBody] CreateTestRequestDto dto)
+    public async Task<IActionResult> CreateTest([FromBody] CreateTestRequestDto dto)
     {
-        var id = await _service.CreateTest(dto);
+        var id = await _service.CreateTestAsync(dto);
         return Ok(new { TestId = id });
     }
 }
