@@ -1,14 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace backend.Models;
-
-public partial class FrameworkConcept
+﻿namespace backend.Models
 {
-    public int? Id { get; set; }
+    public class FrameworkConcept
+    {
+        public long Id { get; set; }
 
-    public int? FrameworkId { get; set; }
+        public int? FrameworkId { get; set; }
+        public Framework? Framework { get; set; }
 
-    public int? Concept { get; set; }
-    public int? ConceptId { get; set; }
+        public long? ConceptId { get; set; }
+        public Concept? Concept { get; set; }
+    }
 }

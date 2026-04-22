@@ -4,24 +4,29 @@ const bodyParser = require("body-parser");
 
 
 const AuthRepository = require("./repositories/auth");
-const ProfileRepository = require("./repositories/profile");
+const UsersRepository = require('./repositories/users');
+
 const LoggerRepository = require("./repositories/logger");
 const SessionRepository = require("./repositories/session");
-const UsersRepository = require('./repositories/userinformation');
+
+const RoleRepository = require("./repositories/role");
 const UpdateRolesRepository = require('./repositories/updaterole');
+
+const ProfileRepository = require("./repositories/profile");
 const UserProfileRepository = require("./repositories/userProfile");
 const EmployerProfileRepository = require("./repositories/userProfile");
-const RoleRepository = require("./repositories/role");
+
 
 const AuthService = require("./services/authservice");
 const ProfileService = require("./services/profileservice");
 const LoggerService = require("./services/loggerservices");
 const SessionService = require("./services/sessionservice");
 const UsersService = require('./services/userinformationservice');
+const RoleService = require("./services/roleservice");
 const UpdateRolesService = require('./services/updaterolesservices');
 const EmployerProfileService = require("./services/userProfileService");
 const UserProfileService = require("./services/userProfile.service");
-const RoleService = require("./services/roleservice");
+
 const AdminProfileService = require("./services/adminProfileService");
 const UpdateRolesController = require('./controllers/updaterolescontroller');
 const UsersController = require('./controllers/userinformationcontroller');

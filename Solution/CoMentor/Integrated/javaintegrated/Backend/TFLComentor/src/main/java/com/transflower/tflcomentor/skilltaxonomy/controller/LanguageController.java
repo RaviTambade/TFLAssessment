@@ -1,0 +1,30 @@
+package com.transflower.tflcomentor.skilltaxonomy.controller;
+
+import java.util.List;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.transflower.tflcomentor.skilltaxonomy.dto.response.LanguageDto;
+import com.transflower.tflcomentor.skilltaxonomy.service.LanguageService;
+
+@RestController
+@RequestMapping("/api/sme")
+public class LanguageController {
+    
+
+    private final LanguageService languageService;
+    
+    public LanguageController(LanguageService languageService) {
+        this.languageService = languageService;
+    }
+
+     @GetMapping("/{smeId}/languages")
+    public ResponseEntity<List<LanguageDto>> getAssignedLanguages(@PathVariable long smeId) {
+        List<LanguageDto> languages = languageService.getLanguagesBySmeId(smeId);
+        return ResponseEntity.ok(languages);
+    }
+}

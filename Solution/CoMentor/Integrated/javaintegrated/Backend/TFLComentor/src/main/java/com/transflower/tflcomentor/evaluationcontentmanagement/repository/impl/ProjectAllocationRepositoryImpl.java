@@ -19,16 +19,14 @@ public class ProjectAllocationRepositoryImpl implements ProjectAllocationReposit
     private Connection getConnection() throws Exception {
         return DBConfig.getConnection();
     }
-    
+
     @Override
-    public boolean addStudentToProject(ProjectAllocation projectAllocation) {
+    public boolean addMember(ProjectAllocation projectAllocation) {
 
         String query = "INSERT INTO project_allocations(project_id, student_id, joined_date) VALUES (?, ?, NOW())";
 
         try (
-            Connection connection = getConnection();
-            PreparedStatement statement = connection.prepareStatement(query)
-        ) {
+                Connection connection = getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setLong(1, projectAllocation.getProjectId());
             statement.setLong(2, projectAllocation.getStudentId());
 
@@ -41,7 +39,7 @@ public class ProjectAllocationRepositoryImpl implements ProjectAllocationReposit
     }
 
     @Override
-    public boolean removeStudentFromProject(Long projectId, Long studentId) {
+    public boolean removeMember(Long projectId, Long studentId) {
 
         String query = """
             UPDATE project_allocations
@@ -50,9 +48,7 @@ public class ProjectAllocationRepositoryImpl implements ProjectAllocationReposit
         """;
 
         try (
-            Connection conn = getConnection();
-            PreparedStatement stmt = conn.prepareStatement(query)
-        ) {
+                Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setLong(1, projectId);
             stmt.setLong(2, studentId);
 
@@ -65,11 +61,11 @@ public class ProjectAllocationRepositoryImpl implements ProjectAllocationReposit
     }
 
     @Override
-    public List<ProjectAllocationResponseDTO> getAllocatedProjects() {
+    public List<ProjectAllocationResponseDTO> getProjectAllocationDetails() {
         List<ProjectAllocationResponseDTO> allocations = new ArrayList<>();
 
         String query = """
-            SELECT 
+            SELECT
                 pa.project_id,
                 p.project_name,
                 pa.student_id,
@@ -84,9 +80,7 @@ public class ProjectAllocationRepositoryImpl implements ProjectAllocationReposit
         """;
 
         try (
-            Connection connection = getConnection();
-            PreparedStatement statement = connection.prepareStatement(query)
-        ) {
+                Connection connection = getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {
             ResultSet rs = statement.executeQuery();
 
             while (rs.next()) {
@@ -115,29 +109,27 @@ public class ProjectAllocationRepositoryImpl implements ProjectAllocationReposit
         return allocations;
     }
 
-     @Override
+    @Override
     public List<ProjectAllocationResponseDTO> getStudentByProjectId(Long projectId) {
         List<ProjectAllocationResponseDTO> allocations = new ArrayList<>();
 
         String query = """
-            SELECT 
-                pa.project_id,
-                p.project_name,
-                pa.student_id,
-                CONCAT(pi.first_name, ' ', pi.last_name) AS student_name,
-                pa.joined_date,
-                pa.release_date
-            FROM project_allocations pa
-            JOIN projects p ON pa.project_id = p.project_id
-            JOIN users u ON pa.student_id = u.id
-            JOIN personal_informations pi ON u.id = pi.user_id
-            WHERE pa.project_id = ?
-        """;
+                     SELECT
+                         pa.project_id,
+                         p.project_name,
+                         pa.student_id,
+                         CONCAT(pi.first_name, ' ', pi.last_name) AS student_name,
+                         pa.joined_date,
+                         pa.release_date
+                     FROM project_allocations pa
+                     JOIN projects p ON pa.project_id = p.project_id
+                     JOIN users u ON pa.student_id = u.id
+                     JOIN personal_informations pi ON u.id = pi.user_id
+                     WHERE pa.project_id = ?
+                 """;
 
         try (
-            Connection conn = getConnection();
-            PreparedStatement stmt = conn.prepareStatement(query)
-        ) {
+                Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setLong(1, projectId);
 
             ResultSet rs = stmt.executeQuery();
@@ -166,5 +158,33 @@ public class ProjectAllocationRepositoryImpl implements ProjectAllocationReposit
         }
 
         return allocations;
+    }
+
+    @Override
+    public List<String> getProjectByStudentId(Long studentId) {
+        List<String> projectNames = new ArrayList<>();
+
+        String query = """
+        SELECT p.project_name
+        FROM project_allocations pa
+        JOIN projects p ON pa.project_id = p.project_id
+        WHERE pa.student_id = ?
+    """;
+
+        try (
+                Connection connection = getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setLong(1, studentId);
+
+            ResultSet rs = statement.executeQuery();
+
+            while (rs.next()) {
+                projectNames.add(rs.getString("project_name"));
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return projectNames;
     }
 }

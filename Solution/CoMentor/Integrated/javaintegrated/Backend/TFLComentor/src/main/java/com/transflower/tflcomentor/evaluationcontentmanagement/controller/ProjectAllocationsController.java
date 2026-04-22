@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.transflower.tflcomentor.evaluationcontentmanagement.dto.request.ProjectAllocationRequestDTO;
 import com.transflower.tflcomentor.evaluationcontentmanagement.dto.response.ProjectAllocationResponseDTO;
 import com.transflower.tflcomentor.evaluationcontentmanagement.entity.ProjectAllocation;
-import com.transflower.tflcomentor.evaluationcontentmanagement.service.ProjectAllowcationService;
+import com.transflower.tflcomentor.evaluationcontentmanagement.service.ProjectAllocationService;
 
 @RestController
 @RequestMapping("/api/project-allocations")
@@ -24,26 +24,26 @@ import com.transflower.tflcomentor.evaluationcontentmanagement.service.ProjectAl
 public class ProjectAllocationsController {
 
     @Autowired
-   private ProjectAllowcationService service;
+   private ProjectAllocationService service;
 
     @GetMapping("/{projectId}/students")
     public List<ProjectAllocationResponseDTO> getStudentByProjectId(@PathVariable Long projectId) {
-    return service.getStudentByProjectId(projectId);
+        return service.getStudentByProjectId(projectId);
     }
 
     @GetMapping
-    public List<ProjectAllocationResponseDTO> getAllProjects() {
-        return service.getAllocatedProjects();
+    public List<ProjectAllocationResponseDTO> getProjectAllocationDetails() {
+        return service.getProjectAllocationDetails();
     }
 
     @PostMapping("/add")
-    public String addStudentToProject(@RequestBody ProjectAllocationRequestDTO request) {
+    public String addMember(@RequestBody ProjectAllocationRequestDTO request) {
 
         ProjectAllocation allocation = new ProjectAllocation();
         allocation.setProjectId(request.getProjectId());
         allocation.setStudentId(request.getStudentId());
 
-        boolean status = service.addStudentToProject(allocation);
+        boolean status = service.addMember(allocation);
 
         if (status) {
             return "Student added successfully";
@@ -52,12 +52,17 @@ public class ProjectAllocationsController {
         return "Failed to add student";
     }
 
+    @GetMapping("/student/{studentId}/projects")
+    public List<String> getProjectByStudentId(@PathVariable Long studentId) {
+        return service.getProjectByStudentId(studentId);
+    }
+
     @DeleteMapping("/remove")
-    public String removeStudentFromProject(
+    public String removeMember(
             @RequestParam Long projectId,
             @RequestParam Long studentId) {
 
-        boolean status = service.removeStudentFromProject(projectId, studentId);
+        boolean status = service.removeMember(projectId, studentId);
 
         if (status) {
             return "Student released successfully";

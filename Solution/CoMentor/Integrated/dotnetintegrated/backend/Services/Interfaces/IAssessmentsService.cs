@@ -22,5 +22,7 @@ public interface IAssessmentsService
     Task<int> GetCompletedAssessmentsAsync();
 
     Task<List<AllAssessmentDto>> GetAllAssessments();
+
+    Task<List<AssessmentSummaryDto>> GetAssessmentSummariesForStudent(long studentId);
 }
 

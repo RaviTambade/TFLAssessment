@@ -42,6 +42,10 @@ builder.Services.AddScoped<ILayersRepository, LayersRepository>();
 builder.Services.AddScoped<IStudentsRepository, StudentsRepository>();
 builder.Services.AddScoped<IStudentsService, StudentsService>();
 
+builder.Services.AddScoped<IConceptsService, ConceptsService>();
+builder.Services.AddScoped<IConceptsRepository, ConceptsRepository>();
+builder.Services.AddScoped<ICreateTestService, CreateTestService>();
+builder.Services.AddScoped<ICreateTestRepository, CreateTestRepository>();
 
 // Configure CORS to allow requests from the frontend
 builder.Services.AddCors(options =>
@@ -54,6 +58,7 @@ builder.Services.AddCors(options =>
                   .AllowAnyHeader();
         });
 });
+Dapper.DefaultTypeMap.MatchNamesWithUnderscores = true;
 
 
 var app = builder.Build();
