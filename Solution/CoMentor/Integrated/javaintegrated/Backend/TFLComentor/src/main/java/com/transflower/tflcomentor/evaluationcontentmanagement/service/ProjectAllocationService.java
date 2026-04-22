@@ -5,13 +5,15 @@ import java.util.List;
 import com.transflower.tflcomentor.evaluationcontentmanagement.dto.response.ProjectAllocationResponseDTO;
 import com.transflower.tflcomentor.evaluationcontentmanagement.entity.ProjectAllocation;
 
-public interface ProjectAllowcationService {
+public interface ProjectAllocationService {
 
-    boolean addStudentToProject(ProjectAllocation projectAllocations);
+    boolean addMember(ProjectAllocation projectAllocations);
 
-    boolean removeStudentFromProject(Long projectId, Long studentId);
+    boolean removeMember(Long projectId, Long studentId);
 
     List<ProjectAllocationResponseDTO> getStudentByProjectId(Long projectId);
 
     List<ProjectAllocationResponseDTO> getAllocatedProjects();
+
+     List<String> getProjectByStudentId(Long studentId);
 }
