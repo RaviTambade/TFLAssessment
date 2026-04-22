@@ -5,6 +5,7 @@ import Navbar from "../components/Navbar";
 import EvaluationContentMenu from "../components/assessment/evaluationcontent/EvaluationContentMenu";
 import SkillTaxonomyMenu from "../components/assessment/skilltaxonomy/SkillTaxonomyMenu";
 import Assessment from "../components/assessment/ComponentButtons";
+import AddRuntime from "@/components/assessment/skilltaxonomy/AddRuntime";
 
 
 function AppRoutes() {
@@ -21,6 +22,10 @@ function AppRoutes() {
 
           {/* Skill Taxonomy */}
           <Route path="skilltaxonomy/skilltaxonomy-menu" element={<SkillTaxonomyMenu />} />
+
+           <Route path="skilltaxonomy/AddRuntime" element={<AddRuntime />} />
+
+          
 
           {/* Default route - shows main assessment */}
           <Route index element={<Assessment />} />

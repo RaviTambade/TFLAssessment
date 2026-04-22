@@ -1,5 +1,6 @@
 package com.transflower.tflcomentor.skilltaxonomy.repository.impl;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -7,6 +8,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
+import com.transflower.tflcomentor.configuration.DBConfig;
 import com.transflower.tflcomentor.skilltaxonomy.dto.response.RuntimeAssignmentResponse;
 import com.transflower.tflcomentor.skilltaxonomy.repository.RuntimeAssignmentRepository;
 
@@ -40,7 +42,7 @@ public class RuntimeAssignmentRepositoryImpl implements RuntimeAssignmentReposit
 
         List<RuntimeAssignmentResponse> results = new ArrayList<>();
 
-        try (PreparedStatement ps = RuntimeRepositoryImpl.getConnection().prepareStatement(query)) {
+        try (Connection conn = DBConfig.getConnection(); PreparedStatement ps = conn.prepareStatement(query)) {
             ps.setLong(1, runtimeId);
 
             try (ResultSet rs = ps.executeQuery()) {

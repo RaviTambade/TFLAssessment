@@ -32,6 +32,17 @@ const SkillTaxonomyMenu = () => {
                     >
                         <div className="bg-gradient-hero p-6 sm:p-8">
                             <CardContent>
+                   <Button
+                    variant="hero"
+                    size="lg"
+                    className="group"
+                    onClick={() =>
+                      navigate("/skilltaxonomy/AddRuntime")
+                    }
+                  >
+                   add Runtime
+                    <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                  </Button>
 
                             </CardContent>
                         </div>
