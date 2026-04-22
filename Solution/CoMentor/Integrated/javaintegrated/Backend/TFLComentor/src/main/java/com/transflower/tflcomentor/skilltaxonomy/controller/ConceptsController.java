@@ -33,6 +33,17 @@ public class ConceptsController {
         return conceptsService.getAllConcepts();
     }
 
+    
+    @GetMapping("/concepts/{id}")
+    public Concept findById(@PathVariable Long id) {
+        return conceptsService.findById(id);
+    }
+
+    @PostMapping("/addConcept")
+    public boolean addConcept(@RequestBody Concept concept) {
+        return conceptsService.addConcept(concept);
+    }
+
     @GetMapping("/frameworks/{framework}/concepts")    //not working
     public List<Concept> getAllConceptsforFramework(@PathVariable String framework) {
         return conceptsService.getAllConceptsforFramework(framework);
@@ -59,14 +70,5 @@ public class ConceptsController {
         return conceptsService.getAllFrameworksByLanguageAndLayer(languageId, layerId);
     }
 
-    @GetMapping("/concept/{id}")
-    public Concept findById(@PathVariable Long id) {
-        return conceptsService.findById(id);
-    }
-
-    @PostMapping("/addConcept")
-    public boolean addConcept(@RequestBody Concept concept) {
-        return conceptsService.addConcept(concept);
-    }
 }
 
