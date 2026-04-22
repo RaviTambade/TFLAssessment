@@ -37,13 +37,13 @@ public class QuestionsServicesImpl implements QuestionsServices {
         return repository.getQuestionsByDifficulty(difficulty);
     }
 
-    // nirjala user story 72
-    public void createQuestion(QuestionRequestDto dto) {
+    @Override
+    public void create(QuestionRequestDto dto) {
         Question q = new Question();
         q.setDescription(dto.getDescription());
         q.setQuestionType(dto.getQuestionType());
         q.setDifficultyLevel(dto.getDifficultyLevel());
-        Long questionId = repository.insertQuestion(q);
+        Long questionId = repository.insert(q);
 
         if (questionId != null) {
             repository.insertMcqOptions(
@@ -66,8 +66,8 @@ public class QuestionsServicesImpl implements QuestionsServices {
     }
 
     @Override
-    public List<QuestionResponse> getRecentQuestions() {
-        return repository.getRecentQuestions();
+    public List<QuestionResponse> getQuestionsFromLastTwoDays() {
+        return repository.getQuestionsFromLastTwoDays();
     }
 
     @Override
@@ -90,10 +90,10 @@ public class QuestionsServicesImpl implements QuestionsServices {
         repository.rejectQuestions(questionIds);
     }
     
-    @Override
-    public List<QuestionResponse> getRecentQuestionList() {
-        return repository.getRecentQuestionList();
-    }
+    // @Override
+    // public List<QuestionResponse> getRecentQuestionList() {
+    //     return repository.getRecentQuestionList();
+    // }
 
     @Override
     public QuestionResponseDto getQuestionDetailsById(Long id) {

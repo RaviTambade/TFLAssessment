@@ -22,5 +22,25 @@ module.exports = (controller) => {
     controller.updateUserStatus(req, res)
   );
 
+
+  // ✅ Personal Info
+  router.put("/personal/:user_id/", (req, res) =>
+    controller.updatePersonInformation(req, res)
+  )
+
+  // ✅ Professional Info
+  router.put("/professional/:user_id/", (req, res) =>
+    controller.updateProfessionalInformation(req, res)
+  )
+
+  // ✅ Academic Info
+  router.put("/academic/:user_id/",  (req, res) =>
+    controller.updateAcademicInformation(req, res)
+  );
+
+  // ✅ Full Profile Update
+  router.put("/full/:user_id/",(req, res) =>
+    controller.updateProfile(req, res)
+  );
   return router;
 };

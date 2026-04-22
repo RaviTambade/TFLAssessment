@@ -13,15 +13,15 @@ public interface QuestionsServices {
       List<Question> getAllQuestions();
     List<Question> getQuestionsByDifficulty(String difficulty);
 
-    void createQuestion(QuestionRequestDto dto);
+    void create(QuestionRequestDto dto);
     // List<Question> getAllQuestions();
     List<QuestionResponse> getDraftQuestions();
-    List<QuestionResponse> getRecentQuestions();
+    List<QuestionResponse> getQuestionsFromLastTwoDays();
     void approveQuestionById(Long id);
     void rejectQuestionById(Long id);
     void approveQuestions(List<Long> questionId);
     void rejectQuestions(List<Long> questionId);
-    List<QuestionResponse> getRecentQuestionList();
+    // List<QuestionResponse> getRecentQuestionList();
     QuestionResponseDto getQuestionDetailsById(Long id);
     List<QuestionResponse> getQuestionsByType(String questionType);
     List<QuestionResponse> getQuestionsByStatus(String questionStatus);
