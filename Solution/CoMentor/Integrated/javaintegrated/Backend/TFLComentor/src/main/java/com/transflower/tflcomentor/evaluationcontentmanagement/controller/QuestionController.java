@@ -1,17 +1,22 @@
 package com.transflower.tflcomentor.evaluationcontentmanagement.controller;
 
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.transflower.tflcomentor.evaluationcontentmanagement.dto.request.QuestionDto;
 import com.transflower.tflcomentor.evaluationcontentmanagement.dto.request.QuestionRequestDto;
 import com.transflower.tflcomentor.evaluationcontentmanagement.dto.response.QuestionResponse;
 import com.transflower.tflcomentor.evaluationcontentmanagement.dto.response.QuestionResponseDto;
-import com.transflower.tflcomentor.evaluationcontentmanagement.entity.Project;
 import com.transflower.tflcomentor.evaluationcontentmanagement.entity.Question;
 import com.transflower.tflcomentor.evaluationcontentmanagement.service.QuestionsServices;
 
@@ -38,9 +43,9 @@ public class QuestionController {
         return service.getQuestionsByDifficulty(level);
     }
 
-     @PostMapping()
-        public String createQuestion(@RequestBody QuestionRequestDto dto) {
-        service.createQuestion(dto);
+    @PostMapping()
+    public String create(@RequestBody QuestionRequestDto dto) {
+        service.create(dto);
         return "Question with Options Saved!";
     }
 
@@ -48,19 +53,10 @@ public class QuestionController {
     // public List<Question> getAll() {
     //     return service.getAllQuestions();
     // }
-
     @GetMapping("/drafts")
     public List<QuestionResponse> getDraft() {
         return service.getDraftQuestions();
     }
-
-
-    
-    @GetMapping("/drafts/list")
-    public List<QuestionResponse> getDraftList() {
-        return service.getDraftQuestionList();
-    }
-
 
     @PutMapping("/{id}/approve")
     public String approve(@PathVariable Long id) {
@@ -87,16 +83,14 @@ public class QuestionController {
     }
 
     @GetMapping("/recent")
-    public List<QuestionResponse> getRecentQuestions() {
-        return service.getRecentQuestions();
+    public List<QuestionResponse> getQuestionsFromLastTwoDays() {
+        return service.getQuestionsFromLastTwoDays();
     }
 
-
-    @GetMapping("/recent/list")
-    public List<QuestionResponse> getRecentList() {
-        return service.getRecentQuestionList();
-    }
-
+    // @GetMapping("/recent/list")
+    // public List<QuestionResponse> getRecentList() {
+    //     return service.getRecentQuestionList();
+    // }
     @GetMapping("/details/{id}")
     public QuestionResponseDto getDetailsById(@PathVariable Long id) {
         return service.getQuestionDetailsById(id);
@@ -106,7 +100,7 @@ public class QuestionController {
     public String updateQuestion(@PathVariable Long id, @RequestBody QuestionRequestDto dto) {
         service.updateQuestionById(id, dto);
         return "Question Updated Successfully";
-}
+    }
 
     @GetMapping("/type/{questionType}")
     public List<QuestionResponse> getQuestionsByType(@PathVariable String questionType) {
@@ -114,16 +108,14 @@ public class QuestionController {
     }
 
     @GetMapping("/status/{questionStatus}")
-    public List<QuestionResponse> findByStatus(@PathVariable String questionStatus) {
-        return service.findByStatus(questionStatus);
+    public List<QuestionResponse> getQuestionsByStatus(@PathVariable String questionStatus) {
+        return service.getQuestionsByStatus(questionStatus);
     }
 
     @GetMapping("/concepts/{conceptId}/questions")
     public ResponseEntity<?> getQuestionsByConceptId(@PathVariable Long conceptId) {
-        List<QuestionDto> questions = service.getQuestionsByConceptId(conceptId);   
+        List<QuestionDto> questions = service.getQuestionsByConceptId(conceptId);
         return ResponseEntity.ok(questions);
     }
 
-
-    
 }

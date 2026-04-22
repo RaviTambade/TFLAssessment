@@ -1,10 +1,8 @@
 package com.transflower.tflcomentor.evaluationcontentmanagement.repository.impl;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -18,7 +16,6 @@ import com.transflower.tflcomentor.configuration.DBConfig;
 import com.transflower.tflcomentor.evaluationcontentmanagement.dto.request.QuestionRequestDto;
 import com.transflower.tflcomentor.evaluationcontentmanagement.dto.response.QuestionResponse;
 import com.transflower.tflcomentor.evaluationcontentmanagement.dto.response.QuestionResponseDto;
-import com.transflower.tflcomentor.evaluationcontentmanagement.entity.Project;
 import com.transflower.tflcomentor.evaluationcontentmanagement.entity.Question;
 import com.transflower.tflcomentor.evaluationcontentmanagement.repository.QuestionsRepository;
 
@@ -126,7 +123,7 @@ public class QuestionsRepositoryImpl implements QuestionsRepository {
     }
 
     @Override
-    public List<Question> findByType(String questionType) {
+    public List<QuestionResponse> getQuestionsByType(String questionType) {
 
         String sql = """
                 SELECT question_id, question_type, description
@@ -139,10 +136,10 @@ public class QuestionsRepositoryImpl implements QuestionsRepository {
             statement.setString(1, questionType);
 
             try (ResultSet rs = statement.executeQuery()) {
-                List<Question> results = new ArrayList<>();
+                List<QuestionResponse> results = new ArrayList<>();
 
                 while (rs.next()) {
-                    Question question = new Question();
+                    QuestionResponse question = new QuestionResponse();
                     question.setQuestionId(rs.getLong("question_id"));
                     question.setQuestionType(rs.getString("question_type"));
                     question.setDescription(rs.getString("description"));
@@ -158,7 +155,7 @@ public class QuestionsRepositoryImpl implements QuestionsRepository {
 
     // nirjala user story 72
     @Override
-    public Long insertQuestion(Question q) {
+    public Long insert(Question q) {
 
         Long questionId = null;
 
@@ -310,52 +307,31 @@ public class QuestionsRepositoryImpl implements QuestionsRepository {
         }
     }
 
-    @Override
-    public List<QuestionResponse> getRecentQuestions() {
-        List<QuestionResponse> list = new ArrayList<>();
-        String sql = "SELECT * FROM questions where status='DRAFT' AND created_at >= NOW() - INTERVAL 2 DAY ORDER BY created_at DESC";
-        try (Connection connection = getConnection(); java.sql.Statement statement = connection.createStatement(); ResultSet rs = statement.executeQuery(sql)) {
-            while (rs.next()) {
-                QuestionResponse q = new QuestionResponse();
-                q.setQuestionId(rs.getLong("question_id"));
-                q.setDescription(rs.getString("description"));
-                q.setQuestionType(rs.getString("question_type"));
-                q.setDifficultyLevel(rs.getString("difficulty_level"));
-                q.setQuestionStatus(rs.getString("status"));
+    // @Override
+    // public List<QuestionResponse> getRecentQuestions() {
+    //     List<QuestionResponse> list = new ArrayList<>();
+    //     String sql = "SELECT * FROM questions where status='DRAFT' AND created_at >= NOW() - INTERVAL 2 DAY ORDER BY created_at DESC";
+    //     try (Connection connection = getConnection(); java.sql.Statement statement = connection.createStatement(); ResultSet rs = statement.executeQuery(sql)) {
+    //         while (rs.next()) {
+    //             QuestionResponse q = new QuestionResponse();
+    //             q.setQuestionId(rs.getLong("question_id"));
+    //             q.setDescription(rs.getString("description"));
+    //             q.setQuestionType(rs.getString("question_type"));
+    //             q.setDifficultyLevel(rs.getString("difficulty_level"));
+    //             q.setQuestionStatus(rs.getString("status"));
 
-                list.add(q);
-            }
+    //             list.add(q);
+    //         }
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    //     } catch (Exception e) {
+    //         e.printStackTrace();
+    //     }
 
-        return list;
-    }
-
-    @Override
-    public List<QuestionResponse> getDraftQuestionList() {
-        List<QuestionResponse> list = new ArrayList<>();
-        String sql = "SELECT question_id, description FROM questions WHERE status='DRAFT'";
-        try (Connection connection = getConnection(); PreparedStatement statement = connection.prepareStatement(sql); ResultSet rs = statement.executeQuery()) {
-            while (rs.next()) {
-                list.add(new QuestionResponse(
-                        rs.getLong("question_id"),
-                        rs.getString("description"),
-                        rs.getString("question_type"),
-                        rs.getString("status"),
-                        rs.getString("difficulty_level")
-                ));
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return list;
-    }
+    //     return list;
+    // }
 
     @Override
-    public List<QuestionResponse> getRecentQuestionList() {
+    public List<QuestionResponse> getQuestionsFromLastTwoDays() {
         List<QuestionResponse> list = new ArrayList<>();
         String sql = "SELECT question_id, description FROM questions WHERE created_at >= NOW() - INTERVAL 2 DAY ORDER BY created_at DESC";
         try (Connection connection = getConnection(); PreparedStatement statement = connection.prepareStatement(sql); ResultSet rs = statement.executeQuery()) {
@@ -444,33 +420,7 @@ public class QuestionsRepositoryImpl implements QuestionsRepository {
     }
 
     @Override
-    public List<QuestionResponse> getQuestionsByType(String questionType) {
-        String sql = """
-                SELECT question_id, question_type, description
-                FROM questions
-                WHERE question_type = ?
-                ORDER BY question_id
-                """;
-        try (Connection connection = getConnection(); PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setString(1, questionType);
-            try (ResultSet rs = statement.executeQuery()) {
-                List<QuestionResponse> results = new java.util.ArrayList<>();
-                while (rs.next()) {
-                    QuestionResponse question = new QuestionResponse();
-                    question.setQuestionId((long) rs.getInt("question_id"));
-                    question.setQuestionType(rs.getString("question_type"));
-                    question.setDescription(rs.getString("description"));
-                    results.add(question);
-                }
-                return results;
-            }
-        } catch (Exception ex) {
-            throw new RuntimeException("Failed to fetch questions by type", ex);
-        }
-    }
-
-    @Override
-    public List<QuestionResponse> findByStatus(String questionStatus) {
+    public List<QuestionResponse> getQuestionsByStatus(String questionStatus) {
         List<QuestionResponse> list = new ArrayList<>();
         String sql = """
                 SELECT question_id, question_type, description, difficulty_level, status

@@ -12,24 +12,21 @@ public interface QuestionsRepository {
     Question getQuestionById(long question_id);
     List<Question> getAllQuestions();
     List<Question> getQuestionsByDifficulty(String difficulty);
-    List<Question> findByType(String questionType);
-
-    Long insertQuestion(Question q);
+    Long insert(Question q);
     void insertMcqOptions(Long questionId,
             String optionA,
             String optionB,
             String optionC,
             String optionD,
             String correctAnswer);
-    List<QuestionResponse> getDraftQuestionList();
     void updateQuestionById(Long id, QuestionRequestDto dto);
-    List<QuestionResponse> getRecentQuestionList();
+    List<QuestionResponse> getQuestionsFromLastTwoDays();
     QuestionResponseDto getQuestionDetailsById(Long id);
     List<QuestionResponse> getQuestionsByType(String questionType);
     // List<Questions> getAllQuestions();
     List<QuestionResponse> getDraftQuestions();
-    List<QuestionResponse> getRecentQuestions();
-    List<QuestionResponse> findByStatus(String questionStatus);
+    // List<QuestionResponse> getRecentQuestions();
+    List<QuestionResponse> getQuestionsByStatus(String questionStatus);
     void approveQuestionById(Long id);
     void rejectQuestionById(Long id);
     void approveQuestions(List<Long> questionId);
