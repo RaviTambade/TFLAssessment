@@ -1,19 +1,19 @@
 const Credential = require("../dtos/requests/credential");
 const UserRequest = require("../dtos/requests/userrequest");
 
-class AuthenticationController {
-  constructor(authenticationService) {
-    this.authenticationService = authenticationService;
+class AuthController {
+  constructor(authService) {
+    this.authService = authService;
   }
 
-  userLogin = (req, res) => {
+  validate = (req, res) => {
     const credentialCheck = new Credential(
       req.body.username,
       req.body.password,
       req.body.role,
     );
 
-    this.authenticationService.validate(credentialCheck, (err, result) => {
+    this.authService.validate(credentialCheck, (err, result) => {
       if (err) {
         console.error("error fetching users:", err);
         return res.status(500).json({ error: "intternal server error" });
@@ -27,7 +27,7 @@ class AuthenticationController {
     });
   };
 
-  InsertUser(req, res) {
+  register(req, res) {
     const user = new UserRequest(
       req.body.firstName,
       req.body.lastName,
@@ -35,7 +35,7 @@ class AuthenticationController {
       req.body.password,
       req.body.contact,
     );
-    this.authenticationService.InsertUser(user, (err, result) => {
+    this.authService.register(user, (err, result) => {
       if (err) {
         console.error("Error inserting user:", err);
         res.status(500).json({ error: "Failed to register user" });
@@ -46,4 +46,4 @@ class AuthenticationController {
   }
 }
 
-module.exports = AuthenticationController;
+module.exports = AuthController;

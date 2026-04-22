@@ -2,148 +2,110 @@ const express=require("express");
 const cors=require("cors");
 const bodyParser = require("body-parser");
 
-//  Sanika Yash
-const userLoginService = require("./services/authservice");
-const AuthenticationController = require("./controllers/authcontroller_sanika_yash");
-const userLoginRoutes = require("./routers/authroutes");
-const userLoginRepository = require("./repositories/authrepository");
-const Connection = require("./connectivity/db");
 
-const ProfileRepository = require("./repositories/profilerepository");
+const AuthRepository = require("./repositories/auth");
+const ProfileRepository = require("./repositories/profile");
+const LoggerRepository = require("./repositories/logger");
+const SessionRepository = require("./repositories/session");
+const UsersRepository = require('./repositories/userinformation');
+const UpdateRolesRepository = require('./repositories/updaterole');
+const UserProfileRepository = require("./repositories/userProfile");
+const EmployerProfileRepository = require("./repositories/userProfile");
+const RoleRepository = require("./repositories/role");
+
+const AuthService = require("./services/authservice");
 const ProfileService = require("./services/profileservice");
-const ProfileController = require("./controllers/profilecontroller_sanika");
-const userProfileRoutes = require("./routers/profileroutes");
-
-const UserLogRepository = require("./repositories/userlogrepository");
-const UserLogService = require("./services/userlogservice");
-const UserLogController = require("./controllers/userlogcontroller_sanika");
-const UserLogRoutes = require("./routers/userlogroutes");
-
-
-// Sai Samruddhi
-const SessionRepository = require("./repositories/sessionrepository");
+const LoggerService = require("./services/loggerservices");
 const SessionService = require("./services/sessionservice");
-const SessionController = require("./controllers/sessioncontroller_sai_samruddhi");
-const SessionRoutes = require("./routers/sessionroutes");
-
-// Arnav 
-const UsersRepository = require('./repositories/userrepository');
-const UsersService = require('./services/userservice');
-const UsersController = require('./controllers/usercontroller');
-const UsersRouterFactory = require('./routers/userrouter');
-
-
-//Tejas Naukudkar
-const UpdateRolesRepository = require('./repositories/updaterolesrepository');
+const UsersService = require('./services/userinformationservice');
 const UpdateRolesService = require('./services/updaterolesservices');
+const EmployerProfileService = require("./services/userProfileService");
+const UserProfileService = require("./services/userProfile.service");
+const RoleService = require("./services/roleservice");
+const AdminProfileService = require("./services/adminProfileService");
 const UpdateRolesController = require('./controllers/updaterolescontroller');
+const UsersController = require('./controllers/userinformationcontroller');
+const UsersRouterFactory = require('./routers/userinformationroutes');
+const AdminProfileController = require("./controllers/adminProfileController");
+const UserProfileController = require("./controllers/userProfile.controller");
+const EmployerProfileController = require("./controllers/userProfileControllers")
+const AuthController = require("./controllers/authcontroller_sanika_yash");
+const ProfileController = require("./controllers/profilecontroller_sanika");
+const LoggerController = require("./controllers/loggercontroller");
+const SessionController = require("./controllers/sessioncontroller_sai_samruddhi");
+const RoleController = require("./controllers/roleController");
+
+
+const LoggerRoutes = require("./routers/loggerroutes");
+const SessionRoutes = require("./routers/sessionroutes");
+const AuthRoutes = require("./routers/authroutes");
+const userProfileRoutes = require("./routers/profileroutes");
+const RoleRouterFactory = require("./routers/roleRouter");
+const EmployerProfileRouter = require("./routers/userProfileRoutes");
+const userProfileRouter = require("./routers/userProfile.routes");
 const UpdateRolesRouter = require('./routers/updaterolesrouter');
 
-//Chaitrali
-const UserProfileRepository = require("./repositories/userProfile.repository");
-const UserProfileService = require("./services/userProfile.service");
-const UserProfileController = require("./controllers/userProfile.controller");
-const userProfileRouter = require("./routes/userProfile.routes");
-
-const notFoundHandler = require("./middlewares/notFoundHandler");
-const errorHandler = require("./middlewares/errorHandler");
-
-//Ajay Kale
-const EmployerProfileRepository = require("./repositories/userProfileRepository");
-const EmployerProfileService = require("./services/userProfileService");
-const EmployerProfileController = require("./controllers/userProfileControllers");
-const EmployerProfileRouter = require("./routers/userProfileRoutes");
+const NotFoundHandler = require("./middlewares/notFoundHandler");
+const ErrorHandler = require("./middlewares/errorHandler");
 
 
-// Sanika
-const RolesRepository = require("./repositories/rolesRepository");
-const RolesService = require("./services/rolesservice");
-const RolesController = require("./controllers/rolesController");
-const RolesRouterFactory = require("./routers/rolesRouter");
+// Initialize repositories, services, and controllers for each module
+const connection = require("./connectivity/db");
 
 
-
-//Nitish Kharat
-
-//Rahul Gayke
-const UserEditProfileRepository = require("./repositories/userProfileRepository");
-const UserEditProfileService = require("./services/userProfileService");
-const UserEditProfileController = require("./controllers/userProfileController");
-const userEditRouterFactory = require("./routers/userProfileRoutes");
-
-
-
-//SACHIN KHARAT 
-const AdminProfileService = require("./services/adminProfileService");
-const AdminProfileController = require("./controllers/adminProfileController");
-
-//--------------------------------------  DEPENCENCY INJECTION  --------------------------------------
-
-// Sanika Yash - Dependency Injection
-const repo = new userLoginRepository(Connection);
-const srv = new userLoginService(repo);
-const authController = new AuthenticationController(srv);
+const authRepo = new AuthRepository(connection);  
+const loginsvc = new userLoginService(authRepo);
+const authcontroller = new AuthenticationController(loginService);
 const authRoutes = userLoginRoutes(authController);
 
-const profileRepository=new ProfileRepository(Connection);
-const profileService=new ProfileService(profileRepository);
-const profileController=new ProfileController(profileService);
-const profileRoutes = userProfileRoutes(profileController);
+const profileRepo=new ProfileRepository(connection);
+const profileSvc=new ProfileService(profileRepo);
+const profileController=new ProfileController(profileSvc);
+const profileRoutes = userProfileRoutes(profileController);  
 
-const userLogRepository=new UserLogRepository(Connection);
-const userLogService=new UserLogService(userLogRepository);
-const userLogController=new UserLogController(userLogService);
-const userLogRoutes = UserLogRoutes(userLogController);
+const loggerRepo=new LoggerRepository(connection);
+const loggerSvc=new LoggerService(loggerRepo);
+const loggerController=new LoggerController(loggerSvc);
+const loggerRoutes = LoggerRoutes(loggerController);
 
-
-// Sai Samruddhi - Dependency Injection
-const sessionRepo = new SessionRepository(Connection);
-const sessionService = new SessionService(sessionRepo);
-const sessionController = new SessionController(sessionService);
+const sessionRepo = new SessionRepository(connection);
+const sessionSvc = new SessionService(sessionRepo);
+const sessionController = new SessionController(sessionSvc);
 const sessionRoutes = SessionRoutes(sessionController);
 
-// Arnav - Dependency Injection
-const userRepo = new UsersRepository(Connection);
-const service = new UsersService(userRepo);
-const controller = new UsersController(service);
-const userRouter = UsersRouterFactory(controller);
+const updaterolesRepo = new UpdateRolesRepository(connection);
+const updaterolesSvc = new UpdateRolesService(updaterolesRepo, connection);
+const updaterolesController = new UpdateRolesController(updaterolesSvc);
+const updaterolesRouter = UpdateRolesRouter(updaterolesController);
 
-// Tejas Naukudkar - Dependency injection 
-const updaterolesrepo = new UpdateRolesRepository(Connection);
-const updaterolesservice = new UpdateRolesService(updaterolesrepo, Connection);
-const updaterolescontroller = new UpdateRolesController(updaterolesservice);
-const updaterolesrouter = UpdateRolesRouter(updaterolescontroller);
-
-//Chaitrali - Dependency Injection
-const userProfileRepository = new UserProfileRepository(connection);
-const userProfileService = new UserProfileService(userProfileRepository);
-const userProfileController = new UserProfileController(userProfileService);
+const userProfileRepo = new UserProfileRepository(connection);
+const userProfileSvc = new UserProfileService(userProfileRepo);
+const userProfileController = new UserProfileController(userProfileSvc);
 const router = userProfileRouter(userProfileController);
 
-//Ajay Kale  - Dependency Injection
-const employerRepo = new EmployerProfileRepository(Connection);
-const employerService = new EmployerProfileService(employerRepo);
-const employerController = new EmployerProfileController(employerService);
+const employerRepo = new EmployerProfileRepository(connection);
+const employerSvc = new EmployerProfileService(employerRepo);
+const employerController = new EmployerProfileController(employerSvc);
 const employerRoutes = EmployerProfileRouter(employerController);
 
-//Sanika - Dependency Injection
-const rolerepo = new RolesRepository(Connection);
-const roleservice = new RolesService(rolerepo);
-const rolecontroller = new RolesController(roleservice);
-const rolesRouter = RolesRouterFactory(rolecontroller);
-//Rahul 
+const roleRepo = new RoleRepository(connection);
+const roleSvc = new RoleService(roleRepo);
+const roleController = new RoleController(roleSvc);
+const roleRouter = RoleRouterFactory(roleController);
+
 const userEditRepo = new UserProfileRepository();
-const userEditService = new UserProfileService(userRepo);
-const userEditController = new UserProfileController(userService);
+const userEditSvc = new UserProfileService(userEditRepo);
+const userEditController = new UserProfileController(userEditSvc); 
 
-
-
-
-
-
-
+  
+const userInformationRepo = new UsersRepository(connection);
+const userInformationSvc = new UsersService(userInformationRepo);
+const userInformationController = new UsersController(userInformationSvc);
+const userInformationRouter = UsersRouterFactory(userInformationController);
 
 const app = express();
+
+// Middleware configuration for logging, CORS, and JSON parsing
 
 app.use(cors());
 app.use(express.json());
@@ -153,34 +115,19 @@ app.use((req, res, next) => {
   next();
 });
 
-//--------------------------------------  ROUTES  --------------------------------------
 
+app.use(NotFoundHandler);
+app.use(ErrorHandler);
+app.use("/api/auth/", authRoutes);
+app.use("/api/roles", roleRouter);
 
-// Sanika Yash - Routes
-app.use("/api/authentication/", authRoutes);
 app.use("/api/profile/", profileRoutes);
-app.use("/api/userlog/", userLogRoutes);
+app.use("/api/employerprofile", employerRoutes);
+app.use("/api/userprofiles", router);
+app.use("/api/userlog/", loggerRoutes);
+app.use("/api/usersessions", sessionRoutes);
 
-// Sai Samruddhi - Session Routes
-app.use("/api/v1/sessions", sessionRoutes);
-
-// Arnav  - User Routes
-app.use("/api/v1/users", userRouter);
-
-//Chaitrali - User Profile Routes
-app.use("/api/v1/user-profiles", router);
-
-//Ajay Kale - EmployerProfile Routes
-app.use("/api/employer-profile", employerRoutes);
-
-//Sanika  - role Routes
-app.use("/api/roles", rolesRouter);
-//rahul - edit profile
-app.use("/api/v1/profile", userRouterFactory(userController));
-
-//Tejas Naukudkar - Update Roles Routes
 app.use(['/api', '/api/v1'], updaterolesrouter);
-
-
+app.use("/api/v1/user-information", userInformationRouter);
 
 module.exports = app;

@@ -65,11 +65,11 @@ public class Question {
         this.difficultyLevel = difficultyLevel;
     }
 
-    public String getStatus() {
+    public String geQuestiontStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setQuestionStatus(String status) {
         this.status = status;
     }
 

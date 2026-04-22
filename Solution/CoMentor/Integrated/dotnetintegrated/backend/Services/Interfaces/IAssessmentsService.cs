@@ -3,11 +3,13 @@ using System.Threading.Tasks;
 
 using backend.DTOs;
 namespace backend.Services.Interfaces;
+
 public interface IAssessmentsService
 {
     Task<List<UpcomingAssessmentDto>> GetAllUpcomingAssessmentsService(long userId);
     Task<List<AllAssessmentDto>> GetAssessments();
-    
+     Task<bool> DeactivateAssessment(long id);
+     Task<bool> RestoreAssessment(long id);
     Task<List<TestDto>> GetTestsAsync();
     Task<List<StudentDto>> GetStudentsAsync();
     Task AssignAssessmentAsync(AssignAssessmentDto dto);
@@ -17,6 +19,8 @@ public interface IAssessmentsService
     Task<AssessmentReportDto> GetResultData(AssessmentstudenttResultDto request);
 
     Task<int> GetTotalAssessmentsAsync();
-Task<int> GetCompletedAssessmentsAsync();
+    Task<int> GetCompletedAssessmentsAsync();
+
+    Task<List<AllAssessmentDto>> GetAllAssessments();
 }
 

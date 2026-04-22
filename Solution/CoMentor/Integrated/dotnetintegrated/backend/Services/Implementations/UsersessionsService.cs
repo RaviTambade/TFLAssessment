@@ -22,10 +22,10 @@ namespace backend.Services.Implementations
             return await _repo.GetAllUserSessionsAsync();
         }
 
-            public async Task<int> GetTotalUserSessionsAsync()
-{
-    return await _repo.GetTotalUserSessionsAsync();
-}
+        public async Task<int> GetTotalUserSessionsAsync()
+        {
+            return await _repo.GetTotalUserSessionsAsync();
+        }
 
     }
 }

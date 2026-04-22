@@ -1,15 +1,15 @@
-class AuthenticationService {
-  constructor(authenticationRepository) {
-    this.authenticationRepository = authenticationRepository;
+class AuthService {
+  constructor(authRepository) {
+    this.authRepository = authRepository;
   }
 
   validate(credential, callback) {
-    this.authenticationRepository.userLogin(credential, callback);
+    this.authRepository.validate(credential, callback);
   }
 
-  InsertUser(user, callback) {
-    this.authenticationRepository.InsertUser(user, callback);
+  register(user, callback) {
+    this.authRepository.register(user, callback);
   }
 }
 
-module.exports = AuthenticationService;
+module.exports = AuthService;
