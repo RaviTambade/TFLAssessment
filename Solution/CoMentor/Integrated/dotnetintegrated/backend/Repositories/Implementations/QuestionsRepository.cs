@@ -1,16 +1,21 @@
 using MySql.Data.MySqlClient;
 using backend.DTOs;
 using backend.Repositories.Interfaces;
+using System.Data; // Fixes IDbConnection
+using Dapper;
 
 namespace backend.Repositories.Implementations
 {
     public class QuestionsRepository : IQuestionsRepository
     {
         private readonly IConfiguration _configuration;
+        private readonly string _connectionString;
 
         public QuestionsRepository(IConfiguration configuration)
         {
             _configuration = configuration;
+            _connectionString = _configuration.GetConnectionString("DefaultConnection")
+                                            ?? throw new ArgumentNullException(nameof(configuration), "DefaultConnection string is missing");
         }
 
         public QuestionsDto QuestionDetailsWithAns(int questionId)
@@ -91,6 +96,49 @@ namespace backend.Repositories.Implementations
                 }
 
                 return dto;
+            }
+        }
+        public async Task<IEnumerable<AssessmentQuestionAnswersDto>> GetStudentAssessmentQuestionsResultAsync(int assessmentId, int studentId)
+        {
+            const string sql = @"
+            SELECT 
+        a.id                        AS AssessmentId,
+        a.student_id                AS StudentId,
+        sa.QuestionId,
+        qu.description,
+	    mo.option_a,
+        mo.option_b,
+        mo.option_c,
+        mo.option_d,
+        mo.correct_answer           AS CorrectAnswer,
+        sa.SelectedOption           AS StudentSelectedAnswer,
+        CASE 
+        WHEN sa.SelectedOption = mo.correct_answer 
+        THEN 'Correct' 
+        ELSE 'Wrong' 
+        END                         AS Result
+        FROM assessments a
+        JOIN StudentAnswers sa 
+            ON sa.AssessmentId = a.Id 
+            AND sa.StudentId = a.student_id
+
+        JOIN mcq_options mo 
+            ON mo.question_id = sa.QuestionId
+        join questions qu 
+            ON qu.question_id=mo.question_id
+        WHERE 
+            a.id = @AssessmentId        
+            AND a.student_id = @StudentId 
+        ORDER BY 
+            sa.QuestionId;";
+
+            using (IDbConnection db = new MySqlConnection(_connectionString))
+            {
+                return await db.QueryAsync<AssessmentQuestionAnswersDto>(sql, new
+                {
+                    AssessmentId = assessmentId,
+                    StudentId = studentId
+                });
             }
         }
     }

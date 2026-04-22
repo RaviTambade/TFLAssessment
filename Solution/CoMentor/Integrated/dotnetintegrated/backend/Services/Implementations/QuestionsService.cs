@@ -17,5 +17,18 @@ namespace backend.Services.Implementations
         {
             return _repository.QuestionDetailsWithAns(questionId);
         }
+
+        public async Task<IEnumerable<AssessmentQuestionAnswersDto>> GetStudentAssessmentQuestionsResultAsync(int assessmentId, int studentId)
+        {
+            if (assessmentId <= 0 || studentId <= 0)
+                throw new ArgumentException("AssessmentId and StudentId must be greater than 0.");
+
+            var results = await _repository.GetStudentAssessmentQuestionsResultAsync(assessmentId, studentId);
+
+            if (results == null || !results.Any())
+                throw new KeyNotFoundException($"No assessment found for AssessmentId={assessmentId}, StudentId={studentId}.");
+
+            return results;
+        }
     }
 }
