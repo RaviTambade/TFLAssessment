@@ -1,6 +1,6 @@
 const LoginStatus = require("../dtos/responses/LoginStatus");
 
-class AuthRepository {
+class Auth {
 
   constructor(connection) {
     this.connection = connection;
@@ -25,21 +25,18 @@ class AuthRepository {
 
   register(user, callback) {
     console.log(user);
-    const query = "CALL RegisterUser(?,?,?,?,?)"; this.connection.query(query,[user.contact, user.firstName, user.lastName, user.email, user.password],callback,
+    const query = "CALL RegisterUser(?,?,?,?,?)"; 
+    this.connection.query(query,[user.contact, user.firstName, user.lastName, user.email, user.password],callback
     );
   }
 
-  getUserById(id, callback) {
-  this.connection.query("SELECT * FROM users WHERE id = ?", [id], (err, result) => {if (err) return callback(err);callback(null, result);}
-    );
-  }
 
-  updatePassword(id, newPassword, callback) {
-    this.connection.query( "UPDATE users SET password = ? WHERE id = ?", [newPassword, id],
+  changePassword(changePassword, callback) {
+    this.connection.query( "UPDATE users SET password = ? WHERE id = ? AND password=?", [changePassword.newPassword, changePassword.id, changePassword.oldPassword],
       (err, result) => {if (err) return callback(err); callback(null, result);}
     );
   }
  
 }
 
-module.exports = AuthRepository;
+module.exports = Auth;

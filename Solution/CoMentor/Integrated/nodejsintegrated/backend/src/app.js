@@ -17,7 +17,7 @@ const UserProfileRepository = require("./repositories/userProfile");
 const EmployerProfileRepository = require("./repositories/userProfile");
 
 
-const AuthService = require("./services/authservice");
+const AuthService = require("./services/auth");
 const ProfileService = require("./services/profileservice");
 const LoggerService = require("./services/loggerservices");
 const SessionService = require("./services/sessionservice");
@@ -34,7 +34,7 @@ const UsersRouterFactory = require('./routers/userinformationroutes');
 const AdminProfileController = require("./controllers/adminProfileController");
 const UserProfileController = require("./controllers/userProfile.controller");
 const EmployerProfileController = require("./controllers/userProfileControllers")
-const AuthController = require("./controllers/authcontroller_sanika_yash");
+const AuthController = require("./controllers/auth");
 const ProfileController = require("./controllers/profilecontroller_sanika");
 const LoggerController = require("./controllers/loggercontroller");
 const SessionController = require("./controllers/sessioncontroller_sai_samruddhi");
@@ -43,7 +43,7 @@ const RoleController = require("./controllers/roleController");
 
 const LoggerRoutes = require("./routers/loggerroutes");
 const SessionRoutes = require("./routers/sessionroutes");
-const AuthRoutes = require("./routers/authroutes");
+const AuthRoutes = require("./routers/auth");
 const userProfileRoutes = require("./routers/profileroutes");
 const RoleRouterFactory = require("./routers/roleRouter");
 const EmployerProfileRouter = require("./routers/userProfileRoutes");
@@ -59,9 +59,9 @@ const connection = require("./connectivity/db");
 
 
 const authRepo = new AuthRepository(connection);  
-const loginsvc = new userLoginService(authRepo);
-const authcontroller = new AuthenticationController(loginService);
-const authRoutes = userLoginRoutes(authController);
+const authSvc = new AuthService(authRepo);
+const authController = new AuthController(authSvc);
+const authRoutes = AuthRoutes(authController);
 
 const profileRepo=new ProfileRepository(connection);
 const profileSvc=new ProfileService(profileRepo);
