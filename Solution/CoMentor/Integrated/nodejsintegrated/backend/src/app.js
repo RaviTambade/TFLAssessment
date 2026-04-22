@@ -38,7 +38,7 @@ const RoleController = require("./controllers/roleController");
 const AuthRoutes = require("./routers/authroutes");
 const userProfileRoutes = require("./routers/profileroutes");
 const LoggerRoutes = require("./routers/logger");
-const RoleRouterFactory = require("./routers/role");
+const RoleRouter = require("./routers/role");
 const EmployerProfileRouter = require("./routers/userProfileRoutes");
 const userProfileRouter = require("./routers/userProfile.routes");
 const UpdateRolesRouter = require('./routers/updaterolesrouter');
@@ -88,7 +88,7 @@ const employerRoutes = EmployerProfileRouter(employerController);
 const roleRepo = new RoleRepository(connection);
 const roleSvc = new RoleService(roleRepo);
 const roleController = new RoleController(roleSvc);
-const roleRouter = RoleRouterFactory(roleController);
+const roleRouter = RoleRouter(roleController);
 
 const userEditRepo = new UserProfileRepository();
 const userEditSvc = new UserProfileService(userEditRepo);
@@ -116,7 +116,7 @@ app.use((req, res, next) => {
 app.use(NotFoundHandler);
 app.use(ErrorHandler);
 app.use("/api/auth/", authRoutes);
-app.use("/api/roles", role)
+app.use("/api/roles", roleRouter)
 
 
 
