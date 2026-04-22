@@ -2,7 +2,7 @@
 {
     public class FrameworkConcept
     {
-        public int Id { get; set; }
+        public long Id { get; set; }
 
         public int? FrameworkId { get; set; }
         public Framework? Framework { get; set; }
