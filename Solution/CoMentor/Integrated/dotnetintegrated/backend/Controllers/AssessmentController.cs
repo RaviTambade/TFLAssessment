@@ -19,7 +19,7 @@ public class AssessmentController : ControllerBase
     [HttpGet("user/{userId}")]
     public async Task<IActionResult> GetAll(long userId)
     {
-        var data = await _service.GetAllUpcomingAssessmentsService(userId); // Replace 0 with actual user ID if available
+        var data = await _service.GetAllUpcomingAssessmentsService(userId); 
         return Ok(data);
     }
 
@@ -153,5 +153,27 @@ public class AssessmentController : ControllerBase
             return NotFound();
 
         return Ok(new { message = "Assessment restored successfully" });
+    }
+
+    [HttpGet("summaries/{studentId}")]
+    public async Task<IActionResult> GetAssessmentSummariesForStudent(long studentId)
+    {
+        try
+        {
+            var summaries = await _service.GetAssessmentSummariesForStudent(studentId);
+            return Ok(summaries);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, new { message = "An error occurred while fetching assessment summaries", error = ex.Message, stackTrace = ex.StackTrace });
+        }
+    }
+
+
+    [HttpGet("student-assessments-status")]
+    public async Task<IActionResult> Get()
+    {
+        var data = await _service.GetAllAssessments();
+        return Ok(data);
     }
 }

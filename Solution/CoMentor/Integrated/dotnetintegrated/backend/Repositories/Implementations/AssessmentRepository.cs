@@ -65,7 +65,7 @@ public class AssessmentRepository : IAssessmentRepository
             data[i].SrNo = i + 1;
         }
 
-        return data; 
+        return data;
     }
 
     public async Task<List<AllAssessmentDto>> GetAllAssessments()
@@ -82,7 +82,7 @@ public class AssessmentRepository : IAssessmentRepository
 
             join p in _context.PersonalInformations on u.Id equals p.UserId into personalGroup
             from p in personalGroup.DefaultIfEmpty()
-            // where !a.IsActive
+                // where !a.IsActive
 
             select new AllAssessmentDto
             {
@@ -250,6 +250,147 @@ public class AssessmentRepository : IAssessmentRepository
             .CountAsync(x => x.Status == "Completed");
     }
 
+   public async Task<List<AssessmentSummaryDto>> GetAssessmentSummariesForStudent(long studentId)
+{
+    var data = await (
+        from a in _context.Assessments
 
+        where a.StudentId == studentId
 
+        join t in _context.Tests
+            on a.TestId equals t.Id into tg
+        from t in tg.DefaultIfEmpty()
+
+        join pi in _context.PersonalInformations
+            on (int?)a.StudentId equals pi.UserId into pig
+        from pi in pig.DefaultIfEmpty()
+
+        join sar in _context.StudentAssessmentResults
+            on (int?)a.Id equals sar.AssessmentId into sarg
+        from sar in sarg.DefaultIfEmpty()
+
+        from tq in _context.TestQuestions
+            .Where(x => t != null && x.TestId == t.Id)
+            .DefaultIfEmpty()
+
+        from sa in _context.StudentAnswers
+            .Where(x => x.AssessmentId == (int)a.Id &&
+                        (tq != null && x.QuestionId == (int)tq.QuestionId))
+            .DefaultIfEmpty()
+
+        from mo in _context.McqOptions
+            .Where(x => tq != null && x.QuestionId == (int?)tq.QuestionId)
+            .DefaultIfEmpty()
+
+        group new { a, t, pi, sar, tq, sa, mo } by new
+        {
+            AssessmentId    = a.Id,
+            Title           = t != null ? t.Title : null,
+            StudentId       = a.StudentId,
+            StudentName     = pi != null ? pi.FullName : null,
+            Status          = a.Status,
+            Score           = sar != null ? (float?)sar.Score : null,
+            Percentile      = sar != null ? (float?)sar.Percentile : null,
+            TimeTakenMinutes = sar != null ? (long?)sar.TimeTakenMinutes : null
+        }
+        into g
+
+        select new AssessmentSummaryDto
+        {
+            AssessmentId = g.Key.AssessmentId,
+
+            AssessmentTitle = g.Key.Title ?? "No Test",
+
+            Student = new StudentDto
+            {
+                Id       = (int)(g.Key.StudentId ?? 0),
+                FullName = g.Key.StudentName ?? "Unknown"
+            },
+
+            Status = g.Key.Status,
+
+            Score            = g.Key.Score ?? 0f,
+            Percentile       = g.Key.Percentile ?? 0f,
+            TimeTakenMinutes = g.Key.TimeTakenMinutes ?? 0L,
+
+            TotalQuestions = g
+                .Where(x => x.tq != null)
+                .Select(x => x.tq!.QuestionId)
+                .Distinct()
+                .Count(),
+
+            CorrectAnswers = g
+                .Where(x =>
+                    x.sa != null &&
+                    x.mo != null &&
+                    x.sa.SelectedOption == x.mo.CorrectAnswer)
+                .Select(x => x.sa!.QuestionId)
+                .Distinct()
+                .Count(),
+
+            WrongAnswers = g
+                .Where(x =>
+                    x.sa != null &&
+                    x.mo != null &&
+                    x.sa.SelectedOption != null &&
+                    x.sa.SelectedOption != x.mo.CorrectAnswer)
+                .Select(x => x.sa!.QuestionId)
+                .Distinct()
+                .Count()
+        }
+
+    ).ToListAsync();
+
+    return data;
 }
+
+
+
+   public List<StudentAssessmentDto> GetFullData()
+{
+    var data = (from a in _context.Assessments
+
+                join t in _context.Tests 
+                    on a.TestId equals t.Id into testGroup
+                from t in testGroup.DefaultIfEmpty()
+
+                join u in _context.Users 
+                    on a.StudentId equals u.Id into userGroup
+                from u in userGroup.DefaultIfEmpty()
+
+                join p in _context.PersonalInformations 
+                    on u.Id equals p.UserId into personalGroup
+                from p in personalGroup.DefaultIfEmpty()
+
+              join r in _context.StudentAssessmentResults
+    on a.Id equals (long?)r.AssessmentId into resultGroup
+                from r in resultGroup.DefaultIfEmpty()
+
+                select new StudentAssessmentDto
+                {
+                    AssessmentId = a.Id,
+
+                    TestId = t != null ? t.Id : 0,
+                    TestTitle = t != null ? t.Title : "No Test",
+
+                    StudentId = u != null ? u.Id : 0,
+                    StudentName = p != null ? p.FullName : "Unknown",
+
+                    Status = a.Status,
+                    AssignedAt = a.AssignedAt,
+                    ScheduledAt = a.ScheduledAt,
+
+                    Result = r == null ? null : new ResultDto
+                    {
+                        Score = r.Score,
+                        Percentile = r.Percentile,
+                        TimeTakenMinutes = r.TimeTakenMinutes
+                    }
+                }).ToList();
+
+    return data;
+}
+    }
+
+
+
