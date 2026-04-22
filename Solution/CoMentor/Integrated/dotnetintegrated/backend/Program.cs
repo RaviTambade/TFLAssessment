@@ -39,6 +39,8 @@ builder.Services.AddScoped<ILanguagesService, LanguagesService>();
 builder.Services.AddScoped<ILanguagesRepository, LanguagesRepository>();
 builder.Services.AddScoped<ILayersService, LayersService>();
 builder.Services.AddScoped<ILayersRepository, LayersRepository>();
+builder.Services.AddScoped<IStudentsRepository, StudentsRepository>();
+builder.Services.AddScoped<IStudentsService, StudentsService>();
 
 
 // Configure CORS to allow requests from the frontend
@@ -52,6 +54,7 @@ builder.Services.AddCors(options =>
                   .AllowAnyHeader();
         });
 });
+
 
 var app = builder.Build();
 
