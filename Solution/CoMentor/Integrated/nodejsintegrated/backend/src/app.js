@@ -23,21 +23,20 @@ const EmployerProfileService = require("./services/userProfileService");
 const UserProfileService = require("./services/userProfile.service");
 const RoleService = require("./services/roleservice");
 const AdminProfileService = require("./services/adminProfileService");
-
+const UpdateRolesController = require('./controllers/updaterolescontroller');
 const UsersController = require('./controllers/userinformationcontroller');
 const UsersRouterFactory = require('./routers/userinformationroutes');
-const UpdateRolesController = require('./controllers/updaterolescontroller');
+const AdminProfileController = require("./controllers/adminProfileController");
 const UserProfileController = require("./controllers/userProfile.controller");
 const EmployerProfileController = require("./controllers/userProfileControllers")
-const AdminProfileController = require("./controllers/adminProfileController");
 const AuthController = require("./controllers/authcontroller_sanika_yash");
 const ProfileController = require("./controllers/profilecontroller_sanika");
 const LoggerController = require("./controllers/loggercontroller");
-const LoggerRoutes = require("./routers/loggerroutes");
 const SessionController = require("./controllers/sessioncontroller_sai_samruddhi");
 const RoleController = require("./controllers/roleController");
 
 
+const LoggerRoutes = require("./routers/loggerroutes");
 const SessionRoutes = require("./routers/sessionroutes");
 const AuthRoutes = require("./routers/authroutes");
 const userProfileRoutes = require("./routers/profileroutes");
@@ -46,16 +45,17 @@ const EmployerProfileRouter = require("./routers/userProfileRoutes");
 const userProfileRouter = require("./routers/userProfile.routes");
 const UpdateRolesRouter = require('./routers/updaterolesrouter');
 
-const notFoundHandler = require("./middlewares/notFoundHandler");
-const errorHandler = require("./middlewares/errorHandler");
+const NotFoundHandler = require("./middlewares/notFoundHandler");
+const ErrorHandler = require("./middlewares/errorHandler");
 
 
 // Initialize repositories, services, and controllers for each module
 const connection = require("./connectivity/db");
 
 
-const srv = new userLoginService(repo);
-const authController = new AuthenticationController(srv);
+const authRepo = new AuthRepository(connection);  
+const loginService = new userLoginService(authRepo);
+const authController = new AuthenticationController(loginService);
 const authRoutes = userLoginRoutes(authController);
 
 const profileRepository=new ProfileRepository(connection);
@@ -92,10 +92,12 @@ const roleRepository = new RoleRepository(connection);
 const roleService = new RoleService(roleRepository);
 const roleController = new RoleController(roleService);
 const roleRouter = RoleRouterFactory(roleController);
-const userEditRepo = new UserProfileRepository();
-const userEditService = new UserProfileService(userRepo);
-const userEditController = new UserProfileController(userService); 
 
+const userEditRepo = new UserProfileRepository();
+const userEditService = new UserProfileService(userEditRepo);
+const userEditController = new UserProfileController(userEditService); 
+
+  
 const userInformationRepo = new UsersRepository(connection);
 const userInformationService = new UsersService(userInformationRepo);
 const userInformationController = new UsersController(userInformationService);
@@ -114,15 +116,17 @@ app.use((req, res, next) => {
 });
 
 
-app.use(notFoundHandler);
-app.use(errorHandler);
-app.use("/api/authentication/", authRoutes);
-app.use("/api/profile/", profileRoutes);
-app.use("/api/userlog/", loggerRoutes);
-app.use("/api/v1/sessions", sessionRoutes);
-app.use("/api/v1/user-profiles", router);
-app.use("/api/employer-profile", employerRoutes);
+app.use(NotFoundHandler);
+app.use(ErrorHandler);
+app.use("/api/auth/", authRoutes);
 app.use("/api/roles", roleRouter);
+
+app.use("/api/profile/", profileRoutes);
+app.use("/api/employerprofile", employerRoutes);
+app.use("/api/userprofiles", router);
+app.use("/api/userlog/", loggerRoutes);
+app.use("/api/usersessions", sessionRoutes);
+
 app.use(['/api', '/api/v1'], updaterolesrouter);
 app.use("/api/v1/user-information", userInformationRouter);
 
