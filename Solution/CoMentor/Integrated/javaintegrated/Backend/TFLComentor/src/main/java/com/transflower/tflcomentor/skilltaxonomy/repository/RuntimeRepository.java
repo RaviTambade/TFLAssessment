@@ -12,9 +12,11 @@ import com.transflower.tflcomentor.skilltaxonomy.entity.Runtime;
 @Repository
 public interface RuntimeRepository {
 
-    public List<RuntimeDTO> getAllRuntimes();
+    public List<RuntimeDTO> getRuntimes();
     public boolean addRuntime(RuntimeDTO runtimedto);
     public List<RuntimeSummaryResponse> findAllRuntimeSummaries();
     public Optional<Runtime> findById(Long runtimeId);
+    public List<Runtime> getAllRuntimes();
+    
     
 }

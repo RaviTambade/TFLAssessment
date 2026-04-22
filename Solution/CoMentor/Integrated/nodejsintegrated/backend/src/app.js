@@ -15,26 +15,33 @@ const UserController = require("./controllers/users");
 const userRouter = require("./routers/users");
 
 
-const AuthService = require("./services/authservice");
+const AuthService = require("./services/auth");
+const ProfileService = require("./services/profileservice");
 const LoggerService = require("./services/logger");
-const RoleService = require("./services/roleservice");
+const UsersService = require('./services/userinformationservice');
+const RoleService = require("./services/role");
 const UpdateRolesService = require('./services/updaterolesservices');
 
 
 
 const UpdateRolesController = require('./controllers/updaterolescontroller');
 const LoggerController = require("./controllers/logger")
-
-
-const AuthController = require("./controllers/authcontroller_sanika_yash");
-
+const UsersController = require('./controllers/userinformationcontroller');
+const UsersRouterFactory = require('./routers/userinformationroutes');
+const AdminProfileController = require("./controllers/adminProfileController");
+const UserProfileController = require("./controllers/userProfile.controller");
+const EmployerProfileController = require("./controllers/userProfileControllers")
+const AuthController = require("./controllers/auth");
+const ProfileController = require("./controllers/profilecontroller_sanika");
 const RoleController = require("./controllers/roleController");
 
 
-const AuthRoutes = require("./routers/authroutes");
-
+const AuthRoutes = require("./routers/auth");
+const userProfileRoutes = require("./routers/profileroutes");
 const LoggerRoutes = require("./routers/logger");
-const RoleRouterFactory = require("./routers/roleRouter");
+const RoleRouter = require("./routers/role");
+const EmployerProfileRouter = require("./routers/userProfileRoutes");
+const userProfileRouter = require("./routers/userProfile.routes");
 const UpdateRolesRouter = require('./routers/updaterolesrouter');
 
 const NotFoundHandler = require("./middlewares/notFoundHandler");
@@ -45,9 +52,9 @@ const ErrorHandler = require("./middlewares/errorHandler");
 const connection = require("./connectivity/db");
 
 const authRepo = new AuthRepository(connection);  
-const loginsvc = new userLoginService(authRepo);
-const authcontroller = new AuthenticationController(loginService);
-const authRoutes = userLoginRoutes(authController);
+const authSvc = new AuthService(authRepo);
+const authController = new AuthController(authSvc);
+const authRoutes = AuthRoutes(authController);
 
 const userRepo = new UserRepository(connection);
 const userSvc = new UserService(userRepo);
@@ -76,7 +83,7 @@ const updaterolesRouter = UpdateRolesRouter(updaterolesController);
 const roleRepo = new RoleRepository(connection);
 const roleSvc = new RoleService(roleRepo);
 const roleController = new RoleController(roleSvc);
-const roleRouter = RoleRouterFactory(roleController);
+const roleRouter = RoleRouter(roleController);
 
 const userEditRepo = new UserProfileRepository();
 const userEditSvc = new UserProfileService(userEditRepo);

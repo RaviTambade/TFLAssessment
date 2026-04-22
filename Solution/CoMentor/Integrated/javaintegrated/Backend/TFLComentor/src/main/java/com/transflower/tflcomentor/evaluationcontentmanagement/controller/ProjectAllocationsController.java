@@ -24,7 +24,7 @@ import com.transflower.tflcomentor.evaluationcontentmanagement.service.ProjectAl
 public class ProjectAllocationsController {
 
     @Autowired
-   private ProjectAllocationService service;
+    private ProjectAllocationService service;
 
     @GetMapping("/{projectId}/students")
     public List<ProjectAllocationResponseDTO> getStudentByProjectId(@PathVariable Long projectId) {

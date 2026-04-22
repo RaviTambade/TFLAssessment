@@ -13,33 +13,18 @@ import com.transflower.tflcomentor.skilltaxonomy.entity.Framework;
 import com.transflower.tflcomentor.skilltaxonomy.entity.Language;
 import com.transflower.tflcomentor.skilltaxonomy.entity.Layer;
 import com.transflower.tflcomentor.skilltaxonomy.entity.Runtime;
-import com.transflower.tflcomentor.skilltaxonomy.repository.IConceptRepository;
-import com.transflower.tflcomentor.skilltaxonomy.service.IConceptsService;
+import com.transflower.tflcomentor.skilltaxonomy.repository.ConceptRepository;
+import com.transflower.tflcomentor.skilltaxonomy.service.ConceptsService;
 
 @Service
-public class ConceptsService implements IConceptsService {
+public class ConceptsServiceimpl implements ConceptsService {
 
     @Autowired
-    private IConceptRepository conceptsRepository;
+    private ConceptRepository repository;
 
     @Override
     public List<Concept> getAllConcepts() {
-        return conceptsRepository.getAllConcepts();
-    }
-
-    @Override
-    public List<Runtime> getAllRuntimes() {
-        return conceptsRepository.getAllRuntimes();
-    }
-
-    @Override
-    public List<Language> getAllLanguages(int runtimeId) {
-        return conceptsRepository.getAllLanguages(runtimeId);
-    }
-
-    @Override
-    public List<Layer> getAllLayers() {
-        return conceptsRepository.getAllLayers();
+        return repository.getAllConcepts();
     }
 
     // @Override
@@ -48,22 +33,17 @@ public class ConceptsService implements IConceptsService {
     // }
 
     @Override
-    public List<Framework> getAllFrameworksByLanguageAndLayer(int languageId, int layerId) {
-        return conceptsRepository.getAllFrameworksByLanguageAndLayer(languageId, layerId);
-    }
-
-    @Override
     public List<Concept> getAllConceptsforFramework(String framework) {
-        return conceptsRepository.getAllConceptsforFramework(framework);
+        return  repository.getAllConceptsforFramework(framework);
     }
 
     @Override
-    public Concept findById(Long id) {
-        return conceptsRepository.findById(id);
+    public Concept getById(Long id) {
+        return repository.getById(id);
     }
 
     @Override
     public boolean addConcept(Concept concept) {
-        return conceptsRepository.addConcept(concept);
+        return repository.addConcept(concept);
     }
 }

@@ -4,7 +4,8 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.transflower.tflcomentor.skilltaxonomy.dto.response.LanguageDto;
+import com.transflower.tflcomentor.skilltaxonomy.dto.response.LanguageResponseDto;
+import com.transflower.tflcomentor.skilltaxonomy.entity.Language;
 import com.transflower.tflcomentor.skilltaxonomy.repository.LanguageRepository;
 import com.transflower.tflcomentor.skilltaxonomy.service.LanguageService;
 
@@ -12,22 +13,27 @@ import com.transflower.tflcomentor.skilltaxonomy.service.LanguageService;
 public class LanguageServiceImpl implements LanguageService {
 
 
-    private final LanguageRepository languageRepository;
+    private final LanguageRepository repository;
 
     public LanguageServiceImpl(LanguageRepository languageRepository) {
-        this.languageRepository = languageRepository;
+        this.repository = languageRepository;
     }
 
     @Override
-    public List<LanguageDto> getLanguagesBySmeId(long smeId) {
+    public List<LanguageResponseDto> getLanguagesBySmeId(long smeId) {
 
-        List<LanguageDto> entities = languageRepository.getLanguagesBySmeId(smeId);
+        List<LanguageResponseDto> entities = repository.getLanguagesBySmeId(smeId);
 
         return entities.stream()
-                .map(l -> new LanguageDto(
+                .map(l -> new LanguageResponseDto(
                         l.getLanguageId(),
                         l.getLanguageName()
                 ))
                 .toList();
+    }
+
+     @Override
+    public List<Language> getAllLanguages(int runtimeId) {
+        return repository.getAllLanguages(runtimeId);
     }
 }

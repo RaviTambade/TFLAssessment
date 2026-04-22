@@ -3,7 +3,6 @@ package com.transflower.tflcomentor.skilltaxonomy.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,13 +11,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.transflower.tflcomentor.evaluationcontentmanagement.dto.request.QuestionDto;
 import com.transflower.tflcomentor.skilltaxonomy.entity.Concept;
 import com.transflower.tflcomentor.skilltaxonomy.entity.Framework;
-import com.transflower.tflcomentor.skilltaxonomy.entity.Language;
-import com.transflower.tflcomentor.skilltaxonomy.entity.Layer;
 import com.transflower.tflcomentor.skilltaxonomy.entity.Runtime;
-import com.transflower.tflcomentor.skilltaxonomy.service.IConceptsService;
+import com.transflower.tflcomentor.skilltaxonomy.service.ConceptsService;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
@@ -26,7 +22,7 @@ import com.transflower.tflcomentor.skilltaxonomy.service.IConceptsService;
 public class ConceptsController {
 
     @Autowired
-    private IConceptsService conceptsService;
+    private ConceptsService conceptsService;
 
     @GetMapping("/concepts")
     public List<Concept> getAllConcepts(){
@@ -35,8 +31,8 @@ public class ConceptsController {
 
     
     @GetMapping("/concepts/{id}")
-    public Concept findById(@PathVariable Long id) {
-        return conceptsService.findById(id);
+    public Concept getById(@PathVariable Long id) {
+        return conceptsService.getById(id);
     }
 
     @PostMapping("/concepts")
@@ -49,20 +45,6 @@ public class ConceptsController {
         return conceptsService.getAllConceptsforFramework(framework);
     }
 
-    @GetMapping("/runtimes")
-    public List<Runtime> getAllRuntimes() {
-        return conceptsService.getAllRuntimes();
-    }
-
-    
-  
-
-
-
-    @GetMapping("/frameworks/languages/{languageId}/layers/{layerId}")
-    public List<Framework> getAllFrameworksByLanguageAndLayer(@PathVariable int languageId, @PathVariable int layerId) {
-        return conceptsService.getAllFrameworksByLanguageAndLayer(languageId, layerId);
-    }
 
 }
 

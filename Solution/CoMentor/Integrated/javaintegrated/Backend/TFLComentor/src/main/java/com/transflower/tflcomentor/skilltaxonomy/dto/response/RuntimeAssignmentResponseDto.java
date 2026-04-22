@@ -1,6 +1,6 @@
 package com.transflower.tflcomentor.skilltaxonomy.dto.response;
 
-public class RuntimeAssignmentResponse {
+public class RuntimeAssignmentResponseDto {
 
     private Long smeRuntimeId;
     private Long userId;
@@ -8,7 +8,7 @@ public class RuntimeAssignmentResponse {
     private String userContact;
     private String userStatus;
 
-    public RuntimeAssignmentResponse(
+    public RuntimeAssignmentResponseDto(
             Long smeRuntimeId,
             Long userId,
             String userName,
