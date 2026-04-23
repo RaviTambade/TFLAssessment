@@ -58,18 +58,18 @@ public class ConceptRepositoryImpl implements ConceptRepository {
     }
 
     @Override
-    public List<Concept> getAllConceptsforFramework(String framework) {
+    public List<Concept> getAllConceptsforFramework(int framework) {
         String query = "SELECT DISTINCT c.id, c.name, c.description from concepts c " +
                 "JOIN framework_concepts fc " +
                 "ON fc.concept_id=c.id " +
                 "JOIN frameworks f " +
                 "ON f.id=fc.framework_id " +
-                "WHERE f.name=?";
+                "WHERE f.id=?";
         PreparedStatement preparedStatement;
         List<Concept> conceptsList = new ArrayList<>();
         try (Connection connection = getConnection()) {
             preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1, framework);
+            preparedStatement.setInt(1, framework);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 Concept concept = new Concept();
@@ -130,4 +130,5 @@ public class ConceptRepositoryImpl implements ConceptRepository {
             return false;
         }
     }
+
 }
