@@ -17,7 +17,7 @@ import com.transflower.tflcomentor.skilltaxonomy.repository.ConceptRepository;
 import com.transflower.tflcomentor.skilltaxonomy.service.ConceptsService;
 
 @Service
-public class ConceptsServiceimpl implements ConceptsService {
+public class ConceptsServiceImpl implements ConceptsService {
 
     @Autowired
     private ConceptRepository repository;
@@ -27,13 +27,8 @@ public class ConceptsServiceimpl implements ConceptsService {
         return repository.getAllConcepts();
     }
 
-    // @Override
-    // public List<Frameworks> getAllFrameworksByLanguageId(int languageId) {
-    //     return conceptsRepository.getAllFrameworksByLanguageId(languageId);
-    // }
-
     @Override
-    public List<Concept> getAllConceptsforFramework(String framework) {
+    public List<Concept> getAllConceptsforFramework(int framework) {
         return  repository.getAllConceptsforFramework(framework);
     }
 
@@ -43,7 +38,12 @@ public class ConceptsServiceimpl implements ConceptsService {
     }
 
     @Override
-    public boolean addConcept(Concept concept) {
+    public Concept addConcept(Concept concept) {
         return repository.addConcept(concept);
+    }
+
+    @Override
+    public boolean mapConceptToFramework(int conceptId, int frameworkId) {
+        return repository.mapConceptToFramework(conceptId, frameworkId);
     }
 }

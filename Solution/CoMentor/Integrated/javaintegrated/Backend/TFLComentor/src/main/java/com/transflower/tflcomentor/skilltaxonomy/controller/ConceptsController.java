@@ -32,14 +32,19 @@ public class ConceptsController {
         return conceptsService.getById(id);
     }
 
-    @PostMapping("/concepts")
-    public boolean addConcept(@RequestBody Concept concept) {
+    @PostMapping("/add/concept")
+    public Concept addConcept(@RequestBody Concept concept) {
         return conceptsService.addConcept(concept);
     }
 
-    @GetMapping("/concepts/frameworks/{framework}")    //not working
-    public List<Concept> getAllConceptsforFramework(@PathVariable String framework) {
+    @GetMapping("/concepts/frameworks/{framework}")   
+    public List<Concept> getAllConceptsforFramework(@PathVariable int framework) {
         return conceptsService.getAllConceptsforFramework(framework);
+    }
+
+    @PostMapping("/map/concept/framework/{conceptId}/{frameworkId}")
+    public boolean mapConceptToFramework(@PathVariable int conceptId, @PathVariable int frameworkId) {
+        return conceptsService.mapConceptToFramework(conceptId, frameworkId);
     }
 
 }

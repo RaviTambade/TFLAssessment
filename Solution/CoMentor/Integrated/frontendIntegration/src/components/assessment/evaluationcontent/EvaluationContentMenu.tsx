@@ -33,6 +33,58 @@ const EvaluationContentMenu = () => {
                   <Button
                     variant="hero"
                     size="lg"
+                    className="group" 
+                    onClick={() => navigate("/models/evaluationcontent/updatequestion")}
+                  >
+                    Update questions 
+                    <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                  </Button>
+
+                <Button
+                    variant="hero"
+                    size="lg"
+                    className="group"
+                    onClick={() =>
+                      navigate("/models/evaluationcontent/viewquestion")
+                    }
+                  >
+                    Questions 
+                    <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                  </Button>
+                  
+                  <Button
+                    variant="hero"
+                    size="lg"
+                    className="group" 
+                    onClick={() => navigate("/models/evaluationcontent/questionbyconcept")}
+                  >
+                    Questions by Concept
+                    <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                  </Button>
+
+                  <Button
+                    variant="hero"
+                    size="lg"
+                    className="group"
+                    onClick={() => navigate("/models/evaluationcontent/insertquestion")}
+                    >
+                    SME Insert Question
+                    <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                  </Button>
+
+                  <Button
+                    variant="hero"
+                    size="lg"
+                    className="group"
+                    onClick={() => navigate("/models/evaluationcontent/reviewquestion")}
+                  >
+                    MENTOR Review Question
+                    <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                  </Button>
+
+                   <Button
+                    variant="hero"
+                    size="lg"
                     className="group"
                     onClick={() => navigate("/models/evaluationcontent/questionbystatus")}
                   >
@@ -49,9 +101,13 @@ const EvaluationContentMenu = () => {
                     View Questions by Type
                     <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                   </Button>
-                  </div>
+                 
+
+
+                </div>
               </CardContent>
             </div>
+         
           </Card>
         </div>
       </div>

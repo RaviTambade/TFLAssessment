@@ -1,19 +1,19 @@
-class Logger {
+class UserActivityRepository {
   constructor(connection) {
     this.connection = connection;
   }
 
-  LoginEntry(userid, callback) {
+  login(userid, callback) {
     const sql = "INSERT INTO user_logs (user_id,login_time) VALUES(?,now() );";
     this.connection.query(sql, [userid], callback);
   }
 
-  LogoutEntry(userid, callback) {
+  logout(userid, callback) {
     const sql = "UPDATE user_logs SET logout_time=now() WHERE user_id=? AND logout_time is null;";
     this.connection.query(sql, [userid], callback);
   }
 
-  getLoginsLast24Hrs(callback) {
+  getTotalLogins24Hours(callback) {
     const sql = `
       SELECT COUNT(*) AS totalLogins24h
       FROM user_logs
@@ -25,7 +25,7 @@ class Logger {
     });
   }
 
-  getAvgSessionTime(callback) {
+  getRecentAverageSessionTime(callback) {
     const sql = `
       SELECT AVG(TIMESTAMPDIFF(SECOND, login_time, logout_time)) AS avgSessionTime
       FROM (
@@ -42,7 +42,7 @@ class Logger {
     });
   }
 
-  getActiveSessionsCount(callback) {
+  getTotalActiveSessions(callback) {
     const sql = `
       SELECT COUNT(*) AS activeSessions
       FROM user_logs
@@ -54,7 +54,7 @@ class Logger {
     });
   }
 
-  getActiveUsers(callback) {
+  getCurrentActiveUsers(callback) {
     const sql = `
       SELECT 
         CONCAT(p.first_name,' ', p.last_name) AS full_name,
@@ -70,7 +70,7 @@ class Logger {
     });
   }
   
-  getSessionLogs(name, callback) {
+  getAllUserActivity(name, callback) {
     let sql = `
       SELECT
         us.id AS session_id,
@@ -105,4 +105,4 @@ class Logger {
   
 }
 
-module.exports = Logger;
+module.exports = UserActivityRepository;

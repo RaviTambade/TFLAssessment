@@ -1,5 +1,5 @@
 const RoleRequestDto = require("../dtos/requests/RoleRequestDto");
-class Role{
+class RolesController{
   constructor(role) {
     this.roleService = role;
   }
@@ -45,4 +45,4 @@ class Role{
   }
 }
 
-module.exports = Role;
+module.exports = RolesController;

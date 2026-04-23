@@ -65,7 +65,7 @@ public class QuestionResponseDto {
         this.difficultyLevel = difficultyLevel;
     }
 
-    public String geQuestiontStatus() {
+    public String getQuestionStatus() {
         return status;
     }
 
