@@ -6,6 +6,15 @@ import EvaluationContentMenu from "../components/assessment/evaluationcontent/Ev
 import SkillTaxonomyMenu from "../components/assessment/skilltaxonomy/SkillTaxonomyMenu";
 import Assessment from "../components/assessment/ComponentButtons";
 import AddRuntime from "@/components/assessment/skilltaxonomy/AddRuntime";
+import UpdateQuestion from "@/components/assessment/evaluationcontent/UpdateQuestion";
+import QuestionsByConcept from "@/components/assessment/evaluationcontent/QuestionsByConcept";
+import QuestionPage from "@/components/assessment/evaluationcontent/QuestionsPage";
+import SMEInsertQuestion from "@/components/assessment/evaluationcontent/SMEInsertQuestion";
+import MentorReviewQuestion from "@/components/assessment/evaluationcontent/MentorReviewQuestion";
+import QuestionDetails from "@/components/assessment/evaluationcontent/QuestionDetails";
+import EditQuestion from "@/components/assessment/evaluationcontent/EditQuestion";
+import ViewRuntimes from "@/components/assessment/skilltaxonomy/ViewRuntimes";
+
 
 
 function AppRoutes() {
@@ -23,7 +32,8 @@ function AppRoutes() {
           {/* Skill Taxonomy */}
           <Route path="skilltaxonomy/skilltaxonomy-menu" element={<SkillTaxonomyMenu />} />
 
-           <Route path="skilltaxonomy/AddRuntime" element={<AddRuntime />} />
+          <Route path="skilltaxonomy/AddRuntime" element={<AddRuntime />} />
+              <Route path="skilltaxonomy/ViewRuntimes" element={<ViewRuntimes />} />
  
           
 
