@@ -10,8 +10,8 @@ import java.util.Optional;
 import org.springframework.stereotype.Repository;
 
 import com.transflower.tflcomentor.configuration.DBConfig;
-import com.transflower.tflcomentor.skilltaxonomy.dto.response.RuntimeDTO;
-import com.transflower.tflcomentor.skilltaxonomy.dto.response.RuntimeSummaryResponse;
+import com.transflower.tflcomentor.skilltaxonomy.dto.response.RuntimeResponseDTO;
+import com.transflower.tflcomentor.skilltaxonomy.dto.response.RuntimeSummaryResponseDto;
 import com.transflower.tflcomentor.skilltaxonomy.entity.Concept;
 import com.transflower.tflcomentor.skilltaxonomy.entity.Runtime;
 import com.transflower.tflcomentor.skilltaxonomy.repository.RuntimeRepository;
@@ -37,8 +37,8 @@ public class RuntimeRepositoryImpl implements RuntimeRepository {
     
 
     @Override
-    public List<RuntimeDTO> getRuntimes() {
-        List<RuntimeDTO> runtimesList = new ArrayList<>();
+    public List<RuntimeResponseDTO> getRuntimes() {
+        List<RuntimeResponseDTO> runtimesList = new ArrayList<>();
         String query = "SELECT runtime_name FROM runtimes";
 
         try (Connection connection = DBConfig.getConnection();
@@ -46,7 +46,7 @@ public class RuntimeRepositoryImpl implements RuntimeRepository {
           ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
-                RuntimeDTO rt = new RuntimeDTO();
+                RuntimeResponseDTO rt = new RuntimeResponseDTO();
                 rt.setRuntime_name(rs.getString("Runtime_name"));
                 runtimesList.add(rt);
             }
@@ -58,7 +58,7 @@ public class RuntimeRepositoryImpl implements RuntimeRepository {
     }
 
     @Override
-    public boolean addRuntime(RuntimeDTO runtimedto) {
+    public boolean addRuntime(RuntimeResponseDTO runtimedto) {
         String query = "insert into runtimes (runtime_name) values(?)";
 
         try (Connection connection = DBConfig.getConnection(); 
@@ -73,8 +73,8 @@ public class RuntimeRepositoryImpl implements RuntimeRepository {
     }
 
     @Override
-    public List<RuntimeSummaryResponse> findAllRuntimeSummaries() {
-        List<RuntimeSummaryResponse> runtimes = new ArrayList<>();
+    public List<RuntimeSummaryResponseDto> findAllRuntimeSummaries() {
+        List<RuntimeSummaryResponseDto> runtimes = new ArrayList<>();
         String query = """
                 select r.id, trim(r.runtime_name) as runtime_name, count(sr.sme_runtime_id) as linked_smes
                 from runtimes r
@@ -86,7 +86,7 @@ public class RuntimeRepositoryImpl implements RuntimeRepository {
         try (Connection connection = DBConfig.getConnection(); PreparedStatement ps = connection.prepareStatement(query); ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
-                runtimes.add(new RuntimeSummaryResponse(
+                runtimes.add(new RuntimeSummaryResponseDto(
                         rs.getLong("id"),
                         rs.getString("runtime_name"),
                         rs.getLong("linked_smes")));

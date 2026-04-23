@@ -9,8 +9,8 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.transflower.tflcomentor.skilltaxonomy.dto.response.RuntimeAssignmentResponseDto;
 import com.transflower.tflcomentor.skilltaxonomy.dto.response.RuntimeDetailsResponseDto;
-import com.transflower.tflcomentor.skilltaxonomy.dto.response.RuntimeSummaryResponse;
-import com.transflower.tflcomentor.skilltaxonomy.dto.response.RuntimeDTO;
+import com.transflower.tflcomentor.skilltaxonomy.dto.response.RuntimeSummaryResponseDto;
+import com.transflower.tflcomentor.skilltaxonomy.dto.response.RuntimeResponseDTO;
 import com.transflower.tflcomentor.skilltaxonomy.entity.Runtime;
 import com.transflower.tflcomentor.skilltaxonomy.repository.RuntimeRepository;
 import com.transflower.tflcomentor.skilltaxonomy.service.RuntimeService;
@@ -27,17 +27,17 @@ public class RuntimeServiceImpl implements RuntimeService {
     // }
 
     @Override
-    public List<RuntimeDTO> getRuntimes() {
+    public List<RuntimeResponseDTO> getRuntimes() {
         return repository.getRuntimes();
     }
 
     @Override
-    public boolean addRuntime(RuntimeDTO runtimedto) {
+    public boolean addRuntime(RuntimeResponseDTO runtimedto) {
         return repository.addRuntime(runtimedto);
     }
 
     @Override
-    public List<RuntimeSummaryResponse> getAllRuntimeSummaries() {
+    public List<RuntimeSummaryResponseDto> getAllRuntimeSummaries() {
         return repository.findAllRuntimeSummaries();
     }
 
