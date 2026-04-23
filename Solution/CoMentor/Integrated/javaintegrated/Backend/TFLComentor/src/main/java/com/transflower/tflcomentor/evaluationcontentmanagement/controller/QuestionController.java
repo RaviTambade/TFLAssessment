@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.transflower.tflcomentor.evaluationcontentmanagement.dto.request.QuestionDto;
-import com.transflower.tflcomentor.evaluationcontentmanagement.dto.request.QuestionRequestDto;
-import com.transflower.tflcomentor.evaluationcontentmanagement.dto.response.QuestionResponse;
+import com.transflower.tflcomentor.evaluationcontentmanagement.dto.request.QuestionOptionsRequestDto;
 import com.transflower.tflcomentor.evaluationcontentmanagement.dto.response.QuestionResponseDto;
+import com.transflower.tflcomentor.evaluationcontentmanagement.dto.response.QuestionOptionsResponseDto;
 import com.transflower.tflcomentor.evaluationcontentmanagement.entity.Question;
 import com.transflower.tflcomentor.evaluationcontentmanagement.service.QuestionsServices;
 
@@ -44,7 +44,7 @@ public class QuestionController {
     }
 
     @PostMapping()
-    public String create(@RequestBody QuestionRequestDto dto) {
+    public String create(@RequestBody QuestionOptionsRequestDto dto) {
         service.create(dto);
         return "Question with Options Saved!";
     }
@@ -54,7 +54,7 @@ public class QuestionController {
     //     return service.getAllQuestions();
     // }
     @GetMapping("/drafts")
-    public List<QuestionResponse> getDraft() {
+    public List<QuestionResponseDto> getDraft() {
         return service.getDraftQuestions();
     }
 
@@ -83,7 +83,7 @@ public class QuestionController {
     }
 
     @GetMapping("/recent")
-    public List<QuestionResponse> getQuestionsFromLastTwoDays() {
+    public List<QuestionResponseDto> getQuestionsFromLastTwoDays() {
         return service.getQuestionsFromLastTwoDays();
     }
 
@@ -92,23 +92,23 @@ public class QuestionController {
     //     return service.getRecentQuestionList();
     // }
     @GetMapping("/details/{question_id}")
-    public QuestionResponseDto getQuestionDetailsById(@PathVariable Long question_id) {
+    public QuestionOptionsResponseDto getQuestionDetailsById(@PathVariable Long question_id) {
         return service.getQuestionDetailsById(question_id);
     }
 
     @PutMapping("/{question_id}")
-    public String updateQuestion(@PathVariable Long question_id, @RequestBody QuestionRequestDto dto) {
+    public String updateQuestion(@PathVariable Long question_id, @RequestBody QuestionOptionsRequestDto dto) {
         service.updateQuestionById(question_id, dto);
         return "Question Updated Successfully";
     }
 
     @GetMapping("/type/{questionType}")
-    public List<QuestionResponse> getQuestionsByType(@PathVariable String questionType) {
+    public List<QuestionResponseDto> getQuestionsByType(@PathVariable String questionType) {
         return service.getQuestionsByType(questionType);
     }
 
     @GetMapping("/status/{questionStatus}")
-    public List<QuestionResponse> getQuestionsByStatus(@PathVariable String questionStatus) {
+    public List<QuestionResponseDto> getQuestionsByStatus(@PathVariable String questionStatus) {
         return service.getQuestionsByStatus(questionStatus);
     }
 
