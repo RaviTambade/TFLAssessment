@@ -3,7 +3,7 @@ namespace backend.Repositories.Interfaces
     public interface ILanguagesRepository
     {
         
-        Task<List<LanguageDto>> GetLanguages(long runtimeId);
+        Task<List<LanguageDto>> GetLanguagesAsync(long runtimeId);
       
     }
 }

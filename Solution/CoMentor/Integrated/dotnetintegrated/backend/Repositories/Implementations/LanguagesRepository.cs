@@ -16,7 +16,7 @@ namespace backend.Repositories
 
         
 
-    public async Task<List<LanguageDto>> GetLanguages(long runtimeId)
+    public async Task<List<LanguageDto>> GetLanguagesAsync(long runtimeId)
         {
             return await _context.Languages
         .Where(x => x.RuntimeId == runtimeId)

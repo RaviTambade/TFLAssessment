@@ -18,7 +18,7 @@ public class RuntimesController : ControllerBase
     [HttpGet("runtimes")]
    // http://localhost:5201/api/runtimes/runtimes
     public async Task<IActionResult> GetRuntimes()
-        => Ok(await _service.GetRuntimes());
+        => Ok(await _service.GetRuntimesAsync());
 
    
 }

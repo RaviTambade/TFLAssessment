@@ -4,10 +4,12 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.transflower.tflcomentor.skilltaxonomy.dto.response.LanguageDto;
+import com.transflower.tflcomentor.skilltaxonomy.dto.response.LanguageResponseDto;
+import com.transflower.tflcomentor.skilltaxonomy.entity.Language;
 
 @Service
 public interface LanguageService {
-    
-     List<LanguageDto> getLanguagesBySmeId(long smeId);
+
+     public List<LanguageResponseDto> getLanguagesBySmeId(long smeId);
+     public List<Language> getAllLanguages(int runtimeId);
 }

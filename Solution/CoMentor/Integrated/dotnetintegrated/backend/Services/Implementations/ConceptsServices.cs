@@ -15,14 +15,9 @@ namespace backend.Services
             _repo = repo;
         }
 
-        
 
-        
-
-        
-
-        public Task<List<ConceptDto>> GetConcepts(List<long> frameworkIds)
-            => _repo.GetConcepts(frameworkIds);
+        public Task<List<ConceptDto>> GetConceptsAsync(List<long> frameworkIds)
+            => _repo.GetConceptsAsync(frameworkIds);
 
         
     }

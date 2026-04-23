@@ -20,7 +20,7 @@ namespace backend.Repositories
 
    
 
-    public async Task<List<QuestionDto>> GetQuestionsByConceptId(List<long> conceptIds, string type)
+    public async Task<List<QuestionDto>> GetQuestionsByConceptIdAsync(List<long> conceptIds, string type)
         {
             return await _context.QuestionFrameworkConcepts
                 .Where(x => conceptIds.Contains(x.FrameworkConcepts!.ConceptId ?? 0))
@@ -37,7 +37,7 @@ namespace backend.Repositories
                 .ToListAsync();
         }
 
-    public async Task<long> CreateTest(CreateTestRequestDto dto)
+    public async Task<long> CreateTestAsync(CreateTestRequestDto dto)
         {
             var test = new Test
             {

@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.transflower.tflcomentor.evaluationcontentmanagement.dto.request.QuestionDto;
-import com.transflower.tflcomentor.evaluationcontentmanagement.dto.request.QuestionRequestDto;
-import com.transflower.tflcomentor.evaluationcontentmanagement.dto.response.QuestionResponse;
+import com.transflower.tflcomentor.evaluationcontentmanagement.dto.request.QuestionOptionsRequestDto;
 import com.transflower.tflcomentor.evaluationcontentmanagement.dto.response.QuestionResponseDto;
+import com.transflower.tflcomentor.evaluationcontentmanagement.dto.response.QuestionOptionsResponseDto;
 import com.transflower.tflcomentor.evaluationcontentmanagement.entity.Question;
 import com.transflower.tflcomentor.evaluationcontentmanagement.service.QuestionsServices;
 
@@ -44,7 +44,7 @@ public class QuestionController {
     }
 
     @PostMapping()
-    public String create(@RequestBody QuestionRequestDto dto) {
+    public String create(@RequestBody QuestionOptionsRequestDto dto) {
         service.create(dto);
         return "Question with Options Saved!";
     }
@@ -54,19 +54,19 @@ public class QuestionController {
     //     return service.getAllQuestions();
     // }
     @GetMapping("/drafts")
-    public List<QuestionResponse> getDraft() {
+    public List<QuestionResponseDto> getDraft() {
         return service.getDraftQuestions();
     }
 
-    @PutMapping("/{id}/approve")
-    public String approve(@PathVariable Long id) {
-        service.approveQuestionById(id);
+    @PutMapping("/{question_id}/approve")
+    public String approve(@PathVariable Long question_id) {
+        service.approveQuestionById(question_id);
         return "Approved";
     }
 
-    @PutMapping("/{id}/reject")
-    public String rejectQuestionById(@PathVariable Long id) {
-        service.rejectQuestionById(id);
+    @PutMapping("/{question_id}/reject")
+    public String rejectQuestionById(@PathVariable Long question_id) {
+        service.rejectQuestionById(question_id);
         return "Rejected";
     }
 
@@ -83,7 +83,7 @@ public class QuestionController {
     }
 
     @GetMapping("/recent")
-    public List<QuestionResponse> getQuestionsFromLastTwoDays() {
+    public List<QuestionResponseDto> getQuestionsFromLastTwoDays() {
         return service.getQuestionsFromLastTwoDays();
     }
 
@@ -91,24 +91,24 @@ public class QuestionController {
     // public List<QuestionResponse> getRecentList() {
     //     return service.getRecentQuestionList();
     // }
-    @GetMapping("/details/{id}")
-    public QuestionResponseDto getDetailsById(@PathVariable Long id) {
-        return service.getQuestionDetailsById(id);
+    @GetMapping("/details/{question_id}")
+    public QuestionOptionsResponseDto getQuestionDetailsById(@PathVariable Long question_id) {
+        return service.getQuestionDetailsById(question_id);
     }
 
-    @PutMapping("/{id}")
-    public String updateQuestion(@PathVariable Long id, @RequestBody QuestionRequestDto dto) {
-        service.updateQuestionById(id, dto);
+    @PutMapping("/{question_id}")
+    public String updateQuestion(@PathVariable Long question_id, @RequestBody QuestionOptionsRequestDto dto) {
+        service.updateQuestionById(question_id, dto);
         return "Question Updated Successfully";
     }
 
     @GetMapping("/type/{questionType}")
-    public List<QuestionResponse> getQuestionsByType(@PathVariable String questionType) {
+    public List<QuestionResponseDto> getQuestionsByType(@PathVariable String questionType) {
         return service.getQuestionsByType(questionType);
     }
 
     @GetMapping("/status/{questionStatus}")
-    public List<QuestionResponse> getQuestionsByStatus(@PathVariable String questionStatus) {
+    public List<QuestionResponseDto> getQuestionsByStatus(@PathVariable String questionStatus) {
         return service.getQuestionsByStatus(questionStatus);
     }
 

@@ -24,8 +24,8 @@ import com.transflower.tflcomentor.evaluationcontentmanagement.service.ProjectAl
 public class ProjectAllocationsController {
 
     @Autowired
-   private ProjectAllocationService service;
-
+    private ProjectAllocationService service;
+    
     @GetMapping("/{projectId}/students")
     public List<ProjectAllocationResponseDTO> getStudentByProjectId(@PathVariable Long projectId) {
         return service.getStudentByProjectId(projectId);
@@ -42,13 +42,10 @@ public class ProjectAllocationsController {
         ProjectAllocation allocation = new ProjectAllocation();
         allocation.setProjectId(request.getProjectId());
         allocation.setStudentId(request.getStudentId());
-
         boolean status = service.addMember(allocation);
-
         if (status) {
             return "Student added successfully";
         }
-
         return "Failed to add student";
     }
 
@@ -58,16 +55,11 @@ public class ProjectAllocationsController {
     }
 
     @DeleteMapping("/remove")
-    public String removeMember(
-            @RequestParam Long projectId,
-            @RequestParam Long studentId) {
-
+    public String removeMember(@RequestParam Long projectId, @RequestParam Long studentId) {
         boolean status = service.removeMember(projectId, studentId);
-
         if (status) {
             return "Student released successfully";
         }
-
         return "Failed to release student";
     }
 }

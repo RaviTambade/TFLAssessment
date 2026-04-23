@@ -9,6 +9,8 @@ public class Concept{
     private int status ;
     private LocalDateTime createdAt;
 
+    
+
     public Concept(){
       this.id = 0;
         this.name = " ";

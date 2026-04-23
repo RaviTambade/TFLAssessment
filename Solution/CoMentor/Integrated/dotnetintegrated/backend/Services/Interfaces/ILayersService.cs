@@ -6,7 +6,7 @@ namespace backend.Services.Interfaces
     {
        
        
-        Task<List<LayerDto>> GetLayers(long languageId);
+        Task<List<LayerDto>> GetLayersAsync(long languageId);
         
     }
 }

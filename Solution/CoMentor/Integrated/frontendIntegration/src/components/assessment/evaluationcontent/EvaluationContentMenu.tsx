@@ -28,6 +28,66 @@ const EvaluationContentMenu = () => {
                 : "opacity-0 translate-y-10"
             }`}
           >
+
+            <div className="bg-gradient-hero p-6 sm:p-8">
+              <CardContent>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <Button
+                    variant="hero"
+                    size="lg"
+                    className="group" 
+                    onClick={() => navigate("/models/evaluationcontent/updatequestion")}
+                  >
+                    Update questions 
+                    <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                  </Button>
+
+                <Button
+                    variant="hero"
+                    size="lg"
+                    className="group"
+                    onClick={() =>
+                      navigate("/models/evaluationcontent/viewquestion")
+                    }
+                  >
+                    Questions 
+                    <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                  </Button>
+                  
+                  <Button
+                    variant="hero"
+                    size="lg"
+                    className="group" 
+                    onClick={() => navigate("/models/evaluationcontent/questionbyconcept")}
+                  >
+                    Questions by Concept
+                    <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                  </Button>
+
+                  <Button
+                    variant="hero"
+                    size="lg"
+                    className="group"
+                    onClick={() => navigate("/models/evaluationcontent/insertquestion")}
+                    >
+                    SME Insert Question
+                    <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                  </Button>
+
+                  <Button
+                    variant="hero"
+                    size="lg"
+                    className="group"
+                    onClick={() => navigate("/models/evaluationcontent/reviewquestion")}
+                  >
+                    MENTOR Review Question
+                    <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                  </Button>
+
+
+                </div>
+              </CardContent>
+            </div>
          
           </Card>
         </div>

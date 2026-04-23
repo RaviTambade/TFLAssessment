@@ -6,9 +6,9 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.transflower.tflcomentor.evaluationcontentmanagement.dto.request.QuestionDto;
-import com.transflower.tflcomentor.evaluationcontentmanagement.dto.request.QuestionRequestDto;
-import com.transflower.tflcomentor.evaluationcontentmanagement.dto.response.QuestionResponse;
+import com.transflower.tflcomentor.evaluationcontentmanagement.dto.request.QuestionOptionsRequestDto;
 import com.transflower.tflcomentor.evaluationcontentmanagement.dto.response.QuestionResponseDto;
+import com.transflower.tflcomentor.evaluationcontentmanagement.dto.response.QuestionOptionsResponseDto;
 import com.transflower.tflcomentor.evaluationcontentmanagement.entity.Question;
 import com.transflower.tflcomentor.evaluationcontentmanagement.repository.QuestionsRepository;
 import com.transflower.tflcomentor.evaluationcontentmanagement.service.QuestionsServices;
@@ -38,7 +38,7 @@ public class QuestionsServicesImpl implements QuestionsServices {
     }
 
     @Override
-    public void create(QuestionRequestDto dto) {
+    public void create(QuestionOptionsRequestDto dto) {
         Question q = new Question();
         q.setDescription(dto.getDescription());
         q.setQuestionType(dto.getQuestionType());
@@ -61,12 +61,12 @@ public class QuestionsServicesImpl implements QuestionsServices {
     //     return repository.getAllQuestions();
     // }
     @Override
-    public List<QuestionResponse> getDraftQuestions() {
+    public List<QuestionResponseDto> getDraftQuestions() {
         return repository.getDraftQuestions();
     }
 
     @Override
-    public List<QuestionResponse> getQuestionsFromLastTwoDays() {
+    public List<QuestionResponseDto> getQuestionsFromLastTwoDays() {
         return repository.getQuestionsFromLastTwoDays();
     }
 
@@ -96,22 +96,22 @@ public class QuestionsServicesImpl implements QuestionsServices {
     // }
 
     @Override
-    public QuestionResponseDto getQuestionDetailsById(Long id) {
+    public QuestionOptionsResponseDto getQuestionDetailsById(Long id) {
         return repository.getQuestionDetailsById(id);
     }
 
     @Override
-    public void updateQuestionById(Long id, QuestionRequestDto dto) {
+    public void updateQuestionById(Long id, QuestionOptionsRequestDto dto) {
         repository.updateQuestionById(id, dto);
     }
 
     @Override
-    public List<QuestionResponse> getQuestionsByType(String questionType) {
+    public List<QuestionResponseDto> getQuestionsByType(String questionType) {
         return repository.getQuestionsByType(questionType);
     }
 
     @Override
-    public List<QuestionResponse> getQuestionsByStatus(String questionStatus) {
+    public List<QuestionResponseDto> getQuestionsByStatus(String questionStatus) {
         return repository.getQuestionsByStatus(questionStatus);
     }
 
