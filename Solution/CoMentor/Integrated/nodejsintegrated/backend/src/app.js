@@ -4,13 +4,15 @@ const bodyParser = require("body-parser");
 
 
 const AuthRepository = require("./repositories/auth");
-const UsersRepository = require('./repositories/users');
 const LoggerRepository = require("./repositories/logger");
 const RoleRepository = require("./repositories/role");
 const UpdateRolesRepository = require('./repositories/updaterole');
-const ProfileRepository = require("./repositories/profile");
-const UserProfileRepository = require("./repositories/userProfile");
-const EmployerProfileRepository = require("./repositories/userProfile");
+
+
+const UserRepository = require("./repositories/users");
+const UserService = require("./services/users");
+const UserController = require("./controllers/users");
+const userRouter = require("./routers/users");
 
 
 const AuthService = require("./services/auth");
@@ -19,10 +21,9 @@ const LoggerService = require("./services/logger");
 const UsersService = require('./services/userinformationservice');
 const RoleService = require("./services/role");
 const UpdateRolesService = require('./services/updaterolesservices');
-const EmployerProfileService = require("./services/userProfileService");
-const UserProfileService = require("./services/userProfile.service");
 
-const AdminProfileService = require("./services/adminProfileService");
+
+
 const UpdateRolesController = require('./controllers/updaterolescontroller');
 const LoggerController = require("./controllers/logger")
 const UsersController = require('./controllers/userinformationcontroller');
@@ -55,10 +56,11 @@ const authSvc = new AuthService(authRepo);
 const authController = new AuthController(authSvc);
 const authRoutes = AuthRoutes(authController);
 
-const profileRepo=new ProfileRepository(connection);
-const profileSvc=new ProfileService(profileRepo);
-const profileController=new ProfileController(profileSvc);
-const profileRoutes = userProfileRoutes(profileController);  
+const userRepo = new UserRepository(connection);
+const userSvc = new UserService(userRepo);
+const userController = new UserController(userSvc);
+const userRoutes = userRouter(userController);
+
 
 const loggerRepo=new LoggerRepository(connection);
 const loggerSvc=new LoggerService(loggerRepo);
@@ -75,15 +77,8 @@ const updaterolesSvc = new UpdateRolesService(updaterolesRepo, connection);
 const updaterolesController = new UpdateRolesController(updaterolesSvc);
 const updaterolesRouter = UpdateRolesRouter(updaterolesController);
 
-const userProfileRepo = new UserProfileRepository(connection);
-const userProfileSvc = new UserProfileService(userProfileRepo);
-const userProfileController = new UserProfileController(userProfileSvc);
-const router = userProfileRouter(userProfileController);
 
-const employerRepo = new EmployerProfileRepository(connection);
-const employerSvc = new EmployerProfileService(employerRepo);
-const employerController = new EmployerProfileController(employerSvc);
-const employerRoutes = EmployerProfileRouter(employerController);
+
 
 const roleRepo = new RoleRepository(connection);
 const roleSvc = new RoleService(roleRepo);
@@ -94,11 +89,11 @@ const userEditRepo = new UserProfileRepository();
 const userEditSvc = new UserProfileService(userEditRepo);
 const userEditController = new UserProfileController(userEditSvc); 
 
-  
-const userInformationRepo = new UsersRepository(connection);
-const userInformationSvc = new UsersService(userInformationRepo);
-const userInformationController = new UsersController(userInformationSvc);
-const userInformationRouter = UsersRouterFactory(userInformationController); 
+
+
+
+
+
 
 const app = express();
 
@@ -116,17 +111,12 @@ app.use((req, res, next) => {
 app.use(NotFoundHandler);
 app.use(ErrorHandler);
 app.use("/api/auth/", authRoutes);
-app.use("/api/roles", roleRouter)
-
-
-
-app.use("/api/profile/", profileRoutes);
-app.use("/api/employerprofile", employerRoutes);
-app.use("/api/userprofiles", router); 
+app.use("/api/roles", roleRouter);
 app.use("/api/userlog/", loggerRoutes);
 app.use("/api/usersessions", sessionRoutes);
 
+app.use("/api/users", userRoutes);
+
 app.use(['/api', '/api/v1'], updaterolesrouter);
-app.use("/api/v1/user-information", userInformationRouter);
 
 module.exports = app;
