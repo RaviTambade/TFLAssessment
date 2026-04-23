@@ -9,9 +9,10 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
+
+import com.transflower.tflcomentor.configuration.DBConfig;
 import com.transflower.tflcomentor.skilltaxonomy.entity.Framework;
 import com.transflower.tflcomentor.skilltaxonomy.repository.FrameworkRepository;
-import com.transflower.tflcomentor.configuration.DBConfig;
 
 @Repository
 public class FrameworkRepositoryImpl implements FrameworkRepository {

@@ -162,7 +162,7 @@ class Users {
    * Update only personal information
    * Uses stored procedure for consistency
    */
-  updatePersonInformation(userId, data, callback) {
+  updatePersonalInformation(userId, data, callback) {
     const query = `CALL sp_update_personal_information(?, ?, ?, ?, ?, ?, ?, ?);`;
 
     const values = [

@@ -7,8 +7,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.transflower.tflcomentor.skilltaxonomy.service.FrameworkService;
+
 import com.transflower.tflcomentor.skilltaxonomy.entity.Framework;
+import com.transflower.tflcomentor.skilltaxonomy.service.FrameworkService;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController

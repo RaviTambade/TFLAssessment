@@ -26,19 +26,19 @@ public class ConceptsController {
     public List<Concept> getAllConcepts() {
         return conceptsService.getAllConcepts();
     }
-
+    
     @GetMapping("/concepts/{id}")
     public Concept getById(@PathVariable Long id) {
         return conceptsService.getById(id);
     }
 
-    @PostMapping("/concepts")
+    @PostMapping("/add/concept")
     public boolean addConcept(@RequestBody Concept concept) {
         return conceptsService.addConcept(concept);
     }
 
-    @GetMapping("/concepts/frameworks/{framework}")    //not working
-    public List<Concept> getAllConceptsforFramework(@PathVariable String framework) {
+    @GetMapping("/concepts/frameworks/{framework}")   
+    public List<Concept> getAllConceptsforFramework(@PathVariable int framework) {
         return conceptsService.getAllConceptsforFramework(framework);
     }
 

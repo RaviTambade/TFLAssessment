@@ -9,7 +9,7 @@ import com.transflower.tflcomentor.skilltaxonomy.entity.Concept;
 @Service
 public interface ConceptsService {
     public List<Concept> getAllConcepts();
-    public List<Concept> getAllConceptsforFramework(String framework);
+    public List<Concept> getAllConceptsforFramework(int framework);
     public Concept getById(Long id);
     public boolean addConcept(Concept concept);
 }
