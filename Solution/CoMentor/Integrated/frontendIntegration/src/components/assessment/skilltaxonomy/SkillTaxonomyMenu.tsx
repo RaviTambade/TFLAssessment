@@ -37,7 +37,7 @@ const SkillTaxonomyMenu = () => {
                     size="lg"
                     className="group"
                     onClick={() =>
-                      navigate("/skilltaxonomy/AddRuntime")
+                      navigate("/models/skilltaxonomy/AddRuntime")
                     }
                   >
                    add Runtime
