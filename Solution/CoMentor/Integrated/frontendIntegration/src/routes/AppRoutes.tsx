@@ -5,6 +5,14 @@ import Navbar from "../components/Navbar";
 import EvaluationContentMenu from "../components/assessment/evaluationcontent/EvaluationContentMenu";
 import SkillTaxonomyMenu from "../components/assessment/skilltaxonomy/SkillTaxonomyMenu";
 import Assessment from "../components/assessment/ComponentButtons";
+import UpdateQuestion from "@/components/assessment/evaluationcontent/UpdateQuestion";
+import QuestionsByConcept from "@/components/assessment/evaluationcontent/QuestionsByConcept";
+import QuestionPage from "@/components/assessment/evaluationcontent/QuestionsPage";
+import SMEInsertQuestion from "@/components/assessment/evaluationcontent/SMEInsertQuestion";
+import MentorReviewQuestion from "@/components/assessment/evaluationcontent/MentorReviewQuestion";
+import QuestionDetails from "@/components/assessment/evaluationcontent/QuestionDetails";
+import EditQuestion from "@/components/assessment/evaluationcontent/EditQuestion";
+
 
 
 function AppRoutes() {
@@ -23,6 +31,15 @@ function AppRoutes() {
           <Route path="skilltaxonomy/skilltaxonomy-menu" element={<SkillTaxonomyMenu />} />
 
           {/* Default route - shows main assessment */}
+
+          <Route path="evaluationcontent/updatequestion" element={<UpdateQuestion />} />
+          <Route path="evaluationcontent/questionbyconcept" element={<QuestionsByConcept />} />
+          <Route path="evaluationcontent/viewquestion" element={<QuestionPage />} />
+          <Route path="/evaluationcontent/questiondetails/:question_id" element={<QuestionDetails />} />
+          <Route path="/evaluationcontent/update/:id" element={<EditQuestion />} />
+          <Route path="/evaluationcontent/edit/:id" element={<EditQuestion />} />
+          <Route path="evaluationcontent/insertquestion" element={<SMEInsertQuestion />} />
+          <Route path="evaluationcontent/reviewquestion" element={<MentorReviewQuestion />} />
           <Route index element={<Assessment />} />
         </Routes>
       </main>
