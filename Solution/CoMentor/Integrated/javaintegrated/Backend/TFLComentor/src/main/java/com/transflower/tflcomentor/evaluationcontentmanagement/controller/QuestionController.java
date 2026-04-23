@@ -58,15 +58,15 @@ public class QuestionController {
         return service.getDraftQuestions();
     }
 
-    @PutMapping("/{id}/approve")
-    public String approve(@PathVariable Long id) {
-        service.approveQuestionById(id);
+    @PutMapping("/{question_id}/approve")
+    public String approve(@PathVariable Long question_id) {
+        service.approveQuestionById(question_id);
         return "Approved";
     }
 
-    @PutMapping("/{id}/reject")
-    public String rejectQuestionById(@PathVariable Long id) {
-        service.rejectQuestionById(id);
+    @PutMapping("/{question_id}/reject")
+    public String rejectQuestionById(@PathVariable Long question_id) {
+        service.rejectQuestionById(question_id);
         return "Rejected";
     }
 
@@ -91,14 +91,14 @@ public class QuestionController {
     // public List<QuestionResponse> getRecentList() {
     //     return service.getRecentQuestionList();
     // }
-    @GetMapping("/details/{id}")
-    public QuestionResponseDto getDetailsById(@PathVariable Long id) {
-        return service.getQuestionDetailsById(id);
+    @GetMapping("/details/{question_id}")
+    public QuestionResponseDto getQuestionDetailsById(@PathVariable Long question_id) {
+        return service.getQuestionDetailsById(question_id);
     }
 
-    @PutMapping("/{id}")
-    public String updateQuestion(@PathVariable Long id, @RequestBody QuestionRequestDto dto) {
-        service.updateQuestionById(id, dto);
+    @PutMapping("/{question_id}")
+    public String updateQuestion(@PathVariable Long question_id, @RequestBody QuestionRequestDto dto) {
+        service.updateQuestionById(question_id, dto);
         return "Question Updated Successfully";
     }
 

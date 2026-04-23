@@ -19,7 +19,7 @@ import com.transflower.tflcomentor.skilltaxonomy.entity.Runtime;
 
 @RestController
 @RequestMapping("/api")
-@CrossOrigin(origins = "http://localhost:8081")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class RuntimesController {
     @Autowired
     private RuntimeService runtimeService;
