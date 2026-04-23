@@ -14,11 +14,8 @@ import com.transflower.tflcomentor.skilltaxonomy.entity.Runtime;
 @Repository
 public interface ConceptRepository {
     List<Concept> getAllConcepts();
-    List<Runtime> getAllRuntimes();
-    List<Language> getAllLanguages(int runtimeId);
-    List<Layer> getAllLayers();
-    List<Framework> getAllFrameworksByLanguageAndLayer(int languageId, int layerId);
-    List<Concept> getAllConceptsforFramework(String framework);
-    Concept findById(Long id);
-    boolean addConcept(Concept concept);
+    List<Concept> getAllConceptsforFramework(int framework);
+    Concept getById(Long id);
+    boolean addConcept(Concept concept);  
 }
+

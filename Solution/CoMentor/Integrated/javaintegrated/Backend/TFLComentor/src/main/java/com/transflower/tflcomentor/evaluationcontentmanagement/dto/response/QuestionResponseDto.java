@@ -1,20 +1,38 @@
 package com.transflower.tflcomentor.evaluationcontentmanagement.dto.response;
 
+import java.time.LocalDateTime;
 
 public class QuestionResponseDto {
-
     private Long questionId;
     private String description;
     private String questionType;
     private String difficultyLevel;
     private String status;
+    private LocalDateTime createdAt;
 
-    private String optionA;
-    private String optionB;
-    private String optionC;
-    private String optionD;
-    private String correctAnswer;
+    public QuestionResponseDto() {
+    }
 
+    public QuestionResponseDto(Long questionId, String description, String questionType,
+            String difficultyLevel, String status) {
+        this.questionId = questionId;
+        this.description = description;
+        this.questionType = questionType;
+        this.difficultyLevel = difficultyLevel;
+        this.status = status;
+    }
+
+    public QuestionResponseDto(Long questionId, String description, String questionType,
+            String difficultyLevel, LocalDateTime createdAt, String status) {
+        this.questionId = questionId;
+        this.description = description;
+        this.questionType = questionType;
+        this.difficultyLevel = difficultyLevel;
+        this.createdAt = createdAt;
+        this.status = status;
+    }
+
+    // Getters and Setters
     public Long getQuestionId() {
         return questionId;
     }
@@ -47,51 +65,19 @@ public class QuestionResponseDto {
         this.difficultyLevel = difficultyLevel;
     }
 
-    public String getStatus() {
+    public String geQuestiontStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setQuestionStatus(String status) {
         this.status = status;
     }
 
-    public String getOptionA() {
-        return optionA;
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
     }
 
-    public void setOptionA(String optionA) {
-        this.optionA = optionA;
-    }
-
-    public String getOptionB() {
-        return optionB;
-    }
-
-    public void setOptionB(String optionB) {
-        this.optionB = optionB;
-    }
-
-    public String getOptionC() {
-        return optionC;
-    }
-
-    public void setOptionC(String optionC) {
-        this.optionC = optionC;
-    }
-
-    public String getOptionD() {
-        return optionD;
-    }
-
-    public void setOptionD(String optionD) {
-        this.optionD = optionD;
-    }
-
-    public String getCorrectAnswer() {
-        return correctAnswer;
-    }
-
-    public void setCorrectAnswer(String correctAnswer) {
-        this.correctAnswer = correctAnswer;
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 }

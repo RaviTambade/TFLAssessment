@@ -4,10 +4,12 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
-import com.transflower.tflcomentor.skilltaxonomy.dto.response.LanguageDto;
+import com.transflower.tflcomentor.skilltaxonomy.dto.response.LanguageResponseDto;
+import com.transflower.tflcomentor.skilltaxonomy.entity.Language;
 
 
 @Repository
 public interface LanguageRepository {
-    List<LanguageDto> getLanguagesBySmeId(long smeId);
+    List<LanguageResponseDto> getLanguagesBySmeId(long smeId);
+    List<Language> getAllLanguages(int runtimeId);
 }
