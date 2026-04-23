@@ -4,13 +4,13 @@ const ActiveSessionsResponseDto = require("../dtos/responses/loggeractive-sessio
 const ActiveUsersResponseDto = require("../dtos/responses/loggeractive-usersresponsedto");
 
 class Logger {
-  constructor(Logger) {
-    this.Logger = Logger;
+  constructor(loggerServie) {
+    this.service = loggerSvc;
   }
 
   LoginEntry = (req, res) => {
     const userid = req.params.userid;
-    this.Logger.LoginEntry(userid, (err, result) => {
+    this.service.LoginEntry(userid, (err, result) => {
       if (result.affectedRows > 0) {
         res.status(200).json({ message: "log inserted sucessfully" });
         console.log("log inserted sucessfully");
@@ -22,7 +22,7 @@ class Logger {
 
   LogoutEntry = (req, res) => {
     const userid = req.params.userid;
-    this.Logger.LogoutEntry(userid, (err, result) => {
+    this.service.LogoutEntry(userid, (err, result) => {
       if (result.affectedRows > 0) {
         res.status(200).json({ message: "log inserted sucessfully" });
         console.log("log inserted sucessfully");
@@ -33,7 +33,7 @@ class Logger {
   };
 
   getLoginsLast24Hrs = (req, res) => {
-    this.Logger.getLoginStats((err, data) => {
+    this.service.getLoginStats((err, data) => {
       if (err) {
         return res.status(500).json({ message: err.message });
       }
@@ -45,7 +45,7 @@ class Logger {
   };
 
   getAvgSessionTime = (req, res) => {
-    this.Logger.getAverageSessionTime((err, data) => {
+    this.service.getAverageSessionTime((err, data) => {
       if (err) {
         return res.status(500).json({ message: err.message });
       }
@@ -55,7 +55,7 @@ class Logger {
   };
 
   getActiveSessions = (req, res) => {
-    this.Logger.getActiveSessions((err, data) => {
+    this.service.getActiveSessions((err, data) => {
       if (err) {
         return res.status(500).json({ message: err.message });
       }
@@ -67,7 +67,7 @@ class Logger {
   }; 
 
   getActiveUsers = (req, res) => {
-    this.Logger.getActiveUsers((err, data) => {
+    this.service.getActiveUsers((err, data) => {
       if (err) {
         return res.status(500).json({ message: err.message });
       }
@@ -87,7 +87,7 @@ class Logger {
 
     const filters = new SessionRequestDto(req.query);
 
-    this.Logger.getSessionLogs(filters.name, (err, logs) => {
+    this.service.getSessionLogs(filters.name, (err, logs) => {
       if (err) {
         return res.status(500).json({
           success: false,
@@ -111,4 +111,4 @@ class Logger {
 
 }
 
-module.exports = Logger;
+module.exports = Logger;  

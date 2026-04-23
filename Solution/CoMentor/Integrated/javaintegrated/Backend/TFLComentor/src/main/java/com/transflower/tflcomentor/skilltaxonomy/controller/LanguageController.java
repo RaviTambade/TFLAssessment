@@ -13,7 +13,7 @@ import com.transflower.tflcomentor.skilltaxonomy.dto.response.LanguageResponseDt
 import com.transflower.tflcomentor.skilltaxonomy.entity.Language;
 import com.transflower.tflcomentor.skilltaxonomy.service.LanguageService;
 
-@CrossOrigin(origins = "http://localhost:8081")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @RequestMapping("/api/sme")
 public class LanguageController {

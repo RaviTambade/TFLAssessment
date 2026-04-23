@@ -23,7 +23,7 @@ public class ConceptsController {
     private ConceptsService conceptsService;
 
     @GetMapping("/concepts")
-    public List<Concept> getAllConcepts(){
+    public List<Concept> getAllConcepts() {
         return conceptsService.getAllConcepts();
     }
     
@@ -42,6 +42,4 @@ public class ConceptsController {
         return conceptsService.getAllConceptsforFramework(framework);
     }
 
-
 }
-

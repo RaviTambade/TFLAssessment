@@ -1,15 +1,16 @@
 const express=require("express");
 
-const Logger = (Logger) => {  
+const Logger = (controller) => {  
+
   const router = express.Router();
 
-  router.post("/login/:userid", Logger.LoginEntry);
-  router.put("/logout/:userid", Logger.LogoutEntry);
-  router.get("/logins-24h", Logger.getLoginsLast24Hrs);
-  router.get("/average-time", Logger.getAvgSessionTime);
-  router.get("/active-count", Logger.getActiveSessions);
-  router.get("/active-users", Logger.getActiveUsers);
-  router.get("/logs", Logger.getSessionLogs)
+    router.post("/login/:userid", controller.LoginEntry);
+    router.put("/logout/:userid", controller.LogoutEntry);
+    router.get("/logins-24h", controller.getLoginsLast24Hrs);
+    router.get("/average-time", controller.getAvgSessionTime);
+    router.get("/active-count", controller.getActiveSessions);
+    router.get("/active-users", controller.getActiveUsers);
+    router.get("/logs", controller.getSessionLogs)
 
   return router;
 };
