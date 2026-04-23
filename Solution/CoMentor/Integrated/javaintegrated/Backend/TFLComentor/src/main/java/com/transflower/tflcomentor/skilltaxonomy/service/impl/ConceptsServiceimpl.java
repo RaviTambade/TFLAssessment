@@ -33,7 +33,7 @@ public class ConceptsServiceimpl implements ConceptsService {
     // }
 
     @Override
-    public List<Concept> getAllConceptsforFramework(String framework) {
+    public List<Concept> getAllConceptsforFramework(int framework) {
         return  repository.getAllConceptsforFramework(framework);
     }
 

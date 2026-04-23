@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.transflower.tflcomentor.skilltaxonomy.entity.Concept;
-import com.transflower.tflcomentor.skilltaxonomy.entity.Framework;
-import com.transflower.tflcomentor.skilltaxonomy.entity.Runtime;
 import com.transflower.tflcomentor.skilltaxonomy.service.ConceptsService;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -28,20 +26,19 @@ public class ConceptsController {
     public List<Concept> getAllConcepts(){
         return conceptsService.getAllConcepts();
     }
-
     
     @GetMapping("/concepts/{id}")
     public Concept getById(@PathVariable Long id) {
         return conceptsService.getById(id);
     }
 
-    @PostMapping("/concepts")
+    @PostMapping("/add/concept")
     public boolean addConcept(@RequestBody Concept concept) {
         return conceptsService.addConcept(concept);
     }
 
-    @GetMapping("/concepts/frameworks/{framework}")    //not working
-    public List<Concept> getAllConceptsforFramework(@PathVariable String framework) {
+    @GetMapping("/concepts/frameworks/{framework}")   
+    public List<Concept> getAllConceptsforFramework(@PathVariable int framework) {
         return conceptsService.getAllConceptsforFramework(framework);
     }
 

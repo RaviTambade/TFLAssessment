@@ -1,7 +1,5 @@
 package com.transflower.tflcomentor.skilltaxonomy.repository.impl;
 
-import com.transflower.tflcomentor.skilltaxonomy.entity.Layer;
-import com.transflower.tflcomentor.skilltaxonomy.repository.LayerRepository;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,9 +7,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
 
 import com.transflower.tflcomentor.configuration.DBConfig;
+import com.transflower.tflcomentor.skilltaxonomy.entity.Layer;
+import com.transflower.tflcomentor.skilltaxonomy.repository.LayerRepository;
 
+@Repository
 public class LayerRepositoryImpl implements LayerRepository {
 
     private Connection getConnection() {
