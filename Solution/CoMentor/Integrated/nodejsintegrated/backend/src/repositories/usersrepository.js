@@ -1,8 +1,4 @@
-/**
- * User Repository
- * Data access layer for user operations
- * SOLID Principle: Single Responsibility - Only handles database operations
- */
+
 
 class Users {
 
@@ -10,10 +6,7 @@ class Users {
     this.db = db;
   }
 
-  /**
-   * Get complete user information by user ID
-   * Async method using promise-based queries
-   */
+
   async getUserInformationById(userId) {
     const query = `
       SELECT  u.id AS user_id, u.contact, u.status, p.first_name, p.last_name,
@@ -34,10 +27,7 @@ class Users {
     }
   }
 
-  /**
-   * Get complete user profile using stored procedure
-   * Callback-based method
-   */
+
   getUserCompleteInformation(userId, callback) {
     const query = `CALL sp_get_user_complete_profile(?)`;
     this.db.query(query, [userId], (err, results) => {
@@ -47,10 +37,7 @@ class Users {
     });
   }
 
-  /**
-   * Get user personal information
-   * Callback-based helper method
-   */
+
   getUserPersonalInformation(userId, callback) {
     const query = `SELECT first_name, last_name, email
       FROM personal_informations
@@ -59,10 +46,6 @@ class Users {
     this.getUserInformation(userId, query, callback);
   }
 
-  /**
-   * Get user academic information
-   * Callback-based helper method
-   */
   getUserAcademicInformation(userId, callback) {
     const query = `SELECT enrollment_year, passing_year, percentage, college_name, stream_name, specialization
       FROM academic_informations
@@ -71,10 +54,7 @@ class Users {
     this.getUserInformation(userId, query, callback);
   }
 
-  /**
-   * Get user professional information
-   * Callback-based helper method
-   */
+
   getUserProfessionalInformation(userId, callback) {
     const query = `SELECT company_name, job_title, employment_type, start_date, end_date, is_current_job, experience_years, location, skills
       FROM professional_informations
@@ -83,10 +63,7 @@ class Users {
     this.getUserInformation(userId, query, callback);
   }
 
-  /**
-   * Helper function to avoid code duplication
-   * Executes query and returns first result or null
-   */
+
   getUserInformation(userId, query, callback) {
     this.db.query(query, [userId], (err, results) => {
       if (err) return callback(err, null);
@@ -95,11 +72,8 @@ class Users {
     });
   }
 
-  /**
-   * Get only user name
-   * Callback-based method
-   */
-  getUserName(userNameRequest, callback) {
+
+  getUserName(id, callback) {
     const sql = "SELECT first_name, last_name FROM personal_informations WHERE user_id = ? LIMIT 1";
 
     this.db.query(sql, [userNameRequest.userid], (err, result) => {
@@ -116,10 +90,7 @@ class Users {
     });
   }
 
-  /**
-   * Update complete user information (all sections)
-   * Uses stored procedure for transaction safety
-   */
+
   updateCompleteUserInformation(userId, data, callback) {
     const query = `CALL sp_update_user_complete_profile(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`;
 
@@ -158,10 +129,7 @@ class Users {
     });
   }
 
-  /**
-   * Update only personal information
-   * Uses stored procedure for consistency
-   */
+
   updatePersonalInformation(userId, data, callback) {
     const query = `CALL sp_update_personal_information(?, ?, ?, ?, ?, ?, ?, ?);`;
 
@@ -182,10 +150,7 @@ class Users {
     });
   }
 
-  /**
-   * Update only professional information
-   * Uses stored procedure for consistency
-   */
+
   updateProfessionalInformation(userId, data, callback) {
     const query = `CALL sp_update_professional_information(?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`;
 
@@ -208,10 +173,7 @@ class Users {
     });
   }
 
-  /**
-   * Update only academic information
-   * Uses stored procedure for consistency
-   */
+
   updateAcademicInformation(userId, data, callback) {
     const query = `CALL sp_update_academic_information(?, ?, ?, ?, ?, ?, ?)`;
 
@@ -231,10 +193,7 @@ class Users {
     });
   }
 
-  /**
-   * Update user status (ACTIVE, INACTIVE, BLOCKED)
-   * Direct SQL update
-   */
+
   updateUserStatus(userId, status, callback) {
     const sql = "UPDATE users SET status = ? WHERE id = ?";
     this.db.query(sql, [status, userId], callback);
