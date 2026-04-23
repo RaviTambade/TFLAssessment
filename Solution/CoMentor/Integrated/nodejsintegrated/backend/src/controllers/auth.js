@@ -3,20 +3,17 @@ const Credential = require("../dtos/requests/credential");
 const UserRequest = require("../dtos/requests/userrequest");
 
 class Auth {
+
+  //constructor dependency injection for authService
   constructor(authService) {
+    //self reference
+    //this keyword is used to refer to the current instance of the class and
+    // allows us to access the properties and methods of the class within its scope. By assigning the passed authService parameter to this.authService, we can use this.authService to call methods defined in the authService throughout the Auth class.
     this.authService = authService;
   }
 
-  validate = (req, res) => {
-    const credentialCheck = new Credential(
-      req.body.username,
-      req.body.password,
-      req.body.role,
-    );
-
-    this.authService.validate(credentialCheck, (err, result) => {
+    onValidate=(err, result) => {
       if (err) {
-        console.error("error fetching users:", err);
         return res.status(500).json({ error: "intternal server error" });
       }
 
@@ -25,37 +22,9 @@ class Auth {
       } else {
         res.status(404).json({ message: "No data found" });
       }
-    });
-  };
-
-  register(req, res) {
-    const user = new UserRequest(
-      req.body.firstName,
-      req.body.lastName,
-      req.body.email,
-      req.body.password,
-      req.body.contact,
-    );
-    this.authService.register(user, (err, result) => {
-      if (err) {
-        console.error("Error inserting user:", err);
-        res.status(500).json({ error: "Failed to register user" });
-      } else {
-        res.status(200).json({ message: "User registered successfully" });
-      }
-    });
-  }
-
-   changePassword(req, res) {
-
-    const changePassword =new ChangePasswordDto(req.body.id, req.body.oldPassword, req.body.newPassword);
-
-
-    if (!changePassword.id || !changePassword.oldPassword || !changePassword.newPassword) {
-      return res.status(400).json({ message: "All fields are required" });
     }
 
-    this.authService.changePassword(changePassword, (err, result) => {
+    onChangePassword=(err, result) => {
       if (err) {
         console.log(err);
         return res.status(500).json({ message: "failed to change password" });
@@ -69,7 +38,35 @@ class Auth {
       {
          return res.status(500).json({ message: "failed to change password" });
       }
-    });
+    }
+
+    onRegister=(err, result) => {
+      if (err) {
+        console.error("Error inserting user:", err);
+        res.status(500).json({ error: "Failed to register user" });
+      } else {
+        res.status(200).json({ message: "User registered successfully" });
+      }
+    }
+
+
+  validate = (req, res) => {
+    const credential = new Credential(req.body.username,req.body.password,req.body.role  );
+    this.authService.validate(credential, onValidate);
+  };
+
+  register(req, res) {
+    const user = new UserRequest(req.body.firstName,req.body.lastName,req.body.email,req.body.password,req.body.contact );
+    this.authService.register(user, onRegister);
+  }
+
+   changePassword(req, res) {
+
+    const changePassword =new ChangePasswordDto(req.body.id, req.body.oldPassword, req.body.newPassword);
+    if (!changePassword.id || !changePassword.oldPassword || !changePassword.newPassword) {
+      return res.status(400).json({ message: "All fields are required" });
+    }
+    this.authService.changePassword(changePassword, onChangePassword);
   }
 }
 
