@@ -13,9 +13,9 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import com.transflower.tflcomentor.configuration.DBConfig;
-import com.transflower.tflcomentor.evaluationcontentmanagement.dto.request.QuestionRequestDto;
-import com.transflower.tflcomentor.evaluationcontentmanagement.dto.response.QuestionResponse;
+import com.transflower.tflcomentor.evaluationcontentmanagement.dto.request.QuestionOptionsRequestDto;
 import com.transflower.tflcomentor.evaluationcontentmanagement.dto.response.QuestionResponseDto;
+import com.transflower.tflcomentor.evaluationcontentmanagement.dto.response.QuestionOptionsResponseDto;
 import com.transflower.tflcomentor.evaluationcontentmanagement.entity.Question;
 import com.transflower.tflcomentor.evaluationcontentmanagement.repository.QuestionsRepository;
 
@@ -123,7 +123,7 @@ public class QuestionsRepositoryImpl implements QuestionsRepository {
     }
 
     @Override
-    public List<QuestionResponse> getQuestionsByType(String questionType) {
+    public List<QuestionResponseDto> getQuestionsByType(String questionType) {
 
         String sql = """
                 SELECT question_id, question_type, description
@@ -136,10 +136,10 @@ public class QuestionsRepositoryImpl implements QuestionsRepository {
             statement.setString(1, questionType);
 
             try (ResultSet rs = statement.executeQuery()) {
-                List<QuestionResponse> results = new ArrayList<>();
+                List<QuestionResponseDto> results = new ArrayList<>();
 
                 while (rs.next()) {
-                    QuestionResponse question = new QuestionResponse();
+                    QuestionResponseDto question = new QuestionResponseDto();
                     question.setQuestionId(rs.getLong("question_id"));
                     question.setQuestionType(rs.getString("question_type"));
                     question.setDescription(rs.getString("description"));
@@ -228,12 +228,12 @@ public class QuestionsRepositoryImpl implements QuestionsRepository {
     //     return list;
     // }
     @Override
-    public List<QuestionResponse> getDraftQuestions() {
-        List<QuestionResponse> list = new ArrayList<>();
+    public List<QuestionResponseDto> getDraftQuestions() {
+        List<QuestionResponseDto> list = new ArrayList<>();
         String sql = "SELECT * FROM questions WHERE status='DRAFT'";
         try (Connection connection = getConnection(); PreparedStatement statement = connection.prepareStatement(sql); ResultSet rs = statement.executeQuery()) {
             while (rs.next()) {
-                QuestionResponse q = new QuestionResponse();
+                QuestionResponseDto q = new QuestionResponseDto();
                 q.setQuestionId(rs.getLong("question_id"));
                 q.setDescription(rs.getString("description"));
                 q.setQuestionType(rs.getString("question_type"));
@@ -331,12 +331,12 @@ public class QuestionsRepositoryImpl implements QuestionsRepository {
     // }
 
     @Override
-    public List<QuestionResponse> getQuestionsFromLastTwoDays() {
-        List<QuestionResponse> list = new ArrayList<>();
+    public List<QuestionResponseDto> getQuestionsFromLastTwoDays() {
+        List<QuestionResponseDto> list = new ArrayList<>();
         String sql = "SELECT question_id, description FROM questions WHERE created_at >= NOW() - INTERVAL 2 DAY ORDER BY created_at DESC";
         try (Connection connection = getConnection(); PreparedStatement statement = connection.prepareStatement(sql); ResultSet rs = statement.executeQuery()) {
             while (rs.next()) {
-                list.add(new QuestionResponse(
+                list.add(new QuestionResponseDto(
                         rs.getLong("question_id"),
                         rs.getString("description"),
                         rs.getString("question_type"),
@@ -351,8 +351,8 @@ public class QuestionsRepositoryImpl implements QuestionsRepository {
     }
 
     @Override
-    public QuestionResponseDto getQuestionDetailsById(Long id) {
-        QuestionResponseDto dto = new QuestionResponseDto();
+    public QuestionOptionsResponseDto getQuestionDetailsById(Long id) {
+        QuestionOptionsResponseDto dto = new QuestionOptionsResponseDto();
         try (Connection connection = getConnection()) {
             String sql = "SELECT * FROM questions WHERE question_id=?";
             PreparedStatement statement = connection.prepareStatement(sql);
@@ -384,7 +384,7 @@ public class QuestionsRepositoryImpl implements QuestionsRepository {
     }
 
     @Override
-    public void updateQuestionById(Long id, QuestionRequestDto dto) {
+    public void updateQuestionById(Long id, QuestionOptionsRequestDto dto) {
 
         String sql = "UPDATE questions SET description=?, question_type=?, difficulty_level=? WHERE question_id=?";
 
@@ -420,8 +420,8 @@ public class QuestionsRepositoryImpl implements QuestionsRepository {
     }
 
     @Override
-    public List<QuestionResponse> getQuestionsByStatus(String questionStatus) {
-        List<QuestionResponse> list = new ArrayList<>();
+    public List<QuestionResponseDto> getQuestionsByStatus(String questionStatus) {
+        List<QuestionResponseDto> list = new ArrayList<>();
         String sql = """
                 SELECT question_id, question_type, description, difficulty_level, status
                 FROM questions
@@ -432,7 +432,7 @@ public class QuestionsRepositoryImpl implements QuestionsRepository {
             statement.setString(1, questionStatus);
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
-                QuestionResponse dto = new QuestionResponse();
+                QuestionResponseDto dto = new QuestionResponseDto();
                 dto.setQuestionId(rs.getLong("question_id"));
                 dto.setDescription(rs.getString("description"));
                 dto.setQuestionType(rs.getString("question_type"));

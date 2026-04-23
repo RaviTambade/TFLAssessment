@@ -2,9 +2,9 @@ package com.transflower.tflcomentor.evaluationcontentmanagement.repository;
 
 import java.util.List;
 
-import com.transflower.tflcomentor.evaluationcontentmanagement.dto.request.QuestionRequestDto;
-import com.transflower.tflcomentor.evaluationcontentmanagement.dto.response.QuestionResponse;
+import com.transflower.tflcomentor.evaluationcontentmanagement.dto.request.QuestionOptionsRequestDto;
 import com.transflower.tflcomentor.evaluationcontentmanagement.dto.response.QuestionResponseDto;
+import com.transflower.tflcomentor.evaluationcontentmanagement.dto.response.QuestionOptionsResponseDto;
 import com.transflower.tflcomentor.evaluationcontentmanagement.entity.Question;
 
 public interface QuestionsRepository {
@@ -19,14 +19,14 @@ public interface QuestionsRepository {
             String optionC,
             String optionD,
             String correctAnswer);
-    void updateQuestionById(Long id, QuestionRequestDto dto);
-    List<QuestionResponse> getQuestionsFromLastTwoDays();
-    QuestionResponseDto getQuestionDetailsById(Long id);
-    List<QuestionResponse> getQuestionsByType(String questionType);
+    void updateQuestionById(Long id, QuestionOptionsRequestDto dto);
+    List<QuestionResponseDto> getQuestionsFromLastTwoDays();
+    QuestionOptionsResponseDto getQuestionDetailsById(Long id);
+    List<QuestionResponseDto> getQuestionsByType(String questionType);
     // List<Questions> getAllQuestions();
-    List<QuestionResponse> getDraftQuestions();
+    List<QuestionResponseDto> getDraftQuestions();
     // List<QuestionResponse> getRecentQuestions();
-    List<QuestionResponse> getQuestionsByStatus(String questionStatus);
+    List<QuestionResponseDto> getQuestionsByStatus(String questionStatus);
     void approveQuestionById(Long id);
     void rejectQuestionById(Long id);
     void approveQuestions(List<Long> questionId);
