@@ -15,6 +15,7 @@ import SMEInsertQuestion from "@/components/assessment/evaluationcontent/SMEInse
 import MentorReviewQuestion from "@/components/assessment/evaluationcontent/MentorReviewQuestion";
 import QuestionDetails from "@/components/assessment/evaluationcontent/QuestionDetails";
 import EditQuestion from "@/components/assessment/evaluationcontent/EditQuestion";
+import AddConcept from "@/components/assessment/skilltaxonomy/AddConcept";
 
 
 
@@ -39,6 +40,7 @@ function AppRoutes() {
           <Route path="skilltaxonomy/skilltaxonomy-menu" element={<SkillTaxonomyMenu />} />
 
            <Route path="skilltaxonomy/AddRuntime" element={<AddRuntime />} />
+           <Route path="skilltaxonomy/AddConcept" element={<AddConcept />} />
 
           
 

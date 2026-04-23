@@ -34,20 +34,19 @@ class UserActivityService {
     });
   }
 
-  getActiveUsers(callback) {
-    this.repository.getActiveUsers((err, result) => {
+  getCurrentActiveUsers(callback) {
+    this.repository.getCurrentActiveUsers((err, result) => {
       if (err) return callback(err, null);
       callback(null, result);
     });
   }
 
-  getSessionLogs(callback) {
-    this.repository.getSessionLogs((err, result) => {
+  getAllUserActivity(callback) {
+    this.repository.getAllUserActivity((err, result) => {
       if (err) return callback(err, null);
       callback(null, result);
     });
   }
-
 }
 
 module.exports= UserActivityService;
