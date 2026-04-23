@@ -22,7 +22,7 @@ public class LayersController {
         this.layersService = layersService;
     }
 
-@GetMapping("/layers")
+    @GetMapping("/layers")
     public List<Layer> getAllLayers() {
         return layersService.getAllLayers();
     }

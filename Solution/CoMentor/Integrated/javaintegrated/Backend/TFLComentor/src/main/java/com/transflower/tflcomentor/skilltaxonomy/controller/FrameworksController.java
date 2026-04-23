@@ -21,10 +21,9 @@ public class FrameworksController {
         this.frameworkService = frameworkService;
     }
 
-     @GetMapping("/frameworks/languages/{languageId}/layers/{layerId}")
+    @GetMapping("/frameworks/languages/{languageId}/layers/{layerId}")
     public List<Framework> getAllFrameworksByLanguageAndLayer(@PathVariable int languageId, @PathVariable int layerId) {
         return frameworkService.getAllFrameworksByLanguageAndLayer(languageId, layerId);
     }
-
 
 }
