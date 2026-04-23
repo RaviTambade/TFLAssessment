@@ -4,24 +4,11 @@ const UserRequest = require("../dtos/requests/userrequest");
 
 class Auth {
 
-  /**
-   * Constructor with dependency injection for authService
-   * @param {Object} authService - The authentication service instance
-   */
+
   constructor(authService) {
     this.authService = authService;
   }
 
-  // ==================== REUSABLE UTILITY FUNCTIONS ====================
-
-  /**
-   * Generic success response handler
-   * Standardizes all success responses with consistent format
-   * @param {Object} res - Express response object
-   * @param {*} data - Response data
-   * @param {number} statusCode - HTTP status code (default: 200)
-   * @param {string} message - Optional success message
-   */
   sendSuccess(res, data, statusCode = 200, message = null) {
     const response = { data };
     if (message) {
@@ -30,14 +17,6 @@ class Auth {
     return res.status(statusCode).json(response);
   }
 
-  /**
-   * Generic error response handler
-   * Standardizes all error responses with logging
-   * @param {Object} res - Express response object
-   * @param {string} message - Error message
-   * @param {number} statusCode - HTTP status code (default: 500)
-   * @param {Error} error - Optional error object for logging
-   */
   sendError(res, message, statusCode = 500, error = null) {
     if (error) {
       console.error(`[Auth Error] ${message}:`, error);
@@ -45,13 +24,7 @@ class Auth {
     return res.status(statusCode).json({ error: message });
   }
 
-  /**
-   * Validate required fields in an object
-   * Checks if all specified fields exist and are non-empty
-   * @param {Object} obj - Object to validate
-   * @param {Array<string>} requiredFields - Array of required field names
-   * @returns {Object} - Validation result with isValid flag and message
-   */
+
   validateRequired(obj, requiredFields) {
     const missingFields = requiredFields.filter(field => !obj[field]);
     
@@ -65,15 +38,7 @@ class Auth {
     return { isValid: true };
   }
 
-  /**
-   * Generic callback handler factory for async service calls
-   * Eliminates duplicate callback code across endpoints
-   * @param {Object} res - Express response object
-   * @param {string} successMessage - Success message
-   * @param {string} errorMessage - Error message on failure
-   * @param {Function} customHandler - Optional custom handler for result processing
-   * @returns {Function} - Returns callback function for service
-   */
+
   createServiceCallback(res, successMessage, errorMessage, customHandler = null) {
     return (err, result) => {
       if (err) {
@@ -88,22 +53,10 @@ class Auth {
     };
   }
 
-  /**
-   * Validate API response from service
-   * Checks for successful result indicators
-   * @param {Object} result - Result from service
-   * @returns {boolean} - True if result is valid and successful
-   */
   isValidResult(result) {
     return result && (result.status === true || (result.affectedRows && result.affectedRows > 0));
   }
 
-  /**
-   * Extract specific fields from request body
-   * @param {Object} body - Request body
-   * @param {Array<string>} fields - Field names to extract
-   * @returns {Object} - Extracted data object
-   */
   extractRequestData(body, fields) {
     const data = {};
     fields.forEach(field => {
@@ -112,21 +65,11 @@ class Auth {
     return data;
   }
 
-  /**
-   * Validate email format
-   * @param {string} email - Email to validate
-   * @returns {boolean} - True if email is valid
-   */
   isValidEmail(email) {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   }
 
-  /**
-   * Check password strength
-   * @param {string} password - Password to check
-   * @returns {Object} - Validation result with isValid flag and message
-   */
   validatePassword(password) {
     if (!password || password.length < 8) {
       return {
@@ -137,13 +80,7 @@ class Auth {
     return { isValid: true };
   }
 
-  // ==================== AUTH ENDPOINT HANDLERS ====================
 
-  /**
-   * Validate user credentials (Login)
-   * @param {Object} req - Express request object
-   * @param {Object} res - Express response object
-   */
   validate = (req, res) => {
     // Extract request data
     const { username, password, role } = req.body;
@@ -180,11 +117,7 @@ class Auth {
     this.authService.validate(credential, callback);
   };
 
-  /**
-   * Register new user
-   * @param {Object} req - Express request object
-   * @param {Object} res - Express response object
-   */
+
   register = (req, res) => {
     // Extract request data
     const { firstName, lastName, email, password, contact } = req.body;
@@ -232,11 +165,7 @@ class Auth {
     this.authService.register(user, callback);
   };
 
-  /**
-   * Change user password
-   * @param {Object} req - Express request object
-   * @param {Object} res - Express response object
-   */
+
   changePassword = (req, res) => {
     // Extract request data
     const { id, oldPassword, newPassword } = req.body;
