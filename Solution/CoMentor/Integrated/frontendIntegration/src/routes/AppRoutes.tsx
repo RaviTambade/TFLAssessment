@@ -5,9 +5,7 @@ import Navbar from "../components/Navbar";
 import EvaluationContentMenu from "../components/assessment/evaluationcontent/EvaluationContentMenu";
 import SkillTaxonomyMenu from "../components/assessment/skilltaxonomy/SkillTaxonomyMenu";
 import Assessment from "../components/assessment/ComponentButtons";
-<<<<<<< HEAD
 import AddRuntime from "@/components/assessment/skilltaxonomy/AddRuntime";
-=======
 import UpdateQuestion from "@/components/assessment/evaluationcontent/UpdateQuestion";
 import QuestionsByConcept from "@/components/assessment/evaluationcontent/QuestionsByConcept";
 import QuestionPage from "@/components/assessment/evaluationcontent/QuestionsPage";
@@ -16,7 +14,6 @@ import MentorReviewQuestion from "@/components/assessment/evaluationcontent/Ment
 import QuestionDetails from "@/components/assessment/evaluationcontent/QuestionDetails";
 import EditQuestion from "@/components/assessment/evaluationcontent/EditQuestion";
 
->>>>>>> e5466ab5d6d8070619a137ed5fe3d59103b8fadf
 
 
 function AppRoutes() {
