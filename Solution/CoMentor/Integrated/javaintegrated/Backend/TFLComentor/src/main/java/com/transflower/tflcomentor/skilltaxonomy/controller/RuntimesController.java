@@ -12,36 +12,41 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.transflower.tflcomentor.skilltaxonomy.dto.response.RuntimeDTO;
-import com.transflower.tflcomentor.skilltaxonomy.dto.response.RuntimeDetailsResponse;
+import com.transflower.tflcomentor.skilltaxonomy.dto.response.RuntimeDetailsResponseDto;
 import com.transflower.tflcomentor.skilltaxonomy.dto.response.RuntimeSummaryResponse;
 import com.transflower.tflcomentor.skilltaxonomy.service.RuntimeService;
+import com.transflower.tflcomentor.skilltaxonomy.entity.Runtime;
 
 @RestController
 @RequestMapping("/api")
 @CrossOrigin(origins = "http://localhost:8081")
 public class RuntimesController {
     @Autowired
-    private RuntimeService svc;
+    private RuntimeService runtimeService;
     
     @GetMapping("/name/runtimes")
-    public List<RuntimeDTO> getAllRuntimes() {
-        return svc.getAllRuntimes();
-      
+    public List<RuntimeDTO> getRuntimes() {
+        return runtimeService.getRuntimes();
     }
 
     @GetMapping("/runtimes/summaries")
     public List<RuntimeSummaryResponse> getAllRuntimeSummaries() {
-        return svc.getAllRuntimeSummaries();
+        return runtimeService.getAllRuntimeSummaries();
     }
 
     @GetMapping("/runtimes/{runtimeId}")
-    public RuntimeDetailsResponse getRuntimeDetails(@PathVariable Long runtimeId) {
-        return svc.getRuntimeDetails(runtimeId);
+    public RuntimeDetailsResponseDto getRuntimeDetails(@PathVariable Long runtimeId) {
+        return runtimeService.getRuntimeDetails(runtimeId);
     }
 
     @PostMapping("/runtimes/add")
     public boolean addRuntime(@RequestBody RuntimeDTO dto) {
-        return svc.addRuntime(dto);
+        return runtimeService.addRuntime(dto);
+    }
+
+    @GetMapping("/runtimes")
+    public List<Runtime> getAllRuntimes() {
+        return runtimeService.getAllRuntimes();
     }
     
 }
