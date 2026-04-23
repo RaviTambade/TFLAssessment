@@ -3,177 +3,160 @@ const AvgSessionResponseDto = require("../dtos/responses/loggeravg-sessionrespon
 const ActiveSessionsResponseDto = require("../dtos/responses/loggeractive-sessionsresponsedto");
 const ActiveUsersResponseDto = require("../dtos/responses/loggeractive-usersresponsedto");
 const UserActivityRequestDto = require("../dtos/requests/useractivityrequestdto");
-
+const ResponseGenerator = require("../helpers/ResponseGenerator");
 class UserActivityController {
   constructor(userActivityService) {
     this.service = userActivityService;
   }
 
-  sendSuccess(res, data, statusCode = 200, message = null) {
-    const response = { success: true, data };
-    if (message) response.message = message;
-    return res.status(statusCode).json(response);
-  }
-
-  sendError(res, message, statusCode = 500, error = null) {
-    if (error) {
-      console.error(`[Logger Error] ${message}:`, error);
-    }
-    return res.status(statusCode).json({ success: false, error: message });
-  }
-
-  createServiceCallback(res, handler) {
-    return (error, data) => {
-      if (error) {
-        return this.sendError(
-          res,
-          error.message || "Operation failed",
-          500,
-          error,
-        );
-      }
-      return handler(data, res);
-    };
-  }
-
   login = (req, res) => {
     const userId = req.params.userId;
+    const responseGenerator = new ResponseGenerator();
 
     if (!userId) {
       return this.sendError(res, "User ID is required", 400);
     }
 
-    const callback = this.createServiceCallback(res, (result, response) => {
-      if (result.affectedRows > 0) {
-        return this.sendSuccess(
-          response,
-          result,
-          201,
-          "Login entry recorded successfully",
-        );
-      }
-      return this.sendError(response, "Failed to record login entry", 400);
+    this.service.login(userId, (err, result) => {
+      responseGenerator.generateResponse(
+        res,
+        err,
+        result,
+        "Invalid credentials",
+        "Validation successful",
+      );
     });
-
-    this.service.login(userId, callback);
   };
 
   logout = (req, res) => {
     const userId = req.params.userId;
+    const responseGenerator = new ResponseGenerator();
 
     if (!userId) {
       return this.sendError(res, "User ID is required", 400);
     }
 
-    const callback = this.createServiceCallback(res, (result, response) => {
-      if (result.affectedRows > 0) {
-        return this.sendSuccess(
-          response,
-          result,
-          201,
-          "Logout entry recorded successfully",
-        );
-      }
-      return this.sendError(response, "Failed to record logout entry", 400);
+    this.service.logout(userId, (err, result) => {
+      responseGenerator.generateResponse(
+        res,
+        err,
+        result,
+        "Failed to record logout entry",
+        "Logout entry recorded successfully",
+      );
     });
-
-    this.service.logout(userId, callback);
   };
 
   getTotalLogins24Hours = (req, res) => {
-    const callback = this.createServiceCallback(res, (data, response) => {
+    const responseGenerator = new ResponseGenerator();
+
+    this.service.getTotalLogins24Hours((err, result) => {
       const loginStats = {
-        totalLogins24Hours: data?.totalLogins24Hours || 0,
+        totalLogins24Hours: result?.totalLogins24Hours || 0,
         timestamp: new Date().toISOString(),
       };
-      return this.sendSuccess(
-        response,
+      responseGenerator.generateResponse(
+        res,
+        err,
         loginStats,
-        200,
+        "Failed to retrieved Login statistics",
         "Login statistics retrieved",
       );
     });
-
-    this.service.getTotalLogins24Hours(callback);
   };
 
   getRecentAverageSessionTime = (req, res) => {
-    const callback = this.createServiceCallback(res, (data, response) => {
-      const sessionStats = new AvgSessionResponseDto(data);
-      return this.sendSuccess(
-        response,
+    const responseGenerator = new ResponseGenerator();
+
+    this.service.getRecentAverageSessionTime((err, result) => {
+      const sessionStats = new AvgSessionResponseDto(result);
+      responseGenerator.generateResponse(
+        res,
+        err,
         sessionStats,
-        200,
+        "Failed to retrieved Average session time",
         "Average session time retrieved",
       );
     });
-
-    this.service.getRecentAverageSessionTime(callback);
   };
 
   getTotalActiveSessions = (req, res) => {
-    const callback = this.createServiceCallback(res, (data, response) => {
+    const responseGenerator = new ResponseGenerator();
+
+    this.service.getTotalActiveSessions((err, result) => {
       const activeSessions = {
-        totalActiveSessions: data?.activeSessions || 0,
+        totalActiveSessions: result?.activeSessions || 0,
         timestamp: new Date().toISOString(),
       };
-      return this.sendSuccess(
-        response,
+      responseGenerator.generateResponse(
+        res,
+        err,
         activeSessions,
-        200,
-        "Active sessions retrieved",
+        "Failed to retrieved total Active sessions ",
+        "total Active sessions retrieved",
       );
     });
-
-    this.service.getTotalActiveSessions(callback);
   };
 
   getCurrentActiveUsers = (req, res) => {
-    const callback = this.createServiceCallback(res, (data, response) => {
-      const formattedUsers = data.map((user) => ({
+    const responseGenerator = new ResponseGenerator();
+
+    this.service.getCurrentActiveUsers((err, result) => {
+
+      const formattedUsers = result.map((user) => ({
         userId: user.user_id || user.userId,
         fullName: user.full_name || user.fullName,
         loginTime: user.login_time || user.loginTime,
         status: "ACTIVE",
       }));
 
-      return this.sendSuccess(
-        response,
+      responseGenerator.generateResponse(
+        res,
+        err,
         formattedUsers,
-        200,
-        "Active users retrieved",
+        "Failed to retrieved Active users ",
+        " Active user retrieved",
       );
     });
-
-    this.service.getCurrentActiveUsers(callback);
   };
 
   getAllUserActivity = (req, res) => {
+    const responseGenerator = new ResponseGenerator();
+
     const sessionFilters = new UserActivityRequestDto(req.query);
 
-    if (!sessionFilters.userName) {
-      return this.sendError(res, "User name filter is required", 400);
+    if (!sessionFilters.name) {
+      return responseGenerator.sendError(res, "User name filter is required", 400);
     }
 
-    const callback = this.createServiceCallback(res, (logs, response) => {
-      if (!logs || logs.length === 0) {
-        return this.sendError(
-          response,
-          "No session logs found for the specified criteria",
-          404,
-        );
-      }
+    // const callback = this.createServiceCallback(res, (logs, response) => {
+    //   if (!logs || logs.length === 0) {
+    //     return this.sendError(
+    //       response,
+    //       "No session logs found for the specified criteria",
+    //       404,
+    //     );
+    //   }
 
-      return this.sendSuccess(
-        response,
-        logs,
-        200,
+      // return this.sendSuccess(
+      //   response,
+      //   logs,
+      //   200,
+      //   "Session logs retrieved successfully",
+      // );
+    // });
+
+    this.service.getAllUserActivity(sessionFilters.name, (err, result) => {
+
+      responseGenerator.generateResponse(
+        res,
+        err,
+        result,
+        "No session logs found for the specified criteria",
         "Session logs retrieved successfully",
       );
     });
-
-    this.service.getAllUserActivity(sessionFilters.userName, callback);
   };
 }
 
-module.exports = UserActivityController;  
+module.exports = UserActivityController;

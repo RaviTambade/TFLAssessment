@@ -41,11 +41,8 @@ class UserActivityService {
     });
   }
 
-  getAllUserActivity(callback) {
-    this.repository.getAllUserActivity((err, result) => {
-      if (err) return callback(err, null);
-      callback(null, result);
-    });
+  getAllUserActivity(name,callback) {
+    this.repository.getAllUserActivity(name,callback);
   }
 }
 

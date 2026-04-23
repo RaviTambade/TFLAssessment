@@ -97,10 +97,7 @@ class UserActivityRepository {
 
     sql += ` ORDER BY us.login_time DESC `;
 
-    this.connection.query(sql, params, (err, results) => {
-      if (err) return callback(err, null);
-      callback(null, results);
-    });
+    this.connection.query(sql, params, callback)
   }
   
 }

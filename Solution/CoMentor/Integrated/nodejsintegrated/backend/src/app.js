@@ -5,7 +5,7 @@ const bodyParser = require("body-parser");
 
 const connection = require("./connectivity/db");
 
-// const AuthRepository = require("./repositories/auth");
+const AuthRepository = require("./repositories/authrepository");
 const UserActivityRepository = require("./repositories/useractivityrepository");
 // const RoleRepository = require("./repositories/role");
 // const UpdateRolesRepository = require('./repositories/updaterole');
@@ -17,7 +17,7 @@ const UserActivityRepository = require("./repositories/useractivityrepository");
 // const userRouter = require("./routers/users");
 
 
-// const AuthService = require("./services/auth");
+const AuthService = require("./services/authservice");
 // const ProfileService = require("./services/profileservice");
 const UserActivityService = require("./services/useractivityservice");
 // const UsersService = require('./services/userinformationservice');
@@ -33,12 +33,12 @@ const UserActivityController = require("./controllers/useractivitycontroller")
 // const AdminProfileController = require("./controllers/adminProfileController");
 // const UserProfileController = require("./controllers/userProfile.controller");
 // const EmployerProfileController = require("./controllers/userProfileControllers")
-// const AuthController = require("./controllers/auth");
+const AuthController = require("./controllers/authcontroller");
 // const ProfileController = require("./controllers/profilecontroller_sanika");
 // const RoleController = require("./controllers/roleController");
 
 
-// const AuthRoutes = require("./routers/auth");
+const AuthRoutes = require("./routers/authroutes");
 // const userProfileRoutes = require("./routers/profileroutes");
 const UserActivityRoutes = require("./routers/useractivityroutes");
 // const RoleRouter = require("./routers/role");
@@ -53,10 +53,10 @@ const UserActivityRoutes = require("./routers/useractivityroutes");
 
 // Initialize repositories, services, and controllers for each module
 
-// const authRepo = new AuthRepository(connection);  
-// const authSvc = new AuthService(authRepo);
-// const authController = new AuthController(authSvc);
-// const authRoutes = AuthRoutes(authController);
+const authRepo = new AuthRepository(connection);  
+const authSvc = new AuthService(authRepo);
+const authController = new AuthController(authSvc);
+const authRoutes = AuthRoutes(authController);
 
 // const userRepo = new UserRepository(connection);
 // const userSvc = new UserService(userRepo);
@@ -112,7 +112,7 @@ app.use((req, res, next) => {
 
 // app.use(NotFoundHandler);
 // app.use(ErrorHandler);
-// app.use("/api/auth/", authRoutes);
+app.use("/api/auth/", authRoutes);
 // app.use("/api/roles", roleRouter);
 app.use("/api/useractivity/", userActivityRoutes);
 // app.use("/api/usersessions", sessionRoutes);
