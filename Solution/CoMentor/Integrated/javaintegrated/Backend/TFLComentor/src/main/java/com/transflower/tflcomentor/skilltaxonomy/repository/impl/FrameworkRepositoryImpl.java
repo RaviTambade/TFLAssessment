@@ -9,10 +9,8 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
-<<<<<<< HEAD
+
 import com.transflower.tflcomentor.configuration.DBConfig;
-=======
->>>>>>> 7b28adf6b8e7e6abef07475bc510cde8dc7155e3
 import com.transflower.tflcomentor.skilltaxonomy.entity.Framework;
 import com.transflower.tflcomentor.skilltaxonomy.repository.FrameworkRepository;
 
