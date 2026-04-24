@@ -36,7 +36,7 @@ class RolesService {
   }
 
   assignRoles(userId, roleIds, callback) {
-   this.repository.assignRole(userId,roleIds,callback);
+   this.repository.assignRoles(userId,roleIds,callback);
   }
 }
 

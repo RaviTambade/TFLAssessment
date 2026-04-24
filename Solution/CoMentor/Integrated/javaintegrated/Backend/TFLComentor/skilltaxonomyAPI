@@ -1,0 +1,321 @@
+{
+  "info": {
+    "_postman_id": "c20bbeca-b7a4-4e99-bd8d-31db0fa8caeb",
+    "name": "TFLComentorAPI",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "48129642",
+    "_collection_link": "https://go.postman.co/collection/48129642-c20bbeca-b7a4-4e99-bd8d-31db0fa8caeb?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "get concept by id",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/concepts/89",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "concepts",
+            "89"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "get all concepts",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/concepts",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "concepts"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "add concept",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"name\": \"concept\",\r\n    \"description\":\"new concept\",\r\n    \"status\":0\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/add/concept",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "add",
+            "concept"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "get concept by framework id",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"name\": \"concept\",\r\n    \"description\":\"new concept\",\r\n    \"status\":0\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/concepts/frameworks/3",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "concepts",
+            "frameworks",
+            "3"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "mapping of concept and framework",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"name\": \"concept\",\r\n    \"description\":\"new concept\",\r\n    \"status\":0\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/map/concept/framework/127/9",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "map",
+            "concept",
+            "framework",
+            "127",
+            "9"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "get framework by language and layer id",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/frameworks/languages/2/layers/2",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "frameworks",
+            "languages",
+            "2",
+            "layers",
+            "2"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "get language by runtime id",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/sme/languages/runtime/2",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "sme",
+            "languages",
+            "runtime",
+            "2"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "get language for sme",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/sme/5/languages",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "sme",
+            "5",
+            "languages"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "get all layers",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/layers",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "layers"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "get runtime name",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/name/runtimes",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "name",
+            "runtimes"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "get runtime summary",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/runtimes/summaries",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "runtimes",
+            "summaries"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "get runtime by id",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/runtimes/2",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "runtimes",
+            "2"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "get all runtimes",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/runtimes",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "runtimes"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}

@@ -1,9 +1,3 @@
-/**
- * User Controller
- * Handles HTTP request/response for user operations
- * SOLID Principle: Single Responsibility - Only handles HTTP layer
- */
-
 const UpdateUserStatusRequestDto = require("../dtos/requests/updateUserStatusRequestDto");
 const UpdateUserStatusResponseDto = require("../dtos/responses/updateUserStatusResponseDto");
 const UserNameRequest = require("../dtos/requests/UserNameRequest")
@@ -14,10 +8,6 @@ class UsersController {
     this.service = service;
   }
 
-  /**
-   * GET /api/v1/users/:userId
-   * Retrieve complete user information by user ID
-   */
   async getUserInformationById(req, res, next) {
     try {
       const userId = req.params.userId;
@@ -38,10 +28,7 @@ class UsersController {
     }
   }
 
-  /**
-   * GET /api/v1/users/:userId/name
-   * Retrieve only user name
-   */
+
   getUserName = (req, res, next) => {
     try {
       const userid = new UserNameRequest(req.params.userId);
@@ -74,10 +61,7 @@ class UsersController {
     }
   };
 
-  /**
-   * PUT /api/v1/users/:userId
-   * Update complete user information
-   */
+ 
   updateCompleteUserInformation = (req, res, next) => {
     try {
       const userId = req.params.userId;
@@ -112,10 +96,7 @@ class UsersController {
     }
   };
 
-  /**
-   * PUT /api/v1/users/:userId/personal-info
-   * Update personal information
-   */
+ 
   updatePersonalInformation = (req, res, next) => {
     try {
       const userId = req.params.userId;
@@ -150,10 +131,7 @@ class UsersController {
     }
   };
 
-  /**
-   * PUT /api/v1/users/:userId/professional-info
-   * Update professional information
-   */
+
   updateProfessionalInformation = (req, res, next) => {
     try {
       const userId = req.params.userId;
@@ -188,10 +166,7 @@ class UsersController {
     }
   };
 
-  /**
-   * PUT /api/v1/users/:userId/academic-info
-   * Update academic information
-   */
+ 
   updateAcademicInformation = (req, res, next) => {
     try {
       const userId = req.params.userId;
@@ -226,10 +201,7 @@ class UsersController {
     }
   };
 
-  /**
-   * PATCH /api/v1/users/:userId/status
-   * Update user status
-   */
+
   updateUserStatus = (req, res, next) => {
     try {
       const requestDto = new UpdateUserStatusRequestDto(req.body);
@@ -263,10 +235,7 @@ class UsersController {
     }
   };
 
-  /**
-   * GET /api/v1/users/:userId/complete
-   * Get complete user profile with all details
-   */
+
   getUserCompleteInformation = (req, res, next) => {
     try {
       const userId = req.params.userId;
@@ -309,10 +278,7 @@ class UsersController {
     }
   };
 
-  /**
-   * GET /api/v1/users/:userId/personal
-   * Get only personal information
-   */
+ 
   getUserPersonalInformation = (req, res, next) => {
     try {
       const userId = req.params.userId;
@@ -355,10 +321,7 @@ class UsersController {
     }
   };
 
-  /**
-   * GET /api/v1/users/:userId/academic
-   * Get only academic information
-   */
+
   getUserAcademicInformation = (req, res, next) => {
     try {
       const userId = req.params.userId;
@@ -401,10 +364,7 @@ class UsersController {
     }
   };
 
-  /**
-   * GET /api/v1/users/:userId/professional
-   * Get only professional information
-   */
+
   getUserProfessionalInformation = (req, res, next) => {
     try {
       const userId = req.params.userId;

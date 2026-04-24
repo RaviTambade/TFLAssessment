@@ -15,7 +15,7 @@ import com.transflower.tflcomentor.skilltaxonomy.service.LanguageService;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
-@RequestMapping("/api/sme")
+@RequestMapping("/api/lauguages")
 public class LanguageController {
 
     private final LanguageService languageService;
@@ -24,12 +24,12 @@ public class LanguageController {
         this.languageService = languageService;
     }
 
-    @GetMapping("/languages/runtime/{runtimeId}")
+    @GetMapping("/runtime/{runtimeId}")
     public List<Language> getAllLanguages(@PathVariable int runtimeId) {
         return languageService.getAllLanguages(runtimeId);
     }
 
-    @GetMapping("/{smeId}/languages")
+    @GetMapping("/sme/{smeId}")
     public ResponseEntity<List<LanguageResponseDto>> getAssignedLanguages(@PathVariable long smeId) {
         List<LanguageResponseDto> languages = languageService.getLanguagesBySmeId(smeId);
         return ResponseEntity.ok(languages);

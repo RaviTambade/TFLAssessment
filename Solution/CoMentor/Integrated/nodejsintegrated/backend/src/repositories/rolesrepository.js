@@ -28,7 +28,7 @@ class RolesRepository {
                   JOIN roles r ON ur.role_id = r.role_id
                   WHERE ur.user_id = ? `;
 
-    this.db.query(query, [userId], (err, results) => {
+    this.connection.query(query, [userId], (err, results) => {
       if (err) return callback(err, null);
 
       const userRole = results.length > 0 ? results[0].role_name : null;
@@ -46,21 +46,27 @@ class RolesRepository {
     this.connection.query(deleteSql, [userId], callback);
   }
 
-  assignRole(userId, roleId, callback) {
-    const insertSql = `INSERT INTO user_roles (user_id, role_id, assigned_at) VALUES (?, ?, NOW()) ON DUPLICATE KEY UPDATE assigned_at = NOW()`;
-    this.connection.query(insertSql, [userId, roleId], callback);
+assignRoles(userId, roleIds, callback) {
+  // validation
+  if (!Array.isArray(roleIds) || roleIds.length === 0) {
+    return callback(null, { affectedRows: 0 });
   }
 
-  assignRoles(userId, roleIds, callback) {
-    if (!Array.isArray(roleIds) || roleIds.length === 0) {
-      return callback(null, { affectedRows: 0 });
-    }
+  // create placeholders for each role
+  const placeholders = roleIds.map(() => "(?, ?, NOW())").join(", ");
 
-    const placeholders = roleIds.map(() => "(?, ?, NOW())").join(", ");
-    const insertSql = `INSERT INTO user_roles (user_id, role_id, assigned_at) VALUES ${placeholders} ON DUPLICATE KEY UPDATE assigned_at = NOW()`;
-    const values = roleIds.flatMap((roleId) => [userId, roleId]);
-    this.connection.query(insertSql, values, callback);
-  }
+  const sql = `
+    INSERT INTO user_roles (user_id, role_id, assigned_at)
+    VALUES ${placeholders}
+    ON DUPLICATE KEY UPDATE assigned_at = NOW()
+  `;
+
+  // flatten values: [userId, roleId, userId, roleId, ...]
+  const values = roleIds.flatMap(roleId => [userId, roleId]);
+
+
+  this.connection.query(sql, values, callback);
+}
 }
 
 module.exports = RolesRepository;
