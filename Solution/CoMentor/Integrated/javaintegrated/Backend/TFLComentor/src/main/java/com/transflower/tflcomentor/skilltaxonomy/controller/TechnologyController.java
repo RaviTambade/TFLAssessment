@@ -18,79 +18,87 @@ import com.transflower.tflcomentor.skilltaxonomy.entity.Framework;
 import com.transflower.tflcomentor.skilltaxonomy.entity.Language;
 import com.transflower.tflcomentor.skilltaxonomy.entity.Layer;
 import com.transflower.tflcomentor.skilltaxonomy.entity.Runtime;
+import com.transflower.tflcomentor.skilltaxonomy.service.FrameworkService;
 import com.transflower.tflcomentor.skilltaxonomy.service.LanguageService;
+import com.transflower.tflcomentor.skilltaxonomy.service.TechnologyService;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @RequestMapping("/api/technologies")
 public class TechnologyController {
 
+    private final TechnologyService technologyService;
+
+    public TechnologyController(TechnologyService technologyService) {
+        this.technologyService = technologyService;
+    }
+
     @GetMapping("/concepts")
     public List<Concept> getAllConcepts() {
-        return conceptsService.getAllConcepts();
+        return technologyService.getAllConcepts();
     }
 
     @GetMapping("/concepts/{id}")
     public Concept getConceptById(@PathVariable Long id) {
-        return conceptsService.getById(id);
+        return technologyService.getConceptById(id);
     }
 
     @PostMapping("/add/concept")
     public Concept addConcept(@RequestBody Concept concept) {
-        return conceptsService.addConcept(concept);
+        return technologyService.addConcept(concept);
     }
 
     @GetMapping("/concepts/frameworks/{framework}")   
     public List<Concept> getAllConceptsforFramework(@PathVariable int framework) {
-        return conceptsService.getAllConceptsforFramework(framework);
+        return technologyService.getAllConceptsforFramework(framework);
     }
 
     @PostMapping("conceptsmapping/{conceptId}/framework/{frameworkId}")
     public boolean mapConceptToFramework(@PathVariable int conceptId, @PathVariable int frameworkId) {
-        return conceptsService.mapConceptToFramework(conceptId, frameworkId);
+        return technologyService.mapConceptToFramework(conceptId, frameworkId);
     }
 
     // Frameworks endpoints
     @GetMapping("/frameworks")
     public List<Framework> getAllFrameworks() {
-        return frameworkService.getAllFrameworks();
+        return technologyService.getAllFrameworks();
     }
 
     @GetMapping("/frameworks/{id}")
     public Framework getFrameworkById(@PathVariable Long id) {
-        return frameworkService.getFrameworkById(id);
+        return technologyService.getFrameworkById(id);
     }
 
     @GetMapping("/frameworks/languages/{languageId}/layers/{layerId}")
     public List<Framework> getAllFrameworks(@PathVariable int languageId, @PathVariable int layerId) {
-        return frameworkService.getAllFrameworksByLanguageAndLayer(languageId, layerId);
+        return technologyService.getAllFrameworksByLanguageAndLayer(languageId, layerId);
     }
 
     @GetMapping("/frameworks/languages/{languageId}")                                //**********NEW*****************/
     public List<Framework> getAllFrameworks(@PathVariable int languageId) {   
-        return frameworkService.getAllFrameworks(languageId);
+        return technologyService.getAllFrameworks(languageId);
     }
 
     // Layers endpoints
     @GetMapping("/layers")
     public List<Layer> getAllLayers() {
-        return layerService.getAllLayers();
+        return technologyService.getAllLayers();
     }
 
     // Runtimes endpoints
     @GetMapping("/runtimes")
     public List<Runtime> getAllRuntimes() {
-        return runtimeService.getAllRuntimes();
+        return technologyService.getAllRuntimes();
     }
 
     @GetMapping("/runtimes/{id}")
     public Runtime getRuntimeById(@PathVariable Long id) {
-        return runtimeService.getRuntimeById(id);
+        return technologyService.getRuntimeById(id);
     }
 
     @GetMapping("/sme")
     public List<RuntimeSummaryResponseDto> getAllRuntimeSummaries() {
-        return runtimeService.getAllRuntimeSummaries();
+        return technologyService.getAllRuntimeSummaries();
     }
 
 
