@@ -1,6 +1,7 @@
 package com.transflower.tflcomentor.ecm.repository.impl;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -20,10 +21,10 @@ import com.transflower.tflcomentor.ecm.dto.response.QuestionResponseDto;
 import com.transflower.tflcomentor.ecm.entity.Question;
 import com.transflower.tflcomentor.ecm.entity.QuestionStatus;
 import com.transflower.tflcomentor.ecm.entity.enums.QuestionTypes;
-import com.transflower.tflcomentor.ecm.repository.QuestionsRepository;
+import com.transflower.tflcomentor.ecm.repository.QuestionRepository;
 
 @Repository
-public class QuestionsRepositoryImpl implements QuestionsRepository {
+public class QuestionRepositoryImpl implements QuestionRepository {
 
     private Connection getConnection() throws Exception {
         return DBConfig.getConnection();
@@ -42,7 +43,7 @@ public class QuestionsRepositoryImpl implements QuestionsRepository {
                 String description = rs.getString("description");
                 QuestionTypes questionType = QuestionTypes.valueOf(rs.getString("question_type"));
                 String difficultyLevel = rs.getString("difficulty_level");
-                
+
                 LocalDateTime createdAt = LocalDateTime.ofInstant(
                         rs.getTimestamp("created_at").toInstant(),
                         ZoneId.systemDefault());
@@ -99,7 +100,7 @@ public class QuestionsRepositoryImpl implements QuestionsRepository {
                         rs.getString("description"),
                         QuestionTypes.valueOf(rs.getString("question_type")),
                         rs.getString("difficulty_level"),
-                        LocalDateTime.ofInstant(rs.getTimestamp("created_at").toInstant(),ZoneId.systemDefault()),
+                        LocalDateTime.ofInstant(rs.getTimestamp("created_at").toInstant(), ZoneId.systemDefault()),
                         rs.getString("status"));
                 list.add(q);
             }
@@ -111,7 +112,7 @@ public class QuestionsRepositoryImpl implements QuestionsRepository {
     }
 
     @Override
-    public List<QuestionResponseDto> getQuestionsByType(String questionType) {
+    public List<QuestionResponseDto> getQuestions(String questionType) {
 
         String sql = """
                 SELECT question_id, question_type, description
@@ -121,7 +122,7 @@ public class QuestionsRepositoryImpl implements QuestionsRepository {
                 """;
 
         try (Connection connection = getConnection(); PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setString(1, questionType);
+            statement.setString(1, questionType.toString());
 
             try (ResultSet rs = statement.executeQuery()) {
                 List<QuestionResponseDto> results = new ArrayList<>();
@@ -129,8 +130,11 @@ public class QuestionsRepositoryImpl implements QuestionsRepository {
                 while (rs.next()) {
                     QuestionResponseDto question = new QuestionResponseDto();
                     question.setQuestionId(rs.getLong("question_id"));
-                    question.setQuestionType(rs.getString("question_type"));
                     question.setDescription(rs.getString("description"));
+                    question.setQuestionType(rs.getString("question_type"));
+                    question.setDifficultyLevel(rs.getString("difficulty_level"));
+                    question.setQuestionStatus(rs.getString("status"));
+
                     results.add(question);
                 }
                 return results;
@@ -141,7 +145,6 @@ public class QuestionsRepositoryImpl implements QuestionsRepository {
         }
     }
 
-    // nirjala user story 72
     @Override
     public Long insert(Question q) {
 
@@ -215,85 +218,6 @@ public class QuestionsRepositoryImpl implements QuestionsRepository {
     //     }
     //     return list;
     // }
-    @Override
-    public List<QuestionResponseDto> getDraftQuestions() {
-        List<QuestionResponseDto> list = new ArrayList<>();
-        String sql = "SELECT * FROM questions WHERE status='DRAFT'";
-        try (Connection connection = getConnection(); PreparedStatement statement = connection.prepareStatement(sql); ResultSet rs = statement.executeQuery()) {
-            while (rs.next()) {
-                QuestionResponseDto q = new QuestionResponseDto();
-                q.setQuestionId(rs.getLong("question_id"));
-                q.setDescription(rs.getString("description"));
-                q.setQuestionType(rs.getString("question_type"));
-                q.setDifficultyLevel(rs.getString("difficulty_level"));
-                q.setQuestionStatus(rs.getString("status"));
-                list.add(q);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return list;
-    }
-
-    @Override
-    public void approveQuestionById(Long id) {
-        String sql = "UPDATE questions SET status='APPROVED' WHERE question_id=?";
-        try (Connection connection = getConnection(); PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setLong(1, id);
-            statement.executeUpdate();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
-    public void rejectQuestionById(Long id) {
-        String sql = "UPDATE questions SET status='INACTIVE' WHERE question_id=?";
-        try (Connection connection = getConnection(); PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setLong(1, id);
-            statement.executeUpdate();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
-    public void approveQuestions(List<Long> questionId) {
-        if (questionId == null || questionId.isEmpty()) {
-            return;
-        }
-        String placeholders = String.join(",", Collections.nCopies(questionId.size(), "?"));
-        String sql = "UPDATE questions SET status = 'APPROVED' "
-                + "WHERE status = 'DRAFT' AND question_id IN (" + placeholders + ")";
-        try (Connection connection = getConnection(); 
-        PreparedStatement statement = connection.prepareStatement(sql)) {
-            for (int i = 0; i < questionId.size(); i++) {
-                statement.setLong(i + 1, questionId.get(i));
-            }
-            statement.executeUpdate();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @Override
-    public void rejectQuestions(List<Long> questionId) {
-        if (questionId == null || questionId.isEmpty()) {
-            return;
-        }
-        String placeholders = String.join(",", Collections.nCopies(questionId.size(), "?"));
-        String sql = "UPDATE questions SET status = 'REJECTED' "
-                + "WHERE status = 'DRAFT' AND question_id IN (" + placeholders + ")";
-        try (Connection connection = getConnection();
-        PreparedStatement statement = connection.prepareStatement(sql)) {
-            for (int i = 0; i < questionId.size(); i++) {
-                statement.setLong(i + 1, questionId.get(i));
-            }
-            statement.executeUpdate();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
 
     // @Override
     // public List<QuestionResponse> getRecentQuestions() {
@@ -307,39 +231,16 @@ public class QuestionsRepositoryImpl implements QuestionsRepository {
     //             q.setQuestionType(rs.getString("question_type"));
     //             q.setDifficultyLevel(rs.getString("difficulty_level"));
     //             q.setQuestionStatus(rs.getString("status"));
-
     //             list.add(q);
     //         }
-
     //     } catch (Exception e) {
     //         e.printStackTrace();
     //     }
-
     //     return list;
     // }
-
+    
     @Override
-    public List<QuestionResponseDto> getQuestionsFromLastTwoDays() {
-        List<QuestionResponseDto> list = new ArrayList<>();
-        String sql = "SELECT question_id, description FROM questions WHERE created_at >= NOW() - INTERVAL 2 DAY ORDER BY created_at DESC";
-        try (Connection connection = getConnection(); PreparedStatement statement = connection.prepareStatement(sql); ResultSet rs = statement.executeQuery()) {
-            while (rs.next()) {
-                list.add(new QuestionResponseDto(
-                        rs.getLong("question_id"),
-                        rs.getString("description"),
-                        rs.getString("question_type"),
-                        rs.getString("status"),
-                        rs.getString("difficulty_level")
-                ));
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return list;
-    }
-
-    @Override
-    public QuestionOptionsResponseDto getQuestionDetailsById(Long id) {
+    public QuestionOptionsResponseDto getQuestionDetails(Long id) {
         QuestionOptionsResponseDto dto = new QuestionOptionsResponseDto();
         try (Connection connection = getConnection()) {
             String sql = "SELECT * FROM questions WHERE question_id=?";
@@ -376,8 +277,7 @@ public class QuestionsRepositoryImpl implements QuestionsRepository {
 
         String sql = "UPDATE questions SET description=?, question_type=?, difficulty_level=?,status=? WHERE question_id=?";
 
-        try (Connection connection = getConnection();
-         PreparedStatement statement = connection.prepareStatement(sql)) {
+        try (Connection connection = getConnection(); PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setString(1, dto.getDescription());
             statement.setString(2, dto.getQuestionType());
@@ -410,7 +310,7 @@ public class QuestionsRepositoryImpl implements QuestionsRepository {
     }
 
     @Override
-    public List<QuestionResponseDto> getQuestionsByStatus(String questionStatus) {
+    public List<QuestionResponseDto> getQuestions(QuestionStatus status) {
         List<QuestionResponseDto> list = new ArrayList<>();
         String sql = """
                 SELECT question_id, question_type, description, difficulty_level, status
@@ -419,7 +319,7 @@ public class QuestionsRepositoryImpl implements QuestionsRepository {
                 ORDER BY question_id
                 """;
         try (Connection connection = getConnection(); PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setString(1, questionStatus);
+            statement.setString(1, status.name());
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
                 QuestionResponseDto dto = new QuestionResponseDto();
@@ -435,7 +335,7 @@ public class QuestionsRepositoryImpl implements QuestionsRepository {
         return list;
     }
 
-       @Override
+    @Override
     public List<Question> getQuestionsByConceptId(Long conceptId) {
         List<Question> list = new ArrayList<>();
         String sql = """ 
@@ -448,9 +348,8 @@ public class QuestionsRepositoryImpl implements QuestionsRepository {
                     WHERE fc.concept_id = ?;
                     """;
 
-        try (
-             Connection connection = getConnection(); 
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+        try (Connection connection = getConnection(); 
+            PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setLong(1, conceptId);
             ResultSet rs = statement.executeQuery();
 
@@ -458,7 +357,7 @@ public class QuestionsRepositoryImpl implements QuestionsRepository {
                 Question question = new Question();
                 question.setQuestionId(rs.getLong("question_id"));
                 question.setDescription(rs.getString("description"));
-                question.setQuestionType(rs.getString("question_type"));
+                question.setQuestionType(QuestionTypes.valueOf(rs.getString("question_type")));
                 list.add(question);
             }
 
@@ -469,68 +368,64 @@ public class QuestionsRepositoryImpl implements QuestionsRepository {
         return list;
     }
 
-       @Override
-       public List<QuestionResponseDto> getQuestions(LocalDate fromDate, LocalDate toDate) {
-        QuestionOptionsResponseDto dto = new QuestionOptionsResponseDto();
+    @Override
+    public List<QuestionResponseDto> getQuestions(LocalDate fromDate, LocalDate toDate) {
+        List<QuestionResponseDto> list = new ArrayList<>();
         try (Connection connection = getConnection()) {
-            String sql = "SELECT * FROM questions WHERE question_id=?";
+            String sql = "SELECT * FROM questions WHERE DATE(created_at) BETWEEN ? AND ?";
             PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setLong(1, id);
+            statement.setDate(1, Date.valueOf(fromDate));
+            statement.setDate(2, Date.valueOf(toDate));
             ResultSet rs = statement.executeQuery();
-            if (rs.next()) {
+            while (rs.next()) {
+                QuestionResponseDto dto = new QuestionResponseDto();
                 dto.setQuestionId(rs.getLong("question_id"));
                 dto.setDescription(rs.getString("description"));
                 dto.setQuestionType(rs.getString("question_type"));
                 dto.setDifficultyLevel(rs.getString("difficulty_level"));
-                dto.setStatus(rs.getString("status"));
-            }
-
-            String sql1 = "SELECT * FROM mcq_options WHERE question_id=?";
-            PreparedStatement statement1 = connection.prepareStatement(sql1);
-            statement1.setLong(1, id);
-            ResultSet rs1 = statement1.executeQuery();
-            if (rs1.next()) {
-                dto.setOptionA(rs1.getString("option_a"));
-                dto.setOptionB(rs1.getString("option_b"));
-                dto.setOptionC(rs1.getString("option_c"));
-                dto.setOptionD(rs1.getString("option_d"));
-                dto.setCorrectAnswer(rs1.getString("correct_answer"));
+                dto.setQuestionStatus(rs.getString("status"));
+                dto.setCreatedAt(
+                        rs.getTimestamp("created_at").toLocalDateTime()
+                );
+                list.add(dto);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return dto;
-       }
+        return list;
+    }
 
-       @Override
-       public QuestionOptionsResponseDto getQuestionDetails(Long id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getQuestionDetails'");
-       }
+    @Override
+    public void updateQuestionStatus(List<Long> questionIds, QuestionStatus status) {
+        if (questionIds == null || questionIds.isEmpty()) {
+            return;
+        }
+        String placeholders = String.join(",", Collections.nCopies(questionIds.size(), "?"));
+        String sql = "UPDATE questions SET status = ? "
+                + "WHERE status = 'DRAFT' AND question_id IN (" + placeholders + ")";
+        try (Connection connection = getConnection(); 
+        PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, status.name());
+            for (int i = 0; i < questionIds.size(); i++) {
+                statement.setLong(i + 2, questionIds.get(i));
+            }
+            statement.executeUpdate();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 
-       @Override
-       public List<QuestionResponseDto> getQuestionse(String questionType) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getQuestionse'");
-       }
+    @Override
+    public void updateQuestionStatus(long questionId, QuestionStatus status) {
 
-       @Override
-       public List<QuestionResponseDto> getQuestions(QuestionStatus status) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getQuestions'");
-       }
-
-       @Override
-       public void updateQuestionStatus(List<Long> questionIds, QuestionStatus status) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'updateQuestionStatus'");
-       }
-
-       @Override
-       public void updateQuestionStatus(long questionId, QuestionStatus status) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'updateQuestionStatus'");
-       }
-
+        String sql = "UPDATE questions SET status=? WHERE question_id=?";
+        try (Connection connection = getConnection(); PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, status.name());
+            statement.setLong(2, questionId);
+            statement.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 }

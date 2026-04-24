@@ -21,7 +21,7 @@ public class ProjectRepositoryImpl implements ProjectRepository {
         return DBConfig.getConnection();
     }
 
-     @Override
+    @Override
     public List<Project> getAllProjects() {
         List<Project> projects = new ArrayList<>();
 
@@ -35,13 +35,13 @@ public class ProjectRepositoryImpl implements ProjectRepository {
 
             while (rs.next()) {
                 Project project = new Project();
-                project.setProject_id(rs.getInt("project_id"));
-                project.setMentor_id(rs.getInt("mentor_id"));
-                project.setProject_name(rs.getString("project_name"));
+                project.setProjectId(rs.getInt("project_id"));
+                project.setMentorId(rs.getInt("mentor_id"));
+                project.setProjectName(rs.getString("project_name"));
                 project.setDescription(rs.getString("description"));
-                project.setRepository_url(rs.getString("repository_url"));
+                project.setRepositoryUrl(rs.getString("repository_url"));
                 project.setStatus(rs.getString("status"));
-                project.setCreated_at(rs.getString("created_at"));
+                project.setCreatedAt(rs.getString("created_at"));
                 projects.add(project);
             }
         } catch (Exception e) {
@@ -59,20 +59,20 @@ public class ProjectRepositoryImpl implements ProjectRepository {
             Connection connection = getConnection();
 
             String query = "SELECT * FROM tflcomentor_db.projects WHERE project_id = ?";
-            PreparedStatement ps =  connection.prepareStatement(query);
+            PreparedStatement ps = connection.prepareStatement(query);
             ps.setLong(1, project_id);
 
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
                 project = new Project();
-                project.setProject_id(rs.getInt("project_id"));
-                project.setMentor_id(rs.getInt("mentor_id"));
-                project.setProject_name(rs.getString("project_name"));
+                project.setProjectId(rs.getInt("project_id"));
+                project.setMentorId(rs.getInt("mentor_id"));
+                project.setProjectName(rs.getString("project_name"));
                 project.setDescription(rs.getString("description"));
-                project.setRepository_url(rs.getString("repository_url"));
+                project.setRepositoryUrl(rs.getString("repository_url"));
                 project.setStatus(rs.getString("status"));
-                project.setCreated_at(rs.getString("created_at"));
+                project.setCreatedAt(rs.getString("created_at"));
             }
 
         } catch (Exception e) {
@@ -82,7 +82,7 @@ public class ProjectRepositoryImpl implements ProjectRepository {
         return project;
     }
 
-     @Override
+    @Override
     public boolean addMember(ProjectAllocation projectAllocation) {
 
         String query = "INSERT INTO project_allocations(project_id, student_id, joined_date) VALUES (?, ?, NOW())";
@@ -227,7 +227,7 @@ public class ProjectRepositoryImpl implements ProjectRepository {
         List<Project> projects = new ArrayList<Project>();
 
         String query = """
-        SELECT p.project_name
+        SELECT p.project_name, p.project_id
         FROM project_allocations pa
         JOIN projects p ON pa.project_id = p.project_id
         WHERE pa.student_id = ?
@@ -252,5 +252,56 @@ public class ProjectRepositoryImpl implements ProjectRepository {
 
         return projects;
     }
-    
+
+    @Override
+    public List<ProjectAllocationResponseDTO> getStudentByProjectId(Long projectId) {
+        List<ProjectAllocationResponseDTO> students = new ArrayList<>();
+
+        String query = """
+            SELECT
+                pa.project_id,
+                p.project_name,
+                pa.student_id,
+                CONCAT(pi.first_name, ' ', pi.last_name) AS student_name,
+                pa.joined_date,
+                pa.release_date
+            FROM project_allocations pa
+            JOIN projects p ON pa.project_id = p.project_id
+            JOIN users u ON pa.student_id = u.id
+            JOIN personal_informations pi ON u.id = pi.user_id
+            WHERE pa.project_id = ?
+        """;
+
+        try (
+                Connection connection = getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setLong(1, projectId);
+
+            ResultSet rs = statement.executeQuery();
+
+            while (rs.next()) {
+                ProjectAllocationResponseDTO dto = new ProjectAllocationResponseDTO();
+
+                dto.setProjectId(rs.getLong("project_id"));
+                dto.setProjectName(rs.getString("project_name"));
+
+                dto.setStudentId(rs.getLong("student_id"));
+                dto.setStudentName(rs.getString("student_name"));
+
+                if (rs.getTimestamp("joined_date") != null) {
+                    dto.setJoinedDate(rs.getTimestamp("joined_date").toLocalDateTime());
+                }
+
+                if (rs.getTimestamp("release_date") != null) {
+                    dto.setReleaseDate(rs.getTimestamp("release_date").toLocalDateTime());
+                }
+
+                students.add(dto);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return students;
+    }
+
 }

@@ -120,7 +120,7 @@ public partial class AppDbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseMySql("server=localhost;port=3306;database=tflcomentor_db;user=root;password=password", Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.4.4-mysql"));
+        => optionsBuilder.UseMySql("server=192.168.1.149;port=3306;database=tflcomentor_db;user=root;password=password", Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.4.4-mysql"));
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
