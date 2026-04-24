@@ -4,7 +4,6 @@ using backend.Repositories.Interfaces;
 using backend.Repositories.Implementations; 
 using backend.Services.Interfaces;
 using backend.Services.Implementations;
-using backend.Repositories.Implementations;
 using backend.Services;
 using backend.Repositories;
 
@@ -46,6 +45,8 @@ builder.Services.AddScoped<IConceptsService, ConceptsService>();
 builder.Services.AddScoped<IConceptsRepository, ConceptsRepository>();
 builder.Services.AddScoped<ICreateTestService, CreateTestService>();
 builder.Services.AddScoped<ICreateTestRepository, CreateTestRepository>();
+builder.Services.AddScoped<IScoreService, ScoreService>();
+builder.Services.AddScoped<IScoreRepository, ScoreRepository>();
 
 // Configure CORS to allow requests from the frontend
 builder.Services.AddCors(options =>

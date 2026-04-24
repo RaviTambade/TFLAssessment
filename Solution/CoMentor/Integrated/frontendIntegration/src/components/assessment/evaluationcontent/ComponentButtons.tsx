@@ -1,18 +1,14 @@
-import { Card, CardContent } from "../ui/card";
-import { Button } from "../ui/button";
-import { useScrollAnimation } from "../../hooks/use-scroll-animation";
+import { Card, CardContent } from "../../ui/card";
+import { Button } from "../../ui/button";
+import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 import { useNavigate } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 
 const buttons = [
   { label: "Evaluation Content Management", path: "/models/evaluationcontent/componentmenu" },
-<<<<<<< HEAD
-  { label: "Skill Taxonomy", path: "/models/skilltaxonomy/skilltaxonomy-menu" },
-  { label: "Assessment Orchestrator", path: "/models/assessmentorchestrator/assessmentorchestrator-menu" },
-=======
-  { label: "Skill Taxonomy", path: "/models/skilltaxonomy/skilltaxonomy-menu" }
->>>>>>> f51b6dcb31068a232d1a484e077a5683aec82e85
-  ];
+  { label: "Question by Status", path: "/models/evaluationcontent/questionbystatus" },
+
+];
 
 const Assessment = () => {
   const { ref, isVisible } = useScrollAnimation();
@@ -40,12 +36,12 @@ const Assessment = () => {
             <div className="bg-gradient-hero p-6 sm:p-8">
               <CardContent>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {buttons.map(({ label, path, span }) => (
+                  {buttons.map(({ label, path }) => (
                     <Button
                       key={path}
                       variant="hero"
                       size="lg"
-                      className={`group ${span === 2 ? "md:col-span-2" : ""}`}
+                      className="group"
                       onClick={() => navigate(path)}
                     >
                       {label}

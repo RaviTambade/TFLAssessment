@@ -1,6 +1,6 @@
 const LoginStatus = require("../dtos/responses/LoginStatus");
 
-class Auth {
+class AuthRepository {
 
   constructor(connection) {
     this.connection = connection;
@@ -15,16 +15,19 @@ class Auth {
 
         const isValidUser = results && results.length > 0;
         const userId = isValidUser ? results[0].id : null;
-
-        const loginStatus = new LoginStatus( isValidUser ? true : false, isValidUser ? "Login successful" : "Invalid credentials",userId, credential.role); 
-
-        callback(null, loginStatus);
+        if(isValidUser)
+        {
+           callback(null, results);
+        }
+        else
+        {
+          callback(err, null);
+        }
       },
     );
   }
 
   register(user, callback) {
-    console.log(user);
     const query = "CALL RegisterUser(?,?,?,?,?)"; 
     this.connection.query(query,[user.contact, user.firstName, user.lastName, user.email, user.password],callback
     );
@@ -39,4 +42,4 @@ class Auth {
  
 }
 
-module.exports = Auth;
+module.exports = AuthRepository;

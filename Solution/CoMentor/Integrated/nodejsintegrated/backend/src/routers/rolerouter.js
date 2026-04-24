@@ -1,6 +1,6 @@
 const express = require('express');
 
-const roleModule = (controller) => {
+const RoleRoutes = (controller) => {
     
   const router = express.Router();
   //Route mapping for Role Management
@@ -12,4 +12,4 @@ const roleModule = (controller) => {
   return router;
 };
 
-module.exports = roleModule;
+module.exports = RoleRoutes;

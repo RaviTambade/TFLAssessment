@@ -1,5 +1,5 @@
 // for US_ADMIN_10 
-class LoggerSessionRequestDto {
+class UserActivityRequestDto {
   constructor(query) {
     this.name = query.name || null;
     this.page = parseInt(query.page) || 1;
@@ -7,4 +7,4 @@ class LoggerSessionRequestDto {
   }
 }
 
-module.exports = LoggerSessionRequestDto;
+module.exports = UserActivityRequestDto ;

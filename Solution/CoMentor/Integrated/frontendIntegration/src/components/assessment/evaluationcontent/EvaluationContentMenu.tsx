@@ -1,6 +1,6 @@
 import { Card, CardContent } from "../../ui/card";
 import { Button } from "../../ui/button";
-import { useScrollAnimation } from "../../../hooks/use-scroll-animation";
+import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 import { useNavigate } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 
@@ -22,12 +22,91 @@ const EvaluationContentMenu = () => {
         <div className="max-w-6xl mx-auto">
           <Card
             ref={ref}
-            className={`border-0 shadow-elegant overflow-hidden transition-all duration-1000 ${
-              isVisible
+            className={`border-0 shadow-elegant overflow-hidden transition-all duration-1000 ${isVisible
                 ? "opacity-100 translate-y-0"
                 : "opacity-0 translate-y-10"
-            }`}
+              }`}
           >
+            <div className="bg-gradient-hero p-6 sm:p-8">
+              <CardContent>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <Button
+                    variant="hero"
+                    size="lg"
+                    className="group" 
+                    onClick={() => navigate("/models/evaluationcontent/updatequestion")}
+                  >
+                    Update questions 
+                    <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                  </Button>
+
+                <Button
+                    variant="hero"
+                    size="lg"
+                    className="group"
+                    onClick={() =>
+                      navigate("/models/evaluationcontent/viewquestion")
+                    }
+                  >
+                    Questions 
+                    <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                  </Button>
+                  
+                  <Button
+                    variant="hero"
+                    size="lg"
+                    className="group" 
+                    onClick={() => navigate("/models/evaluationcontent/questionbyconcept")}
+                  >
+                    Questions by Concept
+                    <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                  </Button>
+
+                  <Button
+                    variant="hero"
+                    size="lg"
+                    className="group"
+                    onClick={() => navigate("/models/evaluationcontent/insertquestion")}
+                    >
+                    SME Insert Question
+                    <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                  </Button>
+
+                  <Button
+                    variant="hero"
+                    size="lg"
+                    className="group"
+                    onClick={() => navigate("/models/evaluationcontent/reviewquestion")}
+                  >
+                    MENTOR Review Question
+                    <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                  </Button>
+
+                   <Button
+                    variant="hero"
+                    size="lg"
+                    className="group"
+                    onClick={() => navigate("/models/evaluationcontent/questionbystatus")}
+                  >
+                    View Questions by Status
+                    <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                  </Button>
+
+                  <Button
+                    variant="hero"
+                    size="lg"
+                    className="group"
+                    onClick={() => navigate("/models/evaluationcontent/questionbytype")}
+                  >
+                    View Questions by Type
+                    <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                  </Button>
+                 
+
+
+                </div>
+              </CardContent>
+            </div>
          
           </Card>
         </div>
