@@ -1,16 +1,22 @@
-package com.transflower.tflcomentor.evaluationcontentmanagement.controller;
+package com.transflower.tflcomentor.ecm.controller;
 
 import java.util.List;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.transflower.tflcomentor.evaluationcontentmanagement.entity.Project;
-import com.transflower.tflcomentor.evaluationcontentmanagement.entity.ProjectAllocation;
-import com.transflower.tflcomentor.evaluationcontentmanagement.service.ProjectServices;
+import com.transflower.tflcomentor.ecm.dto.request.ProjectAllocationRequestDTO;
+import com.transflower.tflcomentor.ecm.dto.response.ProjectAllocationResponseDTO;
+import com.transflower.tflcomentor.ecm.entity.Project;
+import com.transflower.tflcomentor.ecm.entity.ProjectAllocation;
+import com.transflower.tflcomentor.ecm.service.ProjectService;
 
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -58,7 +64,7 @@ public class ProjectController {
     }
 
     @GetMapping("/student/{studentId}/projects")
-    public List<String> getProjectByStudentId(@PathVariable Long studentId) {
+    public List<Project> getProjectByStudentId(@PathVariable Long studentId) {
         return service.getProjectByStudentId(studentId);
     }
 

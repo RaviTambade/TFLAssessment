@@ -1,11 +1,10 @@
 const express = require('express');
 
-
-const usersModule = (controller) => {
+const UsersRoutes = (controller) => {
   const router = express.Router();
   //Route mapping for User Management
   router.get("/:userId", controller.getUserInformationById.bind(controller));
-  router.get("/:userId/name", controller.getUserName.bind(controller));
+  // router.get("/:userId/name", controller.getUserName.bind(controller));
   router.get("/:userId/complete", controller.getUserCompleteInformation.bind(controller));
   router.get("/:userId/personal", controller.getUserPersonalInformation.bind(controller));
   router.get("/:userId/academic", controller.getUserAcademicInformation.bind(controller));
@@ -19,4 +18,4 @@ const usersModule = (controller) => {
   return router;
 };
 
-module.exports = usersModule;
+module.exports = UsersRoutes;

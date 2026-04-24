@@ -14,11 +14,11 @@ import com.transflower.tflcomentor.evaluationcontentmanagement.repository.Questi
 import com.transflower.tflcomentor.evaluationcontentmanagement.service.QuestionsServices;
 
 @Service
-public class QuestionsServicesImpl implements QuestionsServices {
+public class QuestionsServicesImpl implements QuestionService {
 
-    private QuestionsRepository repository;
+    private QuestionRepository repository;
 
-    public QuestionsServicesImpl(QuestionsRepository repository) {
+    public QuestionsServicesImpl(QuestionRepository repository) {
         this.repository = repository;
     }
 

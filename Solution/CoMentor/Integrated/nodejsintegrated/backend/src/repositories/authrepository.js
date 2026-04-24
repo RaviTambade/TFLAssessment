@@ -1,4 +1,4 @@
-const LoginStatus = require("../dtos/responses/LoginStatus");
+ const LoginStatus = require("../dtos/responses/LoginStatus");
 
 class AuthRepository {
 

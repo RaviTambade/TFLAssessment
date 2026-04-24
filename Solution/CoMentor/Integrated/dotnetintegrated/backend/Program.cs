@@ -11,7 +11,6 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
-
 builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddDbContext<AppDbContext>(options =>
@@ -20,7 +19,6 @@ builder.Services.AddDbContext<AppDbContext>(options =>
         ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("DefaultConnection"))
     )
 );
-
 
 // Register repositories and services
 builder.Services.AddScoped<IAssessmentsService, AssessmentsService>();
@@ -60,7 +58,6 @@ builder.Services.AddCors(options =>
         });
 });
 Dapper.DefaultTypeMap.MatchNamesWithUnderscores = true;
-
 
 var app = builder.Build();
 

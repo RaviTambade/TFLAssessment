@@ -20,10 +20,10 @@ import com.transflower.tflcomentor.ecm.dto.response.QuestionResponseDto;
 import com.transflower.tflcomentor.ecm.entity.Question;
 import com.transflower.tflcomentor.ecm.entity.QuestionStatus;
 import com.transflower.tflcomentor.ecm.entity.enums.QuestionTypes;
-import com.transflower.tflcomentor.ecm.repository.QuestionsRepository;
+import com.transflower.tflcomentor.ecm.repository.QuestionRepository;
 
 @Repository
-public class QuestionsRepositoryImpl implements QuestionsRepository {
+public class QuestionsRepositoryImpl implements QuestionRepository {
 
     private Connection getConnection() throws Exception {
         return DBConfig.getConnection();
