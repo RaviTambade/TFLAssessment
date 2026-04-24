@@ -8,7 +8,7 @@ import com.transflower.tflcomentor.evaluationcontentmanagement.dto.response.Ques
 import com.transflower.tflcomentor.evaluationcontentmanagement.dto.response.QuestionOptionsResponseDto;
 import com.transflower.tflcomentor.evaluationcontentmanagement.entity.Question;
 
-public interface QuestionsServices {
+public interface QuestionService {
     Question getQuestionById(long question_id);
       List<Question> getAllQuestions();
     List<Question> getQuestionsByDifficulty(String difficulty);

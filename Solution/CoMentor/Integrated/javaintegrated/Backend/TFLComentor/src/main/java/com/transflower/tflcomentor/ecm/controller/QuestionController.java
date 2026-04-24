@@ -26,7 +26,7 @@ import com.transflower.tflcomentor.evaluationcontentmanagement.service.Questions
 public class QuestionController {
 
     @Autowired
-    private QuestionsServices service;
+    private QuestionService service;
 
     @GetMapping("/{question_id}")
     public Question getQuestionById(@PathVariable("question_id") long question_id) {
