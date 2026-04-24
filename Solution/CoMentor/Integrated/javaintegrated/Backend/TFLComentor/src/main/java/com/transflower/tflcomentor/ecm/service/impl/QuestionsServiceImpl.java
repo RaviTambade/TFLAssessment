@@ -1,28 +1,26 @@
 package com.transflower.tflcomentor.ecm.service.impl;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.transflower.tflcomentor.ecm.dto.request.QuestionDto;
 import com.transflower.tflcomentor.ecm.dto.request.QuestionOptionsRequestDto;
-import com.transflower.tflcomentor.ecm.dto.response.QuestionResponseDto;
 import com.transflower.tflcomentor.ecm.dto.response.QuestionOptionsResponseDto;
+import com.transflower.tflcomentor.ecm.dto.response.QuestionResponseDto;
 import com.transflower.tflcomentor.ecm.entity.Question;
 import com.transflower.tflcomentor.ecm.entity.QuestionStatus;
 import com.transflower.tflcomentor.ecm.entity.enums.QuestionTypes;
 import com.transflower.tflcomentor.ecm.repository.QuestionRepository;
 import com.transflower.tflcomentor.ecm.service.QuestionService;
+
 @Service
-public class QuestionServiceImpl implements QuestionService {
+public class QuestionsServiceImpl implements QuestionService {
 
     @Autowired
     private QuestionRepository repository;
 
-    // Simple insert
     @Override
     public Long insertQuestion(Question question) {
         return repository.insert(question);
@@ -30,22 +28,24 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public Long createQuestionWithOptions(QuestionOptionsRequestDto dto) {
+
         Question question = new Question();
         question.setDescription(dto.getDescription());
         question.setQuestionType(
-            QuestionTypes.valueOf(dto.getQuestionType().toUpperCase())
+                QuestionTypes.valueOf(dto.getQuestionType().toUpperCase())
         );
         question.setDifficultyLevel(dto.getDifficultyLevel());
+
         Long questionId = repository.insert(question);
         if ("MCQ".equalsIgnoreCase(dto.getQuestionType())) {
 
             repository.insertMcqOptions(
-                questionId,
-                dto.getOptionA(),
-                dto.getOptionB(),
-                dto.getOptionC(),
-                dto.getOptionD(),
-                dto.getCorrectAnswer()
+                    questionId,
+                    dto.getOptionA(),
+                    dto.getOptionB(),
+                    dto.getOptionC(),
+                    dto.getOptionD(),
+                    dto.getCorrectAnswer()
             );
         }
 

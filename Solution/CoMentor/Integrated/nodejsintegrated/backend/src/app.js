@@ -11,10 +11,10 @@ const RolesRepository = require("./repositories/rolesrepository");
 // const UpdateRolesRepository = require('./repositories/updaterole');
 
 
-// const UserRepository = require("./repositories/users");
-// const UserService = require("./services/users");
-// const UserController = require("./controllers/users");
-// const userRouter = require("./routers/users");
+const UsersRepository = require("./repositories/usersrepository");
+const UsersService = require("./services/usersservices");
+const UsersController = require("./controllers/userscontroller");
+const UsersRoutes = require("./routers/usersroutes");
 
 
 const AuthService = require("./services/authservice");
@@ -58,10 +58,10 @@ const authService = new AuthService(authRepository);
 const authController = new AuthController(authService);
 const authRoutes = AuthRoutes(authController);
 
-// const userRepo = new UserRepository(connection);
-// const userSvc = new UserService(userRepo);
-// const userController = new UserController(userSvc);
-// const userRoutes = userRouter(userController);
+const usersRepository = new UsersRepository(connection);
+const usersService = new UsersService(usersRepository);
+const usersController = new UsersController(usersService);
+const usersRoutes = UsersRoutes(usersController);
 
 
 const userActivityRepository = new UserActivityRepository(connection);
@@ -117,7 +117,7 @@ app.use("/api/roles/", rolesRoutes);
 app.use("/api/useractivity/", userActivityRoutes);
 // app.use("/api/usersessions", sessionRoutes);
 
-// app.use("/api/users", userRoutes);
+app.use("/api/users", usersRoutes);
 
 // app.use(['/api', '/api/v1'], updaterolesrouter);
 

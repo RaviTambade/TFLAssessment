@@ -25,27 +25,27 @@ public class Project {
 
     }
 
-    public long getProject_id() {
+    public long getProjectId() {
         return project_id;
     }
 
-    public void setProject_id(long project_id) {
+    public void setProjectId(long project_id) {
         this.project_id = project_id;
     }
 
-    public long getMentor_id() {
+    public long getMentorId() {
         return mentor_id;
     }
 
-    public void setMentor_id(long mentor_id) {
+    public void setMentorId(long mentor_id) {
         this.mentor_id = mentor_id;
     }
 
-    public String getProject_name() {
+    public String getProjectName() {
         return project_name;
     }
 
-    public void setProject_name(String project_name) {
+    public void setProjectName(String project_name) {
         this.project_name = project_name;
     }
 
@@ -57,11 +57,11 @@ public class Project {
         this.description = description;
     }
 
-    public String getRepository_url() {
+    public String getRepositoryUrl() {
         return repository_url;
     }
 
-    public void setRepository_url(String repository_url) {
+    public void setRepositoryUrl(String repository_url) {
         this.repository_url = repository_url;
     }
 
@@ -73,11 +73,11 @@ public class Project {
         this.status = status;
     }
 
-    public String getCreated_at() {
+    public String getCreatedAt() {
         return created_at;
     }
 
-    public void setCreated_at(String created_at) {
+    public void setCreatedAt(String created_at) {
         this.created_at = created_at;
     }
 
