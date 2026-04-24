@@ -6,7 +6,12 @@ import { ArrowRight } from "lucide-react";
 
 const buttons = [
   { label: "Evaluation Content Management", path: "/models/evaluationcontent/componentmenu" },
+<<<<<<< HEAD
+  { label: "Skill Taxonomy", path: "/models/skilltaxonomy/skilltaxonomy-menu" },
+  { label: "Assessment Orchestrator", path: "/models/assessmentorchestrator/assessmentorchestrator-menu" },
+=======
   { label: "Skill Taxonomy", path: "/models/skilltaxonomy/skilltaxonomy-menu" }
+>>>>>>> f51b6dcb31068a232d1a484e077a5683aec82e85
   ];
 
 const Assessment = () => {
