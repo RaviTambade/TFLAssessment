@@ -45,7 +45,7 @@ public class ProjectController {
         return service.getStudentByProjectId(projectId);
     }
 
-    @GetMapping
+    @GetMapping("/allocations")
     public List<ProjectAllocationResponseDTO> getProjectAllocationDetails() {
         return service.getProjectAllocationDetails();
     }
