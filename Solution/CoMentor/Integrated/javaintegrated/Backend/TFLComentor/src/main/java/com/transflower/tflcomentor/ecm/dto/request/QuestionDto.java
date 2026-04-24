@@ -1,4 +1,4 @@
-package com.transflower.tflcomentor.evaluationcontentmanagement.dto.request;
+package com.transflower.tflcomentor.ecm.dto.request;
 
 public class QuestionDto {
 private String description;

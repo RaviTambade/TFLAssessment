@@ -1,4 +1,4 @@
-package com.transflower.tflcomentor.evaluationcontentmanagement.entity;
+package com.transflower.tflcomentor.ecm.entity;
 
 import java.time.LocalDateTime;
 

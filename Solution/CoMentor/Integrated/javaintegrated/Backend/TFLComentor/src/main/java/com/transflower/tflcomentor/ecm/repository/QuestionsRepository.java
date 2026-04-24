@@ -1,12 +1,13 @@
-package com.transflower.tflcomentor.evaluationcontentmanagement.repository;
+package com.transflower.tflcomentor.ecm.repository;
 
 import java.time.LocalDate;
 import java.util.List;
 
-import com.transflower.tflcomentor.evaluationcontentmanagement.dto.request.QuestionOptionsRequestDto;
-import com.transflower.tflcomentor.evaluationcontentmanagement.dto.response.QuestionResponseDto;
-import com.transflower.tflcomentor.evaluationcontentmanagement.dto.response.QuestionOptionsResponseDto;
-import com.transflower.tflcomentor.evaluationcontentmanagement.entity.Question;
+import com.transflower.tflcomentor.ecm.dto.request.QuestionOptionsRequestDto;
+import com.transflower.tflcomentor.ecm.dto.response.QuestionResponseDto;
+import com.transflower.tflcomentor.ecm.dto.response.QuestionOptionsResponseDto;
+import com.transflower.tflcomentor.ecm.entity.Question;
+import com.transflower.tflcomentor.ecm.entity.QuestionStatus;
 
 public interface QuestionsRepository {
     
