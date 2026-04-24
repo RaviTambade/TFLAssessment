@@ -8,6 +8,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import TapProgram from "./pages/TapProgram";
 import RaviTambade from "./pages/RaviTambade";
+import UpcomingAssessment from "./components/assessment/assessmentOrchestrator/UpcomingAssessment";
 
 const queryClient = new QueryClient();
 
@@ -22,12 +23,15 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/tap-program" element={<TapProgram />} />
           <Route path="/ravi-tambade" element={<RaviTambade />} />
+          <Route path="/upcoming-assessment" element={<UpcomingAssessment />} />
           {/* Module routes - /models/* */}
           <Route path="/models/*" element={<AppRoutes />} />
         </Routes>
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
+
+  
 );
 
 export default App;
