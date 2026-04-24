@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 public class Question {
     private Long questionId;
     private String description;
-    private String questionType;
+    private  questionType;
     private String difficultyLevel;
     private String status;
     private LocalDateTime createdAt;

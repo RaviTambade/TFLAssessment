@@ -1,5 +1,6 @@
 package com.transflower.tflcomentor.evaluationcontentmanagement.repository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import com.transflower.tflcomentor.evaluationcontentmanagement.dto.request.QuestionOptionsRequestDto;
@@ -20,17 +21,22 @@ public interface QuestionsRepository {
             String optionD,
             String correctAnswer);
     void updateQuestionById(Long id, QuestionOptionsRequestDto dto);
-    List<QuestionResponseDto> getQuestionsFromLastTwoDays();
-    QuestionOptionsResponseDto getQuestionDetailsById(Long id);
-    List<QuestionResponseDto> getQuestionsByType(String questionType);
+    List<QuestionResponseDto> getQuestions(LocalDate fromDate, LocalDate toDate);
+    QuestionOptionsResponseDto getQuestionDetails(Long id);
+    List<QuestionResponseDto> getQuestionse(String questionType);
     // List<Questions> getAllQuestions();
-    List<QuestionResponseDto> getDraftQuestions();
+
+
+
     // List<QuestionResponse> getRecentQuestions();
-    List<QuestionResponseDto> getQuestionsByStatus(String questionStatus);
-    void approveQuestionById(Long id);
-    void rejectQuestionById(Long id);
-    void approveQuestions(List<Long> questionId);
-    void rejectQuestions(List<Long> questionId);
+    List<QuestionResponseDto> getQuestions(QuestionStatus status);
+
+   //multiple question status update
+    void updateQuestionStatus(List<Long> questionIds, QuestionStatus status);
+
+    //single question status update
+    void updateQuestionStatus(long  questionId, QuestionStatus status);
+
     // Questions updateQuestion(Questions question);
     List<Question> getQuestionsByConceptId(Long conceptId);
     

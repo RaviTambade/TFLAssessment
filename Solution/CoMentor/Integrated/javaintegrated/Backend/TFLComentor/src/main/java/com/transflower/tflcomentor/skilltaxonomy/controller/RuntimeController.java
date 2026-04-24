@@ -18,18 +18,18 @@ import com.transflower.tflcomentor.skilltaxonomy.service.RuntimeService;
 import com.transflower.tflcomentor.skilltaxonomy.entity.Runtime;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/runtimes")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
-public class RuntimesController {
+public class RuntimeController {
     @Autowired
     private RuntimeService runtimeService;
     
-    @GetMapping("/name/runtimes")
+    @GetMapping("")
     public List<RuntimeResponseDTO> getRuntimes() {
         return runtimeService.getRuntimes();
     }
 
-    @GetMapping("/runtimes/summaries")
+    @GetMapping("/sme")
     public List<RuntimeSummaryResponseDto> getAllRuntimeSummaries() {
         return runtimeService.getAllRuntimeSummaries();
     }

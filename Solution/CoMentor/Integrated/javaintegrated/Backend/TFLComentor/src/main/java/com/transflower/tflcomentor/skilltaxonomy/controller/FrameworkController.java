@@ -14,17 +14,21 @@ import com.transflower.tflcomentor.skilltaxonomy.service.FrameworkService;
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @RequestMapping("/api")
-public class FrameworksController {
+public class FrameworkController {
 
     private final FrameworkService frameworkService;
 
-    public FrameworksController(FrameworkService frameworkService) {
+    public FrameworkController(FrameworkService frameworkService) {
         this.frameworkService = frameworkService;
     }
 
     @GetMapping("/frameworks/languages/{languageId}/layers/{layerId}")
-    public List<Framework> getAllFrameworksByLanguageAndLayer(@PathVariable int languageId, @PathVariable int layerId) {
+    public List<Framework> getAllFrameworks(@PathVariable int languageId, @PathVariable int layerId) {
         return frameworkService.getAllFrameworksByLanguageAndLayer(languageId, layerId);
     }
 
+      @GetMapping("/frameworks/languages/{languageId}")
+    public List<Framework> getAllFrameworks(@PathVariable int languageId) {
+        return frameworkService.getAllFrameworks(languageId);
+    }
 }

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.transflower.tflcomentor.configuration.DBConfig;
 import com.transflower.tflcomentor.evaluationcontentmanagement.dto.response.ProjectAllocationResponseDTO;
+import com.transflower.tflcomentor.evaluationcontentmanagement.entity.Project;
 import com.transflower.tflcomentor.evaluationcontentmanagement.entity.ProjectAllocation;
 import com.transflower.tflcomentor.evaluationcontentmanagement.repository.ProjectAllocationRepository;
 
@@ -110,7 +111,7 @@ public class ProjectAllocationRepositoryImpl implements ProjectAllocationReposit
     }
 
     @Override
-    public List<ProjectAllocationResponseDTO> getStudentByProjectId(Long projectId) {
+    public List<ProjectAllocationResponseDTO> getProjectMember(Long projectId) {
         List<ProjectAllocationResponseDTO> allocations = new ArrayList<>();
 
         String query = """
@@ -161,8 +162,8 @@ public class ProjectAllocationRepositoryImpl implements ProjectAllocationReposit
     }
 
     @Override
-    public List<String> getProjectByStudentId(Long studentId) {
-        List<String> projectNames = new ArrayList<>();
+    public List<Project> getProjectByStudentId(Long studentId) {
+        List<Project> projects = new ArrayList<Project>();
 
         String query = """
         SELECT p.project_name
@@ -178,13 +179,16 @@ public class ProjectAllocationRepositoryImpl implements ProjectAllocationReposit
             ResultSet rs = statement.executeQuery();
 
             while (rs.next()) {
-                projectNames.add(rs.getString("project_name"));
+                Project project = new Project();
+                project.setProjectName(rs.getString("project_name"));
+                project.setProjectId(rs.getLong("project_id"));
+                projects.add(project);
             }
 
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        return projectNames;
+        return projects;
     }
 }

@@ -12,17 +12,17 @@ import com.transflower.tflcomentor.skilltaxonomy.service.LayerService;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/layers")
 
-public class LayersController {
+public class LayerController {
 
     private final LayerService layersService;
 
-    public LayersController(LayerService layersService) {
+    public LayerController(LayerService layersService) {
         this.layersService = layersService;
     }
 
-    @GetMapping("/layers")
+    @GetMapping("/")
     public List<Layer> getAllLayers() {
         return layersService.getAllLayers();
     }

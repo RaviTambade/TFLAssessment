@@ -17,10 +17,10 @@ import com.transflower.tflcomentor.skilltaxonomy.service.ConceptsService;
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @RequestMapping("/api")
-public class ConceptsController {
+public class ConceptController {
 
     @Autowired
-    private ConceptsService conceptsService;
+    private ConceptService conceptsService;
 
     @GetMapping("/concepts")
     public List<Concept> getAllConcepts() {
