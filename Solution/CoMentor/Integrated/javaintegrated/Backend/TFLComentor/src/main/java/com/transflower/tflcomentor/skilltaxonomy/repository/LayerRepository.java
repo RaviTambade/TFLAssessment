@@ -9,6 +9,6 @@ import com.transflower.tflcomentor.skilltaxonomy.entity.Layer;
 @Repository
 public interface LayerRepository {
 
-    public List<Layer> getAllLayers();
+   List<Layer> getAllLayers();
 
 }
