@@ -63,15 +63,15 @@ class RolesController {
   }
 
   unAssignRoles(req, res) {
-    try {
-      const userId = req.params.userId || req.body.userId;
-
+    
+      const userId = req.params.userId ;
+ const responseGenerator = new ResponseGenerator();
       if (!userId) {
-        return this.responseGenerator.sendError(res, "UserId is required", 400);
+        return responseGenerator.sendError(res, "UserId is required", 400);
       }
 
       this.service.unAssignRoles(userId, (err, result) => {
-        this.responseGenerator.generateResponse(
+      responseGenerator.generateResponse(
           res,
           err,
           result,
@@ -79,54 +79,61 @@ class RolesController {
           "Roles unassigned successfully",
         );
       });
-    } catch (error) {
-      return this.responseGenerator.sendError(
-        res,
-        "Internal Server Error",
-        500,
-        error,
-      );
-    }
-  }
+    } 
 
   assignRoles(req, res) {
-    try {
-      const userId = req.body.userId || req.params.userId;
-      const roleIds = req.body.roleIds;
+  const userId = req.params.userId;
+  const roleIds = req.body.roleIds;
+  const responseGenerator = new ResponseGenerator();
 
-      // 🔹 Validation
-      if (
-        !userId ||
-        !roleIds ||
-        !Array.isArray(roleIds) ||
-        roleIds.length === 0
-      ) {
-        return this.responseGenerator.sendError(
-          res,
-          "UserId and roleIds (non-empty array) are required",
-          400,
-        );
-      }
+  if (
+    !userId ||
+    !Array.isArray(roleIds) ||
+    roleIds.length === 0
+  ) {
+    return responseGenerator.sendError(
+      res,
+      "UserId and roleIds (non-empty array) are required",
+      400
+    );
+  }
 
-      // 🔹 Call service
-      this.service.assignRoles(userId, roleIds, (err, result) => {
-        this.responseGenerator.generateResponse(
-          res,
-          err,
-          result,
-          "Failed to assign roles",
-          "Roles assigned successfully",
-        );
+  this.service.assignRoles(userId, roleIds, (err, result) => {
+    if (err) {
+      console.error(err);
+      return responseGenerator.sendError(res,err,500, "Database error");
+    }
+
+    return responseGenerator.sendSuccess(res, result,200, "Roles assigned successfully");
+  });
+}
+  getUserByRole(req, res) {
+    const userId = req.params.userId;
+    const responseGenerator = new ResponseGenerator();
+    this.service.getUserByRole(userId, (err, result) => {
+      responseGenerator.generateResponse(res, err, result, "Failed to get user by role", "User retrieved successfully")
+    });
+  }
+
+    unAssignRole(req, res) {
+      const userId = req.params.userId;
+      const roleId = req.params.roleId;
+      const responseGenerator = new ResponseGenerator();
+      this.service.unAssignRole(userId, roleId, (err, result) => {
+        responseGenerator.generateResponse(res, err, result, "Failed to unassign role", "Role unassigned successfully")
       });
-    } catch (error) {
-      return this.responseGenerator.sendError(
-        res,
-        "Internal Server Error",
-        500,
-        error,
-      );
+
+    
+    }
+    assignRole(req, res) {
+      const userId = req.params.userId;
+      const roleId = req.params.roleId;
+      const responseGenerator = new ResponseGenerator();
+      this.service.assignRole(userId, roleId, (err, result) => {
+        responseGenerator.generateResponse(res, err, result, "Failed to assign role", "Role assigned successfully")
+      });
     }
   }
-}
+
 
 module.exports = RolesController;
