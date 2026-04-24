@@ -1,7 +1,8 @@
+package com.transflower.tflcomentor.ecm.entity.enums;
+
 public enum QuestionTypes {
     
-    MULTIPLE_CHOICE,
-    TRUE_FALSE,
-    SHORT_ANSWER,
-    CODING
+    PROBLEM_STATEMENT,
+    MCQ,
+    HANDS_ON
 }

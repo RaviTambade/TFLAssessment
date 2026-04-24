@@ -1,4 +1,4 @@
-package com.transflower.tflcomentor.evaluationcontentmanagement.dto.response;
+package com.transflower.tflcomentor.ecm.dto.response;
 
 public class ProjectRequestDto {
 

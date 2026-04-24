@@ -1,11 +1,13 @@
-package com.transflower.tflcomentor.evaluationcontentmanagement.entity;
+package com.transflower.tflcomentor.ecm.entity;
 
 import java.time.LocalDateTime;
+
+import com.transflower.tflcomentor.ecm.entity.enums.QuestionTypes;
 
 public class Question {
     private Long questionId;
     private String description;
-    private  questionType;
+    private QuestionTypes questionType;
     private String difficultyLevel;
     private String status;
     private LocalDateTime createdAt;
@@ -13,7 +15,7 @@ public class Question {
     public Question() {
     }
 
-    public Question(Long questionId, String description, String questionType,
+    public Question(Long questionId, String description, QuestionTypes questionType,
             String difficultyLevel, String status) {
         this.questionId = questionId;
         this.description = description;
@@ -22,7 +24,7 @@ public class Question {
         this.status = status;
     }
 
-    public Question(Long questionId, String description, String questionType,
+    public Question(Long questionId, String description, QuestionTypes questionType,
             String difficultyLevel, LocalDateTime createdAt, String status) {
         this.questionId = questionId;
         this.description = description;
@@ -49,11 +51,11 @@ public class Question {
         this.description = description;
     }
 
-    public String getQuestionType() {
+    public QuestionTypes getQuestionType() {
         return questionType;
     }
 
-    public void setQuestionType(String questionType) {
+    public void setQuestionType(QuestionTypes questionType) {
         this.questionType = questionType;
     }
 
@@ -65,11 +67,11 @@ public class Question {
         this.difficultyLevel = difficultyLevel;
     }
 
-    public String geQuestiontStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setQuestionStatus(String status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 
@@ -81,12 +83,6 @@ public class Question {
         this.createdAt = createdAt;
     }
 
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
+    
     
 }

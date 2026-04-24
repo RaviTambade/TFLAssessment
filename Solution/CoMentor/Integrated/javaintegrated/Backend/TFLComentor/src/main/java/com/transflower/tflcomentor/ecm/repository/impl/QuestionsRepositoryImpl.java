@@ -1,9 +1,10 @@
-package com.transflower.tflcomentor.evaluationcontentmanagement.repository.impl;
+package com.transflower.tflcomentor.ecm.repository.impl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -13,11 +14,13 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import com.transflower.tflcomentor.configuration.DBConfig;
-import com.transflower.tflcomentor.evaluationcontentmanagement.dto.request.QuestionOptionsRequestDto;
-import com.transflower.tflcomentor.evaluationcontentmanagement.dto.response.QuestionOptionsResponseDto;
-import com.transflower.tflcomentor.evaluationcontentmanagement.dto.response.QuestionResponseDto;
-import com.transflower.tflcomentor.evaluationcontentmanagement.entity.Question;
-import com.transflower.tflcomentor.evaluationcontentmanagement.repository.QuestionsRepository;
+import com.transflower.tflcomentor.ecm.dto.request.QuestionOptionsRequestDto;
+import com.transflower.tflcomentor.ecm.dto.response.QuestionOptionsResponseDto;
+import com.transflower.tflcomentor.ecm.dto.response.QuestionResponseDto;
+import com.transflower.tflcomentor.ecm.entity.Question;
+import com.transflower.tflcomentor.ecm.entity.QuestionStatus;
+import com.transflower.tflcomentor.ecm.entity.enums.QuestionTypes;
+import com.transflower.tflcomentor.ecm.repository.QuestionsRepository;
 
 @Repository
 public class QuestionsRepositoryImpl implements QuestionsRepository {
@@ -30,24 +33,20 @@ public class QuestionsRepositoryImpl implements QuestionsRepository {
     public Question getQuestionById(long question_id) {
 
         try (Connection connection = getConnection()) {
-
             String sql = "SELECT * FROM questions WHERE question_id = ?";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setLong(1, question_id);
-
             ResultSet rs = statement.executeQuery();
-
             if (rs.next()) {
                 long id = rs.getLong("question_id");
                 String description = rs.getString("description");
-                String questionType = rs.getString("question_type");
+                QuestionTypes questionType = QuestionTypes.valueOf(rs.getString("question_type"));
                 String difficultyLevel = rs.getString("difficulty_level");
                 
                 LocalDateTime createdAt = LocalDateTime.ofInstant(
                         rs.getTimestamp("created_at").toInstant(),
                         ZoneId.systemDefault());
                 String status = rs.getString("status");
-
                 return new Question(
                         id,
                         description,
@@ -66,26 +65,20 @@ public class QuestionsRepositoryImpl implements QuestionsRepository {
     @Override
     public List<Question> getAllQuestions() {
         List<Question> list = new ArrayList<>();
-
         try (Connection connection = getConnection()) {
-
             String query = "SELECT * FROM questions";
             Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery(query);
-
             while (rs.next()) {
                 Question q = new Question(
                         rs.getLong("question_id"),
                         rs.getString("description"),
-                        rs.getString("question_type"),
+                        QuestionTypes.valueOf(rs.getString("question_type")),
                         rs.getString("difficulty_level"),
-                        LocalDateTime.ofInstant(
-                                rs.getTimestamp("created_at").toInstant(),
-                                ZoneId.systemDefault()),
+                        LocalDateTime.ofInstant(rs.getTimestamp("created_at").toInstant(), ZoneId.systemDefault()),
                         rs.getString("status"));
                 list.add(q);
             }
-
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -95,24 +88,18 @@ public class QuestionsRepositoryImpl implements QuestionsRepository {
     @Override
     public List<Question> getQuestionsByDifficulty(String difficulty) {
         List<Question> list = new ArrayList<>();
-
         try (Connection connection = getConnection()) {
-
             String query = "SELECT * FROM questions WHERE difficulty_level = ?";
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, difficulty);
-
             ResultSet rs = statement.executeQuery();
-
             while (rs.next()) {
                 Question q = new Question(
                         rs.getLong("question_id"),
                         rs.getString("description"),
-                        rs.getString("question_type"),
+                        QuestionTypes.valueOf(rs.getString("question_type")),
                         rs.getString("difficulty_level"),
-                        LocalDateTime.ofInstant(
-                                rs.getTimestamp("created_at").toInstant(),
-                                ZoneId.systemDefault()),
+                        LocalDateTime.ofInstant(rs.getTimestamp("created_at").toInstant(),ZoneId.systemDefault()),
                         rs.getString("status"));
                 list.add(q);
             }
@@ -165,7 +152,7 @@ public class QuestionsRepositoryImpl implements QuestionsRepository {
         try (Connection connection = getConnection(); PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
             statement.setString(1, q.getDescription());
-            statement.setString(2, q.getQuestionType());
+            statement.setString(2, q.getQuestionType().toString());
             statement.setString(3, q.getDifficultyLevel());
 
             statement.executeUpdate();
@@ -481,6 +468,69 @@ public class QuestionsRepositoryImpl implements QuestionsRepository {
 
         return list;
     }
+
+       @Override
+       public List<QuestionResponseDto> getQuestions(LocalDate fromDate, LocalDate toDate) {
+        QuestionOptionsResponseDto dto = new QuestionOptionsResponseDto();
+        try (Connection connection = getConnection()) {
+            String sql = "SELECT * FROM questions WHERE question_id=?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setLong(1, id);
+            ResultSet rs = statement.executeQuery();
+            if (rs.next()) {
+                dto.setQuestionId(rs.getLong("question_id"));
+                dto.setDescription(rs.getString("description"));
+                dto.setQuestionType(rs.getString("question_type"));
+                dto.setDifficultyLevel(rs.getString("difficulty_level"));
+                dto.setStatus(rs.getString("status"));
+            }
+
+            String sql1 = "SELECT * FROM mcq_options WHERE question_id=?";
+            PreparedStatement statement1 = connection.prepareStatement(sql1);
+            statement1.setLong(1, id);
+            ResultSet rs1 = statement1.executeQuery();
+            if (rs1.next()) {
+                dto.setOptionA(rs1.getString("option_a"));
+                dto.setOptionB(rs1.getString("option_b"));
+                dto.setOptionC(rs1.getString("option_c"));
+                dto.setOptionD(rs1.getString("option_d"));
+                dto.setCorrectAnswer(rs1.getString("correct_answer"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return dto;
+       }
+
+       @Override
+       public QuestionOptionsResponseDto getQuestionDetails(Long id) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getQuestionDetails'");
+       }
+
+       @Override
+       public List<QuestionResponseDto> getQuestionse(String questionType) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getQuestionse'");
+       }
+
+       @Override
+       public List<QuestionResponseDto> getQuestions(QuestionStatus status) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getQuestions'");
+       }
+
+       @Override
+       public void updateQuestionStatus(List<Long> questionIds, QuestionStatus status) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'updateQuestionStatus'");
+       }
+
+       @Override
+       public void updateQuestionStatus(long questionId, QuestionStatus status) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'updateQuestionStatus'");
+       }
 
 
 }
