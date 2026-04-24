@@ -1,5 +1,6 @@
-package com.transflower.tflcomentor.evaluationcontentmanagement.controller;
+package com.transflower.tflcomentor.ecm.controller;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,14 +12,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.transflower.tflcomentor.evaluationcontentmanagement.dto.request.QuestionDto;
-import com.transflower.tflcomentor.evaluationcontentmanagement.dto.request.QuestionOptionsRequestDto;
-import com.transflower.tflcomentor.evaluationcontentmanagement.dto.response.QuestionResponseDto;
-import com.transflower.tflcomentor.evaluationcontentmanagement.dto.response.QuestionOptionsResponseDto;
-import com.transflower.tflcomentor.evaluationcontentmanagement.entity.Question;
-import com.transflower.tflcomentor.evaluationcontentmanagement.service.QuestionsServices;
+import com.transflower.tflcomentor.ecm.dto.request.QuestionDto;
+import com.transflower.tflcomentor.ecm.dto.request.QuestionOptionsRequestDto;
+import com.transflower.tflcomentor.ecm.dto.response.QuestionResponseDto;
+import com.transflower.tflcomentor.ecm.dto.response.QuestionOptionsResponseDto;
+import com.transflower.tflcomentor.ecm.entity.Question;
+import com.transflower.tflcomentor.ecm.entity.QuestionStatus;
+import com.transflower.tflcomentor.ecm.service.QuestionService;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
@@ -26,7 +29,7 @@ import com.transflower.tflcomentor.evaluationcontentmanagement.service.Questions
 public class QuestionController {
 
     @Autowired
-    private QuestionsServices service;
+    private QuestionService service;
 
     @GetMapping("/{question_id}")
     public Question getQuestionById(@PathVariable("question_id") long question_id) {
@@ -45,7 +48,7 @@ public class QuestionController {
 
     @PostMapping()
     public String create(@RequestBody QuestionOptionsRequestDto dto) {
-        service.create(dto);
+        service.createQuestionWithOptions(dto);
         return "Question with Options Saved!";
     }
 
@@ -55,45 +58,45 @@ public class QuestionController {
     // }
     @GetMapping("/drafts")
     public List<QuestionResponseDto> getDraft() {
-        return service.getDraftQuestions();
+        return service.getQuestions("Draft");
     }
 
     @PutMapping("/{question_id}/approve")
-    public String approve(@PathVariable Long question_id) {
-        service.approveQuestionById(question_id);
-        return "Approved";
+    public String approveQuestionById(@PathVariable Long question_id) {
+        service.updateQuestionStatus(question_id, QuestionStatus.APPROVED);
+        return "Question Approved Successfully";
     }
 
     @PutMapping("/{question_id}/reject")
     public String rejectQuestionById(@PathVariable Long question_id) {
-        service.rejectQuestionById(question_id);
-        return "Rejected";
+        service.updateQuestionStatus(question_id, QuestionStatus.REJECTED);
+        return "Question Rejected Successfully";
     }
 
     @PostMapping("/approve-selected")
-    public String approveSelected(@RequestBody List<Long> questionId) {
-        service.approveQuestions(questionId);
+    public String approveSelectedQuestions(@RequestBody List<Long> questionId) {
+        service.updateQuestionStatus(questionId, QuestionStatus.APPROVED);
         return "Selected questions approved";
     }
 
     @PostMapping("/reject-selected")
-    public String rejectSelected(@RequestBody List<Long> questionId) {
-        service.rejectQuestions(questionId);
+    public String rejectSelectedQuestions(@RequestBody List<Long> questionId) {
+        service.updateQuestionStatus(questionId, QuestionStatus.REJECTED);
         return "Selected questions rejected";
     }
 
     @GetMapping("/recent")
-    public List<QuestionResponseDto> getQuestionsFromLastTwoDays() {
-        return service.getQuestionsFromLastTwoDays();
+    public List<QuestionResponseDto> getByDate(@RequestParam String fromDate,@RequestParam String toDate) {
+        return service.getQuestions(LocalDate.parse(fromDate),LocalDate.parse(toDate));
     }
-
+    
     // @GetMapping("/recent/list")
     // public List<QuestionResponse> getRecentList() {
     //     return service.getRecentQuestionList();
     // }
     @GetMapping("/details/{question_id}")
     public QuestionOptionsResponseDto getQuestionDetailsById(@PathVariable Long question_id) {
-        return service.getQuestionDetailsById(question_id);
+        return service.getQuestionDetails(question_id);
     }
 
     @PutMapping("/{question_id}")
@@ -104,18 +107,17 @@ public class QuestionController {
 
     @GetMapping("/type/{questionType}")
     public List<QuestionResponseDto> getQuestionsByType(@PathVariable String questionType) {
-        return service.getQuestionsByType(questionType);
+        return service.getQuestions(questionType);
     }
 
     @GetMapping("/status/{questionStatus}")
     public List<QuestionResponseDto> getQuestionsByStatus(@PathVariable String questionStatus) {
-        return service.getQuestionsByStatus(questionStatus);
+        return service.getQuestions(questionStatus);
     }
 
     @GetMapping("/concepts/{conceptId}/questions")
-    public ResponseEntity<?> getQuestionsByConceptId(@PathVariable Long conceptId) {
-        List<QuestionDto> questions = service.getQuestionsByConceptId(conceptId);
-        return ResponseEntity.ok(questions);
+    public List<Question> getQuestionsByConcept(@RequestParam Long conceptId) {
+        return service.getQuestionsByConceptId(conceptId);
     }
 
 }
