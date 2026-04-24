@@ -16,6 +16,7 @@ public interface ConceptRepository {
     List<Concept> getAllConcepts();
     List<Concept> getAllConceptsforFramework(int framework);
     Concept getById(Long id);
-    boolean addConcept(Concept concept);  
+    Concept addConcept(Concept concept);  
+    boolean mapConceptToFramework(int conceptId, int frameworkId);
 }
 

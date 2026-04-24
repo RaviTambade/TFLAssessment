@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.sql.Timestamp;
 
 import org.springframework.stereotype.Repository;
 
@@ -115,20 +116,41 @@ public class ConceptRepositoryImpl implements ConceptRepository {
     }
 
     @Override
-    public boolean addConcept(Concept concept) {
-        String query = "INSERT INTO concepts(name,description,status) VALUE(?,?,?)";
+    public Concept addConcept(Concept concept) {
+        String query = "INSERT INTO concepts(name,description,status,created_at) VALUES(?,?,?,?)";
         try (Connection connection = getConnection()) {
-            PreparedStatement ps = connection.prepareStatement(query);
+            PreparedStatement ps = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, concept.getName());
             ps.setString(2, concept.getDescription());
             ps.setInt(3, concept.getStatus());
+            ps.setTimestamp(4, Timestamp.valueOf(LocalDateTime.now()));
 
-            ps.executeQuery();
+            ps.executeUpdate();
+
+            ResultSet rs=ps.getGeneratedKeys();
+            if(rs.next()){
+                concept.setId(rs.getInt(1));
+            }
+            return concept;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
+    public boolean mapConceptToFramework(int conceptId, int frameworkId) {
+        String query = "INSERT INTO framework_concepts(framework_id, concept_id) VALUES(?,?)";
+        try (Connection connection = getConnection()) {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setInt(1, frameworkId);
+            ps.setInt(2, conceptId);
+
+            ps.executeUpdate();
             return true;
         } catch (Exception e) {
             e.printStackTrace();
             return false;
         }
     }
-
 }

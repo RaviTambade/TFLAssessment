@@ -10,17 +10,16 @@ public class ProjectAllocation {
     private LocalDateTime joinedDate;
     private LocalDateTime releaseDate;
 
-
     public ProjectAllocation() {
         this.id = 0L;
         this.projectId = 0L;
         this.studentId = 0L;
         this.joinedDate = null;
-        this. releaseDate=null;
+        this.releaseDate = null;
 
     }
 
-    public ProjectAllocation(Long id, Long projectId, Long studentId, LocalDateTime joinedDate , LocalDateTime releaseDate) {
+    public ProjectAllocation(Long id, Long projectId, Long studentId, LocalDateTime joinedDate, LocalDateTime releaseDate) {
         this.id = id;
         this.projectId = projectId;
         this.studentId = studentId;
@@ -28,7 +27,7 @@ public class ProjectAllocation {
         this.releaseDate = releaseDate;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 

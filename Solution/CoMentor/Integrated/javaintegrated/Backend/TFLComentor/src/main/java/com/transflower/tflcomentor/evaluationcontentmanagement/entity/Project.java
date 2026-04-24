@@ -10,25 +10,21 @@ public class Project {
     private String status;
     private String created_at;
 
-    
-
-    public Project()
-    {
+    public Project() {
 
     }
 
-    public Project(long project_id,long mentor_id,String project_name,String description,String repository_url,String status,String created_at)
-    {
-        this.project_id=project_id;
-        this.mentor_id=mentor_id;
-        this.project_name=project_name;
-        this.description=description;
-        this.repository_url=repository_url;
-        this.status=status;
-        this.created_at=created_at;
+    public Project(long project_id, long mentor_id, String project_name, String description, String repository_url, String status, String created_at) {
+        this.project_id = project_id;
+        this.mentor_id = mentor_id;
+        this.project_name = project_name;
+        this.description = description;
+        this.repository_url = repository_url;
+        this.status = status;
+        this.created_at = created_at;
 
     }
-   
+
     public long getProject_id() {
         return project_id;
     }
@@ -86,24 +82,26 @@ public class Project {
     }
 
     @Override
-    public String toString() 
-    {
-            return "Project{" +
-            "project_id=" + project_id +
-            ", mentor_id=" + mentor_id +
-            ", project_name='" + project_name + '\'' +
-            ", description='" + description + '\'' +
-            ", repository_url='" + repository_url + '\'' +
-            ", status='" + status + '\'' +
-            ", created_at='" + created_at + '\'' +
-            '}';
+    public String toString() {
+        return "Project{"
+                + "project_id=" + project_id
+                + ", mentor_id=" + mentor_id
+                + ", project_name='" + project_name + '\''
+                + ", description='" + description + '\''
+                + ", repository_url='" + repository_url + '\''
+                + ", status='" + status + '\''
+                + ", created_at='" + created_at + '\''
+                + '}';
     }
 
     @Override
-    public boolean equals(Object obj) 
-    {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
 
         Project project = (Project) obj;
 
@@ -111,27 +109,13 @@ public class Project {
     }
 
     @Override
-     public int hashCode() {
-    return Long.hashCode(project_id);
-}
+    public int hashCode() {
+        return Long.hashCode(project_id);
+    }
 
     @Override
     protected Object clone() throws CloneNotSupportedException {
         return super.clone(); // shallow copy
     }
 
-    @Override
-    protected void finalize() throws Throwable
-    {
-        try {
-        System.out.println("Project object is being garbage collected");
-         } finally {
-        super.finalize();
-    }
 }
-
-    
-
-}
-
-

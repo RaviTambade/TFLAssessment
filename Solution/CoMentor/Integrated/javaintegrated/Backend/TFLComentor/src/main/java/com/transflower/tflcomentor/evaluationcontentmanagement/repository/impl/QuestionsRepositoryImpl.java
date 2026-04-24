@@ -14,8 +14,8 @@ import org.springframework.stereotype.Repository;
 
 import com.transflower.tflcomentor.configuration.DBConfig;
 import com.transflower.tflcomentor.evaluationcontentmanagement.dto.request.QuestionOptionsRequestDto;
-import com.transflower.tflcomentor.evaluationcontentmanagement.dto.response.QuestionResponseDto;
 import com.transflower.tflcomentor.evaluationcontentmanagement.dto.response.QuestionOptionsResponseDto;
+import com.transflower.tflcomentor.evaluationcontentmanagement.dto.response.QuestionResponseDto;
 import com.transflower.tflcomentor.evaluationcontentmanagement.entity.Question;
 import com.transflower.tflcomentor.evaluationcontentmanagement.repository.QuestionsRepository;
 
@@ -42,6 +42,7 @@ public class QuestionsRepositoryImpl implements QuestionsRepository {
                 String description = rs.getString("description");
                 String questionType = rs.getString("question_type");
                 String difficultyLevel = rs.getString("difficulty_level");
+                
                 LocalDateTime createdAt = LocalDateTime.ofInstant(
                         rs.getTimestamp("created_at").toInstant(),
                         ZoneId.systemDefault());
@@ -386,14 +387,16 @@ public class QuestionsRepositoryImpl implements QuestionsRepository {
     @Override
     public void updateQuestionById(Long id, QuestionOptionsRequestDto dto) {
 
-        String sql = "UPDATE questions SET description=?, question_type=?, difficulty_level=? WHERE question_id=?";
+        String sql = "UPDATE questions SET description=?, question_type=?, difficulty_level=?,status=? WHERE question_id=?";
 
-        try (Connection connection = getConnection(); PreparedStatement statement = connection.prepareStatement(sql)) {
+        try (Connection connection = getConnection();
+         PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setString(1, dto.getDescription());
             statement.setString(2, dto.getQuestionType());
             statement.setString(3, dto.getDifficultyLevel());
-            statement.setLong(4, id);
+            statement.setString(4, dto.getStatus());
+            statement.setLong(5, id);
 
             statement.executeUpdate();
 

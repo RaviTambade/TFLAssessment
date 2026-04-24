@@ -86,8 +86,6 @@ const UpdateQuestion = () => {
                 return;
             }
 
-            // Build update payload with correct types
-            // Status is string enum (DRAFT, APPROVED, INACTIVE)
             const updatePayload = {
                 description: editData.description !== undefined ? editData.description : originalQuestion.description,
                 questionType: editData.questionType !== undefined ? editData.questionType : originalQuestion.questionType,
