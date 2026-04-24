@@ -1,5 +1,4 @@
-class Role {
-    
+class RolesRepository {
   constructor(connection) {
     this.connection = connection;
   }
@@ -9,14 +8,19 @@ class Role {
     this.connection.query(sql, callback);
   }
 
-  addNewRole(role, callback) {
+  addNewRole(newrole, callback) {
     const sql = "insert into roles(role_name,description) values(?,?)";
-    this.connection.query(sql, [role.roleName, role.description], callback);
+    this.connection.query(sql, [newrole.roleName, newrole.description], callback);
   }
 
-  updateExistingRole(id, role, callback) {
+  updateExistingRole(roleId, role, callback) {
     const sql = "UPDATE roles SET role_name=?, description=? WHERE role_id=?";
-    this.connection.query(sql, [role.roleName, role.description, id], callback);
+    this.connection.query(sql, [role.roleName, role.description, roleId], callback);
+  }
+
+  getRoleById(roleId, callback) {
+    const sql = "select * from roles where role_id =?";
+    this.connection.query(sql, [roleId], callback);
   }
 
   getUserByRole(userId, callback) {
@@ -31,39 +35,32 @@ class Role {
       callback(null, userRole);
     });
   }
-
-  getRoleById(id, callback) {
-    const sql = "select * from roles where role_id =?";
-    this.connection.query(sql, [id], callback);
+  unAssignRole(userId, roleId, callback) {
+    const deleteSql =
+      "DELETE FROM user_roles WHERE user_id = ? AND role_id = ?";
+    this.connection.query(deleteSql, [userId, roleId], callback);
   }
 
-
-  unAssignRole(user_id, role_id, callback) {
-    const deleteSql = "DELETE FROM user_roles WHERE user_id = ? AND role_id = ?";
-    this.connection.query(deleteSql, [user_id, role_id], callback);
-  }
-
-  unAssignRoles(user_id, callback) {
+  unAssignRoles(userId, callback) {
     const deleteSql = "DELETE FROM user_roles WHERE user_id = ?";
-    this.connection.query(deleteSql, [user_id], callback);
+    this.connection.query(deleteSql, [userId], callback);
   }
 
-  
-  assignRole(user_id, role_id, callback) {
+  assignRole(userId, roleId, callback) {
     const insertSql = `INSERT INTO user_roles (user_id, role_id, assigned_at) VALUES (?, ?, NOW()) ON DUPLICATE KEY UPDATE assigned_at = NOW()`;
-    this.connection.query(insertSql, [user_id, role_id], callback);
+    this.connection.query(insertSql, [userId, roleId], callback);
   }
 
-  assignRoles(user_id, role_ids, callback) {
-    if (!Array.isArray(role_ids) || role_ids.length === 0) {
+  assignRoles(userId, roleIds, callback) {
+    if (!Array.isArray(roleIds) || roleIds.length === 0) {
       return callback(null, { affectedRows: 0 });
     }
 
-    const placeholders = role_ids.map(() => "(?, ?, NOW())").join(", ");
+    const placeholders = roleIds.map(() => "(?, ?, NOW())").join(", ");
     const insertSql = `INSERT INTO user_roles (user_id, role_id, assigned_at) VALUES ${placeholders} ON DUPLICATE KEY UPDATE assigned_at = NOW()`;
-    const values = role_ids.flatMap(role_id => [user_id, role_id]);
+    const values = roleIds.flatMap((roleId) => [userId, roleId]);
     this.connection.query(insertSql, values, callback);
   }
 }
 
-module.exports = Role;
+module.exports = RolesRepository;

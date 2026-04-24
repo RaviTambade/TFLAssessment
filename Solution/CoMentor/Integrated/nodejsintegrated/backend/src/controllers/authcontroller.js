@@ -7,7 +7,7 @@ const ResponseGenerator = require("../helpers/ResponseGenerator");
 
 class AuthController {
   constructor(authService) {
-    this.authService = authService;
+    this.service = authService;
   }
 
   // Controller methods (Action method)
@@ -18,7 +18,7 @@ class AuthController {
       req.body.password,
       req.body.role,
     );
-    this.authService.validate(credential, (err, result) => {
+    this.service.validate(credential, (err, result) => {
       if (err) {
         return responseGenerator.sendError(res, "Server error", 500, err);
       }
@@ -53,7 +53,7 @@ class AuthController {
       req.body.password,
       req.body.contact,
     );
-    this.authService.register(user, (err, result) => {
+    this.service.register(user, (err, result) => {
       responseGenerator.generateResponse(
         res,
         err,
@@ -78,7 +78,7 @@ class AuthController {
     ) {
       return res.status(400).json({ message: "All fields are required" });
     }
-    this.authService.changePassword(changePassword, (err, result) => {
+    this.service.changePassword(changePassword, (err, result) => {
       responseGenerator.generateResponse(
         res,
         err,

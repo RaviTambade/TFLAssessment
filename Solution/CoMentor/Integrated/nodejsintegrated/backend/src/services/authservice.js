@@ -1,18 +1,18 @@
 class AuthService{
   constructor(authRepository) {
-    this.authRepository = authRepository;
+    this.repository = authRepository;
   }
 
   validate(credential, callback) {
-    this.authRepository.validate(credential, callback);
+    this.repository.validate(credential, callback);
   }
 
   register(user, callback) {
-    this.authRepository.register(user, callback);
+    this.repository.register(user, callback);
   }
 
   changePassword(changePassword, callback) {
-      this.authRepository.changePassword(changePassword, callback);
+      this.repository.changePassword(changePassword, callback);
   }
  
 }
