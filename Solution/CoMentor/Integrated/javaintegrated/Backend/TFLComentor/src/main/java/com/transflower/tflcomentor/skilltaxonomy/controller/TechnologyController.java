@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 import com.transflower.tflcomentor.skilltaxonomy.dto.response.LanguageResponseDto;
+import com.transflower.tflcomentor.skilltaxonomy.dto.response.RuntimeSummaryResponseDto;
 import com.transflower.tflcomentor.skilltaxonomy.entity.Concept;
 import com.transflower.tflcomentor.skilltaxonomy.entity.Framework;
 import com.transflower.tflcomentor.skilltaxonomy.entity.Language;
@@ -22,7 +23,7 @@ import com.transflower.tflcomentor.skilltaxonomy.service.LanguageService;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
-@RequestMapping("/api/v1/technologies")
+@RequestMapping("/api/technologies")
 public class TechnologyController {
 
     @GetMapping("/concepts")
@@ -31,11 +32,11 @@ public class TechnologyController {
     }
 
     @GetMapping("/concepts/{id}")
-    public Concept getById(@PathVariable Long id) {
+    public Concept getConceptById(@PathVariable Long id) {
         return conceptsService.getById(id);
     }
 
-    @PostMapping("/concept")
+    @PostMapping("/add/concept")
     public Concept addConcept(@RequestBody Concept concept) {
         return conceptsService.addConcept(concept);
     }
@@ -45,7 +46,7 @@ public class TechnologyController {
         return conceptsService.getAllConceptsforFramework(framework);
     }
 
-    @PostMapping("conceptsmapping/framework/{conceptId}/{frameworkId}")
+    @PostMapping("conceptsmapping/{conceptId}/framework/{frameworkId}")
     public boolean mapConceptToFramework(@PathVariable int conceptId, @PathVariable int frameworkId) {
         return conceptsService.mapConceptToFramework(conceptId, frameworkId);
     }
@@ -59,6 +60,16 @@ public class TechnologyController {
     @GetMapping("/frameworks/{id}")
     public Framework getFrameworkById(@PathVariable Long id) {
         return frameworkService.getFrameworkById(id);
+    }
+
+    @GetMapping("/frameworks/languages/{languageId}/layers/{layerId}")
+    public List<Framework> getAllFrameworks(@PathVariable int languageId, @PathVariable int layerId) {
+        return frameworkService.getAllFrameworksByLanguageAndLayer(languageId, layerId);
+    }
+
+    @GetMapping("/frameworks/languages/{languageId}")                                //**********NEW*****************/
+    public List<Framework> getAllFrameworks(@PathVariable int languageId) {   
+        return frameworkService.getAllFrameworks(languageId);
     }
 
     // Layers endpoints
@@ -77,5 +88,11 @@ public class TechnologyController {
     public Runtime getRuntimeById(@PathVariable Long id) {
         return runtimeService.getRuntimeById(id);
     }
+
+    @GetMapping("/sme")
+    public List<RuntimeSummaryResponseDto> getAllRuntimeSummaries() {
+        return runtimeService.getAllRuntimeSummaries();
+    }
+
 
 }
