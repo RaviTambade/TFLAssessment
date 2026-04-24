@@ -1,5 +1,5 @@
 const express = require("express");
-const authroutes = (controller) => {
+const AuthRoutes = (controller) => {
 
   const router = express.Router();
   
@@ -9,4 +9,4 @@ const authroutes = (controller) => {
   return router;
 };
 
-module.exports = authroutes;
+module.exports = AuthRoutes;

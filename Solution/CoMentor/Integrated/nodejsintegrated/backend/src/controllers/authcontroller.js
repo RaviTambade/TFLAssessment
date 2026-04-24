@@ -10,8 +10,8 @@ class AuthController {
     this.service = authService;
   }
 
-  // Controller methods (Action method)
-  validate = (req, res) => {
+ 
+  validate (req, res) {
     const responseGenerator = new ResponseGenerator();
     const credential = new Credential(
       req.body.username,

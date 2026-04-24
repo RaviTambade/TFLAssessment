@@ -1,11 +1,17 @@
 var mysql = require("mysql2");
 
 const dbconfig = {
-  host: "192.168.1.149",
+  host: "localhost",
   user: "root",
   password: "password",
   database: "tflcomentor_db",
 };
+// const dbconfig = {
+//   host: "192.168.1.149",
+//   user: "root",
+//   password: "password",
+//   database: "tflcomentor_db",
+// };
 
 const connection = mysql.createConnection(dbconfig);
 connection.connect((err) => {

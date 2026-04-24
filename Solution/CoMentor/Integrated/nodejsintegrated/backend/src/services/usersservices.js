@@ -1,5 +1,6 @@
-class UsersServices {
+const { json } = require("body-parser");
 
+class UsersServices {
   constructor(usersRepository) {
     this.repository = usersRepository;
   }
@@ -8,9 +9,6 @@ class UsersServices {
     this.repository.getUserInformationById(Number(userId), callback);
   }
 
-  // getUserName(userNameRequest, callback) {
-  //   this.repository.getUserName(userNameRequest, callback);
-  // }
 
   getUserCompleteInformation(userId, callback) {
     this.repository.getUserCompleteInformation(userId, callback);
@@ -30,28 +28,30 @@ class UsersServices {
 
   filterFields(data) {
     let filtered = {};
+
     for (let key in data) {
       if (data[key] !== undefined && data[key] !== "") {
         filtered[key] = data[key];
       }
     }
+
     return filtered;
   }
 
-  updatePersonal (userId, data, callback) {
-    const filteredData = filterFields(data);
+  updatePersonal(userId, data, callback) {
+    const filteredData = this.filterFields(data);
     this.repository.updatePersonal(userId, filteredData, callback);
-  };
+  }
 
-  updateProfessional (userId, data, callback) {
-    const filteredData = filterFields(data);
+  updateProfessional(userId, data, callback) {
+    const filteredData = this.filterFields(data);
     this.repository.updateProfessional(userId, filteredData, callback);
-  };
+  }
 
-  updateAcademic (userId, data, callback) {
-    const filteredData = filterFields(data);
+  updateAcademic(userId, data, callback) {
+    const filteredData = this.filterFields(data);
     this.repository.updateAcademic(userId, filteredData, callback);
-  };
+  }
 
   updateUserStatus(userId, status, callback) {
     const ALLOWED_STATUSES = ["ACTIVE", "INACTIVE", "BLOCKED"];
@@ -60,7 +60,8 @@ class UsersServices {
       return callback(new Error("Invalid user ID"), null);
     }
 
-    const normalizedStatus = typeof status === "string" ? status.trim().toUpperCase() : "";
+    const normalizedStatus =
+      typeof status === "string" ? status.trim().toUpperCase() : "";
 
     if (!normalizedStatus) {
       return callback(new Error("Status is required"), null);
@@ -69,18 +70,19 @@ class UsersServices {
     if (!ALLOWED_STATUSES.includes(normalizedStatus)) {
       return callback(
         new Error("Status must be one of: ACTIVE, INACTIVE, or BLOCKED"),
-        null
+        null,
       );
     }
 
-    this.repo.updateUserStatus(userId, normalizedStatus, (err, result) => {
-      if (err) return callback(err, null);
-      callback(null, result);
-    });
+    this.repository.updateUserStatus(
+      userId,
+      normalizedStatus,
+      (err, result) => {
+        if (err) return callback(err, null);
+        callback(null, result);
+      },
+    );
   }
-
-
-
 }
 
 module.exports = UsersServices;
