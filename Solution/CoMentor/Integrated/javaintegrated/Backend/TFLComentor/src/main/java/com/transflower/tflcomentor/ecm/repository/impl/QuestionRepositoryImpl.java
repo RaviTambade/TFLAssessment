@@ -173,7 +173,7 @@ public class QuestionRepositoryImpl implements QuestionRepository {
     }
 
     @Override
-            public void insertMcqOptions(Long question_ids,
+    public void insertMcqOptions(Long questionId,
             String optionA,
             String optionB,
             String optionC,

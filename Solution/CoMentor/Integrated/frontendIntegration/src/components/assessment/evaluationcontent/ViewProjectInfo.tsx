@@ -19,7 +19,7 @@ const ViewProjectInfo: React.FC = () => {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [loading, setLoading] = useState(true);
 
-  // ✅ FETCH ALL PROJECTS
+  // FETCH ALL PROJECTS
   useEffect(() => {
     fetch("http://localhost:8080/api/projects")
       .then((res) => {
@@ -38,15 +38,31 @@ const ViewProjectInfo: React.FC = () => {
       });
   }, []);
 
-  // ✅ OPTIONAL: FETCH SINGLE PROJECT (FROM API)
+  // OPTIONAL: FETCH SINGLE PROJECT (FROM API)
   const handleView = (id: number) => {
     fetch(`http://localhost:8080/api/projects/${id}`)
-      .then((res) => res.json())
+      .then((res) => {
+        if (!res.ok) {
+          return res.text().then((text) => {
+            throw new Error(`Failed to fetch project ${id}: ${res.status} ${res.statusText} - ${text}`);
+          });
+        }
+        const contentType = res.headers.get("content-type") || "";
+        if (!contentType.includes("application/json")) {
+          return res.text().then((text) => {
+            throw new Error(`Expected JSON response but got ${contentType}: ${text}`);
+          });
+        }
+        return res.json();
+      })
       .then((data) => setSelectedProject(data))
-      .catch((err) => console.error(err));
+      .catch((err) => {
+        console.error("Error fetching project details:", err);
+        setSelectedProject(null);
+      });
   };
 
-  // ✅ STATUS COLORS (DB VALUES)
+  // STATUS COLORS (DB VALUES)
   const getStatusColor = (status: string) => {
     switch (status) {
       case "COMPLETED":

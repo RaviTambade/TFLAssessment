@@ -3,7 +3,7 @@ package com.transflower.tflcomentor.skilltaxonomy.entity;
 import java.time.LocalDateTime;
 
 public class Concept{
-    private int id;
+    private Integer id;
     private String name;
     private String description;
     private int status ;
@@ -19,7 +19,7 @@ public class Concept{
         this.createdAt = LocalDateTime.now();  
     }
 
-    public Concept(int id, String name, String description, int status, LocalDateTime createdAt){
+    public Concept(Integer id, String name, String description, int status, LocalDateTime createdAt){
         this.id = id;
         this.name = name;
         this.description = description;
@@ -27,10 +27,10 @@ public class Concept{
         this.createdAt = createdAt;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

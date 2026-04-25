@@ -4,14 +4,12 @@ using backend.Repositories.Interfaces;
 using backend.Repositories.Implementations; 
 using backend.Services.Interfaces;
 using backend.Services.Implementations;
-using backend.Repositories.Implementations;
 using backend.Services;
 using backend.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
-
 
 builder.Services.AddEndpointsApiExplorer();
 
@@ -21,7 +19,6 @@ builder.Services.AddDbContext<AppDbContext>(options =>
         ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("DefaultConnection"))
     )
 );
-
 
 // Register repositories and services
 builder.Services.AddScoped<IAssessmentsService, AssessmentsService>();
@@ -46,6 +43,8 @@ builder.Services.AddScoped<IConceptsService, ConceptsService>();
 builder.Services.AddScoped<IConceptsRepository, ConceptsRepository>();
 builder.Services.AddScoped<ICreateTestService, CreateTestService>();
 builder.Services.AddScoped<ICreateTestRepository, CreateTestRepository>();
+builder.Services.AddScoped<IScoreService, ScoreService>();
+builder.Services.AddScoped<IScoreRepository, ScoreRepository>();
 
 // Configure CORS to allow requests from the frontend
 builder.Services.AddCors(options =>
@@ -59,7 +58,6 @@ builder.Services.AddCors(options =>
         });
 });
 Dapper.DefaultTypeMap.MatchNamesWithUnderscores = true;
-
 
 var app = builder.Build();
 

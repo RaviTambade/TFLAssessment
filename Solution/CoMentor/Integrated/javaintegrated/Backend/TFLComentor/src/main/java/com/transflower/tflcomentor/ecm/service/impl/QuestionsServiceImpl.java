@@ -10,6 +10,7 @@ import com.transflower.tflcomentor.ecm.dto.request.QuestionOptionsRequestDto;
 import com.transflower.tflcomentor.ecm.dto.response.QuestionOptionsResponseDto;
 import com.transflower.tflcomentor.ecm.dto.response.QuestionResponseDto;
 import com.transflower.tflcomentor.ecm.entity.Question;
+import com.transflower.tflcomentor.ecm.entity.enums.DifficultyLevels;
 import com.transflower.tflcomentor.ecm.entity.enums.QuestionStatus;
 import com.transflower.tflcomentor.ecm.entity.enums.QuestionTypes;
 import com.transflower.tflcomentor.ecm.repository.QuestionRepository;
@@ -34,7 +35,7 @@ public class QuestionsServiceImpl implements QuestionService {
         question.setQuestionType(
                 QuestionTypes.valueOf(dto.getQuestionType().toUpperCase())
         );
-        question.setDifficultyLevel(dto.getDifficultyLevel());
+        question.setDifficultyLevel(DifficultyLevels.valueOf(dto.getDifficultyLevel().toUpperCase()));
 
         Long questionId = repository.insert(question);
         if ("MCQ".equalsIgnoreCase(dto.getQuestionType())) {

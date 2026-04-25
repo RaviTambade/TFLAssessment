@@ -15,7 +15,7 @@ public interface QuestionRepository {
     
     Question getQuestionById(long question_id);
     List<Question> getAllQuestions();
-    List<Question> getQuestionsByDifficulty(DifficultyLevels difficulty);
+    List<Question> getQuestionsByDifficulty(String difficulty);
     Long insert(Question q);
     void insertMcqOptions(Long question_id,
             String optionA,
@@ -24,12 +24,12 @@ public interface QuestionRepository {
             String optionD,
             String correctAnswer);
     void updateQuestionById(Long question_id, QuestionOptionsRequestDto dto);
-    List<Question> getQuestions(LocalDate fromDate, LocalDate toDate);
+    List<QuestionResponseDto> getQuestions(LocalDate fromDate, LocalDate toDate);
     QuestionOptionsResponseDto getQuestionDetails(Long question_id);
-    List<Question> getQuestions(QuestionTypes questionType);
+    List<QuestionResponseDto> getQuestions(String questionType);
     // List<Questions> getAllQuestions();
     // List<QuestionResponse> getRecentQuestions();
-    List<Question> getQuestions(QuestionStatus status);
+    List<QuestionResponseDto> getQuestions(QuestionStatus status);
    //multiple question status update
     void updateQuestionStatus(List<Long> question_ids, QuestionStatus status);
     //single question status update
