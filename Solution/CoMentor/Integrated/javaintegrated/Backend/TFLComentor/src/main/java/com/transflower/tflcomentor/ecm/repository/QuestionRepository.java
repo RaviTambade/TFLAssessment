@@ -5,13 +5,7 @@ package com.transflower.tflcomentor.ecm.repository;
 import java.time.LocalDate;
 import java.util.List;
 
-<<<<<<< HEAD
-import com.transflower.tflcomentor.ecm.dto.request.QuestionOptionsRequestDto;
-import com.transflower.tflcomentor.ecm.dto.response.QuestionOptionsResponseDto;
-import com.transflower.tflcomentor.ecm.dto.response.QuestionResponseDTO;
-=======
 import com.transflower.tflcomentor.ecm.dto.QuestionOptionsRequestDto;
->>>>>>> 85c337740a6b0aab8d9b488ab71e5535536d1d5e
 import com.transflower.tflcomentor.ecm.entity.Question;
 import com.transflower.tflcomentor.ecm.entity.enums.DifficultyLevel;
 import com.transflower.tflcomentor.ecm.entity.enums.QuestionStatus;

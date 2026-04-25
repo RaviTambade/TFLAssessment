@@ -1,7 +1,7 @@
 package com.transflower.tflcomentor.skilltaxonomy.repository.impl;
 
 import java.sql.Statement;
-import java.security.Timestamp;
+import java.sql.Timestamp;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

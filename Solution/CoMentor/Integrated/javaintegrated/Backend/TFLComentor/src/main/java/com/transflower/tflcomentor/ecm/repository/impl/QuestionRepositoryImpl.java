@@ -15,17 +15,9 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import com.transflower.tflcomentor.configuration.DBConfig;
-<<<<<<< HEAD
-import com.transflower.tflcomentor.ecm.dto.request.QuestionOptionsRequestDto;
-import com.transflower.tflcomentor.ecm.dto.response.QuestionOptionsResponseDto;
-import com.transflower.tflcomentor.ecm.dto.response.QuestionResponseDTO;
-import com.transflower.tflcomentor.ecm.entity.Question;
-import com.transflower.tflcomentor.ecm.entity.enums.DifficultyLevels;
-=======
 import com.transflower.tflcomentor.ecm.dto.QuestionOptionsRequestDto;
 import com.transflower.tflcomentor.ecm.entity.Question;
 import com.transflower.tflcomentor.ecm.entity.enums.DifficultyLevel;
->>>>>>> 85c337740a6b0aab8d9b488ab71e5535536d1d5e
 import com.transflower.tflcomentor.ecm.entity.enums.QuestionStatus;
 import com.transflower.tflcomentor.ecm.entity.enums.QuestionType;
 import com.transflower.tflcomentor.ecm.repository.QuestionRepository;
@@ -112,11 +104,7 @@ public class QuestionRepositoryImpl implements QuestionRepository {
     }
 
     @Override
-<<<<<<< HEAD
-    public List<QuestionResponseDTO> getQuestions(String questionType) {
-=======
     public List<Question> getQuestions(QuestionType questionType) {
->>>>>>> 85c337740a6b0aab8d9b488ab71e5535536d1d5e
 
         String sql = """
     SELECT question_id, question_type, description, difficulty_level, status
@@ -130,17 +118,10 @@ public class QuestionRepositoryImpl implements QuestionRepository {
             statement.setString(1, questionType.toString());
 
             try (ResultSet rs = statement.executeQuery()) {
-<<<<<<< HEAD
-                List<QuestionResponseDTO> results = new ArrayList<>();
-
-                while (rs.next()) {
-                    QuestionResponseDTO question = new QuestionResponseDTO();
-=======
                 List<Question> results = new ArrayList<>();
 
                 while (rs.next()) {
                     Question question = new Question();
->>>>>>> 85c337740a6b0aab8d9b488ab71e5535536d1d5e
                     question.setQuestionId(rs.getLong("question_id"));
                     question.setDescription(rs.getString("description"));
 
@@ -433,16 +414,6 @@ public class QuestionRepositoryImpl implements QuestionRepository {
         }
     }
 
-    @Override
-    public List<Question> getQuestionsByDifficulty(DifficultyLevels difficulty) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getQuestionsByDifficulty'");
-    }
-
-    @Override
-    public List<Question> getQuestions(QuestionTypes questionType) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getQuestions'");
-    }
+   
 
 }

@@ -15,14 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-<<<<<<< HEAD
-import com.transflower.tflcomentor.ecm.dto.request.QuestionDto;
-import com.transflower.tflcomentor.ecm.dto.request.QuestionOptionsRequestDto;
-import com.transflower.tflcomentor.ecm.dto.response.QuestionOptionsResponseDto;
-import com.transflower.tflcomentor.ecm.dto.response.QuestionResponseDTO;
-=======
 import com.transflower.tflcomentor.ecm.dto.QuestionOptionsRequestDto;
->>>>>>> 85c337740a6b0aab8d9b488ab71e5535536d1d5e
 import com.transflower.tflcomentor.ecm.entity.Question;
 import com.transflower.tflcomentor.ecm.entity.enums.DifficultyLevel;
 import com.transflower.tflcomentor.ecm.entity.enums.QuestionStatus;
@@ -68,14 +61,9 @@ public class QuestionController {
     // return service.getAllQuestions();
     // }
     @GetMapping("/drafts")
-<<<<<<< HEAD
-    public List<QuestionResponseDTO> getDraft() {
-        return service.getQuestions("Draft");
-=======
     // http://localhost:8080/api/questions/drafts
     public List<Question> getDraft() {
         return service.getQuestions(QuestionStatus.DRAFT);
->>>>>>> 85c337740a6b0aab8d9b488ab71e5535536d1d5e
     }
 
     @PatchMapping("/{question_id}/status")
@@ -93,14 +81,9 @@ public class QuestionController {
     }
 
     @GetMapping("/recent")
-<<<<<<< HEAD
-    public List<QuestionResponseDTO> getByDate(@RequestParam String fromDate, @RequestParam String toDate) {
-        return service.getQuestions(LocalDate.parse(fromDate), LocalDate.parse(toDate));
-=======
     // http://localhost:8080/api/questions/recent?fromDate=2024-01-01&toDate=2024-12-31
     public List<Question> getByDate(@RequestParam LocalDate fromDate, @RequestParam LocalDate toDate) {
         return service.getQuestions(fromDate, toDate);
->>>>>>> 85c337740a6b0aab8d9b488ab71e5535536d1d5e
     }
 
     // @GetMapping("/recent/list")
@@ -120,19 +103,9 @@ public class QuestionController {
         return "Question Updated Successfully";
     }
 
-<<<<<<< HEAD
-    @GetMapping("/type/{questionType}")
-    public List<QuestionResponseDTO> getQuestionsByType(@PathVariable String questionType) {
-        return service.getQuestions(questionType);
-    }
-
-    @GetMapping("/status/{questionStatus}")
-    public List<QuestionResponseDTO> getQuestionsByStatus(@PathVariable String questionStatus) {
-=======
     @GetMapping("/status/{questionStatus}")
     // http://localhost:8080/api/questions/status/APPROVED
     public List<Question> getQuestionsByStatus(@PathVariable QuestionStatus questionStatus) {
->>>>>>> 85c337740a6b0aab8d9b488ab71e5535536d1d5e
         return service.getQuestions(questionStatus);
     }
 

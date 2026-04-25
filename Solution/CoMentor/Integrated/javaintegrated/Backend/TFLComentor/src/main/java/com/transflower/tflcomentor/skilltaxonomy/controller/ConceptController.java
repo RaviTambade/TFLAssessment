@@ -11,12 +11,8 @@
 // import org.springframework.web.bind.annotation.RequestMapping;
 // import org.springframework.web.bind.annotation.RestController;
 
-<<<<<<< HEAD
-import com.transflower.tflcomentor.skilltaxonomy.entity.Concept;
-=======
 // import com.transflower.tflcomentor.skilltaxonomy.entity.Concept;
 // import com.transflower.tflcomentor.skilltaxonomy.service.ConceptService;
->>>>>>> 85c337740a6b0aab8d9b488ab71e5535536d1d5e
 
 // @CrossOrigin(origins = "*", allowedHeaders = "*")
 // @RestController
