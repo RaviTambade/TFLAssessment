@@ -15,12 +15,11 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import com.transflower.tflcomentor.configuration.DBConfig;
-import com.transflower.tflcomentor.ecm.dto.request.QuestionOptionsRequestDto;
-import com.transflower.tflcomentor.ecm.dto.response.QuestionResponseDto;
+import com.transflower.tflcomentor.ecm.dto.QuestionOptionsRequestDto;
 import com.transflower.tflcomentor.ecm.entity.Question;
-import com.transflower.tflcomentor.ecm.entity.enums.DifficultyLevels;
+import com.transflower.tflcomentor.ecm.entity.enums.DifficultyLevel;
 import com.transflower.tflcomentor.ecm.entity.enums.QuestionStatus;
-import com.transflower.tflcomentor.ecm.entity.enums.QuestionTypes;
+import com.transflower.tflcomentor.ecm.entity.enums.QuestionType;
 import com.transflower.tflcomentor.ecm.repository.QuestionRepository;
 
 @Repository
@@ -41,14 +40,14 @@ public class QuestionRepositoryImpl implements QuestionRepository {
             if (rs.next()) {
                 long id = rs.getLong("question_id");
                 String description = rs.getString("description");
-                QuestionTypes questionType = QuestionTypes.valueOf(rs.getString("question_type"));
+                QuestionType questionType = QuestionType.valueOf(rs.getString("question_type"));
                 String difficultyLevel = rs.getString("difficulty_level");
 
                 LocalDateTime createdAt = LocalDateTime.ofInstant(
                         rs.getTimestamp("created_at").toInstant(),
                         ZoneId.systemDefault());
                 String status = rs.getString("status");
-                return new Question(id, description, questionType, DifficultyLevels.valueOf(difficultyLevel), QuestionStatus.valueOf(status));
+                return new Question(id, description, questionType, DifficultyLevel.valueOf(difficultyLevel), QuestionStatus.valueOf(status));
             }
 
         } catch (Exception e) {
@@ -68,8 +67,8 @@ public class QuestionRepositoryImpl implements QuestionRepository {
                 Question q = new Question(
                         rs.getLong("question_id"),
                         rs.getString("description"),
-                        QuestionTypes.valueOf(rs.getString("question_type")),
-                        DifficultyLevels.valueOf(rs.getString("difficulty_level")),
+                        QuestionType.valueOf(rs.getString("question_type")),
+                        DifficultyLevel.valueOf(rs.getString("difficulty_level")),
                         QuestionStatus.valueOf(rs.getString("status")));
                 list.add(q);
             }
@@ -80,7 +79,7 @@ public class QuestionRepositoryImpl implements QuestionRepository {
     }
 
     @Override
-    public List<Question> getQuestionsByDifficulty(DifficultyLevels difficulty) {
+    public List<Question> getQuestionsByDifficulty(DifficultyLevel difficulty) {
         List<Question> list = new ArrayList<>();
         try (Connection connection = getConnection()) {
             String query = "SELECT * FROM questions WHERE difficulty_level = ?";
@@ -91,8 +90,8 @@ public class QuestionRepositoryImpl implements QuestionRepository {
                 Question q = new Question(
                         rs.getLong("question_id"),
                         rs.getString("description"),
-                        QuestionTypes.valueOf(rs.getString("question_type")),
-                        DifficultyLevels.valueOf(rs.getString("difficulty_level")),
+                        QuestionType.valueOf(rs.getString("question_type")),
+                        DifficultyLevel.valueOf(rs.getString("difficulty_level")),
                         QuestionStatus.valueOf(rs.getString("status"))
                 );
                 list.add(q);
@@ -105,7 +104,7 @@ public class QuestionRepositoryImpl implements QuestionRepository {
     }
 
     @Override
-    public List<Question> getQuestions(QuestionTypes questionType) {
+    public List<Question> getQuestions(QuestionType questionType) {
 
         String sql = """
     SELECT question_id, question_type, description, difficulty_level, status
@@ -126,8 +125,8 @@ public class QuestionRepositoryImpl implements QuestionRepository {
                     question.setQuestionId(rs.getLong("question_id"));
                     question.setDescription(rs.getString("description"));
 
-                    question.setQuestionType(QuestionTypes.valueOf(rs.getString("question_type")));
-                    question.setDifficultyLevel(DifficultyLevels.valueOf(rs.getString("difficulty_level")));
+                    question.setQuestionType(QuestionType.valueOf(rs.getString("question_type")));
+                    question.setDifficultyLevel(DifficultyLevel.valueOf(rs.getString("difficulty_level")));
                     question.setQuestionStatus(QuestionStatus.valueOf(rs.getString("status")));
                     results.add(question);
                 }
@@ -241,8 +240,8 @@ public class QuestionRepositoryImpl implements QuestionRepository {
             if (rs.next()) {
                 dto.setQuestionId(rs.getLong("question_id"));
                 dto.setDescription(rs.getString("description"));
-                dto.setQuestionType(QuestionTypes.valueOf(rs.getString("question_type")));
-                dto.setDifficultyLevel(DifficultyLevels.valueOf(rs.getString("difficulty_level")));
+                dto.setQuestionType(QuestionType.valueOf(rs.getString("question_type")));
+                dto.setDifficultyLevel(DifficultyLevel.valueOf(rs.getString("difficulty_level")));
                 dto.setStatus(QuestionStatus.valueOf(rs.getString("status")));
             }
 
@@ -278,7 +277,7 @@ public class QuestionRepositoryImpl implements QuestionRepository {
 
             statement.executeUpdate();
 
-            if (dto.getQuestionType() == QuestionTypes.MCQ) {
+            if (dto.getQuestionType() == QuestionType.MCQ) {
 
                 String optionSql = "UPDATE mcq_options SET option_a=?, option_b=?, option_c=?, option_d=?, correct_answer=? WHERE question_id=?";
 
@@ -316,8 +315,8 @@ public class QuestionRepositoryImpl implements QuestionRepository {
                 Question question = new Question();
                 question.setQuestionId(rs.getLong("question_id"));
                 question.setDescription(rs.getString("description"));
-                question.setQuestionType(QuestionTypes.valueOf(rs.getString("question_type")));
-                question.setDifficultyLevel(DifficultyLevels.valueOf(rs.getString("difficulty_level")));
+                question.setQuestionType(QuestionType.valueOf(rs.getString("question_type")));
+                question.setDifficultyLevel(DifficultyLevel.valueOf(rs.getString("difficulty_level")));
                 question.setQuestionStatus(QuestionStatus.valueOf(rs.getString("status")));
                 list.add(question);
             }
@@ -348,7 +347,7 @@ public class QuestionRepositoryImpl implements QuestionRepository {
                 Question question = new Question();
                 question.setQuestionId(rs.getLong("question_id"));
                 question.setDescription(rs.getString("description"));
-                question.setQuestionType(QuestionTypes.valueOf(rs.getString("question_type")));
+                question.setQuestionType(QuestionType.valueOf(rs.getString("question_type")));
                 list.add(question);
             }
 
@@ -372,7 +371,7 @@ public class QuestionRepositoryImpl implements QuestionRepository {
                 Question question = new Question();
                 question.setQuestionId(rs.getLong("question_id"));
                 question.setDescription(rs.getString("description"));
-                question.setQuestionType(QuestionTypes.valueOf(rs.getString("question_type")));
+                question.setQuestionType(QuestionType.valueOf(rs.getString("question_type")));
                 question.setCreatedAt(rs.getTimestamp("created_at").toLocalDateTime()
                 );
                 list.add(question);

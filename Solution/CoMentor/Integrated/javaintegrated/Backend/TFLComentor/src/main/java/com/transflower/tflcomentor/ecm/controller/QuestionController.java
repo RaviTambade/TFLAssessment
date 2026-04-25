@@ -15,11 +15,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.transflower.tflcomentor.ecm.dto.request.QuestionOptionsRequestDto;
+import com.transflower.tflcomentor.ecm.dto.QuestionOptionsRequestDto;
 import com.transflower.tflcomentor.ecm.entity.Question;
-import com.transflower.tflcomentor.ecm.entity.enums.DifficultyLevels;
+import com.transflower.tflcomentor.ecm.entity.enums.DifficultyLevel;
 import com.transflower.tflcomentor.ecm.entity.enums.QuestionStatus;
+import com.transflower.tflcomentor.ecm.entity.enums.QuestionType;
 import com.transflower.tflcomentor.ecm.service.QuestionService;
+
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
@@ -43,7 +45,7 @@ public class QuestionController {
 
     @GetMapping("/difficulty/{level}")
     // http://localhost:8080/api/questions/difficulty/ADVANCE
-    public List<Question> getByDifficulty(@PathVariable DifficultyLevels level) {
+    public List<Question> getByDifficulty(@PathVariable DifficultyLevel level) {
         return service.getQuestionsByDifficulty(level);
     }
 

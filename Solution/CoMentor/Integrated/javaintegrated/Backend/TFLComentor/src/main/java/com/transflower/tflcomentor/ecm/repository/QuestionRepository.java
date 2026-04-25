@@ -3,18 +3,17 @@ package com.transflower.tflcomentor.ecm.repository;
 import java.time.LocalDate;
 import java.util.List;
 
-import com.transflower.tflcomentor.ecm.dto.request.QuestionOptionsRequestDto;
-import com.transflower.tflcomentor.ecm.dto.response.QuestionResponseDto;
+import com.transflower.tflcomentor.ecm.dto.QuestionOptionsRequestDto;
 import com.transflower.tflcomentor.ecm.entity.Question;
-import com.transflower.tflcomentor.ecm.entity.enums.QuestionTypes;
-import com.transflower.tflcomentor.ecm.entity.enums.DifficultyLevels;
+import com.transflower.tflcomentor.ecm.entity.enums.DifficultyLevel;
 import com.transflower.tflcomentor.ecm.entity.enums.QuestionStatus;
+import com.transflower.tflcomentor.ecm.entity.enums.QuestionType;
 
 public interface QuestionRepository {
     
     Question getQuestionById(long question_id);
     List<Question> getAllQuestions();
-    List<Question> getQuestionsByDifficulty(DifficultyLevels difficulty);
+    List<Question> getQuestionsByDifficulty(DifficultyLevel difficulty);
     Long insert(Question q);
     void insertMcqOptions(Long question_id,
             String optionA,
@@ -25,7 +24,7 @@ public interface QuestionRepository {
     void updateQuestionById(Long question_id, QuestionOptionsRequestDto dto);
     List<Question> getQuestions(LocalDate fromDate, LocalDate toDate);
     QuestionOptionsRequestDto getQuestionDetails(Long question_id);
-    List<Question> getQuestions(QuestionTypes questionType);
+    List<Question> getQuestions(QuestionType questionType);
     // List<Questions> getAllQuestions();
     // List<QuestionResponse> getRecentQuestions();
     List<Question> getQuestions(QuestionStatus status);
