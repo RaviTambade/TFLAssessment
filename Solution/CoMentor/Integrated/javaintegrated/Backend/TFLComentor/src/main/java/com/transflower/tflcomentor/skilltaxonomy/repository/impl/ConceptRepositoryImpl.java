@@ -1,156 +1,156 @@
-package com.transflower.tflcomentor.skilltaxonomy.repository.impl;
+// package com.transflower.tflcomentor.skilltaxonomy.repository.impl;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.sql.Timestamp;
+// import java.sql.Connection;
+// import java.sql.DriverManager;
+// import java.sql.PreparedStatement;
+// import java.sql.ResultSet;
+// import java.sql.SQLException;
+// import java.sql.Statement;
+// import java.util.ArrayList;
+// import java.util.List;
+// import java.time.LocalDateTime;
+// import java.time.ZoneId;
+// import java.sql.Timestamp;
 
-import org.springframework.stereotype.Repository;
+// import org.springframework.stereotype.Repository;
 
-import com.transflower.tflcomentor.configuration.DBConfig;
-import com.transflower.tflcomentor.skilltaxonomy.entity.Concept;
-import com.transflower.tflcomentor.skilltaxonomy.repository.ConceptRepository;  
+// import com.transflower.tflcomentor.configuration.DBConfig;
+// import com.transflower.tflcomentor.skilltaxonomy.entity.Concept;
+// import com.transflower.tflcomentor.skilltaxonomy.repository.ConceptRepository;  
 
 
-@Repository
-public class ConceptRepositoryImpl implements ConceptRepository {
+// @Repository
+// public class ConceptRepositoryImpl implements ConceptRepository {
 
-    private Concept concepts;
+//     private Concept concepts;
 
-    public ConceptRepositoryImpl() {
-        this.concepts = new Concept();
-    }
+//     public ConceptRepositoryImpl() {
+//         this.concepts = new Concept();
+//     }
 
-    public ConceptRepositoryImpl(Concept concepts) {
-        this.concepts = concepts;
-    }
+//     public ConceptRepositoryImpl(Concept concepts) {
+//         this.concepts = concepts;
+//     }
 
-    private Connection getConnection() {
-        return DBConfig.getConnection();
-    }
+//     private Connection getConnection() {
+//         return DBConfig.getConnection();
+//     }
 
-    @Override
-    public List<Concept> getAllConcepts(){
-        String query = "SELECT  DISTINCT c.id, c.name, c.description FROM concepts c";
-        List<Concept> conceptsList = new ArrayList<>();
-        try (Connection connection = getConnection()) {
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(query);
+//     @Override
+//     public List<Concept> getAllConcepts(){
+//         String query = "SELECT  DISTINCT c.id, c.name, c.description FROM concepts c";
+//         List<Concept> conceptsList = new ArrayList<>();
+//         try (Connection connection = getConnection()) {
+//             Statement statement = connection.createStatement();
+//             ResultSet resultSet = statement.executeQuery(query);
 
-            while (resultSet.next()) {
-                Concept concepts = new Concept();
-                concepts.setId(resultSet.getInt("id"));
-                concepts.setName(resultSet.getString("name"));
-                concepts.setDescription(resultSet.getString("description"));
-                conceptsList.add(concepts);
-            }
-            return conceptsList;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ArrayList<>();
-        }
-    }
+//             while (resultSet.next()) {
+//                 Concept concepts = new Concept();
+//                 concepts.setId(resultSet.getInt("id"));
+//                 concepts.setName(resultSet.getString("name"));
+//                 concepts.setDescription(resultSet.getString("description"));
+//                 conceptsList.add(concepts);
+//             }
+//             return conceptsList;
+//         } catch (Exception e) {
+//             e.printStackTrace();
+//             return new ArrayList<>();
+//         }
+//     }
 
-    @Override
-    public List<Concept> getAllConceptsforFramework(int framework) {
-        String query = "SELECT DISTINCT c.id, c.name, c.description from concepts c " +
-                "JOIN framework_concepts fc " +
-                "ON fc.concept_id=c.id " +
-                "JOIN frameworks f " +
-                "ON f.id=fc.framework_id " +
-                "WHERE f.id=?";
-        PreparedStatement preparedStatement;
-        List<Concept> conceptsList = new ArrayList<>();
-        try (Connection connection = getConnection()) {
-            preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setInt(1, framework);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                Concept concept = new Concept();
-                concept.setId(resultSet.getInt("id"));
-                concept.setName(resultSet.getString("name"));
-                concept.setDescription(resultSet.getString("description"));
-                conceptsList.add(concept);
-            }
-            return conceptsList;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return new ArrayList<>();
-        }
-    }
+//     @Override
+//     public List<Concept> getAllConceptsforFramework(int framework) {
+//         String query = "SELECT DISTINCT c.id, c.name, c.description from concepts c " +
+//                 "JOIN framework_concepts fc " +
+//                 "ON fc.concept_id=c.id " +
+//                 "JOIN frameworks f " +
+//                 "ON f.id=fc.framework_id " +
+//                 "WHERE f.id=?";
+//         PreparedStatement preparedStatement;
+//         List<Concept> conceptsList = new ArrayList<>();
+//         try (Connection connection = getConnection()) {
+//             preparedStatement = connection.prepareStatement(query);
+//             preparedStatement.setInt(1, framework);
+//             ResultSet resultSet = preparedStatement.executeQuery();
+//             while (resultSet.next()) {
+//                 Concept concept = new Concept();
+//                 concept.setId(resultSet.getInt("id"));
+//                 concept.setName(resultSet.getString("name"));
+//                 concept.setDescription(resultSet.getString("description"));
+//                 conceptsList.add(concept);
+//             }
+//             return conceptsList;
+//         } catch (SQLException e) {
+//             e.printStackTrace();
+//             return new ArrayList<>();
+//         }
+//     }
 
-    @Override
-    public Concept getById(Long id) {
-        Concept concept = null;
+//     @Override
+//     public Concept getById(Long id) {
+//         Concept concept = null;
 
-        try (Connection connection = getConnection()) {
+//         try (Connection connection = getConnection()) {
 
-            String query = "SELECT * FROM concepts WHERE id = ?";
-            PreparedStatement ps = connection.prepareStatement(query);
-            ps.setLong(1, id);
+//             String query = "SELECT * FROM concepts WHERE id = ?";
+//             PreparedStatement ps = connection.prepareStatement(query);
+//             ps.setLong(1, id);
 
-            ResultSet rs = ps.executeQuery();
+//             ResultSet rs = ps.executeQuery();
 
-            if (rs.next()) {
-                concept = new Concept();
-                concept.setId(rs.getInt("id"));
-                concept.setName(rs.getString("name"));
-                concept.setDescription(rs.getString("description"));
-                concept.setStatus(rs.getInt("status"));
-                concept.setCreatedAt(
-                        LocalDateTime.ofInstant(rs.getTimestamp("created_at").toInstant(), ZoneId.systemDefault()));
-            }
+//             if (rs.next()) {
+//                 concept = new Concept();
+//                 concept.setId(rs.getInt("id"));
+//                 concept.setName(rs.getString("name"));
+//                 concept.setDescription(rs.getString("description"));
+//                 concept.setStatus(rs.getInt("status"));
+//                 concept.setCreatedAt(
+//                         LocalDateTime.ofInstant(rs.getTimestamp("created_at").toInstant(), ZoneId.systemDefault()));
+//             }
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//         } catch (Exception e) {
+//             e.printStackTrace();
+//         }
 
-        return concept;
-    }
+//         return concept;
+//     }
 
-    @Override
-    public Concept addConcept(Concept concept) {
-        String query = "INSERT INTO concepts(name,description,status,created_at) VALUES(?,?,?,?)";
-        try (Connection connection = getConnection()) {
-            PreparedStatement ps = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-            ps.setString(1, concept.getName());
-            ps.setString(2, concept.getDescription());
-            ps.setInt(3, concept.getStatus());
-            ps.setTimestamp(4, Timestamp.valueOf(LocalDateTime.now()));
+//     @Override
+//     public Concept addConcept(Concept concept) {
+//         String query = "INSERT INTO concepts(name,description,status,created_at) VALUES(?,?,?,?)";
+//         try (Connection connection = getConnection()) {
+//             PreparedStatement ps = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+//             ps.setString(1, concept.getName());
+//             ps.setString(2, concept.getDescription());
+//             ps.setInt(3, concept.getStatus());
+//             ps.setTimestamp(4, Timestamp.valueOf(LocalDateTime.now()));
 
-            ps.executeUpdate();
+//             ps.executeUpdate();
 
-            ResultSet rs=ps.getGeneratedKeys();
-            if(rs.next()){
-                concept.setId(rs.getInt(1));
-            }
-            return concept;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
+//             ResultSet rs=ps.getGeneratedKeys();
+//             if(rs.next()){
+//                 concept.setId(rs.getInt(1));
+//             }
+//             return concept;
+//         } catch (Exception e) {
+//             e.printStackTrace();
+//             return null;
+//         }
+//     }
 
-    @Override
-    public boolean mapConceptToFramework(int conceptId, int frameworkId) {
-        String query = "INSERT INTO framework_concepts(framework_id, concept_id) VALUES(?,?)";
-        try (Connection connection = getConnection()) {
-            PreparedStatement ps = connection.prepareStatement(query);
-            ps.setInt(1, frameworkId);
-            ps.setInt(2, conceptId);
+//     @Override
+//     public boolean mapConceptToFramework(int conceptId, int frameworkId) {
+//         String query = "INSERT INTO framework_concepts(framework_id, concept_id) VALUES(?,?)";
+//         try (Connection connection = getConnection()) {
+//             PreparedStatement ps = connection.prepareStatement(query);
+//             ps.setInt(1, frameworkId);
+//             ps.setInt(2, conceptId);
 
-            ps.executeUpdate();
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-}
+//             ps.executeUpdate();
+//             return true;
+//         } catch (Exception e) {
+//             e.printStackTrace();
+//             return false;
+//         }
+//     }
+// }
