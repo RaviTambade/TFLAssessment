@@ -7,7 +7,7 @@ import com.transflower.tflcomentor.ecm.dto.request.QuestionOptionsRequestDto;
 import com.transflower.tflcomentor.ecm.dto.response.QuestionResponseDto;
 import com.transflower.tflcomentor.ecm.dto.response.QuestionOptionsResponseDto;
 import com.transflower.tflcomentor.ecm.entity.Question;
-import com.transflower.tflcomentor.ecm.entity.QuestionStatus;
+import com.transflower.tflcomentor.ecm.entity.enums.QuestionStatus;
 
 public interface QuestionService {
 

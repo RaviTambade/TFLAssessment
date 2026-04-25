@@ -19,7 +19,7 @@ import com.transflower.tflcomentor.ecm.dto.request.QuestionOptionsRequestDto;
 import com.transflower.tflcomentor.ecm.dto.response.QuestionOptionsResponseDto;
 import com.transflower.tflcomentor.ecm.dto.response.QuestionResponseDto;
 import com.transflower.tflcomentor.ecm.entity.Question;
-import com.transflower.tflcomentor.ecm.entity.QuestionStatus;
+import com.transflower.tflcomentor.ecm.entity.enums.QuestionStatus;
 import com.transflower.tflcomentor.ecm.entity.enums.QuestionTypes;
 import com.transflower.tflcomentor.ecm.repository.QuestionRepository;
 
@@ -48,13 +48,7 @@ public class QuestionRepositoryImpl implements QuestionRepository {
                         rs.getTimestamp("created_at").toInstant(),
                         ZoneId.systemDefault());
                 String status = rs.getString("status");
-                return new Question(
-                        id,
-                        description,
-                        questionType,
-                        difficultyLevel,
-                        createdAt,
-                        status);
+                return new Question(id,description,questionType,difficultyLevel,createdAt,status);
             }
 
         } catch (Exception e) {
@@ -396,7 +390,7 @@ public class QuestionRepositoryImpl implements QuestionRepository {
     }
 
     @Override
-    public void updateQuestionStatus(List<Long> questionIds, QuestionStatus status) {
+    public void updateQuestionsStatus(List<Long> questionIds, QuestionStatus status) {
         if (questionIds == null || questionIds.isEmpty()) {
             return;
         }
