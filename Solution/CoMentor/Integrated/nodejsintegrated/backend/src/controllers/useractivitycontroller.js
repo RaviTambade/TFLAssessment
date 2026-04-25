@@ -4,12 +4,13 @@ const ActiveSessionsResponseDto = require("../dtos/responses/loggeractive-sessio
 const ActiveUsersResponseDto = require("../dtos/responses/loggeractive-usersresponsedto");
 const UserActivityRequestDto = require("../dtos/requests/useractivityrequestdto");
 const ResponseGenerator = require("../helpers/ResponseGenerator");
+
 class UserActivityController {
   constructor(userActivityService) {
     this.service = userActivityService;
   }
 
-  login = (req, res) => {
+  login (req, res)  {
     const userId = req.params.userId;
     const responseGenerator = new ResponseGenerator();
 
@@ -28,7 +29,7 @@ class UserActivityController {
     });
   };
 
-  logout = (req, res) => {
+  logout  (req, res) {
     const userId = req.params.userId;
     const responseGenerator = new ResponseGenerator();
 
@@ -47,7 +48,7 @@ class UserActivityController {
     });
   };
 
-  getTotalLogins24Hours = (req, res) => {
+  getTotalLogins24Hours (req, res)  {
     const responseGenerator = new ResponseGenerator();
 
     this.service.getTotalLogins24Hours((err, result) => {
@@ -65,7 +66,7 @@ class UserActivityController {
     });
   };
 
-  getRecentAverageSessionTime = (req, res) => {
+  getRecentAverageSessionTime  (req, res)  {
     const responseGenerator = new ResponseGenerator();
 
     this.service.getRecentAverageSessionTime((err, result) => {
@@ -80,7 +81,7 @@ class UserActivityController {
     });
   };
 
-  getTotalActiveSessions = (req, res) => {
+  getTotalActiveSessions (req, res)  {
     const responseGenerator = new ResponseGenerator();
 
     this.service.getTotalActiveSessions((err, result) => {
@@ -98,7 +99,7 @@ class UserActivityController {
     });
   };
 
-  getCurrentActiveUsers = (req, res) => {
+  getCurrentActiveUsers (req, res) {
     const responseGenerator = new ResponseGenerator();
 
     this.service.getCurrentActiveUsers((err, result) => {
@@ -120,7 +121,7 @@ class UserActivityController {
     });
   };
 
-  getAllUserActivity = (req, res) => {
+  getAllUserActivity (req, res)  {
     const responseGenerator = new ResponseGenerator();
 
     const sessionFilters = new UserActivityRequestDto(req.query);
@@ -128,23 +129,6 @@ class UserActivityController {
     if (!sessionFilters.name) {
       return responseGenerator.sendError(res, "User name filter is required", 400);
     }
-
-    // const callback = this.createServiceCallback(res, (logs, response) => {
-    //   if (!logs || logs.length === 0) {
-    //     return this.sendError(
-    //       response,
-    //       "No session logs found for the specified criteria",
-    //       404,
-    //     );
-    //   }
-
-      // return this.sendSuccess(
-      //   response,
-      //   logs,
-      //   200,
-      //   "Session logs retrieved successfully",
-      // );
-    // });
 
     this.service.getAllUserActivity(sessionFilters.name, (err, result) => {
 

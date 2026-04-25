@@ -8,50 +8,28 @@ const connection = require("./connectivity/db");
 const AuthRepository = require("./repositories/authrepository");
 const UserActivityRepository = require("./repositories/useractivityrepository");
 const RolesRepository = require("./repositories/rolesrepository");
-// const UpdateRolesRepository = require('./repositories/updaterole');
-
-
 const UsersRepository = require("./repositories/usersrepository");
-const UsersService = require("./services/usersservices");
-const UsersController = require("./controllers/userscontroller");
-const UsersRoutes = require("./routers/usersroutes");
+
 
 
 const AuthService = require("./services/authservice");
-// const ProfileService = require("./services/profileservice");
+const UsersService = require("./services/usersservices");
 const UserActivityService = require("./services/useractivityservice");
-// const UsersService = require('./services/userinformationservice');
 const RolesService = require("./services/rolesservice");
-// const UpdateRolesService = require('./services/updaterolesservices');
 
 
 
-// const UpdateRolesController = require('./controllers/updaterolescontroller');
 const UserActivityController = require("./controllers/useractivitycontroller")
-// const UsersController = require('./controllers/userinformationcontroller');
-// const UsersRouterFactory = require('./routers/userinformationroutes');
-// const AdminProfileController = require("./controllers/adminProfileController");
-// const UserProfileController = require("./controllers/userProfile.controller");
-// const EmployerProfileController = require("./controllers/userProfileControllers")
+const UsersController = require("./controllers/userscontroller");
 const AuthController = require("./controllers/authcontroller");
-// const ProfileController = require("./controllers/profilecontroller_sanika");
 const RolesController = require("./controllers/rolescontroller");
 
 
 const AuthRoutes = require("./routers/authroutes");
-// const userProfileRoutes = require("./routers/profileroutes");
 const UserActivityRoutes = require("./routers/useractivityroutes");
 const RolesRouter = require("./routers/rolesroutes");
-// const EmployerProfileRouter = require("./routers/userProfileRoutes");
-// const userProfileRouter = require("./routers/userProfile.routes");
-// const UpdateRolesRouter = require('./routers/updaterolesrouter');
+const UsersRoutes = require("./routers/usersroutes");
 
-// const NotFoundHandler = require("./middlewares/notFoundHandler");
-// const ErrorHandler = require("./middlewares/errorHandler"); 
-
-
-
-// Initialize repositories, services, and controllers for each module
 
 const authRepository = new AuthRepository(connection);  
 const authService = new AuthService(authRepository);
@@ -63,37 +41,15 @@ const usersService = new UsersService(usersRepository);
 const usersController = new UsersController(usersService);
 const usersRoutes = UsersRoutes(usersController);
 
-
 const userActivityRepository = new UserActivityRepository(connection);
 const userActivityService = new UserActivityService(userActivityRepository);
 const userActivityController = new UserActivityController(userActivityService);
 const userActivityRoutes = UserActivityRoutes(userActivityController);
 
-// const sessionRepo = new SessionRepository(connection);
-// const sessionSvc = new SessionService(sessionRepo);
-// const sessionController = new SessionController(sessionSvc);
-// const sessionRoutes = SessionRoutes(sessionController);
-
-// const updaterolesRepo = new UpdateRolesRepository(connection);
-// const updaterolesSvc = new UpdateRolesService(updaterolesRepo, connection);
-// const updaterolesController = new UpdateRolesController(updaterolesSvc);
-// const updaterolesRouter = UpdateRolesRouter(updaterolesController);
-
-
-
-
 const rolesRepository = new RolesRepository(connection);
 const rolesService = new RolesService(rolesRepository);
 const rolesController = new RolesController(rolesService);
 const rolesRoutes = RolesRouter(rolesController);
-
-// const userEditRepo = new UserProfileRepository();
-// const userEditSvc = new UserProfileService(userEditRepo);
-// const userEditController = new UserProfileController(userEditSvc); 
-
-
-
-
 
 
 
@@ -110,15 +66,10 @@ app.use((req, res, next) => {
 });
 
 
-// app.use(NotFoundHandler);
-// app.use(ErrorHandler);
 app.use("/api/auth/", authRoutes);
 app.use("/api/roles/", rolesRoutes);
 app.use("/api/useractivity/", userActivityRoutes);
-// app.use("/api/usersessions", sessionRoutes);
-
 app.use("/api/users", usersRoutes);
 
-// app.use(['/api', '/api/v1'], updaterolesrouter);
 
 module.exports = app;

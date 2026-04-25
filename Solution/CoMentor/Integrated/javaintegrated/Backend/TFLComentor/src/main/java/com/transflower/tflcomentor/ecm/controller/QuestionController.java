@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,12 +14,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.transflower.tflcomentor.ecm.dto.request.QuestionDto;
 import com.transflower.tflcomentor.ecm.dto.request.QuestionOptionsRequestDto;
-import com.transflower.tflcomentor.ecm.dto.response.QuestionResponseDto;
-import com.transflower.tflcomentor.ecm.dto.response.QuestionOptionsResponseDto;
 import com.transflower.tflcomentor.ecm.entity.Question;
+import com.transflower.tflcomentor.ecm.entity.enums.DifficultyLevels;
 import com.transflower.tflcomentor.ecm.entity.enums.QuestionStatus;
+import com.transflower.tflcomentor.ecm.entity.enums.QuestionTypes;
 import com.transflower.tflcomentor.ecm.service.QuestionService;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -42,7 +40,7 @@ public class QuestionController {
     }
 
     @GetMapping("/difficulty/{level}")
-    public List<Question> getByDifficulty(@PathVariable String level) {
+    public List<Question> getByDifficulty(@PathVariable DifficultyLevels level) {
         return service.getQuestionsByDifficulty(level);
     }
 
@@ -57,8 +55,8 @@ public class QuestionController {
     //     return service.getAllQuestions();
     // }
     @GetMapping("/drafts")
-    public List<QuestionResponseDto> getDraft() {
-        return service.getQuestions("Draft");
+    public List<Question> getDraft() {
+        return service.getQuestions(QuestionStatus.DRAFT);
     }
 
     @PutMapping("/{question_id}/approve")
@@ -86,8 +84,8 @@ public class QuestionController {
     }
 
     @GetMapping("/recent")
-    public List<QuestionResponseDto> getByDate(@RequestParam String fromDate,@RequestParam String toDate) {
-        return service.getQuestions(LocalDate.parse(fromDate),LocalDate.parse(toDate));
+    public List<Question> getByDate(@RequestParam LocalDate fromDate, @RequestParam LocalDate toDate) {
+        return service.getQuestions(fromDate, toDate);
     }
     
     // @GetMapping("/recent/list")
@@ -95,7 +93,7 @@ public class QuestionController {
     //     return service.getRecentQuestionList();
     // }
     @GetMapping("/details/{question_id}")
-    public QuestionOptionsResponseDto getQuestionDetailsById(@PathVariable Long question_id) {
+    public QuestionOptionsRequestDto getQuestionDetailsById(@PathVariable Long question_id) {
         return service.getQuestionDetails(question_id);
     }
 
@@ -106,12 +104,12 @@ public class QuestionController {
     }
 
     @GetMapping("/type/{questionType}")
-    public List<QuestionResponseDto> getQuestionsByType(@PathVariable String questionType) {
+    public List<Question> getQuestionsByType(@PathVariable QuestionTypes questionType) {
         return service.getQuestions(questionType);
     }
 
     @GetMapping("/status/{questionStatus}")
-    public List<QuestionResponseDto> getQuestionsByStatus(@PathVariable String questionStatus) {
+    public List<Question> getQuestionsByStatus(@PathVariable QuestionStatus questionStatus) {
         return service.getQuestions(questionStatus);
     }
 
