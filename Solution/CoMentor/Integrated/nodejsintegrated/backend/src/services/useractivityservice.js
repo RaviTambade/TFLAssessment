@@ -1,5 +1,3 @@
-const sessionLogResponseDto = require("../dtos/responses/sessionLogResponsedto");
-
 class UserActivityService {
   constructor(userActivityRepository) {
     this.repository = userActivityRepository;

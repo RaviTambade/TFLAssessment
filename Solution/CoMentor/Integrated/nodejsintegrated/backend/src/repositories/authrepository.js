@@ -1,4 +1,3 @@
- const LoginStatus = require("../dtos/responses/LoginStatus");
 
 class AuthRepository {
 

@@ -1,6 +1,5 @@
 const UpdateUserStatusRequestDto = require("../dtos/requests/updateUserStatusRequestDto");
 const UpdateUserStatusResponseDto = require("../dtos/responses/updateUserStatusResponseDto");
-const UserNameRequest = require("../dtos/requests/UserNameRequest")
 const ResponseGenerator = require("../helpers/ResponseGenerator");
 
 
@@ -10,7 +9,7 @@ class UsersController {
     this.service = usersService;
   }
 
-  getUserInformationById = (req, res) => {
+  getUserInformationById (req, res)  {
     const userId = req.params.userId;
     const responseGenerator = new ResponseGenerator();
 
@@ -25,16 +24,13 @@ class UsersController {
     });
   };
 
-  // getUserName = (req, res, next) => {
-  //   const userid = new UserNameRequest(req.params.userId);
-  //   this.service.getUserName(userid, (err, result) => this.onError(err, result, res));
-  // };
-
   updatePersonal(req, res) {
-    const userId = req.params.id;
+    const userId = req.params.userId;
     const data = req.body;
     const responseGenerator = new ResponseGenerator();
-    profileService.updatePersonal(userId, data, (err, result) => {
+
+    this.service.updatePersonal(userId, data, (err, result) => {
+      console.log(err);
       responseGenerator.generateResponse(
         res,
         err,
@@ -47,7 +43,7 @@ class UsersController {
 
   updateProfessional(req, res) {
     const responseGenerator = new ResponseGenerator();
-    const result = profileService.updateProfessional(req.params.id, req.body, (err, result) => {
+    const result = this.service.updateProfessional(req.params.userId, req.body, (err, result) => {
       responseGenerator.generateResponse(
         res,
         err,
@@ -59,7 +55,7 @@ class UsersController {
   };
 
   updateAcademic(req, res) {
-    const result = profileService.updateAcademic(req.params.id, req.body, (err, result) => {
+    const result = this.service.updateAcademic(req.params.userId, req.body, (err, result) => {
       responseGenerator.generateResponse(
         res,
         err,
@@ -71,22 +67,23 @@ class UsersController {
     res.json({ success: true, result });
   };
 
-  updateUserStatus (req, res, next) {
-    const requestDto = new UpdateUserStatusRequestDto(req.body);
-    const validationErrors = requestDto.validate();
-    this.service.updateUserStatus(Number(id), status, (err, result) => {
+  updateUserStatus (req, res) {
+    const requestDto = new UpdateUserStatusRequestDto(req.body.user_id,req.body.status);
+   const responseGenerator = new ResponseGenerator();
+
+    this.service.updateUserStatus(Number(requestDto.user_id), requestDto.status, (err, result) => {
       responseGenerator.generateResponse(
         res,
         err,
         result,
         "Failed to update User Status  ",
-        "  User Status update successfully",
+        " User Status update successfully",
       );
     });
   };
 
 
-  getUserCompleteInformation = (req, res, next) => {
+  getUserCompleteInformation (req, res) {
     const userId = req.params.userId;
     const responseGenerator = new ResponseGenerator();
 
@@ -102,7 +99,7 @@ class UsersController {
 
   };
 
-  getUserPersonalInformation = (req, res, next) => {
+  getUserPersonalInformation (req, res) {
     const userId = req.params.userId;
     const responseGenerator = new ResponseGenerator();
 
@@ -117,7 +114,7 @@ class UsersController {
     });
   };
 
-  getUserAcademicInformation = (req, res, next) => {
+  getUserAcademicInformation (req, res) {
     const userId = req.params.userId;
     const responseGenerator = new ResponseGenerator();
 
@@ -133,7 +130,7 @@ class UsersController {
   };
 
 
-  getUserProfessionalInformation = (req, res, next) => {
+  getUserProfessionalInformation (req, res) {
     const userId = req.params.userId;
     const responseGenerator = new ResponseGenerator();
 

@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
-import com.transflower.tflcomentor.evaluationcontentmanagement.entity.Question;
+import com.transflower.tflcomentor.ecm.entity.Question;
 import com.transflower.tflcomentor.skilltaxonomy.entity.Concept;
 import com.transflower.tflcomentor.skilltaxonomy.entity.Framework;
 import com.transflower.tflcomentor.skilltaxonomy.entity.Language;

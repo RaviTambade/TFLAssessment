@@ -66,24 +66,6 @@ class UsersRepository {
   }
 
 
-  // getUserName(id, callback) {
-  //   const sql = "SELECT first_name, last_name FROM personal_informations WHERE user_id = ? LIMIT 1";
-
-  //   this.db.query(sql, [userNameRequest.userid], (err, result) => {
-  //     if (err) {
-  //       console.error("Error fetching username:", err);
-  //       return callback(err, null);
-  //     }
-
-  //     if (!result || result.length === 0) {
-  //       return callback(null, null);
-  //     }
-
-  //     callback(null, result[0]);
-  //   });
-  // }
-
-
   updatePersonal(userId, data, callback) {
     const fields = Object.keys(data)
       .map(key => `${key} = ?`)

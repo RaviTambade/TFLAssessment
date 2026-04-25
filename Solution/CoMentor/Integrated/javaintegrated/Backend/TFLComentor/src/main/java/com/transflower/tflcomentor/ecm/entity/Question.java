@@ -2,21 +2,26 @@ package com.transflower.tflcomentor.ecm.entity;
 
 import java.time.LocalDateTime;
 
+import javax.xml.crypto.Data;
+
+import com.transflower.tflcomentor.ecm.entity.enums.DifficultyLevels;
+import com.transflower.tflcomentor.ecm.entity.enums.QuestionStatus;
 import com.transflower.tflcomentor.ecm.entity.enums.QuestionTypes;
+import com.transflower.tflcomentor.ecm.entity.enums.QuestionStatus;
 
 public class Question {
     private Long questionId;
     private String description;
     private QuestionTypes questionType;
-    private String difficultyLevel;
-    private String status;
+    private DifficultyLevels difficultyLevel;
+    private QuestionStatus status;
     private LocalDateTime createdAt;
 
     public Question() {
     }
 
     public Question(Long questionId, String description, QuestionTypes questionType,
-            String difficultyLevel, String status) {
+            DifficultyLevels difficultyLevel, QuestionStatus status) {
         this.questionId = questionId;
         this.description = description;
         this.questionType = questionType;
@@ -24,15 +29,6 @@ public class Question {
         this.status = status;
     }
 
-    public Question(Long questionId, String description, QuestionTypes questionType,
-            String difficultyLevel, LocalDateTime createdAt, String status) {
-        this.questionId = questionId;
-        this.description = description;
-        this.questionType = questionType;
-        this.difficultyLevel = difficultyLevel;
-        this.createdAt = createdAt;
-        this.status = status;
-    }
 
     // Getters and Setters
     public Long getQuestionId() {
@@ -59,19 +55,19 @@ public class Question {
         this.questionType = questionType;
     }
 
-    public String getDifficultyLevel() {
+    public DifficultyLevels getDifficultyLevel() {
         return difficultyLevel;
     }
 
-    public void setDifficultyLevel(String difficultyLevel) {
+    public void setDifficultyLevel(DifficultyLevels difficultyLevel) {
         this.difficultyLevel = difficultyLevel;
     }
 
-    public String getStatus() {
+    public QuestionStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(QuestionStatus status) {
         this.status = status;
     }
 
