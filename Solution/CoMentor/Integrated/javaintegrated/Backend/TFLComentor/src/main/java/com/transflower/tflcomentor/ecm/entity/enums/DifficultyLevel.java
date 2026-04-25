@@ -1,7 +1,7 @@
 package com.transflower.tflcomentor.ecm.entity.enums;
 
-public enum DifficultyLevels {
+public enum DifficultyLevel {
     BEGINNER,
     INTERMEDIATE,
-    ADVANCED
+    ADVANCE
 }

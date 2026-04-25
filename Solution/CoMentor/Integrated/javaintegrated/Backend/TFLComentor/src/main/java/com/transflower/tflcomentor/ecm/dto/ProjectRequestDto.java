@@ -1,4 +1,4 @@
-package com.transflower.tflcomentor.ecm.dto.request;
+package com.transflower.tflcomentor.ecm.dto;
 
 public class ProjectRequestDto {
     private long mentor_id;

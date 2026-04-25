@@ -6,12 +6,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.transflower.tflcomentor.ecm.dto.request.QuestionOptionsRequestDto;
-import com.transflower.tflcomentor.ecm.dto.response.QuestionOptionsResponseDto;
-import com.transflower.tflcomentor.ecm.dto.response.QuestionResponseDto;
+import com.transflower.tflcomentor.ecm.dto.QuestionOptionsRequestDto;
 import com.transflower.tflcomentor.ecm.entity.Question;
+import com.transflower.tflcomentor.ecm.entity.enums.DifficultyLevel;
 import com.transflower.tflcomentor.ecm.entity.enums.QuestionStatus;
-import com.transflower.tflcomentor.ecm.entity.enums.QuestionTypes;
+import com.transflower.tflcomentor.ecm.entity.enums.QuestionType;
 import com.transflower.tflcomentor.ecm.repository.QuestionRepository;
 import com.transflower.tflcomentor.ecm.service.QuestionService;
 
@@ -31,13 +30,11 @@ public class QuestionsServiceImpl implements QuestionService {
 
         Question question = new Question();
         question.setDescription(dto.getDescription());
-        question.setQuestionType(
-                QuestionTypes.valueOf(dto.getQuestionType().toUpperCase())
-        );
+        question.setQuestionType(dto.getQuestionType());
         question.setDifficultyLevel(dto.getDifficultyLevel());
-
+        question.setQuestionStatus(dto.getStatus());
         Long questionId = repository.insert(question);
-        if ("MCQ".equalsIgnoreCase(dto.getQuestionType())) {
+        if (dto.getQuestionType() == QuestionType.MCQ) {
 
             repository.insertMcqOptions(
                     questionId,
@@ -63,32 +60,32 @@ public class QuestionsServiceImpl implements QuestionService {
     }
 
     @Override
-    public List<Question> getQuestionsByDifficulty(String difficulty) {
+    public List<Question> getQuestionsByDifficulty(DifficultyLevel difficulty) {
         return repository.getQuestionsByDifficulty(difficulty);
     }
 
     @Override
-    public void updateQuestionById(Long id, QuestionOptionsRequestDto dto) {
-        repository.updateQuestionById(id, dto);
+    public void updateQuestionById(Long questionId, QuestionOptionsRequestDto dto) {
+        repository.updateQuestionById(questionId, dto);
     }
 
     @Override
-    public List<QuestionResponseDto> getQuestions(LocalDate fromDate, LocalDate toDate) {
+    public List<Question> getQuestions(LocalDate fromDate, LocalDate toDate) {
         return repository.getQuestions(fromDate, toDate);
     }
 
     @Override
-    public QuestionOptionsResponseDto getQuestionDetails(Long id) {
-        return repository.getQuestionDetails(id);
+    public QuestionOptionsRequestDto getQuestionDetails(Long questionId) {
+        return repository.getQuestionDetails(questionId);
     }
 
     @Override
-    public List<QuestionResponseDto> getQuestions(String questionType) {
+    public List<Question> getQuestions(QuestionType questionType) {
         return repository.getQuestions(questionType);
     }
 
     @Override
-    public List<QuestionResponseDto> getQuestions(QuestionStatus status) {
+    public List<Question> getQuestions(QuestionStatus status) {
         return repository.getQuestions(status);
     }
 

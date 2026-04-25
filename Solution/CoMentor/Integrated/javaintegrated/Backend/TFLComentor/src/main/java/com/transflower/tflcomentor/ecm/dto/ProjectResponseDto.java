@@ -1,6 +1,6 @@
-package com.transflower.tflcomentor.ecm.dto.response;
+package com.transflower.tflcomentor.ecm.dto;
 
-public class ProjectRequestDto {
+public class ProjectResponseDto {
 
     private long project_id;
     private long mentor_id;
@@ -12,10 +12,10 @@ public class ProjectRequestDto {
     private String status;
     private String created_at;
 
-    public ProjectRequestDto() {
+    public ProjectResponseDto() {
     }
 
-    public ProjectRequestDto(long project_id, long mentor_id, String project_name,
+    public ProjectResponseDto(long project_id, long mentor_id, String project_name,
             String description, String repository_url,
             String status, String created_at, Long menteeId, String assignedOn) {
         this.project_id = project_id;

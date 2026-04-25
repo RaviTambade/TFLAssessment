@@ -9,8 +9,8 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import com.transflower.tflcomentor.configuration.DBConfig;
-import com.transflower.tflcomentor.ecm.dto.response.ProjectAllocationResponseDTO;
 import com.transflower.tflcomentor.ecm.entity.ProjectAllocation;
+import com.transflower.tflcomentor.ecm.dto.ProjectAllocationResponseDto;
 import com.transflower.tflcomentor.ecm.entity.Project;
 import com.transflower.tflcomentor.ecm.repository.ProjectRepository;
 
@@ -123,8 +123,8 @@ public class ProjectRepositoryImpl implements ProjectRepository {
     }
 
     @Override
-    public List<ProjectAllocationResponseDTO> getProjectAllocationDetails() {
-        List<ProjectAllocationResponseDTO> allocations = new ArrayList<>();
+    public List<ProjectAllocationResponseDto> getProjectAllocationDetails() {
+        List<ProjectAllocationResponseDto> allocations = new ArrayList<>();
 
         String query = """
             SELECT
@@ -146,7 +146,7 @@ public class ProjectRepositoryImpl implements ProjectRepository {
             ResultSet rs = statement.executeQuery();
 
             while (rs.next()) {
-                ProjectAllocationResponseDTO dto = new ProjectAllocationResponseDTO();
+                ProjectAllocationResponseDto dto = new ProjectAllocationResponseDto();
 
                 dto.setProjectId(rs.getLong("project_id"));
                 dto.setProjectName(rs.getString("project_name"));
@@ -172,8 +172,8 @@ public class ProjectRepositoryImpl implements ProjectRepository {
     }
 
     @Override
-    public List<ProjectAllocationResponseDTO> getProjectMember(Long projectId) {
-        List<ProjectAllocationResponseDTO> allocations = new ArrayList<>();
+    public List<ProjectAllocationResponseDto> getProjectMember(Long projectId) {
+        List<ProjectAllocationResponseDto> allocations = new ArrayList<>();
 
         String query = """
                      SELECT
@@ -197,7 +197,7 @@ public class ProjectRepositoryImpl implements ProjectRepository {
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
-                ProjectAllocationResponseDTO dto = new ProjectAllocationResponseDTO();
+                ProjectAllocationResponseDto dto = new ProjectAllocationResponseDto();
 
                 dto.setProjectId(rs.getLong("project_id"));
                 dto.setProjectName(rs.getString("project_name"));
@@ -254,8 +254,8 @@ public class ProjectRepositoryImpl implements ProjectRepository {
     }
 
     @Override
-    public List<ProjectAllocationResponseDTO> getStudentByProjectId(Long projectId) {
-        List<ProjectAllocationResponseDTO> students = new ArrayList<>();
+    public List<ProjectAllocationResponseDto> getStudentByProjectId(Long projectId) {
+        List<ProjectAllocationResponseDto> students = new ArrayList<>();
 
         String query = """
             SELECT
@@ -279,7 +279,7 @@ public class ProjectRepositoryImpl implements ProjectRepository {
             ResultSet rs = statement.executeQuery();
 
             while (rs.next()) {
-                ProjectAllocationResponseDTO dto = new ProjectAllocationResponseDTO();
+                ProjectAllocationResponseDto dto = new ProjectAllocationResponseDto();
 
                 dto.setProjectId(rs.getLong("project_id"));
                 dto.setProjectName(rs.getString("project_name"));
