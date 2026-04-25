@@ -19,7 +19,7 @@ import com.transflower.tflcomentor.ecm.dto.request.QuestionOptionsRequestDto;
 import com.transflower.tflcomentor.ecm.dto.response.QuestionOptionsResponseDto;
 import com.transflower.tflcomentor.ecm.dto.response.QuestionResponseDto;
 import com.transflower.tflcomentor.ecm.entity.Question;
-import com.transflower.tflcomentor.ecm.entity.QuestionStatus;
+import com.transflower.tflcomentor.ecm.entity.enums.QuestionStatus;
 import com.transflower.tflcomentor.ecm.entity.enums.QuestionTypes;
 import com.transflower.tflcomentor.ecm.repository.QuestionRepository;
 
@@ -173,7 +173,7 @@ public class QuestionRepositoryImpl implements QuestionRepository {
     }
 
     @Override
-    public void insertMcqOptions(Long questionId,
+            public void insertMcqOptions(Long question_ids,
             String optionA,
             String optionB,
             String optionC,
@@ -240,12 +240,12 @@ public class QuestionRepositoryImpl implements QuestionRepository {
     // }
     
     @Override
-    public QuestionOptionsResponseDto getQuestionDetails(Long id) {
+    public QuestionOptionsResponseDto getQuestionDetails(Long question_id) {
         QuestionOptionsResponseDto dto = new QuestionOptionsResponseDto();
         try (Connection connection = getConnection()) {
             String sql = "SELECT * FROM questions WHERE question_id=?";
             PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setLong(1, id);
+            statement.setLong(1, question_id);
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
                 dto.setQuestionId(rs.getLong("question_id"));
@@ -257,7 +257,7 @@ public class QuestionRepositoryImpl implements QuestionRepository {
 
             String sql1 = "SELECT * FROM mcq_options WHERE question_id=?";
             PreparedStatement statement1 = connection.prepareStatement(sql1);
-            statement1.setLong(1, id);
+            statement1.setLong(1, question_id);
             ResultSet rs1 = statement1.executeQuery();
             if (rs1.next()) {
                 dto.setOptionA(rs1.getString("option_a"));
@@ -273,7 +273,7 @@ public class QuestionRepositoryImpl implements QuestionRepository {
     }
 
     @Override
-    public void updateQuestionById(Long id, QuestionOptionsRequestDto dto) {
+    public void updateQuestionById(Long question_id, QuestionOptionsRequestDto dto) {
 
         String sql = "UPDATE questions SET description=?, question_type=?, difficulty_level=?,status=? WHERE question_id=?";
 
@@ -283,7 +283,7 @@ public class QuestionRepositoryImpl implements QuestionRepository {
             statement.setString(2, dto.getQuestionType());
             statement.setString(3, dto.getDifficultyLevel());
             statement.setString(4, dto.getStatus());
-            statement.setLong(5, id);
+            statement.setLong(5, question_id);
 
             statement.executeUpdate();
 
@@ -298,7 +298,7 @@ public class QuestionRepositoryImpl implements QuestionRepository {
                 optionStmt.setString(3, dto.getOptionC());
                 optionStmt.setString(4, dto.getOptionD());
                 optionStmt.setString(5, dto.getCorrectAnswer());
-                optionStmt.setLong(6, id);
+                optionStmt.setLong(6, question_id);
 
                 optionStmt.executeUpdate();
             }
@@ -396,18 +396,18 @@ public class QuestionRepositoryImpl implements QuestionRepository {
     }
 
     @Override
-    public void updateQuestionStatus(List<Long> questionIds, QuestionStatus status) {
-        if (questionIds == null || questionIds.isEmpty()) {
+    public void updateQuestionStatus(List<Long> question_ids, QuestionStatus status) {
+        if (question_ids == null || question_ids.isEmpty()) {
             return;
         }
-        String placeholders = String.join(",", Collections.nCopies(questionIds.size(), "?"));
+        String placeholders = String.join(",", Collections.nCopies(question_ids.size(), "?"));
         String sql = "UPDATE questions SET status = ? "
                 + "WHERE status = 'DRAFT' AND question_id IN (" + placeholders + ")";
         try (Connection connection = getConnection(); 
         PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, status.name());
-            for (int i = 0; i < questionIds.size(); i++) {
-                statement.setLong(i + 2, questionIds.get(i));
+            for (int i = 0; i < question_ids.size(); i++) {
+                statement.setLong(i + 2, question_ids.get(i));
             }
             statement.executeUpdate();
         } catch (Exception e) {
@@ -416,12 +416,12 @@ public class QuestionRepositoryImpl implements QuestionRepository {
     }
 
     @Override
-    public void updateQuestionStatus(long questionId, QuestionStatus status) {
+    public void updateQuestionStatus(long question_id, QuestionStatus status) {
 
         String sql = "UPDATE questions SET status=? WHERE question_id=?";
         try (Connection connection = getConnection(); PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, status.name());
-            statement.setLong(2, questionId);
+            statement.setLong(2, question_id);
             statement.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
