@@ -91,7 +91,7 @@ public class QuestionController {
     // public List<QuestionResponse> getRecentList() {
     //     return service.getRecentQuestionList();
     // }
-    @GetMapping("/details/{question_id}")
+    @GetMapping("/{question_id}")
     public QuestionOptionsResponseDto getQuestionDetailsById(@PathVariable Long question_id) {
         return service.getQuestionDetailsById(question_id);
     }

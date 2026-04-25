@@ -33,10 +33,10 @@ namespace backend.Controllers
             return Ok(result);
         }
 
-        [HttpGet("view/{questionId}")]
-        public async Task<IActionResult> ViewQuestionDetails(int questionId)
+        [HttpGet("/{questionId}/answer")]
+        public async Task<IActionResult> GetQuestionDetailsWithAnswer(int questionId)
         {
-            var result = await _service.ViewQuestionDetails(questionId);
+            var result = await _service.GetQuestionDetailsWithAnswer(questionId);
 
             if (result == null)
             {
@@ -45,5 +45,19 @@ namespace backend.Controllers
 
             return Ok(result);
         }
+
+        [HttpGet("/{questionId}")]
+        public async Task<IActionResult> GetQuestionDetails(int questionId)
+        {
+            var result = await _service.GetQuestionDetails(questionId);
+
+            if (result == null)
+            {
+                return NotFound("Question not found");
+            }
+
+            return Ok(result);
+        }
+
     }
 }
