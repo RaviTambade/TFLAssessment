@@ -1,25 +1,26 @@
-package com.transflower.tflcomentor.ecm.dto.response;
+package com.transflower.tflcomentor.ecm.dto;
 
 import java.time.LocalDateTime;
-import com.transflower.tflcomentor.ecm.entity.enums.QuestionTypes;
-import com.transflower.tflcomentor.ecm.entity.enums.DifficultyLevels;
+
+import com.transflower.tflcomentor.ecm.entity.enums.DifficultyLevel;
 import com.transflower.tflcomentor.ecm.entity.enums.QuestionStatus;
+import com.transflower.tflcomentor.ecm.entity.enums.QuestionType;
 
 
 
 public class QuestionResponseDto {
     private Long questionId;
     private String description;
-    private QuestionTypes questionType;
-    private DifficultyLevels difficultyLevel;
+    private QuestionType questionType;
+    private DifficultyLevel difficultyLevel;
     private QuestionStatus status;
     private LocalDateTime createdAt;
 
     public QuestionResponseDto() {
     }
 
-    public QuestionResponseDto(Long questionId, String description, QuestionTypes questionType,
-            DifficultyLevels difficultyLevel, QuestionStatus status) {
+    public QuestionResponseDto(Long questionId, String description, QuestionType questionType,
+            DifficultyLevel difficultyLevel, QuestionStatus status) {
         this.questionId = questionId;
         this.description = description;
         this.questionType = questionType;
@@ -46,19 +47,19 @@ public class QuestionResponseDto {
         this.description = description;
     }
 
-    public QuestionTypes getQuestionType() {
+    public QuestionType getQuestionType() {
         return questionType;
     }
 
-    public void setQuestionType(QuestionTypes questionType) {
+    public void setQuestionType(QuestionType questionType) {
         this.questionType = questionType;
     }
 
-    public DifficultyLevels getDifficultyLevel() {
+    public DifficultyLevel getDifficultyLevel() {
         return difficultyLevel;
     }
 
-    public void setDifficultyLevel(DifficultyLevels difficultyLevel) {
+    public void setDifficultyLevel(DifficultyLevel difficultyLevel) {
         this.difficultyLevel = difficultyLevel;
     }
 

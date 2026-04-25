@@ -14,11 +14,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.transflower.tflcomentor.ecm.dto.request.QuestionOptionsRequestDto;
+import com.transflower.tflcomentor.ecm.dto.QuestionOptionsRequestDto;
 import com.transflower.tflcomentor.ecm.entity.Question;
-import com.transflower.tflcomentor.ecm.entity.enums.DifficultyLevels;
+import com.transflower.tflcomentor.ecm.entity.enums.DifficultyLevel;
 import com.transflower.tflcomentor.ecm.entity.enums.QuestionStatus;
-import com.transflower.tflcomentor.ecm.entity.enums.QuestionTypes;
+import com.transflower.tflcomentor.ecm.entity.enums.QuestionType;
 import com.transflower.tflcomentor.ecm.service.QuestionService;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -40,7 +40,7 @@ public class QuestionController {
     }
 
     @GetMapping("/difficulty/{level}")
-    public List<Question> getByDifficulty(@PathVariable DifficultyLevels level) {
+    public List<Question> getByDifficulty(@PathVariable DifficultyLevel level) {
         return service.getQuestionsByDifficulty(level);
     }
 
@@ -104,7 +104,7 @@ public class QuestionController {
     }
 
     @GetMapping("/type/{questionType}")
-    public List<Question> getQuestionsByType(@PathVariable QuestionTypes questionType) {
+    public List<Question> getQuestionsByType(@PathVariable QuestionType questionType) {
         return service.getQuestions(questionType);
     }
 

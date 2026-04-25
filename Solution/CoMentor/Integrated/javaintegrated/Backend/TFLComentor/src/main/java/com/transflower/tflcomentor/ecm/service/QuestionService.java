@@ -3,11 +3,11 @@ package com.transflower.tflcomentor.ecm.service;
 import java.time.LocalDate;
 import java.util.List;
 
-import com.transflower.tflcomentor.ecm.dto.request.QuestionOptionsRequestDto;
+import com.transflower.tflcomentor.ecm.dto.QuestionOptionsRequestDto;
 import com.transflower.tflcomentor.ecm.entity.Question;
-import com.transflower.tflcomentor.ecm.entity.enums.DifficultyLevels;
+import com.transflower.tflcomentor.ecm.entity.enums.DifficultyLevel;
 import com.transflower.tflcomentor.ecm.entity.enums.QuestionStatus;
-import com.transflower.tflcomentor.ecm.entity.enums.QuestionTypes;
+import com.transflower.tflcomentor.ecm.entity.enums.QuestionType;
 
 public interface QuestionService {
     
@@ -19,7 +19,7 @@ public interface QuestionService {
 
     public List<Question> getAllQuestions();
 
-    public List<Question> getQuestionsByDifficulty(DifficultyLevels difficulty);
+    public List<Question> getQuestionsByDifficulty(DifficultyLevel difficulty);
 
     public void updateQuestionById(Long questionId, QuestionOptionsRequestDto dto);
 
@@ -27,7 +27,7 @@ public interface QuestionService {
 
     public QuestionOptionsRequestDto getQuestionDetails(Long questionId);
 
-    public List<Question> getQuestions(QuestionTypes questionType);
+    public List<Question> getQuestions(QuestionType questionType);
 
     public List<Question> getQuestions(QuestionStatus status);
 

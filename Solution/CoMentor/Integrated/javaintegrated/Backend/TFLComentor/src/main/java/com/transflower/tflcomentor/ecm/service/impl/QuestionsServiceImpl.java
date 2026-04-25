@@ -6,11 +6,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.transflower.tflcomentor.ecm.dto.request.QuestionOptionsRequestDto;
+import com.transflower.tflcomentor.ecm.dto.QuestionOptionsRequestDto;
 import com.transflower.tflcomentor.ecm.entity.Question;
-import com.transflower.tflcomentor.ecm.entity.enums.DifficultyLevels;
+import com.transflower.tflcomentor.ecm.entity.enums.DifficultyLevel;
 import com.transflower.tflcomentor.ecm.entity.enums.QuestionStatus;
-import com.transflower.tflcomentor.ecm.entity.enums.QuestionTypes;
+import com.transflower.tflcomentor.ecm.entity.enums.QuestionType;
 import com.transflower.tflcomentor.ecm.repository.QuestionRepository;
 import com.transflower.tflcomentor.ecm.service.QuestionService;
 
@@ -31,9 +31,9 @@ public class QuestionsServiceImpl implements QuestionService {
         Question question = new Question();
         question.setDescription(dto.getDescription());
         question.setQuestionType(
-        QuestionTypes.valueOf(dto.getQuestionType().toUpperCase()));
+        QuestionType.valueOf(dto.getQuestionType().toUpperCase()));
         question.setDifficultyLevel(
-        DifficultyLevels.valueOf(dto.getDifficultyLevel().toUpperCase()));
+        DifficultyLevel.valueOf(dto.getDifficultyLevel().toUpperCase()));
         question.setQuestionStatus(QuestionStatus.valueOf(dto.getStatus().toUpperCase()));
         Long questionId = repository.insert(question);
         if ("MCQ".equalsIgnoreCase(dto.getQuestionType())) {
@@ -62,7 +62,7 @@ public class QuestionsServiceImpl implements QuestionService {
     }
 
     @Override
-    public List<Question> getQuestionsByDifficulty(DifficultyLevels difficulty) {
+    public List<Question> getQuestionsByDifficulty(DifficultyLevel difficulty) {
         return repository.getQuestionsByDifficulty(difficulty);
     }
 
@@ -82,7 +82,7 @@ public class QuestionsServiceImpl implements QuestionService {
     }
 
     @Override
-    public List<Question> getQuestions(QuestionTypes questionType) {
+    public List<Question> getQuestions(QuestionType questionType) {
         return repository.getQuestions(questionType);
     }
 

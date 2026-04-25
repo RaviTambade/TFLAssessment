@@ -1,13 +1,15 @@
-package com.transflower.tflcomentor.ecm.dto.request;
+package com.transflower.tflcomentor.ecm.dto;
+
+import com.transflower.tflcomentor.ecm.entity.enums.QuestionStatus;
 
 
 
-public class QuestionOptionsRequestDto {
+public class QuestionWithAnswerDto {
     private long questionId;
     private String description;
-    private String questionType;
+    private QuestionType questionType;
     private String difficultyLevel;
-    private String status;
+    private QuestionStatus status;
     private String questionDetails;
 
     private String optionA;
@@ -40,11 +42,11 @@ public class QuestionOptionsRequestDto {
         this.difficultyLevel = difficultyLevel;
     }
 
-    public String getStatus() {
+    public QuestionStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(QuestionStatus status) {
         this.status = status;
     }
 

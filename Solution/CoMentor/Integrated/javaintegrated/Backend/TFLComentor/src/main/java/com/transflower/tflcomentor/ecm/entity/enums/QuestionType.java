@@ -1,6 +1,6 @@
 package com.transflower.tflcomentor.ecm.entity.enums;
 
-public enum QuestionTypes {
+public enum QuestionType {
     
     PROBLEM_STATEMENT,
     MCQ,
