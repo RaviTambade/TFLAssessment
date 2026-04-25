@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.transflower.tflcomentor.ecm.dto.response.ProjectAllocationResponseDTO;
+import com.transflower.tflcomentor.ecm.dto.ProjectAllocationResponseDto;
 import com.transflower.tflcomentor.ecm.entity.Project;
 import com.transflower.tflcomentor.ecm.entity.ProjectAllocation;
 import com.transflower.tflcomentor.ecm.repository.ProjectRepository;
@@ -35,12 +35,12 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public List<ProjectAllocationResponseDTO> getStudentByProjectId(Long projectId) {
+    public List<ProjectAllocationResponseDto> getStudentByProjectId(Long projectId) {
         return repository.getStudentByProjectId(projectId);
     }
 
     @Override
-    public List<ProjectAllocationResponseDTO> getProjectAllocationDetails() {
+    public List<ProjectAllocationResponseDto> getProjectAllocationDetails() {
         return repository.getProjectAllocationDetails();
     }
 
@@ -56,7 +56,7 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public List<ProjectAllocationResponseDTO> getProjectMember(Long projectId) {
+    public List<ProjectAllocationResponseDto> getProjectMember(Long projectId) {
         return repository.getProjectMember(projectId);
     }
 }

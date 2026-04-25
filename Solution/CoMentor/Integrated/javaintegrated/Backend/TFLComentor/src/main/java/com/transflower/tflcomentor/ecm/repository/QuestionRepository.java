@@ -3,19 +3,21 @@ package com.transflower.tflcomentor.ecm.repository;
 import java.time.LocalDate;
 import java.util.List;
 
-import com.transflower.tflcomentor.ecm.dto.request.QuestionOptionsRequestDto;
-import com.transflower.tflcomentor.ecm.dto.response.QuestionOptionsResponseDto;
-import com.transflower.tflcomentor.ecm.dto.response.QuestionResponseDto;
+import com.transflower.tflcomentor.ecm.dto.QuestionOptionsRequestDto;
 import com.transflower.tflcomentor.ecm.entity.Question;
-import com.transflower.tflcomentor.ecm.entity.enums.QuestionTypes;
-import com.transflower.tflcomentor.ecm.entity.enums.DifficultyLevels;
+import com.transflower.tflcomentor.ecm.entity.enums.DifficultyLevel;
 import com.transflower.tflcomentor.ecm.entity.enums.QuestionStatus;
+import com.transflower.tflcomentor.ecm.entity.enums.QuestionType;
 
 public interface QuestionRepository {
     
     Question getQuestionById(long question_id);
     List<Question> getAllQuestions();
+<<<<<<< HEAD
     List<Question> getQuestionsByDifficulty(String difficulty);
+=======
+    List<Question> getQuestionsByDifficulty(DifficultyLevel difficulty);
+>>>>>>> 85c337740a6b0aab8d9b488ab71e5535536d1d5e
     Long insert(Question q);
     void insertMcqOptions(Long question_id,
             String optionA,
@@ -24,9 +26,15 @@ public interface QuestionRepository {
             String optionD,
             String correctAnswer);
     void updateQuestionById(Long question_id, QuestionOptionsRequestDto dto);
+<<<<<<< HEAD
     List<QuestionResponseDto> getQuestions(LocalDate fromDate, LocalDate toDate);
     QuestionOptionsResponseDto getQuestionDetails(Long question_id);
     List<QuestionResponseDto> getQuestions(String questionType);
+=======
+    List<Question> getQuestions(LocalDate fromDate, LocalDate toDate);
+    QuestionOptionsRequestDto getQuestionDetails(Long question_id);
+    List<Question> getQuestions(QuestionType questionType);
+>>>>>>> 85c337740a6b0aab8d9b488ab71e5535536d1d5e
     // List<Questions> getAllQuestions();
     // List<QuestionResponse> getRecentQuestions();
     List<QuestionResponseDto> getQuestions(QuestionStatus status);

@@ -2,26 +2,22 @@ package com.transflower.tflcomentor.ecm.entity;
 
 import java.time.LocalDateTime;
 
-import javax.xml.crypto.Data;
-
-import com.transflower.tflcomentor.ecm.entity.enums.DifficultyLevels;
+import com.transflower.tflcomentor.ecm.entity.enums.DifficultyLevel;
 import com.transflower.tflcomentor.ecm.entity.enums.QuestionStatus;
-import com.transflower.tflcomentor.ecm.entity.enums.QuestionTypes;
-import com.transflower.tflcomentor.ecm.entity.enums.QuestionStatus;
+import com.transflower.tflcomentor.ecm.entity.enums.QuestionType;
 
 public class Question {
     private Long questionId;
     private String description;
-    private QuestionTypes questionType;
-    private DifficultyLevels difficultyLevel;
+    private QuestionType questionType;
+    private DifficultyLevel difficultyLevel;
     private QuestionStatus status;
     private LocalDateTime createdAt;
 
     public Question() {
     }
 
-    public Question(Long questionId, String description, QuestionTypes questionType,
-            DifficultyLevels difficultyLevel, QuestionStatus status) {
+    public Question(Long questionId, String description, QuestionType questionType, DifficultyLevel difficultyLevel, QuestionStatus status) {
         this.questionId = questionId;
         this.description = description;
         this.questionType = questionType;
@@ -47,19 +43,19 @@ public class Question {
         this.description = description;
     }
 
-    public QuestionTypes getQuestionType() {
+    public QuestionType getQuestionType() {
         return questionType;
     }
 
-    public void setQuestionType(QuestionTypes questionType) {
+    public void setQuestionType(QuestionType questionType) {
         this.questionType = questionType;
     }
 
-    public DifficultyLevels getDifficultyLevel() {
+    public DifficultyLevel getDifficultyLevel() {
         return difficultyLevel;
     }
 
-    public void setDifficultyLevel(DifficultyLevels difficultyLevel) {
+    public void setDifficultyLevel(DifficultyLevel difficultyLevel) {
         this.difficultyLevel = difficultyLevel;
     }
 
@@ -67,7 +63,7 @@ public class Question {
         return status;
     }
 
-    public void setStatus(QuestionStatus status) {
+    public void setQuestionStatus(QuestionStatus status) {
         this.status = status;
     }
 
@@ -78,6 +74,8 @@ public class Question {
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
+
+    
 
     
     

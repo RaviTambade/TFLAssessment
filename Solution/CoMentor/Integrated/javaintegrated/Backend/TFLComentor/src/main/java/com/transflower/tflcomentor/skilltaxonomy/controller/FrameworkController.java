@@ -1,34 +1,34 @@
-package com.transflower.tflcomentor.skilltaxonomy.controller;
+// package com.transflower.tflcomentor.skilltaxonomy.controller;
 
-import java.util.List;
+// import java.util.List;
 
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+// import org.springframework.web.bind.annotation.CrossOrigin;
+// import org.springframework.web.bind.annotation.GetMapping;
+// import org.springframework.web.bind.annotation.PathVariable;
+// import org.springframework.web.bind.annotation.RequestMapping;
+// import org.springframework.web.bind.annotation.RestController;
 
-import com.transflower.tflcomentor.skilltaxonomy.entity.Framework;
-import com.transflower.tflcomentor.skilltaxonomy.service.FrameworkService;
+// import com.transflower.tflcomentor.skilltaxonomy.entity.Framework;
+// import com.transflower.tflcomentor.skilltaxonomy.service.FrameworkService;
 
-@CrossOrigin(origins = "*", allowedHeaders = "*")
-@RestController
-@RequestMapping("/api")
-public class FrameworkController {
+// @CrossOrigin(origins = "*", allowedHeaders = "*")
+// @RestController
+// @RequestMapping("/api")
+// public class FrameworkController {
 
-    private final FrameworkService frameworkService;
+//     private final FrameworkService frameworkService;
 
-    public FrameworkController(FrameworkService frameworkService) {
-        this.frameworkService = frameworkService;
-    }
+//     public FrameworkController(FrameworkService frameworkService) {
+//         this.frameworkService = frameworkService;
+//     }
 
-    @GetMapping("/frameworks/languages/{languageId}/layers/{layerId}")
-    public List<Framework> getAllFrameworks(@PathVariable int languageId, @PathVariable int layerId) {
-        return frameworkService.getAllFrameworksByLanguageAndLayer(languageId, layerId);
-    }
+//     @GetMapping("/frameworks/languages/{languageId}/layers/{layerId}")
+//     public List<Framework> getAllFrameworks(@PathVariable int languageId, @PathVariable int layerId) {
+//         return frameworkService.getAllFrameworksByLanguageAndLayer(languageId, layerId);
+//     }
 
-      @GetMapping("/frameworks/languages/{languageId}")
-    public List<Framework> getAllFrameworks(@PathVariable int languageId) {
-        return frameworkService.getAllFrameworks(languageId);
-    }
-}
+//       @GetMapping("/frameworks/languages/{languageId}")
+//     public List<Framework> getAllFrameworks(@PathVariable int languageId) {
+//         return frameworkService.getAllFrameworks(languageId);
+//     }
+// }
