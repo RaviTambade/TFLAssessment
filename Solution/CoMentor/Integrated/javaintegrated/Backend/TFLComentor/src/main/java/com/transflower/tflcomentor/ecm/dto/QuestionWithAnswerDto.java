@@ -1,6 +1,7 @@
 package com.transflower.tflcomentor.ecm.dto;
 
 import com.transflower.tflcomentor.ecm.entity.enums.QuestionStatus;
+import com.transflower.tflcomentor.ecm.entity.enums.QuestionType;
 
 
 
@@ -26,11 +27,11 @@ public class QuestionWithAnswerDto {
         this.description = description;
     }
 
-    public String getQuestionType() {
+    public QuestionType getQuestionType() {
         return questionType;
     }
 
-    public void setQuestionType(String questionType) {
+    public void setQuestionType(QuestionType questionType) {
         this.questionType = questionType;
     }
 

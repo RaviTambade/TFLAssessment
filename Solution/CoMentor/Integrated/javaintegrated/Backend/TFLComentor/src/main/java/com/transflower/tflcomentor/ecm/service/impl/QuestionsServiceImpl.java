@@ -30,13 +30,11 @@ public class QuestionsServiceImpl implements QuestionService {
 
         Question question = new Question();
         question.setDescription(dto.getDescription());
-        question.setQuestionType(
-        QuestionType.valueOf(dto.getQuestionType().toUpperCase()));
-        question.setDifficultyLevel(
-        DifficultyLevel.valueOf(dto.getDifficultyLevel().toUpperCase()));
-        question.setQuestionStatus(QuestionStatus.valueOf(dto.getStatus().toUpperCase()));
+        question.setQuestionType(dto.getQuestionType());
+        question.setDifficultyLevel(dto.getDifficultyLevel());
+        question.setQuestionStatus(dto.getStatus());
         Long questionId = repository.insert(question);
-        if ("MCQ".equalsIgnoreCase(dto.getQuestionType())) {
+        if (dto.getQuestionType() == QuestionType.MCQ) {
 
             repository.insertMcqOptions(
                     questionId,
