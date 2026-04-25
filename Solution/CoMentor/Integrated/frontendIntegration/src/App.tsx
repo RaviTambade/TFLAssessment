@@ -22,6 +22,7 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/tap-program" element={<TapProgram />} />
           <Route path="/ravi-tambade" element={<RaviTambade />} />
+          
           {/* Module routes - /models/* */}
           <Route path="/models/*" element={<AppRoutes />} />
         </Routes>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <title>Document</title>
+</head>
+<body>
+
+    <select name="state" id="sel">
+        <option value="goa">GOA</option>
+        <option value="kerala">KERALA</option>
+        <option value="maharashtra">MAHARASHTRA</option>
+        <option value="tamilnadu">TAMILNADU</option>
+        <option value="karnataka">KARNATAKA</option>
+    </select>
+    
+    <button id="btn">Click Me</button>
+    <p id="para"></p>
+
+    <script>
+    
+        $(document).ready(function() {
+            $('#btn').click(function() {
+                var selectedValue = $('#sel').val();
+                $('#para').text('You selected: ' + selectedValue);
+            });
+        });
+        
+    </script>
+</body>
+</html>

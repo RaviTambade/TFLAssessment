@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assessment Feedback Form</title>
+    <style>
+        /* Add some basic styling */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            margin-bottom: 20px;
+        }
+        form {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        textarea {
+            width: 100%;
+            height: 150px;
+        }
+        input[type="submit"] {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+    </style>
+    <!-- Include jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+<body>
+    <h1>Assessment Feedback</h1>
+    
+    <!-- Display assessment results -->
+    <div>
+        <h2>Assessment Results</h2>
+        <p><strong>Score:</strong> 80%</p>
+        <p><strong>Correct Answers:</strong> 8 out of 10</p>
+        <!-- Add more result details as needed -->
+    </div>
+    
+    <!-- Feedback form -->
+    <form id="feedbackForm">
+        <h2>Feedback Form</h2>
+        <div>
+            <label for="rating">Rating:</label>
+            <select name="rating" id="rating">
+                <option value="5">5 - Excellent</option>
+                <option value="4">4 - Very Good</option>
+                <option value="3">3 - Good</option>
+                <option value="2">2 - Fair</option>
+                <option value="1">1 - Poor</option>
+            </select>
+        </div>
+        <div>
+            <label for="comments">Comments:</label>
+            <textarea name="comments" id="comments" placeholder="Enter your feedback here"></textarea>
+        </div>
+        <div>
+            <input type="submit" value="Submit Feedback">
+        </div>
+    </form>
+
+    <script>
+        $(document).ready(function() {
+            // Handle form submission using AJAX
+            $('#feedbackForm').submit(function(event) {
+                // Prevent default form submission
+                event.preventDefault();
+                var formData = $(this).serialize();
+                
+                // Submit form data using AJAX
+                $.ajax({
+                    type: 'POST',
+                    url: '/submit-feedback', // Replace with your server-side endpoint
+                    data: formData,
+                    success: function(response) {
+                        // Handle successful feedback submission
+                        alert('Feedback submitted successfully!');
+                        // You can optionally redirect or perform other actions here
+                    },
+                    error: function(xhr, status, error) {
+                        // Handle error
+                        alert('An error occurred while submitting feedback.');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

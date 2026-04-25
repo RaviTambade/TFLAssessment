@@ -17,4 +17,7 @@ public interface ConceptRepository {
     List<Concept> getAllConceptsforFramework(String framework);
     Concept getById(Long id);
     boolean addConcept(Concept concept);
+
+
+ 
 }

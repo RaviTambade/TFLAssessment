@@ -1,0 +1,81 @@
+
+
+Assessment App Database Design
+
+------------------------------------------------------------------------------------------------------------
+*Evaulator*-> Portal -> Login -> Online Exam -> Technology ->FrontEnd ->(Exam Conduction)javascript,React,Angular
+                               ->Fresher Criteria                     ->BackEnd  ->Spring boot,Hybernet,.NETWORK 
+                                                                      ->Full Stack-> All
+		       Rating->Technical
+		             ->Communication
+			         ->Verdict
+			         ->Goals,Approch to Client,Learning,Leadership,Work ethics,team work,innovation
+					 
+*Candidate* -> Portal -> Login -> Technical Round -> Feedback
+                    -> Internal
+					-> External
+---------------------------------------------------------------------------------------------------------------					
+*Required Tables*
+
+
+Suggested Tables
+
+
+
+1.TechnicalSkills(id, title,)
+2.smes (id,employeeid,technicalskillid,certifiedon)
+3.evaluationCriterias(id, title, skillId)
+
+--Objective test conduction
+
+4.questions (id, subjectid, question, A,B,C,D,Answer,evaluationCriteriaId)
+5.tests(id, subjectid, duration,smeid,createdOn, modifiedon, sheduledOn)
+6.testAssessmentCriteria(id, testid, evaluationcriteriaId)
+7.testquestions(testquestionId, testid, questionid)
+8.candidateasnswers(questionanwerid, employeeId testquestionsId,answerkeyId)
+9.candidatetestresults(candidatetestresultid, testid,marks)
+
+--Face to face  technical interview conduction
+
+10.interviews(technicalInterviewId, dateofInterview, smeId, employeeId)
+11.interviewCriterias(TechnicalInterviewAssessmentCriteriaid, technicalInterviewId, evalutioncriteria)
+12.interviewResults(resultid,TechnicalInterviewAssessmentCriteriaid,Rating, comments )
+
+Technical Skills
+
+ID					Title
+23					Core Java
+24					Adv. Java
+26					MicroServices
+27					React
+28					C#
+
+SMEs
+id	employeeid	technicalskillid	certifiedon
+1	34			23					23/2/2023
+2   34			27					12/1/2024
+3	45			28					1/2/2024
+
+
+
+evaluationCriterias
+id	 	title  									SkillId
+23		Object Oriented Programming				23
+24		Multithreading							23
+25		Web Programming							24
+26		Web Programming							28
+
+questions 
+id	 question 		A 			B 	  C 			D				Answer,		evaluationCriteriaId
+1    What is JVM    class	engine    machine		interface		B			23
+
+
+
+
+Tests
+id	 skillId	 duration	            smeid	       createdOn     modifiedon 	scheduledOn)
+1	 23			 20			2		2/3/2023	2/6/2023	7/2/2024
+2	 24			 40			1		21/8/2023	2/2/2024	15/2/2024
+
+
+

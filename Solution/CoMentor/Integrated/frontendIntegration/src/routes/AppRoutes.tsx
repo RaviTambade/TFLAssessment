@@ -5,6 +5,7 @@ import Navbar from "../components/Navbar";
 import EvaluationContentMenu from "../components/assessment/evaluationcontent/EvaluationContentMenu";
 import SkillTaxonomyMenu from "../components/assessment/skilltaxonomy/SkillTaxonomyMenu";
 import Assessment from "../components/assessment/ComponentButtons";
+import ViewProjectInfo from "@/components/assessment/evaluationcontent/ViewProjectInfo";
 
 
 function AppRoutes() {
@@ -18,6 +19,8 @@ function AppRoutes() {
 
           {/* Evaluation Content */}
           <Route path="evaluationcontent/componentmenu" element={<EvaluationContentMenu />} />
+
+          <Route path="evaluationcontent/viewprojectinfo" element={<ViewProjectInfo />} />
 
           {/* Skill Taxonomy */}
           <Route path="skilltaxonomy/skilltaxonomy-menu" element={<SkillTaxonomyMenu />} />
