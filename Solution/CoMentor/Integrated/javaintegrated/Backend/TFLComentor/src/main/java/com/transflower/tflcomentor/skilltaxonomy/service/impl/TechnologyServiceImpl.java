@@ -4,10 +4,12 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.transflower.tflcomentor.skilltaxonomy.dto.response.LanguageResponseDto;
 import com.transflower.tflcomentor.skilltaxonomy.dto.response.RuntimeSummaryResponseDto;
 import com.transflower.tflcomentor.skilltaxonomy.entity.Concept;
 import com.transflower.tflcomentor.skilltaxonomy.entity.Runtime;
 import com.transflower.tflcomentor.skilltaxonomy.entity.Framework;
+import com.transflower.tflcomentor.skilltaxonomy.entity.Language;
 import com.transflower.tflcomentor.skilltaxonomy.entity.Layer;
 import com.transflower.tflcomentor.skilltaxonomy.repository.TechnologyRepository;
 import com.transflower.tflcomentor.skilltaxonomy.service.TechnologyService;
@@ -69,6 +71,16 @@ public class TechnologyServiceImpl implements TechnologyService {
     @Override
     public List<Layer> getAllLayers(){
         return technologyRepository.getAllLayers();
+    }
+
+    @Override
+    public List<LanguageResponseDto> getLanguagesBySmeId(long smeId){
+        return technologyRepository.getLanguagesBySmeId(smeId);
+    }
+
+    @Override
+    public List<Language> getAllLanguages(int runtimeId){
+        return technologyRepository.getAllLanguages(runtimeId);
     }
 
     @Override

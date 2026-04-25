@@ -161,12 +161,44 @@ public class TechnologyRepositoryImpl implements TechnologyRepository {
 
     @Override
     public List<Framework> getAllFrameworks(){
-        return null;
+        String query = "SELECT  DISTINCT id, name FROM frameworks";
+        List<Framework> frameworksList = new ArrayList<>();
+        try(Connection connection = getConnection()){
+           Statement statement = connection.createStatement();
+           ResultSet resultSet = statement.executeQuery(query); 
+              while(resultSet.next()){
+                Framework framework = new Framework();
+                framework.setId(resultSet.getInt("id"));
+                framework.setFrameworkName(resultSet.getString("name"));
+                frameworksList.add(framework);
+              }
+            return frameworksList;
+        }catch(Exception e){
+            e.printStackTrace();
+            return null;
+        }
+       
     }
 
     @Override
     public Framework getFrameworkById(Long id){
-        return null;
+        String query = "SELECT id, name FROM frameworks WHERE id=?";
+        try(Connection connection = getConnection()){
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setLong(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if(resultSet.next()){
+                Framework framework = new Framework();
+                framework.setId(resultSet.getInt("id"));
+                framework.setFrameworkName(resultSet.getString("name"));
+                return framework;
+            } else {
+                return null; // No framework found with the given ID
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override
@@ -196,7 +228,23 @@ public class TechnologyRepositoryImpl implements TechnologyRepository {
 
     @Override
     public List<Framework> getAllFrameworks(int languageId){
-        return null;
+        String query = "SELECT DISTINCT f.id, f.name from frameworks f WHERE f.language_id = ?";
+        try(Connection connection = getConnection()){
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, languageId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            List<Framework> frameworksList = new ArrayList<>();
+            while(resultSet.next()){
+                Framework framework = new Framework();
+                framework.setId(resultSet.getInt("id"));
+                framework.setFrameworkName(resultSet.getString("name"));
+                frameworksList.add(framework);
+            }
+            return frameworksList;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override
@@ -276,17 +324,14 @@ public class TechnologyRepositoryImpl implements TechnologyRepository {
     // public List<RuntimeResponseDTO> getRuntimes() {
     //     List<RuntimeResponseDTO> runtimesList = new ArrayList<>();
     //     String query = "SELECT runtime_name FROM runtimes";
-
     //     try (Connection connection = DBConfig.getConnection();
     //      PreparedStatement ps = connection.prepareStatement(query);
     //       ResultSet rs = ps.executeQuery()) {
-
     //         while (rs.next()) {
     //             RuntimeResponseDTO rt = new RuntimeResponseDTO();
     //             rt.setRuntime_name(rs.getString("Runtime_name"));
     //             runtimesList.add(rt);
     //         }
-
     //     } catch (Exception e) {
     //         System.out.println(e);
     //     }
@@ -337,16 +382,13 @@ public class TechnologyRepositoryImpl implements TechnologyRepository {
     // @Override
     // public Optional<Runtime> findById(Long runtimeId) {
     //     String query = "select id, runtime_name from runtimes where id = ?";
-
     //     try (Connection connection = DBConfig.getConnection(); 
     //     PreparedStatement ps = connection.prepareStatement(query)) {
     //         ps.setLong(1, runtimeId);
-
     //         try (ResultSet rs = ps.executeQuery()) {
     //             if (!rs.next()) {
     //                 return Optional.empty();
     //             }
-
     //             Runtime runtime = new Runtime();
     //             runtime.setId(rs.getInt("id"));
     //             runtime.setRuntimeName(rs.getString("runtime_name"));
