@@ -7,7 +7,6 @@ import javax.xml.crypto.Data;
 import com.transflower.tflcomentor.ecm.entity.enums.DifficultyLevels;
 import com.transflower.tflcomentor.ecm.entity.enums.QuestionStatus;
 import com.transflower.tflcomentor.ecm.entity.enums.QuestionTypes;
-import com.transflower.tflcomentor.ecm.entity.enums.QuestionStatus;
 
 public class Question {
     private Long questionId;
