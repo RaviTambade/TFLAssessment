@@ -1,12 +1,13 @@
-package com.transflower.tflcomentor.ecm.entity;
+package com.transflower.tflcomentor.ecm.dto.response;
 
 import java.time.LocalDateTime;
-
+import com.transflower.tflcomentor.ecm.entity.enums.QuestionTypes;
 import com.transflower.tflcomentor.ecm.entity.enums.DifficultyLevels;
 import com.transflower.tflcomentor.ecm.entity.enums.QuestionStatus;
-import com.transflower.tflcomentor.ecm.entity.enums.QuestionTypes;
 
-public class Question {
+
+
+public class QuestionResponseDto {
     private Long questionId;
     private String description;
     private QuestionTypes questionType;
@@ -14,10 +15,11 @@ public class Question {
     private QuestionStatus status;
     private LocalDateTime createdAt;
 
-    public Question() {
+    public QuestionResponseDto() {
     }
 
-    public Question(Long questionId, String description, QuestionTypes questionType, DifficultyLevels difficultyLevel, QuestionStatus status) {
+    public QuestionResponseDto(Long questionId, String description, QuestionTypes questionType,
+            DifficultyLevels difficultyLevel, QuestionStatus status) {
         this.questionId = questionId;
         this.description = description;
         this.questionType = questionType;
@@ -25,6 +27,7 @@ public class Question {
         this.status = status;
     }
 
+    
 
     // Getters and Setters
     public Long getQuestionId() {
@@ -59,7 +62,7 @@ public class Question {
         this.difficultyLevel = difficultyLevel;
     }
 
-    public QuestionStatus getStatus() {
+    public QuestionStatus getQuestionStatus() {
         return status;
     }
 
@@ -74,9 +77,4 @@ public class Question {
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
-
-    
-
-    
-    
 }

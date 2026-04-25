@@ -3,11 +3,12 @@ package com.transflower.tflcomentor.ecm.dto.request;
 
 
 public class QuestionOptionsRequestDto {
-
+    private long questionId;
     private String description;
     private String questionType;
     private String difficultyLevel;
     private String status;
+    private String questionDetails;
 
     private String optionA;
     private String optionB;
@@ -85,5 +86,21 @@ public class QuestionOptionsRequestDto {
 
     public void setCorrectAnswer(String correctAnswer) {
         this.correctAnswer = correctAnswer;
+    }
+
+    public long getQuestionId() {
+        return questionId;
+    }
+
+    public void setQuestionId(long questionId) {
+        this.questionId = questionId;
+    }
+
+    public String getQuestionDetails(long questionId) {
+        return questionDetails;
+    }
+
+    public void setQuestionDetails(String questionDetails) {
+        this.questionDetails = questionDetails;
     }
 }

@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import java.util.List;
 
 import com.transflower.tflcomentor.ecm.dto.request.QuestionOptionsRequestDto;
-import com.transflower.tflcomentor.ecm.dto.response.QuestionOptionsResponseDto;
 import com.transflower.tflcomentor.ecm.dto.response.QuestionResponseDto;
 import com.transflower.tflcomentor.ecm.entity.Question;
 import com.transflower.tflcomentor.ecm.entity.enums.QuestionTypes;
@@ -25,7 +24,7 @@ public interface QuestionRepository {
             String correctAnswer);
     void updateQuestionById(Long question_id, QuestionOptionsRequestDto dto);
     List<Question> getQuestions(LocalDate fromDate, LocalDate toDate);
-    QuestionOptionsResponseDto getQuestionDetails(Long question_id);
+    QuestionOptionsRequestDto getQuestionDetails(Long question_id);
     List<Question> getQuestions(QuestionTypes questionType);
     // List<Questions> getAllQuestions();
     // List<QuestionResponse> getRecentQuestions();

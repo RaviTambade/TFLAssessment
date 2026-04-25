@@ -7,9 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.transflower.tflcomentor.ecm.dto.request.QuestionOptionsRequestDto;
-import com.transflower.tflcomentor.ecm.dto.response.QuestionOptionsResponseDto;
-import com.transflower.tflcomentor.ecm.dto.response.QuestionResponseDto;
 import com.transflower.tflcomentor.ecm.entity.Question;
+import com.transflower.tflcomentor.ecm.entity.enums.DifficultyLevels;
 import com.transflower.tflcomentor.ecm.entity.enums.QuestionStatus;
 import com.transflower.tflcomentor.ecm.entity.enums.QuestionTypes;
 import com.transflower.tflcomentor.ecm.repository.QuestionRepository;
@@ -32,10 +31,10 @@ public class QuestionsServiceImpl implements QuestionService {
         Question question = new Question();
         question.setDescription(dto.getDescription());
         question.setQuestionType(
-                QuestionTypes.valueOf(dto.getQuestionType().toUpperCase())
-        );
-        question.setDifficultyLevel(dto.getDifficultyLevel());
-
+        QuestionTypes.valueOf(dto.getQuestionType().toUpperCase()));
+        question.setDifficultyLevel(
+        DifficultyLevels.valueOf(dto.getDifficultyLevel().toUpperCase()));
+        question.setQuestionStatus(QuestionStatus.valueOf(dto.getStatus().toUpperCase()));
         Long questionId = repository.insert(question);
         if ("MCQ".equalsIgnoreCase(dto.getQuestionType())) {
 
@@ -63,32 +62,32 @@ public class QuestionsServiceImpl implements QuestionService {
     }
 
     @Override
-    public List<Question> getQuestionsByDifficulty(String difficulty) {
+    public List<Question> getQuestionsByDifficulty(DifficultyLevels difficulty) {
         return repository.getQuestionsByDifficulty(difficulty);
     }
 
     @Override
-    public void updateQuestionById(Long id, QuestionOptionsRequestDto dto) {
-        repository.updateQuestionById(id, dto);
+    public void updateQuestionById(Long questionId, QuestionOptionsRequestDto dto) {
+        repository.updateQuestionById(questionId, dto);
     }
 
     @Override
-    public List<QuestionResponseDto> getQuestions(LocalDate fromDate, LocalDate toDate) {
+    public List<Question> getQuestions(LocalDate fromDate, LocalDate toDate) {
         return repository.getQuestions(fromDate, toDate);
     }
 
     @Override
-    public QuestionOptionsResponseDto getQuestionDetails(Long id) {
-        return repository.getQuestionDetails(id);
+    public QuestionOptionsRequestDto getQuestionDetails(Long questionId) {
+        return repository.getQuestionDetails(questionId);
     }
 
     @Override
-    public List<QuestionResponseDto> getQuestions(String questionType) {
+    public List<Question> getQuestions(QuestionTypes questionType) {
         return repository.getQuestions(questionType);
     }
 
     @Override
-    public List<QuestionResponseDto> getQuestions(QuestionStatus status) {
+    public List<Question> getQuestions(QuestionStatus status) {
         return repository.getQuestions(status);
     }
 

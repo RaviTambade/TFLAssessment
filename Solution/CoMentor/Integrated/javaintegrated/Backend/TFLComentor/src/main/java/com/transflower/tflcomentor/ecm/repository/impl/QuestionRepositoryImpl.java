@@ -16,9 +16,9 @@ import org.springframework.stereotype.Repository;
 
 import com.transflower.tflcomentor.configuration.DBConfig;
 import com.transflower.tflcomentor.ecm.dto.request.QuestionOptionsRequestDto;
-import com.transflower.tflcomentor.ecm.dto.response.QuestionOptionsResponseDto;
 import com.transflower.tflcomentor.ecm.dto.response.QuestionResponseDto;
 import com.transflower.tflcomentor.ecm.entity.Question;
+import com.transflower.tflcomentor.ecm.entity.enums.DifficultyLevels;
 import com.transflower.tflcomentor.ecm.entity.enums.QuestionStatus;
 import com.transflower.tflcomentor.ecm.entity.enums.QuestionTypes;
 import com.transflower.tflcomentor.ecm.repository.QuestionRepository;
@@ -48,13 +48,7 @@ public class QuestionRepositoryImpl implements QuestionRepository {
                         rs.getTimestamp("created_at").toInstant(),
                         ZoneId.systemDefault());
                 String status = rs.getString("status");
-                return new Question(
-                        id,
-                        description,
-                        questionType,
-                        difficultyLevel,
-                        createdAt,
-                        status);
+                return new Question(id, description, questionType, DifficultyLevels.valueOf(difficultyLevel), QuestionStatus.valueOf(status));
             }
 
         } catch (Exception e) {
@@ -75,9 +69,8 @@ public class QuestionRepositoryImpl implements QuestionRepository {
                         rs.getLong("question_id"),
                         rs.getString("description"),
                         QuestionTypes.valueOf(rs.getString("question_type")),
-                        rs.getString("difficulty_level"),
-                        LocalDateTime.ofInstant(rs.getTimestamp("created_at").toInstant(), ZoneId.systemDefault()),
-                        rs.getString("status"));
+                        DifficultyLevels.valueOf(rs.getString("difficulty_level")),
+                        QuestionStatus.valueOf(rs.getString("status")));
                 list.add(q);
             }
         } catch (Exception e) {
@@ -87,21 +80,21 @@ public class QuestionRepositoryImpl implements QuestionRepository {
     }
 
     @Override
-    public List<Question> getQuestionsByDifficulty(String difficulty) {
+    public List<Question> getQuestionsByDifficulty(DifficultyLevels difficulty) {
         List<Question> list = new ArrayList<>();
         try (Connection connection = getConnection()) {
             String query = "SELECT * FROM questions WHERE difficulty_level = ?";
             PreparedStatement statement = connection.prepareStatement(query);
-            statement.setString(1, difficulty);
+            statement.setString(1, difficulty.toString());
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
                 Question q = new Question(
                         rs.getLong("question_id"),
                         rs.getString("description"),
                         QuestionTypes.valueOf(rs.getString("question_type")),
-                        rs.getString("difficulty_level"),
-                        LocalDateTime.ofInstant(rs.getTimestamp("created_at").toInstant(), ZoneId.systemDefault()),
-                        rs.getString("status"));
+                        DifficultyLevels.valueOf(rs.getString("difficulty_level")),
+                        QuestionStatus.valueOf(rs.getString("status"))
+                );
                 list.add(q);
             }
 
@@ -112,7 +105,7 @@ public class QuestionRepositoryImpl implements QuestionRepository {
     }
 
     @Override
-    public List<QuestionResponseDto> getQuestions(String questionType) {
+    public List<Question> getQuestions(QuestionTypes questionType) {
 
         String sql = """
                 SELECT question_id, question_type, description
@@ -121,20 +114,20 @@ public class QuestionRepositoryImpl implements QuestionRepository {
                 ORDER BY question_id
                 """;
 
-        try (Connection connection = getConnection(); PreparedStatement statement = connection.prepareStatement(sql)) {
+        try (Connection connection = getConnection();
+        PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, questionType.toString());
 
             try (ResultSet rs = statement.executeQuery()) {
-                List<QuestionResponseDto> results = new ArrayList<>();
+                List<Question> results = new ArrayList<>();
 
                 while (rs.next()) {
-                    QuestionResponseDto question = new QuestionResponseDto();
+                    Question question = new Question();
                     question.setQuestionId(rs.getLong("question_id"));
                     question.setDescription(rs.getString("description"));
-                    question.setQuestionType(rs.getString("question_type"));
-                    question.setDifficultyLevel(rs.getString("difficulty_level"));
-                    question.setQuestionStatus(rs.getString("status"));
-
+                    question.setQuestionType(QuestionTypes.valueOf(rs.getString("question_type")));
+                    question.setDifficultyLevel(DifficultyLevels.valueOf(rs.getString("difficulty_level")));
+                    question.setQuestionStatus(QuestionStatus.valueOf(rs.getString("status")));
                     results.add(question);
                 }
                 return results;
@@ -152,11 +145,12 @@ public class QuestionRepositoryImpl implements QuestionRepository {
 
         String sql = "INSERT INTO questions(description, question_type, difficulty_level, status, created_at) VALUES (?, ?, ?, 'DRAFT', NOW())";
 
-        try (Connection connection = getConnection(); PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+        try (Connection connection = getConnection();
+        PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
             statement.setString(1, q.getDescription());
             statement.setString(2, q.getQuestionType().toString());
-            statement.setString(3, q.getDifficultyLevel());
+            statement.setString(3, q.getDifficultyLevel().toString());
 
             statement.executeUpdate();
 
@@ -173,7 +167,7 @@ public class QuestionRepositoryImpl implements QuestionRepository {
     }
 
     @Override
-            public void insertMcqOptions(Long question_ids,
+    public void insertMcqOptions(Long question_id,
             String optionA,
             String optionB,
             String optionC,
@@ -182,14 +176,15 @@ public class QuestionRepositoryImpl implements QuestionRepository {
 
         String sql = "INSERT INTO mcq_options(option_a, option_b, option_c, option_d, correct_answer, question_id) VALUES (?, ?, ?, ?, ?, ?)";
 
-        try (Connection connection = getConnection(); PreparedStatement statement = connection.prepareStatement(sql)) {
+        try (Connection connection = getConnection(); 
+        PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setString(1, optionA);
             statement.setString(2, optionB);
             statement.setString(3, optionC);
             statement.setString(4, optionD);
             statement.setString(5, correctAnswer);
-            statement.setLong(6, questionId);
+            statement.setLong(6, question_id);
 
             statement.executeUpdate();
 
@@ -240,8 +235,8 @@ public class QuestionRepositoryImpl implements QuestionRepository {
     // }
     
     @Override
-    public QuestionOptionsResponseDto getQuestionDetails(Long question_id) {
-        QuestionOptionsResponseDto dto = new QuestionOptionsResponseDto();
+    public QuestionOptionsRequestDto getQuestionDetails(Long question_id) {
+        QuestionOptionsRequestDto dto = new QuestionOptionsRequestDto();
         try (Connection connection = getConnection()) {
             String sql = "SELECT * FROM questions WHERE question_id=?";
             PreparedStatement statement = connection.prepareStatement(sql);
@@ -310,24 +305,26 @@ public class QuestionRepositoryImpl implements QuestionRepository {
     }
 
     @Override
-    public List<QuestionResponseDto> getQuestions(QuestionStatus status) {
-        List<QuestionResponseDto> list = new ArrayList<>();
+    public List<Question> getQuestions(QuestionStatus status) {
+        List<Question> list = new ArrayList<>();
         String sql = """
                 SELECT question_id, question_type, description, difficulty_level, status
                 FROM questions
                 WHERE status = ?
                 ORDER BY question_id
                 """;
-        try (Connection connection = getConnection(); PreparedStatement statement = connection.prepareStatement(sql)) {
+        try (Connection connection = getConnection(); 
+        PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, status.name());
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
-                QuestionResponseDto dto = new QuestionResponseDto();
-                dto.setQuestionId(rs.getLong("question_id"));
-                dto.setDescription(rs.getString("description"));
-                dto.setQuestionType(rs.getString("question_type"));
-                dto.setQuestionStatus(rs.getString("status"));
-                list.add(dto);
+                Question question = new Question();
+                question.setQuestionId(rs.getLong("question_id"));
+                question.setDescription(rs.getString("description"));
+                question.setQuestionType(QuestionTypes.valueOf(rs.getString("question_type")));
+                question.setDifficultyLevel(DifficultyLevels.valueOf(rs.getString("difficulty_level")));
+                question.setQuestionStatus(QuestionStatus.valueOf(rs.getString("status")));
+                list.add(question);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -369,8 +366,8 @@ public class QuestionRepositoryImpl implements QuestionRepository {
     }
 
     @Override
-    public List<QuestionResponseDto> getQuestions(LocalDate fromDate, LocalDate toDate) {
-        List<QuestionResponseDto> list = new ArrayList<>();
+    public List<Question> getQuestions(LocalDate fromDate, LocalDate toDate) {
+        List<Question> list = new ArrayList<>();
         try (Connection connection = getConnection()) {
             String sql = "SELECT * FROM questions WHERE DATE(created_at) BETWEEN ? AND ?";
             PreparedStatement statement = connection.prepareStatement(sql);
@@ -378,16 +375,13 @@ public class QuestionRepositoryImpl implements QuestionRepository {
             statement.setDate(2, Date.valueOf(toDate));
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
-                QuestionResponseDto dto = new QuestionResponseDto();
-                dto.setQuestionId(rs.getLong("question_id"));
-                dto.setDescription(rs.getString("description"));
-                dto.setQuestionType(rs.getString("question_type"));
-                dto.setDifficultyLevel(rs.getString("difficulty_level"));
-                dto.setQuestionStatus(rs.getString("status"));
-                dto.setCreatedAt(
-                        rs.getTimestamp("created_at").toLocalDateTime()
+                Question question = new Question();
+                question.setQuestionId(rs.getLong("question_id"));
+                question.setDescription(rs.getString("description"));
+                question.setQuestionType(QuestionTypes.valueOf(rs.getString("question_type")));
+                question.setCreatedAt(rs.getTimestamp("created_at").toLocalDateTime()
                 );
-                list.add(dto);
+                list.add(question);
             }
         } catch (Exception e) {
             e.printStackTrace();
