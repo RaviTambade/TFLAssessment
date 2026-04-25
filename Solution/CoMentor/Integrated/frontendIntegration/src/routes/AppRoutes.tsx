@@ -20,8 +20,8 @@ import ViewRuntimes from "@/components/assessment/skilltaxonomy/ViewRuntimes";
 import AddConcept from "@/components/assessment/skilltaxonomy/AddConcept";
 import UpcomingAssessment from "../components/assessment/assessmentOrchestrator/UpcomingAssessment";
 import DeleteAssessment from "@/components/assessment/assessmentOrchestrator/DeleteAssessment";
-
-
+import QuestionsByDifficulty from "@/components/assessment/evaluationcontent/QuestionByDifficulty";
+import ProjectByMentee from "@/components/assessment/evaluationcontent/ProjectByMentee";
 
 function AppRoutes() {
   return (
@@ -67,6 +67,8 @@ function AppRoutes() {
           <Route index element={<Assessment />} />
            <Route path="upcoming-assessment" element={<UpcomingAssessment />} />
             <Route path="delete-assessment" element={<DeleteAssessment />} />
+            <Route path="evaluationcontent/questionbydifficulty" element={<QuestionsByDifficulty />} />
+            <Route path="evaluationcontent/projectbymentee" element={<ProjectByMentee />} />
         </Routes>
       </main>
     </div>

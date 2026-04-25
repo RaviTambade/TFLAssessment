@@ -17,8 +17,9 @@ import org.springframework.stereotype.Repository;
 import com.transflower.tflcomentor.configuration.DBConfig;
 import com.transflower.tflcomentor.ecm.dto.request.QuestionOptionsRequestDto;
 import com.transflower.tflcomentor.ecm.dto.response.QuestionOptionsResponseDto;
-import com.transflower.tflcomentor.ecm.dto.response.QuestionResponseDto;
+import com.transflower.tflcomentor.ecm.dto.response.QuestionResponseDTO;
 import com.transflower.tflcomentor.ecm.entity.Question;
+import com.transflower.tflcomentor.ecm.entity.enums.DifficultyLevels;
 import com.transflower.tflcomentor.ecm.entity.enums.QuestionStatus;
 import com.transflower.tflcomentor.ecm.entity.enums.QuestionTypes;
 import com.transflower.tflcomentor.ecm.repository.QuestionRepository;
@@ -112,7 +113,7 @@ public class QuestionRepositoryImpl implements QuestionRepository {
     }
 
     @Override
-    public List<QuestionResponseDto> getQuestions(String questionType) {
+    public List<QuestionResponseDTO> getQuestions(String questionType) {
 
         String sql = """
                 SELECT question_id, question_type, description
@@ -125,10 +126,10 @@ public class QuestionRepositoryImpl implements QuestionRepository {
             statement.setString(1, questionType.toString());
 
             try (ResultSet rs = statement.executeQuery()) {
-                List<QuestionResponseDto> results = new ArrayList<>();
+                List<QuestionResponseDTO> results = new ArrayList<>();
 
                 while (rs.next()) {
-                    QuestionResponseDto question = new QuestionResponseDto();
+                    QuestionResponseDTO question = new QuestionResponseDTO();
                     question.setQuestionId(rs.getLong("question_id"));
                     question.setDescription(rs.getString("description"));
                     question.setQuestionType(rs.getString("question_type"));
@@ -426,6 +427,18 @@ public class QuestionRepositoryImpl implements QuestionRepository {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public List<Question> getQuestionsByDifficulty(DifficultyLevels difficulty) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getQuestionsByDifficulty'");
+    }
+
+    @Override
+    public List<Question> getQuestions(QuestionTypes questionType) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getQuestions'");
     }
 
 }

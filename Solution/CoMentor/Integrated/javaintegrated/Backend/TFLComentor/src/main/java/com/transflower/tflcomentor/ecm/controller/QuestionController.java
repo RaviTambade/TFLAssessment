@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.transflower.tflcomentor.ecm.dto.request.QuestionDto;
 import com.transflower.tflcomentor.ecm.dto.request.QuestionOptionsRequestDto;
-import com.transflower.tflcomentor.ecm.dto.response.QuestionResponseDto;
 import com.transflower.tflcomentor.ecm.dto.response.QuestionOptionsResponseDto;
+import com.transflower.tflcomentor.ecm.dto.response.QuestionResponseDTO;
 import com.transflower.tflcomentor.ecm.entity.Question;
 import com.transflower.tflcomentor.ecm.entity.enums.QuestionStatus;
 import com.transflower.tflcomentor.ecm.service.QuestionService;
@@ -54,10 +54,10 @@ public class QuestionController {
 
     // @GetMapping
     // public List<Question> getAll() {
-    //     return service.getAllQuestions();
+    // return service.getAllQuestions();
     // }
     @GetMapping("/drafts")
-    public List<QuestionResponseDto> getDraft() {
+    public List<QuestionResponseDTO> getDraft() {
         return service.getQuestions("Draft");
     }
 
@@ -86,13 +86,13 @@ public class QuestionController {
     }
 
     @GetMapping("/recent")
-    public List<QuestionResponseDto> getByDate(@RequestParam String fromDate,@RequestParam String toDate) {
-        return service.getQuestions(LocalDate.parse(fromDate),LocalDate.parse(toDate));
+    public List<QuestionResponseDTO> getByDate(@RequestParam String fromDate, @RequestParam String toDate) {
+        return service.getQuestions(LocalDate.parse(fromDate), LocalDate.parse(toDate));
     }
-    
+
     // @GetMapping("/recent/list")
     // public List<QuestionResponse> getRecentList() {
-    //     return service.getRecentQuestionList();
+    // return service.getRecentQuestionList();
     // }
     @GetMapping("/details/{question_id}")
     public QuestionOptionsResponseDto getQuestionDetailsById(@PathVariable Long question_id) {
@@ -106,12 +106,12 @@ public class QuestionController {
     }
 
     @GetMapping("/type/{questionType}")
-    public List<QuestionResponseDto> getQuestionsByType(@PathVariable String questionType) {
+    public List<QuestionResponseDTO> getQuestionsByType(@PathVariable String questionType) {
         return service.getQuestions(questionType);
     }
 
     @GetMapping("/status/{questionStatus}")
-    public List<QuestionResponseDto> getQuestionsByStatus(@PathVariable String questionStatus) {
+    public List<QuestionResponseDTO> getQuestionsByStatus(@PathVariable String questionStatus) {
         return service.getQuestions(questionStatus);
     }
 

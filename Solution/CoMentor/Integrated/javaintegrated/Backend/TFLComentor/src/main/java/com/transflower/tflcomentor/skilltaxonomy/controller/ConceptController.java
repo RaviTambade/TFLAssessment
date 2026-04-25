@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.transflower.tflcomentor.skilltaxonomy.entity.Concept;
-import com.transflower.tflcomentor.skilltaxonomy.service.ConceptService;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
