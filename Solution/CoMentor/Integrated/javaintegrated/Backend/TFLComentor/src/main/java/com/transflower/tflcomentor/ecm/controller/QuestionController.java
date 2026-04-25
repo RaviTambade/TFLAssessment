@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -18,7 +19,6 @@ import com.transflower.tflcomentor.ecm.dto.request.QuestionOptionsRequestDto;
 import com.transflower.tflcomentor.ecm.entity.Question;
 import com.transflower.tflcomentor.ecm.entity.enums.DifficultyLevels;
 import com.transflower.tflcomentor.ecm.entity.enums.QuestionStatus;
-import com.transflower.tflcomentor.ecm.entity.enums.QuestionTypes;
 import com.transflower.tflcomentor.ecm.service.QuestionService;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -67,27 +67,21 @@ public class QuestionController {
 
     @PutMapping("/{question_id}/reject")
     public String rejectQuestionById(@PathVariable Long question_id) {
-        service.updateQuestionStatus(question_id, QuestionStatus.REJECTED);
+        service.updateQuestionStatus(question_id, QuestionStatus.INACTIVE);
         return "Question Rejected Successfully";
     }
 
-    @PostMapping("/approve-selected")
-    public String approveSelectedQuestions(@RequestBody List<Long> questionId) {
-        service.updateQuestionStatus(questionId, QuestionStatus.APPROVED);
-        return "Selected questions approved";
-    }
-
-    @PostMapping("/reject-selected")
-    public String rejectSelectedQuestions(@RequestBody List<Long> questionId) {
-        service.updateQuestionStatus(questionId, QuestionStatus.REJECTED);
-        return "Selected questions rejected";
+    @PatchMapping("/status/{status}")
+    public String updateQuestionStatus(@PathVariable QuestionStatus status, @RequestBody List<Long> questionIds) {
+        service.updateQuestionStatus(questionIds, status);
+        return "Question status updated successfully";
     }
 
     @GetMapping("/recent")
     public List<Question> getByDate(@RequestParam LocalDate fromDate, @RequestParam LocalDate toDate) {
         return service.getQuestions(fromDate, toDate);
     }
-    
+
     // @GetMapping("/recent/list")
     // public List<QuestionResponse> getRecentList() {
     //     return service.getRecentQuestionList();
@@ -101,11 +95,6 @@ public class QuestionController {
     public String updateQuestion(@PathVariable Long question_id, @RequestBody QuestionOptionsRequestDto dto) {
         service.updateQuestionById(question_id, dto);
         return "Question Updated Successfully";
-    }
-
-    @GetMapping("/type/{questionType}")
-    public List<Question> getQuestionsByType(@PathVariable QuestionTypes questionType) {
-        return service.getQuestions(questionType);
     }
 
     @GetMapping("/status/{questionStatus}")

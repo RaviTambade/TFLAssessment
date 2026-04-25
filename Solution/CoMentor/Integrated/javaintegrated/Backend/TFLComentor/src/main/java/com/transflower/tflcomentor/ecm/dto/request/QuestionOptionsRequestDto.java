@@ -1,13 +1,18 @@
 package com.transflower.tflcomentor.ecm.dto.request;
 
+import com.transflower.tflcomentor.ecm.entity.Question;
+import com.transflower.tflcomentor.ecm.entity.enums.QuestionTypes;
+import com.transflower.tflcomentor.ecm.entity.enums.DifficultyLevels;
+import com.transflower.tflcomentor.ecm.entity.enums.QuestionStatus;
+
 
 
 public class QuestionOptionsRequestDto {
     private long questionId;
     private String description;
-    private String questionType;
-    private String difficultyLevel;
-    private String status;
+    private QuestionTypes questionType;
+    private DifficultyLevels difficultyLevel;
+    private QuestionStatus status;
     private String questionDetails;
 
     private String optionA;
@@ -24,27 +29,27 @@ public class QuestionOptionsRequestDto {
         this.description = description;
     }
 
-    public String getQuestionType() {
+    public QuestionTypes getQuestionType() {
         return questionType;
     }
 
-    public void setQuestionType(String questionType) {
+    public void setQuestionType(QuestionTypes questionType) {
         this.questionType = questionType;
     }
 
-    public String getDifficultyLevel() {
+    public DifficultyLevels getDifficultyLevel() {
         return difficultyLevel;
     }
 
-    public void setDifficultyLevel(String difficultyLevel) {
+    public void setDifficultyLevel(DifficultyLevels difficultyLevel) {
         this.difficultyLevel = difficultyLevel;
     }
 
-    public String getStatus() {
+    public QuestionStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(QuestionStatus status) {
         this.status = status;
     }
 
