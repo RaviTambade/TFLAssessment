@@ -19,7 +19,6 @@ import com.transflower.tflcomentor.ecm.dto.QuestionOptionsRequestDto;
 import com.transflower.tflcomentor.ecm.entity.Question;
 import com.transflower.tflcomentor.ecm.entity.enums.DifficultyLevel;
 import com.transflower.tflcomentor.ecm.entity.enums.QuestionStatus;
-import com.transflower.tflcomentor.ecm.entity.enums.QuestionType;
 import com.transflower.tflcomentor.ecm.service.QuestionService;
 
 
@@ -49,16 +48,15 @@ public class QuestionController {
         return service.getQuestionsByDifficulty(level);
     }
 
-    @PostMapping()
+    @PostMapping("concept/{conceptId}/framework/{frameworkId}")
     // http://localhost:8080/api/questions
-    public String create(@RequestBody QuestionOptionsRequestDto dto) {
-        service.createQuestionWithOptions(dto);
-        return "Question with Options Saved!";
+    public Long create(@RequestBody QuestionOptionsRequestDto dto,@PathVariable int conceptId, @PathVariable int frameworkId) {
+        return service.createQuestionWithOptions(dto,conceptId,frameworkId);
     }
 
     // @GetMapping
     // public List<Question> getAll() {
-    //     return service.getAllQuestions();
+    // return service.getAllQuestions();
     // }
     @GetMapping("/drafts")
     // http://localhost:8080/api/questions/drafts
@@ -88,8 +86,9 @@ public class QuestionController {
 
     // @GetMapping("/recent/list")
     // public List<QuestionResponse> getRecentList() {
-    //     return service.getRecentQuestionList();
+    // return service.getRecentQuestionList();
     // }
+
     @GetMapping("/{question_id}/details")
     //http://localhost:8080/api/questions/1/details
     public QuestionOptionsRequestDto getQuestionDetailsById(@PathVariable Long question_id) {

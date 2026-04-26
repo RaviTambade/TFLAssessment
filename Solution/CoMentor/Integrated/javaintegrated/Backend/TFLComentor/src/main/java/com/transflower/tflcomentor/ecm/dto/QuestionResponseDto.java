@@ -6,9 +6,8 @@ import com.transflower.tflcomentor.ecm.entity.enums.DifficultyLevel;
 import com.transflower.tflcomentor.ecm.entity.enums.QuestionStatus;
 import com.transflower.tflcomentor.ecm.entity.enums.QuestionType;
 
-
-
 public class QuestionResponseDto {
+
     private Long questionId;
     private String description;
     private QuestionType questionType;
@@ -28,9 +27,6 @@ public class QuestionResponseDto {
         this.status = status;
     }
 
-    
-
-    // Getters and Setters
     public Long getQuestionId() {
         return questionId;
     }

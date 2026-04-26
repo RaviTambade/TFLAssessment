@@ -6,7 +6,7 @@ namespace backend.Services.Interfaces;
 
 public interface IAssessmentsService
 {
-    Task<List<UpcomingAssessmentDto>> GetAllUpcomingAssessmentsService(long userId);
+    Task<List<UpcomingAssessmentDto>> GetAllUpcomingAssessmentsService(long userId ,DateTime fromDate, DateTime toDate);
     Task<List<AllAssessmentDto>> GetAssessments();
      Task<bool> DeactivateAssessment(long id);
      Task<bool> RestoreAssessment(long id);

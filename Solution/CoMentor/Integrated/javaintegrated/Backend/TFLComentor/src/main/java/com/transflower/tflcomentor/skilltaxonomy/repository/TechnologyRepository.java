@@ -10,6 +10,7 @@ import com.transflower.tflcomentor.skilltaxonomy.entity.Runtime;
 import com.transflower.tflcomentor.skilltaxonomy.entity.Framework;
 import com.transflower.tflcomentor.skilltaxonomy.entity.Language;
 import com.transflower.tflcomentor.skilltaxonomy.entity.Layer;
+import com.transflower.tflcomentor.skilltaxonomy.entity.Runtime;
 
 public interface TechnologyRepository {
     List<Concept> getAllConcepts();
@@ -33,4 +34,5 @@ public interface TechnologyRepository {
     List<Runtime> getAllRuntimes();
     Runtime getRuntimeById(Long id);
     // List<RuntimeSummaryResponseDto> getAllRuntimeSummaries();
+    List<Framework> getAllFrameworksByLanguageAndLayer(int languageId, int layerId);
 }

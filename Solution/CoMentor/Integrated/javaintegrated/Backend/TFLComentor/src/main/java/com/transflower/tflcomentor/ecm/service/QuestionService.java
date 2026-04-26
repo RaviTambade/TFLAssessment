@@ -8,12 +8,13 @@ import com.transflower.tflcomentor.ecm.entity.Question;
 import com.transflower.tflcomentor.ecm.entity.enums.DifficultyLevel;
 import com.transflower.tflcomentor.ecm.entity.enums.QuestionStatus;
 import com.transflower.tflcomentor.ecm.entity.enums.QuestionType;
+import com.transflower.tflcomentor.skilltaxonomy.entity.ConceptsInFramework;
 
 public interface QuestionService {
     
-    public Long insertQuestion(Question question);
+    public Long insertQuestion(Question question,int conceptId, int frameworkId);
 
-    public Long createQuestionWithOptions(QuestionOptionsRequestDto dto);
+    public Long createQuestionWithOptions(QuestionOptionsRequestDto dto,int conceptId, int frameworkId);
 
     public Question getQuestionById(long questionId);
 
