@@ -16,8 +16,6 @@ class UsersRepository {
       WHERE u.id = ?`;
 
     this.connection.query(query, [userId], callback);
-
-
   }
 
 
