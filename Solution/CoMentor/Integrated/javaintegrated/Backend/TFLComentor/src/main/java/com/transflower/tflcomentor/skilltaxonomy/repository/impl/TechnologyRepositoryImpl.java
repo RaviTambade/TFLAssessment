@@ -1,7 +1,7 @@
 package com.transflower.tflcomentor.skilltaxonomy.repository.impl;
 
 import java.sql.Statement;
-import java.security.Timestamp;
+import java.sql.Timestamp;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -22,6 +22,7 @@ import com.transflower.tflcomentor.skilltaxonomy.entity.Concept;
 import com.transflower.tflcomentor.skilltaxonomy.entity.Framework;
 import com.transflower.tflcomentor.skilltaxonomy.entity.Language;
 import com.transflower.tflcomentor.skilltaxonomy.entity.Layer;
+import com.transflower.tflcomentor.skilltaxonomy.entity.Runtime;
 import com.transflower.tflcomentor.skilltaxonomy.repository.TechnologyRepository;
 
 @Repository
@@ -191,6 +192,11 @@ public class TechnologyRepositoryImpl implements TechnologyRepository {
             e.printStackTrace();
             return new ArrayList<>();
         }
+    }
+
+    @Override
+    public List<Framework> getAllFrameworksByLanguageAndLayer(int languageId, int layerId) {
+        return getAllFrameworks(languageId, layerId);
     }
 
     @Override

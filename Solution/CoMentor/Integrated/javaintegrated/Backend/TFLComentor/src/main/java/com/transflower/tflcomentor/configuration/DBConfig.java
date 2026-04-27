@@ -3,24 +3,34 @@ package com.transflower.tflcomentor.configuration;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 
 @Configuration
+@PropertySource("classpath:application.properties")
 public class DBConfig {
 
-    private static final String URL = "jdbc:mysql://192.168.1.149:3306/tflcomentor_db";
-    private static final String USERNAME = "root";
-    private static final String PASSWORD = "password";
-    private static final String DRIVER = "com.mysql.cj.jdbc.Driver";
+    private static String URL;
+    private static String USERNAME;
+    private static String PASSWORD;
+    private static String DRIVER;
+
+    @Autowired
+    public DBConfig(Environment environment) {
+        URL = environment.getProperty("spring.datasource.url");
+        USERNAME = environment.getProperty("spring.datasource.username");
+        PASSWORD = environment.getProperty("spring.datasource.password");
+        DRIVER = environment.getProperty("spring.datasource.driver-class-name");
+    }
 
     public static Connection getConnection() {
-        Connection connection = null;
         try {
             Class.forName(DRIVER);
-            connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+            return DriverManager.getConnection(URL, USERNAME, PASSWORD);
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new IllegalStateException("Unable to connect to the database using URL=" + URL, e);
         }
-        return connection;
     }
 }

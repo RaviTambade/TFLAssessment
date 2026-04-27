@@ -8,11 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.transflower.tflcomentor.ecm.dto.QuestionOptionsRequestDto;
 import com.transflower.tflcomentor.ecm.entity.Question;
-<<<<<<< HEAD
-import com.transflower.tflcomentor.ecm.entity.enums.DifficultyLevels;
-=======
 import com.transflower.tflcomentor.ecm.entity.enums.DifficultyLevel;
->>>>>>> 85c337740a6b0aab8d9b488ab71e5535536d1d5e
 import com.transflower.tflcomentor.ecm.entity.enums.QuestionStatus;
 import com.transflower.tflcomentor.ecm.entity.enums.QuestionType;
 import com.transflower.tflcomentor.ecm.repository.QuestionRepository;
@@ -34,17 +30,9 @@ public class QuestionsServiceImpl implements QuestionService {
 
         Question question = new Question();
         question.setDescription(dto.getDescription());
-<<<<<<< HEAD
-        question.setQuestionType(
-                QuestionTypes.valueOf(dto.getQuestionType().toUpperCase())
-        );
-        question.setDifficultyLevel(DifficultyLevels.valueOf(dto.getDifficultyLevel().toUpperCase()));
-
-=======
         question.setQuestionType(dto.getQuestionType());
         question.setDifficultyLevel(dto.getDifficultyLevel());
         question.setQuestionStatus(dto.getStatus());
->>>>>>> 85c337740a6b0aab8d9b488ab71e5535536d1d5e
         Long questionId = repository.insert(question);
         if (dto.getQuestionType() == QuestionType.MCQ) {
 

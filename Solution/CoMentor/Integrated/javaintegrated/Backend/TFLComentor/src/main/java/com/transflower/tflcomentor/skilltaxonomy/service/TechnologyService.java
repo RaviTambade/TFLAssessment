@@ -6,6 +6,7 @@ import com.transflower.tflcomentor.skilltaxonomy.dto.response.RuntimeSummaryResp
 import com.transflower.tflcomentor.skilltaxonomy.entity.Concept;
 import com.transflower.tflcomentor.skilltaxonomy.entity.Framework;
 import com.transflower.tflcomentor.skilltaxonomy.entity.Layer;
+import com.transflower.tflcomentor.skilltaxonomy.entity.Runtime;
 
 public interface TechnologyService {
     List<Concept> getAllConcepts();
