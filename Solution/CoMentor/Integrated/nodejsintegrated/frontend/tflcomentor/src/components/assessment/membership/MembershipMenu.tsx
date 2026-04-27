@@ -38,7 +38,7 @@ const MembershipMenu = () => {
 
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
-                                    <div className="flex flex-col gap-4">
+                                    {/* <div className="flex flex-col gap-4">
                                         <Input
                                             type="number"
                                             placeholder="Enter User ID"
@@ -56,14 +56,16 @@ const MembershipMenu = () => {
                                            Get User Logs Details
                                             <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                                         </Button>
-                                    </div>
-{/* 
+                                    </div> */}
+
                                     <Button variant="hero" size="lg" className="group"
-                                        onClick={() => navigate("/models/membership/AdminProfile")}>
-                                        Add Role
+                                        onClick={() => navigate("/models/membership/UserActivity")}>
+                                       user activity
                                         <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                                     </Button>
 
+                                    
+{/* 
                                     <Button onClick={() => navigate("/models/membership/StudentDashboard")} variant="hero" size="lg" className="group">
                                         Update Role
                                         <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
@@ -77,8 +79,8 @@ const MembershipMenu = () => {
                                      <Button onClick={() => navigate("/models/membership/StudentDashboard")} variant="hero" size="lg" className="group">
                                        Get Specific Role
                                         <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                                    </Button> */}
-
+                                    </Button>
+ */}
 
                                 </div>
 

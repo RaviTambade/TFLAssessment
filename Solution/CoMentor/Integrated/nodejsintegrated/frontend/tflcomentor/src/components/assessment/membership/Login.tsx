@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react"
-import { useNavigate } from "react-router-dom"
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { Button } from "../../ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "../../ui/card";
@@ -7,32 +7,51 @@ import { Input } from "../../ui/input";
 import { Label } from "../../ui/label";
 import { Checkbox } from "../../ui/checkbox";
 import { Separator } from "../../ui/separator";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../../ui/select";
-import { Eye, EyeOff, Lock, User } from "lucide-react"
-import getAllRoles, { Role } from "@/services/RolesManagement/GetRoles";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../../ui/select";
+import { Eye, EyeOff, Lock, User } from "lucide-react";
+// import getAllRoles, { Role } from "@/services/RolesManagement/GetRoles";
+
+    interface Role {
+      role_id: number;
+      role_name: string;
+      description: string;
+    }
 
 const LoginPage = () => {
-  const [showPassword, setShowPassword] = useState(false)
-  const [rememberMe, setRememberMe] = useState(false)
-  const [username, setUsername] = useState("")
-  const [password, setPassword] = useState("")
+  const [showPassword, setShowPassword] = useState(false);
+  const [rememberMe, setRememberMe] = useState(false);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const [roles, setRoles] = useState<Role[]>([]);
-   const [loading, setLoading] = useState<boolean>(true);
-  const [role, setRole] = useState("")
-    const [error, setError] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(true);
+  const [role, setRole] = useState("");
+  const [error, setError] = useState<string>("");
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
-    useEffect(() => {
+  useEffect(() => {
+    const BASE_URL: string = "http://localhost:3000";
+ 
+
     const fetchRoles = async () => {
       try {
         setLoading(true);
+        const response = await fetch(`${BASE_URL}/api/roles/getAllRoles`);
 
-        const data = await getAllRoles();
-        console.log("API DATA:", data); // ✅ Debug
+      if (!response.ok) {
+        throw new Error("Failed to fetch roles");
+      }
 
-        setRoles(data);
+      const data = await response.json();
+        setRoles(data.data);
         setError("");
+        
       } catch (err) {
         console.error(err);
         setError("Failed to fetch roles");
@@ -44,99 +63,97 @@ const LoginPage = () => {
     fetchRoles();
   }, []);
 
+  const handleLogin = async () => {
+    try {
+      const res = await fetch(
+        "http://localhost:3000/api/auth/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            username,
+            password,
+            role,
+          }),
+        },
+      );
 
-    const handleLogin = async () => {
-  try {
-    const res = await fetch("http://localhost:3000/api/authentication/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        username,
-        password,
-        role,
-      }),
-    });
-
-    if (!res.ok) {
-      throw new Error("Login failed");
-    }
-
-    const data = await res.json();
-    console.log(data);
-
-    localStorage.setItem("user", JSON.stringify(data));
-    // redirect after login
-    // navigate("/models/evaluationcontent/components");
-
-  } catch (error) {
-    console.error(error);
-  }
-};
-
-
-    const handleUserLogLogin = async (userid:number) => {
-  try {
-    const res = await fetch(`http://localhost:3000/api/userlog/login/${userid}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-
-    if (!res.ok) {
-      throw new Error("user log failed");
-    }
-
-    const data = await res.json();
-    console.log(data);
-
-  } catch (error) {
-    console.error(error);
-  }
-};
-  const handleSubmit =async (e: React.FormEvent) => {
-      e.preventDefault()
-
-      if (!username.trim()) {
-        alert("Username is required")
-        return
+      if (!res.ok) {
+        throw new Error("Login failed");
       }
 
-      if (!password.trim()) {
-        alert("Password is required")
-        return
+      const data = await res.json();
+      console.log(data.data);
+
+      localStorage.setItem("user", JSON.stringify(data.data));
+      // redirect after login
+      // navigate("/models/evaluationcontent/components");
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleUserLogLogin = async (userid: number) => {
+    try {
+      const res = await fetch(
+        `http://localhost:3000/api/useractivity/login/${userid}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        },
+      );
+
+      if (!res.ok) {
+        throw new Error("user log failed");
       }
 
-      if (!role) {
-        alert("Please select a role")
-        return
+      const data = await res.json();
+      console.log(data.message);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!username.trim()) {
+      alert("Username is required");
+      return;
+    }
+
+    if (!password.trim()) {
+      alert("Password is required");
+      return;
+    }
+
+    if (!role) {
+      alert("Please select a role");
+      return;
+    }
+
+    console.log("Login →", { username, role, rememberMe });
+
+    try {
+      await handleLogin(); // wait for login complete
+
+      const user = JSON.parse(localStorage.getItem("user") || "{}");
+
+      if (user?.userid) {
+        await handleUserLogLogin(user.userid);
+        window.location.href = "/";
       }
-
-      console.log("Login →", { username, role, rememberMe })
-
-     try {
-await handleLogin();   // wait for login complete
-
-    const user = JSON.parse(localStorage.getItem("user") || "{}");
-
-    if (user?.userid) {
-      await handleUserLogLogin(user.userid);
-      window.location.href="/"
+    } catch (error) {
+      console.error("Submit Error:", error);
     }
-
-
-  } catch (error) {
-    console.error("Submit Error:", error);
-  }
-    
-    }
+  };
 
   return (
     <div className="min-h-screen bg-[var(--gradient-hero)] flex items-center justify-center px-4 select-none">
       <div className="w-full max-w-md">
-
         {/* Heading */}
         <div className="text-center mb-8">
           <h1 className="text-4xl sm:text-5xl font-bold leading-tight pb-2 bg-gradient-accent bg-clip-text text-transparent">
@@ -150,17 +167,12 @@ await handleLogin();   // wait for login complete
 
         {/* Card */}
         <Card className="bg-card/50 backdrop-blur-sm border border-border shadow-[var(--shadow-elegant)]">
-          
           <CardHeader>
-            <CardTitle className="text-center text-xl">
-              Welcome Back
-            </CardTitle>
+            <CardTitle className="text-center text-xl">Welcome Back</CardTitle>
           </CardHeader>
 
           <CardContent className="p-6 sm:p-8">
-
             <form onSubmit={handleSubmit} className="space-y-5">
-
               {/* Username */}
               <div className="space-y-2">
                 <Label htmlFor="username">Username</Label>
@@ -191,14 +203,11 @@ await handleLogin();   // wait for login complete
                   </SelectTrigger>
 
                   <SelectContent>
-                    {
-                      roles.map((r) => (
-                        <SelectItem key={r.role_id} value={r.role_name}>
-                          {r.role_name}
-                        </SelectItem>
-                      ))
-                    }
-
+                    {roles.map((r) => (
+                      <SelectItem key={r.role_id} value={r.role_name}>
+                        {r.role_name}
+                      </SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
               </div>
@@ -234,11 +243,9 @@ await handleLogin();   // wait for login complete
                   </button>
                 </div>
               </div>
-              
 
               {/* Remember + Forgot */}
               <div className="flex items-center justify-between">
-
                 <div className="flex items-center space-x-2">
                   <Checkbox
                     id="remember"
@@ -247,7 +254,10 @@ await handleLogin();   // wait for login complete
                       setRememberMe(Boolean(checked))
                     }
                   />
-                  <Label htmlFor="remember" className="text-sm text-muted-foreground">
+                  <Label
+                    htmlFor="remember"
+                    className="text-sm text-muted-foreground"
+                  >
                     Remember me
                   </Label>
                 </div>
@@ -263,7 +273,6 @@ await handleLogin();   // wait for login complete
               <Button type="submit" variant="hero" size="lg" className="w-full">
                 Login
               </Button>
-
             </form>
 
             {/* Divider */}
@@ -305,13 +314,11 @@ await handleLogin();   // wait for login complete
                 Register Now
               </button>
             </p>
-
           </CardContent>
         </Card>
-
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default LoginPage
+export default LoginPage;
