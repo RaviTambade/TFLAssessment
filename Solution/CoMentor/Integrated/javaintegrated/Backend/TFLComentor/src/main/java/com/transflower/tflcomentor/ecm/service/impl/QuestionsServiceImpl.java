@@ -13,6 +13,7 @@ import com.transflower.tflcomentor.ecm.entity.enums.QuestionStatus;
 import com.transflower.tflcomentor.ecm.entity.enums.QuestionType;
 import com.transflower.tflcomentor.ecm.repository.QuestionRepository;
 import com.transflower.tflcomentor.ecm.service.QuestionService;
+import com.transflower.tflcomentor.skilltaxonomy.entity.ConceptsInFramework;
 
 @Service
 public class QuestionsServiceImpl implements QuestionService {
@@ -21,19 +22,19 @@ public class QuestionsServiceImpl implements QuestionService {
     private QuestionRepository repository;
 
     @Override
-    public Long insertQuestion(Question question) {
-        return repository.insert(question);
+    public Long insertQuestion(Question question,int conceptId, int frameworkId) {
+        return repository.insert(question,conceptId,frameworkId);
     }
 
     @Override
-    public Long createQuestionWithOptions(QuestionOptionsRequestDto dto) {
+    public Long createQuestionWithOptions(QuestionOptionsRequestDto dto,int conceptId, int frameworkId) {
 
         Question question = new Question();
         question.setDescription(dto.getDescription());
         question.setQuestionType(dto.getQuestionType());
         question.setDifficultyLevel(dto.getDifficultyLevel());
         question.setQuestionStatus(dto.getStatus());
-        Long questionId = repository.insert(question);
+        Long questionId = repository.insert(question,conceptId, frameworkId);
         if (dto.getQuestionType() == QuestionType.MCQ) {
 
             repository.insertMcqOptions(

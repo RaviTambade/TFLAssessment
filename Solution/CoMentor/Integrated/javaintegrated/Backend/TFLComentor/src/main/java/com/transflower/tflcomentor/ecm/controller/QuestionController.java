@@ -49,11 +49,10 @@ public class QuestionController {
         return service.getQuestionsByDifficulty(level);
     }
 
-    @PostMapping()
+    @PostMapping("concept/{conceptId}/framework/{frameworkId}")
     // http://localhost:8080/api/questions
-    public String create(@RequestBody QuestionOptionsRequestDto dto) {
-        service.createQuestionWithOptions(dto);
-        return "Question with Options Saved!";
+    public Long create(@RequestBody QuestionOptionsRequestDto dto,@PathVariable int conceptId, @PathVariable int frameworkId) {
+        return service.createQuestionWithOptions(dto,conceptId,frameworkId);
     }
 
     // @GetMapping
