@@ -7,7 +7,8 @@ import { ArrowRight } from "lucide-react";
 const buttons = [
   { label: "Evaluation Content Management", path: "/models/evaluationcontent/componentmenu" },
   { label: "Skill Taxonomy", path: "/models/skilltaxonomy/skilltaxonomy-menu" },
-  { label: "Assessment Orchestrator", path: "/models/assessmentorchestrator/assessmentorchestrator-menu" }
+  { label: "Assessment Orchestrator", path: "/models/assessmentorchestrator/assessmentorchestrator-menu" },
+  { label: "Membership", path: "/models/membership/membership-menu" },
 ];
 
 const Assessment = () => {

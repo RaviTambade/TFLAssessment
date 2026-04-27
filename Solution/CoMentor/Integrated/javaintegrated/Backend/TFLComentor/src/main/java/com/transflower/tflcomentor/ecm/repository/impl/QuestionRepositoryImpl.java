@@ -138,10 +138,10 @@ public class QuestionRepositoryImpl implements QuestionRepository {
     }
 
     @Override
-    public Long insert(Question q) {
+    public Long insert(Question q,int conceptId, int frameworkId) {
 
         Long questionId = null;
-
+        Long frameworkConceptId = getFrameworkConceptId(conceptId, frameworkId);
         String sql = "INSERT INTO questions(description, question_type, difficulty_level, status, created_at) VALUES (?, ?, ?, 'DRAFT', NOW())";
 
         try (Connection connection = getConnection(); PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
@@ -156,7 +156,7 @@ public class QuestionRepositoryImpl implements QuestionRepository {
             if (rs.next()) {
                 questionId = rs.getLong(1);
             }
-
+            insertQuestionFrameworkConceptMapping(questionId, frameworkConceptId);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -414,6 +414,32 @@ public class QuestionRepositoryImpl implements QuestionRepository {
         }
     }
 
-   
+    @Override
+    public Long getFrameworkConceptId(int conceptId, int frameworkId) {
+        String sql = "SELECT id FROM framework_concepts WHERE concept_id = ? AND framework_id = ?";
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, conceptId);
+            statement.setInt(2, frameworkId);
+            ResultSet rs = statement.executeQuery();
+            if (rs.next()) {
+                return rs.getLong("id");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        throw new RuntimeException("Framework concept not found for conceptId: " + conceptId + " and frameworkId: " + frameworkId);
+    }
 
+    @Override
+    public void insertQuestionFrameworkConceptMapping(Long questionId, Long frameworkConceptId) {
+        String sql = "INSERT INTO question_framework_concepts(question_id, framework_concepts_id) VALUES (?, ?)";
+        try (Connection connection = getConnection(); PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setLong(1, questionId);
+            statement.setLong(2, frameworkConceptId);
+            statement.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

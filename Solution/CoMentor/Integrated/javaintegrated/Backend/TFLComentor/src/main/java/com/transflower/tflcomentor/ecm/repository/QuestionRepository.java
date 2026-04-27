@@ -10,13 +10,14 @@ import com.transflower.tflcomentor.ecm.entity.Question;
 import com.transflower.tflcomentor.ecm.entity.enums.DifficultyLevel;
 import com.transflower.tflcomentor.ecm.entity.enums.QuestionStatus;
 import com.transflower.tflcomentor.ecm.entity.enums.QuestionType;
+import com.transflower.tflcomentor.skilltaxonomy.entity.ConceptsInFramework;
 
 public interface QuestionRepository {
     
     Question getQuestionById(long question_id);
     List<Question> getAllQuestions();
     List<Question> getQuestionsByDifficulty(DifficultyLevel difficulty);
-    Long insert(Question q);
+    Long insert(Question q,int conceptId, int frameworkId);
     void insertMcqOptions(Long question_id,
             String optionA,
             String optionB,
@@ -36,7 +37,8 @@ public interface QuestionRepository {
     void updateQuestionStatus(long  question_id, QuestionStatus status);
     // Questions updateQuestion(Questions question);
     List<Question> getQuestionsByConceptId(Long conceptId);
-    
+    void insertQuestionFrameworkConceptMapping(Long questionId, Long frameworkConceptId);
+    Long getFrameworkConceptId(int conceptId, int frameworkId);
 }
 
 
