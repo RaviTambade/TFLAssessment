@@ -6,6 +6,7 @@ import com.transflower.tflcomentor.skilltaxonomy.dto.response.LanguageResponseDt
 import com.transflower.tflcomentor.skilltaxonomy.dto.response.RuntimeResponseDTO;
 import com.transflower.tflcomentor.skilltaxonomy.dto.response.RuntimeSummaryResponseDto;
 import com.transflower.tflcomentor.skilltaxonomy.entity.Concept;
+import com.transflower.tflcomentor.skilltaxonomy.entity.Runtime;
 import com.transflower.tflcomentor.skilltaxonomy.entity.Framework;
 import com.transflower.tflcomentor.skilltaxonomy.entity.Language;
 import com.transflower.tflcomentor.skilltaxonomy.entity.Layer;

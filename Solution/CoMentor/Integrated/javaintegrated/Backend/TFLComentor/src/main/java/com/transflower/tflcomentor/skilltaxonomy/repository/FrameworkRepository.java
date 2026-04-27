@@ -1,13 +1,13 @@
-package com.transflower.tflcomentor.skilltaxonomy.repository;
+// package com.transflower.tflcomentor.skilltaxonomy.repository;
 
-import java.util.List;
+// import java.util.List;
 
-import org.springframework.stereotype.Repository;
+// import org.springframework.stereotype.Repository;
 
-import com.transflower.tflcomentor.skilltaxonomy.entity.Framework;
+// import com.transflower.tflcomentor.skilltaxonomy.entity.Framework;
 
-@Repository
-public interface FrameworkRepository {
+// @Repository
+// public interface FrameworkRepository {
     
-   public List<Framework> getAllFrameworksByLanguageAndLayer(int languageId, int layerId);
-}
+//    public List<Framework> getAllFrameworksByLanguageAndLayer(int languageId, int layerId);
+// }

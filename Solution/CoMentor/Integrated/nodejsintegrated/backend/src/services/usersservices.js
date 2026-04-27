@@ -9,7 +9,6 @@ class UsersServices {
     this.repository.getUserInformationById(Number(userId), callback);
   }
 
-
   getUserCompleteInformation(userId, callback) {
     this.repository.getUserCompleteInformation(userId, callback);
   }
@@ -82,6 +81,10 @@ class UsersServices {
         callback(null, result);
       },
     );
+  }
+
+  getAllUsers(callback) {
+    this.repository.getAllUsers(callback);
   }
 }
 

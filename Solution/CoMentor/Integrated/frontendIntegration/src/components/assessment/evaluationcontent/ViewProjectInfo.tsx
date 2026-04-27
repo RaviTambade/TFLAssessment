@@ -5,10 +5,10 @@ import { ArrowRight } from "lucide-react";
 import { useScrollAnimation } from "../../../hooks/use-scroll-animation";
 
 interface Project {
-  project_id: number;
-  project_name: string;
+  projectId: number;
+  projectName: string;
   description: string;
-  repository_url: string;
+  repositoryUrl: string;
   status: string;
 }
 
@@ -125,11 +125,11 @@ const ViewProjectInfo: React.FC = () => {
 
                     <tbody>
                       {projects.map((p, index) => (
-                        <tr key={p.project_id} className="border-b">
+                        <tr key={p.projectId} className="border-b">
                           <td className="p-2">{index + 1}</td>
 
                           <td className="p-2">
-                            {p.project_name}
+                            {p.projectName}
                           </td>
 
                           <td className="p-2">
@@ -141,7 +141,7 @@ const ViewProjectInfo: React.FC = () => {
                           <td className="p-2">
                             <Button
                               size="sm"
-                              onClick={() => handleView(p.project_id)}
+                              onClick={() => handleView(p.projectId)}
                             >
                               View <ArrowRight className="ml-1 h-4 w-4" />
                             </Button>
@@ -162,7 +162,7 @@ const ViewProjectInfo: React.FC = () => {
                   {selectedProject ? (
                     <>
                       <h3 className="text-xl font-bold mb-3">
-                        {selectedProject.project_name}
+                        {selectedProject.projectName}
                       </h3>
 
                       <p className="mb-2">
@@ -179,7 +179,7 @@ const ViewProjectInfo: React.FC = () => {
                       </p>
 
                       <a
-                        href={selectedProject.repository_url}
+                        href={selectedProject.repositoryUrl}
                         target="_blank"
                         rel="noreferrer"
                         className="text-blue-600 underline"
