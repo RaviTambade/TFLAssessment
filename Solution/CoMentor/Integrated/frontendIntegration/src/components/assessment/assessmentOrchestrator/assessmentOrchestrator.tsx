@@ -32,6 +32,16 @@ const AssessmentOrchestrator = () => {
                   All Assessment
                   <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                 </Button>
+
+                <Button
+                  variant="hero"
+                  size="lg"
+                  className="group"
+                  onClick={() => navigate("/models/create-test")}
+                >
+                  Create Test
+                  <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                </Button>
               </div>
             </CardContent>
           </div>

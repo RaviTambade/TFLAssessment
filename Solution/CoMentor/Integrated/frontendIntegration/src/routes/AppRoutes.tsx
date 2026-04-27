@@ -32,6 +32,8 @@ import RegisterPage from "@/components/assessment/membership/Register";
 import GetUserInformation from "@/components/assessment/membership/GetUserInformation";
 import UserActivity from "@/components/assessment/membership/UserActivity";
 import UserProfile from "@/components/assessment/membership/UserProfile";
+import SMECreateTest from "@/components/assessment/assessmentOrchestrator/SMECreateTest";
+
 
 
 function AppRoutes() {
@@ -80,6 +82,7 @@ function AppRoutes() {
 
           <Route index element={<Assessment />} />
           <Route path="upcoming-assessment" element={<UpcomingAssessment />} />
+          <Route path="create-test" element={<SMECreateTest />} />
           <Route path="delete-assessment" element={<DeleteAssessment />} />
           <Route path="evaluationcontent/questionbydifficulty" element={<QuestionsByDifficulty />} />
           <Route path="evaluationcontent/projectbymentee" element={<ProjectByMentee />} />
