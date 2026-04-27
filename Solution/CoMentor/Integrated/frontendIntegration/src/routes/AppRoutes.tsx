@@ -20,9 +20,9 @@ import ViewRuntimes from "@/components/assessment/skilltaxonomy/ViewRuntimes";
 import AddConcept from "@/components/assessment/skilltaxonomy/AddConcept";
 import UpcomingAssessment from "../components/assessment/assessmentOrchestrator/UpcomingAssessment";
 import DeleteAssessment from "@/components/assessment/assessmentOrchestrator/DeleteAssessment";
-import ViewProjectInfo from "@/components/assessment/evaluationcontent/ViewProjectInfo";
-import ProjectByMentee from "@/components/assessment/evaluationcontent/ProjectByMentee";
-import QuestionsByDifficulty from "@/components/assessment/evaluationcontent/QuestionByDifficulty";
+import Question from "@/components/assessment/assessmentOrchestrator/applyAssessment";
+import Result from "@/components/assessment/assessmentOrchestrator/Result";
+
 
 
 function AppRoutes() {
@@ -47,30 +47,30 @@ function AppRoutes() {
 
           {/* Assessment Orchestrator */}
           <Route path="assessmentorchestrator/assessmentorchestrator-menu" element={<AssessmentOrchestrator />} />
-          
+          <Route path="upcoming-assessment" element={<UpcomingAssessment />} />
+          <Route path="delete-assessment" element={<DeleteAssessment />} />
+          <Route path="apply-assessment" element={<Question />} />
+          <Route path="result" element={<Result />} />
+
           <Route path="skilltaxonomy/AddRuntime" element={<AddRuntime />} />
           <Route path="skilltaxonomy/ViewRuntimes" element={<ViewRuntimes />} />
+
+          <Route path="skilltaxonomy/AddRuntime" element={<AddRuntime />} />
           <Route path="skilltaxonomy/AddConcept" element={<AddConcept />} />
 
-          
+
 
           {/* Default route - shows main assessment */}
 
           <Route path="evaluationcontent/updatequestion" element={<UpdateQuestion />} />
           <Route path="evaluationcontent/questionbyconcept" element={<QuestionsByConcept />} />
           <Route path="evaluationcontent/viewquestion" element={<QuestionPage />} />
-          <Route path="/evaluationcontent/questiondetails/:question_id" element={<QuestionDetails />} />
-          <Route path="/evaluationcontent/update/:id" element={<EditQuestion />} />
-          <Route path="/evaluationcontent/edit/:id" element={<EditQuestion />} />
+          <Route path="evaluationcontent/questiondetails/:question_id" element={<QuestionDetails />} />
+          <Route path="evaluationcontent/update/:id" element={<EditQuestion />} />
+          <Route path="evaluationcontent/edit/:id" element={<EditQuestion />} />
           <Route path="evaluationcontent/insertquestion" element={<SMEInsertQuestion />} />
           <Route path="evaluationcontent/reviewquestion" element={<MentorReviewQuestion />} />
-          <Route path="evaluationcontent/viewprojectinfo" element={<ViewProjectInfo />} />  
-
           <Route index element={<Assessment />} />
-           <Route path="upcoming-assessment" element={<UpcomingAssessment />} />
-            <Route path="delete-assessment" element={<DeleteAssessment />} />
-            <Route path="evaluationcontent/questionbydifficulty" element={<QuestionsByDifficulty />} />
-            <Route path="evaluationcontent/projectbymentee" element={<ProjectByMentee />} />
         </Routes>
       </main>
     </div>
