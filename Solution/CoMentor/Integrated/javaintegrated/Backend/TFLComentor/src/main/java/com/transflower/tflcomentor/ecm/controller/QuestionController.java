@@ -58,7 +58,7 @@ public class QuestionController {
 
     // @GetMapping
     // public List<Question> getAll() {
-    //     return service.getAllQuestions();
+    // return service.getAllQuestions();
     // }
     @GetMapping("/drafts")
     // http://localhost:8080/api/questions/drafts
@@ -88,7 +88,7 @@ public class QuestionController {
 
     // @GetMapping("/recent/list")
     // public List<QuestionResponse> getRecentList() {
-    //     return service.getRecentQuestionList();
+    // return service.getRecentQuestionList();
     // }
 <<<<<<< HEAD
     @GetMapping("/{question_id}")
