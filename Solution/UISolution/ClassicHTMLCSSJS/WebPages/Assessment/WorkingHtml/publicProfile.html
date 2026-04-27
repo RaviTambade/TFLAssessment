@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Customer Profile</title>
+
+  <!-- Bootstrap CSS -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+    rel="stylesheet" />
+</head>
+
+<body class="bg-light min-vh-100 d-flex align-items-center">
+
+  <div class="container bg-white rounded-4 shadow-lg p-4 p-md-4 w-100 vh-100">
+    
+
+    <!-- Profile Header -->
+    <div class="text-center float-end  mb-4">
+      <img
+        src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
+        alt="User Avatar"
+        class="rounded-circle border border-3 border-primary mb-5 mx-5 d-block"
+        width="200"
+        height="200"
+      />
+      <h3 id="profileName" class="fw-semibold text-primary"></h3>
+      <p class="text-muted" id="profileRole">Profile</p>
+    </div>
+
+    <!-- Profile Info -->
+    <div class="row text-center justify-content-between align-items-center mt-3">
+
+  <div class="col-sm-6 col-md-3 mb-3">
+    <p class="fw-semibold mb-1">Aadhar ID</p>
+    <p class="text-secondary mb-0" id="profileAadhar"></p>
+  </div>
+
+  <div class="col-sm-6 col-md-3 mb-3">
+    <p class="fw-semibold mb-1">Full Name</p>
+    <p class="text-secondary mb-0" id="profileFullName"></p>
+  </div>
+
+  <div class="col-sm-6 col-md-3 mb-3">
+    <p class="fw-semibold mb-1">Email</p>
+    <p class="text-secondary mb-0" id="profileEmail"></p>
+  </div>
+
+  <div class="col-sm-6 col-md-3 mb-3">
+    <p class="fw-semibold mb-1">Contact Number</p>
+    <p class="text-secondary mb-0" id="profileContact"></p>
+  </div>
+
+</div>
+
+
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <script>
+    function loadUserProfile(userId) {
+      $.ajax({
+        url: `http://localhost:5238/api/UserProfile/${userId}`,
+        method: "GET",
+        success: function (data) {
+          if (!data) {
+            alert("Profile Not Found!!");
+            return;
+          }
+
+          document.getElementById("profileName").textContent =
+            data.firstname + " " + data.lastname;
+          document.getElementById("profileFullName").innerText =
+            data.firstname + " " + data.lastname;
+          document.getElementById("profileAadhar").textContent =
+            data.aadharId;
+          document.getElementById("profileEmail").textContent = data.email;
+          document.getElementById("profileContact").textContent =
+            data.contactNumber;
+        },
+        error: function (xhr, status, error) {
+          console.error("Error fetching user:", error);
+        }
+      });
+    }
+  </script>
+
+</body>
+</html>
