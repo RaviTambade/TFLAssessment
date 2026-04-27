@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Online Assessment Dashboard</title>
+<style>
+    /* Add your CSS styles here */
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+    }
+    .container {
+        max-width: 800px;
+        margin: 20px auto;
+        padding: 20px;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+    h2 {
+        margin-top: 0;
+    }
+    .assessment-list {
+        list-style-type: none;
+        padding: 0;
+    }
+    .assessment-item {
+        border-bottom: 1px solid #ccc;
+        padding: 10px 0;
+    }
+    .assessment-item:last-child {
+        border-bottom: none;
+    }
+    .assessment-name {
+        font-weight: bold;
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Online Assessment Dashboard</h2>
+
+    <ul class="assessment-list">
+        <li class="assessment-item">
+            <span class="assessment-name">HTML Basics</span>
+            <span class="assessment-status">Completed</span>
+            <span class="assessment-score">Score: 8/10</span>
+            <span class="assessment-action"><a href="#">View Details</a></span>
+        </li>
+        <li class="assessment-item">
+            <span class="assessment-name">CSS Fundamentals</span>
+            <span class="assessment-status">In Progress</span>
+            <span class="assessment-score">Score: -</span>
+            <span class="assessment-action"><a href="#">Resume</a></span>
+        </li>
+        <!-- Add more assessment items as needed -->
+    </ul>
+</div>
+
+</body>
+</html>

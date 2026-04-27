@@ -17,9 +17,9 @@ public class AssessmentController : ControllerBase
     }
 
     [HttpGet("user/{userId}")]
-    public async Task<IActionResult> GetAll(long userId)
+    public async Task<IActionResult> GetAll(long userId ,DateTime fromDate, DateTime toDate)
     {
-        var data = await _service.GetAllUpcomingAssessmentsService(userId); 
+        var data = await _service.GetAllUpcomingAssessmentsService(userId, fromDate, toDate); 
         return Ok(data);
     }
 

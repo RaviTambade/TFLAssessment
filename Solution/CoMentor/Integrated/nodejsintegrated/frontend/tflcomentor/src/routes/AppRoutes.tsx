@@ -11,6 +11,8 @@ import ChangePassword from "../components/assessment/membership/ChangePassword";
 import MembershipMenu from "@/components/assessment/membership/MembershipMenu";
 import GetUserLogDetail  from "@/components/assessment/membership/GetUserLogDetail";
 import Assessment from "../components/assessment/ComponentButtons";
+import UserActivity from "@/components/assessment/membership/UserActivity";
+import ManageUsers from "@/components/assessment/membership/ManageUsers";
 
 
 
@@ -35,7 +37,10 @@ function AppRoutes() {
           <Route path="membership/ChangePassword" element={<ChangePassword />} />
 
           <Route path="membership/MembershipMenu" element={<MembershipMenu />} />
-          <Route path="membership/UserLogDetail/:userId" element={<GetUserLogDetail />} />
+          {/* <Route path="membership/UserLogDetail/:userId" element={<GetUserLogDetail />} /> */}
+          <Route path="membership/UserActivity/" element={<UserActivity />} />
+          <Route path="membership/ManageUsers/" element={<ManageUsers />} />
+          
 
        
           {/* /models alone (empty splat) shows main assessment */}

@@ -19,8 +19,6 @@ import com.transflower.tflcomentor.skilltaxonomy.entity.Framework;
 import com.transflower.tflcomentor.skilltaxonomy.entity.Language;
 import com.transflower.tflcomentor.skilltaxonomy.entity.Layer;
 import com.transflower.tflcomentor.skilltaxonomy.entity.Runtime;
-import com.transflower.tflcomentor.skilltaxonomy.service.FrameworkService;
-import com.transflower.tflcomentor.skilltaxonomy.service.LanguageService;
 import com.transflower.tflcomentor.skilltaxonomy.service.TechnologyService;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -60,12 +58,12 @@ public class TechnologyController {
     }
 
     // Frameworks endpoints
-    @GetMapping("/frameworks")
+    @GetMapping("/frameworks")   
     public List<Framework> getAllFrameworks() {
         return technologyService.getAllFrameworks();
     }
 
-    @GetMapping("/frameworks/{id}")
+    @GetMapping("/frameworks/{id}")  
     public Framework getFrameworkById(@PathVariable Long id) {
         return technologyService.getFrameworkById(id);
     }
@@ -75,7 +73,7 @@ public class TechnologyController {
         return technologyService.getAllFrameworksByLanguageAndLayer(languageId, layerId);
     }
 
-    @GetMapping("/frameworks/languages/{languageId}")                                //**********NEW*****************/
+    @GetMapping("/frameworks/languages/{languageId}")  
     public List<Framework> getAllFrameworks(@PathVariable int languageId) {   
         return technologyService.getAllFrameworks(languageId);
     }
@@ -86,13 +84,23 @@ public class TechnologyController {
         return technologyService.getAllLayers();
     }
 
+    @GetMapping("/languages/sme/{smeId}")  
+    public List<LanguageResponseDto> getLanguagesBySmeId(@PathVariable long smeId){
+        return technologyService.getLanguagesBySmeId(smeId);
+    }
+
+    @GetMapping("/languages/runtime/{runtimeId}")
+    public List<Language> getAllLanguages(@PathVariable int runtimeId){
+        return technologyService.getAllLanguages(runtimeId);
+    }
+
     // Runtimes endpoints
     @GetMapping("/runtimes")
     public List<Runtime> getAllRuntimes() {
         return technologyService.getAllRuntimes();
     }
 
-    @GetMapping("/runtimes/{id}")
+    @GetMapping("/runtimes/{id}") //To be implemented 
     public Runtime getRuntimeById(@PathVariable Long id) {
         return technologyService.getRuntimeById(id);
     }

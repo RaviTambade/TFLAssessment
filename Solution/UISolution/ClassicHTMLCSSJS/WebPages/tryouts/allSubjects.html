@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <title>Document</title>
+</head>
+<body>
+     <script>
+
+    var subjectsUrl="http://localhost:5151/api/assessment/subjects";
+    var subjects;
+
+    $(document).ready(()=>{
+
+        $.ajax({
+        url: subjectsUrl,
+        type: 'GET',
+        contentType: 'application/json',
+
+        success: function (data) {
+            subjects = (data);
+            console.log(subjects); 
+            for(var i=0; i<=subjects.length; i++){  
+            document.write(subjects[i].id +" "+subjects[i].title+" -------");
+            }   
+        },
+        error: function (xhr, status, error) {
+            console.error(xhr.responseText);
+        }
+    });
+})
+    </script>
+</body>
+</html>

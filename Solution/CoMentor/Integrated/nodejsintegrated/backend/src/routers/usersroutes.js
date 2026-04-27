@@ -2,6 +2,7 @@ const express = require('express');
 
 const UsersRoutes = (controller) => {
   const router = express.Router();
+  router.get("/getAllUsers", controller.getAllUsers.bind(controller));
   
   router.get("/:userId", controller.getUserInformationById.bind(controller));
   router.get("/:userId/complete", controller.getUserCompleteInformation.bind(controller));
@@ -12,7 +13,6 @@ const UsersRoutes = (controller) => {
   router.patch("/:userId/professional-info", controller.updateProfessional.bind(controller));
   router.patch("/:userId/academic-info", controller.updateAcademic.bind(controller));
   router.patch("/:userId/status", controller.updateUserStatus.bind(controller));
-
   return router;
 };
 
