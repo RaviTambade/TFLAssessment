@@ -7,18 +7,20 @@ import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 import { Skeleton } from "@/components/ui/skeleton";
 
 const GetUserLogDetail: React.FC = () => {
-  const { userId } = useParams<{ userId: string }>();
+  const { userId: routeUserId } = useParams<{ userId: string }>();
   const { ref, isVisible } = useScrollAnimation();
+  const [userId, setUserId] = useState<string>(routeUserId ?? '');
   const [userLogs, setUserLogs] = useState<UserLog[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+  const [inputValue, setInputValue] = useState<string>(routeUserId ?? '');
 
   useEffect(() => {
     const fetchUserLogs = async () => {
       if (!userId) return;
       try {
         setLoading(true);
-        const logs = await getUserLogDetails(parseInt(userId));
+        const logs = await getUserLogDetails(parseInt(userId, 10));
         setUserLogs(logs);
         setError(null);
       } catch (err) {
@@ -29,8 +31,19 @@ const GetUserLogDetail: React.FC = () => {
       }
     };
 
-    fetchUserLogs();
+    if (userId) {
+      fetchUserLogs();
+    }
   }, [userId]);
+
+  const handleFetchLogs = async () => {
+    if (!inputValue.trim()) {
+      setError('Please enter a valid user ID.');
+      return;
+    }
+
+    setUserId(inputValue.trim());
+  };
 
   return (
     <section className="py-16 sm:py-20 bg-background">
@@ -41,8 +54,32 @@ const GetUserLogDetail: React.FC = () => {
             User Log Details
           </h2>
           <p className="text-lg text-muted-foreground">
-            Viewing logs for User ID: {userId}
+            {userId
+              ? `Viewing logs for User ID: ${userId}`
+              : 'Enter a user ID below to fetch log history.'}
           </p>
+        </div>
+
+        <div className="max-w-xl mx-auto mb-8">
+          <div className="grid gap-4 md:grid-cols-[1fr_auto]">
+            <input
+              value={inputValue}
+              onChange={(e) => {
+                setInputValue(e.target.value);
+                setError(null);
+              }}
+              type="text"
+              placeholder="Enter user ID"
+              className="w-full rounded-lg border border-slate-200 px-4 py-3 text-base shadow-sm outline-none focus:border-slate-400 focus:ring-2 focus:ring-slate-100"
+            />
+            <button
+              type="button"
+              onClick={handleFetchLogs}
+              className="rounded-lg bg-primary px-6 py-3 text-white transition hover:bg-primary/90"
+            >
+              Load Logs
+            </button>
+          </div>
         </div>
 
         {/* Card */}

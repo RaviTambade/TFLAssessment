@@ -9,6 +9,7 @@ import Index from "./pages/Index";
 import TapProgram from "./pages/TapProgram";
 import RaviTambade from "./pages/RaviTambade";
 import UpcomingAssessment from "./components/assessment/assessmentOrchestrator/UpcomingAssessment";
+import UserProfile from "./components/assessment/membership/UserProfile";
 
 const queryClient = new QueryClient();
 
@@ -24,7 +25,7 @@ const App = () => (
           <Route path="/tap-program" element={<TapProgram />} />
           <Route path="/ravi-tambade" element={<RaviTambade />} />
           <Route path="/upcoming-assessment" element={<UpcomingAssessment />} />
-          <Route path="/models/membership/EmployerProfile/:id" element={<EmployerProfile />} />
+          <Route path="/component/assessment/membership/UserProfile/:id" element={<UserProfile />} />
 
           {/* Module routes - /models/* */}
           <Route path="/models/*" element={<AppRoutes />} />
