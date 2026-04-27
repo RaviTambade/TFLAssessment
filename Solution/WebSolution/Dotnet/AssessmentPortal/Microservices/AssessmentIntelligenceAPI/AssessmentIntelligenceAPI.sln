@@ -1,0 +1,24 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.2.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AssessmentIntelligenceAPI", "AssessmentIntelligenceAPI.csproj", "{9B0F1729-6A16-2DFF-CCC1-051DB9063F7E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9B0F1729-6A16-2DFF-CCC1-051DB9063F7E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B0F1729-6A16-2DFF-CCC1-051DB9063F7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B0F1729-6A16-2DFF-CCC1-051DB9063F7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B0F1729-6A16-2DFF-CCC1-051DB9063F7E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1570E8C3-6EC4-4B98-96EE-782A55FDBE3F}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <title>Get Test Result Details</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 10px;
+      border: 1px solid #ccc;
+      text-align: left;
+    }
+    th {
+        background-color: #f2f2f2;
+    }
+    #results {
+        display: none;
+    }
+    </style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+<body>
+
+  <h2>Fetch Test Result Details</h2>
+
+    <label >Enter Test ID:</label>
+    <input type="number" id="txtId" name="testId" /> 
+    <button id="btnsubmit"  >Submit</button>
+
+
+  <div id="results">
+    <h3>Results</h3>
+    <table id="resultsTable">
+      <thead>
+        <tr>
+          <th>Test ID</th>
+          <th>Test Name</th>
+          <th>Candidate ID</th>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Subject</th>
+          <th>Score</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <script>
+    //  var interviewListUrl = "http://localhost:5235/api/Result/tests/" + testId + "/details";
+    $(document).ready(function(){
+        $("#btnsubmit").click(function(){
+        var testId = $("#txtId").val();
+        var interviewListUrl = "http://localhost:5235/api/Result/tests/" + testId + "/details";
+        console.log(testId);
+
+         $.ajax({
+        url: interviewListUrl,
+        type: 'GET',
+        contentType: 'application/json',
+
+        success: function (response) {
+            console.log("inside ajax call block");
+            tests = response;
+            console.log(tests);
+         
+            
+        },
+        error: function (xhr, status, error) {
+            console.error(xhr.responseText);
+        }
+    });
+  });
+});
+
+
+  </script>
+
+</body>
+</html>

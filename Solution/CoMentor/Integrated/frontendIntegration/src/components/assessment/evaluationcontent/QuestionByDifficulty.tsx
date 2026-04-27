@@ -28,20 +28,20 @@ const QuestionsByDifficulty = () => {
     filter.length === 0
       ? questions
       : questions.filter((q) =>
-          filter.includes(q.difficulty_level)
+          filter.includes(q.difficultyLevel)
         );
 
   // Counts
   const beginner = questions.filter(
-    (q) => q.difficulty_level === "BEGINNER"
+    (q) => q.difficultyLevel === "BEGINNER"
   ).length;
 
   const intermediate = questions.filter(
-    (q) => q.difficulty_level === "INTERMEDIATE"
+    (q) => q.difficultyLevel === "INTERMEDIATE"
   ).length;
 
   const advance = questions.filter(
-    (q) => q.difficulty_level === "ADVANCE"
+    (q) => q.difficultyLevel === "ADVANCE"
   ).length;
 
   // Toggle Function
@@ -144,7 +144,7 @@ const QuestionsByDifficulty = () => {
                         <td className="p-2">{q.question_id}</td>
                         <td className="p-2">{q.description}</td>
                         <td className="p-2 font-semibold">
-                          {q.difficulty_level}
+                          {q.difficultyLevel}
                         </td>
                       </tr>
                     ))}

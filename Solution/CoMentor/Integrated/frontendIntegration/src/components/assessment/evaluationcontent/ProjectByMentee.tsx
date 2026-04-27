@@ -18,7 +18,7 @@ function ProjectByMentee() {
       setLoading(true);
       setError("");
 
-      const response = await fetch("http://localhost:8085/api/projects");
+      const response = await fetch("http://localhost:8080/api/projects");
 
       if (!response.ok) {
         throw new Error("Failed to fetch projects");
@@ -45,7 +45,7 @@ function ProjectByMentee() {
       setError("");
 
       const response = await fetch(
-        `http://localhost:8085/api/projects/mentee/${menteeId}`
+        `http://localhost:8080/api/projects/student/${menteeId}/projects`
       );
 
       if (!response.ok) {
