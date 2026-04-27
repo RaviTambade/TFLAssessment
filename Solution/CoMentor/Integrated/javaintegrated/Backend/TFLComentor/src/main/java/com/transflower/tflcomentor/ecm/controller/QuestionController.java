@@ -51,9 +51,9 @@ public class QuestionController {
 
     @PostMapping()
     // http://localhost:8080/api/questions
-    public String create(@RequestBody QuestionOptionsRequestDto dto) {
-        service.createQuestionWithOptions(dto);
-        return "Question with Options Saved!";
+    public Long create(@RequestBody QuestionOptionsRequestDto dto) {
+        return service.createQuestionWithOptions(dto);
+            
     }
 
     // @GetMapping
