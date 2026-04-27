@@ -2,21 +2,22 @@ package com.transflower.tflcomentor.ecm.entity;
 
 import java.time.LocalDateTime;
 
-import com.transflower.tflcomentor.ecm.entity.enums.QuestionTypes;
+import com.transflower.tflcomentor.ecm.entity.enums.DifficultyLevel;
+import com.transflower.tflcomentor.ecm.entity.enums.QuestionStatus;
+import com.transflower.tflcomentor.ecm.entity.enums.QuestionType;
 
 public class Question {
     private Long questionId;
     private String description;
-    private QuestionTypes questionType;
-    private String difficultyLevel;
-    private String status;
+    private QuestionType questionType;
+    private DifficultyLevel difficultyLevel;
+    private QuestionStatus status;
     private LocalDateTime createdAt;
 
     public Question() {
     }
 
-    public Question(Long questionId, String description, QuestionTypes questionType,
-            String difficultyLevel, String status) {
+    public Question(Long questionId, String description, QuestionType questionType, DifficultyLevel difficultyLevel, QuestionStatus status) {
         this.questionId = questionId;
         this.description = description;
         this.questionType = questionType;
@@ -24,15 +25,6 @@ public class Question {
         this.status = status;
     }
 
-    public Question(Long questionId, String description, QuestionTypes questionType,
-            String difficultyLevel, LocalDateTime createdAt, String status) {
-        this.questionId = questionId;
-        this.description = description;
-        this.questionType = questionType;
-        this.difficultyLevel = difficultyLevel;
-        this.createdAt = createdAt;
-        this.status = status;
-    }
 
     // Getters and Setters
     public Long getQuestionId() {
@@ -51,27 +43,27 @@ public class Question {
         this.description = description;
     }
 
-    public QuestionTypes getQuestionType() {
+    public QuestionType getQuestionType() {
         return questionType;
     }
 
-    public void setQuestionType(QuestionTypes questionType) {
+    public void setQuestionType(QuestionType questionType) {
         this.questionType = questionType;
     }
 
-    public String getDifficultyLevel() {
+    public DifficultyLevel getDifficultyLevel() {
         return difficultyLevel;
     }
 
-    public void setDifficultyLevel(String difficultyLevel) {
+    public void setDifficultyLevel(DifficultyLevel difficultyLevel) {
         this.difficultyLevel = difficultyLevel;
     }
 
-    public String getStatus() {
+    public QuestionStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setQuestionStatus(QuestionStatus status) {
         this.status = status;
     }
 
@@ -82,6 +74,8 @@ public class Question {
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
+
+    
 
     
     

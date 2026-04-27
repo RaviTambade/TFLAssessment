@@ -1,20 +1,26 @@
-package com.transflower.tflcomentor.ecm.dto.response;
+package com.transflower.tflcomentor.ecm.dto;
 
 import java.time.LocalDateTime;
+
+import com.transflower.tflcomentor.ecm.entity.enums.DifficultyLevel;
+import com.transflower.tflcomentor.ecm.entity.enums.QuestionStatus;
+import com.transflower.tflcomentor.ecm.entity.enums.QuestionType;
+
+
 
 public class QuestionResponseDto {
     private Long questionId;
     private String description;
-    private String questionType;
-    private String difficultyLevel;
-    private String status;
+    private QuestionType questionType;
+    private DifficultyLevel difficultyLevel;
+    private QuestionStatus status;
     private LocalDateTime createdAt;
 
     public QuestionResponseDto() {
     }
 
-    public QuestionResponseDto(Long questionId, String description, String questionType,
-            String difficultyLevel, String status) {
+    public QuestionResponseDto(Long questionId, String description, QuestionType questionType,
+            DifficultyLevel difficultyLevel, QuestionStatus status) {
         this.questionId = questionId;
         this.description = description;
         this.questionType = questionType;
@@ -22,15 +28,7 @@ public class QuestionResponseDto {
         this.status = status;
     }
 
-    public QuestionResponseDto(Long questionId, String description, String questionType,
-            String difficultyLevel, LocalDateTime createdAt, String status) {
-        this.questionId = questionId;
-        this.description = description;
-        this.questionType = questionType;
-        this.difficultyLevel = difficultyLevel;
-        this.createdAt = createdAt;
-        this.status = status;
-    }
+    
 
     // Getters and Setters
     public Long getQuestionId() {
@@ -49,27 +47,27 @@ public class QuestionResponseDto {
         this.description = description;
     }
 
-    public String getQuestionType() {
+    public QuestionType getQuestionType() {
         return questionType;
     }
 
-    public void setQuestionType(String questionType) {
+    public void setQuestionType(QuestionType questionType) {
         this.questionType = questionType;
     }
 
-    public String getDifficultyLevel() {
+    public DifficultyLevel getDifficultyLevel() {
         return difficultyLevel;
     }
 
-    public void setDifficultyLevel(String difficultyLevel) {
+    public void setDifficultyLevel(DifficultyLevel difficultyLevel) {
         this.difficultyLevel = difficultyLevel;
     }
 
-    public String getQuestionStatus() {
+    public QuestionStatus getQuestionStatus() {
         return status;
     }
 
-    public void setQuestionStatus(String status) {
+    public void setQuestionStatus(QuestionStatus status) {
         this.status = status;
     }
 

@@ -1,27 +1,22 @@
-package com.transflower.tflcomentor.ecm.dto.response;
+package com.transflower.tflcomentor.ecm.dto;
 
+import com.transflower.tflcomentor.ecm.entity.enums.DifficultyLevel;
+import com.transflower.tflcomentor.ecm.entity.enums.QuestionStatus;
+import com.transflower.tflcomentor.ecm.entity.enums.QuestionType;
 
-public class QuestionOptionsResponseDto {
-
-    private Long questionId;
+public class QuestionOptionsRequestDto {
+    private long questionId;
     private String description;
-    private String questionType;
-    private String difficultyLevel;
-    private String status;
+    private QuestionType questionType;
+    private DifficultyLevel difficultyLevel;
+    private QuestionStatus status;
+    private String questionDetails;
 
     private String optionA;
     private String optionB;
     private String optionC;
     private String optionD;
     private String correctAnswer;
-
-    public Long getQuestionId() {
-        return questionId;
-    }
-
-    public void setQuestionId(Long questionId) {
-        this.questionId = questionId;
-    }
 
     public String getDescription() {
         return description;
@@ -31,27 +26,27 @@ public class QuestionOptionsResponseDto {
         this.description = description;
     }
 
-    public String getQuestionType() {
+    public QuestionType getQuestionType() {
         return questionType;
     }
 
-    public void setQuestionType(String questionType) {
+    public void setQuestionType(QuestionType questionType) {
         this.questionType = questionType;
     }
 
-    public String getDifficultyLevel() {
+    public DifficultyLevel getDifficultyLevel() {
         return difficultyLevel;
     }
 
-    public void setDifficultyLevel(String difficultyLevel) {
+    public void setDifficultyLevel(DifficultyLevel difficultyLevel) {
         this.difficultyLevel = difficultyLevel;
     }
 
-    public String getStatus() {
+    public QuestionStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(QuestionStatus status) {
         this.status = status;
     }
 
@@ -93,5 +88,21 @@ public class QuestionOptionsResponseDto {
 
     public void setCorrectAnswer(String correctAnswer) {
         this.correctAnswer = correctAnswer;
+    }
+
+    public long getQuestionId() {
+        return questionId;
+    }
+
+    public void setQuestionId(long questionId) {
+        this.questionId = questionId;
+    }
+
+    public String getQuestionDetails(long questionId) {
+        return questionDetails;
+    }
+
+    public void setQuestionDetails(String questionDetails) {
+        this.questionDetails = questionDetails;
     }
 }
