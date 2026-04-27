@@ -7,38 +7,34 @@ import { ArrowRight } from "lucide-react";
 import { useState } from "react";
 
 const MembershipMenu = () => {
-    const { ref, isVisible } = useScrollAnimation();
-    const navigate = useNavigate();
-    const [userId, setUserId] = useState<string>("");
+  const { ref, isVisible } = useScrollAnimation();
+  const navigate = useNavigate();
+  const [userId, setUserId] = useState<string>("");
 
-    return (
-        <section className="py-16 sm:py-20 bg-background">
-            <div className="container mx-auto px-4">
+  return (
+    <section className="py-16 sm:py-20 bg-background">
+      <div className="container mx-auto px-4">
+        {/* Heading */}
+        <div className="text-center mb-12 sm:mb-16">
+          <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
+            Manage User Logs
+          </h2>
+        </div>
 
-                {/* Heading */}
-                <div className="text-center mb-12 sm:mb-16">
-                    <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
-                        Manage User Logs
-                      
-                    </h2>
-
-                </div>
-
-                {/* Card */}
-                <div className="max-w-6xl mx-auto">
-                    <Card
-                        ref={ref}
-                        className={`border-0 shadow-elegant overflow-hidden transition-all duration-1000 ${isVisible
-                            ? "opacity-100 translate-y-0"
-                            : "opacity-0 translate-y-10"
-                            }`}
-                    >
-                        <div className="bg-gradient-hero p-6 sm:p-8">
-                            <CardContent>
-
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-
-                                    {/* <div className="flex flex-col gap-4">
+        {/* Card */}
+        <div className="max-w-6xl mx-auto">
+          <Card
+            ref={ref}
+            className={`border-0 shadow-elegant overflow-hidden transition-all duration-1000 ${
+              isVisible
+                ? "opacity-100 translate-y-0"
+                : "opacity-0 translate-y-10"
+            }`}
+          >
+            <div className="bg-gradient-hero p-6 sm:p-8">
+              <CardContent>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {/* <div className="flex flex-col gap-4">
                                         <Input
                                             type="number"
                                             placeholder="Enter User ID"
@@ -58,14 +54,27 @@ const MembershipMenu = () => {
                                         </Button>
                                     </div> */}
 
-                                    <Button variant="hero" size="lg" className="group"
-                                        onClick={() => navigate("/models/membership/UserActivity")}>
-                                       user activity
-                                        <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                                    </Button>
+                  <Button
+                    variant="hero"
+                    size="lg"
+                    className="group"
+                    onClick={() => navigate("/models/membership/UserActivity")}
+                  >
+                    user activity
+                    <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                  </Button>
 
-                                    
-{/* 
+                  <Button
+                    variant="hero"
+                    size="lg"
+                    className="group"
+                    onClick={() => navigate("/models/membership/ManageUsers")}
+                  >
+                   Manage Users Role
+                    <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                  </Button>
+
+                  {/* 
                                     <Button onClick={() => navigate("/models/membership/StudentDashboard")} variant="hero" size="lg" className="group">
                                         Update Role
                                         <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
@@ -81,17 +90,14 @@ const MembershipMenu = () => {
                                         <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                                     </Button>
  */}
-
-                                </div>
-
-                            </CardContent>
-                        </div>
-                    </Card>
                 </div>
-
+              </CardContent>
             </div>
-        </section>
-    );
+          </Card>
+        </div>
+      </div>
+    </section>
+  );
 };
 
 export default MembershipMenu;
