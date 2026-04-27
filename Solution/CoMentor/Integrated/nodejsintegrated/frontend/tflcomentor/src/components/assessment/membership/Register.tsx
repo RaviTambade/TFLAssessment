@@ -1,44 +1,98 @@
-import { useState } from "react"
+import { useState, type FormEvent } from "react"
 import { useNavigate } from "react-router-dom"
 
-import { Button } from "../../ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "../../ui/card";
-import { Input } from "../../ui/input";
-import { Label } from "../../ui/label";
-import { Separator } from "../../ui/separator";
+import { Button } from "../../ui/button"
+import { Card, CardContent, CardHeader, CardTitle } from "../../ui/card"
+import { Input } from "../../ui/input"
+import { Label } from "../../ui/label"
+import { Separator } from "../../ui/separator"
 
 const RegisterPage = () => {
-
   const navigate = useNavigate()
 
   const [firstName, setFirstName] = useState("")
   const [lastName, setLastName] = useState("")
   const [email, setEmail] = useState("")
   const [contact, setContact] = useState("")
-  const [password, setPassword] = useState("")
-  const [confirmPassword, setConfirmPassword] = useState("")
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [apiError, setApiError] = useState<string | null>(null)
+  const [apiSuccess, setApiSuccess] = useState<string | null>(null)
 
-  const handleRegister = (e: React.FormEvent) => {
-    e.preventDefault()
-
-    console.log({
+  const handleRegister = async (generatedPassword: string) => {
+    const payload = {
+      contact,
       firstName,
       lastName,
       email,
-      contact,
-      password,
-      confirmPassword
+      password: generatedPassword,
+    }
+
+    const res = await fetch("http://localhost:3000/api/auth/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
     })
 
-        navigate("/login")
+    const data = await res.json()
+
+    if (!res.ok) {
+      throw new Error(data?.message || data?.error || "Registration failed")
+    }
+
+    return data
+  }
+
+  const handlePassword = async () => {
+    const res = await fetch("http://localhost:5121/api/auth/send-password", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email }),
+    })
+
+    const data = await res.json()
+
+    if (!res.ok) {
+      throw new Error(data?.message || data?.error || "Failed to generate password")
+    }
+
+    return typeof data === "string" ? data : data?.password
+  }
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+
+    setApiError(null)
+    setApiSuccess(null)
+
+    try {
+      setIsSubmitting(true)
+
+      const generatedPassword = await handlePassword()
+      if (!generatedPassword) {
+        throw new Error("Failed to generate password")
+      }
+
+      await handleRegister(generatedPassword)
+
+      setApiSuccess("Registration successful")
+
+      setTimeout(() => {
+        navigate("/models/membership/Login")
+      }, 1000)
+    } catch (err) {
+      setApiError(err instanceof Error ? err.message : "Registration failed")
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
     <div className="min-h-screen bg-[var(--gradient-hero)] flex items-center justify-center px-4 select-none">
-
       <div className="w-full max-w-md">
-
-        {/* Heading */}
         <div className="text-center mb-8 select-none">
           <h1 className="text-3xl sm:text-4xl font-bold text-foreground mb-3">
             Create{" "}
@@ -52,23 +106,23 @@ const RegisterPage = () => {
           </p>
         </div>
 
-        {/* Card */}
         <Card className="bg-card/50 backdrop-blur-sm border border-border shadow-[var(--shadow-elegant)] select-none">
-
           <CardHeader>
-            <CardTitle className="text-center text-xl">
-              Register
-            </CardTitle>
+            <CardTitle className="text-center text-xl">Register</CardTitle>
           </CardHeader>
 
           <CardContent className="p-6 sm:p-8">
+            <form onSubmit={handleSubmit} className="space-y-4">
+              {apiError && (
+                <div className="text-sm text-destructive">{apiError}</div>
+              )}
 
-            <form onSubmit={handleRegister} className="space-y-4">
+              {apiSuccess && (
+                <div className="text-sm text-success">{apiSuccess}</div>
+              )}
 
-              {/* First Name */}
               <div className="space-y-2">
                 <Label htmlFor="firstName">First Name</Label>
-
                 <Input
                   id="firstName"
                   type="text"
@@ -79,10 +133,8 @@ const RegisterPage = () => {
                 />
               </div>
 
-              {/* Last Name */}
               <div className="space-y-2">
                 <Label htmlFor="lastName">Last Name</Label>
-
                 <Input
                   id="lastName"
                   type="text"
@@ -93,10 +145,8 @@ const RegisterPage = () => {
                 />
               </div>
 
-              {/* Email */}
               <div className="space-y-2">
                 <Label htmlFor="email">Email</Label>
-
                 <Input
                   id="email"
                   type="email"
@@ -107,10 +157,8 @@ const RegisterPage = () => {
                 />
               </div>
 
-              {/* Contact */}
               <div className="space-y-2">
                 <Label htmlFor="contact">Contact</Label>
-
                 <Input
                   id="contact"
                   type="tel"
@@ -121,65 +169,33 @@ const RegisterPage = () => {
                 />
               </div>
 
-              {/* Password */}
-              <div className="space-y-2">
-                <Label htmlFor="password">Password</Label>
-
-                <Input
-                  id="password"
-                  type="password"
-                  placeholder="Enter your password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                />
-              </div>
-
-              {/* Confirm Password */}
-              <div className="space-y-2">
-                <Label htmlFor="confirmPassword">Confirm Password</Label>
-
-                <Input
-                  id="confirmPassword"
-                  type="password"
-                  placeholder="Confirm your password"
-                  value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
-                  required
-                />
-              </div>
-
-              {/* Register Button */}
               <Button
                 type="submit"
                 variant="hero"
                 size="lg"
                 className="w-full"
+                disabled={isSubmitting}
               >
-                Register
+                {isSubmitting ? "Registering..." : "Register"}
               </Button>
-
             </form>
 
-            {/* Divider */}
             <div className="my-6">
               <Separator />
             </div>
 
-            {/* Already have account */}
             <p className="text-center text-sm text-muted-foreground">
               Already have an account?{" "}
               <button
+                type="button"
                 onClick={() => navigate("/models/membership/Login")}
                 className="font-bold text-primary hover:text-accent transition-smooth"
               >
                 Sign in
               </button>
             </p>
-
           </CardContent>
         </Card>
-
       </div>
     </div>
   )

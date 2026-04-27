@@ -6,7 +6,7 @@ export interface UserName {
 }
 
 const getProfileName = async (userId: number): Promise<UserName> => {
-  const response = await fetch(`${BASE_URL}/api/profile/username/${userId}`);
+  const response = await fetch(`${BASE_URL}/api/users/${userId}/personal`);
 
   if (!response.ok) {
     throw new Error("Failed to fetch roles");
