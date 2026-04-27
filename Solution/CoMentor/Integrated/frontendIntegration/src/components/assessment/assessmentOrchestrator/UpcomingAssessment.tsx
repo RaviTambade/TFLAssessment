@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 interface Assessment {
   srNo: number;
@@ -11,140 +11,138 @@ interface Assessment {
 const UpcomingAssessment: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
   const [userId, setUserId] = useState("");
   const [inputId, setInputId] = useState("");
+
+  const [fromDate, setFromDate] = useState("");
+  const [toDate, setToDate] = useState("");
+
   const [assessments, setAssessments] = useState<Assessment[]>([]);
 
-  const thStyle: React.CSSProperties = {
-    border: "1px solid #e5e7eb",
-    padding: "10px",
-    textAlign: "center",
+  // 👉 convert YYYY-MM-DD → MM/DD/YYYY (for display only)
+  const formatToDisplay = (date: string) => {
+    if (!date) return "";
+    const [y, m, d] = date.split("-");
+    return `${m}/${d}/${y}`;
   };
 
-  const tdStyle: React.CSSProperties = {
-    border: "1px solid #e5e7eb",
-    padding: "10px",
-    textAlign: "center",
+  // 👉 convert any date → YYYY-MM-DD (safe for API)
+  const formatForApi = (date: string) => {
+    return date; // already correct from input[type="date"]
   };
 
-  useEffect(() => {
-    if (!userId) return;
+  const fetchAssessments = async () => {
+    if (!inputId || !fromDate || !toDate) {
+      setError("Please enter UserId, From Date and To Date");
+      return;
+    }
 
-    const fetchAssessments = async () => {
-      setLoading(true);
-      setError(null);
+    setLoading(true);
+    setError(null);
 
-      try {
-        const apiUrl = `http://localhost:5201/api/Assessment/user/${userId}`;
-        const response = await fetch(apiUrl);
+    try {
+      const apiFrom = formatForApi(fromDate);
+      const apiTo = formatForApi(toDate);
 
-        if (!response.ok) {
-          throw new Error("Failed to fetch data");
-        }
+      const apiUrl = `http://localhost:5201/api/Assessment/user/${inputId}?fromDate=${apiFrom}&toDate=${apiTo}`;
 
-        const data: Assessment[] = await response.json();
-        setAssessments(data);
-      } catch (err: any) {
-        setError(err.message);
-        setAssessments([]);
-      } finally {
-        setLoading(false);
+      const response = await fetch(apiUrl);
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch data");
       }
-    };
 
-    fetchAssessments();
-  }, [userId]);
+      const data: Assessment[] = await response.json();
+      setAssessments(data);
+      setUserId(inputId);
+    } catch (err: any) {
+      setError(err.message);
+      setAssessments([]);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
-    <div
-      style={{
-        padding: "20px",
-        backgroundColor: "#f6e3df",
-        minHeight: "100vh",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-      }}
-    >
-      <h2 style={{ color: "#0f172a", marginBottom: "20px" }}>
+    <div className="min-h-screen bg-rose-100 flex flex-col items-center p-6">
+      <h2 className="text-xl font-semibold mb-6">
         Upcoming Assessments
       </h2>
 
-      <div style={{ marginBottom: "20px", textAlign: "center" }}>
+      {/* Input Section */}
+      <div className="flex flex-col md:flex-row gap-3 mb-6">
         <input
           type="text"
-          placeholder="Enter User ID (1,2,3...)"
+          placeholder="Enter User ID"
           value={inputId}
           onChange={(e) => setInputId(e.target.value)}
-          style={{
-            padding: "8px",
-            marginRight: "10px",
-            border: "1px solid #d1d5db",
-            borderRadius: "6px",
-            minWidth: "220px",
-          }}
+          className="px-3 py-2 border rounded-md"
         />
+
+        <input
+          type="date"
+          value={fromDate}
+          onChange={(e) => setFromDate(e.target.value)}
+          className="px-3 py-2 border rounded-md"
+        />
+
+        <input
+          type="date"
+          value={toDate}
+          onChange={(e) => setToDate(e.target.value)}
+          className="px-3 py-2 border rounded-md"
+        />
+
         <button
-          onClick={() => setUserId(inputId)}
-          style={{
-            padding: "8px 12px",
-            cursor: "pointer",
-            backgroundColor: "#ef4444",
-            color: "white",
-            border: "none",
-            borderRadius: "6px",
-          }}
+          onClick={fetchAssessments}
+          className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600"
         >
           Show Assessments
         </button>
       </div>
 
-      {loading && <p style={{ color: "#6b7280" }}>Loading...</p>}
-
-      {error && (
-        <p style={{ color: "#ef4444", marginBottom: "20px" }}>{error}</p>
+      {/* Show selected dates in your format */}
+      {fromDate && toDate && (
+        <p className="mb-4 text-gray-700">
+          Showing: {formatToDisplay(fromDate)} → {formatToDisplay(toDate)}
+        </p>
       )}
 
+      {/* Loading */}
+      {loading && <p className="text-gray-500">Loading...</p>}
+
+      {/* Error */}
+      {error && <p className="text-red-500">{error}</p>}
+
+      {/* No Data */}
       {!loading && userId && assessments.length === 0 && !error && (
-        <p style={{ color: "#64748b" }}>
+        <p className="text-gray-600">
           No upcoming assessment available for this user.
         </p>
       )}
 
+      {/* Table */}
       {assessments.length > 0 && (
-        <div
-          style={{
-            marginTop: "20px",
-            backgroundColor: "white",
-            borderRadius: "10px",
-            overflow: "hidden",
-            boxShadow: "0 10px 25px rgba(0,0,0,0.08)",
-            width: "80%",
-            maxWidth: "900px",
-          }}
-        >
-          <table
-            style={{
-              width: "100%",
-              borderCollapse: "collapse",
-              textAlign: "center",
-            }}
-          >
+        <div className="bg-white rounded-lg shadow-md w-full max-w-4xl overflow-hidden">
+          <table className="w-full text-center border-collapse">
             <thead>
-              <tr style={{ backgroundColor: "#ef4444", color: "white" }}>
-                <th style={thStyle}>Assessment Name</th>
-                <th style={thStyle}>Date</th>
-                <th style={thStyle}>Duration</th>
-                <th style={thStyle}>Status</th>
+              <tr className="bg-red-500 text-white">
+                <th className="p-3">Assessment Name</th>
+                <th className="p-3">Date</th>
+                <th className="p-3">Duration</th>
+                <th className="p-3">Status</th>
               </tr>
             </thead>
             <tbody>
               {assessments.map((item) => (
-                <tr key={item.srNo}>
-                  <td style={tdStyle}>{item.assessmentName}</td>
-                  <td style={tdStyle}>{item.scheduledAt}</td>
-                  <td style={tdStyle}>{item.duration} mins</td>
-                  <td style={tdStyle}>{item.status}</td>
+                <tr key={item.srNo} className="border-t">
+                  <td className="p-3">{item.assessmentName}</td>
+                  <td className="p-3">
+                    {formatToDisplay(item.scheduledAt.split("T")[0])}
+                  </td>
+                  <td className="p-3">{item.duration} mins</td>
+                  <td className="p-3">{item.status}</td>
                 </tr>
               ))}
             </tbody>

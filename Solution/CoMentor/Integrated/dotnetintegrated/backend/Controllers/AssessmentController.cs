@@ -17,9 +17,9 @@ public class AssessmentController : ControllerBase
     }
 
     [HttpGet("user/{userId}")]
-    public async Task<IActionResult> GetAll(long userId)
+    public async Task<IActionResult> GetAll(long userId ,DateTime fromDate, DateTime toDate)
     {
-        var data = await _service.GetAllUpcomingAssessmentsService(userId); 
+        var data = await _service.GetAllUpcomingAssessmentsService(userId, fromDate, toDate); 
         return Ok(data);
     }
 
@@ -59,11 +59,12 @@ public class AssessmentController : ControllerBase
         return Ok("Assessment Assigned Successfully");
     }
     [HttpGet("questions/{assessmentId}")]
-    public async Task<IActionResult> GetAssessmentQuestions(int assessmentId)
+    public async Task<IActionResult> GetQuestionsByAssessmentId(int assessmentId)
     {
-        var data = await _service.GetAssessmentQuestions(assessmentId);
-        return Ok(data);
+        var assessmentQuestions = await _service.GetAssessmentQuestions(assessmentId);
+        return Ok(assessmentQuestions);
     }
+    
     [HttpPost("submit")]
     public async Task<IActionResult> SaveAssessmentAnswersAsync([FromBody] AssessmentAnswersDto submission)
     {

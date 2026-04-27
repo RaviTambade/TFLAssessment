@@ -20,9 +20,9 @@ namespace backend.Services.Implementations
             _repository = repository;
         }
 
-        public async Task<List<UpcomingAssessmentDto>> GetAllUpcomingAssessmentsService(long userId)
+        public async Task<List<UpcomingAssessmentDto>> GetAllUpcomingAssessmentsService(long userId, DateTime fromDate, DateTime toDate )
         {
-            return await _repository.GetAllUpcomingAssessments(userId); // Replace 0 with actual user ID if available
+            return await _repository.GetAllUpcomingAssessments(userId,fromDate, toDate); 
         }
 
         public async Task<List<AllAssessmentDto>> GetAssessments()

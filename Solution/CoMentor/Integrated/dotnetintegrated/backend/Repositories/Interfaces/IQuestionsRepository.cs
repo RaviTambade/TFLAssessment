@@ -5,9 +5,9 @@ namespace backend.Repositories.Interfaces
 {
     public interface IQuestionsRepository
     {
-        Task<QuestionsDto> QuestionDetailsWithAns(int questionId);
+        Task<QuestionsDto> GetQuestionDetailsWithAnswer(int questionId);
         Task<IEnumerable<AssessmentQuestionAnswersDto>> GetStudentAssessmentQuestionsResultAsync(int assessmentId, int studentId);
-        Task<QuestionDetailsDto> ViewQuestionDetails(int questionId);
+        Task<QuestionDetailsDto> GetQuestionDetails(int questionId);
     }
   
 }

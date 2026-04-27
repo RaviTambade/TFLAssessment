@@ -90,9 +90,14 @@ public class QuestionController {
     // public List<QuestionResponse> getRecentList() {
     // return service.getRecentQuestionList();
     // }
+<<<<<<< HEAD
+    @GetMapping("/{question_id}")
+    public QuestionOptionsResponseDto getQuestionDetailsById(@PathVariable Long question_id) {
+=======
     @GetMapping("/{question_id}/details")
     //http://localhost:8080/api/questions/1/details
     public QuestionOptionsRequestDto getQuestionDetailsById(@PathVariable Long question_id) {
+>>>>>>> f0de9bd4dc6c3738b4bb3180ce02e1ca0e4eef35
         return service.getQuestionDetails(question_id);
     }
 

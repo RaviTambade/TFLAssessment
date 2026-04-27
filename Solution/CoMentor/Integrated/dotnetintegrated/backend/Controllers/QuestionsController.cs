@@ -15,16 +15,16 @@ namespace backend.Controllers
             _service = service;
         }
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> QuestionDetailsWithAns(int id)
-        {
-            var result = await _service.QuestionDetailsWithAns(id);
+        // [HttpGet("{id}")]
+        // public async Task<IActionResult> GetQuestionDetailsWithAnswer(int id)
+        // {
+        //     var result = await _service.GetQuestionDetailsWithAnswer(id);
 
-            if (result == null)
-                return NotFound("No data found");
+        //     if (result == null)
+        //         return NotFound("No data found");
 
-            return Ok(result);
-        }
+        //     return Ok(result);
+        // }
 
         [HttpGet("{assessmentId}/student/{studentId}")]
         public async Task<IActionResult> GetStudentAssessmentQuestionsResultAsync(int assessmentId, int studentId)
@@ -33,10 +33,10 @@ namespace backend.Controllers
             return Ok(result);
         }
 
-        [HttpGet("view/{questionId}")]
-        public async Task<IActionResult> ViewQuestionDetails(int questionId)
+        [HttpGet("/{questionId}/answer")]
+        public async Task<IActionResult> GetQuestionDetailsWithAnswer(int questionId)
         {
-            var result = await _service.ViewQuestionDetails(questionId);
+            var result = await _service.GetQuestionDetailsWithAnswer(questionId);
 
             if (result == null)
             {
@@ -45,5 +45,19 @@ namespace backend.Controllers
 
             return Ok(result);
         }
+
+        [HttpGet("/{questionId}")]
+        public async Task<IActionResult> GetQuestionDetails(int questionId)
+        {
+            var result = await _service.GetQuestionDetails(questionId);
+
+            if (result == null)
+            {
+                return NotFound("Question not found");
+            }
+
+            return Ok(result);
+        }
+
     }
 }
