@@ -1,0 +1,51 @@
+
+SELECT CONCAT(ROUND(yourValue * 100, 2), '%') AS percent_formattedFROM yourTable;
+
+create temporary table tblemployee
+    (
+    Column_1 datatype,
+    Column_2 datatype,
+    Column_3 datatype,
+    …
+    )
+[Wednesday 4:51 PM] Shubhangi Tambadeq
+UPDATE accounts SET balance=round(fromaccountbalance-amount,2) WHERE id=fromaccountid;
+
+INSERT INTO operations(acctId,acctnumber,amount,operationmode,operationtype,operationdate)
+
+VALUES(toaccountid,toaccountnumber,amount,'D',transactiontype,NOW());
+[Wednesday 5:30 PM] 
+Nayan Kothawade (Unverified) no longer has access to the chat.
+
+
+CREATE PROCEDURE UpdateSalaryByPercentage
+    @Percentage DECIMAL(5,2)
+AS
+BEGIN
+    DECLARE @EmployeeID INT
+    DECLARE @FirstName NVARCHAR(50)
+    DECLARE @LastName NVARCHAR(50)
+    DECLARE @CurrentSalary DECIMAL(10,2)
+    DECLARE @NewSalary DECIMAL(10,2)
+    
+    DECLARE employee_cursor CURSOR FOR
+    SELECT EmployeeID, FirstName, LastName, Salary
+    FROM Employee
+    
+    OPEN employee_cursor
+    FETCH NEXT FROM employee_cursor INTO @EmployeeID, @FirstName, @LastName, @CurrentSalary
+    
+    WHILE @@FETCH_STATUS = 0
+    BEGIN
+        SET @NewSalary = @CurrentSalary * (1 + @Percentage / 100)
+        
+        UPDATE Employee
+        SET Salary = @NewSalary
+        WHERE EmployeeID = @EmployeeID
+        
+        FETCH NEXT FROM employee_cursor INTO @EmployeeID, @FirstName, @LastName, @CurrentSalary
+    END
+    
+    CLOSE employee_cursor
+    DEALLOCATE employee_cursor
+END

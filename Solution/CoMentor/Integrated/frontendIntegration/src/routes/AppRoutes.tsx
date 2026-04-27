@@ -20,7 +20,9 @@ import ViewRuntimes from "@/components/assessment/skilltaxonomy/ViewRuntimes";
 import AddConcept from "@/components/assessment/skilltaxonomy/AddConcept";
 import UpcomingAssessment from "../components/assessment/assessmentOrchestrator/UpcomingAssessment";
 import DeleteAssessment from "@/components/assessment/assessmentOrchestrator/DeleteAssessment";
-
+import ViewProjectInfo from "@/components/assessment/evaluationcontent/ViewProjectInfo";
+import ProjectByMentee from "@/components/assessment/evaluationcontent/ProjectByMentee";
+import QuestionsByDifficulty from "@/components/assessment/evaluationcontent/QuestionByDifficulty";
 
 
 function AppRoutes() {
@@ -47,10 +49,8 @@ function AppRoutes() {
           <Route path="assessmentorchestrator/assessmentorchestrator-menu" element={<AssessmentOrchestrator />} />
           
           <Route path="skilltaxonomy/AddRuntime" element={<AddRuntime />} />
-              <Route path="skilltaxonomy/ViewRuntimes" element={<ViewRuntimes />} />
- 
-           <Route path="skilltaxonomy/AddRuntime" element={<AddRuntime />} />
-           <Route path="skilltaxonomy/AddConcept" element={<AddConcept />} />
+          <Route path="skilltaxonomy/ViewRuntimes" element={<ViewRuntimes />} />
+          <Route path="skilltaxonomy/AddConcept" element={<AddConcept />} />
 
           
 
@@ -64,9 +64,13 @@ function AppRoutes() {
           <Route path="/evaluationcontent/edit/:id" element={<EditQuestion />} />
           <Route path="evaluationcontent/insertquestion" element={<SMEInsertQuestion />} />
           <Route path="evaluationcontent/reviewquestion" element={<MentorReviewQuestion />} />
+          <Route path="evaluationcontent/viewprojectinfo" element={<ViewProjectInfo />} />  
+
           <Route index element={<Assessment />} />
            <Route path="upcoming-assessment" element={<UpcomingAssessment />} />
             <Route path="delete-assessment" element={<DeleteAssessment />} />
+            <Route path="evaluationcontent/questionbydifficulty" element={<QuestionsByDifficulty />} />
+            <Route path="evaluationcontent/projectbymentee" element={<ProjectByMentee />} />
         </Routes>
       </main>
     </div>

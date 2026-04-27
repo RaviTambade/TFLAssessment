@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Online Interview Assessment</title>
+<style>
+    /* Add your CSS styles here */
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+    }
+    .container {
+        max-width: 800px;
+        margin: 20px auto;
+        padding: 20px;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+    h2 {
+        margin-top: 0;
+    }
+    .question {
+        margin-bottom: 20px;
+    }
+    .question-text {
+        font-weight: bold;
+    }
+    .answer-options {
+        margin-top: 5px;
+    }
+    .answer-option {
+        margin-right: 10px;
+    }
+    .response {
+        margin-top: 10px;
+    }
+    .submit-btn {
+        padding: 8px 20px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Online Interview Assessment</h2>
+
+    <div class="question">
+        <div class="question-text">Question 1: What is your experience with HTML?</div>
+        <div class="answer-options">
+            <input type="radio" id="answer1_yes" name="answer1" value="Yes" class="answer-option">
+            <label for="answer1_yes">Yes</label>
+            <input type="radio" id="answer1_no" name="answer1" value="No" class="answer-option">
+            <label for="answer1_no">No</label>
+        </div>
+        <div class="response">
+            <textarea id="response1" rows="4" cols="50" placeholder="Provide additional details if necessary"></textarea>
+        </div>
+    </div>
+
+    <div class="question">
+        <div class="question-text">Question 2: What is your proficiency level in CSS?</div>
+        <div class="answer-options">
+            <select id="answer2" name="answer2" class="answer-option">
+                <option value="beginner">Beginner</option>
+                <option value="intermediate">Intermediate</option>
+                <option value="advanced">Advanced</option>
+            </select>
+        </div>
+        <div class="response">
+            <textarea id="response2" rows="4" cols="50" placeholder="Provide additional details if necessary"></textarea>
+        </div>
+    </div>
+
+    <!-- Add more questions as needed -->
+
+    <div class="submit-btn-container">
+        <button type="submit" class="submit-btn">Submit Assessment</button>
+    </div>
+</div>
+
+</body>
+</html>

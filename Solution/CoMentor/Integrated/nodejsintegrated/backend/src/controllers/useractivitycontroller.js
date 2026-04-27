@@ -53,7 +53,7 @@ class UserActivityController {
 
     this.service.getTotalLogins24Hours((err, result) => {
       const loginStats = {
-        totalLogins24Hours: result?.totalLogins24Hours || 0,
+        totalLogins24Hours: result?.totalLogins24h || 0,
         timestamp: new Date().toISOString(),
       };
       responseGenerator.generateResponse(
@@ -126,9 +126,9 @@ class UserActivityController {
 
     const sessionFilters = new UserActivityRequestDto(req.query);
 
-    if (!sessionFilters.name) {
-      return responseGenerator.sendError(res, "User name filter is required", 400);
-    }
+    // if (!sessionFilters.name) {
+    //   return responseGenerator.sendError(res, "User name filter is required", 400);
+    // }
 
     this.service.getAllUserActivity(sessionFilters.name, (err, result) => {
 

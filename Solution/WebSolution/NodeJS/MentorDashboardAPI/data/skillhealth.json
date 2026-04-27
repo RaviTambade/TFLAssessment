@@ -1,0 +1,5 @@
+[
+    { "level": "Strong", "topic": "Programming Basics", "percent": 85 },
+    { "level": "Average", "topic": "Web Architecture", "percent": 55 },
+    { "level": "Weak", "topic": "Dependency Injection, LINQ", "percent": 30 }
+  ]

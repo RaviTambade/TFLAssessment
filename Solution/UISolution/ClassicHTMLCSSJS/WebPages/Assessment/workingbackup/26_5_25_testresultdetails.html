@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Student Test Result - Web Programming</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 40px;
+      background-color: #f4f4f4;
+    }
+
+    .report-container {
+      background: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      max-width: 800px;
+      margin: auto;
+    }
+
+    h2, h3 {
+      text-align: center;
+      color: #333;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 25px;
+    }
+
+    th, td {
+      border: 1px solid #ccc;
+      padding: 12px;
+      text-align: center;
+    }
+
+    th {
+      background-color: #007BFF;
+      color: white;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+
+    .rating-good {
+      color: green;
+      font-weight: bold;
+    }
+
+    .rating-average {
+      color: orange;
+      font-weight: bold;
+    }
+
+    .rating-poor {
+      color: red;
+      font-weight: bold;
+    }
+
+    .summary {
+      margin-top: 20px;
+      font-size: 1.1em;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="report-container">
+    <h2>Student Assessment Report</h2>
+    <h3>Subject: Web Programming</h3>
+
+    <p><strong>Student Name:</strong> Priya Nair</p>
+    <p><strong>Test Date:</strong> 2025-05-20</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Evaluation Criteria</th>
+          <th>Score (%)</th>
+          <th>Rating</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>HTML Structure & Semantics</td>
+          <td>92</td>
+          <td class="rating-good">Excellent</td>
+          <td>Pass</td>
+        </tr>
+        <tr>
+          <td>CSS Styling & Layout</td>
+          <td>78</td>
+          <td class="rating-good">Good</td>
+          <td>Pass</td>
+        </tr>
+        <tr>
+          <td>JavaScript Basics</td>
+          <td>60</td>
+          <td class="rating-average">Average</td>
+          <td>Pass</td>
+        </tr>
+        <tr>
+          <td>Form Validation</td>
+          <td>45</td>
+          <td class="rating-poor">Needs Improvement</td>
+          <td>Fail</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="summary">
+      <p><strong>Total Score:</strong> 275 / 400</p>
+      <p><strong>Overall Percentage:</strong> 68.75%</p>
+      <p><strong>Final Result:</strong> <span class="rating-average">Pass with Remarks</span></p>
+    </div>
+  </div>
+
+</body>
+</html>

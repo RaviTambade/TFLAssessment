@@ -24,6 +24,8 @@ const App = () => (
           <Route path="/tap-program" element={<TapProgram />} />
           <Route path="/ravi-tambade" element={<RaviTambade />} />
           <Route path="/upcoming-assessment" element={<UpcomingAssessment />} />
+          <Route path="/models/membership/EmployerProfile/:id" element={<EmployerProfile />} />
+
           {/* Module routes - /models/* */}
           <Route path="/models/*" element={<AppRoutes />} />
         </Routes>
@@ -31,7 +33,7 @@ const App = () => (
     </TooltipProvider>
   </QueryClientProvider>
 
-  
+
 );
 
 export default App;

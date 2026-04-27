@@ -1,5 +1,4 @@
 class UsersRepository {
-
   constructor(connection) {
     this.connection = connection;
   }
@@ -16,10 +15,7 @@ class UsersRepository {
       WHERE u.id = ?`;
 
     this.connection.query(query, [userId], callback);
-
-
   }
-
 
   getUserCompleteInformation(userId, callback) {
     const query = `CALL sp_get_user_complete_profile(?)`;
@@ -29,7 +25,6 @@ class UsersRepository {
       callback(null, profile);
     });
   }
-
 
   getUserPersonalInformation(userId, callback) {
     const query = `SELECT first_name, last_name, email
@@ -47,7 +42,6 @@ class UsersRepository {
     this.getUserInformation(userId, query, callback);
   }
 
-
   getUserProfessionalInformation(userId, callback) {
     const query = `SELECT company_name, job_title, employment_type, start_date, end_date, is_current_job, experience_years, location, skills
       FROM professional_informations
@@ -55,7 +49,6 @@ class UsersRepository {
 
     this.getUserInformation(userId, query, callback);
   }
-
 
   getUserInformation(userId, query, callback) {
     this.connection.query(query, [userId], (err, results) => {
@@ -65,42 +58,55 @@ class UsersRepository {
     });
   }
 
-
   updatePersonal(userId, data, callback) {
     const fields = Object.keys(data)
-      .map(key => `${key} = ?`)
+      .map((key) => `${key} = ?`)
       .join(", ");
 
     const values = Object.values(data);
     const sql = `UPDATE personal_informations SET ${fields} WHERE user_id = ?`;
     this.connection.query(sql, [...values, userId], callback);
-  };
+  }
 
   updateProfessional(userId, data, callback) {
     const fields = Object.keys(data)
-      .map(key => `${key} = ?`)
+      .map((key) => `${key} = ?`)
       .join(", ");
 
     const values = Object.values(data);
     const sql = `UPDATE professional_informations SET ${fields} WHERE user_id = ?`;
     this.connection.query(sql, [...values, userId], callback);
-  };
+  }
 
   updateAcademic(userId, data, callback) {
     const fields = Object.keys(data)
-      .map(key => `${key} = ?`)
+      .map((key) => `${key} = ?`)
       .join(", ");
 
     const values = Object.values(data);
     const sql = `UPDATE academic_informations SET ${fields} WHERE user_id = ?`;
     this.connection.query(sql, [...values, userId], callback);
-  };
+  }
 
   updateUserStatus(userId, status, callback) {
     const sql = "UPDATE users SET status = ? WHERE id = ?";
     this.connection.query(sql, [status, userId], callback);
   }
 
+  getAllUsers(callback) {
+    const query = ` SELECT 
+        p.user_id, 
+        CONCAT(p.first_name, ' ', p.last_name) AS full_name, 
+        u.created_at,
+        u.status,
+        r.role_name
+    FROM personal_informations p
+    LEFT JOIN user_roles ur ON p.user_id = ur.user_id
+    LEFT JOIN roles r ON ur.role_id = r.role_id
+    LEFT JOIN users u ON p.user_id = u.id 
+    ORDER BY p.user_id;`;
+    this.connection.query(query, callback);
+  }
 }
 
 module.exports = UsersRepository;

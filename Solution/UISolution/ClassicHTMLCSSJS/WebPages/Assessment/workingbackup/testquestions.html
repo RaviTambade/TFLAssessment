@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Checkbox and Select Example</title>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<h3>Test Questions</h3>
+</head>
+<body>
+
+<div id="chkbx"></div> 
+
+<button id="btnsubmit">Delete</button>
+
+<script>
+var testId=1;
+var questions;
+var selectedQuestions;
+var testQuestionUrl="http://localhost:5172/api/questionbank/questions/tests/"+testId;;
+var deleteTestQuestions="http://localhost:5151/api/assessment/deletequestions";
+
+$(document).ready(function() {
+  // Event handler for checkboxes
+        $.ajax({
+        url: testQuestionUrl,
+        type: 'GET',
+        contentType: 'application/json',
+
+        success: function (data) {
+            var questions = data;
+            console.log(questions);
+            
+            for(var i=0;i <questions.length;i++){
+                var testQuestions = $('<input type="checkbox" value="'+questions[i].id+'"/>'+questions[i].title+"<br/>");
+                $("#chkbx").append(testQuestions);
+
+            }
+        },
+        error: function (xhr, status, error) {
+            console.error(xhr.responseText);
+        }
+    });
+
+    $("#btnsubmit").click(function () {    
+            var selectedQuestions = new Array();
+            $("#chkbx input[type=checkbox]:checked").each(function () {
+                selectedQuestions.push(parseInt($(this).val()));;
+            });
+            console.log(selectedQuestions);
+            
+            $.ajax({
+            url: deleteTestQuestions,
+            type: 'DELETE',
+            contentType: 'application/json',
+            data: JSON.stringify(selectedQuestions),
+
+            success: function (response) {
+                console.log(response);
+            },
+            error: function (xhr, status, error) {
+                console.error(xhr.responseText);
+            }
+        });
+   })
+});
+
+</script>
+</body>
+</html>

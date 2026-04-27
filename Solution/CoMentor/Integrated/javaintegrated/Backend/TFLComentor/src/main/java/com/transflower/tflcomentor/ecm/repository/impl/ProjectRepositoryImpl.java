@@ -41,7 +41,7 @@ public class ProjectRepositoryImpl implements ProjectRepository {
                 project.setDescription(rs.getString("description"));
                 project.setRepositoryUrl(rs.getString("repository_url"));
                 project.setStatus(rs.getString("status"));
-                project.setCreatedAt(rs.getString("created_at"));
+                project.setCreatedAt(rs.getTimestamp("created_at").toLocalDateTime());
                 projects.add(project);
             }
         } catch (Exception e) {
@@ -72,7 +72,7 @@ public class ProjectRepositoryImpl implements ProjectRepository {
                 project.setDescription(rs.getString("description"));
                 project.setRepositoryUrl(rs.getString("repository_url"));
                 project.setStatus(rs.getString("status"));
-                project.setCreatedAt(rs.getString("created_at"));
+                 project.setCreatedAt(rs.getTimestamp("created_at").toLocalDateTime());
             }
 
         } catch (Exception e) {
@@ -227,7 +227,7 @@ public class ProjectRepositoryImpl implements ProjectRepository {
         List<Project> projects = new ArrayList<Project>();
 
         String query = """
-        SELECT p.project_name, p.project_id
+        SELECT p.project_name, p.project_id, p.mentor_id, p.description, p.repository_url, p.status, p.created_at
         FROM project_allocations pa
         JOIN projects p ON pa.project_id = p.project_id
         WHERE pa.student_id = ?
@@ -243,6 +243,11 @@ public class ProjectRepositoryImpl implements ProjectRepository {
                 Project project = new Project();
                 project.setProjectName(rs.getString("project_name"));
                 project.setProjectId(rs.getLong("project_id"));
+                project.setMentorId(rs.getLong("mentor_id"));
+                project.setDescription(rs.getString("description"));
+                project.setRepositoryUrl(rs.getString("repository_url"));
+                project.setStatus(rs.getString("status"));
+                project.setCreatedAt(rs.getTimestamp("created_at").toLocalDateTime());
                 projects.add(project);
             }
 

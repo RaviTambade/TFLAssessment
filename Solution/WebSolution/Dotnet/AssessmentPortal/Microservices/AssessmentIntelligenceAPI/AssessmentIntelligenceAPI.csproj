@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <InvariantGlobalization>true</InvariantGlobalization>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="dapper" Version="2.1.35" />
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.1" />
+      <PackageReference Include="mysql.data" Version="8.4.0" />
+      <PackageReference Include="Serilog" Version="3.1.1" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+    <PackageReference Include="Serilog.Extensions.Logging.File" Version="3.0.0" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.6" />
+  </ItemGroup>
+
+  <!-- <ItemGroup>
+    <ProjectReference Include="..\..\Entities\AssessmentIntelligenceEntity\AssessmentIntelligenceEntity.csproj" />
+    <ProjectReference Include="..\..\Interfaces\AssessmentIntelligenceInterfaces\AssessmentIntelligenceInterfaces.csproj" />
+    <ProjectReference Include="..\..\Services\AssessmentIntelligenceServices\AssessmentIntelligenceServices.csproj" />
+  </ItemGroup> -->
+
+
+</Project>

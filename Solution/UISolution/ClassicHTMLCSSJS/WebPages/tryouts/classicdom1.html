@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Online Assessment Report</title>
+<body>
+    <button>Click me</button>
+    <hr/>
+
+    <script>
+        //classic DOM manipulation example
+        // This script adds an event listener to a button that shows an alert when clicked.
+        let btn=document.querySelector("button");
+        btn.addEventListener("click", function() {
+            
+            //dyanmically creating a new paragraph element
+            //and appending it to the body
+            var p = document.createElement("p");
+            p.textContent = "I am new!";
+            document.body.appendChild(p);
+
+        });
+    </script>
+</body>

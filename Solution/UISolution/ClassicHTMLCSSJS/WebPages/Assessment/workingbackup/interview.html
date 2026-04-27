@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Interview Assessment Report</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f0f2f5;
+      margin: 40px;
+    }
+
+    .report-container {
+      max-width: 1000px;
+      margin: auto;
+      background-color: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      text-align: center;
+      color: #2c3e50;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 30px;
+    }
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 12px;
+      text-align: center;
+    }
+
+    th {
+      background-color: #2980b9;
+      color: white;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+
+    .selected {
+      color: green;
+      font-weight: bold;
+    }
+
+    .rejected {
+      color: red;
+      font-weight: bold;
+    }
+
+    .remarks {
+      text-align: left;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="report-container">
+    <h2>📋 Students Interview Assessment Report</h2>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Student Name</th>
+          <th>Interview Date</th>
+          <th>Panelist</th>
+          <th>Technical Score (out of 50)</th>
+          <th>Communication (out of 25)</th>
+          <th>Attitude (out of 25)</th>
+          <th>Remarks</th>
+          <th>Decision</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Rohan Desai</td>
+          <td>2025-05-20</td>
+          <td>Mr. Sharma</td>
+          <td>42</td>
+          <td>20</td>
+          <td>22</td>
+          <td class="remarks">Strong technical skills; can improve slightly on articulation.</td>
+          <td class="selected">Selected</td>
+        </tr>
+        <tr>
+          <td>Sneha Kulkarni</td>
+          <td>2025-05-20</td>
+          <td>Ms. Patil</td>
+          <td>30</td>
+          <td>18</td>
+          <td>20</td>
+          <td class="remarks">Average in technical; excellent team fit.</td>
+          <td class="selected">Selected</td>
+        </tr>
+        <tr>
+          <td>Ajay Kamble</td>
+          <td>2025-05-20</td>
+          <td>Mr. Singh</td>
+          <td>20</td>
+          <td>15</td>
+          <td>18</td>
+          <td class="remarks">Lacks basic technical foundation; needs training.</td>
+          <td class="rejected">Rejected</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</body>
+</html>

@@ -227,6 +227,11 @@ public class TechnologyRepositoryImpl implements TechnologyRepository {
     }
 
     @Override
+    public List<Framework> getAllFrameworksByLanguageAndLayer(int languageId, int layerId) {
+        return getAllFrameworks(languageId, layerId);
+    }
+
+    @Override
     public List<Framework> getAllFrameworks(int languageId){
         String query = "SELECT DISTINCT f.id, f.name from frameworks f WHERE f.language_id = ?";
         try(Connection connection = getConnection()){

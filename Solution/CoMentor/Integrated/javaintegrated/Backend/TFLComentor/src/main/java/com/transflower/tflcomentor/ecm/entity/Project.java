@@ -1,5 +1,7 @@
 package com.transflower.tflcomentor.ecm.entity;
 
+import java.time.LocalDateTime;
+
 public class Project {
 
     private long project_id;
@@ -8,13 +10,13 @@ public class Project {
     private String description;
     private String repository_url;
     private String status;
-    private String created_at;
+    private LocalDateTime created_at;
 
     public Project() {
 
     }
 
-    public Project(long project_id, long mentor_id, String project_name, String description, String repository_url, String status, String created_at) {
+    public Project(long project_id, long mentor_id, String project_name, String description, String repository_url, String status, LocalDateTime created_at) {
         this.project_id = project_id;
         this.mentor_id = mentor_id;
         this.project_name = project_name;
@@ -73,11 +75,11 @@ public class Project {
         this.status = status;
     }
 
-    public String getCreatedAt() {
+    public LocalDateTime getCreatedAt() {
         return created_at;
     }
 
-    public void setCreatedAt(String created_at) {
+    public void setCreatedAt(LocalDateTime created_at) {
         this.created_at = created_at;
     }
 

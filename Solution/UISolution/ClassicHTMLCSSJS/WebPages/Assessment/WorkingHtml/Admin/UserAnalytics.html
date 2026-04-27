@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User Analytics Dashboard</title>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        .dashboard-card {
+            border-radius: 10px;
+            padding: 20px;
+            color: white;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            transition: 0.3s;
+        }
+        .dashboard-card:hover {
+            transform: scale(1.03);
+        }
+        .card-title {
+            font-size: 18px;
+            font-weight: 600;
+        }
+        .card-value {
+            font-size: 45px;
+            font-weight: bold;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body class="p-4">
+
+    <h2 class="mb-4">DASHBOARD</h2>
+
+    <div class="row g-4">
+
+        <!-- Average Time -->
+        <div class="col-md-4">
+            <div class="dashboard-card" style="background:#198754;">
+                <div class="card-title">for future used</div>
+                <div id="avgTime" class="card-value">0</div>
+            </div>
+        </div>
+
+        <!-- Active Users -->
+        <div class="col-md-4">
+            <div class="dashboard-card" style="background:#0d6efd;" onclick="LoadActiveuser()">
+                <div class="card-title">Active Users</div>
+                <div id="activeUsers" class="card-value">0</div>
+            </div>
+        </div>
+
+         <div class="col-md-4">
+            <div class="dashboard-card" style="background:#fd9d0d;" onclick="loadAllUsers()">
+                <div class="card-title">Total Users</div>
+                <div id="allUsers" class="card-value">0</div>
+            </div>
+        </div>
+    </div>
+
+    <hr class="my-5">
+
+    <!-- TOP 10 USERS TABLE -->
+    <h3 id="heading">Top 10 Users</h3>
+    <table class="table table-bordered table-striped mt-3">
+        <thead class="table-dark">
+            <tr>
+                <th>Name</th>
+                <th>Role</th>
+                <th>Email</th>
+                 <th>Action</th>
+            </tr>
+        </thead>
+        <tbody id="topTenTable"></tbody>
+    </table>
+
+    <hr class="my-5">
+
+  
+
+
+<script>
+ API = "http://localhost:5238/api/UserAnalytics";
+
+$(document).ready(function () {
+    loadDashboard();              
+    loadTop10Users();
+
+
+    setInterval(() => {
+        loadDashboard();
+    }, 3000); 
+});
+
+
+// ---------------------------
+// Dashboard Cards
+// ---------------------------
+function loadDashboard() {
+
+
+    // Active Users Count
+    $.ajax({
+        url: API + "/ActiveUsercount",
+        method: "GET",
+        success: function (data) {
+            $("#activeUsers").text(data);
+        }
+    });
+    
+    $.ajax({
+        url: API + "/allusercount",
+        method: "GET",
+        success: function (data) {
+            $("#allUsers").text(data);
+        }
+    });
+
+}
+
+
+// ---------------------------
+// Top 10 Users Table
+// ---------------------------
+function loadTop10Users() {
+    $.ajax({
+        url: API + "/toptenuser",
+        method: "GET",
+        success: function (data) {
+
+            $("#topTenTable").empty();
+
+            data.forEach(user => {
+                let roles = user.userRoles && user.userRoles.length > 0
+                    ? user.userRoles.map(r => r.role.name).join(", ")
+                    : "-";
+
+                $("#topTenTable").append(`
+                    <tr>
+                    
+                        <td>${user.firstname} ${user.lastname}</td>
+                        <td>${roles}</td>
+                        <td>${user.email}</td>
+                        <td><button onclick ="userhistory(${user.id})">details</button>
+                            </td>
+                    </tr>
+                `);
+            });
+        }
+    });
+}
+
+function LoadActiveuser() {
+    $.ajax({
+        url: API + "/activeuser",
+        method: "GET",
+        success: function (data) {
+
+            $("#topTenTable").empty();
+            document.getElementById("heading").textContent="Active Users"
+
+            data.forEach(user => {
+                let roles = user.userRoles && user.userRoles.length > 0
+                    ? user.userRoles.map(r => r.role.name).join(", ")
+                    : "-";
+
+                $("#topTenTable").append(`
+                    <tr>
+                    
+                        <td>${user.firstname} ${user.lastname}</td>
+                        <td>${roles}</td>
+                        <td>${user.email}</td>
+                    </tr>
+                `);
+            });
+        }
+    });
+}
+
+
+function userhistory(userId)
+{
+     $("#content").load("DisplayUserHistory.html",function(){
+      userDetailHistory(userId);
+     });
+}
+
+
+
+// ---------------------------
+// All Users Table
+// ---------------------------
+function loadAllUsers() {
+    $.ajax({
+        url: API + "/alluser",
+        method: "GET",
+        success: function (data) {
+
+            $("#topTenTable").empty();
+             document.getElementById("heading").textContent="All Users"
+                 data.forEach(user => {
+                let roles = user.userRoles && user.userRoles.length > 0
+                    ? user.userRoles.map(r => r.role.name).join(", ")
+                    : "-";
+
+                $("#topTenTable").append(`
+                    <tr>
+                    
+                        <td>${user.firstname} ${user.lastname}</td>
+                        <td>${roles}</td>
+                        <td>${user.email}</td>
+                    </tr>
+                `);
+            });
+        }
+    });
+}
+
+</script>
+
+</body>
+</html>
