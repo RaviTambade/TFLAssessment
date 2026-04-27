@@ -10,6 +10,7 @@ import TapProgram from "./pages/TapProgram";
 import RaviTambade from "./pages/RaviTambade";
 import UpcomingAssessment from "./components/assessment/assessmentOrchestrator/UpcomingAssessment";
 import UserProfile from "./components/assessment/membership/UserProfile";
+import ChangePassword from "./components/assessment/membership/ChangePassword";
 
 const queryClient = new QueryClient();
 
@@ -26,6 +27,7 @@ const App = () => (
           <Route path="/ravi-tambade" element={<RaviTambade />} />
           <Route path="/upcoming-assessment" element={<UpcomingAssessment />} />
           <Route path="/component/assessment/membership/UserProfile/:id" element={<UserProfile />} />
+          <Route path="/change-password/:id" element={<ChangePassword />} />
 
           {/* Module routes - /models/* */}
           <Route path="/models/*" element={<AppRoutes />} />

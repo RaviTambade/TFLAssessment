@@ -10,8 +10,8 @@ class AuthController {
     this.service = authService;
   }
 
- 
-  validate (req, res) {
+
+  validate(req, res) {
     const responseGenerator = new ResponseGenerator();
     const credential = new Credential(
       req.body.username,
@@ -65,27 +65,34 @@ class AuthController {
   }
 
   changePassword(req, res) {
-    const responseGenerator = new ResponseGenerator();
-    const changePassword = new ChangePasswordDto(
-      req.body.id,
-      req.body.oldPassword,
-      req.body.newPassword,
-    );
-    if (
-      !changePassword.id ||
-      !changePassword.oldPassword ||
-      !changePassword.newPassword
-    ) {
-      return res.status(400).json({ message: "All fields are required" });
+    const { id, newPassword } = req.body;
+
+    if (!id || !newPassword) {
+      return res.status(400).json({
+        success: false,
+        message: "User ID and new password required"
+      });
     }
-    this.service.changePassword(changePassword, (err, result) => {
-      responseGenerator.generateResponse(
-        res,
-        err,
-        result,
-        "Failed to change password",
-        "Password changed successfully",
-      );
+
+    this.service.changePassword({ id, newPassword }, (err, result) => {
+      if (err) {
+        return res.status(500).json({
+          success: false,
+          message: "Server error"
+        });
+      }
+
+      if (!result) {
+        return res.status(404).json({
+          success: false,
+          message: "User not found"
+        });
+      }
+
+      res.json({
+        success: true,
+        message: "Password updated successfully"
+      });
     });
   }
 }
