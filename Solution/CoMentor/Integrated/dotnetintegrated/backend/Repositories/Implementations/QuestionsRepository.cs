@@ -19,7 +19,7 @@ namespace backend.Repositories.Implementations
                                             ?? throw new ArgumentNullException(nameof(configuration), "DefaultConnection string is missing");
         }
 
-        public async Task<QuestionsDto> QuestionDetailsWithAns(int questionId)
+        public async Task<QuestionsDto> GetQuestionDetailsWithAnswer(int questionId)
         {
             QuestionsDto dto = null;
 
@@ -117,7 +117,7 @@ namespace backend.Repositories.Implementations
             }
         }
 
-        public async Task<QuestionDetailsDto> ViewQuestionDetails(int questionId)
+        public async Task<QuestionDetailsDto> GetQuestionDetails(int questionId)
         {
             QuestionDetailsDto dto = null;
 
