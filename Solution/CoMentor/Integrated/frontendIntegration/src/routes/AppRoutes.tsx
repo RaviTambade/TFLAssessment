@@ -20,6 +20,9 @@ import ViewRuntimes from "@/components/assessment/skilltaxonomy/ViewRuntimes";
 import AddConcept from "@/components/assessment/skilltaxonomy/AddConcept";
 import UpcomingAssessment from "../components/assessment/assessmentOrchestrator/UpcomingAssessment";
 import DeleteAssessment from "@/components/assessment/assessmentOrchestrator/DeleteAssessment";
+import Question from "@/components/assessment/assessmentOrchestrator/applyAssessment";
+import Result from "@/components/assessment/assessmentOrchestrator/Result";
+
 import ViewProjectInfo from "@/components/assessment/evaluationcontent/ViewProjectInfo";
 import ProjectByMentee from "@/components/assessment/evaluationcontent/ProjectByMentee";
 import QuestionsByDifficulty from "@/components/assessment/evaluationcontent/QuestionByDifficulty";
@@ -32,6 +35,8 @@ import RegisterPage from "@/components/assessment/membership/Register";
 import GetUserInformation from "@/components/assessment/membership/GetUserInformation";
 import UserActivity from "@/components/assessment/membership/UserActivity";
 import UserProfile from "@/components/assessment/membership/UserProfile";
+import SMECreateTest from "@/components/assessment/assessmentOrchestrator/SMECreateTest";
+
 
 
 function AppRoutes() {
@@ -56,15 +61,22 @@ function AppRoutes() {
 
           {/* Assessment Orchestrator */}
           <Route path="assessmentorchestrator/assessmentorchestrator-menu" element={<AssessmentOrchestrator />} />
+          <Route path="upcoming-assessment" element={<UpcomingAssessment />} />
+          <Route path="delete-assessment" element={<DeleteAssessment />} />
+          <Route path="apply-assessment" element={<Question />} />
+          <Route path="result" element={<Result />} />
+
 
           <Route path="membership/membership-menu" element={<MembershipMenu />} />
 
           
           <Route path="skilltaxonomy/AddRuntime" element={<AddRuntime />} />
           <Route path="skilltaxonomy/ViewRuntimes" element={<ViewRuntimes />} />
+
+          <Route path="skilltaxonomy/AddRuntime" element={<AddRuntime />} />
           <Route path="skilltaxonomy/AddConcept" element={<AddConcept />} />
 
-          
+
 
           {/* Default route - shows main assessment */}
 
@@ -76,10 +88,12 @@ function AppRoutes() {
           <Route path="evaluationcontent/edit/:id" element={<EditQuestion />} />
           <Route path="evaluationcontent/insertquestion" element={<SMEInsertQuestion />} />
           <Route path="evaluationcontent/reviewquestion" element={<MentorReviewQuestion />} />
+          <Route index element={<Assessment />} />
           <Route path="evaluationcontent/viewprojectinfo" element={<ViewProjectInfo />} />
 
           <Route index element={<Assessment />} />
           <Route path="upcoming-assessment" element={<UpcomingAssessment />} />
+          <Route path="create-test" element={<SMECreateTest />} />
           <Route path="delete-assessment" element={<DeleteAssessment />} />
           <Route path="evaluationcontent/questionbydifficulty" element={<QuestionsByDifficulty />} />
           <Route path="evaluationcontent/projectbymentee" element={<ProjectByMentee />} />
