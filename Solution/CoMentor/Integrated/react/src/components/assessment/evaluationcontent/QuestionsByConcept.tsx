@@ -9,7 +9,7 @@ const QuestionsByConcept = () => {
 
     // ✅ Load all concepts
     useEffect(() => {
-        fetch("http://localhost:8080/api/concepts")
+        fetch("http://localhost:8080/api/technologies/concepts")
             .then((res) => res.json())
             .then((data) => setConcepts(data))
             .catch((err) => console.error(err));
