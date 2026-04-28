@@ -36,6 +36,7 @@ import GetUserInformation from "@/components/assessment/membership/GetUserInform
 import UserActivity from "@/components/assessment/membership/UserActivity";
 import UserProfile from "@/components/assessment/membership/UserProfile";
 import SMECreateTest from "@/components/assessment/assessmentOrchestrator/SMECreateTest";
+import ConceptByFramework from "@/components/assessment/skilltaxonomy/ConceptByFramework";
 
 
 
@@ -73,9 +74,11 @@ function AppRoutes() {
           <Route path="skilltaxonomy/AddRuntime" element={<AddRuntime />} />
           <Route path="skilltaxonomy/ViewRuntimes" element={<ViewRuntimes />} />
 
+
           <Route path="skilltaxonomy/AddRuntime" element={<AddRuntime />} />
           <Route path="skilltaxonomy/AddConcept" element={<AddConcept />} />
-
+           <Route path="skilltaxonomy/ConceptByFramework" element={<ConceptByFramework />} />
+          
 
 
           {/* Default route - shows main assessment */}
