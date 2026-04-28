@@ -7,7 +7,6 @@ import { ArrowRight } from "lucide-react";
 const buttons = [
   { label: "Evaluation Content Management", path: "/models/evaluationcontent/componentmenu" },
   { label: "Question by Status", path: "/models/evaluationcontent/questionbystatus" },
-
 ];
 
 const Assessment = () => {

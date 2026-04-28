@@ -102,6 +102,15 @@ const EvaluationContentMenu = () => {
                     <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                   </Button>
                  
+                  <Button
+                    variant="hero"
+                    size="lg"
+                    className="group"
+                    onClick={() => navigate("/models/evaluationcontent/questionsbyconceptid")}
+                  >
+                    View Questions by Concept
+                    <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                  </Button>
 
 
                 </div>
