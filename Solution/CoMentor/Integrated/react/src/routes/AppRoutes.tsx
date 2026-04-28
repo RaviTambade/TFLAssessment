@@ -38,6 +38,7 @@ import UserProfile from "@/components/assessment/membership/UserProfile";
 import SMECreateTest from "@/components/assessment/assessmentOrchestrator/SMECreateTest";
 import ConceptByFramework from "@/components/assessment/skilltaxonomy/ConceptByFramework";
 
+import QuestionByConceptId from "@/components/assessment/evaluationcontent/QuestionByConceptId";
 
 
 function AppRoutes() {
@@ -56,7 +57,7 @@ function AppRoutes() {
           <Route path="evaluationcontent/questionbystatus" element={<QuestionByStatus />} />
           {/* Question by Type */}
           <Route path="evaluationcontent/questionbytype" element={<QuestionByType />} />
-
+          <Route path="evaluationcontent/questionsbyconceptid" element={<QuestionByConceptId />} />
           {/* Skill Taxonomy */}
           <Route path="skilltaxonomy/skilltaxonomy-menu" element={<SkillTaxonomyMenu />} />
 
