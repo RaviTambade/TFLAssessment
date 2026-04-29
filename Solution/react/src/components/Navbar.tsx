@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState ,useEffect} from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Button } from "./ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./ui/dropdown-menu";
@@ -11,14 +11,92 @@ const Navbar = ({ isLoggedIn }: NavbarProps) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
+  const [loading, setLoading] = useState<boolean>(true);
+  const [userName, setUserName] = useState<UserName>();
+  const [error, setError] = useState<string>("");
+
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+
+   interface UserName {
+      firstname: string;
+      lastname: string;
+    }
+
+
+        useEffect(() => {
+    const BASE_URL: string = "http://localhost:3000";
+
+    const fetchProfileName = async () => {
+      setLoading(true);
+
+      const userData = localStorage.getItem("user");
+
+      if (!userData) return;
+
+      const user = JSON.parse(userData);
+      try {
+        const response = await fetch(
+          `${BASE_URL}/api/users/${user.userid}/personal`,
+        );
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch roles");
+        }
+
+        const data = await response.json();
+
+        console.log("API DATA:", data.data);
+
+        const userdata={
+          firstname:data.data.first_name,
+          lastname:data.data.last_name
+
+        }
+
+        setUserName(userdata);
+        setError("");
+      } catch (err) {
+        console.error(err);
+        setError("Failed to fetch roles");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProfileName();
+  }, []);
+
 
   const handleSectionClick = (sectionId: string) => {
     if (location.pathname !== '/') {
       navigate(`/${sectionId}`);
     } else {
       document.getElementById(sectionId.replace('#', ''))?.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  
+    const handleUserLogLogout = async (userid: number) => {
+    try {
+      const res = await fetch(
+        `http://localhost:3000/api/useractivity/logout/${userid}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        },
+      );
+
+      if (!res.ok) {
+        throw new Error("user log failed");
+      }
+
+      const data = await res.json();
+      console.log(data.message);
+    } catch (error) {
+      console.error(error);
     }
   };
 
@@ -100,25 +178,40 @@ const Navbar = ({ isLoggedIn }: NavbarProps) => {
           
             {isLoggedIn ? (
 
+                  
                     <DropdownMenu>
-                          <DropdownMenuTrigger asChild>
-                            <button className="flex items-center gap-2 bg-primary text-white px-4 py-2 rounded-md hover:bg-accent transition">
-                            <CircleUser className="w-5 h-5" />Profile<ChevronDown className="w-4 h-4 ml-1" />
-                            </button>
-                          </DropdownMenuTrigger>
+                      <DropdownMenuTrigger asChild>
+                        <button className="flex items-center gap-2 bg-primary text-white px-4 py-2 rounded-md hover:bg-accent transition">
+                          <CircleUser className="w-5 h-5" />
+                          {userName?.firstname + " " + userName?.lastname}
+                          <ChevronDown className="w-4 h-4 ml-1" />
+                        </button>
+                      </DropdownMenuTrigger>
                             <DropdownMenuContent align="end" className="w-44">
                               <DropdownMenuItem onClick={() => navigate("")}>
                                 Profile
                               </DropdownMenuItem>
-                              <DropdownMenuItem onClick={() => navigate("/models/membership/ChangePassword")}>
-                                Change Password
-                              </DropdownMenuItem>
-                              <DropdownMenuItem onClick={() => navigate("/tap-program")}>
-                                Logout
-                              </DropdownMenuItem>
+                              <DropdownMenuItem
+                                    onClick={() => {
+                                      try {
+                                        const user = JSON.parse(
+                                          localStorage.getItem("user") || "{}",
+                                        );
+                                        if (user?.userid) {
+                                          handleUserLogLogout(user.userid);
+                                        }
+                                      } catch (error) {
+                                        console.error("Submit Error:", error);
+                                      }
+                                      localStorage.removeItem("user");
+                                      navigate("/");
+                                      window.location.reload(); // redirect
+                                    }}
+                                  >
+                                    Logout
+                                </DropdownMenuItem>
                             </DropdownMenuContent>
                         </DropdownMenu>
-                  
 
                 ) : (
 
