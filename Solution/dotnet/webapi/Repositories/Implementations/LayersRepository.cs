@@ -13,10 +13,6 @@ namespace backend.Repositories
             _context = context;
         }
 
-<<<<<<< HEAD
-=======
-        
->>>>>>> 9db25447bf6545f66a1ebd91a8c5fe7abddb966e
     public async Task<List<LayerDto>> GetLayersAsync(long languageId)
 {
     return await _context.Layers

@@ -18,4 +18,8 @@ public class StudentResultService : IStudentResultService
     {
         return await _repo.GetStudentResultsAsync();
     }
+     public async Task<StudentAnswersResultDto> GetStudentAnswerResultAsync(int questionId, int studentId, int assessmentId)
+    {
+        return await _repo.GetStudentAnswerResultAsync(questionId, studentId, assessmentId);
+    }
 }
