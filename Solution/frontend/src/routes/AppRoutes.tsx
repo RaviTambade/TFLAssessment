@@ -1,6 +1,5 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import Navbar from "../components/Navbar";
 
 import EvaluationContentMenu from "../components/assessment/evaluationcontent/EvaluationContentMenu";
 import SkillTaxonomyMenu from "../components/assessment/skilltaxonomy/SkillTaxonomyMenu";
@@ -44,7 +43,6 @@ import QuestionByConceptId from "@/components/assessment/evaluationcontent/Quest
 function AppRoutes() {
   return (
     <div className="min-h-screen bg-background">
-      <Navbar />
       <main className="pt-20">
         <Routes>
           {/* Main Component Page */}
@@ -106,9 +104,9 @@ function AppRoutes() {
           <Route path="membership/ChangePassword" element={<ChangePassword />} />
           <Route path="membership/GetUserInformation" element={<GetUserInformation />} />
           <Route path="membership/GetUserLogDetail" element={<GetUserLogDetail />} />
-          <Route path="membership/LoginPage" element={<LoginPage />} />
+          <Route path="membership/Login" element={<LoginPage />} />
           <Route path="membership/ManageUsers" element={<ManageUsers />} />
-          <Route path="membership/RegisterPage" element={<RegisterPage />} />
+          <Route path="membership/Register" element={<RegisterPage />} />
           <Route path="membership/UserActivity" element={<UserActivity />} />
           <Route path="membership/UserProfile" element={<UserProfile />} />
 
