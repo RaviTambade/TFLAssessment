@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 
-
 type Assessment = {
   id: number;
   srNo: number;
