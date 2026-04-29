@@ -19,6 +19,30 @@ const Question: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [selectedAnswers, setSelectedAnswers] = useState<SelectedAnswersType>({});
   const [loading, setLoading] = useState<boolean>(true);
+  const [timeLeft, setTimeLeft] = useState<number>(30 * 60); // Default 30 mins in seconds
+  const [studentId, setStudentId] = useState<string>("");
+  const [isStarted, setIsStarted] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (timeLeft <= 0) {
+      // Auto-submit when timer reaches zero
+      const submitBtn = document.getElementById("submit-assessment-btn");
+      if (submitBtn) submitBtn.click();
+      return;
+    }
+
+    const timer = setInterval(() => {
+      setTimeLeft((prev) => prev - 1);
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, [timeLeft]);
+
+  const formatTime = (seconds: number) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins}:${secs < 10 ? "0" : ""}${secs}`;
+  };
 
   const navigate = useNavigate();
 
@@ -76,7 +100,7 @@ const Question: React.FC = () => {
     );
 
     const payload = {
-      studentId: 1,
+      studentId: parseInt(studentId),
       assessmentId: 7,
       timeTakenMinutes: 30,
       answers: answersArray,
@@ -92,12 +116,41 @@ const Question: React.FC = () => {
       .then((res) => res.json())
       .then((data) => {
         console.log("Submission Response:", data);
-        navigate("result");
+        navigate("/models/result");
       })
       .catch((error) =>
         console.error("Error submitting answers:", error)
       );
   };
+
+  if (!isStarted) {
+    return (
+      <div className="mx-auto max-w-md rounded-[2rem] bg-white p-8 shadow-soft ring-1 ring-slate-200 text-center">
+        <h2 className="text-2xl font-bold text-slate-900 mb-6">Enter Student Details</h2>
+        <div className="space-y-4">
+          <div>
+            <label className="block text-sm font-medium text-slate-700 mb-1 text-left">
+              Student ID
+            </label>
+            <input
+              type="number"
+              placeholder="Enter your ID (e.g. 1)"
+              value={studentId}
+              onChange={(e) => setStudentId(e.target.value)}
+              className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent outline-none"
+            />
+          </div>
+          <button
+            onClick={() => studentId && setIsStarted(true)}
+            disabled={!studentId}
+            className="w-full bg-[#dc2626] text-white py-2 rounded-lg font-semibold hover:bg-[#b91c1c] transition disabled:opacity-50"
+          >
+            Start Assessment
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   if (loading)
     return (
@@ -117,10 +170,15 @@ const Question: React.FC = () => {
   const options = getOptions(currentQuestion);
 
   return (
-    <div className="mx-auto max-w-5xl rounded-[2rem] bg-white p-6 shadow-soft ring-1 ring-slate-200">
-      <h1 className="text-2xl font-bold text-slate-950">
-        Quiz Assessment
-      </h1>
+    <div className="mx-auto max-w-5xl rounded-[2rem] bg-white p-6 shadow-soft ring-1 ring-slate-200 relative">
+      <div className="flex justify-between items-center">
+        <h1 className="text-2xl font-bold text-slate-950">
+          Assessment
+        </h1>
+        <div className={`text-xl font-mono font-bold px-4 py-2 rounded-xl border-2 ${timeLeft < 60 ? 'text-red-600 border-red-600 animate-pulse' : 'text-slate-700 border-slate-200'}`}>
+          Time Remaining: {formatTime(timeLeft)}
+        </div>
+      </div>
 
       <form onSubmit={handleSubmit}>
         <div className="mt-6 rounded-3xl bg-slate-50 p-5 shadow-sm ring-1 ring-slate-200">
@@ -209,6 +267,7 @@ const Question: React.FC = () => {
 
           <button 
             type="submit" 
+            id="submit-assessment-btn"
             className="mx-auto rounded-lg bg-[#dc2626] px-8 py-2 font-semibold text-white hover:bg-[#b91c1c] transition"
           >
             Submit All Answers

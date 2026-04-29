@@ -6,6 +6,7 @@ using backend.Repositories.Interfaces;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
+using MySql.Data.MySqlClient;
 
 public class AssessmentRepository : IAssessmentRepository
 {
@@ -215,18 +216,19 @@ public class AssessmentRepository : IAssessmentRepository
             .ToListAsync();
     }
     public async Task<bool> SaveAssessmentAnswersAsync(List<StudentAnswer>? answers)
-    {
-        // 1. Add the summary record (Score, Time Taken, etc.)
+    {   
+        foreach(var answer in answers ?? new List<StudentAnswer>())
+        {
+            answer.CreatedAt= DateTime.Now;
+            Console.WriteLine("Date"+ answer.CreatedAt);
+        }
 
-        // 2. Add all the individual answers at once (Bulk Insert)cd
         if (answers != null && answers.Any())
         {
             await _context.StudentAnswers.AddRangeAsync(answers);
         }
-
-        // 3. Save everything to the database
+     
         var rowsAffected = await _context.SaveChangesAsync();
-
         return rowsAffected > 0;
     }
 
@@ -235,11 +237,8 @@ public class AssessmentRepository : IAssessmentRepository
         var results = await _context.StudentAssessmentReports
         .FromSqlInterpolated($"CALL GetStudentAssessmentReport({studentId}, {assessmentId})")
         .ToListAsync(); // Execution happens here
-
-        // 2. Now pick the first item from the list in C#
         var report = results.FirstOrDefault();
         return report;
-
     }
 
     public async Task<int> GetTotalAssessmentsAsync()
