@@ -40,5 +40,4 @@ public class CreateTestRequestDto
     public long Duration { get; set; }
     public string? SkillLevel { get; set; }
     public List<long>? QuestionIds { get; set; }
-    public string? Description { get; set; }  
 }
