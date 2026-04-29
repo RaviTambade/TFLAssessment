@@ -1,44 +1,39 @@
-import { useState } from 'react';
-import App from '@/App';
+import { useState } from "react";
 
 interface UserProfile {
-  userId: number;
+  user_id: number;
   contact: string;
   status: string;
-  personalInformation: {
-    firstName: string;
-    lastName: string;
-    gender: string;
-    dateOfBirth: string;
-    email: string;
-  };
-  academicInformation: {
-    enrollmentYear: number;
-    passingYear: number;
-    percentage: number;
-    collegeName: string;
-  };
-  professionalInformation: {
-    skills: string;
-  };
+
+  first_name: string;
+  last_name: string;
+  gender: string;
+  date_of_birth: string;
+  email: string;
+
+  enrollment_year: number | null;
+  passing_year: number | null;
+  percentage: number | null;
+  college_name: string | null;
+
+  skills: string | null;
 }
 
 interface ApiResponse {
   success: boolean;
+  data?: UserProfile[];
   message?: string;
-  data?: UserProfile;
   error?: string;
-  statusCode?: number;
 }
 
 function GetUserInformation() {
-  const [userId, setUserId] = useState<string>('');
+  const [userId, setUserId] = useState("");
   const [response, setResponse] = useState<ApiResponse | null>(null);
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState(false);
 
   const fetchProfile = async () => {
     if (!userId.trim()) {
-      alert('Please enter a user ID');
+      alert("Enter user ID");
       return;
     }
 
@@ -46,62 +41,69 @@ function GetUserInformation() {
     setResponse(null);
 
     try {
-      const res = await fetch(`http://localhost:4001/api/userprofile/getUserProfile/${userId}`);
+      const res = await fetch(
+        `http://localhost:3000/api/users/${userId}` 
+      );
+
       const data: ApiResponse = await res.json();
+
+      console.log("API RESPONSE:", data);
+
       setResponse(data);
-    } catch (error) {
+
+    } catch {
       setResponse({
         success: false,
-        error: 'Failed to fetch data. Make sure the backend is running.',
-        statusCode: 0
+        error: "Backend not running",
       });
     } finally {
       setLoading(false);
     }
   };
 
-  return (
-    <div className="App">
-      <h1>API Testing Frontend - User Profile</h1>
-      <div className="input-section">
-        <label htmlFor="userId">User ID:</label>
-        <input
-          id="userId"
-          type="text"
-          value={userId}
-          onChange={(e) => setUserId(e.target.value)}
-          placeholder="Enter user ID"
-        />
-        <button onClick={fetchProfile} disabled={loading}>
-          {loading ? 'Fetching...' : 'Get Profile'}
-        </button>
-      </div>
+  const user = response?.data?.[0];
 
-      {response && (
-        <div className="response-section">
-          <h2>Response</h2>
-          <pre>{JSON.stringify(response, null, 2)}</pre>
-          {response.success && response.data && (
-            <div className="profile-display">
-              <h3>User Profile Details</h3>
-              <p><strong>User ID:</strong> {response.data.userId}</p>
-              <p><strong>Contact:</strong> {response.data.contact}</p>
-              <p><strong>Status:</strong> {response.data.status}</p>
-              <h4>Personal Information</h4>
-              <p><strong>Name:</strong> {response.data.personalInformation.firstName} {response.data.personalInformation.lastName}</p>
-              <p><strong>Gender:</strong> {response.data.personalInformation.gender}</p>
-              <p><strong>Date of Birth:</strong> {response.data.personalInformation.dateOfBirth}</p>
-              <p><strong>Email:</strong> {response.data.personalInformation.email}</p>
-              <h4>Academic Information</h4>
-              <p><strong>Enrollment Year:</strong> {response.data.academicInformation.enrollmentYear}</p>
-              <p><strong>Passing Year:</strong> {response.data.academicInformation.passingYear}</p>
-              <p><strong>Percentage:</strong> {response.data.academicInformation.percentage}%</p>
-              <p><strong>College:</strong> {response.data.academicInformation.collegeName}</p>
-              <h4>Professional Information</h4>
-              <p><strong>Skills:</strong> {response.data.professionalInformation.skills}</p>
-            </div>
-          )}
+  return (
+    <div style={{ padding: "20px" }}>
+      <h2>User Profile</h2>
+
+      <input
+        value={userId}
+        onChange={(e) => setUserId(e.target.value)}
+        placeholder="Enter User ID"
+        style={{ marginRight: "10px" }}
+      />
+
+      <button onClick={fetchProfile}>
+        {loading ? "Loading..." : "Get Profile"}
+      </button>
+
+      {response?.success && user && (
+        <div>
+          <h3>User ID: {user.user_id}</h3>
+          <p>Contact: {user.contact}</p>
+          <p>Status: {user.status}</p>
+
+          <h4>Personal</h4>
+          <p>
+            {user.first_name} {user.last_name}
+          </p>
+          <p>Email: {user.email}</p>
+          <p>Gender: {user.gender}</p>
+
+          <h4>Academic</h4>
+          <p>College: {user.college_name || "N/A"}</p>
+          <p>Percentage: {user.percentage ?? "N/A"}</p>
+
+          <h4>Professional</h4>
+          <p>Skills: {user.skills || "N/A"}</p>
         </div>
+      )}
+
+      {response && !response.success && (
+        <p style={{ color: "red" }}>
+          {response.error || response.message}
+        </p>
       )}
     </div>
   );

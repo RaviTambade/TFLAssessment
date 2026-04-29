@@ -14,12 +14,14 @@ namespace backend.Repositories
         }
 
 
-    public async Task<List<QuestionDto>> GetQuestionsByConceptIdAsync(List<long> conceptIds, string type)
+    public async Task<List<QuestionDto>> GetQuestionsByConceptIdAsync(List<long> conceptIds, string type, string difficulty)
         {
             return await _context.QuestionFrameworkConcepts
                 .Where(x => conceptIds.Contains(x.FrameworkConcepts!.ConceptId ?? 0))
                 .Select(x => x.Question!)
-                .Where(q => q.QuestionType == type)
+                .Where(q => q.QuestionType == type.ToUpper())
+                .Where(q => q.DifficultyLevel == difficulty.ToUpper())
+
                 .Select(q => new QuestionDto
                 {
                     Id = q.QuestionId,
@@ -39,6 +41,7 @@ namespace backend.Repositories
                 Duration = (int)dto.Duration,
         Difficulty = dto.SkillLevel,
         SmeRuntimeId = dto.SmeId,
+         Description = dto.Description, 
                 CreatedAt = DateTime.Now,
                 Status = true
             };
