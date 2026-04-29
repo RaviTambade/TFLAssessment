@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import './App.css';
+import App from '../../../App';
 
 interface UserProfile {
   userId: number;
