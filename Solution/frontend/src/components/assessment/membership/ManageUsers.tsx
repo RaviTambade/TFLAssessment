@@ -53,7 +53,7 @@ const ManageUsers = () => {
       const res = await fetch(`http://localhost:3000/api/roles/assignRoles/${userId}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({role_ids: roleIds }),
+        body: JSON.stringify({roleIds: roleIds }),
       })
 
       if (!res.ok) throw new Error(`HTTP ${res.status}`)
