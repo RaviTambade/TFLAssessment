@@ -138,7 +138,7 @@ export default function AssignAssessment() {
             <h2 className="font-bold mb-3">Select Status</h2>
 
             <div className="flex gap-3 mb-4">
-              {["Created", "Assigned", "Cancelled"].map(s => (
+              {["Pending", "Assigned", "Completed", "Cancelled"].map(s => (
                 <button
                   key={s}
                   onClick={() => setStatus(s)}
