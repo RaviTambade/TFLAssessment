@@ -13,12 +13,6 @@ namespace backend.Repositories
             _context = context;
         }
 
-        
-
-
-
-
-   
 
     public async Task<List<QuestionDto>> GetQuestionsByConceptIdAsync(List<long> conceptIds, string type, string difficulty)
         {
