@@ -197,7 +197,7 @@ const Navbar = ({ isLoggedIn }: NavbarProps) => {
                   </button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="w-44">
-                  <DropdownMenuItem onClick={() => navigate("")}>
+                  <DropdownMenuItem onClick={() => navigate("/models/membership/UserProfile")}>
                     Profile
                   </DropdownMenuItem>
 
