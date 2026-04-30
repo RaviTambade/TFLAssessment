@@ -168,26 +168,39 @@ public class AssessmentRepository : IAssessmentRepository
                           FullName = p.FullName ?? string.Empty
                       }).ToListAsync();
     }
+public async Task AssignAssessmentAsync(AssignAssessmentDto dto)
+{
+    // ✅ Validation
+    if (dto.StudentIds == null || !dto.StudentIds.Any())
+        throw new Exception("StudentIds is empty");
 
-    public async Task AssignAssessmentAsync(AssignAssessmentDto dto)
+    if (dto.TestId == 0)
+        throw new Exception("Invalid TestId");
+
+    // ✅ Valid status list
+    var validStatuses = new[] { "Pending", "Assigned", "Completed", "Cancelled" };
+
+    if (!string.IsNullOrEmpty(dto.Status) && !validStatuses.Contains(dto.Status))
+        throw new Exception("Invalid status");
+
+    var assessments = new List<Assessment>();
+
+    foreach (var studentId in dto.StudentIds)
     {
-        var assessments = new List<Assessment>();
-
-        foreach (var studentId in dto.StudentIds)
+        assessments.Add(new Assessment
         {
-            assessments.Add(new Assessment
-            {
-                TestId = dto.TestId,
-                StudentId = studentId,
-                AssignedAt = DateTime.Now,
-                ScheduledAt = dto.ScheduledAt,
-                Status = "Assigned"
-            });
-        }
-
-        await _context.Assessments.AddRangeAsync(assessments);
-        await _context.SaveChangesAsync();
+            TestId = dto.TestId,
+            StudentId = studentId,
+            AssignedBy = 1,
+            AssignedAt = DateTime.Now,                 // backend handles this
+            ScheduledAt = dto.ScheduledAt,             // from frontend
+            Status = dto.Status ?? "Pending"           // dynamic status
+        });
     }
+
+    await _context.Assessments.AddRangeAsync(assessments);
+    await _context.SaveChangesAsync();
+}
     public async Task<List<AssessmentQuestionDto>> GetAssessmentQuestions(int assessmentId)
     {
         // We use .Set<T>() to access the keyless entity defined in the Context
