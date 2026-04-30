@@ -20,8 +20,17 @@ const UserProfile = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const uid = id ? parseInt(id, 10) : 21;
-    setUserId(uid);
+const storedUser = localStorage.getItem("user");
+
+if (storedUser) {
+  try {
+    const user = JSON.parse(storedUser);
+    setUserId(user?.userid);
+  } catch (e) {
+    console.error("Invalid user data in localStorage");
+  }
+}
+ 
   }, [id]);
 
   useEffect(() => {
