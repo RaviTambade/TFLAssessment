@@ -36,6 +36,8 @@ interface AcademicDetails {
 
 
 const TabProfile = () => {
+
+    
   const [activeTab, setActiveTab] = useState<TabType>("professional")
 
   // Hardcoded Personal Details

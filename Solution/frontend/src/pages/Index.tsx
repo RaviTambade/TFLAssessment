@@ -33,6 +33,7 @@ const Index = () => {
       <VideoShowcase />
       <Contact />
       <Dashboard />
+      <TabProfile />
       <Footer />
     </div>
   );
