@@ -32,8 +32,7 @@ const Index = () => {
       <SuccessStories />
       <VideoShowcase />
       <Contact />
-      <Dashboard />
-      <TabProfile />
+      <TabProfile/>
       <Footer />
     </div>
   );

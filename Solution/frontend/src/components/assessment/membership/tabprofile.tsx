@@ -1,27 +1,25 @@
-import { useState, FormEvent } from "react"
+import { useState, useEffect } from "react";
 import { Card, CardContent } from "../../ui/card";
 import { Input } from "../../ui/input";
-import { Button } from "../../ui/button";
-import { Eye, EyeOff } from "lucide-react"
 
-type TabType = "personal" | "professional" | "academic"
+type TabType = "personal" | "professional" | "academic";
 
 interface PersonalDetails {
-  firstName: string;
-  lastName: string;
+  first_name: string;
+  last_name: string;
   email: string;
-  phone: string;
-  dateOfBirth: string;
+  contact: string;
+  date_of_birth: string;
   address: string;
 }
 
 interface ProfessionalDetails {
-  companyName: string;
-  designation: string;
-  department: string;
-  yearsOfExperience: number;
-  skills: string[];
-  salary: string;
+  company_name: string;
+  job_title: string;
+  employment_type: string;
+  experience_years: number;
+  location: string[];
+  skills: string;
 }
 
 interface AcademicDetails {
@@ -33,301 +31,238 @@ interface AcademicDetails {
   certifications: string[];
 }
 
-
-
 const TabProfile = () => {
+  const [activeTab, setActiveTab] = useState<TabType>("professional");
+  const [personalData, setPersonalData] = useState<PersonalDetails | null>(null);
+  const [professionalData, setProfessionalData] = useState<ProfessionalDetails | null>(null);
+  //const [academicData, setAcademicData] = useState<AcademicDetails | null>(null);
+  const [loading, setLoading] = useState(false);
 
-    
-  const [activeTab, setActiveTab] = useState<TabType>("professional")
+  // Professional Data
+ // const professionalData: ProfessionalDetails = {
+   // companyName: "Transflower Learning Pvt. Ltd.",
+  //  // designation: "Chief Mentor",
+  //   department: "Learning and Development",
+  //   yearsOfExperience: 30,
+  //   skills: ["React", "TypeScript", "Node.js", "AWS", "Docker"],
+  //   salary: "$120,000 - $140,000",
+  // };
 
-  // Hardcoded Personal Details
-  const personalData: PersonalDetails = {
-    firstName: "Ravi",
-    lastName: "Tambade",
-    email: "ravi.tambade@transflower.in",
-    phone: "+1-234-567-8900",
-    dateOfBirth: "1975-08-18",
-    address: "601, Rama Apartment,Walwekar Nagar ,Pune, Maharashtra, India - 411009"
-  }
-
-  // Hardcoded Professional Details
-  const professionalData: ProfessionalDetails = {
-    companyName: "Transflower Learning Pvt. Ltd.",
-    designation: "Chief Mentor",
-    department: "Learning and Development",
-    yearsOfExperience: 30,
-    skills: ["React", "TypeScript", "Node.js", "AWS", "Docker"],
-    salary: "$120,000 - $140,000"
-  }
-
-  // Hardcoded Academic Details
+  // Academic Data
   const academicData: AcademicDetails = {
     university: "Massachusetts Institute of Technology (MIT)",
     degree: "Bachelor of Science",
     field: "Computer Science",
     graduationYear: 1997,
     gpa: 3.8,
-    certifications: ["AWS Certified Solutions Architect", "Google Cloud Professional Data Engineer"]
-  }
+    certifications: [
+      "AWS Certified Solutions Architect",
+      "Google Cloud Professional Data Engineer",
+    ],
+  };
+
+  useEffect(() => {
+    const fetchPersonalDetails = async () => {
+      setLoading(true);
+
+      let userid;
+
+      const storedUser = sessionStorage.getItem("current");
+      if (storedUser) {
+        try {
+          const user = JSON.parse(storedUser);
+          userid = user?.userid;
+        } catch {
+          console.error("Invalid user data");
+        }
+      }
+
+      if (!userid) {
+        console.error("User ID not found");
+        setLoading(false);
+        return;
+      }
+
+      try {
+        const res = await fetch(
+          `http://localhost:3000/api/users/${userid}/personal/`
+        );
+
+        const data = await res.json();
+        console.log("API RESPONSE:", data);
+
+        const personal: PersonalDetails = data.data;
+
+        // ✅ FIX DOB FORMAT
+        if (personal.date_of_birth) {
+          personal.date_of_birth =
+            personal.date_of_birth.split("T")[0];
+        }
+
+        setPersonalData(personal);
+      } catch {
+        console.error("Failed to fetch personal details");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+
+     const fetchProfessionalDetails = async () => {
+      setLoading(true);
+
+      let userid;
+
+      const storedUser = sessionStorage.getItem("current");
+      if (storedUser) {
+        try {
+          const user = JSON.parse(storedUser);
+          userid = user?.userid;
+        } catch {
+          console.error("Invalid user data");
+        }
+      }
+
+      if (!userid) {
+        console.error("User ID not found");
+        setLoading(false);
+        return;
+      }
+
+      try {
+        const res = await fetch(
+          `http://localhost:3000/api/users/${userid}/professional/`
+        );
+
+        const data = await res.json();
+        console.log("API RESPONSE:", data);
+
+        const professional: ProfessionalDetails = data.data;
+
+        console.log("PROFESSIONAL DETAILS:", professional);
+        setProfessionalData(professional);
+      } catch {
+        console.error("Failed to fetch professional details");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+
+    fetchPersonalDetails();
+    fetchProfessionalDetails();
+  }, []);
 
   return (
     <div className="min-h-screen bg-gradient-hero flex flex-col">
       <div className="flex-1 flex justify-center items-center pt-24 p-6">
         <Card className="w-full max-w-2xl shadow-lg">
-          {/* Tab Navigation */}
+
+          {/* Tabs */}
           <div className="border-b flex">
-            <button
-              onClick={() => setActiveTab("personal")}
-              className={`flex-1 py-4 px-6 text-center font-semibold transition-all ${
-                activeTab === "personal"
-                  ? "border-b-2 border-blue-600 text-blue-600"
-                  : "text-gray-600 hover:text-gray-900"
-              }`}
-            >
-              Personal Details
-            </button>
-            <button
-              onClick={() => setActiveTab("professional")}
-              className={`flex-1 py-4 px-6 text-center font-semibold transition-all ${
-                activeTab === "professional"
-                  ? "border-b-2 border-blue-600 text-blue-600"
-                  : "text-gray-600 hover:text-gray-900"
-              }`}
-            >
-              Professional Details
-            </button>
-            <button
-              onClick={() => setActiveTab("academic")}
-              className={`flex-1 py-4 px-6 text-center font-semibold transition-all ${
-                activeTab === "academic"
-                  ? "border-b-2 border-blue-600 text-blue-600"
-                  : "text-gray-600 hover:text-gray-900"
-              }`}
-            >
-              Academic Details
-            </button>
+            {["personal", "professional", "academic"].map((tab) => (
+              <button
+                key={tab}
+                onClick={() => setActiveTab(tab as TabType)}
+                className={`flex-1 py-4 px-6 font-semibold ${
+                  activeTab === tab
+                    ? "border-b-2 border-blue-600 text-blue-600"
+                    : "text-gray-600"
+                }`}
+              >
+                {tab.charAt(0).toUpperCase() + tab.slice(1)} Details
+              </button>
+            ))}
           </div>
 
           <CardContent className="p-8 space-y-6">
-            {/* Personal Details Tab */}
+
+            {/* PERSONAL */}
             {activeTab === "personal" && (
               <div className="space-y-4">
-                <h2 className="text-2xl font-bold text-gray-900 mb-6">Personal Information</h2>
-                
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">First Name</label>
+                <h2 className="text-xl font-bold">Personal Information</h2>
+
+                {loading ? (
+                  <p>Loading...</p>
+                ) : (
+                  <>
+                    <Input value={personalData?.first_name || ""} readOnly />
+                    <Input value={personalData?.last_name || ""} readOnly />
+                    <Input value={personalData?.email || ""} readOnly />
+                    <Input value={personalData?.contact || ""} readOnly />
+
+                    {/* ✅ DOB FIXED */}
                     <Input
-                      type="text"
-                      value={personalData.firstName}
+                      type="date"
+                      value={personalData?.date_of_birth || ""}
                       readOnly
-                      className="bg-gray-50"
                     />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Last Name</label>
-                    <Input
-                      type="text"
-                      value={personalData.lastName}
-                      readOnly
-                      className="bg-gray-50"
-                    />
-                  </div>
-                </div>
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
-                  <Input
-                    type="email"
-                    value={personalData.email}
-                    readOnly
-                    className="bg-gray-50"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
-                  <Input
-                    type="tel"
-                    value={personalData.phone}
-                    readOnly
-                    className="bg-gray-50"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Date of Birth</label>
-                  <Input
-                    type="date"
-                    value={personalData.dateOfBirth}
-                    readOnly
-                    className="bg-gray-50"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Address</label>
-                  <Input
-                    type="text"
-                    value={personalData.address}
-                    readOnly
-                    className="bg-gray-50"
-                  />
-                </div>
+                    <Input value={personalData?.address || ""} readOnly />
+                  </>
+                )}
               </div>
             )}
 
-            {/* Professional Details Tab */}
+            {/* PROFESSIONAL */}
             {activeTab === "professional" && (
               <div className="space-y-4">
-                <h2 className="text-2xl font-bold text-gray-900 mb-6">Professional Information</h2>
+                <h2 className="text-xl font-bold">Professional Information</h2>
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Company Name</label>
-                  <Input
-                    type="text"
-                    value={professionalData.companyName}
-                    readOnly
-                    className="bg-gray-50"
-                  />
-                </div>
+                <Input value={professionalData?.company_name} readOnly />
+                <Input value={professionalData?.job_title} readOnly />
+                <Input value={professionalData?.employment_type} readOnly />
+                <Input
+                  type="number"
+                  value={professionalData?.experience_years}
+                  readOnly
+                />
+                 <Input value={professionalData?.location} readOnly />
+                 <Input value={professionalData?.skills} readOnly />
+                {/* <Input value={professionalData.salary} readOnly /> */}
 
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Designation</label>
-                    <Input
-                      type="text"
-                      value={professionalData.designation}
-                      readOnly
-                      className="bg-gray-50"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Department</label>
-                    <Input
-                      type="text"
-                      value={professionalData.department}
-                      readOnly
-                      className="bg-gray-50"
-                    />
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Years of Experience</label>
-                    <Input
-                      type="number"
-                      value={professionalData.yearsOfExperience}
-                      readOnly
-                      className="bg-gray-50"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Salary Range</label>
-                    <Input
-                      type="text"
-                      value={professionalData.salary}
-                      readOnly
-                      className="bg-gray-50"
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Skills</label>
-                  <div className="flex flex-wrap gap-2">
-                    {professionalData.skills.map((skill, index) => (
-                      <span
-                        key={index}
-                        className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium"
-                      >
-                        {skill}
-                      </span>
-                    ))}
-                  </div>
-                </div>
+                {/* <div className="flex gap-2 flex-wrap">
+                  {professionalData.skills.map((s, i) => (
+                    <span key={i} className="bg-blue-100 px-2 py-1 rounded">
+                      {s}
+                    </span>
+                  ))}
+                </div> */}
               </div>
             )}
 
-            {/* Academic Details Tab */}
+            {/* ACADEMIC */}
             {activeTab === "academic" && (
               <div className="space-y-4">
-                <h2 className="text-2xl font-bold text-gray-900 mb-6">Academic Information</h2>
+                <h2 className="text-xl font-bold">Academic Information</h2>
+
+                <Input value={academicData.university} readOnly />
+                <Input value={academicData.degree} readOnly />
+                <Input value={academicData.field} readOnly />
+                <Input
+                  type="number"
+                  value={academicData.graduationYear}
+                  readOnly
+                />
+                <Input
+                  type="number"
+                  value={academicData.gpa}
+                  readOnly
+                />
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">University</label>
-                  <Input
-                    type="text"
-                    value={academicData.university}
-                    readOnly
-                    className="bg-gray-50"
-                  />
-                </div>
-
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Degree</label>
-                    <Input
-                      type="text"
-                      value={academicData.degree}
-                      readOnly
-                      className="bg-gray-50"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Field of Study</label>
-                    <Input
-                      type="text"
-                      value={academicData.field}
-                      readOnly
-                      className="bg-gray-50"
-                    />
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Graduation Year</label>
-                    <Input
-                      type="number"
-                      value={academicData.graduationYear}
-                      readOnly
-                      className="bg-gray-50"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">GPA</label>
-                    <Input
-                      type="number"
-                      step="0.1"
-                      value={academicData.gpa}
-                      readOnly
-                      className="bg-gray-50"
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Certifications</label>
-                  <div className="space-y-2">
-                    {academicData.certifications.map((cert, index) => (
-                      <div
-                        key={index}
-                        className="bg-green-50 border border-green-200 px-4 py-2 rounded-md text-green-900"
-                      >
-                        ✓ {cert}
-                      </div>
-                    ))}
-                  </div>
+                  {academicData.certifications.map((c, i) => (
+                    <div key={i}>✓ {c}</div>
+                  ))}
                 </div>
               </div>
             )}
+
           </CardContent>
         </Card>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default TabProfile;
