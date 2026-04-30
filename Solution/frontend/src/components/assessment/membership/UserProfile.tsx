@@ -22,14 +22,14 @@ const UserProfile = () => {
 
 
   useEffect(() => {
-    const storedUser = localStorage.getItem("user");
+    const currentuser = sessionStorage.getItem("current");
 
-    if (storedUser) {
+    if (currentuser) {
       try {
-        const user = JSON.parse(storedUser);
+        const user = JSON.parse(currentuser);
         setUserId(user?.userid);
       } catch (e) {
-        console.error("Invalid user data in localStorage");
+        console.error("Invalid user data in sessionStorage");
       }
     }
 

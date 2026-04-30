@@ -15,17 +15,7 @@ namespace backend.Controllers
             _service = service;
         }
 
-        // [HttpGet("{id}")]
-        // public async Task<IActionResult> GetQuestionDetailsWithAnswer(int id)
-        // {
-        //     var result = await _service.GetQuestionDetailsWithAnswer(id);
-
-        //     if (result == null)
-        //         return NotFound("No data found");
-
-        //     return Ok(result);
-        // }
-
+       
         [HttpGet("{assessmentId}/student/{studentId}")]
         public async Task<IActionResult> GetStudentAssessmentQuestionsResultAsync(int assessmentId, int studentId)
         {
