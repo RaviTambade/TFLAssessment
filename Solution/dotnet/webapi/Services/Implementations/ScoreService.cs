@@ -22,5 +22,9 @@ namespace backend.Services
         {
             return await _scoreRepository.GetAllStudentsAverageScoreAsync();
         }
+         public async Task<AssessmentScoreDto> GetAssessmentResultData(int studentId, int assessmentId)
+        {
+            return await _scoreRepository.GetAssessmentResultData(studentId, assessmentId);
+        }
     }
 }

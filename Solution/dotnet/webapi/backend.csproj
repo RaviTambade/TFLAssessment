@@ -4,6 +4,10 @@
     <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+  <!-- Workaround: disable apphost generation to avoid apphost.exe copy issues during build -->
+  <EnableAppHost>false</EnableAppHost>
+  <!-- Also set UseAppHost false to ensure SDK doesn't attempt to generate/copy an apphost -->
+  <UseAppHost>false</UseAppHost>
   </PropertyGroup>
 
   <ItemGroup>

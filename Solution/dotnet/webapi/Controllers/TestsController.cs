@@ -18,12 +18,14 @@ public class CreateTestController : ControllerBase
 
 
 
-    [HttpGet("questions")]
-    //http://localhost:5201/api/CreateTest/questions?conceptIds=1&conceptIds=2&type=MCQ
-    public async Task<IActionResult> GetQuestionsByConceptIdAsync(
-        [FromQuery] List<long> conceptIds,
-        [FromQuery] string type)
-        => Ok(await _service.GetQuestionsByConceptIdAsync(conceptIds, type));
+   [HttpGet("questions")]
+public async Task<IActionResult> GetQuestionsByConceptIdAsync(
+    [FromQuery] List<long> conceptIds,
+    [FromQuery] string type,
+    [FromQuery] string difficulty)
+{
+    return Ok(await _service.GetQuestionsByConceptIdAsync(conceptIds, type, difficulty));
+}
 
     [HttpPost("create")]
     //http://localhost:5201/api/CreateTest/create

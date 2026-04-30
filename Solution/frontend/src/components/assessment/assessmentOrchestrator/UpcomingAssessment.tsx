@@ -20,16 +20,14 @@ const UpcomingAssessment: React.FC = () => {
 
   const [assessments, setAssessments] = useState<Assessment[]>([]);
 
-  // 👉 convert YYYY-MM-DD → MM/DD/YYYY (for display only)
   const formatToDisplay = (date: string) => {
     if (!date) return "";
     const [y, m, d] = date.split("-");
     return `${m}/${d}/${y}`;
   };
 
-  // 👉 convert any date → YYYY-MM-DD (safe for API)
   const formatForApi = (date: string) => {
-    return date; // already correct from input[type="date"]
+    return date; 
   };
 
   const fetchAssessments = async () => {
@@ -118,7 +116,7 @@ const UpcomingAssessment: React.FC = () => {
       {/* No Data */}
       {!loading && userId && assessments.length === 0 && !error && (
         <p className="text-gray-600">
-          No upcoming assessment available for this user.
+          No upcoming assessment available for you.
         </p>
       )}
 

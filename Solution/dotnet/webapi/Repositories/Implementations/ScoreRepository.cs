@@ -94,5 +94,68 @@ namespace backend.Repositories
 
             return list;
         }
+         public async Task<AssessmentScoreDto> GetAssessmentResultData(int studentId, int assessmentId)
+        {
+        AssessmentScoreDto report = new AssessmentScoreDto();
+
+        using (MySqlConnection con = new MySqlConnection(_configuration.GetConnectionString("DefaultConnection")))
+        {
+            string query = @"
+                SELECT 
+                    t.id AS test_id,
+                    t.title AS test_title,
+                    sa.StudentId,
+                    
+                    COUNT(CASE 
+                        WHEN sa.SelectedOption = mo.correct_answer THEN 1 
+                    END) AS correct_answers,
+                    
+                    COUNT(CASE 
+                        WHEN sa.SelectedOption <> mo.correct_answer THEN 1 
+                    END) AS wrong_answers,
+                    
+                    COUNT(*) AS total_questions,
+                    
+                    ROUND(
+                        (COUNT(CASE WHEN sa.SelectedOption = mo.correct_answer THEN 1 END) * 100.0) 
+                        / COUNT(*), 2
+                    ) AS score_percentage
+
+                FROM studentanswers sa
+                JOIN assessments a ON sa.AssessmentId = a.id
+                JOIN tests t ON a.test_id = t.id
+                JOIN mcq_options mo ON sa.QuestionId = mo.question_id
+
+                WHERE sa.StudentId = @student_id
+                AND a.id = @assessment_id
+
+                GROUP BY t.id, t.title, sa.StudentId;
+            ";
+
+            using (MySqlCommand cmd = new MySqlCommand(query, con))
+            {
+                cmd.Parameters.AddWithValue("@student_id", studentId);
+                cmd.Parameters.AddWithValue("@assessment_id", assessmentId);
+
+                await con.OpenAsync();
+
+                using (MySqlDataReader reader = (MySqlDataReader)await cmd.ExecuteReaderAsync())
+                {
+                    if (await reader.ReadAsync())
+                    {
+                        report.TestId = Convert.ToInt64(reader["test_id"]);
+                        report.TestTitle = reader["test_title"].ToString();
+                        report.StudentId = Convert.ToInt32(reader["StudentId"]);
+                        report.CorrectAnswers = Convert.ToInt32(reader["correct_answers"]);
+                        report.WrongAnswers = Convert.ToInt32(reader["wrong_answers"]);
+                        report.TotalQuestions = Convert.ToInt32(reader["total_questions"]);
+                        report.ScorePercentage = Convert.ToDecimal(reader["score_percentage"]);
+                    }
+                }
+            }
+        }
+
+        return report;
+        }
     }
 }

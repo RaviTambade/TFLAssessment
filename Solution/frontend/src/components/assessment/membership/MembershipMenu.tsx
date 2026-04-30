@@ -69,7 +69,7 @@ const MembershipMenu = () => {
                     variant="hero"
                     size="lg"
                     className="group"
-                    onClick={() => navigate("/models/membership/LoginPage")}
+                    onClick={() => navigate("/models/membership/Login")}
                     >
                     Login Page
                     <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
@@ -90,7 +90,7 @@ const MembershipMenu = () => {
                     variant="hero"
                     size="lg"
                     className="group"
-                    onClick={() => navigate("/models/membership/RegisterPage")}
+                    onClick={() => navigate("/models/membership/Register")}
                   >
                     Register Page
                     <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />

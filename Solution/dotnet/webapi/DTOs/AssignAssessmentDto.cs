@@ -6,7 +6,11 @@ public class AssignAssessmentDto
 
     public DateTime ScheduledAt { get; set; }
 
-    public DateTime AssignedAt { get; set; }
+    //public DateTime AssignedAt { get; set; }
 
     public string? Status { get; set; }
 }
+
+
+
+

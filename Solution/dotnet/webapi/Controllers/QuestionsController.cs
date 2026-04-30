@@ -33,7 +33,7 @@ namespace backend.Controllers
             return Ok(result);
         }
 
-        [HttpGet("/{questionId}/answer")]
+        [HttpGet("{questionId}/answer")]
         public async Task<IActionResult> GetQuestionDetailsWithAnswer(int questionId)
         {
             var result = await _service.GetQuestionDetailsWithAnswer(questionId);
@@ -46,7 +46,7 @@ namespace backend.Controllers
             return Ok(result);
         }
 
-        [HttpGet("/{questionId}")]
+        [HttpGet("{questionId}")]
         public async Task<IActionResult> GetQuestionDetails(int questionId)
         {
             var result = await _service.GetQuestionDetails(questionId);

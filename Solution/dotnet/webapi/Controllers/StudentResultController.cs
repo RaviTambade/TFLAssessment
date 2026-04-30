@@ -36,5 +36,20 @@ namespace backend.Controllers
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
-    }
+        
+    
+            [HttpGet("{questionId}/{studentId}/{assessmentId}")]
+            public async Task<IActionResult> GetStudentAnswerResult(
+                int questionId,
+                int studentId,
+                int assessmentId)
+            {
+                var result = await _service.GetStudentAnswerResultAsync(questionId, studentId, assessmentId);
+
+                if (result == null)
+                    return NotFound("No data found");
+
+                return Ok(result);
+            }
 }
+    }
