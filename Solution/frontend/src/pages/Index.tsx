@@ -10,6 +10,10 @@ import Contact from "../components/Contact";
 import Footer from "../components/Footer";
 import TabProfile from "@/components/assessment/membership/tabprofile";
 import Dashboard from "@/components/assessment/membership/dashboard";
+import DashboardSME from "@/components/assessment/membership/dashboardsme";
+import DashboardMentor from "@/components/assessment/membership/dashboardmentor";
+import DashboardEmployer from "@/components/assessment/membership/dashboardemployer";
+import DashboardAdmin from "@/components/assessment/membership/dashboardadmin";
 
 const Index = () => {
   const location = useLocation();
@@ -32,7 +36,8 @@ const Index = () => {
       <SuccessStories />
       <VideoShowcase />
       <Contact />
-      <TabProfile/>
+      <DashboardAdmin />
+      <TabProfile />
       <Footer />
     </div>
   );
