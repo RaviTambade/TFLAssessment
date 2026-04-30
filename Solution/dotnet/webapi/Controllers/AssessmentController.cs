@@ -52,12 +52,20 @@ public class AssessmentController : ControllerBase
         return Ok(students);
     }
 
-    [HttpPost("assigned")]
-    public async Task<IActionResult> AssignAssessmentAsync(AssignAssessmentDto dto)
+   [HttpPost("assigned")]
+public async Task<IActionResult> AssignAssessmentAsync([FromBody] AssignAssessmentDto dto)
+{
+    try
     {
         await _service.AssignAssessmentAsync(dto);
         return Ok("Assessment Assigned Successfully");
     }
+    catch (Exception ex)
+    {
+        return BadRequest(ex.Message);
+    }
+}
+
     [HttpGet("questions/{assessmentId}")]
     public async Task<IActionResult> GetQuestionsByAssessmentId(int assessmentId)
     {

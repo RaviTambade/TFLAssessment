@@ -40,7 +40,7 @@ namespace backend.Services.Implementations
             return await _repository.GetStudentsAsync();
         }
 
-        public async Task AssignAssessmentAsync(AssignAssessmentDto dto)
+      public async Task AssignAssessmentAsync(AssignAssessmentDto dto)
         {
             await _repository.AssignAssessmentAsync(dto);
         }

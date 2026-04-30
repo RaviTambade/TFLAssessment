@@ -1,6 +1,5 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import Navbar from "../components/Navbar";
 
 import EvaluationContentMenu from "../components/assessment/evaluationcontent/EvaluationContentMenu";
 import SkillTaxonomyMenu from "../components/assessment/skilltaxonomy/SkillTaxonomyMenu";
@@ -36,6 +35,7 @@ import GetUserInformation from "@/components/assessment/membership/GetUserInform
 import UserActivity from "@/components/assessment/membership/UserActivity";
 import UserProfile from "@/components/assessment/membership/UserProfile";
 import SMECreateTest from "@/components/assessment/assessmentOrchestrator/SMECreateTest";
+import AssignAssessment from "@/components/assessment/assessmentOrchestrator/AssignAssessment";
 import ConceptByFramework from "@/components/assessment/skilltaxonomy/ConceptByFramework";
 
 import QuestionByConceptId from "@/components/assessment/evaluationcontent/QuestionByConceptId";
@@ -44,7 +44,6 @@ import QuestionByConceptId from "@/components/assessment/evaluationcontent/Quest
 function AppRoutes() {
   return (
     <div className="min-h-screen bg-background">
-      <Navbar />
       <main className="pt-20">
         <Routes>
           {/* Main Component Page */}
@@ -98,6 +97,7 @@ function AppRoutes() {
           <Route index element={<Assessment />} />
           <Route path="upcoming-assessment" element={<UpcomingAssessment />} />
           <Route path="create-test" element={<SMECreateTest />} />
+           <Route path="assign-assessment" element={<AssignAssessment />} />
           <Route path="delete-assessment" element={<DeleteAssessment />} />
           <Route path="evaluationcontent/questionbydifficulty" element={<QuestionsByDifficulty />} />
           <Route path="evaluationcontent/projectbymentee" element={<ProjectByMentee />} />
@@ -106,9 +106,9 @@ function AppRoutes() {
           <Route path="membership/ChangePassword" element={<ChangePassword />} />
           <Route path="membership/GetUserInformation" element={<GetUserInformation />} />
           <Route path="membership/GetUserLogDetail" element={<GetUserLogDetail />} />
-          <Route path="membership/LoginPage" element={<LoginPage />} />
+          <Route path="membership/Login" element={<LoginPage />} />
           <Route path="membership/ManageUsers" element={<ManageUsers />} />
-          <Route path="membership/RegisterPage" element={<RegisterPage />} />
+          <Route path="membership/Register" element={<RegisterPage />} />
           <Route path="membership/UserActivity" element={<UserActivity />} />
           <Route path="membership/UserProfile" element={<UserProfile />} />
 
