@@ -4,8 +4,8 @@
 
 
 using Microsoft.AspNetCore.Mvc;
-[controller]
-[Route("api/")]
+
+[Route("api/[controller]")]
 [ApiController]
 public class ConceptsController : ControllerBase
 {
