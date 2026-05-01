@@ -8,6 +8,8 @@ import SuccessStories from "../components/SuccessStories";
 import VideoShowcase from "../components/VideoShowcase";
 import Contact from "../components/Contact";
 import Footer from "../components/Footer";
+import TabProfile from "@/components/assessment/membership/tabprofile";
+import Dashboard from "@/components/assessment/membership/dashboard";
 
 const Index = () => {
   const location = useLocation();
@@ -22,6 +24,7 @@ const Index = () => {
 
   return (
     <div className="min-h-screen">
+     
       <Hero />
       <About />
       <Services />
@@ -29,6 +32,7 @@ const Index = () => {
       <SuccessStories />
       <VideoShowcase />
       <Contact />
+      <Dashboard />
       <Footer />
     </div>
   );

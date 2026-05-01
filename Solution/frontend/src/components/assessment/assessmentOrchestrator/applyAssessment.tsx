@@ -15,6 +15,8 @@ type SelectedAnswersType = {
 };
 
 const Question: React.FC = () => {
+
+  // State variables
   const [questions, setQuestions] = useState<QuestionType[]>([]);
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [selectedAnswers, setSelectedAnswers] = useState<SelectedAnswersType>({});
@@ -22,6 +24,10 @@ const Question: React.FC = () => {
   const [timeLeft, setTimeLeft] = useState<number>(30 * 60); // Default 30 mins in seconds
   const [studentId, setStudentId] = useState<string>("");
   const [isStarted, setIsStarted] = useState<boolean>(false);
+
+
+
+  //hook function
 
   useEffect(() => {
     if (timeLeft <= 0) {
@@ -38,6 +44,7 @@ const Question: React.FC = () => {
     return () => clearInterval(timer);
   }, [timeLeft]);
 
+  //helper function
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
@@ -58,6 +65,11 @@ const Question: React.FC = () => {
         setLoading(false);
       });
   }, []);
+
+
+
+
+
 
   // ✅ Transform options
   const getOptions = (question: QuestionType) => {
