@@ -1,61 +1,102 @@
 import { useEffect, useState } from "react";
+import { Button } from "../../ui/button";
+import { Input } from "../../ui/input";
+import { Label } from "../../ui/label";
+import { Checkbox } from "../../ui/checkbox";
+import { RadioGroup, RadioGroupItem } from "../../ui/radio-group";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../../ui/card";
 
-interface Question {
-  id: string;
-  title: string;
+type Concept = {
+  id: number,
+  name: string;
+};
+
+type Question = {
+  questionId: number;
+  description: string;
   type: string;
-  difficulty: "Easy" | "Medium" | "Hard";
-  concept: string;
+  difficulty: "BEGINNER" | "INTERMEDIATE" | "ADVANCED";
+  conceptId: number;
 }
+
+const baseUrl="http://localhost:8080/api";
 
 const SMECreateTest = () => {
 
   const [testName, setTestName] = useState("");
   const [description, setDescription] = useState("");
   const [duration, setDuration] = useState("");
-  const [selectedQuestions, setSelectedQuestions] = useState<string[]>([]);
+  const [selectedQuestions, setSelectedQuestions] = useState<number[]>([]);
   const [showQuestionList, setShowQuestionList] = useState(false);
-  const [selectedConcept, setSelectedConcept] = useState<string>("all");
+  const [selectedConcept, setSelectedConcept] = useState<Concept | null>(null);
 
+  // State for API data
+  const [concepts, setConcepts] = useState<Concept[]>([]);
+  const [availableQuestions, setAvailableQuestions] = useState<Question[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [loadingQuestions, setLoadingQuestions] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  //Add radio buttons for language selection (JavaScript, Python, Java, C#, etc.)
-  // Available concepts
-  const concepts = [
-    { id: "all", name: "All Concepts" },
-    { id: "reflection", name: "reflection" },
-    { id: "javascript", name: "JavaScript" },
-    { id: "design", name: "System Design" },
-    { id: "dsa", name: "Data Structures & Algorithms" },
-    { id: "api", name: "REST APIs" },
-  ];
+  // Fetch concepts and questions on component mount
+  useEffect(() => {
+   const fetchConcept=async ()=>{
+    try{
+      const response = await fetch(`${baseUrl}/technologies/concepts`,{
+        method:"GET",
+      });
+      if(!response.ok){
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const data:Concept[]=await response.json();
+      setConcepts(Array.isArray(data)? data:[]);
+      setLoading(false);
+    }catch(err){
+      setError("Failed to fetch concepts. Please check the API endpoint.");
+      setLoading(false);
+      console.error("Error loading concepts:", err);
+    }
+  };
+   void fetchConcept();
+  }, []);
 
-  // Mock questions list - Replace with API call
-  const availableQuestions: Question[] = [
-    { id: "q1", title: "What is reflection?", type: "Multiple Choice", difficulty: "Easy", concept: "reflection" },
-    { id: "q2", title: "Explain JavaScript closures", type: "Short Answer", difficulty: "Medium", concept: "javascript" },
-    { id: "q3", title: "Design a scalable architecture", type: "Essay", difficulty: "Hard", concept: "design" },
-    { id: "q4", title: "What are hooks in reflection?", type: "Multiple Choice", difficulty: "Easy", concept: "reflection" },
-    { id: "q5", title: "Implement a binary search tree", type: "Coding", difficulty: "Hard", concept: "dsa" },
-    { id: "q6", title: "Explain REST APIs", type: "Short Answer", difficulty: "Medium", concept: "api" },
-    { id: "q7", title: "What is async/await?", type: "Multiple Choice", difficulty: "Medium", concept: "javascript" },
-    { id: "q8", title: "Design a caching system", type: "Essay", difficulty: "Hard", concept: "design" },
-  ];
+  useEffect(()=>{
+    if(!selectedConcept?.id) return;
+    
+    const fetchQuestions=async ()=>{
+      try{
+        setError(null);
+        setLoadingQuestions(true);
+        const response=await fetch(`${baseUrl}/questions/concepts/${selectedConcept.id}/questions`,{
+          method:"GET",
+        });
+        if(!response.ok){
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data:Question[]=await response.json();
+        console.log("Questions fetched:", data);
+        setAvailableQuestions(Array.isArray(data)?data:[]);
+        setLoadingQuestions(false);
+      }catch(error){
+        console.error("Error loading questions:", error);
+        setError("Failed to load questions. Please try again.");
+        setLoadingQuestions(false);
+      }
+    };
+    void fetchQuestions();
+  },[selectedConcept?.id])
+  // Filtered questions are directly from API based on selected concept
+  const filteredQuestions = availableQuestions;
 
-  // Filter questions based on selected concept
-  const filteredQuestions = selectedConcept === "all"
-    ? availableQuestions
-    : availableQuestions.filter((q) => q.concept === selectedConcept);
-
-  const toggleQuestion = (questionId: string) => {
+  const toggleQuestion = (questionId: number) => {
     setSelectedQuestions((prev) => prev.includes(questionId) ? prev.filter((id) => id !== questionId) : [...prev, questionId]
     );
   };
 
-  const removeQuestion = (questionId: string) => {
+  const removeQuestion = (questionId: number) => {
     setSelectedQuestions((prev) => prev.filter((id) => id !== questionId));
   };
 
-  const selectedQuestionsData = availableQuestions.filter((q) =>selectedQuestions.includes(q.id)
+  const selectedQuestionsData = availableQuestions.filter((q) =>selectedQuestions.includes(q.questionId)
   );
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -63,173 +104,231 @@ const SMECreateTest = () => {
     console.log({ testName, description,duration,selectedQuestions: selectedQuestionsData   });
   };
 
+  const submitTest=()=>{
+    fetch(`http://localhost:5201/api/CreateTest/create`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ testName, description, duration, selectedQuestions: selectedQuestionsData })
+    });
+  }
+  
   return (
-    <div className="w-full max-w-4xl mx-auto p-8 bg-white rounded-lg shadow-md">
-      <h1 className="text-3xl font-bold text-gray-900 mb-8">Create New Test</h1>
-      <form className="space-y-6" onSubmit={handleSubmit}>
-        {/* Test Name */}
-        <div className="flex flex-col">
-          <label htmlFor="testName" className="block text-sm font-medium text-gray-700 mb-2">Test Name</label> 
-          <input 
-            type="text" 
-            id="testName" 
-            name="testName" 
-            value={testName}
-            onChange={(e) => setTestName(e.target.value)}
-            required 
-            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
-          />
-        </div>
-
-        {/* Description */}
-        <div className="flex flex-col">
-          <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-2">Description</label>
-          <textarea 
-            id="description" 
-            name="description" 
-            rows={4}
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            required 
-            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition resize-none"
-          ></textarea>
-        </div>
-
-        {/* Duration */}
-        <div className="flex flex-col">
-          <label htmlFor="duration" className="block text-sm font-medium text-gray-700 mb-2">Duration (minutes)</label>
-          <input 
-            type="number" 
-            id="duration" 
-            name="duration" 
-            value={duration}
-            onChange={(e) => setDuration(e.target.value)}
-            required 
-            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
-          />
-        </div>
-
-        {/* Concept Selection */}
-        <div className="flex flex-col border-t pt-6">
-          <label className="block text-sm font-medium text-gray-700 mb-4">Filter Questions by Concept</label>
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-            {concepts.map((concept) => (
-              <div key={concept.id} className="flex items-center">
-                <input
-                  type="radio"
-                  id={concept.id}
-                  name="concept"
-                  value={concept.id}
-                  checked={selectedConcept === concept.id}
-                  onChange={(e) => setSelectedConcept(e.target.value)}
-                  className="w-4 h-4 text-blue-600 focus:ring-2 focus:ring-blue-500 cursor-pointer"
-                />
-                <label htmlFor={concept.id} className="ml-2 text-sm font-medium text-gray-700 cursor-pointer">
-                  {concept.name}
-                </label>
-              </div>
-            ))}
-          </div>
-          <p className="text-xs text-gray-500 mt-2">
-            Showing {filteredQuestions.length} question(s) for "{concepts.find((c) => c.id === selectedConcept)?.name}"
-          </p>
-        </div>
-
-        {/* Questions Selection */}
-        <div className="flex flex-col border-t pt-6">
-          <div className="flex justify-between items-center mb-4">
-            <label className="block text-sm font-medium text-gray-700">Select Questions</label>
-            <button
-              type="button"
-              onClick={() => setShowQuestionList(!showQuestionList)}
-              className="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-700 transition"
-            >
-              {showQuestionList ? "Hide" : "Browse"} Questions
-            </button>
-          </div>
-
-          {/* Available Questions List */}
-          {showQuestionList && (
-            <div className="border border-gray-200 rounded-md p-4 bg-gray-50 mb-6 max-h-80 overflow-y-auto">
-              {filteredQuestions.length > 0 ? (
-                filteredQuestions.map((question) => (
-                  <div key={question.id} className="flex items-center p-3 border-b border-gray-200 last:border-b-0 hover:bg-gray-100 rounded transition">
-                    <input
-                      type="checkbox"
-                      id={question.id}
-                      checked={selectedQuestions.includes(question.id)}
-                      onChange={() => toggleQuestion(question.id)}
-                      className="w-4 h-4 text-blue-600 rounded focus:ring-2 focus:ring-blue-500 cursor-pointer"
-                    />
-                    <label htmlFor={question.id} className="flex-1 ml-3 cursor-pointer">
-                      <div className="font-medium text-gray-900">{question.title}</div>
-                      <div className="text-sm text-gray-500">
-                        <span className="inline-block mr-3">{question.type}</span>
-                        <span className={`inline-block px-2 py-1 rounded text-xs font-semibold ${
-                          question.difficulty === "Easy" ? "bg-green-100 text-green-800" :
-                          question.difficulty === "Medium" ? "bg-yellow-100 text-yellow-800" :
-                          "bg-red-100 text-red-800"
-                        }`}>
-                          {question.difficulty}
-                        </span>
-                      </div>
-                    </label>
-                  </div>
-                ))
-              ) : (
-                <p className="text-gray-500 text-sm italic text-center py-4">No questions available for this concept.</p>
-              )}
+    <div className="w-full max-w-5xl mx-auto p-6">
+      <Card>
+        <CardHeader>
+          <CardTitle>Create New Test</CardTitle>
+          <CardDescription>Add test details and select questions from your preferred concepts</CardDescription>
+        </CardHeader>
+        <CardContent>
+          {loading && (
+            <div className="flex justify-center py-12">
+              <p className="text-muted-foreground">Loading concepts and questions...</p>
             </div>
           )}
 
-          {/* Selected Questions */}
-          <div className="flex flex-col">
-            <h3 className="text-sm font-medium text-gray-700 mb-3">
-              Selected Questions ({selectedQuestions.length})
-            </h3>
-            {selectedQuestionsData.length > 0 ? (
-              <div className="space-y-2">
-                {selectedQuestionsData.map((question) => (
-                  <div
-                    key={question.id}
-                    className="flex items-center justify-between p-3 bg-blue-50 border border-blue-200 rounded-md"
-                  >
-                    <div>
-                      <div className="font-medium text-gray-900">{question.title}</div>
-                      <div className="text-sm text-gray-600">{question.type} • {question.difficulty}</div>
-                    </div>
-                    <button
-                      type="button"
-                      onClick={() => removeQuestion(question.id)}
-                      className="text-red-600 hover:text-red-800 font-medium transition"
-                    >
-                      Remove
-                    </button>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <p className="text-gray-500 text-sm italic">No questions selected yet. Click "Browse Questions" to add questions.</p>
-            )}
-          </div>
-        </div>
+          {error && (
+            <div className="mb-6 p-4 bg-destructive/10 border border-destructive/30 rounded-lg">
+              <p className="text-destructive font-medium">Error: {error}</p>
+              <p className="text-destructive/80 text-sm mt-1">Please make sure the API endpoints are available.</p>
+            </div>
+          )}
 
-        {/* Submit Button */}
-        <div className="flex gap-4 pt-6 border-t">
-          <button
-            type="submit"
-            className="flex-1 px-6 py-3 bg-green-600 text-white font-medium rounded-md hover:bg-green-700 transition"
-          >
-            Create Test
-          </button>
-          <button
-            type="reset"
-            className="flex-1 px-6 py-3 bg-gray-300 text-gray-800 font-medium rounded-md hover:bg-gray-400 transition"
-          >
-            Clear
-          </button>
-        </div>
-      </form>
+          {!loading && !error && (
+            <form className="space-y-8" onSubmit={handleSubmit}>
+            {/* Test Name */}
+            <div className="space-y-2">
+              <Label htmlFor="testName">Test Name</Label>
+              <Input 
+                id="testName" 
+                placeholder="Enter test name"
+                value={testName}
+                onChange={(e) => setTestName(e.target.value)}
+                required 
+              />
+            </div>
+
+            {/* Description */}
+            <div className="space-y-2">
+              <Label htmlFor="description">Description</Label>
+              <textarea 
+                id="description" 
+                placeholder="Enter test description"
+                rows={4}
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                required 
+                className="flex w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm resize-none"
+              />
+            </div>
+
+            {/* Duration */}
+            <div className="space-y-2">
+              <Label htmlFor="duration">Duration (minutes)</Label>
+              <Input 
+                type="number" 
+                id="duration" 
+                placeholder="Enter duration in minutes"
+                value={duration}
+                onChange={(e) => setDuration(e.target.value)}
+                required 
+              />
+            </div>
+
+            {/* Concept Selection */}
+            <div className="space-y-4 border-t pt-6">
+              <div>
+                <Label className="text-base font-semibold">Filter Questions by Concept</Label>
+                <p className="text-sm text-muted-foreground mt-1">Select a concept to view available questions</p>
+              </div>
+              <RadioGroup value={selectedConcept?.id.toString() || ""}>
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                  {concepts.map((concept) => (
+                    <div key={concept.id} className="flex items-center space-x-2">
+                      <RadioGroupItem 
+                        value={concept.id.toString()} 
+                        id={`concept-${concept.id}`}
+                        onClick={() => setSelectedConcept(concept)}
+                      />
+                      <Label 
+                        htmlFor={`concept-${concept.id}`} 
+                        className="cursor-pointer font-normal"
+                      >
+                        {concept.name}
+                      </Label>
+                    </div>
+                  ))}
+                </div>
+              </RadioGroup>
+              <p className="text-xs text-muted-foreground mt-2">
+                Showing {filteredQuestions.length} question(s) for "{selectedConcept?.name || 'Select a concept'}"
+              </p>
+            </div>
+
+            {/* Questions Selection */}
+            <div className="space-y-4 border-t pt-6">
+              <div className="flex justify-between items-center">
+                <div>
+                  <Label className="text-base font-semibold">Select Questions</Label>
+                  <p className="text-sm text-muted-foreground mt-1">Choose questions to include in your test</p>
+                </div>
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => setShowQuestionList(!showQuestionList)}
+                >
+                  {showQuestionList ? "Hide" : "Browse"} Questions
+                </Button>
+              </div>
+
+              {/* Available Questions List */}
+              {showQuestionList && (
+                <Card className="bg-card">
+                  <CardContent className="pt-6 max-h-96 overflow-y-auto">
+                    {loadingQuestions ? (
+                      <p className="text-center py-8 text-muted-foreground">Loading questions...</p>
+                    ) : filteredQuestions.length > 0 ? (
+                      <>
+                        <div className="mb-4 p-2 bg-muted rounded text-xs text-muted-foreground">
+                          Debug: {filteredQuestions.length} questions loaded
+                        </div>
+                        <div className="space-y-3">
+                          {filteredQuestions.map((question) => (
+                            <div key={question.questionId} className="flex items-start space-x-3 p-3 rounded-lg border hover:bg-muted transition-colors">
+                              <Checkbox 
+                                id={`question-${question.questionId}`}
+                                checked={selectedQuestions.includes(question.questionId)}
+                                onCheckedChange={() => toggleQuestion(question.questionId)}
+                                className="mt-1"
+                              />
+                              <div className="flex-1 min-w-0">
+                                <label 
+                                  htmlFor={`question-${question.questionId}`}
+                                  className="cursor-pointer block"
+                                >
+                                  <div className="font-medium text-foreground break-words">{question.description}</div>
+                                  <div className="flex flex-wrap items-center gap-2 mt-2">
+                                    <span className="text-xs text-muted-foreground bg-muted px-2 py-1 rounded">{question.type}</span>
+                                    <span className={`text-xs font-semibold px-2 py-1 rounded ${
+                                      question.difficulty === "BEGINNER" ? "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-100" :
+                                      question.difficulty === "INTERMEDIATE" ? "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-100" :
+                                      "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-100"
+                                    }`}>
+                                      {question.difficulty}
+                                    </span>
+                                  </div>
+                                </label>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </>
+                    ) : (
+                      <p className="text-center py-8 text-muted-foreground">
+                        {selectedConcept ? "No questions available for this concept." : "Please select a concept first."}
+                      </p>
+                    )}
+                  </CardContent>
+                </Card>
+              )}
+
+              {/* Selected Questions */}
+              <div className="space-y-3">
+                <Label className="text-base font-semibold">
+                  Selected Questions ({selectedQuestions.length})
+                </Label>
+                {selectedQuestionsData.length > 0 ? (
+                  <div className="space-y-2">
+                    {selectedQuestionsData.map((question) => (
+                      <div
+                        key={question.questionId}
+                        className="flex items-start justify-between p-3 bg-primary/5 border border-primary/20 rounded-lg hover:bg-primary/10 transition-colors"
+                      >
+                        <div className="flex-1 min-w-0">
+                          <div className="font-medium text-foreground break-words">{question.description}</div>
+                          <div className="text-sm text-muted-foreground mt-1">{question.type} • {question.difficulty}</div>
+                        </div>
+                        <Button
+                          type="button"
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => removeQuestion(question.questionId)}
+                          className="ml-2 text-destructive hover:text-destructive hover:bg-destructive/10"
+                        >
+                          Remove
+                        </Button>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <p className="text-muted-foreground text-sm">No questions selected yet. Click "Browse Questions" to add questions.</p>
+                )}
+              </div>
+            </div>
+
+            {/* Submit Button */}
+            <div className="flex gap-3 pt-6 border-t">
+              <Button
+                type="submit"
+                className="flex-1"
+                variant="default"
+                // onClick={}
+              >
+                Create Test
+              </Button>
+              <Button
+                type="reset"
+                variant="outline"
+                className="flex-1"
+              >
+                Clear
+              </Button>
+            </div>
+          </form>
+          )}
+        </CardContent>
+      </Card>
     </div>
   );
     
