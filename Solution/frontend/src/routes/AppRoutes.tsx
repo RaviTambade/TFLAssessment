@@ -18,7 +18,7 @@ import EditQuestion from "@/components/assessment/evaluationcontent/EditQuestion
 import ViewRuntimes from "@/components/assessment/skilltaxonomy/ViewRuntimes";
 import AddConcept from "@/components/assessment/skilltaxonomy/AddConcept";
 import UpcomingAssessment from "../components/assessment/assessmentOrchestrator/UpcomingAssessment";
-import DeleteAssessment from "@/components/assessment/assessmentOrchestrator/DeleteAssessment";
+import DeleteAssessment from "@/components/assessment/assessmentOrchestrator/AllAssessment";
 import Question from "@/components/assessment/assessmentOrchestrator/applyAssessment";
 import Result from "@/components/assessment/assessmentOrchestrator/Result";
 
