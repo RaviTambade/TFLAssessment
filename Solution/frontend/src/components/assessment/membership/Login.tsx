@@ -144,7 +144,7 @@ const LoginPage = () => {
 
       if (user?.userid) {
         await handleUserLogLogin(user.userid);
-        window.location.href = "/";
+        window.location.href = "/models/membership/dashboard";
       }
     } catch (error) {
       console.error("Submit Error:", error);
