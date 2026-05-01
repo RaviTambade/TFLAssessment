@@ -103,10 +103,14 @@ useEffect(() => {
       })
     );
 
+    const assessmentId=7;
+    const timeTakentoAnswer=2;
+    const currentStudent=JSON.parse(localStorage.getItem("user") || "{}");
+    
     const payload = {
-      studentId: parseInt(studentId),
-      assessmentId: 7,
-      timeTakenMinutes: 30,
+      studentId: parseInt(currentStudent.userid) || 0,
+      assessmentId: assessmentId,
+      timeTakenMinutes: timeTakentoAnswer,
       answers: answersArray,
     };
 

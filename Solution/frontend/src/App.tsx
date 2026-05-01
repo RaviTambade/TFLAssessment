@@ -21,12 +21,12 @@ interface User {
 
 
 const App = () => {
-   const [user, setUser] = useState<User | null>(null);
+   const [currentUser, setCurrentUser] = useState<User | null>(null);
 
   useEffect(() => {
-    const storedUser = localStorage.getItem("user");
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
+    const theUser = sessionStorage.getItem("current");
+    if (theUser) {
+      setCurrentUser(JSON.parse(theUser));
     }
   }, []);
 
@@ -37,7 +37,7 @@ const App = () => {
       <Sonner />
 
       <BrowserRouter future={{ v7_relativeSplatPath: true, v7_startTransition: true }}>
-       <Navbar isLoggedIn={!!user} />
+       <Navbar isLoggedIn={!!currentUser} />
 
         <Routes>
           <Route path="/" element={<Index />} />

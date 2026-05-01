@@ -18,6 +18,10 @@ const Result: React.FC = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    //get userid from session storage
+    //get assessmentid from url pramerter or urlroute
+    
+    //http://localhost:5201/api/students/4/assessment/7/result
     fetch("http://localhost:5201/api/Assessment/4/7")
       .then(async (res) => {
         if (!res.ok) {
