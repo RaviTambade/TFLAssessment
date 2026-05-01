@@ -32,7 +32,12 @@ const Index = () => {
       <SuccessStories />
       <VideoShowcase />
       <Contact />
+<<<<<<< HEAD
+      <TabProfile/>
+=======
       <Dashboard />
+      <TabProfile />
+>>>>>>> cc89aeb21e5eb3a1ee506de9c4a92683e99a1f42
       <Footer />
     </div>
   );
