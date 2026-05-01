@@ -18,7 +18,7 @@ import EditQuestion from "@/components/assessment/evaluationcontent/EditQuestion
 import ViewRuntimes from "@/components/assessment/skilltaxonomy/ViewRuntimes";
 import AddConcept from "@/components/assessment/skilltaxonomy/AddConcept";
 import UpcomingAssessment from "../components/assessment/assessmentOrchestrator/UpcomingAssessment";
-import DeleteAssessment from "@/components/assessment/assessmentOrchestrator/AllAssessment";
+import AllAssessment from "@/components/assessment/assessmentOrchestrator/AllAssessment";
 import Question from "@/components/assessment/assessmentOrchestrator/applyAssessment";
 import Result from "@/components/assessment/assessmentOrchestrator/Result";
 
@@ -63,7 +63,7 @@ function AppRoutes() {
           {/* Assessment Orchestrator */}
           <Route path="assessmentorchestrator/assessmentorchestrator-menu" element={<AssessmentOrchestrator />} />
           <Route path="upcoming-assessment" element={<UpcomingAssessment />} />
-          <Route path="delete-assessment" element={<DeleteAssessment />} />
+          <Route path="all-assessment" element={<AllAssessment />} />
           <Route path="apply-assessment" element={<Question />} />
           <Route path="result" element={<Result />} />
 
@@ -96,7 +96,7 @@ function AppRoutes() {
           <Route path="upcoming-assessment" element={<UpcomingAssessment />} />
           <Route path="create-test" element={<SMECreateTest />} />
            <Route path="assign-assessment" element={<AssignAssessment />} />
-          <Route path="delete-assessment" element={<DeleteAssessment />} />
+          <Route path="all-assessment" element={<AllAssessment />} />
           <Route path="evaluationcontent/questionbydifficulty" element={<QuestionsByDifficulty />} />
           <Route path="evaluationcontent/projectbymentee" element={<ProjectByMentee />} />
 

@@ -10,7 +10,7 @@ type Assessment = {
   isActive: boolean;
 };
 
-const DeleteAssessment = () => {
+const AllAssessment = () => {
 
 
 
@@ -350,4 +350,4 @@ const DeleteAssessment = () => {
   );
 };
 
-export default DeleteAssessment;
+export default AllAssessment;
