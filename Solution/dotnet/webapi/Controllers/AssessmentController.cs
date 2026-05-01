@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Mvc;
 using backend.Services.Interfaces;
 namespace backend.Controllers;
 
-using System.Security.Cryptography.X509Certificates;
 using backend.DTOs;
 
 [ApiController]

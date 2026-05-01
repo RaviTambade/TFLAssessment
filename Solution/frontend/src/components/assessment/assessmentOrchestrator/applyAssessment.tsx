@@ -23,6 +23,10 @@ const Question = () => {
   const [assessmentId, setAssessmentId] = useState<string>("");
   const [isStarted, setIsStarted] = useState<boolean>(false);
 
+
+
+  //hook function
+
   useEffect(() => {
     if (!isStarted) return;
     const timer = setInterval(() => {
@@ -46,6 +50,7 @@ const Question = () => {
     }
   }, [timeLeft, isStarted]);
 
+  //helper function
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
@@ -67,6 +72,11 @@ const Question = () => {
         setLoading(false);
       });
   }, [isStarted, assessmentId]);
+
+
+
+
+
 
   // ✅ Transform options
   const getOptions = (question: QuestionType) => {

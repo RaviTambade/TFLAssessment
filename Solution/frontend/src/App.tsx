@@ -23,6 +23,8 @@ interface User {
 const App = () => {
    const [currentUser, setCurrentUser] = useState<User | null>(null);
 
+
+  //hook function
   useEffect(() => {
     const theUser = sessionStorage.getItem("current");
     if (theUser) {
@@ -30,6 +32,8 @@ const App = () => {
     }
   }, []);
 
+
+  //rendering logic
   return (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
