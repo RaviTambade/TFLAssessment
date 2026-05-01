@@ -2,9 +2,48 @@ import { Card, CardContent } from "../../ui/card";
 import { Button } from "../../ui/button";
 import { useNavigate } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
+import { useEffect, useState } from "react";
+
+const actions = [
+  {
+    label: "Upcoming Assessment",
+    path: "/models/upcoming-assessment",
+    roles: ["Mentor", "Student"],
+  },
+  {
+    label: "All Assessment",
+    path: "/models/delete-assessment",
+    roles: ["Admin"],
+  },
+  {
+    label: "Create Test",
+    path: "/models/create-test",
+    roles: ["SME"],
+  },
+  {
+    label: "Assign Assessment",
+    path: "/models/assign-assessment",
+    roles: ["Admin"],
+  },
+  {
+    label: "Applying Assessment",
+    path: "/models/apply-assessment",
+    roles: ["Student"],
+  },
+];
 
 const AssessmentOrchestrator = () => {
   const navigate = useNavigate();
+
+  const [role, setRole] = useState<string | null>(null);
+
+  useEffect(() => {
+    const userData = localStorage.getItem("user");
+    if (userData) {
+      const user = JSON.parse(userData);
+      setRole(user.rolename);
+    }
+  }, []);
 
   return (
     <section className="py-16 sm:py-20 bg-background">

@@ -8,9 +8,6 @@ import {
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
 import { CircleUser, Menu, X, ChevronDown } from "lucide-react";
-import {
-  UserName,
-} from "@/services/RolesManagement/GetProfileName";
 
 interface NavbarProps {
   isLoggedIn?: boolean;
@@ -128,6 +125,7 @@ const Navbar = ({ isLoggedIn }: NavbarProps) => {
       href: "/models/evaluationcontent/components",
       label: "Assessment",
       isLink: true,
+      requiresAuth: true,  
     },
   ];
 
@@ -152,11 +150,11 @@ const Navbar = ({ isLoggedIn }: NavbarProps) => {
 
           {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center space-x-6 xl:space-x-8">
-            {navItems.map((item) =>
+            {navItems.filter(item => !item.requiresAuth || isLoggedIn).map((item) =>
               item.isLink ? (
                 item.href.startsWith("http") ? (
                   <a
-                    key={item.label}
+                    key={item.label} 
                     href={item.href}
                     target="_blank"
                     rel="noopener noreferrer"
