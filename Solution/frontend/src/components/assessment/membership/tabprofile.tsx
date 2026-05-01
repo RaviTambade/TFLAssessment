@@ -67,7 +67,7 @@ const TabProfile = () => {
 
       let userid;
 
-      const storedUser = localStorage.getItem("user");
+      const storedUser = sessionStorage.getItem("current");
       if (storedUser) {
         try {
           const user = JSON.parse(storedUser);
@@ -113,7 +113,7 @@ const TabProfile = () => {
 
       let userid;
 
-      const storedUser = localStorage.getItem("user");
+      const storedUser = sessionStorage.getItem("current");
       if (storedUser) {
         try {
           const user = JSON.parse(storedUser);
