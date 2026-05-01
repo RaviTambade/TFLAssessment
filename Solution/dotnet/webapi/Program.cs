@@ -17,6 +17,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     )
 );
 
+builder.Services.AddMemoryCache();
 builder.Services.AddScoped<IAssessmentsService, AssessmentsService>();
 builder.Services.AddScoped<IAssessmentRepository, AssessmentRepository>();
 builder.Services.AddScoped<IUserSessionsService, UserSessionsService>();
@@ -40,6 +41,9 @@ builder.Services.AddScoped<ICreateTestService, CreateTestService>();
 builder.Services.AddScoped<ICreateTestRepository, CreateTestRepository>();
 builder.Services.AddScoped<IScoreService, ScoreService>();
 builder.Services.AddScoped<IScoreRepository, ScoreRepository>();
+builder.Services.AddScoped<IPasswordService, PasswordService>();
+builder.Services.AddScoped<IEmailService, EmailService>();
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll",
