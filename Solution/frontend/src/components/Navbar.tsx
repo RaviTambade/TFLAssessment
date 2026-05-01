@@ -31,11 +31,11 @@ const Navbar = ({ isLoggedIn }: NavbarProps) => {
     const fetchProfileName = async () => {
       setLoading(true);
 
-      const userData = localStorage.getItem("user");
+      const currentUserDetails = sessionStorage.getItem("current");
 
-      if (!userData) return;
+      if (!currentUserDetails) return;
 
-      const user = JSON.parse(userData);
+      const user = JSON.parse(currentUserDetails);
       try {
         const response = await fetch(
           `${BASE_URL}/api/users/${user.userid}/personal`,
@@ -49,13 +49,13 @@ const Navbar = ({ isLoggedIn }: NavbarProps) => {
 
         console.log("API DATA:", data.data);
 
-        const userdata={
+        const currentUserFullName={
           firstname:data.data.first_name,
           lastname:data.data.last_name
 
         }
 
-        setUserName(userdata);
+        setUserName(currentUserFullName);
         setError("");
       } catch (err) {
         console.error(err);
@@ -203,7 +203,7 @@ const Navbar = ({ isLoggedIn }: NavbarProps) => {
                     onClick={() => {
                       try {
                         const user = JSON.parse(
-                          localStorage.getItem("user") || "{}",
+                          sessionStorage.getItem("current") || "{}",
                         );
                         if (user?.userid) {
                           handleUserLogLogout(user.userid);
@@ -211,7 +211,7 @@ const Navbar = ({ isLoggedIn }: NavbarProps) => {
                       } catch (error) {
                         console.error("Submit Error:", error);
                       }
-                      localStorage.removeItem("user");
+                      sessionStorage.removeItem("current");
                       navigate("/");
                       window.location.reload(); // redirect
                     }}

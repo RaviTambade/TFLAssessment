@@ -201,32 +201,37 @@ public async Task AssignAssessmentAsync(AssignAssessmentDto dto)
     await _context.Assessments.AddRangeAsync(assessments);
     await _context.SaveChangesAsync();
 }
-    public async Task<List<AssessmentQuestionDto>> GetAssessmentQuestions(int assessmentId)
+    public async Task<List<AssessmentQuestionDto>> GetAssessmentQuestionsAsync(int assessmentId)
     {
         // We use .Set<T>() to access the keyless entity defined in the Context
-        return await _context.Set<AssessmentQuestionDto>()
-            .FromSqlInterpolated($@"
-                    SELECT
-                    ques.question_id        AS QuestionId,
-                     ques.description        AS Description,
-                    ques.question_type      AS QuestionType,
-                    mcq.option_a            AS OptionA,
-                    mcq.option_b            AS OptionB,
-                    mcq.option_c            AS OptionC,
-                    mcq.option_d            AS OptionD
-                    FROM assessments AS asm
-                    INNER JOIN tests AS tst
-                    ON asm.test_id = tst.id
-                    INNER JOIN test_questions AS testQues
-                     ON testQues.test_id = tst.id
-                    INNER JOIN questions AS ques
-                    ON ques.question_id = testQues.question_id
-                    INNER JOIN mcq_options AS mcq
-                     ON mcq.question_id = ques.question_id
-                    WHERE asm.id = 4
-                    ORDER BY testQues.sequence_order ASC;
-                ")
-            .ToListAsync();
+return await _context.Set<AssessmentQuestionDto>()
+    .FromSqlInterpolated($@"
+        SELECT
+            ques.question_id        AS QuestionId,
+            ques.description        AS Description,
+            ques.question_type      AS QuestionType,
+            MAX(mcq.option_a)       AS OptionA,
+            MAX(mcq.option_b)       AS OptionB,
+            MAX(mcq.option_c)       AS OptionC,
+            MAX(mcq.option_d)       AS OptionD
+        FROM assessments AS asm
+        INNER JOIN tests AS tst
+            ON asm.test_id = tst.id
+        INNER JOIN test_questions AS testQues
+            ON testQues.test_id = tst.id
+        INNER JOIN questions AS ques
+            ON ques.question_id = testQues.question_id
+        INNER JOIN mcq_options AS mcq
+            ON mcq.question_id = ques.question_id
+        WHERE asm.id = {assessmentId}
+        GROUP BY 
+            ques.question_id, 
+            ques.description, 
+            ques.question_type, 
+            testQues.sequence_order
+        ORDER BY testQues.sequence_order ASC;
+    ")
+    .ToListAsync();
     }
     public async Task<bool> SaveAssessmentAnswersAsync(List<StudentAnswer>? answers)
     {   

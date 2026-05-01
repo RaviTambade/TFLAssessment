@@ -27,10 +27,10 @@ class UsersRepository {
   }
 
   getUserPersonalInformation(userId, callback) {
-    const query = `SELECT first_name, last_name, email
-      FROM personal_informations
+    const query = `SELECT p.first_name, p.last_name, p.gender, p.date_of_birth, p.email, p.address, p.pincode,u.contact
+      FROM personal_informations p 
+      join users u on u.id = p.user_id
       WHERE user_id = ?`;
-
     this.getUserInformation(userId, query, callback);
   }
 
