@@ -14,15 +14,13 @@ type SelectedAnswersType = {
   [key: number]: string;
 };
 
-const Question: React.FC = () => {
-
-  // State variables
+const Question = () => {
   const [questions, setQuestions] = useState<QuestionType[]>([]);
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [selectedAnswers, setSelectedAnswers] = useState<SelectedAnswersType>({});
   const [loading, setLoading] = useState<boolean>(true);
-  const [timeLeft, setTimeLeft] = useState<number>(30 * 60); // Default 30 mins in seconds
-  const [studentId, setStudentId] = useState<string>("");
+  const [timeLeft, setTimeLeft] = useState<number>(2.5 * 60); // Default 30 mins in seconds
+  const [assessmentId, setAssessmentId] = useState<string>("");
   const [isStarted, setIsStarted] = useState<boolean>(false);
 
 
@@ -30,19 +28,27 @@ const Question: React.FC = () => {
   //hook function
 
   useEffect(() => {
-    if (timeLeft <= 0) {
-      // Auto-submit when timer reaches zero
-      const submitBtn = document.getElementById("submit-assessment-btn");
-      if (submitBtn) submitBtn.click();
-      return;
-    }
-
+    if (!isStarted) return;
     const timer = setInterval(() => {
-      setTimeLeft((prev) => prev - 1);
+      setTimeLeft((prev) => {
+        if (prev <= 1) {
+          clearInterval(timer);
+          return 0;
+        }
+        return prev - 1;
+      });
     }, 1000);
-
     return () => clearInterval(timer);
-  }, [timeLeft]);
+  }, [isStarted]);
+
+  useEffect(() => {
+    if (isStarted && timeLeft === 0) {
+      const submitBtn = document.getElementById("submit-assessment-btn") as HTMLButtonElement;
+      if (submitBtn) {
+        submitBtn.click();
+      }
+    }
+  }, [timeLeft, isStarted]);
 
   //helper function
   const formatTime = (seconds: number) => {
@@ -54,7 +60,8 @@ const Question: React.FC = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch("http://localhost:5201/api/Assessment/questions/4")
+    if (!isStarted || !assessmentId) return;
+    fetch(`http://localhost:5201/api/Assessment/${assessmentId}/questions`)
       .then((res) => res.json())
       .then((data: QuestionType[]) => {
         setQuestions(Array.isArray(data) ? data : []);
@@ -64,7 +71,7 @@ const Question: React.FC = () => {
         console.error("Error fetching questions:", error);
         setLoading(false);
       });
-  }, []);
+  }, [isStarted, assessmentId]);
 
 
 
@@ -111,10 +118,13 @@ const Question: React.FC = () => {
       })
     );
 
+    const timeTakentoAnswer=2;
+    const currentStudent=JSON.parse(localStorage.getItem("user") || "{}");
+    
     const payload = {
-      studentId: parseInt(studentId),
-      assessmentId: 7,
-      timeTakenMinutes: 30,
+      studentId: parseInt(currentStudent.userid) || 0,
+      assessmentId: parseInt(assessmentId),
+      timeTakenMinutes: timeTakentoAnswer,
       answers: answersArray,
     };
 
@@ -140,21 +150,21 @@ const Question: React.FC = () => {
       <div className="mx-auto max-w-md rounded-[2rem] bg-white p-8 shadow-soft ring-1 ring-slate-200 text-center">
         <h2 className="text-2xl font-bold text-slate-900 mb-6">Enter Student Details</h2>
         <div className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1 text-left">
-              Student ID
-            </label>
-            <input
-              type="number"
-              placeholder="Enter your ID (e.g. 1)"
-              value={studentId}
-              onChange={(e) => setStudentId(e.target.value)}
-              className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent outline-none"
-            />
-          </div>
+<div>
+  <label className="block text-sm font-medium text-slate-700 mb-1 text-left">
+    Assessment ID
+  </label>
+  <input
+    type="number"
+    placeholder="Enter Assessment ID (e.g. 1)"
+    value={assessmentId}
+    onChange={(e) => setAssessmentId(e.target.value)}
+    className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent outline-none"
+  />
+</div>
           <button
-            onClick={() => studentId && setIsStarted(true)}
-            disabled={!studentId}
+            onClick={() => assessmentId && setIsStarted(true)}
+            disabled={!assessmentId}
             className="w-full bg-[#dc2626] text-white py-2 rounded-lg font-semibold hover:bg-[#b91c1c] transition disabled:opacity-50"
           >
             Start Assessment
@@ -187,8 +197,9 @@ const Question: React.FC = () => {
         <h1 className="text-2xl font-bold text-slate-950">
           Assessment
         </h1>
-        <div className={`text-xl font-mono font-bold px-4 py-2 rounded-xl border-2 ${timeLeft < 60 ? 'text-red-600 border-red-600 animate-pulse' : 'text-slate-700 border-slate-200'}`}>
+        <div className={`text-xl font-mono font-bold px-4 py-2 rounded-xl border-2 ${timeLeft < 30 ? 'text-red-600 border-red-600 animate-pulse' : 'text-slate-700 border-slate-200'}`}>
           Time Remaining: {formatTime(timeLeft)}
+          
         </div>
       </div>
 

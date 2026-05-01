@@ -84,10 +84,9 @@ const LoginPage = () => {
         throw new Error("Login failed");
       }
 
-      const data = await res.json();
-      console.log(data.data);
+      const validToken = await res.json();
 
-      localStorage.setItem("user", JSON.stringify(data.data));
+      sessionStorage.setItem("current", JSON.stringify(validToken.data));
       // redirect after login
       // navigate("/models/evaluationcontent/components");
     } catch (error) {
@@ -140,7 +139,7 @@ const LoginPage = () => {
     try {
       await handleLogin(); // wait for login complete
 
-      const user = JSON.parse(localStorage.getItem("user") || "{}");
+      const user = JSON.parse(sessionStorage.getItem("current") || "{}");
 
       if (user?.userid) {
         await handleUserLogLogin(user.userid);

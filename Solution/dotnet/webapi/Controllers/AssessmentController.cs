@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Mvc;
 using backend.Services.Interfaces;
 namespace backend.Controllers;
 
-using System.Security.Cryptography.X509Certificates;
 using backend.DTOs;
 
 [ApiController]
@@ -47,15 +46,15 @@ public class AssessmentController : ControllerBase
 
     [HttpGet("students")]
     public async Task<IActionResult> GetStudentsAsync()
-    {
+    { 
         var students = await _service.GetStudentsAsync();
         return Ok(students);
     }
 
-   [HttpPost("assigned")]
-public async Task<IActionResult> AssignAssessmentAsync([FromBody] AssignAssessmentDto dto)
-{
-    try
+    [HttpPost("assigned")]
+    public async Task<IActionResult> AssignAssessmentAsync([FromBody] AssignAssessmentDto dto)
+    {
+        try
     {
         await _service.AssignAssessmentAsync(dto);
         return Ok("Assessment Assigned Successfully");
@@ -66,10 +65,10 @@ public async Task<IActionResult> AssignAssessmentAsync([FromBody] AssignAssessme
     }
 }
 
-    [HttpGet("questions/{assessmentId}")]
-    public async Task<IActionResult> GetQuestionsByAssessmentId(int assessmentId)
+    [HttpGet("{assessmentId}/questions")]
+    public async Task<IActionResult> GetAssessmentQuestionsAsync(int assessmentId)
     {
-        var assessmentQuestions = await _service.GetAssessmentQuestions(assessmentId);
+        var assessmentQuestions = await _service.GetAssessmentQuestionsAsync(assessmentId);
         return Ok(assessmentQuestions);
     }
     
