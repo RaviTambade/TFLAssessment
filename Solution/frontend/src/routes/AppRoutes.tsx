@@ -39,6 +39,7 @@ import AssignAssessment from "@/components/assessment/assessmentOrchestrator/Ass
 import ConceptByFramework from "@/components/assessment/skilltaxonomy/ConceptByFramework";
 
 import QuestionByConceptId from "@/components/assessment/evaluationcontent/QuestionByConceptId";
+import Dashboard from "@/components/assessment/membership/dashboard";
 
 
 function AppRoutes() {
@@ -46,6 +47,8 @@ function AppRoutes() {
     <div className="min-h-screen bg-background">
       <main className="pt-20">
         <Routes>
+
+           
           {/* Main Component Page */}
           <Route path="evaluationcontent/components" element={<Assessment />} />
 
@@ -109,6 +112,7 @@ function AppRoutes() {
           <Route path="membership/Register" element={<RegisterPage />} />
           <Route path="membership/UserActivity" element={<UserActivity />} />
           <Route path="membership/UserProfile" element={<UserProfile />} />
+          <Route path="membership/dashboard" element={<Dashboard />} />
 
         </Routes>
       </main>
