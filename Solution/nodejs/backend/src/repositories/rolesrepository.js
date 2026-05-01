@@ -31,7 +31,7 @@ class RolesRepository {
     this.connection.query(query, [userId], (err, results) => {
       if (err) return callback(err, null);
 
-      const userRole = results.length > 0 ? results[0].role_name : null;
+      const userRole = results.length > 0 ? results : null;
       callback(null, userRole);
     });
   }

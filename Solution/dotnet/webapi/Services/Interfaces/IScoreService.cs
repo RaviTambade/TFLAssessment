@@ -8,5 +8,8 @@ namespace backend.Services.Interfaces
         Task<AverageScoreDto> GetAverageScoreByIdAsync(int studentId);
     
         Task<List<AverageScoreDto>> GetAllStudentsAverageScoreAsync();
+
+        Task<AssessmentScoreDto> GetAssessmentResultData(int studentId, int assessmentId);
+
     }
 }
