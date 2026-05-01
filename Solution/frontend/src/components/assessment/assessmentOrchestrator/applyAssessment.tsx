@@ -14,29 +14,33 @@ type SelectedAnswersType = {
   [key: number]: string;
 };
 
-const Question: React.FC = () => {
+const Question = () => {
   const [questions, setQuestions] = useState<QuestionType[]>([]);
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [selectedAnswers, setSelectedAnswers] = useState<SelectedAnswersType>({});
   const [loading, setLoading] = useState<boolean>(true);
-  const [timeLeft, setTimeLeft] = useState<number>(30 * 60); // Default 30 mins in seconds
+  const [timeLeft, setTimeLeft] = useState<number>(2.5 * 60); // Default 30 mins in seconds
   const [studentId, setStudentId] = useState<string>("");
   const [isStarted, setIsStarted] = useState<boolean>(false);
 
-  useEffect(() => {
-    if (timeLeft <= 0) {
-      // Auto-submit when timer reaches zero
-      const submitBtn = document.getElementById("submit-assessment-btn");
-      if (submitBtn) submitBtn.click();
-      return;
-    }
+useEffect(() => {
+  const timer = setInterval(() => {
+    setTimeLeft((prev) => {
+      if (prev <= 1) {
+        clearInterval(timer);
 
-    const timer = setInterval(() => {
-      setTimeLeft((prev) => prev - 1);
-    }, 1000);
+        // Auto-submit when timer reaches zero
+        const submitBtn = document.getElementById("submit-assessment-btn");
+        if (submitBtn) submitBtn.click();
 
-    return () => clearInterval(timer);
-  }, [timeLeft]);
+        return 0;
+      }
+      return prev - 1;
+    });
+  }, 1000);
+
+      return () => clearInterval(timer);
+}, []);
 
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
@@ -175,8 +179,9 @@ const Question: React.FC = () => {
         <h1 className="text-2xl font-bold text-slate-950">
           Assessment
         </h1>
-        <div className={`text-xl font-mono font-bold px-4 py-2 rounded-xl border-2 ${timeLeft < 60 ? 'text-red-600 border-red-600 animate-pulse' : 'text-slate-700 border-slate-200'}`}>
+        <div className={`text-xl font-mono font-bold px-4 py-2 rounded-xl border-2 ${timeLeft < 30 ? 'text-red-600 border-red-600 animate-pulse' : 'text-slate-700 border-slate-200'}`}>
           Time Remaining: {formatTime(timeLeft)}
+          
         </div>
       </div>
 
