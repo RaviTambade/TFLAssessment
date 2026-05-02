@@ -1,32 +1,112 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Button } from "./ui/button";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./ui/dropdown-menu";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "./ui/dropdown-menu";
 import { CircleUser, Menu, X, ChevronDown } from "lucide-react";
 
 interface NavbarProps {
-  isLoggedIn?: boolean
+  isLoggedIn?: boolean;
 }
 const Navbar = ({ isLoggedIn }: NavbarProps) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
+  const [loading, setLoading] = useState<boolean>(true);
+  const [userName, setUserName] = useState<UserName>();
+  const [error, setError] = useState<string>("");
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+    interface UserName {
+      firstname: string;
+      lastname: string;
+    }
+  useEffect(() => {
+    const BASE_URL: string = "http://localhost:3000";
+
+    const fetchProfileName = async () => {
+      setLoading(true);
+
+      const currentUserDetails = sessionStorage.getItem("current");
+
+      if (!currentUserDetails) return;
+
+      const user = JSON.parse(currentUserDetails);
+      try {
+        const response = await fetch(
+          `${BASE_URL}/api/users/${user.userid}/personal`,
+        );
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch roles");
+        }
+
+        const data = await response.json();
+
+        console.log("API DATA:", data.data);
+
+        const currentUserFullName={
+          firstname:data.data.first_name,
+          lastname:data.data.last_name
+
+        }
+
+        setUserName(currentUserFullName);
+        setError("");
+      } catch (err) {
+        console.error(err);
+        setError("Failed to fetch roles");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProfileName();
+  }, []);
 
   const handleSectionClick = (sectionId: string) => {
-    if (location.pathname !== '/') {
+    if (location.pathname !== "/") {
       navigate(`/${sectionId}`);
     } else {
-      document.getElementById(sectionId.replace('#', ''))?.scrollIntoView({ behavior: 'smooth' });
+      document
+        .getElementById(sectionId.replace("#", ""))
+        ?.scrollIntoView({ behavior: "smooth" });
     }
   };
 
+  const handleUserLogLogout = async (userid: number) => {
+    try {
+      const res = await fetch(
+        `http://localhost:3000/api/useractivity/logout/${userid}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        },
+      );
+
+      if (!res.ok) {
+        throw new Error("user log failed");
+      }
+
+      const data = await res.json();
+      console.log(data.message);
+    } catch (error) {
+      console.error(error);
+    }
+  };
   const handleGetStartedClick = () => {
-    if (location.pathname !== '/') {
-      navigate('/', { state: { scrollToContact: true } });
+    if (location.pathname !== "/") {
+      navigate("/", { state: { scrollToContact: true } });
     } else {
-      document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+      document
+        .getElementById("contact")
+        ?.scrollIntoView({ behavior: "smooth" });
     }
   };
 
@@ -35,9 +115,18 @@ const Navbar = ({ isLoggedIn }: NavbarProps) => {
     { href: "#about", label: "About", isLink: false },
     { href: "#services", label: "Services", isLink: false },
     { href: "#tap-program", label: "TAP Program", isLink: false },
-    { href: "https://ravitambade.wordpress.com/", label: "Blogs", isLink: true },
+    {
+      href: "https://ravitambade.wordpress.com/",
+      label: "Blogs",
+      isLink: true,
+    },
     { href: "#success-stories", label: "Success Stories", isLink: false },
-    { href: "/models/evaluationcontent/components", label: "Assessment", isLink: true }, 
+    {
+      href: "/models/evaluationcontent/components",
+      label: "Assessment",
+      isLink: true,
+      requiresAuth: true,  
+    },
   ];
 
   return (
@@ -46,9 +135,9 @@ const Navbar = ({ isLoggedIn }: NavbarProps) => {
         <div className="flex items-center justify-between">
           {/* Logo */}
           <div className="flex items-center space-x-3">
-            <img 
-              src="/lovable-uploads/d49f4d74-db53-42cc-9388-fcf6ea2a49e8.png" 
-              alt="Transflower Learning Logo" 
+            <img
+              src="/lovable-uploads/d49f4d74-db53-42cc-9388-fcf6ea2a49e8.png"
+              alt="Transflower Learning Logo"
               className="w-8 h-8 sm:w-10 sm:h-10 object-contain"
             />
             <span className="text-lg sm:text-xl font-bold text-primary hidden sm:block">
@@ -58,15 +147,15 @@ const Navbar = ({ isLoggedIn }: NavbarProps) => {
               Transflower
             </span>
           </div>
-          
+
           {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center space-x-6 xl:space-x-8">
-            {navItems.map((item) => (
+            {navItems.filter(item => !item.requiresAuth || isLoggedIn).map((item) =>
               item.isLink ? (
-                item.href.startsWith('http') ? (
-                  <a 
-                    key={item.label}
-                    href={item.href} 
+                item.href.startsWith("http") ? (
+                  <a
+                    key={item.label} 
+                    href={item.href}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-foreground hover:text-primary transition-smooth text-sm xl:text-base"
@@ -74,76 +163,97 @@ const Navbar = ({ isLoggedIn }: NavbarProps) => {
                     {item.label}
                   </a>
                 ) : (
-                  <Link 
+                  <Link
                     key={item.label}
-                    to={item.href} 
+                    to={item.href}
                     className="text-foreground hover:text-primary transition-smooth text-sm xl:text-base"
                   >
                     {item.label}
                   </Link>
                 )
               ) : (
-                <button 
+                <button
                   key={item.label}
-                  onClick={() => handleSectionClick(item.href)} 
+                  onClick={() => handleSectionClick(item.href)}
                   className="text-foreground hover:text-primary transition-smooth text-sm xl:text-base"
                 >
                   {item.label}
                 </button>
-              )
-            ))}
+              ),
+            )}
           </div>
-          
+
           {/* Buttons */}
           <div className="flex items-center space-x-2 select-none">
-
-          
             {isLoggedIn ? (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <button className="flex items-center gap-2 bg-primary text-white px-4 py-2 rounded-md hover:bg-accent transition">
+                    <CircleUser className="w-5 h-5" />
+                    {userName?.firstname + " " + userName?.lastname}
+                    <ChevronDown className="w-4 h-4 ml-1" />
+                  </button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-44">
+                  <DropdownMenuItem onClick={() => navigate("/models/membership/UserProfile")}>
+                    Profile
+                  </DropdownMenuItem>
 
-                    <DropdownMenu>
-                          <DropdownMenuTrigger asChild>
-                            <button className="flex items-center gap-2 bg-primary text-white px-4 py-2 rounded-md hover:bg-accent transition">
-                            <CircleUser className="w-5 h-5" />Profile<ChevronDown className="w-4 h-4 ml-1" />
-                            </button>
-                          </DropdownMenuTrigger>
-                            <DropdownMenuContent align="end" className="w-44">
-                              <DropdownMenuItem onClick={() => navigate("")}>
-                                Profile
-                              </DropdownMenuItem>
-                              <DropdownMenuItem onClick={() => navigate("/models/membership/ChangePassword")}>
-                                Change Password
-                              </DropdownMenuItem>
-                              <DropdownMenuItem onClick={() => navigate("/tap-program")}>
-                                Logout
-                              </DropdownMenuItem>
-                            </DropdownMenuContent>
-                        </DropdownMenu>
-                  
+                  <DropdownMenuItem
+                    onClick={() => {
+                      try {
+                        const user = JSON.parse(
+                          sessionStorage.getItem("current") || "{}",
+                        );
+                        if (user?.userid) {
+                          handleUserLogLogout(user.userid);
+                        }
+                      } catch (error) {
+                        console.error("Submit Error:", error);
+                      }
+                      sessionStorage.removeItem("current");
+                      navigate("/");
+                      window.location.reload(); // redirect
+                    }}
+                  >
+                    Logout
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ) : (
+              <div className="flex gap-4">
+                <Link to="/models/membership/Login">
+                  <Button
+                    variant="hero"
+                    size="sm"
+                    className="text-xs sm:text-sm px-3 sm:px-4"
+                  >
+                    Sign In
+                  </Button>
+                </Link>
 
-                ) : (
-
-                  <div className="flex gap-4">
-
-                    <Link to="/models/membership/Login">
-                      <Button variant="hero" size="sm" className="text-xs sm:text-sm px-3 sm:px-4">
-                       Sign In
-                      </Button>
-                    </Link>
-
-                    <Button variant="hero" size="sm" className="text-xs sm:text-sm px-3 sm:px-4" onClick={handleGetStartedClick}>
-                      Get Started
-                    </Button>
-                  </div>
-                )}
+                <Button
+                  variant="hero"
+                  size="sm"
+                  className="text-xs sm:text-sm px-3 sm:px-4"
+                  onClick={handleGetStartedClick}
+                >
+                  Get Started
+                </Button>
+              </div>
+            )}
             {/* Hamburger */}
             <button
               className="lg:hidden p-2 text-foreground hover:text-primary transition-smooth"
               onClick={toggleMenu}
               aria-label="Toggle menu"
             >
-              {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+              {isMenuOpen ? (
+                <X className="h-5 w-5" />
+              ) : (
+                <Menu className="h-5 w-5" />
+              )}
             </button>
-
           </div>
         </div>
 
@@ -151,12 +261,12 @@ const Navbar = ({ isLoggedIn }: NavbarProps) => {
         {isMenuOpen && (
           <div className="lg:hidden mt-4 pb-4 border-t border-border">
             <div className="flex flex-col space-y-3 pt-4">
-              {navItems.map((item) => (
+              {navItems.map((item) =>
                 item.isLink ? (
-                  item.href.startsWith('http') ? (
-                    <a 
+                  item.href.startsWith("http") ? (
+                    <a
                       key={item.label}
-                      href={item.href} 
+                      href={item.href}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-foreground hover:text-primary transition-smooth py-2 px-2"
@@ -165,9 +275,9 @@ const Navbar = ({ isLoggedIn }: NavbarProps) => {
                       {item.label}
                     </a>
                   ) : (
-                    <Link 
+                    <Link
                       key={item.label}
-                      to={item.href} 
+                      to={item.href}
                       className="text-foreground hover:text-primary transition-smooth py-2 px-2"
                       onClick={() => setIsMenuOpen(false)}
                     >
@@ -175,18 +285,18 @@ const Navbar = ({ isLoggedIn }: NavbarProps) => {
                     </Link>
                   )
                 ) : (
-                  <button 
+                  <button
                     key={item.label}
                     onClick={() => {
                       handleSectionClick(item.href);
                       setIsMenuOpen(false);
-                    }} 
+                    }}
                     className="text-foreground hover:text-primary transition-smooth py-2 px-2 text-left"
                   >
                     {item.label}
                   </button>
-                )
-              ))}
+                ),
+              )}
             </div>
           </div>
         )}

@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import Navbar from "../components/Navbar";
 import Hero from "../components/Hero";
 import About from "../components/About";
 import Services from "../components/Services";
@@ -9,7 +8,15 @@ import SuccessStories from "../components/SuccessStories";
 import VideoShowcase from "../components/VideoShowcase";
 import Contact from "../components/Contact";
 import Footer from "../components/Footer";
+import TabProfile from "@/components/assessment/membership/tabprofile";
+import Dashboard from "@/components/assessment/membership/dashboardstudent";
+import DashboardSME from "@/components/assessment/membership/dashboardsme";
+import DashboardMentor from "@/components/assessment/membership/dashboardmentor";
+import DashboardEmployer from "@/components/assessment/membership/dashboardemployer";
+import DashboardAdmin from "@/components/assessment/membership/dashboardadmin";
+import RTCreateQuestion from "@/components/assessment/evaluationcontent/rtcreatequestion";
 
+// index
 const Index = () => {
   const location = useLocation();
 
@@ -23,7 +30,7 @@ const Index = () => {
 
   return (
     <div className="min-h-screen">
-      <Navbar />
+     
       <Hero />
       <About />
       <Services />
@@ -31,6 +38,7 @@ const Index = () => {
       <SuccessStories />
       <VideoShowcase />
       <Contact />
+      <TabProfile />
       <Footer />
     </div>
   );

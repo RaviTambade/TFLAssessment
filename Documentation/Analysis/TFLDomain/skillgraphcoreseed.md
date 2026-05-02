@@ -1,4 +1,4 @@
-Below is a **sample seeding script for the Skill Graph Core tables** of **TFLCoMentor**.
+# **Sample seeding script for the Skill Graph Core tables** of **TFLCoMentor**.
 This will populate:
 
 * Skill Categories
@@ -10,7 +10,6 @@ This will populate:
 
 This seed data represents a **Software Engineer Skill Graph** similar to what platforms like LinkedIn or Google internally maintain.
 
----
 
 # 🌱 Skill Graph Core – Seed Data
 
@@ -27,8 +26,6 @@ INSERT INTO skill_categories (category_name) VALUES
 ('Software Engineering');
 ```
 
----
-
 # 2️⃣ Skill Levels
 
 ```sql
@@ -38,8 +35,6 @@ INSERT INTO skill_levels (level_name, description) VALUES
 ('Advanced','Can design and implement independently'),
 ('Expert','Can architect systems using this skill');
 ```
-
----
 
 # 3️⃣ Skills (Core Skill Graph)
 
@@ -78,8 +73,6 @@ INSERT INTO skills (skill_name, category, parent_skill_id) VALUES
 ('Microservices', 'Software Engineering', 23);
 ```
 
----
-
 # 4️⃣ Skill Relationships
 
 This creates **dependency graph between skills**.
@@ -113,7 +106,6 @@ INSERT INTO skill_relations (parent_skill_id, child_skill_id, relation_type) VAL
 (23,25,'architecture');
 ```
 
----
 
 # 5️⃣ Student Skills (Skill Graph Data)
 
@@ -131,8 +123,6 @@ VALUES
 (2,6,60,65,NOW()),
 (2,11,75,80,NOW());
 ```
-
----
 
 # 6️⃣ Skill Evidence
 
@@ -152,7 +142,6 @@ VALUES
 (2,3,'mentor_feedback',401,70);
 ```
 
----
 
 # 🧠 What This Creates in the Platform
 
@@ -176,7 +165,7 @@ Node.js
 SQL
 ```
 
----
+
 
 # 🚀 How This Helps TFLCoMentor
 

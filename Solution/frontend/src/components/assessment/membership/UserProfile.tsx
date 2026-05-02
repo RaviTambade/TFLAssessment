@@ -18,10 +18,21 @@ const UserProfile = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [userrole, setUserRoles] = useState([]);
+
 
   useEffect(() => {
-    const uid = id ? parseInt(id, 10) : 21;
-    setUserId(uid);
+    const currentuser = sessionStorage.getItem("current");
+
+    if (currentuser) {
+      try {
+        const user = JSON.parse(currentuser);
+        setUserId(user?.userid);
+      } catch (e) {
+        console.error("Invalid user data in sessionStorage");
+      }
+    }
+
   }, [id]);
 
   useEffect(() => {
@@ -44,6 +55,25 @@ const UserProfile = () => {
         setError(err.message);
         setLoading(false);
       });
+
+    fetch(`http://localhost:3000/api/roles/getUserByRole/${userId}`) // ✅ generic API
+      .then(res => {
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        return res.json();
+      })
+      .then(res => {
+        if (res.success) {
+          setUserRoles(res.data);
+        } else {
+          setError("No data found");
+        }
+        setLoading(false);
+      })
+      .catch(err => {
+        setError(err.message);
+        setLoading(false);
+      });
+
   }, [userId]);
 
   if (loading) return <div className="text-center mt-20">Loading...</div>;
@@ -81,7 +111,8 @@ const UserProfile = () => {
 
                     {/* ✅ Dynamic Role */}
                     <Badge className="mt-2 bg-primary text-white">
-                      {user.role_name || "User"}
+                     <p>{userrole.map(r => r.role_name).join(", ")}</p>
+                      
                     </Badge>
 
                     <div className="flex gap-4 mt-3 text-primary">

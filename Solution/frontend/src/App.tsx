@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import AppRoutes from "./routes/AppRoutes";
 import { Toaster } from "./components/ui/toaster";
 import { Toaster as Sonner } from "./components/ui/sonner";
@@ -11,16 +11,38 @@ import RaviTambade from "./pages/RaviTambade";
 import UpcomingAssessment from "./components/assessment/assessmentOrchestrator/UpcomingAssessment";
 import UserProfile from "./components/assessment/membership/UserProfile";
 import ChangePassword from "./components/assessment/membership/ChangePassword";
+import Navbar from "./components/Navbar";
 
 const queryClient = new QueryClient();
 
-const App = () => (
+interface User {
+  userid: number;
+}
+
+
+const App = () => {
+   const [currentUser, setCurrentUser] = useState<User | null>(null);
+
+
+  //hook function
+  useEffect(() => {
+    const theUser = sessionStorage.getItem("current");
+    if (theUser) {
+      setCurrentUser(JSON.parse(theUser));
+    }
+  }, []);
+
+
+  //rendering logic
+  return (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <Toaster />
       <Sonner />
 
       <BrowserRouter future={{ v7_relativeSplatPath: true, v7_startTransition: true }}>
+       <Navbar isLoggedIn={!!currentUser} />
+
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/tap-program" element={<TapProgram />} />
@@ -36,7 +58,7 @@ const App = () => (
     </TooltipProvider>
   </QueryClientProvider>
 
-
-);
+  );
+};
 
 export default App;

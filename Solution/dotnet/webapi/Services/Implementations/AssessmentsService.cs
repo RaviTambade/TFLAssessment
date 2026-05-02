@@ -40,7 +40,7 @@ namespace backend.Services.Implementations
             return await _repository.GetStudentsAsync();
         }
 
-        public async Task AssignAssessmentAsync(AssignAssessmentDto dto)
+      public async Task AssignAssessmentAsync(AssignAssessmentDto dto)
         {
             await _repository.AssignAssessmentAsync(dto);
         }
@@ -50,9 +50,9 @@ namespace backend.Services.Implementations
         //     return await _repository.GetAssessmentResults();
         // }
 
-        public async Task<List<AssessmentQuestionDto>> GetAssessmentQuestions(int assessmentId)
+        public async Task<List<AssessmentQuestionDto>> GetAssessmentQuestionsAsync(int assessmentId)
         {
-            return await _repository.GetAssessmentQuestions(assessmentId);
+            return await _repository.GetAssessmentQuestionsAsync(assessmentId);
         }
 
         public async Task<bool> SaveAssessmentAnswersAsync(AssessmentAnswersDto submission)

@@ -1,6 +1,5 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import Navbar from "../components/Navbar";
 
 import EvaluationContentMenu from "../components/assessment/evaluationcontent/EvaluationContentMenu";
 import SkillTaxonomyMenu from "../components/assessment/skilltaxonomy/SkillTaxonomyMenu";
@@ -19,7 +18,7 @@ import EditQuestion from "@/components/assessment/evaluationcontent/EditQuestion
 import ViewRuntimes from "@/components/assessment/skilltaxonomy/ViewRuntimes";
 import AddConcept from "@/components/assessment/skilltaxonomy/AddConcept";
 import UpcomingAssessment from "../components/assessment/assessmentOrchestrator/UpcomingAssessment";
-import DeleteAssessment from "@/components/assessment/assessmentOrchestrator/DeleteAssessment";
+import AllAssessment from "@/components/assessment/assessmentOrchestrator/AllAssessment";
 import Question from "@/components/assessment/assessmentOrchestrator/applyAssessment";
 import Result from "@/components/assessment/assessmentOrchestrator/Result";
 
@@ -36,17 +35,20 @@ import GetUserInformation from "@/components/assessment/membership/GetUserInform
 import UserActivity from "@/components/assessment/membership/UserActivity";
 import UserProfile from "@/components/assessment/membership/UserProfile";
 import SMECreateTest from "@/components/assessment/assessmentOrchestrator/SMECreateTest";
+import AssignAssessment from "@/components/assessment/assessmentOrchestrator/AssignAssessment";
 import ConceptByFramework from "@/components/assessment/skilltaxonomy/ConceptByFramework";
 
 import QuestionByConceptId from "@/components/assessment/evaluationcontent/QuestionByConceptId";
+import Dashboard from "@/components/assessment/membership/dashboard";
 
 
 function AppRoutes() {
   return (
     <div className="min-h-screen bg-background">
-      <Navbar />
       <main className="pt-20">
         <Routes>
+
+           
           {/* Main Component Page */}
           <Route path="evaluationcontent/components" element={<Assessment />} />
 
@@ -64,7 +66,7 @@ function AppRoutes() {
           {/* Assessment Orchestrator */}
           <Route path="assessmentorchestrator/assessmentorchestrator-menu" element={<AssessmentOrchestrator />} />
           <Route path="upcoming-assessment" element={<UpcomingAssessment />} />
-          <Route path="delete-assessment" element={<DeleteAssessment />} />
+          <Route path="all-assessment" element={<AllAssessment />} />
           <Route path="apply-assessment" element={<Question />} />
           <Route path="result" element={<Result />} />
 
@@ -74,8 +76,6 @@ function AppRoutes() {
           
           <Route path="skilltaxonomy/AddRuntime" element={<AddRuntime />} />
           <Route path="skilltaxonomy/ViewRuntimes" element={<ViewRuntimes />} />
-
-
           <Route path="skilltaxonomy/AddRuntime" element={<AddRuntime />} />
           <Route path="skilltaxonomy/AddConcept" element={<AddConcept />} />
            <Route path="skilltaxonomy/ConceptByFramework" element={<ConceptByFramework />} />
@@ -98,7 +98,8 @@ function AppRoutes() {
           <Route index element={<Assessment />} />
           <Route path="upcoming-assessment" element={<UpcomingAssessment />} />
           <Route path="create-test" element={<SMECreateTest />} />
-          <Route path="delete-assessment" element={<DeleteAssessment />} />
+           <Route path="assign-assessment" element={<AssignAssessment />} />
+          <Route path="all-assessment" element={<AllAssessment />} />
           <Route path="evaluationcontent/questionbydifficulty" element={<QuestionsByDifficulty />} />
           <Route path="evaluationcontent/projectbymentee" element={<ProjectByMentee />} />
 
@@ -106,11 +107,12 @@ function AppRoutes() {
           <Route path="membership/ChangePassword" element={<ChangePassword />} />
           <Route path="membership/GetUserInformation" element={<GetUserInformation />} />
           <Route path="membership/GetUserLogDetail" element={<GetUserLogDetail />} />
-          <Route path="membership/LoginPage" element={<LoginPage />} />
+          <Route path="membership/Login" element={<LoginPage />} />
           <Route path="membership/ManageUsers" element={<ManageUsers />} />
-          <Route path="membership/RegisterPage" element={<RegisterPage />} />
+          <Route path="membership/Register" element={<RegisterPage />} />
           <Route path="membership/UserActivity" element={<UserActivity />} />
           <Route path="membership/UserProfile" element={<UserProfile />} />
+          <Route path="membership/dashboard" element={<Dashboard />} />
 
         </Routes>
       </main>

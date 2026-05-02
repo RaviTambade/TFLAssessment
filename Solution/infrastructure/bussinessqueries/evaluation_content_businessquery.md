@@ -337,6 +337,55 @@ ON qb.question_id = mo.question_id
 WHERE qb.question_type = 'MCQ'
 AND mo.question_id IS NULL;
 ```
+## 🔹 19. get questions by concept
+```
+ SELECT q.question_id, q.description, q.question_type
+                    FROM questions q
+                    JOIN question_framework_concepts qfc 
+                        ON q.question_id = qfc.question_id
+                    JOIN framework_concepts fc 
+                        ON qfc.framework_concepts_id = fc.id
+                    WHERE fc.concept_id = (SELECT id FROM concepts WHERE name="polymorphism") ;
+```
+
+## 🔹 20. get questions by framework
+```
+ SELECT q.question_id, q.description, q.question_type, f.name
+                    FROM questions q
+                    JOIN question_framework_concepts qfc 
+                        ON q.question_id = qfc.question_id
+                    JOIN framework_concepts fc 
+                        ON qfc.framework_concepts_id = fc.id
+					JOIN frameworks f 
+						ON fc.framework_id=f.id
+                    WHERE f.id=1 ;
+```
+
+## 🔹 21. get questions by language
+```
+ SELECT q.question_id, q.description, q.question_type, f.name
+                    FROM questions q
+                    JOIN question_framework_concepts qfc 
+                        ON q.question_id = qfc.question_id
+                    JOIN framework_concepts fc 
+                        ON qfc.framework_concepts_id = fc.id
+					JOIN frameworks f 
+						ON fc.framework_id=f.id
+                    WHERE f.language_id=1 ;
+```
+
+## 🔹 22. get questions by language and framework
+```
+ SELECT q.question_id, q.description, q.question_type, f.name
+                    FROM questions q
+                    JOIN question_framework_concepts qfc 
+                        ON q.question_id = qfc.question_id
+                    JOIN framework_concepts fc 
+                        ON qfc.framework_concepts_id = fc.id
+					JOIN frameworks f 
+						ON fc.framework_id=f.id
+                    WHERE f.language_id=1 AND f.id=4 ;
+```
 
 
 # 🚀 What This Enables in TFLCoMentor

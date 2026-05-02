@@ -3,13 +3,14 @@ import { useParams, useNavigate } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
+
+import {  WEBAPI_DOTNET_URL, WEBAPI_NODE_URL ,WEBAPI_JAVA_URL} from "@/lib/utils";
+
 const EditQuestion = () => {
     const { id } = useParams();
     const navigate = useNavigate();
 
-    const BASE_URL = "http://localhost:8080/api/questions";
-
-    const [loading, setLoading] = useState(true);
+   const [loading, setLoading] = useState(true);
 
     const [formData, setFormData] = useState({
         description: "",
@@ -25,7 +26,7 @@ const EditQuestion = () => {
     useEffect(() => {
         if (!id) return;
 
-        fetch(`${BASE_URL}/details/${id}`)
+        fetch(`${WEBAPI_NODE_URL}/questions/details/${id}`)
             .then(res => res.json())
             .then(data => {
                 console.log("API DATA:", data);
@@ -61,7 +62,7 @@ const EditQuestion = () => {
 
     const handleUpdate = async () => {
         try {
-            await fetch(`${BASE_URL}/${id}`, {
+            await fetch(`${WEBAPI_JAVA_URL}/questions/${id}`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(formData)
