@@ -151,73 +151,6 @@
 * **System intelligence**: Probability model, risk flags, skill analytics.
 * **Employer alignment**: Shortlisting, fit scoring, placement pipeline.
 
-## Complete TFL Career OS visualization
-
-the “Master Blueprint” and “Real-Time Loop” into a single ASCII Career OS map**, showing **all layers, entities, flows, mentor actions, and employer matching** — a **complete TFL Career OS visualization**.
-
-+--------------------+
-|  Daily Learning    |
-|      Tasks         |
-|--------------------|
-| Learn / Practice   |
-| Assess / Reflect   |
-+---------+----------+
-          |
-          v
-+--------------------+
-| Evidence Collection|
-|--------------------|
-| Project Completion |
-| Assessment Scores  |
-| Mentor Ratings     |
-+---------+----------+
-          |
-          v
-+-----------------------+
-| Placement Probability |
-|-----------------------|
-| Compute Probabilit    |
-| Confidence Level      |
-| Dominant Factors      |
-+---------+-------------+
-          |
-          v
-+----------------------+
-| Mentor Interventions |
-|----------------------|
-| Suggested Actions    |
-| Simulate Impact      |
-| Assign Tasks         |
-+---------+------------+
-          |
-          v
-+---------------------+
-| Probability Update  |
-|---------------------|
-| New Placement Score |
-| Adjust Risk Flags   |
-+---------+-----------+
-          |
-          v
-+----------------------+
-| Employer Signal      |
-|----------------------|
-| Shortlist Students   |
-| Fit Score            |
-| Placement Pipeline   |
-+---------+------------+
-          |
-          v
-     (Feedback Loop)
-          ^
-          |
-          +--------------------+
-          | Weekly / Monthly / |
-          | Quarterly Plans    |
-          +--------------------+
-
-
-
 ## 🔹 How to Read This Complete Career OS Map
 
 1. **Chief Mentor → Co-Mentor App**
@@ -251,7 +184,7 @@ the “Master Blueprint” and “Real-Time Loop” into a single ASCII Career O
 
 
 
-✅ **This ASCII blueprint visualizes the full Career OS**, showing:
+✅ **This blueprint visualizes the full Career OS**, showing:
 
 * Student journey & evidence flow
 * Mentor action loops
