@@ -3,7 +3,7 @@ import { Card } from "../../ui/card";
 import { Button } from "../../ui/button";
 import { ArrowRight } from "lucide-react";
 import { useScrollAnimation } from "../../../hooks/use-scroll-animation";
-
+import { WEBAPI_URL } from "@/lib/utils";
 interface Project {
   projectId: number;
   projectName: string;
@@ -21,7 +21,7 @@ const ViewProjectInfo: React.FC = () => {
 
   // FETCH ALL PROJECTS
   useEffect(() => {
-    fetch("http://localhost:8080/api/projects")
+    fetch( `${WEBAPI_URL}/projects`)
       .then((res) => {
         if (!res.ok) {
           throw new Error("Failed to fetch projects");
@@ -40,7 +40,7 @@ const ViewProjectInfo: React.FC = () => {
 
   // OPTIONAL: FETCH SINGLE PROJECT (FROM API)
   const handleView = (id: number) => {
-    fetch(`http://localhost:8080/api/projects/${id}`)
+    fetch(`${WEBAPI_URL}/projects/${id}`)
       .then((res) => {
         if (!res.ok) {
           return res.text().then((text) => {

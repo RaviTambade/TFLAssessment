@@ -6,8 +6,8 @@ const QuestionDetails = () => {
     const { question_id } = useParams();
     const [q, setQ] = useState(null);
     const navigate = useNavigate();
-
-    const BASE_URL = "http://localhost:8080/api/questions";
+    const WEBAPI_URL = "http://localhost:8080/api";
+    const BASE_URL = `${WEBAPI_URL}/questions`;
 
     useEffect(() => {
         fetch(`${BASE_URL}/details/${question_id}`)
