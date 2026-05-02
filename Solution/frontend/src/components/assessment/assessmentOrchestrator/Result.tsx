@@ -105,7 +105,7 @@ const Result: React.FC = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("http://localhost:5201/api/Score/GetAssessmentResultData/23/7")
+    fetch("${WEBAPI_DOTNET_URL}/Score/GetAssessmentResultData/23/7")
       .then(async (res) => {
         if (!res.ok) {
           throw new Error("Failed to fetch result");

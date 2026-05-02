@@ -365,5 +365,3 @@ CREATE TABLE employer_matching (
 * Employer matching
 
 It is **ML-ready**, **mentor-friendly**, and **employer-ready**.
-
- 

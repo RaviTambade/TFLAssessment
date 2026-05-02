@@ -10,6 +10,11 @@ import Contact from "../components/Contact";
 import Footer from "../components/Footer";
 import TabProfile from "@/components/assessment/membership/tabprofile";
 import Dashboard from "@/components/assessment/membership/dashboard";
+import DashboardSME from "@/components/assessment/membership/dashboardsme";
+import DashboardMentor from "@/components/assessment/membership/dashboardmentor";
+import DashboardEmployer from "@/components/assessment/membership/dashboardemployer";
+import DashboardAdmin from "@/components/assessment/membership/dashboardadmin";
+import RTCreateQuestion from "@/components/assessment/evaluationcontent/rtcreatequestion";
 
 const Index = () => {
   const location = useLocation();
@@ -32,12 +37,8 @@ const Index = () => {
       <SuccessStories />
       <VideoShowcase />
       <Contact />
-<<<<<<< HEAD
-      <TabProfile/>
-=======
-      <Dashboard />
-      <TabProfile />
->>>>>>> cc89aeb21e5eb3a1ee506de9c4a92683e99a1f42
+      
+      <RTCreateQuestion />
       <Footer />
     </div>
   );

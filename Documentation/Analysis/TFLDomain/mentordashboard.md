@@ -126,6 +126,7 @@ This dashboard ensures:
 
 
 ### Why this wireframe is important (mentor-to-mentor clarity)
+
 * It **preserves mentor authority** at every step
 * AI is visible only where it adds value, never where it replaces judgment
 * Every screen answers a real mentoring question:

@@ -1,4 +1,6 @@
 import React, { useState, useMemo } from "react";
+import { WEBAPI_DOTNET_URL } from "@/lib/utils";
+
 
 type Assessment = {
   id: number;
@@ -10,10 +12,7 @@ type Assessment = {
   isActive: boolean;
 };
 
-const DeleteAssessment = () => {
-
-
-
+const AllAssessment = () => {
   const [assessments, setAssessments] = useState<Assessment[]>([]);
   const [loading, setLoading] = useState(false);
   const [showAssessments, setShowAssessments] = useState(false);
@@ -27,20 +26,17 @@ const DeleteAssessment = () => {
   const itemsPerPage = 6;
 
   const getAssessments = async () => {
-    try {
-      
+    try {  
       setShowAssessments(true);
       setLoading(true);
-      const response = await fetch(
-        "http://localhost:5201/api/Assessment/all"
-      );
-
+      const response = await fetch(WEBAPI_DOTNET_URL+"/Assessment/all" );
       const data = await response.json();
-
       setAssessments(data);
-    } catch (error) {
+    } 
+    catch (error) {
       console.log("Error:", error);
-    } finally {
+    } 
+    finally {
       setLoading(false);
     }
   };
@@ -48,22 +44,18 @@ const DeleteAssessment = () => {
   // Soft Delete
   const handleDelete = async (id: number) => {
     try {
-      const response = await fetch(
-        `http://localhost:5201/api/Assessment/InActive/${id}`,
-        {
-          method: "DELETE",
-        }
-      );
-
+      const response = await fetch(`${WEBAPI_DOTNET_URL}/Assessment/InActive/${id}`,{method: "DELETE"});
       if (response.ok) {
         const updatedData = assessments.map((item) =>
           item.id === id ? { ...item, isActive: false } : item
         );
         setAssessments(updatedData);
-      } else {
+      }
+      else {
         console.error("Failed to InActive assessment");
       }
-    } catch (error) {
+    } 
+    catch (error) {
       console.error("Error:", error);
     }
   };
@@ -72,10 +64,7 @@ const DeleteAssessment = () => {
   const handleRestore = async (id: number) => {
     try {
       const response = await fetch(
-        `http://localhost:5201/api/Assessment/restore/${id}`,
-        {
-          method: "POST",
-        }
+        `${WEBAPI_DOTNET_URL}/Assessment/restore/${id}`, { method: "POST" }
       );
 
       if (response.ok) {
@@ -350,4 +339,4 @@ const DeleteAssessment = () => {
   );
 };
 
-export default DeleteAssessment;
+export default AllAssessment;

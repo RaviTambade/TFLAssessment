@@ -43,7 +43,7 @@ const UpcomingAssessment: React.FC = () => {
       const apiFrom = formatForApi(fromDate);
       const apiTo = formatForApi(toDate);
 
-      const apiUrl = `http://localhost:5201/api/Assessment/user/${inputId}?fromDate=${apiFrom}&toDate=${apiTo}`;
+      const apiUrl = `${WEBAPI_DOTNET_URL}/Assessment/user/${inputId}?fromDate=${apiFrom}&toDate=${apiTo}`;
 
       const response = await fetch(apiUrl);
 

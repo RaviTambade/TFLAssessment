@@ -24,9 +24,6 @@ const Question = () => {
   const [isStarted, setIsStarted] = useState<boolean>(false);
 
 
-
-  //hook function
-
   useEffect(() => {
     if (!isStarted) return;
     const timer = setInterval(() => {
@@ -41,14 +38,14 @@ const Question = () => {
     return () => clearInterval(timer);
   }, [isStarted]);
 
+
   useEffect(() => {
     if (isStarted && timeLeft === 0) {
       const submitBtn = document.getElementById("submit-assessment-btn") as HTMLButtonElement;
-      if (submitBtn) {
-        submitBtn.click();
-      }
+      if (submitBtn) { submitBtn.click(); }
     }
   }, [timeLeft, isStarted]);
+
 
   //helper function
   const formatTime = (seconds: number) => {
@@ -61,7 +58,7 @@ const Question = () => {
 
   useEffect(() => {
     if (!isStarted || !assessmentId) return;
-    fetch(`http://localhost:5201/api/Assessment/${assessmentId}/questions`)
+    fetch(`${WEBAPI_DOTNET_URL}/Assessment/${assessmentId}/questions`)
       .then((res) => res.json())
       .then((data: QuestionType[]) => {
         setQuestions(Array.isArray(data) ? data : []);
@@ -128,7 +125,7 @@ const Question = () => {
       answers: answersArray,
     };
 
-    fetch("http://localhost:5201/api/Assessment/submit", {
+    fetch(`${WEBAPI_DOTNET_URL}/Assessment/submit`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
