@@ -1,5 +1,5 @@
 import { useState } from "react";
-
+import { WEBAPI_NODE_URL } from "@/lib/utils";
 interface UserProfile {
   user_id: number;
   contact: string;
@@ -42,7 +42,7 @@ function GetUserInformation() {
 
     try {
       const res = await fetch(
-        `http://localhost:3000/api/users/${userId}` 
+        `${WEBAPI_NODE_URL}/users/${userId}`
       );
 
       const data: ApiResponse = await res.json();

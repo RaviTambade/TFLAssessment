@@ -21,6 +21,18 @@ namespace backend.Repositories
 
     public async Task<List<ConceptDto>> GetConceptsAsync(List<long> frameworkIds)
         {
+            if (frameworkIds == null || frameworkIds.Count == 0)
+            {
+                return await _context.Concepts
+                    .Select(x => new ConceptDto
+                    {
+                        Id = x.Id,
+                        Name = x.Name
+                    })
+                    .Distinct()
+                    .ToListAsync();
+            }
+
             return await _context.FrameworkConcepts
                 .Where(x => frameworkIds.Contains(x.FrameworkId ?? 0))
                 .Select(x => new ConceptDto

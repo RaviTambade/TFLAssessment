@@ -25,13 +25,14 @@ class AuthController {
 
       const isValid = Array.isArray(result) && result.length > 0;
 
-      const loginStatus = new LoginStatus(
-        isValid,
-        isValid ? "login successfully" : "login failed",
-        isValid ? result[0].id : 0,
-      );
-
-      if (isValid) {
+      if(isValid)
+      {
+        const loginStatus = new LoginStatus(
+          result[0].id,
+          result[0].first_name,
+          result[0].last_name,
+          result[0].role_name  
+        );
         return responseGenerator.sendSuccess(
           res,
           loginStatus,
@@ -41,6 +42,7 @@ class AuthController {
       } else {
         return responseGenerator.sendError(res, "Invalid credentials", 401);
       }
+    
     });
   };
 

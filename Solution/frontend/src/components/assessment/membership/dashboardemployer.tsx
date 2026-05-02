@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 import { Card, CardContent, CardHeader, CardTitle } from "../../ui/card";
 import { Bell, Users, Briefcase, TrendingUp, CheckCircle, AlertCircle, Calendar, Star } from "lucide-react";
-
+import { WEBAPI_NODE_URL } from "@/lib/utils";
 interface RecruiterNotification {
   id: number;
   title: string;
@@ -211,7 +211,7 @@ const DashboardEmployer = () => {
   ];
 
   useEffect(() => {
-    const apiURL = "http://localhost:8080/api/employer/profile";
+    const apiURL = `${WEBAPI_NODE_URL}/employer/profile`;
         fetch(apiURL).then((response) => response.json()).then((data) => {
           setEmployerName(data.companyName);
           setDepartment(data.department);

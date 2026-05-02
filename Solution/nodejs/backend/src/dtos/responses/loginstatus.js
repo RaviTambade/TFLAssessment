@@ -1,9 +1,10 @@
 class LoginStatus{
-    constructor(status,message,userid)
+    constructor(userid, firstname,lastname,rolename)
     {
-        this.status=status;
-        this.message=message;
         this.userid=userid;
+        this.firstname=firstname;
+        this.lastname=lastname;
+        this.rolename=rolename;
     }
 }
 

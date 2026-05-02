@@ -2,15 +2,17 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 
+import {  WEBAPI_DOTNET_URL, WEBAPI_NODE_URL ,WEBAPI_JAVA_URL} from "@/lib/utils";
+
+
 const QuestionDetails = () => {
     const { question_id } = useParams();
     const [q, setQ] = useState(null);
     const navigate = useNavigate();
-    const WEBAPI_URL = "http://localhost:8080/api";
-    const BASE_URL = `${WEBAPI_URL}/questions`;
+//questions`;
 
     useEffect(() => {
-        fetch(`${BASE_URL}/details/${question_id}`)
+        fetch(`${WEBAPI_JAVA_URL}/questions/details/${question_id}`)
             .then(res => {
                 if (!res.ok) {
                     throw new Error("Failed to fetch");
@@ -25,13 +27,13 @@ const QuestionDetails = () => {
     }, [question_id]);
 
     const approve = async () => {
-        await fetch(`${BASE_URL}/${question_id}/approve`, { method: "PUT" });
+        await fetch(`${WEBAPI_JAVA_URL}/questions/${question_id}/approve`, { method: "PUT" });
         alert("Approved ✅");
         navigate("/models/evaluationcontent/reviewquestion");
     };
 
     const reject = async () => {
-        await fetch(`${BASE_URL}/${question_id}/reject`, { method: "PUT" });
+        await fetch(`${WEBAPI_JAVA_URL}/questions/${question_id}/reject`, { method: "PUT" });
         alert("Rejected ❌");
         navigate("/models/evaluationcontent/reviewquestion");
     };

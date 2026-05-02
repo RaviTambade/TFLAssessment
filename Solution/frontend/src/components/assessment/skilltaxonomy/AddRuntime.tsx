@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { Code2 } from "lucide-react";
 
+import {  WEBAPI_DOTNET_URL, WEBAPI_NODE_URL ,WEBAPI_JAVA_URL} from "@/lib/utils";
+
+
 const AddRuntime: React.FC = () => {
   const [name, setName] = useState("");
   const [message, setMessage] = useState("");
@@ -9,7 +12,7 @@ const AddRuntime: React.FC = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch("http://localhost:8080/api/runtimes/add", {
+      const response = await fetch(`${WEBAPI_JAVA_URL}/runtimes/add`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

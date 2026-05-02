@@ -6,8 +6,10 @@ class AuthRepository {
   }
 
   validate(credential, callback) {
-    const sql = `SELECT u.id from users u
-                    JOIN user_roles ur ON u.id= ur.user_id JOIN roles r ON r.role_id = ur.role_id
+    const sql = `SELECT u.id, p.first_name, p.last_name, r.role_name from users u
+                  JOIN user_roles ur ON u.id= ur.user_id 
+                  JOIN roles r ON r.role_id = ur.role_id
+                  JOIN personal_informations p on p.user_id = u.id
                     WHERE u.contact=? AND u.password=? AND u.status="ACTIVE" AND r.role_name=?;`;
     this.connection.query(sql, [credential.username, credential.password, credential.role],
       (err, results) => {

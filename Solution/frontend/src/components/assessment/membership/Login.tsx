@@ -7,6 +7,8 @@ import { Input } from "../../ui/input";
 import { Label } from "../../ui/label";
 import { Checkbox } from "../../ui/checkbox";
 import { Separator } from "../../ui/separator";
+import { WEBAPI_NODE_URL } from "@/lib/utils";
+
 import {
   Select,
   SelectContent,
@@ -36,13 +38,12 @@ const LoginPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const BASE_URL: string = "http://localhost:3000";
  
 
     const fetchRoles = async () => {
       try {
         setLoading(true);
-        const response = await fetch(`${BASE_URL}/api/roles/getAllRoles`);
+        const response = await fetch(`${WEBAPI_NODE_URL}/roles/getAllRoles`);
 
       if (!response.ok) {
         throw new Error("Failed to fetch roles");
@@ -66,7 +67,7 @@ const LoginPage = () => {
   const handleLogin = async () => {
     try {
       const res = await fetch(
-        "http://localhost:3000/api/auth/login",
+        `${WEBAPI_NODE_URL}/auth/login`,
         {
           method: "POST",
           headers: {
@@ -97,7 +98,7 @@ const LoginPage = () => {
   const handleUserLogLogin = async (userid: number) => {
     try {
       const res = await fetch(
-        `http://localhost:3000/api/useractivity/login/${userid}`,
+        `${WEBAPI_NODE_URL}/useractivity/login/${userid}`,
         {
           method: "POST",
           headers: {
