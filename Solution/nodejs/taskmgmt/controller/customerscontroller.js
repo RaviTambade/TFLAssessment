@@ -3,6 +3,9 @@
 
 class CustomersController {
 
+    //Dependency injection of repository for 
+    // better separation of concerns  and testability
+    
     constructor(repo) {
         this.customersRepo = repo;
     }

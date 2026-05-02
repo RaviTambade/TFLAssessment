@@ -3,15 +3,16 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { useNavigate } from "react-router-dom";
 
+import {  WEBAPI_DOTNET_URL, WEBAPI_NODE_URL ,WEBAPI_JAVA_URL} from "@/lib/utils";
 const MentorReviewQuestion = () => {
   const [questions, setQuestions] = useState([]);
   const navigate = useNavigate();
 
-  const BASE_URL = "http://localhost:8080/api/questions";
+ 
 
   const fetchDraftQuestions = async () => {
     try {
-      const res = await fetch(`${BASE_URL}/drafts`);
+      const res = await fetch(`${WEBAPI_JAVA_URL}/questions/drafts`);
       const data = await res.json();
       setQuestions(data);
     } catch (err) {
@@ -21,7 +22,7 @@ const MentorReviewQuestion = () => {
 
   const fetchRecent = async () => {
     try {
-      const res = await fetch(`${BASE_URL}/recent`);
+      const res = await fetch(`${WEBAPI_JAVA_URL}/questions/recent`);
       const data = await res.json();
       setQuestions(data);
     } catch (err) {
