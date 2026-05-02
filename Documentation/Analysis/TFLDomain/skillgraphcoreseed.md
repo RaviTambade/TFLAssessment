@@ -1,4 +1,4 @@
-Below is a **sample seeding script for the Skill Graph Core tables** of **TFLCoMentor**.
+# **Sample seeding script for the Skill Graph Core tables** of **TFLCoMentor**.
 This will populate:
 
 * Skill Categories
@@ -113,7 +113,6 @@ INSERT INTO skill_relations (parent_skill_id, child_skill_id, relation_type) VAL
 (23,25,'architecture');
 ```
 
----
 
 # 5️⃣ Student Skills (Skill Graph Data)
 
@@ -132,7 +131,6 @@ VALUES
 (2,11,75,80,NOW());
 ```
 
----
 
 # 6️⃣ Skill Evidence
 
@@ -152,7 +150,6 @@ VALUES
 (2,3,'mentor_feedback',401,70);
 ```
 
----
 
 # 🧠 What This Creates in the Platform
 
@@ -176,7 +173,7 @@ Node.js
 SQL
 ```
 
----
+
 
 # 🚀 How This Helps TFLCoMentor
 
