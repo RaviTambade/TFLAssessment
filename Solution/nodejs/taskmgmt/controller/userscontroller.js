@@ -8,8 +8,11 @@ var users = [
 
 class UsersController {
 
-    constructor(repo) {
-        this.taskAllocationRepo = repo;
+    // no dependency injection for simplicity,
+    // in real application we would inject a service or repository 
+    // to handle data operations
+    constructor() {
+        
     }
  
     getAllUsers(req, res) {
