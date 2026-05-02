@@ -10,7 +10,6 @@ This will populate:
 
 This seed data represents a **Software Engineer Skill Graph** similar to what platforms like LinkedIn or Google internally maintain.
 
----
 
 # 🌱 Skill Graph Core – Seed Data
 
@@ -27,8 +26,6 @@ INSERT INTO skill_categories (category_name) VALUES
 ('Software Engineering');
 ```
 
----
-
 # 2️⃣ Skill Levels
 
 ```sql
@@ -38,8 +35,6 @@ INSERT INTO skill_levels (level_name, description) VALUES
 ('Advanced','Can design and implement independently'),
 ('Expert','Can architect systems using this skill');
 ```
-
----
 
 # 3️⃣ Skills (Core Skill Graph)
 
@@ -77,8 +72,6 @@ INSERT INTO skills (skill_name, category, parent_skill_id) VALUES
 ('System Design', 'Software Engineering', 23),
 ('Microservices', 'Software Engineering', 23);
 ```
-
----
 
 # 4️⃣ Skill Relationships
 
@@ -130,7 +123,6 @@ VALUES
 (2,6,60,65,NOW()),
 (2,11,75,80,NOW());
 ```
-
 
 # 6️⃣ Skill Evidence
 

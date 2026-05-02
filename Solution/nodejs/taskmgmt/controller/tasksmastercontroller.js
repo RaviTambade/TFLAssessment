@@ -1,6 +1,8 @@
 const RequestTaskDto = require('../dtos/requests/requesttaskdto');
 
 class TasksMasterController {
+    //Dependency injection of service for
+    // better separation of concerns and testability
     constructor(svc){
         this.tasksService = svc;
         console.log("taskscontroller constructor");
