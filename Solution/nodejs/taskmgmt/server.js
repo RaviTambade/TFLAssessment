@@ -24,13 +24,13 @@ const { Connection } = require("mysql2");
 
 
 //Customers module
-// const CustomersRepository = require("./repository/customersrepo");
-// const CustomersController = require("./controller/customerscontroller");
-// const CustomersRoutes = require("./routes/customersroutes");
+const CustomersRepository = require("./repository/customersrepo");
+const CustomersController = require("./controller/customerscontroller");
+const CustomersRoutes = require("./routes/customersroutes");
 
-// const customersRepo = new CustomersRepository(connection);
-// const customersController = new CustomersController(customersRepo);
-// const customersRoutes = CustomersRoutes(customersController);
+const customersRepo = new CustomersRepository(connection);
+const customersController = new CustomersController(customersRepo);
+const customersRoutes = CustomersRoutes(customersController);
 
 
 //Tasks module
@@ -57,7 +57,7 @@ app.use(express.json());
 
 //Route configuration
 // app.use("/api/users", usersRoutesInstance);
-// app.use("/api/customers", customersRoutes);
+ app.use("/api/customers", customersRoutes);
 // app.use("/api/tasks",taskRoutes );
 app.use("/api/taskallocation", taskAllocationRoutes);
 
