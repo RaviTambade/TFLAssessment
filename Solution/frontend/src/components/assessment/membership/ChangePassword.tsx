@@ -4,7 +4,11 @@ import { Input } from "../../ui/input";
 import { Button } from "../../ui/button";
 import { Eye, EyeOff } from "lucide-react"
 
+
+import {  WEBAPI_DOTNET_URL, WEBAPI_NODE_URL ,WEBAPI_JAVA_URL} from "@/lib/utils";
+
 const ChangePassword = () => {
+  
   const [userId, setUserId] = useState("")
   const [currentPassword, setCurrentPassword] = useState("")
   const [newPassword, setNewPassword] = useState("")
@@ -45,7 +49,7 @@ const ChangePassword = () => {
         currentPassword,
         newPassword,
       })
-       const response = await fetch("http://localhost:3000/api/auth/changepassword", {
+       const response = await fetch(`${WEBAPI_NODE_URL}/api/auth/changepassword`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
