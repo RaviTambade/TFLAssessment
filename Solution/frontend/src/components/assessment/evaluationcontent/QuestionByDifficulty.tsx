@@ -2,6 +2,9 @@ import React, { useEffect, useState } from "react";
 import { Card, CardContent } from "../../ui/card";
 import { useScrollAnimation } from "../../../hooks/use-scroll-animation";
 
+import {  WEBAPI_DOTNET_URL, WEBAPI_NODE_URL ,WEBAPI_JAVA_URL} from "@/lib/utils";
+
+
 const QuestionsByDifficulty = () => {
   const [questions, setQuestions] = useState([]);
   const [filter, setFilter] = useState([]); 
@@ -15,7 +18,7 @@ const QuestionsByDifficulty = () => {
 
   const fetchQuestions = async () => {
     try {
-      const response = await fetch("http://localhost:8080/api/questions");
+      const response = await fetch(`${WEBAPI_JAVA_URL}/questions`);
       const data = await response.json();
       setQuestions(data);
     } catch (error) {

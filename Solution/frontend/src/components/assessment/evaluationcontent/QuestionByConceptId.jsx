@@ -1,15 +1,18 @@
 import {useState,useEffect} from 'react';
-import {Button} from "../../ui/button";
+import { Button } from "../../ui/button";
+
+
+import {  WEBAPI_DOTNET_URL, WEBAPI_NODE_URL ,WEBAPI_JAVA_URL} from "@/lib/utils";
 const QuestionByConceptId = ()=>{
 
-    const baseUrl = "http://localhost:8080/api/questions";
+  
     const [conceptId,setConceptId] = useState('');
     const [questions,setQuestions] = useState([]);
    
     const fetchConcept = async () => {
         if(!conceptId || conceptId === '0') return;
         try{
-            const response = await fetch(`${baseUrl}/concepts/${conceptId}/questions`,
+            const response = await fetch(`${WEBAPI_JAVA_URL}/concepts/${conceptId}/questions`,
                 {
                     method: 'GET',
                 });

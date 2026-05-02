@@ -1,6 +1,7 @@
 
 
 import React, { useEffect, useState } from "react";
+import {  WEBAPI_DOTNET_URL, WEBAPI_NODE_URL ,WEBAPI_JAVA_URL} from "@/lib/utils";
 
 function ProjectByMentee() {
   const [projects, setProjects] = useState([]);
@@ -18,7 +19,7 @@ function ProjectByMentee() {
       setLoading(true);
       setError("");
 
-      const response = await fetch("http://localhost:8080/api/projects");
+      const response = await fetch(`${WEBAPI_JAVA_URL}/projects`);
 
       if (!response.ok) {
         throw new Error("Failed to fetch projects");
@@ -45,7 +46,7 @@ function ProjectByMentee() {
       setError("");
 
       const response = await fetch(
-        `http://localhost:8080/api/projects/student/${menteeId}/projects`
+        `${WEBAPI_JAVA_URL}/projects/student/${menteeId}/projects`
       );
 
       if (!response.ok) {

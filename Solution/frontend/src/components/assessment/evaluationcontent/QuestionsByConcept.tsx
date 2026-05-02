@@ -2,6 +2,9 @@ import { useEffect, useState } from "react";
 import { Card,CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
+import {  WEBAPI_DOTNET_URL, WEBAPI_NODE_URL ,WEBAPI_JAVA_URL} from "@/lib/utils";
+
+
 const QuestionsByConcept = () => {
     const [concepts, setConcepts] = useState([]);
     const [questions, setQuestions] = useState([]);
