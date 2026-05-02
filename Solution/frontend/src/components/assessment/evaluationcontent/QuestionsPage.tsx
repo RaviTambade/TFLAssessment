@@ -2,9 +2,12 @@ import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
+import {  WEBAPI_DOTNET_URL, WEBAPI_NODE_URL ,WEBAPI_JAVA_URL} from "@/lib/utils";
+
+
 const QuestionsPage = () => {
-  const [questions, setQuestions] = useState([]);
-  const [question, setQuestion] = useState([]);
+  const [questions, setQuestions] = useState<any[]>([]);
+  const [question, setQuestion] = useState<any>(null);
 
   const [questionId, setQuestionId] = useState("");
   const [error, setError] = useState("");
@@ -17,7 +20,7 @@ const QuestionsPage = () => {
     setQuestion(null);
     setError("");
 
-    fetch("http://localhost:8080/api/questions")
+    fetch(`${WEBAPI_JAVA_URL}/questions`)
       .then((res) => {
         if (!res.ok) throw new Error("API Error");
         return res.json();
@@ -40,7 +43,7 @@ const QuestionsPage = () => {
       setQuestion(null);
 
       const res = await fetch(
-        `http://localhost:8080/api/questions/${questionId}`
+        `${WEBAPI_JAVA_URL}/questions/${questionId}`
       );
 
       if (!res.ok) throw new Error("Not found");

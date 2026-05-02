@@ -3,6 +3,9 @@ import { Code2 } from "lucide-react";
 import { Card,CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
+import {  WEBAPI_DOTNET_URL, WEBAPI_NODE_URL ,WEBAPI_JAVA_URL} from "@/lib/utils";
+
+
 interface Runtime {
   id: number;
   runtimeName: string;
@@ -15,7 +18,7 @@ const ViewRuntimes = () => {
   const fetchRuntimes = () => {
     setLoading(true);
 
-    fetch("http://localhost:8080/api/runtimes")
+    fetch(`${WEBAPI_JAVA_URL}/runtimes`)
       .then((res) => res.json())
       .then((result) => {
         console.log("API DATA:", result);

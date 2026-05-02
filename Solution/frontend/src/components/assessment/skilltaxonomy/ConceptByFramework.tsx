@@ -5,6 +5,9 @@ import { Input } from "@/components/ui/input";
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 import { Search, BookOpen, Loader2 } from "lucide-react";
 
+import {  WEBAPI_DOTNET_URL, WEBAPI_NODE_URL ,WEBAPI_JAVA_URL} from "@/lib/utils";
+
+
 type Framework = {
   id: number;
   frameworkName: string;
@@ -15,7 +18,7 @@ type Concept = {
   name: string;
 };
 
-const baseUrl = "http://localhost:8080/api/technologies";
+// const baseUrl = "http://localhost:8080/api/technologies";
 
 const ConceptByFramework = () => {
   const [frameworks, setFrameworks] = useState<Framework[]>([]);
@@ -25,7 +28,7 @@ const ConceptByFramework = () => {
   const { ref, isVisible } = useScrollAnimation();
 
   useEffect(() => {
-    fetch(`${baseUrl}/frameworks`)
+    fetch(`${WEBAPI_JAVA_URL}/technologies/frameworks`)
       .then(res => res.json())
       .then(data => setFrameworks(Array.isArray(data) ? data : []))
       .catch(err => console.error(err));
@@ -49,7 +52,7 @@ const ConceptByFramework = () => {
       setLoading(true);
 
       const res = await fetch(
-        `${baseUrl}/concepts/frameworks/${framework.id}`
+        `${WEBAPI_JAVA_URL}/technologies/concepts/frameworks/${framework.id}`
       );
 
       const data = await res.json();

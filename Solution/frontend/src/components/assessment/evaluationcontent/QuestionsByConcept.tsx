@@ -1,32 +1,36 @@
 import { useEffect, useState } from "react";
-import { Card,CardContent } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-
-import {  WEBAPI_DOTNET_URL, WEBAPI_NODE_URL ,WEBAPI_JAVA_URL} from "@/lib/utils";
+import { Loader2 } from "lucide-react";
+import { WEBAPI_JAVA_URL } from "@/lib/utils";
 
 
 const QuestionsByConcept = () => {
     const [concepts, setConcepts] = useState([]);
     const [questions, setQuestions] = useState([]);
     const [selectedConcept, setSelectedConcept] = useState(null);
+    const [loading, setLoading] = useState(false);
 
     // ✅ Load all concepts
     useEffect(() => {
-        fetch("http://localhost:8080/api/technologies/concepts")
+        fetch(`${WEBAPI_JAVA_URL}/technologies/concepts`)
             .then((res) => res.json())
             .then((data) => setConcepts(data))
             .catch((err) => console.error(err));
     }, []);
 
     // ✅ Load questions by concept
-   const loadQuestions = (id: number) => {
-    setSelectedConcept(id);
+    const loadQuestions = (id: number) => {
+        setSelectedConcept(id);
+        setLoading(true);
+        setQuestions([]);
 
-    fetch(`http://localhost:8080/api/concepts/${id}/questions`)
-        .then((res) => res.json())
-        .then((data) => setQuestions(data))
-        .catch((err) => console.error(err));
-};
+        fetch(`${WEBAPI_JAVA_URL}//concepts/${id}/questions`)
+            .then((res) => res.json())
+            .then((data) => setQuestions(Array.isArray(data) ? data : []))
+            .catch((err) => console.error(err))
+            .finally(() => setLoading(false));
+    };
 
     return (
         <section className="py-16 sm:py-20 bg-background">
@@ -53,8 +57,15 @@ const QuestionsByConcept = () => {
                     ))}
                 </div>
 
+                {/* Loading State */}
+                {loading && (
+                    <div className="flex justify-center py-10">
+                        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+                    </div>
+                )}
+
                 {/* Questions Table */}
-                {questions.length > 0 && (
+                {!loading && questions.length > 0 && (
                     <div className="max-w-5xl mx-auto">
                         <Card className="shadow-lg border-0">
                             <CardContent className="p-6 overflow-x-auto">

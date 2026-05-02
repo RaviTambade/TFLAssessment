@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 
+import {  WEBAPI_DOTNET_URL, WEBAPI_NODE_URL ,WEBAPI_JAVA_URL} from "@/lib/utils";
+
 const SMEInsertQuestion = () => {
   const [formData, setFormData] = useState({
     description: "",
@@ -14,7 +16,6 @@ const SMEInsertQuestion = () => {
     correctAnswer: ""
   });
 
-  const BASE_URL = "http://localhost:8080/api/questions";
 
   const handleChange = (e) => {
     setFormData({
@@ -26,7 +27,7 @@ const SMEInsertQuestion = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    await fetch(`${BASE_URL}`, {
+    await fetch(`${WEBAPI_JAVA_URL}/questions`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
