@@ -14,6 +14,7 @@ import DashboardSME from "@/components/assessment/membership/dashboardsme";
 import DashboardMentor from "@/components/assessment/membership/dashboardmentor";
 import DashboardEmployer from "@/components/assessment/membership/dashboardemployer";
 import DashboardAdmin from "@/components/assessment/membership/dashboardadmin";
+import RTCreateQuestion from "@/components/assessment/evaluationcontent/rtcreatequestion";
 
 const Index = () => {
   const location = useLocation();
@@ -35,7 +36,7 @@ const Index = () => {
       <TapHighlight />
       <SuccessStories />
       <VideoShowcase />
-      <Contact />G
+      <Contact />
       <TabProfile />
       <Footer />
     </div>

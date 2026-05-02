@@ -1,7 +1,3 @@
-Excellent.
-
-
----
 
 # 🚨 DROPOUT → RECOVERY PATH (TFL MODEL)
 

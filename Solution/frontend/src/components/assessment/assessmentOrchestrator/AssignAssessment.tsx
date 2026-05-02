@@ -34,7 +34,7 @@ export default function AssignAssessment() {
 
   const fetchStudents = async () => {
     try {
-      const res = await fetch("http://localhost:5201/api/Assessment/students");
+      const res = await fetch("${WEBAPI_DOTNET_URL}/Assessment/students");
       const data = await res.json();
       setStudents(Array.isArray(data) ? data : []);
     } catch {
@@ -44,7 +44,7 @@ export default function AssignAssessment() {
 
   const fetchTests = async () => {
     try {
-      const res = await fetch("http://localhost:5201/api/Assessment/tests");
+      const res = await fetch("${WEBAPI_DOTNET_URL}/Assessment/tests");
       const data = await res.json();
       setTests(Array.isArray(data) ? data : []);
     } catch {
