@@ -9,7 +9,7 @@ import VideoShowcase from "../components/VideoShowcase";
 import Contact from "../components/Contact";
 import Footer from "../components/Footer";
 import TabProfile from "@/components/assessment/membership/tabprofile";
-import Dashboard from "@/components/assessment/membership/dashboard";
+import Dashboard from "@/components/assessment/membership/dashboardstudent";
 import DashboardSME from "@/components/assessment/membership/dashboardsme";
 import DashboardMentor from "@/components/assessment/membership/dashboardmentor";
 import DashboardEmployer from "@/components/assessment/membership/dashboardemployer";
@@ -35,8 +35,7 @@ const Index = () => {
       <TapHighlight />
       <SuccessStories />
       <VideoShowcase />
-      <Contact />
-      <DashboardAdmin />
+      <Contact />G
       <TabProfile />
       <Footer />
     </div>
