@@ -10,13 +10,10 @@ What follows is a **Placement Probability Model (ML-ready)** designed so that:
 
 This fits *perfectly* on top of your **Quarterly → Monthly → Weekly → Daily → Evidence** stack.
 
----
 
 # Placement Probability Model (PPM)
 
 ## TFL Career Intelligence Engine (ML-Ready)
-
----
 
 ## 1️⃣ What Is Placement Probability in TFL?
 
@@ -27,17 +24,15 @@ Placement Probability answers **one business-critical question**:
 This is **not a guess**.
 It is a **signal-weighted, evidence-backed probability**.
 
----
+
 
 ## 2️⃣ Design Philosophy (Mentor-First, ML-Ready)
 
-✔ Transparent factors
-✔ Explainable scoring
-✔ Time-bound (30 / 60 / 90 days)
-✔ Employer-context aware
-✔ Improves as data grows
-
----
+- ✔ Transparent factors
+- ✔ Explainable scoring
+- ✔ Time-bound (30 / 60 / 90 days)
+- ✔ Employer-context aware
+- ✔ Improves as data grows
 
 ## 3️⃣ Core Dimensions of Placement Probability
 
@@ -52,7 +47,6 @@ We compute probability from **6 signal categories**:
 | 5 | Mentor Confidence   | Human judgment               |
 | 6 | Employer Demand Fit | Is the market ready?         |
 
----
 
 ## 4️⃣ Feature Engineering (ML-Ready)
 
@@ -67,8 +61,6 @@ skill_growth_velocity (last 4 weeks)
 skill_plateau_flag
 ```
 
----
-
 ### 4.2 Proof & Project Features
 
 ```text
@@ -80,7 +72,6 @@ evidence_completeness_ratio
 
 (from `milestone_projects`, `milestone_evidence`)
 
----
 
 ### 4.3 Consistency & Discipline Features
 
@@ -91,8 +82,6 @@ current_learning_streak
 missed_days_ratio
 ```
 
----
-
 ### 4.4 Interview Readiness Features
 
 ```text
@@ -101,8 +90,6 @@ mock_interviews_cleared
 interview_confidence_avg
 interview_avoidance_flag
 ```
-
----
 
 ### 4.5 Mentor Confidence Features
 
@@ -114,8 +101,6 @@ mentor_risk_flags_count
 
 📌 **Critical:** this keeps humans in the loop.
 
----
-
 ### 4.6 Employer Demand Fit Features
 
 ```text
@@ -126,11 +111,8 @@ employer_type_match
 
 (from EMS & employer dashboards)
 
----
 
 ## 5️⃣ Placement Probability Schema (MySQL)
-
----
 
 ### 5.1 `placement_probability_scores`
 
@@ -160,8 +142,6 @@ CREATE TABLE placement_probability_scores (
     FOREIGN KEY (student_id) REFERENCES students(student_id)
 );
 ```
-
----
 
 ### 5.2 `placement_model_features` (ML Training Table)
 
@@ -196,8 +176,6 @@ CREATE TABLE placement_model_features (
 
 📌 This table makes your system **ML-ready from day one**.
 
----
-
 ## 6️⃣ Rule-Based Scoring Formula (Phase 1)
 
 Before ML, start with **weighted scoring**.
@@ -224,8 +202,6 @@ Placement Score =
 | Employer Fit    | 80    | 0.10   |
 
 ➡ **Placement Probability (60 days): ~71%**
-
----
 
 ## 7️⃣ ML Upgrade Path (Phase 2)
 
@@ -254,11 +230,9 @@ label_placed = true if student placed within 90 days
 
 📌 You can **explain every prediction**.
 
----
+
 
 ## 8️⃣ APIs
-
----
 
 ### 🔹 Get Placement Probability (Student/Mentor)
 
@@ -278,8 +252,6 @@ GET /api/placement/probability?window=60Days
 }
 ```
 
----
-
 ### 🔹 Trigger Recalculation (System)
 
 ```
@@ -291,8 +263,6 @@ Runs:
 * Weekly
 * After milestone completion
 * After interview events
-
----
 
 ## 9️⃣ Dashboard Integration
 
@@ -313,8 +283,6 @@ Runs:
 * Pipeline quality
 * Interview-ready shortlists
 
----
-
 ## 🔟 Why This Model Is Powerful (Mentor Reality)
 
 Most platforms:
@@ -332,17 +300,14 @@ This model:
 * Motivates students
 * Enables data-driven placement ops
 
----
 
 ## 🔜 Ultra-High Impact Next Steps
 
-1️⃣ **Employer matching algorithm (student ↔ job)**
-2️⃣ **Dropout probability model**
-3️⃣ **Intervention recommendation engine**
-4️⃣ **SHAP-based explanation UI**
-5️⃣ **Placement funnel analytics**
-
----
+- 1️⃣ **Employer matching algorithm (student ↔ job)**
+- 2️⃣ **Dropout probability model**
+- 3️⃣ **Intervention recommendation engine**
+- 4️⃣ **SHAP-based explanation UI**
+- 5️⃣ **Placement funnel analytics**
 
 You now have:
 - ✔ Career roadmap
