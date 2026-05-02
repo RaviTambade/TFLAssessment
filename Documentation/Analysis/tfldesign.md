@@ -1,6 +1,6 @@
 
 
-# 🌸 Transflower Career OS — ASCII Blueprint
+# 🌸 Transflower Career OS
 
  The Blueprint  combines **TFL layers, Co-Mentor Application workflow, student journey, evidence, placement probability, interventions, and employer matching** — all in **one coherent Career OS view**.
 
@@ -35,46 +35,46 @@
 +--------------------+       +----------------------+     +----------------------+
              |                           |
              v                           v
-     +--------------------+     +--------------------+
-     | Daily Learning Plan |     | Mentor Interventions|
-     |------------------- |     |-------------------|
-     | Tasks: Learn       |     | Action Type:       |
-     | Practice           |     | Mock Interview     |
-     | Assessment         |     | Project Review     |
-     | Reflection         |     | Confidence Coaching|
-     +--------------------+     +-------------------+
+     +--------------------+     +----------------------+
+     |Daily Learning Plan |    | Mentor Interventions  |
+     |------------------- |     |----------------------|
+     | Tasks: Learn       |     | Action Type:         |
+     | Practice           |     | Mock Interview       |
+     | Assessment         |     | Project Review       |
+     | Reflection         |     | Confidence Coaching  |
+     +--------------------+     +----------------------+
              |                           |
              v                           |
-     +--------------------+               |
-     | Weekly Adaptive Plan|               |
-     |------------------- |               |
-     | Adjust Focus Areas  |<--------------+
-     | Based on Evidence   |
+     +--------------------+              |
+     |Weekly Adaptive Plan|              |
+     |------------------- |              |
+     | Adjust Focus Area  |<-------------+
+     | Based on Evidence  |
      +--------------------+
              |
              v
-     +--------------------+
-     | Monthly Milestones  |
-     |------------------- |
-     | Projects            |
-     | Assessments         |
+     +----------------------+
+     | Monthly Milestones   |
+     |----------------------|
+     | Projects             |
+     | Assessments          |
      | Interview Checkpoints|
-     | Evidence Captured   |
-     +--------------------+
+     | Evidence Captured    |
+     +----------------------+
              |
              v
      +--------------------+
      | Quarterly Roadmap   |
-     |------------------- |
+     |-------------------- |
      | Career Target Role  |
      | Skills Prioritized  |
      | Employer Alignment  |
-     +--------------------+
+     +---------------------+
              |
              v
-     +--------------------+
+     +---------------------+
      | Evidence Engine     |
-     |------------------- |
+     |-------------------- |
      | Projects            |
      | Assessments         |
      | Mentor Ratings      |
@@ -82,35 +82,34 @@
      +--------------------+
              |
              v
-     +--------------------+
-     | Placement Probability|
-     |--------------------|
-     | Probability Score   |
-     | Confidence Level    |
-     | Dominant Factors    |
-     +--------------------+
+     +------------------------+
+     | Placement Probability  |
+     |------------------------|
+     | Probability Score      |
+     | Confidence Level       |
+     | Dominant Factors       |
+     +------------------------+
              |
              v
-     +--------------------+
-     | Employer Matching   |
-     |--------------------|
-     | Shortlist Students  |
-     | Fit Score           |
-     | Placement Status    |
-     +--------------------+
+     +----------------------+
+     | Employer Matching    |
+     |----------------------|
+     | Shortlist Students   |
+     | Fit Score            |
+     | Placement Status     |
+     +----------------------+
              |
              v
-     +--------------------+
-     | Placement Outcome   |
-     |--------------------|
-     | Placed / Interview  |
-     | Pipeline / Pending  |
-     +--------------------+
+     +----------------------+
+     | Placement Outcome    |
+     |----------------------|
+     | Placed / Interview   |
+     | Pipeline / Pending   |
+     +----------------------+
 ```
 
 
-
-## 🔹 How to Read This Blueprint
+## 🔹 Blue print Details
 
 1. **Chief Mentor → Co-Mentor App**
 
@@ -156,7 +155,7 @@
 
                               +---------------------+
                               |    Chief Mentor     |
-                              |--------------------|
+                              |---------------------|
                               | Define TFL Rules    |
                               | Approve Roadmaps    |
                               | Monitor Metrics     |
@@ -165,7 +164,7 @@
                                          v
                               +---------------------+
                               |   Co-Mentor App     |
-                              |--------------------|
+                              |---------------------|
                               | Dashboard           |
                               | Alerts & Risks      |
                               | Intervention Engine |
@@ -177,11 +176,11 @@
              v                           v                           v
 +---------------------+     +----------------------+     +----------------------+
 |  Student 360 View   |     | Mentor Action Panel  |     | Analytics & Reports  |
-|---------------------|      |----------------------|       |----------------------|
-| Skills & SRI        |      | Suggested Actions    |      | Placement Trends     |
-| Projects & Evidence |      | Simulate Probability |      | Skill Growth         |
-| Milestones & Status |      | Assign Tasks         |      | Intervention ROI     |
-+---------------------+      +----------------------+       +----------------------+
+|---------------------|     |----------------------|     |----------------------|
+| Skills & SRI        |     | Suggested Actions    |     | Placement Trends     |
+| Projects & Evidence |     | Simulate Probability |     | Skill Growth         |
+| Milestones & Status |     | Assign Tasks         |     | Intervention ROI     |
++---------------------+      +---------------------+     +----------------------+
              |                           |
              v                           v
      +---------------------+     +--------------------+
@@ -194,9 +193,9 @@
      +--------------------+     +----------------------+
              |                           |
              v                           |
-     +---------------------+              |
+     +---------------------+             |
      | Weekly Adaptive Plan|             |
-     |-------------------- |              |
+     |-------------------- |             |
      | Adjust Focus Areas  |<------------+
      | Based on Evidence   |
      +---------------------+
@@ -321,7 +320,7 @@
           +--------------------+
 ```
 
-## 🔹 How This Loop Works
+## 🔹 Loop 
 
 1. **Daily Learning Tasks**
 
@@ -711,7 +710,7 @@ the “Master Blueprint” and “Real-Time Loop” into a single ASCII Career O
  Daily → Weekly → Monthly → Quarterly Plans
 
 
-# 🌸 TFL Student Day-by-Day Flow — ASCII Animation
+# 🌸 TFL Student Day-by-Day Flow 
 
 ```
 Day 1
@@ -821,7 +820,7 @@ Repeat → Daily → Weekly → Monthly → Quarterly Plans
 ```
 
 
-## 🔹 How This Flow Works
+## 🔹 The Flow
 
 1. **Daily Learning Plan**
 
@@ -956,7 +955,7 @@ Day 6 → Continuous Loop
 Repeat → Daily → Weekly → Monthly → Quarterly Plans
 
 
-# 🌸 Transflower Career OS — Multi-Student Real-Time ASCII Flow
+# 🌸 Transflower Career OS
 
 ```
 Day 1: Onboarding & Daily Tasks
@@ -1059,7 +1058,7 @@ Day 4 → Continuous Loop
 
 
 
-## 🔹 Features Highlighted in This Multi-Student Flow
+## 🔹 Features Highlighted
 
 1. **Parallel Student Tracking**
 
@@ -1083,9 +1082,8 @@ Day 4 → Continuous Loop
 
 
 
-✅ **This ASCII animation gives a “live Career OS view”**:
+✅ **This view gives a “live Career OS view”**:
 
 * Mentors see **student status, evidence, risk, probability, and suggested actions**.
 * Students progress **daily**, with feedback loops and placement alignment.
 * The system **continuously adapts**, making TFL a **fully operational Career OS**.
-
