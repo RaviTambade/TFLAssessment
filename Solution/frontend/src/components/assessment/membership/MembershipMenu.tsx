@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import { useState } from "react";
 
+
 const MembershipMenu = () => {
   const { ref, isVisible } = useScrollAnimation();
   const navigate = useNavigate();

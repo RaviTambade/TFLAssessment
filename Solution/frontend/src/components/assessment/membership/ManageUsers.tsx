@@ -3,6 +3,7 @@ import { Button } from "../../ui/button";
 import { Card, CardContent } from "../../ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../../ui/table";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../../ui/select";
+import { WEBAPI_NODE_URL } from "@/lib/utils";
 
 type User = {
   id: number
@@ -50,7 +51,7 @@ const ManageUsers = () => {
     setError(null)
 
     try {
-      const res = await fetch(`http://localhost:3000/api/roles/assignRoles/${userId}`, {
+      const res = await fetch(`${WEBAPI_NODE_URL}/roles/assignRoles/${userId}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({roleIds: roleIds }),
@@ -76,7 +77,7 @@ const ManageUsers = () => {
       setError(null)
 
       try {
-        const res = await fetch("http://localhost:3000/api/users/getAllUsers")
+        const res = await fetch(`${WEBAPI_NODE_URL}/users/getAllUsers`)
         if (!res.ok) throw new Error(`HTTP ${res.status}`)
 
         const json = await res.json()
@@ -144,7 +145,7 @@ const mapped: User[] = Array.from(userMap.values())
   useEffect(() => {
     const fetchRoles = async () => {
       try {
-        const res = await fetch("http://localhost:3000/api/roles/getallroles")
+        const res = await fetch(`${WEBAPI_NODE_URL}/roles/getallroles`)
         if (!res.ok) throw new Error(`HTTP ${res.status}`)
 
         const json = await res.json()

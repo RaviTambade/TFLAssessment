@@ -6,7 +6,8 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 import { Skeleton } from "@/components/ui/skeleton";
 
-const GetUserLogDetail: React.FC = () => {
+
+const GetUserLogDetail = () => {
   const { userId: routeUserId } = useParams<{ userId: string }>();
   const { ref, isVisible } = useScrollAnimation();
   const [userId, setUserId] = useState<string>(routeUserId ?? '');

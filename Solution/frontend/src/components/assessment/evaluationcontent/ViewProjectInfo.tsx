@@ -3,7 +3,6 @@ import { Card } from "../../ui/card";
 import { Button } from "../../ui/button";
 import { ArrowRight } from "lucide-react";
 import { useScrollAnimation } from "../../../hooks/use-scroll-animation";
-import { WEBAPI_URL } from "@/lib/utils";
 interface Project {
   projectId: number;
   projectName: string;
@@ -11,6 +10,8 @@ interface Project {
   repositoryUrl: string;
   status: string;
 }
+
+const WEBAPI_URL = "http://localhost:8080/api";
 
 const ViewProjectInfo: React.FC = () => {
   const { ref, isVisible } = useScrollAnimation();

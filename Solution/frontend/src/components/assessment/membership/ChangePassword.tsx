@@ -3,6 +3,7 @@ import { Card, CardContent } from "../../ui/card";
 import { Input } from "../../ui/input";
 import { Button } from "../../ui/button";
 import { Eye, EyeOff } from "lucide-react"
+import { WEBAPI_NODE_URL } from "@/lib/utils";
 
 const ChangePassword = () => {
   const [userId, setUserId] = useState("")
@@ -45,7 +46,7 @@ const ChangePassword = () => {
         currentPassword,
         newPassword,
       })
-       const response = await fetch("http://localhost:3000/api/auth/changepassword", {
+       const response = await fetch(`${WEBAPI_NODE_URL}/auth/changepassword`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

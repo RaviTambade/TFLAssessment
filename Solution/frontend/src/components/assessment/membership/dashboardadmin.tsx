@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 import { Card, CardContent, CardHeader, CardTitle } from "../../ui/card";
 import { Bell, Users, Lock, TrendingUp, CheckCircle, AlertCircle, Shield, Settings } from "lucide-react";
-
+import { WEBAPI_NODE_URL } from "@/lib/utils";
 interface AdminNotification {
   id: number;
   title: string;
@@ -236,7 +236,7 @@ const DashboardAdmin = () => {
   ];
 
   useEffect(() => {
-    const apiURL = "http://localhost:8080/api/admin/profile";
+    const apiURL = `${WEBAPI_NODE_URL}/admin/profile`;
         fetch(apiURL).then((response) => response.json()).then((data) => {
           setAdminName(data.adminName);
           setOrganization(data.organization);
