@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Card, CardContent } from "../../ui/card";
 import { Input } from "../../ui/input";
+import { WEBAPI_NODE_URL } from "@/lib/utils";
 
 type TabType = "personal" | "professional" | "academic";
 
@@ -85,7 +86,7 @@ const TabProfile = () => {
 
       try {
         const res = await fetch(
-          `http://localhost:3000/api/users/${userid}/personal/`
+          `${WEBAPI_NODE_URL}/users/${userid}/personal/`
         );
 
         const data = await res.json();
@@ -131,7 +132,7 @@ const TabProfile = () => {
 
       try {
         const res = await fetch(
-          `http://localhost:3000/api/users/${userid}/professional/`
+          `${WEBAPI_NODE_URL}/users/${userid}/professional/`
         );
 
         const data = await res.json();

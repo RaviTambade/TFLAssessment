@@ -2,7 +2,13 @@ import { useEffect, useState } from "react";
 
 import { Card, CardContent, CardHeader, CardTitle } from "../../ui/card";
 import { Bell, Users, Lock, TrendingUp, CheckCircle, AlertCircle, Shield, Settings } from "lucide-react";
+<<<<<<< HEAD
+import { WEBAPI_NODE_URL } from "@/lib/utils";
+=======
+import UserActivity from "./UserActivity";
+import { useNavigate } from "react-router-dom";
 
+>>>>>>> 8b702a610507a57d0248010da9855f428d2334fb
 interface AdminNotification {
   id: number;
   title: string;
@@ -55,6 +61,7 @@ const DashboardAdmin = () => {
    const[adminName, setAdminName] = useState<string>("Admin User");
    const[organization, setOrganization] = useState<string>("Transflower");
    const[profilePicture, setProfilePicture] = useState<string>("https://avatars.githubusercontent.com/u/12345678?v=4");
+   const navigate=useNavigate();
 
   // Admin System Notifications
   const adminNotifications: AdminNotification[] = [
@@ -236,7 +243,7 @@ const DashboardAdmin = () => {
   ];
 
   useEffect(() => {
-    const apiURL = "http://localhost:8080/api/admin/profile";
+    const apiURL = `${WEBAPI_NODE_URL}/admin/profile`;
         fetch(apiURL).then((response) => response.json()).then((data) => {
           setAdminName(data.adminName);
           setOrganization(data.organization);
@@ -261,7 +268,7 @@ const DashboardAdmin = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           <Card>
             <CardContent className="p-6">
-              <div className="flex items-center justify-between">
+              <div className="flex items-center justify-between" onClick={()=>{navigate("/models/membership/ManageUsers")}}>
                 <div>
                   <p className="text-gray-600 text-sm font-medium">Total Members</p>
                   <p className="text-3xl font-bold text-gray-900 mt-1">72</p>
@@ -297,7 +304,7 @@ const DashboardAdmin = () => {
 
           <Card>
             <CardContent className="p-6">
-              <div className="flex items-center justify-between">
+              <div className="flex items-center justify-between" onClick={()=>{navigate("/models/membership/UserActivity")}}>
                 <div>
                   <p className="text-gray-600 text-sm font-medium">Active Sessions</p>
                   <p className="text-3xl font-bold text-gray-900 mt-1">28</p>
