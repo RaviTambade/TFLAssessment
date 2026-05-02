@@ -19,16 +19,24 @@ class TaskAllocationRepo{
             });
     }
 
-    allocate(taskId, assignedTo, callback) {
-        const query = 'INSERT INTO allocated_tasks (task_id, assigned_to) VALUES (?, ?)';
-        this.db.query(query, [taskId, assignedTo], (err, result) => {
+allocate(taskId, assignedBy, assignedTo, assignedOn, status, dueDate, startedOn, completedOn, remark, callback) {
+
+    const query = 'INSERT INTO allocated_tasks (task_id, assigned_by, assigned_to, assigned_on, status, due_date, started_on, completed_on, remark) VALUES (?,?,?,?,?,?,?,?,?)';
+
+    this.db.query(
+        query,
+        [taskId, assignedBy, assignedTo, assignedOn, status, dueDate, startedOn, completedOn, remark],
+        (err, result) => {
+
             if (err) {
                 console.error('Failed to allocate task:', err);
                 return callback(err, null);
             }
+
             callback(null, result);
-        });
-    }
+        }
+    );
+}
 
     unallocate(taskId, assignedTo, callback) {
         const query = 'DELETE FROM allocated_tasks WHERE task_id = ? AND assigned_to = ?';

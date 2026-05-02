@@ -29,7 +29,7 @@ const actions = [
   {
     label: "Applying Assessment",
     path: "/models/apply-assessment",
-    roles: ["Student"],
+    roles: ["tudent"],
   },
 ];
 
@@ -39,7 +39,7 @@ const AssessmentOrchestrator = () => {
   const [role, setRole] = useState<string | null>(null);
 
   useEffect(() => {
-    const userData = localStorage.getItem("user");
+    const userData = sessionStorage.getItem("current");
     if (userData) {
       const user = JSON.parse(userData);
       setRole(user.rolename);
@@ -52,62 +52,21 @@ const AssessmentOrchestrator = () => {
         <Card className="border-0 shadow-elegant overflow-hidden">
           <div className="bg-gradient-hero p-6 sm:p-8">
             <CardContent>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                <Button
-                  variant="hero"
-                  size="lg"
-                  className="group"
-                  onClick={() => navigate("/models/upcoming-assessment")}
-                >
-                  Upcoming Assessment
-                  <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                </Button>
-
-                 <Button
-                  variant="hero"
-                  size="lg"
-                  className="group"
-                  onClick={() => navigate("/models/all-assessment")}
-                >
-                  All Assessment
-                  <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                </Button>
-
-                <Button
-                  variant="hero"
-                  size="lg"
-                  className="group"
-
-                  onClick={() => navigate("/models/create-test")}
-                >
-                  Create Test
-                  <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                </Button>
-                
-                 <Button
-                variant="hero"
-                  size="lg"
-                  className="group"
-
-                  onClick={() => navigate("/models/assign-assessment")}
-                >
-                  Assign Assessment
-                  <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                </Button>
-                
-
-                <Button
-                variant="hero"
-                  size="lg"
-                  className="group"
-
-                  onClick={() => navigate("/models/apply-assessment")}
-                >
-                  Applying Assessment
-                  <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                </Button>
-
-
+              <div className="grid grid-cols-1 gap-6">
+                {actions
+                  .filter((action) => role && action.roles.includes(role))
+                  .map((action) => (
+                    <Button
+                      key={action.label}
+                      variant="hero"
+                      size="lg"
+                      className="group"
+                      onClick={() => navigate(action.path)}
+                    >
+                      {action.label}
+                      <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                    </Button>
+                  ))}
               </div>
             </CardContent>
           </div>
