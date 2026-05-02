@@ -1,11 +1,12 @@
-import { TasksRepository } from "./repository/tasksrepo";
-import { TasksService } from "./service/tasksservice";
-import { TasksController } from "./controller/taskscontroller";
-import { TasksRoutes } from "./routes/tasksroutes";
+const TasksRepository = require("./repository/tasksrepo")
+const TasksService = require("./service/tasksservice")
+const TasksController = require("./controller/tasksmastercontroller")
+const TasksRoutes = require("./routes/tasksroutes")
 
-import{ TaskAllocationRepo } from "./repository/taskallocationrepo";
-import {TaskAllocationControllerconst} from "./controller/taskallocationcontroller";
-import {TaskAllocationRoutes} from "./routes/taskallocationroutes";
+const TaskAllocationRepo = require("./repository/taskallocationrepo")
+const TaskAllocationControllerconst = require("./controller/taskallocationcontroller")
+const TaskAllocationRoutes = require("./routes/taskallocationroutes")
+
 
 const connection = require("./config/db");
 const express= require("express");
@@ -33,7 +34,6 @@ const customersRoutes = CustomersRoutes(customersController);
 
 
 //Tasks module
-
 const tasksRepo = new TasksRepository(connection);
 const tasksSvc = new TasksService(tasksRepo);
 const tasksController = new TasksController(tasksSvc);
