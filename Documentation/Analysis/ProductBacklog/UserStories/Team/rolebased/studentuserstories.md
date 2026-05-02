@@ -18,11 +18,11 @@ This documentation helps:
 * ✅ **Acceptance Criteria**
 * 🎯 **Business Value**
 
----
+
 
 # 👤 1️⃣ Student Profile APIs
 
----
+
 
 ## 👨‍🎓 User Story 1: View Profile
 
@@ -45,7 +45,6 @@ GET /api/student/profile
 
 Helps students **maintain a professional developer profile**.
 
----
 
 ## 👨‍🎓 User Story 2: Update Profile
 
@@ -77,7 +76,6 @@ PUT /api/student/profile
 * Student can update portfolio links
 * Changes should reflect immediately
 
----
 
 ## 👨‍🎓 User Story 3: Change Password
 
@@ -96,11 +94,11 @@ PUT /api/student/profile/password
 * Old password must be verified
 * New password must meet security rules
 
----
+
 
 # 📚 2️⃣ Learning APIs
 
----
+
 
 ## 👨‍🎓 User Story 4: View Enrolled Courses
 
@@ -120,7 +118,6 @@ GET /api/student/courses
 * Include course progress percentage
 * Show enrolled date
 
----
 
 ## 👨‍🎓 User Story 5: View Assignments and Labs
 
@@ -145,8 +142,6 @@ GET /api/student/courses/{courseId}/tasks
 ### 🎯 Business Value
 
 Helps students **manage coursework and practice activities from a single learning interface**.
-
----
 
 ## 👨‍🎓 User Story 6: Submit Assignment
 
@@ -184,11 +179,9 @@ POST /api/student/courses/{courseId}/assignments/{assignmentId}/submit
 
 Allows students to **submit real development work like GitHub repositories or project demos**.
 
----
 
 # 🧪 3️⃣ Assessment APIs
 
----
 
 ## 👨‍🎓 User Story 7: View Scheduled Assessments
 
@@ -210,7 +203,6 @@ GET /api/student/assessments/scheduled
 * Show status (scheduled / missed / completed)
 * Show technology
 
----
 
 ## 👨‍🎓 User Story 8: Start Assessment
 
@@ -229,8 +221,6 @@ GET /api/student/assessments/{assessmentId}
 * System loads questions
 * Timer should start
 
----
-
 ## 👨‍🎓 User Story 9: Submit Assessment
 
 **As a Student**  
@@ -247,8 +237,6 @@ POST /api/student/assessments/{assessmentId}/submit
 
 * Answers should be stored
 * System calculates score
-
----
 
 ## 👨‍🎓 User Story 10: View Assessment Result
 
@@ -268,11 +256,9 @@ GET /api/student/assessments/{assessmentId}/result
 * Display correct vs incorrect answers
 * Display assessment statistics
 
----
 
 # 👨‍🏫 4️⃣ Mentorship APIs
 
----
 
 ## 👨‍🎓 User Story 11: View Assigned Mentor
 
@@ -291,7 +277,6 @@ GET /api/student/mentor
 * Show mentor name
 * Show mentor expertise
 
----
 
 ## 👨‍🎓 User Story 12: Schedule Mentorship Session
 
@@ -324,7 +309,6 @@ POST /api/student/mentorship/session
 
 # 💬 5️⃣ Discussion APIs
 
----
 
 ## 👨‍🎓 User Story 13: Post a Question
 **As a Student**  
@@ -342,7 +326,6 @@ POST /api/student/questions
 * Question appears in discussion board
 * Mentors and SMEs can respond
 
----
 
 ## 👨‍🎓 User Story 14: View Discussions
 
@@ -361,8 +344,6 @@ GET /api/student/questions
 * Show recent discussions
 * Show reply count
 
----
-
 ## 👨‍🎓 User Story 15: View Question Details
 
 **As a Student**  
@@ -380,11 +361,10 @@ GET /api/student/questions/{questionId}
 * Show question
 * Show answers
 
----
+
 
 # 🚀 6️⃣ Project APIs
 
----
 
 ## 👨‍🎓 User Story 16: View My Projects
 
@@ -405,7 +385,6 @@ GET /api/student/projects
 * Show technology stack
 * Show mentor review status
 
----
 
 ## 👨‍🎓 User Story 17: Submit Project
 
@@ -434,11 +413,9 @@ POST /api/student/projects
 * Project stored in system
 * Mentor notified
 
----
 
 # 💼 7️⃣ Placement APIs
 
----
 
 ## 👨‍🎓 User Story 18: View Job Opportunities
 
@@ -458,7 +435,6 @@ GET /api/student/jobs
 * Show company name
 * Show salary range
 
----
 
 ## 👨‍🎓 User Story 19: Apply for Job
 
@@ -477,7 +453,6 @@ POST /api/student/jobs/{jobId}/apply
 * Application stored
 * Employer notified
 
----
 
 ## 👨‍🎓 User Story 20: View My Applications
 
@@ -496,7 +471,6 @@ GET /api/student/applications
 * Show applied jobs
 * Show application status
 
----
 
 ## 👨‍🎓 User Story 21: View Job Offers
 
@@ -516,11 +490,9 @@ GET /api/student/offers
 * Show salary
 * Show joining date
 
----
 
 # 📊 8️⃣ Progress APIs
 
----
 
 ## 👨‍🎓 User Story 22: View Learning Progress
 
@@ -552,11 +524,9 @@ GET /api/student/progress
 * Show assessment completion
 * Calculate growth score
 
----
 
 # 🔔 9️⃣ Notification APIs
 
----
 
 ## 👨‍🎓 User Story 23: View Notifications
 
@@ -585,7 +555,7 @@ Employer
 * Show notification source
 * Show time received
 
----
+
 
 # 🧠 Complete TFLCoMentor Ecosystem Flow
 
