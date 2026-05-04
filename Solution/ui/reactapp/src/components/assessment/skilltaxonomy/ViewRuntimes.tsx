@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { Code2 } from "lucide-react";
-import { Card,CardContent } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
-import {  WEBAPI_DOTNET_URL, WEBAPI_NODE_URL ,WEBAPI_JAVA_URL} from "@/lib/utils";
+import { WEBAPI_JAVA_URL } from "@/lib/utils";
 
 
 interface Runtime {
@@ -26,7 +26,7 @@ const ViewRuntimes = () => {
         setLoading(false);
       })
       .catch((err) => {
-        console.error(err);
+        // console.error(err);
         setLoading(false);
       });
   };
@@ -38,10 +38,10 @@ const ViewRuntimes = () => {
         {/* Title */}
         <div className="text-center mb-12">
           <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
-             <span className="bg-gradient-primary bg-clip-text text-transparent"> Runtime Explorer</span>
+            <span className="bg-gradient-primary bg-clip-text text-transparent"> Runtime Explorer</span>
           </h2>
           <p className="text-lg text-muted-foreground">
-           
+
           </p>
         </div>
 
