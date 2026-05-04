@@ -26,7 +26,7 @@ const EditQuestion = () => {
     useEffect(() => {
         if (!id) return;
 
-        fetch(`${WEBAPI_NODE_URL}/questions/details/${id}`)
+        fetch(`${WEBAPI_JAVA_URL}/questions/details/${id}`)
             .then(res => res.json())
             .then(data => {
                 console.log("API DATA:", data);

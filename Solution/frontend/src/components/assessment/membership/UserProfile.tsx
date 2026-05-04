@@ -8,6 +8,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
+import { WEBAPI_DOTNET_URL } from "@/lib/utils";
 
 import { Linkedin, Github, Mail, Phone } from "lucide-react";
 
@@ -38,7 +39,7 @@ const UserProfile = () => {
   useEffect(() => {
     if (!userId) return;
 
-    fetch(`http://localhost:3000/api/users/${userId}/complete`) // ✅ generic API
+    fetch(`${WEBAPI_DOTNET_URL}/users/${userId}/complete`) // ✅ generic API
       .then(res => {
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         return res.json();
@@ -56,7 +57,7 @@ const UserProfile = () => {
         setLoading(false);
       });
 
-    fetch(`http://localhost:3000/api/roles/getUserByRole/${userId}`) // ✅ generic API
+    fetch(`${WEBAPI_DOTNET_URL}/roles/getUserByRole/${userId}`) // ✅ generic API
       .then(res => {
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         return res.json();

@@ -5,7 +5,7 @@ import { Label } from "../../ui/label";
 import { Checkbox } from "../../ui/checkbox";
 import { RadioGroup, RadioGroupItem } from "../../ui/radio-group";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../../ui/card";
-
+import { WEBAPI_DOTNET_URL } from "@/lib/utils";
 type Concept = {
   id: number,
   name: string;
@@ -19,7 +19,7 @@ type Question = {
   conceptId: number;
 }
 
-const baseUrl="http://localhost:8080/api";
+
 
 const SMECreateTest = () => {
 
@@ -41,7 +41,7 @@ const SMECreateTest = () => {
   useEffect(() => {
    const fetchConcept=async ()=>{
     try{
-      const response = await fetch(`${baseUrl}/technologies/concepts`,{
+      const response = await fetch(`${WEBAPI_DOTNET_URL}/technologies/concepts`,{
         method:"GET",
       });
       if(!response.ok){
@@ -66,7 +66,7 @@ const SMECreateTest = () => {
       try{
         setError(null);
         setLoadingQuestions(true);
-        const response=await fetch(`${baseUrl}/questions/concepts/${selectedConcept.id}/questions`,{
+        const response=await fetch(`${WEBAPI_DOTNET_URL}/questions/concepts/${selectedConcept.id}/questions`,{
           method:"GET",
         });
         if(!response.ok){
@@ -105,7 +105,7 @@ const SMECreateTest = () => {
   };
 
   const submitTest=()=>{
-    fetch(`http://localhost:5201/api/CreateTest/create`, {
+    fetch(`${WEBAPI_DOTNET_URL}/CreateTest/create`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"

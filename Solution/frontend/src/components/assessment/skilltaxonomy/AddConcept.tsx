@@ -5,6 +5,9 @@ import { Button} from '../../ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from "../../ui/card";
 import { Input } from '../../ui/input';
 
+import {  WEBAPI_DOTNET_URL, WEBAPI_NODE_URL ,WEBAPI_JAVA_URL} from "@/lib/utils";
+
+
 type Runtime={
     id:number;
     runtimeName:string;
@@ -32,7 +35,7 @@ type Concept={
   description:string;
   status:number;
 };
-const baseUrl="http://localhost:8080/api";
+
 
 const AddConcept =()=>{
 
@@ -55,7 +58,7 @@ const AddConcept =()=>{
   useEffect(()=>{
     const fetchRuntime= async ()=>{
       try{
-        const response=await fetch(`${baseUrl}/runtimes`,{
+        const response=await fetch(`${WEBAPI_JAVA_URL}/technologies/runtimes`,{
           method:"GET",
         });
         const data:Runtime[]=await response.json();
@@ -72,7 +75,7 @@ const AddConcept =()=>{
     const fetchLanguage=async ()=>{
       try{
            if (!selectedRuntime?.id) return;
-          const response=await fetch(`${baseUrl}/sme/languages/runtime/${selectedRuntime?.id}`,{
+          const response=await fetch(`${WEBAPI_JAVA_URL}/technologies/sme/languages/runtime/${selectedRuntime?.id}`,{
           method:"GET",
         });
         const data:Language[]=await response.json();
@@ -88,7 +91,7 @@ const AddConcept =()=>{
     const fetchLayer=async()=>{
       try{
         //  if (!selectedLanguage?.id) return;
-         const response=await fetch(`${baseUrl}/layers`,{
+         const response=await fetch(`${WEBAPI_JAVA_URL}/technologies/layers`,{
           method:"GET",
         });
         const data:Layer[]=await response.json();
@@ -104,7 +107,7 @@ const AddConcept =()=>{
     const fetchFramework=async()=>{
       try{
         //  if (!selectedLanguage?.id || !selectedLayer?.id) return;
-         const response=await fetch(`${baseUrl}/frameworks/languages/${selectedLanguage?.id}/layers/${selectedLayer?.id}`,{
+         const response=await fetch(`${WEBAPI_JAVA_URL}/technologies/frameworks/languages/${selectedLanguage?.id}/layers/${selectedLayer?.id}`,{
           method:"GET",
         });
         const data:Framework[]=await response.json();
@@ -123,7 +126,7 @@ const AddConcept =()=>{
     const fetchConcept=async ()=>{
       try{
          if (!selectedFramework?.id) return;
-          const response=await fetch(`${baseUrl}/concepts/frameworks/${selectedFramework?.id}`,{
+          const response=await fetch(`${WEBAPI_JAVA_URL}/technologies/concepts/frameworks/${selectedFramework?.id}`,{
           method:"GET",
         });
         const data:Concept[]=await response.json();
@@ -150,7 +153,7 @@ const AddConcept =()=>{
 
     try{
       console.log("Submitting concept with payload:", payload);
-      const response1 = await fetch(`${baseUrl}/add/concept`, {
+      const response1 = await fetch(`${WEBAPI_JAVA_URL}/add/concept`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -177,7 +180,7 @@ const AddConcept =()=>{
         const conceptId = data1.id; // Assuming backend returns the new concept's ID
 
         // Now associate the concept with the selected framework,/map/concept/framework/{conceptId}/{frameworkId}
-        const response2 = await fetch(`${baseUrl}/map/concept/framework/${conceptId}/${selectedFramework?.id}`, {
+        const response2 = await fetch(`${WEBAPI_JAVA_URL}/technologies/map/concept/framework/${conceptId}/${selectedFramework?.id}`, {
           method: "POST",
           body: JSON.stringify({ conceptId, frameworkId: selectedFramework?.id }),
           headers: {

@@ -3,6 +3,9 @@ import React, { useState } from "react";
 import { Card,CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
+import {  WEBAPI_DOTNET_URL, WEBAPI_NODE_URL ,WEBAPI_JAVA_URL} from "@/lib/utils";
+
+
 interface QuestionDto {
     questionId: number;
     description: string;
@@ -11,8 +14,6 @@ interface QuestionDto {
     status: string;
 }
 
-// ✅ Centralized Base URL
-const BASE_URL = "http://localhost:8080/api";
 
 const UpdateQuestion = () => {
     const [questions, setQuestions] = useState<QuestionDto[]>([]);
@@ -26,7 +27,7 @@ const UpdateQuestion = () => {
     const fetchQuestions = async () => {
         setLoading(true);
         try {
-            const res = await fetch(`${BASE_URL}/questions`);
+            const res = await fetch(`${WEBAPI_JAVA_URL}/questions`);
             if (!res.ok) throw new Error("Failed to fetch");
 
             const data = await res.json();
@@ -48,7 +49,7 @@ const UpdateQuestion = () => {
 
         setLoading(true);
         try {
-            const res = await fetch(`${BASE_URL}/questions/${inputId}`);
+            const res = await fetch(`${WEBAPI_JAVA_URL}/questions/${inputId}`);
             if (!res.ok) throw new Error("Not found");
 
             const data = await res.json();
@@ -95,7 +96,7 @@ const UpdateQuestion = () => {
 
             console.log("📤 Sending update payload:", updatePayload);
 
-            const res = await fetch(`${BASE_URL}/questions/${id}`, {
+            const res = await fetch(`${WEBAPI_JAVA_URL}/questions/${id}`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(updatePayload),

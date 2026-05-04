@@ -32,6 +32,7 @@ class CustomersController {
     }
 
     createCustomer(req, res) {
+          const id = parseInt(req.params.id);
         const { name, email } = req.body;
         const newCustomer = {
             id: customers.length + 1,
@@ -49,6 +50,7 @@ class CustomersController {
 
     updateCustomer(req, res) {
         const id = parseInt(req.params.id);
+
         const { name, email } = req.body;
         this.customersRepo.updateCustomer(id, { name, email }, (err, updatedCustomer) => {
             if (err) {

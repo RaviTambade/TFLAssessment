@@ -15,11 +15,37 @@ class TaskAllocationController {
     }
 
     allocate(req, res) {
-        const { taskId, assignedTo } = req.body;
-        this.taskAllocationRepo.allocate(taskId, assignedTo, (err, result) => {
-            if (err) return res.status(500).json(err);
-            res.json({ message: "Task allocated successfully" });
+        const {
+    taskId,
+    assignedBy,
+    assignedTo,
+    assignedOn,
+    status,
+    dueDate,
+    startedOn,
+    completedOn,
+    remark
+} = req.body;
+
+this.taskAllocationRepo.allocate(
+    taskId,
+    assignedBy,
+    assignedTo,
+    assignedOn,
+    status,
+    dueDate,
+    startedOn,
+    completedOn,
+    remark,
+    (err, result) => {
+        if (err) return res.status(500).json(err);
+
+        res.json({
+            message: "Task allocated successfully",
+            data: result
         });
+    }
+);
     }
 
     unallocate(req, res) {
@@ -55,5 +81,7 @@ class TaskAllocationController {
         });
     }
 }
+
+
 
 module.exports = TaskAllocationController;

@@ -13,11 +13,9 @@ namespace backend.Services
             _config = config;
         }
 
-        public void SendEmail(string toEmail, string password)
+        public void SendEmail(string toEmail, string passphrase)
         {
             var email = new MimeMessage();
-
-
             string emailby = _config["EmailService:email"];
             string emailpassword = _config["EmailService:password"];
             string host = _config["EmailService:host"];
@@ -25,27 +23,16 @@ namespace backend.Services
 
             email.From.Add(MailboxAddress.Parse(emailby));
             email.To.Add(MailboxAddress.Parse(toEmail));
-            email.Subject = "password Verification";
-
-
+            email.Subject = "Passphrase Verification";
 
             email.Body = new TextPart(MimeKit.Text.TextFormat.Text)
             {
-                Text = $"Your password is: {password}"
+                Text = $"Your passphrase is: {passphrase}"
             };
 
             using var smtp = new SmtpClient();
-            smtp.Connect(
-                host,
-               port,
-                false
-            );
-
-            smtp.Authenticate(
-                emailby,
-                emailpassword
-            );
-
+            smtp.Connect(host, port, false );
+            smtp.Authenticate(emailby, emailpassword  );
             smtp.Send(email);
             smtp.Disconnect(true);
         }

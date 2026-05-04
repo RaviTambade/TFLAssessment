@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 import { Card, CardContent, CardHeader, CardTitle } from "../../ui/card";
 import { Bell, Users, Zap, TrendingUp, CheckCircle, AlertCircle, BookOpen, MessageSquare } from "lucide-react";
-
+import { WEBAPI_NODE_URL } from "@/lib/utils";
 interface MentorNotification {
   id: number;
   title: string;
@@ -202,7 +202,7 @@ const DashboardMentor = () => {
   ];
 
   useEffect(() => {
-    const apiURL = "http://localhost:8080/api/mentor/profile";
+    const apiURL = `${WEBAPI_NODE_URL}/mentor/profile`;
         fetch(apiURL).then((response) => response.json()).then((data) => {
           setMentorName(data.name);
           setOrganization(data.organization);

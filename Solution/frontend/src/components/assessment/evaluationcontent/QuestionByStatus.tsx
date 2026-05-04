@@ -1,6 +1,8 @@
 //working...
 
 import { useEffect, useMemo, useState } from "react";
+import {  WEBAPI_DOTNET_URL, WEBAPI_NODE_URL ,WEBAPI_JAVA_URL} from "@/lib/utils";
+
 
 type Question = {
   questionId: number;
@@ -12,7 +14,7 @@ type Question = {
 };
 
 const fetchQuestionsByStatus = async (status: string) => {
-  const res = await fetch(`http://localhost:8080/api/questions?status=${status}`);
+  const res = await fetch(`${WEBAPI_JAVA_URL}/questions?status=${status}`);
   if (!res.ok) throw new Error('Failed to fetch');
   return res.json();
 };
