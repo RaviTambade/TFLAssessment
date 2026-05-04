@@ -5,6 +5,27 @@ import { Button } from "@/components/ui/button";
 
 import {  WEBAPI_DOTNET_URL, WEBAPI_NODE_URL ,WEBAPI_JAVA_URL} from "@/lib/utils";
 
+type Concept = {
+    id: string | number;
+    name?: string;
+    title?: string;
+};
+
+type QuestionFormData = {
+    description: string;
+    questionType: string;
+    difficultyLevel: string;
+    selectedConcept: string;
+    optionA: string;
+    optionB: string;
+    optionC: string;
+    optionD: string;
+    correctAnswer: string;
+};
+
+type QuestionListItem = QuestionFormData & {
+    id: number;
+};
 
 const RTCreateQuestion = () => {
     const { id } = useParams();
@@ -14,8 +35,8 @@ const RTCreateQuestion = () => {
     // const CONCEPTS_URL = `${WEBAPI_JAVA_URL}/concepts`;
 
     const [loading, setLoading] = useState(id ? true : false);
-    const [concepts, setConcepts] = useState<any[]>([]);
-    const [questionsList, setQuestionsList] = useState<any[]>([]);
+    const [concepts, setConcepts] = useState<Concept[]>([]);
+    const [questionsList, setQuestionsList] = useState<QuestionListItem[]>([]);
 
     const [formData, setFormData] = useState({
         description: "",
@@ -73,7 +94,7 @@ const RTCreateQuestion = () => {
             });
     }, []);
 
-    const handleChange = (e: any) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         setFormData({
             ...formData,
             [e.target.name]: e.target.value

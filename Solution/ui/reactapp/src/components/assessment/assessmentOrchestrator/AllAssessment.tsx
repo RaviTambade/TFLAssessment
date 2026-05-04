@@ -29,7 +29,7 @@ const AllAssessment = () => {
     try {  
       setShowAssessments(true);
       setLoading(true);
-      const response = await fetch(WEBAPI_DOTNET_URL+"/Assessment/all" );
+      const response = await fetch(`${WEBAPI_DOTNET_URL}/Assessment/all`);
       const data = await response.json();
       setAssessments(data);
     } 

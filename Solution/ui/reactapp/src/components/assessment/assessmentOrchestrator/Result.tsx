@@ -88,6 +88,8 @@ import { Card, CardContent } from "../../ui/card";
 import { Button } from "../../ui/button";
 import { useNavigate } from "react-router-dom";
 import { CheckCircle, ArrowLeft } from "lucide-react";
+import { WEBAPI_DOTNET_URL } from "../../../lib/utils";
+
 
 interface ResultData {
   testId: number;
@@ -105,7 +107,7 @@ const Result: React.FC = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("${WEBAPI_DOTNET_URL}/Score/GetAssessmentResultData/23/7")
+    fetch(`${WEBAPI_DOTNET_URL}/Score/GetAssessmentResultData/23/7`)
       .then(async (res) => {
         if (!res.ok) {
           throw new Error("Failed to fetch result");

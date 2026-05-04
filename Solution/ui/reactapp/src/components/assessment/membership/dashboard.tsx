@@ -7,7 +7,7 @@ import DashboardMentor from "./dashboardmentor";
 import DashboardEmployer from "./dashboardemployer";
 
 
-const Dashboard: React.FC = () => {
+const Dashboard = () => {
   const navigate = useNavigate();
 
   const [role, setRole] = useState<string | null>(null);

@@ -4,10 +4,15 @@ import { Button } from "@/components/ui/button";
 
 import {  WEBAPI_DOTNET_URL, WEBAPI_NODE_URL ,WEBAPI_JAVA_URL} from "@/lib/utils";
 
+type Question = {
+  questionId?: number;
+  description: string;
+  questionType: string;
+};
 
 const QuestionsPage = () => {
-  const [questions, setQuestions] = useState<any[]>([]);
-  const [question, setQuestion] = useState<any>(null);
+  const [questions, setQuestions] = useState<Question[]>([]);
+  const [question, setQuestion] = useState<Question | null>(null);
 
   const [questionId, setQuestionId] = useState("");
   const [error, setError] = useState("");

@@ -18,6 +18,21 @@ type Role = {
   name: string
 }
 
+type ApiUser = {
+  user_id?: number
+  full_name?: string
+  role_name?: string
+  created_at?: string
+  status?: string
+}
+
+type ApiRole = {
+  role_id?: number
+  id?: number
+  role_name?: string
+  name?: string
+}
+
 const formatDate = (value?: string) => {
   if (!value) return "—"
   const d = new Date(value)
@@ -63,7 +78,7 @@ const ManageUsers = () => {
       setEditingUser(null)
       setEditingRoles([])
 
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error(err)
       setError("Failed to save roles")
     } finally {
@@ -83,7 +98,7 @@ const ManageUsers = () => {
         const json = await res.json()
         console.log("API:", json)
 
-        let payload: any[] = []
+        let payload: ApiUser[] = []
 
         if (Array.isArray(json?.data)) {
           // handle nested arrays (common in MySQL/SP)
@@ -102,7 +117,7 @@ const ManageUsers = () => {
         }
 const userMap = new Map<string, User>()
 
-;(payload || []).forEach((u: any, i: number) => {
+;(payload || []).forEach((u: ApiUser, i: number) => {
   const name = u.full_name ?? "—"
   const role = u.role_name ?? ""
 
@@ -131,7 +146,7 @@ const mapped: User[] = Array.from(userMap.values())
 
         setUsers(mapped)
 
-      } catch (err: any) {
+      } catch (err: unknown) {
         console.error(err)
         setError("Failed to load users")
       } finally {
@@ -151,7 +166,7 @@ const mapped: User[] = Array.from(userMap.values())
         const json = await res.json()
         console.log("Roles API:", json)
 
-        let rolesData: any[] = []
+        let rolesData: ApiRole[] = []
 
         if (Array.isArray(json?.data)) {
           rolesData = json.data
@@ -162,14 +177,14 @@ const mapped: User[] = Array.from(userMap.values())
           rolesData = []
         }
 
-        const mappedRoles: Role[] = (rolesData || []).map((r: any) => ({
+        const mappedRoles: Role[] = (rolesData || []).map((r: ApiRole) => ({
           id: r.role_id ?? r.id,
           name: r.role_name ?? r.name,
         }))
 
         setRoles(mappedRoles)
 
-      } catch (err: any) {
+      } catch (err: unknown) {
         console.error("Failed to load roles:", err)
         setError("Failed to load roles")
       }

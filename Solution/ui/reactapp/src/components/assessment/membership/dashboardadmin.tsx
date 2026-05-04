@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-
 import { Card, CardContent, CardHeader, CardTitle } from "../../ui/card";
 import { Bell, Users, Lock, TrendingUp, CheckCircle, AlertCircle, Shield, Settings } from "lucide-react";
 import UserActivity from "./UserActivity";

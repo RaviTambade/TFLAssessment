@@ -5,9 +5,26 @@ import { WEBAPI_NODE_URL } from "@/lib/utils";
 
 // Types
 type ApiActiveUser = {
-  full_name: string;
-  login_time: string;
-  status: string;
+  full_name?: string;
+  fullName?: string;
+  login_time?: string;
+  loginTime?: string;
+  status?: string;
+};
+
+type ApiSession = {
+  session_id?: string | number;
+  sessionId?: string | number;
+  id?: string | number;
+  full_name?: string;
+  fullName?: string;
+  name?: string;
+  login_time?: string;
+  loginTime?: string;
+  login?: string;
+  logout_time?: string;
+  logoutTime?: string;
+  logout?: string;
 };
 
 type SessionRow = {
@@ -17,8 +34,6 @@ type SessionRow = {
   logout: string | null;
   status: string;
 };
-
-const API_BASE_3000 = `${WEBAPI_NODE_URL}/useractivity`;
 
 const UserActivity = () => {
   // Stats + Active Users
@@ -54,7 +69,7 @@ const UserActivity = () => {
     const login = new Date(loginTime).getTime();
     const now = new Date().getTime();
 
-    let diff = Math.floor((now - login) / 1000);
+    const diff = Math.floor((now - login) / 1000);
 
     const hours = Math.floor(diff / 3600);
     const mins = Math.floor((diff % 3600) / 60);
@@ -92,9 +107,9 @@ const UserActivity = () => {
       try {
         // Stats APIs
         const [countRes, loginsRes, avgRes] = await Promise.all([
-          fetch(`${API_BASE_3000}/active-count`),
-          fetch(`${API_BASE_3000}/logins-24h`),
-          fetch(`${API_BASE_3000}/average-time`),
+          fetch(`$${WEBAPI_NODE_URL}/useractivity/active-count`),
+          fetch(`$${WEBAPI_NODE_URL}/useractivity/logins-24h`),
+          fetch(`$${WEBAPI_NODE_URL}/useractivity/average-time`),
         ]);
 
         const countData = await countRes.json();
@@ -114,7 +129,7 @@ const UserActivity = () => {
         );
 
         // Sessions API
-        const sessionsRes = await fetch(`${API_BASE_3000}/logs`);
+        const sessionsRes = await fetch(`$${WEBAPI_NODE_URL}/useractivity/logs`);
 
         if (!sessionsRes.ok) {
           throw new Error(`HTTP Error: ${sessionsRes.status}`);
@@ -127,7 +142,7 @@ const UserActivity = () => {
           : sessionsData.data || sessionsData.sessions || [];
 
         const mappedSessions: SessionRow[] = sessionsArray.map(
-          (item: any, index: number) => ({
+          (item: ApiSession, index: number) => ({
             id: String(
               item.session_id ||
                 item.sessionId ||
@@ -161,9 +176,9 @@ const UserActivity = () => {
         );
 
         setSessions(mappedSessions);
-      } catch (err: any) {
+      } catch (err: unknown) {
         console.error(err);
-        setError(err.message || "Something went wrong");
+        setError(err instanceof Error ? err.message : "Something went wrong");
       } finally {
         setLoading(false);
       }
@@ -175,13 +190,13 @@ const UserActivity = () => {
   // Fetch Active Users
   const fetchActiveUsersList = async () => {
     try {
-      const res = await fetch(`${API_BASE_3000}/active-users`);
+      const res = await fetch(`${WEBAPI_NODE_URL}/useractivity/active-users`);
       const raw = await res.json();
 
       const data = raw.data || [];
 
-      const cleaned: ApiActiveUser[] = data.map(
-        (u: any) => ({
+      const cleaned: Required<Pick<ApiActiveUser, "full_name" | "login_time" | "status">>[] = data.map(
+        (u: ApiActiveUser) => ({
           full_name:
             u.full_name ||
             u.fullName ||

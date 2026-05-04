@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 
 import { Card, CardContent, CardHeader, CardTitle } from "../../ui/card";
 import { Bell, Calendar, Award, TrendingUp, CheckCircle, AlertCircle, Clock } from "lucide-react";
+import { WEBAPI_NODE_URL } from "@/lib/utils";
 
 interface Notification {
   id: number;
@@ -178,7 +179,7 @@ const DashboardStudent = () => {
 
 
   useEffect(() => {
-    const apiURl = "http://localhost:8080/api/user/profile";
+    const apiURl = `${WEBAPI_NODE_URL}/user/profile`;
         fetch(apiURl).then((response) => response.json()).then((data) => {
           setName(data.name);
           setRole(data.role);
