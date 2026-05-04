@@ -6,16 +6,11 @@ import { ArrowRight } from "lucide-react";
 import { useScrollAnimation } from "../../../hooks/use-scroll-animation";
 
 import { WEBAPI_JAVA_URL } from "@/lib/utils";
+import Project from "../assessmentOrchestrator/entities/Project";
 
 // import { WEBAPI_URL } from "@/lib/utils";
 
-interface Project {
-  projectId: number;
-  projectName: string;
-  description: string;
-  repositoryUrl: string;
-  status: string;
-}
+
 
 // const WEBAPI_URL = "http://localhost:8080/api";
 

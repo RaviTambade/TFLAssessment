@@ -1,15 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { WEBAPI_DOTNET_URL } from "@/lib/utils";
+import QuestionType from "./entities/Question";
 
-type QuestionType = {
-  questionId: number;
-  description: string;
-  optionA?: string;
-  optionB?: string;
-  optionC?: string;
-  optionD?: string;
-};
+
 
 type SelectedAnswersType = {
   [key: number]: string;

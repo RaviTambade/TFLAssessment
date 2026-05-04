@@ -5,17 +5,9 @@ import { Button } from "@/components/ui/button";
 
 
 import {  WEBAPI_DOTNET_URL, WEBAPI_NODE_URL ,WEBAPI_JAVA_URL} from "@/lib/utils";
+import QuestionFormData from "../assessmentOrchestrator/entities/QuestionFormData";
 
-type QuestionFormData = {
-    description: string;
-    questionType: string;
-    difficultyLevel: string;
-    optionA: string;
-    optionB: string;
-    optionC: string;
-    optionD: string;
-    correctAnswer: string;
-};
+
 
 const EditQuestion = () => {
     const { id } = useParams();

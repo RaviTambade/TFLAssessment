@@ -4,15 +4,9 @@ import { Card,CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
 import {  WEBAPI_DOTNET_URL, WEBAPI_NODE_URL ,WEBAPI_JAVA_URL} from "@/lib/utils";
+import QuestionDto from "../assessmentOrchestrator/entities/QuestionsDto";
 
 
-interface QuestionDto {
-    questionId: number;
-    description: string;
-    questionType: string;
-    difficultyLevel: string;
-    status: string;
-}
 
 
 const UpdateQuestion = () => {
