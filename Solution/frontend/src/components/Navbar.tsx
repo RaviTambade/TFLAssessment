@@ -1,12 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Button } from "./ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "./ui/dropdown-menu";
+import {DropdownMenu,DropdownMenuContent,DropdownMenuItem,DropdownMenuTrigger} from "./ui/dropdown-menu";
 import { CircleUser, Menu, X, ChevronDown } from "lucide-react";
 
 interface NavbarProps {
@@ -47,9 +42,7 @@ const Navbar = ({ isLoggedIn }: NavbarProps) => {
 
         const data = await response.json();
 
-        console.log("API DATA:", data.data);
-
-        const currentUserFullName={
+         const currentUserFullName={
           firstname:data.data.first_name,
           lastname:data.data.last_name
 
@@ -81,13 +74,7 @@ const Navbar = ({ isLoggedIn }: NavbarProps) => {
   const handleUserLogLogout = async (userid: number) => {
     try {
       const res = await fetch(
-        `http://localhost:3000/api/useractivity/logout/${userid}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        },
+        `http://localhost:3000/api/useractivity/logout/${userid}`, { method: "PUT", headers: { "Content-Type": "application/json" }},
       );
 
       if (!res.ok) {
@@ -95,7 +82,6 @@ const Navbar = ({ isLoggedIn }: NavbarProps) => {
       }
 
       const data = await res.json();
-      console.log(data.message);
     } catch (error) {
       console.error(error);
     }

@@ -19,11 +19,8 @@ interface User {
   userid: number;
 }
 
-
 const App = () => {
    const [currentUser, setCurrentUser] = useState<User | null>(null);
-
-
   //hook function
   useEffect(() => {
     const theUser = sessionStorage.getItem("current");
