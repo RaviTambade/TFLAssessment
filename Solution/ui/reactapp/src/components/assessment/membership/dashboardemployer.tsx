@@ -2,48 +2,12 @@ import { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "../../ui/card";
 import { Bell, Users, Briefcase, TrendingUp, CheckCircle, AlertCircle, Calendar, Star } from "lucide-react";
 import { WEBAPI_NODE_URL } from "@/lib/utils";
+import RecruiterNotification from "./entities/RecruiterNotification";
+import Candidate from "./entities/Candidate";
+import JobOpening from "./entities/jobopening";
+import SkillRequirement from "./entities/SkillRequirement";
 
-interface RecruiterNotification {
-  id: number;
-  title: string;
-  message: string;
-  type: "info" | "success" | "warning" | "error";
-  timestamp: string;
-  read: boolean;
-}
-
-interface Candidate {
-  id: number;
-  name: string;
-  email: string;
-  appliedPosition: string;
-  skillsMatch: number;
-  experienceLevel: "fresher" | "junior" | "mid-level" | "senior";
-  assessmentScore: number;
-  interviewStatus: "pending" | "scheduled" | "completed" | "rejected";
-  applicationDate: string;
-}
-
-interface JobOpening {
-  id: number;
-  jobTitle: string;
-  department: string;
-  requiredSkills: string[];
-  candidatesShortlisted: number;
-  candidatesInterviewed: number;
-  offersExtended: number;
-  openPositions: number;
-  status: "active" | "closed" | "onhold";
-}
-
-interface SkillRequirement {
-  skill: string;
-  requiredLevel: "beginner" | "intermediate" | "advanced";
-  candidatesCovered: number;
-  totalRequired: number;
-  fillPercentage: number;
-}
-
+import  openings from "./data/jobopenings.json";
 //function component for Employer Recruitment Dashboard - Transflower
 const DashboardEmployer = () => {
     //parts
@@ -142,41 +106,7 @@ const DashboardEmployer = () => {
   ];
 
   // Job Openings and Hiring Pipeline
-  const jobOpenings: JobOpening[] = [
-    {
-      id: 1,
-      jobTitle: "Full-Stack Developer",
-      department: "Engineering",
-      requiredSkills: ["React", "Node.js", "MongoDB", "JavaScript"],
-      candidatesShortlisted: 3,
-      candidatesInterviewed: 2,
-      offersExtended: 1,
-      openPositions: 2,
-      status: "active",
-    },
-    {
-      id: 2,
-      jobTitle: "Backend Engineer",
-      department: "Engineering",
-      requiredSkills: ["Java", "Spring Boot", "PostgreSQL", "System Design"],
-      candidatesShortlisted: 4,
-      candidatesInterviewed: 3,
-      offersExtended: 1,
-      openPositions: 1,
-      status: "active",
-    },
-    {
-      id: 3,
-      jobTitle: "DevOps Engineer",
-      department: "Infrastructure",
-      requiredSkills: ["AWS", "Docker", "Kubernetes", "CI/CD"],
-      candidatesShortlisted: 2,
-      candidatesInterviewed: 2,
-      offersExtended: 1,
-      openPositions: 1,
-      status: "onhold",
-    },
-  ];
+  const jobOpenings: JobOpening[] =openings as JobOpening[];
 
   // Skill Requirements and Coverage
   const skillRequirements: SkillRequirement[] = [

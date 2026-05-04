@@ -3,44 +3,10 @@ import { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "../../ui/card";
 import { Bell, Users, Target, TrendingUp, CheckCircle, AlertCircle, BarChart3, FileText } from "lucide-react";
 import { WEBAPI_NODE_URL } from "@/lib/utils";
-
-interface SMENotification {
-  id: number;
-  title: string;
-  message: string;
-  type: "info" | "success" | "warning" | "error";
-  timestamp: string;
-  read: boolean;
-}
-
-interface CandidatePerformance {
-  id: number;
-  candidateName: string;
-  email: string;
-  skillLevel: string;
-  assessmentsTaken: number;
-  averageScore: number;
-  lastAssessmentDate: string;
-  status: "excellent" | "good" | "average" | "needsImprovement";
-}
-
-interface AssessmentMetrics {
-  id: number;
-  assessmentName: string;
-  subject: string;
-  totalCandidates: number;
-  averageScore: number;
-  passRate: number;
-  difficultyLevel: "beginner" | "intermediate" | "advanced";
-  createdDate: string;
-}
-
-interface SkillGapAnalysis {
-  skill: string;
-  candidatesLacking: number;
-  averagePerformance: number;
-  priority: "high" | "medium" | "low";
-}
+import AssessmentMetrics from "./entities/AssessmentMetrics";
+import CandidatePerformance from "./entities/CandidatePerformance";
+import SkillGapAnalysis from "./entities/SkillGapAnalysis";
+import SMENotification from "./entities/SMENotification";
 
 //function component for SME Dashboard
 const DashboardSME = () => {
