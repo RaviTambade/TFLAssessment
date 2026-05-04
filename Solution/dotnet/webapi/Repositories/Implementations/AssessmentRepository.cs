@@ -266,8 +266,8 @@ return await _context.Set<AssessmentQuestionDto>()
 
     public async Task<int> GetCompletedAssessmentsAsync()
     {
-        return await _context.Assessments
-            .CountAsync(x => x.Status == "Completed");
+        
+        return await _context.Assessments.CountAsync(x => x.Status == "Completed");
     }
 
    public async Task<List<AssessmentSummaryDto>> GetAssessmentSummariesForStudent(long studentId)
