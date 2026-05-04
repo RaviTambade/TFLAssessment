@@ -6,13 +6,24 @@ import { Button } from "@/components/ui/button";
 
 import {  WEBAPI_DOTNET_URL, WEBAPI_NODE_URL ,WEBAPI_JAVA_URL} from "@/lib/utils";
 
+type QuestionFormData = {
+    description: string;
+    questionType: string;
+    difficultyLevel: string;
+    optionA: string;
+    optionB: string;
+    optionC: string;
+    optionD: string;
+    correctAnswer: string;
+};
+
 const EditQuestion = () => {
     const { id } = useParams();
     const navigate = useNavigate();
 
    const [loading, setLoading] = useState(true);
 
-    const [formData, setFormData] = useState({
+    const [formData, setFormData] = useState<QuestionFormData>({
         description: "",
         questionType: "",
         difficultyLevel: "",
@@ -53,7 +64,7 @@ const EditQuestion = () => {
             });
     }, [id]);
 
-    const handleChange = (e: any) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         setFormData({
             ...formData,
             [e.target.name]: e.target.value

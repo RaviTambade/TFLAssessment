@@ -4,11 +4,20 @@ import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
 import { WEBAPI_JAVA_URL } from "@/lib/utils";
 
+type Concept = {
+    id: number;
+    name: string;
+};
+
+type Question = {
+    description: string;
+    questionType: string;
+};
 
 const QuestionsByConcept = () => {
-    const [concepts, setConcepts] = useState([]);
-    const [questions, setQuestions] = useState([]);
-    const [selectedConcept, setSelectedConcept] = useState(null);
+    const [concepts, setConcepts] = useState<Concept[]>([]);
+    const [questions, setQuestions] = useState<Question[]>([]);
+    const [selectedConcept, setSelectedConcept] = useState<number | null>(null);
     const [loading, setLoading] = useState(false);
 
     // ✅ Load all concepts
@@ -45,7 +54,7 @@ const QuestionsByConcept = () => {
 
                 {/* Concepts Buttons */}
                 <div className="flex flex-wrap justify-center gap-4 mb-10">
-                    {concepts.map((c: any) => (
+                    {concepts.map((c) => (
                         <Button
                             key={c.id}
                             variant={selectedConcept === c.id ? "default" : "outline"}
@@ -79,7 +88,7 @@ const QuestionsByConcept = () => {
                                     </thead>
 
                                     <tbody>
-                                        {questions.map((q: any, index: number) => (
+                                        {questions.map((q, index) => (
                                             <tr
                                                 key={index}
                                                 className="border-b hover:bg-muted/50 transition"

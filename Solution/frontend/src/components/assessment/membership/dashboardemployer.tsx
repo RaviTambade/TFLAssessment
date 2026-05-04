@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-
 import { Card, CardContent, CardHeader, CardTitle } from "../../ui/card";
 import { Bell, Users, Briefcase, TrendingUp, CheckCircle, AlertCircle, Calendar, Star } from "lucide-react";
 import { WEBAPI_NODE_URL } from "@/lib/utils";
+
 interface RecruiterNotification {
   id: number;
   title: string;

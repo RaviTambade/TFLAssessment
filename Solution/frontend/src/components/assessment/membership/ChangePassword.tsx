@@ -5,6 +5,10 @@ import { Button } from "../../ui/button";
 import { Eye, EyeOff } from "lucide-react"
 import { WEBAPI_NODE_URL } from "@/lib/utils";
 
+type ChangePasswordResponse = {
+  message?: string
+  error?: string
+}
 
 const ChangePassword = () => {
   
@@ -60,7 +64,7 @@ const ChangePassword = () => {
         }),
       });
 
-      let data: any = null
+      let data: ChangePasswordResponse | null = null
       const contentType = response.headers.get("content-type") || ""
 
       if (contentType.includes("application/json")) {
@@ -88,8 +92,8 @@ const ChangePassword = () => {
       setNewPassword("")
       setConfirmPassword("")
 
-    } catch (error: any) {
-      setError(error?.message || "Something went wrong.")
+    } catch (error: unknown) {
+      setError(error instanceof Error ? error.message : "Something went wrong.")
     } finally {
       setLoading(false)
     }

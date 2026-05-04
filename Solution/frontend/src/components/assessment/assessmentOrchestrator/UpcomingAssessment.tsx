@@ -54,8 +54,8 @@ const UpcomingAssessment: React.FC = () => {
       const data: Assessment[] = await response.json();
       setAssessments(data);
       setUserId(inputId);
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : "Failed to fetch data");
       setAssessments([]);
     } finally {
       setLoading(false);

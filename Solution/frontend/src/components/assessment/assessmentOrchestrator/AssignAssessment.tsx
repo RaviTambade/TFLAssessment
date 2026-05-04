@@ -1,10 +1,23 @@
 import { useEffect, useState } from "react";
 import { WEBAPI_DOTNET_URL } from "@/lib/utils";
 
+interface Student {
+  id: number;
+  fullName: string;
+}
+
+interface Test {
+  id: number;
+  title: string;
+  duration: number;
+  difficulty?: string;
+  description?: string;
+}
+
 export default function AssignAssessment() {
 
-  const [students, setStudents] = useState<any[]>([]);
-  const [tests, setTests] = useState<any[]>([]);
+  const [students, setStudents] = useState<Student[]>([]);
+  const [tests, setTests] = useState<Test[]>([]);
 
   const [status, setStatus] = useState("");
   const [searchStudent, setSearchStudent] = useState("");
@@ -35,7 +48,7 @@ export default function AssignAssessment() {
 
   const fetchStudents = async () => {
     try {
-      const res = await fetch("${WEBAPI_DOTNET_URL}/Assessment/students");
+      const res = await fetch(`${WEBAPI_DOTNET_URL}/Assessment/students`);
       const data = await res.json();
       setStudents(Array.isArray(data) ? data : []);
     } catch {
@@ -45,7 +58,7 @@ export default function AssignAssessment() {
 
   const fetchTests = async () => {
     try {
-      const res = await fetch("${WEBAPI_DOTNET_URL}/Assessment/tests");
+      const res = await fetch(`${WEBAPI_DOTNET_URL}/Assessment/tests`);
       const data = await res.json();
       setTests(Array.isArray(data) ? data : []);
     } catch {
@@ -99,8 +112,8 @@ export default function AssignAssessment() {
       alert("Assessment Assigned Successfully");
       reset();
 
-    } catch (err: any) {
-      alert(err.message);
+    } catch (err: unknown) {
+      alert(err instanceof Error ? err.message : "Failed to assign assessment");
     }
   };
 
