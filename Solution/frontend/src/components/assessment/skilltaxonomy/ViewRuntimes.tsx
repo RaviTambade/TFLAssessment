@@ -18,7 +18,7 @@ const ViewRuntimes = () => {
   const fetchRuntimes = () => {
     setLoading(true);
 
-    fetch(`${WEBAPI_JAVA_URL}/runtimes`)
+    fetch(`${WEBAPI_JAVA_URL}/technologies/runtimes`)
       .then((res) => res.json())
       .then((result) => {
         console.log("API DATA:", result);

@@ -2,13 +2,10 @@ import { useEffect, useState } from "react";
 
 import { Card, CardContent, CardHeader, CardTitle } from "../../ui/card";
 import { Bell, Users, Lock, TrendingUp, CheckCircle, AlertCircle, Shield, Settings } from "lucide-react";
-<<<<<<< HEAD
-import { WEBAPI_NODE_URL } from "@/lib/utils";
-=======
 import UserActivity from "./UserActivity";
 import { useNavigate } from "react-router-dom";
+import { WEBAPI_NODE_URL } from "@/lib/utils";
 
->>>>>>> 8b702a610507a57d0248010da9855f428d2334fb
 interface AdminNotification {
   id: number;
   title: string;

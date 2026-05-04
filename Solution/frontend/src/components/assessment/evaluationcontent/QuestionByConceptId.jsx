@@ -12,7 +12,7 @@ const QuestionByConceptId = ()=>{
     const fetchConcept = async () => {
         if(!conceptId || conceptId === '0') return;
         try{
-            const response = await fetch(`${WEBAPI_JAVA_URL}/concepts/${conceptId}/questions`,
+            const response = await fetch(`${WEBAPI_JAVA_URL}/questions/concepts/${conceptId}/questions`,
                 {
                     method: 'GET',
                 });
