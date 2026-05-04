@@ -3,212 +3,39 @@ import { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "../../ui/card";
 import { Bell, Users, Zap, TrendingUp, CheckCircle, AlertCircle, BookOpen, MessageSquare } from "lucide-react";
 import { WEBAPI_NODE_URL } from "@/lib/utils";
+import MentorNotification from "./entities/MentorNotification";
+import MentorshipActivity from "./entities/MentorshipActivity";
+import Mentee from "./entities/Mentee";
+import MenteeGrowth from "./entities/MenteeGrowth";
+import AllmentorNotifications from "./data/mentorNotifications.json";
+import AllmentorshipActivities from "./data/mentorshipActivities.json";
+import AllMenteeGrowth from "./data/menteeGrowths.json";
+import AllMentee from "./data/mentees.json";
 
-interface MentorNotification {
-  id: number;
-  title: string;
-  message: string;
-  type: "info" | "success" | "warning" | "error";
-  timestamp: string;
-  read: boolean;
-}
-
-interface Mentee {
-  id: number;
-  name: string;
-  email: string;
-  careerGoal: string;
-  joinDate: string;
-  progress: number;
-  lastMeetingDate: string;
-  status: "onTrack" | "needsSupport" | "exceeding" | "atRisk";
-}
-
-interface MentorshipActivity {
-  id: number;
-  menteeName: string;
-  activityType: "session" | "feedback" | "assignment" | "guidance";
-  description: string;
-  date: string;
-  completionStatus: "completed" | "pending" | "in-progress";
-}
-
-interface MenteeGrowth {
-  menteeName: string;
-  skillName: string;
-  improvementPercentage: number;
-  currentLevel: "beginner" | "intermediate" | "advanced";
-  recommendedFocus: string;
-}
 
 //function component for Mentor Dashboard - Transflower
 const DashboardMentor = () => {
-    //parts
-    // State for mentor user data
-    // Data members for mentee insights
-    // Helper functions for tracking progress
-    // Render functions for mentorship features
 
-    //data members
-   const[mentorName, setMentorName] = useState<string>("Ravi Tambade");
-   const[organization, setOrganization] = useState<string>("Transflower");
-   const[profilePicture, setProfilePicture] = useState<string>("https://avatars.githubusercontent.com/u/12345678?v=4");
+  //data members
+  const [mentorName, setMentorName] = useState<string>("Ravi Tambade");
+  const [organization, setOrganization] = useState<string>("Transflower");
+  const [profilePicture, setProfilePicture] = useState<string>("https://avatars.githubusercontent.com/u/12345678?v=4");
+ 
+  const mentorNotifications: MentorNotification[] = AllmentorNotifications as MentorNotification[];
 
-  // Mentor-specific Notifications
-  const mentorNotifications: MentorNotification[] = [
-    {
-      id: 1,
-      title: "Mentee Milestone Achieved",
-      message: "Priya Sharma completed her first full-stack project and is now ready for advanced training",
-      type: "success",
-      timestamp: "2 hours ago",
-      read: false,
-    },
-    {
-      id: 2,
-      title: "Support Needed",
-      message: "Arjun Patel is struggling with cloud architecture concepts. Schedule a mentoring session",
-      type: "warning",
-      timestamp: "1 day ago",
-      read: false,
-    },
-    {
-      id: 3,
-      title: "Career Milestone",
-      message: "Ananya Desai is interview-ready. Start preparing for employer matching process",
-      type: "info",
-      timestamp: "3 days ago",
-      read: true,
-    },
-    {
-      id: 4,
-      title: "Session Reminder",
-      message: "You have a mentorship session scheduled with 3 mentees this week",
-      type: "info",
-      timestamp: "5 days ago",
-      read: true,
-    },
-  ];
+  const mentees: Mentee[] = AllMentee as Mentee[];
+ 
+  const mentorshipActivities: MentorshipActivity[] = AllmentorshipActivities as MentorshipActivity[];
 
-  // Mentee Overview - Individual Development Tracking
-  const mentees: Mentee[] = [
-    {
-      id: 1,
-      name: "Priya Sharma",
-      email: "priya.sharma@transflower.in",
-      careerGoal: "Full-Stack Developer",
-      joinDate: "2026-01-15",
-      progress: 85,
-      lastMeetingDate: "2026-04-25",
-      status: "exceeding",
-    },
-    {
-      id: 2,
-      name: "Arjun Patel",
-      email: "arjun.patel@transflower.in",
-      careerGoal: "Cloud Architect",
-      joinDate: "2026-02-10",
-      progress: 55,
-      lastMeetingDate: "2026-04-20",
-      status: "needsSupport",
-    },
-    {
-      id: 3,
-      name: "Ananya Desai",
-      email: "ananya.desai@transflower.in",
-      careerGoal: "Backend Engineer",
-      joinDate: "2025-12-01",
-      progress: 92,
-      lastMeetingDate: "2026-04-22",
-      status: "exceeding",
-    },
-    {
-      id: 4,
-      name: "Rohit Kumar",
-      email: "rohit.kumar@transflower.in",
-      careerGoal: "DevOps Engineer",
-      joinDate: "2026-03-05",
-      progress: 70,
-      lastMeetingDate: "2026-04-15",
-      status: "onTrack",
-    },
-  ];
-
-  // Mentorship Activities
-  const mentorshipActivities: MentorshipActivity[] = [
-    {
-      id: 1,
-      menteeName: "Priya Sharma",
-      activityType: "session",
-      description: "1-on-1 Technical Mentoring: React Advanced Patterns Discussion",
-      date: "2026-04-25",
-      completionStatus: "completed",
-    },
-    {
-      id: 2,
-      menteeName: "Arjun Patel",
-      activityType: "feedback",
-      description: "Code Review & Feedback: AWS Lambda Implementation",
-      date: "2026-04-24",
-      completionStatus: "in-progress",
-    },
-    {
-      id: 3,
-      menteeName: "Ananya Desai",
-      activityType: "guidance",
-      description: "Career Development Guidance: Interview Preparation",
-      date: "2026-04-28",
-      completionStatus: "pending",
-    },
-    {
-      id: 4,
-      menteeName: "Rohit Kumar",
-      activityType: "assignment",
-      description: "Practical Assignment: Set up CI/CD Pipeline",
-      date: "2026-04-20",
-      completionStatus: "completed",
-    },
-  ];
-
-  // Mentee Growth Tracking
-  const menteeGrowth: MenteeGrowth[] = [
-    {
-      menteeName: "Priya Sharma",
-      skillName: "React Development",
-      improvementPercentage: 45,
-      currentLevel: "advanced",
-      recommendedFocus: "Performance optimization and testing",
-    },
-    {
-      menteeName: "Arjun Patel",
-      skillName: "Cloud Architecture",
-      improvementPercentage: 20,
-      currentLevel: "beginner",
-      recommendedFocus: "AWS fundamentals and hands-on practice",
-    },
-    {
-      menteeName: "Ananya Desai",
-      skillName: "Backend Development",
-      improvementPercentage: 50,
-      currentLevel: "advanced",
-      recommendedFocus: "System design and scalability",
-    },
-    {
-      menteeName: "Rohit Kumar",
-      skillName: "DevOps & Infrastructure",
-      improvementPercentage: 35,
-      currentLevel: "intermediate",
-      recommendedFocus: "Kubernetes and containerization",
-    },
-  ];
+  const menteeGrowth: MenteeGrowth[] = AllMenteeGrowth as MenteeGrowth[];
 
   useEffect(() => {
     const apiURL = `${WEBAPI_NODE_URL}/mentor/profile`;
-        fetch(apiURL).then((response) => response.json()).then((data) => {
-          setMentorName(data.name);
-          setOrganization(data.organization);
-          setProfilePicture(data.profilePicture);
-        });
+    fetch(apiURL).then((response) => response.json()).then((data) => {
+      setMentorName(data.name);
+      setOrganization(data.organization);
+      setProfilePicture(data.profilePicture);
+    });
 
 
   }, []);
@@ -290,15 +117,14 @@ const DashboardMentor = () => {
                 {mentorNotifications.map((notification) => (
                   <div
                     key={notification.id}
-                    className={`p-4 rounded-lg border-l-4 ${
-                      notification.type === "info"
+                    className={`p-4 rounded-lg border-l-4 ${notification.type === "info"
                         ? "bg-blue-50 border-blue-400"
                         : notification.type === "success"
-                        ? "bg-green-50 border-green-400"
-                        : notification.type === "warning"
-                        ? "bg-yellow-50 border-yellow-400"
-                        : "bg-red-50 border-red-400"
-                    }`}
+                          ? "bg-green-50 border-green-400"
+                          : notification.type === "warning"
+                            ? "bg-yellow-50 border-yellow-400"
+                            : "bg-red-50 border-red-400"
+                      }`}
                   >
                     <div className="flex items-start justify-between">
                       <div className="flex-1">
@@ -337,11 +163,10 @@ const DashboardMentor = () => {
                           <span>{activity.date}</span>
                         </div>
                       </div>
-                      <span className={`px-3 py-1 rounded-full text-xs font-medium ${
-                        activity.completionStatus === "completed" ? "bg-green-100 text-green-800" :
-                        activity.completionStatus === "in-progress" ? "bg-yellow-100 text-yellow-800" :
-                        "bg-gray-100 text-gray-800"
-                      }`}>
+                      <span className={`px-3 py-1 rounded-full text-xs font-medium ${activity.completionStatus === "completed" ? "bg-green-100 text-green-800" :
+                          activity.completionStatus === "in-progress" ? "bg-yellow-100 text-yellow-800" :
+                            "bg-gray-100 text-gray-800"
+                        }`}>
                         {activity.completionStatus}
                       </span>
                     </div>
@@ -379,11 +204,10 @@ const DashboardMentor = () => {
                     </div>
                     <div className="w-full bg-gray-200 rounded-full h-2 mb-2">
                       <div
-                        className={`h-2 rounded-full transition-all ${
-                          mentee.status === "exceeding" ? "bg-green-500" :
-                          mentee.status === "onTrack" ? "bg-blue-500" :
-                          mentee.status === "needsSupport" ? "bg-yellow-500" : "bg-red-500"
-                        }`}
+                        className={`h-2 rounded-full transition-all ${mentee.status === "exceeding" ? "bg-green-500" :
+                            mentee.status === "onTrack" ? "bg-blue-500" :
+                              mentee.status === "needsSupport" ? "bg-yellow-500" : "bg-red-500"
+                          }`}
                         style={{ width: `${mentee.progress}%` }}
                       />
                     </div>
@@ -411,11 +235,10 @@ const DashboardMentor = () => {
                         <p className="text-xs font-medium text-gray-600">{growth.menteeName}</p>
                         <p className="text-sm font-semibold text-gray-900">{growth.skillName}</p>
                       </div>
-                      <span className={`text-xs font-bold px-2 py-1 rounded ${
-                        growth.currentLevel === "advanced" ? "bg-green-100 text-green-800" :
-                        growth.currentLevel === "intermediate" ? "bg-blue-100 text-blue-800" :
-                        "bg-yellow-100 text-yellow-800"
-                      }`}>
+                      <span className={`text-xs font-bold px-2 py-1 rounded ${growth.currentLevel === "advanced" ? "bg-green-100 text-green-800" :
+                          growth.currentLevel === "intermediate" ? "bg-blue-100 text-blue-800" :
+                            "bg-yellow-100 text-yellow-800"
+                        }`}>
                         {growth.currentLevel}
                       </span>
                     </div>

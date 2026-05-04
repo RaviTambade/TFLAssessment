@@ -22,8 +22,8 @@ const AllAssessment = () => {
       setShowAssessments(true);
       setLoading(true);
       const response = await fetch(`${WEBAPI_DOTNET_URL}/Assessment/all`);
-      const data = await response.json();
-      setAssessments(data);
+      const allAssessments = await response.json();
+      setAssessments(allAssessments);
     } 
     catch (error) {
       console.log("Error:", error);

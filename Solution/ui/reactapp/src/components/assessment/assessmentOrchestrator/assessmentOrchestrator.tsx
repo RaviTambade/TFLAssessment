@@ -13,7 +13,7 @@ const actions = [
   },
   {
     label: "All Assessment",
-    path: "/models/delete-assessment",
+    path: "/models/all-assessment",
     roles: ["Admin"],
   },
   {

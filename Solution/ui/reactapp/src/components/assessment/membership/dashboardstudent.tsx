@@ -3,43 +3,18 @@ import { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "../../ui/card";
 import { Bell, Calendar, Award, TrendingUp, CheckCircle, AlertCircle, Clock } from "lucide-react";
 import { WEBAPI_NODE_URL } from "@/lib/utils";
+import Notification from "./entities/StudentNotifications";
+import ScheduledAssessment from "./entities/ScheduledAssessment";
+import Result from "./entities/StudentResults";
+import LearningCurveData from "./entities/LearningCurveData";
+import AllNotification from "./data/studentNotification.json";
+import AllScheduledAssessments from "./data/scheuledAssessment.json";
+import StudentResults from "./data/studentResult.json";
 
-interface Notification {
-  id: number;
-  title: string;
-  message: string;
-  type: "info" | "success" | "warning" | "error";
-  timestamp: string;
-  read: boolean;
-}
 
-interface ScheduledAssessment {
-  id: number;
-  name: string;
-  subject: string;
-  scheduledDate: string;
-  duration: number;
-  totalQuestions: number;
-  status: "upcoming" | "in-progress" | "completed";
-}
 
-interface Result {
-  id: number;
-  assessmentName: string;
-  subject: string;
-  score: number;
-  totalScore: number;
-  percentage: number;
-  completedDate: string;
-  status: "pass" | "fail";
-}
 
-interface LearningCurveData {
-  week: string;
-  score: number;
-  assessmentCount: number;
-  averageTime: number;
-}
+
 
 //function component for dashboard
 const DashboardStudent = () => {
@@ -57,115 +32,14 @@ const DashboardStudent = () => {
 
    const[profilePicture, setProfilePicture] = useState<string>("https://avatars.githubusercontent.com/u/12345678?v=4");
   // Hardcoded Notifications Data
-  const notifications: Notification[] = [
-    {
-      id: 1,
-      title: "Assessment Scheduled",
-      message: "Your Python Advanced Assessment is scheduled for May 5, 2026",
-      type: "info",
-      timestamp: "2 hours ago",
-      read: false,
-    },
-    {
-      id: 2,
-      title: "Score Released",
-      message: "Your JavaScript Fundamentals assessment has been graded. Score: 92%",
-      type: "success",
-      timestamp: "1 day ago",
-      read: false,
-    },
-    {
-      id: 3,
-      title: "Assignment Pending",
-      message: "You have 2 days left to complete your Data Structures assignment",
-      type: "warning",
-      timestamp: "3 days ago",
-      read: true,
-    },
-    {
-      id: 4,
-      title: "Performance Alert",
-      message: "Your performance in Web Development has declined. Consider reviewing fundamentals.",
-      type: "error",
-      timestamp: "5 days ago",
-      read: true,
-    },
-  ];
+  const notifications: Notification[] = AllNotification as Notification[];
 
   // Hardcoded Scheduled Assessments Data
-  const scheduledAssessments: ScheduledAssessment[] = [
-    {
-      id: 1,
-      name: "Python Advanced Concepts",
-      subject: "Python",
-      scheduledDate: "2026-05-05",
-      duration: 120,
-      totalQuestions: 50,
-      status: "upcoming",
-    },
-    {
-      id: 2,
-      name: "React Component Design",
-      subject: "React",
-      scheduledDate: "2026-05-10",
-      duration: 90,
-      totalQuestions: 40,
-      status: "upcoming",
-    },
-    {
-      id: 3,
-      name: "Database Design and Optimization",
-      subject: "SQL",
-      scheduledDate: "2026-05-15",
-      duration: 100,
-      totalQuestions: 45,
-      status: "upcoming",
-    },
-  ];
+  const scheduledAssessments: ScheduledAssessment[] = AllScheduledAssessments as ScheduledAssessment[]; 
+   
 
   // Hardcoded Results Data
-  const results: Result[] = [
-    {
-      id: 1,
-      assessmentName: "JavaScript Fundamentals",
-      subject: "JavaScript",
-      score: 92,
-      totalScore: 100,
-      percentage: 92,
-      completedDate: "2026-04-25",
-      status: "pass",
-    },
-    {
-      id: 2,
-      assessmentName: "HTML & CSS Basics",
-      subject: "Web Design",
-      score: 88,
-      totalScore: 100,
-      percentage: 88,
-      completedDate: "2026-04-20",
-      status: "pass",
-    },
-    {
-      id: 3,
-      assessmentName: "Node.js Intermediate",
-      subject: "Backend",
-      score: 76,
-      totalScore: 100,
-      percentage: 76,
-      completedDate: "2026-04-18",
-      status: "pass",
-    },
-    {
-      id: 4,
-      assessmentName: "Advanced CSS Grid",
-      subject: "Web Design",
-      score: 65,
-      totalScore: 100,
-      percentage: 65,
-      completedDate: "2026-04-15",
-      status: "fail",
-    },
-  ];
+  const results: Result[] = StudentResults as Result[];
 
   // Hardcoded Learning Curve Data
   const learningCurveData: LearningCurveData[] = [
