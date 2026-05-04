@@ -22,7 +22,7 @@ const QuestionsByConcept = () => {
 
     // ✅ Load all concepts
     useEffect(() => {
-        fetch(`${WEBAPI_JAVA_URL}/technologies/concepts`)
+        fetch(`${WEBAPI_JAVA_URL}/concepts`)
             .then((res) => res.json())
             .then((data) => setConcepts(data))
             .catch((err) => console.error(err));
@@ -34,7 +34,7 @@ const QuestionsByConcept = () => {
         setLoading(true);
         setQuestions([]);
 
-        fetch(`${WEBAPI_JAVA_URL}//concepts/${id}/questions`)
+        fetch(`${WEBAPI_JAVA_URL}/concepts/${id}/questions`)
             .then((res) => res.json())
             .then((data) => setQuestions(Array.isArray(data) ? data : []))
             .catch((err) => console.error(err))

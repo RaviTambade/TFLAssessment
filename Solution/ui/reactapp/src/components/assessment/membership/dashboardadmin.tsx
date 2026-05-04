@@ -10,7 +10,10 @@ import AdminNotification from "./entities/AdminNotification";
 import Member from "./entities/Member";
 import RolePermission from "./entities/RolePermission";
 import MemberActivity from "./entities/MemberActivity";
-
+import AdminNotifications from "./data/adminNotifications.json";
+import Members from "./data/members.json";
+import RolePermissions from "./data/rolePermissions.json";
+import MemberActivities from "./data/memberActivities.json";
 
 //function component for Admin Dashboard - Transflower Membership & Roles Management
 const DashboardAdmin = () => {
@@ -27,183 +30,16 @@ const DashboardAdmin = () => {
    const navigate=useNavigate();
 
   // Admin System Notifications
-  const adminNotifications: AdminNotification[] = [
-    {
-      id: 1,
-      title: "New Member Pending Approval",
-      message: "5 new members awaiting admin approval for Mentor and Student roles",
-      type: "info",
-      timestamp: "2 hours ago",
-      read: false,
-    },
-    {
-      id: 2,
-      title: "Suspicious Activity Detected",
-      message: "Multiple failed login attempts detected from 3 accounts. Review security alerts",
-      type: "warning",
-      timestamp: "1 day ago",
-      read: false,
-    },
-    {
-      id: 3,
-      title: "Role Permission Updated",
-      message: "SME role permissions successfully updated. 12 members affected",
-      type: "success",
-      timestamp: "3 days ago",
-      read: true,
-    },
-    {
-      id: 4,
-      title: "User Deactivation",
-      message: "3 inactive members (no login for 90 days) automatically deactivated",
-      type: "info",
-      timestamp: "5 days ago",
-      read: true,
-    },
-  ];
+  const adminNotifications: AdminNotification[] = AdminNotifications as AdminNotification[] ;
 
   // Member Directory - Organization Membership
-  const members: Member[] = [
-    {
-      id: 1,
-      name: "Ravi Tambade",
-      email: "ravi.tambade@transflower.in",
-      role: "admin",
-      status: "active",
-      joinDate: "2025-06-01",
-      lastLoginDate: "2026-05-01",
-      department: "Administration",
-    },
-    {
-      id: 2,
-      name: "Priya Sharma",
-      email: "priya.sharma@transflower.in",
-      role: "student",
-      status: "active",
-      joinDate: "2026-01-15",
-      lastLoginDate: "2026-04-30",
-      department: "Engineering",
-    },
-    {
-      id: 3,
-      name: "Arjun Patel",
-      email: "arjun.patel@transflower.in",
-      role: "mentor",
-      status: "active",
-      joinDate: "2025-11-20",
-      lastLoginDate: "2026-04-28",
-      department: "Mentorship",
-    },
-    {
-      id: 4,
-      name: "Ananya Desai",
-      email: "ananya.desai@transflower.in",
-      role: "sme",
-      status: "active",
-      joinDate: "2025-09-10",
-      lastLoginDate: "2026-04-25",
-      department: "Assessment",
-    },
-    {
-      id: 5,
-      name: "Rohit Kumar",
-      email: "rohit.kumar@transflower.in",
-      role: "employer",
-      status: "pending",
-      joinDate: "2026-04-28",
-      lastLoginDate: "2026-04-28",
-      department: "Recruiting",
-    },
-  ];
+  const members: Member[] =  Members as Member[] ;
 
   // Role Definitions and Permissions
-  const rolePermissions: RolePermission[] = [
-    {
-      id: 1,
-      roleName: "Admin",
-      memberCount: 1,
-      permissions: ["manage_users", "manage_roles", "view_analytics", "system_settings", "audit_logs", "manage_assessments"],
-      createdDate: "2025-06-01",
-      status: "active",
-      description: "Full system access with membership and role management",
-    },
-    {
-      id: 2,
-      roleName: "Mentor",
-      memberCount: 12,
-      permissions: ["view_mentees", "manage_mentorship", "view_progress", "provide_feedback"],
-      createdDate: "2025-08-15",
-      status: "active",
-      description: "Mentor program management and mentee guidance",
-    },
-    {
-      id: 3,
-      roleName: "Subject Matter Expert",
-      memberCount: 8,
-      permissions: ["create_assessments", "review_assessments", "analyze_results", "identify_gaps"],
-      createdDate: "2025-09-01",
-      status: "active",
-      description: "Assessment creation and evaluation responsibilities",
-    },
-    {
-      id: 4,
-      roleName: "Employer",
-      memberCount: 6,
-      permissions: ["view_candidates", "create_job_openings", "manage_recruitment", "interview_candidates"],
-      createdDate: "2025-10-05",
-      status: "active",
-      description: "Recruitment and hiring pipeline management",
-    },
-    {
-      id: 5,
-      roleName: "Student",
-      memberCount: 45,
-      permissions: ["take_assessments", "view_progress", "access_resources", "submit_assignments"],
-      createdDate: "2025-12-01",
-      status: "active",
-      description: "Student learning and assessment participation",
-    },
-  ];
+  const rolePermissions: RolePermission[] = RolePermissions as RolePermission[];
 
   // Member Activity Log
-  const memberActivities: MemberActivity[] = [
-    {
-      id: 1,
-      memberName: "Priya Sharma",
-      role: "Student",
-      activityType: "login",
-      description: "Logged in to assessment portal",
-      timestamp: "2 hours ago",
-      status: "completed",
-    },
-    {
-      id: 2,
-      memberName: "Arjun Patel",
-      role: "Mentor",
-      activityType: "profile_update",
-      description: "Updated profile information",
-      timestamp: "1 day ago",
-      status: "completed",
-    },
-    {
-      id: 3,
-      memberName: "Rohit Kumar",
-      role: "Employer",
-      activityType: "role_change",
-      description: "Role assignment pending approval",
-      timestamp: "2 days ago",
-      status: "pending",
-    },
-    {
-      id: 4,
-      memberName: "Ananya Desai",
-      role: "SME",
-      activityType: "permission_grant",
-      description: "New assessment creation permission granted",
-      timestamp: "3 days ago",
-      status: "completed",
-    },
-  ];
+  const memberActivities: MemberActivity[] = MemberActivities as MemberActivity[];
 
   useEffect(() => {
     const apiURL = `${WEBAPI_NODE_URL}/admin/profile`;
