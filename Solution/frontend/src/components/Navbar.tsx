@@ -8,6 +8,7 @@ import {
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
 import { CircleUser, Menu, X, ChevronDown } from "lucide-react";
+import { WEBAPI_NODE_URL } from "@/lib/utils"
 
 interface NavbarProps {
   isLoggedIn?: boolean;
@@ -26,8 +27,7 @@ const Navbar = ({ isLoggedIn }: NavbarProps) => {
       lastname: string;
     }
   useEffect(() => {
-    const BASE_URL: string = "http://localhost:3000";
-
+   
     const fetchProfileName = async () => {
       setLoading(true);
 
@@ -38,7 +38,7 @@ const Navbar = ({ isLoggedIn }: NavbarProps) => {
       const user = JSON.parse(currentUserDetails);
       try {
         const response = await fetch(
-          `${BASE_URL}/api/users/${user.userid}/personal`,
+          `${WEBAPI_NODE_URL}/users/${user.userid}/personal`,
         );
 
         if (!response.ok) {
@@ -81,7 +81,7 @@ const Navbar = ({ isLoggedIn }: NavbarProps) => {
   const handleUserLogLogout = async (userid: number) => {
     try {
       const res = await fetch(
-        `http://localhost:3000/api/useractivity/logout/${userid}`,
+        `${WEBAPI_NODE_URL}/useractivity/logout/${userid}`,
         {
           method: "PUT",
           headers: {
