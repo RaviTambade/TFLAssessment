@@ -5,45 +5,12 @@ import UserActivity from "./UserActivity";
 import { useNavigate } from "react-router-dom";
 import { WEBAPI_NODE_URL } from "@/lib/utils";
 
-interface AdminNotification {
-  id: number;
-  title: string;
-  message: string;
-  type: "info" | "success" | "warning" | "error";
-  timestamp: string;
-  read: boolean;
-}
 
-interface Member {
-  id: number;
-  name: string;
-  email: string;
-  role: "admin" | "mentor" | "sme" | "employer" | "student";
-  status: "active" | "inactive" | "suspended" | "pending";
-  joinDate: string;
-  lastLoginDate: string;
-  department: string;
-}
+import AdminNotification from "./entities/AdminNotification";
+import Member from "./entities/Member";
+import RolePermission from "./entities/RolePermission";
+import MemberActivity from "./entities/MemberActivity";
 
-interface RolePermission {
-  id: number;
-  roleName: string;
-  memberCount: number;
-  permissions: string[];
-  createdDate: string;
-  status: "active" | "inactive";
-  description: string;
-}
-
-interface MemberActivity {
-  id: number;
-  memberName: string;
-  role: string;
-  activityType: "login" | "profile_update" | "role_change" | "permission_grant" | "system_access";
-  description: string;
-  timestamp: string;
-  status: "completed" | "pending" | "failed";
-}
 
 //function component for Admin Dashboard - Transflower Membership & Roles Management
 const DashboardAdmin = () => {

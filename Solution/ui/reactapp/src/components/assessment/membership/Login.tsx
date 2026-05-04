@@ -19,28 +19,26 @@ import {
 import { Eye, EyeOff, Lock, User } from "lucide-react";
 // import getAllRoles, { Role } from "@/services/RolesManagement/GetRoles";
 
-    interface Role {
-      role_id: number;
-      role_name: string;
-      description: string;
-    }
+import Role from "./entities/Role";
+
+
 
 const LoginPage = () => {
+
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("9881735801");
+  const [password, setPassword] = useState("12345");
   const [roles, setRoles] = useState<Role[]>([]);
+   const [role, setRole] = useState("");
+
   const [loading, setLoading] = useState<boolean>(true);
-  const [role, setRole] = useState("");
   const [error, setError] = useState<string>("");
 
   const navigate = useNavigate();
 
-  useEffect(() => {
- 
 
-    const fetchRoles = async () => {
+  const fetchRoles = async () => {
       try {
         setLoading(true);
         const response = await fetch(`${WEBAPI_NODE_URL}/roles/getAllRoles`);
@@ -49,22 +47,19 @@ const LoginPage = () => {
         throw new Error("Failed to fetch roles");
       }
 
-      const data = await response.json();
-        setRoles(data.data);
+      const result = await response.json();
+        setRoles(result.data);
         setError("");
         
       } catch (err) {
-        console.error(err);
         setError("Failed to fetch roles");
       } finally {
         setLoading(false);
       }
-    };
+  };
 
-    fetchRoles();
-  }, []);
 
-  const handleLogin = async () => {
+  const validateUser = async () => {
     try {
       const res = await fetch(
         `${WEBAPI_NODE_URL}/auth/login`,
@@ -95,7 +90,7 @@ const LoginPage = () => {
     }
   };
 
-  const handleUserLogLogin = async (userid: number) => {
+  const handleUserActivityLogin = async (userid: number) => {
     try {
       const res = await fetch(
         `${WEBAPI_NODE_URL}/useractivity/login/${userid}`,
@@ -117,6 +112,7 @@ const LoginPage = () => {
       console.error(error);
     }
   };
+  
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -138,18 +134,24 @@ const LoginPage = () => {
     console.log("Login →", { username, role, rememberMe });
 
     try {
-      await handleLogin(); // wait for login complete
+      await validateUser(); // wait for login complete
 
       const user = JSON.parse(sessionStorage.getItem("current") || "{}");
 
       if (user?.userid) {
-        await handleUserLogLogin(user.userid);
+        await handleUserActivityLogin(user.userid);
         window.location.href = "/models/membership/dashboard";
       }
     } catch (error) {
       console.error("Submit Error:", error);
     }
   };
+
+
+  useEffect(() => { 
+    fetchRoles();
+  }, []);
+
 
   return (
     <div className="min-h-screen bg-[var(--gradient-hero)] flex items-center justify-center px-4 select-none">
@@ -175,7 +177,7 @@ const LoginPage = () => {
             <form onSubmit={handleSubmit} className="space-y-5">
               {/* Username */}
               <div className="space-y-2">
-                <Label htmlFor="username">Username</Label>
+                <Label htmlFor="username">Contact Number</Label>
 
                 <div className="relative">
                   <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
@@ -183,7 +185,7 @@ const LoginPage = () => {
                   <Input
                     id="username"
                     type="text"
-                    placeholder="Enter your username"
+                    placeholder="Enter your contactnumber"
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
                     autoComplete="username"
