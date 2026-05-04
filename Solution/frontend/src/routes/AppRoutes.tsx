@@ -7,7 +7,7 @@ import Assessment from "../components/assessment/ComponentButtons";
 import AssessmentOrchestrator from "@/components/assessment/assessmentOrchestrator/assessmentOrchestrator";
 import QuestionByStatus from "@/components/assessment/evaluationcontent/QuestionByStatus";
 import QuestionByType from "@/components/assessment/evaluationcontent/QuestionByType";
-import AddRuntime from "@/components/assessment/skilltaxonomy/AddRuntime";
+
 import UpdateQuestion from "@/components/assessment/evaluationcontent/UpdateQuestion";
 import QuestionsByConcept from "@/components/assessment/evaluationcontent/QuestionsByConcept";
 import QuestionPage from "@/components/assessment/evaluationcontent/QuestionsPage";
@@ -73,10 +73,9 @@ function AppRoutes() {
 
           <Route path="membership/membership-menu" element={<MembershipMenu />} />
 
-          
-          <Route path="skilltaxonomy/AddRuntime" element={<AddRuntime />} />
+ 
           <Route path="skilltaxonomy/ViewRuntimes" element={<ViewRuntimes />} />
-          <Route path="skilltaxonomy/AddRuntime" element={<AddRuntime />} />
+
           <Route path="skilltaxonomy/AddConcept" element={<AddConcept />} />
            <Route path="skilltaxonomy/ConceptByFramework" element={<ConceptByFramework />} />
           
