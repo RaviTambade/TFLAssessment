@@ -1,16 +1,8 @@
 import React, { useState, useMemo } from "react";
 import { WEBAPI_DOTNET_URL } from "@/lib/utils";
+import Assessment from "./entities/Assessment";
 
 
-type Assessment = {
-  id: number;
-  srNo: number;
-  assessmentTitle: string;
-  fullName: string;
-  difficultyLevel: string;
-  status: string;
-  isActive: boolean;
-};
 
 const AllAssessment = () => {
   const [assessments, setAssessments] = useState<Assessment[]>([]);
@@ -30,8 +22,8 @@ const AllAssessment = () => {
       setShowAssessments(true);
       setLoading(true);
       const response = await fetch(`${WEBAPI_DOTNET_URL}/Assessment/all`);
-      const data = await response.json();
-      setAssessments(data);
+      const allAssessments = await response.json();
+      setAssessments(allAssessments);
     } 
     catch (error) {
       console.log("Error:", error);

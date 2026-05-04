@@ -1,18 +1,9 @@
 import { useEffect, useState } from "react";
 import { WEBAPI_DOTNET_URL } from "@/lib/utils";
+import Student from "./entities/Student";
 
-interface Student {
-  id: number;
-  fullName: string;
-}
+import Test from "./entities/Test";
 
-interface Test {
-  id: number;
-  title: string;
-  duration: number;
-  difficulty?: string;
-  description?: string;
-}
 
 export default function AssignAssessment() {
 

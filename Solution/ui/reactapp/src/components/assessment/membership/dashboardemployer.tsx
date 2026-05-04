@@ -8,6 +8,9 @@ import JobOpening from "./entities/jobopening";
 import SkillRequirement from "./entities/SkillRequirement";
 
 import  openings from "./data/jobopenings.json";
+import  allCandidates from "./data/candidates.json";
+import  allSkillRequirements from "./data/skillrequirements.json";
+
 //function component for Employer Recruitment Dashboard - Transflower
 const DashboardEmployer = () => {
     //parts
@@ -58,87 +61,13 @@ const DashboardEmployer = () => {
   ];
 
   // Candidate Pipeline - Recruitment Tracking
-  const candidates: Candidate[] = [
-    {
-      id: 1,
-      name: "Priya Sharma",
-      email: "priya.sharma@transflower.in",
-      appliedPosition: "Full-Stack Developer",
-      skillsMatch: 92,
-      experienceLevel: "junior",
-      assessmentScore: 88,
-      interviewStatus: "scheduled",
-      applicationDate: "2026-03-15",
-    },
-    {
-      id: 2,
-      name: "Arjun Patel",
-      email: "arjun.patel@transflower.in",
-      appliedPosition: "Cloud Architect",
-      skillsMatch: 75,
-      experienceLevel: "mid-level",
-      assessmentScore: 72,
-      interviewStatus: "pending",
-      applicationDate: "2026-03-20",
-    },
-    {
-      id: 3,
-      name: "Ananya Desai",
-      email: "ananya.desai@transflower.in",
-      appliedPosition: "Backend Engineer",
-      skillsMatch: 95,
-      experienceLevel: "mid-level",
-      assessmentScore: 91,
-      interviewStatus: "completed",
-      applicationDate: "2026-02-28",
-    },
-    {
-      id: 4,
-      name: "Rohit Kumar",
-      email: "rohit.kumar@transflower.in",
-      appliedPosition: "DevOps Engineer",
-      skillsMatch: 88,
-      experienceLevel: "junior",
-      assessmentScore: 85,
-      interviewStatus: "completed",
-      applicationDate: "2026-03-10",
-    },
-  ];
+  const candidates: Candidate[] =allCandidates as Candidate[];
 
   // Job Openings and Hiring Pipeline
   const jobOpenings: JobOpening[] =openings as JobOpening[];
 
   // Skill Requirements and Coverage
-  const skillRequirements: SkillRequirement[] = [
-    {
-      skill: "React Development",
-      requiredLevel: "advanced",
-      candidatesCovered: 3,
-      totalRequired: 5,
-      fillPercentage: 60,
-    },
-    {
-      skill: "Backend Development (Java/Python)",
-      requiredLevel: "advanced",
-      candidatesCovered: 4,
-      totalRequired: 4,
-      fillPercentage: 100,
-    },
-    {
-      skill: "Cloud Architecture (AWS)",
-      requiredLevel: "intermediate",
-      candidatesCovered: 2,
-      totalRequired: 3,
-      fillPercentage: 67,
-    },
-    {
-      skill: "DevOps & Infrastructure",
-      requiredLevel: "advanced",
-      candidatesCovered: 1,
-      totalRequired: 3,
-      fillPercentage: 33,
-    },
-  ];
+  const skillRequirements: SkillRequirement[] =allSkillRequirements as SkillRequirement[];
 
   useEffect(() => {
     const apiURL = `${WEBAPI_NODE_URL}/employer/profile`;

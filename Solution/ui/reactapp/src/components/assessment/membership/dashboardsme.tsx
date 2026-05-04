@@ -7,6 +7,10 @@ import AssessmentMetrics from "./entities/AssessmentMetrics";
 import CandidatePerformance from "./entities/CandidatePerformance";
 import SkillGapAnalysis from "./entities/SkillGapAnalysis";
 import SMENotification from "./entities/SMENotification";
+import SmeNotifications from "./data/smeNotifications.json";
+import CandidatePerformances from "./data/candidatePerformance.json";
+import AssessmentMetric from "./data/assessmentMetrics.json";
+import SkillGapAnalyse from "./data/SkillGapAnalysis.json";
 
 //function component for SME Dashboard
 const DashboardSME = () => {
@@ -22,146 +26,16 @@ const DashboardSME = () => {
    const[profilePicture, setProfilePicture] = useState<string>("https://avatars.githubusercontent.com/u/12345678?v=4");
 
   // SME-specific Notifications
-  const smeNotifications: SMENotification[] = [
-    {
-      id: 1,
-      title: "Low Performance Alert",
-      message: "5 candidates scored below 60% in Python Advanced Assessment",
-      type: "warning",
-      timestamp: "2 hours ago",
-      read: false,
-    },
-    {
-      id: 2,
-      title: "Assessment Completion",
-      message: "JavaScript Fundamentals assessment completed by 12/15 candidates",
-      type: "success",
-      timestamp: "1 day ago",
-      read: false,
-    },
-    {
-      id: 3,
-      title: "Skill Gap Identified",
-      message: "Database Design skills show significant gaps across cohort",
-      type: "error",
-      timestamp: "3 days ago",
-      read: true,
-    },
-    {
-      id: 4,
-      title: "Assessment Review Pending",
-      message: "3 assessments awaiting review and validation",
-      type: "info",
-      timestamp: "5 days ago",
-      read: true,
-    },
-  ];
+  const smeNotifications: SMENotification[] = SmeNotifications as SMENotification[];
 
   // Candidate Performance Overview
-  const candidatePerformance: CandidatePerformance[] = [
-    {
-      id: 1,
-      candidateName: "John Smith",
-      email: "john.smith@company.com",
-      skillLevel: "Advanced",
-      assessmentsTaken: 8,
-      averageScore: 92,
-      lastAssessmentDate: "2026-04-25",
-      status: "excellent",
-    },
-    {
-      id: 2,
-      candidateName: "Sarah Johnson",
-      email: "sarah.j@company.com",
-      skillLevel: "Intermediate",
-      assessmentsTaken: 6,
-      averageScore: 78,
-      lastAssessmentDate: "2026-04-22",
-      status: "good",
-    },
-    {
-      id: 3,
-      candidateName: "Mike Chen",
-      email: "mike.chen@company.com",
-      skillLevel: "Beginner",
-      assessmentsTaken: 4,
-      averageScore: 65,
-      lastAssessmentDate: "2026-04-20",
-      status: "average",
-    },
-    {
-      id: 4,
-      candidateName: "Emma Davis",
-      email: "emma.d@company.com",
-      skillLevel: "Intermediate",
-      assessmentsTaken: 5,
-      averageScore: 58,
-      lastAssessmentDate: "2026-04-18",
-      status: "needsImprovement",
-    },
-  ];
+  const candidatePerformance: CandidatePerformance[] =CandidatePerformances as CandidatePerformance[] ;
 
   // Assessment Metrics
-  const assessmentMetrics: AssessmentMetrics[] = [
-    {
-      id: 1,
-      assessmentName: "JavaScript Fundamentals",
-      subject: "JavaScript",
-      totalCandidates: 15,
-      averageScore: 82.5,
-      passRate: 86.7,
-      difficultyLevel: "beginner",
-      createdDate: "2026-04-01",
-    },
-    {
-      id: 2,
-      assessmentName: "React Advanced Patterns",
-      subject: "React",
-      totalCandidates: 12,
-      averageScore: 76.3,
-      passRate: 75.0,
-      difficultyLevel: "advanced",
-      createdDate: "2026-03-15",
-    },
-    {
-      id: 3,
-      assessmentName: "Database Design Optimization",
-      subject: "SQL",
-      totalCandidates: 10,
-      averageScore: 68.5,
-      passRate: 60.0,
-      difficultyLevel: "advanced",
-      createdDate: "2026-03-01",
-    },
-  ];
+  const assessmentMetrics: AssessmentMetrics[] = AssessmentMetric as AssessmentMetrics[];
 
   // Skill Gap Analysis
-  const skillGapAnalysis: SkillGapAnalysis[] = [
-    {
-      skill: "Advanced JavaScript Patterns",
-      candidatesLacking: 5,
-      averagePerformance: 62,
-      priority: "high",
-    },
-    {
-      skill: "Database Optimization",
-      candidatesLacking: 7,
-      averagePerformance: 58,
-      priority: "high",
-    },
-    {
-      skill: "System Design",
-      candidatesLacking: 4,
-      averagePerformance: 70,
-      priority: "medium",
-    },
-    {
-      skill: "Cloud Architecture",
-      candidatesLacking: 6,
-      averagePerformance: 65,
-      priority: "medium",
-    },
-  ];
+  const skillGapAnalysis: SkillGapAnalysis[] = SkillGapAnalyse as SkillGapAnalysis[] ;
 
   useEffect(() => {
     const apiURL = `${WEBAPI_NODE_URL}/sme/profile`;

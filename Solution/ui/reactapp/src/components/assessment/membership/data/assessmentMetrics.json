@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "assessmentName": "JavaScript Fundamentals",
+    "subject": "JavaScript",
+    "totalCandidates": 15,
+    "averageScore": 82.5,
+    "passRate": 86.7,
+    "difficultyLevel": "beginner",
+    "createdDate": "2026-04-01"
+  },
+  {
+    "id": 2,
+    "assessmentName": "React Advanced Patterns",
+    "subject": "React",
+    "totalCandidates": 12,
+    "averageScore": 76.3,
+    "passRate": 75.0,
+    "difficultyLevel": "advanced",
+    "createdDate": "2026-03-15"
+  },
+  {
+    "id": 3,
+    "assessmentName": "Database Design Optimization",
+    "subject": "SQL",
+    "totalCandidates": 10,
+    "averageScore": 68.5,
+    "passRate": 60.0,
+    "difficultyLevel": "advanced",
+    "createdDate": "2026-03-01"
+  }
+]
