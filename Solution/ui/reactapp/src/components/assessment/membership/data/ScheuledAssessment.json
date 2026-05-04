@@ -1,0 +1,29 @@
+[
+  {
+    "id": 1,
+    "name": "Python Advanced Concepts",
+    "subject": "Python",
+    "scheduledDate": "2026-05-05",
+    "duration": 120,
+    "totalQuestions": 50,
+    "status": "upcoming"
+  },
+  {
+    "id": 2,
+    "name": "React Component Design",
+    "subject": "React",
+    "scheduledDate": "2026-05-10",
+    "duration": 90,
+    "totalQuestions": 40,
+    "status": "upcoming"
+  },
+  {
+    "id": 3,
+    "name": "Database Design and Optimization",
+    "subject": "SQL",
+    "scheduledDate": "2026-05-15",
+    "duration": 100,
+    "totalQuestions": 45,
+    "status": "upcoming"
+  }
+];
