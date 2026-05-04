@@ -1,17 +1,17 @@
 [
-    {
-        "id": 1,
-        "name": "Ravi",
-        "email": "ravi@example.com"
-    },
-    {
-        "id": 2,
-        "name": "Sita",
-        "email": "sita@example.com"
-    },
-    {
-        "id": 3,
-        "name": "Gita",
-        "email": "gita@example.com"
-    }
+  {
+    "id": 1,
+    "name": "Ravi",
+    "email": "ravi@example.com"
+  },
+  {
+    "id": 3,
+    "name": "Gita",
+    "email": "gita@example.com"
+  },
+  {
+    "id": 3,
+    "name": "Ravi",
+    "email": "ravi@example.com"
+  }
 ]
