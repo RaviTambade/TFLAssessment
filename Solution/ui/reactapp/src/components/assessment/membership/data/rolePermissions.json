@@ -1,0 +1,74 @@
+[
+  {
+    "id": 1,
+    "roleName": "Admin",
+    "memberCount": 1,
+    "permissions": [
+      "manage_users",
+      "manage_roles",
+      "view_analytics",
+      "system_settings",
+      "audit_logs",
+      "manage_assessments"
+    ],
+    "createdDate": "2025-06-01",
+    "status": "active",
+    "description": "Full system access with membership and role management"
+  },
+  {
+    "id": 2,
+    "roleName": "Mentor",
+    "memberCount": 12,
+    "permissions": [
+      "view_mentees",
+      "manage_mentorship",
+      "view_progress",
+      "provide_feedback"
+    ],
+    "createdDate": "2025-08-15",
+    "status": "active",
+    "description": "Mentor program management and mentee guidance"
+  },
+  {
+    "id": 3,
+    "roleName": "Subject Matter Expert",
+    "memberCount": 8,
+    "permissions": [
+      "create_assessments",
+      "review_assessments",
+      "analyze_results",
+      "identify_gaps"
+    ],
+    "createdDate": "2025-09-01",
+    "status": "active",
+    "description": "Assessment creation and evaluation responsibilities"
+  },
+  {
+    "id": 4,
+    "roleName": "Employer",
+    "memberCount": 6,
+    "permissions": [
+      "view_candidates",
+      "create_job_openings",
+      "manage_recruitment",
+      "interview_candidates"
+    ],
+    "createdDate": "2025-10-05",
+    "status": "active",
+    "description": "Recruitment and hiring pipeline management"
+  },
+  {
+    "id": 5,
+    "roleName": "Student",
+    "memberCount": 45,
+    "permissions": [
+      "take_assessments",
+      "view_progress",
+      "access_resources",
+      "submit_assignments"
+    ],
+    "createdDate": "2025-12-01",
+    "status": "active",
+    "description": "Student learning and assessment participation"
+  }
+]
