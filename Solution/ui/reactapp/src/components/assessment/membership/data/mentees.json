@@ -1,0 +1,42 @@
+[
+  {
+    "id": 1,
+    "name": "Priya Sharma",
+    "email": "priya.sharma@transflower.in",
+    "careerGoal": "Full-Stack Developer",
+    "joinDate": "2026-01-15",
+    "progress": 85,
+    "lastMeetingDate": "2026-04-25",
+    "status": "exceeding"
+  },
+  {
+    "id": 2,
+    "name": "Arjun Patel",
+    "email": "arjun.patel@transflower.in",
+    "careerGoal": "Cloud Architect",
+    "joinDate": "2026-02-10",
+    "progress": 55,
+    "lastMeetingDate": "2026-04-20",
+    "status": "needsSupport"
+  },
+  {
+    "id": 3,
+    "name": "Ananya Desai",
+    "email": "ananya.desai@transflower.in",
+    "careerGoal": "Backend Engineer",
+    "joinDate": "2025-12-01",
+    "progress": 92,
+    "lastMeetingDate": "2026-04-22",
+    "status": "exceeding"
+  },
+  {
+    "id": 4,
+    "name": "Rohit Kumar",
+    "email": "rohit.kumar@transflower.in",
+    "careerGoal": "DevOps Engineer",
+    "joinDate": "2026-03-05",
+    "progress": 70,
+    "lastMeetingDate": "2026-04-15",
+    "status": "onTrack"
+  }
+]
