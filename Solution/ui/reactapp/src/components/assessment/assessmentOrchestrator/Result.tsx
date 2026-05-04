@@ -90,16 +90,8 @@ import { useNavigate } from "react-router-dom";
 import { CheckCircle, ArrowLeft } from "lucide-react";
 import { WEBAPI_DOTNET_URL } from "../../../lib/utils";
 
+import ResultData from "./entities/ResultData";
 
-interface ResultData {
-  testId: number;
-  testTitle: string;
-  studentId: number;
-  correctAnswers: number;
-  wrongAnswers: number;
-  totalQuestions: number;
-  scorePercentage: number;
-}
 
 const Result: React.FC = () => {
   const navigate = useNavigate();
