@@ -1,16 +1,8 @@
 import React, { useState, useMemo } from "react";
 import { WEBAPI_DOTNET_URL } from "@/lib/utils";
+import Assessment from "./entities/Assessment";
 
 
-type Assessment = {
-  id: number;
-  srNo: number;
-  assessmentTitle: string;
-  fullName: string;
-  difficultyLevel: string;
-  status: string;
-  isActive: boolean;
-};
 
 const AllAssessment = () => {
   const [assessments, setAssessments] = useState<Assessment[]>([]);

@@ -29,7 +29,7 @@ const actions = [
   {
     label: "Applying Assessment",
     path: "/models/apply-assessment",
-    roles: ["tudent"],
+    roles: ["Student"],
   },
 ];
 
