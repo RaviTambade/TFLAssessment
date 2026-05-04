@@ -2,7 +2,7 @@ import {useState,useEffect} from 'react';
 import { Button } from "../../ui/button";
 
 
-import {  WEBAPI_DOTNET_URL, WEBAPI_NODE_URL ,WEBAPI_JAVA_URL} from "@/lib/utils";
+import {  WEBAPI_JAVA_URL} from "@/lib/utils";
 const QuestionByConceptId = ()=>{
 
   
