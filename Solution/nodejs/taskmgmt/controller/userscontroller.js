@@ -1,4 +1,3 @@
-
 var users = [
     { id: 1, name: "Ravi", email: "ravi@example.com" },
     { id: 2, name: "Sita", email: "sita@example.com" },
@@ -7,10 +6,6 @@ var users = [
 
 
 class UsersController {
-
-    // no dependency injection for simplicity,
-    // in real application we would inject a service or repository 
-    // to handle data operations
     constructor() {
         
     }

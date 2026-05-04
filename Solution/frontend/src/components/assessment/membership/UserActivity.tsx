@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { Card, CardContent } from "../../ui/card";
 import Footer from "../../Footer";
+import { WEBAPI_NODE_URL } from "@/lib/utils";
 
 // Types
 type ApiActiveUser = {
@@ -17,7 +18,7 @@ type SessionRow = {
   status: string;
 };
 
-const API_BASE_3000 = "http://localhost:3000/api/useractivity";
+const API_BASE_3000 = `${WEBAPI_NODE_URL}/useractivity`;
 
 const UserActivity = () => {
   // Stats + Active Users

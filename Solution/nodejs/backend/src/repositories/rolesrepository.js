@@ -35,6 +35,11 @@ class RolesRepository {
       callback(null, userRole);
     });
   }
+
+  getUserRoleIds(userId, callback) {
+    const query = `SELECT role_id FROM user_roles WHERE user_id = ?`;
+    this.connection.query(query, [userId], callback);
+  }
   unAssignRole(userId, roleId, callback) {
     const deleteSql =
       "DELETE FROM user_roles WHERE user_id = ? AND role_id = ?";

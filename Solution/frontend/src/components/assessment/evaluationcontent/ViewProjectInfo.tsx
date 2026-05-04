@@ -1,9 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { Card } from "../../ui/card";
 import { Button } from "../../ui/button";
+
 import { ArrowRight } from "lucide-react";
 import { useScrollAnimation } from "../../../hooks/use-scroll-animation";
-import { WEBAPI_URL } from "@/lib/utils";
+
+import { WEBAPI_JAVA_URL } from "@/lib/utils";
+
+// import { WEBAPI_URL } from "@/lib/utils";
+
 interface Project {
   projectId: number;
   projectName: string;
@@ -12,7 +17,11 @@ interface Project {
   status: string;
 }
 
+// const WEBAPI_URL = "http://localhost:8080/api";
+
 const ViewProjectInfo: React.FC = () => {
+//  const WEBAPI_URL = "http://localhost:8080/api";
+ 
   const { ref, isVisible } = useScrollAnimation();
 
   const [projects, setProjects] = useState<Project[]>([]);
@@ -21,7 +30,7 @@ const ViewProjectInfo: React.FC = () => {
 
   // FETCH ALL PROJECTS
   useEffect(() => {
-    fetch( `${WEBAPI_URL}/projects`)
+    fetch( `${WEBAPI_JAVA_URL}/projects`)
       .then((res) => {
         if (!res.ok) {
           throw new Error("Failed to fetch projects");
@@ -40,7 +49,7 @@ const ViewProjectInfo: React.FC = () => {
 
   // OPTIONAL: FETCH SINGLE PROJECT (FROM API)
   const handleView = (id: number) => {
-    fetch(`${WEBAPI_URL}/projects/${id}`)
+    fetch(`${WEBAPI_JAVA_URL}/projects/${id}`)
       .then((res) => {
         if (!res.ok) {
           return res.text().then((text) => {

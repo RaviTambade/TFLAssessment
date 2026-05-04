@@ -35,7 +35,7 @@ public class ProjectController {
         return service.getAllProjects();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("~/{id}")
     public Project getProjectById(@PathVariable("id") long project_id) {
         return service.getProjectById(project_id);
     }

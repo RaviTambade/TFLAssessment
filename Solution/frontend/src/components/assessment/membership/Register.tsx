@@ -6,6 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "../../ui/card"
 import { Input } from "../../ui/input"
 import { Label } from "../../ui/label"
 import { Separator } from "../../ui/separator"
+import { WEBAPI_NODE_URL } from "@/lib/utils"
 
 const RegisterPage = () => {
   const navigate = useNavigate()
@@ -27,7 +28,7 @@ const RegisterPage = () => {
       password: generatedPassword,
     }
 
-    const res = await fetch("http://localhost:3000/api/auth/register", {
+    const res = await fetch(`${WEBAPI_NODE_URL}/auth/register`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -45,7 +46,7 @@ const RegisterPage = () => {
   }
 
   const handlePassword = async () => {
-    const res = await fetch("http://localhost:5121/api/auth/send-password", {
+    const res = await fetch(`${WEBAPI_NODE_URL}/auth/send-password`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

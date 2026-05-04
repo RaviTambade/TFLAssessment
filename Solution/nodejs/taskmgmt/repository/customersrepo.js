@@ -17,7 +17,8 @@ class CustomersRepo {
         } else {
             callback(new Error("Customer not found"), null);
         }
-    
+        
+    }
     insertCustomer(customer, callback) {
         let customers = JSON.parse(fs.readFileSync(customersFilePath, 'utf8'));
         customer.id = customers.length + 1;
@@ -25,7 +26,7 @@ class CustomersRepo {
         fs.writeFileSync(customersFilePath, JSON.stringify(customers, null, 2));
         callback(null, customer);
     }
-
+    
     updateCustomer(id, updatedCustomer, callback) {
         let customers = JSON.parse(fs.readFileSync(customersFilePath, 'utf8'));
         const index = customers.findIndex(c => c.id === id);
@@ -37,6 +38,7 @@ class CustomersRepo {
             callback(new Error("Customer not found"), null);
         }
     }
+
 
     deleteCustomer(id, callback) {
         let customers = JSON.parse(fs.readFileSync(customersFilePath, 'utf8'));
@@ -50,6 +52,7 @@ class CustomersRepo {
         }
     }
     }
-}
+
+
 
 module.exports = CustomersRepo;

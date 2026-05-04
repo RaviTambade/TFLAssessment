@@ -1,6 +1,8 @@
 //working...
 
 import { useEffect, useMemo, useState } from "react";
+import {  WEBAPI_DOTNET_URL, WEBAPI_NODE_URL ,WEBAPI_JAVA_URL} from "@/lib/utils";
+
 
 type Question = {
   questionId: number;
@@ -11,9 +13,10 @@ type Question = {
 };
 
 const fetchQuestionsByType = async (type: string) => {
-  const res = await fetch(`http://localhost:8080/api/questions?type=${type}`);
+  const res = await fetch(`${WEBAPI_JAVA_URL}/questions?type=${type}`);
   if (!res.ok) throw new Error('Failed to fetch');
-  return res.json();
+  const data = await res.json();
+  return Array.isArray(data) ? data : data.content || [];
 };
 
 const QUESTION_TYPES = [
@@ -131,7 +134,7 @@ const QuestionByType = () => {
         {questions.length > 0 && (
           <div className="group rounded-xl border border-border bg-card p-5 shadow-sm">
             <h2 className="text-lg font-semibold text-foreground mb-4">
-              {selectedType.replaceAll("_", " ")} Questions
+              {selectedType.split("_").join(" ")} Questions
             </h2>
 
             <ul className="space-y-3">

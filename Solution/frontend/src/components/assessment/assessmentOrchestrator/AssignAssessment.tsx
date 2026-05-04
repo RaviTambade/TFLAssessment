@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { WEBAPI_DOTNET_URL } from "@/lib/utils";
 
 export default function AssignAssessment() {
 
@@ -83,7 +84,7 @@ export default function AssignAssessment() {
       };
 
       const res = await fetch(
-        "http://localhost:5201/api/Assessment/assigned",
+        `${WEBAPI_DOTNET_URL}/Assessment/assigned`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
