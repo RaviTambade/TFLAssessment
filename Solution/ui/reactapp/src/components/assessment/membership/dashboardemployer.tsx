@@ -4,12 +4,13 @@ import { Bell, Users, Briefcase, TrendingUp, CheckCircle, AlertCircle, Calendar,
 import { WEBAPI_NODE_URL } from "@/lib/utils";
 import RecruiterNotification from "./entities/RecruiterNotification";
 import Candidate from "./entities/Candidate";
-import JobOpening from "./entities/JobOpening";
+import JobOpening from "./entities/jobopening";
 import SkillRequirement from "./entities/SkillRequirement";
 
 import  openings from "./data/jobopenings.json";
 import  allCandidates from "./data/candidates.json";
 import  allSkillRequirements from "./data/skillrequirements.json";
+import  RecruiterNotifications from "./data/recruiterNotifications.json";
 
 //function component for Employer Recruitment Dashboard - Transflower
 const DashboardEmployer = () => {
@@ -25,40 +26,7 @@ const DashboardEmployer = () => {
    const[profilePicture, setProfilePicture] = useState<string>("https://avatars.githubusercontent.com/u/12345678?v=4");
 
   // Recruiter Notifications
-  const recruiterNotifications: RecruiterNotification[] = [
-    {
-      id: 1,
-      title: "Top Candidate Available",
-      message: "Priya Sharma (Full-Stack Developer) completed all assessments and is ready for interviews",
-      type: "success",
-      timestamp: "2 hours ago",
-      read: false,
-    },
-    {
-      id: 2,
-      title: "Skill Gap Alert",
-      message: "Limited candidates available with advanced DevOps expertise. Consider extending deadline",
-      type: "warning",
-      timestamp: "1 day ago",
-      read: false,
-    },
-    {
-      id: 3,
-      title: "Interview Scheduled",
-      message: "Ananya Desai scheduled for Backend Engineer position interview on May 5, 2026",
-      type: "info",
-      timestamp: "3 days ago",
-      read: true,
-    },
-    {
-      id: 4,
-      title: "Offer Extended",
-      message: "Rohit Kumar accepted offer for DevOps Engineer position. Onboarding to begin next week",
-      type: "success",
-      timestamp: "5 days ago",
-      read: true,
-    },
-  ];
+  const recruiterNotifications: RecruiterNotification[] = RecruiterNotifications as RecruiterNotification[];
 
   // Candidate Pipeline - Recruitment Tracking
   const candidates: Candidate[] =allCandidates as Candidate[];
