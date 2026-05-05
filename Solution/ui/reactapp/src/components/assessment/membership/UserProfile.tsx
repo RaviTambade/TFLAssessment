@@ -332,19 +332,16 @@ const UserProfile = () => {
                   <p>Loading...</p>
                 ) : (
                   <>
-                    <Input value={personalData?.first_name || ""} readOnly />
-                    <Input value={personalData?.last_name || ""} readOnly />
-                    <Input value={personalData?.email || ""} readOnly />
-                    <Input value={personalData?.contact || ""} readOnly />
+                  
+                    <p><b>First Name:</b> {personalData?.first_name || ""}</p>
+                    <p><b>Last Name:</b> {personalData?.last_name || ""}</p>
+                    <p><b>Email:</b> {personalData?.email || ""}</p>
+                    <p><b>Contact:</b> {personalData?.contact || ""}</p>
 
                     {/* ✅ DOB FIXED */}
-                    <Input
-                      type="date"
-                      value={personalData?.date_of_birth || ""}
-                      readOnly
-                    />
+                    <p><b>Date of Birth:</b> {personalData?.date_of_birth || ""}</p>
 
-                    <Input value={personalData?.address || ""} readOnly />
+                    <p><b>Address:</b> {personalData?.address || ""}</p>
                   </>
                 )}
               </div>
@@ -354,17 +351,14 @@ const UserProfile = () => {
             {activeTab === "professional" && (
               <div className="space-y-4">
                 <h2 className="text-xl font-bold">Professional Information</h2>
-
-                <Input value={professionalData?.company_name} readOnly />
-                <Input value={professionalData?.job_title} readOnly />
-                <Input value={professionalData?.employment_type} readOnly />
-                <Input
-                  type="number"
-                  value={professionalData?.experience_years}
-                  readOnly
-                />
-                 <Input value={professionalData?.location} readOnly />
-                 <Input value={professionalData?.skills} readOnly />
+                 
+                <p><b>Company Name: </b>{professionalData?.company_name} </p>
+                <p><b>Job Title:</b> {professionalData?.job_title} </p>
+               <p><b>Employment Type:</b> {professionalData?.employment_type} </p>
+                <p><b>Experience:</b> {professionalData?.experience_years} years </p>
+               
+                 <p><b>Location: </b>{professionalData?.location} </p>
+                 <p><b>Skills: </b>{professionalData?.skills} </p>
                 {/* <Input value={professionalData.salary} readOnly /> */}
 
                 {/* <div className="flex gap-2 flex-wrap">
@@ -382,21 +376,14 @@ const UserProfile = () => {
               <div className="space-y-4">
                 <h2 className="text-xl font-bold">Academic Information</h2>
 
-                <Input value={academicData?.stream_name} readOnly />
-                <Input value={academicData?.specialization} readOnly />
-                <Input value={academicData?.enrollment_year} readOnly />
-                <Input
-                  type="number"
-                  value={academicData?.passing_year}
-                  readOnly
-                />
-                <Input
-                  type="number"
-                  value={academicData?.percentage}
-                  readOnly
-                />
+                <p><b>Stream Name:</b>{academicData?.stream_name}</p> 
+                <p><b>Specialization:</b> {academicData?.specialization} </p>
+                <p><b>Enrollment Year:</b>{academicData?.enrollment_year} </p>
+                <p><b>Passing Year:</b> {academicData?.passing_year} </p>
+                <p><b>Percentage:</b> {academicData?.percentage} </p> 
+                <p><b>College Name:</b> {academicData?.college_name} </p>
 
-                  <Input value={academicData?.college_name} readOnly /> 
+                  
 
                   
               </div>
