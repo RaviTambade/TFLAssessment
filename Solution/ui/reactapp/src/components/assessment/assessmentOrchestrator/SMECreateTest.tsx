@@ -6,6 +6,7 @@ import { Checkbox } from "../../ui/checkbox";
 import { RadioGroup, RadioGroupItem } from "../../ui/radio-group";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../../ui/card";
 import { WEBAPI_DOTNET_URL } from "@/lib/utils";
+import availableQuestionsFromFile from "./data/availablequestions.json";
 type Concept = {
   id: number,
   name: string;
@@ -17,6 +18,8 @@ type Question = {
   type: string;
   difficulty: "BEGINNER" | "INTERMEDIATE" | "ADVANCED";
   conceptId: number;
+  options?: string[];
+  correctIndex?: number;
 }
 
 
@@ -29,6 +32,10 @@ const SMECreateTest = () => {
   const [selectedQuestions, setSelectedQuestions] = useState<number[]>([]);
   const [showQuestionList, setShowQuestionList] = useState(false);
   const [selectedConcept, setSelectedConcept] = useState<Concept | null>(null);
+
+  // Default hardcoded MCQs (5 questions, each with 4 options)
+  // Load default MCQs from local JSON file
+  const defaultMCQs: Question[] = availableQuestionsFromFile as Question[];
 
   // State for API data
   const [concepts, setConcepts] = useState<Concept[]>([]);
@@ -96,15 +103,18 @@ const SMECreateTest = () => {
     setSelectedQuestions((prev) => prev.filter((id) => id !== questionId));
   };
 
-  const selectedQuestionsData = availableQuestions.filter((q) =>selectedQuestions.includes(q.questionId)
-  );
+  // Combine API-provided questions with our local default MCQs so selectedQuestions can refer to either source
+  const allQuestions = [...availableQuestions, ...defaultMCQs];
+
+  const selectedQuestionsData = allQuestions.filter((q) => selectedQuestions.includes(q.questionId));
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log({ testName, description,duration,selectedQuestions: selectedQuestionsData   });
+
+    console.log({ testName, description, duration, selectedQuestions: selectedQuestionsData });
   };
 
-  const submitTest=()=>{
+  const submitTest = () => {
     fetch(`${WEBAPI_DOTNET_URL}/CreateTest/create`, {
       method: "POST",
       headers: {
@@ -176,137 +186,52 @@ const SMECreateTest = () => {
               />
             </div>
 
-            {/* Concept Selection */}
-            <div className="space-y-4 border-t pt-6">
-              <div>
-                <Label className="text-base font-semibold">Filter Questions by Concept</Label>
-                <p className="text-sm text-muted-foreground mt-1">Select a concept to view available questions</p>
-              </div>
-              <RadioGroup value={selectedConcept?.id.toString() || ""}>
-                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                  {concepts.map((concept) => (
-                    <div key={concept.id} className="flex items-center space-x-2">
-                      <RadioGroupItem 
-                        value={concept.id.toString()} 
-                        id={`concept-${concept.id}`}
-                        onClick={() => setSelectedConcept(concept)}
-                      />
-                      <Label 
-                        htmlFor={`concept-${concept.id}`} 
-                        className="cursor-pointer font-normal"
-                      >
-                        {concept.name}
-                      </Label>
-                    </div>
-                  ))}
-                </div>
-              </RadioGroup>
-              <p className="text-xs text-muted-foreground mt-2">
-                Showing {filteredQuestions.length} question(s) for "{selectedConcept?.name || 'Select a concept'}"
-              </p>
-            </div>
-
-            {/* Questions Selection */}
-            <div className="space-y-4 border-t pt-6">
-              <div className="flex justify-between items-center">
-                <div>
-                  <Label className="text-base font-semibold">Select Questions</Label>
-                  <p className="text-sm text-muted-foreground mt-1">Choose questions to include in your test</p>
-                </div>
-                <Button
-                  type="button"
-                  variant="outline"
-                  onClick={() => setShowQuestionList(!showQuestionList)}
-                >
-                  {showQuestionList ? "Hide" : "Browse"} Questions
-                </Button>
-              </div>
-
-              {/* Available Questions List */}
-              {showQuestionList && (
-                <Card className="bg-card">
-                  <CardContent className="pt-6 max-h-96 overflow-y-auto">
-                    {loadingQuestions ? (
-                      <p className="text-center py-8 text-muted-foreground">Loading questions...</p>
-                    ) : filteredQuestions.length > 0 ? (
-                      <>
-                        <div className="mb-4 p-2 bg-muted rounded text-xs text-muted-foreground">
-                          Debug: {filteredQuestions.length} questions loaded
-                        </div>
-                        <div className="space-y-3">
-                          {filteredQuestions.map((question) => (
-                            <div key={question.questionId} className="flex items-start space-x-3 p-3 rounded-lg border hover:bg-muted transition-colors">
-                              <Checkbox 
-                                id={`question-${question.questionId}`}
-                                checked={selectedQuestions.includes(question.questionId)}
-                                onCheckedChange={() => toggleQuestion(question.questionId)}
-                                className="mt-1"
+            {/* Questions list (including default MCQs) */}
+            <div className="space-y-2">
+              <Label>Available Questions (Local + Concept)</Label>
+              <div className="space-y-4 max-h-80 overflow-auto p-2 border rounded-md bg-muted/5">
+                {allQuestions.length === 0 && (
+                  <p className="text-sm text-muted-foreground">No questions available.</p>
+                )}
+                {allQuestions.map((q) => (
+                  <div key={q.questionId} className="p-3 bg-background border rounded-md">
+                    <div className="flex items-start justify-between">
+                      <div>
+                        <p className="font-medium">{q.description}</p>
+                        <div className="mt-2 grid grid-cols-1 gap-2">
+                          {q.options?.map((opt, idx) => (
+                            <div key={idx} className="flex items-center gap-2">
+                              <input
+                                type="radio"
+                                name={`q-${q.questionId}`}
+                                disabled
+                                checked={false}
+                                className="w-4 h-4"
+                                readOnly
                               />
-                              <div className="flex-1 min-w-0">
-                                <label 
-                                  htmlFor={`question-${question.questionId}`}
-                                  className="cursor-pointer block"
-                                >
-                                  <div className="font-medium text-foreground break-words">{question.description}</div>
-                                  <div className="flex flex-wrap items-center gap-2 mt-2">
-                                    <span className="text-xs text-muted-foreground bg-muted px-2 py-1 rounded">{question.type}</span>
-                                    <span className={`text-xs font-semibold px-2 py-1 rounded ${
-                                      question.difficulty === "BEGINNER" ? "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-100" :
-                                      question.difficulty === "INTERMEDIATE" ? "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-100" :
-                                      "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-100"
-                                    }`}>
-                                      {question.difficulty}
-                                    </span>
-                                  </div>
-                                </label>
-                              </div>
+                              <span className="text-sm">{opt}</span>
                             </div>
                           ))}
                         </div>
-                      </>
-                    ) : (
-                      <p className="text-center py-8 text-muted-foreground">
-                        {selectedConcept ? "No questions available for this concept." : "Please select a concept first."}
-                      </p>
-                    )}
-                  </CardContent>
-                </Card>
-              )}
-
-              {/* Selected Questions */}
-              <div className="space-y-3">
-                <Label className="text-base font-semibold">
-                  Selected Questions ({selectedQuestions.length})
-                </Label>
-                {selectedQuestionsData.length > 0 ? (
-                  <div className="space-y-2">
-                    {selectedQuestionsData.map((question) => (
-                      <div
-                        key={question.questionId}
-                        className="flex items-start justify-between p-3 bg-primary/5 border border-primary/20 rounded-lg hover:bg-primary/10 transition-colors"
-                      >
-                        <div className="flex-1 min-w-0">
-                          <div className="font-medium text-foreground break-words">{question.description}</div>
-                          <div className="text-sm text-muted-foreground mt-1">{question.type} • {question.difficulty}</div>
-                        </div>
-                        <Button
-                          type="button"
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => removeQuestion(question.questionId)}
-                          className="ml-2 text-destructive hover:text-destructive hover:bg-destructive/10"
-                        >
-                          Remove
-                        </Button>
                       </div>
-                    ))}
+                      <div className="ml-4">
+                        <label className="flex items-center gap-2 text-sm">
+                          <input
+                            type="checkbox"
+                            checked={selectedQuestions.includes(q.questionId)}
+                            onChange={() => toggleQuestion(q.questionId)}
+                            className="w-4 h-4"
+                          />
+                          <span>Include</span>
+                        </label>
+                      </div>
+                    </div>
                   </div>
-                ) : (
-                  <p className="text-muted-foreground text-sm">No questions selected yet. Click "Browse Questions" to add questions.</p>
-                )}
+                ))}
               </div>
             </div>
 
+            
             {/* Submit Button */}
             <div className="flex gap-3 pt-6 border-t">
               <Button
