@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-
+import { Input } from "../../ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
@@ -12,6 +12,36 @@ import { WEBAPI_NODE_URL } from "@/lib/utils";
 
 import { Linkedin, Github, Mail, Phone } from "lucide-react";
 
+type TabType = "personal" | "professional" | "academic";
+
+interface PersonalDetails {
+  first_name: string;
+  last_name: string;
+  email: string;
+  contact: string;
+  date_of_birth: string;
+  address: string;
+}
+
+interface ProfessionalDetails {
+  company_name: string;
+  job_title: string;
+  employment_type: string;
+  experience_years: number;
+  location: string[];
+  skills: string;
+}
+
+interface AcademicDetails {
+  stream_name: string;
+  specialization: string;
+  enrollment_year: number;
+  passing_year: number;
+  percentage: number;
+  college_name: string;
+
+}
+
 const UserProfile = () => {
   const { id } = useParams();
 
@@ -19,8 +49,140 @@ const UserProfile = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [userrole, setUserRoles] = useState([]);
+  const [userRoles, setUserRoles] = useState([]);
+ const [activeTab, setActiveTab] = useState<TabType>("professional");
+  const [personalData, setPersonalData] = useState<PersonalDetails | null>(null);
+  const [professionalData, setProfessionalData] = useState<ProfessionalDetails | null>(null);
+  const [academicData, setAcademicData] = useState<AcademicDetails | null>(null);
 
+
+
+    const fetchPersonalDetails = async () => {
+        setLoading(true);
+  
+        let userid;
+  
+        const storedUser = sessionStorage.getItem("current");
+        if (storedUser) {
+          try {
+            const user = JSON.parse(storedUser);
+            userid = user?.userid;
+          } catch {
+            console.error("Invalid user data");
+          }
+        }
+  
+        if (!userid) {
+          console.error("User ID not found");
+          setLoading(false);
+          return;
+        }
+  
+        try {
+          const res = await fetch(
+            `${WEBAPI_NODE_URL}/users/${userid}/personal/`
+          );
+  
+          const data = await res.json();
+          console.log("API RESPONSE:", data);
+  
+          const personal: PersonalDetails = data.data;
+  
+          // ✅ FIX DOB FORMAT
+          if (personal.date_of_birth) {
+            personal.date_of_birth =
+              personal.date_of_birth.split("T")[0];
+          }
+  
+          setPersonalData(personal);
+        } catch {
+          console.error("Failed to fetch personal details");
+        } finally {
+          setLoading(false);
+        }
+      };
+  
+  
+       const fetchProfessionalDetails = async () => {
+        setLoading(true);
+  
+        let userid;
+  
+        const storedUser = sessionStorage.getItem("current");
+        if (storedUser) {
+          try {
+            const user = JSON.parse(storedUser);
+            userid = user?.userid;
+          } catch {
+            console.error("Invalid user data");
+          }
+        }
+  
+        if (!userid) {
+          console.error("User ID not found");
+          setLoading(false);
+          return;
+        }
+  
+        try {
+          const res = await fetch(
+            `${WEBAPI_NODE_URL}/users/${userid}/professional/`
+          );
+  
+          const data = await res.json();
+          console.log("API RESPONSE:", data);
+  
+          const professional: ProfessionalDetails = data.data;
+  
+          console.log("PROFESSIONAL DETAILS:", professional);
+          setProfessionalData(professional);
+        } catch {
+          console.error("Failed to fetch professional details");
+        } finally {
+          setLoading(false);
+        }
+      };
+  
+      const fetchAcademicDetails = async () => {
+        setLoading(true);
+  
+        let userid;
+  
+        const storedUser = sessionStorage.getItem("current");
+        if (storedUser) {
+          try {
+            const user = JSON.parse(storedUser);
+            userid = user?.userid;
+          } catch {
+            console.error("Invalid user data");
+          }
+        }
+  
+        if (!userid) {
+          console.error("User ID not found");
+          setLoading(false);
+          return;
+        }
+  
+        try {
+          const res = await fetch(
+            `${WEBAPI_NODE_URL}/users/${userid}/academic/`
+          );
+  
+          const data = await res.json();
+          console.log("API RESPONSE:", data);
+  
+          const academic: AcademicDetails = data.data;
+  
+          console.log("ACADEMIC DETAILS:", academic);
+          setAcademicData(academic);
+        } catch {
+          console.error("Failed to fetch academic details");
+        } finally {
+          setLoading(false);
+        }
+      };
+  
 
   useEffect(() => {
     const currentuser = sessionStorage.getItem("current");
@@ -34,28 +196,9 @@ const UserProfile = () => {
       }
     }
 
-  }, [id]);
+  }, []);
 
   useEffect(() => {
-    if (!userId) return;
-
-    fetch(`${WEBAPI_NODE_URL}/users/${userId}/complete`) // ✅ generic API
-      .then(res => {
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        return res.json();
-      })
-      .then(res => {
-        if (res.success) {
-          setData(res.data);
-        } else {
-          setError("No data found");
-        }
-        setLoading(false);
-      })
-      .catch(err => {
-        setError(err.message);
-        setLoading(false);
-      });
 
     fetch(`${WEBAPI_NODE_URL}/roles/getUserByRole/${userId}`) // ✅ generic API
       .then(res => {
@@ -64,6 +207,7 @@ const UserProfile = () => {
       })
       .then(res => {
         if (res.success) {
+          console.log("USER ROLES:", res.data);
           setUserRoles(res.data);
         } else {
           setError("No data found");
@@ -75,17 +219,23 @@ const UserProfile = () => {
         setLoading(false);
       });
 
+      
+    fetchPersonalDetails();
+    fetchProfessionalDetails();
+    fetchAcademicDetails();
+
   }, [userId]);
 
   if (loading) return <div className="text-center mt-20">Loading...</div>;
   if (error) return <div className="text-center text-red-500 mt-20">{error}</div>;
 
-  const user = data[0];
+  // const user = data[0];
 
-  const fullName = `${user.first_name || ""} ${user.last_name || ""}`;
+  const fullName = `${personalData?.first_name || ""} ${personalData?.last_name || ""}`;
   const initials = fullName
     ? fullName.split(" ").map(n => n[0]).join("").slice(0, 2).toUpperCase()
     : "NA";
+
 
   return (
     <div className="min-h-screen bg-gradient-hero flex flex-col">
@@ -112,7 +262,7 @@ const UserProfile = () => {
 
                     {/* ✅ Dynamic Role */}
                     <Badge className="mt-2 bg-primary text-white">
-                     <p>{userrole.map(r => r.role_name).join(", ")}</p>
+                     <p>{userRoles?.map(r => r.role_name).join(", ")}</p>
                       
                     </Badge>
 
@@ -120,14 +270,14 @@ const UserProfile = () => {
                       <Linkedin size={20} />
                       <Github size={20} />
 
-                      {user.email && (
-                        <a href={`mailto:${user.email}`}>
+                      {personalData?.email && (
+                        <a href={`mailto:${personalData.email}`}>
                           <Mail size={20} />
                         </a>
                       )}
 
-                      {user.phone && (
-                        <a href={`tel:${user.phone}`}>
+                      {personalData?.contact && (
+                        <a href={`tel:${personalData.contact}`}>
                           <Phone size={20} />
                         </a>
                       )}
@@ -140,49 +290,122 @@ const UserProfile = () => {
                     Experience
                   </p>
                   <p className="text-primary font-semibold">
-                    {user.experience_years ?? 0} years
+                    {professionalData?.experience_years ?? 0} years
                   </p>
 
-                  <Button className="mt-4">Edit Profile</Button>
+                 
                 </div>
 
               </div>
             </CardContent>
           </Card>
 
-          {/* PROFESSIONAL */}
-          <Card>
-            <CardContent className="p-6">
-              <h3 className="text-xl font-semibold mb-4">
-                Professional Information
-              </h3>
+       {/* <div className="min-h-screen bg-gradient-hero flex flex-col"> */}
+      <div className="flex-1 flex justify-center items-center ">
+        <Card className="w-full max-w-2xl shadow-lg">
 
-              <div className="grid md:grid-cols-2 gap-4">
-                <p><b>Company:</b> {user.company_name || "N/A"}</p>
-                <p><b>Job Title:</b> {user.job_title || "N/A"}</p>
-                <p><b>Employment Type:</b> {user.employment_type || "N/A"}</p>
-                <p><b>Location:</b> {user.location || "N/A"}</p>
-                <p><b>Skills:</b> {user.skills || "N/A"}</p>
+          {/* Tabs */}
+          <div className="border-b flex">
+            {["personal", "professional", "academic"].map((tab) => (
+              <button
+                key={tab}
+                onClick={() => setActiveTab(tab as TabType)}
+                className={`flex-1 py-4 px-6 font-semibold ${
+                  activeTab === tab
+                    ? "border-b-2 border-blue-600 text-blue-600"
+                    : "text-gray-600"
+                }`}
+              >
+                {tab.charAt(0).toUpperCase() + tab.slice(1)} Details
+              </button>
+            ))}
+          </div>
+
+          <CardContent className="p-8 space-y-6">
+
+            {/* PERSONAL */}
+            {activeTab === "personal" && (
+              <div className="space-y-4">
+                <h2 className="text-xl font-bold">Personal Information</h2>
+
+                {loading ? (
+                  <p>Loading...</p>
+                ) : (
+                  <>
+                    <Input value={personalData?.first_name || ""} readOnly />
+                    <Input value={personalData?.last_name || ""} readOnly />
+                    <Input value={personalData?.email || ""} readOnly />
+                    <Input value={personalData?.contact || ""} readOnly />
+
+                    {/* ✅ DOB FIXED */}
+                    <Input
+                      type="date"
+                      value={personalData?.date_of_birth || ""}
+                      readOnly
+                    />
+
+                    <Input value={personalData?.address || ""} readOnly />
+                  </>
+                )}
               </div>
-            </CardContent>
-          </Card>
+            )}
 
-          {/* PERSONAL */}
-          <Card>
-            <CardContent className="p-6">
-              <h3 className="text-xl font-semibold mb-4">
-                Personal Information
-              </h3>
+            {/* PROFESSIONAL */}
+            {activeTab === "professional" && (
+              <div className="space-y-4">
+                <h2 className="text-xl font-bold">Professional Information</h2>
 
-              <div className="grid md:grid-cols-2 gap-4">
-                <p><b>Email:</b> {user.email}</p>
-                <p><b>Gender:</b> {user.gender}</p>
-                <p><b>DOB:</b> {user.date_of_birth}</p>
-                <p><b>Address:</b> {user.address}</p>
-                <p><b>Pincode:</b> {user.pincode}</p>
+                <Input value={professionalData?.company_name} readOnly />
+                <Input value={professionalData?.job_title} readOnly />
+                <Input value={professionalData?.employment_type} readOnly />
+                <Input
+                  type="number"
+                  value={professionalData?.experience_years}
+                  readOnly
+                />
+                 <Input value={professionalData?.location} readOnly />
+                 <Input value={professionalData?.skills} readOnly />
+                {/* <Input value={professionalData.salary} readOnly /> */}
+
+                {/* <div className="flex gap-2 flex-wrap">
+                  {professionalData.skills.map((s, i) => (
+                    <span key={i} className="bg-blue-100 px-2 py-1 rounded">
+                      {s}
+                    </span>
+                  ))}
+                </div> */}
               </div>
-            </CardContent>
-          </Card>
+            )}
+
+            {/* ACADEMIC */}
+            {activeTab === "academic" && (
+              <div className="space-y-4">
+                <h2 className="text-xl font-bold">Academic Information</h2>
+
+                <Input value={academicData?.stream_name} readOnly />
+                <Input value={academicData?.specialization} readOnly />
+                <Input value={academicData?.enrollment_year} readOnly />
+                <Input
+                  type="number"
+                  value={academicData?.passing_year}
+                  readOnly
+                />
+                <Input
+                  type="number"
+                  value={academicData?.percentage}
+                  readOnly
+                />
+
+                  <Input value={academicData?.college_name} readOnly /> 
+
+                  
+              </div>
+            )}
+
+          </CardContent>
+        </Card>
+      </div>
+    {/* </div> */}
 
         </div>
       </div>
