@@ -32,6 +32,7 @@ const SMECreateTest = () => {
   const [selectedQuestions, setSelectedQuestions] = useState<number[]>([]);
   const [showQuestionList, setShowQuestionList] = useState(false);
   const [selectedConcept, setSelectedConcept] = useState<Concept | null>(null);
+   const [smeId, setSmeId] = useState<string>("");
 
   // Default hardcoded MCQs (5 questions, each with 4 options)
   // Load default MCQs from local JSON file
@@ -43,6 +44,8 @@ const SMECreateTest = () => {
   const [loading, setLoading] = useState(true);
   const [loadingQuestions, setLoadingQuestions] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [submitLoading, setSubmitLoading] = useState(false);
+  const [submitSuccess, setSubmitSuccess] = useState<string | null>(null);
 
   // Fetch concepts and questions on component mount
   useEffect(() => {
@@ -108,20 +111,105 @@ const SMECreateTest = () => {
 
   const selectedQuestionsData = allQuestions.filter((q) => selectedQuestions.includes(q.questionId));
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
+    setError(null);
+    setSubmitSuccess(null);
     console.log({ testName, description, duration, selectedQuestions: selectedQuestionsData });
+
+    try {
+      await submitTest();
+    } catch (err) {
+      console.error('submitTest failed:', err);
+      setError('Failed to submit test. See console for details.');
+    }
   };
 
-  const submitTest = () => {
-    fetch(`${WEBAPI_DOTNET_URL}/CreateTest/create`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ testName, description, duration, selectedQuestions: selectedQuestionsData })
-    });
+  const submitTest = async () => {
+    const questionIds = selectedQuestionsData.map(q => q.questionId);
+
+    const payload = {
+      SmeId: Number(smeId || 0),
+      Title: testName,
+      Duration: Number(duration || 0),
+      SkillLevel: undefined, // optional: set if you have a skill level
+      QuestionIds: selectedQuestions,
+      Description: description,
+      selectedQuestions: questionIds
+    };
+
+    console.log("Submitting test with payload:", payload);
+    setSubmitLoading(true);
+    try {
+      const res = await fetch(`${WEBAPI_DOTNET_URL}/CreateTest/create`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(payload)
+      });
+
+      const contentType = res.headers.get('content-type') || '';
+  let body: unknown = null;
+      if (contentType.includes('application/json')) {
+        body = await res.json();
+      } else {
+        body = await res.text();
+      }
+
+      if (!res.ok) {
+        console.error('CreateTest API error', res.status, body);
+        setError(`Server returned ${res.status}: ${typeof body === 'string' ? body : JSON.stringify(body)}`);
+        throw new Error('API error');
+      }
+
+      console.log('CreateTest response:', res.status, body);
+
+      // Extract created test id from response (support object { id } or plain numeric)
+      let createdTestId = 0;
+      if (typeof body === 'object' && body !== null && 'id' in (body as Record<string, unknown>)) {
+        createdTestId = Number((body as Record<string, unknown>)['id']);
+      } else if (typeof body === 'number') {
+        createdTestId = Number(body);
+      } else if (typeof body === 'string' && !isNaN(Number(body))) {
+        createdTestId = Number(body);
+      }
+
+      setSubmitSuccess('Test created successfully');
+
+      // If we have selected questions and a created test id, call add-questions API
+      if (createdTestId > 0 && Array.isArray(selectedQuestions) && selectedQuestions.length > 0) {
+        try {
+          const addPayload = { QuestionIds: selectedQuestions };
+
+          console.log("questions to add:", selectedQuestions);
+          const addRes = await fetch(`${WEBAPI_DOTNET_URL}/CreateTest/add-questions?testId=${createdTestId}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(addPayload)
+          });
+
+          let addBody: unknown = null;
+          const addContentType = addRes.headers.get('content-type') || '';
+          if (addContentType.includes('application/json')) addBody = await addRes.json(); else addBody = await addRes.text();
+
+          if (!addRes.ok) {
+            console.error('AddQuestions API error', addRes.status, addBody);
+            setError(`AddQuestions failed ${addRes.status}: ${typeof addBody === 'string' ? addBody : JSON.stringify(addBody)}`);
+          } else {
+            console.log('AddQuestions response:', addRes.status, addBody);
+          }
+        } catch (err) {
+          console.error('Error calling add-questions:', err);
+          setError('Failed to add selected questions to the created test.');
+        }
+      }
+    } catch (err) {
+      console.error('submitTest caught error:', err);
+      throw err;
+    } finally {
+      setSubmitLoading(false);
+    }
   }
   
   return (
@@ -173,7 +261,7 @@ const SMECreateTest = () => {
               />
             </div>
 
-            {/* Duration */}
+              {/* Duration */}
             <div className="space-y-2">
               <Label htmlFor="duration">Duration (minutes)</Label>
               <Input 
@@ -185,6 +273,19 @@ const SMECreateTest = () => {
                 required 
               />
             </div>
+
+            {/* sme Runtime id  */}
+              <div className="space-y-2">
+                <Label htmlFor="smeId">SME Runtime Id</Label>
+                <Input
+                  id="smeId"
+                  type="number"
+                  placeholder="Enter SME Runtime Id (numeric)"
+                  value={smeId}
+                  onChange={(e) => setSmeId(e.target.value)}
+                  required
+                />
+              </div>
 
             {/* Questions list (including default MCQs) */}
             <div className="space-y-2">

@@ -35,6 +35,15 @@ namespace backend.Repositories
 
     public async Task<long> CreateTestAsync(CreateTestRequestDto dto)
         {
+
+             if (dto.SmeId <= 0)
+        throw new ArgumentException("SmeId must be supplied and greater than 0.");
+
+    var smeExists = await _context.SmeRuntimes
+                       .AnyAsync(sr => sr.SmeRuntimeId == dto.SmeId);
+    if (!smeExists)
+        throw new ArgumentException($"SmeRuntime with id {dto.SmeId} not found.");
+
             var test = new Test
             {
                 Title = dto.Title,
