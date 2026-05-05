@@ -4,7 +4,7 @@ import { Bell, Users, Briefcase, TrendingUp, CheckCircle, AlertCircle, Calendar,
 import { WEBAPI_NODE_URL } from "@/lib/utils";
 import RecruiterNotification from "./entities/RecruiterNotification";
 import Candidate from "./entities/Candidate";
-import JobOpening from "./entities/jobopening";
+import JobOpening from "./entities/JobOpening";
 import SkillRequirement from "./entities/SkillRequirement";
 
 import  openings from "./data/jobopenings.json";

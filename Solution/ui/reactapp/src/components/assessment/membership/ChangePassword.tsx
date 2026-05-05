@@ -4,11 +4,8 @@ import { Input } from "../../ui/input";
 import { Button } from "../../ui/button";
 import { Eye, EyeOff } from "lucide-react"
 import { WEBAPI_NODE_URL } from "@/lib/utils";
+import ChangePasswordResponse from "./entities/ChangePasswordResponse";
 
-type ChangePasswordResponse = {
-  message?: string
-  error?: string
-}
 
 const ChangePassword = () => {
   
