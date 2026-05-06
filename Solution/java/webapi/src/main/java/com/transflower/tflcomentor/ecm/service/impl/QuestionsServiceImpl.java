@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.transflower.tflcomentor.ecm.dto.QuestionOptionsRequestDto;
 import com.transflower.tflcomentor.ecm.entity.Question;
+import com.transflower.tflcomentor.ecm.dto.QuestionStatusDto;
 import com.transflower.tflcomentor.ecm.entity.enums.DifficultyLevel;
 import com.transflower.tflcomentor.ecm.entity.enums.QuestionStatus;
 import com.transflower.tflcomentor.ecm.entity.enums.QuestionType;
@@ -87,7 +88,7 @@ public class QuestionsServiceImpl implements QuestionService {
     }
 
     @Override
-    public List<Question> getQuestions(QuestionStatus status) {
+    public List<QuestionStatusDto> getQuestions(QuestionStatus status) {
         return repository.getQuestions(status);
     }
 

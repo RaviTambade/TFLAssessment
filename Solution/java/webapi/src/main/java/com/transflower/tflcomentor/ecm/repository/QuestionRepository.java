@@ -7,11 +7,11 @@ import java.util.List;
 
 import com.transflower.tflcomentor.ecm.dto.QuestionDisplayDto;
 import com.transflower.tflcomentor.ecm.dto.QuestionOptionsRequestDto;
+import com.transflower.tflcomentor.ecm.dto.QuestionStatusDto;
 import com.transflower.tflcomentor.ecm.entity.Question;
 import com.transflower.tflcomentor.ecm.entity.enums.DifficultyLevel;
 import com.transflower.tflcomentor.ecm.entity.enums.QuestionStatus;
 import com.transflower.tflcomentor.ecm.entity.enums.QuestionType;
-import com.transflower.tflcomentor.skilltaxonomy.entity.ConceptsInFramework;
 
 public interface QuestionRepository {
     
@@ -26,7 +26,7 @@ public interface QuestionRepository {
     List<Question> getQuestions(QuestionType questionType);
     // List<Questions> getAllQuestions();
     // List<QuestionResponse> getRecentQuestions();
-    List<Question> getQuestions(QuestionStatus status);
+    List<QuestionStatusDto> getQuestions(QuestionStatus status);
    //multiple question status update
     void updateQuestionStatus(List<Long> question_ids, QuestionStatus status);
     //single question status update

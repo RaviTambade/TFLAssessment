@@ -18,6 +18,7 @@ import org.springframework.stereotype.Repository;
 import com.transflower.tflcomentor.configuration.DBConfig;
 import com.transflower.tflcomentor.ecm.dto.QuestionDisplayDto;
 import com.transflower.tflcomentor.ecm.dto.QuestionOptionsRequestDto;
+import com.transflower.tflcomentor.ecm.dto.QuestionStatusDto;
 import com.transflower.tflcomentor.ecm.entity.Question;
 import com.transflower.tflcomentor.ecm.entity.enums.DifficultyLevel;
 import com.transflower.tflcomentor.ecm.entity.enums.QuestionStatus;
@@ -309,8 +310,8 @@ public class QuestionRepositoryImpl implements QuestionRepository {
     }
 
     @Override
-    public List<Question> getQuestions(QuestionStatus status) {
-        List<Question> list = new ArrayList<>();
+    public List<QuestionStatusDto> getQuestions(QuestionStatus status) {
+        List<QuestionStatusDto> list = new ArrayList<>();
         String sql = """
                 SELECT question_id, question_type, description, difficulty_level, status
                 FROM questions
@@ -321,19 +322,17 @@ public class QuestionRepositoryImpl implements QuestionRepository {
             statement.setString(1, status.name());
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
-                Question question = new Question();
-                question.setQuestionId(rs.getLong("question_id"));
-                question.setDescription(rs.getString("description"));
-                question.setQuestionType(QuestionType.valueOf(rs.getString("question_type")));
-                question.setDifficultyLevel(DifficultyLevel.valueOf(rs.getString("difficulty_level")));
-                question.setQuestionStatus(QuestionStatus.valueOf(rs.getString("status")));
-                list.add(question);
+                QuestionStatusDto questionStatusDto = new QuestionStatusDto();
+                questionStatusDto.setQuestionId(rs.getLong("question_id"));
+                questionStatusDto.setStatus(rs.getString("status"));
+                list.add(questionStatusDto);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
         return list;
     }
+
 
     @Override
     public List<Question> getQuestionsByConceptId(Long conceptId) {

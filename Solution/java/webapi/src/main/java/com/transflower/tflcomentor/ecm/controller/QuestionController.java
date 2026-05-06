@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.transflower.tflcomentor.ecm.dto.QuestionOptionsRequestDto;
+import com.transflower.tflcomentor.ecm.dto.QuestionStatusDto;
 import com.transflower.tflcomentor.ecm.entity.Question;
 import com.transflower.tflcomentor.ecm.entity.enums.DifficultyLevel;
 import com.transflower.tflcomentor.ecm.entity.enums.QuestionStatus;
@@ -58,7 +59,7 @@ public class QuestionController {
 
     @GetMapping("/drafts")
     // http://localhost:8080/api/questions/drafts
-    public List<Question> getDraft() {
+    public List<QuestionStatusDto> getDraft() {
         return service.getQuestions(QuestionStatus.DRAFT);
     }
 
@@ -97,7 +98,7 @@ public class QuestionController {
 
     @GetMapping("/status/{questionStatus}")
     // http://localhost:8080/api/questions/status/APPROVED
-    public List<Question> getQuestionsByStatus(@PathVariable QuestionStatus questionStatus) {
+    public List<QuestionStatusDto> getQuestionsByStatus(@PathVariable QuestionStatus questionStatus) {
         return service.getQuestions(questionStatus);
     }
 
