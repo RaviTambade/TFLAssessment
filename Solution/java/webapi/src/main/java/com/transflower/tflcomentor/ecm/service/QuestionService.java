@@ -4,11 +4,11 @@ import java.time.LocalDate;
 import java.util.List;
 
 import com.transflower.tflcomentor.ecm.dto.QuestionOptionsRequestDto;
+import com.transflower.tflcomentor.ecm.dto.QuestionStatusDto;
 import com.transflower.tflcomentor.ecm.entity.Question;
 import com.transflower.tflcomentor.ecm.entity.enums.DifficultyLevel;
 import com.transflower.tflcomentor.ecm.entity.enums.QuestionStatus;
 import com.transflower.tflcomentor.ecm.entity.enums.QuestionType;
-import com.transflower.tflcomentor.skilltaxonomy.entity.ConceptsInFramework;
 
 public interface QuestionService {
     
@@ -30,7 +30,7 @@ public interface QuestionService {
 
     public List<Question> getQuestions(QuestionType questionType);
 
-    public List<Question> getQuestions(QuestionStatus status);
+    public List<QuestionStatusDto> getQuestions(QuestionStatus status);
 
     public void updateQuestionStatus(List<Long> questionIds, QuestionStatus status);
 
