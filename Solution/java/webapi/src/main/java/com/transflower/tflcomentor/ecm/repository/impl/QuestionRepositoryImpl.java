@@ -11,10 +11,12 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.sql.Timestamp;
 
 import org.springframework.stereotype.Repository;
 
 import com.transflower.tflcomentor.configuration.DBConfig;
+import com.transflower.tflcomentor.ecm.dto.QuestionDisplayDto;
 import com.transflower.tflcomentor.ecm.dto.QuestionOptionsRequestDto;
 import com.transflower.tflcomentor.ecm.dto.QuestionStatusDto;
 import com.transflower.tflcomentor.ecm.entity.Question;
@@ -22,6 +24,7 @@ import com.transflower.tflcomentor.ecm.entity.enums.DifficultyLevel;
 import com.transflower.tflcomentor.ecm.entity.enums.QuestionStatus;
 import com.transflower.tflcomentor.ecm.entity.enums.QuestionType;
 import com.transflower.tflcomentor.ecm.repository.QuestionRepository;
+
 
 @Repository
 public class QuestionRepositoryImpl implements QuestionRepository {
@@ -31,7 +34,7 @@ public class QuestionRepositoryImpl implements QuestionRepository {
     }
 
     @Override
-    public Question getQuestionById(long question_id) {
+    public QuestionDisplayDto getQuestionById(long question_id) {
 
         try (Connection connection = getConnection()) {
             String sql = "SELECT * FROM questions WHERE question_id = ?";
@@ -43,12 +46,8 @@ public class QuestionRepositoryImpl implements QuestionRepository {
                 String description = rs.getString("description");
                 QuestionType questionType = QuestionType.valueOf(rs.getString("question_type"));
                 String difficultyLevel = rs.getString("difficulty_level");
-
-                LocalDateTime createdAt = LocalDateTime.ofInstant(
-                        rs.getTimestamp("created_at").toInstant(),
-                        ZoneId.systemDefault());
                 String status = rs.getString("status");
-                return new Question(id, description, questionType, DifficultyLevel.valueOf(difficultyLevel), QuestionStatus.valueOf(status));
+                return new QuestionDisplayDto(id, description, questionType, DifficultyLevel.valueOf(difficultyLevel), QuestionStatus.valueOf(status));
             }
 
         } catch (Exception e) {
@@ -58,19 +57,20 @@ public class QuestionRepositoryImpl implements QuestionRepository {
     }
 
     @Override
-    public List<Question> getAllQuestions() {
-        List<Question> list = new ArrayList<>();
+    public List<QuestionDisplayDto> getAllQuestions() {
+        List<QuestionDisplayDto> list = new ArrayList<>();
         try (Connection connection = getConnection()) {
             String query = "SELECT * FROM questions";
             Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery(query);
             while (rs.next()) {
-                Question q = new Question(
+                QuestionDisplayDto q = new QuestionDisplayDto(
                         rs.getLong("question_id"),
                         rs.getString("description"),
                         QuestionType.valueOf(rs.getString("question_type")),
                         DifficultyLevel.valueOf(rs.getString("difficulty_level")),
-                        QuestionStatus.valueOf(rs.getString("status")));
+                        QuestionStatus.valueOf(rs.getString("status"))
+                );
                 list.add(q);
             }
         } catch (Exception e) {
@@ -93,7 +93,12 @@ public class QuestionRepositoryImpl implements QuestionRepository {
                         rs.getString("description"),
                         QuestionType.valueOf(rs.getString("question_type")),
                         DifficultyLevel.valueOf(rs.getString("difficulty_level")),
-                        QuestionStatus.valueOf(rs.getString("status"))
+                        rs.getTimestamp("created_at").toLocalDateTime(),
+                        QuestionStatus.valueOf(rs.getString("status")),
+                        rs.getString("language"),
+                        rs.getString("layer"),
+                        rs.getString("framework"),
+                        rs.getString("concept")
                 );
                 list.add(q);
             }
@@ -108,11 +113,11 @@ public class QuestionRepositoryImpl implements QuestionRepository {
     public List<Question> getQuestions(QuestionType questionType) {
 
         String sql = """
-    SELECT question_id, question_type, description, difficulty_level, status
-    FROM questions
-    WHERE question_type = ?
-    ORDER BY question_id
-""";
+            SELECT question_id, question_type, description, difficulty_level, status
+            FROM questions
+            WHERE question_type = ?
+            ORDER BY question_id
+        """;
 
         try (Connection connection = getConnection(); PreparedStatement statement = connection.prepareStatement(sql)) {
 
@@ -139,17 +144,21 @@ public class QuestionRepositoryImpl implements QuestionRepository {
     }
 
     @Override
-    public Long insert(Question q,int conceptId, int frameworkId) {
+    public Long insert(Question q) {
 
         Long questionId = null;
-        Long frameworkConceptId = getFrameworkConceptId(conceptId, frameworkId);
-        String sql = "INSERT INTO questions(description, question_type, difficulty_level, status, created_at) VALUES (?, ?, ?, 'DRAFT', NOW())";
-
-        try (Connection connection = getConnection(); PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+        String sql = "INSERT INTO questions(description, question_type, difficulty_level,  created_at,status, language, layer, framework, concept) VALUES (?, ?, ?, 'DRAFT', NOW(), ?, ?, ?, ?)";
+        try (Connection connection = getConnection();
+        PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
             statement.setString(1, q.getDescription());
             statement.setString(2, q.getQuestionType().toString());
             statement.setString(3, q.getDifficultyLevel().toString());
+            statement.setTimestamp(4, Timestamp.valueOf(q.getCreatedAt()));
+            statement.setString(5, q.getLanguage());
+            statement.setString(6, q.getLayer());
+            statement.setString(7, q.getFramework());
+            statement.setString(8, q.getConcept());
 
             statement.executeUpdate();
 
@@ -157,7 +166,6 @@ public class QuestionRepositoryImpl implements QuestionRepository {
             if (rs.next()) {
                 questionId = rs.getLong(1);
             }
-            insertQuestionFrameworkConceptMapping(questionId, frameworkConceptId);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -230,6 +238,7 @@ public class QuestionRepositoryImpl implements QuestionRepository {
     //     }
     //     return list;
     // }
+
     @Override
     public QuestionOptionsRequestDto getQuestionDetails(Long question_id) {
         QuestionOptionsRequestDto dto = new QuestionOptionsRequestDto();
