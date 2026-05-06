@@ -20,6 +20,8 @@ import com.transflower.tflcomentor.ecm.entity.Question;
 import com.transflower.tflcomentor.ecm.entity.enums.DifficultyLevel;
 import com.transflower.tflcomentor.ecm.entity.enums.QuestionStatus;
 import com.transflower.tflcomentor.ecm.service.QuestionService;
+import com.transflower.tflcomentor.skilltaxonomy.entity.ConceptsInFramework;
+import com.transflower.tflcomentor.ecm.dto.QuestionDisplayDto;
 
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -32,13 +34,13 @@ public class QuestionController {
 
     @GetMapping("/{question_id}")
     // http://localhost:8080/api/questions/1
-    public Question getQuestionById(@PathVariable("question_id") long question_id) {
+    public QuestionDisplayDto getQuestionById(@PathVariable("question_id") long question_id) {
         return service.getQuestionById(question_id);
     }
 
     @GetMapping
     // http://localhost:8080/api/questions
-    public List<Question> getAllQuestions() {
+    public List<QuestionDisplayDto> getAllQuestions() {
         return service.getAllQuestions();
     }
 
@@ -48,16 +50,12 @@ public class QuestionController {
         return service.getQuestionsByDifficulty(level);
     }
 
-    @PostMapping("concept/{conceptId}/framework/{frameworkId}")
+    @PostMapping
     // http://localhost:8080/api/questions
-    public Long create(@RequestBody QuestionOptionsRequestDto dto,@PathVariable int conceptId, @PathVariable int frameworkId) {
-        return service.createQuestionWithOptions(dto,conceptId,frameworkId);
+    public Long create(@RequestBody QuestionOptionsRequestDto dto) {
+        return service.createQuestionWithOptions(dto);
     }
 
-    // @GetMapping
-    // public List<Question> getAll() {
-    // return service.getAllQuestions();
-    // }
     @GetMapping("/drafts")
     // http://localhost:8080/api/questions/drafts
     public List<Question> getDraft() {
@@ -84,10 +82,6 @@ public class QuestionController {
         return service.getQuestions(fromDate, toDate);
     }
 
-    // @GetMapping("/recent/list")
-    // public List<QuestionResponse> getRecentList() {
-    // return service.getRecentQuestionList();
-    // }
     @GetMapping("/{question_id}/details")
     //http://localhost:8080/api/questions/1/details
     public QuestionOptionsRequestDto getQuestionDetailsById(@PathVariable Long question_id) {
