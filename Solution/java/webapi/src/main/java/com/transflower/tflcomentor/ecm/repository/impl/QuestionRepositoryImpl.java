@@ -324,6 +324,7 @@ public class QuestionRepositoryImpl implements QuestionRepository {
             while (rs.next()) {
                 QuestionStatusDto questionStatusDto = new QuestionStatusDto();
                 questionStatusDto.setQuestionId(rs.getLong("question_id"));
+                questionStatusDto.setDescription(rs.getString("description"));
                 questionStatusDto.setStatus(rs.getString("status"));
                 list.add(questionStatusDto);
             }
