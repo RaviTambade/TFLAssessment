@@ -32,7 +32,6 @@ const SMECreateTest = () => {
   const [selectedQuestions, setSelectedQuestions] = useState<number[]>([]);
   const [showQuestionList, setShowQuestionList] = useState(false);
   const [selectedConcept, setSelectedConcept] = useState<Concept | null>(null);
-   const [smeId, setSmeId] = useState<string>("");
 
   // Default hardcoded MCQs (5 questions, each with 4 options)
   // Load default MCQs from local JSON file
@@ -49,6 +48,14 @@ const SMECreateTest = () => {
 
   // Fetch concepts and questions on component mount
   useEffect(() => {
+    // Get SME ID from session storage (Authentication)
+    const userData = sessionStorage.getItem("current");
+    if (userData) {
+      const user = JSON.parse(userData);
+      // Assuming the user object has a property 'userid' or 'id'
+      localStorage.setItem("smeId", user.userid || user.id);
+    }
+
    const fetchConcept=async ()=>{
     try{
       const response = await fetch(`${WEBAPI_DOTNET_URL}/technologies/concepts`,{
@@ -127,9 +134,10 @@ const SMECreateTest = () => {
 
   const submitTest = async () => {
     const questionIds = selectedQuestionsData.map(q => q.questionId);
+    const loggedInSmeId = localStorage.getItem("smeId");
 
     const payload = {
-      SmeId: Number(smeId || 0),
+      SmeId: Number(loggedInSmeId || 0),
       Title: testName,
       Duration: Number(duration || 0),
       SkillLevel: undefined, // optional: set if you have a skill level
@@ -274,22 +282,9 @@ const SMECreateTest = () => {
               />
             </div>
 
-            {/* sme Runtime id  */}
-              <div className="space-y-2">
-                <Label htmlFor="smeId">SME Runtime Id</Label>
-                <Input
-                  id="smeId"
-                  type="number"
-                  placeholder="Enter SME Runtime Id (numeric)"
-                  value={smeId}
-                  onChange={(e) => setSmeId(e.target.value)}
-                  required
-                />
-              </div>
-
             {/* Questions list (including default MCQs) */}
             <div className="space-y-2">
-              <Label>Available Questions (Local + Concept)</Label>
+              <Label>Available Questions </Label>
               <div className="space-y-4 max-h-80 overflow-auto p-2 border rounded-md bg-muted/5">
                 {allQuestions.length === 0 && (
                   <p className="text-sm text-muted-foreground">No questions available.</p>
