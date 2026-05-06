@@ -8,12 +8,14 @@ import org.springframework.stereotype.Service;
 
 import com.transflower.tflcomentor.ecm.dto.QuestionOptionsRequestDto;
 import com.transflower.tflcomentor.ecm.entity.Question;
+import com.transflower.tflcomentor.ecm.dto.QuestionStatusDto;
 import com.transflower.tflcomentor.ecm.entity.enums.DifficultyLevel;
 import com.transflower.tflcomentor.ecm.entity.enums.QuestionStatus;
 import com.transflower.tflcomentor.ecm.entity.enums.QuestionType;
 import com.transflower.tflcomentor.ecm.repository.QuestionRepository;
 import com.transflower.tflcomentor.ecm.service.QuestionService;
 import com.transflower.tflcomentor.skilltaxonomy.entity.ConceptsInFramework;
+import com.transflower.tflcomentor.ecm.dto.QuestionDisplayDto;
 
 @Service
 public class QuestionsServiceImpl implements QuestionService {
@@ -22,19 +24,19 @@ public class QuestionsServiceImpl implements QuestionService {
     private QuestionRepository repository;
 
     @Override
-    public Long insertQuestion(Question question,int conceptId, int frameworkId) {
-        return repository.insert(question,conceptId,frameworkId);
+    public Long insertQuestion(Question question) {
+        return repository.insert(question);
     }
 
     @Override
-    public Long createQuestionWithOptions(QuestionOptionsRequestDto dto,int conceptId, int frameworkId) {
+    public Long createQuestionWithOptions(QuestionOptionsRequestDto dto) {
 
         Question question = new Question();
         question.setDescription(dto.getDescription());
         question.setQuestionType(dto.getQuestionType());
         question.setDifficultyLevel(dto.getDifficultyLevel());
         question.setQuestionStatus(dto.getStatus());
-        Long questionId = repository.insert(question,conceptId, frameworkId);
+        Long questionId = repository.insert(question);
         if (dto.getQuestionType() == QuestionType.MCQ) {
 
             repository.insertMcqOptions(
@@ -51,12 +53,12 @@ public class QuestionsServiceImpl implements QuestionService {
     }
 
     @Override
-    public Question getQuestionById(long question_id) {
+    public QuestionDisplayDto getQuestionById(long question_id) {
         return repository.getQuestionById(question_id);
     }
 
     @Override
-    public List<Question> getAllQuestions() {
+    public List<QuestionDisplayDto> getAllQuestions() {
         return repository.getAllQuestions();
     }
 
@@ -86,7 +88,7 @@ public class QuestionsServiceImpl implements QuestionService {
     }
 
     @Override
-    public List<Question> getQuestions(QuestionStatus status) {
+    public List<QuestionStatusDto> getQuestions(QuestionStatus status) {
         return repository.getQuestions(status);
     }
 
