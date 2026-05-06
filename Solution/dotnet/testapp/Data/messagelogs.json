@@ -1,0 +1,162 @@
+[
+  {
+    "to": "student1@example.com",
+    "from": "noreply@tflmentor.com",
+    "datetime": "2026-05-04T09:00:00",
+    "type": "EMAIL",
+    "subject": "Welcome to TFL Mentor",
+    "content": "Hello Student1, welcome to TFL Mentor platform."
+  },
+  {
+    "to": "+919876543210",
+    "from": "TFLMTR",
+    "datetime": "2026-05-04T09:05:00",
+    "type": "SMS",
+    "subject": "OTP Verification",
+    "content": "Your OTP is 123456"
+  },
+  {
+    "to": "student2@example.com",
+    "from": "support@tflmentor.com",
+    "datetime": "2026-05-04T09:10:00",
+    "type": "EMAIL",
+    "subject": "Course Enrollment",
+    "content": "You have successfully enrolled in .NET course."
+  },
+  {
+    "to": "+919812345678",
+    "from": "TFLMTR",
+    "datetime": "2026-05-04T09:15:00",
+    "type": "SMS",
+    "subject": "Reminder",
+    "content": "Your class starts at 10 AM."
+  },
+  {
+    "to": "student3@example.com",
+    "from": "admin@tflmentor.com",
+    "datetime": "2026-05-04T09:20:00",
+    "type": "EMAIL",
+    "subject": "Password Reset",
+    "content": "Click here to reset your password."
+  },
+  {
+    "to": "+919700000001",
+    "from": "TFLMTR",
+    "datetime": "2026-05-04T09:25:00",
+    "type": "SMS",
+    "subject": "Alert",
+    "content": "Your assignment deadline is tomorrow."
+  },
+  {
+    "to": "student4@example.com",
+    "from": "noreply@tflmentor.com",
+    "datetime": "2026-05-04T09:30:00",
+    "type": "EMAIL",
+    "subject": "New Module Released",
+    "content": "Check out the new React module."
+  },
+  {
+    "to": "+919700000002",
+    "from": "TFLMTR",
+    "datetime": "2026-05-04T09:35:00",
+    "type": "SMS",
+    "subject": "OTP Verification",
+    "content": "Your OTP is 654321"
+  },
+  {
+    "to": "student5@example.com",
+    "from": "support@tflmentor.com",
+    "datetime": "2026-05-04T09:40:00",
+    "type": "EMAIL",
+    "subject": "Project Assigned",
+    "content": "You have been assigned a new project."
+  },
+  {
+    "to": "+919700000003",
+    "from": "TFLMTR",
+    "datetime": "2026-05-04T09:45:00",
+    "type": "SMS",
+    "subject": "Reminder",
+    "content": "Submit your assignment today."
+  },
+  {
+    "to": "student6@example.com",
+    "from": "admin@tflmentor.com",
+    "datetime": "2026-05-04T09:50:00",
+    "type": "EMAIL",
+    "subject": "Feedback Request",
+    "content": "Please provide your course feedback."
+  },
+  {
+    "to": "+919700000004",
+    "from": "TFLMTR",
+    "datetime": "2026-05-04T09:55:00",
+    "type": "SMS",
+    "subject": "Alert",
+    "content": "System maintenance at 12 AM."
+  },
+  {
+    "to": "student7@example.com",
+    "from": "noreply@tflmentor.com",
+    "datetime": "2026-05-04T10:00:00",
+    "type": "EMAIL",
+    "subject": "Account Activated",
+    "content": "Your account is now active."
+  },
+  {
+    "to": "+919700000005",
+    "from": "TFLMTR",
+    "datetime": "2026-05-04T10:05:00",
+    "type": "SMS",
+    "subject": "OTP Verification",
+    "content": "Your OTP is 789012"
+  },
+  {
+    "to": "student8@example.com",
+    "from": "support@tflmentor.com",
+    "datetime": "2026-05-04T10:10:00",
+    "type": "EMAIL",
+    "subject": "Schedule Update",
+    "content": "Your class timing has changed."
+  },
+  {
+    "to": "+919700000006",
+    "from": "TFLMTR",
+    "datetime": "2026-05-04T10:15:00",
+    "type": "SMS",
+    "subject": "Reminder",
+    "content": "Join your session now."
+  },
+  {
+    "to": "student9@example.com",
+    "from": "admin@tflmentor.com",
+    "datetime": "2026-05-04T10:20:00",
+    "type": "EMAIL",
+    "subject": "Certificate Issued",
+    "content": "Download your course certificate."
+  },
+  {
+    "to": "+919700000007",
+    "from": "TFLMTR",
+    "datetime": "2026-05-04T10:25:00",
+    "type": "SMS",
+    "subject": "Alert",
+    "content": "Payment received successfully."
+  },
+  {
+    "to": "student10@example.com",
+    "from": "noreply@tflmentor.com",
+    "datetime": "2026-05-04T10:30:00",
+    "type": "EMAIL",
+    "subject": "Newsletter",
+    "content": "Check out our latest updates."
+  },
+  {
+    "to": "+919700000008",
+    "from": "TFLMTR",
+    "datetime": "2026-05-04T10:35:00",
+    "type": "SMS",
+    "subject": "Reminder",
+    "content": "Your test starts in 30 minutes."
+  }
+]

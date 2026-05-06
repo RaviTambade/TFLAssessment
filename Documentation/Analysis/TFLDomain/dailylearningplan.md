@@ -1,8 +1,5 @@
-Excellent 👏
-
-
-
 # Daily Learning Plan Generator
+
 A **Daily Learning Plan Generator** is the *engine that converts insight into action*.
 This is where TFL stops being a dashboard system and becomes a **personal mentor-in-your-pocket**.
 

@@ -1,0 +1,42 @@
+[
+  {
+    "id": 1,
+    "candidateName": "John Smith",
+    "email": "john.smith@company.com",
+    "skillLevel": "Advanced",
+    "assessmentsTaken": 8,
+    "averageScore": 92,
+    "lastAssessmentDate": "2026-04-25",
+    "status": "excellent"
+  },
+  {
+    "id": 2,
+    "candidateName": "Sarah Johnson",
+    "email": "sarah.j@company.com",
+    "skillLevel": "Intermediate",
+    "assessmentsTaken": 6,
+    "averageScore": 78,
+    "lastAssessmentDate": "2026-04-22",
+    "status": "good"
+  },
+  {
+    "id": 3,
+    "candidateName": "Mike Chen",
+    "email": "mike.chen@company.com",
+    "skillLevel": "Beginner",
+    "assessmentsTaken": 4,
+    "averageScore": 65,
+    "lastAssessmentDate": "2026-04-20",
+    "status": "average"
+  },
+  {
+    "id": 4,
+    "candidateName": "Emma Davis",
+    "email": "emma.d@company.com",
+    "skillLevel": "Intermediate",
+    "assessmentsTaken": 5,
+    "averageScore": 58,
+    "lastAssessmentDate": "2026-04-18",
+    "status": "needsImprovement"
+  }
+]

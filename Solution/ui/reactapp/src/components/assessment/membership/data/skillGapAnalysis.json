@@ -1,0 +1,26 @@
+[
+  {
+    "skill": "Advanced JavaScript Patterns",
+    "candidatesLacking": 5,
+    "averagePerformance": 62,
+    "priority": "high"
+  },
+  {
+    "skill": "Database Optimization",
+    "candidatesLacking": 7,
+    "averagePerformance": 58,
+    "priority": "high"
+  },
+  {
+    "skill": "System Design",
+    "candidatesLacking": 4,
+    "averagePerformance": 70,
+    "priority": "medium"
+  },
+  {
+    "skill": "Cloud Architecture",
+    "candidatesLacking": 6,
+    "averagePerformance": 65,
+    "priority": "medium"
+  }
+]

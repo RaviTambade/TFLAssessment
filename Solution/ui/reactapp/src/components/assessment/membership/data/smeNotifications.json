@@ -1,0 +1,34 @@
+[
+  {
+    "id": 1,
+    "title": "Low Performance Alert",
+    "message": "5 candidates scored below 60% in Python Advanced Assessment",
+    "type": "warning",
+    "timestamp": "2 hours ago",
+    "read": false
+  },
+  {
+    "id": 2,
+    "title": "Assessment Completion",
+    "message": "JavaScript Fundamentals assessment completed by 12/15 candidates",
+    "type": "success",
+    "timestamp": "1 day ago",
+    "read": false
+  },
+  {
+    "id": 3,
+    "title": "Skill Gap Identified",
+    "message": "Database Design skills show significant gaps across cohort",
+    "type": "error",
+    "timestamp": "3 days ago",
+    "read": true
+  },
+  {
+    "id": 4,
+    "title": "Assessment Review Pending",
+    "message": "3 assessments awaiting review and validation",
+    "type": "info",
+    "timestamp": "5 days ago",
+    "read": true
+  }
+]

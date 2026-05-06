@@ -1,0 +1,30 @@
+ [
+    {
+      "skill": "React Development",
+      "requiredLevel": "advanced",
+      "candidatesCovered": 3,
+      "totalRequired": 5,
+      "fillPercentage": 60
+    },
+    {
+      "skill": "Backend Development (Java/Python)",
+      "requiredLevel": "advanced",
+      "candidatesCovered": 4,
+      "totalRequired": 4,
+      "fillPercentage": 100
+    },
+    {
+      "skill": "Cloud Architecture (AWS)",
+      "requiredLevel": "intermediate",
+      "candidatesCovered": 2,
+      "totalRequired": 3,
+      "fillPercentage": 67
+    },
+    {
+      "skill": "DevOps & Infrastructure",
+      "requiredLevel": "advanced",
+      "candidatesCovered": 1,
+      "totalRequired": 3,
+      "fillPercentage": 33
+    }
+  ]

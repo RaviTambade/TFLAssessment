@@ -1,0 +1,46 @@
+[
+    {
+      "id": 1,
+      "name": "Priya Sharma",
+      "email": "priya.sharma@transflower.in",
+      "appliedPosition": "Full-Stack Developer",
+      "skillsMatch": 92,
+      "experienceLevel": "junior",
+      "assessmentScore": 88,
+      "interviewStatus": "scheduled",
+      "applicationDate": "2026-03-15"
+    },
+    {
+      "id": 2,
+      "name": "Arjun Patel",
+      "email": "arjun.patel@transflower.in",
+      "appliedPosition": "Cloud Architect",
+      "skillsMatch": 75,
+      "experienceLevel": "mid-level",
+      "assessmentScore": 72,
+      "interviewStatus": "pending",
+      "applicationDate": "2026-03-20"
+    },
+    {
+      "id": 3,
+      "name": "Ananya Desai",
+      "email": "ananya.desai@transflower.in",
+      "appliedPosition": "Backend Engineer",
+      "skillsMatch": 95,
+      "experienceLevel": "mid-level",
+      "assessmentScore": 91,
+      "interviewStatus": "completed",
+      "applicationDate": "2026-02-28"
+    },
+    {
+      "id": 4,
+      "name": "Rohit Kumar",
+      "email": "rohit.kumar@transflower.in",
+      "appliedPosition": "DevOps Engineer",
+      "skillsMatch": 88,
+      "experienceLevel": "junior",
+      "assessmentScore": 85,
+      "interviewStatus": "completed",
+      "applicationDate": "2026-03-10"
+    }
+]

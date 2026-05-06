@@ -94,9 +94,10 @@ namespace backend.Repositories.Implementations
 
                 using (MySqlCommand cmd = new MySqlCommand(query, con))
                 {
-                    cmd.Parameters.AddWithValue("@question_id", questionId);
                     cmd.Parameters.AddWithValue("@student_id", studentId);
                     cmd.Parameters.AddWithValue("@assessment_id", assessmentId);
+                    cmd.Parameters.AddWithValue("@question_id", questionId);
+                                      
 
                     using (var reader = await cmd.ExecuteReaderAsync())
                     {

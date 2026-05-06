@@ -38,17 +38,16 @@ namespace backend.Controllers
         }
         
     
-            [HttpGet("{questionId}/{studentId}/{assessmentId}")]
+            [HttpGet("{studentId}/{assessmentId}/{questionId}")]
             public async Task<IActionResult> GetStudentAnswerResult(
-                int questionId,
+                int assessmentId,
                 int studentId,
-                int assessmentId)
+                int questionId
+                )
             {
                 var result = await _service.GetStudentAnswerResultAsync(questionId, studentId, assessmentId);
-
                 if (result == null)
                     return NotFound("No data found");
-
                 return Ok(result);
             }
 }

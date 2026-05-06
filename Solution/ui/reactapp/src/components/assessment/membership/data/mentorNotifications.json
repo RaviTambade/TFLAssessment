@@ -1,0 +1,34 @@
+[
+  {
+    "id": 1,
+    "title": "Mentee Milestone Achieved",
+    "message": "Priya Sharma completed her first full-stack project and is now ready for advanced training",
+    "type": "success",
+    "timestamp": "2 hours ago",
+    "read": false
+  },
+  {
+    "id": 2,
+    "title": "Support Needed",
+    "message": "Arjun Patel is struggling with cloud architecture concepts. Schedule a mentoring session",
+    "type": "warning",
+    "timestamp": "1 day ago",
+    "read": false
+  },
+  {
+    "id": 3,
+    "title": "Career Milestone",
+    "message": "Ananya Desai is interview-ready. Start preparing for employer matching process",
+    "type": "info",
+    "timestamp": "3 days ago",
+    "read": true
+  },
+  {
+    "id": 4,
+    "title": "Session Reminder",
+    "message": "You have a mentorship session scheduled with 3 mentees this week",
+    "type": "info",
+    "timestamp": "5 days ago",
+    "read": true
+  }
+]

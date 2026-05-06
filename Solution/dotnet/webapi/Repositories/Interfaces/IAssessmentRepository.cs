@@ -15,7 +15,7 @@ namespace backend.Repositories.Interfaces
         Task AssignAssessmentAsync(AssignAssessmentDto dto);
 
         // Task<List<AssessmentResultDto>> GetAssessmentResults();
-        Task<List<AssessmentQuestionDto>> GetAssessmentQuestions(int assessmentId);
+        Task<List<AssessmentQuestionDto>> GetAssessmentQuestionsAsync(int assessmentId);
         Task<bool> SaveAssessmentAnswersAsync(List<StudentAnswer>? answers);
         Task<AssessmentReportDto> GetResultData(int studentId, int assessmentId);
         Task<int> GetTotalAssessmentsAsync();
