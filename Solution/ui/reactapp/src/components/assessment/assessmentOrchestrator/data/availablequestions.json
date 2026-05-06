@@ -1,0 +1,52 @@
+ [
+    {
+      "questionId": 1001,
+      "description": "What does HTTP stand for?",
+      "type": "MCQ",
+      "difficulty": "BEGINNER",
+      "conceptId": 0,
+      "options": [
+        "HyperText Transfer Protocol",
+        "High Transfer Text Protocol",
+        "Hyperlink Text Transmission Protocol",
+        "HyperText Transmission Procedure"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "questionId": 1002,
+      "description": "Which array method creates a new array by applying a function to each element?",
+      "type": "MCQ",
+      "difficulty": "BEGINNER",
+      "conceptId": 0,
+      "options": ["filter()", "map()", "reduce()", "forEach()"],
+      "correctIndex": 1
+    },
+    {
+      "questionId": 1003,
+      "description": "Which HTTP status code means 'Not Found'?",
+      "type": "MCQ",
+      "difficulty": "BEGINNER",
+      "conceptId": 0,
+      "options": ["200", "301", "404", "500"],
+      "correctIndex": 2
+    },
+    {
+      "questionId": 1004,
+      "description": "In Git, which command creates a new branch and switches to it?",
+      "type": "MCQ",
+      "difficulty": "INTERMEDIATE",
+      "conceptId": 0,
+      "options": ["git branch new-branch", "git checkout -b new-branch", "git switch", "git init new-branch"],
+      "correctIndex": 1
+    },
+    {
+      "questionId": 1005,
+      "description": "Which CSS property is used to change the text color of an element?",
+      "type": "MCQ",
+      "difficulty": "BEGINNER",
+      "conceptId": 0,
+      "options": ["font-color", "text-color", "color", "fg-color"],
+      "correctIndex" : 2
+    }
+  ]
