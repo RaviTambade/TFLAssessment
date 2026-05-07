@@ -48,13 +48,8 @@ public class CreateTestController : ControllerBase
     /// POST /api/createtest/add-questions?testId=1
     /// </summary>
     
-<<<<<<< HEAD
     
      [HttpPut("cancel/{id}")]
-=======
-
-    [HttpPut("cancel/{id}")]
->>>>>>> 6113edf908b4d5c9cef08c5c3260fd4bf1a3d880
     public async Task<IActionResult> CancelTest(int id)
     {
         var result = await _service.CancelTestAsync(id);
@@ -67,10 +62,6 @@ public class CreateTestController : ControllerBase
         return Ok("Test cancelled successfully");
     }
     
-<<<<<<< HEAD
-=======
-
->>>>>>> 6113edf908b4d5c9cef08c5c3260fd4bf1a3d880
     
     [HttpPost("add-questions")]
     public async Task<IActionResult> AddQuestionsToTest([FromBody] AddQuestionsToTestRequestDto request, [FromQuery] long testId)
