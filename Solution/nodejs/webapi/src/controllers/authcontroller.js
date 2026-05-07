@@ -3,7 +3,7 @@ const Credential = require("../dtos/requests/credential");
 const UserRequest = require("../dtos/requests/userrequest");
 const LoginStatsResponseDto = require("../dtos/responses/loggerlogin-statsresponsedto");
 const LoginStatus = require("../dtos/responses/loginstatus");
-const ResponseGenerator = require("../helpers/ResponseGenerator");
+const ResponseGenerator = require("../helpers/responseGenerator");
 
 class AuthController {
   constructor(authService) {

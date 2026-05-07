@@ -42,8 +42,10 @@ const DashboardAdmin = () => {
   const memberActivities: MemberActivity[] = MemberActivities as MemberActivity[];
 
   useEffect(() => {
+
     const apiURL = `${WEBAPI_NODE_URL}/admin/profile`;
-        fetch(apiURL).then((response) => response.json()).then((data) => {
+    
+    fetch(apiURL).then((response) => response.json()).then((data) => {
           setAdminName(data.adminName);
           setOrganization(data.organization);
           setProfilePicture(data.profilePicture);
