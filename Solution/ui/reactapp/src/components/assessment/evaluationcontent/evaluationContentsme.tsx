@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, Loader2, AlertCircle } from "lucide-react";
 import QuestionsComponent from "./QuestionsComponent";
 import QuestionDetailsComponent from "./QuestionDetailsComponent";
+import { Bell, Users, Target, TrendingUp, CheckCircle, AlertCircle, BarChart3, FileText } from "lucide-react";
 
 
 const baseURL = "http://localhost:8080/api";
@@ -56,6 +57,7 @@ const EvaluationContentSme = () => {
                       <p className="text-gray-600 text-sm font-medium">{item.concept}</p>
                       <p className="text-3xl font-bold text-gray-900 mt-1">{item.question_count}</p>
                     </div>
+                    <FileText className="w-12 h-12 text-green-500 opacity-20" />
                   </div>
                 </CardContent>
               </Card>  ))
