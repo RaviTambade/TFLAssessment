@@ -1,6 +1,6 @@
 const UpdateUserStatusRequestDto = require("../dtos/requests/updateUserStatusRequestDto");
 const UpdateUserStatusResponseDto = require("../dtos/responses/updateUserStatusResponseDto");
-const ResponseGenerator = require("../helpers/ResponseGenerator");
+const ResponseGenerator = require("../helpers/responseGenerator");
 
 
 class UsersController {
