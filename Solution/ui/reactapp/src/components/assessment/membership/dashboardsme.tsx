@@ -10,7 +10,7 @@ import SMENotification from "./entities/SMENotification";
 import SmeNotifications from "./data/smeNotifications.json";
 import CandidatePerformances from "./data/candidatePerformance.json";
 import AssessmentMetric from "./data/assessmentMetrics.json";
-import SkillGapAnalyse from "./data/SkillGapAnalysis.json";
+import SkillGapAnalyse from "./data/skillGapAnalysis.json";
 
 //function component for SME Dashboard
 const DashboardSME = () => {
