@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { WEBAPI_NODE_URL } from "@/lib/utils";
+import { Save } from "lucide-react";
 
 import { Linkedin, Github, Mail, Phone, Edit } from "lucide-react";
 
@@ -307,7 +308,7 @@ const UserProfile = () => {
       console.error("Update failed", error);
     }
   };
-  // edit button icon handler
+  
   const onEditHandle = (field: string) => {
     setEditingField(field);
   };
@@ -538,10 +539,10 @@ const UserProfile = () => {
                             alt="Edit Logo"
                           />
                           <div className="flex justify-center mt-1">
-                            <Button onClick={updatePersonalDetails}>  Save</Button>
-
-
-                          </div>
+                            <Button onClick={() => updateSingleField("personal-info", "first_name", personalData.first_name)}
+                              variant="ghost"
+                              className="flex items-center gap-2">
+                              <Save size={18} /></Button></div>
                         </div>
 
                         <div className="flex items-center gap-4">
@@ -570,8 +571,11 @@ const UserProfile = () => {
                             alt="Edit Logo"
                           />
 
-                          <Button onClick={updatePersonalDetails}>  Save</Button>
-                        </div>
+                          <div className="flex justify-center mt-1">
+                            <Button onClick={() => updateSingleField("personal-info", "last_name", personalData.last_name)}
+                              variant="ghost"
+                              className="flex items-center gap-2">
+                              <Save size={18} /></Button></div>                        </div>
 
                         <div className="flex items-center gap-4">
                           <div className="w-32">
@@ -599,8 +603,11 @@ const UserProfile = () => {
                             alt="Edit Logo"
                           />
 
-                          <Button onClick={updatePersonalDetails}>  Save</Button>
-                        </div>
+                          <div className="flex justify-center mt-1">
+                            <Button onClick={() => updateSingleField("personal-info", "email", personalData.email)}
+                              variant="ghost"
+                              className="flex items-center gap-2">
+                              <Save size={18} /></Button></div>                        </div>
 
                         <div className="flex items-center gap-4">
                           <div className="w-32">
@@ -654,8 +661,11 @@ const UserProfile = () => {
                             className="h-8 w-8 cursor-pointer"
                             alt="Edit Logo"
                           />
-                            <Button onClick={updatePersonalDetails}>  Save</Button>
-                        </div>
+                          <div className="flex justify-center mt-1">
+                            <Button onClick={() => updateSingleField("personal-info", "date_of_birth", personalData.date_of_birth)}
+                              variant="ghost"
+                              className="flex items-center gap-2">
+                              <Save size={18} /></Button></div>                        </div>
 
 
                       </>
@@ -694,8 +704,11 @@ const UserProfile = () => {
                         className="h-8 w-8 cursor-pointer"
                         alt="Edit Logo"
                       />
-                      
-                            <Button onClick={updateProfessionalDetails}>  Save</Button>
+                      <div className="flex justify-center mt-1">
+                        <Button onClick={() => updateSingleField("professional-info", "company_name", professionalData.company_name)}
+                          variant="ghost"
+                          className="flex items-center gap-2">
+                          <Save size={18} /></Button></div>
                     </div>
 
                     <div className="flex items-center gap-4">
@@ -723,7 +736,11 @@ const UserProfile = () => {
                         className="h-8 w-8 cursor-pointer"
                         alt="Edit Logo"
                       />
-                            <Button onClick={updateProfessionalDetails}>  Save</Button>
+                      <div className="flex justify-center mt-1">
+                        <Button onClick={() => updateSingleField("professional-info", "job_title", professionalData.job_title)}
+                          variant="ghost"
+                          className="flex items-center gap-2">
+                          <Save size={18} /></Button></div>
                     </div>
 
                     <div className="flex items-center gap-4">
@@ -750,7 +767,12 @@ const UserProfile = () => {
                         onClick={() => onEditHandle("employment_type")}
                         className="h-8 w-8 cursor-pointer"
                         alt="Edit Logo"
-                      /><Button onClick={updateProfessionalDetails}>  Save</Button>
+                      />
+                      <div className="flex justify-center mt-1">
+                        <Button onClick={() => updateSingleField("professional-info", "employment_type", professionalData.employment_type)}
+                          variant="ghost"
+                          className="flex items-center gap-2">
+                          <Save size={18} /></Button></div>
                     </div>
 
                     <div className="flex items-center gap-4">
@@ -778,8 +800,11 @@ const UserProfile = () => {
                         className="h-8 w-8 cursor-pointer"
                         alt="Edit Logo"
                       />
-                       <Button onClick={updateProfessionalDetails}>  Save</Button>
-                    </div>
+                      <div className="flex justify-center mt-1">
+                        <Button onClick={() => updateSingleField("professional-info", "experience_years", professionalData.experience_years)}
+                          variant="ghost"
+                          className="flex items-center gap-2">
+                          <Save size={18} /></Button></div>                    </div>
 
                     <div className="flex items-center gap-4">
                       <div className="w-32">
@@ -806,9 +831,13 @@ const UserProfile = () => {
                         className="h-8 w-8 cursor-pointer"
                         alt="Edit Logo"
                       />
-                    <Button onClick={updateProfessionalDetails}>  Save</Button>                    </div>
+                      <div className="flex justify-center mt-1">
+                        <Button onClick={() => updateSingleField("professional-info", "location", professionalData.location)}
+                          variant="ghost"
+                          className="flex items-center gap-2">
+                          <Save size={18} /></Button></div>                    </div>
 
-                  <div className="flex items-center gap-4">
+                    <div className="flex items-center gap-4">
                       <div className="w-32">
                         <p className="font-bold">Skills</p>
                       </div>
@@ -833,9 +862,13 @@ const UserProfile = () => {
                         className="h-8 w-8 cursor-pointer"
                         alt="Edit Logo"
                       />
-                      <Button onClick={updateProfessionalDetails}>  Save</Button>
+                         <div className="flex justify-center mt-1">
+                        <Button onClick={() => updateSingleField("professional-info", "skills", professionalData.skills)}
+                          variant="ghost"
+                          className="flex items-center gap-2">
+                          <Save size={18} /></Button></div>
                     </div>
-                 
+
                   </div>
                 )}
                 {/* ACADEMIC */}
@@ -867,7 +900,12 @@ const UserProfile = () => {
                         className="h-8 w-8 cursor-pointer"
                         alt="Edit Logo"
                       />
-                      <Button onClick={updateAcademicDetails}>  Save</Button>
+                        <div className="flex justify-center mt-1">
+                        <Button onClick={() => updateSingleField("academic-info", "stream_name", academicData.stream_name)}
+                          variant="ghost"
+                          className="flex items-center gap-2">
+                          <Save size={18} /></Button>
+                          </div>
                     </div>
 
                     <div className="flex items-center gap-4">
@@ -895,8 +933,11 @@ const UserProfile = () => {
                         className="h-8 w-8 cursor-pointer"
                         alt="Edit Logo"
                       />
-                      <Button onClick={updateAcademicDetails}>  Save</Button>
-                    </div>
+                      <div className="flex justify-center mt-1">
+                        <Button onClick={() => updateSingleField("professional-info", "job_title", professionalData.job_title)}
+                          variant="ghost"
+                          className="flex items-center gap-2">
+                          <Save size={18} /></Button></div>                  </div>
 
                     <div className="flex items-center gap-4">
                       <div className="w-32">
@@ -923,8 +964,11 @@ const UserProfile = () => {
                         className="h-8 w-8 cursor-pointer"
                         alt="Edit Logo"
                       />
-                      <Button onClick={updateAcademicDetails}>  Save</Button>
-                    </div>
+                      <div className="flex justify-center mt-1">
+                        <Button onClick={() => updateSingleField("academic-info", "enrollment_year", academicData.enrollment_year)}
+                          variant="ghost"
+                          className="flex items-center gap-2">
+                          <Save size={18} /></Button></div>                  </div>
 
                     <div className="flex items-center gap-4">
                       <div className="w-32">
@@ -951,7 +995,11 @@ const UserProfile = () => {
                         className="h-8 w-8 cursor-pointer"
                         alt="Edit Logo"
                       />
-                      <Button onClick={updateAcademicDetails}>  Save</Button>
+                      <div className="flex justify-center mt-1">
+                        <Button onClick={() => updateSingleField("academic-info", "passing_year", academicData.passing_year)}
+                          variant="ghost"
+                          className="flex items-center gap-2">
+                          <Save size={18} /></Button></div>
                     </div>
 
                     <div className="flex items-center gap-4">
@@ -979,7 +1027,11 @@ const UserProfile = () => {
                         className="h-8 w-8 cursor-pointer"
                         alt="Edit Logo"
                       />
-                      <Button onClick={updateAcademicDetails}>  Save</Button>
+                      <div className="flex justify-center mt-1">
+                        <Button onClick={() => updateSingleField("academic-info", "percentage", academicData.percentage)}
+                          variant="ghost"
+                          className="flex items-center gap-2">
+                          <Save size={18} /></Button></div>
                     </div>
 
                     <div className="flex items-center gap-4">
@@ -1007,12 +1059,16 @@ const UserProfile = () => {
                         className="h-8 w-8 cursor-pointer"
                         alt="Edit Logo"
                       />
-                      <Button onClick={updateAcademicDetails}>  Save</Button>
+                      <div className="flex justify-center mt-1">
+                        <Button onClick={() => updateSingleField("academic-info", "college_name", academicData.college_name)}
+                          variant="ghost"
+                          className="flex items-center gap-2">
+                          <Save size={18} /></Button></div>
 
 
                     </div>
 
-                    
+
                   </div>
 
                 )}
@@ -1020,7 +1076,7 @@ const UserProfile = () => {
 
             </Card>
           </div>
-         
+
 
         </div>
       </div>
