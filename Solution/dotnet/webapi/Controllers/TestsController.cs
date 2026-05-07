@@ -50,6 +50,12 @@ public class CreateTestController : ControllerBase
     {
         try
         {
+
+            // Console.WriteLine("Adding questions to test");
+            // foreach (var qId in request.QuestionIds)
+            // {
+            //     Console.WriteLine($"Question ID: {qId}");
+            // }
             // Validate inputs
             if (request?.QuestionIds == null || request.QuestionIds.Count == 0)
             {

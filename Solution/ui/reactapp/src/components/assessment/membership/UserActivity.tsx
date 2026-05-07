@@ -2,38 +2,13 @@ import { useEffect, useMemo, useState } from "react";
 import { Card, CardContent } from "../../ui/card";
 import Footer from "../../Footer";
 import { WEBAPI_NODE_URL } from "@/lib/utils";
+import ApiActiveUser from "./entities/ApiActiveUser";
+import ApiSession from "./entities/ApiSession";
+import SessionRow from "./entities/SessionRow";
 
-// Types
-type ApiActiveUser = {
-  full_name?: string;
-  fullName?: string;
-  login_time?: string;
-  loginTime?: string;
-  status?: string;
-};
 
-type ApiSession = {
-  session_id?: string | number;
-  sessionId?: string | number;
-  id?: string | number;
-  full_name?: string;
-  fullName?: string;
-  name?: string;
-  login_time?: string;
-  loginTime?: string;
-  login?: string;
-  logout_time?: string;
-  logoutTime?: string;
-  logout?: string;
-};
 
-type SessionRow = {
-  id: string;
-  name: string;
-  login: string | null;
-  logout: string | null;
-  status: string;
-};
+
 
 const UserActivity = () => {
   // Stats + Active Users
@@ -107,9 +82,9 @@ const UserActivity = () => {
       try {
         // Stats APIs
         const [countRes, loginsRes, avgRes] = await Promise.all([
-          fetch(`$${WEBAPI_NODE_URL}/useractivity/active-count`),
-          fetch(`$${WEBAPI_NODE_URL}/useractivity/logins-24h`),
-          fetch(`$${WEBAPI_NODE_URL}/useractivity/average-time`),
+          fetch(`${WEBAPI_NODE_URL}/useractivity/active-count`),
+          fetch(`${WEBAPI_NODE_URL}/useractivity/logins-24h`),
+          fetch(`${WEBAPI_NODE_URL}/useractivity/average-time`),
         ]);
 
         const countData = await countRes.json();
@@ -129,7 +104,7 @@ const UserActivity = () => {
         );
 
         // Sessions API
-        const sessionsRes = await fetch(`$${WEBAPI_NODE_URL}/useractivity/logs`);
+        const sessionsRes = await fetch(`${WEBAPI_NODE_URL}/useractivity/logs`);
 
         if (!sessionsRes.ok) {
           throw new Error(`HTTP Error: ${sessionsRes.status}`);

@@ -4,34 +4,16 @@ import { Card, CardContent } from "../../ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../../ui/table";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../../ui/select";
 import { WEBAPI_NODE_URL } from "@/lib/utils";
+import User from "./entities/User";
+import ApiUser from "./entities/ApiUser";
+import ApiRole from "./entities/ApiRole";
 
-type User = {
-  id: number
-  name: string
-  role: string
-  joiningDate: string
-  status?: string
-}
 
 type Role = {
   id: number
   name: string
 }
 
-type ApiUser = {
-  user_id?: number
-  full_name?: string
-  role_name?: string
-  created_at?: string
-  status?: string
-}
-
-type ApiRole = {
-  role_id?: number
-  id?: number
-  role_name?: string
-  name?: string
-}
 
 const formatDate = (value?: string) => {
   if (!value) return "—"
