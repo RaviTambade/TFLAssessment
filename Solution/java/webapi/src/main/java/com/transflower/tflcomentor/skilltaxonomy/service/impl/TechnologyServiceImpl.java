@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.transflower.tflcomentor.skilltaxonomy.dto.response.ConceptQuestionCountDto;
 import com.transflower.tflcomentor.skilltaxonomy.dto.response.LanguageResponseDto;
 import com.transflower.tflcomentor.skilltaxonomy.dto.response.RuntimeSummaryResponseDto;
 import com.transflower.tflcomentor.skilltaxonomy.entity.Concept;
@@ -24,8 +25,8 @@ public class TechnologyServiceImpl implements TechnologyService {
     }
 
     @Override
-    public List<Concept> getAllConcepts(){
-        return technologyRepository.getAllConcepts();
+    public List<ConceptQuestionCountDto> getAllConceptsCount(){
+        return technologyRepository.getAllConceptsCount();
     }
 
     @Override

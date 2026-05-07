@@ -2,6 +2,7 @@ package com.transflower.tflcomentor.skilltaxonomy.repository;
 
 import java.util.List;
 
+import com.transflower.tflcomentor.skilltaxonomy.dto.response.ConceptQuestionCountDto;
 import com.transflower.tflcomentor.skilltaxonomy.dto.response.LanguageResponseDto;
 import com.transflower.tflcomentor.skilltaxonomy.dto.response.RuntimeResponseDTO;
 import com.transflower.tflcomentor.skilltaxonomy.dto.response.RuntimeSummaryResponseDto;
@@ -13,11 +14,12 @@ import com.transflower.tflcomentor.skilltaxonomy.entity.Layer;
 import com.transflower.tflcomentor.skilltaxonomy.entity.Runtime;
 
 public interface TechnologyRepository {
-    List<Concept> getAllConcepts();
+    //List<Concept> getAllConcepts();
     Concept getConceptById(Long id);
     Concept addConcept(Concept concept);
     List<Concept> getAllConceptsforFramework(int framework);
     boolean mapConceptToFramework(int conceptId, int frameworkId);
+    List<ConceptQuestionCountDto> getAllConceptsCount();
 
     List<Framework> getAllFrameworks();
     Framework getFrameworkById(Long id);

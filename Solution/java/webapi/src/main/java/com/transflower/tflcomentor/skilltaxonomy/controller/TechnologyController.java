@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
+import com.transflower.tflcomentor.skilltaxonomy.dto.response.ConceptQuestionCountDto;
 import com.transflower.tflcomentor.skilltaxonomy.dto.response.LanguageResponseDto;
 import com.transflower.tflcomentor.skilltaxonomy.dto.response.RuntimeSummaryResponseDto;
 import com.transflower.tflcomentor.skilltaxonomy.entity.Concept;
@@ -32,9 +32,9 @@ public class TechnologyController {
         this.technologyService = technologyService;
     }
 
-    @GetMapping("/concepts")
-    public List<Concept> getAllConcepts() {
-        return technologyService.getAllConcepts();
+    @GetMapping("/concepts/question-count")
+    public List<ConceptQuestionCountDto> getAllConceptsCount() {
+        return technologyService.getAllConceptsCount();
     }
 
     @GetMapping("/concepts/{id}")

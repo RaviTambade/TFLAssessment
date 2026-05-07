@@ -15,18 +15,24 @@ export default function AssignAssessment() {
 
   const [selectedStudents, setSelectedStudents] = useState<number[]>([]);
   const [selectedTest, setSelectedTest] = useState<number | null>(null);
+  const [isStudentListOpen, setIsStudentListOpen] = useState(false);
 
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
 
+  const getCurrentSchedule = () => {
+    const now = new Date();
+    return {
+      date: now.toISOString().split("T")[0],
+      time: now.toTimeString().slice(0, 5)
+    };
+  };
  
   useEffect(() => {
-    const now = new Date();
-    const isoDate = now.toISOString().split("T")[0];
-    const isoTime = now.toTimeString().slice(0,5);
+    const currentSchedule = getCurrentSchedule();
 
-    setDate(isoDate);
-    setTime(isoTime);
+    setDate(currentSchedule.date);
+    setTime(currentSchedule.time);
   }, []);
 
   const [step, setStep] = useState(0);
@@ -74,16 +80,47 @@ export default function AssignAssessment() {
 
   const handleAssign = async () => {
     try {
-      if (selectedStudents.length === 0 || !selectedTest) {
+      if (!selectedTest) {
+        alert("Please select test");
+        return;
+      }
+
+      if (status !== "Cancelled" && selectedStudents.length === 0) {
         alert("Please select students and test");
         return;
       }
 
+      if (status === "Cancelled") {
+        const res = await fetch(
+          `${WEBAPI_DOTNET_URL}/Assessment/cancel/test/${selectedTest}`,
+          { method: "POST" }
+        );
+
+        if (!res.ok) {
+          const errorData = await res.text();
+          let message = "Failed to cancel assessment";
+          try {
+            const jsonErr = JSON.parse(errorData);
+            message = jsonErr.message || message;
+          } catch {
+            message = errorData || message;
+          }
+          throw new Error(message);
+        }
+
+        const result = await res.json();
+        const cancelledCount = Number(result.cancelledCount ?? 0);
+        alert(result.message || `Assessment cancellation successfully done. ${cancelledCount} record(s) updated.`);
+        reset();
+        return;
+      }
+
+      // Ensure property names match the backend DTO (camelCase vs PascalCase)
       const dto = {
-        studentIds: selectedStudents,
-        testId: selectedTest,
-        scheduledAt: new Date(`${date}T${time}:00`).toISOString(),
-        status
+        StudentIds: selectedStudents,
+        TestId: selectedTest,
+        ScheduledAt: new Date(`${date}T${time}:00`).toISOString(),
+        Status: status
       };
 
       const res = await fetch(
@@ -94,10 +131,18 @@ export default function AssignAssessment() {
           body: JSON.stringify(dto)
         }
       );
-
-      const text = await res.text();
-
-      if (!res.ok) throw new Error(text);
+      
+      if (!res.ok) {
+        const errorData = await res.text();
+        let message = "Failed to assign assessment";
+        try {
+          const jsonErr = JSON.parse(errorData);
+          message = jsonErr.message || "Server Error";
+        } catch {
+          message = errorData || message;
+        }
+        throw new Error(message);
+      }
 
       alert("Assessment Assigned Successfully");
       reset();
@@ -114,219 +159,141 @@ export default function AssignAssessment() {
     setSearchTest("");
     setSelectedStudents([]);
     setSelectedTest(null);
-    setDate("");
-    setTime("");
+    const currentSchedule = getCurrentSchedule();
+    setDate(currentSchedule.date);
+    setTime(currentSchedule.time);
   };
 
   return (
-    <div className="min-h-screen bg-orange-50 flex justify-center p-6">
-      <div className="w-full max-w-2xl">
+    <div className="h-screen bg-orange-50 flex justify-center p-6 overflow-hidden">
+      <div className="w-full max-w-4xl">
 
         <h1 className="text-3xl font-bold mb-6 text-orange-600">
           Assign Assessment
         </h1>
 
-        {/* START */}
-        {step === 0 && (
-          <button
-            onClick={() => setStep(1)}
-            className="bg-orange-600 text-white px-6 py-3 rounded shadow"
-          >
-            + Assign Assessment
-          </button>
-        )}
-
-        {/*STATUS */}
-        {step === 1 && (
-          <div className="bg-white p-5 rounded shadow border border-orange-200">
-            <h2 className="font-bold mb-3">Select Status</h2>
-
-            <div className="flex gap-3 mb-4">
-              {["Pending", "Assigned", "Completed", "Cancelled"].map(s => (
-                <button
-                  key={s}
-                  onClick={() => setStatus(s)}
-                  className={`px-4 py-2 rounded-full border ${
-                    status === s ? "bg-orange-600 text-white" : ""
-                  }`}
-                >
-                  {s}
-                </button>
-              ))}
-            </div>
-
-            <button
-              onClick={() => setStep(2)}
-              disabled={!status}
-              className="bg-orange-600 text-white w-full py-2 rounded"
-            >
-              Next
-            </button>
-          </div>
-        )}
-
-        {/*TEST */}
-        {step === 2 && (
-          <div className="bg-white p-5 mt-4 rounded shadow border border-orange-200">
-
-            <h2 className="font-bold mb-2">Select Test</h2>
-
+        <div className="bg-white p-8 rounded-xl shadow-lg border border-orange-200 space-y-6">
+          {/* TEST SELECTION */}
+          <section>
+            <h2 className="text-lg font-bold mb-3 text-gray-800">1. Select Test</h2>
             <input
               placeholder="Search tests..."
-              className="border p-2 w-full mb-3"
+              className="border p-2 w-full mb-3 rounded-md focus:ring-2 focus:ring-orange-500 outline-none"
               value={searchTest}
               onChange={(e) => setSearchTest(e.target.value)}
             />
-
-            <div className="max-h-60 overflow-y-auto">
+            <div className="max-h-48 overflow-y-auto border rounded-md p-2">
               {filteredTests.map(t => (
-                <label key={t.id} className="flex flex-col border p-3 mb-2 rounded">
-                  <div className="flex items-center gap-2">
-                    <input
-                      type="radio"
-                      name="test"
-                      checked={selectedTest === t.id}
-                      onChange={() => setSelectedTest(t.id)}
-                    />
-                    <span className="font-semibold">{t.title}</span>
-                  </div>
-
-                  <div className="text-sm text-gray-600 ml-6 mt-1">
-                    ⏱ Duration: {t.duration} min
-                  </div>
-
-                  {t.difficulty && (
-                    <div className="text-sm ml-6">
-                      🎯 Difficulty: <span className="font-medium">{t.difficulty}</span>
-                    </div>
-                  )}
-
-                  {t.description && (
-                    <div className="text-sm text-gray-500 ml-6 mt-1">
-                      {t.description}
-                    </div>
-                  )}
-                </label>
-              ))}
-            </div>
-
-            <button
-              onClick={() => setStep(3)}
-              disabled={!selectedTest}
-              className="bg-orange-600 text-white w-full mt-3 py-2 rounded"
-            >
-              Next
-            </button>
-          </div>
-        )}
-
-        {/*STUDENTS */}
-        {step === 3 && (
-          <div className="bg-white p-5 mt-4 rounded shadow border border-orange-200">
-
-            <h2 className="font-bold mb-2">Select Students</h2>
-
-            <input
-              placeholder="Search students..."
-              className="border p-2 w-full mb-3"
-              value={searchStudent}
-              onChange={(e) => setSearchStudent(e.target.value)}
-            />
-
-            <div className="max-h-60 overflow-y-auto">
-              {filteredStudents.map(s => (
-                <label key={s.id} className="flex gap-2 border p-2 mb-2 rounded">
+                <label key={t.id} className={`flex items-center gap-3 p-3 mb-2 rounded-lg cursor-pointer transition ${selectedTest === t.id ? 'bg-orange-100 border-orange-400 border' : 'bg-gray-50 border border-transparent hover:bg-gray-100'}`}>
                   <input
-                    type="checkbox"
-                    checked={selectedStudents.includes(s.id)}
-                    onChange={() => toggleStudent(s.id)}
+                    type="radio"
+                    name="test"
+                    className="accent-orange-600"
+                    checked={selectedTest === t.id}
+                    onChange={() => setSelectedTest(t.id)}
                   />
-                  {s.fullName}
+                  <div>
+                    <span className="font-semibold block">{t.title}</span>
+                    <span className="text-xs text-gray-500">⏱ {t.duration} min | 🎯 {t.difficulty}</span>
+                  </div>
                 </label>
               ))}
             </div>
+          </section>
 
-            <button
-              onClick={() => setStep(4)}
-              disabled={selectedStudents.length === 0}
-              className="bg-orange-600 text-white w-full mt-3 py-2 rounded"
-            >
-              Next
-            </button>
-          </div>
-        )}
-
-        {/*SCHEDULE */}
-        {step === 4 && (
-          <div className="bg-white p-5 mt-4 rounded shadow border border-orange-200">
-
-            <h2 className="font-bold mb-3">Schedule</h2>
-
-            <input
-              type="date"
-              className="border p-2 w-full mb-2"
-              value={date}
-              onChange={(e) => setDate(e.target.value)}
-            />
-
-            <input
-              type="time"
-              className="border p-2 w-full"
-              value={time}
-              onChange={(e) => setTime(e.target.value)}
-            />
-
-            <button
-              onClick={() => setStep(5)}
-              disabled={!date || !time}
-              className="bg-orange-600 text-white w-full mt-3 py-2 rounded"
-            >
-              Next
-            </button>
-          </div>
-        )}
-
-        {/*SUMMARY */}
-        {step === 5 && (
-          <div className="bg-white p-5 mt-4 rounded shadow border border-orange-200">
-
-            <h2 className="text-xl font-bold text-orange-600 mb-3">
-              Summary
-            </h2>
-
-            <p><b>Status:</b> {status}</p>
-            <p><b>Date:</b> {date}</p>
-            <p><b>Time:</b> {time}</p>
-
-            <p className="mt-3 font-semibold">Students:</p>
-            <p>
-              {students
-                .filter(s => selectedStudents.includes(s.id))
-                .map(s => s.fullName)
-                .join(", ")}
-            </p>
-
-            <p className="mt-3 font-semibold">Test:</p>
-            <p>{tests.find(t => t.id === selectedTest)?.title}</p>
-
-            <div className="flex gap-2 mt-5">
-              <button
-                onClick={handleAssign}
-                className="bg-orange-600 text-white w-full py-2 rounded"
+          {/* STUDENT SELECTION */}
+          <section className={status === "Cancelled" ? "opacity-50 pointer-events-none" : ""}>
+            <h2 className="text-lg font-bold mb-3 text-gray-800">2. Select Students</h2>
+            <div className="relative">
+              <div 
+                onClick={() => setIsStudentListOpen(!isStudentListOpen)}
+                className="border p-2 w-full rounded-md bg-white flex flex-wrap gap-2 min-h-[42px] cursor-pointer focus-within:ring-2 focus-within:ring-orange-500"
               >
-                Assign Assessment
-              </button>
-
-              <button
-                onClick={reset}
-                className="border w-full py-2 rounded"
-              >
-                Cancel
-              </button>
+                {selectedStudents.length === 0 && (
+                  <span className="text-gray-400">
+                    {status === "Cancelled" ? "Students are not required for cancellation" : "Select Students..."}
+                  </span>
+                )}
+                {selectedStudents.map(id => (
+                  <span key={id} className="bg-orange-100 text-orange-700 px-2 py-1 rounded text-xs font-bold flex items-center gap-1">
+                    {students.find(s => s.id === id)?.fullName}
+                    <button onClick={(e) => { e.stopPropagation(); toggleStudent(id); }} className="hover:text-orange-900 ml-1">×</button>
+                  </span>
+                ))}
+              </div>
+              {isStudentListOpen && (
+                <div className="absolute z-10 w-full mt-1 bg-white border rounded-md shadow-xl max-h-48 overflow-y-auto">
+                {students.map(s => (
+                  <div 
+                    key={s.id} 
+                    onClick={() => toggleStudent(s.id)}
+                    className={`p-2 hover:bg-orange-50 cursor-pointer flex items-center gap-2 ${selectedStudents.includes(s.id) ? 'bg-orange-50 font-bold' : ''}`}
+                  >
+                    <input type="checkbox" checked={selectedStudents.includes(s.id)} readOnly className="accent-orange-600" />
+                    <span className="text-sm">{s.fullName}</span>
+                  </div>
+                ))}
+              </div>
+              )}
             </div>
+          </section>
 
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {/* STATUS SELECTION */}
+            <section>
+              <h2 className="text-lg font-bold mb-3 text-gray-800">3. Status</h2>
+              <div className="flex gap-3">
+                {["Assigned", "Cancelled"].map(s => (
+                  <button
+                    key={s}
+                    onClick={() => setStatus(s)}
+                    className={`flex-1 py-2 rounded-md border font-medium transition ${
+                      status === s ? "bg-orange-600 text-white border-orange-600" : "bg-white text-gray-600 border-gray-300 hover:bg-gray-50"
+                    }`}
+                  >
+                    {s}
+                  </button>
+                ))}
+              </div>
+            </section>
+
+            {/* SCHEDULE SELECTION */}
+            <section>
+              <h2 className="text-lg font-bold mb-3 text-gray-800">4. Schedule</h2>
+              <div className="flex gap-2">
+                <input
+                  type="date"
+                  className="border p-2 flex-1 rounded-md outline-none focus:ring-2 focus:ring-orange-500"
+                  value={date}
+                  onChange={(e) => setDate(e.target.value)}
+                />
+                <input
+                  type="time"
+                  className="border p-2 flex-1 rounded-md outline-none focus:ring-2 focus:ring-orange-500"
+                  value={time}
+                  onChange={(e) => setTime(e.target.value)}
+                />
+              </div>
+            </section>
           </div>
-        )}
+
+          {/* ACTION BUTTONS */}
+          <div className="pt-6 border-t flex gap-4">
+            <button
+              onClick={handleAssign}
+              disabled={!selectedTest || !status || (status !== "Cancelled" && selectedStudents.length === 0) || !date || !time}
+              className="flex-[2] bg-orange-600 text-white py-3 rounded-lg font-bold text-lg shadow-md hover:bg-orange-700 transition disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {status === "Cancelled" ? "Confirm Cancellation" : "Assign Assessment"}
+            </button>
+            <button
+              onClick={reset}
+              className="flex-1 border-2 border-gray-300 text-gray-600 py-3 rounded-lg font-bold hover:bg-gray-50 transition"
+            >
+              Reset
+            </button>
+          </div>
+        </div>
 
       </div>
     </div>

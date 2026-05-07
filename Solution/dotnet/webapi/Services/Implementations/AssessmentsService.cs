@@ -109,6 +109,11 @@ namespace backend.Services.Implementations
             return await _repository.DeactivateAssessment(id);
         }
 
+        public async Task<int> CancelAssessmentsByTestId(long testId)
+        {
+            return await _repository.CancelAssessmentsByTestId(testId);
+        }
+
         public async Task<bool> RestoreAssessment(long id)
         {
             return await _repository.RestoreAssessment(id);

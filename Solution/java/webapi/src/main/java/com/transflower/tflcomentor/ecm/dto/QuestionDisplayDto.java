@@ -54,6 +54,5 @@ public class QuestionDisplayDto {
     public void setStatus(QuestionStatus status) {
         this.status = status;
     }
-   
     
 }

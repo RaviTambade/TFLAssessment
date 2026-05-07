@@ -36,6 +36,10 @@ public class QuestionsServiceImpl implements QuestionService {
         question.setQuestionType(dto.getQuestionType());
         question.setDifficultyLevel(dto.getDifficultyLevel());
         question.setQuestionStatus(dto.getStatus());
+        question.setLanguage(dto.getLanguage());
+        question.setLayer(dto.getLayer());
+        question.setFramework(dto.getFramework());
+        question.setConcept(dto.getConcept());
         Long questionId = repository.insert(question);
         if (dto.getQuestionType() == QuestionType.MCQ) {
 
@@ -48,7 +52,6 @@ public class QuestionsServiceImpl implements QuestionService {
                     dto.getCorrectAnswer()
             );
         }
-
         return questionId;
     }
 
@@ -105,5 +108,10 @@ public class QuestionsServiceImpl implements QuestionService {
     @Override
     public List<Question> getQuestionsByConceptId(Long conceptId) {
         return repository.getQuestionsByConceptId(conceptId);
+    }
+
+    @Override
+    public int getQuestionCountByConcept(String concept) {
+        return repository.getQuestionCountByConcept(concept);
     }
 }
