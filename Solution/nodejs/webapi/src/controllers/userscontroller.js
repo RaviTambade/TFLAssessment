@@ -58,6 +58,7 @@ class UsersController {
   }
 
   updateAcademic(req, res) {
+    const responseGenerator = new ResponseGenerator();
     const result = this.service.updateAcademic(
       req.params.userId,
       req.body,
@@ -71,7 +72,7 @@ class UsersController {
         );
       },
     );
-    res.json({ success: true, result });
+  
   }
 
   updateUserStatus(req, res) {
