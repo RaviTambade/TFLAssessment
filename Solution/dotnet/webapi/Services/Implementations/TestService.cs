@@ -18,5 +18,12 @@ namespace backend.Services
 
         public Task<long> CreateTestAsync(CreateTestRequestDto dto)
             => _repo.CreateTestAsync(dto);
+
+            
+        public async Task<bool> CancelTestAsync(int id)
+        {
+            return await _repo.CancelTestAsync(id);
+        }
+
     }
 }

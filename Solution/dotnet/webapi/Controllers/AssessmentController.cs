@@ -152,6 +152,17 @@ public class AssessmentController : ControllerBase
         return Ok(new { message = "Assessment InActive successfully" });
     }
 
+    [HttpPost("cancel/test/{testId}")]
+    public async Task<IActionResult> CancelByTest(long testId)
+    {
+        var cancelledCount = await _service.CancelAssessmentsByTestId(testId);
+
+        if (cancelledCount == 0)
+            return NotFound(new { message = "Test not found." });
+
+        return Ok(new { message = "Test cancelled successfully.", cancelledCount });
+    }
+
     [HttpPost("restore/{id}")]
     public async Task<IActionResult> Restore(long id)
     {

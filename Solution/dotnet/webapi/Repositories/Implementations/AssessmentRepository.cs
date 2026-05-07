@@ -125,6 +125,29 @@ public class AssessmentRepository : IAssessmentRepository
         return true;
     }
 
+    public async Task<int> CancelAssessmentsByTestId(long testId)
+    {
+        var testExists = await _context.Tests.AnyAsync(t => t.Id == testId);
+
+        if (!testExists)
+            return 0;
+
+        var testRowsAffected = await _context.Database.ExecuteSqlInterpolatedAsync($@"
+            UPDATE tests
+            SET status = 0
+            WHERE id = {testId}");
+
+        var assessmentRowsAffected = await _context.Database.ExecuteSqlInterpolatedAsync($@"
+            UPDATE assessments
+            SET status = 'Cancelled',
+                is_active = 0
+            WHERE test_id = {testId}
+              AND is_active = 1
+              AND status <> 'Completed'");
+
+        return Math.Max(1, testRowsAffected + assessmentRowsAffected);
+    }
+
     public async Task<bool> RestoreAssessment(long id)
     {
         var assessment = await _context.Assessments.FindAsync(id);

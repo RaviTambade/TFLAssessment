@@ -188,7 +188,7 @@ public partial class AppDbContext : DbContext
                 .HasColumnName("scheduled_at");
             entity.Property(e => e.Status)
                 .HasDefaultValueSql("'Pending'")
-                .HasColumnType("enum('Assigned','Pending','Completed')")
+                .HasColumnType("enum('Assigned','Pending','Completed','Cancelled')")
                 .HasColumnName("status");
             entity.Property(e => e.StudentId).HasColumnName("student_id");
             entity.Property(e => e.TestId).HasColumnName("test_id");
