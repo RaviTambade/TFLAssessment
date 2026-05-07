@@ -5,13 +5,11 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.sql.Timestamp;
 
 import org.springframework.stereotype.Repository;
 
@@ -19,6 +17,7 @@ import com.transflower.tflcomentor.configuration.DBConfig;
 import com.transflower.tflcomentor.ecm.dto.QuestionDisplayDto;
 import com.transflower.tflcomentor.ecm.dto.QuestionOptionsRequestDto;
 import com.transflower.tflcomentor.ecm.dto.QuestionStatusDto;
+import com.transflower.tflcomentor.ecm.dto.QuestionTypeDto;
 import com.transflower.tflcomentor.ecm.entity.Question;
 import com.transflower.tflcomentor.ecm.entity.enums.DifficultyLevel;
 import com.transflower.tflcomentor.ecm.entity.enums.QuestionStatus;
@@ -110,7 +109,7 @@ public class QuestionRepositoryImpl implements QuestionRepository {
     }
 
     @Override
-    public List<Question> getQuestions(QuestionType questionType) {
+    public List<QuestionTypeDto> getQuestionsByType(QuestionType questionType) {
 
         String sql = """
             SELECT question_id, question_type, description, difficulty_level, status
@@ -124,16 +123,14 @@ public class QuestionRepositoryImpl implements QuestionRepository {
             statement.setString(1, questionType.toString());
 
             try (ResultSet rs = statement.executeQuery()) {
-                List<Question> results = new ArrayList<>();
+                List<QuestionTypeDto> results = new ArrayList<>();
 
                 while (rs.next()) {
-                    Question question = new Question();
-                    question.setQuestionId(rs.getLong("question_id"));
-                    question.setDescription(rs.getString("description"));
+                    QuestionTypeDto question = new QuestionTypeDto();   
 
+                    question.setDescription(rs.getString("description"));
+                    question.setStatus(QuestionStatus.valueOf(rs.getString("status")));
                     question.setQuestionType(QuestionType.valueOf(rs.getString("question_type")));
-                    question.setDifficultyLevel(DifficultyLevel.valueOf(rs.getString("difficulty_level")));
-                    question.setQuestionStatus(QuestionStatus.valueOf(rs.getString("status")));
                     results.add(question);
                 }
                 return results;
