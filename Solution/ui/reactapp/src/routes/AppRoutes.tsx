@@ -40,7 +40,8 @@ import ConceptByFramework from "@/components/assessment/skilltaxonomy/ConceptByF
 
 import QuestionByConceptId from "@/components/assessment/evaluationcontent/QuestionByConceptId";
 import Dashboard from "@/components/assessment/membership/dashboard";
-
+import DashboardSME from "@/components/assessment/membership/dashboardsme";
+import EvaluationContentSme from "@/components/assessment/evaluationcontent/evaluationContentsme";
 
 function AppRoutes() {
   return (
@@ -93,7 +94,7 @@ function AppRoutes() {
           <Route path="evaluationcontent/reviewquestion" element={<MentorReviewQuestion />} />
           <Route index element={<Assessment />} />
           <Route path="evaluationcontent/viewprojectinfo" element={<ViewProjectInfo />} />
-
+          <Route path="evaluationcontent/sme" element={<EvaluationContentSme />} />
           <Route index element={<Assessment />} />
           <Route path="upcoming-assessment" element={<UpcomingAssessment />} />
           <Route path="create-test" element={<SMECreateTest />} />
@@ -112,6 +113,7 @@ function AppRoutes() {
           <Route path="membership/UserActivity" element={<UserActivity />} />
           <Route path="membership/UserProfile" element={<UserProfile />} />
           <Route path="membership/dashboard" element={<Dashboard />} />
+          <Route path="membership/SmeDashboard" element={<DashboardSME />} />
 
         </Routes>
       </main>

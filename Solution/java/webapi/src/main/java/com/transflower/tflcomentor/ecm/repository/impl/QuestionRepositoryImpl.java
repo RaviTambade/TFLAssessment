@@ -451,4 +451,20 @@ public class QuestionRepositoryImpl implements QuestionRepository {
             e.printStackTrace();
         }
     }
+
+    @Override
+    public int getQuestionCountByConcept(String concept){
+        String sql="SELECT COUNT(*) FROM questions WHERE concept=?";
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, concept);
+            ResultSet rs = statement.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
 }

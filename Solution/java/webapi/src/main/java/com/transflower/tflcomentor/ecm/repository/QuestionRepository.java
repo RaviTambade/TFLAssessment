@@ -35,6 +35,7 @@ public interface QuestionRepository {
     List<Question> getQuestionsByConceptId(Long conceptId);
     void insertQuestionFrameworkConceptMapping(Long questionId, Long frameworkConceptId);
     Long getFrameworkConceptId(int conceptId, int frameworkId);
+    int getQuestionCountByConcept(String concept);
 }
 
 

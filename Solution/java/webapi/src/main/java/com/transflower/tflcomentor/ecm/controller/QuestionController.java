@@ -108,4 +108,9 @@ public class QuestionController {
         return service.getQuestionsByConceptId(conceptId);
     }
 
+    @GetMapping("/concepts/{concept}/count")
+    // http://localhost:8080/api/questions/concepts/loops/count
+    public int getQuestionCountByConcept(@PathVariable String concept) {
+        return service.getQuestionCountByConcept(concept);
+    }
 }

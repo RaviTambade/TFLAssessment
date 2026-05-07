@@ -15,6 +15,7 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import com.transflower.tflcomentor.configuration.DBConfig;
+import com.transflower.tflcomentor.skilltaxonomy.dto.response.ConceptQuestionCountDto;
 import com.transflower.tflcomentor.skilltaxonomy.dto.response.LanguageResponseDto;
 import com.transflower.tflcomentor.skilltaxonomy.dto.response.RuntimeResponseDTO;
 import com.transflower.tflcomentor.skilltaxonomy.dto.response.RuntimeSummaryResponseDto;
@@ -39,28 +40,6 @@ public class TechnologyRepositoryImpl implements TechnologyRepository {
 
     private Connection getConnection() {
         return DBConfig.getConnection();
-    }
-
-    @Override
-    public List<Concept> getAllConcepts(){
-        String query = "SELECT  DISTINCT c.id, c.name, c.description FROM concepts c";
-        List<Concept> conceptsList = new ArrayList<>();
-        try (Connection connection = getConnection()) {
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(query);
-
-            while (resultSet.next()) {
-                Concept concepts = new Concept();
-                concepts.setId(resultSet.getInt("id"));
-                concepts.setName(resultSet.getString("name"));
-                concepts.setDescription(resultSet.getString("description"));
-                conceptsList.add(concepts);
-            }
-            return conceptsList;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ArrayList<>();
-        }
     }
 
     @Override
@@ -425,6 +404,26 @@ public class TechnologyRepositoryImpl implements TechnologyRepository {
             }
             return runtimesList;
         } catch (Exception e) {
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
+    }
+
+    @Override
+    public List<ConceptQuestionCountDto> getAllConceptsCount() {
+        String query = "SELECT DISTINCT concept, COUNT(*) as question_count FROM questions GROUP BY concept";
+        List<ConceptQuestionCountDto> conceptCounts = new ArrayList<>();
+        try (Connection connection = getConnection()) {
+            PreparedStatement statement = connection.prepareStatement(query);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                conceptCounts.add(new ConceptQuestionCountDto(
+                    resultSet.getString("concept"),
+                    resultSet.getInt("question_count")
+                ));
+            }
+            return conceptCounts;
+        } catch (SQLException e) {
             e.printStackTrace();
             return new ArrayList<>();
         }

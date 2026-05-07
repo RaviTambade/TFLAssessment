@@ -38,6 +38,8 @@ public interface QuestionService {
     public void updateQuestionStatus(long questionId, QuestionStatus status);
 
     public  List<Question> getQuestionsByConceptId(Long conceptId);
+
+    public int getQuestionCountByConcept(String concept);
 }
 
 

@@ -106,4 +106,9 @@ public class QuestionsServiceImpl implements QuestionService {
     public List<Question> getQuestionsByConceptId(Long conceptId) {
         return repository.getQuestionsByConceptId(conceptId);
     }
+
+    @Override
+    public int getQuestionCountByConcept(String concept) {
+        return repository.getQuestionCountByConcept(concept);
+    }
 }
