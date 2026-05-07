@@ -10,7 +10,7 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { WEBAPI_NODE_URL } from "@/lib/utils";
 
-import { Linkedin, Github, Mail, Phone } from "lucide-react";
+import { Linkedin, Github, Mail, Phone, Edit } from "lucide-react";
 
 type TabType = "personal" | "professional" | "academic";
 
@@ -50,139 +50,141 @@ const UserProfile = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [userRoles, setUserRoles] = useState([]);
- const [activeTab, setActiveTab] = useState<TabType>("professional");
+  const [activeTab, setActiveTab] = useState<TabType>("professional");
   const [personalData, setPersonalData] = useState<PersonalDetails | null>(null);
   const [professionalData, setProfessionalData] = useState<ProfessionalDetails | null>(null);
   const [academicData, setAcademicData] = useState<AcademicDetails | null>(null);
+  const [editingField, setEditingField] = useState("");
 
 
 
-    const fetchPersonalDetails = async () => {
-        setLoading(true);
-  
-        let userid;
-  
-        const storedUser = sessionStorage.getItem("current");
-        if (storedUser) {
-          try {
-            const user = JSON.parse(storedUser);
-            userid = user?.userid;
-          } catch {
-            console.error("Invalid user data");
-          }
-        }
-  
-        if (!userid) {
-          console.error("User ID not found");
-          setLoading(false);
-          return;
-        }
-  
-        try {
-          const res = await fetch(
-            `${WEBAPI_NODE_URL}/users/${userid}/personal/`
-          );
-  
-          const data = await res.json();
-          console.log("API RESPONSE:", data);
-  
-          const personal: PersonalDetails = data.data;
-  
-          // ✅ FIX DOB FORMAT
-          if (personal.date_of_birth) {
-            personal.date_of_birth =
-              personal.date_of_birth.split("T")[0];
-          }
-  
-          setPersonalData(personal);
-        } catch {
-          console.error("Failed to fetch personal details");
-        } finally {
-          setLoading(false);
-        }
-      };
-  
-  
-       const fetchProfessionalDetails = async () => {
-        setLoading(true);
-  
-        let userid;
-  
-        const storedUser = sessionStorage.getItem("current");
-        if (storedUser) {
-          try {
-            const user = JSON.parse(storedUser);
-            userid = user?.userid;
-          } catch {
-            console.error("Invalid user data");
-          }
-        }
-  
-        if (!userid) {
-          console.error("User ID not found");
-          setLoading(false);
-          return;
-        }
-  
-        try {
-          const res = await fetch(
-            `${WEBAPI_NODE_URL}/users/${userid}/professional/`
-          );
-  
-          const data = await res.json();
-          console.log("API RESPONSE:", data);
-  
-          const professional: ProfessionalDetails = data.data;
-  
-          console.log("PROFESSIONAL DETAILS:", professional);
-          setProfessionalData(professional);
-        } catch {
-          console.error("Failed to fetch professional details");
-        } finally {
-          setLoading(false);
-        }
-      };
-  
-      const fetchAcademicDetails = async () => {
-        setLoading(true);
-  
-        let userid;
-  
-        const storedUser = sessionStorage.getItem("current");
-        if (storedUser) {
-          try {
-            const user = JSON.parse(storedUser);
-            userid = user?.userid;
-          } catch {
-            console.error("Invalid user data");
-          }
-        }
-  
-        if (!userid) {
-          console.error("User ID not found");
-          setLoading(false);
-          return;
-        }
-  
-        try {
-          const res = await fetch(
-            `${WEBAPI_NODE_URL}/users/${userid}/academic/`
-          );
-  
-          const data = await res.json();
-          console.log("API RESPONSE:", data);
-  
-          const academic: AcademicDetails = data.data;
-  
-          console.log("ACADEMIC DETAILS:", academic);
-          setAcademicData(academic);
-        } catch {
-          console.error("Failed to fetch academic details");
-        } finally {
-          setLoading(false);
-        }
-      };
-  
+
+  const fetchPersonalDetails = async () => {
+    setLoading(true);
+
+    let userid;
+
+    const storedUser = sessionStorage.getItem("current");
+    if (storedUser) {
+      try {
+        const user = JSON.parse(storedUser);
+        userid = user?.userid;
+      } catch {
+        console.error("Invalid user data");
+      }
+    }
+
+    if (!userid) {
+      console.error("User ID not found");
+      setLoading(false);
+      return;
+    }
+
+    try {
+      const res = await fetch(
+        `${WEBAPI_NODE_URL}/users/${userid}/personal/`
+      );
+
+      const data = await res.json();
+      console.log("API RESPONSE:", data);
+
+      const personal: PersonalDetails = data.data;
+
+      // ✅ FIX DOB FORMAT
+      if (personal.date_of_birth) {
+        personal.date_of_birth =
+          personal.date_of_birth.split("T")[0];
+      }
+
+      setPersonalData(personal);
+    } catch {
+      console.error("Failed to fetch personal details");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+
+  const fetchProfessionalDetails = async () => {
+    setLoading(true);
+
+    let userid;
+
+    const storedUser = sessionStorage.getItem("current");
+    if (storedUser) {
+      try {
+        const user = JSON.parse(storedUser);
+        userid = user?.userid;
+      } catch {
+        console.error("Invalid user data");
+      }
+    }
+
+    if (!userid) {
+      console.error("User ID not found");
+      setLoading(false);
+      return;
+    }
+
+    try {
+      const res = await fetch(
+        `${WEBAPI_NODE_URL}/users/${userid}/professional/`
+      );
+
+      const data = await res.json();
+      console.log("API RESPONSE:", data);
+
+      const professional: ProfessionalDetails = data.data;
+
+      console.log("PROFESSIONAL DETAILS:", professional);
+      setProfessionalData(professional);
+    } catch {
+      console.error("Failed to fetch professional details");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const fetchAcademicDetails = async () => {
+    setLoading(true);
+
+    let userid;
+
+    const storedUser = sessionStorage.getItem("current");
+    if (storedUser) {
+      try {
+        const user = JSON.parse(storedUser);
+        userid = user?.userid;
+      } catch {
+        console.error("Invalid user data");
+      }
+    }
+
+    if (!userid) {
+      console.error("User ID not found");
+      setLoading(false);
+      return;
+    }
+
+    try {
+      const res = await fetch(
+        `${WEBAPI_NODE_URL}/users/${userid}/academic/`
+      );
+
+      const data = await res.json();
+      console.log("API RESPONSE:", data);
+
+      const academic: AcademicDetails = data.data;
+
+      console.log("ACADEMIC DETAILS:", academic);
+      setAcademicData(academic);
+    } catch {
+      console.error("Failed to fetch academic details");
+    } finally {
+      setLoading(false);
+    }
+  };
+
 
   useEffect(() => {
     const currentuser = sessionStorage.getItem("current");
@@ -219,7 +221,7 @@ const UserProfile = () => {
         setLoading(false);
       });
 
-      
+
     fetchPersonalDetails();
     fetchProfessionalDetails();
     fetchAcademicDetails();
@@ -235,6 +237,184 @@ const UserProfile = () => {
   const initials = fullName
     ? fullName.split(" ").map(n => n[0]).join("").slice(0, 2).toUpperCase()
     : "NA";
+
+
+  const handleChange = (
+    section: "personal" | "professional" | "academic",
+    field: string,
+    value: any
+  ) => {
+
+    if (section === "personal") {
+      setPersonalData((prev) =>
+        prev
+          ? { ...prev, [field]: value }
+          : null
+      );
+    }
+
+    if (section === "professional") {
+      setProfessionalData((prev) =>
+        prev
+          ? { ...prev, [field]: value }
+          : null
+      );
+    }
+
+    if (section === "academic") {
+      setAcademicData((prev) =>
+        prev
+          ? { ...prev, [field]: value }
+          : null
+      );
+    }
+  };
+  const updateSingleField = async (
+    endpoint: string,
+    field: string,
+    value: any
+  ) => {
+    try {
+
+      const storedUser = sessionStorage.getItem("current");
+
+      if (!storedUser) return;
+
+      const user = JSON.parse(storedUser);
+      const userid = user?.userid;
+
+      const response = await fetch(
+        `http://localhost:3000/api/users/${userid}/${endpoint}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+
+          body: JSON.stringify({
+            [field]: value,
+          }),
+        }
+      );
+
+      const result = await response.json();
+
+      console.log("UPDATED:", result);
+
+      setEditingField("");
+
+    } catch (error) {
+      console.error("Update failed", error);
+    }
+  };
+  // edit button icon handler
+  const onEditHandle = (field: string) => {
+    setEditingField(field);
+  };
+
+
+  const updatePersonalDetails = async () => {
+    try {
+      const storedUser = sessionStorage.getItem("current");
+
+      if (!storedUser) return;
+
+      const user = JSON.parse(storedUser);
+      const userid = user?.userid;
+
+      const response = await fetch(
+        `http://localhost:3000/api/users/${userid}/personal-info`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            first_name: personalData.first_name,
+            last_name: personalData.last_name,
+            email: personalData.email,
+            date_of_birth: personalData.date_of_birth,
+            address: personalData.address,
+          })
+        }
+      );
+
+      const result = await response.json();
+
+      console.log("PERSONAL UPDATED:", result);
+
+      setEditingField("");
+    } catch (error) {
+      console.error("Failed to update personal details", error);
+    }
+  };
+
+  const updateProfessionalDetails = async () => {
+    try {
+      const storedUser = sessionStorage.getItem("current");
+
+      if (!storedUser) return;
+
+      const user = JSON.parse(storedUser);
+      const userid = user?.userid;
+
+      const response = await fetch(
+        `http://localhost:3000/api/users/${userid}/professional-info`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            company_name: professionalData.company_name,
+            job_title: professionalData.job_title,
+            employment_type: professionalData.employment_type,
+            experience_years: professionalData.experience_years,
+            location: professionalData.location,
+            skills: professionalData.skills,
+          })
+        }
+      );
+
+      const result = await response.json();
+
+      console.log("PROFESSIONAL UPDATED:", result);
+
+      setEditingField("");
+    } catch (error) {
+      console.error("Failed to update professional details", error);
+    }
+  };
+
+  const updateAcademicDetails = async () => {
+    try {
+      const storedUser = sessionStorage.getItem("current");
+
+      if (!storedUser) return;
+
+      const user = JSON.parse(storedUser);
+      const userid = user?.userid;
+
+      const response = await fetch(
+        `http://localhost:3000/api/users/${userid}/academic-info`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(academicData),
+        }
+      );
+
+      const result = await response.json();
+
+      console.log("ACADEMIC UPDATED:", result);
+
+      setEditingField("");
+    } catch (error) {
+      console.error("Failed to update academic details", error);
+    }
+  };
 
 
   return (
@@ -262,8 +442,8 @@ const UserProfile = () => {
 
                     {/* ✅ Dynamic Role */}
                     <Badge className="mt-2 bg-primary text-white">
-                     <p>{userRoles?.map(r => r.role_name).join(", ")}</p>
-                      
+                      <p>{userRoles?.map(r => r.role_name).join(", ")}</p>
+
                     </Badge>
 
                     <div className="flex gap-4 mt-3 text-primary">
@@ -293,106 +473,554 @@ const UserProfile = () => {
                     {professionalData?.experience_years ?? 0} years
                   </p>
 
-                 
+
                 </div>
 
               </div>
             </CardContent>
           </Card>
 
-       {/* <div className="min-h-screen bg-gradient-hero flex flex-col"> */}
-      <div className="flex-1 flex justify-center items-center ">
-        <Card className="w-full max-w-2xl shadow-lg">
+          {/* <div className="min-h-screen bg-gradient-hero flex flex-col"> */}
+          <div className="flex-1 flex justify-center items-center ">
+            <Card className="w-full max-w-2xl shadow-lg">
 
-          {/* Tabs */}
-          <div className="border-b flex">
-            {["personal", "professional", "academic"].map((tab) => (
-              <button
-                key={tab}
-                onClick={() => setActiveTab(tab as TabType)}
-                className={`flex-1 py-4 px-6 font-semibold ${
-                  activeTab === tab
-                    ? "border-b-2 border-blue-600 text-blue-600"
-                    : "text-gray-600"
-                }`}
-              >
-                {tab.charAt(0).toUpperCase() + tab.slice(1)} Details
-              </button>
-            ))}
-          </div>
+              {/* Tabs */}
+              <div className="border-b flex">
+                {["personal", "professional", "academic"].map((tab) => (
+                  <button
+                    key={tab}
+                    onClick={() => setActiveTab(tab as TabType)}
+                    className={`flex-1 py-4 px-6 font-semibold ${activeTab === tab
+                      ? "border-b-2 border-blue-600 text-blue-600"
+                      : "text-gray-600"
+                      }`}
+                  >
+                    {tab.charAt(0).toUpperCase() + tab.slice(1)} Details
+                  </button>
+                ))}
+              </div>
 
-          <CardContent className="p-8 space-y-6">
+              <CardContent className="p-8 space-y-6">
 
-            {/* PERSONAL */}
-            {activeTab === "personal" && (
-              <div className="space-y-4">
-                <h2 className="text-xl font-bold">Personal Information</h2>
+                {/* PERSONAL */}
+                {activeTab === "personal" && (
+                  <div className="space-y-4">
+                    {loading ? (
+                      <p>Loading...</p>
+                    ) : (
+                      <>
 
-                {loading ? (
-                  <p>Loading...</p>
-                ) : (
-                  <>
-                  
-                    <p><b>First Name:</b> {personalData?.first_name || ""}</p>
-                    <p><b>Last Name:</b> {personalData?.last_name || ""}</p>
-                    <p><b>Email:</b> {personalData?.email || ""}</p>
-                    <p><b>Contact:</b> {personalData?.contact || ""}</p>
+                        <div className="flex items-center gap-4">
+                          <div className="w-32">
+                            <p className="font-bold">First Name</p>
+                          </div>
 
-                    {/* ✅ DOB FIXED */}
-                    <p><b>Date of Birth:</b> {personalData?.date_of_birth || ""}</p>
+                          <Input
+                            type="text"
+                            value={personalData?.first_name || ""}
+                            className="flex-1"
+                            disabled={editingField !== "first_name"}
+                            onChange={(e) =>
+                              handleChange(
+                                "personal",
+                                "first_name",
+                                e.target.value
+                              )
 
-                    <p><b>Address:</b> {personalData?.address || ""}</p>
-                  </>
+
+                            }></Input>
+
+
+                          <img
+                            src="/editlogo.png"
+                            onClick={() => onEditHandle("first_name")}
+                            className="h-8 w-8 cursor-pointer"
+                            alt="Edit Logo"
+                          />
+                          <div className="flex justify-center mt-1">
+                            <Button onClick={updatePersonalDetails}>  Save</Button>
+
+
+                          </div>
+                        </div>
+
+                        <div className="flex items-center gap-4">
+                          <div className="w-32">
+                            <p className="font-bold">Last Name</p>
+                          </div>
+
+                          <Input
+                            type="text"
+                            value={personalData?.last_name || ""}
+                            className="flex-1"
+                            disabled={editingField !== "last_name"}
+                            onChange={(e) =>
+                              handleChange(
+                                "personal",
+                                "last_name",
+                                e.target.value
+                              )
+                            }
+                          />
+
+                          <img
+                            src="/editlogo.png"
+                            onClick={() => onEditHandle("last_name")}
+                            className="h-8 w-8 cursor-pointer"
+                            alt="Edit Logo"
+                          />
+
+                          <Button onClick={updatePersonalDetails}>  Save</Button>
+                        </div>
+
+                        <div className="flex items-center gap-4">
+                          <div className="w-32">
+                            <p className="font-bold">Email</p>
+                          </div>
+
+                          <Input
+                            type="email"
+                            value={personalData?.email || ""}
+                            className="flex-1"
+                            disabled={editingField !== "email"}
+                            onChange={(e) =>
+                              handleChange(
+                                "personal",
+                                "email",
+                                e.target.value
+                              )
+                            }
+                          />
+
+                          <img
+                            src="/editlogo.png"
+                            onClick={() => onEditHandle("email")}
+                            className="h-8 w-8 cursor-pointer"
+                            alt="Edit Logo"
+                          />
+
+                          <Button onClick={updatePersonalDetails}>  Save</Button>
+                        </div>
+
+                        <div className="flex items-center gap-4">
+                          <div className="w-32">
+                            <p className="font-bold">Contact</p>
+                          </div>
+
+                          <Input
+                            type="text"
+                            value={personalData?.contact || ""}
+                            className="flex-1"
+                            disabled={editingField !== "Contact"}
+                            onChange={(e) =>
+                              handleChange(
+                                "personal",
+                                "contact",
+                                e.target.value
+                              )
+                            }
+                          />
+                          {/* 
+                          <img
+                            src="/editlogo.png"
+                            onClick={() => onEditHandle("Contact")}
+                            className="h-8 w-8 cursor-pointer"
+                            alt="Edit Logo"
+                          /> */}
+                        </div>
+
+                        <div className="flex items-center gap-4">
+                          <div className="w-32">
+                            <p className="font-bold">Date of Birth</p>
+                          </div>
+
+                          <Input
+                            type="date"
+                            value={personalData?.date_of_birth || ""}
+                            className="flex-1"
+                            disabled={editingField !== "date_of_birth"}
+                            onChange={(e) =>
+                              handleChange(
+                                "personal",
+                                "date_of_birth",
+                                e.target.value
+                              )
+                            }
+                          />
+
+                          <img
+                            src="/editlogo.png"
+                            onClick={() => onEditHandle("date_of_birth")}
+                            className="h-8 w-8 cursor-pointer"
+                            alt="Edit Logo"
+                          />
+                            <Button onClick={updatePersonalDetails}>  Save</Button>
+                        </div>
+
+
+                      </>
+                    )}
+                  </div>
+
+
                 )}
-              </div>
-            )}
 
-            {/* PROFESSIONAL */}
-            {activeTab === "professional" && (
-              <div className="space-y-4">
-                <h2 className="text-xl font-bold">Professional Information</h2>
+                {/* PROFESSIONAL */}
+                {activeTab === "professional" && (
+                  <div className="space-y-4">
+
+                    <div className="flex items-center gap-4">
+                      <div className="w-32">
+                        <p className="font-bold">Company Name</p>
+                      </div>
+
+                      <Input
+                        type="text"
+                        value={professionalData?.company_name || ""}
+                        className="flex-1"
+                        disabled={editingField !== "company_name"}
+                        onChange={(e) =>
+                          handleChange(
+                            "professional",
+                            "company_name",
+                            e.target.value
+                          )
+                        }
+                      />
+
+                      <img
+                        src="/editlogo.png"
+                        onClick={() => onEditHandle("company_name")}
+                        className="h-8 w-8 cursor-pointer"
+                        alt="Edit Logo"
+                      />
+                      
+                            <Button onClick={updateProfessionalDetails}>  Save</Button>
+                    </div>
+
+                    <div className="flex items-center gap-4">
+                      <div className="w-32">
+                        <p className="font-bold">Job Title</p>
+                      </div>
+
+                      <Input
+                        type="text"
+                        value={professionalData?.job_title || ""}
+                        className="flex-1"
+                        disabled={editingField !== "job_title"}
+                        onChange={(e) =>
+                          handleChange(
+                            "professional",
+                            "job_title",
+                            e.target.value
+                          )
+                        }
+                      />
+
+                      <img
+                        src="/editlogo.png"
+                        onClick={() => onEditHandle("job_title")}
+                        className="h-8 w-8 cursor-pointer"
+                        alt="Edit Logo"
+                      />
+                            <Button onClick={updateProfessionalDetails}>  Save</Button>
+                    </div>
+
+                    <div className="flex items-center gap-4">
+                      <div className="w-32">
+                        <p className="font-bold">Employment Type</p>
+                      </div>
+
+                      <Input
+                        type="text"
+                        value={professionalData?.employment_type || ""}
+                        className="flex-1"
+                        disabled={editingField !== "employment_type"}
+                        onChange={(e) =>
+                          handleChange(
+                            "professional",
+                            "employment_type",
+                            e.target.value
+                          )
+                        }
+                      />
+
+                      <img
+                        src="/editlogo.png"
+                        onClick={() => onEditHandle("employment_type")}
+                        className="h-8 w-8 cursor-pointer"
+                        alt="Edit Logo"
+                      /><Button onClick={updateProfessionalDetails}>  Save</Button>
+                    </div>
+
+                    <div className="flex items-center gap-4">
+                      <div className="w-32">
+                        <p className="font-bold">Experience</p>
+                      </div>
+
+                      <Input
+                        type="number"
+                        value={professionalData?.experience_years || ""}
+                        className="flex-1"
+                        disabled={editingField !== "experience_years"}
+                        onChange={(e) =>
+                          handleChange(
+                            "professional",
+                            "experience_years",
+                            e.target.value
+                          )
+                        }
+                      />
+
+                      <img
+                        src="/editlogo.png"
+                        onClick={() => onEditHandle("experience_years")}
+                        className="h-8 w-8 cursor-pointer"
+                        alt="Edit Logo"
+                      />
+                       <Button onClick={updateProfessionalDetails}>  Save</Button>
+                    </div>
+
+                    <div className="flex items-center gap-4">
+                      <div className="w-32">
+                        <p className="font-bold">Location</p>
+                      </div>
+
+                      <Input
+                        type="text"
+                        value={professionalData?.location || ""}
+                        className="flex-1"
+                        disabled={editingField !== "location"}
+                        onChange={(e) =>
+                          handleChange(
+                            "professional",
+                            "location",
+                            e.target.value.split(",")
+                          )
+                        }
+                      />
+
+                      <img
+                        src="/editlogo.png"
+                        onClick={() => onEditHandle("location")}
+                        className="h-8 w-8 cursor-pointer"
+                        alt="Edit Logo"
+                      />
+                    <Button onClick={updateProfessionalDetails}>  Save</Button>                    </div>
+
+                  <div className="flex items-center gap-4">
+                      <div className="w-32">
+                        <p className="font-bold">Skills</p>
+                      </div>
+
+                      <Input
+                        type="text"
+                        value={professionalData?.skills || ""}
+                        className="flex-1"
+                        disabled={editingField !== "skills"}
+                        onChange={(e) =>
+                          handleChange(
+                            "professional",
+                            "skills",
+                            e.target.value
+                          )
+                        }
+                      />
+
+                      <img
+                        src="/editlogo.png"
+                        onClick={() => onEditHandle("skills")}
+                        className="h-8 w-8 cursor-pointer"
+                        alt="Edit Logo"
+                      />
+                      <Button onClick={updateProfessionalDetails}>  Save</Button>
+                    </div>
                  
-                <p><b>Company Name: </b>{professionalData?.company_name} </p>
-                <p><b>Job Title:</b> {professionalData?.job_title} </p>
-               <p><b>Employment Type:</b> {professionalData?.employment_type} </p>
-                <p><b>Experience:</b> {professionalData?.experience_years} years </p>
-               
-                 <p><b>Location: </b>{professionalData?.location} </p>
-                 <p><b>Skills: </b>{professionalData?.skills} </p>
-                {/* <Input value={professionalData.salary} readOnly /> */}
+                  </div>
+                )}
+                {/* ACADEMIC */}
+                {activeTab === "academic" && (
+                  <div className="space-y-4">
 
-                {/* <div className="flex gap-2 flex-wrap">
-                  {professionalData.skills.map((s, i) => (
-                    <span key={i} className="bg-blue-100 px-2 py-1 rounded">
-                      {s}
-                    </span>
-                  ))}
-                </div> */}
-              </div>
-            )}
+                    <div className="flex items-center gap-4">
+                      <div className="w-32">
+                        <p className="font-bold">Stream Name</p>
+                      </div>
 
-            {/* ACADEMIC */}
-            {activeTab === "academic" && (
-              <div className="space-y-4">
-                <h2 className="text-xl font-bold">Academic Information</h2>
+                      <Input
+                        type="text"
+                        value={academicData?.stream_name || ""}
+                        className="flex-1"
+                        disabled={editingField !== "stream_name"}
+                        onChange={(e) =>
+                          handleChange(
+                            "academic",
+                            "stream_name",
+                            e.target.value
+                          )
+                        }
+                      />
 
-                <p><b>Stream Name:</b>{academicData?.stream_name}</p> 
-                <p><b>Specialization:</b> {academicData?.specialization} </p>
-                <p><b>Enrollment Year:</b>{academicData?.enrollment_year} </p>
-                <p><b>Passing Year:</b> {academicData?.passing_year} </p>
-                <p><b>Percentage:</b> {academicData?.percentage} </p> 
-                <p><b>College Name:</b> {academicData?.college_name} </p>
+                      <img
+                        src="/editlogo.png"
+                        onClick={() => onEditHandle("stream_name")}
+                        className="h-8 w-8 cursor-pointer"
+                        alt="Edit Logo"
+                      />
+                      <Button onClick={updateAcademicDetails}>  Save</Button>
+                    </div>
 
-                  
+                    <div className="flex items-center gap-4">
+                      <div className="w-32">
+                        <p className="font-bold">Specialization</p>
+                      </div>
 
-                  
-              </div>
-            )}
+                      <Input
+                        type="text"
+                        value={academicData?.specialization || ""}
+                        className="flex-1"
+                        disabled={editingField !== "specialization"}
+                        onChange={(e) =>
+                          handleChange(
+                            "academic",
+                            "specialization",
+                            e.target.value
+                          )
+                        }
+                      />
 
-          </CardContent>
-        </Card>
-      </div>
-    {/* </div> */}
+                      <img
+                        src="/editlogo.png"
+                        onClick={() => onEditHandle("specialization")}
+                        className="h-8 w-8 cursor-pointer"
+                        alt="Edit Logo"
+                      />
+                      <Button onClick={updateAcademicDetails}>  Save</Button>
+                    </div>
+
+                    <div className="flex items-center gap-4">
+                      <div className="w-32">
+                        <p className="font-bold">Enrollment Year</p>
+                      </div>
+
+                      <Input
+                        type="number"
+                        value={academicData?.enrollment_year || ""}
+                        className="flex-1"
+                        disabled={editingField !== "enrollment_year"}
+                        onChange={(e) =>
+                          handleChange(
+                            "academic",
+                            "enrollment_year",
+                            e.target.value
+                          )
+                        }
+                      />
+
+                      <img
+                        src="/editlogo.png"
+                        onClick={() => onEditHandle("enrollment_year")}
+                        className="h-8 w-8 cursor-pointer"
+                        alt="Edit Logo"
+                      />
+                      <Button onClick={updateAcademicDetails}>  Save</Button>
+                    </div>
+
+                    <div className="flex items-center gap-4">
+                      <div className="w-32">
+                        <p className="font-bold">Passing Year</p>
+                      </div>
+
+                      <Input
+                        type="number"
+                        value={academicData?.passing_year || ""}
+                        className="flex-1"
+                        disabled={editingField !== "passing_year"}
+                        onChange={(e) =>
+                          handleChange(
+                            "academic",
+                            "passing_year",
+                            e.target.value
+                          )
+                        }
+                      />
+
+                      <img
+                        src="/editlogo.png"
+                        onClick={() => onEditHandle("passing_year")}
+                        className="h-8 w-8 cursor-pointer"
+                        alt="Edit Logo"
+                      />
+                      <Button onClick={updateAcademicDetails}>  Save</Button>
+                    </div>
+
+                    <div className="flex items-center gap-4">
+                      <div className="w-32">
+                        <p className="font-bold">Percentage</p>
+                      </div>
+
+                      <Input
+                        type="number"
+                        value={academicData?.percentage || ""}
+                        className="flex-1"
+                        disabled={editingField !== "percentage"}
+                        onChange={(e) =>
+                          handleChange(
+                            "academic",
+                            "percentage",
+                            e.target.value
+                          )
+                        }
+                      />
+
+                      <img
+                        src="/editlogo.png"
+                        onClick={() => onEditHandle("percentage")}
+                        className="h-8 w-8 cursor-pointer"
+                        alt="Edit Logo"
+                      />
+                      <Button onClick={updateAcademicDetails}>  Save</Button>
+                    </div>
+
+                    <div className="flex items-center gap-4">
+                      <div className="w-32">
+                        <p className="font-bold">College Name</p>
+                      </div>
+
+                      <Input
+                        type="text"
+                        value={academicData?.college_name || ""}
+                        className="flex-1"
+                        disabled={editingField !== "college_name"}
+                        onChange={(e) =>
+                          handleChange(
+                            "academic",
+                            "college_name",
+                            e.target.value
+                          )
+                        }
+                      />
+
+                      <img
+                        src="/editlogo.png"
+                        onClick={() => onEditHandle("college_name")}
+                        className="h-8 w-8 cursor-pointer"
+                        alt="Edit Logo"
+                      />
+                      <Button onClick={updateAcademicDetails}>  Save</Button>
+
+
+                    </div>
+
+                    
+                  </div>
+
+                )}
+              </CardContent>
+
+            </Card>
+          </div>
+         
 
         </div>
       </div>
