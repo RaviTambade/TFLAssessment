@@ -15,14 +15,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.transflower.tflcomentor.ecm.dto.QuestionDisplayDto;
 import com.transflower.tflcomentor.ecm.dto.QuestionOptionsRequestDto;
 import com.transflower.tflcomentor.ecm.dto.QuestionStatusDto;
+import com.transflower.tflcomentor.ecm.dto.QuestionTypeDto;
 import com.transflower.tflcomentor.ecm.entity.Question;
 import com.transflower.tflcomentor.ecm.entity.enums.DifficultyLevel;
 import com.transflower.tflcomentor.ecm.entity.enums.QuestionStatus;
+import com.transflower.tflcomentor.ecm.entity.enums.QuestionType;
 import com.transflower.tflcomentor.ecm.service.QuestionService;
-import com.transflower.tflcomentor.skilltaxonomy.entity.ConceptsInFramework;
-import com.transflower.tflcomentor.ecm.dto.QuestionDisplayDto;
 
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -106,6 +107,12 @@ public class QuestionController {
     // http://localhost:8080/api/questions/concepts/1/questions
     public List<Question> getQuestionsByConcept(@PathVariable Long conceptId) {
         return service.getQuestionsByConceptId(conceptId);
+    }
+
+    @GetMapping("/type/{questionType}")
+    // http://localhost:8080/api/questions/type/MCQ
+    public List<QuestionTypeDto> getQuestionsByType(@PathVariable QuestionType questionType) {
+        return service.getQuestionsByType(questionType);
     }
 
 }

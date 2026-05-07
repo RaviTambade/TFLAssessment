@@ -12,6 +12,7 @@ import com.transflower.tflcomentor.ecm.entity.Question;
 import com.transflower.tflcomentor.ecm.entity.enums.DifficultyLevel;
 import com.transflower.tflcomentor.ecm.entity.enums.QuestionStatus;
 import com.transflower.tflcomentor.ecm.entity.enums.QuestionType;
+import com.transflower.tflcomentor.ecm.dto.QuestionTypeDto;
 
 public interface QuestionRepository {
     
@@ -23,7 +24,7 @@ public interface QuestionRepository {
     void updateQuestionById(Long question_id, QuestionOptionsRequestDto dto);
     List<Question> getQuestions(LocalDate fromDate, LocalDate toDate);
     QuestionOptionsRequestDto getQuestionDetails(Long question_id);
-    List<Question> getQuestions(QuestionType questionType);
+    List<QuestionTypeDto> getQuestionsByType(QuestionType questionType);
     // List<Questions> getAllQuestions();
     // List<QuestionResponse> getRecentQuestions();
     List<QuestionStatusDto> getQuestions(QuestionStatus status);
