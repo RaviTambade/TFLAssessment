@@ -9,6 +9,7 @@ const UsersRoutes = (controller) => {
   router.get("/:userId/personal", controller.getUserPersonalInformation.bind(controller));
   router.get("/:userId/academic", controller.getUserAcademicInformation.bind(controller));
   router.get("/:userId/professional", controller.getUserProfessionalInformation.bind(controller));
+  
   router.patch("/:userId/personal-info", controller.updatePersonal.bind(controller));
   router.patch("/:userId/professional-info", controller.updateProfessional.bind(controller));
   router.patch("/:userId/academic-info", controller.updateAcademic.bind(controller));

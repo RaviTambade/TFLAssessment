@@ -6,16 +6,16 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.transflower.tflcomentor.ecm.dto.QuestionDisplayDto;
 import com.transflower.tflcomentor.ecm.dto.QuestionOptionsRequestDto;
-import com.transflower.tflcomentor.ecm.entity.Question;
 import com.transflower.tflcomentor.ecm.dto.QuestionStatusDto;
+import com.transflower.tflcomentor.ecm.dto.QuestionTypeDto;
+import com.transflower.tflcomentor.ecm.entity.Question;
 import com.transflower.tflcomentor.ecm.entity.enums.DifficultyLevel;
 import com.transflower.tflcomentor.ecm.entity.enums.QuestionStatus;
 import com.transflower.tflcomentor.ecm.entity.enums.QuestionType;
 import com.transflower.tflcomentor.ecm.repository.QuestionRepository;
 import com.transflower.tflcomentor.ecm.service.QuestionService;
-import com.transflower.tflcomentor.skilltaxonomy.entity.ConceptsInFramework;
-import com.transflower.tflcomentor.ecm.dto.QuestionDisplayDto;
 
 @Service
 public class QuestionsServiceImpl implements QuestionService {
@@ -83,8 +83,8 @@ public class QuestionsServiceImpl implements QuestionService {
     }
 
     @Override
-    public List<Question> getQuestions(QuestionType questionType) {
-        return repository.getQuestions(questionType);
+    public List<QuestionTypeDto> getQuestionsByType(QuestionType questionType) {
+        return repository.getQuestionsByType(questionType);
     }
 
     @Override

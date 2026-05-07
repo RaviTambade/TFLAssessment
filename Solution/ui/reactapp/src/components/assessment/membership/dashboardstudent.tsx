@@ -8,7 +8,7 @@ import ScheduledAssessment from "./entities/ScheduledAssessment";
 import Result from "./entities/StudentResults";
 import LearningCurveData from "./entities/LearningCurveData";
 import AllNotification from "./data/studentNotification.json";
-import AllScheduledAssessments from "./data/scheuledAssessment.json";
+import AllScheduledAssessments from "./data/ScheuledAssessment.json";
 import StudentResults from "./data/studentResult.json";
 
 

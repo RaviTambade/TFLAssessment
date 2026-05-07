@@ -1,5 +1,5 @@
 const RoleRequestDto = require("../dtos/requests/RoleRequestDto");
-const ResponseGenerator = require("../helpers/ResponseGenerator");
+const ResponseGenerator = require("../helpers/responseGenerator");
 
 class RolesController {
   constructor(roleService) {
@@ -107,6 +107,7 @@ class RolesController {
       );
     });
   }
+
   getUserByRole(req, res) {
     const userId = req.params.userId;
     const responseGenerator = new ResponseGenerator();
@@ -135,6 +136,8 @@ class RolesController {
       );
     });
   }
+
+  
   assignRole(req, res) {
     const userId = req.params.userId;
     const roleId = req.params.roleId;

@@ -45,6 +45,23 @@ public class CreateTestController : ControllerBase
     /// Add multiple questions to a test using Entity Framework Core
     /// POST /api/createtest/add-questions?testId=1
     /// </summary>
+    
+
+    [HttpPut("cancel/{id}")]
+    public async Task<IActionResult> CancelTest(int id)
+    {
+        var result = await _service.CancelTestAsync(id);
+
+        if (!result)
+        {
+            return NotFound("Test not found");
+        }
+
+        return Ok("Test cancelled successfully");
+    }
+    
+
+    
     [HttpPost("add-questions")]
     public async Task<IActionResult> AddQuestionsToTest([FromBody] AddQuestionsToTestRequestDto request, [FromQuery] long testId)
     {
