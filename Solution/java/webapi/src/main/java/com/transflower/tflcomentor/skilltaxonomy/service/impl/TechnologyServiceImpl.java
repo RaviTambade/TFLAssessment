@@ -5,13 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.transflower.tflcomentor.skilltaxonomy.dto.response.ConceptQuestionCountDto;
-import com.transflower.tflcomentor.skilltaxonomy.dto.response.LanguageResponseDto;
-import com.transflower.tflcomentor.skilltaxonomy.dto.response.RuntimeSummaryResponseDto;
-import com.transflower.tflcomentor.skilltaxonomy.entity.Concept;
-import com.transflower.tflcomentor.skilltaxonomy.entity.Runtime;
-import com.transflower.tflcomentor.skilltaxonomy.entity.Framework;
-import com.transflower.tflcomentor.skilltaxonomy.entity.Language;
-import com.transflower.tflcomentor.skilltaxonomy.entity.Layer;
+import com.transflower.tflcomentor.skilltaxonomy.dto.response.DifficultyQuestionCountDto;
 import com.transflower.tflcomentor.skilltaxonomy.repository.TechnologyRepository;
 import com.transflower.tflcomentor.skilltaxonomy.service.TechnologyService;
 
@@ -30,73 +24,8 @@ public class TechnologyServiceImpl implements TechnologyService {
     }
 
     @Override
-    public Concept getConceptById(Long id){
-        return technologyRepository.getConceptById(id);
-    }
-
-    @Override
-    public Concept addConcept(Concept concept){
-        return technologyRepository.addConcept(concept);
-    }
-
-    @Override
-    public List<Concept> getAllConceptsforFramework(int framework){
-        return technologyRepository.getAllConceptsforFramework(framework);
-    }
-
-    @Override
-    public boolean mapConceptToFramework(int conceptId, int frameworkId){
-        return technologyRepository.mapConceptToFramework(conceptId, frameworkId);
-    }
-
-    @Override
-    public List<Framework> getAllFrameworks(){
-        return technologyRepository.getAllFrameworks();
-    }
-
-    @Override
-    public Framework getFrameworkById(Long id){
-        return technologyRepository.getFrameworkById(id);
-    }
-
-    @Override
-    public List<Framework> getAllFrameworksByLanguageAndLayer(int languageId, int layerId){
-        return technologyRepository.getAllFrameworks(languageId, layerId);
-    }
-
-    @Override
-    public List<Framework> getAllFrameworks(int languageId){
-        return technologyRepository.getAllFrameworks(languageId);
-    }
-
-    @Override
-    public List<Layer> getAllLayers(){
-        return technologyRepository.getAllLayers();
-    }
-
-    @Override
-    public List<LanguageResponseDto> getLanguagesBySmeId(long smeId){
-        return technologyRepository.getLanguagesBySmeId(smeId);
-    }
-
-    @Override
-    public List<Language> getAllLanguages(int runtimeId){
-        return technologyRepository.getAllLanguages(runtimeId);
-    }
-
-    @Override
-    public List<Runtime> getAllRuntimes(){
-        return technologyRepository.getAllRuntimes();
-    }
-
-    @Override
-    public Runtime getRuntimeById(Long id){
-        return technologyRepository.getRuntimeById(id);
-    }
-
-    @Override                          //doubtfull
-    public List<RuntimeSummaryResponseDto> getAllRuntimeSummaries(){
-        return technologyRepository.findAllRuntimeSummaries();
-    }
+    public List<DifficultyQuestionCountDto> getAllQuestionsByDifficulty(){
+        return technologyRepository. getAllQuestionsByDifficulty();
+     }
 
 }

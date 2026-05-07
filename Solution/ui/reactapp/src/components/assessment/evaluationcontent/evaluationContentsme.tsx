@@ -15,10 +15,15 @@ type ConceptCount={
     question_count:number;
 };
 
+type DifficultyCount={
+    difficulty:string;
+    count:number;
+};
+
 const EvaluationContentSme = () => {
  
     const [conceptQuestionCount, setConceptQuestionCount] = useState([]);
-   
+    const [difficultyQuestionCount,setDifficultyQuestionCount]=useState([]);
 
   useEffect(()=>{
     const fetchConceptCount=async()=>{
@@ -35,6 +40,22 @@ const EvaluationContentSme = () => {
     void fetchConceptCount();
   },[]);
 
+  useEffect(()=>{
+  const fetchDifficultyCount=async()=>{
+    try{
+      const response=await fetch(`${baseURL}/technologies/difficulty/question-count`,{
+        method:"GET",
+      });
+      const data:DifficultyCount[]=await response.json();
+      setDifficultyQuestionCount(Array.isArray(data)?data:[]);
+    }catch(error){
+      console.log(error);
+    }
+  };
+  void fetchDifficultyCount();
+ },[]);
+
+
    return(
     <div className="min-h-screen bg-gray-50 p-6">
         <div className="max-w-7xl mx-auto space-y-8">
@@ -48,8 +69,10 @@ const EvaluationContentSme = () => {
       {/* Top Stats */}
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
 
+           <div>
+            <h5>Questions as per concepts</h5>
+           </div>
              {conceptQuestionCount.map((item)  => (
-            
               <Card>
                 <CardContent className="p-6">
                   <div className="flex items-center justify-between">
@@ -62,6 +85,27 @@ const EvaluationContentSme = () => {
                 </CardContent>
               </Card>  ))
             }
+            
+
+            <div>
+            <h5>Questions as per difficulty</h5>
+            </div>
+            {
+              difficultyQuestionCount.map((item)=>(
+                <Card>
+                <CardContent className="p-6">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-gray-600 text-sm font-medium">{item.difficulty}</p>
+                      <p className="text-3xl font-bold text-gray-900 mt-1">{item.count}</p>
+                    </div>
+                    <FileText className="w-12 h-12 text-green-500 opacity-20" />
+                  </div>
+                </CardContent>
+              </Card>
+              ))
+            }
+            
 
           </div>
     </div>
