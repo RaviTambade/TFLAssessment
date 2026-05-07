@@ -6,12 +6,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.sql.Timestamp;
 
 import org.springframework.stereotype.Repository;
 
@@ -119,7 +116,8 @@ public class QuestionRepositoryImpl implements QuestionRepository {
             ORDER BY question_id
         """;
 
-        try (Connection connection = getConnection(); PreparedStatement statement = connection.prepareStatement(sql)) {
+        try (Connection connection = getConnection(); 
+        PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setString(1, questionType.toString());
 
@@ -147,18 +145,17 @@ public class QuestionRepositoryImpl implements QuestionRepository {
     public Long insert(Question q) {
 
         Long questionId = null;
-        String sql = "INSERT INTO questions(description, question_type, difficulty_level,  created_at,status, language, layer, framework, concept) VALUES (?, ?, ?, 'DRAFT', NOW(), ?, ?, ?, ?)";
+        String sql = "INSERT INTO questions(description, question_type, difficulty_level,  created_at,status, language, layer, framework, concept) VALUES (?, ?, ?, NOW(), 'DRAFT', ?, ?, ?, ?)";
         try (Connection connection = getConnection();
         PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
             statement.setString(1, q.getDescription());
             statement.setString(2, q.getQuestionType().toString());
             statement.setString(3, q.getDifficultyLevel().toString());
-            statement.setTimestamp(4, Timestamp.valueOf(q.getCreatedAt()));
-            statement.setString(5, q.getLanguage());
-            statement.setString(6, q.getLayer());
-            statement.setString(7, q.getFramework());
-            statement.setString(8, q.getConcept());
+            statement.setString(4, q.getLanguage());
+            statement.setString(5, q.getLayer());
+            statement.setString(6, q.getFramework());
+            statement.setString(7, q.getConcept());
 
             statement.executeUpdate();
 
@@ -183,7 +180,8 @@ public class QuestionRepositoryImpl implements QuestionRepository {
 
         String sql = "INSERT INTO mcq_options(option_a, option_b, option_c, option_d, correct_answer, question_id) VALUES (?, ?, ?, ?, ?, ?)";
 
-        try (Connection connection = getConnection(); PreparedStatement statement = connection.prepareStatement(sql)) {
+        try (Connection connection = getConnection(); 
+        PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setString(1, optionA);
             statement.setString(2, optionB);
@@ -253,6 +251,10 @@ public class QuestionRepositoryImpl implements QuestionRepository {
                 dto.setQuestionType(QuestionType.valueOf(rs.getString("question_type")));
                 dto.setDifficultyLevel(DifficultyLevel.valueOf(rs.getString("difficulty_level")));
                 dto.setStatus(QuestionStatus.valueOf(rs.getString("status")));
+                dto.setLanguage(rs.getString("language"));
+                dto.setLayer(rs.getString("layer"));
+                dto.setFramework(rs.getString("framework"));
+                dto.setConcept(rs.getString("concept"));
             }
 
             String sql1 = "SELECT * FROM mcq_options WHERE question_id=?";
@@ -275,15 +277,20 @@ public class QuestionRepositoryImpl implements QuestionRepository {
     @Override
     public void updateQuestionById(Long question_id, QuestionOptionsRequestDto dto) {
 
-        String sql = "UPDATE questions SET description=?, question_type=?, difficulty_level=?,status=? WHERE question_id=?";
+        String sql = "UPDATE questions SET description=?, question_type=?, difficulty_level=?,status=? ,language=?, layer=?, framework=?, concept=? WHERE question_id=?";
 
-        try (Connection connection = getConnection(); PreparedStatement statement = connection.prepareStatement(sql)) {
+        try (Connection connection = getConnection();
+        PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setString(1, dto.getDescription());
             statement.setString(2, dto.getQuestionType().name());
             statement.setString(3, dto.getDifficultyLevel().name());
             statement.setString(4, dto.getStatus().name());
-            statement.setLong(5, question_id);
+            statement.setString(5, dto.getLanguage());
+            statement.setString(6, dto.getLayer());
+            statement.setString(7, dto.getFramework());
+            statement.setString(8, dto.getConcept());
+            statement.setLong(9, question_id);
 
             statement.executeUpdate();
 
@@ -318,7 +325,8 @@ public class QuestionRepositoryImpl implements QuestionRepository {
                 WHERE status = ?
                 ORDER BY question_id
                 """;
-        try (Connection connection = getConnection(); PreparedStatement statement = connection.prepareStatement(sql)) {
+        try (Connection connection = getConnection(); 
+        PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, status.name());
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
@@ -348,7 +356,8 @@ public class QuestionRepositoryImpl implements QuestionRepository {
                     WHERE fc.concept_id = ?;
                     """;
 
-        try (Connection connection = getConnection(); PreparedStatement statement = connection.prepareStatement(sql)) {
+        try (Connection connection = getConnection(); 
+        PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setLong(1, conceptId);
             ResultSet rs = statement.executeQuery();
 
@@ -399,7 +408,8 @@ public class QuestionRepositoryImpl implements QuestionRepository {
         String placeholders = String.join(",", Collections.nCopies(question_ids.size(), "?"));
         String sql = "UPDATE questions SET status = ? "
                 + "WHERE status = 'DRAFT' AND question_id IN (" + placeholders + ")";
-        try (Connection connection = getConnection(); PreparedStatement statement = connection.prepareStatement(sql)) {
+        try (Connection connection = getConnection(); 
+        PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, status.name());
             for (int i = 0; i < question_ids.size(); i++) {
                 statement.setLong(i + 2, question_ids.get(i));
@@ -414,7 +424,8 @@ public class QuestionRepositoryImpl implements QuestionRepository {
     public void updateQuestionStatus(long question_id, QuestionStatus status) {
 
         String sql = "UPDATE questions SET status=? WHERE question_id=?";
-        try (Connection connection = getConnection(); PreparedStatement statement = connection.prepareStatement(sql)) {
+        try (Connection connection = getConnection(); 
+        PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, status.name());
             statement.setLong(2, question_id);
             statement.executeUpdate();
@@ -427,7 +438,7 @@ public class QuestionRepositoryImpl implements QuestionRepository {
     public Long getFrameworkConceptId(int conceptId, int frameworkId) {
         String sql = "SELECT id FROM framework_concepts WHERE concept_id = ? AND framework_id = ?";
         try (Connection connection = getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+            PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, conceptId);
             statement.setInt(2, frameworkId);
             ResultSet rs = statement.executeQuery();
@@ -443,7 +454,8 @@ public class QuestionRepositoryImpl implements QuestionRepository {
     @Override
     public void insertQuestionFrameworkConceptMapping(Long questionId, Long frameworkConceptId) {
         String sql = "INSERT INTO question_framework_concepts(question_id, framework_concepts_id) VALUES (?, ?)";
-        try (Connection connection = getConnection(); PreparedStatement statement = connection.prepareStatement(sql)) {
+        try (Connection connection = getConnection();
+        PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setLong(1, questionId);
             statement.setLong(2, frameworkConceptId);
             statement.executeUpdate();
