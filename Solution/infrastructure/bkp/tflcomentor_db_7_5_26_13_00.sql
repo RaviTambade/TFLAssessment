@@ -1,10 +1,10 @@
-CREATE DATABASE  IF NOT EXISTS `tflcomentor_nikita_rutuja` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `tflcomentor_nikita_rutuja`;
--- MySQL dump 10.13  Distrib 8.0.41, for Win64 (x86_64)
+CREATE DATABASE  IF NOT EXISTS `tflcomentor_db` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `tflcomentor_db`;
+-- MySQL dump 10.13  Distrib 8.0.43, for Win64 (x86_64)
 --
--- Host: localhost    Database: tflcomentor_nikita_rutuja
+-- Host: localhost    Database: tflcomentor_db
 -- ------------------------------------------------------
--- Server version	8.4.4
+-- Server version	8.0.43
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -16,29 +16,6 @@ USE `tflcomentor_nikita_rutuja`;
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-
---
--- Table structure for table `__efmigrationshistory`
---
-
-DROP TABLE IF EXISTS `__efmigrationshistory`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `__efmigrationshistory` (
-  `MigrationId` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `ProductVersion` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  PRIMARY KEY (`MigrationId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `__efmigrationshistory`
---
-
-LOCK TABLES `__efmigrationshistory` WRITE;
-/*!40000 ALTER TABLE `__efmigrationshistory` DISABLE KEYS */;
-/*!40000 ALTER TABLE `__efmigrationshistory` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `academic_informations`
@@ -196,67 +173,6 @@ INSERT INTO `concepts` VALUES (1,'Variables','Basic storage units used to hold d
 UNLOCK TABLES;
 
 --
--- Table structure for table `framework_concepts`
---
-
-DROP TABLE IF EXISTS `framework_concepts`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `framework_concepts` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `framework_id` bigint DEFAULT NULL,
-  `concept_id` bigint DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `framework_id` (`framework_id`),
-  KEY `concept_id` (`concept_id`),
-  CONSTRAINT `framework_concepts_ibfk_1` FOREIGN KEY (`framework_id`) REFERENCES `frameworks` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `framework_concepts_ibfk_2` FOREIGN KEY (`concept_id`) REFERENCES `concepts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=182 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `framework_concepts`
---
-
-LOCK TABLES `framework_concepts` WRITE;
-/*!40000 ALTER TABLE `framework_concepts` DISABLE KEYS */;
-INSERT INTO `framework_concepts` VALUES (1,1,26),(2,1,27),(3,1,28),(4,1,30),(5,1,31),(6,1,95),(7,1,96),(8,1,97),(9,1,85),(10,1,82),(11,1,86),(12,1,106),(13,1,108),(14,1,113),(15,1,114),(16,2,95),(17,2,96),(18,2,97),(19,2,26),(20,2,30),(21,2,31),(22,3,109),(23,3,110),(24,3,111),(25,3,96),(26,3,30),(27,4,109),(28,4,110),(29,4,111),(30,4,96),(31,4,30),(32,5,95),(33,5,96),(34,5,97),(35,5,80),(36,5,82),(37,5,81),(38,5,106),(39,5,108),(40,6,95),(41,6,96),(42,6,97),(43,7,97),(44,7,76),(45,7,78),(46,8,79),(47,8,76),(48,8,78),(49,9,100),(50,9,109),(51,9,110),(52,10,101),(53,10,109),(54,10,110),(55,11,109),(56,11,110),(57,11,111),(58,12,95),(59,12,96),(60,12,97),(61,12,106),(62,12,108),(63,13,97),(64,13,23),(65,14,97),(66,14,76),(67,14,78),(68,15,89),(69,15,90),(70,15,91),(71,15,92),(72,15,76),(73,15,78),(74,15,97),(75,16,97),(76,16,98),(77,17,95),(78,17,96),(79,17,97),(80,18,105),(81,18,79),(82,18,76),(83,18,78),(84,19,105),(85,19,95),(86,19,76),(87,20,105),(88,20,79),(89,20,76),(90,21,105),(91,21,97),(92,21,76),(93,22,95),(94,22,103),(95,22,104),(96,23,95),(97,23,103),(98,23,104),(99,24,109),(100,24,110),(101,24,111),(102,25,109),(103,25,110),(104,25,111),(105,26,109),(106,26,110),(107,26,111),(108,27,109),(109,27,110),(110,27,111),(111,28,21),(112,28,22),(113,28,64),(114,29,21),(115,29,22),(116,30,21),(117,30,22),(118,31,21),(119,31,22),(120,32,21),(121,32,76),(122,33,21),(123,33,76),(124,34,21),(125,34,76),(126,35,97),(127,35,64),(128,36,97),(129,36,64),(130,37,97),(131,37,64),(132,38,97),(133,38,64),(134,39,97),(135,39,76),(136,40,97),(137,40,76),(138,41,55),(139,41,56),(140,41,57),(141,41,60),(142,41,64),(143,42,55),(144,42,56),(145,42,57),(146,42,60),(147,42,64),(148,43,55),(149,43,56),(150,43,57),(151,43,64),(152,44,55),(153,44,56),(154,44,57),(155,44,64),(156,45,1),(157,45,2),(158,45,3),(159,45,4),(160,45,5),(161,45,6),(162,45,7),(163,45,8),(164,45,9),(165,45,10),(166,45,11),(167,45,12),(168,45,13),(169,45,14),(170,45,15),(171,45,16),(172,45,17),(173,45,18),(174,45,19),(175,45,20),(176,45,21),(177,45,22),(180,9,127),(181,5,128);
-/*!40000 ALTER TABLE `framework_concepts` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `frameworks`
---
-
-DROP TABLE IF EXISTS `frameworks`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `frameworks` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `name` varchar(100) NOT NULL,
-  `layer_id` bigint DEFAULT NULL,
-  `language_id` bigint DEFAULT NULL,
-  `created_at` datetime DEFAULT NULL,
-  `updated_at` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `layer_id` (`layer_id`),
-  KEY `language_id` (`language_id`),
-  CONSTRAINT `frameworks_ibfk_1` FOREIGN KEY (`layer_id`) REFERENCES `layers` (`id`),
-  CONSTRAINT `frameworks_ibfk_2` FOREIGN KEY (`language_id`) REFERENCES `languages` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `frameworks`
---
-
-LOCK TABLES `frameworks` WRITE;
-/*!40000 ALTER TABLE `frameworks` DISABLE KEYS */;
-INSERT INTO `frameworks` VALUES (1,'Spring Boot',2,1,'2026-03-21 01:16:33','2026-03-21 01:16:33'),(2,'Spring MVC',2,1,'2026-03-21 01:16:33','2026-03-21 01:16:33'),(3,'Hibernate',2,1,'2026-03-21 01:16:33','2026-03-21 01:16:33'),(4,'JPA',2,1,'2026-03-21 01:16:33','2026-03-21 01:16:33'),(5,'ASP.NET Core',2,2,'2026-03-21 01:16:33','2026-03-21 01:16:33'),(6,'ASP.NET MVC',2,2,'2026-03-21 01:16:33','2026-03-21 01:16:33'),(7,'GRPC',2,2,'2026-03-21 01:16:33','2026-03-21 01:16:33'),(8,'SignalR',2,2,'2026-03-21 01:16:33','2026-03-21 01:16:33'),(9,'ADO.NET',2,2,'2026-03-21 01:16:33','2026-03-21 01:16:33'),(10,'Entity Framework',2,2,'2026-03-21 01:16:33','2026-03-21 01:16:33'),(11,'Dapper',2,2,'2026-03-21 01:16:33','2026-03-21 01:16:33'),(12,'Django',2,4,'2026-03-21 01:16:33','2026-03-21 01:16:33'),(13,'Flask',2,4,'2026-03-21 01:16:33','2026-03-21 01:16:33'),(14,'FastAPI',2,4,'2026-03-21 01:16:33','2026-03-21 01:16:33'),(15,'Node.js',2,3,'2026-03-21 01:16:33','2026-03-21 01:16:33'),(16,'Express.js',2,3,'2026-03-21 01:16:33','2026-03-21 01:16:33'),(17,'NestJS',2,3,'2026-03-21 01:16:33','2026-03-21 01:16:33'),(18,'React',1,3,'2026-03-21 01:16:33','2026-03-21 01:16:33'),(19,'Angular',1,3,'2026-03-21 01:16:33','2026-03-21 01:16:33'),(20,'Vue.js',1,3,'2026-03-21 01:16:33','2026-03-21 01:16:33'),(21,'Next.js',1,3,'2026-03-21 01:16:33','2026-03-21 01:16:33'),(22,'JSP',1,1,'2026-03-21 01:16:33','2026-03-21 01:16:33'),(23,'Razor Pages',1,2,'2026-03-21 01:16:33','2026-03-21 01:16:33'),(24,'MySQL',3,19,'2026-03-21 01:16:33','2026-03-21 01:16:33'),(25,'PostgreSQL',3,19,'2026-03-21 01:16:33','2026-03-21 01:16:33'),(26,'Oracle Database',3,19,'2026-03-21 01:16:33','2026-03-21 01:16:33'),(27,'Microsoft SQL Server',3,19,'2026-03-21 01:16:33','2026-03-21 01:16:33'),(28,'JUnit',4,1,'2026-03-21 01:16:33','2026-03-21 01:16:33'),(29,'TestNG',4,1,'2026-03-21 01:16:33','2026-03-21 01:16:33'),(30,'NUnit',4,2,'2026-03-21 01:16:33','2026-03-21 01:16:33'),(31,'xUnit',4,2,'2026-03-21 01:16:33','2026-03-21 01:16:33'),(32,'Jest',4,3,'2026-03-21 01:16:33','2026-03-21 01:16:33'),(33,'Chai',4,3,'2026-03-21 01:16:33','2026-03-21 01:16:33'),(34,'PyTest',4,4,'2026-03-21 01:16:33','2026-03-21 01:16:33'),(35,'Selenium',4,1,'2026-03-21 01:16:33','2026-03-21 01:16:33'),(36,'Selenium',4,2,'2026-03-21 01:16:33','2026-03-21 01:16:33'),(37,'Selenium',4,3,'2026-03-21 01:16:33','2026-03-21 01:16:33'),(38,'Selenium',4,6,'2026-03-21 01:16:33','2026-03-21 01:16:33'),(39,'playwright',4,6,'2026-03-21 01:16:33','2026-03-21 01:16:33'),(40,'playwright',4,3,'2026-03-21 01:16:33','2026-03-21 01:16:33'),(41,'TensorFlow',5,4,'2026-03-21 01:16:33','2026-03-21 01:16:33'),(42,'PyTorch',5,4,'2026-03-21 01:16:33','2026-03-21 01:16:33'),(43,'Scikit-learn',5,4,'2026-03-21 01:16:33','2026-03-21 01:16:33'),(44,'Keras',5,4,'2026-03-21 01:16:33','2026-03-21 01:16:33'),(45,'Core',2,1,'2026-03-21 01:16:33','2026-03-21 01:16:33'),(46,'Core',1,1,'2026-03-21 01:16:33','2026-03-21 01:16:33'),(47,'Core',2,2,'2026-03-21 01:16:33','2026-03-21 01:16:33'),(48,'Core',1,2,'2026-03-21 01:16:33','2026-03-21 01:16:33'),(49,'Core',2,3,'2026-03-21 01:16:33','2026-03-21 01:16:33'),(50,'Core',1,3,'2026-03-21 01:16:33','2026-03-21 01:16:33'),(51,'Core',2,4,'2026-03-21 01:16:33','2026-03-21 01:16:33'),(52,'Core',1,4,'2026-03-21 01:16:33','2026-03-21 01:16:33');
-/*!40000 ALTER TABLE `frameworks` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `hands_on_results`
 --
 
@@ -409,57 +325,6 @@ CREATE TABLE `job_descriptions` (
 LOCK TABLES `job_descriptions` WRITE;
 /*!40000 ALTER TABLE `job_descriptions` DISABLE KEYS */;
 /*!40000 ALTER TABLE `job_descriptions` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `languages`
---
-
-DROP TABLE IF EXISTS `languages`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `languages` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `language` varchar(100) DEFAULT NULL,
-  `runtime_id` bigint DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `runtime_id` (`runtime_id`),
-  CONSTRAINT `languages_ibfk_1` FOREIGN KEY (`runtime_id`) REFERENCES `runtimes` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `languages`
---
-
-LOCK TABLES `languages` WRITE;
-/*!40000 ALTER TABLE `languages` DISABLE KEYS */;
-INSERT INTO `languages` VALUES (1,'Java',2),(2,'C#',4),(3,'JavaScript',3),(4,'Python',1),(5,'Kotlin',2),(6,'TypeScript',3),(7,'C',5),(8,'C++',5),(9,'Dart',6),(10,'Go',7),(11,'Rust',8),(12,'R',9),(13,'Ruby',10),(14,'Swift',11),(15,'Shell Script',12),(16,'HTML',13),(17,'YAML',13),(18,'Markdown',13),(19,'SQL',14),(20,'VB.NET',4),(21,'Bash',12);
-/*!40000 ALTER TABLE `languages` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `layers`
---
-
-DROP TABLE IF EXISTS `layers`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `layers` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `layers` varchar(50) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `layers`
---
-
-LOCK TABLES `layers` WRITE;
-/*!40000 ALTER TABLE `layers` DISABLE KEYS */;
-INSERT INTO `layers` VALUES (1,'Frontend'),(2,'Backend'),(3,'Database'),(4,'Testing'),(5,'AI');
-/*!40000 ALTER TABLE `layers` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -895,7 +760,7 @@ CREATE TABLE `personal_informations` (
 
 LOCK TABLES `personal_informations` WRITE;
 /*!40000 ALTER TABLE `personal_informations` DISABLE KEYS */;
-INSERT INTO `personal_informations` (`id`, `user_id`, `first_name`, `last_name`, `gender`, `date_of_birth`, `email`, `address`, `pincode`) VALUES (2,2,'Sachin','Gayke','MALE','2002-05-15','sachin@gmail.com','Pune, Maharashtra','411001'),(3,7,'Sumit','Bhor','MALE','2006-06-13','sumitbhor227@gmail.com','Tambademala, Awasari Khurd','412405'),(4,4,'Sai','Jagdale','FEMALE','2004-06-14','saijagdale1406@gmail.com','Pancharatneshwar Society, Dhankawadi','411043'),(5,8,'Shrutik','Daundkar','MALE','2007-01-03','shrutikdaundkar6225@gmail.com','Pimpalgaon, Khed','410505'),(6,5,'Parikshit','Shelorkar','MALE','2006-11-16','parikshitshelorkar2.0@gmail.com','Area Code 444107','444107'),(7,6,'Samruddhi','Rasal','FEMALE','2004-02-03','samruddhi.rasal03@gmail.com','Shramsafalya, Dhankawadi','411043'),(8,13,'Sahil','Kamble','MALE','2004-01-19','sahilbajkamble@gmail.com','Surli, Satara','415511'),(9,9,'Chaitrali','Patil','FEMALE','2004-04-09','chaitralipatil944@gmail.com','Shridharnagar, Dhankawadi','411043'),(10,3,'Tejas','Pawale','MALE','1998-02-24','pawaletejas98@gmail.com','Ghatkopar West','400084'),(11,11,'Arnav','Tolahunase','MALE','2004-12-21','arnav.tolahunase21@gmail.com','Indira Nagar, Nashik','422009'),(12,14,'Sarthak','Kadam','MALE','2003-04-28','sarthakkadam7777@gmail.com','Kolhapur Area','416003'),(13,15,'Tanvi','Sonawane','FEMALE','2004-04-18','tanvi.sonawane1804@gmail.com','JM Road, Shivaji Nagar','411005'),(14,12,'Nirjala','Naik','FEMALE','2004-06-17','nirjalanaik1706@gmail.com','Khanapur, Gargoti','416209'),(15,19,'Sachin','Kharat','MALE','2004-02-17','kharatsachin012@gmail.com','Hasnabad, Bhokardan, Jalna','431114'),(16,25,'Rahul','Gayke','MALE','2000-01-01','rahul@gmail.com','Pune','411001'),(17,17,'Nitish','Kharat','MALE','1999-12-31','nkharat@example.com','Chhatrapti Sambhajinagar','431001'),(18,18,'Sanika','Bhor','FEMALE','2005-04-27','bhorsanika0239@gmail.com','Awasari Khurd','412405'),(19,16,'Anish','Adak','MALE','2004-06-25','anishadak4210@gmail.com','B.T. Kawade Road','411036'),(20,20,'Ajay','Kale','MALE','1989-12-31','ajaykale@gmail.com','Chhatrapti Sambhajinagar','431001'),(21,21,'Karan','Rajput','MALE','2004-05-23','karanbohare@gmail.com','chh.Sambhaji nagar','431001'),(22,22,'Pooja','Devray','FEMALE','1994-09-15','poojadevray@gmail.com','Pune-Satara Road','411037'),(23,23,'Rutuja','Mokale','FEMALE','2003-06-22','rutujamokale2003@gmail.com','Wangi, Kadegaon, Sangli','415305'),(24,24,'Abhay','Rathod','MALE','1995-08-28','abhayrathod241995@gmail.com','Rasta Peth, Pune','411011'),(25,1,'Ravi','Tambade','MALE','1974-12-31','Ravitambade@gmail.com','pune','431005'),(26,30,'Yash','Gawade','MALE',NULL,'yashgavde9@gmail.com','Rajgurunagar, Pune',NULL),(27,31,'Yash','Gawade','MALE',NULL,'yashgavde9@gmail.com','Rajgurunagar,Pune, Maharashtra',NULL),(28,32,'TestFirst','TestLast',NULL,NULL,'testuser123@example.test',NULL,NULL),(29,33,'satish','karat',NULL,NULL,'satish@gmail.com',NULL,NULL),(30,34,'Sanika','Bhor',NULL,NULL,'sanika.bhor@example.com',NULL,NULL),(31,35,'Sanika','Bhor',NULL,NULL,'sanika.bhor@example.com',NULL,NULL),(32,36,'Sanika','Bhor',NULL,NULL,'sanika.bhor@example.com',NULL,NULL),(33,NULL,'Vibhavari','Borole','FEMALE','2001-03-02','vibhavari961@gmail.com',' Bhosari-pune','411026'),(34,38,'Sanika','kulkarni','FEMALE','2000-08-15','sanikakulkarni@gmail.com','Ambethan, Pune','411028'),(35,39,'Sejal','Kulkarni','FEMALE','2003-11-20','sejalkulkarni@gmail.com','Ambethan, Pune','411052'),(36,40,'Nikita','Bansode','FEMALE','2005-10-05','nikitabansode@gmail.com','Manchar, Pune','411046'),(37,41,'Pranita','Mane','FEMALE','2002-06-25','pranitamane@gmail.com','Parner, Ahilyanagar','411057');
+INSERT INTO `personal_informations` (`id`, `user_id`, `first_name`, `last_name`, `gender`, `date_of_birth`, `email`, `address`, `pincode`) VALUES (2,2,'Sachin','Gayke','MALE','2002-05-15','sachin@gmail.com','Pune, Maharashtra','411001'),(3,7,'Sumit','Bhor','MALE','2006-06-13','sumitbhor227@gmail.com','Tambademala, Awasari Khurd','412405'),(4,4,'Sai','Jagdale','FEMALE','2004-06-14','saijagdale1406@gmail.com','Pancharatneshwar Society, Dhankawadi','411043'),(5,8,'Shrutik','Daundkar','MALE','2007-01-03','shrutikdaundkar6225@gmail.com','Pimpalgaon, Khed','410505'),(6,5,'Parikshit','Shelorkar','MALE','2006-11-16','parikshitshelorkar2.0@gmail.com','Area Code 444107','444107'),(7,6,'Samruddhi','Rasal','FEMALE','2004-02-03','samruddhi.rasal03@gmail.com','Shramsafalya, Dhankawadi','411043'),(8,13,'Sahil','Kamble','MALE','2004-01-19','sahilbajkamble@gmail.com','Surli, Satara','415511'),(9,9,'Chaitrali','Patil','FEMALE','2004-04-09','chaitralipatil944@gmail.com','Shridharnagar, Dhankawadi','411043'),(10,3,'Tejas','Pawale','MALE','1998-02-24','pawaletejas98@gmail.com','Ghatkopar West','400084'),(11,11,'Arnav','Tolahunase','MALE','2004-12-21','arnav.tolahunase21@gmail.com','Indira Nagar, Nashik','422009'),(12,14,'Sarthak','Kadam','MALE','2003-04-28','sarthakkadam7777@gmail.com','Kolhapur Area','416003'),(13,15,'Tanvi','Sonawane','FEMALE','2004-04-18','tanvi.sonawane1804@gmail.com','JM Road, Shivaji Nagar','411005'),(14,12,'Nirjala','Naik','FEMALE','2004-06-17','nirjalanaik1706@gmail.com','Khanapur, Gargoti','416209'),(15,19,'Sachin','Kharat','MALE','2004-02-17','kharatsachin012@gmail.com','Hasnabad, Bhokardan, Jalna','431114'),(16,25,'Rahul','Gayke','MALE','2000-01-01','rahul@gmail.com','Pune','411001'),(17,17,'Nitish','Kharat','MALE','1999-12-31','nkharat@example.com','Chhatrapti Sambhajinagar','431001'),(18,18,'Sanika','Bhor','FEMALE','2005-04-27','bhorsanika0239@gmail.com','Awasari Khurd','412405'),(19,16,'Anish','Adak','MALE','2004-06-25','anishadak4210@gmail.com','B.T. Kawade Road','411036'),(20,20,'Ajay','Kale','MALE','1989-12-31','ajaykale@gmail.com','Chhatrapti Sambhajinagar','431001'),(21,21,'Karan','Rajput','MALE','2004-05-23','karanbohare@gmail.com','chh.Sambhaji nagar','431001'),(22,22,'Pooja','Devray','FEMALE','1994-09-15','poojadevray@gmail.com','Pune-Satara Road','411037'),(23,23,'Rutuja','Mokale','FEMALE','2003-06-22','rutujamokale2003@gmail.com','Wangi, Kadegaon, Sangli','415305'),(24,24,'Abhay','Rathod','MALE','1995-08-28','abhayrathod241995@gmail.com','Rasta Peth, Pune','411011'),(25,1,'Ravi','Tambade','MALE','1974-12-31','Ravitambade@gmail.com','pune','431005'),(26,30,'Yash','Gawade','MALE',NULL,'yashgavde9@gmail.com','Rajgurunagar, Pune',NULL),(27,31,'Yash','Gawade','MALE',NULL,'yashgavde9@gmail.com','Rajgurunagar,Pune, Maharashtra',NULL),(28,32,'TestFirst','TestLast',NULL,NULL,'testuser123@example.test',NULL,NULL),(29,33,'satish','karat',NULL,NULL,'satish@gmail.com',NULL,NULL),(30,34,'Sanika','Bhor',NULL,NULL,'sanika.bhor@example.com',NULL,NULL),(31,35,'Sanika','Bhor',NULL,NULL,'sanika.bhor@example.com',NULL,NULL),(32,36,'Sanika','Bhor',NULL,NULL,'sanika.bhor@example.com',NULL,NULL),(33,NULL,'Vibhavari','Borole','FEMALE','2001-03-02','vibhavari961@gmail.com',' Bhosari-pune','411026');
 /*!40000 ALTER TABLE `personal_informations` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1022,35 +887,6 @@ LOCK TABLES `projects` WRITE;
 /*!40000 ALTER TABLE `projects` DISABLE KEYS */;
 INSERT INTO `projects` VALUES (1,1,'TFLAssessment','Assessment platform for conducting online tests, evaluating performance, and generating results','https://github.com/RaviTambade/TFLAssessment.git','PENDING','2026-04-14 17:13:07'),(2,4,'E-Krushi-Project','Digital agriculture platform providing farmers with crop guidance, market prices, and smart farming solutions','https://github.com/RaviTambade/E-Krushi-Project.git','IN_PROGRESS','2026-04-14 17:13:07'),(3,4,'TFLGreenhouseAutomation','Automation system for monitoring and controlling greenhouse environment like temperature, humidity, and irrigation','https://github.com/RaviTambade/TFLGreenhouseAutomation.git','IN_PROGRESS','2026-04-14 17:13:07'),(4,1,'EAgroServices','Online platform offering agricultural services like equipment rental, soil testing, and advisory support','https://github.com/RaviTambade/EAgroServices.git','PENDING','2026-04-14 17:13:07'),(5,4,'InventoryManagement','System to manage stock, track inventory levels, and generate reports for business operations','https://github.com/RaviTambade/InventoryManagement.git','COMPLETED','2026-04-14 17:13:07');
 /*!40000 ALTER TABLE `projects` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `question_framework_concepts`
---
-
-DROP TABLE IF EXISTS `question_framework_concepts`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `question_framework_concepts` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `question_id` bigint DEFAULT NULL,
-  `framework_concepts_id` bigint DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `question_id` (`question_id`),
-  KEY `framework_concepts_id` (`framework_concepts_id`),
-  CONSTRAINT `question_framework_concepts_ibfk_1` FOREIGN KEY (`question_id`) REFERENCES `questions` (`question_id`),
-  CONSTRAINT `question_framework_concepts_ibfk_2` FOREIGN KEY (`framework_concepts_id`) REFERENCES `framework_concepts` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=541 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `question_framework_concepts`
---
-
-LOCK TABLES `question_framework_concepts` WRITE;
-/*!40000 ALTER TABLE `question_framework_concepts` DISABLE KEYS */;
-INSERT INTO `question_framework_concepts` VALUES (1,141,3),(2,142,3),(3,143,3),(4,144,3),(5,210,5),(6,211,5),(7,212,5),(8,213,5),(9,41,36),(10,42,36),(11,43,36),(12,44,36),(13,45,36),(14,46,36),(15,47,36),(16,48,36),(17,49,36),(18,50,36),(19,51,36),(20,52,36),(21,53,36),(22,54,36),(23,55,36),(24,56,36),(25,57,36),(26,58,36),(27,59,36),(28,60,36),(29,81,163),(30,82,163),(31,83,163),(32,84,163),(33,85,163),(34,86,163),(35,87,163),(36,88,163),(37,89,163),(38,90,163),(39,91,163),(40,92,163),(41,93,163),(42,94,163),(43,95,163),(44,96,163),(45,97,163),(46,98,163),(47,99,163),(48,100,163),(49,101,164),(50,102,164),(51,103,164),(52,104,164),(53,105,164),(54,106,164),(55,107,164),(56,108,164),(57,109,164),(58,110,164),(59,111,164),(60,112,164),(61,113,164),(62,114,164),(63,115,164),(64,116,164),(65,117,164),(66,118,164),(67,119,164),(68,120,164),(69,121,171),(70,122,171),(71,123,171),(72,124,171),(73,125,171),(74,126,171),(75,127,171),(76,128,171),(77,129,171),(78,130,171),(79,131,171),(80,132,171),(81,133,171),(82,134,171),(83,135,171),(84,136,171),(85,137,171),(86,138,171),(87,139,171),(88,140,171),(89,161,19),(90,162,19),(91,163,19),(92,164,19),(93,165,19),(94,166,19),(95,167,19),(96,168,19),(97,169,19),(98,170,19),(99,171,19),(100,172,19),(101,173,19),(102,174,19),(103,175,19),(104,176,19),(105,177,19),(106,178,19),(107,179,19),(108,180,19),(109,241,168),(110,242,168),(111,243,168),(112,244,168),(113,245,168),(114,246,168),(115,247,168),(116,248,168),(117,249,168),(118,250,168),(119,251,168),(120,252,168),(121,253,168),(122,254,168),(123,255,168),(124,256,168),(125,257,168),(126,258,168),(127,259,168),(128,260,168),(129,261,161),(130,262,161),(131,263,161),(132,264,161),(133,265,161),(134,266,161),(135,267,161),(136,268,161),(137,269,161),(138,270,161),(139,271,161),(140,272,161),(141,273,161),(142,274,161),(143,275,161),(144,276,161),(145,277,161),(146,278,161),(147,279,161),(148,280,161),(149,301,174),(150,302,174),(151,303,174),(152,304,174),(153,305,174),(154,306,174),(155,307,174),(156,308,174),(157,309,174),(158,310,174),(159,311,174),(160,312,174),(161,313,174),(162,314,174),(163,315,174),(164,316,174),(165,317,174),(166,318,174),(167,319,174),(168,320,174),(169,341,165),(170,342,165),(171,343,165),(172,344,165),(173,345,165),(174,346,165),(175,347,165),(176,348,165),(177,349,165),(178,350,165),(179,351,165),(180,352,165),(181,353,165),(182,354,165),(183,355,165),(184,356,165),(185,357,165),(186,358,165),(187,359,165),(188,360,165),(189,361,31),(190,362,31),(191,363,31),(192,364,31),(193,365,31),(194,366,31),(195,367,31),(196,368,31),(197,369,31),(198,370,31),(199,371,31),(200,372,31),(201,373,31),(202,374,31),(203,375,31),(204,376,31),(205,377,31),(206,378,31),(207,379,31),(208,380,31),(209,381,26),(210,382,26),(211,383,26),(212,384,26),(213,385,26),(214,386,26),(215,387,26),(216,388,26),(217,389,26),(218,390,26),(219,391,26),(220,392,26),(221,393,26),(222,394,26),(223,395,26),(224,396,26),(225,397,26),(226,398,26),(227,399,26),(228,400,26),(229,401,19),(230,402,19),(231,403,19),(232,404,19),(233,405,19),(234,406,19),(235,407,19),(236,408,19),(237,409,19),(238,410,19),(239,411,19),(240,412,19),(241,413,19),(242,414,19),(243,415,19),(244,416,19),(245,417,19),(246,418,19),(247,419,19),(248,420,19),(249,421,20),(250,422,20),(251,423,20),(252,424,20),(253,425,20),(254,426,20),(255,427,20),(256,428,20),(257,429,20),(258,430,20),(259,431,20),(260,432,20),(261,433,20),(262,434,20),(263,435,20),(264,436,20),(265,437,20),(266,438,20),(267,439,20),(268,440,20),(269,441,4),(270,442,4),(271,443,4),(272,444,4),(273,445,4),(274,446,4),(275,447,4),(276,448,4),(277,449,4),(278,450,4),(279,451,4),(280,452,4),(281,453,4),(282,454,4),(283,455,4),(284,456,4),(285,457,4),(286,458,4),(287,459,4),(288,460,4),(289,461,34),(290,461,60),(291,461,63),(292,461,65),(293,461,74),(294,461,75),(295,461,79),(296,462,34),(297,462,60),(298,462,63),(299,462,65),(300,462,74),(301,462,75),(302,462,79),(303,463,34),(304,463,60),(305,463,63),(306,463,65),(307,463,74),(308,463,75),(309,463,79),(310,464,34),(311,464,60),(312,464,63),(313,464,65),(314,464,74),(315,464,75),(316,464,79),(317,465,34),(318,465,60),(319,465,63),(320,465,65),(321,465,74),(322,465,75),(323,465,79),(324,466,34),(325,466,60),(326,466,63),(327,466,65),(328,466,74),(329,466,75),(330,466,79),(331,467,34),(332,467,60),(333,467,63),(334,467,65),(335,467,74),(336,467,75),(337,467,79),(338,468,34),(339,468,60),(340,468,63),(341,468,65),(342,468,74),(343,468,75),(344,468,79),(345,469,34),(346,469,60),(347,469,63),(348,469,65),(349,469,74),(350,469,75),(351,469,79),(352,470,34),(353,470,60),(354,470,63),(355,470,65),(356,470,74),(357,470,75),(358,470,79),(359,471,34),(360,471,60),(361,471,63),(362,471,65),(363,471,74),(364,471,75),(365,471,79),(366,472,34),(367,472,60),(368,472,63),(369,472,65),(370,472,74),(371,472,75),(372,472,79),(373,473,34),(374,473,60),(375,473,63),(376,473,65),(377,473,74),(378,473,75),(379,473,79),(380,474,34),(381,474,60),(382,474,63),(383,474,65),(384,474,74),(385,474,75),(386,474,79),(387,475,34),(388,475,60),(389,475,63),(390,475,65),(391,475,74),(392,475,75),(393,475,79),(394,476,34),(395,476,60),(396,476,63),(397,476,65),(398,476,74),(399,476,75),(400,476,79),(401,477,34),(402,477,60),(403,477,63),(404,477,65),(405,477,74),(406,477,75),(407,477,79),(408,478,34),(409,478,60),(410,478,63),(411,478,65),(412,478,74),(413,478,75),(414,478,79),(415,479,34),(416,479,60),(417,479,63),(418,479,65),(419,479,74),(420,479,75),(421,479,79),(422,480,34),(423,480,60),(424,480,63),(425,480,65),(426,480,74),(427,480,75),(428,480,79),(429,481,61),(430,482,61),(431,483,61),(432,484,61),(433,485,61),(434,486,61),(435,487,61),(436,488,61),(437,489,61),(438,490,61),(439,491,61),(440,492,61),(441,493,61),(442,494,61),(443,495,61),(444,496,61),(445,497,61),(446,498,61),(447,499,61),(448,500,61),(449,501,93),(450,502,93),(451,503,93),(452,504,93),(453,505,93),(454,506,93),(455,507,93),(456,508,93),(457,509,93),(458,510,93),(459,511,93),(460,512,93),(461,513,93),(462,514,93),(463,515,93),(464,516,93),(465,517,93),(466,518,93),(467,519,93),(468,520,93),(469,521,19),(470,522,19),(471,523,19),(472,524,19),(473,525,19),(474,526,19),(475,527,19),(476,528,19),(477,529,19),(478,530,19),(479,531,19),(480,532,19),(481,533,19),(482,534,19),(483,535,19),(484,536,19),(485,537,19),(486,538,19),(487,539,19),(488,540,19),(489,541,19),(490,542,19),(491,543,19),(492,544,19),(493,545,19),(494,546,19),(495,547,19),(496,548,19),(497,549,19),(498,550,19),(499,551,19),(500,552,19),(501,553,19),(502,554,19),(503,555,19),(504,556,19),(505,557,19),(506,558,19),(507,559,19),(508,560,19),(509,561,19),(510,562,19),(511,563,19),(512,564,19),(513,565,19),(514,566,19),(515,567,19),(516,568,19),(517,569,19),(518,570,19),(519,571,19),(520,572,19),(521,573,19),(522,574,19),(523,575,19),(524,576,19),(525,577,19),(526,578,19),(527,579,19),(528,580,19),(529,14,5),(530,14,5),(531,14,5),(532,15,5),(533,1,25),(534,2,26),(535,3,30),(536,4,31),(540,1577,1);
-/*!40000 ALTER TABLE `question_framework_concepts` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -1259,37 +1095,6 @@ INSERT INTO `student_assessment_results` VALUES (1,16,1,32,35,45),(2,2,4,39,42,3
 UNLOCK TABLES;
 
 --
--- Table structure for table `student_concept_progress`
---
-
-DROP TABLE IF EXISTS `student_concept_progress`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `student_concept_progress` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `student_id` bigint DEFAULT NULL,
-  `concept_id` bigint DEFAULT NULL,
-  `status` enum('IN_PROGRESS','PENDING','COMPLETED') DEFAULT 'PENDING',
-  `initiated_at` datetime DEFAULT NULL,
-  `completed_at` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `fk_scp_student` (`student_id`),
-  KEY `fk_scp_concept` (`concept_id`),
-  CONSTRAINT `fk_scp_concept` FOREIGN KEY (`concept_id`) REFERENCES `concepts` (`id`),
-  CONSTRAINT `fk_scp_student` FOREIGN KEY (`student_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `student_concept_progress`
---
-
-LOCK TABLES `student_concept_progress` WRITE;
-/*!40000 ALTER TABLE `student_concept_progress` DISABLE KEYS */;
-/*!40000 ALTER TABLE `student_concept_progress` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `studentanswers`
 --
 
@@ -1305,7 +1110,7 @@ CREATE TABLE `studentanswers` (
   `TimeTakenMinutes` int NOT NULL,
   `CreatedAt` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=199 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=217 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1314,7 +1119,7 @@ CREATE TABLE `studentanswers` (
 
 LOCK TABLES `studentanswers` WRITE;
 /*!40000 ALTER TABLE `studentanswers` DISABLE KEYS */;
-INSERT INTO `studentanswers` VALUES (1,23,7,871,'A',30,'2026-04-29 15:26:39'),(2,23,7,872,'A',30,'2026-04-29 15:26:39'),(3,23,7,873,'D',30,'2026-04-29 15:26:39'),(4,23,7,874,'B',30,'2026-04-29 15:26:39'),(5,23,7,875,'D',30,'2026-04-29 15:26:39'),(6,23,7,876,'B',30,'2026-04-29 15:26:39'),(7,23,7,877,'B',30,'2026-04-29 15:26:39'),(8,23,7,878,'B',30,'2026-04-29 15:26:39'),(9,23,7,879,'B',30,'2026-04-29 15:26:39'),(10,23,7,880,'B',30,'2026-04-29 15:26:39'),(11,20,7,871,'A',30,'2026-04-29 15:29:11'),(12,21,7,871,'A',30,'2026-04-29 15:29:55'),(13,21,7,871,'A',30,'2026-04-29 15:30:56'),(14,21,7,872,'A',30,'2026-04-29 15:30:56'),(15,21,7,873,'B',30,'2026-04-29 15:30:56'),(16,21,7,874,'C',30,'2026-04-29 15:30:56'),(17,21,7,875,'A',30,'2026-04-29 15:30:56'),(18,21,7,876,'A',30,'2026-04-29 15:30:56'),(19,21,7,877,'A',30,'2026-04-29 15:30:56'),(20,21,7,878,'D',30,'2026-04-29 15:30:56'),(21,21,7,879,'D',30,'2026-04-29 15:30:56'),(22,21,7,880,'B',30,'2026-04-29 15:30:56'),(23,20,7,871,'A',30,'2026-04-29 15:31:36'),(24,20,7,872,'D',30,'2026-04-29 15:31:36'),(25,20,7,873,'D',30,'2026-04-29 15:31:36'),(26,20,7,874,'B',30,'2026-04-29 15:31:36'),(27,20,7,875,'C',30,'2026-04-29 15:31:36'),(28,20,7,876,'A',30,'2026-04-29 15:31:36'),(29,20,7,877,'A',30,'2026-04-29 15:31:36'),(30,20,7,878,'B',30,'2026-04-29 15:31:36'),(31,20,7,879,'C',30,'2026-04-29 15:31:36'),(32,20,7,880,'D',30,'2026-04-29 15:31:36'),(33,13,7,871,'C',30,'2026-04-29 15:32:13'),(34,13,7,872,'A',30,'2026-04-29 15:32:13'),(35,13,7,873,'D',30,'2026-04-29 15:32:13'),(36,13,7,874,'B',30,'2026-04-29 15:32:13'),(37,13,7,875,'D',30,'2026-04-29 15:32:13'),(38,13,7,876,'B',30,'2026-04-29 15:32:13'),(39,13,7,877,'C',30,'2026-04-29 15:32:13'),(40,13,7,878,'C',30,'2026-04-29 15:32:13'),(41,13,7,879,'C',30,'2026-04-29 15:32:13'),(42,13,7,880,'D',30,'2026-04-29 15:32:13'),(43,17,7,871,'A',30,'2026-04-29 15:55:12'),(44,17,7,872,'A',30,'2026-04-29 15:55:12'),(45,17,7,873,'C',30,'2026-04-29 15:55:12'),(46,17,7,874,'D',30,'2026-04-29 15:55:12'),(47,17,7,875,'D',30,'2026-04-29 15:55:12'),(48,17,7,876,'B',30,'2026-04-29 15:55:12'),(49,17,7,877,'C',30,'2026-04-29 15:55:12'),(50,17,7,878,'C',30,'2026-04-29 15:55:12'),(51,17,7,879,'B',30,'2026-04-29 15:55:12'),(52,17,7,880,'D',30,'2026-04-29 15:55:12'),(53,13,7,871,'A',30,'2026-04-29 16:00:52'),(54,13,7,872,'D',30,'2026-04-29 16:00:52'),(55,13,7,873,'C',30,'2026-04-29 16:00:52'),(56,13,7,874,'B',30,'2026-04-29 16:00:52'),(57,13,7,875,'C',30,'2026-04-29 16:00:52'),(58,13,7,876,'D',30,'2026-04-29 16:00:52'),(59,13,7,877,'C',30,'2026-04-29 16:00:52'),(60,13,7,878,'B',30,'2026-04-29 16:00:52'),(61,13,7,879,'C',30,'2026-04-29 16:00:52'),(62,13,7,880,'D',30,'2026-04-29 16:00:52'),(63,1,7,871,'A',30,'2026-04-29 16:09:13'),(64,1,7,872,'A',30,'2026-04-29 16:09:13'),(65,1,7,873,'A',30,'2026-04-29 16:09:13'),(66,1,7,874,'A',30,'2026-04-29 16:09:13'),(67,1,7,875,'A',30,'2026-04-29 16:09:13'),(68,1,7,876,'A',30,'2026-04-29 16:09:13'),(69,1,7,877,'A',30,'2026-04-29 16:09:13'),(70,1,7,878,'D',30,'2026-04-29 16:09:13'),(71,1,7,879,'D',30,'2026-04-29 16:09:13'),(72,1,7,880,'D',30,'2026-04-29 16:09:13'),(73,1,7,871,'A',30,'2026-04-29 16:09:17'),(74,1,7,872,'A',30,'2026-04-29 16:09:17'),(75,1,7,873,'A',30,'2026-04-29 16:09:17'),(76,1,7,874,'A',30,'2026-04-29 16:09:17'),(77,1,7,875,'A',30,'2026-04-29 16:09:17'),(78,1,7,876,'A',30,'2026-04-29 16:09:17'),(79,1,7,877,'A',30,'2026-04-29 16:09:17'),(80,1,7,878,'D',30,'2026-04-29 16:09:17'),(81,1,7,879,'D',30,'2026-04-29 16:09:17'),(82,1,7,880,'D',30,'2026-04-29 16:09:17'),(83,19,7,871,'C',30,'2026-04-29 16:45:51'),(84,24,7,871,'A',30,'2026-04-29 16:48:40'),(85,24,7,872,'A',30,'2026-04-29 16:48:40'),(86,24,7,873,'A',30,'2026-04-29 16:48:40'),(87,24,7,874,'A',30,'2026-04-29 16:48:40'),(88,24,7,875,'A',30,'2026-04-29 16:48:40'),(89,24,7,876,'A',30,'2026-04-29 16:48:40'),(90,24,7,877,'A',30,'2026-04-29 16:48:40'),(91,24,7,878,'A',30,'2026-04-29 16:48:40'),(92,24,7,879,'A',30,'2026-04-29 16:48:40'),(93,24,7,880,'A',30,'2026-04-29 16:48:40'),(94,19,7,871,'C',30,'2026-04-29 16:50:23'),(95,19,7,872,'C',30,'2026-04-29 16:50:23'),(96,19,7,873,'D',30,'2026-04-29 16:50:23'),(97,19,7,874,'B',30,'2026-04-29 16:50:23'),(98,19,7,875,'D',30,'2026-04-29 16:50:23'),(99,19,7,876,'B',30,'2026-04-29 16:50:23'),(100,19,7,877,'A',30,'2026-04-29 16:50:23'),(101,19,7,878,'C',30,'2026-04-29 16:50:23'),(102,19,7,879,'B',30,'2026-04-29 16:50:23'),(103,19,7,880,'D',30,'2026-04-29 16:50:23'),(104,6,7,871,'A',30,'2026-04-29 16:57:55'),(105,6,7,872,'D',30,'2026-04-29 16:57:55'),(106,6,7,873,'B',30,'2026-04-29 16:57:55'),(107,6,7,874,'D',30,'2026-04-29 16:57:55'),(108,6,7,875,'B',30,'2026-04-29 16:57:55'),(109,6,7,876,'D',30,'2026-04-29 16:57:55'),(110,6,7,877,'B',30,'2026-04-29 16:57:55'),(111,6,7,878,'B',30,'2026-04-29 16:57:55'),(112,6,7,879,'D',30,'2026-04-29 16:57:55'),(113,6,7,880,'A',30,'2026-04-29 16:57:55'),(114,18,7,871,'A',30,'2026-04-30 10:27:27'),(115,18,7,872,'A',30,'2026-04-30 10:27:27'),(116,18,7,873,'A',30,'2026-04-30 10:27:27'),(117,18,7,871,'A',30,'2026-04-30 10:27:27'),(118,18,7,872,'A',30,'2026-04-30 10:27:27'),(119,18,7,874,'A',30,'2026-04-30 10:27:27'),(120,18,7,873,'A',30,'2026-04-30 10:27:27'),(121,18,7,875,'A',30,'2026-04-30 10:27:27'),(122,18,7,874,'A',30,'2026-04-30 10:27:27'),(123,18,7,876,'A',30,'2026-04-30 10:27:27'),(124,18,7,875,'A',30,'2026-04-30 10:27:27'),(125,18,7,877,'A',30,'2026-04-30 10:27:27'),(126,18,7,876,'A',30,'2026-04-30 10:27:27'),(127,18,7,878,'A',30,'2026-04-30 10:27:27'),(128,18,7,877,'A',30,'2026-04-30 10:27:27'),(129,18,7,879,'A',30,'2026-04-30 10:27:27'),(130,18,7,878,'A',30,'2026-04-30 10:27:27'),(131,18,7,880,'A',30,'2026-04-30 10:27:27'),(132,18,7,879,'A',30,'2026-04-30 10:27:27'),(133,18,7,880,'A',30,'2026-04-30 10:27:27'),(134,18,7,871,'A',30,'2026-04-30 10:27:28'),(135,18,7,872,'A',30,'2026-04-30 10:27:28'),(136,18,7,873,'A',30,'2026-04-30 10:27:28'),(137,18,7,874,'A',30,'2026-04-30 10:27:28'),(138,18,7,875,'A',30,'2026-04-30 10:27:28'),(139,18,7,876,'A',30,'2026-04-30 10:27:28'),(140,18,7,877,'A',30,'2026-04-30 10:27:28'),(141,18,7,878,'A',30,'2026-04-30 10:27:28'),(142,18,7,879,'A',30,'2026-04-30 10:27:28'),(143,18,7,880,'A',30,'2026-04-30 10:27:28'),(144,18,7,871,'A',30,'2026-04-30 10:27:27'),(145,18,7,872,'A',30,'2026-04-30 10:27:27'),(146,18,7,873,'A',30,'2026-04-30 10:27:27'),(147,18,7,874,'A',30,'2026-04-30 10:27:27'),(148,18,7,875,'A',30,'2026-04-30 10:27:27'),(149,18,7,876,'A',30,'2026-04-30 10:27:27'),(150,18,7,877,'A',30,'2026-04-30 10:27:27'),(151,18,7,878,'A',30,'2026-04-30 10:27:27'),(152,18,7,879,'A',30,'2026-04-30 10:27:27'),(153,18,7,880,'A',30,'2026-04-30 10:27:27'),(154,18,7,871,'A',30,'2026-04-30 10:27:28'),(155,18,7,872,'A',30,'2026-04-30 10:27:28'),(156,18,7,873,'A',30,'2026-04-30 10:27:28'),(157,18,7,874,'A',30,'2026-04-30 10:27:28'),(158,18,7,875,'A',30,'2026-04-30 10:27:28'),(159,18,7,876,'A',30,'2026-04-30 10:27:28'),(160,18,7,877,'A',30,'2026-04-30 10:27:28'),(161,18,7,878,'A',30,'2026-04-30 10:27:28'),(162,18,7,879,'A',30,'2026-04-30 10:27:28'),(163,18,7,880,'A',30,'2026-04-30 10:27:28'),(164,18,7,871,'A',30,'2026-04-30 10:27:26'),(165,18,7,872,'A',30,'2026-04-30 10:27:26'),(166,18,7,873,'A',30,'2026-04-30 10:27:26'),(167,18,7,874,'A',30,'2026-04-30 10:27:26'),(168,18,7,875,'A',30,'2026-04-30 10:27:26'),(169,18,7,876,'A',30,'2026-04-30 10:27:26'),(170,18,7,877,'A',30,'2026-04-30 10:27:26'),(171,18,7,878,'A',30,'2026-04-30 10:27:26'),(172,18,7,879,'A',30,'2026-04-30 10:27:26'),(173,18,7,880,'A',30,'2026-04-30 10:27:26'),(174,20,7,871,'A',30,'2026-04-30 18:34:25'),(175,20,7,872,'D',30,'2026-04-30 18:34:25'),(176,20,7,873,'B',30,'2026-04-30 18:34:25'),(177,20,7,874,'C',30,'2026-04-30 18:34:25'),(178,20,7,875,'D',30,'2026-04-30 18:34:25'),(179,20,7,876,'A',30,'2026-04-30 18:34:25'),(180,20,7,877,'B',30,'2026-04-30 18:34:25'),(181,20,7,878,'C',30,'2026-04-30 18:34:25'),(182,20,7,879,'B',30,'2026-04-30 18:34:25'),(183,20,7,880,'C',30,'2026-04-30 18:34:25'),(184,19,7,871,'B',30,'2026-05-01 09:57:55'),(185,1,7,871,'A',2,'2026-05-01 10:44:45'),(186,1,7,872,'A',2,'2026-05-01 10:44:45'),(187,1,7,873,'A',2,'2026-05-01 10:44:45'),(188,1,7,874,'A',2,'2026-05-01 10:44:45'),(189,1,7,875,'A',2,'2026-05-01 10:44:45'),(190,1,7,876,'A',2,'2026-05-01 10:44:45'),(191,1,7,877,'A',2,'2026-05-01 10:44:45'),(192,1,7,878,'A',2,'2026-05-01 10:44:45'),(193,1,7,879,'A',2,'2026-05-01 10:44:45'),(194,1,7,880,'A',2,'2026-05-01 10:44:45'),(195,6,7,871,'A',30,'2026-05-01 12:07:04'),(196,6,7,872,'D',30,'2026-05-01 12:07:04'),(197,6,7,873,'D',30,'2026-05-01 12:07:04'),(198,7,7,871,'B',30,'2026-05-01 15:39:54');
+INSERT INTO `studentanswers` VALUES (1,23,7,871,'A',30,'2026-04-29 15:26:39'),(2,23,7,872,'A',30,'2026-04-29 15:26:39'),(3,23,7,873,'D',30,'2026-04-29 15:26:39'),(4,23,7,874,'B',30,'2026-04-29 15:26:39'),(5,23,7,875,'D',30,'2026-04-29 15:26:39'),(6,23,7,876,'B',30,'2026-04-29 15:26:39'),(7,23,7,877,'B',30,'2026-04-29 15:26:39'),(8,23,7,878,'B',30,'2026-04-29 15:26:39'),(9,23,7,879,'B',30,'2026-04-29 15:26:39'),(10,23,7,880,'B',30,'2026-04-29 15:26:39'),(11,20,7,871,'A',30,'2026-04-29 15:29:11'),(12,21,7,871,'A',30,'2026-04-29 15:29:55'),(13,21,7,871,'A',30,'2026-04-29 15:30:56'),(14,21,7,872,'A',30,'2026-04-29 15:30:56'),(15,21,7,873,'B',30,'2026-04-29 15:30:56'),(16,21,7,874,'C',30,'2026-04-29 15:30:56'),(17,21,7,875,'A',30,'2026-04-29 15:30:56'),(18,21,7,876,'A',30,'2026-04-29 15:30:56'),(19,21,7,877,'A',30,'2026-04-29 15:30:56'),(20,21,7,878,'D',30,'2026-04-29 15:30:56'),(21,21,7,879,'D',30,'2026-04-29 15:30:56'),(22,21,7,880,'B',30,'2026-04-29 15:30:56'),(23,20,7,871,'A',30,'2026-04-29 15:31:36'),(24,20,7,872,'D',30,'2026-04-29 15:31:36'),(25,20,7,873,'D',30,'2026-04-29 15:31:36'),(26,20,7,874,'B',30,'2026-04-29 15:31:36'),(27,20,7,875,'C',30,'2026-04-29 15:31:36'),(28,20,7,876,'A',30,'2026-04-29 15:31:36'),(29,20,7,877,'A',30,'2026-04-29 15:31:36'),(30,20,7,878,'B',30,'2026-04-29 15:31:36'),(31,20,7,879,'C',30,'2026-04-29 15:31:36'),(32,20,7,880,'D',30,'2026-04-29 15:31:36'),(33,13,7,871,'C',30,'2026-04-29 15:32:13'),(34,13,7,872,'A',30,'2026-04-29 15:32:13'),(35,13,7,873,'D',30,'2026-04-29 15:32:13'),(36,13,7,874,'B',30,'2026-04-29 15:32:13'),(37,13,7,875,'D',30,'2026-04-29 15:32:13'),(38,13,7,876,'B',30,'2026-04-29 15:32:13'),(39,13,7,877,'C',30,'2026-04-29 15:32:13'),(40,13,7,878,'C',30,'2026-04-29 15:32:13'),(41,13,7,879,'C',30,'2026-04-29 15:32:13'),(42,13,7,880,'D',30,'2026-04-29 15:32:13'),(43,17,7,871,'A',30,'2026-04-29 15:55:12'),(44,17,7,872,'A',30,'2026-04-29 15:55:12'),(45,17,7,873,'C',30,'2026-04-29 15:55:12'),(46,17,7,874,'D',30,'2026-04-29 15:55:12'),(47,17,7,875,'D',30,'2026-04-29 15:55:12'),(48,17,7,876,'B',30,'2026-04-29 15:55:12'),(49,17,7,877,'C',30,'2026-04-29 15:55:12'),(50,17,7,878,'C',30,'2026-04-29 15:55:12'),(51,17,7,879,'B',30,'2026-04-29 15:55:12'),(52,17,7,880,'D',30,'2026-04-29 15:55:12'),(53,13,7,871,'A',30,'2026-04-29 16:00:52'),(54,13,7,872,'D',30,'2026-04-29 16:00:52'),(55,13,7,873,'C',30,'2026-04-29 16:00:52'),(56,13,7,874,'B',30,'2026-04-29 16:00:52'),(57,13,7,875,'C',30,'2026-04-29 16:00:52'),(58,13,7,876,'D',30,'2026-04-29 16:00:52'),(59,13,7,877,'C',30,'2026-04-29 16:00:52'),(60,13,7,878,'B',30,'2026-04-29 16:00:52'),(61,13,7,879,'C',30,'2026-04-29 16:00:52'),(62,13,7,880,'D',30,'2026-04-29 16:00:52'),(63,1,7,871,'A',30,'2026-04-29 16:09:13'),(64,1,7,872,'A',30,'2026-04-29 16:09:13'),(65,1,7,873,'A',30,'2026-04-29 16:09:13'),(66,1,7,874,'A',30,'2026-04-29 16:09:13'),(67,1,7,875,'A',30,'2026-04-29 16:09:13'),(68,1,7,876,'A',30,'2026-04-29 16:09:13'),(69,1,7,877,'A',30,'2026-04-29 16:09:13'),(70,1,7,878,'D',30,'2026-04-29 16:09:13'),(71,1,7,879,'D',30,'2026-04-29 16:09:13'),(72,1,7,880,'D',30,'2026-04-29 16:09:13'),(73,1,7,871,'A',30,'2026-04-29 16:09:17'),(74,1,7,872,'A',30,'2026-04-29 16:09:17'),(75,1,7,873,'A',30,'2026-04-29 16:09:17'),(76,1,7,874,'A',30,'2026-04-29 16:09:17'),(77,1,7,875,'A',30,'2026-04-29 16:09:17'),(78,1,7,876,'A',30,'2026-04-29 16:09:17'),(79,1,7,877,'A',30,'2026-04-29 16:09:17'),(80,1,7,878,'D',30,'2026-04-29 16:09:17'),(81,1,7,879,'D',30,'2026-04-29 16:09:17'),(82,1,7,880,'D',30,'2026-04-29 16:09:17'),(83,19,7,871,'C',30,'2026-04-29 16:45:51'),(84,24,7,871,'A',30,'2026-04-29 16:48:40'),(85,24,7,872,'A',30,'2026-04-29 16:48:40'),(86,24,7,873,'A',30,'2026-04-29 16:48:40'),(87,24,7,874,'A',30,'2026-04-29 16:48:40'),(88,24,7,875,'A',30,'2026-04-29 16:48:40'),(89,24,7,876,'A',30,'2026-04-29 16:48:40'),(90,24,7,877,'A',30,'2026-04-29 16:48:40'),(91,24,7,878,'A',30,'2026-04-29 16:48:40'),(92,24,7,879,'A',30,'2026-04-29 16:48:40'),(93,24,7,880,'A',30,'2026-04-29 16:48:40'),(94,19,7,871,'C',30,'2026-04-29 16:50:23'),(95,19,7,872,'C',30,'2026-04-29 16:50:23'),(96,19,7,873,'D',30,'2026-04-29 16:50:23'),(97,19,7,874,'B',30,'2026-04-29 16:50:23'),(98,19,7,875,'D',30,'2026-04-29 16:50:23'),(99,19,7,876,'B',30,'2026-04-29 16:50:23'),(100,19,7,877,'A',30,'2026-04-29 16:50:23'),(101,19,7,878,'C',30,'2026-04-29 16:50:23'),(102,19,7,879,'B',30,'2026-04-29 16:50:23'),(103,19,7,880,'D',30,'2026-04-29 16:50:23'),(104,6,7,871,'A',30,'2026-04-29 16:57:55'),(105,6,7,872,'D',30,'2026-04-29 16:57:55'),(106,6,7,873,'B',30,'2026-04-29 16:57:55'),(107,6,7,874,'D',30,'2026-04-29 16:57:55'),(108,6,7,875,'B',30,'2026-04-29 16:57:55'),(109,6,7,876,'D',30,'2026-04-29 16:57:55'),(110,6,7,877,'B',30,'2026-04-29 16:57:55'),(111,6,7,878,'B',30,'2026-04-29 16:57:55'),(112,6,7,879,'D',30,'2026-04-29 16:57:55'),(113,6,7,880,'A',30,'2026-04-29 16:57:55'),(114,18,7,871,'A',30,'2026-04-30 10:27:27'),(115,18,7,872,'A',30,'2026-04-30 10:27:27'),(116,18,7,873,'A',30,'2026-04-30 10:27:27'),(117,18,7,871,'A',30,'2026-04-30 10:27:27'),(118,18,7,872,'A',30,'2026-04-30 10:27:27'),(119,18,7,874,'A',30,'2026-04-30 10:27:27'),(120,18,7,873,'A',30,'2026-04-30 10:27:27'),(121,18,7,875,'A',30,'2026-04-30 10:27:27'),(122,18,7,874,'A',30,'2026-04-30 10:27:27'),(123,18,7,876,'A',30,'2026-04-30 10:27:27'),(124,18,7,875,'A',30,'2026-04-30 10:27:27'),(125,18,7,877,'A',30,'2026-04-30 10:27:27'),(126,18,7,876,'A',30,'2026-04-30 10:27:27'),(127,18,7,878,'A',30,'2026-04-30 10:27:27'),(128,18,7,877,'A',30,'2026-04-30 10:27:27'),(129,18,7,879,'A',30,'2026-04-30 10:27:27'),(130,18,7,878,'A',30,'2026-04-30 10:27:27'),(131,18,7,880,'A',30,'2026-04-30 10:27:27'),(132,18,7,879,'A',30,'2026-04-30 10:27:27'),(133,18,7,880,'A',30,'2026-04-30 10:27:27'),(134,18,7,871,'A',30,'2026-04-30 10:27:28'),(135,18,7,872,'A',30,'2026-04-30 10:27:28'),(136,18,7,873,'A',30,'2026-04-30 10:27:28'),(137,18,7,874,'A',30,'2026-04-30 10:27:28'),(138,18,7,875,'A',30,'2026-04-30 10:27:28'),(139,18,7,876,'A',30,'2026-04-30 10:27:28'),(140,18,7,877,'A',30,'2026-04-30 10:27:28'),(141,18,7,878,'A',30,'2026-04-30 10:27:28'),(142,18,7,879,'A',30,'2026-04-30 10:27:28'),(143,18,7,880,'A',30,'2026-04-30 10:27:28'),(144,18,7,871,'A',30,'2026-04-30 10:27:27'),(145,18,7,872,'A',30,'2026-04-30 10:27:27'),(146,18,7,873,'A',30,'2026-04-30 10:27:27'),(147,18,7,874,'A',30,'2026-04-30 10:27:27'),(148,18,7,875,'A',30,'2026-04-30 10:27:27'),(149,18,7,876,'A',30,'2026-04-30 10:27:27'),(150,18,7,877,'A',30,'2026-04-30 10:27:27'),(151,18,7,878,'A',30,'2026-04-30 10:27:27'),(152,18,7,879,'A',30,'2026-04-30 10:27:27'),(153,18,7,880,'A',30,'2026-04-30 10:27:27'),(154,18,7,871,'A',30,'2026-04-30 10:27:28'),(155,18,7,872,'A',30,'2026-04-30 10:27:28'),(156,18,7,873,'A',30,'2026-04-30 10:27:28'),(157,18,7,874,'A',30,'2026-04-30 10:27:28'),(158,18,7,875,'A',30,'2026-04-30 10:27:28'),(159,18,7,876,'A',30,'2026-04-30 10:27:28'),(160,18,7,877,'A',30,'2026-04-30 10:27:28'),(161,18,7,878,'A',30,'2026-04-30 10:27:28'),(162,18,7,879,'A',30,'2026-04-30 10:27:28'),(163,18,7,880,'A',30,'2026-04-30 10:27:28'),(164,18,7,871,'A',30,'2026-04-30 10:27:26'),(165,18,7,872,'A',30,'2026-04-30 10:27:26'),(166,18,7,873,'A',30,'2026-04-30 10:27:26'),(167,18,7,874,'A',30,'2026-04-30 10:27:26'),(168,18,7,875,'A',30,'2026-04-30 10:27:26'),(169,18,7,876,'A',30,'2026-04-30 10:27:26'),(170,18,7,877,'A',30,'2026-04-30 10:27:26'),(171,18,7,878,'A',30,'2026-04-30 10:27:26'),(172,18,7,879,'A',30,'2026-04-30 10:27:26'),(173,18,7,880,'A',30,'2026-04-30 10:27:26'),(174,20,7,871,'A',30,'2026-04-30 18:34:25'),(175,20,7,872,'D',30,'2026-04-30 18:34:25'),(176,20,7,873,'B',30,'2026-04-30 18:34:25'),(177,20,7,874,'C',30,'2026-04-30 18:34:25'),(178,20,7,875,'D',30,'2026-04-30 18:34:25'),(179,20,7,876,'A',30,'2026-04-30 18:34:25'),(180,20,7,877,'B',30,'2026-04-30 18:34:25'),(181,20,7,878,'C',30,'2026-04-30 18:34:25'),(182,20,7,879,'B',30,'2026-04-30 18:34:25'),(183,20,7,880,'C',30,'2026-04-30 18:34:25'),(184,19,7,871,'B',30,'2026-05-01 09:57:55'),(185,1,7,871,'A',2,'2026-05-01 10:44:45'),(186,1,7,872,'A',2,'2026-05-01 10:44:45'),(187,1,7,873,'A',2,'2026-05-01 10:44:45'),(188,1,7,874,'A',2,'2026-05-01 10:44:45'),(189,1,7,875,'A',2,'2026-05-01 10:44:45'),(190,1,7,876,'A',2,'2026-05-01 10:44:45'),(191,1,7,877,'A',2,'2026-05-01 10:44:45'),(192,1,7,878,'A',2,'2026-05-01 10:44:45'),(193,1,7,879,'A',2,'2026-05-01 10:44:45'),(194,1,7,880,'A',2,'2026-05-01 10:44:45'),(195,6,7,871,'A',30,'2026-05-01 12:07:04'),(196,6,7,872,'D',30,'2026-05-01 12:07:04'),(197,6,7,873,'D',30,'2026-05-01 12:07:04'),(198,2,7,871,'B',30,'2026-05-01 15:13:39'),(199,2,7,872,'D',30,'2026-05-01 15:13:39'),(200,2,7,873,'D',30,'2026-05-01 15:13:39'),(201,2,7,874,'D',30,'2026-05-01 15:13:39'),(202,2,7,875,'D',30,'2026-05-01 15:13:39'),(203,2,7,877,'D',30,'2026-05-01 15:13:39'),(204,2,7,878,'B',30,'2026-05-01 15:13:39'),(205,2,7,879,'D',30,'2026-05-01 15:13:39'),(206,2,7,880,'D',30,'2026-05-01 15:13:39'),(207,2,7,871,'B',30,'2026-05-01 15:13:41'),(208,2,7,872,'D',30,'2026-05-01 15:13:41'),(209,2,7,873,'D',30,'2026-05-01 15:13:41'),(210,2,7,874,'D',30,'2026-05-01 15:13:41'),(211,2,7,875,'D',30,'2026-05-01 15:13:41'),(212,2,7,877,'D',30,'2026-05-01 15:13:41'),(213,2,7,878,'B',30,'2026-05-01 15:13:41'),(214,2,7,879,'D',30,'2026-05-01 15:13:41'),(215,2,7,880,'D',30,'2026-05-01 15:13:41'),(216,1,7,871,'A',30,'2026-05-01 15:15:02');
 /*!40000 ALTER TABLE `studentanswers` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1396,7 +1201,7 @@ CREATE TABLE `user_logs` (
   PRIMARY KEY (`id`),
   KEY `fk_user_logs_user` (`user_id`),
   CONSTRAINT `fk_user_logs_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=107 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=108 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1405,7 +1210,7 @@ CREATE TABLE `user_logs` (
 
 LOCK TABLES `user_logs` WRITE;
 /*!40000 ALTER TABLE `user_logs` DISABLE KEYS */;
-INSERT INTO `user_logs` VALUES (1,3,'2026-03-23 08:15:00','2026-03-23 10:20:00'),(2,12,'2026-03-23 08:45:00','2026-03-23 17:00:00'),(3,7,'2026-03-23 09:30:00','2026-03-23 11:15:00'),(4,22,'2026-03-23 10:05:00','2026-03-23 12:30:00'),(5,5,'2026-03-23 11:20:00','2026-03-23 14:00:00'),(6,19,'2026-03-23 12:10:00','2026-03-23 13:45:00'),(7,8,'2026-03-23 13:00:00','2026-03-23 18:30:00'),(8,2,'2026-03-23 14:15:00','2026-03-23 15:50:00'),(9,14,'2026-03-23 15:30:00','2026-03-23 16:45:00'),(10,1,'2026-03-23 16:05:00','2026-03-23 19:10:00'),(11,25,'2026-03-23 17:20:00','2026-03-23 20:00:00'),(12,11,'2026-03-23 18:40:00','2026-03-23 22:15:00'),(13,6,'2026-03-24 07:50:00','2026-03-24 09:30:00'),(14,4,'2026-03-24 08:20:00','2026-03-24 10:20:00'),(15,17,'2026-03-24 08:55:00','2026-03-24 10:45:00'),(16,21,'2026-03-24 09:10:00','2026-03-24 11:40:00'),(17,9,'2026-03-24 09:40:00','2026-03-24 11:20:00'),(18,15,'2026-03-24 10:15:00','2026-03-24 12:15:00'),(19,3,'2026-03-24 10:50:00','2026-03-24 14:00:00'),(21,24,'2026-03-24 12:05:00','2026-03-24 13:10:00'),(22,13,'2026-03-24 12:45:00','2026-03-24 14:45:00'),(23,8,'2026-03-24 13:20:00','2026-03-24 15:50:00'),(24,20,'2026-03-24 13:50:00','2026-03-24 15:30:00'),(25,2,'2026-03-24 14:15:00','2026-03-24 16:15:00'),(26,16,'2026-03-24 14:40:00','2026-03-24 17:10:00'),(27,7,'2026-03-24 15:10:00','2026-03-24 17:10:00'),(28,23,'2026-03-24 15:35:00','2026-03-24 18:05:00'),(29,12,'2026-03-24 16:00:00','2026-03-24 18:00:00'),(30,18,'2026-03-24 16:25:00','2026-03-24 18:55:00'),(31,6,'2026-04-14 08:00:00','2026-04-14 09:45:00'),(32,7,'2026-04-14 08:30:00','2026-04-14 10:30:00'),(33,8,'2026-04-14 09:00:00','2026-04-14 11:30:00'),(34,9,'2026-04-14 09:20:00','2026-04-14 11:50:00'),(36,11,'2026-04-14 10:00:00','2026-04-14 11:45:00'),(37,12,'2026-04-14 10:30:00','2026-04-14 12:45:00'),(38,13,'2026-04-14 11:00:00','2026-04-14 13:00:00'),(39,14,'2026-04-14 11:20:00','2026-04-14 13:00:00'),(40,15,'2026-04-14 11:45:00','2026-04-14 14:15:00'),(51,3,'2026-04-16 09:10:00','2026-04-16 10:25:00'),(52,8,'2026-04-16 08:25:00','2026-04-16 11:10:00'),(53,7,'2026-04-16 08:40:00','2026-04-16 10:40:00'),(54,1,'2026-04-16 10:05:00','2026-04-16 15:05:00'),(55,6,'2026-04-16 07:50:00','2026-04-16 09:50:00'),(57,2,'2026-04-16 11:20:00','2026-04-16 14:05:00'),(58,9,'2026-04-16 08:55:00','2026-04-16 13:55:00'),(59,4,'2026-04-16 09:30:00','2026-04-16 11:30:00'),(60,5,'2026-04-16 10:40:00','2026-04-16 11:55:00'),(61,3,'2026-04-20 07:55:00',NULL),(62,7,'2026-04-20 08:20:00',NULL),(63,8,'2026-04-20 08:45:00','2026-04-20 10:10:00'),(64,1,'2026-04-20 09:05:00','2026-04-22 15:45:49'),(65,6,'2026-04-20 09:30:00','2026-04-20 12:05:00'),(67,2,'2026-04-20 10:15:00','2026-04-20 13:40:00'),(68,9,'2026-04-20 10:40:00',NULL),(69,4,'2026-04-20 11:05:00','2026-04-20 12:25:00'),(70,5,'2026-04-20 11:30:00',NULL),(71,1,'2026-04-20 11:30:00','2026-04-22 15:45:49'),(72,1,'2026-04-22 15:45:22','2026-04-22 15:45:49'),(73,1,'2026-04-23 11:34:28','2026-04-23 11:34:43'),(74,1,'2026-04-23 12:21:03','2026-04-23 12:41:32'),(75,1,'2026-04-23 12:23:14','2026-04-23 12:41:32'),(76,1,'2026-04-23 12:24:13','2026-04-23 12:41:32'),(77,1,'2026-04-23 12:25:18','2026-04-23 12:41:32'),(78,1,'2026-04-24 10:48:31','2026-04-24 10:49:49'),(79,1,'2026-05-01 10:23:34','2026-05-01 10:38:12'),(80,1,'2026-05-01 10:38:04','2026-05-01 10:38:12'),(81,1,'2026-05-01 11:15:19','2026-05-01 11:21:58'),(82,1,'2026-05-01 11:21:55','2026-05-01 11:21:58'),(83,2,'2026-05-01 11:22:17',NULL),(84,1,'2026-04-27 08:40:30','2026-04-27 09:10:17'),(85,1,'2026-04-27 08:54:09','2026-04-27 09:10:17'),(86,1,'2026-04-27 09:09:17','2026-04-27 09:10:17'),(87,1,'2026-04-27 09:10:37','2026-04-27 09:17:25'),(88,1,'2026-05-01 02:43:56','2026-05-01 02:44:53'),(89,1,'2026-05-01 02:45:20','2026-05-01 02:45:28'),(90,1,'2026-04-29 12:59:01','2026-04-29 13:02:14'),(91,1,'2026-04-29 17:55:53','2026-04-29 17:57:09'),(92,1,'2026-04-30 15:39:31','2026-04-30 15:39:41'),(93,1,'2026-04-30 15:39:36','2026-04-30 15:39:41'),(94,1,'2026-04-30 15:41:56','2026-04-30 15:44:09'),(95,1,'2026-04-30 15:42:55','2026-04-30 15:44:09'),(96,1,'2026-04-30 16:01:57','2026-04-30 16:06:49'),(97,20,'2026-04-30 16:07:34','2026-04-30 16:51:54'),(98,1,'2026-04-30 16:52:44','2026-04-30 18:52:04'),(99,1,'2026-04-30 18:15:20','2026-04-30 18:52:04'),(100,1,'2026-04-30 18:52:24','2026-04-30 19:19:02'),(101,1,'2026-04-30 19:20:44','2026-04-30 19:36:43'),(102,1,'2026-04-30 19:33:48','2026-04-30 19:36:43'),(103,1,'2026-04-30 19:36:56','2026-04-30 21:31:06'),(104,1,'2026-04-30 19:38:49','2026-04-30 21:31:06'),(105,20,'2026-04-30 21:31:27',NULL),(106,1,'2026-04-30 21:32:17',NULL);
+INSERT INTO `user_logs` VALUES (1,3,'2026-03-23 08:15:00','2026-03-23 10:20:00'),(2,12,'2026-03-23 08:45:00','2026-03-23 17:00:00'),(3,7,'2026-03-23 09:30:00','2026-03-23 11:15:00'),(4,22,'2026-03-23 10:05:00','2026-03-23 12:30:00'),(5,5,'2026-03-23 11:20:00','2026-03-23 14:00:00'),(6,19,'2026-03-23 12:10:00','2026-03-23 13:45:00'),(7,8,'2026-03-23 13:00:00','2026-03-23 18:30:00'),(8,2,'2026-03-23 14:15:00','2026-03-23 15:50:00'),(9,14,'2026-03-23 15:30:00','2026-03-23 16:45:00'),(10,1,'2026-03-23 16:05:00','2026-03-23 19:10:00'),(11,25,'2026-03-23 17:20:00','2026-03-23 20:00:00'),(12,11,'2026-03-23 18:40:00','2026-03-23 22:15:00'),(13,6,'2026-03-24 07:50:00','2026-03-24 09:30:00'),(14,4,'2026-03-24 08:20:00','2026-03-24 10:20:00'),(15,17,'2026-03-24 08:55:00','2026-03-24 10:45:00'),(16,21,'2026-03-24 09:10:00','2026-03-24 11:40:00'),(17,9,'2026-03-24 09:40:00','2026-03-24 11:20:00'),(18,15,'2026-03-24 10:15:00','2026-03-24 12:15:00'),(19,3,'2026-03-24 10:50:00','2026-03-24 14:00:00'),(21,24,'2026-03-24 12:05:00','2026-03-24 13:10:00'),(22,13,'2026-03-24 12:45:00','2026-03-24 14:45:00'),(23,8,'2026-03-24 13:20:00','2026-03-24 15:50:00'),(24,20,'2026-03-24 13:50:00','2026-03-24 15:30:00'),(25,2,'2026-03-24 14:15:00','2026-03-24 16:15:00'),(26,16,'2026-03-24 14:40:00','2026-03-24 17:10:00'),(27,7,'2026-03-24 15:10:00','2026-03-24 17:10:00'),(28,23,'2026-03-24 15:35:00','2026-03-24 18:05:00'),(29,12,'2026-03-24 16:00:00','2026-03-24 18:00:00'),(30,18,'2026-03-24 16:25:00','2026-03-24 18:55:00'),(31,6,'2026-04-14 08:00:00','2026-04-14 09:45:00'),(32,7,'2026-04-14 08:30:00','2026-04-14 10:30:00'),(33,8,'2026-04-14 09:00:00','2026-04-14 11:30:00'),(34,9,'2026-04-14 09:20:00','2026-04-14 11:50:00'),(36,11,'2026-04-14 10:00:00','2026-04-14 11:45:00'),(37,12,'2026-04-14 10:30:00','2026-04-14 12:45:00'),(38,13,'2026-04-14 11:00:00','2026-04-14 13:00:00'),(39,14,'2026-04-14 11:20:00','2026-04-14 13:00:00'),(40,15,'2026-04-14 11:45:00','2026-04-14 14:15:00'),(51,3,'2026-04-16 09:10:00','2026-04-16 10:25:00'),(52,8,'2026-04-16 08:25:00','2026-04-16 11:10:00'),(53,7,'2026-04-16 08:40:00','2026-04-16 10:40:00'),(54,1,'2026-04-16 10:05:00','2026-04-16 15:05:00'),(55,6,'2026-04-16 07:50:00','2026-04-16 09:50:00'),(57,2,'2026-04-16 11:20:00','2026-04-16 14:05:00'),(58,9,'2026-04-16 08:55:00','2026-04-16 13:55:00'),(59,4,'2026-04-16 09:30:00','2026-04-16 11:30:00'),(60,5,'2026-04-16 10:40:00','2026-04-16 11:55:00'),(61,3,'2026-04-20 07:55:00',NULL),(62,7,'2026-04-20 08:20:00',NULL),(63,8,'2026-04-20 08:45:00','2026-04-20 10:10:00'),(64,1,'2026-04-20 09:05:00','2026-04-22 15:45:49'),(65,6,'2026-04-20 09:30:00','2026-04-20 12:05:00'),(67,2,'2026-04-20 10:15:00','2026-04-20 13:40:00'),(68,9,'2026-04-20 10:40:00',NULL),(69,4,'2026-04-20 11:05:00','2026-04-20 12:25:00'),(70,5,'2026-04-20 11:30:00',NULL),(71,1,'2026-04-20 11:30:00','2026-04-22 15:45:49'),(72,1,'2026-04-22 15:45:22','2026-04-22 15:45:49'),(73,1,'2026-04-23 11:34:28','2026-04-23 11:34:43'),(74,1,'2026-04-23 12:21:03','2026-04-23 12:41:32'),(75,1,'2026-04-23 12:23:14','2026-04-23 12:41:32'),(76,1,'2026-04-23 12:24:13','2026-04-23 12:41:32'),(77,1,'2026-04-23 12:25:18','2026-04-23 12:41:32'),(78,1,'2026-04-24 10:48:31','2026-04-24 10:49:49'),(79,1,'2026-05-01 10:23:34','2026-05-01 10:38:12'),(80,1,'2026-05-01 10:38:04','2026-05-01 10:38:12'),(81,1,'2026-05-01 11:15:19','2026-05-01 11:21:58'),(82,1,'2026-05-01 11:21:55','2026-05-01 11:21:58'),(83,2,'2026-05-01 11:22:17',NULL),(84,1,'2026-04-27 08:40:30','2026-04-27 09:10:17'),(85,1,'2026-04-27 08:54:09','2026-04-27 09:10:17'),(86,1,'2026-04-27 09:09:17','2026-04-27 09:10:17'),(87,1,'2026-04-27 09:10:37','2026-04-27 09:17:25'),(88,1,'2026-05-01 02:43:56','2026-05-01 02:44:53'),(89,1,'2026-05-01 02:45:20','2026-05-01 02:45:28'),(90,1,'2026-04-29 12:59:01','2026-04-29 13:02:14'),(91,1,'2026-04-29 17:55:53','2026-04-29 17:57:09'),(92,1,'2026-04-30 15:39:31','2026-04-30 15:39:41'),(93,1,'2026-04-30 15:39:36','2026-04-30 15:39:41'),(94,1,'2026-04-30 15:41:56','2026-04-30 15:44:09'),(95,1,'2026-04-30 15:42:55','2026-04-30 15:44:09'),(96,1,'2026-04-30 16:01:57','2026-04-30 16:06:49'),(97,20,'2026-04-30 16:07:34','2026-04-30 16:51:54'),(98,1,'2026-04-30 16:52:44','2026-04-30 18:52:04'),(99,1,'2026-04-30 18:15:20','2026-04-30 18:52:04'),(100,1,'2026-04-30 18:52:24','2026-04-30 19:19:02'),(101,1,'2026-04-30 19:20:44','2026-04-30 19:36:43'),(102,1,'2026-04-30 19:33:48','2026-04-30 19:36:43'),(103,1,'2026-04-30 19:36:56','2026-04-30 21:31:06'),(104,1,'2026-04-30 19:38:49','2026-04-30 21:31:06'),(105,20,'2026-04-30 21:31:27',NULL),(106,1,'2026-04-30 21:32:17',NULL),(107,1,'2026-05-06 12:37:29',NULL);
 /*!40000 ALTER TABLE `user_logs` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1426,7 +1231,7 @@ CREATE TABLE `user_roles` (
   KEY `role_id` (`role_id`),
   CONSTRAINT `user_roles_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
   CONSTRAINT `user_roles_ibfk_2` FOREIGN KEY (`role_id`) REFERENCES `roles` (`role_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=141 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=137 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1435,7 +1240,7 @@ CREATE TABLE `user_roles` (
 
 LOCK TABLES `user_roles` WRITE;
 /*!40000 ALTER TABLE `user_roles` DISABLE KEYS */;
-INSERT INTO `user_roles` VALUES (9,4,3,'2026-03-23 11:00:00'),(10,5,4,'2026-03-23 11:30:00'),(51,7,2,'2026-04-01 13:23:31'),(52,6,2,'2026-04-01 13:27:29'),(53,8,2,'2026-04-01 13:27:34'),(54,9,2,'2026-04-01 13:28:16'),(56,11,2,'2026-04-01 13:28:34'),(57,12,2,'2026-04-01 13:28:39'),(58,13,2,'2026-04-01 13:28:45'),(59,14,2,'2026-04-01 13:28:49'),(61,16,2,'2026-04-01 13:29:00'),(62,17,2,'2026-04-01 13:29:05'),(63,18,2,'2026-04-01 13:29:13'),(64,19,2,'2026-04-01 13:29:19'),(65,20,2,'2026-04-01 13:29:26'),(66,21,2,'2026-04-01 13:29:48'),(67,22,2,'2026-04-01 13:30:03'),(68,23,4,'2026-04-01 13:30:08'),(69,24,4,'2026-04-01 13:30:12'),(70,25,2,'2026-04-01 13:30:16'),(81,30,2,'2026-04-01 16:48:37'),(98,2,4,'2026-04-14 10:54:03'),(101,3,2,'2026-04-14 11:23:45'),(109,20,5,'2026-04-16 09:56:20'),(112,21,5,'2026-04-16 16:32:48'),(123,1,1,'2026-04-21 11:45:16'),(124,1,2,'2026-04-21 11:45:16'),(125,1,3,'2026-04-21 11:45:16'),(126,33,7,'2026-04-22 15:57:03'),(127,34,7,'2026-04-23 13:15:11'),(132,35,7,'2026-04-24 12:48:17'),(133,35,2,'2026-04-24 12:48:17'),(134,35,7,'2026-04-24 12:50:38'),(135,35,2,'2026-04-24 12:50:38'),(136,32,1,'2026-04-30 16:08:22'),(137,38,2,'2026-05-01 01:35:11'),(138,39,2,'2026-05-01 01:35:11'),(139,40,4,'2026-05-01 01:35:11'),(140,41,4,'2026-05-01 01:35:11');
+INSERT INTO `user_roles` VALUES (9,4,3,'2026-03-23 11:00:00'),(10,5,4,'2026-03-23 11:30:00'),(51,7,2,'2026-04-01 13:23:31'),(52,6,2,'2026-04-01 13:27:29'),(53,8,2,'2026-04-01 13:27:34'),(54,9,2,'2026-04-01 13:28:16'),(56,11,2,'2026-04-01 13:28:34'),(57,12,2,'2026-04-01 13:28:39'),(58,13,2,'2026-04-01 13:28:45'),(59,14,2,'2026-04-01 13:28:49'),(61,16,2,'2026-04-01 13:29:00'),(62,17,2,'2026-04-01 13:29:05'),(63,18,2,'2026-04-01 13:29:13'),(64,19,2,'2026-04-01 13:29:19'),(65,20,2,'2026-04-01 13:29:26'),(66,21,2,'2026-04-01 13:29:48'),(67,22,2,'2026-04-01 13:30:03'),(68,23,2,'2026-04-01 13:30:08'),(69,24,2,'2026-04-01 13:30:12'),(70,25,2,'2026-04-01 13:30:16'),(81,30,2,'2026-04-01 16:48:37'),(98,2,4,'2026-04-14 10:54:03'),(101,3,2,'2026-04-14 11:23:45'),(109,20,5,'2026-04-16 09:56:20'),(112,21,5,'2026-04-16 16:32:48'),(123,1,1,'2026-04-21 11:45:16'),(124,1,2,'2026-04-21 11:45:16'),(125,1,3,'2026-04-21 11:45:16'),(126,33,7,'2026-04-22 15:57:03'),(127,34,7,'2026-04-23 13:15:11'),(132,35,7,'2026-04-24 12:48:17'),(133,35,2,'2026-04-24 12:48:17'),(134,35,7,'2026-04-24 12:50:38'),(135,35,2,'2026-04-24 12:50:38'),(136,32,1,'2026-04-30 16:08:22');
 /*!40000 ALTER TABLE `user_roles` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1454,7 +1259,7 @@ CREATE TABLE `users` (
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1463,9 +1268,555 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'9881735801','12345','ACTIVE','2012-09-05 00:00:00','2026-03-25 13:19:04'),(2,'8433752395','12345','ACTIVE','2026-02-02 00:00:00','2026-03-20 17:27:27'),(3,'9930952851','12345','ACTIVE','2024-12-27 00:00:00','2026-03-20 17:27:27'),(4,'9843053149','12345','BLOCKED','2026-01-19 00:00:00','2026-03-25 16:10:58'),(5,'9309868668','12345','INACTIVE','2026-01-21 00:00:00','2026-03-20 17:27:27'),(6,'9665992262','12345','ACTIVE','2025-12-29 00:00:00','2026-03-25 13:48:04'),(7,'8530086989','12345','ACTIVE','2024-05-21 00:00:00','2026-03-20 17:27:27'),(8,'9359595484','12345','ACTIVE','2025-06-27 00:00:00','2026-03-20 17:27:27'),(9,'7030799646','12345','ACTIVE','2026-01-19 00:00:00','2026-03-20 17:27:27'),(11,'9545611780','12345','ACTIVE','2025-12-28 00:00:00','2026-03-20 17:27:27'),(12,'7972520102','12345','ACTIVE','2025-06-16 00:00:00','2026-03-20 17:27:27'),(13,'7972542628','12345','ACTIVE','2025-06-16 00:00:00','2026-03-20 17:27:27'),(14,'9356445527','12345','ACTIVE','2025-08-01 00:00:00','2026-03-20 17:27:27'),(15,'7499583199','12345','ACTIVE','2026-01-15 00:00:00','2026-03-20 17:27:27'),(16,'7387745636','12345','ACTIVE','2026-01-01 00:00:00','2026-03-20 17:27:27'),(17,'8149416008','12345','ACTIVE','2025-09-05 00:00:00','2026-03-20 17:27:27'),(18,'8446756339','12345','ACTIVE','2024-04-01 00:00:00','2026-03-20 17:27:27'),(19,'9637661382','12345','ACTIVE','2025-09-05 00:00:00','2026-03-20 17:27:27'),(20,'7498105029','12345','ACTIVE','2025-09-05 00:00:00','2026-03-20 17:27:27'),(21,'9765869164','12345','ACTIVE','2025-09-05 00:00:00','2026-03-20 17:27:27'),(22,'9604941566','12345','ACTIVE','2012-11-04 00:00:00','2026-03-20 17:27:27'),(23,'9529259355','12345','ACTIVE','2025-07-01 00:00:00','2026-03-20 17:27:27'),(24,'7972616050','12345','ACTIVE','2025-08-25 00:00:00','2026-03-21 00:38:42'),(25,'9130240968','12345','ACTIVE','2025-09-05 00:00:00','2026-03-21 01:05:03'),(30,'902274918','12345','ACTIVE','2026-04-01 15:23:59','2026-04-01 15:23:59'),(31,'9022974919','12345','ACTIVE','2026-04-14 15:33:18','2026-04-14 15:33:18'),(32,'1112223334','123456','ACTIVE','2026-04-16 14:37:39','2026-04-16 14:37:39'),(33,'1234567890','12345','ACTIVE','2026-04-22 15:57:03','2026-04-22 15:57:03'),(34,'9876543210','SecurePass123','ACTIVE','2026-04-23 13:15:11','2026-04-23 13:15:11'),(35,'9876543210','SecurePass123','ACTIVE','2026-04-23 13:15:43','2026-04-23 13:15:43'),(36,'9876543210','SecurePass123','ACTIVE','2026-04-23 13:16:27','2026-04-23 13:16:27'),(37,'7218540228','12345','ACTIVE',NULL,NULL),(38,'9503046227','12345','ACTIVE','2026-05-01 01:29:17','2026-05-01 01:29:17'),(39,'9270309017','12345','ACTIVE','2026-05-01 01:29:17','2026-05-01 01:29:17'),(40,'9356812683','12345','ACTIVE','2026-05-01 01:29:17','2026-05-01 01:29:17'),(41,'8830361396','12345','ACTIVE','2026-05-01 01:29:17','2026-05-01 01:29:17');
+INSERT INTO `users` VALUES (1,'9881735801','12345','ACTIVE','2012-09-05 00:00:00','2026-03-25 13:19:04'),(2,'8433752395','12345','ACTIVE','2026-02-02 00:00:00','2026-03-20 17:27:27'),(3,'9930952851','12345','ACTIVE','2024-12-27 00:00:00','2026-03-20 17:27:27'),(4,'9843053149','12345','BLOCKED','2026-01-19 00:00:00','2026-03-25 16:10:58'),(5,'9309868668','12345','INACTIVE','2026-01-21 00:00:00','2026-03-20 17:27:27'),(6,'9665992262','12345','ACTIVE','2025-12-29 00:00:00','2026-03-25 13:48:04'),(7,'8530086989','12345','ACTIVE','2024-05-21 00:00:00','2026-03-20 17:27:27'),(8,'9359595484','12345','ACTIVE','2025-06-27 00:00:00','2026-03-20 17:27:27'),(9,'7030799646','12345','ACTIVE','2026-01-19 00:00:00','2026-03-20 17:27:27'),(11,'9545611780','12345','ACTIVE','2025-12-28 00:00:00','2026-03-20 17:27:27'),(12,'7972520102','12345','ACTIVE','2025-06-16 00:00:00','2026-03-20 17:27:27'),(13,'7972542628','12345','ACTIVE','2025-06-16 00:00:00','2026-03-20 17:27:27'),(14,'9356445527','12345','ACTIVE','2025-08-01 00:00:00','2026-03-20 17:27:27'),(15,'7499583199','12345','ACTIVE','2026-01-15 00:00:00','2026-03-20 17:27:27'),(16,'7387745636','12345','ACTIVE','2026-01-01 00:00:00','2026-03-20 17:27:27'),(17,'8149416008','12345','ACTIVE','2025-09-05 00:00:00','2026-03-20 17:27:27'),(18,'8446756339','12345','ACTIVE','2024-04-01 00:00:00','2026-03-20 17:27:27'),(19,'9637661382','12345','ACTIVE','2025-09-05 00:00:00','2026-03-20 17:27:27'),(20,'7498105029','12345','ACTIVE','2025-09-05 00:00:00','2026-03-20 17:27:27'),(21,'9765869164','12345','ACTIVE','2025-09-05 00:00:00','2026-03-20 17:27:27'),(22,'9604941566','12345','ACTIVE','2012-11-04 00:00:00','2026-03-20 17:27:27'),(23,'9529259355','12345','ACTIVE','2025-07-01 00:00:00','2026-03-20 17:27:27'),(24,'7972616050','12345','ACTIVE','2025-08-25 00:00:00','2026-03-21 00:38:42'),(25,'9130240968','12345','ACTIVE','2025-09-05 00:00:00','2026-03-21 01:05:03'),(30,'902274918','12345','ACTIVE','2026-04-01 15:23:59','2026-04-01 15:23:59'),(31,'9022974919','12345','ACTIVE','2026-04-14 15:33:18','2026-04-14 15:33:18'),(32,'1112223334','123456','ACTIVE','2026-04-16 14:37:39','2026-04-16 14:37:39'),(33,'1234567890','12345','ACTIVE','2026-04-22 15:57:03','2026-04-22 15:57:03'),(34,'9876543210','SecurePass123','ACTIVE','2026-04-23 13:15:11','2026-04-23 13:15:11'),(35,'9876543210','SecurePass123','ACTIVE','2026-04-23 13:15:43','2026-04-23 13:15:43'),(36,'9876543210','SecurePass123','ACTIVE','2026-04-23 13:16:27','2026-04-23 13:16:27'),(37,'7218540228','12345','ACTIVE',NULL,NULL);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Dumping events for database 'tflcomentor_db'
+--
+
+--
+-- Dumping routines for database 'tflcomentor_db'
+--
+/*!50003 DROP PROCEDURE IF EXISTS `CalculateStudentResult` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `CalculateStudentResult`(IN p_student_id INT, IN p_assessment_id INT)
+BEGIN
+    DECLARE total_q INT DEFAULT 0;
+    DECLARE correct_q INT DEFAULT 0;
+    DECLARE wrong_q INT DEFAULT 0;
+    DECLARE score_percent DECIMAL(5,2);
+
+    -- Total Questions Attempted
+    SELECT COUNT(*) INTO total_q
+    FROM studentanswers sa  WHERE sa.StudentId = p_student_id  AND sa.AssessmentId = p_assessment_id;
+
+    -- Correct Answers
+    SELECT COUNT(*) INTO correct_q
+    FROM studentanswers sa
+    INNER JOIN mcq_options mo ON sa.QuestionId = mo.question_id
+    WHERE sa.StudentId = p_student_id AND sa.AssessmentId = p_assessment_id AND sa.SelectedOption = mo.correct_answer;
+    -- Wrong Answers
+    SET wrong_q = total_q - correct_q;
+    -- Score Calculation (%)
+    IF total_q > 0 THEN
+        SET score_percent = (correct_q / total_q) * 100;
+    ELSE
+        SET score_percent = 0;
+    END IF;
+    -- Insert into result table
+    INSERT INTO student_assessment_results ( StudentId,AssessmentId, TotalQuestions, CorrectAnswers,WrongAnswers, Score, CreatedAt )
+    VALUES ( p_student_id, p_assessment_id, total_q, correct_q, wrong_q,score_percent, NOW());
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `GetStudentAssessmentReport` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`%` PROCEDURE `GetStudentAssessmentReport`(
+    IN p_student_id INT,
+    IN p_assessment_id INT
+)
+BEGIN
+    SELECT 
+        p_student_id AS StudentId,
+        p_assessment_id AS AssessmentId,
+
+        -- ✅ Correct Answers (Score)
+        COUNT(DISTINCT CASE 
+            WHEN s.selectedoption = m.correct_answer THEN tq.question_id 
+        END) AS Score,
+
+        -- ✅ Total Questions
+        COUNT(DISTINCT tq.question_id) AS TotalQuestions,
+
+        -- ✅ Correct Answers
+        COUNT(DISTINCT CASE 
+            WHEN s.selectedoption = m.correct_answer THEN tq.question_id 
+        END) AS CorrectAnswers,
+
+        -- ✅ Wrong Answers
+        COUNT(DISTINCT CASE 
+            WHEN s.selectedoption != m.correct_answer 
+                 AND s.selectedoption IS NOT NULL THEN tq.question_id 
+        END) AS WrongAnswers,
+
+        -- ✅ Percentage (0–100 always)
+        ROUND(
+            COUNT(DISTINCT CASE 
+                WHEN s.selectedoption = m.correct_answer THEN tq.question_id 
+            END) * 100.0 
+            / COUNT(DISTINCT tq.question_id),
+        2) AS Percentage
+
+    FROM test_questions tq
+
+    INNER JOIN mcq_options m 
+        ON tq.question_id = m.question_id
+
+    LEFT JOIN studentanswers s 
+        ON tq.question_id = s.questionid
+        AND s.studentid = p_student_id
+        AND s.assessmentid = p_assessment_id
+
+    WHERE tq.test_id = p_assessment_id;
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `GetUserlistWithRole` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`%` PROCEDURE `GetUserlistWithRole`()
+BEGIN
+    SELECT 
+        p.user_id, 
+        CONCAT(p.first_name, ' ', p.last_name) AS full_name, 
+        u.created_at,
+        u.status,
+        r.role_name
+    FROM personal_informations p
+    LEFT JOIN user_roles ur ON p.user_id = ur.user_id
+    LEFT JOIN roles r ON ur.role_id = r.role_id
+    LEFT JOIN users u ON p.user_id = u.id   -- ✅ FIXED HERE
+    ORDER BY p.user_id;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `GetUserProfile` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`%` PROCEDURE `GetUserProfile`(IN userId INT)
+BEGIN
+    SELECT 
+        u.id AS user_id,
+        u.contact,
+        u.status,
+        p.first_name,
+        p.last_name,
+        p.gender,
+        p.date_of_birth,
+        p.email,
+        a.enrollment_year,
+        a.passing_year,
+        a.percentage,
+        a.college_name,
+        prof.skills
+    FROM users u
+    LEFT JOIN personal_informations p ON u.id = p.user_id
+    LEFT JOIN academic_informations a ON u.id = a.user_id
+    LEFT JOIN professional_informations prof ON u.id=prof.user_id
+    WHERE u.id = userId;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `RegisterUser` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `RegisterUser`(
+    IN p_contact VARCHAR(20),
+    IN p_first_name VARCHAR(100),
+    IN p_last_name VARCHAR(100),
+    IN p_email VARCHAR(255),
+    IN p_password VARCHAR(255)
+)
+BEGIN
+    DECLARE v_user_id INT;
+    DECLARE v_personal_id INT;
+
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        ROLLBACK;
+        GET DIAGNOSTICS CONDITION 1 @error_message = MESSAGE_TEXT;
+        SELECT 'FAILED' AS status, @error_message AS message;
+    END;
+
+    START TRANSACTION;
+
+    INSERT INTO users (
+        contact,
+        password,
+        status,
+        created_at,
+        updated_at
+    )
+    VALUES (
+        p_contact,
+        p_password,
+        'ACTIVE',
+        NOW(),
+        NOW()
+    );
+
+    SET v_user_id = LAST_INSERT_ID();
+
+    SELECT IFNULL(MAX(id), 0) + 1
+    INTO v_personal_id
+    FROM personal_informations
+    FOR UPDATE;
+
+    INSERT INTO personal_informations (
+        id,
+        user_id,
+        first_name,
+        last_name,
+        email
+    )
+    VALUES (
+        v_personal_id,
+        v_user_id,
+        p_first_name,
+        p_last_name,
+        p_email
+    );
+    
+    
+    INSERT into user_roles(user_id, role_id,assigned_at) values (v_user_id, 7,now());
+
+    COMMIT;
+
+    SELECT 'SUCCESS' AS status, v_user_id AS user_id;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_get_user_complete_profile` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`%` PROCEDURE `sp_get_user_complete_profile`(
+    IN p_user_id BIGINT
+)
+BEGIN
+
+    SELECT 
+        pi.user_id,
+        pi.first_name,
+        pi.last_name,
+        pi.gender,
+        pi.date_of_birth,
+        pi.email,
+        pi.address,
+        pi.pincode,
+
+        pr.company_name,
+        pr.job_title,
+        pr.employment_type,
+        pr.start_date,
+        pr.end_date,
+        pr.is_current_job,
+        pr.experience_years,
+        pr.location,
+        pr.skills,
+
+        ai.stream_name,
+        ai.specialization,
+        ai.enrollment_year,
+        ai.passing_year,
+        ai.percentage,
+        ai.college_name
+
+    FROM personal_informations pi
+
+    LEFT JOIN professional_informations pr 
+        ON pr.user_id = pi.user_id
+        AND pr.start_date = (
+            SELECT MAX(start_date) 
+            FROM professional_informations 
+            WHERE user_id = p_user_id
+        )
+
+    LEFT JOIN academic_informations ai 
+        ON ai.user_id = pi.user_id
+        AND ai.passing_year = (
+            SELECT MAX(passing_year) 
+            FROM academic_informations 
+            WHERE user_id = p_user_id
+        )
+
+    WHERE pi.user_id = p_user_id;
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_update_academic_information` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`%` PROCEDURE `sp_update_academic_information`(
+    IN p_user_id BIGINT,
+    IN p_stream_name VARCHAR(100),
+    IN p_specialization VARCHAR(100),
+    IN p_enrollment_year BIGINT,
+    IN p_passing_year BIGINT,
+    IN p_percentage DECIMAL(5,2),
+    IN p_college_name VARCHAR(255)
+)
+BEGIN
+
+    UPDATE academic_informations
+    SET
+        stream_name = p_stream_name,
+        specialization = p_specialization,
+        enrollment_year = p_enrollment_year,
+        passing_year = p_passing_year,
+        percentage = p_percentage,
+        college_name = p_college_name
+    WHERE user_id = p_user_id
+    ORDER BY passing_year DESC
+    LIMIT 1;
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_update_personal_information` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`%` PROCEDURE `sp_update_personal_information`(
+    IN p_user_id BIGINT,
+    IN p_first_name VARCHAR(100),
+    IN p_last_name VARCHAR(100),
+    IN p_gender ENUM('MALE','FEMALE'),
+    IN p_date_of_birth DATE,
+    IN p_email VARCHAR(255),
+    IN p_address VARCHAR(255),
+    IN p_pincode VARCHAR(10)
+)
+BEGIN
+
+    UPDATE personal_informations
+    SET
+        first_name = p_first_name,
+        last_name = p_last_name,
+        gender = p_gender,
+        date_of_birth = p_date_of_birth,
+        email = p_email,
+        address = p_address,
+        pincode = p_pincode
+    WHERE user_id = p_user_id;
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_update_professional_information` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`%` PROCEDURE `sp_update_professional_information`(
+    IN p_user_id INT,
+    IN p_company_name VARCHAR(100),
+    IN p_job_title VARCHAR(100),
+    IN p_employment_type ENUM('FULL_TIME','PART_TIME','INTERNSHIP'),
+    IN p_start_date DATE,
+    IN p_end_date DATE,
+    IN p_is_current_job TINYINT(1),
+    IN p_experience_years BIGINT,
+    IN p_location VARCHAR(100),
+    IN p_skills TEXT
+)
+BEGIN
+
+    UPDATE professional_informations
+    SET
+        company_name = p_company_name,
+        job_title = p_job_title,
+        employment_type = p_employment_type,
+        start_date = p_start_date,
+        end_date = p_end_date,
+        is_current_job = p_is_current_job,
+        experience_years = p_experience_years,
+        location = p_location,
+        skills = p_skills
+    WHERE user_id = p_user_id
+    ORDER BY start_date DESC
+    LIMIT 1;
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_update_user_complete_profile` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`%` PROCEDURE `sp_update_user_complete_profile`(
+    IN p_user_id BIGINT,
+
+    -- Personal
+    IN p_first_name VARCHAR(100),
+    IN p_last_name VARCHAR(100),
+    IN p_gender ENUM('MALE','FEMALE'),
+    IN p_date_of_birth DATE,
+    IN p_email VARCHAR(255),
+    IN p_address VARCHAR(255),
+    IN p_pincode VARCHAR(10),
+
+    -- Professional
+    IN p_company_name VARCHAR(100),
+    IN p_job_title VARCHAR(100),
+    IN p_employment_type ENUM('FULL_TIME','PART_TIME','INTERNSHIP'),
+    IN p_start_date DATE,
+    IN p_end_date DATE,
+    IN p_is_current_job TINYINT(1),
+    IN p_experience_years BIGINT,
+    IN p_location VARCHAR(100),
+    IN p_skills TEXT,
+
+    -- Academic
+    IN p_stream_name VARCHAR(100),
+    IN p_specialization VARCHAR(100),
+    IN p_enrollment_year BIGINT,
+    IN p_passing_year BIGINT,
+    IN p_percentage DECIMAL(5,2),
+    IN p_college_name VARCHAR(255)
+)
+BEGIN
+
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        ROLLBACK;
+    END;
+
+    START TRANSACTION;
+
+    -- Personal
+    CALL sp_update_personal_information(
+        p_user_id,
+        p_first_name,
+        p_last_name,
+        p_gender,
+        p_date_of_birth,
+        p_email,
+        p_address,
+        p_pincode
+    );
+
+    -- Professional
+    CALL sp_update_professional_information(
+        p_user_id,
+        p_company_name,
+        p_job_title,
+        p_employment_type,
+        p_start_date,
+        p_end_date,
+        p_is_current_job,
+        p_experience_years,
+        p_location,
+        p_skills
+    );
+
+    -- Academic
+    CALL sp_update_academic_information(
+        p_user_id,
+        p_stream_name,
+        p_specialization,
+        p_enrollment_year,
+        p_passing_year,
+        p_percentage,
+        p_college_name
+    );
+
+    COMMIT;
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -1476,4 +1827,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-05-07 12:02:57
+-- Dump completed on 2026-05-07 12:56:29
