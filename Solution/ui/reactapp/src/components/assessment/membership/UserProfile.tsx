@@ -290,7 +290,13 @@ const UserProfile = () => {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(personalData),
+          body: JSON.stringify({
+            first_name: personalData.first_name,
+            last_name: personalData.last_name,
+            email: personalData.email,
+            date_of_birth: personalData.date_of_birth,
+            address: personalData.address,
+          })
         }
       );
 
@@ -320,7 +326,14 @@ const UserProfile = () => {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(professionalData),
+          body: JSON.stringify({
+            company_name: professionalData.company_name,
+            job_title: professionalData.job_title,
+            employment_type: professionalData.employment_type,
+            experience_years: professionalData.experience_years,
+            location: professionalData.location,
+            skills: professionalData.skills,
+          })
         }
       );
 
@@ -484,9 +497,9 @@ const UserProfile = () => {
                           />
 
                           <div className="flex justify-center mt-6">
-                            <Button onClick={updatePersonalDetails}>
-                              Save
-                            </Button>
+                            {/* <Button onClick={updatePersonalDetails}>
+                             Save
+                            </Button> */}
                           </div>
                         </div>
 
@@ -562,13 +575,13 @@ const UserProfile = () => {
                               )
                             }
                           />
-
+                          {/* 
                           <img
                             src="/editlogo.png"
                             onClick={() => onEditHandle("Contact")}
                             className="h-8 w-8 cursor-pointer"
                             alt="Edit Logo"
-                          />
+                          /> */}
                         </div>
 
                         <div className="flex items-center gap-4">
@@ -627,9 +640,19 @@ const UserProfile = () => {
 
                         <div className="flex justify-center">
                         </div>
+                        <div className="flex justify-center pt-6">
+                          <Button
+                            onClick={updatePersonalDetails}
+                            className="px-10 py-3 text-lg font-semibold rounded-xl shadow-md bg-red-500 hover:bg-red-600 text-white"
+                          >
+                            Save
+                          </Button>
+                        </div>
                       </>
                     )}
                   </div>
+
+
                 )}
 
                 {/* PROFESSIONAL */}
@@ -797,7 +820,14 @@ const UserProfile = () => {
                         alt="Edit Logo"
                       />
                     </div>
-
+                    <div className="flex justify-center pt-6">
+                      <Button
+                        onClick={updateProfessionalDetails}
+                        className="px-10 py-3 text-lg font-semibold rounded-xl shadow-md bg-red-500 hover:bg-red-600 text-white"
+                      >
+                        Save
+                      </Button>
+                    </div>
                   </div>
                 )}
                 {/* ACADEMIC */}
@@ -964,11 +994,23 @@ const UserProfile = () => {
                         className="h-8 w-8 cursor-pointer"
                         alt="Edit Logo"
                       />
+
+                      
                     </div>
 
+ <div className="flex justify-center pt-6">
+        <Button
+          onClick={updateAcademicDetails}
+          className="px-10 py-3 text-lg font-semibold rounded-xl shadow-md bg-red-500 hover:bg-red-600 text-white"
+        >
+          Save
+        </Button>
+        </div>
                   </div>
+                  
                 )}
               </CardContent>
+              
             </Card>
           </div>
           {/* </div> */}
