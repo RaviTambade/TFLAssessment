@@ -269,6 +269,45 @@ const UserProfile = () => {
       );
     }
   };
+  const updateSingleField = async (
+    endpoint: string,
+    field: string,
+    value: any
+  ) => {
+    try {
+
+      const storedUser = sessionStorage.getItem("current");
+
+      if (!storedUser) return;
+
+      const user = JSON.parse(storedUser);
+      const userid = user?.userid;
+
+      const response = await fetch(
+        `http://localhost:3000/api/users/${userid}/${endpoint}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+
+          body: JSON.stringify({
+            [field]: value,
+          }),
+        }
+      );
+
+      const result = await response.json();
+
+      console.log("UPDATED:", result);
+
+      setEditingField("");
+
+    } catch (error) {
+      console.error("Update failed", error);
+    }
+  };
+  // edit button icon handler
   const onEditHandle = (field: string) => {
     setEditingField(field);
   };
@@ -290,7 +329,13 @@ const UserProfile = () => {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(personalData),
+          body: JSON.stringify({
+            first_name: personalData.first_name,
+            last_name: personalData.last_name,
+            email: personalData.email,
+            date_of_birth: personalData.date_of_birth,
+            address: personalData.address,
+          })
         }
       );
 
@@ -320,7 +365,14 @@ const UserProfile = () => {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(professionalData),
+          body: JSON.stringify({
+            company_name: professionalData.company_name,
+            job_title: professionalData.job_title,
+            employment_type: professionalData.employment_type,
+            experience_years: professionalData.experience_years,
+            location: professionalData.location,
+            skills: professionalData.skills,
+          })
         }
       );
 
@@ -474,7 +526,10 @@ const UserProfile = () => {
                                 "first_name",
                                 e.target.value
                               )
+
+
                             }></Input>
+
 
                           <img
                             src="/editlogo.png"
@@ -482,11 +537,10 @@ const UserProfile = () => {
                             className="h-8 w-8 cursor-pointer"
                             alt="Edit Logo"
                           />
+                          <div className="flex justify-center mt-1">
+                            <Button onClick={updatePersonalDetails}>  Save</Button>
 
-                          <div className="flex justify-center mt-6">
-                            <Button onClick={updatePersonalDetails}>
-                              Save
-                            </Button>
+
                           </div>
                         </div>
 
@@ -515,6 +569,8 @@ const UserProfile = () => {
                             className="h-8 w-8 cursor-pointer"
                             alt="Edit Logo"
                           />
+
+                          <Button onClick={updatePersonalDetails}>  Save</Button>
                         </div>
 
                         <div className="flex items-center gap-4">
@@ -542,6 +598,8 @@ const UserProfile = () => {
                             className="h-8 w-8 cursor-pointer"
                             alt="Edit Logo"
                           />
+
+                          <Button onClick={updatePersonalDetails}>  Save</Button>
                         </div>
 
                         <div className="flex items-center gap-4">
@@ -562,13 +620,13 @@ const UserProfile = () => {
                               )
                             }
                           />
-
+                          {/* 
                           <img
                             src="/editlogo.png"
                             onClick={() => onEditHandle("Contact")}
                             className="h-8 w-8 cursor-pointer"
                             alt="Edit Logo"
-                          />
+                          /> */}
                         </div>
 
                         <div className="flex items-center gap-4">
@@ -596,40 +654,15 @@ const UserProfile = () => {
                             className="h-8 w-8 cursor-pointer"
                             alt="Edit Logo"
                           />
+                            <Button onClick={updatePersonalDetails}>  Save</Button>
                         </div>
 
-                        <div className="flex items-center gap-4">
-                          <div className="w-32">
-                            <p className="font-bold">Address</p>
-                          </div>
 
-                          <Input
-                            type="text"
-                            value={personalData?.address || ""}
-                            className="flex-1"
-                            disabled={editingField !== "address"}
-                            onChange={(e) =>
-                              handleChange(
-                                "personal",
-                                "address",
-                                e.target.value
-                              )
-                            }
-                          />
-
-                          <img
-                            src="/editlogo.png"
-                            onClick={() => onEditHandle("address")}
-                            className="h-8 w-8 cursor-pointer"
-                            alt="Edit Logo"
-                          />
-                        </div>
-
-                        <div className="flex justify-center">
-                        </div>
                       </>
                     )}
                   </div>
+
+
                 )}
 
                 {/* PROFESSIONAL */}
@@ -661,6 +694,8 @@ const UserProfile = () => {
                         className="h-8 w-8 cursor-pointer"
                         alt="Edit Logo"
                       />
+                      
+                            <Button onClick={updateProfessionalDetails}>  Save</Button>
                     </div>
 
                     <div className="flex items-center gap-4">
@@ -688,6 +723,7 @@ const UserProfile = () => {
                         className="h-8 w-8 cursor-pointer"
                         alt="Edit Logo"
                       />
+                            <Button onClick={updateProfessionalDetails}>  Save</Button>
                     </div>
 
                     <div className="flex items-center gap-4">
@@ -714,7 +750,7 @@ const UserProfile = () => {
                         onClick={() => onEditHandle("employment_type")}
                         className="h-8 w-8 cursor-pointer"
                         alt="Edit Logo"
-                      />
+                      /><Button onClick={updateProfessionalDetails}>  Save</Button>
                     </div>
 
                     <div className="flex items-center gap-4">
@@ -742,6 +778,7 @@ const UserProfile = () => {
                         className="h-8 w-8 cursor-pointer"
                         alt="Edit Logo"
                       />
+                       <Button onClick={updateProfessionalDetails}>  Save</Button>
                     </div>
 
                     <div className="flex items-center gap-4">
@@ -769,9 +806,9 @@ const UserProfile = () => {
                         className="h-8 w-8 cursor-pointer"
                         alt="Edit Logo"
                       />
-                    </div>
+                    <Button onClick={updateProfessionalDetails}>  Save</Button>                    </div>
 
-                    <div className="flex items-center gap-4">
+                  <div className="flex items-center gap-4">
                       <div className="w-32">
                         <p className="font-bold">Skills</p>
                       </div>
@@ -796,8 +833,9 @@ const UserProfile = () => {
                         className="h-8 w-8 cursor-pointer"
                         alt="Edit Logo"
                       />
+                      <Button onClick={updateProfessionalDetails}>  Save</Button>
                     </div>
-
+                 
                   </div>
                 )}
                 {/* ACADEMIC */}
@@ -829,6 +867,7 @@ const UserProfile = () => {
                         className="h-8 w-8 cursor-pointer"
                         alt="Edit Logo"
                       />
+                      <Button onClick={updateAcademicDetails}>  Save</Button>
                     </div>
 
                     <div className="flex items-center gap-4">
@@ -856,6 +895,7 @@ const UserProfile = () => {
                         className="h-8 w-8 cursor-pointer"
                         alt="Edit Logo"
                       />
+                      <Button onClick={updateAcademicDetails}>  Save</Button>
                     </div>
 
                     <div className="flex items-center gap-4">
@@ -883,6 +923,7 @@ const UserProfile = () => {
                         className="h-8 w-8 cursor-pointer"
                         alt="Edit Logo"
                       />
+                      <Button onClick={updateAcademicDetails}>  Save</Button>
                     </div>
 
                     <div className="flex items-center gap-4">
@@ -910,6 +951,7 @@ const UserProfile = () => {
                         className="h-8 w-8 cursor-pointer"
                         alt="Edit Logo"
                       />
+                      <Button onClick={updateAcademicDetails}>  Save</Button>
                     </div>
 
                     <div className="flex items-center gap-4">
@@ -937,6 +979,7 @@ const UserProfile = () => {
                         className="h-8 w-8 cursor-pointer"
                         alt="Edit Logo"
                       />
+                      <Button onClick={updateAcademicDetails}>  Save</Button>
                     </div>
 
                     <div className="flex items-center gap-4">
@@ -964,14 +1007,20 @@ const UserProfile = () => {
                         className="h-8 w-8 cursor-pointer"
                         alt="Edit Logo"
                       />
+                      <Button onClick={updateAcademicDetails}>  Save</Button>
+
+
                     </div>
 
+                    
                   </div>
+
                 )}
               </CardContent>
+
             </Card>
           </div>
-          {/* </div> */}
+         
 
         </div>
       </div>

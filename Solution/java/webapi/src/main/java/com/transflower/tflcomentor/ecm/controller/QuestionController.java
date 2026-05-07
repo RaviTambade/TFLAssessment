@@ -15,14 +15,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.transflower.tflcomentor.ecm.dto.QuestionDisplayDto;
 import com.transflower.tflcomentor.ecm.dto.QuestionOptionsRequestDto;
 import com.transflower.tflcomentor.ecm.dto.QuestionStatusDto;
+import com.transflower.tflcomentor.ecm.dto.QuestionTypeDto;
 import com.transflower.tflcomentor.ecm.entity.Question;
 import com.transflower.tflcomentor.ecm.entity.enums.DifficultyLevel;
 import com.transflower.tflcomentor.ecm.entity.enums.QuestionStatus;
+import com.transflower.tflcomentor.ecm.entity.enums.QuestionType;
 import com.transflower.tflcomentor.ecm.service.QuestionService;
-import com.transflower.tflcomentor.skilltaxonomy.entity.ConceptsInFramework;
-import com.transflower.tflcomentor.ecm.dto.QuestionDisplayDto;
 
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -33,6 +34,7 @@ public class QuestionController {
     @Autowired
     private QuestionService service;
 
+    
     @GetMapping("/{question_id}")
     // http://localhost:8080/api/questions/1
     public QuestionDisplayDto getQuestionById(@PathVariable("question_id") long question_id) {
@@ -108,9 +110,17 @@ public class QuestionController {
         return service.getQuestionsByConceptId(conceptId);
     }
 
+
     @GetMapping("/concepts/{concept}/count")
     // http://localhost:8080/api/questions/concepts/loops/count
     public int getQuestionCountByConcept(@PathVariable String concept) {
         return service.getQuestionCountByConcept(concept);
     }
+
+    @GetMapping("/type/{questionType}")
+    // http://localhost:8080/api/questions/type/MCQ
+    public List<QuestionTypeDto> getQuestionsByType(@PathVariable QuestionType questionType) {
+        return service.getQuestionsByType(questionType);
+    }
+
 }

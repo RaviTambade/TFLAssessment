@@ -33,6 +33,26 @@ namespace backend.Repositories
                 .ToListAsync();
         }
 
+
+ public async Task<bool> CancelTestAsync(int id)
+    {
+        var test = await _context.Tests
+            .FirstOrDefaultAsync(x => x.Id == id);
+
+        if (test == null)
+        {
+            return false;
+        }
+
+        // Make inactive
+        test.Status = false;
+
+        await _context.SaveChangesAsync();
+
+        return true;
+    }
+
+
     public async Task<long> CreateTestAsync(CreateTestRequestDto dto)
         {
 

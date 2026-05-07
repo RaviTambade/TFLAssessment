@@ -10,6 +10,10 @@ public class QuestionOptionsRequestDto {
     private QuestionType questionType;
     private DifficultyLevel difficultyLevel;
     private QuestionStatus status;
+    private String language;
+    private String layer;
+    private String framework;
+    private String concept;
     private String questionDetails;
 
     private String optionA;
@@ -105,4 +109,29 @@ public class QuestionOptionsRequestDto {
     public void setQuestionDetails(String questionDetails) {
         this.questionDetails = questionDetails;
     }
+    public String getLanguage() {
+        return language;
+    }
+    public void setLanguage(String language) {
+        this.language = language;
+    }
+    public String getLayer() {
+        return layer;
+    }
+    public void setLayer(String layer) {
+        this.layer = layer;
+    }
+    public String getFramework() {
+        return framework;
+    }
+    public void setFramework(String framework) {
+        this.framework = framework;
+    }
+    public String getConcept() {
+        return concept;
+    }
+    public void setConcept(String concept) {
+        this.concept = concept;
+    }
+    
 }
