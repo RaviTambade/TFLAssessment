@@ -141,4 +141,30 @@ public class CreateTestController : ControllerBase
         }
     }
 
+   
+
+        [HttpGet("20questions")]
+        public async Task<IActionResult> GetQuestions()
+        {
+            try
+            {
+                var questions = await _context.Questions
+                    .OrderBy(q => q.QuestionId)
+                    .Take(20)
+                    .ToListAsync();
+
+                return Ok(questions);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new
+                {
+                    message = "Error fetching questions",
+                    error = ex.Message
+                });
+            }
+        }
+    
+    
+
 }

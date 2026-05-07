@@ -6,7 +6,6 @@ import { Checkbox } from "../../ui/checkbox";
 import { RadioGroup, RadioGroupItem } from "../../ui/radio-group";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../../ui/card";
 import { WEBAPI_DOTNET_URL } from "@/lib/utils";
-import availableQuestionsFromFile from "./data/availablequestions.json";
 type Concept = {
   id: number,
   name: string;
@@ -33,10 +32,6 @@ const SMECreateTest = () => {
   const [showQuestionList, setShowQuestionList] = useState(false);
   const [selectedConcept, setSelectedConcept] = useState<Concept | null>(null);
 
-  // Default hardcoded MCQs (5 questions, each with 4 options)
-  // Load default MCQs from local JSON file
-  const defaultMCQs: Question[] = availableQuestionsFromFile as Question[];
-
   // State for API data
   const [concepts, setConcepts] = useState<Concept[]>([]);
   const [availableQuestions, setAvailableQuestions] = useState<Question[]>([]);
@@ -55,6 +50,25 @@ const SMECreateTest = () => {
       // Assuming the user object has a property 'userid' or 'id'
       localStorage.setItem("smeId", user.userid || user.id);
     }
+
+    const fetchAllQuestions = async () => {
+      try {
+        setLoadingQuestions(true);
+        const response = await fetch(`${WEBAPI_DOTNET_URL}/createTest/20questions`);
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data: Question[] = await response.json();
+        setAvailableQuestions(Array.isArray(data) ? data : []);
+        setLoadingQuestions(false);
+      } catch (err) {
+        setError("Failed to fetch questions.");
+        setLoadingQuestions(false);
+        console.error("Error loading questions:", err);
+      }
+    };
+
+    void fetchAllQuestions();
 
    const fetchConcept=async ()=>{
     try{
@@ -114,7 +128,7 @@ const SMECreateTest = () => {
   };
 
   // Combine API-provided questions with our local default MCQs so selectedQuestions can refer to either source
-  const allQuestions = [...availableQuestions, ...defaultMCQs];
+  const allQuestions = availableQuestions;
 
   const selectedQuestionsData = allQuestions.filter((q) => selectedQuestions.includes(q.questionId));
 
@@ -150,7 +164,7 @@ const SMECreateTest = () => {
     setSubmitLoading(true);
     try {
       const res = await fetch(`${WEBAPI_DOTNET_URL}/CreateTest/create`, {
-        method: "POST",
+        method: "POST",         
         headers: {
           "Content-Type": "application/json"
         },
@@ -184,6 +198,7 @@ const SMECreateTest = () => {
       }
 
       setSubmitSuccess('Test created successfully');
+      alert('Test created successfully!');
 
       // If we have selected questions and a created test id, call add-questions API
       if (createdTestId > 0 && Array.isArray(selectedQuestions) && selectedQuestions.length > 0) {
@@ -294,21 +309,7 @@ const SMECreateTest = () => {
                     <div className="flex items-start justify-between">
                       <div>
                         <p className="font-medium">{q.description}</p>
-                        <div className="mt-2 grid grid-cols-1 gap-2">
-                          {q.options?.map((opt, idx) => (
-                            <div key={idx} className="flex items-center gap-2">
-                              <input
-                                type="radio"
-                                name={`q-${q.questionId}`}
-                                disabled
-                                checked={false}
-                                className="w-4 h-4"
-                                readOnly
-                              />
-                              <span className="text-sm">{opt}</span>
-                            </div>
-                          ))}
-                        </div>
+                        <p className="text-xs text-muted-foreground mt-1">Type: {q.type} | Difficulty: {q.difficulty}</p>
                       </div>
                       <div className="ml-4">
                         <label className="flex items-center gap-2 text-sm">
