@@ -15,13 +15,33 @@ public class AssessmentController : ControllerBase
         _service = service;
     }
 
+    //[HttpGet("user/{userId}")]
+    // [HttpGet("my-assessments")]
+    // public async Task<IActionResult> GetAll(long userId ,DateTime fromDate, DateTime toDate)
+    // {
+    //     var data = await _service.GetAllUpcomingAssessmentsService(userId, fromDate, toDate); 
+    //     return Ok(data);
+    // }
     [HttpGet("user/{userId}")]
-    public async Task<IActionResult> GetAll(long userId ,DateTime fromDate, DateTime toDate)
+    public async Task<IActionResult> GetAll(long userId,DateTime fromDate,DateTime toDate)
     {
-        var data = await _service.GetAllUpcomingAssessmentsService(userId, fromDate, toDate); 
-        return Ok(data);
-    }
+        try
+        {
+            var data =
+                await _service.GetAllUpcomingAssessmentsService(userId,fromDate,toDate
+                );
 
+            return Ok(data);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, new
+            {
+                message = "Error fetching assessments",
+                error = ex.Message
+            });
+        }
+    }
     [HttpGet("all")]
     public async Task<IActionResult> GetAll(bool? isActive = null)
     {
@@ -46,7 +66,7 @@ public class AssessmentController : ControllerBase
 
     [HttpGet("students")]
     public async Task<IActionResult> GetStudentsAsync()
-    { 
+    {
         var students = await _service.GetStudentsAsync();
         return Ok(students);
     }
@@ -55,15 +75,15 @@ public class AssessmentController : ControllerBase
     public async Task<IActionResult> AssignAssessmentAsync([FromBody] AssignAssessmentDto dto)
     {
         try
-    {
-        await _service.AssignAssessmentAsync(dto);
-        return Ok("Assessment Assigned Successfully");
+        {
+            await _service.AssignAssessmentAsync(dto);
+            return Ok("Assessment Assigned Successfully");
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
     }
-    catch (Exception ex)
-    {
-        return BadRequest(ex.Message);
-    }
-}
 
     [HttpGet("{assessmentId}/questions")]
     public async Task<IActionResult> GetAssessmentQuestionsAsync(int assessmentId)
@@ -71,7 +91,7 @@ public class AssessmentController : ControllerBase
         var assessmentQuestions = await _service.GetAssessmentQuestionsAsync(assessmentId);
         return Ok(assessmentQuestions);
     }
-    
+
     [HttpPost("submit")]
     public async Task<IActionResult> SaveAssessmentAnswersAsync([FromBody] AssessmentAnswersDto submission)
     {

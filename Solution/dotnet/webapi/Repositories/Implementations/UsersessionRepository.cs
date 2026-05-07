@@ -8,14 +8,11 @@ using System.Linq;
 using System;
 using backend.Repositories.Interfaces;
 
-
-
 namespace backend.Repositories.Implementations
 {
     public class UsersessionRepository : IUserSessionRepository
     {
         private readonly AppDbContext _context;
-
 
         public UsersessionRepository(AppDbContext context)
         {
