@@ -107,6 +107,7 @@ class RolesController {
       );
     });
   }
+
   getUserByRole(req, res) {
     const userId = req.params.userId;
     const responseGenerator = new ResponseGenerator();
@@ -135,6 +136,8 @@ class RolesController {
       );
     });
   }
+
+  
   assignRole(req, res) {
     const userId = req.params.userId;
     const roleId = req.params.roleId;
