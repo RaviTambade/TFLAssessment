@@ -20,6 +20,8 @@ public class AssessmentRepository : IAssessmentRepository
     [HttpGet]
     public async Task<List<UpcomingAssessmentDto>> GetAllUpcomingAssessments(long userId , DateTime fromDate, DateTime toDate)
     {
+        Console.WriteLine($"UserId: {userId}, FromDate: {fromDate}, ToDate: {toDate}");
+        toDate = toDate.Date.AddDays(1).AddSeconds(-1);
                     var data = await (
                     from a in _context.Assessments
 

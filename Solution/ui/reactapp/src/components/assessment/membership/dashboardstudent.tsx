@@ -52,17 +52,33 @@ const DashboardStudent = () => {
   ];
 
 
-  useEffect(() => {
-    const apiURl = `${WEBAPI_NODE_URL}/user/profile`;
-        fetch(apiURl).then((response) => response.json()).then((data) => {
-          setName(data.name);
-          setRole(data.role);
-          setProfilePicture(data.profilePicture);
-        });
+  // useEffect(() => {
+  //   const apiURl = `${WEBAPI_NODE_URL}/user/profile`;
+  //       fetch(apiURl).then((response) => response.json()).then((data) => {
+  //         setName(data.name);
+  //         setRole(data.role);
+  //         setProfilePicture(data.profilePicture);
+  //       });
 
 
-  }, []);
+  // }, []);
+useEffect(() => {
 
+  const currentUser = sessionStorage.getItem("current");
+
+  if (currentUser) {
+
+    const user = JSON.parse(currentUser);
+
+    setName(
+      `${user.firstname} ${user.lastname}`
+    );
+
+    setRole(user.rolename);
+
+  }
+
+}, []);
   // Render the dashboard UI
   return (
     <div className="min-h-screen bg-gray-50 p-6">
