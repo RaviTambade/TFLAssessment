@@ -48,8 +48,13 @@ public class CreateTestController : ControllerBase
     /// POST /api/createtest/add-questions?testId=1
     /// </summary>
     
+<<<<<<< HEAD
     
      [HttpPut("cancel/{id}")]
+=======
+
+    [HttpPut("cancel/{id}")]
+>>>>>>> 6113edf908b4d5c9cef08c5c3260fd4bf1a3d880
     public async Task<IActionResult> CancelTest(int id)
     {
         var result = await _service.CancelTestAsync(id);
@@ -62,6 +67,10 @@ public class CreateTestController : ControllerBase
         return Ok("Test cancelled successfully");
     }
     
+<<<<<<< HEAD
+=======
+
+>>>>>>> 6113edf908b4d5c9cef08c5c3260fd4bf1a3d880
     
     [HttpPost("add-questions")]
     public async Task<IActionResult> AddQuestionsToTest([FromBody] AddQuestionsToTestRequestDto request, [FromQuery] long testId)
@@ -158,5 +167,31 @@ public class CreateTestController : ControllerBase
             return StatusCode(500, new { message = "An error occurred while adding questions", error = ex.Message });
         }
     }
+
+   
+
+        [HttpGet("20questions")]
+        public async Task<IActionResult> GetQuestions()
+        {
+            try
+            {
+                var questions = await _context.Questions
+                    .OrderBy(q => q.QuestionId)
+                    .Take(20)
+                    .ToListAsync();
+
+                return Ok(questions);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new
+                {
+                    message = "Error fetching questions",
+                    error = ex.Message
+                });
+            }
+        }
+    
+    
 
 }

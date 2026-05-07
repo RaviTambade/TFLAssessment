@@ -24,6 +24,5 @@ namespace backend.Services
         {
             return await _repo.CancelTestAsync(id);
         }
-
     }
 }
