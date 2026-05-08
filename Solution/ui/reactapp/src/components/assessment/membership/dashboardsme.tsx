@@ -6,11 +6,11 @@ import { WEBAPI_NODE_URL } from "@/lib/utils";
 import AssessmentMetrics from "./entities/AssessmentMetrics";
 import CandidatePerformance from "./entities/CandidatePerformance";
 import SkillGapAnalysis from "./entities/SkillGapAnalysis";
-import SMENotification from "./entities/Notification";
-import SmeNotifications from "./data/smeNotifications.json";
+import Notification from "./entities/Notification";
+import SmeNotifications from "./data/notifications/smeNotifications.json";
 import CandidatePerformances from "./data/candidatePerformance.json";
 import AssessmentMetric from "./data/assessmentMetrics.json";
-import SkillGapAnalyse from "./data/skillGapAnalysis.json";
+import SkillGapAnalyse from "./data/skills/skillGapAnalysis.json";
 
 //function component for SME Dashboard
 const DashboardSME = () => {
@@ -26,7 +26,7 @@ const DashboardSME = () => {
    const[profilePicture, setProfilePicture] = useState<string>("https://avatars.githubusercontent.com/u/12345678?v=4");
 
   // SME-specific Notifications
-  const smeNotifications: SMENotification[] = SmeNotifications as SMENotification[];
+  const smeNotifications: Notification[] = SmeNotifications as Notification[];
 
   // Candidate Performance Overview
   const candidatePerformance: CandidatePerformance[] =CandidatePerformances as CandidatePerformance[] ;
