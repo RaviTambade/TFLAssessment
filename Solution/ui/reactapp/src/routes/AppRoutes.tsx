@@ -31,7 +31,7 @@ import GetUserLogDetail from "@/components/assessment/membership/GetUserLogDetai
 import LoginPage from "@/components/assessment/membership/Login";
 import ManageUsers from "@/components/assessment/membership/ManageUsers";
 import RegisterPage from "@/components/assessment/membership/Register";
-import GetUserInformation from "@/components/assessment/membership/GetUserInformation";
+import GetUserInformation from "@/components/assessment/membership/UserInformation";
 import UserActivity from "@/components/assessment/membership/UserActivity";
 import UserProfile from "@/components/assessment/membership/UserProfile";
 import SMECreateTest from "@/components/assessment/assessmentOrchestrator/SMECreateTest";
