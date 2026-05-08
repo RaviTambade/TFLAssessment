@@ -1,4 +1,4 @@
-type QuestionFormData = {
+type MultipleChoiceQuestion  = {
     description: string;
     questionType: string;
     difficultyLevel: string;
@@ -13,4 +13,4 @@ type QuestionFormData = {
     correctAnswer: string;
 };
 
-export default QuestionFormData;
+export default MultipleChoiceQuestion;
