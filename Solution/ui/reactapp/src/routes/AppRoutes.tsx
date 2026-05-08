@@ -27,7 +27,7 @@ import ProjectByMentee from "@/components/assessment/evaluationcontent/ProjectBy
 import QuestionsByDifficulty from "@/components/assessment/evaluationcontent/QuestionByDifficulty";
 import MembershipMenu from "@/components/assessment/membership/MembershipMenu";
 import ChangePassword from "@/components/assessment/membership/ChangePassword";
-import GetUserLogDetail from "@/components/assessment/membership/GetUserLogDetail";
+import GetUserLogDetail from "@/components/assessment/membership/UserLogDetail";
 import LoginPage from "@/components/assessment/membership/Login";
 import ManageUsers from "@/components/assessment/membership/ManageUsers";
 import RegisterPage from "@/components/assessment/membership/Register";

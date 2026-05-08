@@ -1,16 +1,20 @@
-import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+<<<<<<< HEAD:Solution/ui/reactapp/src/components/assessment/evaluationcontent/MentorReviewQuestion.jsx
 import {  WEBAPI_DOTNET_URL, WEBAPI_NODE_URL ,WEBAPI_JAVA_URL} from "@/lib/utils";
 
 
+=======
+import { WEBAPI_JAVA_URL } from "@/lib/utils";
+>>>>>>> 5626306bf6210fb183c49603abe6f3fb7934b6f8:Solution/ui/reactapp/src/components/assessment/evaluationcontent/MentorReviewQuestion.tsx
 const MentorReviewQuestion = () => {
   const [questions, setQuestions] = useState([]);
   const navigate = useNavigate();
 
- 
+
 
   const fetchDraftQuestions = async () => {
     try {
@@ -63,7 +67,7 @@ const MentorReviewQuestion = () => {
               <tbody>
                 {questions.length === 0 ? (
                   <tr>
-                    <td colSpan="2" className="text-center p-4 text-gray-500">
+                    <td colSpan={2} className="text-center p-4 text-gray-500">
                       No Questions Found
                     </td>
                   </tr>

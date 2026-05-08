@@ -2,15 +2,15 @@ import { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "../../ui/card";
 import { Bell, Users, Briefcase, TrendingUp, CheckCircle, AlertCircle, Calendar, Star } from "lucide-react";
 import { WEBAPI_NODE_URL } from "@/lib/utils";
-import RecruiterNotification from "./entities/RecruiterNotification";
+import Notification from "./entities/Notification";
 import Candidate from "./entities/Candidate";
 import JobOpening from "./entities/jobopening";
 import SkillRequirement from "./entities/SkillRequirement";
 
 import  openings from "./data/jobopenings.json";
-import  allCandidates from "./data/candidates.json";
-import  allSkillRequirements from "./data/skillrequirements.json";
-import  RecruiterNotifications from "./data/recruiterNotifications.json";
+import  allCandidates from "./data/users/candidates.json";
+import  allSkillRequirements from "./data/skills/skillrequirements.json";
+import  RecruiterNotifications from "./data/notifications/recruiterNotifications.json";
 
 //function component for Employer Recruitment Dashboard - Transflower
 const DashboardEmployer = () => {
@@ -26,7 +26,7 @@ const DashboardEmployer = () => {
    const[profilePicture, setProfilePicture] = useState<string>("https://avatars.githubusercontent.com/u/12345678?v=4");
 
   // Recruiter Notifications
-  const recruiterNotifications: RecruiterNotification[] = RecruiterNotifications as RecruiterNotification[];
+  const recruiterNotifications: Notification[] = RecruiterNotifications as Notification[];
 
   // Candidate Pipeline - Recruitment Tracking
   const candidates: Candidate[] =allCandidates as Candidate[];
