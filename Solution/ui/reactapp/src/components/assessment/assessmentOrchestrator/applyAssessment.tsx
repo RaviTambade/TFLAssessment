@@ -7,7 +7,7 @@ import {
 
 import { WEBAPI_DOTNET_URL } from "@/lib/utils";
 
-import QuestionType from "./entities/Question";
+import QuestionType from "./entities/DisplayQuestion";
 
 type SelectedAnswersType = {
   [key: number]: string;
