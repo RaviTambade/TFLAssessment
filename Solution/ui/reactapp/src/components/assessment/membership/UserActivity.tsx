@@ -4,7 +4,7 @@ import Footer from "../../Footer";
 import { WEBAPI_NODE_URL } from "@/lib/utils";
 import ApiActiveUser from "./entities/ApiActiveUser";
 import ApiSession from "./entities/ApiSession";
-import SessionRow from "./entities/SessionRow";
+import UserActivitySession from "./entities/UserActivitySession";
 
 
 
@@ -19,7 +19,7 @@ const UserActivity = () => {
   const [showActiveUsers, setShowActiveUsers] = useState(false);
 
   // Sessions Table
-  const [sessions, setSessions] = useState<SessionRow[]>([]);
+  const [userActivitySessions, setUserActivitySessions] = useState<UserActivitySession[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
@@ -116,7 +116,7 @@ const UserActivity = () => {
           ? sessionsData
           : sessionsData.data || sessionsData.sessions || [];
 
-        const mappedSessions: SessionRow[] = sessionsArray.map(
+        const mappedSessions: UserActivitySession[] = sessionsArray.map(
           (item: ApiSession, index: number) => ({
             id: String(
               item.session_id ||
@@ -150,7 +150,7 @@ const UserActivity = () => {
           })
         );
 
-        setSessions(mappedSessions);
+        setUserActivitySessions(mappedSessions);
       } catch (err: unknown) {
         console.error(err);
         setError(err instanceof Error ? err.message : "Something went wrong");
@@ -195,12 +195,12 @@ const UserActivity = () => {
 
   // Search Filter
   const filteredSessions = useMemo(() => {
-    return sessions.filter((s) =>
+    return userActivitySessions.filter((s) =>
       s.name
         .toLowerCase()
         .includes(searchTerm.toLowerCase())
     );
-  }, [sessions, searchTerm]);
+  }, [userActivitySessions, searchTerm]);
 
   return (
     <div className="min-h-screen bg-gradient-hero flex flex-col">

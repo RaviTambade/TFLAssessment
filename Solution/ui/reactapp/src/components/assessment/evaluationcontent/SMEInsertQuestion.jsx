@@ -1,39 +1,52 @@
-import React, { useState } from "react";
+import React from "react";
+import { useEffect,useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 
 import {  WEBAPI_DOTNET_URL, WEBAPI_NODE_URL ,WEBAPI_JAVA_URL} from "@/lib/utils";
+import { Layer } from "recharts";
+
+
 
 const SMEInsertQuestion = () => {
+
   const [formData, setFormData] = useState({
     description: "",
     questionType: "MCQ",
     difficultyLevel: "BEGINNER",
+    language:"JAVA",
+    layer:"Backend",
+    framework:"",
+    concept:"",
     optionA: "",
     optionB: "",
     optionC: "",
     optionD: "",
     correctAnswer: ""
   });
-
-
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
+    const handleChange = (e) => {
+        setFormData({
+          ...formData,
+          [e.target.name]: e.target.value
+        });
   };
-
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    await fetch(`${WEBAPI_JAVA_URL}/questions`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(formData)
-    });
+        try {
+      const response = await fetch(`${WEBAPI_JAVA_URL}/questions`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(formData)
+      });
+    if (!response.ok) {
+        const errorText = await response.text();
+        alert("Error ❌: " + errorText);
+        return;
+      }
 
     alert("Question Saved ✅");
 
@@ -41,12 +54,21 @@ const SMEInsertQuestion = () => {
       description: "",
       questionType: "MCQ",
       difficultyLevel: "BEGINNER",
+      language: "JAVA",
+      layer: "Backend",
+      framework: "",
+      concept: "",
       optionA: "",
       optionB: "",
       optionC: "",
       optionD: "",
       correctAnswer: ""
     });
+
+    } catch (err) {
+      console.error(err);
+      alert("Something went wrong ❌");
+    }
   };
 
   return (
@@ -90,6 +112,46 @@ const SMEInsertQuestion = () => {
           <option value="INTERMEDIATE">Intermediate</option>
           <option value="ADVANCE">Advance</option>
         </select>
+
+        <input
+          type="text"
+          name="language"
+          placeholder="Enter Language"
+          value={formData.language}
+          onChange={handleChange}
+          className="w-full p-3 border rounded-lg mb-3"
+          required
+        />
+
+        <input
+          type="text"
+          name="layer"
+          placeholder="Enter Layer"
+          value={formData.layer}
+          onChange={handleChange}
+          className="w-full p-3 border rounded-lg mb-3"
+          required
+        />
+
+        <input
+          type="text"
+          name="framework"
+          placeholder="Enter Framework"
+          value={formData.frameworks}
+          onChange={handleChange}
+          className="w-full p-3 border rounded-lg mb-3"
+          required
+        />
+        <input
+          type="text"
+          name="concept"
+          placeholder="Enter Concept"
+          value={formData.concept}
+          onChange={handleChange}
+          className="w-full p-3 border rounded-lg mb-3"
+          required
+        />
+        
 
         {/* MCQ Options */}
         {formData.questionType === "MCQ" && (

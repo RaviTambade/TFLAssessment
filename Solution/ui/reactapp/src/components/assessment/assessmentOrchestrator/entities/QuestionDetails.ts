@@ -1,9 +1,9 @@
 
-interface QuestionDto {
+interface QuestionDetails {
     questionId: number;
     description: string;
     questionType: string;
     difficultyLevel: string;
     status: string;
 }
-export default QuestionDto;
+export default QuestionDetails;

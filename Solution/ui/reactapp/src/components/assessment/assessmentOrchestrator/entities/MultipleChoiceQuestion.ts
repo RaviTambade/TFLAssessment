@@ -1,7 +1,11 @@
-type QuestionFormData = {
+type MultipleChoiceQuestion  = {
     description: string;
     questionType: string;
     difficultyLevel: string;
+    language: string;
+    layer: string;
+    framework: string;
+    concept: string;
     optionA: string;
     optionB: string;
     optionC: string;
@@ -9,4 +13,4 @@ type QuestionFormData = {
     correctAnswer: string;
 };
 
-export default QuestionFormData;
+export default MultipleChoiceQuestion;

@@ -65,6 +65,7 @@ class UsersRepository {
 
     const values = Object.values(data);
     const sql = `UPDATE personal_informations SET ${fields} WHERE user_id = ?`;
+    console.log(sql);
     this.connection.query(sql, [...values, userId], callback);
   }
 
@@ -75,6 +76,7 @@ class UsersRepository {
 
     const values = Object.values(data);
     const sql = `UPDATE professional_informations SET ${fields} WHERE user_id = ?`;
+      console.log(sql);
     this.connection.query(sql, [...values, userId], callback);
   }
 
@@ -85,6 +87,7 @@ class UsersRepository {
 
     const values = Object.values(data);
     const sql = `UPDATE academic_informations SET ${fields} WHERE user_id = ?`;
+      console.log(sql);
     this.connection.query(sql, [...values, userId], callback);
   }
 

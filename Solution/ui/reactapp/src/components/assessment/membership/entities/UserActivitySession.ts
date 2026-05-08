@@ -1,4 +1,4 @@
-interface SessionRow{
+interface UserActivitySession{
   id: string;
   name: string;
   login: string | null;
@@ -6,4 +6,4 @@ interface SessionRow{
   status: string;
 };
 
-export default SessionRow;
+export default UserActivitySession;
