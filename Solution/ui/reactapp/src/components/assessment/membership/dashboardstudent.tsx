@@ -5,7 +5,7 @@ import { Bell, Calendar, Award, TrendingUp, CheckCircle, AlertCircle, Clock } fr
 import { WEBAPI_NODE_URL } from "@/lib/utils";
 import Notification from "./entities/StudentNotifications";
 import ScheduledAssessment from "./entities/ScheduledAssessment";
-import Result from "./entities/StudentResults";
+import Result from "./entities/StudentResult";
 import LearningCurveData from "./entities/LearningCurveData";
 import AllNotification from "./data/studentNotification.json";
 import AllScheduledAssessments from "./data/ScheuledAssessment.json";

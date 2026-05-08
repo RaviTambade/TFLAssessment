@@ -6,7 +6,7 @@ import { WEBAPI_NODE_URL } from "@/lib/utils";
 import AssessmentMetrics from "./entities/AssessmentMetrics";
 import CandidatePerformance from "./entities/CandidatePerformance";
 import SkillGapAnalysis from "./entities/SkillGapAnalysis";
-import SMENotification from "./entities/SMENotification";
+import SMENotification from "./entities/Notification";
 import SmeNotifications from "./data/smeNotifications.json";
 import CandidatePerformances from "./data/candidatePerformance.json";
 import AssessmentMetric from "./data/assessmentMetrics.json";

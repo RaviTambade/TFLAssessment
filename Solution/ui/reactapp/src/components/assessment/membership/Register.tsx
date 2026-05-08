@@ -1,4 +1,4 @@
-import { useState, type FormEvent } from "react"
+import { useState, type FormEvent, ChangeEvent } from "react"
 import { useNavigate } from "react-router-dom"
 import { Button } from "../../ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "../../ui/card"
@@ -7,32 +7,50 @@ import { Label } from "../../ui/label"
 import { Separator } from "../../ui/separator"
 import { WEBAPI_NODE_URL } from "@/lib/utils"
 
-const RegisterPage = () => {
+ 
+
+const Register = () => {
+
   const navigate = useNavigate()
 
-  const [firstName, setFirstName] = useState("")
-  const [lastName, setLastName] = useState("")
-  const [email, setEmail] = useState("")
-  const [contact, setContact] = useState("")
+  const [currentUser, setCurrentUser] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    contact: "",
+    password: ""
+  })
+
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [apiError, setApiError] = useState<string | null>(null)
   const [apiSuccess, setApiSuccess] = useState<string | null>(null)
 
+  // Generic handler for all fields
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target
+
+    setCurrentUser((prevUser) => ({
+      ...prevUser,
+      [name]: value
+    }))
+  }
+
   const handleRegister = async (generatedPassword: string) => {
-    const payload = {
-      contact,
-      firstName,
-      lastName,
-      email,
-      password: generatedPassword,
+
+    // Create updated user object
+    const updatedUser = {
+      ...currentUser,
+      password: generatedPassword
     }
+
+    console.log(updatedUser)
 
     const res = await fetch(`${WEBAPI_NODE_URL}/auth/register`, {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "application/json"
       },
-      body: JSON.stringify(payload),
+      body: JSON.stringify(updatedUser)
     })
 
     const data = await res.json()
@@ -45,12 +63,23 @@ const RegisterPage = () => {
   }
 
   const handlePassword = async () => {
+
+    // Sample static password generation
+    // Replace with API call if needed
+
+    const generatedPassword = Math.random()
+      .toString(36)
+      .slice(-8)
+
+    return generatedPassword
+
+    /*
     const res = await fetch(`${WEBAPI_NODE_URL}/auth/send-password`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ email }),
+      body: JSON.stringify({ email: currentUser.email }),
     })
 
     const data = await res.json()
@@ -60,18 +89,22 @@ const RegisterPage = () => {
     }
 
     return typeof data === "string" ? data : data?.password
+    */
   }
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+
     e.preventDefault()
 
     setApiError(null)
     setApiSuccess(null)
 
     try {
+
       setIsSubmitting(true)
 
       const generatedPassword = await handlePassword()
+
       if (!generatedPassword) {
         throw new Error("Failed to generate password")
       }
@@ -80,20 +113,40 @@ const RegisterPage = () => {
 
       setApiSuccess("Registration successful")
 
+      // Reset form
+      setCurrentUser({
+        firstName: "",
+        lastName: "",
+        email: "",
+        contact: "",
+        password: ""
+      })
+
       setTimeout(() => {
         navigate("/models/membership/Login")
       }, 1000)
+
     } catch (err) {
-      setApiError(err instanceof Error ? err.message : "Registration failed")
+
+      setApiError(
+        err instanceof Error
+          ? err.message
+          : "Registration failed"
+      )
+
     } finally {
+
       setIsSubmitting(false)
+
     }
   }
 
   return (
     <div className="min-h-screen bg-[var(--gradient-hero)] flex items-center justify-center px-4 select-none">
+
       <div className="w-full max-w-md">
-        <div className="text-center mb-8 select-none">
+
+        <div className="text-center mb-8">
           <h1 className="text-3xl sm:text-4xl font-bold text-foreground mb-3">
             Create{" "}
             <span className="bg-gradient-accent bg-clip-text text-transparent">
@@ -106,65 +159,82 @@ const RegisterPage = () => {
           </p>
         </div>
 
-        <Card className="bg-card/50 backdrop-blur-sm border border-border shadow-[var(--shadow-elegant)] select-none">
+        <Card className="bg-card/50 backdrop-blur-sm border border-border shadow-[var(--shadow-elegant)]">
+
           <CardHeader>
-            <CardTitle className="text-center text-xl">Register</CardTitle>
+            <CardTitle className="text-center text-xl">
+              Register
+            </CardTitle>
           </CardHeader>
 
           <CardContent className="p-6 sm:p-8">
+
             <form onSubmit={handleSubmit} className="space-y-4">
+
               {apiError && (
-                <div className="text-sm text-destructive">{apiError}</div>
+                <div className="text-sm text-destructive">
+                  {apiError}
+                </div>
               )}
 
               {apiSuccess && (
-                <div className="text-sm text-success">{apiSuccess}</div>
+                <div className="text-sm text-green-500">
+                  {apiSuccess}
+                </div>
               )}
 
               <div className="space-y-2">
                 <Label htmlFor="firstName">First Name</Label>
+
                 <Input
                   id="firstName"
+                  name="firstName"
                   type="text"
                   placeholder="Enter your first name"
-                  value={firstName}
-                  onChange={(e) => setFirstName(e.target.value)}
+                  value={currentUser.firstName}
+                  onChange={handleChange}
                   required
                 />
               </div>
 
               <div className="space-y-2">
                 <Label htmlFor="lastName">Last Name</Label>
+
                 <Input
                   id="lastName"
+                  name="lastName"
                   type="text"
                   placeholder="Enter your last name"
-                  value={lastName}
-                  onChange={(e) => setLastName(e.target.value)}
+                  value={currentUser.lastName}
+                  onChange={handleChange}
                   required
                 />
               </div>
 
               <div className="space-y-2">
                 <Label htmlFor="email">Email</Label>
+
                 <Input
                   id="email"
+                  name="email"
                   type="email"
                   placeholder="Enter your email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  value={currentUser.email}
+                  onChange={handleChange}
                   required
                 />
               </div>
 
               <div className="space-y-2">
                 <Label htmlFor="contact">Contact</Label>
+
                 <Input
                   id="contact"
+                  name="contact"
                   type="tel"
                   placeholder="Enter your contact number"
-                  value={contact}
-                  onChange={(e) => setContact(e.target.value)}
+                  value={currentUser.contact}
+                  onChange={handleChange}
                   required
                 />
               </div>
@@ -178,6 +248,7 @@ const RegisterPage = () => {
               >
                 {isSubmitting ? "Registering..." : "Register"}
               </Button>
+
             </form>
 
             <div className="my-6">
@@ -185,7 +256,9 @@ const RegisterPage = () => {
             </div>
 
             <p className="text-center text-sm text-muted-foreground">
+
               Already have an account?{" "}
+
               <button
                 type="button"
                 onClick={() => navigate("/models/membership/Login")}
@@ -193,12 +266,17 @@ const RegisterPage = () => {
               >
                 Sign in
               </button>
+
             </p>
+
           </CardContent>
+
         </Card>
+
       </div>
+
     </div>
   )
 }
 
-export default RegisterPage
+export default Register;
