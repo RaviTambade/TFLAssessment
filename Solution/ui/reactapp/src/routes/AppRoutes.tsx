@@ -71,7 +71,8 @@ function AppRoutes() {
           <Route path="upcoming-assessment" element={<UpcomingAssessment />} />
           <Route path="all-assessment" element={<AllAssessment />} />
           <Route path="apply-assessment" element={<Question />} />
-          <Route path="result" element={<Result />} />
+          {/* <Route path="result" element={<Result />} /> */}
+          <Route path="result/:assessmentId" element={<Result />}/>
 
           <Route path="assessment/start/:assessmentId" element={<Question />}/>
           <Route path="membership/membership-menu" element={<MembershipMenu />} />
