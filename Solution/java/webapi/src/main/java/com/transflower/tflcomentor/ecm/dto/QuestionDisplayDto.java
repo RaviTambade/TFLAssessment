@@ -1,6 +1,5 @@
 package com.transflower.tflcomentor.ecm.dto;
 
-import java.time.LocalDateTime;
 import com.transflower.tflcomentor.ecm.entity.enums.DifficultyLevel;
 import com.transflower.tflcomentor.ecm.entity.enums.QuestionStatus;
 import com.transflower.tflcomentor.ecm.entity.enums.QuestionType;
@@ -22,7 +21,6 @@ public class QuestionDisplayDto {
         this.questionType = questionType;
         this.difficultyLevel = difficultyLevel;
         this.status = status;
-    
     }
 
     // Getters and Setters
@@ -56,6 +54,5 @@ public class QuestionDisplayDto {
     public void setStatus(QuestionStatus status) {
         this.status = status;
     }
-   
     
 }

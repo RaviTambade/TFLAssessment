@@ -8,7 +8,7 @@ import ScheduledAssessment from "./entities/ScheduledAssessment";
 import Result from "./entities/StudentResults";
 import LearningCurveData from "./entities/LearningCurveData";
 import AllNotification from "./data/studentNotification.json";
-import AllScheduledAssessments from "./data/scheuledAssessment.json";
+import AllScheduledAssessments from "./data/ScheuledAssessment.json";
 import StudentResults from "./data/studentResult.json";
 
 
@@ -52,17 +52,33 @@ const DashboardStudent = () => {
   ];
 
 
-  useEffect(() => {
-    const apiURl = `${WEBAPI_NODE_URL}/user/profile`;
-        fetch(apiURl).then((response) => response.json()).then((data) => {
-          setName(data.name);
-          setRole(data.role);
-          setProfilePicture(data.profilePicture);
-        });
+  // useEffect(() => {
+  //   const apiURl = `${WEBAPI_NODE_URL}/user/profile`;
+  //       fetch(apiURl).then((response) => response.json()).then((data) => {
+  //         setName(data.name);
+  //         setRole(data.role);
+  //         setProfilePicture(data.profilePicture);
+  //       });
 
 
-  }, []);
+  // }, []);
+useEffect(() => {
 
+  const currentUser = sessionStorage.getItem("current");
+
+  if (currentUser) {
+
+    const user = JSON.parse(currentUser);
+
+    setName(
+      `${user.firstname} ${user.lastname}`
+    );
+
+    setRole(user.rolename);
+
+  }
+
+}, []);
   // Render the dashboard UI
   return (
     <div className="min-h-screen bg-gray-50 p-6">

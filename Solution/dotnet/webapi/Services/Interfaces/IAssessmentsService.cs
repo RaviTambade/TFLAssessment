@@ -9,6 +9,7 @@ public interface IAssessmentsService
     Task<List<UpcomingAssessmentDto>> GetAllUpcomingAssessmentsService(long userId ,DateTime fromDate, DateTime toDate);
     Task<List<AllAssessmentDto>> GetAssessments();
      Task<bool> DeactivateAssessment(long id);
+     Task<int> CancelAssessmentsByTestId(long testId);
      Task<bool> RestoreAssessment(long id);
     Task<List<TestDto>> GetTestsAsync();
     Task<List<StudentDto>> GetStudentsAsync();

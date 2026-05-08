@@ -8,6 +8,7 @@ type Question = {
   questionId?: number;
   description: string;
   questionType: string;
+  difficultyLevel: string;
 };
 
 const QuestionsPage = () => {
@@ -120,6 +121,9 @@ const QuestionsPage = () => {
                       <th className="p-4 text-primary font-semibold">
                         Question Type
                       </th>
+                      <th className="p-4 text-primary font-semibold">
+                        Difficulty Level
+                      </th>
                     </tr>
                   </thead>
 
@@ -134,6 +138,9 @@ const QuestionsPage = () => {
                         </td>
                         <td className="p-4 text-foreground">
                           {q.questionType}
+                        </td>
+                        <td className="p-4 text-foreground">
+                          {q.difficultyLevel}
                         </td>
                       </tr>
                     ))}
@@ -166,6 +173,9 @@ const QuestionsPage = () => {
 
                   <p className="mb-2">
                     <strong>Type:</strong> {question.questionType}
+                  </p>
+                  <p className="mb-2">
+                    <strong>Difficulty Level:</strong> {question.difficultyLevel}
                   </p>
 
                 </CardContent>

@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { WEBAPI_NODE_URL } from "@/lib/utils";
+import { Save } from "lucide-react";
 
 import { Linkedin, Github, Mail, Phone, Edit } from "lucide-react";
 
@@ -269,99 +270,47 @@ const UserProfile = () => {
       );
     }
   };
+  const updateSingleField = async (
+    endpoint: string,
+    field: string,
+    value: any
+  ) => {
+    try {
+
+      const storedUser = sessionStorage.getItem("current");
+
+      if (!storedUser) return;
+
+      const user = JSON.parse(storedUser);
+      const userid = user?.userid;
+
+      const response = await fetch(
+        `http://localhost:3000/api/users/${userid}/${endpoint}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+
+          body: JSON.stringify({
+            [field]: value,
+          }),
+        }
+      );
+
+      const result = await response.json();
+
+      console.log("UPDATED:", result);
+
+      setEditingField("");
+
+    } catch (error) {
+      console.error("Update failed", error);
+    }
+  };
+  
   const onEditHandle = (field: string) => {
     setEditingField(field);
-  };
-
-
-  const updatePersonalDetails = async () => {
-    try {
-      const storedUser = sessionStorage.getItem("current");
-
-      if (!storedUser) return;
-
-      const user = JSON.parse(storedUser);
-      const userid = user?.userid;
-
-      const response = await fetch(
-        `http://localhost:3000/api/users/${userid}/personal-info`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(personalData),
-        }
-      );
-
-      const result = await response.json();
-
-      console.log("PERSONAL UPDATED:", result);
-
-      setEditingField("");
-    } catch (error) {
-      console.error("Failed to update personal details", error);
-    }
-  };
-
-  const updateProfessionalDetails = async () => {
-    try {
-      const storedUser = sessionStorage.getItem("current");
-
-      if (!storedUser) return;
-
-      const user = JSON.parse(storedUser);
-      const userid = user?.userid;
-
-      const response = await fetch(
-        `http://localhost:3000/api/users/${userid}/professional-info`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(professionalData),
-        }
-      );
-
-      const result = await response.json();
-
-      console.log("PROFESSIONAL UPDATED:", result);
-
-      setEditingField("");
-    } catch (error) {
-      console.error("Failed to update professional details", error);
-    }
-  };
-
-  const updateAcademicDetails = async () => {
-    try {
-      const storedUser = sessionStorage.getItem("current");
-
-      if (!storedUser) return;
-
-      const user = JSON.parse(storedUser);
-      const userid = user?.userid;
-
-      const response = await fetch(
-        `http://localhost:3000/api/users/${userid}/academic-info`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(academicData),
-        }
-      );
-
-      const result = await response.json();
-
-      console.log("ACADEMIC UPDATED:", result);
-
-      setEditingField("");
-    } catch (error) {
-      console.error("Failed to update academic details", error);
-    }
   };
 
 
@@ -474,7 +423,10 @@ const UserProfile = () => {
                                 "first_name",
                                 e.target.value
                               )
+
+
                             }></Input>
+
 
                           <img
                             src="/editlogo.png"
@@ -482,12 +434,11 @@ const UserProfile = () => {
                             className="h-8 w-8 cursor-pointer"
                             alt="Edit Logo"
                           />
-
-                          <div className="flex justify-center mt-6">
-                            <Button onClick={updatePersonalDetails}>
-                              Save
-                            </Button>
-                          </div>
+                          <div className="flex justify-center mt-1">
+                            <Button onClick={() => updateSingleField("personal-info", "first_name", personalData.first_name)}
+                              variant="ghost"
+                              className="flex items-center gap-2">
+                              <Save size={18} /></Button></div>
                         </div>
 
                         <div className="flex items-center gap-4">
@@ -515,7 +466,12 @@ const UserProfile = () => {
                             className="h-8 w-8 cursor-pointer"
                             alt="Edit Logo"
                           />
-                        </div>
+
+                          <div className="flex justify-center mt-1">
+                            <Button onClick={() => updateSingleField("personal-info", "last_name", personalData.last_name)}
+                              variant="ghost"
+                              className="flex items-center gap-2">
+                              <Save size={18} /></Button></div>                        </div>
 
                         <div className="flex items-center gap-4">
                           <div className="w-32">
@@ -542,7 +498,12 @@ const UserProfile = () => {
                             className="h-8 w-8 cursor-pointer"
                             alt="Edit Logo"
                           />
-                        </div>
+
+                          <div className="flex justify-center mt-1">
+                            <Button onClick={() => updateSingleField("personal-info", "email", personalData.email)}
+                              variant="ghost"
+                              className="flex items-center gap-2">
+                              <Save size={18} /></Button></div>                        </div>
 
                         <div className="flex items-center gap-4">
                           <div className="w-32">
@@ -562,13 +523,13 @@ const UserProfile = () => {
                               )
                             }
                           />
-
+                          {/* 
                           <img
                             src="/editlogo.png"
                             onClick={() => onEditHandle("Contact")}
                             className="h-8 w-8 cursor-pointer"
                             alt="Edit Logo"
-                          />
+                          /> */}
                         </div>
 
                         <div className="flex items-center gap-4">
@@ -596,40 +557,18 @@ const UserProfile = () => {
                             className="h-8 w-8 cursor-pointer"
                             alt="Edit Logo"
                           />
-                        </div>
+                          <div className="flex justify-center mt-1">
+                            <Button onClick={() => updateSingleField("personal-info", "date_of_birth", personalData.date_of_birth)}
+                              variant="ghost"
+                              className="flex items-center gap-2">
+                              <Save size={18} /></Button></div>                        </div>
 
-                        <div className="flex items-center gap-4">
-                          <div className="w-32">
-                            <p className="font-bold">Address</p>
-                          </div>
 
-                          <Input
-                            type="text"
-                            value={personalData?.address || ""}
-                            className="flex-1"
-                            disabled={editingField !== "address"}
-                            onChange={(e) =>
-                              handleChange(
-                                "personal",
-                                "address",
-                                e.target.value
-                              )
-                            }
-                          />
-
-                          <img
-                            src="/editlogo.png"
-                            onClick={() => onEditHandle("address")}
-                            className="h-8 w-8 cursor-pointer"
-                            alt="Edit Logo"
-                          />
-                        </div>
-
-                        <div className="flex justify-center">
-                        </div>
                       </>
                     )}
                   </div>
+
+
                 )}
 
                 {/* PROFESSIONAL */}
@@ -661,6 +600,11 @@ const UserProfile = () => {
                         className="h-8 w-8 cursor-pointer"
                         alt="Edit Logo"
                       />
+                      <div className="flex justify-center mt-1">
+                        <Button onClick={() => updateSingleField("professional-info", "company_name", professionalData.company_name)}
+                          variant="ghost"
+                          className="flex items-center gap-2">
+                          <Save size={18} /></Button></div>
                     </div>
 
                     <div className="flex items-center gap-4">
@@ -688,6 +632,11 @@ const UserProfile = () => {
                         className="h-8 w-8 cursor-pointer"
                         alt="Edit Logo"
                       />
+                      <div className="flex justify-center mt-1">
+                        <Button onClick={() => updateSingleField("professional-info", "job_title", professionalData.job_title)}
+                          variant="ghost"
+                          className="flex items-center gap-2">
+                          <Save size={18} /></Button></div>
                     </div>
 
                     <div className="flex items-center gap-4">
@@ -715,6 +664,11 @@ const UserProfile = () => {
                         className="h-8 w-8 cursor-pointer"
                         alt="Edit Logo"
                       />
+                      <div className="flex justify-center mt-1">
+                        <Button onClick={() => updateSingleField("professional-info", "employment_type", professionalData.employment_type)}
+                          variant="ghost"
+                          className="flex items-center gap-2">
+                          <Save size={18} /></Button></div>
                     </div>
 
                     <div className="flex items-center gap-4">
@@ -742,7 +696,11 @@ const UserProfile = () => {
                         className="h-8 w-8 cursor-pointer"
                         alt="Edit Logo"
                       />
-                    </div>
+                      <div className="flex justify-center mt-1">
+                        <Button onClick={() => updateSingleField("professional-info", "experience_years", professionalData.experience_years)}
+                          variant="ghost"
+                          className="flex items-center gap-2">
+                          <Save size={18} /></Button></div>                    </div>
 
                     <div className="flex items-center gap-4">
                       <div className="w-32">
@@ -769,7 +727,11 @@ const UserProfile = () => {
                         className="h-8 w-8 cursor-pointer"
                         alt="Edit Logo"
                       />
-                    </div>
+                      <div className="flex justify-center mt-1">
+                        <Button onClick={() => updateSingleField("professional-info", "location", professionalData.location)}
+                          variant="ghost"
+                          className="flex items-center gap-2">
+                          <Save size={18} /></Button></div>                    </div>
 
                     <div className="flex items-center gap-4">
                       <div className="w-32">
@@ -796,6 +758,11 @@ const UserProfile = () => {
                         className="h-8 w-8 cursor-pointer"
                         alt="Edit Logo"
                       />
+                         <div className="flex justify-center mt-1">
+                        <Button onClick={() => updateSingleField("professional-info", "skills", professionalData.skills)}
+                          variant="ghost"
+                          className="flex items-center gap-2">
+                          <Save size={18} /></Button></div>
                     </div>
 
                   </div>
@@ -829,6 +796,12 @@ const UserProfile = () => {
                         className="h-8 w-8 cursor-pointer"
                         alt="Edit Logo"
                       />
+                        <div className="flex justify-center mt-1">
+                        <Button onClick={() => updateSingleField("academic-info", "stream_name", academicData.stream_name)}
+                          variant="ghost"
+                          className="flex items-center gap-2">
+                          <Save size={18} /></Button>
+                          </div>
                     </div>
 
                     <div className="flex items-center gap-4">
@@ -856,7 +829,11 @@ const UserProfile = () => {
                         className="h-8 w-8 cursor-pointer"
                         alt="Edit Logo"
                       />
-                    </div>
+                      <div className="flex justify-center mt-1">
+                        <Button onClick={() => updateSingleField("professional-info", "job_title", professionalData.job_title)}
+                          variant="ghost"
+                          className="flex items-center gap-2">
+                          <Save size={18} /></Button></div>                  </div>
 
                     <div className="flex items-center gap-4">
                       <div className="w-32">
@@ -883,7 +860,11 @@ const UserProfile = () => {
                         className="h-8 w-8 cursor-pointer"
                         alt="Edit Logo"
                       />
-                    </div>
+                      <div className="flex justify-center mt-1">
+                        <Button onClick={() => updateSingleField("academic-info", "enrollment_year", academicData.enrollment_year)}
+                          variant="ghost"
+                          className="flex items-center gap-2">
+                          <Save size={18} /></Button></div>                  </div>
 
                     <div className="flex items-center gap-4">
                       <div className="w-32">
@@ -910,6 +891,11 @@ const UserProfile = () => {
                         className="h-8 w-8 cursor-pointer"
                         alt="Edit Logo"
                       />
+                      <div className="flex justify-center mt-1">
+                        <Button onClick={() => updateSingleField("academic-info", "passing_year", academicData.passing_year)}
+                          variant="ghost"
+                          className="flex items-center gap-2">
+                          <Save size={18} /></Button></div>
                     </div>
 
                     <div className="flex items-center gap-4">
@@ -937,6 +923,11 @@ const UserProfile = () => {
                         className="h-8 w-8 cursor-pointer"
                         alt="Edit Logo"
                       />
+                      <div className="flex justify-center mt-1">
+                        <Button onClick={() => updateSingleField("academic-info", "percentage", academicData.percentage)}
+                          variant="ghost"
+                          className="flex items-center gap-2">
+                          <Save size={18} /></Button></div>
                     </div>
 
                     <div className="flex items-center gap-4">
@@ -964,14 +955,24 @@ const UserProfile = () => {
                         className="h-8 w-8 cursor-pointer"
                         alt="Edit Logo"
                       />
+                      <div className="flex justify-center mt-1">
+                        <Button onClick={() => updateSingleField("academic-info", "college_name", academicData.college_name)}
+                          variant="ghost"
+                          className="flex items-center gap-2">
+                          <Save size={18} /></Button></div>
+
+
                     </div>
 
+
                   </div>
+
                 )}
               </CardContent>
+
             </Card>
           </div>
-          {/* </div> */}
+
 
         </div>
       </div>

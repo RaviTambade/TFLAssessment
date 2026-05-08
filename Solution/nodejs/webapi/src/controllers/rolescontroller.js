@@ -1,5 +1,5 @@
 const RoleRequestDto = require("../dtos/requests/RoleRequestDto");
-const ResponseGenerator = require("../helpers/ResponseGenerator");
+const ResponseGenerator = require("../helpers/responseGenerator");
 
 class RolesController {
   constructor(roleService) {

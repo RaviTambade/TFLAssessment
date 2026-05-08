@@ -3,7 +3,7 @@ const AvgSessionResponseDto = require("../dtos/responses/loggeravg-sessionrespon
 const ActiveSessionsResponseDto = require("../dtos/responses/loggeractive-sessionsresponsedto");
 const ActiveUsersResponseDto = require("../dtos/responses/loggeractive-usersresponsedto");
 const UserActivityRequestDto = require("../dtos/requests/useractivityrequestdto");
-const ResponseGenerator = require("../helpers/ResponseGenerator");
+const ResponseGenerator = require("../helpers/responseGenerator");
 
 class UserActivityController {
   constructor(userActivityService) {

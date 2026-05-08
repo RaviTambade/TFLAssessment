@@ -49,7 +49,7 @@ const ChangePassword = () => {
         currentPassword,
         newPassword,
       })
-       const response = await fetch(`${WEBAPI_NODE_URL}/auth/changepassword`, {
+      const response = await fetch(`${WEBAPI_NODE_URL}/auth/changepassword`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
