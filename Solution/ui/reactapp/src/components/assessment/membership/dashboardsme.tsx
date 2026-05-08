@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-
+import { useEffect, useState} from "react";
+import { useNavigate } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "../../ui/card";
 import { Bell, Users, Target, TrendingUp, CheckCircle, AlertCircle, BarChart3, FileText } from "lucide-react";
 import { WEBAPI_NODE_URL } from "@/lib/utils";
@@ -10,7 +10,7 @@ import SMENotification from "./entities/SMENotification";
 import SmeNotifications from "./data/smeNotifications.json";
 import CandidatePerformances from "./data/candidatePerformance.json";
 import AssessmentMetric from "./data/assessmentMetrics.json";
-import SkillGapAnalyse from "./data/SkillGapAnalysis.json";
+import SkillGapAnalyse from "./data/skillGapAnalysis.json";
 
 //function component for SME Dashboard
 const DashboardSME = () => {
@@ -36,6 +36,9 @@ const DashboardSME = () => {
 
   // Skill Gap Analysis
   const skillGapAnalysis: SkillGapAnalysis[] = SkillGapAnalyse as SkillGapAnalysis[] ;
+
+  //navigate
+  const navigate = useNavigate();
 
   useEffect(() => {
     const apiURL = `${WEBAPI_NODE_URL}/sme/profile`;
@@ -102,6 +105,20 @@ const DashboardSME = () => {
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-gray-600 text-sm font-medium">Skill Gaps Identified</p>
+                  <p className="text-3xl font-bold text-gray-900 mt-1">4</p>
+                </div>
+                <BarChart3 className="w-12 h-12 text-red-500 opacity-20" />
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card
+          className="cursor-pointer hover:shadow-lg transition"
+           onClick={() => navigate("/models/evaluationcontent/sme")}>
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-gray-600 text-sm font-medium">Evaluation Content</p>
                   <p className="text-3xl font-bold text-gray-900 mt-1">4</p>
                 </div>
                 <BarChart3 className="w-12 h-12 text-red-500 opacity-20" />

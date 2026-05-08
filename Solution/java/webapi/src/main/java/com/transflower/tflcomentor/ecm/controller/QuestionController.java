@@ -34,6 +34,7 @@ public class QuestionController {
     @Autowired
     private QuestionService service;
 
+    
     @GetMapping("/{question_id}")
     // http://localhost:8080/api/questions/1
     public QuestionDisplayDto getQuestionById(@PathVariable("question_id") long question_id) {
@@ -107,6 +108,13 @@ public class QuestionController {
     // http://localhost:8080/api/questions/concepts/1/questions
     public List<Question> getQuestionsByConcept(@PathVariable Long conceptId) {
         return service.getQuestionsByConceptId(conceptId);
+    }
+
+
+    @GetMapping("/concepts/{concept}/count")
+    // http://localhost:8080/api/questions/concepts/loops/count
+    public int getQuestionCountByConcept(@PathVariable String concept) {
+        return service.getQuestionCountByConcept(concept);
     }
 
     @GetMapping("/type/{questionType}")

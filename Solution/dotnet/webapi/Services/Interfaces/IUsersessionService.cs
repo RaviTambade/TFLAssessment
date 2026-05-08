@@ -9,6 +9,7 @@ namespace backend.Services.Interfaces
 {
     public interface IUserSessionsService
     {
+        
         Task<List<UserSessionDto>> GetUserSessionsAsync();
         Task<int> GetTotalUserSessionsAsync();
     }

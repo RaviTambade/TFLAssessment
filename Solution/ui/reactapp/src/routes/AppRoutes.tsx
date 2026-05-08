@@ -19,7 +19,7 @@ import ViewRuntimes from "@/components/assessment/skilltaxonomy/ViewRuntimes";
 import AddConcept from "@/components/assessment/skilltaxonomy/AddConcept";
 import UpcomingAssessment from "../components/assessment/assessmentOrchestrator/UpcomingAssessment";
 import AllAssessment from "@/components/assessment/assessmentOrchestrator/AllAssessment";
-import Question from "@/components/assessment/assessmentOrchestrator/applyAssessment";
+//import Question from "@/components/assessment/assessmentOrchestrator/applyAssessment";
 import Result from "@/components/assessment/assessmentOrchestrator/Result";
 
 import ViewProjectInfo from "@/components/assessment/evaluationcontent/ViewProjectInfo";
@@ -40,6 +40,9 @@ import ConceptByFramework from "@/components/assessment/skilltaxonomy/ConceptByF
 
 import QuestionByConceptId from "@/components/assessment/evaluationcontent/QuestionByConceptId";
 import Dashboard from "@/components/assessment/membership/dashboard";
+import DashboardSME from "@/components/assessment/membership/dashboardsme";
+import EvaluationContentSme from "@/components/assessment/evaluationcontent/evaluationContentsme";
+import Question from "@/components/assessment/assessmentOrchestrator/applyAssessment";
 
 
 function AppRoutes() {
@@ -70,7 +73,7 @@ function AppRoutes() {
           <Route path="apply-assessment" element={<Question />} />
           <Route path="result" element={<Result />} />
 
-
+          <Route path="assessment/start/:assessmentId" element={<Question />}/>
           <Route path="membership/membership-menu" element={<MembershipMenu />} />
 
  
@@ -93,11 +96,11 @@ function AppRoutes() {
           <Route path="evaluationcontent/reviewquestion" element={<MentorReviewQuestion />} />
           <Route index element={<Assessment />} />
           <Route path="evaluationcontent/viewprojectinfo" element={<ViewProjectInfo />} />
-
+          <Route path="evaluationcontent/sme" element={<EvaluationContentSme />} />
           <Route index element={<Assessment />} />
           <Route path="upcoming-assessment" element={<UpcomingAssessment />} />
           <Route path="create-test" element={<SMECreateTest />} />
-           <Route path="assign-assessment" element={<AssignAssessment />} />
+          <Route path="assign-assessment" element={<AssignAssessment />} />
           <Route path="all-assessment" element={<AllAssessment />} />
           <Route path="evaluationcontent/questionbydifficulty" element={<QuestionsByDifficulty />} />
           <Route path="evaluationcontent/projectbymentee" element={<ProjectByMentee />} />
@@ -112,6 +115,7 @@ function AppRoutes() {
           <Route path="membership/UserActivity" element={<UserActivity />} />
           <Route path="membership/UserProfile" element={<UserProfile />} />
           <Route path="membership/dashboard" element={<Dashboard />} />
+          <Route path="membership/SmeDashboard" element={<DashboardSME />} />
 
         </Routes>
       </main>

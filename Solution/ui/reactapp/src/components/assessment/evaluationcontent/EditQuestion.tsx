@@ -4,7 +4,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
 
-import {  WEBAPI_DOTNET_URL, WEBAPI_NODE_URL ,WEBAPI_JAVA_URL} from "@/lib/utils";
+import { WEBAPI_DOTNET_URL, WEBAPI_NODE_URL, WEBAPI_JAVA_URL } from "@/lib/utils";
 import QuestionFormData from "../assessmentOrchestrator/entities/QuestionFormData";
 
 
@@ -13,12 +13,16 @@ const EditQuestion = () => {
     const { id } = useParams();
     const navigate = useNavigate();
 
-   const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(true);
 
     const [formData, setFormData] = useState<QuestionFormData>({
         description: "",
         questionType: "",
         difficultyLevel: "",
+        language: "",
+        layer: "",
+        framework: "",
+        concept: "",
         optionA: "",
         optionB: "",
         optionC: "",
@@ -26,35 +30,49 @@ const EditQuestion = () => {
         correctAnswer: ""
     });
 
-    useEffect(() => {
-        if (!id) return;
+   useEffect(() => {
+    if (!id) return;
 
-        fetch(`${WEBAPI_JAVA_URL}/questions/details/${id}`)
-            .then(res => res.json())
-            .then(data => {
-                console.log("API DATA:", data);
+    const fetchQuestion = async () => {
+        try {
 
-                setFormData({
-                    description: data.description || "",
-                    questionType: data.questionType || "MCQ",
-                    difficultyLevel: data.difficultyLevel || "",
+            const res = await fetch(
+                `${WEBAPI_JAVA_URL}/questions/${id}/details`
+            );
 
-                    optionA: data.optionA || "",
-                    optionB: data.optionB || "",
-                    optionC: data.optionC || "",
-                    optionD: data.optionD || "",
+            const data = await res.json();
 
-                    correctAnswer: data.correctAnswer || ""
-                });
+            console.log("API DATA:", data);
 
-                setLoading(false);
-            })
-            .catch(err => {
-                console.error(err);
-                alert("Error loading data ❌");
-                setLoading(false);
+            setFormData({
+                description: data.description || "",
+                questionType: data.questionType || "MCQ",
+                difficultyLevel: data.difficultyLevel || "",
+                language: data.language || "",
+                layer: data.layer || "",
+                framework: data.framework || "",
+                concept: data.concept || "",
+                optionA: data.optionA || "",
+                optionB: data.optionB || "",
+                optionC: data.optionC || "",
+                optionD: data.optionD || "",
+                correctAnswer: data.correctAnswer || ""
             });
-    }, [id]);
+
+        } catch (err) {
+
+            console.error(err);
+            alert("Error loading data ❌");
+
+        } finally {
+
+            setLoading(false);
+        }
+    };
+
+    fetchQuestion();
+
+}, [id]);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         setFormData({
@@ -117,8 +135,12 @@ const EditQuestion = () => {
                         {/* Type + Difficulty */}
                         <div className="grid md:grid-cols-2 gap-4">
 
+                            {/* Question Type */}
                             <div>
-                                <label className="text-sm font-medium">Question Type</label>
+                                <label className="text-sm font-medium">
+                                    Question Type
+                                </label>
+
                                 <select
                                     name="questionType"
                                     value={formData.questionType}
@@ -126,12 +148,18 @@ const EditQuestion = () => {
                                     className="w-full mt-1 p-3 border rounded-lg"
                                 >
                                     <option value="MCQ">MCQ</option>
-                                    <option value="PROBLEM_STATEMENT">Problem Statement</option>
+                                    <option value="PROBLEM_STATEMENT">
+                                        Problem Statement
+                                    </option>
                                 </select>
                             </div>
 
+                            {/* Difficulty */}
                             <div>
-                                <label className="text-sm font-medium">Difficulty Level</label>
+                                <label className="text-sm font-medium">
+                                    Difficulty Level
+                                </label>
+
                                 <select
                                     name="difficultyLevel"
                                     value={formData.difficultyLevel}
@@ -145,6 +173,73 @@ const EditQuestion = () => {
                             </div>
 
                         </div>
+
+                        {/* Language + Layer */}
+                        <div className="grid md:grid-cols-2 gap-4">
+
+                            <div>
+                                <label className="text-sm font-medium">
+                                    Language
+                                </label>
+
+                                <input
+                                    type="text"
+                                    name="language"
+                                    value={formData.language}
+                                    onChange={handleChange}
+                                    className="w-full mt-1 p-3 border rounded-lg"
+                                />
+                            </div>
+
+                            <div>
+                                <label className="text-sm font-medium">
+                                    Layer
+                                </label>
+
+                                <input
+                                    type="text"
+                                    name="layer"
+                                    value={formData.layer}
+                                    onChange={handleChange}
+                                    className="w-full mt-1 p-3 border rounded-lg"
+                                />
+                            </div>
+
+                        </div>
+
+                        {/* Framework + Concept */}
+                        <div className="grid md:grid-cols-2 gap-4">
+
+                            <div>
+                                <label className="text-sm font-medium">
+                                    Framework
+                                </label>
+
+                                <input
+                                    type="text"
+                                    name="framework"
+                                    value={formData.framework}
+                                    onChange={handleChange}
+                                    className="w-full mt-1 p-3 border rounded-lg"
+                                />
+                            </div>
+
+                            <div>
+                                <label className="text-sm font-medium">
+                                    Concept
+                                </label>
+
+                                <input
+                                    type="text"
+                                    name="concept"
+                                    value={formData.concept}
+                                    onChange={handleChange}
+                                    className="w-full mt-1 p-3 border rounded-lg"
+                                />
+                            </div>
+
+                        </div>
+
 
                         {/* MCQ Section */}
                         {formData.questionType === "MCQ" && (

@@ -12,7 +12,7 @@ const QuestionDetails = () => {
 //questions`;
 
     useEffect(() => {
-        fetch(`${WEBAPI_JAVA_URL}/questions/details/${question_id}`)
+        fetch(`${WEBAPI_JAVA_URL}/questions/${question_id}/details`)
             .then(res => {
                 if (!res.ok) {
                     throw new Error("Failed to fetch");
@@ -26,17 +26,7 @@ const QuestionDetails = () => {
             });
     }, [question_id]);
 
-    const approve = async () => {
-        await fetch(`${WEBAPI_JAVA_URL}/questions/${question_id}/approve`, { method: "PUT" });
-        alert("Approved ✅");
-        navigate("/models/evaluationcontent/reviewquestion");
-    };
-
-    const reject = async () => {
-        await fetch(`${WEBAPI_JAVA_URL}/questions/${question_id}/reject`, { method: "PUT" });
-        alert("Rejected ❌");
-        navigate("/models/evaluationcontent/reviewquestion");
-    };
+    
 
     const edit = () => {
         navigate(`/models/evaluationcontent/edit/${question_id}`);
@@ -58,7 +48,12 @@ const QuestionDetails = () => {
                 </h2>
 
                 <p><b>Type:</b> {q.questionType}</p>
+                   <p><b>Language:</b> {q.language}</p>
+                <p><b>Layer:</b> {q.layer}</p>
+                <p><b>Framework:</b> {q.framework}</p>
+                <p><b>Concept:</b> {q.concept}</p>
                 <p><b>Difficulty:</b> {q.difficultyLevel}</p>
+             
 
                 {q.questionType === "MCQ" && (
                     <div className="mt-4">
@@ -74,8 +69,6 @@ const QuestionDetails = () => {
                 )}
 
                 <div className="flex gap-4 mt-6">
-                    <Button onClick={approve}>Approve</Button>
-                    <Button onClick={reject}>Reject</Button>
                     <Button variant="outline" onClick={edit}>Edit</Button>
                 </div>
 
