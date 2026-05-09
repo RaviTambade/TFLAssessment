@@ -5,6 +5,8 @@ import Assessment from "./entities/Assessment";
 
 
 const AllAssessment = () => {
+
+
   const [assessments, setAssessments] = useState<Assessment[]>([]);
   const [loading, setLoading] = useState(false);
   const [showAssessments, setShowAssessments] = useState(false);
@@ -15,9 +17,11 @@ const AllAssessment = () => {
   const [activeStatusFilter, setActiveStatusFilter] = useState("");
   const [studentSearch, setStudentSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
+
   const itemsPerPage = 6;
 
   const getAssessments = async () => {
+   
     try {  
       setShowAssessments(true);
       setLoading(true);

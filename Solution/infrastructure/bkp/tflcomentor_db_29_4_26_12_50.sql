@@ -1,4 +1,5 @@
-
+Create Databse tflcomentor_db;
+use tflcomentor_db;
 
 DROP TABLE IF EXISTS `__efmigrationshistory`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;

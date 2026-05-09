@@ -3,14 +3,14 @@ import { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "../../ui/card";
 import { Bell, Users, Zap, TrendingUp, CheckCircle, AlertCircle, BookOpen, MessageSquare } from "lucide-react";
 import { WEBAPI_NODE_URL } from "@/lib/utils";
-import MentorNotification from "./entities/MentorNotification";
+import Notification from "./entities/Notification";
 import MentorshipActivity from "./entities/MentorshipActivity";
 import Mentee from "./entities/Mentee";
 import MenteeGrowth from "./entities/MenteeGrowth";
-import AllmentorNotifications from "./data/mentorNotifications.json";
+import AllmentorNotifications from "./data/notifications/mentorNotifications.json";
 import AllmentorshipActivities from "./data/mentorshipActivities.json";
 import AllMenteeGrowth from "./data/menteeGrowths.json";
-import AllMentee from "./data/mentees.json";
+import AllMentee from "./data/users/mentees.json";
 
 
 //function component for Mentor Dashboard - Transflower
@@ -21,7 +21,7 @@ const DashboardMentor = () => {
   const [organization, setOrganization] = useState<string>("Transflower");
   const [profilePicture, setProfilePicture] = useState<string>("https://avatars.githubusercontent.com/u/12345678?v=4");
  
-  const mentorNotifications: MentorNotification[] = AllmentorNotifications as MentorNotification[];
+  const mentorNotifications: Notification[] = AllmentorNotifications as Notification[];
 
   const mentees: Mentee[] = AllMentee as Mentee[];
  

@@ -1,4 +1,4 @@
-interface Result {
+interface StudentResult {
   id: number;
   assessmentName: string;
   subject: string;
@@ -9,4 +9,4 @@ interface Result {
   status: "pass" | "fail";
 }
 
-export default Result;
+export default StudentResult;

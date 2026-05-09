@@ -3,11 +3,11 @@ import { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "../../ui/card";
 import { Bell, Calendar, Award, TrendingUp, CheckCircle, AlertCircle, Clock } from "lucide-react";
 import { WEBAPI_NODE_URL } from "@/lib/utils";
-import Notification from "./entities/StudentNotifications";
+import Notification from "./entities/Notification";
 import ScheduledAssessment from "./entities/ScheduledAssessment";
-import Result from "./entities/StudentResults";
+import Result from "./entities/StudentResult";
 import LearningCurveData from "./entities/LearningCurveData";
-import AllNotification from "./data/studentNotification.json";
+import AllNotification from "./data/notifications/studentNotification.json";
 import AllScheduledAssessments from "./data/ScheuledAssessment.json";
 import StudentResults from "./data/studentResult.json";
 

@@ -6,12 +6,12 @@ import { useNavigate } from "react-router-dom";
 import { WEBAPI_NODE_URL } from "@/lib/utils";
 
 
-import AdminNotification from "./entities/AdminNotification";
+import Notification from "./entities/Notification";
 import Member from "./entities/Member";
 import RolePermission from "./entities/RolePermission";
 import MemberActivity from "./entities/MemberActivity";
-import AdminNotifications from "./data/adminNotifications.json";
-import Members from "./data/members.json";
+import AdminNotifications from "./data/notifications/adminNotifications.json";
+import Members from "./data/users/members.json";
 import RolePermissions from "./data/rolePermissions.json";
 import MemberActivities from "./data/memberActivities.json";
 
@@ -30,7 +30,7 @@ const DashboardAdmin = () => {
    const navigate=useNavigate();
 
   // Admin System Notifications
-  const adminNotifications: AdminNotification[] = AdminNotifications as AdminNotification[] ;
+  const adminNotifications: Notification[] = AdminNotifications as Notification[] ;
 
   // Member Directory - Organization Membership
   const members: Member[] =  Members as Member[] ;

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { WEBAPI_NODE_URL } from "@/lib/utils";
 import ApiResponse from "./entities/ApiResponse";
 
-function GetUserInformation() {
+function UserInformation() {
   const [userId, setUserId] = useState("");
   const [response, setResponse] = useState<ApiResponse | null>(null);
   const [loading, setLoading] = useState(false);
