@@ -32,7 +32,7 @@ const Question = () => {
     useState<boolean>(true);
 
   const [timeLeft, setTimeLeft] =
-    useState<number>(2.5 * 60);
+    useState<number>(10 * 60);
 
   const [examEnded, setExamEnded] =
   useState<boolean>(false);
@@ -240,7 +240,7 @@ const Question = () => {
       assessmentId:
         parseInt(assessmentId || "0"),
 
-      timeTakenMinutes: 2,
+      timeTakenMinutes: 10,
 
       answers: answersArray,
     };
