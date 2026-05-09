@@ -240,7 +240,7 @@ const Question = () => {
       assessmentId:
         parseInt(assessmentId || "0"),
 
-      timeTakenMinutes: 2,
+      timeTakenMinutes: 10,
 
       answers: answersArray,
     };
