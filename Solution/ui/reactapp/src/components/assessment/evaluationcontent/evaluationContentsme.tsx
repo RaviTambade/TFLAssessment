@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Loader2, AlertCircle } from "lucide-react";
+import { ArrowRight, Loader2} from "lucide-react";
 import QuestionsComponent from "./QuestionsComponent";
 import QuestionDetailsComponent from "./QuestionDetailsComponent";
 import { Bell, Users, Target, TrendingUp, CheckCircle, AlertCircle, BarChart3, FileText } from "lucide-react";
@@ -22,6 +22,7 @@ type DifficultyCount={
 
 const EvaluationContentSme = () => {
  
+    const navigate=useNavigate();
     const [conceptQuestionCount, setConceptQuestionCount] = useState([]);
     const [difficultyQuestionCount,setDifficultyQuestionCount]=useState([]);
 
@@ -74,7 +75,8 @@ const EvaluationContentSme = () => {
            </div>
     
              {conceptQuestionCount.map((item)  => (
-              <Card>
+              <Card
+              onClick={()=>navigate("/models/evaluationcontent/questionbydifficulty")}>
                 <CardContent className="p-6">
                   <div className="flex items-center justify-between">
                     <div>
