@@ -4,9 +4,9 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
 
-import { WEBAPI_DOTNET_URL, WEBAPI_NODE_URL, WEBAPI_JAVA_URL } from "@/lib/utils";
-import QuestionFormData from "../assessmentOrchestrator/entities/QuestionFormData";
 
+import { WEBAPI_DOTNET_URL, WEBAPI_NODE_URL, WEBAPI_JAVA_URL } from "@/lib/utils";
+import QuestionFormData from "../assessmentOrchestrator/entities/MultipleChoiceQuestion";
 
 
 const EditQuestion = () => {
@@ -123,11 +123,7 @@ const EditQuestion = () => {
                         {/* Description */}
                         <div>
                             <label className="text-sm font-medium">Description</label>
-                            <input
-                                type="text"
-                                name="description"
-                                value={formData.description}
-                                onChange={handleChange}
+                            <input type="text" name="description" value={formData.description} onChange={handleChange}
                                 className="w-full mt-1 p-3 border rounded-lg"
                             />
                         </div>
@@ -225,19 +221,9 @@ const EditQuestion = () => {
                             </div>
 
                             <div>
-                                <label className="text-sm font-medium">
-                                    Concept
-                                </label>
-
-                                <input
-                                    type="text"
-                                    name="concept"
-                                    value={formData.concept}
-                                    onChange={handleChange}
-                                    className="w-full mt-1 p-3 border rounded-lg"
-                                />
+                                <label className="text-sm font-medium">Concept</label>
+                                <input type="text" name="concept" value={formData.concept} onChange={handleChange} className="w-full mt-1 p-3 border rounded-lg" />
                             </div>
-
                         </div>
 
 
@@ -250,31 +236,15 @@ const EditQuestion = () => {
                                 <input name="optionB" value={formData.optionB} onChange={handleChange} placeholder="Option B" className="w-full p-3 border rounded-lg" />
                                 <input name="optionC" value={formData.optionC} onChange={handleChange} placeholder="Option C" className="w-full p-3 border rounded-lg" />
                                 <input name="optionD" value={formData.optionD} onChange={handleChange} placeholder="Option D" className="w-full p-3 border rounded-lg" />
-
-                                <input
-                                    name="correctAnswer"
-                                    value={formData.correctAnswer}
-                                    onChange={handleChange}
-                                    placeholder="Correct Answer (A/B/C/D or full value)"
-                                    className="w-full p-3 border rounded-lg border-primary"
-                                />
+                                <input name="correctAnswer" value={formData.correctAnswer} onChange={handleChange} placeholder="Correct Answer (A/B/C/D or full value)" className="w-full p-3 border rounded-lg border-primary" />
                             </div>
                         )}
 
                         {/* Buttons */}
                         <div className="flex justify-end gap-4 pt-4">
-                            <Button
-                                variant="outline"
-                                onClick={() => navigate("/models/evaluationcontent/reviewquestion")}
-                            >
-                                Cancel
-                            </Button>
-
-                            <Button onClick={handleUpdate}>
-                                Update Question
-                            </Button>
+                            <Button  variant="outline" onClick={() => navigate("/models/evaluationcontent/reviewquestion")}>Cancel</Button>
+                            <Button onClick={handleUpdate}>Update Question</Button>
                         </div>
-
                     </CardContent>
                 </Card>
             </div>

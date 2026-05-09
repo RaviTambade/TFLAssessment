@@ -1,4 +1,4 @@
-type Questione= {
+type DisplayQuestion= {
   questionId: number;
   description: string;
   optionA?: string;
@@ -7,7 +7,7 @@ type Questione= {
   optionD?: string;
 };
 
-export default Questione;
+export default DisplayQuestion;
 
 
 

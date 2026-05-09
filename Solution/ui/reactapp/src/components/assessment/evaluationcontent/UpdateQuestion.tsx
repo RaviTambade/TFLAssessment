@@ -3,8 +3,8 @@ import React, { useState } from "react";
 import { Card,CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
-import { WEBAPI_JAVA_URL} from "@/lib/utils";
-import QuestionDto from "../assessmentOrchestrator/entities/QuestionsDto";
+import {  WEBAPI_DOTNET_URL, WEBAPI_NODE_URL ,WEBAPI_JAVA_URL} from "@/lib/utils";
+import QuestionDto from "../assessmentOrchestrator/entities/QuestionDetails";
 
 const UpdateQuestion = () => {
 
@@ -40,7 +40,7 @@ const UpdateQuestion = () => {
         if (!inputId) return alert("Enter ID");
 
         setLoading(true);
-        
+
         try {
             const res = await fetch(`${WEBAPI_JAVA_URL}/questions/${inputId}`);
 

@@ -7,7 +7,7 @@ import {
 
 import { WEBAPI_DOTNET_URL } from "@/lib/utils";
 
-import QuestionType from "./entities/Question";
+import QuestionType from "./entities/DisplayQuestion";
 
 type SelectedAnswersType = {
   [key: number]: string;
@@ -32,10 +32,10 @@ const Question = () => {
     useState<boolean>(true);
 
   const [timeLeft, setTimeLeft] =
-    useState<number>(2.5 * 60);
+    useState<number>(10 * 60);
 
   const [examEnded, setExamEnded] =
-  useState<boolean>(false);
+    useState<boolean>(false);
 
   // TIMER
   useEffect(() => {
@@ -66,18 +66,18 @@ const Question = () => {
 
     if (timeLeft === 0) {
 
-  setExamEnded(true);
+      setExamEnded(true);
 
-  const submitBtn =
-    document.getElementById(
-      "submit-assessment-btn"
-    ) as HTMLButtonElement;
+      const submitBtn =
+        document.getElementById(
+          "submit-assessment-btn"
+        ) as HTMLButtonElement;
 
-  if (submitBtn) {
+      if (submitBtn) {
 
-    submitBtn.click();
-  }
-}
+        submitBtn.click();
+      }
+    }
 
   }, [timeLeft]);
 
@@ -240,7 +240,7 @@ const Question = () => {
       assessmentId:
         parseInt(assessmentId || "0"),
 
-      timeTakenMinutes: 2,
+      timeTakenMinutes: 10,
 
       answers: answersArray,
     };
@@ -262,7 +262,8 @@ const Question = () => {
 
       .then(() => {
 
-        navigate("/models/result");
+        // ✅ FIXED: pass assessmentId so Result page can fetch the report
+        navigate(`/models/result/${assessmentId}`);
 
       })
 

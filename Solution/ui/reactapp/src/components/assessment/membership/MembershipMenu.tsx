@@ -49,7 +49,7 @@ const MembershipMenu = () => {
                     size="lg"
                     className="group"
                     onClick={() =>
-                      navigate("/models/membership/GetUserInformation")
+                      navigate("/models/membership/UserInformation")
                     }
                   >
                     User Information
@@ -60,7 +60,7 @@ const MembershipMenu = () => {
                     variant="hero"
                     size="lg"
                     className="group" 
-                    onClick={() => navigate("/models/membership/GetUserLogDetail")}
+                    onClick={() => navigate("/models/membership/UserLogDetail")}
                   >
                     UserLog Details
                     <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />

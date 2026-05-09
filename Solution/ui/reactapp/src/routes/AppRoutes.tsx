@@ -16,7 +16,7 @@ import MentorReviewQuestion from "@/components/assessment/evaluationcontent/Ment
 import QuestionDetails from "@/components/assessment/evaluationcontent/QuestionDetails";
 import EditQuestion from "@/components/assessment/evaluationcontent/EditQuestion";
 import ViewRuntimes from "@/components/assessment/skilltaxonomy/ViewRuntimes";
-import AddConcept from "@/components/assessment/skilltaxonomy/AddConcept";
+// import AddConcept from "@/components/assessment/skilltaxonomy/AddConcept";
 import UpcomingAssessment from "../components/assessment/assessmentOrchestrator/UpcomingAssessment";
 import AllAssessment from "@/components/assessment/assessmentOrchestrator/AllAssessment";
 //import Question from "@/components/assessment/assessmentOrchestrator/applyAssessment";
@@ -27,11 +27,11 @@ import ProjectByMentee from "@/components/assessment/evaluationcontent/ProjectBy
 import QuestionsByDifficulty from "@/components/assessment/evaluationcontent/QuestionByDifficulty";
 import MembershipMenu from "@/components/assessment/membership/MembershipMenu";
 import ChangePassword from "@/components/assessment/membership/ChangePassword";
-import GetUserLogDetail from "@/components/assessment/membership/GetUserLogDetail";
+import GetUserLogDetail from "@/components/assessment/membership/UserLogDetail";
 import LoginPage from "@/components/assessment/membership/Login";
 import ManageUsers from "@/components/assessment/membership/ManageUsers";
 import RegisterPage from "@/components/assessment/membership/Register";
-import GetUserInformation from "@/components/assessment/membership/GetUserInformation";
+import GetUserInformation from "@/components/assessment/membership/UserInformation";
 import UserActivity from "@/components/assessment/membership/UserActivity";
 import UserProfile from "@/components/assessment/membership/UserProfile";
 import SMECreateTest from "@/components/assessment/assessmentOrchestrator/SMECreateTest";
@@ -71,7 +71,8 @@ function AppRoutes() {
           <Route path="upcoming-assessment" element={<UpcomingAssessment />} />
           <Route path="all-assessment" element={<AllAssessment />} />
           <Route path="apply-assessment" element={<Question />} />
-          <Route path="result" element={<Result />} />
+          {/* <Route path="result" element={<Result />} /> */}
+          <Route path="result/:assessmentId" element={<Result />}/>
 
           <Route path="assessment/start/:assessmentId" element={<Question />}/>
           <Route path="membership/membership-menu" element={<MembershipMenu />} />
@@ -79,7 +80,7 @@ function AppRoutes() {
  
           <Route path="skilltaxonomy/ViewRuntimes" element={<ViewRuntimes />} />
 
-          <Route path="skilltaxonomy/AddConcept" element={<AddConcept />} />
+          {/* <Route path="skilltaxonomy/AddConcept" element={<AddConcept />} /> */}
            <Route path="skilltaxonomy/ConceptByFramework" element={<ConceptByFramework />} />
           
 

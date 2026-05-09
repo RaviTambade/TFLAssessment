@@ -6,6 +6,8 @@ import { Checkbox } from "../../ui/checkbox";
 import { RadioGroup, RadioGroupItem } from "../../ui/radio-group";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../../ui/card";
 import { WEBAPI_DOTNET_URL } from "@/lib/utils";
+
+
 type Concept = {
   id: number,
   name: string;
@@ -20,7 +22,6 @@ type Question = {
   options?: string[];
   correctIndex?: number;
 }
-
 
 
 const SMECreateTest = () => {
@@ -131,6 +132,9 @@ const SMECreateTest = () => {
   const allQuestions = availableQuestions;
 
   const selectedQuestionsData = allQuestions.filter((q) => selectedQuestions.includes(q.questionId));
+
+
+
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -261,91 +265,48 @@ const SMECreateTest = () => {
             {/* Test Name */}
             <div className="space-y-2">
               <Label htmlFor="testName">Test Name</Label>
-              <Input 
-                id="testName" 
-                placeholder="Enter test name"
-                value={testName}
-                onChange={(e) => setTestName(e.target.value)}
-                required 
-              />
+              <Input  id="testName"  placeholder="Enter test name" value={testName} onChange={(e) => setTestName(e.target.value)} required  />
             </div>
 
             {/* Description */}
             <div className="space-y-2">
               <Label htmlFor="description">Description</Label>
-              <textarea 
-                id="description" 
-                placeholder="Enter test description"
-                rows={4}
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-                required 
-                className="flex w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm resize-none"
-              />
+              <textarea  id="description"  placeholder="Enter test description" rows={4} value={description} onChange={(e) => setDescription(e.target.value)} required className="flex w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm resize-none" />
             </div>
 
               {/* Duration */}
             <div className="space-y-2">
               <Label htmlFor="duration">Duration (minutes)</Label>
-              <Input 
-                type="number" 
-                id="duration" 
-                placeholder="Enter duration in minutes"
-                value={duration}
-                onChange={(e) => setDuration(e.target.value)}
-                required 
-              />
+              <Input  type="number"  id="duration"  placeholder="Enter duration in minutes" value={duration} onChange={(e) => setDuration(e.target.value)} required />
             </div>
 
             {/* Questions list (including default MCQs) */}
             <div className="space-y-2">
               <Label>Available Questions </Label>
               <div className="space-y-4 max-h-80 overflow-auto p-2 border rounded-md bg-muted/5">
-                {allQuestions.length === 0 && (
-                  <p className="text-sm text-muted-foreground">No questions available.</p>
-                )}
-                {allQuestions.map((q) => (
-                  <div key={q.questionId} className="p-3 bg-background border rounded-md">
-                    <div className="flex items-start justify-between">
-                      <div>
-                        <p className="font-medium">{q.description}</p>
-                        <p className="text-xs text-muted-foreground mt-1">Type: {q.type} | Difficulty: {q.difficulty}</p>
-                      </div>
-                      <div className="ml-4">
+                {allQuestions.length === 0 && (<p className="text-sm text-muted-foreground">No questions available.</p>)}
+                {allQuestions.map((q) => (<div key={q.questionId} className="p-3 bg-background border rounded-md">
+                  <div className="flex items-start justify-between"> 
+                    <div>
+                       <p className="font-medium">{q.description}</p>
+                       <p className="text-xs text-muted-foreground mt-1">Type: {q.type} | Difficulty: {q.difficulty}</p>
+                    </div>
+                    <div className="ml-4">
                         <label className="flex items-center gap-2 text-sm">
-                          <input
-                            type="checkbox"
-                            checked={selectedQuestions.includes(q.questionId)}
-                            onChange={() => toggleQuestion(q.questionId)}
-                            className="w-4 h-4"
-                          />
+                          <input type="checkbox" checked={selectedQuestions.includes(q.questionId)} onChange={() => toggleQuestion(q.questionId)}className="w-4 h-4" />
                           <span>Include</span>
                         </label>
-                      </div>
+                    </div>
                     </div>
                   </div>
                 ))}
               </div>
             </div>
-
-            
+   
             {/* Submit Button */}
             <div className="flex gap-3 pt-6 border-t">
-              <Button
-                type="submit"
-                className="flex-1"
-                variant="default"
-                // onClick={}
-              >
-                Create Test
-              </Button>
-              <Button
-                type="reset"
-                variant="outline"
-                className="flex-1"
-              >
-                Clear
-              </Button>
+              <Button type="submit" className="flex-1" variant="default" >Create Test </Button>
+              <Button type="reset" variant="outline" className="flex-1"> Clear </Button>
             </div>
           </form>
           )}

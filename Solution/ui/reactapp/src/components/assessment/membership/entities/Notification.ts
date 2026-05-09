@@ -1,5 +1,4 @@
-
-interface MentorNotification {
+interface Notification {
   id: number;
   title: string;
   message: string;
@@ -7,4 +6,4 @@ interface MentorNotification {
   timestamp: string;
   read: boolean;
 }
-export default MentorNotification;
+export default Notification;
