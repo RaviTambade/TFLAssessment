@@ -7,10 +7,14 @@ import { WEBAPI_JAVA_URL } from "@/lib/utils";
 import QuestionFormData from "../assessmentOrchestrator/entities/MultipleChoiceQuestion";
 
 const EditQuestion = () => {
-    const { id } = useParams();
-    const navigate = useNavigate();
-    const [loading, setLoading] = useState(true);
-    const [formData, setFormData] = useState<QuestionFormData>({
+    
+const navigate = useNavigate();
+
+const { id } = useParams();
+    
+const [loading, setLoading] = useState(true);
+const [formData, setFormData] = useState<QuestionFormData>({
+
         description: "",
         questionType: "",
         difficultyLevel: "",
@@ -28,8 +32,9 @@ const EditQuestion = () => {
    useEffect(() => {
     if (!id) return;
 
-    const fetchQuestion = async () => {
-        try {
+const fetchQuestion = async () => {
+        
+    try {
             const res = await fetch(`${WEBAPI_JAVA_URL}/questions/${id}/details`);
             const data = await res.json();
             console.log("API DATA:", data);
