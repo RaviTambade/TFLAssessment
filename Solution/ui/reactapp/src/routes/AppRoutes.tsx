@@ -16,6 +16,7 @@ import MentorReviewQuestion from "@/components/assessment/evaluationcontent/Ment
 import QuestionDetails from "@/components/assessment/evaluationcontent/QuestionDetails";
 import EditQuestion from "@/components/assessment/evaluationcontent/EditQuestion";
 import ViewRuntimes from "@/components/assessment/skilltaxonomy/ViewRuntimes";
+// import AddConcept from "@/components/assessment/skilltaxonomy/AddConcept";
 import UpcomingAssessment from "../components/assessment/assessmentOrchestrator/UpcomingAssessment";
 import AllAssessment from "@/components/assessment/assessmentOrchestrator/AllAssessment";
 //import Question from "@/components/assessment/assessmentOrchestrator/applyAssessment";
@@ -79,7 +80,7 @@ function AppRoutes() {
  
           <Route path="skilltaxonomy/ViewRuntimes" element={<ViewRuntimes />} />
 
-          <Route path="skilltaxonomy/AddConcept" element={<AddConcept />} />
+          {/* <Route path="skilltaxonomy/AddConcept" element={<AddConcept />} /> */}
            <Route path="skilltaxonomy/ConceptByFramework" element={<ConceptByFramework />} />
           
 

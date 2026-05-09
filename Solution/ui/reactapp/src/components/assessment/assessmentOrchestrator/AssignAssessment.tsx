@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { WEBAPI_DOTNET_URL } from "@/lib/utils";
 import Student from "./entities/Student";
 import Test from "./entities/Test";
@@ -23,7 +23,8 @@ export default function AssignAssessment() {
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  const [step, setStep] = useState(0);
+  // DROPDOWN REF
+  const dropdownRef = useRef<HTMLDivElement | null>(null);
 
   // CURRENT DATE + TIME
   const getCurrentSchedule = () => {
@@ -51,6 +52,32 @@ export default function AssignAssessment() {
 
     fetchStudents();
     fetchTests();
+
+  }, []);
+
+  // CLOSE DROPDOWN WHEN CLICKING OUTSIDE
+  useEffect(() => {
+
+    const handleClickOutside = (event: MouseEvent) => {
+
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+
+        setIsStudentListOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+
+      document.removeEventListener(
+        "mousedown",
+        handleClickOutside
+      );
+    };
 
   }, []);
 
@@ -277,8 +304,6 @@ export default function AssignAssessment() {
   // RESET FORM
   const reset = () => {
 
-    setStep(0);
-
     setStatus("");
 
     setSearchStudent("");
@@ -414,40 +439,20 @@ export default function AssignAssessment() {
               2. Select Students
             </h2>
 
-            {/* SEARCH */}
-            <input
-              type="text"
-              placeholder="Search students..."
-              value={searchStudent}
-              onChange={(e) =>
-                setSearchStudent(e.target.value)
-              }
-              className="border p-2 w-full mb-2 rounded-md outline-none focus:ring-2 focus:ring-orange-500"
-            />
+            <div
+              className="relative"
+              ref={dropdownRef}
+            >
 
-            <div className="relative">
-
-              {/* SELECTED STUDENTS */}
+              {/* SINGLE INPUT + SELECT BOX */}
               <div
                 onClick={() =>
-                  setIsStudentListOpen(!isStudentListOpen)
+                  setIsStudentListOpen(true)
                 }
-                className="border p-2 w-full rounded-md bg-white flex flex-wrap gap-2 min-h-[42px] cursor-pointer focus-within:ring-2 focus:ring-orange-500"
+                className="border p-2 w-full rounded-md bg-white flex flex-wrap items-center gap-2 min-h-[42px] cursor-text focus-within:ring-2 focus-within:ring-orange-500"
               >
 
-                {selectedStudents.length === 0 && (
-
-                  <span className="text-gray-400">
-
-                    {
-                      status === "Cancelled"
-                        ? "Students are not required for cancellation"
-                        : "Select Students..."
-                    }
-
-                  </span>
-                )}
-
+                {/* SELECTED STUDENTS */}
                 {selectedStudents.map(id => (
 
                   <span
@@ -474,6 +479,31 @@ export default function AssignAssessment() {
 
                   </span>
                 ))}
+
+                {/* SEARCH INPUT */}
+                <input
+                  type="text"
+                  placeholder={
+                    selectedStudents.length === 0
+                      ? (
+                          status === "Cancelled"
+                            ? "Students are not required for cancellation"
+                            : "Search and select students..."
+                        )
+                      : ""
+                  }
+                  value={searchStudent}
+                  onChange={(e) =>
+                    setSearchStudent(e.target.value)
+                  }
+                  onFocus={() =>
+                    setIsStudentListOpen(true)
+                  }
+                  onClick={(e) =>
+                    e.stopPropagation()
+                  }
+                  className="flex-1 min-w-[150px] outline-none"
+                />
               </div>
 
               {/* DROPDOWN */}
@@ -481,31 +511,42 @@ export default function AssignAssessment() {
 
                 <div className="absolute z-10 w-full mt-1 bg-white border rounded-md shadow-xl max-h-60 overflow-y-auto">
 
-                  {filteredStudents.map(s => (
+                  {filteredStudents.length > 0 ? (
 
-                    <div
-                      key={s.id}
-                      onClick={() => toggleStudent(s.id)}
-                      className={`p-2 hover:bg-orange-50 cursor-pointer flex items-center gap-2 ${
-                        selectedStudents.includes(s.id)
-                          ? "bg-orange-50 font-bold"
-                          : ""
-                      }`}
-                    >
+                    filteredStudents.map(s => (
 
-                      <input
-                        type="checkbox"
-                        checked={selectedStudents.includes(s.id)}
-                        readOnly
-                        className="accent-orange-600"
-                      />
+                      <div
+                        key={s.id}
+                        onClick={() =>
+                          toggleStudent(s.id)
+                        }
+                        className={`p-2 hover:bg-orange-50 cursor-pointer flex items-center gap-2 ${
+                          selectedStudents.includes(s.id)
+                            ? "bg-orange-50 font-bold"
+                            : ""
+                        }`}
+                      >
 
-                      <span className="text-sm">
-                        {s.fullName}
-                      </span>
+                        <input
+                          type="checkbox"
+                          checked={selectedStudents.includes(s.id)}
+                          readOnly
+                          className="accent-orange-600"
+                        />
 
+                        <span className="text-sm">
+                          {s.fullName}
+                        </span>
+
+                      </div>
+                    ))
+
+                  ) : (
+
+                    <div className="p-3 text-sm text-gray-500">
+                      No students found
                     </div>
-                  ))}
+                  )}
                 </div>
               )}
             </div>
@@ -611,5 +652,4 @@ export default function AssignAssessment() {
       </div>
     </div>
   );
-  
 }
