@@ -3,6 +3,14 @@ import { WEBAPI_DOTNET_URL } from "@/lib/utils";
 import Student from "./entities/Student";
 import Test from "./entities/Test";
 
+type AssignmentSummary = {
+  AssessmentIds: (number | string)[];
+  TestName: string;
+  Status: string;
+  ScheduledAt: string;
+  StudentNames: string[];
+};
+
 export default function AssignAssessment() {
 
   const [students, setStudents] = useState<Student[]>([]);
@@ -22,6 +30,7 @@ export default function AssignAssessment() {
 
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [summary, setSummary] = useState<AssignmentSummary | null>(null);
 
   // DROPDOWN REF
   const dropdownRef = useRef<HTMLDivElement | null>(null);
@@ -99,6 +108,204 @@ export default function AssignAssessment() {
     } catch {
 
       setStudents([]);
+    }
+  };
+
+  const readResponse = async (res: Response) => {
+
+    const text = await res.text();
+
+    if (!text) {
+
+      return null;
+    }
+
+    try {
+
+      return JSON.parse(text);
+
+    } catch {
+
+      return text;
+    }
+  };
+
+  const getResponseMessage = (
+    data: unknown,
+    fallback: string
+  ) => {
+
+    if (typeof data === "string") {
+
+      return data || fallback;
+    }
+
+    if (
+      data &&
+      typeof data === "object" &&
+      "message" in data &&
+      typeof (data as { message?: unknown }).message === "string"
+    ) {
+
+      return (data as { message: string }).message || fallback;
+    }
+
+    return fallback;
+  };
+
+  const getNumberValue = (
+    data: unknown,
+    keys: string[]
+  ) => {
+
+    if (!data || typeof data !== "object") {
+
+      return null;
+    }
+
+    const record = data as Record<string, unknown>;
+
+    for (const key of keys) {
+
+      const value = record[key];
+
+      if (typeof value === "number") {
+
+        return value;
+      }
+
+      if (
+        typeof value === "string" &&
+        value.trim() !== "" &&
+        !Number.isNaN(Number(value))
+      ) {
+
+        return Number(value);
+      }
+    }
+
+    return null;
+  };
+
+  const getAssessmentIdsFromResponse = (data: unknown) => {
+
+    const singleId = getNumberValue(
+      data,
+      [
+        "assessmentId",
+        "AssessmentId",
+        "id",
+        "Id",
+        "assignedAssessmentId",
+        "AssignedAssessmentId"
+      ]
+    );
+
+    if (singleId) {
+
+      return [singleId];
+    }
+
+    if (!data || typeof data !== "object") {
+
+      return [];
+    }
+
+    const record = data as Record<string, unknown>;
+    const ids = record.assessmentIds ?? record.AssessmentIds;
+
+    if (!Array.isArray(ids)) {
+
+      return [];
+    }
+
+    return ids
+      .map(id =>
+        typeof id === "number" ? id : Number(id)
+      )
+      .filter(id => !Number.isNaN(id));
+  };
+
+  const getStudentName = (id: number) => {
+
+    return students.find(s => s.id === id)?.fullName ?? `Student ${id}`;
+  };
+
+  const getTestName = (id: number) => {
+
+    return tests.find(t => t.id === id)?.title ?? `Test ${id}`;
+  };
+
+  const fetchLatestAssessmentIds = async (
+    testName: string,
+    studentIds: number[],
+    selectedStatus: string,
+    scheduledDate: string
+  ) => {
+
+    try {
+
+      const ids = await Promise.all(
+        studentIds.map(async studentId => {
+
+          const params = new URLSearchParams({
+            fromDate: scheduledDate,
+            toDate: scheduledDate
+          });
+
+          const res = await fetch(
+            `${WEBAPI_DOTNET_URL}/Assessment/user/${studentId}?${params.toString()}`
+          );
+
+          if (!res.ok) {
+
+            return null;
+          }
+
+          const data = await readResponse(res);
+
+          if (!Array.isArray(data)) {
+
+            return null;
+          }
+
+          const matchingAssessment = data
+            .filter(item => {
+
+              if (!item || typeof item !== "object") {
+
+                return false;
+              }
+
+              const record = item as Record<string, unknown>;
+              const title = String(record.AssessmentName ?? "").toLowerCase();
+              const itemStatus = String(record.Status ?? "").toLowerCase();
+
+              return (
+                title === testName.toLowerCase() &&
+                itemStatus === selectedStatus.toLowerCase()
+              );
+            })
+            .sort((a, b) => {
+
+              const firstId = getNumberValue(a, ["AssessmentId", "assessmentId"]) ?? 0;
+              const secondId = getNumberValue(b, ["AssessmentId", "assessmentId"]) ?? 0;
+
+              return secondId - firstId;
+            })[0];
+
+          return getNumberValue(
+            matchingAssessment,
+            ["AssessmentId", "assessmentId"]
+          );
+        })
+      );
+
+      return ids.filter((id): id is number => id !== null);
+
+    } catch {
+
+      return [];
     }
   };
 
@@ -189,36 +396,34 @@ export default function AssignAssessment() {
 
         if (!res.ok) {
 
-          const errorData = await res.text();
+          const errorData = await readResponse(res);
 
-          let message = "Failed to cancel assessment";
-
-          try {
-
-            const jsonErr = JSON.parse(errorData);
-
-            message = jsonErr.message || message;
-
-          } catch {
-
-            message = errorData || message;
-          }
+          const message = getResponseMessage(
+            errorData,
+            "Failed to cancel assessment"
+          );
 
           throw new Error(message);
         }
 
-        const result = await res.json();
+        const result = await readResponse(res);
 
         const cancelledCount = Number(
-          result.cancelledCount ?? 0
+          result &&
+          typeof result === "object" &&
+          "cancelledCount" in result
+            ? (result as { cancelledCount?: number }).cancelledCount ?? 0
+            : 0
         );
+
+        setErrorMessage(null);
 
         setSuccessMessage(
-          result.message ||
-          `Assessment cancelled successfully. ${cancelledCount} record(s) updated.`
+          getResponseMessage(
+            result,
+            `Assessment cancelled successfully. ${cancelledCount} record(s) updated.`
+          )
         );
-
-        reset();
 
         return;
       }
@@ -257,38 +462,69 @@ export default function AssignAssessment() {
       // HANDLE ERROR
       if (!res.ok) {
 
-        const errorData = await res.text();
+        const errorData = await readResponse(res);
 
-        let message = "Failed to assign assessment";
-
-        try {
-
-          const jsonErr = JSON.parse(errorData);
-
-          message = jsonErr.message || "Server Error";
-
-        } catch {
-
-          message = errorData || message;
-        }
+        const message = getResponseMessage(
+          errorData,
+          "Failed to assign assessment"
+        );
 
         throw new Error(message);
       }
 
       // HANDLE SUCCESS
-      const result = await res.json();
+      const result = await readResponse(res);
 
       console.log("ASSIGN RESULT => ", result);
 
-      if (!result.success) {
+      // IF BACKEND RETURNS FAILURE
+      if (
+        result &&
+        typeof result === "object" &&
+        "success" in result &&
+        (result as { success?: boolean }).success === false
+      ) {
 
-        setErrorMessage(result.message);
+        setErrorMessage(
+          getResponseMessage(
+            result,
+            "Failed to assign assessment"
+          )
+        );
+
         return;
       }
 
-      setSuccessMessage(result.message);
+      // CLEAR OLD ERROR MESSAGE
+      setErrorMessage(null);
 
-      reset();
+      const testName = getTestName(selectedTest);
+      const studentNames = selectedStudents.map(getStudentName);
+      const responseAssessmentIds = getAssessmentIdsFromResponse(result);
+      const assessmentIds = responseAssessmentIds.length > 0
+        ? responseAssessmentIds
+        : await fetchLatestAssessmentIds(
+            testName,
+            selectedStudents,
+            dto.Status,
+            date
+          );
+
+      // SHOW SUCCESS MESSAGE
+      setSummary({
+        AssessmentIds: assessmentIds,
+        TestName: testName,
+        Status: dto.Status,
+        ScheduledAt: dto.ScheduledAt,
+        StudentNames: studentNames
+      });
+
+      setSuccessMessage(
+        getResponseMessage(
+          result,
+          "Assessment Assigned Successfully"
+        )
+      );
 
     } catch (err: unknown) {
 
@@ -320,6 +556,7 @@ export default function AssignAssessment() {
     setDate(currentSchedule.date);
 
     setTime(currentSchedule.time);
+    setSummary(null);
   };
 
   return (
@@ -335,33 +572,79 @@ export default function AssignAssessment() {
 
         {/* SUCCESS MESSAGE */}
         {successMessage && (
-
-          <div className="mb-4 p-3 bg-green-100 border border-green-400 text-green-800 rounded-lg flex justify-between items-center">
-
-            <span>{successMessage}</span>
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4">
+          <div className="w-full max-w-4xl rounded-lg border border-green-300 bg-green-50 p-8 text-green-800 shadow-2xl">
+            <div className="flex items-center justify-between mb-4">
+              <span className="text-lg font-bold">
+                ✅ {successMessage}
+              </span>
+            </div>
+            
+            {summary && (
+              <div className="bg-white border border-green-200 rounded-md p-4 space-y-2 text-sm">
+                <h3 className="font-bold border-b pb-1 mb-2 uppercase tracking-wider text-green-700">Assignment Summary</h3>
+                <div className="grid grid-cols-2 gap-2">
+                  <div>
+                    <span className="font-semibold">
+                      {summary.AssessmentIds.length > 1 ? "Assessment IDs:" : "Assessment ID:"}
+                    </span>
+                    <div className="flex flex-wrap gap-1 mt-1">
+                      {summary.AssessmentIds.length > 0 ? (
+                        summary.AssessmentIds.map(id => (
+                          <span key={id.toString()} className="bg-green-100 px-2 py-0.5 rounded border border-green-200">{id}</span>
+                        ))
+                      ) : (
+                        <span className="text-green-700">Not returned by API</span>
+                      )}
+                    </div>
+                  </div>
+                  <p><span className="font-semibold">Status:</span> {summary.Status}</p>
+                  <p className="col-span-2"><span className="font-semibold">Test Name:</span> {summary.TestName}</p>
+                  <p className="col-span-2"><span className="font-semibold">Scheduled At:</span> {new Date(summary.ScheduledAt).toLocaleString()}</p>
+                  <div className="col-span-2">
+                    <span className="font-semibold">Students:</span>
+                    <div className="flex flex-wrap gap-1 mt-1">
+                      {summary.StudentNames.map(name => (
+                        <span key={name} className="bg-green-100 px-2 py-0.5 rounded border border-green-200">{name}</span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
 
             <button
-              onClick={() => setSuccessMessage(null)}
-              className="font-bold ml-4"
+              type="button"
+              onClick={() => {
+
+                setSuccessMessage(null);
+                setSummary(null);
+                reset();
+              }}
+              className="mt-4 w-full rounded-md bg-green-600 px-4 py-2 text-sm font-bold text-white transition hover:bg-green-700"
             >
-              ×
+              OK
             </button>
 
+          </div>
           </div>
         )}
 
         {/* ERROR MESSAGE */}
         {errorMessage && (
 
-          <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-800 rounded-lg flex justify-between items-center">
+          <div className="mb-4 flex items-center justify-between rounded-lg border border-red-300 bg-red-100 px-4 py-3 text-red-800 shadow-sm">
 
-            <span>{errorMessage}</span>
+            <span className="text-sm font-medium">
+              {errorMessage}
+            </span>
 
             <button
+              type="button"
               onClick={() => setErrorMessage(null)}
-              className="font-bold ml-4"
+              className="rounded-md bg-red-600 px-3 py-1 text-sm font-medium text-white transition hover:bg-red-700"
             >
-              ×
+              OK
             </button>
 
           </div>

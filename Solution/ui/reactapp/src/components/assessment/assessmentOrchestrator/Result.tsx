@@ -6,7 +6,7 @@ import { CheckCircle, ArrowLeft } from "lucide-react";
 import { WEBAPI_DOTNET_URL } from "../../../lib/utils";
 import ResultData from "./entities/ResultData";
 
-const Result: React.FC = () => {
+const Result= () => {
 
   const navigate = useNavigate();
 

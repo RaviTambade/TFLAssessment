@@ -1,22 +1,18 @@
 import React, { useState } from "react";
 import { useNavigate,useParams } from "react-router-dom";
 import { WEBAPI_DOTNET_URL } from "@/lib/utils";
+import Assessments from "./entities/UpcomingAssessment";
 
 
-interface Assessment {
-  srNo: number;
-  assessmentId: number;
-  assessmentName: string;
-  scheduledAt: string;
-  duration: number;
-  status: string;
-}
 
-const UpcomingAssessment= () => {
+
+const UpcomingAssessment = () => {
+
   const navigate = useNavigate();
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
-  const [assessments, setAssessments] = useState<Assessment[]>([]);
+
+  const [assessments, setAssessments] = useState<Assessments[]>([]);
 
 
   const [loading, setLoading] = useState(false);
@@ -47,7 +43,8 @@ const UpcomingAssessment= () => {
         throw new Error("Failed to fetch assessments");
       }
 
-      const data: Assessment[] = await response.json();
+      const data: Assessments[] = await response.json();
+
       setAssessments(data);
     } 
     catch (err: unknown) 

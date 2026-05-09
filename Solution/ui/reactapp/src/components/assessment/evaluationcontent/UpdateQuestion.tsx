@@ -6,10 +6,8 @@ import { Button } from "@/components/ui/button";
 import {  WEBAPI_DOTNET_URL, WEBAPI_NODE_URL ,WEBAPI_JAVA_URL} from "@/lib/utils";
 import QuestionDto from "../assessmentOrchestrator/entities/QuestionDetails";
 
-
-
-
 const UpdateQuestion = () => {
+
     const [questions, setQuestions] = useState<QuestionDto[]>([]);
     const [editingId, setEditingId] = useState<number | null>(null);
     const [editData, setEditData] = useState<Partial<QuestionDto>>({});
@@ -17,7 +15,6 @@ const UpdateQuestion = () => {
     const [inputId, setInputId] = useState<number | "">("");
     const [loading, setLoading] = useState(false);
 
-    // ✅ Fetch All
     const fetchQuestions = async () => {
         setLoading(true);
         try {
@@ -28,56 +25,53 @@ const UpdateQuestion = () => {
             const safeData = Array.isArray(data) ? data : [];
 
             setQuestions(safeData);
-        } catch (err) {
+        } 
+        catch (err) {
             console.error(err);
-            alert("❌ Failed to fetch questions");
+            alert("Failed to fetch questions");
             setQuestions([]);
-        } finally {
+        } 
+        finally {
             setLoading(false);
         }
     };
 
-    // ✅ Fetch By ID
     const fetchById = async () => {
         if (!inputId) return alert("Enter ID");
 
         setLoading(true);
+
         try {
             const res = await fetch(`${WEBAPI_JAVA_URL}/questions/${inputId}`);
+
             if (!res.ok) throw new Error("Not found");
 
             const data = await res.json();
             setQuestions(data ? [data] : []);
-        } catch (err) {
+        } 
+        catch (err) {
             console.error(err);
-            alert("❌ Question not found");
+            alert("Question not found");
             setQuestions([]);
-        } finally {
+        } 
+        finally {
             setLoading(false);
         }
     };
 
-    // ✅ Handle Input Change
-    const handleChange = (
-        e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-    ) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+
         const { name, value, type } = e.target;
 
-        setEditData({
-            ...editData,
-            [name]: type === "checkbox"
-                ? (e.target as HTMLInputElement).checked
-                : value
-        });
+        setEditData({...editData,[name]: type === "checkbox"? (e.target as HTMLInputElement).checked: value});
     };
 
-    // ✅ Save Update
     const handleSave = async (id: number) => {
         try {
             // Find the original question to get all fields
             const originalQuestion = questions.find(q => q.questionId === id);
             if (!originalQuestion) {
-                alert("❌ Question not found");
+                alert("Question not found");
                 return;
             }
 
@@ -88,7 +82,7 @@ const UpdateQuestion = () => {
                 status: editData.status !== undefined ? editData.status : originalQuestion.status,
             };
 
-            console.log("📤 Sending update payload:", updatePayload);
+            console.log("Sending update payload:", updatePayload);
 
             const res = await fetch(`${WEBAPI_JAVA_URL}/questions/${id}`, {
                 method: "PUT",
@@ -98,13 +92,13 @@ const UpdateQuestion = () => {
 
             if (!res.ok) {
                 const errorData = await res.json().catch(() => ({ message: "No error details" }));
-                console.error("❌ Backend error response:", errorData);
+                console.error("Backend error response:", errorData);
                 throw new Error(errorData.message || "Update failed with status " + res.status);
             }
 
-            alert("✅ Updated successfully");
+            alert("Updated successfully");
 
-            // Refresh data based on current mode
+            
             if (mode === "ALL") {
                 await fetchQuestions();
             } else if (mode === "BY_ID") {
@@ -252,7 +246,7 @@ const UpdateQuestion = () => {
                                                         >
                                                             <option value="DRAFT">DRAFT</option>
                                                             <option value="APPROVED">APPROVED</option>
-                                                            <option value="INACTIVE">INACTIVE</option>
+                                                            <option value="REJECTED">REJECTED</option>
                                                         </select>
                                                     ) : q.status}
                                                 </td>
