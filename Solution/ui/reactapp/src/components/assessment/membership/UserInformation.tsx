@@ -85,4 +85,4 @@ function UserInformation() {
   );
 }
 
-export default GetUserInformation;
+export default UserInformation;

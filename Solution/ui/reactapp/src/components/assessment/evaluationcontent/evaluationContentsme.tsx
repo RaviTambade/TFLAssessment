@@ -72,6 +72,7 @@ const EvaluationContentSme = () => {
            <div>
             <h5>Questions as per concepts</h5>
            </div>
+    
              {conceptQuestionCount.map((item)  => (
               <Card>
                 <CardContent className="p-6">
@@ -90,6 +91,7 @@ const EvaluationContentSme = () => {
             <div>
             <h5>Questions as per difficulty</h5>
             </div>
+
             {
               difficultyQuestionCount.map((item)=>(
                 <Card>
