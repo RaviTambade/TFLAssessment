@@ -6,6 +6,7 @@ import { ArrowRight, Loader2} from "lucide-react";
 import QuestionsComponent from "./QuestionsComponent";
 import QuestionDetailsComponent from "./QuestionDetailsComponent";
 import { Bell, Users, Target, TrendingUp, CheckCircle, AlertCircle, BarChart3, FileText } from "lucide-react";
+import GetQuestionSme from "./getQuestionsme";
 
 
 const baseURL = "http://localhost:8080/api";
@@ -23,8 +24,10 @@ type DifficultyCount={
 const EvaluationContentSme = () => {
  
     const navigate=useNavigate();
+    
     const [conceptQuestionCount, setConceptQuestionCount] = useState([]);
     const [difficultyQuestionCount,setDifficultyQuestionCount]=useState([]);
+    const [selectedFilter,setSelectedFilter]=useState({ concept: "",difficultyLevel: "",language: "",framework: "",layer: ""});
 
   useEffect(()=>{
     const fetchConceptCount=async()=>{
@@ -56,9 +59,11 @@ const EvaluationContentSme = () => {
   void fetchDifficultyCount();
  },[]);
 
-
+    console.log(selectedFilter);
+    
    return(
     <div className="min-h-screen bg-gray-50 p-6">
+        
         <div className="max-w-7xl mx-auto space-y-8">
             {/* Header */}
                 <div>
@@ -76,7 +81,9 @@ const EvaluationContentSme = () => {
     
              {conceptQuestionCount.map((item)  => (
               <Card
-              onClick={()=>navigate("/models/evaluationcontent/questionbydifficulty")}>
+              onClick={()=>setSelectedFilter({
+                concept:item.concept,difficultyLevel:"",language: "",framework: "",layer: ""
+              })}>
                 <CardContent className="p-6">
                   <div className="flex items-center justify-between">
                     <div>
@@ -96,7 +103,11 @@ const EvaluationContentSme = () => {
 
             {
               difficultyQuestionCount.map((item)=>(
-                <Card>
+                <Card
+                onClick={()=>setSelectedFilter({
+                                  concept:"",difficultyLevel:item.difficulty,language: "",framework: "",layer: ""
+
+                })}>
                 <CardContent className="p-6">
                   <div className="flex items-center justify-between">
                     <div>
@@ -109,9 +120,11 @@ const EvaluationContentSme = () => {
               </Card>
               ))
             }
-            
-
           </div>
+          <GetQuestionSme
+            concept={selectedFilter.concept}
+            difficulty_level={selectedFilter.difficultyLevel}
+          />
     </div>
    );
 };
