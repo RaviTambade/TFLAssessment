@@ -5,11 +5,8 @@ import { useNavigate } from "react-router-dom";
 
 import { WEBAPI_JAVA_URL } from "@/lib/utils";
 const MentorReviewQuestion = () => {
-  const [questions, setQuestions] = useState([]);
   const navigate = useNavigate();
-
-
-
+  const [questions, setQuestions] = useState([]);
   const fetchDraftQuestions = async () => {
     try {
       const res = await fetch(`${WEBAPI_JAVA_URL}/questions/drafts`);
@@ -37,7 +34,6 @@ const MentorReviewQuestion = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-500 via-indigo-500 to-purple-600 p-6">
       <div className="max-w-6xl mx-auto">
-
         <h2 className="bg-gradient-primary bg-clip-text text-transparent text-4xl font-bold mb-8 text-center">
           Review Questions
         </h2>
@@ -48,7 +44,9 @@ const MentorReviewQuestion = () => {
             Reset
           </Button>
         </div>
-        <h1 className="text-2xl font-bold text-black mb-6 text-center ">Draft Questions</h1>
+        <h1 className="text-2xl font-bold text-black mb-6 text-center ">
+          Draft Questions
+        </h1>
         <Card className="shadow-2xl rounded-2xl">
           <CardContent className="p-6 overflow-x-auto">
             <table className="w-full text-left border-collapse">
@@ -67,12 +65,8 @@ const MentorReviewQuestion = () => {
                   </tr>
                 ) : (
                   questions.map((q) => (
-                    <tr
-                      key={q.questionId}
-                      className="border-b hover:bg-gray-100 cursor-pointer transition"
-                      onClick={() =>
-                        navigate(`/models/evaluationcontent/questiondetails/${q.questionId}`)
-                      }>
+                    <tr key={q.questionId} className="border-b hover:bg-gray-100 cursor-pointer transition" onClick={() =>
+                        navigate(`/models/evaluationcontent/questiondetails/${q.questionId}`,)} >
                       <td className="p-3 font-medium">{q.questionId}</td>
                       <td className="p-3 text-blue-600 underline">
                         {q.description}
