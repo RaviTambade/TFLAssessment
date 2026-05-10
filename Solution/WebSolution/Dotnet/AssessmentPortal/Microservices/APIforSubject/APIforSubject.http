@@ -1,6 +1,0 @@
-@APIforSubject_HostAddress = http://localhost:5264
-
-GET {{APIforSubject_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
