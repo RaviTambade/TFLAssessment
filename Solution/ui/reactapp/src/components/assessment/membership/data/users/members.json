@@ -1,0 +1,52 @@
+[
+  {
+    "id": 1,
+    "name": "Ravi Tambade",
+    "email": "ravi.tambade@transflower.in",
+    "role": "admin",
+    "status": "active",
+    "joinDate": "2025-06-01",
+    "lastLoginDate": "2026-05-01",
+    "department": "Administration"
+  },
+  {
+    "id": 2,
+    "name": "Priya Sharma",
+    "email": "priya.sharma@transflower.in",
+    "role": "student",
+    "status": "active",
+    "joinDate": "2026-01-15",
+    "lastLoginDate": "2026-04-30",
+    "department": "Engineering"
+  },
+  {
+    "id": 3,
+    "name": "Arjun Patel",
+    "email": "arjun.patel@transflower.in",
+    "role": "mentor",
+    "status": "active",
+    "joinDate": "2025-11-20",
+    "lastLoginDate": "2026-04-28",
+    "department": "Mentorship"
+  },
+  {
+    "id": 4,
+    "name": "Ananya Desai",
+    "email": "ananya.desai@transflower.in",
+    "role": "sme",
+    "status": "active",
+    "joinDate": "2025-09-10",
+    "lastLoginDate": "2026-04-25",
+    "department": "Assessment"
+  },
+  {
+    "id": 5,
+    "name": "Rohit Kumar",
+    "email": "rohit.kumar@transflower.in",
+    "role": "employer",
+    "status": "pending",
+    "joinDate": "2026-04-28",
+    "lastLoginDate": "2026-04-28",
+    "department": "Recruiting"
+  }
+]

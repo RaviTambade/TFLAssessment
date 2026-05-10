@@ -1,0 +1,34 @@
+[
+    {
+      "id": 1,
+      "title": "Assessment Scheduled",
+      "message": "Your Python Advanced Assessment is scheduled for May 5, 2026",
+      "type": "info",
+      "timestamp": "2 hours ago",
+      "read": false
+    },
+    {
+      "id": 2,
+      "title": "Score Released",
+      "message": "Your JavaScript Fundamentals assessment has been graded. Score: 92%",
+      "type": "success",
+      "timestamp": "1 day ago",
+      "read": false
+    },
+    {
+      "id": 3,
+      "title": "Assignment Pending",
+      "message": "You have 2 days left to complete your Data Structures assignment",
+      "type": "warning",
+      "timestamp": "3 days ago",
+      "read": true
+    },
+    {
+      "id": 4,
+      "title": "Performance Alert",
+      "message": "Your performance in Web Development has declined. Consider reviewing fundamentals.",
+      "type": "error",
+      "timestamp": "5 days ago",
+      "read": true
+    }
+  ]

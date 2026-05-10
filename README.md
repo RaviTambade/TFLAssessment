@@ -16,8 +16,6 @@ The TFLAssessment Engine exists to:
 * Adapt assessments to **learner context**
 * Align tightly with **TFL curriculum layers**
 
-
-
 ## 2. Core Design Philosophy
 
 ### ❌ What This Engine Is NOT

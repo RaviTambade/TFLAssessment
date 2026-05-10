@@ -1,0 +1,38 @@
+package com.transflower.tflcomentor.skilltaxonomy.entity;
+
+    public class Runtime {
+        private int id ;
+        private String runtimeName;
+
+        public Runtime(){
+            this.id = 0;
+            this.runtimeName = " ";
+        }
+
+        public Runtime(int id, String runtimeName) {
+            this.id = id;
+            this.runtimeName = runtimeName;
+        }   
+
+        public int getId() {
+            return id;
+        }
+
+        public void setId(int id) {
+            this.id = id;
+        }
+
+        public String getRuntimeName() {
+            return runtimeName;
+        }
+        
+        public void setRuntimeName(String runtimeName) {
+            this.runtimeName = runtimeName;
+        }
+
+        @Override
+        public String toString() {
+            return "Runtimes [id=" + id + ", runtimeName=" + runtimeName + "]";
+        }
+    }
+    

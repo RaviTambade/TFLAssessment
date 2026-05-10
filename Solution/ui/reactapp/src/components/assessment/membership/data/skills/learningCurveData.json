@@ -1,0 +1,8 @@
+[
+    { "week": "Week 1", "score": 65, "assessmentCount": 2, "averageTime": 45 },
+    { "week": "Week 2", "score": 72, "assessmentCount": 3, "averageTime": 50 },
+    { "week": "Week 3", "score": 78, "assessmentCount": 3, "averageTime": 48 },
+    { "week": "Week 4", "score": 82, "assessmentCount": 4, "averageTime": 55 },
+    { "week": "Week 5", "score": 85, "assessmentCount": 3, "averageTime": 52 },
+    { "week": "Current", "score": 88, "assessmentCount": 2, "averageTime": 58 }
+]

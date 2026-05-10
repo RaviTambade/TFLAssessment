@@ -1,0 +1,35 @@
+ [
+    {
+      "id": 1,
+      "jobTitle": "Full-Stack Developer",
+      "department": "Engineering",
+      "requiredSkills": ["React", "Node.js", "MongoDB", "JavaScript"],
+      "candidatesShortlisted": 3,
+      "candidatesInterviewed": 2,
+      "offersExtended": 1,
+      "openPositions": 2,
+      "status": "active"
+    },
+    {
+      "id": 2,
+      "jobTitle": "Backend Engineer",
+      "department": "Engineering",
+      "requiredSkills": ["Java", "Spring Boot", "PostgreSQL", "System Design"],
+      "candidatesShortlisted": 4,
+      "candidatesInterviewed": 3,
+      "offersExtended": 1,
+      "openPositions": 1,
+      "status": "active"
+    },
+    {
+      "id": 3,
+      "jobTitle": "DevOps Engineer",
+      "department": "Infrastructure",
+      "requiredSkills": ["AWS", "Docker", "Kubernetes", "CI/CD"],
+      "candidatesShortlisted": 2,
+      "candidatesInterviewed": 2,
+      "offersExtended": 1,
+      "openPositions": 1,
+      "status": "onhold"
+    }
+  ]
