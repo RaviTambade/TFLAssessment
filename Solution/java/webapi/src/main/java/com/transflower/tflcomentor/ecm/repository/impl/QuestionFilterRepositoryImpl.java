@@ -94,6 +94,7 @@ public class QuestionFilterRepositoryImpl implements QuestionFilterRepository{
 
             String setDifficultyLevel = rs.getString("difficulty_level");
             if (setDifficultyLevel != null) {
+                
                 question.setDifficultyLevel(
                         DifficultyLevel.valueOf(setDifficultyLevel));
             }
