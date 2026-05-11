@@ -61,72 +61,107 @@ const EvaluationContentSme = () => {
 
     console.log(selectedFilter);
     
-   return(
-    <div className="min-h-screen bg-gray-50 p-6">
-        
-        <div className="max-w-7xl mx-auto space-y-8">
-            {/* Header */}
-                <div>
-                <h1 className="text-4xl font-bold text-gray-900 mb-2">Evaluation Content</h1>
-                <h3 className="text-xl text-gray-700 mb-4">Manage evaluation content.</h3>
-                <br />
-            </div>
-        </div>
+   return (
+  <div className="min-h-screen bg-gray-50 p-8">
+    {/* Wrapper */}
+    <div className="max-w-7xl mx-auto space-y-10">
+      
+      {/* Header */}
+      <div>
+        <h1 className="text-4xl font-extrabold text-gray-900 tracking-tight">
+          Evaluation Content
+        </h1>
+        <h3 className="text-lg text-gray-600 mt-2">
+          Manage evaluation content
+        </h3>
+      </div>
+
       {/* Top Stats */}
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-
-           <div>
-            <h5>Questions as per concepts</h5>
-           </div>
-    
-             {conceptQuestionCount.map((item)  => (
-              <Card
-              onClick={()=>setSelectedFilter({
-                concept:item.concept,difficultyLevel:"",language: "",framework: "",layer: ""
-              })}>
-                <CardContent className="p-6">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-gray-600 text-sm font-medium">{item.concept}</p>
-                      <p className="text-3xl font-bold text-gray-900 mt-1">{item.question_count}</p>
-                    </div>
-                    <FileText className="w-12 h-12 text-green-500 opacity-20" />
-                  </div>
-                </CardContent>
-              </Card>  ))
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        
+        {/* Concept Section */}
+        <div className="col-span-full">
+          <h5 className="text-lg font-semibold text-gray-800 mb-4">
+            Questions by Concept
+          </h5>
+        </div>
+        {conceptQuestionCount.map((item) => (
+          <Card
+            key={item.concept}
+            onClick={() =>
+              setSelectedFilter({
+                concept: item.concept,
+                difficultyLevel: "",
+                language: "",
+                framework: "",
+                layer: "",
+              })
             }
-            
+            className="cursor-pointer transition transform hover:scale-105 hover:shadow-lg"
+          >
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm font-medium text-gray-500">
+                    {item.concept}
+                  </p>
+                  <p className="text-3xl font-bold text-gray-900 mt-1">
+                    {item.question_count}
+                  </p>
+                </div>
+                <FileText className="w-12 h-12 text-green-500 opacity-30" />
+              </div>
+            </CardContent>
+          </Card>
+        ))}
 
-            <div>
-            <h5>Questions as per difficulty</h5>
-            </div>
-
-            {
-              difficultyQuestionCount.map((item)=>(
-                <Card
-                onClick={()=>setSelectedFilter({
-                                  concept:"",difficultyLevel:item.difficulty,language: "",framework: "",layer: ""
-
-                })}>
-                <CardContent className="p-6">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-gray-600 text-sm font-medium">{item.difficulty}</p>
-                      <p className="text-3xl font-bold text-gray-900 mt-1">{item.count}</p>
-                    </div>
-                    <FileText className="w-12 h-12 text-green-500 opacity-20" />
-                  </div>
-                </CardContent>
-              </Card>
-              ))
+        {/* Difficulty Section */}
+        <div className="col-span-full mt-8">
+          <h5 className="text-lg font-semibold text-gray-800 mb-4">
+            Questions by Difficulty
+          </h5>
+        </div>
+        {difficultyQuestionCount.map((item) => (
+          <Card
+            key={item.difficulty}
+            onClick={() =>
+              setSelectedFilter({
+                concept: "",
+                difficultyLevel: item.difficulty,
+                language: "",
+                framework: "",
+                layer: "",
+              })
             }
-          </div>
-          <GetQuestionSme
-            concept={selectedFilter.concept}
-            difficulty_level={selectedFilter.difficultyLevel}
-          />
+            className="cursor-pointer transition transform hover:scale-105 hover:shadow-lg"
+          >
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm font-medium text-gray-500">
+                    {item.difficulty}
+                  </p>
+                  <p className="text-3xl font-bold text-gray-900 mt-1">
+                    {item.count}
+                  </p>
+                </div>
+                <FileText className="w-12 h-12 text-green-500 opacity-30" />
+              </div>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+
+      {/* Questions Component */}
+      <div className="mt-10">
+        <GetQuestionSme
+          concept={selectedFilter.concept}
+          difficulty_level={selectedFilter.difficultyLevel}
+        />
+      </div>
     </div>
-   );
-};
+  </div>
+);
+}
 
 export default EvaluationContentSme;
