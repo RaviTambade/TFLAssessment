@@ -3,19 +3,18 @@ import { useParams, useNavigate } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
-
-
-import { WEBAPI_DOTNET_URL, WEBAPI_NODE_URL, WEBAPI_JAVA_URL } from "@/lib/utils";
+import { WEBAPI_JAVA_URL } from "@/lib/utils";
 import QuestionFormData from "../assessmentOrchestrator/entities/MultipleChoiceQuestion";
 
-
 const EditQuestion = () => {
-    const { id } = useParams();
-    const navigate = useNavigate();
+    
+const navigate = useNavigate();
 
-    const [loading, setLoading] = useState(true);
+const { id } = useParams();
+    
+const [loading, setLoading] = useState(true);
+const [formData, setFormData] = useState<QuestionFormData>({
 
-    const [formData, setFormData] = useState<QuestionFormData>({
         description: "",
         questionType: "",
         difficultyLevel: "",
@@ -33,15 +32,11 @@ const EditQuestion = () => {
    useEffect(() => {
     if (!id) return;
 
-    const fetchQuestion = async () => {
-        try {
-
-            const res = await fetch(
-                `${WEBAPI_JAVA_URL}/questions/${id}/details`
-            );
-
+const fetchQuestion = async () => {
+        
+    try {
+            const res = await fetch(`${WEBAPI_JAVA_URL}/questions/${id}/details`);
             const data = await res.json();
-
             console.log("API DATA:", data);
 
             setFormData({
@@ -58,27 +53,20 @@ const EditQuestion = () => {
                 optionD: data.optionD || "",
                 correctAnswer: data.correctAnswer || ""
             });
-
-        } catch (err) {
-
+            } 
+            catch (err) {
             console.error(err);
-            alert("Error loading data ❌");
-
-        } finally {
-
+            alert("Error loading data");
+            } 
+            finally {
             setLoading(false);
         }
     };
-
     fetchQuestion();
-
-}, [id]);
+    }, [id]);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-        setFormData({
-            ...formData,
-            [e.target.name]: e.target.value
-        });
+        setFormData({...formData,[e.target.name]: e.target.value});
     };
 
     const handleUpdate = async () => {
@@ -89,10 +77,11 @@ const EditQuestion = () => {
                 body: JSON.stringify(formData)
             });
 
-            alert("Question Updated Successfully ✅");
+            alert("Question Updated Successfully ");
             navigate("/models/evaluationcontent/reviewquestion");
+
         } catch {
-            alert("Update Failed ❌");
+            alert("Update Failed - Please try again");
         }
     };
 
@@ -120,29 +109,19 @@ const EditQuestion = () => {
 
                     <CardContent className="p-6 space-y-5">
 
-                        {/* Description */}
                         <div>
                             <label className="text-sm font-medium">Description</label>
-                            <input type="text" name="description" value={formData.description} onChange={handleChange}
-                                className="w-full mt-1 p-3 border rounded-lg"
-                            />
+                            <input type="text" name="description" value={formData.description} onChange={handleChange}className="w-full mt-1 p-3 border rounded-lg"/>
                         </div>
 
-                        {/* Type + Difficulty */}
                         <div className="grid md:grid-cols-2 gap-4">
-
-                            {/* Question Type */}
                             <div>
                                 <label className="text-sm font-medium">
                                     Question Type
                                 </label>
 
-                                <select
-                                    name="questionType"
-                                    value={formData.questionType}
-                                    onChange={handleChange}
-                                    className="w-full mt-1 p-3 border rounded-lg"
-                                >
+                                <select name="questionType" value={formData.questionType} onChange={handleChange} className="w-full mt-1 p-3 border rounded-lg">
+
                                     <option value="MCQ">MCQ</option>
                                     <option value="PROBLEM_STATEMENT">
                                         Problem Statement
@@ -150,18 +129,13 @@ const EditQuestion = () => {
                                 </select>
                             </div>
 
-                            {/* Difficulty */}
                             <div>
                                 <label className="text-sm font-medium">
                                     Difficulty Level
                                 </label>
 
-                                <select
-                                    name="difficultyLevel"
-                                    value={formData.difficultyLevel}
-                                    onChange={handleChange}
-                                    className="w-full mt-1 p-3 border rounded-lg"
-                                >
+                                <select name="difficultyLevel" value={formData.difficultyLevel} onChange={handleChange} className="w-full mt-1 p-3 border rounded-lg">
+
                                     <option value="BEGINNER">BEGINNER</option>
                                     <option value="INTERMEDIATE">INTERMEDIATE</option>
                                     <option value="ADVANCE">ADVANCE</option>
@@ -170,21 +144,13 @@ const EditQuestion = () => {
 
                         </div>
 
-                        {/* Language + Layer */}
                         <div className="grid md:grid-cols-2 gap-4">
 
                             <div>
                                 <label className="text-sm font-medium">
                                     Language
                                 </label>
-
-                                <input
-                                    type="text"
-                                    name="language"
-                                    value={formData.language}
-                                    onChange={handleChange}
-                                    className="w-full mt-1 p-3 border rounded-lg"
-                                />
+                                <input type="text" name="language" value={formData.language} onChange={handleChange} className="w-full mt-1 p-3 border rounded-lg" />
                             </div>
 
                             <div>
@@ -192,18 +158,11 @@ const EditQuestion = () => {
                                     Layer
                                 </label>
 
-                                <input
-                                    type="text"
-                                    name="layer"
-                                    value={formData.layer}
-                                    onChange={handleChange}
-                                    className="w-full mt-1 p-3 border rounded-lg"
-                                />
+                                <input type="text" name="layer" value={formData.layer} onChange={handleChange} className="w-full mt-1 p-3 border rounded-lg"/>
                             </div>
 
                         </div>
 
-                        {/* Framework + Concept */}
                         <div className="grid md:grid-cols-2 gap-4">
 
                             <div>
@@ -211,13 +170,7 @@ const EditQuestion = () => {
                                     Framework
                                 </label>
 
-                                <input
-                                    type="text"
-                                    name="framework"
-                                    value={formData.framework}
-                                    onChange={handleChange}
-                                    className="w-full mt-1 p-3 border rounded-lg"
-                                />
+                                <input type="text" name="framework" value={formData.framework} onChange={handleChange} className="w-full mt-1 p-3 border rounded-lg"/>
                             </div>
 
                             <div>
@@ -226,8 +179,6 @@ const EditQuestion = () => {
                             </div>
                         </div>
 
-
-                        {/* MCQ Section */}
                         {formData.questionType === "MCQ" && (
                             <div className="bg-muted/50 p-4 rounded-xl space-y-3">
                                 <h3 className="font-semibold text-primary">Options</h3>
@@ -240,7 +191,6 @@ const EditQuestion = () => {
                             </div>
                         )}
 
-                        {/* Buttons */}
                         <div className="flex justify-end gap-4 pt-4">
                             <Button  variant="outline" onClick={() => navigate("/models/evaluationcontent/reviewquestion")}>Cancel</Button>
                             <Button onClick={handleUpdate}>Update Question</Button>

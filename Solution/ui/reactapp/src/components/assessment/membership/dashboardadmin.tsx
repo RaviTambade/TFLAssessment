@@ -50,8 +50,6 @@ const DashboardAdmin = () => {
           setOrganization(data.organization);
           setProfilePicture(data.profilePicture);
         });
-
-
   }, []);
 
   // Render the Admin Management dashboard UI

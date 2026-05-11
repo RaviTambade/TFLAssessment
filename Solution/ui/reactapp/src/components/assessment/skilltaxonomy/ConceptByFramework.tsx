@@ -89,13 +89,11 @@ const ConceptByFramework = () => {
             <div className="flex flex-col sm:flex-row gap-3 justify-center max-w-md mx-auto">
               <div className="relative flex-1">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                <Input
-                  type="text"
-                  placeholder="e.g. React, Spring Boot..."
-                  value={frameworkName}
-                  onChange={(e) => setFrameworkName(e.target.value)}
-                  className="pl-10 h-12 bg-background/50 backdrop-blur-sm border-border focus:ring-primary"
-                  onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
+                <Input type="text" placeholder="e.g. React, Spring Boot..."
+                        className="pl-10 h-12 bg-background/50 backdrop-blur-sm border-border focus:ring-primary"
+                        value={frameworkName}
+                        onChange={(e) => setFrameworkName(e.target.value)}
+                        onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
                 />
               </div>
 

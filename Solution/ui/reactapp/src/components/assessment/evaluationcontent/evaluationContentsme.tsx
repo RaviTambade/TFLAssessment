@@ -1,15 +1,10 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { ArrowRight, Loader2} from "lucide-react";
-import QuestionsComponent from "./QuestionsComponent";
-import QuestionDetailsComponent from "./QuestionDetailsComponent";
-import { Bell, Users, Target, TrendingUp, CheckCircle, AlertCircle, BarChart3, FileText } from "lucide-react";
+import {FileText } from "lucide-react";
 import GetQuestionSme from "./getQuestionsme";
+import { WEBAPI_JAVA_URL } from "@/lib/utils";
 
-
-const baseURL = "http://localhost:8080/api";
 
 type ConceptCount={
     concept:string;
@@ -32,7 +27,7 @@ const EvaluationContentSme = () => {
   useEffect(()=>{
     const fetchConceptCount=async()=>{
       try{
-        const response=await fetch(`${baseURL}/technologies/concepts/question-count`,{
+        const response=await fetch(`${WEBAPI_JAVA_URL}/technologies/concepts/question-count`,{
           method:"GET",
         });
         const data:ConceptCount[]=await response.json();
@@ -47,7 +42,7 @@ const EvaluationContentSme = () => {
   useEffect(()=>{
   const fetchDifficultyCount=async()=>{
     try{
-      const response=await fetch(`${baseURL}/technologies/difficulty/question-count`,{
+      const response=await fetch(`${WEBAPI_JAVA_URL}/technologies/difficulty/question-count`,{
         method:"GET",
       });
       const data:DifficultyCount[]=await response.json();
