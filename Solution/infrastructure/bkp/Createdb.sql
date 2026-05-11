@@ -79,13 +79,6 @@ CREATE TABLE `roles` (
   PRIMARY KEY (`role_id`)
 );
 
--- [06] runtimes
-DROP TABLE IF EXISTS `runtimes`;
-CREATE TABLE `runtimes` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `runtime_name` varchar(100) NOT NULL,
-  PRIMARY KEY (`id`)
-);
 
 -- [07] studentanswers
 DROP TABLE IF EXISTS `studentanswers`;
@@ -441,14 +434,14 @@ DROP TABLE IF EXISTS `sme_runtimes`;
 CREATE TABLE `sme_runtimes` (
   `sme_runtime_id` bigint NOT NULL AUTO_INCREMENT,
   `user_roles_id` bigint DEFAULT NULL,
-  `runtime_id` bigint DEFAULT NULL,
+  /*`runtime_id` bigint DEFAULT NULL,*/
   `user_id` bigint DEFAULT NULL,
   PRIMARY KEY (`sme_runtime_id`),
   KEY `user_id` (`user_roles_id`),
-  KEY `runtime_id` (`runtime_id`),
+  /*KEY `runtime_id` (`runtime_id`),*/
   KEY `FKkd3ki16rvoq4c5w60inl2uafb` (`user_id`),
   CONSTRAINT `FKkd3ki16rvoq4c5w60inl2uafb` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
-  CONSTRAINT `sme_runtimes_ibfk_2` FOREIGN KEY (`runtime_id`) REFERENCES `runtimes` (`id`)
+ /* CONSTRAINT `sme_runtimes_ibfk_2` FOREIGN KEY (`runtime_id`) REFERENCES `runtimes` (`id`)*/
 );
 
 -- [30] user_logs  (depends on: users)
