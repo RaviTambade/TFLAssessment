@@ -1,10 +1,10 @@
-package com.transflower.tflcomentor.ecm.dto;
+package com.transflower.tflcomentor.ecm.dto.response;
 
 import com.transflower.tflcomentor.ecm.entity.enums.DifficultyLevel;
 import com.transflower.tflcomentor.ecm.entity.enums.QuestionStatus;
 import com.transflower.tflcomentor.ecm.entity.enums.QuestionType;
 
-public class QuestionDisplayDto {
+public class QuestionDisplay {
     private Long questionId;
     private String description;
     private QuestionType questionType;
@@ -12,10 +12,10 @@ public class QuestionDisplayDto {
     private QuestionStatus status;
 
 
-    public QuestionDisplayDto() {
+    public QuestionDisplay() {
     }
 
-    public QuestionDisplayDto(Long questionId, String description, QuestionType questionType, DifficultyLevel difficultyLevel, QuestionStatus status) {
+    public QuestionDisplay(Long questionId, String description, QuestionType questionType, DifficultyLevel difficultyLevel, QuestionStatus status) {
         this.questionId = questionId;
         this.description = description;
         this.questionType = questionType;

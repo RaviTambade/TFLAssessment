@@ -25,16 +25,15 @@ public class CompleteQuestion {
     private String optionD;
     private String correctAnswer;
 
-    public CompleteQuestion
-
-
     // Getters and Setters
-    public Long getId() {
-        return id;
+    public Long getQuestionId() {
+        return questionId;
     }
-    public void setId(Long id) {
-        this.id = id;
+
+    public void setQuestionId(Long questionId) {
+        this.questionId = questionId;
     }
+
     public String getOptionA() {
         return optionA;
     }
@@ -98,7 +97,7 @@ public class CompleteQuestion {
         return status;
     }
 
-    public void setQuestionStatus(QuestionStatus status) {
+    public void setStatus(QuestionStatus status) {
         this.status = status;
     }
 

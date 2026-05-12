@@ -1,10 +1,10 @@
-package com.transflower.tflcomentor.ecm.dto;
+package com.transflower.tflcomentor.ecm.dto.request;
 
 import com.transflower.tflcomentor.ecm.entity.enums.DifficultyLevel;
 import com.transflower.tflcomentor.ecm.entity.enums.QuestionStatus;
 import com.transflower.tflcomentor.ecm.entity.enums.QuestionType;
 
-public class QuestionOptionsRequestDto {
+public class QuestionOptionsRequest {
     private long questionId;
     private String description;
     private QuestionType questionType;

@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.transflower.tflcomentor.skilltaxonomy.dto.response.ConceptQuestionCountDto;
-import com.transflower.tflcomentor.skilltaxonomy.dto.response.DifficultyQuestionCountDto;
+import com.transflower.tflcomentor.skilltaxonomy.dto.response.ConceptQuestionCount;
+import com.transflower.tflcomentor.skilltaxonomy.dto.response.DifficultyQuestionCount;
 import com.transflower.tflcomentor.skilltaxonomy.service.TechnologyService;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -23,12 +23,12 @@ public class TechnologyController {
     }
 
     @GetMapping("/concepts/question-count")
-    public List<ConceptQuestionCountDto> getAllConceptsCount() {
+    public List<ConceptQuestionCount> getAllConceptsCount() {
         return technologyService.getAllConceptsCount();
     }
 
     @GetMapping("/difficulty/question-count")
-    public List<DifficultyQuestionCountDto> getAllQuestionsByDifficulty(){
+    public List<DifficultyQuestionCount> getAllQuestionsByDifficulty(){
         return technologyService. getAllQuestionsByDifficulty();
      }
 }

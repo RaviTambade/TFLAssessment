@@ -1,13 +1,13 @@
 package com.transflower.tflcomentor.skilltaxonomy.dto.response;
 
-public class ConceptQuestionCountDto {
+public class ConceptQuestionCount {
     String concept;
     int question_count;
 
-    public ConceptQuestionCountDto() {
+    public ConceptQuestionCount() {
     }
 
-    public ConceptQuestionCountDto(String concept, int question_count) {
+    public ConceptQuestionCount(String concept, int question_count) {
         this.concept = concept;
         this.question_count = question_count;
     }
@@ -29,7 +29,7 @@ public class ConceptQuestionCountDto {
     }
 
     public String toString() {
-        return "ConceptQuestionCountDto{" +
+        return "ConceptQuestionCount{" +
                 "concept='" + concept + '\'' +
                 ", question_count=" + question_count +
                 '}';

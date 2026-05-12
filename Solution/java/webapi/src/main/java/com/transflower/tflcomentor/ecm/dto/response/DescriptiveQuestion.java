@@ -1,11 +1,14 @@
-package com.transflower.tflcomentor.ecm.dto;
+package com.transflower.tflcomentor.ecm.dto.response;
 
 import com.transflower.tflcomentor.ecm.entity.enums.QuestionStatus;
 import com.transflower.tflcomentor.ecm.entity.enums.QuestionType;
 
-public class QuestionTypeDto {
+public class DescriptiveQuestion {
+
+    
+
     private String description;
-    private String status;
+    private Long questionId;
     private String questionType;
 
     public String getDescription() {
@@ -14,12 +17,13 @@ public class QuestionTypeDto {
     public void setDescription(String description) {
         this.description = description;
     }
-    public String getStatus() {
-        return status;
+    public Long getQuestionId() {
+        return questionId;
     }
-    public void setStatus(QuestionStatus status) {
-        this.status = status.toString();
+    public void setQuestionId(Long questionId) {
+        this.questionId = questionId;
     }
+    
     public String getQuestionType() {
         return questionType;
     }

@@ -1,6 +1,6 @@
-package com.transflower.tflcomentor.ecm.dto;
+package com.transflower.tflcomentor.ecm.dto.request;
 
-public class ProjectAllocationRequestDto {
+public class ProjectAllocationRequest{
 
     private Long projectId;
     private Long studentId;

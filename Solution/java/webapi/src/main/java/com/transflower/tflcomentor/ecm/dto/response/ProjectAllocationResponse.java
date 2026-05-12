@@ -1,7 +1,7 @@
-package com.transflower.tflcomentor.ecm.dto;
+package com.transflower.tflcomentor.ecm.dto.response;
 import java.time.LocalDateTime;
 
-public class ProjectAllocationResponseDto {
+public class ProjectAllocationResponse {
 
     private Long projectId;
     private String projectName;    
