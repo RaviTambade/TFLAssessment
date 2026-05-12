@@ -77,6 +77,20 @@ return (
                     Question by difficulty
                     <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                   </Button>
+
+                  <Button variant="hero" size="lg" className="group" onClick={() =>
+                    navigate("/models/evaluationcontent/ProjectByMentee")}> 
+                    Project by Mentee
+                    <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                  </Button>
+                  <Button variant="hero" size="lg" className="group" onClick={() =>
+                    navigate("/models/evaluationcontent/ViewProjectInfo")}> 
+                    Project Info
+                    <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                  </Button>
+
+
+
                 </div>
               </CardContent>
             </div>
