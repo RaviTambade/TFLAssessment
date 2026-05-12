@@ -1,291 +1,402 @@
-
 import React, { useState } from "react";
-import { Card,CardContent } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import {
+  WEBAPI_DOTNET_URL,
+  WEBAPI_NODE_URL,
+  WEBAPI_JAVA_URL,
+} from "@/lib/utils";
 
-import {  WEBAPI_DOTNET_URL, WEBAPI_NODE_URL ,WEBAPI_JAVA_URL} from "@/lib/utils";
 import QuestionDto from "../assessmentOrchestrator/entities/QuestionDetails";
 
 const UpdateQuestion = () => {
+  const [questions, setQuestions] = useState<QuestionDto[]>([]);
+  const [editingId, setEditingId] = useState<number | null>(null);
+  const [editData, setEditData] = useState<Partial<QuestionDto>>({});
+  const [mode, setMode] = useState<"ALL" | "BY_ID" | null>(null);
+  const [inputId, setInputId] = useState<number | "">("");
+  const [loading, setLoading] = useState(false);
 
-    const [questions, setQuestions] = useState<QuestionDto[]>([]);
-    const [editingId, setEditingId] = useState<number | null>(null);
-    const [editData, setEditData] = useState<Partial<QuestionDto>>({});
-    const [mode, setMode] = useState<"ALL" | "BY_ID" | null>(null);
-    const [inputId, setInputId] = useState<number | "">("");
-    const [loading, setLoading] = useState(false);
+  // ================= FETCH ALL =================
+  const fetchQuestions = async () => {
+    setLoading(true);
 
-    const fetchQuestions = async () => {
-        setLoading(true);
-        try {
-            const res = await fetch(`${WEBAPI_JAVA_URL}/questions`);
-            if (!res.ok) throw new Error("Failed to fetch");
+    try {
+      const res = await fetch(`${WEBAPI_JAVA_URL}/questions`);
 
-            const data = await res.json();
-            const safeData = Array.isArray(data) ? data : [];
+      if (!res.ok) {
+        throw new Error("Failed to fetch questions");
+      }
 
-            setQuestions(safeData);
-        } 
-        catch (err) {
-            console.error(err);
-            alert("Failed to fetch questions");
-            setQuestions([]);
-        } 
-        finally {
-            setLoading(false);
+      const data = await res.json();
+
+      setQuestions(Array.isArray(data) ? data : []);
+    } catch (err) {
+      console.error(err);
+      alert("Failed to fetch questions");
+      setQuestions([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // ================= FETCH BY ID =================
+  const fetchById = async () => {
+    if (!inputId) {
+      alert("Please enter Question ID");
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      const res = await fetch(
+        `${WEBAPI_JAVA_URL}/questions/${inputId}`
+      );
+
+      if (!res.ok) {
+        throw new Error("Question not found");
+      }
+
+      const data = await res.json();
+
+      setQuestions(data ? [data] : []);
+    } catch (err) {
+      console.error(err);
+      alert("Question not found");
+      setQuestions([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // ================= HANDLE INPUT CHANGE =================
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    const { name, value } = e.target;
+
+    setEditData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  // ================= HANDLE SAVE =================
+  const handleSave = async (id: number) => {
+    try {
+      const originalQuestion = questions.find(
+        (q) => q.questionId === id
+      );
+
+      if (!originalQuestion) {
+        alert("Question not found");
+        return;
+      }
+
+      const updatePayload = {
+        description:
+          editData.description ?? originalQuestion.description,
+
+        questionType:
+          editData.questionType ?? originalQuestion.questionType,
+
+        difficultyLevel:
+          editData.difficultyLevel ??
+          originalQuestion.difficultyLevel,
+
+        status: editData.status ?? originalQuestion.status,
+      };
+
+      console.log("Update Payload:", updatePayload);
+
+      const res = await fetch(
+        `${WEBAPI_JAVA_URL}/questions/${id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(updatePayload),
         }
-    };
+      );
 
-    const fetchById = async () => {
-        if (!inputId) return alert("Enter ID");
+      if (!res.ok) {
+        const errorData = await res.json().catch(() => ({
+          message: "Unknown error",
+        }));
 
-        setLoading(true);
+        console.error("Backend Error:", errorData);
 
-        try {
-            const res = await fetch(`${WEBAPI_JAVA_URL}/questions/${inputId}`);
+        throw new Error(
+          errorData.message || `Update failed (${res.status})`
+        );
+      }
 
-            if (!res.ok) throw new Error("Not found");
+      alert("Question updated successfully");
 
-            const data = await res.json();
-            setQuestions(data ? [data] : []);
-        } 
-        catch (err) {
-            console.error(err);
-            alert("Question not found");
-            setQuestions([]);
-        } 
-        finally {
-            setLoading(false);
-        }
-    };
+      // Refresh data
+      if (mode === "ALL") {
+        await fetchQuestions();
+      } else if (mode === "BY_ID") {
+        await fetchById();
+      }
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+      // Reset edit mode
+      setEditingId(null);
+      setEditData({});
+    } catch (err) {
+      console.error(err);
 
-        const { name, value, type } = e.target;
+      alert(
+        "Update failed: " +
+          (err instanceof Error ? err.message : "Unknown error")
+      );
+    }
+  };
 
-        setEditData({...editData,[name]: type === "checkbox"? (e.target as HTMLInputElement).checked: value});
-    };
+  return (
+    <section className="bg-background w-full py-6">
+      <div className="w-full max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
+        {/* TITLE */}
+        <div className="text-center mb-8">
+          <h2 className="text-3xl font-bold">
+            Update{" "}
+            <span className="bg-gradient-primary bg-clip-text text-transparent">
+              Questions
+            </span>
+          </h2>
+        </div>
 
-    const handleSave = async (id: number) => {
-        try {
-            // Find the original question to get all fields
-            const originalQuestion = questions.find(q => q.questionId === id);
-            if (!originalQuestion) {
-                alert("Question not found");
-                return;
-            }
+        {/* BUTTONS */}
+        <div className="flex justify-center gap-4 mb-8 flex-wrap">
+          <Button
+            onClick={() => {
+              setMode("ALL");
+              fetchQuestions();
+            }}
+          >
+            Show All
+          </Button>
 
-            const updatePayload = {
-                description: editData.description !== undefined ? editData.description : originalQuestion.description,
-                questionType: editData.questionType !== undefined ? editData.questionType : originalQuestion.questionType,
-                difficultyLevel: editData.difficultyLevel !== undefined ? editData.difficultyLevel : originalQuestion.difficultyLevel,
-                status: editData.status !== undefined ? editData.status : originalQuestion.status,
-            };
+          <Button
+            onClick={() => {
+              setMode("BY_ID");
+              setQuestions([]);
+            }}
+          >
+            Update By ID
+          </Button>
+        </div>
 
-            console.log("Sending update payload:", updatePayload);
+        {/* FETCH BY ID */}
+        {mode === "BY_ID" && (
+          <div className="flex justify-center gap-2 mb-8 flex-wrap">
+            <input
+              type="number"
+              placeholder="Enter Question ID"
+              value={inputId}
+              onChange={(e) =>
+                setInputId(
+                  e.target.value ? Number(e.target.value) : ""
+                )
+              }
+              className="border px-3 py-2 rounded"
+            />
 
-            const res = await fetch(`${WEBAPI_JAVA_URL}/questions/${id}`, {
-                method: "PUT",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(updatePayload),
-            });
+            <Button onClick={fetchById}>Fetch</Button>
+          </div>
+        )}
 
-            if (!res.ok) {
-                const errorData = await res.json().catch(() => ({ message: "No error details" }));
-                console.error("Backend error response:", errorData);
-                throw new Error(errorData.message || "Update failed with status " + res.status);
-            }
+        {/* LOADING */}
+        {loading && (
+          <p className="text-center text-blue-500 mb-4">
+            Loading...
+          </p>
+        )}
 
-            alert("Updated successfully");
+        {/* COUNT */}
+        <p className="text-center mb-6 text-sm text-gray-600">
+          Total Questions: {questions.length}
+        </p>
 
-            
-            if (mode === "ALL") {
-                await fetchQuestions();
-            } else if (mode === "BY_ID") {
-                await fetchById();
-            }
+        {/* TABLE */}
+        {questions.length > 0 ? (
+          <div className="w-full overflow-x-auto">
+            <Card>
+              <CardContent className="bg-white text-black p-0">
+                <table className="w-full border text-sm">
+                  <thead className="bg-gray-200">
+                    <tr>
+                      <th className="px-4 py-3">ID</th>
+                      <th className="px-4 py-3">Description</th>
+                      <th className="px-4 py-3">Type</th>
+                      <th className="px-4 py-3">Difficulty</th>
+                      <th className="px-4 py-3">Status</th>
+                      <th className="px-4 py-3">Action</th>
+                    </tr>
+                  </thead>
 
-            setEditingId(null);
-            setEditData({});
-        } catch (err) {
-            console.error("🔴 Error:", err);
-            alert("❌ Update failed: " + (err instanceof Error ? err.message : "Unknown error"));
-        }
-    };
+                  <tbody>
+                    {questions.map((q) => (
+                      <tr
+                        key={q.questionId}
+                        className="border-t"
+                      >
+                        {/* ID */}
+                        <td className="px-4 py-3">
+                          {q.questionId}
+                        </td>
 
-    return (
-        <section className="bg-background w-full m-0 py-6">
-            <div className="w-full max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
+                        {/* DESCRIPTION */}
+                        <td className="px-4 py-3">
+                          {editingId === q.questionId ? (
+                            <input
+                              type="text"
+                              name="description"
+                              value={
+                                editData.description ??
+                                q.description
+                              }
+                              onChange={handleChange}
+                              className="border px-2 py-1 w-full rounded"
+                            />
+                          ) : (
+                            q.description
+                          )}
+                        </td>
 
-                {/* TITLE */}
-                <div className="text-center mb-8">
-                    <h2 className="text-3xl font-bold">
-                        Update{" "}
-                        <span className="bg-gradient-primary bg-clip-text text-transparent">
-                            Questions
-                        </span>
-                    </h2>
-                </div>
+                        {/* QUESTION TYPE */}
+                        <td className="px-4 py-3">
+                          {editingId === q.questionId ? (
+                            <select
+                              name="questionType"
+                              value={
+                                editData.questionType ??
+                                q.questionType
+                              }
+                              onChange={handleChange}
+                              className="border px-2 py-1 rounded"
+                            >
+                              <option value="MCQ">MCQ</option>
+                              <option value="PROBLEM_STATEMENT">
+                                PROBLEM_STATEMENT
+                              </option>
+                              <option value="HANDS_ON">
+                                HANDS_ON
+                              </option>
+                            </select>
+                          ) : (
+                            q.questionType
+                          )}
+                        </td>
 
-                {/* BUTTONS */}
-                <div className="flex justify-center gap-4 mb-8 flex-wrap">
-                    <Button onClick={() => {
-                        setMode("ALL");
-                        fetchQuestions();
-                    }}>
-                        Show All
-                    </Button>
+                        {/* DIFFICULTY */}
+                        <td className="px-4 py-3">
+                          {editingId === q.questionId ? (
+                            <select
+                              name="difficultyLevel"
+                              value={
+                                editData.difficultyLevel ??
+                                q.difficultyLevel
+                              }
+                              onChange={handleChange}
+                              className="border px-2 py-1 rounded"
+                            >
+                              <option value="BEGINNER">
+                                BEGINNER
+                              </option>
+                              <option value="INTERMEDIATE">
+                                INTERMEDIATE
+                              </option>
+                              <option value="ADVANCE">
+                                ADVANCE
+                              </option>
+                            </select>
+                          ) : (
+                            q.difficultyLevel
+                          )}
+                        </td>
 
-                    <Button onClick={() => {
-                        setMode("BY_ID");
-                        setQuestions([]);
-                    }}>
-                        Update By ID
-                    </Button>
-                </div>
+                        {/* STATUS */}
+                        <td className="px-4 py-3">
+                          {editingId === q.questionId ? (
+                            <select
+                              name="status"
+                              value={
+                                editData.status ?? q.status
+                              }
+                              onChange={handleChange}
+                              className="border px-2 py-1 rounded"
+                            >
+                              <option value="DRAFT">
+                                DRAFT
+                              </option>
+                              <option value="APPROVED">
+                                APPROVED
+                              </option>
+                              <option value="REJECTED">
+                                REJECTED
+                              </option>
+                            </select>
+                          ) : (
+                            q.status
+                          )}
+                        </td>
 
-                {/* INPUT */}
-                {mode === "BY_ID" && (
-                    <div className="flex justify-center gap-2 mb-8 flex-wrap">
-                        <input
-                            type="number"
-                            placeholder="Enter Question ID"
-                            value={inputId}
-                            onChange={(e) =>
-                                setInputId(e.target.value ? Number(e.target.value) : "")
-                            }
-                            className="border px-3 py-2 rounded"
-                        />
-                        <Button onClick={fetchById}>Fetch</Button>
-                    </div>
-                )}
+                        {/* ACTION */}
+                        <td className="px-4 py-3">
+                          {editingId === q.questionId ? (
+                            <div className="flex gap-2">
+                              <Button
+                                size="sm"
+                                onClick={() =>
+                                  handleSave(q.questionId)
+                                }
+                              >
+                                Save
+                              </Button>
 
-                {/* LOADING */}
-                {loading && (
-                    <p className="text-center text-blue-500 mb-4">Loading...</p>
-                )}
-
-                {/* COUNT */}
-                <p className="text-center mb-6 text-sm text-gray-600">
-                    Total Questions: {questions.length}
-                </p>
-
-                {/* TABLE */}
-                {questions.length > 0 ? (
-                    <div className="w-full overflow-x-auto">
-                        <Card>
-                            <CardContent className="bg-white text-black p-0">
-                                <table className="w-full border text-sm">
-                                    <thead className="bg-gray-200">
-                                        <tr>
-                                            <th className="px-4 py-3 text-base font-semibold">ID</th>
-                                            <th className="px-4 py-3 text-base font-semibold">Description</th>
-                                            <th className="px-4 py-3 text-base font-semibold">Type</th>
-                                            <th className="px-4 py-3 text-base font-semibold">Difficulty</th>
-                                            <th className="px-4 py-3 text-base font-semibold">Status</th>
-                                            <th className="px-4 py-3 text-base font-semibold">Action</th>
-                                        </tr>
-                                    </thead>
-
-                                    <tbody>
-                                        {questions.map((q) => (
-                                            <tr key={q.questionId} className="border-t text-base">
-
-                                                <td className="px-4 py-3">{q.questionId}</td>
-
-                                                <td className="px-4 py-3">
-                                                    {editingId === q.questionId ? (
-                                                        <input
-                                                            name="description"
-                                                            value={editData.description ?? q.description}
-                                                            onChange={handleChange}
-                                                            className="border px-2 py-1 w-full text-base"
-                                                        />
-                                                    ) : (
-                                                        q.description
-                                                    )}
-                                                </td>
-
-                                                <td className="px-4 py-3 text-sm">
-                                                    {editingId === q.questionId ? (
-                                                        <select
-                                                            name="questionType"
-                                                            value={editData.questionType ?? q.questionType}
-                                                            onChange={handleChange}
-                                                            className="text-sm"
-                                                        >
-                                                            <option value="MCQ">MCQ</option>
-                                                            <option value="PROBLEM_STATEMENT">Problem</option>
-                                                            <option value="HANDS_ON">Hands On</option>
-                                                        </select>
-                                                    ) : q.questionType}
-                                                </td>
-
-                                                <td className="px-4 py-3 text-sm">
-                                                    {editingId === q.questionId ? (
-                                                        <select
-                                                            name="difficultyLevel"
-                                                            value={editData.difficultyLevel ?? q.difficultyLevel}
-                                                            onChange={handleChange}
-                                                            className="text-sm"
-                                                        >
-                                                            <option value="BEGINNER">BEGINNER</option>
-                                                            <option value="INTERMEDIATE">INTERMEDIATE</option>
-                                                            <option value="ADVANCE">ADVANCE</option>
-                                                        </select>
-                                                    ) : q.difficultyLevel}
-                                                </td>
-
-                                                <td className="px-2 py-2 text-center text-sm">
-                                                    {editingId === q.questionId ? (
-                                                        <select
-                                                            name="status"
-                                                            value={editData.status ?? q.status}
-                                                            onChange={handleChange}
-                                                            className="text-sm"
-                                                        >
-                                                            <option value="DRAFT">DRAFT</option>
-                                                            <option value="APPROVED">APPROVED</option>
-                                                            <option value="REJECTED">REJECTED</option>
-                                                        </select>
-                                                    ) : q.status}
-                                                </td>
-
-                                                <td className="px-2 py-2 text-center text-sm">
-                                                    {editingId === q.questionId ? (
-                                                        <div className="flex gap-1 justify-center">
-                                                            <Button onClick={() => handleSave(q.questionId)} size="sm" className="text-sm px-2 py-1 h-6">
-                                                                Save
-                                                            </Button>
-                                                            <Button onClick={() => setEditingId(null)} size="sm" className="text-sm px-2 py-1 h-6">
-                                                                Cancel
-                                                            </Button>
-                                                        </div>
-                                                    ) : (
-                                                        <Button onClick={() => {
-                                                            setEditingId(q.questionId);
-                                                            setEditData(q);
-                                                        }} size="sm" className="text-sm px-3 py-2 h-9">
-                                                            Edit
-                                                        </Button>
-                                                    )}
-                                                </td>
-
-                                            </tr>
-                                        ))}
-                                    </tbody>
-                                </table>
-                            </CardContent>
-                        </Card>
-                    </div>
-                ) : (
-                    <p className="text-center text-muted-foreground mt-6">
-                        No questions found
-                    </p>
-                )}
-            </div>
-        </section>
-    );
+                              <Button
+                                size="sm"
+                                variant="outline"
+                                onClick={() => {
+                                  setEditingId(null);
+                                  setEditData({});
+                                }}
+                              >
+                                Cancel
+                              </Button>
+                            </div>
+                          ) : (
+                            <Button
+                              size="sm"
+                              onClick={() => {
+                                setEditingId(q.questionId);
+                                setEditData(q);
+                              }}
+                            >
+                              Edit
+                            </Button>
+                          )}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </CardContent>
+            </Card>
+          </div>
+        ) : (
+          !loading && (
+            <p className="text-center text-muted-foreground mt-6">
+              No questions found
+            </p>
+          )
+        )}
+      </div>
+    </section>
+  );
 };
 
 export default UpdateQuestion;

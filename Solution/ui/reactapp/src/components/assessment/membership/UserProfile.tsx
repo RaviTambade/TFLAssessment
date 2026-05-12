@@ -243,7 +243,7 @@ const UserProfile = () => {
   const handleChange = (
     section: "personal" | "professional" | "academic",
     field: string,
-    value: any
+    value: unknown
   ) => {
 
     if (section === "personal") {
@@ -273,7 +273,7 @@ const UserProfile = () => {
   const updateSingleField = async (
     endpoint: string,
     field: string,
-    value: any
+    value: unknown
   ) => {
     try {
 
@@ -308,7 +308,7 @@ const UserProfile = () => {
       console.error("Update failed", error);
     }
   };
-  
+
   const onEditHandle = (field: string) => {
     setEditingField(field);
   };
@@ -758,7 +758,7 @@ const UserProfile = () => {
                         className="h-8 w-8 cursor-pointer"
                         alt="Edit Logo"
                       />
-                         <div className="flex justify-center mt-1">
+                      <div className="flex justify-center mt-1">
                         <Button onClick={() => updateSingleField("professional-info", "skills", professionalData.skills)}
                           variant="ghost"
                           className="flex items-center gap-2">
@@ -796,12 +796,12 @@ const UserProfile = () => {
                         className="h-8 w-8 cursor-pointer"
                         alt="Edit Logo"
                       />
-                        <div className="flex justify-center mt-1">
+                      <div className="flex justify-center mt-1">
                         <Button onClick={() => updateSingleField("academic-info", "stream_name", academicData.stream_name)}
                           variant="ghost"
                           className="flex items-center gap-2">
                           <Save size={18} /></Button>
-                          </div>
+                      </div>
                     </div>
 
                     <div className="flex items-center gap-4">

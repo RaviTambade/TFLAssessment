@@ -4,7 +4,7 @@ import App from './App.tsx'
 import './index.css'
 // import 'bootstrap/dist/css/bootstrap.min.css';
 
-let theElement = document.getElementById("root");
+const theElement = document.getElementById("root");
 createRoot(theElement).render(<App />);
 
 
