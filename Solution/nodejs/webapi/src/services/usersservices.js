@@ -37,20 +37,49 @@ class UsersServices {
     return filtered;
   }
 
-  updatePersonal(userId, data, callback) {
+  updateUserPersonalInformation(userId, data, callback) {
     const filteredData = this.filterFields(data);
-    this.repository.updatePersonal(userId, filteredData, callback);
+    this.repository.updateUserPersonalInformation(userId, filteredData, callback);
   }
 
-  updateProfessional(userId, data, callback) {
+  updateUserProfessionalInformation(userId, data, callback) {
     const filteredData = this.filterFields(data);
-    this.repository.updateProfessional(userId, filteredData, callback);
+    this.getUserProfessionalInformation(userId, (err, result) => {
+      if (err) return callback(err, null);
+      if (result) {
+        this.repository.updateUserProfessionalInformation(userId, filteredData, callback);
+      }
+      else {
+        this.insertUserProfessionalInformation(userId, filteredData, callback);
+      }
+    })
   }
 
-  updateAcademic(userId, data, callback) {
+  updateUserAcademicInformation(userId, data, callback) {
     const filteredData = this.filterFields(data);
-    this.repository.updateAcademic(userId, filteredData, callback);
+    this.getUserAcademicInformation(userId, (err, result) => {
+      if (err) return callback(err, null);
+      if (result) {
+        this.repository.updateUserAcademicInformation(userId, filteredData, callback);
+      }
+      else {
+
+        this.insertUserAcademicInformation(userId, filteredData, callback);
+      }
+    });
   }
+
+
+  insertUserProfessionalInformation(userId, data, callback) {
+    this.repository.insertUserProfessionalInformation(userId, data, callback);
+  }
+
+  insertUserAcademicInformation(userId, data, callback) {
+
+    this.repository.insertUserAcademicInformation(userId, data, callback);
+  }
+
+
 
   updateUserStatus(userId, status, callback) {
     const ALLOWED_STATUSES = ["ACTIVE", "INACTIVE", "BLOCKED"];

@@ -30,7 +30,7 @@ const UserActivityRoutes = require("./routers/useractivityroutes");
 const RolesRouter = require("./routers/rolesroutes");
 const UsersRoutes = require("./routers/usersroutes");
 
-
+//obj                      //class         //constructor
 const authRepository = new AuthRepository(connection);  
 const authService = new AuthService(authRepository);
 const authController = new AuthController(authService);
@@ -65,7 +65,8 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use("/api/auth/", authRoutes);
+app
+.use("/api/auth/", authRoutes);
 app.use("/api/roles/", rolesRoutes);
 app.use("/api/useractivity/", userActivityRoutes);
 app.use("/api/users", usersRoutes);

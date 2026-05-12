@@ -41,10 +41,7 @@ import ConceptByFramework from "@/components/assessment/skilltaxonomy/ConceptByF
 import QuestionByConceptId from "@/components/assessment/evaluationcontent/QuestionByConceptId";
 import Dashboard from "@/components/assessment/membership/dashboard";
 import DashboardSME from "@/components/assessment/membership/dashboardsme";
-// import EvaluationContentSme from "@/components/assessment/evaluationcontent/EvaluationContentSme";
-
-//import EvaluationContentSme from "@/components/assessment/evaluationcontent/EvaluationContents";
-
+import EvaluationContentSme from "@/components/assessment/evaluationcontent/EvaluationContentSme";
 import Question from "@/components/assessment/assessmentOrchestrator/applyAssessment";
 import RTUpdateQuestion from "@/components/assessment/evaluationcontent/RTUpdateQuestion";
 

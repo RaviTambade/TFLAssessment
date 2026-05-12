@@ -23,12 +23,12 @@ class UsersController {
     });
   }
 
-  updatePersonal(req, res) {
+  updateUserPersonalInformation(req, res) {
     const userId = req.params.userId;
     const data = req.body;
     const responseGenerator = new ResponseGenerator();
 
-    this.service.updatePersonal(userId, data, (err, result) => {
+    this.service.updateUserPersonalInformation(userId, data, (err, result) => {
       console.log(err);
       responseGenerator.generateResponse(
         res,
@@ -40,9 +40,9 @@ class UsersController {
     });
   }
 
-  updateProfessional(req, res) {
+  updateUserProfessionalInformation(req, res) {
     const responseGenerator = new ResponseGenerator();
-    const result = this.service.updateProfessional(
+    const result = this.service.updateUserProfessionalInformation(
       req.params.userId,
       req.body,
       (err, result) => {
@@ -57,9 +57,9 @@ class UsersController {
     );
   }
 
-  updateAcademic(req, res) {
+  updateUserAcademicInformation(req, res) {
     const responseGenerator = new ResponseGenerator();
-    const result = this.service.updateAcademic(
+    const result = this.service.updateUserAcademicInformation(
       req.params.userId,
       req.body,
       (err, result) => {
