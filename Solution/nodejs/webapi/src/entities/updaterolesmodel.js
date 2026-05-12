@@ -1,3 +1,4 @@
+
 class RolesModel {
   constructor(userId, roleIds) {
     this.userId = userId;
