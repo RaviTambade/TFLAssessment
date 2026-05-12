@@ -41,7 +41,11 @@ import ConceptByFramework from "@/components/assessment/skilltaxonomy/ConceptByF
 import QuestionByConceptId from "@/components/assessment/evaluationcontent/QuestionByConceptId";
 import Dashboard from "@/components/assessment/membership/dashboard";
 import DashboardSME from "@/components/assessment/membership/dashboardsme";
+<<<<<<< HEAD
+//import EvaluationContentSme from "@/components/assessment/evaluationcontent/EvaluationContents";
+=======
 import EvaluationContentSme from "@/components/assessment/evaluationcontent/EvaluationContentSme";
+>>>>>>> e28c375f2fc03ec323ecdcbfbc6af291fba192b5
 import Question from "@/components/assessment/assessmentOrchestrator/applyAssessment";
 
 
@@ -97,7 +101,6 @@ function AppRoutes() {
           <Route path="evaluationcontent/reviewquestion" element={<MentorReviewQuestion />} />
           <Route index element={<Assessment />} />
           <Route path="evaluationcontent/viewprojectinfo" element={<ViewProjectInfo />} />
-          <Route path="evaluationcontent/sme" element={<EvaluationContentSme />} />
           <Route index element={<Assessment />} />
           <Route path="upcoming-assessment" element={<UpcomingAssessment />} />
           <Route path="create-test" element={<SMECreateTest />} />
