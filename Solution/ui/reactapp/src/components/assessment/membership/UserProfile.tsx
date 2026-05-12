@@ -22,6 +22,8 @@ interface PersonalDetails {
   contact: string;
   date_of_birth: string;
   address: string;
+  gender: string;
+  pincode: string;
 }
 
 interface ProfessionalDetails {
@@ -255,20 +257,17 @@ const UserProfile = () => {
     }
 
     if (section === "professional") {
-      setProfessionalData((prev) =>
-        prev
-          ? { ...prev, [field]: value }
-          : null
-      );
+      setProfessionalData((prev) => (
+        { ...prev, [field]: value }
+
+      ));
     }
 
     if (section === "academic") {
-      setAcademicData((prev) =>
-        prev
-          ? { ...prev, [field]: value }
-          : null
-      );
-    }
+      setAcademicData((prev) => (
+        { ...prev, [field]: value }
+      ));
+    };
   };
   const updateSingleField = async (
     endpoint: string,
@@ -308,7 +307,7 @@ const UserProfile = () => {
       console.error("Update failed", error);
     }
   };
-  
+
   const onEditHandle = (field: string) => {
     setEditingField(field);
   };
@@ -505,32 +504,7 @@ const UserProfile = () => {
                               className="flex items-center gap-2">
                               <Save size={18} /></Button></div>                        </div>
 
-                        <div className="flex items-center gap-4">
-                          <div className="w-32">
-                            <p className="font-bold">Contact</p>
-                          </div>
 
-                          <Input
-                            type="text"
-                            value={personalData?.contact || ""}
-                            className="flex-1"
-                            disabled={editingField !== "Contact"}
-                            onChange={(e) =>
-                              handleChange(
-                                "personal",
-                                "contact",
-                                e.target.value
-                              )
-                            }
-                          />
-                          {/* 
-                          <img
-                            src="/editlogo.png"
-                            onClick={() => onEditHandle("Contact")}
-                            className="h-8 w-8 cursor-pointer"
-                            alt="Edit Logo"
-                          /> */}
-                        </div>
 
                         <div className="flex items-center gap-4">
                           <div className="w-32">
@@ -564,6 +538,155 @@ const UserProfile = () => {
                               <Save size={18} /></Button></div>                        </div>
 
 
+
+                        <div className="flex items-center gap-4">
+                          <div className="w-32">
+                            <p className="font-bold">Address</p>
+                          </div>
+
+                          <Input
+                            type="text"
+                            value={personalData?.address || ""}
+                            className="flex-1"
+                            disabled={editingField !== "address"}
+                            onChange={(e) =>
+                              handleChange(
+                                "personal",
+                                "address",
+                                e.target.value
+                              )
+                            }
+                          />
+
+                          <img
+                            src="/editlogo.png"
+                            onClick={() => onEditHandle("address")}
+                            className="h-8 w-8 cursor-pointer"
+                            alt="Edit Logo"
+                          />
+                          <div className="flex justify-center mt-1">
+                            <Button onClick={() => updateSingleField("personal-info", "address", personalData.address)}
+                              variant="ghost"
+                              className="flex items-center gap-2">
+                              <Save size={18} /></Button></div>                        </div>
+
+
+                        <div className="flex items-center gap-4">
+                          <div className="w-32">
+                            <p className="font-bold">Pincode</p>
+                          </div>
+
+                          <Input
+                            type="text"
+                            value={personalData?.pincode || ""}
+                            className="flex-1"
+                            disabled={editingField !== "pincode"}
+                            onChange={(e) =>
+                              handleChange(
+                                "personal",
+                                "pincode",
+                                e.target.value
+                              )
+                            }
+                          />
+
+                          <img
+                            src="/editlogo.png"
+                            onClick={() => onEditHandle("pincode")}
+                            className="h-8 w-8 cursor-pointer"
+                            alt="Edit Logo"
+                          />
+                          <div className="flex justify-center mt-1">
+                            <Button onClick={() => updateSingleField("personal-info", "pincode", personalData.pincode)}
+                              variant="ghost"
+                              className="flex items-center gap-2">
+                              <Save size={18} /></Button></div>                        </div>
+
+                        <div className="flex items-center gap-4">
+                          <div className="w-32">
+                            <p className="font-bold">Gender</p>
+                          </div>
+
+                          <div className="flex flex-1 items-center gap-6">
+
+                            <label className="flex items-center gap-2">
+                              <Input
+                                type="radio"
+                                name="gender"
+                                value="MALE"
+                                checked={personalData?.gender === "MALE"}
+                                disabled={editingField !== "gender"}
+                                onChange={(e) =>
+                                  handleChange(
+                                    "personal",
+                                    "gender",
+                                    e.target.value
+                                  )
+                                }
+                              />
+                              Male
+                            </label>
+
+                            <label className="flex items-center gap-2">
+                              <Input
+                                type="radio"
+                                name="gender"
+                                value="FEMALE"
+                                checked={personalData?.gender === "FEMALE"}
+                                disabled={editingField !== "gender"}
+                                onChange={(e) =>
+                                  handleChange(
+                                    "personal",
+                                    "gender",
+                                    e.target.value
+                                  )
+                                }
+                              />
+                              Female
+                            </label>
+                          </div>
+                          <img
+                            src="/editlogo.png"
+                            onClick={() => onEditHandle("gender")}
+                            className="h-8 w-8 cursor-pointer"
+                            alt="Edit Logo"
+                          />
+
+                          <div className="flex justify-center mt-1">
+                            <Button onClick={() => updateSingleField("personal-info", "gender", personalData.gender)}
+                              variant="ghost"
+                              className="flex items-center gap-2">
+                              <Save size={18} /></Button>
+                          </div>
+                        </div>
+
+
+                        <div className="flex items-center gap-4">
+                          <div className="w-32">
+                            <p className="font-bold">Contact</p>
+                          </div>
+
+                          <Input
+                            type="text"
+                            value={personalData?.contact || ""}
+                            className="flex-1"
+                            disabled={editingField !== "Contact"}
+                            onChange={(e) =>
+                              handleChange(
+                                "personal",
+                                "contact",
+                                e.target.value
+                              )
+                            }
+                          />
+                          {/* 
+                          <img
+                            src="/editlogo.png"
+                            onClick={() => onEditHandle("Contact")}
+                            className="h-8 w-8 cursor-pointer"
+                            alt="Edit Logo"
+                          /> */}
+                        </div>
                       </>
                     )}
                   </div>
@@ -758,7 +881,7 @@ const UserProfile = () => {
                         className="h-8 w-8 cursor-pointer"
                         alt="Edit Logo"
                       />
-                         <div className="flex justify-center mt-1">
+                      <div className="flex justify-center mt-1">
                         <Button onClick={() => updateSingleField("professional-info", "skills", professionalData.skills)}
                           variant="ghost"
                           className="flex items-center gap-2">
@@ -796,12 +919,12 @@ const UserProfile = () => {
                         className="h-8 w-8 cursor-pointer"
                         alt="Edit Logo"
                       />
-                        <div className="flex justify-center mt-1">
+                      <div className="flex justify-center mt-1">
                         <Button onClick={() => updateSingleField("academic-info", "stream_name", academicData.stream_name)}
                           variant="ghost"
                           className="flex items-center gap-2">
                           <Save size={18} /></Button>
-                          </div>
+                      </div>
                     </div>
 
                     <div className="flex items-center gap-4">
@@ -830,7 +953,7 @@ const UserProfile = () => {
                         alt="Edit Logo"
                       />
                       <div className="flex justify-center mt-1">
-                        <Button onClick={() => updateSingleField("professional-info", "job_title", professionalData.job_title)}
+                        <Button onClick={() => updateSingleField("academic-info", "specialization", academicData.specialization)}
                           variant="ghost"
                           className="flex items-center gap-2">
                           <Save size={18} /></Button></div>                  </div>
@@ -981,5 +1104,6 @@ const UserProfile = () => {
     </div>
   );
 };
+
 
 export default UserProfile;
