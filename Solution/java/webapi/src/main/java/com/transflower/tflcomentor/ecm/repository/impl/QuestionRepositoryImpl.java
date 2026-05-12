@@ -18,6 +18,7 @@ import com.transflower.tflcomentor.ecm.dto.QuestionDisplayDto;
 import com.transflower.tflcomentor.ecm.dto.QuestionOptionsRequestDto;
 import com.transflower.tflcomentor.ecm.dto.QuestionStatusDto;
 import com.transflower.tflcomentor.ecm.dto.QuestionTypeDto;
+import com.transflower.tflcomentor.ecm.entity.CompleteQuestion;
 import com.transflower.tflcomentor.ecm.entity.Question;
 import com.transflower.tflcomentor.ecm.entity.enums.DifficultyLevel;
 import com.transflower.tflcomentor.ecm.entity.enums.QuestionStatus;
@@ -141,9 +142,10 @@ public class QuestionRepositoryImpl implements QuestionRepository {
         }
     }
 
-    @Override
-    public Long insert(Question q) {
 
+
+    public void insertCompleteQuestion(CompleteQuestion  q){
+       
         Long questionId = null;
         String sql = "INSERT INTO questions(description, question_type, difficulty_level,  created_at,status, language, layer, framework, concept) VALUES (?, ?, ?, NOW(), 'DRAFT', ?, ?, ?, ?)";
         try (Connection connection = getConnection();
@@ -166,7 +168,59 @@ public class QuestionRepositoryImpl implements QuestionRepository {
         } catch (Exception e) {
             e.printStackTrace();
         }
+   
+        
+        String sql = "INSERT INTO mcq_options(option_a, option_b, option_c, option_d, correct_answer, question_id) VALUES (?, ?, ?, ?, ?, ?)";
 
+        try (Connection connection = getConnection(); 
+        PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setString(1, optionA);
+            statement.setString(2, optionB);
+            statement.setString(3, optionC);
+            statement.setString(4, optionD);
+            statement.setString(5, correctAnswer);
+            statement.setLong(6, question_id);
+
+            statement.executeUpdate();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+
+
+
+    }
+    @Override
+    public Long insert(Question q) {
+
+        Long questionId = null;
+
+        String sql = "INSERT INTO questions(description, question_type, difficulty_level,  created_at,status, language, layer, framework, concept) VALUES (?, ?, ?, NOW(), 'DRAFT', ?, ?, ?, ?)";
+        try (Connection connection = getConnection();
+        PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+
+            statement.setString(1, q.getDescription());
+            statement.setString(2, q.getQuestionType().toString());
+            statement.setString(3, q.getDifficultyLevel().toString());
+            statement.setString(4, q.getLanguage());
+            statement.setString(5, q.getLayer());
+            statement.setString(6, q.getFramework());
+            statement.setString(7, q.getConcept());
+
+            statement.executeUpdate();
+
+            ResultSet rs = statement.getGeneratedKeys();
+            if (rs.next()) {
+                questionId = rs.getLong(1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        
         return questionId;
     }
 
@@ -197,45 +251,7 @@ public class QuestionRepositoryImpl implements QuestionRepository {
         }
     }
 
-    // public List<Questions> getAllQuestions() {
-    //     List<Questions> list = new ArrayList<>();
-    //     String sql = "SELECT * FROM questions";
-    //     try (Connection conn = getConnection(); 
-    // Statement stmt = conn.createStatement(); 
-    // ResultSet rs = stmt.executeQuery(sql)) {
-    //         while (rs.next()) {
-    //             Questions q = new Questions();
-    //             q.setQuestionId(rs.getLong("question_id"));
-    //             q.setDescription(rs.getString("description"));
-    //             q.setQuestionType(rs.getString("question_type"));
-    //             q.setDifficultyLevel(rs.getString("difficulty_level"));
-    //             q.setStatus(rs.getString("status"));
-    //             list.add(q);
-    //         }
-    //     } catch (Exception e) {
-    //         e.printStackTrace();
-    //     }
-    //     return list;
-    // }
-    // @Override
-    // public List<QuestionResponse> getRecentQuestions() {
-    //     List<QuestionResponse> list = new ArrayList<>();
-    //     String sql = "SELECT * FROM questions where status='DRAFT' AND created_at >= NOW() - INTERVAL 2 DAY ORDER BY created_at DESC";
-    //     try (Connection connection = getConnection(); java.sql.Statement statement = connection.createStatement(); ResultSet rs = statement.executeQuery(sql)) {
-    //         while (rs.next()) {
-    //             QuestionResponse q = new QuestionResponse();
-    //             q.setQuestionId(rs.getLong("question_id"));
-    //             q.setDescription(rs.getString("description"));
-    //             q.setQuestionType(rs.getString("question_type"));
-    //             q.setDifficultyLevel(rs.getString("difficulty_level"));
-    //             q.setQuestionStatus(rs.getString("status"));
-    //             list.add(q);
-    //         }
-    //     } catch (Exception e) {
-    //         e.printStackTrace();
-    //     }
-    //     return list;
-    // }
+    
 
     @Override
     public QuestionOptionsRequestDto getQuestionDetails(Long question_id) {
@@ -480,3 +496,100 @@ public class QuestionRepositoryImpl implements QuestionRepository {
         return 0;
     }
 }
+
+
+/*
+
+@Override
+public Long insertQuestionWithOptions(
+        Question q,
+        String optionA,
+        String optionB,
+        String optionC,
+        String optionD,
+        String correctAnswer) {
+
+    Long questionId = null;
+
+    String questionSql = """
+        INSERT INTO questions(
+            description,
+            question_type,
+            difficulty_level,
+            created_at,
+            status,
+            language,
+            layer,
+            framework,
+            concept
+        )
+        VALUES (?, ?, ?, NOW(), 'DRAFT', ?, ?, ?, ?)
+        """;
+
+    String optionSql = """
+        INSERT INTO mcq_options(
+            option_a,
+            option_b,
+            option_c,
+            option_d,
+            correct_answer,
+            question_id
+        )
+        VALUES (?, ?, ?, ?, ?, ?)
+        """;
+
+    try (Connection connection = getConnection()) {
+
+        // Start Transaction
+        connection.setAutoCommit(false);
+
+        // Insert Question
+        try (PreparedStatement questionStmt =
+                     connection.prepareStatement(
+                             questionSql,
+                             Statement.RETURN_GENERATED_KEYS)) {
+
+            questionStmt.setString(1, q.getDescription());
+            questionStmt.setString(2, q.getQuestionType().toString());
+            questionStmt.setString(3, q.getDifficultyLevel().toString());
+            questionStmt.setString(4, q.getLanguage());
+            questionStmt.setString(5, q.getLayer());
+            questionStmt.setString(6, q.getFramework());
+            questionStmt.setString(7, q.getConcept());
+
+            questionStmt.executeUpdate();
+
+            ResultSet rs = questionStmt.getGeneratedKeys();
+
+            if (rs.next()) {
+                questionId = rs.getLong(1);
+            }
+        }
+
+        // Insert MCQ Options
+        try (PreparedStatement optionStmt =
+                     connection.prepareStatement(optionSql)) {
+
+            optionStmt.setString(1, optionA);
+            optionStmt.setString(2, optionB);
+            optionStmt.setString(3, optionC);
+            optionStmt.setString(4, optionD);
+            optionStmt.setString(5, correctAnswer);
+            optionStmt.setLong(6, questionId);
+
+            optionStmt.executeUpdate();
+        }
+
+        // Commit Transaction
+        connection.commit();
+
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+
+    return questionId;
+}
+
+
+
+*/
