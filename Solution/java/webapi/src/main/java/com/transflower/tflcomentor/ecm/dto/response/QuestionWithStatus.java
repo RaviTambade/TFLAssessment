@@ -1,14 +1,14 @@
-package com.transflower.tflcomentor.ecm.dto;
+package com.transflower.tflcomentor.ecm.dto.response;
 
-public class QuestionStatusDto {
+public class QuestionWithStatus {
     private Long questionId;
     private String description;
     private String status;
 
-    public QuestionStatusDto() {
+    public QuestionWithStatus() {
     }
 
-    public QuestionStatusDto(Long questionId, String description, String status) {
+    public QuestionWithStatus(Long questionId, String description, String status) {
         this.questionId = questionId;
         this.description = description;
         this.status = status;

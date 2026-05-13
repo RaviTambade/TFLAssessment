@@ -15,10 +15,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.transflower.tflcomentor.ecm.dto.QuestionDisplayDto;
-import com.transflower.tflcomentor.ecm.dto.QuestionOptionsRequestDto;
-import com.transflower.tflcomentor.ecm.dto.QuestionStatusDto;
-import com.transflower.tflcomentor.ecm.dto.QuestionTypeDto;
+import com.transflower.tflcomentor.ecm.dto.response.QuestionDisplay;
+import com.transflower.tflcomentor.ecm.dto.request.QuestionOptionsRequest;
+import com.transflower.tflcomentor.ecm.dto.response.QuestionWithStatus;
+import com.transflower.tflcomentor.ecm.dto.response.DescriptiveQuestion;
+import com.transflower.tflcomentor.ecm.entity.CompleteQuestion;
 import com.transflower.tflcomentor.ecm.entity.Question;
 import com.transflower.tflcomentor.ecm.entity.enums.DifficultyLevel;
 import com.transflower.tflcomentor.ecm.entity.enums.QuestionStatus;
@@ -37,13 +38,13 @@ public class QuestionController {
     
     @GetMapping("/{question_id}")
     // http://localhost:8080/api/questions/1
-    public QuestionDisplayDto getQuestionById(@PathVariable("question_id") long question_id) {
+    public QuestionDisplay getQuestionById(@PathVariable("question_id") long question_id) {
         return service.getQuestionById(question_id);
     }
 
     @GetMapping
     // http://localhost:8080/api/questions
-    public List<QuestionDisplayDto> getAllQuestions() {
+    public List<QuestionDisplay> getAllQuestions() {
         return service.getAllQuestions();
     }
 
@@ -53,21 +54,21 @@ public class QuestionController {
         return service.getQuestionsByDifficulty(level);
     }
 
-    @PostMapping
-    // http://localhost:8080/api/questions
-    public Long create(@RequestBody QuestionOptionsRequestDto dto) {
-        return service.createQuestionWithOptions(dto);
-    }
+    // @PostMapping
+    // // http://localhost:8080/api/questions
+    // public Long create(@RequestBody QuestionOptionsRequest dto) {
+    //     return service.createQuestionWithOptions(dto);
+    // }
 
     @GetMapping("/drafts")
-    // http://localhost:8080/api/questions/drafts
-    public List<QuestionStatusDto> getDraft() {
+    // http://localhost:8080/api/questions/drafts`
+    public List<QuestionWithStatus> getDraft() {
         return service.getQuestions(QuestionStatus.DRAFT);
     }
 
     @PatchMapping("/{question_id}/status")
     // http://localhost:8080/api/questions/1/status?status=APPROVED
-    public String updateQuestionStatus(@PathVariable Long question_id, @RequestParam QuestionStatus status) {
+        public String updateQuestionStatus(@PathVariable Long question_id, @RequestParam QuestionStatus status) {
         service.updateQuestionStatus(question_id, status);
         return "Question status updated successfully";
     }
@@ -87,21 +88,21 @@ public class QuestionController {
 
     @GetMapping("/{question_id}/details")
     //http://localhost:8080/api/questions/1/details
-    public QuestionOptionsRequestDto getQuestionDetailsById(@PathVariable Long question_id) {
+    public QuestionOptionsRequest getQuestionDetailsById(@PathVariable Long question_id) {
         return service.getQuestionDetails(question_id);
     }
 
     @PutMapping("/{question_id}")
     // http://localhost:8080/api/questions/1
-    public String updateQuestion(@PathVariable Long question_id, @RequestBody QuestionOptionsRequestDto dto) {
-        service.updateQuestionById(question_id, dto);
+    public String updateQuestionDetailsById(@PathVariable Long question_id, @RequestBody QuestionOptionsRequest dto) {
+        service.updateQuestionDetailsById(question_id, dto);
         return "Question Updated Successfully";
     }
 
-    @GetMapping("/status/{questionStatus}")
+    @GetMapping("/status/{status}")
     // http://localhost:8080/api/questions/status/APPROVED
-    public List<QuestionStatusDto> getQuestionsByStatus(@PathVariable QuestionStatus questionStatus) {
-        return service.getQuestions(questionStatus);
+    public List<QuestionWithStatus> getQuestionsByStatus(@PathVariable QuestionStatus status) {
+        return service.getQuestions(status);
     }
 
     @GetMapping("/concepts/{conceptId}/questions")
@@ -119,8 +120,14 @@ public class QuestionController {
 
     @GetMapping("/type/{questionType}")
     // http://localhost:8080/api/questions/type/MCQ
-    public List<QuestionTypeDto> getQuestionsByType(@PathVariable QuestionType questionType) {
-        return service.getQuestionsByType(questionType);
+    public List<DescriptiveQuestion> getDescriptiveQuestion(@PathVariable QuestionType questionType) {
+        return service.getDescriptiveQuestion(questionType);
     }
 
+    @PostMapping("/complete")
+    // http://localhost:8080/api/questions/complete
+    public String insertCompleteQuestion(@RequestBody CompleteQuestion question) {
+        service.insertCompleteQuestion(question);
+        return "Complete Question Inserted Successfully";
+    }
 }

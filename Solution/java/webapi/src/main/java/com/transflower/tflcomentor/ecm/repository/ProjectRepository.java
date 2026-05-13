@@ -2,7 +2,7 @@ package com.transflower.tflcomentor.ecm.repository;
 
 import java.util.List;
 
-import com.transflower.tflcomentor.ecm.dto.ProjectAllocationResponseDto;
+import com.transflower.tflcomentor.ecm.dto.response.ProjectAllocationResponse;
 import com.transflower.tflcomentor.ecm.entity.Project;
 import com.transflower.tflcomentor.ecm.entity.ProjectAllocation;
 
@@ -15,9 +15,9 @@ public interface ProjectRepository {
 
     boolean removeMember(Long projectId, Long studentId);
 
-    List<ProjectAllocationResponseDto> getStudentByProjectId(Long projectId);
+    List<ProjectAllocationResponse> getStudentByProjectId(Long projectId);
 
-    List<ProjectAllocationResponseDto> getProjectAllocationDetails();
+    List<ProjectAllocationResponse> getProjectAllocationDetails();
     List<Project> getProjectByStudentId(Long studentId);
-    List<ProjectAllocationResponseDto> getProjectMember(Long projectId);
+    List<ProjectAllocationResponse> getProjectMember(Long projectId);
 }

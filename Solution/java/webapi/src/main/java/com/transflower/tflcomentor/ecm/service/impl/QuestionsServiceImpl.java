@@ -6,10 +6,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.transflower.tflcomentor.ecm.dto.QuestionDisplayDto;
-import com.transflower.tflcomentor.ecm.dto.QuestionOptionsRequestDto;
-import com.transflower.tflcomentor.ecm.dto.QuestionStatusDto;
-import com.transflower.tflcomentor.ecm.dto.QuestionTypeDto;
+import com.transflower.tflcomentor.ecm.dto.response.QuestionDisplay;
+import com.transflower.tflcomentor.ecm.dto.request.QuestionOptionsRequest;
+import com.transflower.tflcomentor.ecm.dto.response.QuestionWithStatus;
+import com.transflower.tflcomentor.ecm.dto.response.DescriptiveQuestion;
+import com.transflower.tflcomentor.ecm.entity.CompleteQuestion;
 import com.transflower.tflcomentor.ecm.entity.Question;
 import com.transflower.tflcomentor.ecm.entity.enums.DifficultyLevel;
 import com.transflower.tflcomentor.ecm.entity.enums.QuestionStatus;
@@ -23,45 +24,41 @@ public class QuestionsServiceImpl implements QuestionService {
     @Autowired
     private QuestionRepository repository;
 
-    @Override
-    public Long insertQuestion(Question question) {
-        return repository.insert(question);
-    }
+
+    // @Override
+    // public Long createQuestionWithOptions(QuestionOptionsRequest dto) {
+
+    //     Question question = new Question();
+    //     question.setDescription(dto.getDescription());
+    //     question.setQuestionType(dto.getQuestionType());
+    //     question.setDifficultyLevel(dto.getDifficultyLevel());
+    //     question.setQuestionStatus(dto.getStatus());
+    //     question.setLanguage(dto.getLanguage());
+    //     question.setLayer(dto.getLayer());
+    //     question.setFramework(dto.getFramework());
+    //     question.setConcept(dto.getConcept());
+    //     Long questionId = repository.insert(question);
+    //     if (dto.getQuestionType() == QuestionType.MCQ) {
+
+    //         repository.insertMcqOptions(
+    //                 questionId,
+    //                 dto.getOptionA(),
+    //                 dto.getOptionB(),
+    //                 dto.getOptionC(),
+    //                 dto.getOptionD(),
+    //                 dto.getCorrectAnswer()
+    //         );
+    //     }
+    //     return questionId;
+    // }
 
     @Override
-    public Long createQuestionWithOptions(QuestionOptionsRequestDto dto) {
-
-        Question question = new Question();
-        question.setDescription(dto.getDescription());
-        question.setQuestionType(dto.getQuestionType());
-        question.setDifficultyLevel(dto.getDifficultyLevel());
-        question.setQuestionStatus(dto.getStatus());
-        question.setLanguage(dto.getLanguage());
-        question.setLayer(dto.getLayer());
-        question.setFramework(dto.getFramework());
-        question.setConcept(dto.getConcept());
-        Long questionId = repository.insert(question);
-        if (dto.getQuestionType() == QuestionType.MCQ) {
-
-            repository.insertMcqOptions(
-                    questionId,
-                    dto.getOptionA(),
-                    dto.getOptionB(),
-                    dto.getOptionC(),
-                    dto.getOptionD(),
-                    dto.getCorrectAnswer()
-            );
-        }
-        return questionId;
-    }
-
-    @Override
-    public QuestionDisplayDto getQuestionById(long question_id) {
+    public QuestionDisplay getQuestionById(long question_id) {
         return repository.getQuestionById(question_id);
     }
 
     @Override
-    public List<QuestionDisplayDto> getAllQuestions() {
+    public List<QuestionDisplay> getAllQuestions() {
         return repository.getAllQuestions();
     }
 
@@ -71,8 +68,8 @@ public class QuestionsServiceImpl implements QuestionService {
     }
 
     @Override
-    public void updateQuestionById(Long questionId, QuestionOptionsRequestDto dto) {
-        repository.updateQuestionById(questionId, dto);
+    public void updateQuestionDetailsById(Long questionId, QuestionOptionsRequest dto) {
+        repository.updateQuestionDetailsById(questionId, dto);
     }
 
     @Override
@@ -81,17 +78,17 @@ public class QuestionsServiceImpl implements QuestionService {
     }
 
     @Override
-    public QuestionOptionsRequestDto getQuestionDetails(Long questionId) {
+    public QuestionOptionsRequest getQuestionDetails(Long questionId) {
         return repository.getQuestionDetails(questionId);
     }
 
     @Override
-    public List<QuestionTypeDto> getQuestionsByType(QuestionType questionType) {
-        return repository.getQuestionsByType(questionType);
+    public List<DescriptiveQuestion> getDescriptiveQuestion(QuestionType questionType) {
+        return repository.getDescriptiveQuestion(questionType);
     }
 
     @Override
-    public List<QuestionStatusDto> getQuestions(QuestionStatus status) {
+    public List<QuestionWithStatus> getQuestions(QuestionStatus status) {
         return repository.getQuestions(status);
     }
 
@@ -113,5 +110,9 @@ public class QuestionsServiceImpl implements QuestionService {
     @Override
     public int getQuestionCountByConcept(String concept) {
         return repository.getQuestionCountByConcept(concept);
+    }
+    @Override
+    public void insertCompleteQuestion(CompleteQuestion q) {
+        repository.insertCompleteQuestion(q);
     }
 }

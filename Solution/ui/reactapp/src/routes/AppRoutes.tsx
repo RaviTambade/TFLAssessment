@@ -43,6 +43,7 @@ import Dashboard from "@/components/assessment/membership/dashboard";
 import DashboardSME from "@/components/assessment/membership/dashboardsme";
 import EvaluationContentSme from "@/components/assessment/evaluationcontent/EvaluationContentSme";
 import Question from "@/components/assessment/assessmentOrchestrator/applyAssessment";
+import RTUpdateQuestion from "@/components/assessment/evaluationcontent/RTUpdateQuestion";
 
 
 function AppRoutes() {
@@ -87,6 +88,11 @@ function AppRoutes() {
 
           {/* Default route - shows main assessment */}
 
+
+            <Route
+  path="evaluationcontent/updatequestion/:id"
+  element={<RTUpdateQuestion />}
+/>
           <Route path="evaluationcontent/updatequestion" element={<UpdateQuestion />} />
           <Route path="evaluationcontent/questionbyconcept" element={<QuestionsByConcept />} />
           <Route path="evaluationcontent/viewquestion" element={<QuestionPage />} />
@@ -97,6 +103,7 @@ function AppRoutes() {
           <Route path="evaluationcontent/reviewquestion" element={<MentorReviewQuestion />} />
           <Route index element={<Assessment />} />
           <Route path="evaluationcontent/viewprojectinfo" element={<ViewProjectInfo />} />
+          {/* <Route path="evaluationcontent/sme" element={<EvaluationContentSme />} /> */}
           <Route index element={<Assessment />} />
           <Route path="upcoming-assessment" element={<UpcomingAssessment />} />
           <Route path="create-test" element={<SMECreateTest />} />

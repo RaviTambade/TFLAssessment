@@ -2,11 +2,11 @@ package com.transflower.tflcomentor.skilltaxonomy.repository;
 
 import java.util.List;
 
-import com.transflower.tflcomentor.skilltaxonomy.dto.response.ConceptQuestionCountDto;
-import com.transflower.tflcomentor.skilltaxonomy.dto.response.DifficultyQuestionCountDto;
+import com.transflower.tflcomentor.skilltaxonomy.dto.response.ConceptQuestionCount;
+import com.transflower.tflcomentor.skilltaxonomy.dto.response.DifficultyQuestionCount;
 
 public interface TechnologyRepository {
     
-    List<ConceptQuestionCountDto> getAllConceptsCount();
-    List<DifficultyQuestionCountDto> getAllQuestionsByDifficulty();
+    List<ConceptQuestionCount> getAllConceptsCount();
+    List<DifficultyQuestionCount> getAllQuestionsByDifficulty();
 }

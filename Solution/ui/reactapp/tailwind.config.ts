@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import tailwindcssAnimate from "tailwindcss-animate";
 
 export default {
 	darkMode: ["class"],
@@ -19,10 +20,10 @@ export default {
 		},
 		extend: {
 			colors: {
-				 "brand-red": "#ef4444",
-                 "brand-orange": "#f97316",
-                 "brand-dark": "#1f2937",
-                 "brand-light": "#fff7ed",
+				"brand-red": "#ef4444",
+				"brand-orange": "#f97316",
+				"brand-dark": "#1f2937",
+				"brand-light": "#fff7ed",
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
 				ring: 'hsl(var(--ring))',
@@ -110,7 +111,7 @@ export default {
 			}
 		}
 	},
-	plugins: [require("tailwindcss-animate")],
+	plugins: [tailwindcssAnimate],
 } satisfies Config;
 
 

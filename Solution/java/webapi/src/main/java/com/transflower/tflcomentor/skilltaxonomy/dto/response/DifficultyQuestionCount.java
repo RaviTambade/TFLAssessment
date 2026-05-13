@@ -1,11 +1,11 @@
 package com.transflower.tflcomentor.skilltaxonomy.dto.response;
 
-public class DifficultyQuestionCountDto {
+public class DifficultyQuestionCount {
    
     private int count;
     private String difficulty;
 
-    public DifficultyQuestionCountDto(String difficulty,int count) {
+    public DifficultyQuestionCount(String difficulty,int count) {
         this.count = count;
         this.difficulty = difficulty;
     }

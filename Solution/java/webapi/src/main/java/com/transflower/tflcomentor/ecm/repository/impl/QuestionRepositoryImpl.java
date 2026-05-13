@@ -14,16 +14,18 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import com.transflower.tflcomentor.configuration.DBConfig;
-import com.transflower.tflcomentor.ecm.dto.QuestionDisplayDto;
-import com.transflower.tflcomentor.ecm.dto.QuestionOptionsRequestDto;
-import com.transflower.tflcomentor.ecm.dto.QuestionStatusDto;
-import com.transflower.tflcomentor.ecm.dto.QuestionTypeDto;
+import com.transflower.tflcomentor.ecm.dto.response.QuestionDisplay;
+import com.transflower.tflcomentor.ecm.dto.request.QuestionOptionsRequest;
+import com.transflower.tflcomentor.ecm.dto.response.QuestionWithStatus;
+import com.transflower.tflcomentor.ecm.dto.response.DescriptiveQuestion;
 import com.transflower.tflcomentor.ecm.entity.CompleteQuestion;
 import com.transflower.tflcomentor.ecm.entity.Question;
+import com.transflower.tflcomentor.ecm.entity.CompleteQuestion;
 import com.transflower.tflcomentor.ecm.entity.enums.DifficultyLevel;
 import com.transflower.tflcomentor.ecm.entity.enums.QuestionStatus;
 import com.transflower.tflcomentor.ecm.entity.enums.QuestionType;
 import com.transflower.tflcomentor.ecm.repository.QuestionRepository;
+import com.transflower.tflcomentor.ecm.dto.response.DescriptiveQuestion;
 
 
 @Repository
@@ -34,7 +36,7 @@ public class QuestionRepositoryImpl implements QuestionRepository {
     }
 
     @Override
-    public QuestionDisplayDto getQuestionById(long question_id) {
+    public QuestionDisplay getQuestionById(long question_id) {
 
         try (Connection connection = getConnection()) {
             String sql = "SELECT * FROM questions WHERE question_id = ?";
@@ -47,7 +49,7 @@ public class QuestionRepositoryImpl implements QuestionRepository {
                 QuestionType questionType = QuestionType.valueOf(rs.getString("question_type"));
                 String difficultyLevel = rs.getString("difficulty_level");
                 String status = rs.getString("status");
-                return new QuestionDisplayDto(id, description, questionType, DifficultyLevel.valueOf(difficultyLevel), QuestionStatus.valueOf(status));
+                return new QuestionDisplay(id, description, questionType, DifficultyLevel.valueOf(difficultyLevel), QuestionStatus.valueOf(status));
             }
 
         } catch (Exception e) {
@@ -57,14 +59,14 @@ public class QuestionRepositoryImpl implements QuestionRepository {
     }
 
     @Override
-    public List<QuestionDisplayDto> getAllQuestions() {
-        List<QuestionDisplayDto> list = new ArrayList<>();
+    public List<QuestionDisplay> getAllQuestions() {
+        List<QuestionDisplay> list = new ArrayList<>();
         try (Connection connection = getConnection()) {
             String query = "SELECT * FROM questions";
             Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery(query);
             while (rs.next()) {
-                QuestionDisplayDto q = new QuestionDisplayDto(
+                QuestionDisplay q = new QuestionDisplay(
                         rs.getLong("question_id"),
                         rs.getString("description"),
                         QuestionType.valueOf(rs.getString("question_type")),
@@ -110,152 +112,95 @@ public class QuestionRepositoryImpl implements QuestionRepository {
     }
 
     @Override
-    public List<QuestionTypeDto> getQuestionsByType(QuestionType questionType) {
+public List<DescriptiveQuestion> getDescriptiveQuestion(QuestionType questionType) {
 
-        String sql = """
-            SELECT question_id, question_type, description, difficulty_level, status
-            FROM questions
-            WHERE question_type = ?
-            ORDER BY question_id
-        """;
+    String sql = """
+        SELECT question_id, question_type, description, difficulty_level
+        FROM questions
+        WHERE question_type = ?
+        ORDER BY question_id
+    """;
 
-        try (Connection connection = getConnection(); 
-        PreparedStatement statement = connection.prepareStatement(sql)) {
+    List<DescriptiveQuestion> results = new ArrayList<>();
 
-            statement.setString(1, questionType.toString());
+    try (Connection connection = getConnection();
+         PreparedStatement statement = connection.prepareStatement(sql)) {
 
-            try (ResultSet rs = statement.executeQuery()) {
-                List<QuestionTypeDto> results = new ArrayList<>();
+        statement.setString(1, questionType.toString());
 
-                while (rs.next()) {
-                    QuestionTypeDto question = new QuestionTypeDto();   
+        try (ResultSet rs = statement.executeQuery()) {
 
-                    question.setDescription(rs.getString("description"));
-                    question.setStatus(QuestionStatus.valueOf(rs.getString("status")));
-                    question.setQuestionType(QuestionType.valueOf(rs.getString("question_type")));
-                    results.add(question);
+            while (rs.next()) {
+
+                DescriptiveQuestion question = new DescriptiveQuestion();
+
+                question.setDescription(rs.getString("description"));
+                question.setQuestionType(QuestionType.valueOf(rs.getString("question_type")));
+
+                results.add(question);
+            }
+        }
+
+    } catch (Exception e) {
+        throw new RuntimeException("Failed to fetch questions by type", e);
+    }
+
+    return results;
+}
+
+
+    @Override
+    public void insertCompleteQuestion(CompleteQuestion q) {
+
+
+        String questionSql = "INSERT INTO questions(description, question_type, difficulty_level, created_at, status, language, layer, framework, concept) VALUES (?, ?, ?, NOW(), 'DRAFT', ?, ?, ?, ?)";
+        String optionSql = "INSERT INTO mcq_options(option_a, option_b, option_c, option_d, correct_answer, question_id) VALUES (?, ?, ?, ?, ?, ?)";
+
+        try (Connection connection = getConnection()) {
+            connection.setAutoCommit(false);
+            Long questionId = null;
+
+            try (PreparedStatement qStatement = connection.prepareStatement(questionSql, Statement.RETURN_GENERATED_KEYS)) {
+                qStatement.setString(1, q.getDescription());
+                qStatement.setString(2, q.getQuestionType().toString());
+                qStatement.setString(3, q.getDifficultyLevel().toString());
+                qStatement.setString(4, q.getLanguage());
+                qStatement.setString(5, q.getLayer());
+                qStatement.setString(6, q.getFramework());
+                qStatement.setString(7, q.getConcept());
+                qStatement.executeUpdate();
+                try (ResultSet rs = qStatement.getGeneratedKeys()) {
+                    if (rs.next()) {
+                        questionId = rs.getLong(1);
+                    }
                 }
-                return results;
             }
-        } catch (Exception e) {
-            throw new RuntimeException("Failed to fetch questions by type", e);
-        }
-    }
 
+            if (questionId != null && q.getQuestionType() == QuestionType.MCQ) {
 
-
-    public void insertCompleteQuestion(CompleteQuestion  q){
-       
-        Long questionId = null;
-        String sql = "INSERT INTO questions(description, question_type, difficulty_level,  created_at,status, language, layer, framework, concept) VALUES (?, ?, ?, NOW(), 'DRAFT', ?, ?, ?, ?)";
-        try (Connection connection = getConnection();
-        PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-
-            statement.setString(1, q.getDescription());
-            statement.setString(2, q.getQuestionType().toString());
-            statement.setString(3, q.getDifficultyLevel().toString());
-            statement.setString(4, q.getLanguage());
-            statement.setString(5, q.getLayer());
-            statement.setString(6, q.getFramework());
-            statement.setString(7, q.getConcept());
-
-            statement.executeUpdate();
-
-            ResultSet rs = statement.getGeneratedKeys();
-            if (rs.next()) {
-                questionId = rs.getLong(1);
+                try (PreparedStatement oStatement = connection.prepareStatement(optionSql)) {
+                    oStatement.setString(1, q.getOptionA());
+                    oStatement.setString(2, q.getOptionB());
+                    oStatement.setString(3, q.getOptionC());
+                    oStatement.setString(4, q.getOptionD());
+                    oStatement.setString(5, q.getCorrectAnswer());
+                    oStatement.setLong(6, questionId);
+                    oStatement.executeUpdate();
+                }
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-   
-        
-        String sql = "INSERT INTO mcq_options(option_a, option_b, option_c, option_d, correct_answer, question_id) VALUES (?, ?, ?, ?, ?, ?)";
 
-        try (Connection connection = getConnection(); 
-        PreparedStatement statement = connection.prepareStatement(sql)) {
+            connection.commit();
 
-            statement.setString(1, optionA);
-            statement.setString(2, optionB);
-            statement.setString(3, optionC);
-            statement.setString(4, optionD);
-            statement.setString(5, correctAnswer);
-            statement.setLong(6, question_id);
-
-            statement.executeUpdate();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-
-
-
-
-    }
-    @Override
-    public Long insert(Question q) {
-
-        Long questionId = null;
-
-        String sql = "INSERT INTO questions(description, question_type, difficulty_level,  created_at,status, language, layer, framework, concept) VALUES (?, ?, ?, NOW(), 'DRAFT', ?, ?, ?, ?)";
-        try (Connection connection = getConnection();
-        PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-
-            statement.setString(1, q.getDescription());
-            statement.setString(2, q.getQuestionType().toString());
-            statement.setString(3, q.getDifficultyLevel().toString());
-            statement.setString(4, q.getLanguage());
-            statement.setString(5, q.getLayer());
-            statement.setString(6, q.getFramework());
-            statement.setString(7, q.getConcept());
-
-            statement.executeUpdate();
-
-            ResultSet rs = statement.getGeneratedKeys();
-            if (rs.next()) {
-                questionId = rs.getLong(1);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        
-        return questionId;
-    }
-
-    @Override
-    public void insertMcqOptions(Long question_id,
-            String optionA,
-            String optionB,
-            String optionC,
-            String optionD,
-            String correctAnswer) {
-
-        String sql = "INSERT INTO mcq_options(option_a, option_b, option_c, option_d, correct_answer, question_id) VALUES (?, ?, ?, ?, ?, ?)";
-
-        try (Connection connection = getConnection(); 
-        PreparedStatement statement = connection.prepareStatement(sql)) {
-
-            statement.setString(1, optionA);
-            statement.setString(2, optionB);
-            statement.setString(3, optionC);
-            statement.setString(4, optionD);
-            statement.setString(5, correctAnswer);
-            statement.setLong(6, question_id);
-
-            statement.executeUpdate();
-
-        } catch (Exception e) {
+        } 
+        catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     
-
     @Override
-    public QuestionOptionsRequestDto getQuestionDetails(Long question_id) {
-        QuestionOptionsRequestDto dto = new QuestionOptionsRequestDto();
+    public QuestionOptionsRequest getQuestionDetails(Long question_id) {
+        QuestionOptionsRequest dto = new QuestionOptionsRequest();
         try (Connection connection = getConnection()) {
             String sql = "SELECT * FROM questions WHERE question_id=?";
             PreparedStatement statement = connection.prepareStatement(sql);
@@ -291,7 +236,7 @@ public class QuestionRepositoryImpl implements QuestionRepository {
     }
 
     @Override
-    public void updateQuestionById(Long question_id, QuestionOptionsRequestDto dto) {
+    public void updateQuestionDetailsById(Long question_id, QuestionOptionsRequest dto) {
 
         String sql = "UPDATE questions SET description=?, question_type=?, difficulty_level=?,status=? ,language=?, layer=?, framework=?, concept=? WHERE question_id=?";
 
@@ -333,8 +278,8 @@ public class QuestionRepositoryImpl implements QuestionRepository {
     }
 
     @Override
-    public List<QuestionStatusDto> getQuestions(QuestionStatus status) {
-        List<QuestionStatusDto> list = new ArrayList<>();
+    public List<QuestionWithStatus> getQuestions(QuestionStatus status) {
+        List<QuestionWithStatus> list = new ArrayList<>();
         String sql = """
                 SELECT question_id, question_type, description, difficulty_level, status
                 FROM questions
@@ -346,11 +291,11 @@ public class QuestionRepositoryImpl implements QuestionRepository {
             statement.setString(1, status.name());
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
-                QuestionStatusDto questionStatusDto = new QuestionStatusDto();
-                questionStatusDto.setQuestionId(rs.getLong("question_id"));
-                questionStatusDto.setDescription(rs.getString("description"));
-                questionStatusDto.setStatus(rs.getString("status"));
-                list.add(questionStatusDto);
+                QuestionWithStatus questionStatus = new QuestionWithStatus();
+                questionStatus.setQuestionId(rs.getLong("question_id"));
+                questionStatus.setDescription(rs.getString("description"));
+                questionStatus.setStatus(rs.getString("status"));
+                list.add(questionStatus);
             }
         } catch (Exception e) {
             e.printStackTrace();

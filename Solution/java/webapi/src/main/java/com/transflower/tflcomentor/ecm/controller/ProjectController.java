@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.transflower.tflcomentor.ecm.dto.ProjectAllocationRequestDto;
-import com.transflower.tflcomentor.ecm.dto.ProjectAllocationResponseDto;
+import com.transflower.tflcomentor.ecm.dto.request.ProjectAllocationRequest;
+import com.transflower.tflcomentor.ecm.dto.response.ProjectAllocationResponse;
 import com.transflower.tflcomentor.ecm.entity.Project;
 import com.transflower.tflcomentor.ecm.entity.ProjectAllocation;
 import com.transflower.tflcomentor.ecm.service.ProjectService;
@@ -41,17 +41,17 @@ public class ProjectController {
     }
 
     @GetMapping("/{projectId}/students")
-    public List<ProjectAllocationResponseDto> getStudentByProjectId(@PathVariable Long projectId) {
+    public List<ProjectAllocationResponse> getStudentByProjectId(@PathVariable Long projectId) {
         return service.getStudentByProjectId(projectId);
     }
 
     @GetMapping("/allocations")
-    public List<ProjectAllocationResponseDto> getProjectAllocationDetails() {
+    public List<ProjectAllocationResponse> getProjectAllocationDetails() {
         return service.getProjectAllocationDetails();
     }
 
     @PostMapping("/add")
-    public String addMember(@RequestBody ProjectAllocationRequestDto request) {
+    public String addMember(@RequestBody ProjectAllocationRequest request) {
 
         ProjectAllocation allocation = new ProjectAllocation();
         allocation.setProjectId(request.getProjectId());
