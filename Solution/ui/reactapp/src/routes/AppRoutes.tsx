@@ -46,6 +46,7 @@ import Question from "@/components/assessment/assessmentOrchestrator/applyAssess
 import RTUpdateQuestion from "@/components/assessment/evaluationcontent/RTUpdateQuestion";
 
 
+
 function AppRoutes() {
   return (
     <div className="min-h-screen bg-background">
@@ -103,7 +104,7 @@ function AppRoutes() {
           <Route path="evaluationcontent/reviewquestion" element={<MentorReviewQuestion />} />
           <Route index element={<Assessment />} />
           <Route path="evaluationcontent/viewprojectinfo" element={<ViewProjectInfo />} />
-          {/* <Route path="evaluationcontent/sme" element={<EvaluationContentSme />} /> */}
+          <Route path="evaluationcontent/sme" element={<EvaluationContentSme />} />
           <Route index element={<Assessment />} />
           <Route path="upcoming-assessment" element={<UpcomingAssessment />} />
           <Route path="create-test" element={<SMECreateTest />} />
