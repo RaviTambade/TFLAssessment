@@ -20,7 +20,7 @@ public class ProjectRepositoryImpl implements ProjectRepository {
     private Connection getConnection() throws Exception {
         return DBConfig.getConnection();
     }
-git 
+
     @Override
     public List<Project> getAllProjects() {
         List<Project> projects = new ArrayList<>();
