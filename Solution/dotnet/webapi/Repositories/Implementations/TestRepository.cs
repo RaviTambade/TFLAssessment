@@ -1,10 +1,14 @@
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using backend.Models;
+using MySql.Data.MySqlClient;
+using System.Data;
+using backend.DTOs;
+using backend.Repositories.Interfaces;
 
 namespace backend.Repositories
 {
-    public class CreateTestRepository : Interfaces.ICreateTestRepository
+    public class CreateTestRepository : ICreateTestRepository
     {
         private readonly AppDbContext _context;
 
@@ -14,25 +18,44 @@ namespace backend.Repositories
         }
 
 
-    public async Task<List<QuestionDto>> GetQuestionsByConceptIdAsync(List<long> conceptIds, string type, string difficulty)
+    public async Task<List<QuestionsDto>> GetQuestionsByConceptAsync(string concept)
         {
-            return await _context.QuestionFrameworkConcepts
-                .Where(x => conceptIds.Contains(x.FrameworkConcepts!.ConceptId ?? 0))
-                .Select(x => x.Question!)
-                .Where(q => q.QuestionType == type.ToUpper())
-                .Where(q => q.DifficultyLevel == difficulty.ToUpper())
+            List<QuestionsDto> questions = new List<QuestionsDto>();
 
-                .Select(q => new QuestionDto
+            string query = @"SELECT  q.question_id, q.description, q.question_type,q.difficulty_level,
+                            m.option_a,m.option_b,m.option_c,m.option_d, m.correct_answer
+                            FROM questions q INNER JOIN mcq_options m ON q.question_id = m.question_id and language='" + concept + "';";
+
+            string connectionString = "server=192.168.1.149;port=3306;database=tflcomentor_db;user=root;password='password'";
+            using (MySqlConnection con = new MySqlConnection(connectionString))
+            {
+                await con.OpenAsync();
+                using (MySqlCommand cmd = new MySqlCommand(query, con))
                 {
-                    Id = q.QuestionId,
-                    Title = q.Description,
-                    Type = q.QuestionType,
-                    Level = q.DifficultyLevel
-                })
-                .Distinct()
-                .ToListAsync();
-        }
+                    using (var reader = await cmd.ExecuteReaderAsync())
+                    {
 
+                        while (await reader.ReadAsync())
+                        {
+                            questions.Add(new QuestionsDto
+                            {
+                                QuestionId = reader.GetInt32("question_id"),
+                                Description = reader.GetString("description"),
+                                QuestionType = reader.GetString("question_type"),
+                                DifficultyLevel = reader.GetString("difficulty_level"),
+                                OptionA = reader.GetString("option_a"),
+                                OptionB = reader.GetString("option_b"),
+                                OptionC = reader.GetString("option_c"),
+                                OptionD = reader.GetString("option_d"),
+                                CorrectAnswer = reader.GetString("correct_answer")
+                            });
+                        }
+                    }
+                }
+            }
+
+            return  questions;
+        }
 
  public async Task<bool> CancelTestAsync(int id)
     {

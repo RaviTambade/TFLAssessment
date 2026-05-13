@@ -56,7 +56,7 @@ namespace backend.Repositories.Implementations
                             DifficultyLevel = reader["difficulty_level"]?.ToString(),
                             Status = reader["status"]?.ToString(),
 
-                            FrameworkName = reader["framework_name"]?.ToString(),
+                            // FrameworkName = reader["framework_name"]?.ToString(),
                             ConceptName = reader["concept_name"]?.ToString(),
 
                             OptionA = reader["option_a"]?.ToString(),

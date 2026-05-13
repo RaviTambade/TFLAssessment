@@ -8,7 +8,7 @@ namespace backend.DTOs
         public string DifficultyLevel { get; set; }
         public string Status { get; set; }
 
-        public string FrameworkName { get; set; }
+       
         public string ConceptName { get; set; }
 
         public string OptionA { get; set; }

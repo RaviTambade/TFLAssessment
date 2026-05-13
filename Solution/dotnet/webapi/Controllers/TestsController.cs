@@ -25,12 +25,11 @@ public class CreateTestController : ControllerBase
     }
 
     [HttpGet("questions")]
-    public async Task<IActionResult> GetQuestionsByConceptIdAsync(
-        [FromQuery] List<long> conceptIds,
-        [FromQuery] string type,
-        [FromQuery] string difficulty)
+    public async Task<IActionResult> GetQuestionsByConceptAsync(
+        [FromQuery] string concept)
+        
     {
-        return Ok(await _service.GetQuestionsByConceptIdAsync(conceptIds, type, difficulty));
+        return Ok(await _service.GetQuestionsByConceptAsync(concept));
     }
 
 
