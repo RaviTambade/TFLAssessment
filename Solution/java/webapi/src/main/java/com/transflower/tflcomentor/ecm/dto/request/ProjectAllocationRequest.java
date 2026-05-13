@@ -10,4 +10,12 @@ public class ProjectAllocationRequest{
 
     public Long getStudentId() { return studentId; }
     public void setStudentId(Long studentId) { this.studentId = studentId; }
-}                                                                                                                                              
+}     
+
+
+
+
+//Class: it is a blue print
+//Create real  world entities from class
+// data member  and member function
+// static member and static functions

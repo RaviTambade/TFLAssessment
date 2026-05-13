@@ -8,7 +8,7 @@ import com.transflower.tflcomentor.ecm.entity.ProjectAllocation;
 
 public interface ProjectRepository {
 
-     List<Project> getAllProjects();
+    List<Project> getAllProjects();
     Project getProjectById(long project_id);
 
     boolean addMember(ProjectAllocation projectAllocation);

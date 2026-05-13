@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Employee API Test</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #ffffff;
+      padding: 20px;
+
+      /* CENTER EVERYTHING */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    h2 {
+      color: #b30000;
+      border-left: 5px solid rgb(0, 0, 0);
+      padding-left: 10px;
+      margin-bottom: 15px;
+    }
+
+    form {
+      background: rgb(198, 168, 233);
+      padding: 20px;
+      width: 400px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(2, 14, 226, 0.1);
+      border-top: 5px solid #0056b3;
+
+      /* Center text inside form */
+      text-align: left;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      color: #000000;
+      margin-top: 10px;
+    }
+
+    input {
+      width: 95%;
+      padding: 8px;
+      margin-top: 5px;
+      border: 2px solid #0056b3;
+      border-radius: 5px;
+    }
+
+    button {
+      background: orange;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 15px;
+      margin-top: 15px;
+    }
+
+    button:hover {
+      background: #ff0000;
+    }
+
+    .btn-blue {
+      background: #0056b3;
+      margin-bottom: 20px;
+    }
+
+    .btn-blue:hover {
+      background: #003f80;
+    }
+
+    #output {
+      margin-top: 20px;
+      white-space: pre-wrap;
+      background: #ffffff;
+      padding: 15px;
+      width: 500px;
+      text-align: left;
+      border-left: 4px solid #0056b3;
+      border-radius: 8px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
+
+<body>
+
+  <h2>Add Employee</h2>
+
+  <form id="employeeForm">
+    <label>ID:</label>
+    <input type="number" id="id" required>
+
+    <label>Name:</label>
+    <input type="text" id="name" required>
+
+    <label>Salary:</label>
+    <input type="number" id="salary" required>
+
+    <label>Experience (years):</label>
+    <input type="number" id="experience" required>
+
+    <label>Age:</label>
+    <input type="number" id="age" required>
+
+    <button type="submit">Add Employee</button>
+  </form>
+
+  <h2>All Employees</h2>
+
+  <button class="btn-blue" onclick="getEmployees()">Get Employees</button>
+
+  <p id="output"></p>
+
+  <script>
+    const API_GET_ALL = "http://localhost:9000/api/Employees";
+    const API_ADD = "http://localhost:9000/api/Employee/add";
+
+    document.getElementById("employeeForm").addEventListener("submit", async function(event) {
+      event.preventDefault();
+
+      const formData = new URLSearchParams();
+      formData.append("id", document.getElementById("id").value);
+      formData.append("name", document.getElementById("name").value);
+      formData.append("salary", document.getElementById("salary").value);
+      formData.append("experience", document.getElementById("experience").value);
+      formData.append("age", document.getElementById("age").value);
+
+      await fetch(API_ADD, {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: formData
+      });
+    });
+
+    async function getEmployees() {
+      try {
+        const res = await fetch(API_GET_ALL);
+        if (!res.ok) throw new Error("Server error: " + res.status);
+
+        const data = await res.json();
+        document.getElementById("output").innerHTML =
+          "📋 All Employees:\n" + JSON.stringify(data, null, 2);
+      } catch (err) {
+        document.getElementById("output").innerHTML = "❌ Error: " + err;
+      }
+    }
+  </script>
+
+</body>
+</html>

@@ -1,15 +1,16 @@
 package com.transflower.tflcomentor.ecm.entity;
 
 import java.time.LocalDateTime;
-
 public class Concept {
-
+    
     private Long id;
     private String name;
     private String description;
     private Boolean status;
     private LocalDateTime createdAt;
 
+    public static int count;   //shared variable (class variables)
+    public static int getCount(){return count;}
    
     public Concept() {
         this.id = null;
@@ -17,18 +18,17 @@ public class Concept {
         this.description = "";
         this.status = true;
         this.createdAt = LocalDateTime.now();
+        count++; 
     }
 
-   
     public Concept(Long id, String name, String description, Boolean status, LocalDateTime createdAt) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.status = status;
         this.createdAt = createdAt;
+        count ++;
     }
-
-    // 🔹 Getters and Setters
 
     public Long getId() {
         return id;
@@ -68,5 +68,13 @@ public class Concept {
 
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
+    }
+
+    @Override
+    protected void finalize() throws Throwable { 
+            count--;
+            if(count <0){
+                 throw new IllegalArgumentException("Count cannot be negative");
+            }
     }
 }

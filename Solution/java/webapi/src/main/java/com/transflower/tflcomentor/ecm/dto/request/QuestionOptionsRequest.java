@@ -5,6 +5,9 @@ import com.transflower.tflcomentor.ecm.entity.enums.QuestionStatus;
 import com.transflower.tflcomentor.ecm.entity.enums.QuestionType;
 
 public class QuestionOptionsRequest {
+
+    //encapsulation
+
     private long questionId;
     private String description;
     private QuestionType questionType;
@@ -21,6 +24,10 @@ public class QuestionOptionsRequest {
     private String optionC;
     private String optionD;
     private String correctAnswer;
+
+
+    //getter and setter
+    
 
     public String getDescription() {
         return description;
