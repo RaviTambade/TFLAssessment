@@ -11,31 +11,25 @@ import UserActivitySession from "./entities/UserActivitySession";
 
 
 const UserActivity = () => {
-  // Stats + Active Users
+
   const [activeUsersCount, setActiveUsersCount] = useState(0);
   const [loginsLast24h, setLoginsLast24h] = useState(0);
   const [avgSessionTime, setAvgSessionTime] = useState("0h 0m 0s");
   const [activeUsersList, setActiveUsersList] = useState<ApiActiveUser[]>([]);
   const [showActiveUsers, setShowActiveUsers] = useState(false);
 
-  // Sessions Table
   const [userActivitySessions, setUserActivitySessions] = useState<UserActivitySession[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
 
-  // Helpers
+  
   const formatTimeOnly = (dateString?: string) => {
     if (!dateString) return "N/A";
 
     const d = new Date(dateString);
 
-    return isNaN(d.getTime())
-      ? "N/A"
-      : d.toLocaleTimeString([], {
-          hour: "2-digit",
-          minute: "2-digit",
-        });
+    return isNaN(d.getTime()) ? "N/A": d.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit",});
   };
 
   const getDuration = (loginTime?: string) => {
@@ -73,14 +67,13 @@ const UserActivity = () => {
     return `${day}-${month}-${year} / ${hours}:${minutes} ${ampm}`;
   };
 
-  // Fetch Data
+
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
       setError(null);
 
       try {
-        // Stats APIs
         const [countRes, loginsRes, avgRes] = await Promise.all([
           fetch(`${WEBAPI_NODE_URL}/useractivity/active-count`),
           fetch(`${WEBAPI_NODE_URL}/useractivity/logins-24h`),
@@ -91,19 +84,12 @@ const UserActivity = () => {
         const loginsData = await loginsRes.json();
         const avgData = await avgRes.json();
 
-        setActiveUsersCount(
-          countData?.data?.totalActiveSessions || 0
-        );
+        setActiveUsersCount(countData?.data?.totalActiveSessions || 0);
 
-        setLoginsLast24h(
-          loginsData?.data?.totalLogins24Hours || 0
-        );
+        setLoginsLast24h(loginsData?.data?.totalLogins24Hours || 0);
 
-        setAvgSessionTime(
-          avgData?.data?.avgSessionTime || "0h 0m 0s"
-        );
+        setAvgSessionTime( avgData?.data?.avgSessionTime || "0h 0m 0s");
 
-        // Sessions API
         const sessionsRes = await fetch(`${WEBAPI_NODE_URL}/useractivity/logs`);
 
         if (!sessionsRes.ok) {
@@ -112,41 +98,15 @@ const UserActivity = () => {
 
         const sessionsData = await sessionsRes.json();
 
-        const sessionsArray = Array.isArray(sessionsData)
-          ? sessionsData
-          : sessionsData.data || sessionsData.sessions || [];
+        const sessionsArray = Array.isArray(sessionsData)? sessionsData: sessionsData.data || sessionsData.sessions || [];
 
         const mappedSessions: UserActivitySession[] = sessionsArray.map(
           (item: ApiSession, index: number) => ({
-            id: String(
-              item.session_id ||
-                item.sessionId ||
-                item.id ||
-                index
-            ),
-
-            name:
-              item.full_name ||
-              item.fullName ||
-              item.name ||
-              "N/A",
-
-            login: formatDateTime(
-              item.login_time ||
-                item.loginTime ||
-                item.login
-            ),
-
-            logout: formatDateTime(
-              item.logout_time ||
-                item.logoutTime ||
-                item.logout
-            ),
-
-            status:
-              item.logout_time || item.logoutTime
-                ? "Inactive"
-                : "Active",
+            id: String(item.session_id ||item.sessionId || item.id || index),
+            name: item.full_name ||item.fullName || item.name || "N/A",
+            login: formatDateTime( item.login_time ||item.loginTime || item.login ),
+            logout: formatDateTime(item.logout_time || item.logoutTime ||item.logout),
+            status: item.logout_time || item.logoutTime ? "Inactive": "Active",
           })
         );
 
@@ -162,26 +122,16 @@ const UserActivity = () => {
     fetchData();
   }, []);
 
-  // Fetch Active Users
   const fetchActiveUsersList = async () => {
     try {
       const res = await fetch(`${WEBAPI_NODE_URL}/useractivity/active-users`);
       const raw = await res.json();
-
       const data = raw.data || [];
 
       const cleaned: Required<Pick<ApiActiveUser, "full_name" | "login_time" | "status">>[] = data.map(
         (u: ApiActiveUser) => ({
-          full_name:
-            u.full_name ||
-            u.fullName ||
-            "N/A",
-
-          login_time:
-            u.login_time ||
-            u.loginTime ||
-            "N/A",
-
+          full_name: u.full_name ||u.fullName ||"N/A",
+          login_time: u.login_time || u.loginTime || "N/A",
           status: u.status || "UNKNOWN",
         })
       );
@@ -193,13 +143,8 @@ const UserActivity = () => {
     }
   };
 
-  // Search Filter
   const filteredSessions = useMemo(() => {
-    return userActivitySessions.filter((s) =>
-      s.name
-        .toLowerCase()
-        .includes(searchTerm.toLowerCase())
-    );
+    return userActivitySessions.filter((s) => s.name.toLowerCase().includes(searchTerm.toLowerCase()) );
   }, [userActivitySessions, searchTerm]);
 
   return (
@@ -209,7 +154,6 @@ const UserActivity = () => {
           User Sessions
         </h1>
 
-        {/* Cards */}
         <div className="grid md:grid-cols-3 gap-6 mb-8">
           <Card className="bg-gradient-primary text-white">
             <CardContent className="flex justify-between items-center p-6">
@@ -282,9 +226,7 @@ const UserActivity = () => {
               </table>
 
               <button
-                onClick={() =>
-                  setShowActiveUsers(false)
-                }
+                onClick={() =>setShowActiveUsers(false)}
                 className="mt-4 bg-red-500 text-white px-4 py-2 rounded"
               >
                 Close
@@ -299,9 +241,7 @@ const UserActivity = () => {
             type="text"
             placeholder="Search sessions by name..."
             value={searchTerm}
-            onChange={(e) =>
-              setSearchTerm(e.target.value)
-            }
+            onChange={(e) =>setSearchTerm(e.target.value)}
             className="flex-1 border px-4 py-2 rounded"
           />
 
@@ -336,9 +276,7 @@ const UserActivity = () => {
                 </thead>
 
                 <tbody>
-                  {filteredSessions
-                    .slice(0, 15)
-                    .map((s, index) => (
+                  {filteredSessions .slice(0, 15).map((s, index) => (
                       <tr
                         key={`${s.id}-${index}`}
                         className="border-b h-12"
