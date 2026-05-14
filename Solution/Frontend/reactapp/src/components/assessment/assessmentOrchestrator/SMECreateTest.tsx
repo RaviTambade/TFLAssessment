@@ -55,7 +55,7 @@ const SMECreateTest = () => {
     const fetchAllQuestions = async () => {
       try {
         setLoadingQuestions(true);
-        const response = await fetch(`${WEBAPI_DOTNET_URL}/createTest/20questions`);
+        const response = await fetch(`${WEBAPI_DOTNET_URL}/CreateTest/20questions`);
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -73,7 +73,7 @@ const SMECreateTest = () => {
 
    const fetchConcept=async ()=>{
     try{
-      const response = await fetch(`${WEBAPI_DOTNET_URL}/technologies/concepts`,{
+      const response = await fetch(`${WEBAPI_DOTNET_URL}/Assessment/technologies/concepts`,{
         method:"GET",
       });
       if(!response.ok){

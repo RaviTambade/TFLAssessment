@@ -1,3 +1,5 @@
+using backend.DTO.Requests;
+using backend.DTO.Responses;
 
 namespace backend.Services.Interfaces
 {
@@ -5,7 +7,7 @@ namespace backend.Services.Interfaces
     {
        
        
-        Task<List<ConceptDto>> GetConceptsAsync(List<long> frameworkIds);
+        Task<List<Concepts>> GetConceptsAsync(List<long> frameworkIds);
        
     }
 }

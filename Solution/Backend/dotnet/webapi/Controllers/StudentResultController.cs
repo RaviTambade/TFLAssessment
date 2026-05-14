@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
-using backend.DTOs;
+using backend.DTO.Requests;
+using backend.DTO.Responses;
 using backend.Services.Interfaces;
 
 namespace backend.Controllers
@@ -17,7 +18,7 @@ namespace backend.Controllers
 
         // ✅ GET: api/StudentResult
         [HttpGet]
-        public async Task<ActionResult<List<StudentResultDto>>> GetStudentResults()
+        public async Task<ActionResult<List<StudentResults>>> GetStudentResults()
         {
             try
             {

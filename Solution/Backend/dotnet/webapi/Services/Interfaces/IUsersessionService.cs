@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
-using backend.DTOs;
+using backend.DTO.Requests;
+using backend.DTO.Responses;
 using backend.Models;
 using backend.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -10,7 +11,7 @@ namespace backend.Services.Interfaces
     public interface IUserSessionsService
     {
         
-        Task<List<UserSessionDto>> GetUserSessionsAsync();
+        Task<List<UserSessions>> GetUserSessionsAsync();
         Task<int> GetTotalUserSessionsAsync();
     }
 }

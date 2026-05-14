@@ -1,10 +1,9 @@
-using backend.DTOs;
-using System.Threading.Tasks;
+using backend.DTO.Responses;
 
 namespace backend.Repositories.Interfaces
 {
     public interface IStudentsRepository
     {
-        Task<StudentCountDto> GetTotalStudents();
+        Task<StudentCounts> GetTotalStudents();
     }
 }

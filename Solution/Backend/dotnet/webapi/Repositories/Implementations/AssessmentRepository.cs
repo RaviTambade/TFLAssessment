@@ -1,13 +1,11 @@
 using Microsoft.EntityFrameworkCore;
 using backend.Models;
 using Microsoft.AspNetCore.Mvc;
-using backend.DTOs;
-using backend.Repositories.Interfaces;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Linq;
-using MySql.Data.MySqlClient;
+using backend.DTO.Responses;
+using backend.DTO.Requests;
 
+
+namespace backend.Repositories.Interfaces;
 public class AssessmentRepository : IAssessmentRepository
 {
 
@@ -19,7 +17,7 @@ public class AssessmentRepository : IAssessmentRepository
     }
 
     [HttpGet]
-    public async Task<List<UpcomingAssessmentDto>> GetAllUpcomingAssessments(long userId, DateTime fromDate, DateTime toDate)
+    public async Task<List<Assessments>> GetAllUpcomingAssessments(long userId, DateTime fromDate, DateTime toDate)
     {
         Console.WriteLine($"UserId: {userId}, FromDate: {fromDate}, ToDate: {toDate}");
         toDate = toDate.Date.AddDays(1).AddSeconds(-1);
@@ -56,7 +54,7 @@ public class AssessmentRepository : IAssessmentRepository
 
             orderby a.ScheduledAt ascending
 
-            select new UpcomingAssessmentDto
+            select new Assessments
             {
                 SrNo = 0,
                 AssessmentId = (int)a.Id,
@@ -75,7 +73,7 @@ public class AssessmentRepository : IAssessmentRepository
         return data;
     }
 
-    public async Task<List<AllAssessmentDto>> GetAllAssessments()
+    public async Task<List<AllAssessments>> GetAllAssessments()
     {
         var data = await (
             from a in _context.Assessments
@@ -89,7 +87,7 @@ public class AssessmentRepository : IAssessmentRepository
             join p in _context.PersonalInformations on u.Id equals p.UserId into personalGroup
             from p in personalGroup.DefaultIfEmpty()
 
-            select new AllAssessmentDto
+            select new AllAssessments
             {
                 Id = a.Id,
                 AssessmentTitle = t != null ? t.Title : "N/A",
@@ -165,10 +163,10 @@ public class AssessmentRepository : IAssessmentRepository
         return true;
     }
 
-    public async Task<List<TestDto>> GetTestsAsync()
+    public async Task<List<Tests>> GetTestsAsync()
     {
         return await _context.Tests
-            .Select(t => new TestDto
+            .Select(t => new Tests
             {
                 Id = t.Id,
                 Title = t.Title,
@@ -179,19 +177,19 @@ public class AssessmentRepository : IAssessmentRepository
             .ToListAsync();
     }
 
-    public async Task<List<StudentDto>> GetStudentsAsync()
+    public async Task<List<Students>> GetStudentsAsync()
     {
         return await (from u in _context.Users
                       join p in _context.PersonalInformations
                       on u.Id equals p.UserId
-                      select new StudentDto
+                      select new Students
                       {
                           Id = (int)u.Id,
                           FullName = p.FullName ?? string.Empty
                       }).ToListAsync();
     }
 
-    public async Task<AssignAssessmentResultDto> AssignAssessmentAsync(AssignAssessmentDto dto)
+    public async Task<AssignAssessmentResults> AssignAssessmentAsync(AssignAssessments dto)
     {
         // ✅ Validation
         if (dto.StudentIds == null || !dto.StudentIds.Any())
@@ -220,7 +218,7 @@ public class AssessmentRepository : IAssessmentRepository
         // ✅ If ALL students are already assigned, return early with message
         if (!newStudentIds.Any())
         {
-            return new AssignAssessmentResultDto
+            return new AssignAssessmentResults
             {
                 Success = false,
                 Message = "This test is already assigned to all selected students."
@@ -249,7 +247,7 @@ public class AssessmentRepository : IAssessmentRepository
             ? $"Assigned to {assignedCount} student(s). Skipped {skippedCount} already assigned."
             : $"Assessment assigned to {assignedCount} student(s) successfully.";
 
-        return new AssignAssessmentResultDto
+        return new AssignAssessmentResults
         {
             Success = true,
             Message = message,
@@ -258,9 +256,9 @@ public class AssessmentRepository : IAssessmentRepository
         };
     }
 
-    public async Task<List<AssessmentQuestionDto>> GetAssessmentQuestionsAsync(int assessmentId)
+    public async Task<List<AssessmentQuestions>> GetAssessmentQuestionsAsync(int assessmentId)
     {
-        return await _context.Set<AssessmentQuestionDto>()
+        return await _context.Set<AssessmentQuestions>()
             .FromSqlInterpolated($@"
                 SELECT
                     ques.question_id        AS QuestionId,
@@ -327,7 +325,7 @@ public class AssessmentRepository : IAssessmentRepository
         return rowsAffected > 0;
     }
 
-    public async Task<AssessmentReportDto> GetResultData(int studentId, int assessmentId)
+    public async Task<AssessmentReports> GetResultData(int studentId, int assessmentId)
     {
         var results = await _context.StudentAssessmentReports
             .FromSqlInterpolated($"CALL GetStudentAssessmentReport({studentId}, {assessmentId})")
@@ -347,7 +345,7 @@ public class AssessmentRepository : IAssessmentRepository
         return await _context.Assessments.CountAsync(x => x.Status == "Completed");
     }
 
-    public async Task<List<AssessmentSummaryDto>> GetAssessmentSummariesForStudent(long studentId)
+    public async Task<List<AssessmentSummaries>> GetAssessmentSummariesForStudent(long studentId)
     {
         var data = await (
             from a in _context.Assessments
@@ -392,12 +390,12 @@ public class AssessmentRepository : IAssessmentRepository
             }
             into g
 
-            select new AssessmentSummaryDto
+            select new AssessmentSummaries
             {
                 AssessmentId    = g.Key.AssessmentId,
                 AssessmentTitle = g.Key.Title ?? "No Test",
 
-                Student = new StudentDto
+                Student = new Students
                 {
                     Id       = (int)(g.Key.StudentId ?? 0),
                     FullName = g.Key.StudentName ?? "Unknown"
@@ -438,7 +436,7 @@ public class AssessmentRepository : IAssessmentRepository
         return data;
     }
 
-    public List<StudentAssessmentDto> GetFullData()
+    public List<StudentAssessments> GetFullData()
     {
         var data = (from a in _context.Assessments
 
@@ -458,7 +456,7 @@ public class AssessmentRepository : IAssessmentRepository
                         on a.Id equals (long?)r.AssessmentId into resultGroup
                     from r in resultGroup.DefaultIfEmpty()
 
-                    select new StudentAssessmentDto
+                    select new StudentAssessments
                     {
                         AssessmentId = a.Id,
 
@@ -472,7 +470,7 @@ public class AssessmentRepository : IAssessmentRepository
                         AssignedAt  = a.AssignedAt,
                         ScheduledAt = a.ScheduledAt,
 
-                        Result = r == null ? null : new ResultDto
+                        Result = r == null ? null : new backend.DTO.Responses.Results
                         {
                             Score            = r.Score,
                             Percentile       = r.Percentile,
@@ -483,7 +481,7 @@ public class AssessmentRepository : IAssessmentRepository
         return data;
     }
 
-    Task IAssessmentRepository.AssignAssessmentAsync(AssignAssessmentDto dto)
+    Task IAssessmentRepository.AssignAssessmentAsync(AssignAssessments dto)
     {
         return AssignAssessmentAsync(dto);
     }

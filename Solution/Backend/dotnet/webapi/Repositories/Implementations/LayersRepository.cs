@@ -1,43 +1,43 @@
-using System.Linq;
-using Microsoft.EntityFrameworkCore;
-using backend.Models;
+// using System.Linq;
+// using Microsoft.EntityFrameworkCore;
+// using backend.Models;
 
-namespace backend.Repositories
-{
-    public class LayersRepository : Interfaces.ILayersRepository
-    {
-        private readonly AppDbContext _context;
+// namespace backend.Repositories
+// {
+//     public class LayersRepository : Interfaces.ILayersRepository
+//     {
+//         private readonly AppDbContext _context;
 
-        public LayersRepository(AppDbContext context)
-        {
-            _context = context;
-        }
+//         public LayersRepository(AppDbContext context)
+//         {
+//             _context = context;
+//         }
 
-    public async Task<List<LayerDto>> GetLayersAsync(long languageId)
-{
-    return await _context.Layers
-        .Select(l => new LayerDto
-        {
-            Id = l.Id,
-            Name = l.Layers,
+//     public async Task<List<LayerDto>> GetLayersAsync(long languageId)
+// {
+//     return await _context.Layers
+//         .Select(l => new LayerDto
+//         {
+//             Id = l.Id,
+//             Name = l.Layers,
 
-            Frameworks = _context.Frameworks
-                .Where(f =>
-                    f.LayerId == l.Id &&
-                    (
-                        f.LanguageId == languageId ||
-                        f.LayerId == 3 ||
-                        f.LayerId == 4 ||
-                        f.LayerId == 5
-                    )
-                )
-                .Select(f => new FrameworkDto
-                {
-                    Id = f.Id,
-                    Name = f.Name
-                }).ToList()
-        })
-        .ToListAsync();
-}
-}
-}
+//             Frameworks = _context.Frameworks
+//                 .Where(f =>
+//                     f.LayerId == l.Id &&
+//                     (
+//                         f.LanguageId == languageId ||
+//                         f.LayerId == 3 ||
+//                         f.LayerId == 4 ||
+//                         f.LayerId == 5
+//                     )
+//                 )
+//                 .Select(f => new FrameworkDto
+//                 {
+//                     Id = f.Id,
+//                     Name = f.Name
+//                 }).ToList()
+//         })
+//         .ToListAsync();
+// }
+// }
+// }

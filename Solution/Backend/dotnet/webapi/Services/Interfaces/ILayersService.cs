@@ -1,12 +1,12 @@
 
 
-namespace backend.Services.Interfaces
-{
-    public interface ILayersService
-    {
+// namespace backend.Services.Interfaces
+// {
+//     public interface ILayersService
+//     {
        
        
-        Task<List<LayerDto>> GetLayersAsync(long languageId);
+//         Task<List<LayerDto>> GetLayersAsync(long languageId);
         
-    }
-}
+//     }
+// }

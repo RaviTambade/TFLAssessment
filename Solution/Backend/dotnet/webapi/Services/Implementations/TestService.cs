@@ -1,6 +1,5 @@
-
-
-using backend.DTOs;
+using backend.DTO.Requests;
+using backend.DTO.Responses;
 using backend.Repositories.Interfaces;
 
 namespace backend.Services
@@ -14,10 +13,10 @@ namespace backend.Services
             _repo = repo;
         }
 
-        public Task<List<QuestionsDto>> GetQuestionsByConceptAsync(string concept)
+        public Task<List<Questions>> GetQuestionsByConceptAsync(string concept)
              => _repo.GetQuestionsByConceptAsync(concept);
 
-        public Task<long> CreateTestAsync(CreateTestRequestDto dto)
+        public Task<long> CreateTestAsync(CreateTestRequests dto)
             => _repo.CreateTestAsync(dto);
 
             

@@ -1,12 +1,9 @@
-using backend.DTOs;
+using backend.DTO.Requests;
+using backend.DTO.Responses;
 using backend.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
 using backend.Models;
-using System.Threading.Tasks;
-using System.Linq;
-using System;
-using backend.Repositories.Interfaces;
+
 
 namespace backend.Repositories.Implementations
 {
@@ -19,13 +16,13 @@ namespace backend.Repositories.Implementations
             _context = context;
         }
 
-        public async Task<List<UserSessionDto>> GetAllUserSessionsAsync()
+        public async Task<List<UserSessions>> GetAllUserSessionsAsync()
         {
             var sessions = await (from ul in _context.UserLogs
                                   join u in _context.Users on ul.UserId equals u.Id
                                   join pi in _context.PersonalInformations on u.Id equals pi.UserId
                                   orderby ul.LoginTime descending
-                                  select new UserSessionDto
+                                  select new UserSessions
                                   {
                                       Id = ul.UserId ?? 0,
                                       Name = pi.FullName,
