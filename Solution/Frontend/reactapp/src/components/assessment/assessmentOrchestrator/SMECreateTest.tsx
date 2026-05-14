@@ -2,14 +2,7 @@ import { useEffect, useState } from "react";
 import { Button } from "../../ui/button";
 import { Input } from "../../ui/input";
 import { Label } from "../../ui/label";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "../../ui/card";
-
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../../ui/card";
 import { WEBAPI_DOTNET_URL } from "@/lib/utils";
 
 type Concept = {
@@ -21,8 +14,10 @@ type Question = {
   questionId: number;
   description: string;
   type: string;
-  difficulty: string;
-  concept: string;
+  difficulty: "BEGINNER" | "INTERMEDIATE" | "ADVANCED";
+  conceptId: number;
+  options?: string[];
+  correctIndex?: number;
 };
 
 const SMECreateTest = () => {
@@ -30,20 +25,22 @@ const SMECreateTest = () => {
   const [description, setDescription] = useState("");
   const [duration, setDuration] = useState("");
 
+  const [selectedQuestions, setSelectedQuestions] = useState<number[]>([]);
+  const [selectedConcept, setSelectedConcept] = useState<number>(1);
+
   const [concepts, setConcepts] = useState<Concept[]>([]);
   const [selectedConcept, setSelectedConcept] = useState("");
 
   const [availableQuestions, setAvailableQuestions] = useState<Question[]>([]);
-  const [selectedQuestions, setSelectedQuestions] = useState<number[]>([]);
 
   const [loading, setLoading] = useState(false);
   const [loadingQuestions, setLoadingQuestions] = useState(false);
 
   const [error, setError] = useState<string | null>(null);
 
-  // =========================================
+  // ==========================
   // FETCH CONCEPTS
-  // =========================================
+  // ==========================
   useEffect(() => {
     const fetchConcepts = async () => {
       try {
@@ -62,32 +59,31 @@ const SMECreateTest = () => {
           );
         }
 
-        // FETCH CONCEPTS
-        const response = await fetch(`${ WEBAPI_DOTNET_URL }/questions/concepts`);
+        // IMPORTANT:
+        // Replace 1 with your actual technologyId
+        const technologyId = 1;
 
+        const response = await fetch(
+          `${WEBAPI_DOTNET_URL}/Assessment/technologies/${technologyId}/concepts`
+        );
+
+        console.log("Concept API Status:", response.status);
 
         if (!response.ok) {
           const errorText = await response.text();
-
           console.log("Concept API Error:", errorText);
 
-          throw new Error(`HTTP Error ${response.status}`);
+          throw new Error(`HTTP error! status: ${response.status}`);
         }
 
         const data: Concept[] = await response.json();
 
         console.log("Concepts:", data);
 
-        setConcepts(data);
-
-        // SET FIRST CONCEPT AUTOMATICALLY
-        if (data.length > 0) {
-          setSelectedConcept(data[0].name);
-        }
+        setConcepts(Array.isArray(data) ? data : []);
       } catch (err) {
-        console.error("Error fetching concepts:", err);
-
-        setError("Failed to load concepts");
+        console.error("Error loading concepts:", err);
+        setError("Failed to load concepts.");
       } finally {
         setLoading(false);
       }
@@ -96,9 +92,9 @@ const SMECreateTest = () => {
     void fetchConcepts();
   }, []);
 
-  // =========================================
-  // FETCH QUESTIONS BY CONCEPT
-  // =========================================
+  // ==========================
+  // FETCH QUESTIONS
+  // ==========================
   useEffect(() => {
     if (!selectedConcept) return;
 
@@ -118,18 +114,17 @@ const SMECreateTest = () => {
 
           console.log("Question API Error:", errorText);
 
-          throw new Error(`HTTP Error ${response.status}`);
+          throw new Error(`HTTP error! status: ${response.status}`);
         }
 
         const data: Question[] = await response.json();
 
         console.log("Questions:", data);
 
-        setAvailableQuestions(data);
+        setAvailableQuestions(Array.isArray(data) ? data : []);
       } catch (err) {
-        console.error("Error fetching questions:", err);
-
-        setError("Failed to load questions");
+        console.error("Error loading questions:", err);
+        setError("Failed to load questions.");
       } finally {
         setLoadingQuestions(false);
       }
@@ -138,9 +133,9 @@ const SMECreateTest = () => {
     void fetchQuestions();
   }, [selectedConcept]);
 
-  // =========================================
+  // ==========================
   // TOGGLE QUESTION
-  // =========================================
+  // ==========================
   const toggleQuestion = (questionId: number) => {
     setSelectedQuestions((prev) =>
       prev.includes(questionId)
@@ -149,9 +144,9 @@ const SMECreateTest = () => {
     );
   };
 
-  // =========================================
-  // SUBMIT TEST
-  // =========================================
+  // ==========================
+  // SUBMIT FORM
+  // ==========================
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -185,7 +180,7 @@ const SMECreateTest = () => {
 
       let data;
 
-      if (contentType?.includes("application/json")) {
+      if (contentType && contentType.includes("application/json")) {
         data = await response.json();
       } else {
         data = await response.text();
@@ -194,7 +189,7 @@ const SMECreateTest = () => {
       console.log("Create Test Response:", data);
 
       if (!response.ok) {
-        throw new Error(`HTTP Error ${response.status}`);
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
 
       alert("Test Created Successfully");
@@ -206,8 +201,7 @@ const SMECreateTest = () => {
       setSelectedQuestions([]);
     } catch (err) {
       console.error("Submit Error:", err);
-
-      setError("Failed to create test");
+      setError("Failed to create test.");
     }
   };
 
@@ -224,9 +218,7 @@ const SMECreateTest = () => {
 
         <CardContent>
           {loading && (
-            <p className="text-center py-4">
-              Loading concepts...
-            </p>
+            <p className="text-center py-4">Loading concepts...</p>
           )}
 
           {error && (
@@ -235,19 +227,14 @@ const SMECreateTest = () => {
             </div>
           )}
 
-          <form
-            onSubmit={handleSubmit}
-            className="space-y-6"
-          >
+          <form onSubmit={handleSubmit} className="space-y-6">
             {/* TEST NAME */}
             <div className="space-y-2">
               <Label>Test Name</Label>
 
               <Input
                 value={testName}
-                onChange={(e) =>
-                  setTestName(e.target.value)
-                }
+                onChange={(e) => setTestName(e.target.value)}
                 placeholder="Enter test name"
                 required
               />
@@ -261,9 +248,7 @@ const SMECreateTest = () => {
                 className="w-full border rounded-md p-3"
                 rows={4}
                 value={description}
-                onChange={(e) =>
-                  setDescription(e.target.value)
-                }
+                onChange={(e) => setDescription(e.target.value)}
                 placeholder="Enter description"
                 required
               />
@@ -271,14 +256,12 @@ const SMECreateTest = () => {
 
             {/* DURATION */}
             <div className="space-y-2">
-              <Label>Duration (Minutes)</Label>
+              <Label>Duration</Label>
 
               <Input
                 type="number"
                 value={duration}
-                onChange={(e) =>
-                  setDuration(e.target.value)
-                }
+                onChange={(e) => setDuration(e.target.value)}
                 placeholder="Enter duration"
                 required
               />
@@ -292,14 +275,11 @@ const SMECreateTest = () => {
                 className="w-full border rounded-md p-2"
                 value={selectedConcept}
                 onChange={(e) =>
-                  setSelectedConcept(e.target.value)
+                  setSelectedConcept(Number(e.target.value))
                 }
               >
                 {concepts.map((concept) => (
-                  <option
-                    key={concept.id}
-                    value={concept.name}
-                  >
+                  <option key={concept.id} value={concept.id}>
                     {concept.name}
                   </option>
                 ))}
@@ -351,10 +331,7 @@ const SMECreateTest = () => {
 
             {/* BUTTONS */}
             <div className="flex gap-4">
-              <Button
-                type="submit"
-                className="flex-1"
-              >
+              <Button type="submit" className="flex-1">
                 Create Test
               </Button>
 

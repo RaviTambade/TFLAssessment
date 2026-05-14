@@ -1,11 +1,10 @@
-
 class AuthRepository {
 
   constructor(connection) {
     this.connection = connection;
   }
 
-  validate(credential, callback) {
+  validateUser(credential, callback) {
     const sql = `SELECT u.id, p.first_name, p.last_name, r.role_name from users u
                   JOIN user_roles ur ON u.id= ur.user_id 
                   JOIN roles r ON r.role_id = ur.role_id
@@ -35,15 +34,10 @@ class AuthRepository {
 
 
 changePassword(data, callback) {
-  const query = `
-    UPDATE users 
-    SET password = ? 
-    WHERE id = ?
-  `;
+  const query = ` UPDATE users SET password = ?, updated_at =now() WHERE id = ?`;
 
   this.connection.query(
-    query,
-    [data.newPassword, data.id],
+    query,[data.newPassword, data.id],
     (err, result) => {
       if (err) return callback(err, null);
 

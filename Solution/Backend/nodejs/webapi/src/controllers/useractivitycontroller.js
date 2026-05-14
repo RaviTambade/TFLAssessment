@@ -81,7 +81,7 @@ class UserActivityController {
     });
   };
 
-  getTotalActiveSessions (req, res)  {
+  getTotalActiveSessionsCount (req, res)  {
     const responseGenerator = new ResponseGenerator();
 
     this.service.getTotalActiveSessions((err, result) => {

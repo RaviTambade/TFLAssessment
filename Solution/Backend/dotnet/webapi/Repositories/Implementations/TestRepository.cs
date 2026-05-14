@@ -94,16 +94,16 @@ public async Task<long> CreateTestAsync(CreateTestRequests dto)
             try
             {
                 // Check SME exists
-                string checkSmeQuery = @"
+                string Query = @"
                     SELECT COUNT(1)
                     FROM SmeRuntimes
                     WHERE SmeRuntimeId = @SmeId";
 
-                using (MySqlCommand checkCmd = new MySqlCommand(checkSmeQuery, con, transaction))
+                using (MySqlCommand Cmd = new MySqlCommand(Query, con, transaction))
                 {
-                    checkCmd.Parameters.AddWithValue("@SmeId", dto.SmeId);
+                    Cmd.Parameters.AddWithValue("@SmeId", dto.SmeId);
 
-                    int count = Convert.ToInt32(await checkCmd.ExecuteScalarAsync());
+                    int count = Convert.ToInt32(await Cmd.ExecuteScalarAsync());
 
                     if (count == 0)
                         throw new ArgumentException($"SmeRuntime with id {dto.SmeId} not found.");
