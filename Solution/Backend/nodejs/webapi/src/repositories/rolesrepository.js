@@ -4,12 +4,12 @@ class RolesRepository {
   }
 
   getAllRoles(callback) {
-    const sql = "select * from roles";
+    const sql = "SELECT * from roles";
     this.connection.query(sql, callback);
   }
 
   insert(newRole, callback) {
-    const sql = "insert into roles(role_name,description) values(?,?)";
+    const sql = "INSERT INTO roles(role_name,description) VALUES(?,?)";
     this.connection.query(sql,[newRole.roleName, newRole.description],callback);
   }
 
@@ -19,7 +19,7 @@ class RolesRepository {
   }
 
   getRoleById(roleId, callback) {
-    const sql = "select * from roles where role_id =?";
+    const sql = "SELECT * from roles WHERE role_id =?";
     this.connection.query(sql,[roleId], callback);
   }
 

@@ -1,4 +1,4 @@
-var mysql = require("mysql2");
+const mysql = require("mysql2");
 
 const dbconfig = {
   host: "192.168.1.149",
