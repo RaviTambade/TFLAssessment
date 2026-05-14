@@ -3,8 +3,8 @@ class AuthService{
     this.repository = authRepository;
   }
 
-  validate(credential, callback) {
-    this.repository.validate(credential, callback);
+  validateUser(credential, callback) {
+    this.repository.validateUser(credential, callback);
   }
 
   register(user, callback) {

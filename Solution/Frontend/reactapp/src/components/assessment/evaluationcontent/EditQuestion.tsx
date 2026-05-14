@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
@@ -9,8 +9,13 @@ import QuestionFormData from "../assessmentOrchestrator/entities/MultipleChoiceQ
 const EditQuestion = () => {
     
 const navigate = useNavigate();
+const location = useLocation();
 
 const { id } = useParams();
+
+const returnPath =
+  (location.state as { from?: string } | null)?.from ??
+  "/models/evaluationcontent/reviewquestion";
     
 const [loading, setLoading] = useState(true);
 const [formData, setFormData] = useState<QuestionFormData>({
@@ -18,6 +23,7 @@ const [formData, setFormData] = useState<QuestionFormData>({
         description: "",
         questionType: "",
         difficultyLevel: "",
+        status: "DRAFT",
         language: "",
         layer: "",
         framework: "",
@@ -43,6 +49,7 @@ const fetchQuestion = async () => {
                 description: data.description || "",
                 questionType: data.questionType || "MCQ",
                 difficultyLevel: data.difficultyLevel || "",
+                status: data.status || "DRAFT",
                 language: data.language || "",
                 layer: data.layer || "",
                 framework: data.framework || "",
@@ -71,14 +78,20 @@ const fetchQuestion = async () => {
 
     const handleUpdate = async () => {
         try {
-            await fetch(`${WEBAPI_JAVA_URL}/questions/${id}`, {
+            const res = await fetch(`${WEBAPI_JAVA_URL}/questions/${id}`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(formData)
             });
 
+            if (!res.ok) {
+                const msg = await res.text().catch(() => res.statusText);
+                alert("Update failed: " + msg);
+                return;
+            }
+
             alert("Question Updated Successfully ");
-            navigate("/models/evaluationcontent/reviewquestion");
+            navigate(returnPath);
 
         } catch {
             alert("Update Failed - Please try again");
@@ -114,7 +127,7 @@ const fetchQuestion = async () => {
                             <input type="text" name="description" value={formData.description} onChange={handleChange}className="w-full mt-1 p-3 border rounded-lg"/>
                         </div>
 
-                        <div className="grid md:grid-cols-2 gap-4">
+                        <div className="grid md:grid-cols-3 gap-4">
                             <div>
                                 <label className="text-sm font-medium">
                                     Question Type
@@ -139,6 +152,19 @@ const fetchQuestion = async () => {
                                     <option value="BEGINNER">BEGINNER</option>
                                     <option value="INTERMEDIATE">INTERMEDIATE</option>
                                     <option value="ADVANCE">ADVANCE</option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <label className="text-sm font-medium">
+                                    Status
+                                </label>
+
+                                <select name="status" value={formData.status} onChange={handleChange} className="w-full mt-1 p-3 border rounded-lg">
+
+                                    <option value="DRAFT">DRAFT</option>
+                                    <option value="APPROVED">APPROVED</option>
+                                    <option value="REJECTED">REJECTED</option>
                                 </select>
                             </div>
 
@@ -192,7 +218,9 @@ const fetchQuestion = async () => {
                         )}
 
                         <div className="flex justify-end gap-4 pt-4">
-                            <Button  variant="outline" onClick={() => navigate("/models/evaluationcontent/reviewquestion")}>Cancel</Button>
+                            <Button variant="outline" onClick={() => navigate(returnPath)}>
+              Cancel
+            </Button>
                             <Button onClick={handleUpdate}>Update Question</Button>
                         </div>
                     </CardContent>

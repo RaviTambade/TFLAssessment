@@ -58,6 +58,8 @@ class UsersRepository {
     });
   }
 
+  
+
   updateUserPersonalInformation(userId, data, callback) {
     const fields = Object.keys(data) .map((key) => `${key} = ?`) .join(", ");
     const values = Object.values(data);
@@ -101,7 +103,7 @@ class UsersRepository {
 
 
 
-// insert into 
+// insert personal information
 insertUserPersonalInformation(personalInformation, callback) {
   const query = `INSERT INTO personal_informations (user_id, first_name, last_name, gender, date_of_birth, email, address, pincode)
                   VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
@@ -113,12 +115,12 @@ insertUserPersonalInformation(personalInformation, callback) {
 
 
 // professional information insert
-insertUserProfessionalInformation(userId, professionalInformation, callback) {
-    const columns = Object.keys(professionalInformation).join(", ");
-    const placeholders = Object.keys(professionalInformation).map(() => "?").join(", ");
-    const values = Object.values(professionalInformation);
-    const sql = `INSERT INTO professional_informations (user_id, ${columns}) VALUES (?, ${placeholders}) `;
-    this.connection.query(sql, [userId, ...values],callback);
+  insertUserProfessionalInformation(userId, professionalInformation, callback) {
+      const columns = Object.keys(professionalInformation).join(", ");
+      const placeholders = Object.keys(professionalInformation).map(() => "?").join(", ");
+      const values = Object.values(professionalInformation);
+      const sql = `INSERT INTO professional_informations (user_id, ${columns}) VALUES (?, ${placeholders}) `;
+      this.connection.query(sql, [userId, ...values],callback);
 }
 
 // academic information insert

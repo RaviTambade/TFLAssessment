@@ -81,7 +81,7 @@ function AppRoutes() {
 
  
           <Route path="skilltaxonomy/ViewRuntimes" element={<ViewRuntimes />} />
-
+ce2
           {/* <Route path="skilltaxonomy/AddConcept" element={<AddConcept />} /> */}
            <Route path="skilltaxonomy/ConceptByFramework" element={<ConceptByFramework />} />
           
