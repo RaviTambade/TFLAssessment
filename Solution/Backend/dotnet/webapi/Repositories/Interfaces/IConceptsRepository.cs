@@ -8,7 +8,7 @@ namespace backend.Repositories.Interfaces
     {
         
         
-        Task<List<Concepts>> GetConceptsAsync(List<long> frameworkIds);
+        Task<List<Concepts>> GetAllConceptsAsync();
        
     }
 }
