@@ -1,4 +1,5 @@
-using backend.DTOs;
+using backend.DTO.Requests;
+using backend.DTO.Responses;
 using backend.Models;
 using backend.Repositories.Interfaces;
 using backend.Services.Interfaces;
@@ -17,7 +18,7 @@ namespace backend.Services.Implementations
             _repo = repo;
         }
 
-        public async Task<List<UserSessionDto>> GetUserSessionsAsync()
+        public async Task<List<UserSessions>> GetUserSessionsAsync()
         {
             return await _repo.GetAllUserSessionsAsync();
         }

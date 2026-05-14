@@ -62,23 +62,37 @@ class RolesController {
     });
   }
 
-  unAssignRoles(req, res) {
+
+  getUserByRole(req, res) {
     const userId = req.params.userId;
     const responseGenerator = new ResponseGenerator();
-    if (!userId) {
-      return responseGenerator.sendError(res, "UserId is required", 400);
-    }
-
-    this.service.unAssignRoles(userId, (err, result) => {
+    this.service.getUserByRole(userId, (err, result) => {
       responseGenerator.generateResponse(
         res,
         err,
         result,
-        "Failed to unassign roles",
-        "Roles unassigned successfully",
+        "Failed to get user by role",
+        "User retrieved successfully",
       );
     });
   }
+
+  
+  assignRole(req, res) {
+    const userId = req.params.userId;
+    const roleId = req.params.roleId;
+    const responseGenerator = new ResponseGenerator();
+    this.service.assignRole(userId, roleId, (err, result) => {
+      responseGenerator.generateResponse(
+        res,
+        err,
+        result,
+        "Failed to assign role",
+        "Role assigned successfully",
+      );
+    });
+  }
+
 
   assignRoles(req, res) {
     const userId = req.params.userId;
@@ -108,20 +122,6 @@ class RolesController {
     });
   }
 
-  getUserByRole(req, res) {
-    const userId = req.params.userId;
-    const responseGenerator = new ResponseGenerator();
-    this.service.getUserByRole(userId, (err, result) => {
-      responseGenerator.generateResponse(
-        res,
-        err,
-        result,
-        "Failed to get user by role",
-        "User retrieved successfully",
-      );
-    });
-  }
-
   unAssignRole(req, res) {
     const userId = req.params.userId;
     const roleId = req.params.roleId;
@@ -137,21 +137,27 @@ class RolesController {
     });
   }
 
-  
-  assignRole(req, res) {
+  unAssignRoles(req, res) {
     const userId = req.params.userId;
-    const roleId = req.params.roleId;
     const responseGenerator = new ResponseGenerator();
-    this.service.assignRole(userId, roleId, (err, result) => {
+    if (!userId) {
+      return responseGenerator.sendError(res, "UserId is required", 400);
+    }
+
+    this.service.unAssignRoles(userId, (err, result) => {
       responseGenerator.generateResponse(
         res,
         err,
         result,
-        "Failed to assign role",
-        "Role assigned successfully",
+        "Failed to unassign roles",
+        "Roles unassigned successfully",
       );
     });
   }
+
+  
+
+
 }
 
 module.exports = RolesController;

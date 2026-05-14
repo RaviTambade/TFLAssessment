@@ -2,9 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using MySql.Data.MySqlClient; 
-using backend.DTOs;
+using backend.DTO.Requests;
+using backend.DTO.Responses;
 using backend.Repositories.Interfaces;
-using Microsoft.Extensions.Configuration;
+
 
 namespace backend.Repositories
 {
@@ -17,9 +18,9 @@ namespace backend.Repositories
             _configuration = configuration;
         }
 
-        public async Task<AverageScoreDto> GetAverageScoreByIdAsync(int studentId)
+        public async Task<AverageScores> GetAverageScoreByIdAsync(int studentId)
         {
-            AverageScoreDto score = new AverageScoreDto();
+            AverageScores score = new AverageScores();
 
             using (MySqlConnection con = new MySqlConnection(_configuration.GetConnectionString("DefaultConnection")))
             {
@@ -56,9 +57,9 @@ namespace backend.Repositories
             return score;
         }
 
-        public async Task<List<AverageScoreDto>> GetAllStudentsAverageScoreAsync()
+        public async Task<List<AverageScores>> GetAllStudentsAverageScoreAsync()
         {
-            List<AverageScoreDto> list = new List<AverageScoreDto>();
+            List<AverageScores> list = new List<AverageScores>();
 
             using (MySqlConnection con = new MySqlConnection(_configuration.GetConnectionString("DefaultConnection")))
             {
@@ -81,7 +82,7 @@ namespace backend.Repositories
                     {
                         while (await reader.ReadAsync())
                         {
-                            list.Add(new AverageScoreDto
+                            list.Add(new AverageScores
                             {
                                 StudentId = Convert.ToInt32(reader["student_id"]),
                                 TotalCompletedAssessments = Convert.ToInt32(reader["total_completed_assessments"]),
@@ -94,9 +95,9 @@ namespace backend.Repositories
 
             return list;
         }
-         public async Task<AssessmentScoreDto> GetAssessmentResultData(int studentId, int assessmentId)
+         public async Task<AssessmentScores> GetAssessmentResultData(int studentId, int assessmentId)
         {
-        AssessmentScoreDto report = new AssessmentScoreDto();
+        AssessmentScores report = new AssessmentScores();
 
         using (MySqlConnection con = new MySqlConnection(_configuration.GetConnectionString("DefaultConnection")))
         {

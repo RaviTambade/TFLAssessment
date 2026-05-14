@@ -1,5 +1,6 @@
 using MySql.Data.MySqlClient;
-using backend.DTOs;
+using backend.DTO.Requests;
+using backend.DTO.Responses;
 using backend.Repositories.Interfaces;
 using System.Data; // Fixes IDbConnection
 using Dapper;
@@ -19,9 +20,9 @@ namespace backend.Repositories.Implementations
                                             ?? throw new ArgumentNullException(nameof(configuration), "DefaultConnection string is missing");
         }
 
-        public async Task<QuestionsDto> GetQuestionDetailsWithAnswer(int questionId)
+        public async Task<Questions> GetQuestionDetailsWithAnswer(int questionId)
         {
-            QuestionsDto dto = null;
+            Questions dto = null;
 
             string query = @"
                     SELECT q.question_id,q.description AS question_description,q.question_type,q.difficulty_level,q.status,
@@ -47,7 +48,7 @@ namespace backend.Repositories.Implementations
                 {
                     if (await reader.ReadAsync())
                     {
-                        dto = new QuestionsDto
+                        dto = new Questions
                         {
                             QuestionId = Convert.ToInt32(reader["question_id"]),
 
@@ -73,7 +74,7 @@ namespace backend.Repositories.Implementations
                 return dto;
             }
         }
-        public async Task<IEnumerable<AssessmentQuestionAnswersDto>> GetStudentAssessmentQuestionsResultAsync(int assessmentId, int studentId)
+        public async Task<IEnumerable<AssessmentQuestionAnswers>> GetStudentAssessmentQuestionsResultAsync(int assessmentId, int studentId)
         {
             const string sql = @"
             SELECT 
@@ -109,7 +110,7 @@ namespace backend.Repositories.Implementations
 
             using (IDbConnection db = new MySqlConnection(_connectionString))
             {
-                return await db.QueryAsync<AssessmentQuestionAnswersDto>(sql, new
+                return await db.QueryAsync<AssessmentQuestionAnswers>(sql, new
                 {
                     AssessmentId = assessmentId,
                     StudentId = studentId
@@ -117,9 +118,9 @@ namespace backend.Repositories.Implementations
             }
         }
 
-        public async Task<QuestionDetailsDto> GetQuestionDetails(int questionId)
+        public async Task<QuestionDetails> GetQuestionDetails(int questionId)
         {
-            QuestionDetailsDto dto = null;
+            QuestionDetails dto = null;
 
             string connStr = _configuration.GetConnectionString("DefaultConnection");
 
@@ -155,7 +156,7 @@ namespace backend.Repositories.Implementations
                 {
                     if (await reader.ReadAsync())
                     {
-                        dto = new QuestionDetailsDto
+                        dto = new QuestionDetails
                         {
                             QuestionId = Convert.ToInt32(reader["question_id"]),
                             QuestionDescription = reader["question_description"]?.ToString(),

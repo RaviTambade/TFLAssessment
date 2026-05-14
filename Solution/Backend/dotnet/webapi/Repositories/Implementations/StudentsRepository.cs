@@ -1,5 +1,6 @@
 using MySql.Data.MySqlClient;
-using backend.DTOs;
+using backend.DTO.Requests;
+using backend.DTO.Responses;
 using backend.Repositories.Interfaces;
 using System.Threading.Tasks;
 
@@ -14,9 +15,9 @@ namespace backend.Repositories.Implementations
             _configuration = configuration;
         }
 
-        public async Task<StudentCountDto> GetTotalStudents()
+        public async Task<StudentCounts> GetTotalStudents()
         {
-            StudentCountDto dto = new StudentCountDto();
+            StudentCounts dto = new StudentCounts();
 
             string query = @"
                 SELECT COUNT(DISTINCT user_id) AS total_students

@@ -2,6 +2,7 @@ type MultipleChoiceQuestion  = {
     description: string;
     questionType: string;
     difficultyLevel: string;
+    status: string;
     language: string;
     layer: string;
     framework: string;

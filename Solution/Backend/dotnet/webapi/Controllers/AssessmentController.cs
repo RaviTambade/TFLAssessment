@@ -2,7 +2,8 @@ using Microsoft.AspNetCore.Mvc;
 using backend.Services.Interfaces;
 namespace backend.Controllers;
 
-using backend.DTOs;
+using backend.DTO.Responses;
+using backend.DTO.Requests;
 
 [ApiController]
 [Route("api/[controller]")]
@@ -65,7 +66,7 @@ public class AssessmentController : ControllerBase
     }
 
     [HttpPost("assigned")]
-    public async Task<IActionResult> AssignAssessmentAsync([FromBody] AssignAssessmentDto dto)
+    public async Task<IActionResult> AssignAssessmentAsync([FromBody] AssignAssessments dto)
     {
         try
         {
@@ -86,7 +87,7 @@ public class AssessmentController : ControllerBase
     }
 
     [HttpPost("submit")]
-    public async Task<IActionResult> SaveAssessmentAnswersAsync([FromBody] AssessmentAnswersDto submission)
+    public async Task<IActionResult> SaveAssessmentAnswersAsync([FromBody] AssessmentAnswers submission)
     {
         try
         {
@@ -116,7 +117,7 @@ public class AssessmentController : ControllerBase
         try
         {
 
-            var request = new AssessmentstudenttResultDto
+            var request = new AssessmentstudentsResults
             {
                 StudentId = studentId,
                 AssessmentId = assessmentId
@@ -141,9 +142,9 @@ public class AssessmentController : ControllerBase
     {
         var total = await _service.GetTotalAssessmentsAsync();
 
-        return Ok(new TotalAssessmentsDto
+        return Ok(new TotalAssessments
         {
-            TotalAssessments = total
+            TotalAssessment = total
         });
     }
 
@@ -152,9 +153,9 @@ public class AssessmentController : ControllerBase
     {
         var completed = await _service.GetCompletedAssessmentsAsync();
 
-        return Ok(new CompletedAssessmentsDto
+        return Ok(new CompletedAssessments
         {
-            CompletedAssessments = completed
+            CompletedAssessment = completed
         });
     }
     [HttpDelete("InActive/{id}")]

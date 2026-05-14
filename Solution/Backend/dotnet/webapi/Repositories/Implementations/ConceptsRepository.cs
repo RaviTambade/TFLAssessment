@@ -1,11 +1,12 @@
-
+using backend.DTO.Requests;
+using backend.DTO.Responses;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using backend.Models;
 
-namespace backend.Repositories
+namespace backend.Repositories.Interfaces
 {
-    public class ConceptsRepository : Interfaces.IConceptsRepository
+    public class ConceptsRepository : IConceptsRepository
     {
         private readonly AppDbContext _context;
 
@@ -19,12 +20,12 @@ namespace backend.Repositories
 
 
 
-    public async Task<List<ConceptDto>> GetConceptsAsync(List<long> frameworkIds)
+    public async Task<List<Concepts>> GetConceptsAsync(List<long> frameworkIds)
         {
             if (frameworkIds == null || frameworkIds.Count == 0)
             {
                 return await _context.Concepts
-                    .Select(x => new ConceptDto
+                    .Select(x => new Concepts
                     {
                         Id = x.Id,
                         Name = x.Name
@@ -35,7 +36,7 @@ namespace backend.Repositories
 
             return await _context.FrameworkConcepts
                 .Where(x => frameworkIds.Contains(x.FrameworkId ?? 0))
-                .Select(x => new ConceptDto
+                .Select(x => new Concepts
                 {
                     Id = x.Concept!.Id,
                     Name = x.Concept!.Name

@@ -1,12 +1,10 @@
-
-
-
-
+using backend.DTO.Requests;
+using backend.DTO.Responses;
 using backend.Repositories.Interfaces;
 
-namespace backend.Services
-{
-    public class ConceptsService : Interfaces.IConceptsService
+namespace backend.Services.Interfaces;
+
+    public class ConceptsService : IConceptsService
     {
         private readonly IConceptsRepository _repo;
 
@@ -16,9 +14,8 @@ namespace backend.Services
         }
 
 
-        public Task<List<ConceptDto>> GetConceptsAsync(List<long> frameworkIds)
+        public Task<List<Concepts>> GetConceptsAsync(List<long> frameworkIds)
             => _repo.GetConceptsAsync(frameworkIds);
 
         
     }
-}
