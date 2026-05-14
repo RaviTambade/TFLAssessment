@@ -8,17 +8,13 @@ class UserActivityRepository {
     this.connection.query(sql, [userid], callback);
   }
 
-  logout(userid, callback) {
+  logOut(userid, callback) {
     const sql = "UPDATE user_logs SET logout_time=now() WHERE user_id=? AND logout_time is null;";
     this.connection.query(sql, [userid], callback);
   }
 
   getTotalLogins24Hours(callback) {
-    const sql = `
-      SELECT COUNT(*) AS totalLogins24h
-      FROM user_logs
-      WHERE login_time >= NOW() - INTERVAL 1 DAY
-    `;
+    const sql = `SELECT COUNT(*) AS totalLogins24h FROM user_logs WHERE login_time >= NOW() - INTERVAL 1 DAY `;
     this.connection.query(sql, (err, results) => {
       if (err) return callback(err, null);
       callback(null, results[0]);
