@@ -10,17 +10,25 @@ class RolesRepository {
 
   insert(newRole, callback) {
     const sql = "insert into roles(role_name,description) values(?,?)";
-    this.connection.query(sql,[newRole.roleName, newRole.description],callback);
+    this.connection.query(
+      sql,
+      [newRole.roleName, newRole.description],
+      callback,
+    );
   }
 
   update(roleId, role, callback) {
     const sql = "UPDATE roles SET role_name=?, description=? WHERE role_id=?";
-    this.connection.query(sql, [role.roleName, role.description, roleId],callback);
+    this.connection.query(
+      sql,
+      [role.roleName, role.description, roleId],
+      callback,
+    );
   }
 
   getRoleById(roleId, callback) {
     const sql = "select * from roles where role_id =?";
-    this.connection.query(sql,[roleId], callback);
+    this.connection.query(sql, [roleId], callback);
   }
 
   /**************** changes expected node js team for getting roleid, rolename*********** */
@@ -41,15 +49,25 @@ class RolesRepository {
     const query = `SELECT role_id FROM user_roles WHERE user_id = ?`;
     this.connection.query(query, [userId], callback);
   }
+
   unAssignRole(userId, roleId, callback) {
     const deleteSql =
       "DELETE FROM user_roles WHERE user_id = ? AND role_id = ?";
     this.connection.query(deleteSql, [userId, roleId], callback);
   }
 
-  unAssignAllRolesToUserId(userId, callback) {
-    const deleteSql = "DELETE FROM user_roles WHERE user_id = ?";
-    this.connection.query(deleteSql, [userId], callback);
+  unAssignRoles(userId, roleIds, callback) {
+    if (!roleIds || roleIds.length === 0) {
+      return callback(null, { affectedRows: 0 });
+    }
+
+    const deleteSql = `
+    DELETE FROM user_roles
+    WHERE user_id = ?
+    AND role_id IN (?)
+  `;
+
+    this.connection.query(deleteSql, [userId, roleIds], callback);
   }
 
   assignRoles(userId, roleIds, callback) {
