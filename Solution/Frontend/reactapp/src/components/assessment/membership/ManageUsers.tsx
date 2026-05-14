@@ -36,6 +36,7 @@ const ManageUsers = () => {
   const [savingRolesFor, setSavingRolesFor] = useState<number | null>(null)
 
 
+  
   const getRoleIdsFromRoleString = (roleString?: string) => {
     if (!roleString) return []
     const names = roleString.split(/[,;|]/).map(s => s.trim())
@@ -49,33 +50,7 @@ const ManageUsers = () => {
     )
   }
 
-  const saveRoles = async (userId: number, roleIds: number[]) => {
-    setSavingRolesFor(userId)
-    setError(null)
-
-    try {
-      const res = await fetch(`${WEBAPI_NODE_URL}/roles/assignRoles/${userId}`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({roleIds: roleIds }),
-      })
-
-      if (!res.ok) throw new Error(`HTTP ${res.status}`)
-
-      updateLocalRoles(userId, roleIds)
-      setEditingUser(null)
-      setEditingRoles([])
-
-    } catch (err: unknown) {
-      console.error(err)
-      setError("Failed to save roles")
-    } finally {
-      setSavingRolesFor(null)
-    }
-  }
-
-  useEffect(() => {
-    const fetchUsers = async () => {
+   const fetchUsers = async () => {
       setLoading(true)
       setError(null)
 
@@ -103,34 +78,34 @@ const ManageUsers = () => {
           console.error("Payload is not an array:", payload)
           payload = []
         }
-const userMap = new Map<string, User>()
+        const userMap = new Map<string, User>()
 
-;(payload || []).forEach((u: ApiUser, i: number) => {
-  const name = u.full_name ?? "—"
-  const role = u.role_name ?? ""
+          ; (payload || []).forEach((u: ApiUser, i: number) => {
+            const name = u.full_name ?? "—"
+            const role = u.role_name ?? ""
 
-  if (userMap.has(name)) {
-    const existing = userMap.get(name)!
+            if (userMap.has(name)) {
+              const existing = userMap.get(name)!
 
-    // avoid duplicate roles
-    const rolesSet = new Set(
-      existing.role.split(",").map(r => r.trim()).filter(Boolean)
-    )
-    rolesSet.add(role)
+              // avoid duplicate roles
+              const rolesSet = new Set(
+                existing.role.split(",").map(r => r.trim()).filter(Boolean)
+              )
+              rolesSet.add(role)
 
-    existing.role = Array.from(rolesSet).join(", ")
-  } else {
-    userMap.set(name, {
-      id: u.user_id ?? i + 1,
-      name,
-      role,
-      joiningDate: u.created_at ?? "",
-      status: u.status ?? "",
-    })
-  }
-})
+              existing.role = Array.from(rolesSet).join(", ")
+            } else {
+              userMap.set(name, {
+                id: u.user_id ?? i + 1,
+                name,
+                role,
+                joiningDate: u.created_at ?? "",
+                status: u.status ?? "",
+              })
+            }
+          })
 
-const mapped: User[] = Array.from(userMap.values())
+        const mapped: User[] = Array.from(userMap.values())
 
         setUsers(mapped)
 
@@ -141,6 +116,88 @@ const mapped: User[] = Array.from(userMap.values())
         setLoading(false)
       }
     }
+
+  const assignRoles = async (userId: number, roleIds: number[]) => {
+    setSavingRolesFor(userId)
+    setError(null)
+
+    try {
+      const res = await fetch(`${WEBAPI_NODE_URL}/roles/assignRoles/${userId}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ roleIds: roleIds }),
+      })
+
+      if (!res.ok) throw new Error(`HTTP ${res.status}`)
+
+      await fetchUsers();
+      setEditingUser(null)
+      setEditingRoles([])
+
+    } catch (err: unknown) {
+      console.error(err)
+      setError("Failed to save roles")
+    } finally {
+      setSavingRolesFor(null)
+    }
+  }
+
+
+
+  const unAssignRoles = async (userId: number, roleIds: number[]) => {
+    setSavingRolesFor(userId)
+    setError(null)
+
+    try { 
+      const res = await fetch(`${WEBAPI_NODE_URL}/roles/unAssignRoles/${userId}`, {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ roleIds: roleIds }),
+      })
+
+      if (!res.ok) throw new Error(`HTTP ${res.status}`)
+
+      // updateLocalRoles(userId, roleIds)
+      await fetchUsers();
+      setEditingUser(null)
+      setEditingRoles([])
+
+    } catch (err: unknown) {
+      console.error(err)
+      setError("Failed to save roles")
+    } finally {
+      setSavingRolesFor(null)
+    }
+  }
+
+  const handleUserRole=(id: number, roleString: string)=>{
+    const existingRoleIds = getRoleIdsFromRoleString(roleString)
+
+    console.log(existingRoleIds)
+    const existinguserrole=editingRoles;
+    // roles added
+    const addedRoles = existinguserrole.filter(
+      id => !existingRoleIds.includes(id)
+    )
+    // roles removed
+    const removedRoles = existingRoleIds.filter(
+      id => !existinguserrole.includes(id)
+    )
+    // assign new roles
+    if (addedRoles.length > 0) {
+      assignRoles(id, addedRoles)
+    }
+
+    // unassign removed roles
+    if (removedRoles.length > 0) {
+      unAssignRoles(id, removedRoles)
+    }
+
+
+  }
+
+  useEffect(() => {
+   
 
     fetchUsers()
   }, [])
@@ -231,11 +288,10 @@ const mapped: User[] = Array.from(userMap.values())
                               {roles.map((r, idx) => (
                                 <span key={r.id}>
                                   <span
-                                    className={`cursor-pointer px-2 py-1 rounded ${
-                                      editingRoles.includes(r.id)
+                                    className={`cursor-pointer px-2 py-1 rounded ${editingRoles.includes(r.id)
                                         ? 'bg-blue-100 text-blue-800 font-semibold'
                                         : 'text-gray-600 hover:bg-gray-100'
-                                    }`}
+                                      }`}
                                     onClick={() => {
                                       setEditingRoles(prev =>
                                         prev.includes(r.id)
@@ -252,8 +308,8 @@ const mapped: User[] = Array.from(userMap.values())
                             </div>
 
                             <div>
-                              
-                              <Button onClick={() => saveRoles(user.id, editingRoles)}>
+
+                              <Button onClick={() => handleUserRole(user.id, user.role)}>
                                 Save
                               </Button>
                               <Button onClick={() => {
