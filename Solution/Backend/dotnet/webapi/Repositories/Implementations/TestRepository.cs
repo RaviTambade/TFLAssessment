@@ -1,4 +1,3 @@
-using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using backend.Models;
 using MySql.Data.MySqlClient;
@@ -75,56 +74,6 @@ namespace backend.Repositories
 
         return true;
     }
-
-
-    // public async Task<long> CreateTestAsync(CreateTestRequests dto)
-    //     {
-
-    //          if (dto.SmeId <= 0)
-    //     throw new ArgumentException("SmeId must be supplied and greater than 0.");
-
-    // var smeExists = await _context.SmeRuntimes
-    //                    .AnyAsync(sr => sr.SmeRuntimeId == dto.SmeId);
-    // if (!smeExists)
-    //     throw new ArgumentException($"SmeRuntime with id {dto.SmeId} not found.");
-
-    //         var test = new Test
-    //         {
-    //             Title = dto.Title,
-    //             Duration = (int)dto.Duration,
-    //     Difficulty = dto.SkillLevel,
-    //     SmeRuntimeId = dto.SmeId,
-    //      Description = dto.Description, 
-    //             CreatedAt = DateTime.Now,
-    //             Status = true
-    //         };
-
-    //         _context.Tests.Add(test);
-    //         await _context.SaveChangesAsync();
-
-    //         long seq = 1;
-
-    //         if (dto.QuestionIds != null)
-    //         {
-    //             foreach (var q in dto.QuestionIds)
-    //         {
-    //             _context.TestQuestions.Add(new TestQuestion
-    //             {
-    //                     TestId = test.Id,
-    //                     QuestionId = q,
-    //                     SequenceOrder = (int)seq++
-    //             });
-    //         }
-    //         }
-
-    //         await _context.SaveChangesAsync();
-
-    //         return test.Id;
-    //     }
-    // }
-
-
-
 
 
 public async Task<long> CreateTestAsync(CreateTestRequests dto)

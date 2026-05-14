@@ -19,7 +19,7 @@ namespace backend.Controllers
             _context = context;
         }
 
-        [HttpGet("~/api/questions/concepts/{conceptId}/questions")]
+        [HttpGet("/api/questions/concepts/{conceptId}/questions")]
         public async Task<IActionResult> GetQuestionsByConcept(long conceptId)
         {
             var result = await _context.QuestionFrameworkConcepts
@@ -39,6 +39,7 @@ namespace backend.Controllers
 
             return Ok(result);
         }
+        
 
        
         [HttpGet("{assessmentId}/student/{studentId}")]
