@@ -25,6 +25,33 @@ namespace backend.Services.Implementations
             return await _repository.GetQuestionDetails(questionId);
         }
 
+        public async Task<List<string>> GetAllConcepts()
+        {
+            return await _repository.GetAllConcepts();
+        }
+        
+
+
+           public async Task<List<string>> GetAllConcepts()
+        {
+            
+        }
+           public async Task<List<string>> GetAllLanguages()
+        {
+            
+        }
+            public async Task<List<string>> GetAllFrameworks()
+        {
+            
+        }
+            public async Task<List<string>> GetAllLayers()
+        {
+            
+        }
+            public async Task<List<string>> GetAllQuestionTypes();
+        T   public async ask<List<string>> GetAllQuestionByStatus(string status);
+         
+
         public async Task<IEnumerable<AssessmentQuestionAnswers>> GetStudentAssessmentQuestionsResultAsync(int assessmentId, int studentId)
         {
             if (assessmentId <= 0 || studentId <= 0)
