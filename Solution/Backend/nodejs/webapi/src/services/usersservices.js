@@ -1,4 +1,3 @@
-const { json } = require("body-parser");
 
 class UsersServices {
   constructor(usersRepository) {

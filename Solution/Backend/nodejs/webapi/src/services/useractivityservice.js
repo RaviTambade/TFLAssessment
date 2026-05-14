@@ -39,7 +39,7 @@ class UserActivityService {
     });
   }
 
-  getAllUserActivity(name,callback) {
+  getAllUserActivity(name, callback) {
     this.repository.getAllUserActivity(name,callback);
   }
 }

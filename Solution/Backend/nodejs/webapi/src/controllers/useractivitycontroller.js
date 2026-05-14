@@ -1,7 +1,3 @@
-const LoginStatsResponseDto = require("../dtos/responses/loggerlogin-statsresponsedto");
-const AvgSessionResponseDto = require("../dtos/responses/loggeravg-sessionresponsedto");
-const ActiveSessionsResponseDto = require("../dtos/responses/loggeractive-sessionsresponsedto");
-const ActiveUsersResponseDto = require("../dtos/responses/loggeractive-usersresponsedto");
 const UserActivityRequestDto = require("../dtos/requests/useractivityrequestdto");
 const ResponseGenerator = require("../helpers/responseGenerator");
 
@@ -29,7 +25,7 @@ class UserActivityController {
     });
   };
 
-  logout  (req, res) {
+  logout (req, res) {
     const userId = req.params.userId;
     const responseGenerator = new ResponseGenerator();
 
@@ -84,7 +80,7 @@ class UserActivityController {
   getTotalActiveSessionsCount (req, res)  {
     const responseGenerator = new ResponseGenerator();
 
-    this.service.getTotalActiveSessions((err, result) => {
+    this.service.getTotalActiveSessionsCount((err, result) => {
       const activeSessions = {
         totalActiveSessions: result?.activeSessions || 0,
         timestamp: new Date().toISOString(),
