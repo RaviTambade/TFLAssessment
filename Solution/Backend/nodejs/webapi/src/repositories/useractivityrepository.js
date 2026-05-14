@@ -13,7 +13,7 @@ class UserActivityRepository {
     this.connection.query(sql, [userid], callback);
   }
 
-  getTotalLogins24Hours(callback) {
+  getTotalLogins24Hours(callback) { 
     const sql = `
       SELECT COUNT(*) AS totalLogins24h
       FROM user_logs
@@ -33,16 +33,17 @@ class UserActivityRepository {
         FROM user_logs
         WHERE logout_time IS NOT NULL
         ORDER BY login_time DESC
-        LIMIT 20
-      ) AS last20
+        LIMIT 50
+      ) AS last50
     `;
     this.connection.query(sql, (err, results) => {
       if (err) return callback(err, null);
       callback(null, results[0]);
     });
+    
   }
 
-  getTotalActiveSessions(callback) {
+  getTotalActiveSessionsCount(callback) {
     const sql = `
       SELECT COUNT(*) AS activeSessions
       FROM user_logs
