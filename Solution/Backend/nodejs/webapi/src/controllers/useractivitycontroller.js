@@ -1,7 +1,4 @@
-const LoginStatsResponseDto = require("../dtos/responses/loggerlogin-statsresponsedto");
 const AvgSessionResponseDto = require("../dtos/responses/loggeravg-sessionresponsedto");
-const ActiveSessionsResponseDto = require("../dtos/responses/loggeractive-sessionsresponsedto");
-const ActiveUsersResponseDto = require("../dtos/responses/loggeractive-usersresponsedto");
 const UserActivityRequestDto = require("../dtos/requests/useractivityrequestdto");
 const ResponseGenerator = require("../helpers/responseGenerator");
 
