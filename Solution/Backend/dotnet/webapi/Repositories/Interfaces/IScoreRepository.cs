@@ -1,13 +1,13 @@
-using backend.DTOs;
-using System.Threading.Tasks;
+using backend.DTO.Responses;
+
 
 namespace backend.Repositories.Interfaces
 {
     public interface IScoreRepository
     {
-        Task<AverageScoreDto> GetAverageScoreByIdAsync(int studentId);
-        Task<List<AverageScoreDto>> GetAllStudentsAverageScoreAsync();
-        Task<AssessmentScoreDto> GetAssessmentResultData(int studentId, int assessmentId);
+        Task<AverageScores> GetAverageScoreByIdAsync(int studentId);
+        Task<List<AverageScores>> GetAllStudentsAverageScoreAsync();
+        Task<AssessmentScores> GetAssessmentResultData(int studentId, int assessmentId);
 
     }
 }

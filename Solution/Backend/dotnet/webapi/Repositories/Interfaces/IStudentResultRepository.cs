@@ -1,11 +1,11 @@
-using backend.DTOs;
+using backend.DTO.Responses;
 
 namespace backend.Repositories.Interfaces
 {
     public interface IStudentResultRepository
     {
-        Task<List<StudentResultDto>> GetStudentResultsAsync();
+        Task<List<StudentResults>> GetStudentResultsAsync();
     
-       Task<StudentAnswersResultDto> GetStudentAnswerResultAsync(int questionId, int studentId, int assessmentId);
+       Task<StudentAnswersResults> GetStudentAnswerResultAsync(int questionId, int studentId, int assessmentId);
 }
 }

@@ -48,8 +48,8 @@ builder.Services.AddScoped<IRuntimesRepository, RuntimesRepository>();
 builder.Services.AddScoped<ILanguagesService, LanguagesService>();
 builder.Services.AddScoped<ILanguagesRepository, LanguagesRepository>();
 
-builder.Services.AddScoped<ILayersService, LayersService>();
-builder.Services.AddScoped<ILayersRepository, LayersRepository>();
+// builder.Services.AddScoped<ILayersService, LayersService>();
+// builder.Services.AddScoped<ILayersRepository, LayersRepository>();
 
 builder.Services.AddScoped<IStudentsRepository, StudentsRepository>();
 builder.Services.AddScoped<IStudentsService, StudentsService>();

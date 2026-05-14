@@ -4,7 +4,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using backend.Models;
-using backend.DTOs;
+using backend.DTO.Requests;
+using backend.DTO.Responses;
+
 
 [Route("api/[controller]")]
 [ApiController]
@@ -36,7 +38,7 @@ public class CreateTestController : ControllerBase
 
     [HttpPost("create")]
     //http://localhost:5201/api/CreateTest/create
-    public async Task<IActionResult> CreateTest([FromBody] CreateTestRequestDto dto)
+    public async Task<IActionResult> CreateTest([FromBody] CreateTestRequests dto)
     {
         var id = await _service.CreateTestAsync(dto);
         return Ok(new { TestId = id });
@@ -63,7 +65,7 @@ public class CreateTestController : ControllerBase
     
     
     [HttpPost("add-questions")]
-    public async Task<IActionResult> AddQuestionsToTest([FromBody] AddQuestionsToTestRequestDto request, [FromQuery] long testId)
+    public async Task<IActionResult> AddQuestionsToTest([FromBody] AddQuestionsToTestRequest request, [FromQuery] long testId)
     {
         try
         {

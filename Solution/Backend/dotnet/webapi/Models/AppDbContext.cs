@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using backend.DTOs;
+using backend.DTO.Requests;
+using backend.DTO.Responses;
+using backend.Models;
 using Microsoft.EntityFrameworkCore;
 using Pomelo.EntityFrameworkCore.MySql.Scaffolding.Internal;
 
@@ -115,8 +117,8 @@ public partial class AppDbContext : DbContext
 
     public virtual DbSet<StudentAnswer> StudentAnswers { get; set; }
 
-    public DbSet<AssessmentQuestionDto> AssessmentQuestionResults { get; set; }
-    public DbSet<AssessmentReportDto> StudentAssessmentReports { get; set; }
+    public DbSet<AssessmentQuestions> AssessmentQuestionResults { get; set; }
+    public DbSet<AssessmentReports> StudentAssessmentReports { get; set; }
 
     
 
@@ -1126,16 +1128,16 @@ public partial class AppDbContext : DbContext
                 .HasForeignKey(d => d.UserId)
                 .HasConstraintName("user_roles_ibfk_1");
         });
-        modelBuilder.Entity<AssessmentQuestionDto>(entity =>
+        modelBuilder.Entity<AssessmentQuestions>(entity =>
         {
             entity.HasNoKey(); // DTOs don't have Primary Keys
             entity.ToView(null); // Tells EF there is no physical table for this
         });
 
-        modelBuilder.Entity<AssessmentAnswersDto>()
+        modelBuilder.Entity<AssessmentAnswers>()
                 .ToTable("studentanswers");
 
-        modelBuilder.Entity<AssessmentReportDto>()
+        modelBuilder.Entity<AssessmentReports>()
                 .HasNoKey()      // no primary key
                 .ToView(null);
 

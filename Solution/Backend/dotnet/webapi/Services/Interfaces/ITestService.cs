@@ -1,11 +1,12 @@
-using backend.DTOs;
+using backend.DTO.Requests;
+using backend.DTO.Responses;
 
 namespace backend.Services.Interfaces
 {
     public interface ICreateTestService
     {
-        Task<List<QuestionsDto>> GetQuestionsByConceptAsync(string concept);
-        Task<long> CreateTestAsync(CreateTestRequestDto dto);
+        Task<List<Questions>> GetQuestionsByConceptAsync(string concept);
+        Task<long> CreateTestAsync(CreateTestRequests dto);
         Task<bool> CancelTestAsync(int id);
         
     }

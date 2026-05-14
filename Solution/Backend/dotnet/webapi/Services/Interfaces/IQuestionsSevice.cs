@@ -1,13 +1,14 @@
-using backend.DTOs;
+using backend.DTO.Requests;
+using backend.DTO.Responses;
 using System.Threading.Tasks;
 
 namespace backend.Services.Interfaces
 {
     public interface IQuestionsService
     {
-        Task<QuestionsDto> GetQuestionDetailsWithAnswer(int questionId);
-        Task<IEnumerable<AssessmentQuestionAnswersDto>> GetStudentAssessmentQuestionsResultAsync(int assessmentId, int studentId);
+        Task<Questions> GetQuestionDetailsWithAnswer(int questionId);
+        Task<IEnumerable<AssessmentQuestionAnswers>> GetStudentAssessmentQuestionsResultAsync(int assessmentId, int studentId);
 
-        Task<QuestionDetailsDto> GetQuestionDetails(int questionId);
+        Task<QuestionDetails> GetQuestionDetails(int questionId);
     }
 }
