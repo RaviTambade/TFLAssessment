@@ -27,10 +27,9 @@ namespace backend.Services.Implementations
  
 
 
-        public async Task<List<string>> GetAllConcepts()
+        public async Task<List<Dictionary<string, object>>> GetAllConcepts()
         {
-          return await Task.FromResult(new List<string>());
-
+            return await _repository.GetAllConcepts();
         }
            public async Task<List<string>> GetAllLanguages()
         {
