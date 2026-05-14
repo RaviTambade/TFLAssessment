@@ -87,7 +87,7 @@ const UserProfile = () => {
     }
 
     try {
-      const res = await fetch( `${WEBAPI_NODE_URL}/users/${userid}/personal/`);
+      const res = await fetch( `${WEBAPI_NODE_URL}/users/${userid}/personal`);
       const data = await res.json();
       console.log("API RESPONSE:", data);
 
@@ -129,7 +129,7 @@ const UserProfile = () => {
     }
 
     try {
-      const res = await fetch(`${WEBAPI_NODE_URL}/users/${userid}/professional/`);
+      const res = await fetch(`${WEBAPI_NODE_URL}/users/${userid}/professional`);
 
       const data = await res.json();
       console.log("API RESPONSE:", data);
@@ -167,7 +167,7 @@ const UserProfile = () => {
     }
 
     try {
-      const res = await fetch(`${WEBAPI_NODE_URL}/users/${userid}/academic/`);
+      const res = await fetch(`${WEBAPI_NODE_URL}/users/${userid}/academic`);
 
       const data = await res.json();
       console.log("API RESPONSE:", data);
@@ -199,6 +199,7 @@ const UserProfile = () => {
   }, []);
 
   useEffect(() => {
+    if (!userId) return;
 
     fetch(`${WEBAPI_NODE_URL}/roles/getUserByRole/${userId}`) 
       .then(res => {
@@ -215,7 +216,7 @@ const UserProfile = () => {
         setLoading(false);
       })
       .catch(err => {
-        setError(err.message);
+        console.error("Failed to fetch roles:", err);
         setLoading(false);
       });
 
@@ -255,7 +256,7 @@ const UserProfile = () => {
       if (!storedUser) return;
       const user = JSON.parse(storedUser);
       const userid = user?.userid;
-      const response = await fetch(`http://localhost:3000/api/users/${userid}/${endpoint}`,
+      const response = await fetch(`${WEBAPI_NODE_URL}/users/${userid}/${endpoint}`,
         {
           method: "PATCH",
           headers: {

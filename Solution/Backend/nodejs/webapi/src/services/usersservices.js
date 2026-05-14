@@ -5,24 +5,22 @@ class UsersServices {
     this.repository = usersRepository;
   }
 
-  getUserInformationById(userId, callback) {
-    this.repository.getUserInformationById(Number(userId), callback);
+  getUserDetailsById(userId, callback) {
+    this.repository.getUserDetailsById(Number(userId), callback);
   }
 
-  getUserCompleteInformation(userId, callback) {
-    this.repository.getUserCompleteInformation(userId, callback);
+
+
+  getUserPersonalDetails(userId, callback) {
+    this.repository.getUserPersonalDetails(userId, callback);
   }
 
-  getUserPersonalInformation(userId, callback) {
-    this.repository.getUserPersonalInformation(userId, callback);
+  getUserAcademicDetails(userId, callback) {
+    this.repository.getUserAcademicDetails(userId, callback);
   }
 
-  getUserAcademicInformation(userId, callback) {
-    this.repository.getUserAcademicInformation(userId, callback);
-  }
-
-  getUserProfessionalInformation(userId, callback) {
-    this.repository.getUserProfessionalInformation(userId, callback);
+  getUserProfessionalDetails(userId, callback) {
+    this.repository.getUserProfessionalDetails(userId, callback);
   }
 
   filterFields(data) {
@@ -37,46 +35,46 @@ class UsersServices {
     return filtered;
   }
 
-  updateUserPersonalInformation(userId, data, callback) {
+  updateUserPersonalDetails(userId, data, callback) {
     const filteredData = this.filterFields(data);
-    this.repository.updateUserPersonalInformation(userId, filteredData, callback);
+    this.repository.updateUserPersonalDetails(userId, filteredData, callback);
   }
 
-  updateUserProfessionalInformation(userId, data, callback) {
+  updateUserProfessionalDetails(userId, data, callback) {
     const filteredData = this.filterFields(data);
-    this.getUserProfessionalInformation(userId, (err, result) => {
+    this.getUserProfessionalDetails(userId, (err, result) => {
       if (err) return callback(err, null);
       if (result) {
-        this.repository.updateUserProfessionalInformation(userId, filteredData, callback);
+        this.repository.updateUserProfessionalDetails(userId, filteredData, callback);
       }
       else {
-        this.insertUserProfessionalInformation(userId, filteredData, callback);
+        this.insertUserProfessionalDetails(userId, filteredData, callback);
       }
     })
   }
 
-  updateUserAcademicInformation(userId, data, callback) {
+  updateUserAcademicDetails(userId, data, callback) {
     const filteredData = this.filterFields(data);
-    this.getUserAcademicInformation(userId, (err, result) => {
+    this.getUserAcademicDetails(userId, (err, result) => {
       if (err) return callback(err, null);
       if (result) {
-        this.repository.updateUserAcademicInformation(userId, filteredData, callback);
+        this.repository.updateUserAcademicDetails(userId, filteredData, callback);
       }
       else {
 
-        this.insertUserAcademicInformation(userId, filteredData, callback);
+        this.insertUserAcademicDetails(userId, filteredData, callback);
       }
     });
   }
 
 
-  insertUserProfessionalInformation(userId, data, callback) {
-    this.repository.insertUserProfessionalInformation(userId, data, callback);
+  insertUserProfessionalDetails(userId, data, callback) {
+    this.repository.insertUserProfessionalDetails(userId, data, callback);
   }
 
-  insertUserAcademicInformation(userId, data, callback) {
+  insertUserAcademicDetails(userId, data, callback) {
 
-    this.repository.insertUserAcademicInformation(userId, data, callback);
+    this.repository.insertUserAcademicDetails(userId, data, callback);
   }
 
 
