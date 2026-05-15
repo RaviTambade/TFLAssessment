@@ -5,31 +5,24 @@ import java.time.LocalDateTime;
 import com.transflower.tflcomentor.ecm.entity.enums.InterviewStatus;
 
 public class ScheduleInterview {
-    private int applicationId;
     private LocalDateTime scheduleAt;
     private String mode;
     private InterviewStatus status;
     private LocalDateTime createdAt;
     private int interviewer;
+    private int studentId;
 
     public ScheduleInterview(){
 
     }
 
-    public ScheduleInterview(int applicationId,LocalDateTime scheduleAt,String mode,InterviewStatus status,LocalDateTime createdAt,int interviewer){
-        this.applicationId=applicationId;
+    public ScheduleInterview(LocalDateTime scheduleAt,String mode,InterviewStatus status,LocalDateTime createdAt,int interviewer,int studentId){
         this.scheduleAt=scheduleAt;
         this.mode=mode;
         this.status=status;
         this.createdAt=createdAt;
         this.interviewer=interviewer;
-    }
-
-    public int getApplicationId() {
-        return applicationId;
-    }
-    public void setApplicationId(int applicationId) {
-        this.applicationId = applicationId;
+        this.studentId=studentId;
     }
 
     public LocalDateTime getScheduleAt() {
@@ -65,6 +58,12 @@ public class ScheduleInterview {
     }
     public void setInterviewer(int interviewer) {
         this.interviewer = interviewer;
+    }
+    public int getStudentId() {
+        return studentId;
+    }
+    public void setStudentId(int studentId) {
+        this.studentId = studentId;
     }
 
 }
