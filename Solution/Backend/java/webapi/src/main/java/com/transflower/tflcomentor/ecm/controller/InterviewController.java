@@ -1,0 +1,53 @@
+package com.transflower.tflcomentor.ecm.controller;
+import com.transflower.tflcomentor.configuration.DBConfig;
+import com.transflower.tflcomentor.ecm.dto.response.InterviewList;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import com.transflower.tflcomentor.ecm.dto.response.InterviewList;
+
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
+
+@CrossOrigin(origins = "*", allowedHeaders = "*")
+@RestController
+@RequestMapping("/api/interview")
+public class InterviewController{
+
+    private Connection getConnection() throws Exception {
+            return DBConfig.getConnection();
+    }
+
+    @GetMapping()
+    public List<InterviewList> getAllInterviewList() {
+          List<InterviewList> interviewList = new ArrayList<>();
+
+            try{
+                Connection connection=getConnection();
+                String query = """
+                    SELECT i.interview_id, jd.title 
+                    FROM interviews i
+                    JOIN job_applications ja ON i.application_id = ja.id
+                    JOIN job_descriptions jd ON ja.job_id = jd.job_id
+                """;
+
+                PreparedStatement statement=connection.prepareStatement(query);
+                    ResultSet rs=statement.executeQuery();
+                    while(rs.next()){
+                        InterviewList list=new InterviewList();
+                        list.setInterviewId(rs.getInt("interview_id"));
+                        list.setTitle(rs.getString("title"));
+                        interviewList.add(list);
+                    }
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+            return interviewList;
+    }
+
+}
