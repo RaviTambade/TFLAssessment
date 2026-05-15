@@ -5,6 +5,7 @@ using backend.Repositories.Interfaces;
 using System.Data; // Fixes IDbConnection
 using Dapper;
 using System.Threading.Tasks;
+using System.Data.SqlClient;
 
 namespace backend.Repositories.Implementations
 {
@@ -18,6 +19,46 @@ namespace backend.Repositories.Implementations
             _configuration = configuration;
             _connectionString = _configuration.GetConnectionString("DefaultConnection")
                                             ?? throw new ArgumentNullException(nameof(configuration), "DefaultConnection string is missing");
+        }
+
+         public async Task<List<Dictionary<string, object>>> GetAllConcepts()
+        {
+            List<Dictionary<string, object>> concepts = new List<Dictionary<string, object>>();
+
+            
+            string connectionString = "server=192.168.1.149;port=3306;database=tflcomentor_db;user=root;password='password'";
+            string query = "SELECT question_id, concept FROM questions";
+
+            using (MySqlConnection con = new MySqlConnection(connectionString))
+            {
+                await con.OpenAsync();
+
+                // Create command
+                MySqlCommand cmd = new MySqlCommand(query, con);
+
+                // Execute query
+                MySqlDataReader reader = (MySqlDataReader)await cmd.ExecuteReaderAsync();
+
+                // Read rows
+                while (await reader.ReadAsync())
+                {
+                    // Create dictionary
+                    Dictionary<string, object> data = new Dictionary<string, object>();
+
+                    // Add values
+                    data["question_id"] = reader["question_id"];
+                    data["concept"] = reader["concept"];
+
+                    // Add into list
+                    concepts.Add(data);
+                }
+
+                // Close reader
+                reader.Close();
+            }
+
+            // Return list
+            return concepts;
         }
 
         public async Task<Questions> GetQuestionDetailsWithAnswer(int questionId)

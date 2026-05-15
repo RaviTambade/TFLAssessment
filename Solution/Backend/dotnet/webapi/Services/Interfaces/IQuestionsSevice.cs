@@ -9,7 +9,7 @@ namespace backend.Services.Interfaces
         Task<Questions> GetQuestionDetailsWithAnswer(int questionId);
         Task<IEnumerable<AssessmentQuestionAnswers>> GetStudentAssessmentQuestionsResultAsync(int assessmentId, int studentId);
 
-        Task<List<string>> GetAllConcepts();
+         Task<List<Dictionary<string, object>>> GetAllConcepts();
         Task<List<string>> GetAllLanguages();
          Task<List<string>> GetAllFrameworks();
          Task<List<string>> GetAllLayers();

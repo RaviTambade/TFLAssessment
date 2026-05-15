@@ -6,8 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../..
 import { WEBAPI_DOTNET_URL } from "@/lib/utils";
 
 type Concept = {
-  id: number;
-  name: string;
+   concept: string;
 };
 
 type Question = {
@@ -26,7 +25,7 @@ const SMECreateTest = () => {
   const [duration, setDuration] = useState("");
 
   const [selectedQuestions, setSelectedQuestions] = useState<number[]>([]);
-  const [selectedConcept, setSelectedConcept] = useState<number>(1);
+  const [selectedConcept, setSelectedConcept] = useState<string>("");
 
   const [concepts, setConcepts] = useState<Concept[]>([]);
   // const [selectedConcept, setSelectedConcept] = useState("");
@@ -64,7 +63,7 @@ const SMECreateTest = () => {
         const technologyId = 1;
 
         const response = await fetch(
-          `${WEBAPI_DOTNET_URL}/Assessment/technologies/${technologyId}/concepts`
+          `${WEBAPI_DOTNET_URL}/Questions/concepts`
         );
 
         console.log("Concept API Status:", response.status);
@@ -81,8 +80,18 @@ const SMECreateTest = () => {
         console.log("Concepts:", data);
 
         setConcepts(Array.isArray(data) ? data : []);
+      
+      
+      
+        if (data.length > 0) {
+          setSelectedConcept(data[0].concept);
+        }
       } catch (err) {
-        console.error("Error loading concepts:", err);
+        console.error(
+          "Error loading concepts:",
+          err
+        );
+
         setError("Failed to load concepts.");
       } finally {
         setLoading(false);
@@ -91,6 +100,7 @@ const SMECreateTest = () => {
 
     void fetchConcepts();
   }, []);
+
 
   // ==========================
   // FETCH QUESTIONS
@@ -270,20 +280,27 @@ const SMECreateTest = () => {
             {/* CONCEPT DROPDOWN */}
             <div className="space-y-2">
               <Label>Select Concept</Label>
-
-              <select
-                className="w-full border rounded-md p-2"
-                value={selectedConcept}
-                onChange={(e) =>
-                  setSelectedConcept(Number(e.target.value))
-                }
-              >
-                {concepts.map((concept) => (
-                  <option key={concept.id} value={concept.id}>
-                    {concept.name}
-                  </option>
-                ))}
-              </select>
+              <div className="relative">
+                <select
+                  className="w-full border border-gray-300 rounded-md p-2.5 pr-10 bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+                  value={selectedConcept}
+                  onChange={(e) => setSelectedConcept(e.target.value)}
+                  required
+                >
+                  <option value="">Select Concept</option>
+                  {concepts.map((concept, index) => (
+                    <option key={index} value={concept.concept}>
+                      {concept.concept}
+                    </option>
+                  ))}
+                </select>
+                {/* Custom dropdown arrow */}
+                <span className="pointer-events-none absolute inset-y-0 right-3 flex items-center text-gray-400">
+                  <svg className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                  </svg>
+                </span>
+              </div>
             </div>
 
             {/* QUESTIONS */}

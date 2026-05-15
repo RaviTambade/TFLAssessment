@@ -25,7 +25,28 @@ namespace backend.Controllers
         //      return await Task.FromResult(new List<string>());
         // }
 
+
+
+        [HttpGet("concepts")]
+        public async Task<IActionResult> GetAllConcepts()
+        {
+            var result = await _service.GetAllConcepts();
+
+            if (result == null || result.Count == 0)
+            {
+                return NotFound(new
+                {
+                    message = "No concepts found"
+                });
+            }
+
+            return Ok(result);
+        }
+
        
+
+
+
         [HttpGet("{assessmentId}/student/{studentId}")]
         public async Task<IActionResult> GetStudentAssessmentQuestionsResultAsync(int assessmentId, int studentId)
         {
