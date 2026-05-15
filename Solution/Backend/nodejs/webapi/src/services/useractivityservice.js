@@ -26,7 +26,7 @@ class UserActivityService {
   }
 
   getTotalActiveSessionsCount(callback) {
-    this.repository.getTotalActiveSessions((err, result) => {
+    this.repository.getTotalActiveSessionsCount((err, result) => {
       if (err) return callback(err, null);
       callback(null, result);
     });

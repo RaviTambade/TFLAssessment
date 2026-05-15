@@ -8,7 +8,7 @@ class UserActivityRepository {
     this.connection.query(sql, [userid], callback);
   }
 
-  logOut(userid, callback) {
+  logout(userid, callback) {
     const sql = "UPDATE user_logs SET logout_time=now() WHERE user_id=? AND logout_time is null;";
     this.connection.query(sql, [userid], callback);
   }
@@ -74,7 +74,7 @@ class UserActivityRepository {
   getAllUserActivity(name, callback) {
     let sql = `
       SELECT
-        us.id AS session_id,
+        u.id AS session_id,
         ul.user_id,
         CONCAT(p.first_name,' ', p.last_name) AS full_name,
         r.role_name AS role,
