@@ -8,7 +8,6 @@ class RolesController {
 
   getAllRoles(req, res) {
     const responseGenerator = new ResponseGenerator();
-
     this.service.getAllRoles((err, result) => {
       responseGenerator.generateResponse(
         res,
@@ -22,9 +21,7 @@ class RolesController {
 
   insert(req, res) {
     const responseGenerator = new ResponseGenerator();
-
     const role = new RoleRequestDto(req.body.roleName, req.body.description);
-
     this.service.insert(role, (err, result) => {
       responseGenerator.generateResponse(
         res,
@@ -39,9 +36,7 @@ class RolesController {
   update(req, res) {
     const id = req.params.id;
     const responseGenerator = new ResponseGenerator();
-
     const role = new RoleRequestDto(req.body.roleName, req.body.description);
-
     this.service.update(id, role, (err, result) => {
       responseGenerator.generateResponse(
         res,
@@ -52,38 +47,35 @@ class RolesController {
       );
     });
   }
-
   
-  getUserRoleByUserId(req, res) {
+  getUserRolesByUserId(req, res) {
     const id = req.params.userId;
     const responseGenerator = new ResponseGenerator();
-
-    this.service.getUserRoleByUserId(id, (err, result) => {
+    this.service.getUserRolesByUserId(id, (err, result) => {
       responseGenerator.generateResponse(
         res, 
         err, 
         result, 
-        "Failed to get user roles", 
-        "User roles retrieved successfully");
+        "Failed to get user's roles", 
+        "User's roles retrieved successfully");
     });
   }
 
-
-  getUserByRole(req, res) {
-    const userId = req.params.userId;
+  getUsersByRoleId(req, res) {
+    console.log("IN getUsersByRoleId", req.params);
+    const roleId = req.params.roleId;
     const responseGenerator = new ResponseGenerator();
-    this.service.getUserByRole(userId, (err, result) => {
+    this.service.getUsersByRoleId(roleId, (err, result) => {
       responseGenerator.generateResponse(
         res,
         err,
         result,
-        "Failed to get user by role",
-        "User retrieved successfully",
+        "Failed to get users by role",
+        "Users retrieved successfully",
       );
     });
   }
 
-  
   assignRole(req, res) {
     const userId = req.params.userId;
     const roleId = req.params.roleId;
@@ -95,35 +87,6 @@ class RolesController {
         result,
         "Failed to assign role",
         "Role assigned successfully",
-      );
-    });
-  }
-
-
-  assignRoles(req, res) {
-    const userId = req.params.userId;
-    const roleIds = req.body.roleIds;
-    const responseGenerator = new ResponseGenerator();
-
-    if (!userId || !Array.isArray(roleIds) || roleIds.length === 0) {
-      return responseGenerator.sendError(
-        res,
-        "UserId and roleIds (non-empty array) are required",
-        400,
-      );
-    }
-
-    this.service.assignRoles(userId, roleIds, (err, result) => {
-      if (err) {
-        console.error(err);
-        return responseGenerator.sendError(res, err, 500, "Database error");
-      }
-
-      return responseGenerator.sendSuccess(
-        res,
-        result,
-        200,
-        "Roles assigned successfully",
       );
     });
   }
@@ -142,32 +105,6 @@ class RolesController {
       );
     });
   }
-
-  unAssignRoles(req, res) {
-    const userId = req.params.userId;
-      const roleIds = req.body.roleIds;
-    const responseGenerator = new ResponseGenerator();
-      if (!userId || !Array.isArray(roleIds) || roleIds.length === 0) {
-        return responseGenerator.sendError(
-          res,
-          "UserId and roleIds (non-empty array) are required",
-          400,
-        );
-      }
-
-    this.service.unAssignRoles(userId, roleIds,(err, result) => {
-      responseGenerator.generateResponse(
-        res,
-        err,
-        result,
-        "Failed to unassign roles",
-        "Roles unassigned successfully",
-      );
-    });
-  }
-
-  
-
 
 }
 
