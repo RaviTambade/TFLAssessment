@@ -9,13 +9,19 @@ class UserActivityController {
 
   login (req, res)  {
     const userId = req.params.userId;
+    const roleId = req.params.roleId;
     const responseGenerator = new ResponseGenerator();
 
     if (!userId) {
       return this.sendError(res, "User ID is required", 400);
     }
 
-    this.service.login(userId, (err, result) => {
+    if (!roleId) {
+      return this.sendError(res, "Role ID is required", 400);
+    }
+    
+
+    this.service.login(userId, roleId, (err, result) => {
       responseGenerator.generateResponse(
         res,
         err,

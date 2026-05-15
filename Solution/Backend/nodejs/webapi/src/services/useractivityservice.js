@@ -3,8 +3,8 @@ class UserActivityService {
     this.repository = userActivityRepository;
   }
 
-  login(userid, callback) {
-    this.repository.login(userid, callback);
+  login(userid, roleid, callback) {
+    this.repository.login(userid, roleid, callback);
   }
 
   logout(userid, callback) {
