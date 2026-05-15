@@ -1,11 +1,12 @@
 class UserActivityRepository {
+  
   constructor(connection) {
     this.connection = connection;
   }
 
-  login(userid, callback) {
-    const sql = "INSERT INTO user_logs (user_id,login_time) VALUES(?,NOW() );";
-    this.connection.query(sql, [userid], callback);
+  login(userid, roleid, callback) {
+    const sql = "INSERT INTO user_logs (user_id,login_time,role_id) VALUES(?,NOW(),? );";
+    this.connection.query(sql, [userid, roleid], callback);
   }
 
   logout(userid, callback) {
@@ -13,7 +14,7 @@ class UserActivityRepository {
     this.connection.query(sql, [userid], callback);
   }
 
-  getTotalLogins24Hours(callback) { 
+  getRecentLoginCount(callback) { 
     const sql = `
       SELECT COUNT(*) AS totalLogins24h
       FROM user_logs
@@ -43,7 +44,7 @@ class UserActivityRepository {
     
   }
 
-  getTotalActiveSessionsCount(callback) {
+  getActiveSessionsCount(callback) {
     const sql = `
       SELECT COUNT(*) AS activeSessions
       FROM user_logs
@@ -55,7 +56,7 @@ class UserActivityRepository {
     });
   }
 
-  getCurrentActiveUsers(callback) {
+  getLiveUsers(callback) {
     const sql = `
       SELECT 
         CONCAT(p.first_name,' ', p.last_name) AS full_name,
@@ -70,6 +71,9 @@ class UserActivityRepository {
       callback(null, results);
     });
   }
+  
+
+  //replace  name by id
   
   getAllUserActivity(name, callback) {
     let sql = `

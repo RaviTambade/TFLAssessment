@@ -1,3 +1,122 @@
+# SQL QUERIES USED IN WEB APIs #
+## USERS ##
+- ### getUserDetailsByID ###
+  ` SELECT  u.id AS user_id, u.contact, u.status, p.first_name, p.last_name,
+        p.gender, p.date_of_birth,  p.email, a.enrollment_year,
+        a.passing_year, a.percentage, a.college_name, prof.skills
+      FROM users u
+      LEFT JOIN personal_informations p ON u.id = p.user_id
+      LEFT JOIN academic_informations a ON u.id = a.user_id
+      LEFT JOIN professional_informations prof ON u.id = prof.user_id
+      WHERE u.id = ? `
+- ### getUserPersonalDetails ###
+  ` SELECT p.first_name, p.last_name, p.gender, p.date_of_birth, p.email, p.address, p.pincode,u.contact
+      FROM personal_informations p 
+      join users u on u.id = p.user_id
+      WHERE user_id = ? `
+- ### getUserAcademicDetails ###
+  ` SELECT enrollment_year, passing_year, percentage, college_name, stream_name, specialization
+      FROM academic_informations
+      WHERE user_id = ? `
+- ### getUserProfessionalDetails ###
+  ` SELECT company_name, job_title, employment_type, start_date, end_date, is_current_job, experience_years, location, skills
+      FROM professional_informations
+      WHERE user_id = ? `
+- ### updateUserPersonalDetails ###
+  ` UPDATE personal_informations SET ${fields} WHERE user_id = ? `
+- ### updateUserProfessionalDetails ###
+  ` UPDATE professional_informations SET ${fields} WHERE user_id = ? `
+- ### updateUserAcademicDetails ###
+  ` UPDATE academic_informations SET ${fields} WHERE user_id = ? `
+- ### updateUserStatus ###
+  ` UPDATE users SET status = ? WHERE id = ? `
+- ### getAllUsers ###
+  ` SELECT 
+        p.user_id, 
+        p.full_name, 
+        u.created_at,
+        u.status,
+        r.role_name
+    FROM personal_informations p
+    LEFT JOIN user_roles ur ON p.user_id = ur.user_id
+    LEFT JOIN roles r ON ur.role_id = r.role_id
+    LEFT JOIN users u ON p.user_id = u.id 
+    ORDER BY p.user_id `
+
+## USER ACTIVITY ##
+- ### login ###
+  ` INSERT INTO user_logs (user_id,login_time) VALUES(?,NOW() ) `
+- ### logout ###
+  ` UPDATE user_logs SET logout_time=now() WHERE user_id=? AND logout_time is null `
+- ### getRecentLoginCount ###
+  ` SELECT COUNT(*) AS totalLogins24h
+      FROM user_logs
+      WHERE login_time >= NOW() `
+- ### getRecentAverageSessionTime ###
+  ` SELECT AVG(TIMESTAMPDIFF(SECOND, login_time, logout_time)) AS avgSessionTime
+      FROM (
+        SELECT login_time, logout_time
+        FROM user_logs
+        WHERE logout_time IS NOT NULL
+        ORDER BY login_time DESC
+        LIMIT 50
+      ) AS last50 `
+- ### getActiveSessionsCount ###
+  ` SELECT COUNT(*) AS activeSessions
+      FROM user_logs
+      WHERE logout_time IS NULL `
+- ### getLiveUsers ###
+  ` SELECT 
+        CONCAT(p.first_name,' ', p.last_name) AS full_name,
+        l.login_time,
+        TIMESTAMPDIFF(SECOND, l.login_time, NOW()) AS active_seconds
+      FROM user_logs l
+      JOIN personal_informations p ON l.user_id = p.user_id
+      WHERE l.logout_time IS NULL `
+- ### getAllUserActivity ###
+  ` SELECT
+        u.id AS session_id,
+        ul.user_id,
+        CONCAT(p.first_name,' ', p.last_name) AS full_name,
+        r.role_name AS role,
+        ul.login_time,
+        ul.logout_time,
+        TIMESTAMPDIFF(MINUTE, ul.login_time, COALESCE(ul.logout_time, NOW())) AS session_duration_minutes 
+      FROM user_logs ul
+      LEFT JOIN users u ON ul.user_id = u.id
+      LEFT JOIN personal_informations p ON ul.user_id = p.user_id
+      LEFT JOIN user_roles ur ON u.id = ur.user_id
+      LEFT JOIN roles r ON ur.role_id = r.role_id `
+## ROLES ##
+- ### getAllRoles ###
+ ` SELECT * from roles `
+- ### insert ###
+  ` INSERT INTO roles(role_name,description) VALUES(?,?) `
+- ### update ###
+  ` UPDATE roles SET role_name=?, description=? WHERE role_id=? `
+- ### getUserRolesByUserId ###
+  ` SELECT r.role_id, r.role_name FROM user_roles ur JOIN roles r ON ur.role_id = r.role_id WHERE ur.user_id = ? `
+- ### unAssignRole ###
+  ` DELETE FROM user_roles WHERE user_id = ? AND role_id = ? `
+- ### unAssignRoles ###
+  ` DELETE FROM user_roles WHERE user_id = ? AND role_id IN (?) `
+- ### assignRole ###
+  ` INSERT INTO user_roles (user_id, role_id, assigned_at)
+    VALUES ${placeholders}
+    ON DUPLICATE KEY UPDATE assigned_at = NOW() `
+## AUTH ##
+- ### validateUser ###
+  ` SELECT u.id, p.first_name, p.last_name, r.role_name from users u
+                  JOIN user_roles ur ON u.id= ur.user_id 
+                  JOIN roles r ON r.role_id = ur.role_id
+                  JOIN personal_informations p on p.user_id = u.id
+                    WHERE u.contact=? AND u.password=? AND u.status="ACTIVE" AND r.role_name=? `
+- ### register ###
+  ` CALL RegisterUser(?,?,?,?,?) `
+- ### changePassword ###
+  ` UPDATE users SET password = ?, updated_at =now() WHERE id = ? `
+
+
 ## SQL statements with explanations
 
 ### `evaluationcontentmanagement.repository.impl.QuestionsRepositoryImpl`

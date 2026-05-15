@@ -1,4 +1,5 @@
 class RolesRepository {
+
   constructor(connection) {
     this.connection = connection;
   }
@@ -47,6 +48,39 @@ class RolesRepository {
   unAssignRole(userId, roleId, callback) {
     const sql = `UPDATE user_roles SET status = 'INACTIVE', updated_at = NOW() WHERE user_id = ? AND role_id = ?`;
     this.connection.query(sql, [userId, roleId], callback);
+    this.connection.query(sql, values, callback);
+  //   const deleteSql =
+  //     "DELETE FROM user_roles WHERE user_id = ? AND role_id = ?";
+  //   this.connection.query(deleteSql, [userId, roleId], callback);
+  // }
+
+  // unAssignRoles(userId, roleIds, callback) {
+  //   if (!roleIds || roleIds.length === 0) {
+  //     return callback(null, { affectedRows: 0 });
+  //   }
+
+  //   const deleteSql = ` DELETE FROM user_roles WHERE user_id = ? AND role_id IN (?)`;
+  //   this.connection.query(deleteSql, [userId, roleIds], callback);
+  // }
+
+  // assignRoles(userId, roleIds, callback) {
+  //   // validation
+  //   if (!Array.isArray(roleIds) || roleIds.length === 0) {
+  //     return callback(null, { affectedRows: 0 });
+  //   }
+
+  //   // create placeholders for each role
+  //   const placeholders = roleIds.map(() => "(?, ?, NOW())").join(", ");
+
+  //   const sql = `
+  //   INSERT INTO user_roles (user_id, role_id, assigned_at)
+  //   VALUES ${placeholders}
+  //   ON DUPLICATE KEY UPDATE assigned_at = NOW()
+  // `;
+
+  //   // flatten values: [userId, roleId, userId, roleId, ...]
+  //   const values = roleIds.flatMap((roleId) => [userId, roleId]);
+
   }
   
 }

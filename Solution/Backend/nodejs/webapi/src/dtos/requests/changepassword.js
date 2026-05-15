@@ -1,4 +1,4 @@
-class ChangePasswordDto {
+class ChangePassword{
   constructor(id, oldPassword, newPassword) {
     this.id = id;
     this.oldPassword = oldPassword;
@@ -6,4 +6,4 @@ class ChangePasswordDto {
   }
 }
 
-module.exports = ChangePasswordDto;
+module.exports = ChangePassword;
