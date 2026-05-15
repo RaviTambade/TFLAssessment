@@ -1,4 +1,4 @@
-const UserActivityRequestDto = require("../dtos/requests/useractivityrequestdto");
+// const UserActivityRequestDto = require("../dtos/requests/useractivityrequestdto");
 const ResponseGenerator = require("../helpers/responseGenerator");
 
 class UserActivityController {

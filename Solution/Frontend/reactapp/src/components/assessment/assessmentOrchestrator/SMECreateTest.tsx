@@ -29,7 +29,7 @@ const SMECreateTest = () => {
   const [selectedConcept, setSelectedConcept] = useState<number>(1);
 
   const [concepts, setConcepts] = useState<Concept[]>([]);
-  const [selectedConcept, setSelectedConcept] = useState("");
+  // const [selectedConcept, setSelectedConcept] = useState("");
 
   const [availableQuestions, setAvailableQuestions] = useState<Question[]>([]);
 
