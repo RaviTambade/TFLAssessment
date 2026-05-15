@@ -4,7 +4,7 @@ const UserActivityRoutes = (controller) => {
 
   const router = express.Router();
 
-    router.post("/login/:userId", controller.login.bind(controller));
+    router.post("/login/:userId/role/:roleId", controller.login.bind(controller));
     router.put("/logout/:userId", controller.logout.bind(controller));
     router.get("/logins-24h", controller.getTotalLogins24Hours.bind(controller));
     router.get("/average-time", controller.getRecentAverageSessionTime.bind(controller));
