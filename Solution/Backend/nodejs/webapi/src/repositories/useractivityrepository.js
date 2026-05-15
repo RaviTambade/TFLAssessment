@@ -4,9 +4,9 @@ class UserActivityRepository {
     this.connection = connection;
   }
 
-  login(userid, callback) {
-    const sql = "INSERT INTO user_logs (user_id,login_time) VALUES(?,NOW() );";
-    this.connection.query(sql, [userid], callback);
+  login(userid, roleid, callback) {
+    const sql = "INSERT INTO user_logs (user_id,login_time,role_id) VALUES(?,NOW(),? );";
+    this.connection.query(sql, [userid, roleid], callback);
   }
 
   logout(userid, callback) {

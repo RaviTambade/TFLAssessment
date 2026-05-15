@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 
+
 const connection = require("./connectivity/db");
 
 const AuthRepository = require("./repositories/authrepository");
@@ -54,8 +55,6 @@ const rolesRoutes = RolesRouter(rolesController);
 const app = express();
 
 
-//Middleware Configuration
-
 app.use(cors());
 app.use(express.json());
 app.use(bodyParser.json());
@@ -64,9 +63,6 @@ app.use((req, res, next) => {
   next();
 });
 
-
-
-// URL Route Mapping
 app.use("/api/auth/", authRoutes);
 app.use("/api/roles/", rolesRoutes);
 app.use("/api/useractivity/", userActivityRoutes);
