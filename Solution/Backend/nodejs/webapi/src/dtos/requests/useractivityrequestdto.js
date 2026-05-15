@@ -1,4 +1,3 @@
-// for US_ADMIN_10 
 class UserActivityRequestDto {
   constructor(query) {
     this.name = query.name || null;

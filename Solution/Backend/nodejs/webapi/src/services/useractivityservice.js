@@ -25,8 +25,8 @@ class UserActivityService {
     });
   }
 
-  getTotalActiveSessions(callback) {
-    this.repository.getTotalActiveSessions((err, result) => {
+  getTotalActiveSessionsCount(callback) {
+    this.repository.getTotalActiveSessionsCount((err, result) => {
       if (err) return callback(err, null);
       callback(null, result);
     });
@@ -39,7 +39,7 @@ class UserActivityService {
     });
   }
 
-  getAllUserActivity(name,callback) {
+  getAllUserActivity(name, callback) {
     this.repository.getAllUserActivity(name,callback);
   }
 }
