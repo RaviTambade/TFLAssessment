@@ -45,10 +45,10 @@ class UserActivityController {
     });
   };
 
-  getTotalLogins24Hours (req, res)  {
+  getRecentLoginCount (req, res)  {
     const responseGenerator = new ResponseGenerator();
 
-    this.service.getTotalLogins24Hours((err, result) => {
+    this.service.getRecentLoginCount((err, result) => {
       const loginStats = {
         totalLogins24Hours: result?.totalLogins24h || 0,
         timestamp: new Date().toISOString(),
@@ -78,10 +78,10 @@ class UserActivityController {
     });
   };
 
-  getTotalActiveSessionsCount (req, res)  {
+  getActiveSessionsCount (req, res)  {
     const responseGenerator = new ResponseGenerator();
 
-    this.service.getTotalActiveSessionsCount((err, result) => {
+    this.service.getActiveSessionsCount((err, result) => {
       const activeSessions = {
         totalActiveSessions: result?.activeSessions || 0,
         timestamp: new Date().toISOString(),
@@ -96,10 +96,10 @@ class UserActivityController {
     });
   };
 
-  getCurrentActiveUsers (req, res) {
+  getLiveUsers (req, res) {
     const responseGenerator = new ResponseGenerator();
 
-    this.service.getCurrentActiveUsers((err, result) => {
+    this.service.getLiveUsers((err, result) => {
 
       const formattedUsers = result.map((user) => ({
         userId: user.user_id || user.userId,
