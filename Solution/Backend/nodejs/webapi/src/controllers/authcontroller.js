@@ -23,7 +23,7 @@ class AuthController {
 
       if(isValid)
       {
-        const loginStatus = new LoginStatus(result[0].id,result[0].first_name,result[0].last_name,result[0].role_name);
+        const loginStatus = new LoginStatus(result[0].id,result[0].first_name,result[0].last_name,result[0].role_name,result[0].role_id);
         return responseGenerator.sendSuccess(res,loginStatus,200, " User Validation successful",);
       } else {
         return responseGenerator.sendError(res, "Invalid credentials", 401);

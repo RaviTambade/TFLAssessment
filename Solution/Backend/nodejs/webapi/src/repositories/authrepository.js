@@ -5,7 +5,7 @@ class AuthRepository {
   }
 
   validateUser(credential, callback) {
-    const sql = `SELECT u.id, p.first_name, p.last_name, r.role_name from users u
+    const sql = `SELECT u.id, p.first_name, p.last_name,r.role_id,r.role_name from users u
                   JOIN user_roles ur ON u.id= ur.user_id 
                   JOIN roles r ON r.role_id = ur.role_id
                   JOIN personal_informations p on p.user_id = u.id

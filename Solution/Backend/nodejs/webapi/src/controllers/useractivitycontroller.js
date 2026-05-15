@@ -34,13 +34,15 @@ class UserActivityController {
 
   logout (req, res) {
     const userId = req.params.userId;
+    const roleId = req.params.roleId;
+
     const responseGenerator = new ResponseGenerator();
 
     if (!userId) {
       return this.sendError(res, "User ID is required", 400);
     }
 
-    this.service.logout(userId, (err, result) => {
+    this.service.logout(userId, roleId,(err, result) => {
       responseGenerator.generateResponse(
         res,
         err,

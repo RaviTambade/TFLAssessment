@@ -7,8 +7,8 @@ class UserActivityService {
     this.repository.login(userid, roleid, callback);
   }
 
-  logout(userid, callback) {
-    this.repository.logout(userid, callback);
+  logout(userid,roleid, callback) {
+    this.repository.logout(userid, roleid,callback);
   }
 
   getRecentLoginCount(callback) {

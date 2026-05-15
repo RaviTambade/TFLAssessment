@@ -9,9 +9,9 @@ class UserActivityRepository {
     this.connection.query(sql, [userid, roleid], callback);
   }
 
-  logout(userid, callback) {
-    const sql = "UPDATE user_logs SET logout_time=now() WHERE user_id=? AND logout_time is null;";
-    this.connection.query(sql, [userid], callback);
+  logout(userid,roleid, callback) {
+    const sql = "UPDATE user_logs SET logout_time=now() WHERE user_id=? AND role_id=? AND logout_time is null;";
+    this.connection.query(sql, [userid,roleid], callback);
   }
 
   getRecentLoginCount(callback) { 
