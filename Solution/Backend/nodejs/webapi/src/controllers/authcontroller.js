@@ -1,11 +1,14 @@
 const ChangePasswordDto = require("../dtos/requests/changepassworddto");
 const Credential = require("../dtos/requests/credential");
-const UserRequest = require("../dtos/requests/userrequest");
+
 const LoginStatsResponseDto = require("../dtos/responses/loggerlogin-statsresponsedto");
 const LoginStatus = require("../dtos/responses/loginstatus");
 const ResponseGenerator = require("../helpers/responseGenerator");
 
+const UserRequest = require("../dtos/requests/userrequest");
+const UserResponse =require("../dtos/responses/userrequets");
 class AuthController {
+  
   constructor(authService) {
     this.service = authService;
   }
