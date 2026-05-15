@@ -13,7 +13,7 @@ public interface IAssessmentsService
      Task<int> CancelAssessmentsByTestId(long testId);
      Task<bool> RestoreAssessment(long id);
     Task<List<Tests>> GetTestsAsync();
-    Task<List<Students>> GetStudentsAsync();
+    Task<List<string>> GetStudentsAsync();
     Task AssignAssessmentAsync(AssignAssessments dto);
     // Task<List<AssessmentResultDto>> GetAssessmentResults();
     Task<List<AssessmentQuestions>> GetAssessmentQuestionsAsync(int assessmentId);

@@ -145,12 +145,17 @@ class RolesController {
 
   unAssignRoles(req, res) {
     const userId = req.params.userId;
+      const roleIds = req.body.roleIds;
     const responseGenerator = new ResponseGenerator();
-    if (!userId) {
-      return responseGenerator.sendError(res, "UserId is required", 400);
-    }
+      if (!userId || !Array.isArray(roleIds) || roleIds.length === 0) {
+        return responseGenerator.sendError(
+          res,
+          "UserId and roleIds (non-empty array) are required",
+          400,
+        );
+      }
 
-    this.service.unAssignRoles(userId, (err, result) => {
+    this.service.unAssignRoles(userId, roleIds,(err, result) => {
       responseGenerator.generateResponse(
         res,
         err,
