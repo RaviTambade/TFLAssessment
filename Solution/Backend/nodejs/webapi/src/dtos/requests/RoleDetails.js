@@ -1,7 +1,7 @@
-class RoleRequestDto {
+class RoleDetails {
   constructor(roleName, description) {
     this.roleName = roleName;
     this.description = description;
   }
 }
-module.exports = RoleRequestDto;
+module.exports = RoleDetails;

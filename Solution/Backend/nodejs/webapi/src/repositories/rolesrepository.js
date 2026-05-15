@@ -1,4 +1,5 @@
 class RolesRepository {
+
   constructor(connection) {
     this.connection = connection;
   }
@@ -26,7 +27,7 @@ class RolesRepository {
   }
 
   // Get role by User ID
-  getUserRoleByUserId(userId, callback) {
+  getUserRolesByUserId(userId, callback) {
     const sql = `SELECT r.role_id, r.role_name FROM user_roles ur JOIN roles r ON ur.role_id = r.role_id WHERE ur.user_id = ?`;
     this.connection.query(sql, [userId], callback);
   }
@@ -42,12 +43,7 @@ class RolesRepository {
       return callback(null, { affectedRows: 0 });
     }
 
-    const deleteSql = `
-    DELETE FROM user_roles
-    WHERE user_id = ?
-    AND role_id IN (?)
-  `;
-
+    const deleteSql = ` DELETE FROM user_roles WHERE user_id = ? AND role_id IN (?)`;
     this.connection.query(deleteSql, [userId, roleIds], callback);
   }
 

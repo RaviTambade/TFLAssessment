@@ -1,4 +1,5 @@
 class UsersRepository {
+  
   constructor(connection) {
     this.connection = connection;
   }
