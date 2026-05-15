@@ -20,12 +20,12 @@ class RolesController {
     });
   }
 
-  addNewRole(req, res) {
+  insert(req, res) {
     const responseGenerator = new ResponseGenerator();
 
     const role = new RoleRequestDto(req.body.roleName, req.body.description);
 
-    this.service.addNewRole(role, (err, result) => {
+    this.service.insert(role, (err, result) => {
       responseGenerator.generateResponse(
         res,
         err,
@@ -36,13 +36,13 @@ class RolesController {
     });
   }
 
-  updateExistingRole(req, res) {
+  update(req, res) {
     const id = req.params.id;
     const responseGenerator = new ResponseGenerator();
 
     const role = new RoleRequestDto(req.body.roleName, req.body.description);
 
-    this.service.updateExistingRole(id, role, (err, result) => {
+    this.service.update(id, role, (err, result) => {
       responseGenerator.generateResponse(
         res,
         err,
@@ -53,12 +53,18 @@ class RolesController {
     });
   }
 
-  getRoleById(req, res) {
-    const id = req.params.id;
+  
+  getUserRoleByUserId(req, res) {
+    const id = req.params.userId;
     const responseGenerator = new ResponseGenerator();
 
-    this.service.getRoleById(id, (err, result) => {
-      responseGenerator.generateResponse(res, err, result, "", "");
+    this.service.getUserRoleByUserId(id, (err, result) => {
+      responseGenerator.generateResponse(
+        res, 
+        err, 
+        result, 
+        "Failed to get user roles", 
+        "User roles retrieved successfully");
     });
   }
 

@@ -7,20 +7,16 @@ class RolesService {
     this.repository.getAllRoles(callback);
   }
 
-  addNewRole(newrole, callback) {
-    this.repository.addNewRole(newrole, callback);
+  insert(newRole, callback) {
+    this.repository.insert(newRole, callback);
   }
 
-  updateExistingRole(roleId, role, callback) {
-    this.repository.updateExistingRole(roleId, role, callback);
+  update(roleId, role, callback) {
+    this.repository.update(roleId, role, callback);
   }
 
-  getRoleById(roleId, callback) {
-    this.repository.getRoleById(roleId, callback);
-  }
-
-  getUserByRole(userId, callback) {
-   this.repository.getUserByRole(userId,callback)
+  getUserRoleByUserId(userId, callback) {
+   this.repository.getUserRoleByUserId(userId,callback)
   }
   
   unAssignRole(userId, roleId, callback) {
