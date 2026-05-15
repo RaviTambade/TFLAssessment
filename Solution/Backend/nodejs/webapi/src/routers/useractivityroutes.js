@@ -6,10 +6,10 @@ const UserActivityRoutes = (controller) => {
 
     router.post("/login/:userId/role/:roleId", controller.login.bind(controller));
     router.put("/logout/:userId", controller.logout.bind(controller));
-    router.get("/logins-24h", controller.getTotalLogins24Hours.bind(controller));
+    router.get("/logins-24h", controller.getRecentLoginCount.bind(controller));
     router.get("/average-time", controller.getRecentAverageSessionTime.bind(controller));
-    router.get("/active-count", controller.getTotalActiveSessionsCount.bind(controller));
-    router.get("/active-users", controller.getCurrentActiveUsers.bind(controller));
+    router.get("/active-count", controller.getActiveSessionsCount.bind(controller));
+    router.get("/active-users", controller.getLiveUsers.bind(controller));
     router.get("/logs", controller.getAllUserActivity.bind(controller));
 
   return router;

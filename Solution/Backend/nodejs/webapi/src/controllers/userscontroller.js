@@ -1,5 +1,5 @@
-const UpdateUserStatusRequestDto = require("../dtos/requests/updateUserStatusRequestDto");
-const UpdateUserStatusResponseDto = require("../dtos/responses/updateUserStatusResponseDto");
+const UpdateUserStatusRequestDto = require("../dtos/requests/userstatus");
+const UpdateUserStatusResponseDto = require("../dtos/responses/userstatus");
 const ResponseGenerator = require("../helpers/responseGenerator");
 
 
