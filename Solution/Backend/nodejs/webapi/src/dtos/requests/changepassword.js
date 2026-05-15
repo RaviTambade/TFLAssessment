@@ -6,4 +6,4 @@ class ChangePassword{
   }
 }
 
-module.exports = ChangePasswordDto;
+module.exports = ChangePassword;

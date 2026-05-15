@@ -1,4 +1,4 @@
-const RoleRequestDto = require("../dtos/requests/RoleRequestDto");
+const RoleRequestDto = require("../dtos/requests/roledetails");
 const ResponseGenerator = require("../helpers/responseGenerator");
 
 class RolesController {
