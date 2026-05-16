@@ -26,186 +26,169 @@ const ManageUsers = () => {
   const [users, setUsers] = useState<User[]>([])
   const [roles, setRoles] = useState<Role[]>([])
 
-
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
-
   const [editingUser, setEditingUser] = useState<number | null>(null)
   const [editingRoles, setEditingRoles] = useState<number[]>([])
-  const [savingRolesFor, setSavingRolesFor] = useState<number | null>(null)
 
-
-  
   const getRoleIdsFromRoleString = (roleString?: string) => {
     if (!roleString) return []
     const names = roleString.split(/[,;|]/).map(s => s.trim())
     return roles.filter(r => names.includes(r.name)).map(r => r.id)
   }
-
-  const updateLocalRoles = (id: number, roleIds: number[]) => {
-    const names = roles.filter(r => roleIds.includes(r.id)).map(r => r.name)
-    setUsers(prev =>
-      prev.map(u => u.id === id ? { ...u, role: names.join(", ") } : u)
-    )
-  }
-
-   const fetchUsers = async () => {
-      setLoading(true)
-      setError(null)
-
-      try {
-        const res = await fetch(`${WEBAPI_NODE_URL}/users/getAllUsers`)
-        if (!res.ok) throw new Error(`HTTP ${res.status}`)
-
-        const json = await res.json()
-        console.log("API:", json)
-
-        let payload: ApiUser[] = []
-
-        if (Array.isArray(json?.data)) {
-          // handle nested arrays (common in MySQL/SP)
-          payload = Array.isArray(json.data[0]) ? json.data[0] : json.data
-        } else if (Array.isArray(json)) {
-          payload = json
-        } else {
-          console.error("Unexpected API structure:", json)
-          payload = []
-        }
-
-        // Ensure payload is always an array before mapping
-        if (!Array.isArray(payload)) {
-          console.error("Payload is not an array:", payload)
-          payload = []
-        }
-        const userMap = new Map<string, User>()
-
-          ; (payload || []).forEach((u: ApiUser, i: number) => {
-            const name = u.full_name ?? "—"
-            const role = u.role_name ?? ""
-
-            if (userMap.has(name)) {
-              const existing = userMap.get(name)!
-
-              // avoid duplicate roles
-              const rolesSet = new Set(
-                existing.role.split(",").map(r => r.trim()).filter(Boolean)
-              )
-              rolesSet.add(role)
-
-              existing.role = Array.from(rolesSet).join(", ")
-            } else {
-              userMap.set(name, {
-                id: u.user_id ?? i + 1,
-                name,
-                role,
-                joiningDate: u.created_at ?? "",
-                status: u.status ?? "",
-              })
-            }
-          })
-
-        const mapped: User[] = Array.from(userMap.values())
-
-        setUsers(mapped)
-
-      } catch (err: unknown) {
-        console.error(err)
-        setError("Failed to load users")
-      } finally {
-        setLoading(false)
-      }
-    }
-
-  const assignRoles = async (userId: number, roleIds: number[]) => {
-    setSavingRolesFor(userId)
-    setError(null)
-
+  
+  // Fetch user roles as a comma-separated string
+  const fetchUserRoles = async (userId: number) => {
     try {
-      const res = await fetch(`${WEBAPI_NODE_URL}/roles/assignRoles/${userId}`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ roleIds: roleIds }),
+      const res = await fetch(
+        `${WEBAPI_NODE_URL}/roles/getUserRolesByUserId/${userId}`
+      )
+      if (!res.ok) throw new Error()
+      const json = await res.json()
+      let payload = []
+      if (Array.isArray(json?.data)) {
+        payload = json.data
+      }
+      return payload[0]?.role_name ?? ""
+    } catch (err) { console.error(err)
+      return "" }
+  }
+
+  const fetchUsers = async () => {
+  setLoading(true)
+  setError(null)
+
+  try {
+
+    // Get all users
+    const res = await fetch(`${WEBAPI_NODE_URL}/users/getAllUsers`)
+
+    if (!res.ok) {
+      throw new Error(`HTTP ${res.status}`)
+    }
+
+    const json = await res.json()
+
+    console.log("Users API:", json)
+
+    let payload: ApiUser[] = []
+
+    if (Array.isArray(json?.data)) {
+
+      payload = Array.isArray(json.data[0])
+        ? json.data[0]
+        : json.data
+
+    } else if (Array.isArray(json)) {
+
+      payload = json
+
+    } else {
+
+      console.error("Unexpected API structure:", json)
+
+      payload = []
+
+    }
+
+    const uniqueUsers = Array.from(
+    new Map(
+        payload.map((u) => [u.user_id, u])
+      ).values()
+    )
+
+    // Fetch fresh roles for every user
+    const mapped: User[] = await Promise.all(
+      uniqueUsers.map(async (u: ApiUser, i: number) => {
+        const roleNames = await fetchUserRoles(u.user_id)
+        return {
+          id: u.user_id ?? i + 1,
+          name: u.full_name ?? "—",
+          role: roleNames,
+          joiningDate: u.created_at ?? "",
+          status: u.status ?? "",
+        }
       })
-
-      if (!res.ok) throw new Error(`HTTP ${res.status}`)
-
-      await fetchUsers();
-      setEditingUser(null)
-      setEditingRoles([])
-
+      )
+      setUsers(mapped)
     } catch (err: unknown) {
       console.error(err)
-      setError("Failed to save roles")
+      setError("Failed to load users")
     } finally {
-      setSavingRolesFor(null)
+      setLoading(false)
     }
   }
 
+  // Helper functions to assign/unassign roles
+  const assignRoles = async (userId: number, roleIds: number[]) => {
+    const requests = roleIds.map(rid =>
+      fetch(`${WEBAPI_NODE_URL}/roles/assignRole/${userId}/role/${rid}`, {
+        method: 'POST'
+      })
+    )
+    return Promise.all(requests)
+  }
 
-
+  // Unassign roles by setting them to INACTIVE
   const unAssignRoles = async (userId: number, roleIds: number[]) => {
-    setSavingRolesFor(userId)
-    setError(null)
-
-    try { 
-      const res = await fetch(`${WEBAPI_NODE_URL}/roles/unAssignRoles/${userId}`, {
-        method: "DELETE",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ roleIds: roleIds }),
+    const requests = roleIds.map(rid =>
+      fetch(`${WEBAPI_NODE_URL}/roles/unAssignRole/${userId}/role/${rid}`, {
+        method: 'PUT'
       })
-
-      if (!res.ok) throw new Error(`HTTP ${res.status}`)
-
-      // updateLocalRoles(userId, roleIds)
-      await fetchUsers();
-      setEditingUser(null)
-      setEditingRoles([])
-
-    } catch (err: unknown) {
-      console.error(err)
-      setError("Failed to save roles")
-    } finally {
-      setSavingRolesFor(null)
-    }
+    )
+    return Promise.all(requests)
   }
 
-  const handleUserRole=(id: number, roleString: string)=>{
+  const handleUserRole = async (id: number, roleString: string) => {
+
     const existingRoleIds = getRoleIdsFromRoleString(roleString)
 
-    console.log(existingRoleIds)
-    const existinguserrole=editingRoles;
-    // roles added
-    const addedRoles = existinguserrole.filter(
-      id => !existingRoleIds.includes(id)
+    const currentRoles = editingRoles
+
+    // Roles added
+    const addedRoles = currentRoles.filter(
+      rid => !existingRoleIds.includes(rid)
     )
-    // roles removed
+
+    // Roles removed
     const removedRoles = existingRoleIds.filter(
-      id => !existinguserrole.includes(id)
+      rid => !currentRoles.includes(rid)
     )
-    // assign new roles
-    if (addedRoles.length > 0) {
-      assignRoles(id, addedRoles)
+
+    console.log("Added:", addedRoles)
+    console.log("Removed:", removedRoles)
+
+    try {
+
+      // FIRST remove roles
+      if (removedRoles.length > 0) {
+        await unAssignRoles(id, removedRoles)
+      }
+
+      // THEN add new roles
+      if (addedRoles.length > 0) {
+        await assignRoles(id, addedRoles)
+      }
+
+      await fetchUsers()
+
+      setEditingUser(null)
+      setEditingRoles([])
+
+    } catch (err) {
+      console.error(err)
     }
-
-    // unassign removed roles
-    if (removedRoles.length > 0) {
-      unAssignRoles(id, removedRoles)
-    }
-
-
   }
 
   useEffect(() => {
-   
-
     fetchUsers()
   }, [])
 
   useEffect(() => {
     const fetchRoles = async () => {
       try {
-        const res = await fetch(`${WEBAPI_NODE_URL}/roles/getallroles`)
+        const res = await fetch(`${WEBAPI_NODE_URL}/roles/getAllRoles`)
         if (!res.ok) throw new Error(`HTTP ${res.status}`)
 
         const json = await res.json()

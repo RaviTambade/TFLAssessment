@@ -95,7 +95,8 @@ class UsersRepository {
     LEFT JOIN user_roles ur ON p.user_id = ur.user_id
     LEFT JOIN roles r ON ur.role_id = r.role_id
     LEFT JOIN users u ON p.user_id = u.id 
-    ORDER BY p.user_id;`;
+    ORDER BY p.user_id
+    AND ur.status = 'ACTIVE'`;
     this.connection.query(query, callback);
   }
 
