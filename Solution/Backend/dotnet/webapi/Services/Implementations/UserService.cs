@@ -1,4 +1,5 @@
-using backend.DTOs;
+using backend.DTO.Requests;
+using backend.DTO.Responses;
 using backend.Models;
 using backend.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -17,11 +18,11 @@ public class UserService : IUserService
         _context = context;
     }
 
-    public async Task<PersonalDetailsDto?> GetPersonalDetailsAsync(int userId)
+    public async Task<PersonalDetails?> GetPersonalDetailsAsync(int userId)
     {
         return await _context.PersonalInformations
             .Where(p => p.UserId == userId)
-            .Select(p => new PersonalDetailsDto
+            .Select(p => new PersonalDetails
             {
                 UserId = p.UserId,
                 FirstName = p.FirstName,
@@ -36,11 +37,11 @@ public class UserService : IUserService
             .FirstOrDefaultAsync();
     }
 
-    public async Task<ProfessionalDetailsDto?> GetProfessionalDetailsAsync(int userId)
+    public async Task<ProfessionalDetails?> GetProfessionalDetailsAsync(int userId)
     {
         return await _context.ProfessionalInformations
             .Where(p => p.UserId == userId)
-            .Select(p => new ProfessionalDetailsDto
+            .Select(p => new ProfessionalDetails
             {
                 UserId = p.UserId,
                 CompanyName = p.CompanyName,
@@ -56,11 +57,11 @@ public class UserService : IUserService
             .FirstOrDefaultAsync();
     }
 
-    public async Task<AcademicDetailsDto?> GetAcademicDetailsAsync(int userId)
+    public async Task<AcademicDetails?> GetAcademicDetailsAsync(int userId)
     {
         return await _context.AcademicInformations
             .Where(a => a.UserId == userId)
-            .Select(a => new AcademicDetailsDto
+            .Select(a => new AcademicDetails
             {
                 UserId = a.UserId,
                 StreamName = a.StreamName,
@@ -73,26 +74,26 @@ public class UserService : IUserService
             .FirstOrDefaultAsync();
     }
 
-    public async Task<FullNameDto?> GetFullNameAsync(int userId)
+    public async Task<FullName?> GetFullNameAsync(int userId)
     {
         return await _context.PersonalInformations
             .Where(p => p.UserId == userId)
-            .Select(p => new FullNameDto
+            .Select(p => new FullName
             {
                 UserId = p.UserId,
                 FirstName = p.FirstName,
                 LastName = p.LastName,
-                FullName = p.FullName ?? string.Join(" ", new[] { p.FirstName, p.LastName }.Where(x => !string.IsNullOrWhiteSpace(x)))
+                Full_Name = p.FullName ?? string.Join(" ", new[] { p.FirstName, p.LastName }.Where(x => !string.IsNullOrWhiteSpace(x)))
             })
             .FirstOrDefaultAsync();
     }
 
-    public async Task<List<UserRoleDto>> GetRolesByUserIdAsync(int userId)
+    public async Task<List<UserRoles>> GetRolesByUserIdAsync(int userId)
     {
         return await _context.UserRoles
             .Where(ur => ur.UserId == userId)
             .Include(ur => ur.Role)
-            .Select(ur => new UserRoleDto
+            .Select(ur => new UserRoles
             {
                 RoleId = ur.RoleId,
                 RoleName = ur.Role != null ? ur.Role.RoleName : null,

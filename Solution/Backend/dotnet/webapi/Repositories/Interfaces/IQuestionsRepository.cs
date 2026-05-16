@@ -1,13 +1,15 @@
-using backend.DTOs;
-using System.Threading.Tasks;
+using backend.DTO.Requests;
+using backend.DTO.Responses;
+
 
 namespace backend.Repositories.Interfaces
 {
     public interface IQuestionsRepository
     {
-        Task<QuestionsDto> GetQuestionDetailsWithAnswer(int questionId);
-        Task<IEnumerable<AssessmentQuestionAnswersDto>> GetStudentAssessmentQuestionsResultAsync(int assessmentId, int studentId);
-        Task<QuestionDetailsDto> GetQuestionDetails(int questionId);
+        Task<List<Dictionary<string, object>>> GetAllConcepts();
+        Task<Questions> GetQuestionDetailsWithAnswer(int questionId);
+        Task<IEnumerable<AssessmentQuestionAnswers>> GetStudentAssessmentQuestionsResultAsync(int assessmentId, int studentId);
+        Task<QuestionDetails> GetQuestionDetails(int questionId);
     }
   
 }

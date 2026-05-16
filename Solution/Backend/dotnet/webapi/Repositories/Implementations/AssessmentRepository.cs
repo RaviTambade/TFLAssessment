@@ -1,13 +1,11 @@
 using Microsoft.EntityFrameworkCore;
 using backend.Models;
 using Microsoft.AspNetCore.Mvc;
-using backend.DTOs;
-using backend.Repositories.Interfaces;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Linq;
-using MySql.Data.MySqlClient;
+using backend.DTO.Responses;
+using backend.DTO.Requests;
 
+
+namespace backend.Repositories.Interfaces;
 public class AssessmentRepository : IAssessmentRepository
 {
 
@@ -19,7 +17,7 @@ public class AssessmentRepository : IAssessmentRepository
     }
 
     [HttpGet]
-    public async Task<List<UpcomingAssessmentDto>> GetAllUpcomingAssessments(long userId, DateTime fromDate, DateTime toDate)
+    public async Task<List<Assessments>> GetAllUpcomingAssessments(long userId, DateTime fromDate, DateTime toDate)
     {
         Console.WriteLine($"UserId: {userId}, FromDate: {fromDate}, ToDate: {toDate}");
         toDate = toDate.Date.AddDays(1).AddSeconds(-1);
@@ -56,7 +54,7 @@ public class AssessmentRepository : IAssessmentRepository
 
             orderby a.ScheduledAt ascending
 
-            select new UpcomingAssessmentDto
+            select new Assessments
             {
                 SrNo = 0,
                 AssessmentId = (int)a.Id,
@@ -75,7 +73,7 @@ public class AssessmentRepository : IAssessmentRepository
         return data;
     }
 
-    public async Task<List<AllAssessmentDto>> GetAllAssessments()
+    public async Task<List<AllAssessments>> GetAllAssessments()
     {
         var data = await (
             from a in _context.Assessments
@@ -89,7 +87,7 @@ public class AssessmentRepository : IAssessmentRepository
             join p in _context.PersonalInformations on u.Id equals p.UserId into personalGroup
             from p in personalGroup.DefaultIfEmpty()
 
-            select new AllAssessmentDto
+            select new AllAssessments
             {
                 Id = a.Id,
                 AssessmentTitle = t != null ? t.Title : "N/A",
@@ -165,10 +163,10 @@ public class AssessmentRepository : IAssessmentRepository
         return true;
     }
 
-    public async Task<List<TestDto>> GetTestsAsync()
+    public async Task<List<Tests>> GetTestsAsync()
     {
         return await _context.Tests
-            .Select(t => new TestDto
+            .Select(t => new Tests
             {
                 Id = t.Id,
                 Title = t.Title,
@@ -179,19 +177,12 @@ public class AssessmentRepository : IAssessmentRepository
             .ToListAsync();
     }
 
-    public async Task<List<StudentDto>> GetStudentsAsync()
+    public async Task<List<string>> GetStudentsAsync()
     {
-        return await (from u in _context.Users
-                      join p in _context.PersonalInformations
-                      on u.Id equals p.UserId
-                      select new StudentDto
-                      {
-                          Id = (int)u.Id,
-                          FullName = p.FullName ?? string.Empty
-                      }).ToListAsync();
+      return await Task.FromResult(new List<string>());
     }
 
-    public async Task<AssignAssessmentResultDto> AssignAssessmentAsync(AssignAssessmentDto dto)
+    public async Task<AssignAssessmentResults> AssignAssessmentAsync(AssignAssessments dto)
     {
         // ✅ Validation
         if (dto.StudentIds == null || !dto.StudentIds.Any())
@@ -220,7 +211,7 @@ public class AssessmentRepository : IAssessmentRepository
         // ✅ If ALL students are already assigned, return early with message
         if (!newStudentIds.Any())
         {
-            return new AssignAssessmentResultDto
+            return new AssignAssessmentResults
             {
                 Success = false,
                 Message = "This test is already assigned to all selected students."
@@ -249,7 +240,7 @@ public class AssessmentRepository : IAssessmentRepository
             ? $"Assigned to {assignedCount} student(s). Skipped {skippedCount} already assigned."
             : $"Assessment assigned to {assignedCount} student(s) successfully.";
 
-        return new AssignAssessmentResultDto
+        return new AssignAssessmentResults
         {
             Success = true,
             Message = message,
@@ -258,9 +249,9 @@ public class AssessmentRepository : IAssessmentRepository
         };
     }
 
-    public async Task<List<AssessmentQuestionDto>> GetAssessmentQuestionsAsync(int assessmentId)
+    public async Task<List<AssessmentQuestions>> GetAssessmentQuestionsAsync(int assessmentId)
     {
-        return await _context.Set<AssessmentQuestionDto>()
+        return await _context.Set<AssessmentQuestions>()
             .FromSqlInterpolated($@"
                 SELECT
                     ques.question_id        AS QuestionId,
@@ -327,7 +318,7 @@ public class AssessmentRepository : IAssessmentRepository
         return rowsAffected > 0;
     }
 
-    public async Task<AssessmentReportDto> GetResultData(int studentId, int assessmentId)
+    public async Task<AssessmentReports> GetResultData(int studentId, int assessmentId)
     {
         var results = await _context.StudentAssessmentReports
             .FromSqlInterpolated($"CALL GetStudentAssessmentReport({studentId}, {assessmentId})")
@@ -347,98 +338,14 @@ public class AssessmentRepository : IAssessmentRepository
         return await _context.Assessments.CountAsync(x => x.Status == "Completed");
     }
 
-    public async Task<List<AssessmentSummaryDto>> GetAssessmentSummariesForStudent(long studentId)
+    public async Task<List<AssessmentSummaries>> GetAssessmentSummariesForStudent(long studentId)
     {
-        var data = await (
-            from a in _context.Assessments
-
-            where a.StudentId == studentId
-
-            join t in _context.Tests
-                on a.TestId equals t.Id into tg
-            from t in tg.DefaultIfEmpty()
-
-            join pi in _context.PersonalInformations
-                on (int?)a.StudentId equals pi.UserId into pig
-            from pi in pig.DefaultIfEmpty()
-
-            join sar in _context.StudentAssessmentResults
-                on (int?)a.Id equals sar.AssessmentId into sarg
-            from sar in sarg.DefaultIfEmpty()
-
-            from tq in _context.TestQuestions
-                .Where(x => t != null && x.TestId == t.Id)
-                .DefaultIfEmpty()
-
-            from sa in _context.StudentAnswers
-                .Where(x => x.AssessmentId == (int)a.Id &&
-                            (tq != null && x.QuestionId == (int)tq.QuestionId))
-                .DefaultIfEmpty()
-
-            from mo in _context.McqOptions
-                .Where(x => tq != null && x.QuestionId == (int?)tq.QuestionId)
-                .DefaultIfEmpty()
-
-            group new { a, t, pi, sar, tq, sa, mo } by new
-            {
-                AssessmentId     = a.Id,
-                Title            = t != null ? t.Title : null,
-                StudentId        = a.StudentId,
-                StudentName      = pi != null ? pi.FullName : null,
-                Status           = a.Status,
-                Score            = sar != null ? (float?)sar.Score : null,
-                Percentile       = sar != null ? (float?)sar.Percentile : null,
-                TimeTakenMinutes = sar != null ? (long?)sar.TimeTakenMinutes : null
-            }
-            into g
-
-            select new AssessmentSummaryDto
-            {
-                AssessmentId    = g.Key.AssessmentId,
-                AssessmentTitle = g.Key.Title ?? "No Test",
-
-                Student = new StudentDto
-                {
-                    Id       = (int)(g.Key.StudentId ?? 0),
-                    FullName = g.Key.StudentName ?? "Unknown"
-                },
-
-                Status           = g.Key.Status,
-                Score            = g.Key.Score ?? 0f,
-                Percentile       = g.Key.Percentile ?? 0f,
-                TimeTakenMinutes = g.Key.TimeTakenMinutes ?? 0L,
-
-                TotalQuestions = g
-                    .Where(x => x.tq != null)
-                    .Select(x => x.tq!.QuestionId)
-                    .Distinct()
-                    .Count(),
-
-                CorrectAnswers = g
-                    .Where(x =>
-                        x.sa != null &&
-                        x.mo != null &&
-                        x.sa.SelectedOption == x.mo.CorrectAnswer)
-                    .Select(x => x.sa!.QuestionId)
-                    .Distinct()
-                    .Count(),
-
-                WrongAnswers = g
-                    .Where(x =>
-                        x.sa != null &&
-                        x.mo != null &&
-                        x.sa.SelectedOption != null &&
-                        x.sa.SelectedOption != x.mo.CorrectAnswer)
-                    .Select(x => x.sa!.QuestionId)
-                    .Distinct()
-                    .Count()
-            }
-        ).ToListAsync();
-
-        return data;
+ 
+         return await Task.FromResult(new List<AssessmentSummaries> ());
+      
     }
 
-    public List<StudentAssessmentDto> GetFullData()
+    public List<StudentAssessments> GetFullData()
     {
         var data = (from a in _context.Assessments
 
@@ -458,7 +365,7 @@ public class AssessmentRepository : IAssessmentRepository
                         on a.Id equals (long?)r.AssessmentId into resultGroup
                     from r in resultGroup.DefaultIfEmpty()
 
-                    select new StudentAssessmentDto
+                    select new StudentAssessments
                     {
                         AssessmentId = a.Id,
 
@@ -472,7 +379,7 @@ public class AssessmentRepository : IAssessmentRepository
                         AssignedAt  = a.AssignedAt,
                         ScheduledAt = a.ScheduledAt,
 
-                        Result = r == null ? null : new ResultDto
+                        Result = r == null ? null : new backend.DTO.Responses.Results
                         {
                             Score            = r.Score,
                             Percentile       = r.Percentile,
@@ -483,7 +390,7 @@ public class AssessmentRepository : IAssessmentRepository
         return data;
     }
 
-    Task IAssessmentRepository.AssignAssessmentAsync(AssignAssessmentDto dto)
+    Task IAssessmentRepository.AssignAssessmentAsync(AssignAssessments dto)
     {
         return AssignAssessmentAsync(dto);
     }

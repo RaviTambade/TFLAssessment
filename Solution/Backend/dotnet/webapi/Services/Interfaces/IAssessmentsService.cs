@@ -1,29 +1,30 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-using backend.DTOs;
+using backend.DTO.Responses;
+using backend.DTO.Requests;
 namespace backend.Services.Interfaces;
 
 public interface IAssessmentsService
 {
-    Task<List<UpcomingAssessmentDto>> GetAllUpcomingAssessmentsService(long userId ,DateTime fromDate, DateTime toDate);
-    Task<List<AllAssessmentDto>> GetAssessments();
+    Task<List<Assessments>> GetAllUpcomingAssessmentsService(long userId ,DateTime fromDate, DateTime toDate);
+    Task<List<AllAssessments>> GetAssessments();
      Task<bool> DeactivateAssessment(long id);
      Task<int> CancelAssessmentsByTestId(long testId);
      Task<bool> RestoreAssessment(long id);
-    Task<List<TestDto>> GetTestsAsync();
-    Task<List<StudentDto>> GetStudentsAsync();
-    Task AssignAssessmentAsync(AssignAssessmentDto dto);
+    Task<List<Tests>> GetTestsAsync();
+    Task<List<string>> GetStudentsAsync();
+    Task AssignAssessmentAsync(AssignAssessments dto);
     // Task<List<AssessmentResultDto>> GetAssessmentResults();
-    Task<List<AssessmentQuestionDto>> GetAssessmentQuestionsAsync(int assessmentId);
-    Task<bool> SaveAssessmentAnswersAsync(AssessmentAnswersDto submission);
-    Task<AssessmentReportDto> GetResultData(AssessmentstudenttResultDto request);
+    Task<List<AssessmentQuestions>> GetAssessmentQuestionsAsync(int assessmentId);
+    Task<bool> SaveAssessmentAnswersAsync(AssessmentAnswers submission);
+    Task<AssessmentReports> GetResultData(AssessmentstudentsResults request);
 
     Task<int> GetTotalAssessmentsAsync();
     Task<int> GetCompletedAssessmentsAsync();
 
-    Task<List<AllAssessmentDto>> GetAllAssessments();
+    Task<List<AllAssessments>> GetAllAssessments();
 
-    Task<List<AssessmentSummaryDto>> GetAssessmentSummariesForStudent(long studentId);
+    Task<List<AssessmentSummaries>> GetAssessmentSummariesForStudent(long studentId);
 }
 

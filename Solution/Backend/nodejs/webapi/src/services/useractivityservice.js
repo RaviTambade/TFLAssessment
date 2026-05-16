@@ -3,16 +3,16 @@ class UserActivityService {
     this.repository = userActivityRepository;
   }
 
-  login(userid, callback) {
-    this.repository.login(userid, callback);
+  login(userid, roleid, callback) {
+    this.repository.login(userid, roleid, callback);
   }
 
-  logout(userid, callback) {
-    this.repository.logout(userid, callback);
+  logout(userid,roleid, callback) {
+    this.repository.logout(userid, roleid,callback);
   }
 
-  getTotalLogins24Hours(callback) {
-    this.repository.getTotalLogins24Hours((err, result) => {
+  getRecentLoginCount(callback) {
+    this.repository.getRecentLoginCount((err, result) => {
       if (err) return callback(err, null);
       callback(null, result);
     });
@@ -25,21 +25,21 @@ class UserActivityService {
     });
   }
 
-  getTotalActiveSessions(callback) {
-    this.repository.getTotalActiveSessions((err, result) => {
+  getActiveSessionsCount(callback) {
+    this.repository.getActiveSessionsCount((err, result) => {
       if (err) return callback(err, null);
       callback(null, result);
     });
   }
 
-  getCurrentActiveUsers(callback) {
-    this.repository.getCurrentActiveUsers((err, result) => {
+  getLiveUsers(callback) {
+    this.repository.getLiveUsers((err, result) => {
       if (err) return callback(err, null);
       callback(null, result);
     });
   }
 
-  getAllUserActivity(name,callback) {
+  getAllUserActivity(name, callback) {
     this.repository.getAllUserActivity(name,callback);
   }
 }

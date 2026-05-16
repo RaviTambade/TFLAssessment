@@ -1,24 +1,22 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import {
-  WEBAPI_DOTNET_URL,
-  WEBAPI_NODE_URL,
-  WEBAPI_JAVA_URL,
-} from "@/lib/utils";
+import { WEBAPI_JAVA_URL } from "@/lib/utils";
 
 import QuestionDto from "../assessmentOrchestrator/entities/QuestionDetails";
 
+const UPDATE_QUESTION_PATH = "/models/evaluationcontent/updatequestion";
+
 const UpdateQuestion = () => {
+  const navigate = useNavigate();
   const [questions, setQuestions] = useState<QuestionDto[]>([]);
-  const [editingId, setEditingId] = useState<number | null>(null);
-  const [editData, setEditData] = useState<Partial<QuestionDto>>({});
-  const [mode, setMode] = useState<"ALL" | "BY_ID" | null>(null);
+  const [mode, setMode] = useState<"ALL" | "BY_ID" | null>("ALL");
   const [inputId, setInputId] = useState<number | "">("");
   const [loading, setLoading] = useState(false);
 
   // ================= FETCH ALL =================
-  const fetchQuestions = async () => {
+  const fetchQuestions = useCallback(async () => {
     setLoading(true);
 
     try {
@@ -38,7 +36,11 @@ const UpdateQuestion = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    void fetchQuestions();
+  }, [fetchQuestions]);
 
   // ================= FETCH BY ID =================
   const fetchById = async () => {
@@ -50,9 +52,7 @@ const UpdateQuestion = () => {
     setLoading(true);
 
     try {
-      const res = await fetch(
-        `${WEBAPI_JAVA_URL}/questions/${inputId}`
-      );
+      const res = await fetch(`${WEBAPI_JAVA_URL}/questions/${inputId}`);
 
       if (!res.ok) {
         throw new Error("Question not found");
@@ -70,89 +70,10 @@ const UpdateQuestion = () => {
     }
   };
 
-  // ================= HANDLE INPUT CHANGE =================
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => {
-    const { name, value } = e.target;
-
-    setEditData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
-  // ================= HANDLE SAVE =================
-  const handleSave = async (id: number) => {
-    try {
-      const originalQuestion = questions.find(
-        (q) => q.questionId === id
-      );
-
-      if (!originalQuestion) {
-        alert("Question not found");
-        return;
-      }
-
-      const updatePayload = {
-        description:
-          editData.description ?? originalQuestion.description,
-
-        questionType:
-          editData.questionType ?? originalQuestion.questionType,
-
-        difficultyLevel:
-          editData.difficultyLevel ??
-          originalQuestion.difficultyLevel,
-
-        status: editData.status ?? originalQuestion.status,
-      };
-
-      console.log("Update Payload:", updatePayload);
-
-      const res = await fetch(
-        `${WEBAPI_JAVA_URL}/questions/${id}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(updatePayload),
-        }
-      );
-
-      if (!res.ok) {
-        const errorData = await res.json().catch(() => ({
-          message: "Unknown error",
-        }));
-
-        console.error("Backend Error:", errorData);
-
-        throw new Error(
-          errorData.message || `Update failed (${res.status})`
-        );
-      }
-
-      alert("Question updated successfully");
-
-      // Refresh data
-      if (mode === "ALL") {
-        await fetchQuestions();
-      } else if (mode === "BY_ID") {
-        await fetchById();
-      }
-
-      // Reset edit mode
-      setEditingId(null);
-      setEditData({});
-    } catch (err) {
-      console.error(err);
-
-      alert(
-        "Update failed: " +
-          (err instanceof Error ? err.message : "Unknown error")
-      );
-    }
+  const goToFullEditor = (questionId: number) => {
+    navigate(`/models/evaluationcontent/edit/${questionId}`, {
+      state: { from: UPDATE_QUESTION_PATH },
+    });
   };
 
   return (
@@ -197,9 +118,7 @@ const UpdateQuestion = () => {
               placeholder="Enter Question ID"
               value={inputId}
               onChange={(e) =>
-                setInputId(
-                  e.target.value ? Number(e.target.value) : ""
-                )
+                setInputId(e.target.value ? Number(e.target.value) : "")
               }
               className="border px-3 py-2 rounded"
             />
@@ -210,9 +129,7 @@ const UpdateQuestion = () => {
 
         {/* LOADING */}
         {loading && (
-          <p className="text-center text-blue-500 mb-4">
-            Loading...
-          </p>
+          <p className="text-center text-blue-500 mb-4">Loading...</p>
         )}
 
         {/* COUNT */}
@@ -239,146 +156,19 @@ const UpdateQuestion = () => {
 
                   <tbody>
                     {questions.map((q) => (
-                      <tr
-                        key={q.questionId}
-                        className="border-t"
-                      >
-                        {/* ID */}
+                      <tr key={q.questionId} className="border-t">
+                        <td className="px-4 py-3">{q.questionId}</td>
+                        <td className="px-4 py-3">{q.description}</td>
+                        <td className="px-4 py-3">{q.questionType}</td>
+                        <td className="px-4 py-3">{q.difficultyLevel}</td>
+                        <td className="px-4 py-3">{q.status}</td>
                         <td className="px-4 py-3">
-                          {q.questionId}
-                        </td>
-
-                        {/* DESCRIPTION */}
-                        <td className="px-4 py-3">
-                          {editingId === q.questionId ? (
-                            <input
-                              type="text"
-                              name="description"
-                              value={
-                                editData.description ??
-                                q.description
-                              }
-                              onChange={handleChange}
-                              className="border px-2 py-1 w-full rounded"
-                            />
-                          ) : (
-                            q.description
-                          )}
-                        </td>
-
-                        {/* QUESTION TYPE */}
-                        <td className="px-4 py-3">
-                          {editingId === q.questionId ? (
-                            <select
-                              name="questionType"
-                              value={
-                                editData.questionType ??
-                                q.questionType
-                              }
-                              onChange={handleChange}
-                              className="border px-2 py-1 rounded"
-                            >
-                              <option value="MCQ">MCQ</option>
-                              <option value="PROBLEM_STATEMENT">
-                                PROBLEM_STATEMENT
-                              </option>
-                              <option value="HANDS_ON">
-                                HANDS_ON
-                              </option>
-                            </select>
-                          ) : (
-                            q.questionType
-                          )}
-                        </td>
-
-                        {/* DIFFICULTY */}
-                        <td className="px-4 py-3">
-                          {editingId === q.questionId ? (
-                            <select
-                              name="difficultyLevel"
-                              value={
-                                editData.difficultyLevel ??
-                                q.difficultyLevel
-                              }
-                              onChange={handleChange}
-                              className="border px-2 py-1 rounded"
-                            >
-                              <option value="BEGINNER">
-                                BEGINNER
-                              </option>
-                              <option value="INTERMEDIATE">
-                                INTERMEDIATE
-                              </option>
-                              <option value="ADVANCE">
-                                ADVANCE
-                              </option>
-                            </select>
-                          ) : (
-                            q.difficultyLevel
-                          )}
-                        </td>
-
-                        {/* STATUS */}
-                        <td className="px-4 py-3">
-                          {editingId === q.questionId ? (
-                            <select
-                              name="status"
-                              value={
-                                editData.status ?? q.status
-                              }
-                              onChange={handleChange}
-                              className="border px-2 py-1 rounded"
-                            >
-                              <option value="DRAFT">
-                                DRAFT
-                              </option>
-                              <option value="APPROVED">
-                                APPROVED
-                              </option>
-                              <option value="REJECTED">
-                                REJECTED
-                              </option>
-                            </select>
-                          ) : (
-                            q.status
-                          )}
-                        </td>
-
-                        {/* ACTION */}
-                        <td className="px-4 py-3">
-                          {editingId === q.questionId ? (
-                            <div className="flex gap-2">
-                              <Button
-                                size="sm"
-                                onClick={() =>
-                                  handleSave(q.questionId)
-                                }
-                              >
-                                Save
-                              </Button>
-
-                              <Button
-                                size="sm"
-                                variant="outline"
-                                onClick={() => {
-                                  setEditingId(null);
-                                  setEditData({});
-                                }}
-                              >
-                                Cancel
-                              </Button>
-                            </div>
-                          ) : (
-                            <Button
-                              size="sm"
-                              onClick={() => {
-                                setEditingId(q.questionId);
-                                setEditData(q);
-                              }}
-                            >
-                              Edit
-                            </Button>
-                          )}
+                          <Button
+                            size="sm"
+                            onClick={() => goToFullEditor(q.questionId)}
+                          >
+                            Edit
+                          </Button>
                         </td>
                       </tr>
                     ))}

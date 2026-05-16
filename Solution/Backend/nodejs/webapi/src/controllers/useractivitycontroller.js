@@ -1,9 +1,6 @@
-const LoginStatsResponseDto = require("../dtos/responses/loggerlogin-statsresponsedto");
-const AvgSessionResponseDto = require("../dtos/responses/loggeravg-sessionresponsedto");
-const ActiveSessionsResponseDto = require("../dtos/responses/loggeractive-sessionsresponsedto");
-const ActiveUsersResponseDto = require("../dtos/responses/loggeractive-usersresponsedto");
-const UserActivityRequestDto = require("../dtos/requests/useractivityrequestdto");
+const AvgSessionResponseDto = require("../dtos/responses/loggeravg-sessionresponse");
 const ResponseGenerator = require("../helpers/responseGenerator");
+const UserActivityRequestDto=require("../dtos/requests/useractivityrequest")
 
 class UserActivityController {
   constructor(userActivityService) {
@@ -12,13 +9,19 @@ class UserActivityController {
 
   login (req, res)  {
     const userId = req.params.userId;
+    const roleId = req.params.roleId;
     const responseGenerator = new ResponseGenerator();
 
     if (!userId) {
       return this.sendError(res, "User ID is required", 400);
     }
 
-    this.service.login(userId, (err, result) => {
+    if (!roleId) {
+      return this.sendError(res, "Role ID is required", 400);
+    }
+    
+
+    this.service.login(userId, roleId, (err, result) => {
       responseGenerator.generateResponse(
         res,
         err,
@@ -29,15 +32,17 @@ class UserActivityController {
     });
   };
 
-  logout  (req, res) {
+  logout (req, res) {
     const userId = req.params.userId;
+    const roleId = req.params.roleId;
+
     const responseGenerator = new ResponseGenerator();
 
     if (!userId) {
       return this.sendError(res, "User ID is required", 400);
     }
 
-    this.service.logout(userId, (err, result) => {
+    this.service.logout(userId, roleId,(err, result) => {
       responseGenerator.generateResponse(
         res,
         err,
@@ -48,10 +53,10 @@ class UserActivityController {
     });
   };
 
-  getTotalLogins24Hours (req, res)  {
+  getRecentLoginCount (req, res)  {
     const responseGenerator = new ResponseGenerator();
 
-    this.service.getTotalLogins24Hours((err, result) => {
+    this.service.getRecentLoginCount((err, result) => {
       const loginStats = {
         totalLogins24Hours: result?.totalLogins24h || 0,
         timestamp: new Date().toISOString(),
@@ -81,10 +86,10 @@ class UserActivityController {
     });
   };
 
-  getTotalActiveSessions (req, res)  {
+  getActiveSessionsCount (req, res)  {
     const responseGenerator = new ResponseGenerator();
 
-    this.service.getTotalActiveSessions((err, result) => {
+    this.service.getActiveSessionsCount((err, result) => {
       const activeSessions = {
         totalActiveSessions: result?.activeSessions || 0,
         timestamp: new Date().toISOString(),
@@ -99,10 +104,10 @@ class UserActivityController {
     });
   };
 
-  getCurrentActiveUsers (req, res) {
+  getLiveUsers (req, res) {
     const responseGenerator = new ResponseGenerator();
 
-    this.service.getCurrentActiveUsers((err, result) => {
+    this.service.getLiveUsers((err, result) => {
 
       const formattedUsers = result.map((user) => ({
         userId: user.user_id || user.userId,

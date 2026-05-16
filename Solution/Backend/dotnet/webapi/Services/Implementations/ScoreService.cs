@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
-using backend.DTOs;
+using backend.DTO.Requests;
+using backend.DTO.Responses;
 using backend.Repositories.Interfaces;
 using backend.Services.Interfaces;
 
@@ -14,15 +15,15 @@ namespace backend.Services
             _scoreRepository = scoreRepository;
         }
 
-        public async Task<AverageScoreDto> GetAverageScoreByIdAsync(int studentId)
+        public async Task<AverageScores> GetAverageScoreByIdAsync(int studentId)
         {
             return await _scoreRepository.GetAverageScoreByIdAsync(studentId);
         }
-         public async Task<List<AverageScoreDto>> GetAllStudentsAverageScoreAsync()
+         public async Task<List<AverageScores>> GetAllStudentsAverageScoreAsync()
         {
             return await _scoreRepository.GetAllStudentsAverageScoreAsync();
         }
-         public async Task<AssessmentScoreDto> GetAssessmentResultData(int studentId, int assessmentId)
+         public async Task<AssessmentScores> GetAssessmentResultData(int studentId, int assessmentId)
         {
             return await _scoreRepository.GetAssessmentResultData(studentId, assessmentId);
         }

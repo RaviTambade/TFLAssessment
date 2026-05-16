@@ -1,19 +1,20 @@
 class UserActivityRepository {
+  
   constructor(connection) {
     this.connection = connection;
   }
 
-  login(userid, callback) {
-    const sql = "INSERT INTO user_logs (user_id,login_time) VALUES(?,now() );";
-    this.connection.query(sql, [userid], callback);
+  login(userid, roleid, callback) {
+    const sql = "INSERT INTO user_logs (user_id,login_time,role_id) VALUES(?,NOW(),? );";
+    this.connection.query(sql, [userid, roleid], callback);
   }
 
-  logout(userid, callback) {
-    const sql = "UPDATE user_logs SET logout_time=now() WHERE user_id=? AND logout_time is null;";
-    this.connection.query(sql, [userid], callback);
+  logout(userid,roleid, callback) {
+    const sql = "UPDATE user_logs SET logout_time=now() WHERE user_id=? AND role_id=? AND logout_time is null;";
+    this.connection.query(sql, [userid,roleid], callback);
   }
 
-  getTotalLogins24Hours(callback) {
+  getRecentLoginCount(callback) { 
     const sql = `
       SELECT COUNT(*) AS totalLogins24h
       FROM user_logs
@@ -33,16 +34,17 @@ class UserActivityRepository {
         FROM user_logs
         WHERE logout_time IS NOT NULL
         ORDER BY login_time DESC
-        LIMIT 20
-      ) AS last20
+        LIMIT 50
+      ) AS last50
     `;
     this.connection.query(sql, (err, results) => {
       if (err) return callback(err, null);
       callback(null, results[0]);
     });
+    
   }
 
-  getTotalActiveSessions(callback) {
+  getActiveSessionsCount(callback) {
     const sql = `
       SELECT COUNT(*) AS activeSessions
       FROM user_logs
@@ -54,7 +56,7 @@ class UserActivityRepository {
     });
   }
 
-  getCurrentActiveUsers(callback) {
+  getLiveUsers(callback) {
     const sql = `
       SELECT 
         CONCAT(p.first_name,' ', p.last_name) AS full_name,
@@ -70,19 +72,22 @@ class UserActivityRepository {
     });
   }
   
+
+  //replace  name by id
+  
   getAllUserActivity(name, callback) {
     let sql = `
       SELECT
-        us.id AS session_id,
-        us.user_id,
+        u.id AS session_id,
+        ul.user_id,
         CONCAT(p.first_name,' ', p.last_name) AS full_name,
         r.role_name AS role,
-        us.login_time,
-        us.logout_time,
-        TIMESTAMPDIFF(MINUTE, us.login_time, COALESCE(us.logout_time, NOW())) AS session_duration_minutes 
-      FROM tflcomentor_db.user_logs us
-      LEFT JOIN users u ON us.user_id = u.id
-      LEFT JOIN personal_informations p ON us.user_id = p.user_id
+        ul.login_time,
+        ul.logout_time,
+        TIMESTAMPDIFF(MINUTE, ul.login_time, COALESCE(ul.logout_time, NOW())) AS session_duration_minutes 
+      FROM user_logs ul
+      LEFT JOIN users u ON ul.user_id = u.id
+      LEFT JOIN personal_informations p ON ul.user_id = p.user_id
       LEFT JOIN user_roles ur ON u.id = ur.user_id
       LEFT JOIN roles r ON ur.role_id = r.role_id
     `;
@@ -95,7 +100,7 @@ class UserActivityRepository {
       params.push(`%${name}%`);
     }
 
-    sql += ` ORDER BY us.login_time DESC `;
+    sql += ` ORDER BY ul.login_time DESC `;
 
     this.connection.query(sql, params, callback)
   }

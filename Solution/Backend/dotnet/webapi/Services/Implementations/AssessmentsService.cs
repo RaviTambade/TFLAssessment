@@ -1,13 +1,13 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using backend.DTOs;
+using backend.DTO.Responses;
+using backend.DTO.Requests;
 using backend.Models;
 using backend.Repositories.Interfaces;
-using backend.Services.Interfaces;
-using System.Linq;
-using AssessmentReportDto = backend.DTOs.AssessmentReportDto;
 
-namespace backend.Services.Implementations
+
+
+namespace backend.Services.Interfaces
 {
 
 
@@ -20,27 +20,27 @@ namespace backend.Services.Implementations
             _repository = repository;
         }
 
-        public async Task<List<UpcomingAssessmentDto>> GetAllUpcomingAssessmentsService(long userId, DateTime fromDate, DateTime toDate )
+        public async Task<List<Assessments>> GetAllUpcomingAssessmentsService(long userId, DateTime fromDate, DateTime toDate )
         {
             return await _repository.GetAllUpcomingAssessments(userId,fromDate, toDate); 
         }
 
-        public async Task<List<AllAssessmentDto>> GetAssessments()
+        public async Task<List<AllAssessments>> GetAssessments()
         {
             return await _repository.GetAllAssessments();
         }
 
-        public async Task<List<TestDto>> GetTestsAsync()
+        public async Task<List<Tests>> GetTestsAsync()
         {
             return await _repository.GetTestsAsync();
         }
 
-        public async Task<List<StudentDto>> GetStudentsAsync()
+        public async Task<List<string>> GetStudentsAsync()
         {
-            return await _repository.GetStudentsAsync();
+              return await Task.FromResult(new List<string>());
         }
 
-      public async Task AssignAssessmentAsync(AssignAssessmentDto dto)
+      public async Task AssignAssessmentAsync(AssignAssessments dto)
         {
             await _repository.AssignAssessmentAsync(dto);
         }
@@ -50,12 +50,12 @@ namespace backend.Services.Implementations
         //     return await _repository.GetAssessmentResults();
         // }
 
-        public async Task<List<AssessmentQuestionDto>> GetAssessmentQuestionsAsync(int assessmentId)
+        public async Task<List<AssessmentQuestions>> GetAssessmentQuestionsAsync(int assessmentId)
         {
             return await _repository.GetAssessmentQuestionsAsync(assessmentId);
         }
 
-        public async Task<bool> SaveAssessmentAnswersAsync(AssessmentAnswersDto submission)
+        public async Task<bool> SaveAssessmentAnswersAsync(AssessmentAnswers submission)
         {
             // Convert DTO to List<StudentAnswer>
             var answers = submission.Answers?.Select(a => new StudentAnswer
@@ -70,14 +70,14 @@ namespace backend.Services.Implementations
 
             return await _repository.SaveAssessmentAnswersAsync(answers);
         }
-        public async Task<AssessmentReportDto> GetResultData(AssessmentstudenttResultDto request)
+        public async Task<AssessmentReports> GetResultData(AssessmentstudentsResults request)
         {
             var result = await _repository.GetResultData(request.StudentId, request.AssessmentId);
 
             if (result == null)
                 return null;
 
-            return new AssessmentReportDto
+            return new AssessmentReports
             {
                 StudentId = result.StudentId,
                 AssessmentId = result.AssessmentId,
@@ -99,7 +99,7 @@ namespace backend.Services.Implementations
             return await _repository.GetCompletedAssessmentsAsync();
         }
 
-        public async Task<List<AllAssessmentDto>> GetAllAssessments()
+        public async Task<List<AllAssessments>> GetAllAssessments()
         {
             return await _repository.GetAllAssessments();
         }
@@ -119,7 +119,7 @@ namespace backend.Services.Implementations
             return await _repository.RestoreAssessment(id);
         }
 
-        public async Task<List<AssessmentSummaryDto>> GetAssessmentSummariesForStudent(long studentId)
+        public async Task<List<AssessmentSummaries>> GetAssessmentSummariesForStudent(long studentId)
         {
             return await _repository.GetAssessmentSummariesForStudent(studentId);
         }

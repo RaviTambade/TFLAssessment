@@ -1,5 +1,5 @@
-const express=require("express");
-const cors=require("cors");
+const express = require("express");
+const cors = require("cors");
 const bodyParser = require("body-parser");
 
 
@@ -30,7 +30,6 @@ const UserActivityRoutes = require("./routers/useractivityroutes");
 const RolesRouter = require("./routers/rolesroutes");
 const UsersRoutes = require("./routers/usersroutes");
 
-//obj                      //class         //constructor
 const authRepository = new AuthRepository(connection);  
 const authService = new AuthService(authRepository);
 const authController = new AuthController(authService);
@@ -55,7 +54,6 @@ const rolesRoutes = RolesRouter(rolesController);
 
 const app = express();
 
-// Middleware configuration for logging, CORS, and JSON parsing
 
 app.use(cors());
 app.use(express.json());
@@ -65,8 +63,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app
-.use("/api/auth/", authRoutes);
+app.use("/api/auth/", authRoutes);
 app.use("/api/roles/", rolesRoutes);
 app.use("/api/useractivity/", userActivityRoutes);
 app.use("/api/users", usersRoutes);

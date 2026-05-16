@@ -27,7 +27,7 @@ const LoginPage = () => {
 
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
-  const [username, setUsername] = useState("9881735801");
+  const [username, setUsername] = useState("7972616050");
   const [password, setPassword] = useState("12345");
   const [roles, setRoles] = useState<Role[]>([]);
    const [role, setRole] = useState("");
@@ -90,10 +90,10 @@ const LoginPage = () => {
     }
   };
 
-  const handleUserActivityLogin = async (userid: number) => {
+  const handleUserActivityLogin = async (userid: number, roleid: number) => {
     try {
       const res = await fetch(
-        `${WEBAPI_NODE_URL}/useractivity/login/${userid}`,
+        `${WEBAPI_NODE_URL}/useractivity/login/${userid}/role/${roleid}`,
         {
           method: "POST",
           headers: {
@@ -139,7 +139,7 @@ const LoginPage = () => {
       const user = JSON.parse(sessionStorage.getItem("current") || "{}");
 
       if (user?.userid) {
-        await handleUserActivityLogin(user.userid);
+        await handleUserActivityLogin(user.userid, user.role_id);
         window.location.href = "/models/membership/dashboard";
       }
     } catch (error) {

@@ -1,9 +1,11 @@
 using MySql.Data.MySqlClient;
-using backend.DTOs;
+using backend.DTO.Requests;
+using backend.DTO.Responses;
 using backend.Repositories.Interfaces;
 using System.Data; // Fixes IDbConnection
 using Dapper;
 using System.Threading.Tasks;
+using System.Data.SqlClient;
 
 namespace backend.Repositories.Implementations
 {
@@ -19,9 +21,49 @@ namespace backend.Repositories.Implementations
                                             ?? throw new ArgumentNullException(nameof(configuration), "DefaultConnection string is missing");
         }
 
-        public async Task<QuestionsDto> GetQuestionDetailsWithAnswer(int questionId)
+         public async Task<List<Dictionary<string, object>>> GetAllConcepts()
         {
-            QuestionsDto dto = null;
+            List<Dictionary<string, object>> concepts = new List<Dictionary<string, object>>();
+
+            
+            string connectionString = "server=192.168.1.149;port=3306;database=tflcomentor_db;user=root;password='password'";
+            string query = "SELECT question_id, concept FROM questions";
+
+            using (MySqlConnection con = new MySqlConnection(connectionString))
+            {
+                await con.OpenAsync();
+
+                // Create command
+                MySqlCommand cmd = new MySqlCommand(query, con);
+
+                // Execute query
+                MySqlDataReader reader = (MySqlDataReader)await cmd.ExecuteReaderAsync();
+
+                // Read rows
+                while (await reader.ReadAsync())
+                {
+                    // Create dictionary
+                    Dictionary<string, object> data = new Dictionary<string, object>();
+
+                    // Add values
+                    data["question_id"] = reader["question_id"];
+                    data["concept"] = reader["concept"];
+
+                    // Add into list
+                    concepts.Add(data);
+                }
+
+                // Close reader
+                reader.Close();
+            }
+
+            // Return list
+            return concepts;
+        }
+
+        public async Task<Questions> GetQuestionDetailsWithAnswer(int questionId)
+        {
+            Questions dto = null;
 
             string query = @"
                     SELECT q.question_id,q.description AS question_description,q.question_type,q.difficulty_level,q.status,
@@ -47,7 +89,7 @@ namespace backend.Repositories.Implementations
                 {
                     if (await reader.ReadAsync())
                     {
-                        dto = new QuestionsDto
+                        dto = new Questions
                         {
                             QuestionId = Convert.ToInt32(reader["question_id"]),
 
@@ -73,7 +115,7 @@ namespace backend.Repositories.Implementations
                 return dto;
             }
         }
-        public async Task<IEnumerable<AssessmentQuestionAnswersDto>> GetStudentAssessmentQuestionsResultAsync(int assessmentId, int studentId)
+        public async Task<IEnumerable<AssessmentQuestionAnswers>> GetStudentAssessmentQuestionsResultAsync(int assessmentId, int studentId)
         {
             const string sql = @"
             SELECT 
@@ -109,7 +151,7 @@ namespace backend.Repositories.Implementations
 
             using (IDbConnection db = new MySqlConnection(_connectionString))
             {
-                return await db.QueryAsync<AssessmentQuestionAnswersDto>(sql, new
+                return await db.QueryAsync<AssessmentQuestionAnswers>(sql, new
                 {
                     AssessmentId = assessmentId,
                     StudentId = studentId
@@ -117,9 +159,9 @@ namespace backend.Repositories.Implementations
             }
         }
 
-        public async Task<QuestionDetailsDto> GetQuestionDetails(int questionId)
+        public async Task<QuestionDetails> GetQuestionDetails(int questionId)
         {
-            QuestionDetailsDto dto = null;
+            QuestionDetails dto = null;
 
             string connStr = _configuration.GetConnectionString("DefaultConnection");
 
@@ -155,7 +197,7 @@ namespace backend.Repositories.Implementations
                 {
                     if (await reader.ReadAsync())
                     {
-                        dto = new QuestionDetailsDto
+                        dto = new QuestionDetails
                         {
                             QuestionId = Convert.ToInt32(reader["question_id"]),
                             QuestionDescription = reader["question_description"]?.ToString(),

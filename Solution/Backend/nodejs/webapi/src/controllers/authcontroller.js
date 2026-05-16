@@ -1,24 +1,20 @@
-const ChangePasswordDto = require("../dtos/requests/changepassworddto");
+const ChangePassword = require("../dtos/requests/changepassword");
 const Credential = require("../dtos/requests/credential");
-const UserRequest = require("../dtos/requests/userrequest");
-const LoginStatsResponseDto = require("../dtos/responses/loggerlogin-statsresponsedto");
+
+const LoginStatsResponse = require("../dtos/responses/loggerlogin-statsresponse");
 const LoginStatus = require("../dtos/responses/loginstatus");
 const ResponseGenerator = require("../helpers/responseGenerator");
 
+const UserRequest = require("../dtos/requests/userrequest");
 class AuthController {
   constructor(authService) {
     this.service = authService;
   }
 
-
-  validate(req, res) {
+  validateUser(req, res) {
     const responseGenerator = new ResponseGenerator();
-    const credential = new Credential(
-      req.body.username,
-      req.body.password,
-      req.body.role,
-    );
-    this.service.validate(credential, (err, result) => {
+    const credential = new Credential(req.body.username, req.body.password,req.body.role,);
+    this.service.validateUser(credential, (err, result) => {
       if (err) {
         return responseGenerator.sendError(res, "Server error", 500, err);
       }
@@ -27,18 +23,8 @@ class AuthController {
 
       if(isValid)
       {
-        const loginStatus = new LoginStatus(
-          result[0].id,
-          result[0].first_name,
-          result[0].last_name,
-          result[0].role_name  
-        );
-        return responseGenerator.sendSuccess(
-          res,
-          loginStatus,
-          200,
-          "Validation successful",
-        );
+        const loginStatus = new LoginStatus(result[0].id,result[0].first_name,result[0].last_name,result[0].role_name,result[0].role_id);
+        return responseGenerator.sendSuccess(res,loginStatus,200, " User Validation successful",);
       } else {
         return responseGenerator.sendError(res, "Invalid credentials", 401);
       }
@@ -48,21 +34,9 @@ class AuthController {
 
   register(req, res) {
     const responseGenerator = new ResponseGenerator();
-    const user = new UserRequest(
-      req.body.firstName,
-      req.body.lastName,
-      req.body.email,
-      req.body.password,
-      req.body.contact,
-    );
+    const user = new UserRequest(req.body.firstName,req.body.lastName,req.body.email,req.body.password,req.body.contact,);
     this.service.register(user, (err, result) => {
-      responseGenerator.generateResponse(
-        res,
-        err,
-        result,
-        "Failed to register user",
-        "User registered successfully",
-      );
+ responseGenerator.generateResponse(res,err,result, "Failed to register user","User registered successfully",);
     });
   }
 
@@ -70,31 +44,19 @@ class AuthController {
     const { id, newPassword } = req.body;
 
     if (!id || !newPassword) {
-      return res.status(400).json({
-        success: false,
-        message: "User ID and new password required"
-      });
+      return res.status(400).json({success: false, message: "User ID and new password required"});
     }
 
     this.service.changePassword({ id, newPassword }, (err, result) => {
       if (err) {
-        return res.status(500).json({
-          success: false,
-          message: "Server error"
-        });
+        return res.status(500).json({success: false, message: "Server error" });
       }
 
       if (!result) {
-        return res.status(404).json({
-          success: false,
-          message: "User not found"
-        });
+        return res.status(404).json({success: false,message: "User not found"});
       }
 
-      res.json({
-        success: true,
-        message: "Password updated successfully"
-      });
+      res.json({success: true,message: "Password updated successfully" });
     });
   }
 }

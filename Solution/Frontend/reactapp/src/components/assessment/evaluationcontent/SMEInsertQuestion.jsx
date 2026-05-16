@@ -35,7 +35,7 @@ const SMEInsertQuestion = () => {
     e.preventDefault();
 
         try {
-      const response = await fetch(`${WEBAPI_JAVA_URL}/questions`, {
+      const response = await fetch(`${WEBAPI_JAVA_URL}/questions/complete`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"

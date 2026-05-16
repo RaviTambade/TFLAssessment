@@ -1,9 +1,9 @@
-using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using backend.Models;
 using MySql.Data.MySqlClient;
 using System.Data;
-using backend.DTOs;
+using backend.DTO.Requests;
+using backend.DTO.Responses;
 using backend.Repositories.Interfaces;
 
 namespace backend.Repositories
@@ -18,9 +18,9 @@ namespace backend.Repositories
         }
 
 
-    public async Task<List<QuestionsDto>> GetQuestionsByConceptAsync(string concept)
+    public async Task<List<Questions>> GetQuestionsByConceptAsync(string concept)
         {
-            List<QuestionsDto> questions = new List<QuestionsDto>();
+            List<Questions> questions = new List<Questions>();
 
             string query = @"SELECT  q.question_id, q.description, q.question_type,q.difficulty_level,
                             m.option_a,m.option_b,m.option_c,m.option_d, m.correct_answer
@@ -37,7 +37,7 @@ namespace backend.Repositories
 
                         while (await reader.ReadAsync())
                         {
-                            questions.Add(new QuestionsDto
+                            questions.Add(new Questions
                             {
                                 QuestionId = reader.GetInt32("question_id"),
                                 Description = reader.GetString("description"),
@@ -76,49 +76,122 @@ namespace backend.Repositories
     }
 
 
-    public async Task<long> CreateTestAsync(CreateTestRequestDto dto)
-        {
-
-             if (dto.SmeId <= 0)
+public async Task<long> CreateTestAsync(CreateTestRequests dto)
+{
+    if (dto.SmeId <= 0)
         throw new ArgumentException("SmeId must be supplied and greater than 0.");
 
-    var smeExists = await _context.SmeRuntimes
-                       .AnyAsync(sr => sr.SmeRuntimeId == dto.SmeId);
-    if (!smeExists)
-        throw new ArgumentException($"SmeRuntime with id {dto.SmeId} not found.");
+    long testId = 0;
 
-            var test = new Test
+    string connectionString = ("Server=192.168.1.149;Port=3306;Database=tflcomentor_db;User=root;Password=password;");
+
+    using (MySqlConnection con = new MySqlConnection(connectionString))
+    {
+        await con.OpenAsync();
+
+        using (MySqlTransaction transaction = await con.BeginTransactionAsync())
+        {
+            try
             {
-                Title = dto.Title,
-                Duration = (int)dto.Duration,
-        Difficulty = dto.SkillLevel,
-        SmeRuntimeId = dto.SmeId,
-         Description = dto.Description, 
-                CreatedAt = DateTime.Now,
-                Status = true
-            };
+                // Check SME exists
+                string Query = @"
+                    SELECT COUNT(1)
+                    FROM SmeRuntimes
+                    WHERE SmeRuntimeId = @SmeId";
 
-            _context.Tests.Add(test);
-            await _context.SaveChangesAsync();
-
-            long seq = 1;
-
-            if (dto.QuestionIds != null)
-            {
-                foreach (var q in dto.QuestionIds)
-            {
-                _context.TestQuestions.Add(new TestQuestion
+                using (MySqlCommand Cmd = new MySqlCommand(Query, con, transaction))
                 {
-                        TestId = test.Id,
-                        QuestionId = q,
-                        SequenceOrder = (int)seq++
-                });
-            }
-            }
+                    Cmd.Parameters.AddWithValue("@SmeId", dto.SmeId);
 
-            await _context.SaveChangesAsync();
+                    int count = Convert.ToInt32(await Cmd.ExecuteScalarAsync());
 
-            return test.Id;
+                    if (count == 0)
+                        throw new ArgumentException($"SmeRuntime with id {dto.SmeId} not found.");
+                }
+
+                // Insert Test
+                string insertTestQuery = @"
+                    INSERT INTO Tests
+                    (
+                        Title,
+                        Duration,
+                        Difficulty,
+                        SmeRuntimeId,
+                        Description,
+                        CreatedAt,
+                        Status
+                    )
+                    VALUES
+                    (
+                        @Title,
+                        @Duration,
+                        @Difficulty,
+                        @SmeRuntimeId,
+                        @Description,
+                        @CreatedAt,
+                        @Status
+                    );
+
+                    SELECT LAST_INSERT_ID();";
+
+                using (MySqlCommand cmd = new MySqlCommand(insertTestQuery, con, transaction))
+                {
+                    cmd.Parameters.AddWithValue("@Title", dto.Title);
+                    cmd.Parameters.AddWithValue("@Duration", (int)dto.Duration);
+                    cmd.Parameters.AddWithValue("@Difficulty", dto.SkillLevel);
+                    cmd.Parameters.AddWithValue("@SmeRuntimeId", dto.SmeId);
+                    cmd.Parameters.AddWithValue("@Description",
+                        dto.Description ?? (object)DBNull.Value);
+                    cmd.Parameters.AddWithValue("@CreatedAt", DateTime.Now);
+                    cmd.Parameters.AddWithValue("@Status", true);
+
+                    testId = Convert.ToInt64(await cmd.ExecuteScalarAsync());
+                }
+
+                // Insert Questions
+                if (dto.QuestionIds != null && dto.QuestionIds.Any())
+                {
+                    int seq = 1;
+
+                    foreach (var questionId in dto.QuestionIds)
+                    {
+                        string insertQuestionQuery = @"
+                            INSERT INTO TestQuestions
+                            (
+                                TestId,
+                                QuestionId,
+                                SequenceOrder
+                            )
+                            VALUES
+                            (
+                                @TestId,
+                                @QuestionId,
+                                @SequenceOrder
+                            )";
+
+                        using (MySqlCommand questionCmd =
+                               new MySqlCommand(insertQuestionQuery, con, transaction))
+                        {
+                            questionCmd.Parameters.AddWithValue("@TestId", testId);
+                            questionCmd.Parameters.AddWithValue("@QuestionId", questionId);
+                            questionCmd.Parameters.AddWithValue("@SequenceOrder", seq++);
+
+                            await questionCmd.ExecuteNonQueryAsync();
+                        }
+                    }
+                }
+
+                await transaction.CommitAsync();
+
+                return testId;
+            }
+            catch
+            {
+                await transaction.RollbackAsync();
+                throw;
+            }
         }
+    }
+}
     }
 }

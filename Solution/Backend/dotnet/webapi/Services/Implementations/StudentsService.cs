@@ -1,4 +1,5 @@
-using backend.DTOs;
+using backend.DTO.Requests;
+using backend.DTO.Responses;
 using backend.Repositories.Interfaces;
 using backend.Services.Interfaces;
 using System.Threading.Tasks;
@@ -14,7 +15,7 @@ namespace backend.Services.Implementations
             _repository = repository;
         }
 
-        public async Task<StudentCountDto> GetTotalStudents()
+        public async Task<StudentCounts> GetTotalStudents()
         {
             return await _repository.GetTotalStudents();
         }

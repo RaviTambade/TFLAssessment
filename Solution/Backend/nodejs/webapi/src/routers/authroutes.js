@@ -1,9 +1,14 @@
 const express = require("express");
+
+
 const AuthRoutes = (controller) => {
 
   const router = express.Router();
   
-  router.post("/login", controller.validate.bind(controller));
+
+  //URL Request Route Mapping with Controller action methods
+
+  router.post("/login", controller.validateUser.bind(controller));
   router.post("/register", controller.register.bind(controller));
   router.put("/changepassword", controller.changePassword.bind(controller));
   return router;

@@ -41,9 +41,13 @@ import ConceptByFramework from "@/components/assessment/skilltaxonomy/ConceptByF
 import QuestionByConceptId from "@/components/assessment/evaluationcontent/QuestionByConceptId";
 import Dashboard from "@/components/assessment/membership/dashboard";
 import DashboardSME from "@/components/assessment/membership/dashboardsme";
-import EvaluationContentSme from "@/components/assessment/evaluationcontent/EvaluationContentSme";
+//import EvaluationContentSme from "@/components/assessment/evaluationcontent/EvaluationContentSme";
 import Question from "@/components/assessment/assessmentOrchestrator/applyAssessment";
 import RTUpdateQuestion from "@/components/assessment/evaluationcontent/RTUpdateQuestion";
+import ScheduleInterview from "@/components/assessment/evaluationcontent/ScheduleInterview";
+
+
+
 
 
 function AppRoutes() {
@@ -80,7 +84,7 @@ function AppRoutes() {
 
  
           <Route path="skilltaxonomy/ViewRuntimes" element={<ViewRuntimes />} />
-
+ce2
           {/* <Route path="skilltaxonomy/AddConcept" element={<AddConcept />} /> */}
            <Route path="skilltaxonomy/ConceptByFramework" element={<ConceptByFramework />} />
           
@@ -103,7 +107,7 @@ function AppRoutes() {
           <Route path="evaluationcontent/reviewquestion" element={<MentorReviewQuestion />} />
           <Route index element={<Assessment />} />
           <Route path="evaluationcontent/viewprojectinfo" element={<ViewProjectInfo />} />
-          {/* <Route path="evaluationcontent/sme" element={<EvaluationContentSme />} /> */}
+           {/* <Route path="evaluationcontent/sme" element={<EvaluationContentSme />} />  */}
           <Route index element={<Assessment />} />
           <Route path="upcoming-assessment" element={<UpcomingAssessment />} />
           <Route path="create-test" element={<SMECreateTest />} />
@@ -111,6 +115,7 @@ function AppRoutes() {
           <Route path="all-assessment" element={<AllAssessment />} />
           <Route path="evaluationcontent/questionbydifficulty" element={<QuestionsByDifficulty />} />
           <Route path="evaluationcontent/projectbymentee" element={<ProjectByMentee />} />
+          <Route path="evaluationcontent/scheduleinterview" element={<ScheduleInterview/>} />
 
           {/* Membership model */}
           <Route path="membership/ChangePassword" element={<ChangePassword />} />

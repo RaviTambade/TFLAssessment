@@ -71,10 +71,10 @@ const Navbar = ({ isLoggedIn }: NavbarProps) => {
     }
   };
 
-  const handleUserLogLogout = async (userid: number) => {
+  const handleUserLogLogout = async (userid: number,roleid:number) => {
     try {
       const res = await fetch(
-        `${WEBAPI_NODE_URL}/useractivity/logout/${userid}`, { method: "PUT", headers: { "Content-Type": "application/json" }},
+        `${WEBAPI_NODE_URL}/useractivity/logout/${userid}/role/${roleid}`, { method: "PUT", headers: { "Content-Type": "application/json" }},
       );
 
       if (!res.ok) {
@@ -192,7 +192,7 @@ const Navbar = ({ isLoggedIn }: NavbarProps) => {
                           sessionStorage.getItem("current") || "{}",
                         );
                         if (user?.userid) {
-                          handleUserLogLogout(user.userid);
+                          handleUserLogLogout(user.userid,user.role_id);
                         }
                       } catch (error) {
                         console.error("Submit Error:", error);

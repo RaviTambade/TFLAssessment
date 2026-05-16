@@ -1,5 +1,5 @@
-const UpdateUserStatusRequestDto = require("../dtos/requests/updateUserStatusRequestDto");
-const UpdateUserStatusResponseDto = require("../dtos/responses/updateUserStatusResponseDto");
+const UpdateUserStatusRequestDto = require("../dtos/requests/userstatus");
+const UpdateUserStatusResponseDto = require("../dtos/responses/userstatus");
 const ResponseGenerator = require("../helpers/responseGenerator");
 
 
@@ -8,27 +8,27 @@ class UsersController {
     this.service = usersService;
   }
 
-  getUserInformationById(req, res) {
+  getUserDetailsById(req, res) {
     const userId = req.params.userId;
     const responseGenerator = new ResponseGenerator();
 
-    this.service.getUserInformationById(Number(userId), (err, result) => {
+    this.service.getUserDetailsById(Number(userId), (err, result) => {
       responseGenerator.generateResponse(
         res,
         err,
         result,
-        "Failed to get user information",
-        "User information retrive successfully",
+        "Failed to get user details",
+        "User details retrieved successfully",
       );
     });
   }
 
-  updateUserPersonalInformation(req, res) {
+  updateUserPersonalDetails(req, res) {
     const userId = req.params.userId;
     const data = req.body;
     const responseGenerator = new ResponseGenerator();
 
-    this.service.updateUserPersonalInformation(userId, data, (err, result) => {
+    this.service.updateUserPersonalDetails(userId, data, (err, result) => {
       console.log(err);
       responseGenerator.generateResponse(
         res,
@@ -40,9 +40,9 @@ class UsersController {
     });
   }
 
-  updateUserProfessionalInformation(req, res) {
+  updateUserProfessionalDetails(req, res) {
     const responseGenerator = new ResponseGenerator();
-    const result = this.service.updateUserProfessionalInformation(
+    const result = this.service.updateUserProfessionalDetails(
       req.params.userId,
       req.body,
       (err, result) => {
@@ -57,9 +57,9 @@ class UsersController {
     );
   }
 
-  updateUserAcademicInformation(req, res) {
+  updateUserAcademicDetails(req, res) {
     const responseGenerator = new ResponseGenerator();
-    const result = this.service.updateUserAcademicInformation(
+    const result = this.service.updateUserAcademicDetails(
       req.params.userId,
       req.body,
       (err, result) => {
@@ -97,26 +97,13 @@ class UsersController {
     );
   }
 
-  getUserCompleteInformation(req, res) {
+
+
+  getUserPersonalDetails(req, res) {
     const userId = req.params.userId;
     const responseGenerator = new ResponseGenerator();
 
-    this.service.getUserCompleteInformation(Number(userId), (err, result) => {
-      responseGenerator.generateResponse(
-        res,
-        err,
-        result,
-        "Failed to get user complete information",
-        "User complete information retrive successfully",
-      );
-    });
-  }
-
-  getUserPersonalInformation(req, res) {
-    const userId = req.params.userId;
-    const responseGenerator = new ResponseGenerator();
-
-    this.service.getUserPersonalInformation(Number(userId), (err, result) => {
+    this.service.getUserPersonalDetails(Number(userId), (err, result) => {
       responseGenerator.generateResponse(
         res,
         err,
@@ -127,11 +114,11 @@ class UsersController {
     });
   }
 
-  getUserAcademicInformation(req, res) {
+  getUserAcademicDetails(req, res) {
     const userId = req.params.userId;
     const responseGenerator = new ResponseGenerator();
 
-    this.service.getUserAcademicInformation(Number(userId), (err, result) => {
+    this.service.getUserAcademicDetails(Number(userId), (err, result) => {
       responseGenerator.generateResponse(
         res,
         err,
@@ -142,11 +129,11 @@ class UsersController {
     });
   }
 
-  getUserProfessionalInformation(req, res) {
+  getUserProfessionalDetails(req, res) {
     const userId = req.params.userId;
     const responseGenerator = new ResponseGenerator();
 
-    this.service.getUserProfessionalInformation(
+    this.service.getUserProfessionalDetails(
       Number(userId),
       (err, result) => {
         responseGenerator.generateResponse(

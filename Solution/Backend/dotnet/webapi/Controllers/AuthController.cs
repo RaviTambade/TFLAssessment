@@ -20,18 +20,18 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("send-password")]
-    public IActionResult SendPassword(PasswordRequest request)
+    public IActionResult SendPassword(string email)
     {
-        var password = _passwordService.GeneratePassword(request.Email);
-        _emailService.SendEmail(request.Email, password);
+        var password = _passwordService.GeneratePassword("");
+        _emailService.SendEmail(" ", " ");
 
        return Ok(new { password = password });
     }
 
     [HttpPost("verify-password")]
-    public IActionResult VerifyPassword(PasswordVerifyRequest request)
+    public IActionResult VerifyPassword(string email, string password)
     {
-        var result = _passwordService.VerifyPassword(request.Email, request.Password);
+        var result = _passwordService.VerifyPassword(email, password);
 
         if (!result)
             return BadRequest("Invalid or Expired Password");

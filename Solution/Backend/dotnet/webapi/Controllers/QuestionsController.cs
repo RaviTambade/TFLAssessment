@@ -19,28 +19,34 @@ namespace backend.Controllers
             _context = context;
         }
 
-        [HttpGet("~/api/questions/concepts/{conceptId}/questions")]
-        public async Task<IActionResult> GetQuestionsByConcept(long conceptId)
+        // [HttpGet("~/api/questions/concepts/{conceptId}/questions")]
+        // public async Task<string> GetQuestionsByConcept(long conceptId)
+        // {
+        //      return await Task.FromResult(new List<string>());
+        // }
+
+
+
+        [HttpGet("concepts")]
+        public async Task<IActionResult> GetAllConcepts()
         {
-            var result = await _context.QuestionFrameworkConcepts
-                .Where(x => x.FrameworkConcepts != null && x.FrameworkConcepts.ConceptId == conceptId)
-                .Select(x => x.Question!)
-                .Where(q => q != null)
-                .Select(q => new
+            var result = await _service.GetAllConcepts();
+
+            if (result == null || result.Count == 0)
+            {
+                return NotFound(new
                 {
-                    questionId = q.QuestionId,
-                    description = q.Description,
-                    type = q.QuestionType,
-                    difficulty = q.DifficultyLevel,
-                    conceptId
-                })
-                .Distinct()
-                .ToListAsync();
+                    message = "No concepts found"
+                });
+            }
 
             return Ok(result);
         }
 
        
+
+
+
         [HttpGet("{assessmentId}/student/{studentId}")]
         public async Task<IActionResult> GetStudentAssessmentQuestionsResultAsync(int assessmentId, int studentId)
         {

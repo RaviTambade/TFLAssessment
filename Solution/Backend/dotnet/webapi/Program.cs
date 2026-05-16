@@ -41,22 +41,15 @@ builder.Services.AddScoped<IStudentResultRepository, StudentResultRepository>();
 builder.Services.AddScoped<IUserSessionRepository, UsersessionRepository>();
 builder.Services.AddScoped<IQuestionsRepository, QuestionsRepository>();
 builder.Services.AddScoped<IQuestionsService, QuestionsService>();
+ 
 
-builder.Services.AddScoped<IRuntimesService, RuntimesService>();
-builder.Services.AddScoped<IRuntimesRepository, RuntimesRepository>();
-
-builder.Services.AddScoped<ILanguagesService, LanguagesService>();
-builder.Services.AddScoped<ILanguagesRepository, LanguagesRepository>();
-
-builder.Services.AddScoped<ILayersService, LayersService>();
-builder.Services.AddScoped<ILayersRepository, LayersRepository>();
+// builder.Services.AddScoped<ILayersService, LayersService>();
+// builder.Services.AddScoped<ILayersRepository, LayersRepository>();
 
 builder.Services.AddScoped<IStudentsRepository, StudentsRepository>();
 builder.Services.AddScoped<IStudentsService, StudentsService>();
 
-
-builder.Services.AddScoped<IConceptsService, ConceptsService>();
-builder.Services.AddScoped<IConceptsRepository, ConceptsRepository>();
+ 
 
 builder.Services.AddScoped<ICreateTestService, CreateTestService>();
 builder.Services.AddScoped<ICreateTestRepository, CreateTestRepository>();
