@@ -31,7 +31,7 @@ TemporaryDependencyNodeTargetIdentifier=net8.0
 /noconfig
 /unsafe-
 /checked-
-/nowarn:1701,1702,1701,1702,8002
+/nowarn:1701,1702,1701,1702
 /fullpaths
 /nostdlib+
 /errorreport:prompt
@@ -60,7 +60,7 @@ obj/Debug/net8.0/
  CandidateAnswerEntity.GlobalUsings.g.cs
 
 [metadataReferences]
-<NUGET>/microsoft.netcore.app.ref/8.0.27/ref/net8.0/
+<NUGET>/microsoft.netcore.app.ref/8.0.22/ref/net8.0/
  Microsoft.CSharp.dll
  Microsoft.VisualBasic.Core.dll
  Microsoft.VisualBasic.dll
@@ -226,10 +226,10 @@ obj/Debug/net8.0/
  WindowsBase.dll
 
 [analyzerReferences]
-<DOTNET>/sdk/10.0.204/Sdks/Microsoft.NET.Sdk/analyzers/
+<DOTNET>/sdk/10.0.101/Sdks/Microsoft.NET.Sdk/analyzers/
  Microsoft.CodeAnalysis.CSharp.NetAnalyzers.dll
  Microsoft.CodeAnalysis.NetAnalyzers.dll
-<NUGET>/microsoft.netcore.app.ref/8.0.27/analyzers/dotnet/cs/
+<NUGET>/microsoft.netcore.app.ref/8.0.22/analyzers/dotnet/cs/
  Microsoft.Interop.ComInterfaceGenerator.dll
  Microsoft.Interop.JavaScript.JSImportGenerator.dll
  Microsoft.Interop.LibraryImportGenerator.dll
@@ -238,5 +238,5 @@ obj/Debug/net8.0/
  System.Text.RegularExpressions.Generator.dll
 
 [analyzerConfigFiles]
-<DOTNET>/sdk/10.0.204/Sdks/Microsoft.NET.Sdk/analyzers/build/config/analysislevel_8_default.globalconfig
+<DOTNET>/sdk/10.0.101/Sdks/Microsoft.NET.Sdk/analyzers/build/config/analysislevel_8_default.globalconfig
 obj/Debug/net8.0/CandidateAnswerEntity.GeneratedMSBuildEditorConfig.editorconfig
