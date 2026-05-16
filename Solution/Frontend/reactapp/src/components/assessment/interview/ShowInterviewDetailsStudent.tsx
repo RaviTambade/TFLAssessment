@@ -39,6 +39,22 @@ const ShowInterviewDetailsStudent = () => {
     });
     }, []);
 
+    const handleCancel=async()=>{
+      try{
+         const response = await fetch(
+            `${WEBAPI_JAVA_URL}/interview/3/cancel`,
+            {
+                method: "PUT",
+                body: JSON.stringify({
+                    status: "CANCELED"
+                })
+            }
+        );
+      }catch(error){
+        console.log(error);
+      }
+     
+    }
     return (
     <div className="flex justify-center items-center min-h-screen bg-gradient-to-br  p-6">
       <Card className="w-full max-w-2xl border border-orange-400 shadow-2xl rounded-2xl overflow-hidden">
@@ -116,13 +132,6 @@ const ShowInterviewDetailsStudent = () => {
     {/* Student Buttons */}
     {user.role_id === 2 && (
         <>
-        <Button
-            variant="outline"
-            className="border-orange-700 text-orange-800 hover:bg-orange-200 font-semibold"
-        >
-            Reschedule
-        </Button>
-
         <Button className="bg-orange-700 hover:bg-orange-800 text-white shadow-lg font-semibold">
             Request Cancellation
         </Button>
@@ -143,6 +152,13 @@ const ShowInterviewDetailsStudent = () => {
             className="border-red-700 text-red-800 hover:bg-red-100 font-semibold"
         >
             Reject Interview
+        </Button>
+
+        <Button onClick={handleCancel}
+            variant="outline"
+            className="border-red-700 text-red-800 hover:bg-red-100 font-semibold"
+        >
+            Cancel Interview
         </Button>
         </>
     )}

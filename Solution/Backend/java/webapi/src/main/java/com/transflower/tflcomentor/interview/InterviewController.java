@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -127,9 +128,9 @@ public class InterviewController{
         return null;
     }
     }
-  @GetMapping("/upcoming/{interviewer}")
-public List<InterviewList> getUpcommingInterviews(
-        @PathVariable int interviewer) {
+ 
+   @GetMapping("/upcoming/{interviewer}")
+   public List<InterviewList> getUpcommingInterviews(@PathVariable int interviewer) {
 
     List<InterviewList> interviews = new ArrayList<>();
 
@@ -183,4 +184,16 @@ public List<InterviewList> getUpcommingInterviews(
 
     return interviews;
 }
+
+    @PutMapping("/{interviewId}/cancel")
+    public void cancelInterview(@PathVariable int interviewId){
+        try(Connection connection=getConnection()){
+            String query="UPDATE interviews set status='CANCELED' where interview_id=?";
+            PreparedStatement ps=connection.prepareStatement(query);
+            ps.setInt(1,interviewId);
+            ps.executeUpdate();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
 }
