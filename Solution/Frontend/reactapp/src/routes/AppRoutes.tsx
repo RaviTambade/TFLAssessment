@@ -44,6 +44,9 @@ import DashboardSME from "@/components/assessment/membership/dashboardsme";
 //import EvaluationContentSme from "@/components/assessment/evaluationcontent/EvaluationContentSme";
 import Question from "@/components/assessment/assessmentOrchestrator/applyAssessment";
 import RTUpdateQuestion from "@/components/assessment/evaluationcontent/RTUpdateQuestion";
+import ScheduleInterview from "@/components/assessment/evaluationcontent/ScheduleInterview";
+
+
 
 
 
@@ -112,6 +115,7 @@ ce2
           <Route path="all-assessment" element={<AllAssessment />} />
           <Route path="evaluationcontent/questionbydifficulty" element={<QuestionsByDifficulty />} />
           <Route path="evaluationcontent/projectbymentee" element={<ProjectByMentee />} />
+          <Route path="evaluationcontent/scheduleinterview" element={<ScheduleInterview/>} />
 
           {/* Membership model */}
           <Route path="membership/ChangePassword" element={<ChangePassword />} />

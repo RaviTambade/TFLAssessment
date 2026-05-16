@@ -1,10 +1,10 @@
 const ALLOWED_STATUSES = ["ACTIVE", "INACTIVE", "BLOCKED"];
 
-class UpdateUserStatusRequestDto {
+class UserStatus {
   constructor(user_id, status) {
     this.user_id = user_id;
     this.status = status;
   }
 }
 
-module.exports = UpdateUserStatusRequestDto;
+module.exports = UserStatus;

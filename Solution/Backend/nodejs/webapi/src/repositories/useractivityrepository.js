@@ -1,19 +1,20 @@
 class UserActivityRepository {
+  
   constructor(connection) {
     this.connection = connection;
   }
 
-  login(userid, callback) {
-    const sql = "INSERT INTO user_logs (user_id,login_time) VALUES(?,NOW() );";
-    this.connection.query(sql, [userid], callback);
+  login(userid, roleid, callback) {
+    const sql = "INSERT INTO user_logs (user_id,login_time,role_id) VALUES(?,NOW(),? );";
+    this.connection.query(sql, [userid, roleid], callback);
   }
 
-  logOut(userid, callback) {
-    const sql = "UPDATE user_logs SET logout_time=now() WHERE user_id=? AND logout_time is null;";
-    this.connection.query(sql, [userid], callback);
+  logout(userid,roleid, callback) {
+    const sql = "UPDATE user_logs SET logout_time=now() WHERE user_id=? AND role_id=? AND logout_time is null;";
+    this.connection.query(sql, [userid,roleid], callback);
   }
 
-  getTotalLogins24Hours(callback) { 
+  getRecentLoginCount(callback) { 
     const sql = `
       SELECT COUNT(*) AS totalLogins24h
       FROM user_logs
@@ -43,7 +44,7 @@ class UserActivityRepository {
     
   }
 
-  getTotalActiveSessionsCount(callback) {
+  getActiveSessionsCount(callback) {
     const sql = `
       SELECT COUNT(*) AS activeSessions
       FROM user_logs
@@ -55,7 +56,7 @@ class UserActivityRepository {
     });
   }
 
-  getCurrentActiveUsers(callback) {
+  getLiveUsers(callback) {
     const sql = `
       SELECT 
         CONCAT(p.first_name,' ', p.last_name) AS full_name,
@@ -71,10 +72,13 @@ class UserActivityRepository {
     });
   }
   
+
+  //replace  name by id
+  
   getAllUserActivity(name, callback) {
     let sql = `
       SELECT
-        us.id AS session_id,
+        u.id AS session_id,
         ul.user_id,
         CONCAT(p.first_name,' ', p.last_name) AS full_name,
         r.role_name AS role,
