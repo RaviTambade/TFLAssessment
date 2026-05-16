@@ -5,25 +5,41 @@ import { WEBAPI_JAVA_URL } from "@/lib/utils";
 
 const ShowInterviewDetailsStudent = () => {
 
-    const [interviewDetail,setInterviewDetail]=useState();
+    const [interviewDetail,setInterviewDetail]=useState({
+        title: "",
+        scheduleDate: "",
+        mode: "",
+        interviewer: "",
+        interviewId:0
+    });
 
-    useEffect(()=>{
-        fetch(`${WEBAPI_JAVA_URL}/interview`)
-        .then((res)=>{
-            if(!res.ok){
-                throw new Error("Failed to fetch api");
-            }
-            return res.json();
-        })
-       .then((data)=>{
-         setInterviewDetail(data);
-       })
-       .catch((err)=>{
-        console.error(err);
-       })
-    },[]);
+    const storedUser = sessionStorage.getItem("current");
+    const user = storedUser ? JSON.parse(storedUser) : null;
     
-  return (
+   useEffect(() => {
+    console.log(user);
+    if(!user) return;
+    fetch(
+        // `${WEBAPI_JAVA_URL}/interview/details/student/${user.userid}/interview/1`
+        `${WEBAPI_JAVA_URL}/interview/details/${user.userid}/role/${user.role_id}/interview/1`
+    )
+    .then((res) => {
+        console.log(res);
+        if(!res.ok){
+            throw new Error("Failed to fetch api");
+        }
+        return res.json();
+    })
+    .then((data) => {
+        console.log("DATA RECEIVED:", data);
+        setInterviewDetail(data);
+    })
+    .catch((err) => {
+        console.error(err);
+    });
+    }, []);
+
+    return (
     <div className="flex justify-center items-center min-h-screen bg-gradient-to-br  p-6">
       <Card className="w-full max-w-2xl border border-orange-400 shadow-2xl rounded-2xl overflow-hidden">
         
@@ -44,53 +60,94 @@ const ShowInterviewDetailsStudent = () => {
               <p className="text-sm text-orange-900 font-medium">
                 Interview On
               </p>
-              <h3 className="text-lg font-bold text-gray-800 mt-1">
-                Java Full Stack Developer
-              </h3>
+              <h4 className="text-lg font-semibold text-gray-800 mt-1">
+                {interviewDetail.title}
+              </h4>
             </div>
 
             <div className=" p-5 rounded-xl border border-orange-300 shadow-sm hover:shadow-md transition">
               <p className="text-sm text-orange-900 font-medium">
                 Scheduled Date
               </p>
-              <h3 className="text-lg font-bold text-gray-800 mt-1">
-                18 May 2026, 10:30 AM
-              </h3>
+              <h4 className="text-lg font-semibold text-gray-800 mt-1">
+                {interviewDetail.scheduleDate}
+              </h4>
             </div>
 
             <div className=" p-5 rounded-xl border border-orange-300 shadow-sm hover:shadow-md transition">
               <p className="text-sm text-orange-900 font-medium">
                 Interview Mode
               </p>
-              <h3 className="text-lg font-bold text-gray-800 mt-1">
-                Online (Google Meet)
-              </h3>
+              <h4 className="text-lg font-semibold text-gray-800 mt-1">
+                {interviewDetail.mode}
+              </h4>
             </div>
 
+
+          {user.role_id === 2 && (
+            <>
             <div className="p-5 rounded-xl border border-orange-300 shadow-sm hover:shadow-md transition">
               <p className="text-sm text-orange-900 font-medium">
                 Interviewer
               </p>
-              <h3 className="text-lg font-bold text-gray-800 mt-1">
-                John Smith
-              </h3>
+              <h4 className="text-lg font-semibold text-gray-800 mt-1">
+                {interviewDetail.interviewer}
+              </h4>
             </div>
+          
+            </>
+           )}
+           {user.role_id === 4 && (
+            <>
+            <div className="p-5 rounded-xl border border-orange-300 shadow-sm hover:shadow-md transition">
+              <p className="text-sm text-orange-900 font-medium">
+                Student
+              </p>
+              <h4 className="text-lg font-semibold text-gray-800 mt-1">
+                {interviewDetail.interviewer}
+              </h4>
+            </div>
+          
+            </>
+           )}
           </div>
-
-          {/* Buttons */}
           <div className="flex flex-col md:flex-row gap-4 justify-end">
 
-            <Button
-              variant="outline"
-              className="border-orange-700 text-orange-800 hover:bg-orange-200 font-semibold"
-            >
-              Reschedule
-            </Button>
+    {/* Student Buttons */}
+    {user.role_id === 2 && (
+        <>
+        <Button
+            variant="outline"
+            className="border-orange-700 text-orange-800 hover:bg-orange-200 font-semibold"
+        >
+            Reschedule
+        </Button>
 
-            <Button className="bg-orange-700 hover:bg-orange-800 text-white shadow-lg font-semibold">
-              Request Cancellation
-            </Button>
-          </div>
+        <Button className="bg-orange-700 hover:bg-orange-800 text-white shadow-lg font-semibold">
+            Request Cancellation
+        </Button>
+        </>
+    )}
+
+    {/* SME Buttons */}
+    {user.role_id === 4 && (
+        <>
+        <Button
+            className="bg-green-700 hover:bg-green-800 text-white shadow-lg font-semibold"
+        >
+            Accept Interview
+        </Button>
+
+        <Button
+            variant="outline"
+            className="border-red-700 text-red-800 hover:bg-red-100 font-semibold"
+        >
+            Reject Interview
+        </Button>
+        </>
+    )}
+
+    </div>
         </CardContent>
       </Card>
     </div>
