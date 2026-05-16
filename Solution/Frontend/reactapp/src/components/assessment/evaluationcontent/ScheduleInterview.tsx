@@ -1,22 +1,31 @@
 import React, { useEffect, useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { CalendarDays, User, Video, GraduationCap } from "lucide-react";
+
+import {
+  CalendarDays,
+  User,
+  Video,
+  GraduationCap,
+  FileText,
+} from "lucide-react";
 
 type ScheduleInterview = {
   scheduleAt: string;
   mode: string;
   status: string;
+  title: string;
   createdAt: string;
   interviewer: number;
   studentId: number;
 };
 
-const ScheduleInterview= () => {
+const ScheduleInterview = () => {
   const [formData, setFormData] = useState<ScheduleInterview>({
     scheduleAt: "",
     mode: "",
     status: "SCHEDULED",
+    title: "",
     createdAt: "",
     interviewer: 0,
     studentId: 0,
@@ -33,13 +42,13 @@ const ScheduleInterview= () => {
   ) => {
     const { name, value } = e.target;
 
-    setFormData({
-      ...formData,
+    setFormData((prev) => ({
+      ...prev,
       [name]:
         name === "interviewer" || name === "studentId"
           ? Number(value)
           : value,
-    });
+    }));
   };
 
   const scheduleInterview = async () => {
@@ -62,6 +71,7 @@ const ScheduleInterview= () => {
           scheduleAt: "",
           mode: "",
           status: "SCHEDULED",
+          title: "",
           createdAt: "",
           interviewer: 0,
           studentId: 0,
@@ -83,6 +93,8 @@ const ScheduleInterview= () => {
   return (
     <section className="min-h-screen bg-background py-16 px-4">
       <div className="max-w-3xl mx-auto">
+
+        {/* Heading */}
         <div className="text-center mb-10">
           <h1 className="text-4xl font-bold text-foreground mb-3">
             Schedule{" "}
@@ -90,14 +102,38 @@ const ScheduleInterview= () => {
               Interview
             </span>
           </h1>
+
+          <p className="text-muted-foreground text-lg">
+            Create and manage interview schedules for students.
+          </p>
         </div>
 
+        {/* Card */}
         <Card className="border-0 shadow-2xl rounded-3xl overflow-hidden">
           <div className="bg-gradient-to-r from-primary/10 to-purple-500/10 p-8">
             <CardContent>
+
               <form onSubmit={handleSubmit} className="space-y-6">
-                
-                {/* Schedule At */}
+
+                {/* Title */}
+                <div>
+                  <label className="text-sm font-semibold mb-2 flex items-center gap-2">
+                    <FileText className="h-4 w-4" />
+                    Interview Title
+                  </label>
+
+                  <input
+                    type="text"
+                    name="title"
+                    value={formData.title}
+                    onChange={handleChange}
+                    placeholder="Enter Interview Title"
+                    required
+                    className="w-full border border-border rounded-xl px-4 py-3 bg-background focus:outline-none focus:ring-2 focus:ring-primary"
+                  />
+                </div>
+
+                {/* Schedule Date */}
                 <div>
                   <label className="text-sm font-semibold mb-2 flex items-center gap-2">
                     <CalendarDays className="h-4 w-4" />
@@ -114,7 +150,7 @@ const ScheduleInterview= () => {
                   />
                 </div>
 
-                {/* Interview Mode */}
+                {/* Mode */}
                 <div>
                   <label className="text-sm font-semibold mb-2 flex items-center gap-2">
                     <Video className="h-4 w-4" />
@@ -197,10 +233,13 @@ const ScheduleInterview= () => {
 
                 {/* Message */}
                 {message && (
-                  <div className="text-center pt-2">
-                    <p className="text-primary font-medium">{message}</p>
+                  <div className="text-center">
+                    <p className="text-primary font-medium">
+                      {message}
+                    </p>
                   </div>
                 )}
+
               </form>
             </CardContent>
           </div>
