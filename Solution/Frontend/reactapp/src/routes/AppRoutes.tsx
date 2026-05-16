@@ -46,9 +46,8 @@ import Question from "@/components/assessment/assessmentOrchestrator/applyAssess
 import RTUpdateQuestion from "@/components/assessment/evaluationcontent/RTUpdateQuestion";
 import ScheduleInterview from "@/components/assessment/interview/ScheduleInterview";
 import InterviewMenu from "@/components/assessment/interview/interviewmenu";
-
-
-
+import ShowInterviewDetailsStudent from "@/components/assessment/interview/ShowInterviewDetailsStudent";
+import GetQuestionSme from "@/components/assessment/evaluationcontent/getQuestionsme";
 
 
 function AppRoutes() {
@@ -63,7 +62,7 @@ function AppRoutes() {
 
           {/* Evaluation Content */}
           <Route path="evaluationcontent/componentmenu" element={<EvaluationContentMenu />} />
-
+          <Route path="evaluationcontent/sme" element={<GetQuestionSme />} />
           {/* Question by Status */}
           <Route path="evaluationcontent/questionbystatus" element={<QuestionByStatus />} />
           {/* Question by Type */}
@@ -122,6 +121,7 @@ ce2
           {/* Interview */}
           <Route path="interview/interview-menu" element={<InterviewMenu/>} />
           <Route path="interview/scheduleinterview" element={<ScheduleInterview/>} />
+          <Route path="interview/show-details-student" element={<ShowInterviewDetailsStudent/>}/>
 
           {/* Membership model */}
           <Route path="membership/ChangePassword" element={<ChangePassword />} />
