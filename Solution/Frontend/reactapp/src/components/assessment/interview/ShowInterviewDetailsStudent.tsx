@@ -39,6 +39,22 @@ const ShowInterviewDetailsStudent = () => {
     });
     }, []);
 
+    const handleCancel=async()=>{
+      try{
+         const response = await fetch(
+            `${WEBAPI_JAVA_URL}/interview/3/cancel`,
+            {
+                method: "PUT",
+                body: JSON.stringify({
+                    status: "CANCELED"
+                })
+            }
+        );
+      }catch(error){
+        console.log(error);
+      }
+     
+    }
     return (
     <div className="flex justify-center items-center min-h-screen bg-gradient-to-br  p-6">
       <Card className="w-full max-w-2xl border border-orange-400 shadow-2xl rounded-2xl overflow-hidden">
@@ -138,7 +154,7 @@ const ShowInterviewDetailsStudent = () => {
             Reject Interview
         </Button>
 
-        <Button
+        <Button onClick={handleCancel}
             variant="outline"
             className="border-red-700 text-red-800 hover:bg-red-100 font-semibold"
         >
