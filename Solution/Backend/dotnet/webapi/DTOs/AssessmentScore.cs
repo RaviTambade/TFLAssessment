@@ -1,4 +1,5 @@
-public class AssessmentScoreDto
+namesapce namespace backend.DTOs.Responses;
+public class AssessmentScore
 {
     public long TestId { get; set; }
     public string TestTitle { get; set; }

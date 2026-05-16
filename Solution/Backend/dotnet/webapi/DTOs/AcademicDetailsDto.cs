@@ -1,6 +1,6 @@
 namespace backend.DTOs;
 
-public class AcademicDetailsDto
+public class AcademicDetails
 {
     //data members and getter , setter
     //Auto property:

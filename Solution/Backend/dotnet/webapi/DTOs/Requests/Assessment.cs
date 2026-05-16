@@ -1,5 +1,5 @@
-namespace backend.DTOs;
-public class UpcomingAssessmentDto
+namespace backend.DTOs.Requests;
+public class Assessment
 {
     public long SrNo { get; set; }
     public string? AssessmentName { get; set; }
@@ -9,8 +9,6 @@ public class UpcomingAssessmentDto
 
     public int? Duration { get; set; }
     public string? Status { get; set; }
-
-
 }
 
 

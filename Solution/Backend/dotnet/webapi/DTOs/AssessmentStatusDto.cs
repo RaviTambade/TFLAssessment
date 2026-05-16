@@ -1,4 +1,6 @@
-public class AssessmentStatusDto
+
+namespace backend.DTOs.Responses;
+public class AssessmentStatus
 {
     public int Id { get; set; }
     public int TestId { get; set; }
