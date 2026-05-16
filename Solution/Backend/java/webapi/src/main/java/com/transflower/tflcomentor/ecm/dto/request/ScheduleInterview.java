@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import com.transflower.tflcomentor.ecm.entity.enums.InterviewStatus;
 
 public class ScheduleInterview {
+    private String title;
     private LocalDateTime scheduleAt;
     private String mode;
     private InterviewStatus status;
@@ -16,13 +17,22 @@ public class ScheduleInterview {
 
     }
 
-    public ScheduleInterview(LocalDateTime scheduleAt,String mode,InterviewStatus status,LocalDateTime createdAt,int interviewer,int studentId){
+    public ScheduleInterview(String title,LocalDateTime scheduleAt,String mode,InterviewStatus status,LocalDateTime createdAt,int interviewer,int studentId){
+        this.title=title;
         this.scheduleAt=scheduleAt;
         this.mode=mode;
         this.status=status;
         this.createdAt=createdAt;
         this.interviewer=interviewer;
         this.studentId=studentId;
+    }
+
+    
+    public String getTitle() {
+        return title;
+    }
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public LocalDateTime getScheduleAt() {
