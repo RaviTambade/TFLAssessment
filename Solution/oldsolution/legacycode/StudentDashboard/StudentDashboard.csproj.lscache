@@ -31,7 +31,7 @@ TemporaryDependencyNodeTargetIdentifier=net8.0
 /noconfig
 /unsafe-
 /checked-
-/nowarn:1701,1702,1701,1702,8002
+/nowarn:1701,1702,1701,1702
 /fullpaths
 /nostdlib+
 /errorreport:prompt
@@ -66,7 +66,7 @@ obj/Debug/net8.0/
 Program.cs
 
 [metadataReferences]
-<NUGET>/microsoft.aspnetcore.app.ref/8.0.27/ref/net8.0/
+<NUGET>/microsoft.aspnetcore.app.ref/8.0.22/ref/net8.0/
  Microsoft.AspNetCore.Antiforgery.dll
  Microsoft.AspNetCore.Authentication.Abstractions.dll
  Microsoft.AspNetCore.Authentication.BearerToken.dll
@@ -207,7 +207,7 @@ Program.cs
  System.Threading.RateLimiting.dll
 <NUGET>/
  microsoft.aspnetcore.openapi/8.0.5/lib/net8.0/Microsoft.AspNetCore.OpenApi.dll
- microsoft.netcore.app.ref/8.0.27/ref/net8.0/
+ microsoft.netcore.app.ref/8.0.22/ref/net8.0/
   Microsoft.CSharp.dll
   Microsoft.VisualBasic.Core.dll
   Microsoft.VisualBasic.dll
@@ -377,24 +377,24 @@ Program.cs
  swashbuckle.aspnetcore.swaggerui/6.4.0/lib/net6.0/Swashbuckle.AspNetCore.SwaggerUI.dll
 
 [analyzerReferences]
-<DOTNET>/sdk/10.0.204/Sdks/Microsoft.NET.Sdk.Razor/source-generators/
+<DOTNET>/sdk/10.0.101/Sdks/Microsoft.NET.Sdk.Razor/source-generators/
  Microsoft.AspNetCore.Razor.Utilities.Shared.dll
  Microsoft.CodeAnalysis.Razor.Compiler.dll
  Microsoft.Extensions.ObjectPool.dll
-<DOTNET>/sdk/10.0.204/Sdks/Microsoft.NET.Sdk.Web/analyzers/cs/
+<DOTNET>/sdk/10.0.101/Sdks/Microsoft.NET.Sdk.Web/analyzers/cs/
  Microsoft.AspNetCore.Analyzers.dll
  Microsoft.AspNetCore.Mvc.Analyzers.dll
-<DOTNET>/sdk/10.0.204/Sdks/Microsoft.NET.Sdk/analyzers/
+<DOTNET>/sdk/10.0.101/Sdks/Microsoft.NET.Sdk/analyzers/
  Microsoft.CodeAnalysis.CSharp.NetAnalyzers.dll
  Microsoft.CodeAnalysis.NetAnalyzers.dll
-<NUGET>/microsoft.aspnetcore.app.ref/8.0.27/analyzers/dotnet/cs/
+<NUGET>/microsoft.aspnetcore.app.ref/8.0.22/analyzers/dotnet/cs/
  Microsoft.AspNetCore.App.Analyzers.dll
  Microsoft.AspNetCore.App.CodeFixes.dll
  Microsoft.AspNetCore.Components.Analyzers.dll
-<NUGET>/microsoft.aspnetcore.app.ref/8.0.27/analyzers/dotnet/roslyn4.4/cs/
+<NUGET>/microsoft.aspnetcore.app.ref/8.0.22/analyzers/dotnet/roslyn4.4/cs/
  Microsoft.Extensions.Logging.Generators.dll
  Microsoft.Extensions.Options.SourceGeneration.dll
-<NUGET>/microsoft.netcore.app.ref/8.0.27/analyzers/dotnet/cs/
+<NUGET>/microsoft.netcore.app.ref/8.0.22/analyzers/dotnet/cs/
  Microsoft.Interop.ComInterfaceGenerator.dll
  Microsoft.Interop.JavaScript.JSImportGenerator.dll
  Microsoft.Interop.LibraryImportGenerator.dll
@@ -403,5 +403,5 @@ Program.cs
  System.Text.RegularExpressions.Generator.dll
 
 [analyzerConfigFiles]
-<DOTNET>/sdk/10.0.204/Sdks/Microsoft.NET.Sdk/analyzers/build/config/analysislevel_8_default.globalconfig
+<DOTNET>/sdk/10.0.101/Sdks/Microsoft.NET.Sdk/analyzers/build/config/analysislevel_8_default.globalconfig
 obj/Debug/net8.0/StudentDashboard.GeneratedMSBuildEditorConfig.editorconfig

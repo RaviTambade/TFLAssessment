@@ -31,7 +31,7 @@ TemporaryDependencyNodeTargetIdentifier=net9.0
 /noconfig
 /unsafe-
 /checked-
-/nowarn:1701,1702,1701,1702,8002
+/nowarn:1701,1702,1701,1702
 /fullpaths
 /nostdlib+
 /errorreport:prompt
@@ -74,7 +74,7 @@ Services/SubjectServiceTests.cs
  microsoft.aspnet.webapi.client/6.0.0/lib/netstandard2.0/System.Net.Http.Formatting.dll
  microsoft.aspnet.webapi.core/5.3.0/lib/net45/System.Web.Http.dll
  microsoft.aspnet.webapi.cors/5.3.0/lib/net45/System.Web.Http.Cors.dll
- microsoft.aspnetcore.app.ref/9.0.16/ref/net9.0/
+ microsoft.aspnetcore.app.ref/9.0.11/ref/net9.0/
   Microsoft.AspNetCore.Antiforgery.dll
   Microsoft.AspNetCore.Authentication.Abstractions.dll
   Microsoft.AspNetCore.Authentication.BearerToken.dll
@@ -214,7 +214,7 @@ Services/SubjectServiceTests.cs
   System.Security.Cryptography.Xml.dll
   System.Threading.RateLimiting.dll
  microsoft.codecoverage/18.0.0/lib/net8.0/Microsoft.VisualStudio.CodeCoverage.Shim.dll
- microsoft.netcore.app.ref/9.0.16/ref/net9.0/
+ microsoft.netcore.app.ref/9.0.11/ref/net9.0/
   Microsoft.CSharp.dll
   Microsoft.VisualBasic.Core.dll
   Microsoft.VisualBasic.dll
@@ -407,17 +407,17 @@ Services/SubjectServiceTests.cs
  zstdsharp.port/0.8.0/lib/net8.0/ZstdSharp.dll
 
 [analyzerReferences]
-<DOTNET>/sdk/10.0.204/Sdks/Microsoft.NET.Sdk/analyzers/
+<DOTNET>/sdk/10.0.101/Sdks/Microsoft.NET.Sdk/analyzers/
  Microsoft.CodeAnalysis.CSharp.NetAnalyzers.dll
  Microsoft.CodeAnalysis.NetAnalyzers.dll
-<NUGET>/microsoft.aspnetcore.app.ref/9.0.16/analyzers/dotnet/cs/
+<NUGET>/microsoft.aspnetcore.app.ref/9.0.11/analyzers/dotnet/cs/
  Microsoft.AspNetCore.App.Analyzers.dll
  Microsoft.AspNetCore.App.CodeFixes.dll
  Microsoft.AspNetCore.Components.Analyzers.dll
-<NUGET>/microsoft.aspnetcore.app.ref/9.0.16/analyzers/dotnet/roslyn4.4/cs/
+<NUGET>/microsoft.aspnetcore.app.ref/9.0.11/analyzers/dotnet/roslyn4.4/cs/
  Microsoft.Extensions.Logging.Generators.dll
  Microsoft.Extensions.Options.SourceGeneration.dll
-<NUGET>/microsoft.netcore.app.ref/9.0.16/analyzers/dotnet/cs/
+<NUGET>/microsoft.netcore.app.ref/9.0.11/analyzers/dotnet/cs/
  Microsoft.Interop.ComInterfaceGenerator.dll
  Microsoft.Interop.JavaScript.JSImportGenerator.dll
  Microsoft.Interop.LibraryImportGenerator.dll
@@ -429,5 +429,5 @@ Services/SubjectServiceTests.cs
  xunit.analyzers.fixes.dll
 
 [analyzerConfigFiles]
-<DOTNET>/sdk/10.0.204/Sdks/Microsoft.NET.Sdk/analyzers/build/config/analysislevel_9_default.globalconfig
+<DOTNET>/sdk/10.0.101/Sdks/Microsoft.NET.Sdk/analyzers/build/config/analysislevel_9_default.globalconfig
 obj/Debug/net9.0/APIforSubject.Tests.GeneratedMSBuildEditorConfig.editorconfig
