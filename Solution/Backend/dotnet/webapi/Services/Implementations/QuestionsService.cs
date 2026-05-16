@@ -47,13 +47,12 @@ namespace backend.Services.Implementations
         {
               return await Task.FromResult(new List<string>());
         }
-         public async Task<List<string>> GetAllQuestionByStatus(string status)
-        {
 
-    
+        public async Task<List<string>> GetAllQuestionByStatus(string status)
+        {
               return await Task.FromResult(new List<string>());
         }
-         
+
 
         public async Task<IEnumerable<AssessmentQuestionAnswers>> GetStudentAssessmentQuestionsResultAsync(int assessmentId, int studentId)
         {
