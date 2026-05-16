@@ -116,13 +116,6 @@ const ShowInterviewDetailsStudent = () => {
     {/* Student Buttons */}
     {user.role_id === 2 && (
         <>
-        <Button
-            variant="outline"
-            className="border-orange-700 text-orange-800 hover:bg-orange-200 font-semibold"
-        >
-            Reschedule
-        </Button>
-
         <Button className="bg-orange-700 hover:bg-orange-800 text-white shadow-lg font-semibold">
             Request Cancellation
         </Button>
@@ -143,6 +136,13 @@ const ShowInterviewDetailsStudent = () => {
             className="border-red-700 text-red-800 hover:bg-red-100 font-semibold"
         >
             Reject Interview
+        </Button>
+
+        <Button
+            variant="outline"
+            className="border-red-700 text-red-800 hover:bg-red-100 font-semibold"
+        >
+            Cancel Interview
         </Button>
         </>
     )}
