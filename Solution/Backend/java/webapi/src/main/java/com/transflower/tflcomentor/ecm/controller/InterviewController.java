@@ -60,12 +60,13 @@ public class InterviewController{
     public void scheduleInterview(@RequestBody ScheduleInterview scheduleInterview){
         try{
             Connection connection=getConnection();
-            String query="INSERT INTO interviews(scheduled_at,mode,status,created_at,interviewer,student_id) VALUES(?,?,'SCHEDULED',NOW(),?,?)";
+            String query="INSERT INTO interviews(scheduled_at,mode,status,title,created_at,interviewer,student_id) VALUES(?,?,'SCHEDULED',?,NOW(),?,?)";
             PreparedStatement ps=connection.prepareStatement(query);
             ps.setTimestamp(1,Timestamp.valueOf(scheduleInterview.getScheduleAt()));
             ps.setString(2,scheduleInterview.getMode());
-            ps.setInt(3, scheduleInterview.getInterviewer());
-            ps.setInt(4, scheduleInterview.getStudentId());
+            ps.setString(3,scheduleInterview.getTitle());
+            ps.setInt(4, scheduleInterview.getInterviewer());
+            ps.setInt(5, scheduleInterview.getStudentId());
             ps.executeUpdate();
 
         }catch(Exception e){
