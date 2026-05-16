@@ -44,10 +44,11 @@ import DashboardSME from "@/components/assessment/membership/dashboardsme";
 //import EvaluationContentSme from "@/components/assessment/evaluationcontent/EvaluationContentSme";
 import Question from "@/components/assessment/assessmentOrchestrator/applyAssessment";
 import RTUpdateQuestion from "@/components/assessment/evaluationcontent/RTUpdateQuestion";
-import ScheduleInterview from "@/components/assessment/evaluationcontent/ScheduleInterview";
-
-
-
+import ScheduleInterview from "@/components/assessment/interview/ScheduleInterview";
+import InterviewMenu from "@/components/assessment/interview/interviewmenu";
+import ShowInterviewDetailsStudent from "@/components/assessment/interview/ShowInterviewDetailsStudent";
+import GetQuestionSme from "@/components/assessment/evaluationcontent/getQuestionsme";
+import UpcomingInterviews from "@/components/assessment/interview/UpcomingInterviews";
 
 
 function AppRoutes() {
@@ -62,7 +63,7 @@ function AppRoutes() {
 
           {/* Evaluation Content */}
           <Route path="evaluationcontent/componentmenu" element={<EvaluationContentMenu />} />
-
+          <Route path="evaluationcontent/sme" element={<GetQuestionSme />} />
           {/* Question by Status */}
           <Route path="evaluationcontent/questionbystatus" element={<QuestionByStatus />} />
           {/* Question by Type */}
@@ -115,7 +116,14 @@ ce2
           <Route path="all-assessment" element={<AllAssessment />} />
           <Route path="evaluationcontent/questionbydifficulty" element={<QuestionsByDifficulty />} />
           <Route path="evaluationcontent/projectbymentee" element={<ProjectByMentee />} />
-          <Route path="evaluationcontent/scheduleinterview" element={<ScheduleInterview/>} />
+
+
+
+          {/* Interview */}
+          <Route path="interview/interview-menu" element={<InterviewMenu/>} />
+          <Route path="interview/scheduleinterview" element={<ScheduleInterview/>} />
+          <Route path="interview/show-details-student" element={<ShowInterviewDetailsStudent />} />
+           <Route path="interview/upcoming-interviews" element={<UpcomingInterviews/>}/>
 
           {/* Membership model */}
           <Route path="membership/ChangePassword" element={<ChangePassword />} />

@@ -24,31 +24,33 @@ class RolesRepository {
 
   // Get role by User ID
   getUserRolesByUserId(userId, callback) {
-    const sql = `SELECT r.role_id, r.role_name FROM user_roles ur JOIN roles r ON ur.role_id = r.role_id WHERE ur.user_id = ?`;
+    const sql = `SELECT ur.user_id, GROUP_CONCAT(r.role_name SEPARATOR ', ') AS role_name FROM user_roles ur
+                  JOIN roles r ON ur.role_id = r.role_id WHERE ur.user_id = ? AND ur.status = 'ACTIVE' GROUP BY ur.user_id;`;
     this.connection.query(sql, [userId], callback);
   }
 
   // Get list of users by Role ID
   getUsersByRoleId(roleId, callback) {
-    const sql = ` SELECT u.id AS user_id, pi.full_name, ur.role_id, r.role_name FROM user_roles ur JOIN users u ON ur.user_id = u.id 
-                  JOIN personal_informations pi ON u.id = pi.user_id JOIN roles r ON ur.role_id = r.role_id WHERE ur.role_id = ? 
+    const sql = ` SELECT u.id AS user_id, pi.full_name, ur.role_id, r.role_name 
+                  FROM user_roles ur JOIN users u ON ur.user_id = u.id JOIN personal_informations pi 
+                  ON u.id = pi.user_id JOIN roles r ON ur.role_id = r.role_id WHERE ur.role_id = ? 
                   AND ur.status = 'ACTIVE' `;
     this.connection.query(sql, [roleId], callback);
   }
 
   // Assign role to a user
   assignRole(userId, roleId, callback) {
-    const sql = `UPDATE user_roles SET status = 'INACTIVE', updated_at = NOW() WHERE user_id = ? AND role_id = 7 AND status = 'ACTIVE';
-                  INSERT INTO user_roles ( user_id, role_id, created_at, updated_at, status )
-                  VALUES ( ?, ?, NOW(), NOW(), 'ACTIVE' )`;
+    const sql = `UPDATE user_roles SET status = 'INACTIVE', updated_at = NOW() WHERE user_id = ? 
+                AND role_id = 7 AND status = 'ACTIVE'; INSERT INTO user_roles ( user_id, role_id, created_at, updated_at, status )
+                VALUES ( ?, ?, NOW(), NOW(), 'ACTIVE' )`;
     this.connection.query(sql, [userId, userId, roleId], callback);
   }
 
   // Unassign role from a user
   unAssignRole(userId, roleId, callback) {
-    const sql = `UPDATE user_roles SET status = 'INACTIVE', updated_at = NOW() WHERE user_id = ? AND role_id = ?`;
+    const sql = `UPDATE user_roles SET status = 'INACTIVE', updated_at = NOW() WHERE user_id = ? AND role_id = ? AND status = 'ACTIVE'`;
     this.connection.query(sql, [userId, roleId], callback);
-    this.connection.query(sql, values, callback);
+    
   //   const deleteSql =
   //     "DELETE FROM user_roles WHERE user_id = ? AND role_id = ?";
   //   this.connection.query(deleteSql, [userId, roleId], callback);
@@ -80,6 +82,7 @@ class RolesRepository {
 
   //   // flatten values: [userId, roleId, userId, roleId, ...]
   //   const values = roleIds.flatMap((roleId) => [userId, roleId]);
+  //  this.connection.query(sql, values, callback);
 
   }
   

@@ -1,5 +1,7 @@
+<<<<<<<< HEAD:Solution/Backend/dotnet/webapi/DTOs/Requests/Assessment.cs
 namespace backend.DTO.Responses;
 public class Assessments
+
 {
     public long SrNo { get; set; }
     public string? AssessmentName { get; set; }
@@ -9,8 +11,6 @@ public class Assessments
 
     public int? Duration { get; set; }
     public string? Status { get; set; }
-
-
 }
 
 
