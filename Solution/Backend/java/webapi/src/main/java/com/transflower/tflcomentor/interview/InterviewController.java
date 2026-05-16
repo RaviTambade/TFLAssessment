@@ -127,9 +127,9 @@ public class InterviewController{
         return null;
     }
     }
-    
-   @GetMapping("/upcoming/{interviewer}")
-   public List<InterviewList> getUpcommingInterviews(@PathVariable int interviewer) {
+  @GetMapping("/upcoming/{interviewer}")
+public List<InterviewList> getUpcommingInterviews(
+        @PathVariable int interviewer) {
 
     List<InterviewList> interviews = new ArrayList<>();
 
@@ -138,11 +138,15 @@ public class InterviewController{
         Connection connection = getConnection();
 
         String query = """
-                SELECT interviewer, title
+                SELECT 
+                    interview_id,
+                    interviewer,
+                    title
                 FROM interviews
                 WHERE interviewer = ?
                 AND scheduled_at >= NOW()
                 AND scheduled_at <= DATE_ADD(NOW(), INTERVAL 4 DAY)
+                AND status = 'SCHEDULED'
                 ORDER BY scheduled_at ASC
                 """;
 
@@ -155,6 +159,11 @@ public class InterviewController{
         while (rs.next()) {
 
             InterviewList list = new InterviewList();
+
+            list.setInterviewId(
+                    rs.getInt("interview_id")
+            );
+
             list.setInterviewer(
                     rs.getInt("interviewer")
             );
@@ -167,10 +176,11 @@ public class InterviewController{
         }
 
     } catch (Exception e) {
+
         e.printStackTrace();
+
     }
 
     return interviews;
 }
-
 }
