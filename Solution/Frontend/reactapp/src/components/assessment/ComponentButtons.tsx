@@ -9,6 +9,7 @@ const buttons = [
   { label: "Skill Taxonomy", path: "/models/skilltaxonomy/skilltaxonomy-menu" },
   { label: "Assessment Orchestrator", path: "/models/assessmentorchestrator/assessmentorchestrator-menu" },
   { label: "Membership", path: "/models/membership/membership-menu" },
+  { label: "Interview", path: "/models/interview/interview-menu" }
 ];
 
 const Assessment = () => {

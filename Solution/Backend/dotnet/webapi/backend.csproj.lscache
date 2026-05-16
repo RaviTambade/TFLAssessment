@@ -21,7 +21,11 @@ ProjectAssetsFile=<PATH>obj/project.assets.json
 RootNamespace=backend
 RunAnalyzers=
 RunAnalyzersDuringLiveAnalysis=
+<<<<<<< HEAD
+SolutionPath=<PATH>backend.sln
+=======
 SolutionPath=*Undefined*
+>>>>>>> 4c066d854557a9a6390596b09655d994fe3cd4f2
 TargetFrameworkIdentifier=.NETCoreApp
 TargetPath=<PATH>bin/Debug/net9.0/backend.dll
 TargetRefPath=<PATH>obj/Debug/net9.0/ref/backend.dll
@@ -31,7 +35,11 @@ TemporaryDependencyNodeTargetIdentifier=net9.0
 /noconfig
 /unsafe-
 /checked-
+<<<<<<< HEAD
+/nowarn:1701,1702,1701,1702
+=======
 /nowarn:1701,1702,1701,1702,8002
+>>>>>>> 4c066d854557a9a6390596b09655d994fe3cd4f2
 /fullpaths
 /nostdlib+
 /errorreport:prompt
@@ -200,7 +208,11 @@ Services/Interfaces/
  k4os.compression.lz4/1.3.8/lib/net6.0/K4os.Compression.LZ4.dll
  k4os.hash.xxhash/1.0.8/lib/net6.0/K4os.Hash.xxHash.dll
  mailkit/4.16.0/lib/net8.0/MailKit.dll
+<<<<<<< HEAD
+ microsoft.aspnetcore.app.ref/9.0.12/ref/net9.0/
+=======
  microsoft.aspnetcore.app.ref/9.0.16/ref/net9.0/
+>>>>>>> 4c066d854557a9a6390596b09655d994fe3cd4f2
   Microsoft.AspNetCore.Antiforgery.dll
   Microsoft.AspNetCore.Authentication.Abstractions.dll
   Microsoft.AspNetCore.Authentication.BearerToken.dll
@@ -354,7 +366,11 @@ Services/Interfaces/
  microsoft.entityframeworkcore.relational/9.0.0/lib/net8.0/Microsoft.EntityFrameworkCore.Relational.dll
  microsoft.entityframeworkcore/9.0.0/lib/net8.0/Microsoft.EntityFrameworkCore.dll
  microsoft.extensions.dependencymodel/9.0.0/lib/net9.0/Microsoft.Extensions.DependencyModel.dll
+<<<<<<< HEAD
+ microsoft.netcore.app.ref/9.0.12/ref/net9.0/
+=======
  microsoft.netcore.app.ref/9.0.16/ref/net9.0/
+>>>>>>> 4c066d854557a9a6390596b09655d994fe3cd4f2
   Microsoft.CSharp.dll
   Microsoft.VisualBasic.Core.dll
   Microsoft.VisualBasic.dll
@@ -543,6 +559,23 @@ Services/Interfaces/
  zstdsharp.port/0.8.6/lib/net9.0/ZstdSharp.dll
 
 [analyzerReferences]
+<<<<<<< HEAD
+<DOTNET>/sdk/10.0.102/Sdks/Microsoft.NET.Sdk.Razor/source-generators/
+ Microsoft.AspNetCore.Razor.Utilities.Shared.dll
+ Microsoft.CodeAnalysis.Razor.Compiler.dll
+ Microsoft.Extensions.ObjectPool.dll
+<DOTNET>/sdk/10.0.102/Sdks/Microsoft.NET.Sdk.Web/analyzers/cs/
+ Microsoft.AspNetCore.Analyzers.dll
+ Microsoft.AspNetCore.Mvc.Analyzers.dll
+<DOTNET>/sdk/10.0.102/Sdks/Microsoft.NET.Sdk/analyzers/
+ Microsoft.CodeAnalysis.CSharp.NetAnalyzers.dll
+ Microsoft.CodeAnalysis.NetAnalyzers.dll
+<NUGET>/microsoft.aspnetcore.app.ref/9.0.12/analyzers/dotnet/cs/
+ Microsoft.AspNetCore.App.Analyzers.dll
+ Microsoft.AspNetCore.App.CodeFixes.dll
+ Microsoft.AspNetCore.Components.Analyzers.dll
+<NUGET>/microsoft.aspnetcore.app.ref/9.0.12/analyzers/dotnet/roslyn4.4/cs/
+=======
 <DOTNET>/sdk/10.0.204/Sdks/Microsoft.NET.Sdk.Razor/source-generators/
  Microsoft.AspNetCore.Razor.Utilities.Shared.dll
  Microsoft.CodeAnalysis.Razor.Compiler.dll
@@ -558,6 +591,7 @@ Services/Interfaces/
  Microsoft.AspNetCore.App.CodeFixes.dll
  Microsoft.AspNetCore.Components.Analyzers.dll
 <NUGET>/microsoft.aspnetcore.app.ref/9.0.16/analyzers/dotnet/roslyn4.4/cs/
+>>>>>>> 4c066d854557a9a6390596b09655d994fe3cd4f2
  Microsoft.Extensions.Logging.Generators.dll
  Microsoft.Extensions.Options.SourceGeneration.dll
 <NUGET>/microsoft.codeanalysis.analyzers/3.3.4/analyzers/dotnet/cs/
@@ -565,7 +599,11 @@ Services/Interfaces/
  Microsoft.CodeAnalysis.CSharp.Analyzers.dll
 <NUGET>/
  microsoft.entityframeworkcore.analyzers/9.0.0/analyzers/dotnet/cs/Microsoft.EntityFrameworkCore.Analyzers.dll
+<<<<<<< HEAD
+ microsoft.netcore.app.ref/9.0.12/analyzers/dotnet/cs/
+=======
  microsoft.netcore.app.ref/9.0.16/analyzers/dotnet/cs/
+>>>>>>> 4c066d854557a9a6390596b09655d994fe3cd4f2
   Microsoft.Interop.ComInterfaceGenerator.dll
   Microsoft.Interop.JavaScript.JSImportGenerator.dll
   Microsoft.Interop.LibraryImportGenerator.dll
@@ -574,5 +612,9 @@ Services/Interfaces/
   System.Text.RegularExpressions.Generator.dll
 
 [analyzerConfigFiles]
+<<<<<<< HEAD
+<DOTNET>/sdk/10.0.102/Sdks/Microsoft.NET.Sdk/analyzers/build/config/analysislevel_9_default.globalconfig
+=======
 <DOTNET>/sdk/10.0.204/Sdks/Microsoft.NET.Sdk/analyzers/build/config/analysislevel_9_default.globalconfig
+>>>>>>> 4c066d854557a9a6390596b09655d994fe3cd4f2
 obj/Debug/net9.0/backend.GeneratedMSBuildEditorConfig.editorconfig
