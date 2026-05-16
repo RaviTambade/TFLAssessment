@@ -13,7 +13,6 @@ import {
 type ScheduleInterview = {
   scheduleAt: string;
   mode: string;
-  status: string;
   title: string;
   createdAt: string;
   interviewer: number;
@@ -24,7 +23,6 @@ const ScheduleInterview = () => {
   const [formData, setFormData] = useState<ScheduleInterview>({
     scheduleAt: "",
     mode: "",
-    status: "SCHEDULED",
     title: "",
     createdAt: "",
     interviewer: 0,
@@ -70,7 +68,6 @@ const ScheduleInterview = () => {
         setFormData({
           scheduleAt: "",
           mode: "",
-          status: "SCHEDULED",
           title: "",
           createdAt: "",
           interviewer: 0,
@@ -102,10 +99,6 @@ const ScheduleInterview = () => {
               Interview
             </span>
           </h1>
-
-          <p className="text-muted-foreground text-lg">
-            Create and manage interview schedules for students.
-          </p>
         </div>
 
         {/* Card */}
@@ -205,22 +198,6 @@ const ScheduleInterview = () => {
                     className="w-full border border-border rounded-xl px-4 py-3 bg-background focus:outline-none focus:ring-2 focus:ring-primary"
                   />
                 </div>
-
-                {/* Status */}
-                <div>
-                  <label className="text-sm font-semibold mb-2">
-                    Status
-                  </label>
-
-                  <input
-                    type="text"
-                    name="status"
-                    value={formData.status}
-                    readOnly
-                    className="w-full border border-border rounded-xl px-4 py-3 bg-muted"
-                  />
-                </div>
-
                 {/* Button */}
                 <div className="pt-4">
                   <Button
