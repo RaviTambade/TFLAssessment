@@ -8,6 +8,8 @@ using backend.Services;
 using backend.Repositories;
 
 
+
+
 //Entry Point of the application: Main method in Program.cs
 
 var builder = WebApplication.CreateBuilder(args);
@@ -95,6 +97,7 @@ app.UseCors("AllowAll");
 
 app.UseAuthorization();
 app.MapControllers();
+
 
 
 app.Run();
