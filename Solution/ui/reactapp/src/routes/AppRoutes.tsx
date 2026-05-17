@@ -41,75 +41,134 @@ import ConceptByFramework from "@/components/assessment/skilltaxonomy/ConceptByF
 import QuestionByConceptId from "@/components/assessment/evaluationcontent/QuestionByConceptId";
 import Dashboard from "@/components/assessment/membership/dashboard";
 import DashboardSME from "@/components/assessment/membership/dashboardsme";
-import EvaluationContentSme from "@/components/assessment/evaluationcontent/EvaluationContents";
+// import EvaluationContentSme from "@/components/assessment/evaluationcontent/EvaluationContents";
 import Question from "@/components/assessment/assessmentOrchestrator/applyAssessment";
 
+import Mentees from "@/components/assessment/membership/Mentees";
 
 function AppRoutes() {
   return (
     <div className="min-h-screen bg-background">
       <main className="pt-20">
         <Routes>
-
-           
           {/* Main Component Page */}
           <Route path="evaluationcontent/components" element={<Assessment />} />
 
           {/* Evaluation Content */}
-          <Route path="evaluationcontent/componentmenu" element={<EvaluationContentMenu />} />
+          <Route
+            path="evaluationcontent/componentmenu"
+            element={<EvaluationContentMenu />}
+          />
 
           {/* Question by Status */}
-          <Route path="evaluationcontent/questionbystatus" element={<QuestionByStatus />} />
+          <Route
+            path="evaluationcontent/questionbystatus"
+            element={<QuestionByStatus />}
+          />
           {/* Question by Type */}
-          <Route path="evaluationcontent/questionbytype" element={<QuestionByType />} />
-          <Route path="evaluationcontent/questionsbyconceptid" element={<QuestionByConceptId />} />
+          <Route
+            path="evaluationcontent/questionbytype"
+            element={<QuestionByType />}
+          />
+          <Route
+            path="evaluationcontent/questionsbyconceptid"
+            element={<QuestionByConceptId />}
+          />
           {/* Skill Taxonomy */}
-          <Route path="skilltaxonomy/skilltaxonomy-menu" element={<SkillTaxonomyMenu />} />
+          <Route
+            path="skilltaxonomy/skilltaxonomy-menu"
+            element={<SkillTaxonomyMenu />}
+          />
 
           {/* Assessment Orchestrator */}
-          <Route path="assessmentorchestrator/assessmentorchestrator-menu" element={<AssessmentOrchestrator />} />
+          <Route
+            path="assessmentorchestrator/assessmentorchestrator-menu"
+            element={<AssessmentOrchestrator />}
+          />
           <Route path="upcoming-assessment" element={<UpcomingAssessment />} />
           <Route path="all-assessment" element={<AllAssessment />} />
           <Route path="apply-assessment" element={<Question />} />
           {/* <Route path="result" element={<Result />} /> */}
-          <Route path="result/:assessmentId" element={<Result />}/>
+          <Route path="result/:assessmentId" element={<Result />} />
 
-          <Route path="assessment/start/:assessmentId" element={<Question />}/>
-          <Route path="membership/membership-menu" element={<MembershipMenu />} />
+          <Route path="assessment/start/:assessmentId" element={<Question />} />
+          <Route
+            path="membership/membership-menu"
+            element={<MembershipMenu />}
+          />
 
- 
           <Route path="skilltaxonomy/ViewRuntimes" element={<ViewRuntimes />} />
 
           {/* <Route path="skilltaxonomy/AddConcept" element={<AddConcept />} /> */}
-           <Route path="skilltaxonomy/ConceptByFramework" element={<ConceptByFramework />} />
-          
-
+          <Route
+            path="skilltaxonomy/ConceptByFramework"
+            element={<ConceptByFramework />}
+          />
 
           {/* Default route - shows main assessment */}
 
-          <Route path="evaluationcontent/updatequestion" element={<UpdateQuestion />} />
-          <Route path="evaluationcontent/questionbyconcept" element={<QuestionsByConcept />} />
-          <Route path="evaluationcontent/viewquestion" element={<QuestionPage />} />
-          <Route path="evaluationcontent/questiondetails/:question_id" element={<QuestionDetails />} />
-          <Route path="evaluationcontent/update/:id" element={<EditQuestion />} />
+          <Route
+            path="evaluationcontent/updatequestion"
+            element={<UpdateQuestion />}
+          />
+          <Route
+            path="evaluationcontent/questionbyconcept"
+            element={<QuestionsByConcept />}
+          />
+          <Route
+            path="evaluationcontent/viewquestion"
+            element={<QuestionPage />}
+          />
+          <Route
+            path="evaluationcontent/questiondetails/:question_id"
+            element={<QuestionDetails />}
+          />
+          <Route
+            path="evaluationcontent/update/:id"
+            element={<EditQuestion />}
+          />
           <Route path="evaluationcontent/edit/:id" element={<EditQuestion />} />
-          <Route path="evaluationcontent/insertquestion" element={<SMEInsertQuestion />} />
-          <Route path="evaluationcontent/reviewquestion" element={<MentorReviewQuestion />} />
+          <Route
+            path="evaluationcontent/insertquestion"
+            element={<SMEInsertQuestion />}
+          />
+          <Route
+            path="evaluationcontent/reviewquestion"
+            element={<MentorReviewQuestion />}
+          />
           <Route index element={<Assessment />} />
-          <Route path="evaluationcontent/viewprojectinfo" element={<ViewProjectInfo />} />
-          <Route path="evaluationcontent/sme" element={<EvaluationContentSme />} />
+          <Route
+            path="evaluationcontent/viewprojectinfo"
+            element={<ViewProjectInfo />}
+          />
+
           <Route index element={<Assessment />} />
           <Route path="upcoming-assessment" element={<UpcomingAssessment />} />
           <Route path="create-test" element={<SMECreateTest />} />
           <Route path="assign-assessment" element={<AssignAssessment />} />
           <Route path="all-assessment" element={<AllAssessment />} />
-          <Route path="evaluationcontent/questionbydifficulty" element={<QuestionsByDifficulty />} />
-          <Route path="evaluationcontent/projectbymentee" element={<ProjectByMentee />} />
+          <Route
+            path="evaluationcontent/questionbydifficulty"
+            element={<QuestionsByDifficulty />}
+          />
+          <Route
+            path="evaluationcontent/projectbymentee"
+            element={<ProjectByMentee />}
+          />
 
           {/* Membership model */}
-          <Route path="membership/ChangePassword" element={<ChangePassword />} />
-          <Route path="membership/GetUserInformation" element={<GetUserInformation />} />
-          <Route path="membership/GetUserLogDetail" element={<GetUserLogDetail />} />
+          <Route
+            path="membership/ChangePassword"
+            element={<ChangePassword />}
+          />
+          <Route
+            path="membership/GetUserInformation"
+            element={<GetUserInformation />}
+          />
+          <Route
+            path="membership/GetUserLogDetail"
+            element={<GetUserLogDetail />}
+          />
           <Route path="membership/Login" element={<LoginPage />} />
           <Route path="membership/ManageUsers" element={<ManageUsers />} />
           <Route path="membership/Register" element={<RegisterPage />} />
@@ -117,7 +176,7 @@ function AppRoutes() {
           <Route path="membership/UserProfile" element={<UserProfile />} />
           <Route path="membership/dashboard" element={<Dashboard />} />
           <Route path="membership/SmeDashboard" element={<DashboardSME />} />
-
+          <Route path="membership/Mentees" element={<Mentees />} />
         </Routes>
       </main>
     </div>

@@ -21,60 +21,51 @@ import { Eye, EyeOff, Lock, User } from "lucide-react";
 
 import Role from "./entities/Role";
 
-
-
 const LoginPage = () => {
-
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
   const [username, setUsername] = useState("9881735801");
   const [password, setPassword] = useState("12345");
   const [roles, setRoles] = useState<Role[]>([]);
-   const [role, setRole] = useState("");
+  const [role, setRole] = useState("");
 
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>("");
 
   const navigate = useNavigate();
 
-
   const fetchRoles = async () => {
-      try {
-        setLoading(true);
-        const response = await fetch(`${WEBAPI_NODE_URL}/roles/getAllRoles`);
+    try {
+      setLoading(true);
+      const response = await fetch(`${WEBAPI_NODE_URL}/roles/getAllRoles`);
 
       if (!response.ok) {
         throw new Error("Failed to fetch roles");
       }
 
       const result = await response.json();
-        setRoles(result.data);
-        setError("");
-        
-      } catch (err) {
-        setError("Failed to fetch roles");
-      } finally {
-        setLoading(false);
-      }
+      setRoles(result.data);
+      setError("");
+    } catch (err) {
+      setError("Failed to fetch roles");
+    } finally {
+      setLoading(false);
+    }
   };
-
 
   const validateUser = async () => {
     try {
-      const res = await fetch(
-        `${WEBAPI_NODE_URL}/auth/login`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            username,
-            password,
-            role,
-          }),
+      const res = await fetch(`${WEBAPI_NODE_URL}/auth/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
         },
-      );
+        body: JSON.stringify({
+          username,
+          password,
+          role,
+        }),
+      });
 
       if (!res.ok) {
         throw new Error("Login failed");
@@ -112,7 +103,7 @@ const LoginPage = () => {
       console.error(error);
     }
   };
-  
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -147,11 +138,9 @@ const LoginPage = () => {
     }
   };
 
-
-  useEffect(() => { 
+  useEffect(() => {
     fetchRoles();
   }, []);
-
 
   return (
     <div className="min-h-screen bg-[var(--gradient-hero)] flex items-center justify-center px-4 select-none">
