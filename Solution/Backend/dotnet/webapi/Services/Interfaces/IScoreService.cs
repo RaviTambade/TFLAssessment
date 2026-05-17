@@ -1,16 +1,16 @@
-using backend.DTO.Requests;
-using backend.DTO.Responses;
+using backend.DTOs.Requests;
+using backend.DTOs.Responses;
 using System.Threading.Tasks;
 
 namespace backend.Services.Interfaces
 {
     public interface IScoreService
     {
-        Task<AverageScores> GetAverageScoreByIdAsync(int studentId);
-    
-        Task<List<AverageScores>> GetAllStudentsAverageScoreAsync();
+        Task<AverageScore> GetAverageScoreByIdAsync(int studentId);
 
-        Task<AssessmentScores> GetAssessmentResultData(int studentId, int assessmentId);
+        Task<List<AverageScore>> GetAllStudentsAverageScoreAsync();
+
+        Task<AssessmentScore> GetAssessmentResultData(int studentId, int assessmentId);
 
     }
 }

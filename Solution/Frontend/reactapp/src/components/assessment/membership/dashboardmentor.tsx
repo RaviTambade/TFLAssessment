@@ -55,7 +55,7 @@ const DashboardMentor = () => {
   }, []);
 
   useEffect(() => {
-    fetch(`${WEBAPI_NODE_URL}/mentors/1/mentees/count`)
+    fetch(`${WEBAPI_NODE_URL}/mentors/3/mentees/count`)
       .then((response) => response.json())
       .then((data) => {
         console.log(data);

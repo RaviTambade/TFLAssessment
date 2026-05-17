@@ -1,4 +1,4 @@
-namespace backend.DTOs;
+namespace backend.DTOs.Responses;
 
 public class AssessmentScore
 {
