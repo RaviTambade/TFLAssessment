@@ -41,7 +41,11 @@ import ConceptByFramework from "@/components/assessment/skilltaxonomy/ConceptByF
 import QuestionByConceptId from "@/components/assessment/evaluationcontent/QuestionByConceptId";
 import Dashboard from "@/components/assessment/membership/dashboard";
 import DashboardSME from "@/components/assessment/membership/dashboardsme";
+<<<<<<< HEAD:Solution/ui/reactapp/src/routes/AppRoutes.tsx
+// import EvaluationContentSme from "@/components/assessment/evaluationcontent/EvaluationContents";
+=======
 //import EvaluationContentSme from "@/components/assessment/evaluationcontent/EvaluationContentSme";
+>>>>>>> be2383c30a022673790a9dffb27d1d931403249a:Solution/Frontend/reactapp/src/routes/AppRoutes.tsx
 import Question from "@/components/assessment/assessmentOrchestrator/applyAssessment";
 import RTUpdateQuestion from "@/components/assessment/evaluationcontent/RTUpdateQuestion";
 import ScheduleInterview from "@/components/assessment/interview/ScheduleInterview";
@@ -50,49 +54,96 @@ import ShowInterviewDetailsStudent from "@/components/assessment/interview/ShowI
 import GetQuestionSme from "@/components/assessment/evaluationcontent/getQuestionsme";
 import UpcomingInterviews from "@/components/assessment/interview/UpcomingInterviews";
 
+import Mentees from "@/components/assessment/membership/Mentees";
 
 function AppRoutes() {
   return (
     <div className="min-h-screen bg-background">
       <main className="pt-20">
         <Routes>
-
-           
           {/* Main Component Page */}
           <Route path="evaluationcontent/components" element={<Assessment />} />
 
           {/* Evaluation Content */}
+<<<<<<< HEAD:Solution/ui/reactapp/src/routes/AppRoutes.tsx
+          <Route
+            path="evaluationcontent/componentmenu"
+            element={<EvaluationContentMenu />}
+          />
+
+=======
           <Route path="evaluationcontent/componentmenu" element={<EvaluationContentMenu />} />
           <Route path="evaluationcontent/sme" element={<GetQuestionSme />} />
+>>>>>>> be2383c30a022673790a9dffb27d1d931403249a:Solution/Frontend/reactapp/src/routes/AppRoutes.tsx
           {/* Question by Status */}
-          <Route path="evaluationcontent/questionbystatus" element={<QuestionByStatus />} />
+          <Route
+            path="evaluationcontent/questionbystatus"
+            element={<QuestionByStatus />}
+          />
           {/* Question by Type */}
-          <Route path="evaluationcontent/questionbytype" element={<QuestionByType />} />
-          <Route path="evaluationcontent/questionsbyconceptid" element={<QuestionByConceptId />} />
+          <Route
+            path="evaluationcontent/questionbytype"
+            element={<QuestionByType />}
+          />
+          <Route
+            path="evaluationcontent/questionsbyconceptid"
+            element={<QuestionByConceptId />}
+          />
           {/* Skill Taxonomy */}
-          <Route path="skilltaxonomy/skilltaxonomy-menu" element={<SkillTaxonomyMenu />} />
+          <Route
+            path="skilltaxonomy/skilltaxonomy-menu"
+            element={<SkillTaxonomyMenu />}
+          />
 
           {/* Assessment Orchestrator */}
-          <Route path="assessmentorchestrator/assessmentorchestrator-menu" element={<AssessmentOrchestrator />} />
+          <Route
+            path="assessmentorchestrator/assessmentorchestrator-menu"
+            element={<AssessmentOrchestrator />}
+          />
           <Route path="upcoming-assessment" element={<UpcomingAssessment />} />
           <Route path="all-assessment" element={<AllAssessment />} />
           <Route path="apply-assessment" element={<Question />} />
           {/* <Route path="result" element={<Result />} /> */}
-          <Route path="result/:assessmentId" element={<Result />}/>
+          <Route path="result/:assessmentId" element={<Result />} />
 
-          <Route path="assessment/start/:assessmentId" element={<Question />}/>
-          <Route path="membership/membership-menu" element={<MembershipMenu />} />
+          <Route path="assessment/start/:assessmentId" element={<Question />} />
+          <Route
+            path="membership/membership-menu"
+            element={<MembershipMenu />}
+          />
 
- 
           <Route path="skilltaxonomy/ViewRuntimes" element={<ViewRuntimes />} />
 ce2
           {/* <Route path="skilltaxonomy/AddConcept" element={<AddConcept />} /> */}
-           <Route path="skilltaxonomy/ConceptByFramework" element={<ConceptByFramework />} />
-          
-
+          <Route
+            path="skilltaxonomy/ConceptByFramework"
+            element={<ConceptByFramework />}
+          />
 
           {/* Default route - shows main assessment */}
 
+<<<<<<< HEAD:Solution/ui/reactapp/src/routes/AppRoutes.tsx
+          <Route
+            path="evaluationcontent/updatequestion"
+            element={<UpdateQuestion />}
+          />
+          <Route
+            path="evaluationcontent/questionbyconcept"
+            element={<QuestionsByConcept />}
+          />
+          <Route
+            path="evaluationcontent/viewquestion"
+            element={<QuestionPage />}
+          />
+          <Route
+            path="evaluationcontent/questiondetails/:question_id"
+            element={<QuestionDetails />}
+          />
+          <Route
+            path="evaluationcontent/update/:id"
+            element={<EditQuestion />}
+          />
+=======
 
             <Route
   path="evaluationcontent/updatequestion/:id"
@@ -103,19 +154,40 @@ ce2
           <Route path="evaluationcontent/viewquestion" element={<QuestionPage />} />
           <Route path="evaluationcontent/questiondetails/:question_id" element={<QuestionDetails />} />
           <Route path="evaluationcontent/update/:id" element={<EditQuestion />} />
+>>>>>>> be2383c30a022673790a9dffb27d1d931403249a:Solution/Frontend/reactapp/src/routes/AppRoutes.tsx
           <Route path="evaluationcontent/edit/:id" element={<EditQuestion />} />
-          <Route path="evaluationcontent/insertquestion" element={<SMEInsertQuestion />} />
-          <Route path="evaluationcontent/reviewquestion" element={<MentorReviewQuestion />} />
+          <Route
+            path="evaluationcontent/insertquestion"
+            element={<SMEInsertQuestion />}
+          />
+          <Route
+            path="evaluationcontent/reviewquestion"
+            element={<MentorReviewQuestion />}
+          />
           <Route index element={<Assessment />} />
+<<<<<<< HEAD:Solution/ui/reactapp/src/routes/AppRoutes.tsx
+          <Route
+            path="evaluationcontent/viewprojectinfo"
+            element={<ViewProjectInfo />}
+          />
+
+=======
           <Route path="evaluationcontent/viewprojectinfo" element={<ViewProjectInfo />} />
            {/* <Route path="evaluationcontent/sme" element={<EvaluationContentSme />} />  */}
+>>>>>>> be2383c30a022673790a9dffb27d1d931403249a:Solution/Frontend/reactapp/src/routes/AppRoutes.tsx
           <Route index element={<Assessment />} />
           <Route path="upcoming-assessment" element={<UpcomingAssessment />} />
           <Route path="create-test" element={<SMECreateTest />} />
           <Route path="assign-assessment" element={<AssignAssessment />} />
           <Route path="all-assessment" element={<AllAssessment />} />
-          <Route path="evaluationcontent/questionbydifficulty" element={<QuestionsByDifficulty />} />
-          <Route path="evaluationcontent/projectbymentee" element={<ProjectByMentee />} />
+          <Route
+            path="evaluationcontent/questionbydifficulty"
+            element={<QuestionsByDifficulty />}
+          />
+          <Route
+            path="evaluationcontent/projectbymentee"
+            element={<ProjectByMentee />}
+          />
 
 
 
@@ -126,9 +198,18 @@ ce2
            <Route path="interview/upcoming-interviews" element={<UpcomingInterviews/>}/>
 
           {/* Membership model */}
-          <Route path="membership/ChangePassword" element={<ChangePassword />} />
-          <Route path="membership/GetUserInformation" element={<GetUserInformation />} />
-          <Route path="membership/GetUserLogDetail" element={<GetUserLogDetail />} />
+          <Route
+            path="membership/ChangePassword"
+            element={<ChangePassword />}
+          />
+          <Route
+            path="membership/GetUserInformation"
+            element={<GetUserInformation />}
+          />
+          <Route
+            path="membership/GetUserLogDetail"
+            element={<GetUserLogDetail />}
+          />
           <Route path="membership/Login" element={<LoginPage />} />
           <Route path="membership/ManageUsers" element={<ManageUsers />} />
           <Route path="membership/Register" element={<RegisterPage />} />
@@ -136,7 +217,7 @@ ce2
           <Route path="membership/UserProfile" element={<UserProfile />} />
           <Route path="membership/dashboard" element={<Dashboard />} />
           <Route path="membership/SmeDashboard" element={<DashboardSME />} />
-
+          <Route path="membership/Mentees" element={<Mentees />} />
         </Routes>
       </main>
     </div>
