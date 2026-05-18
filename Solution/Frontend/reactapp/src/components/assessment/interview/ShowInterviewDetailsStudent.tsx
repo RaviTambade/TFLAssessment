@@ -55,7 +55,32 @@ const ShowInterviewDetailsStudent = () => {
       }catch(error){
         console.log(error);
       }
-     
+    }
+
+    const handleAccept=async()=>{
+      try{
+        const response=await fetch(`${WEBAPI_JAVA_URL}/interview/accept/${id}`,{
+          method:"PUT",
+          body: JSON.stringify({
+                    outcome: "CANCELED"
+                })
+        });
+      }catch(error){
+        console.log(error);
+      }
+    }
+
+    const handleReject=async()=>{
+      try{
+        const response=await fetch(`${WEBAPI_JAVA_URL}/interview/reject/${id}`,{
+          method:"PUT",
+          body:JSON.stringify({
+            outcome:"REJECTED"
+          })
+        })
+      }catch(error){
+        console.log(error);
+      }
     }
     return (
     <div className="flex justify-center items-center min-h-screen bg-gradient-to-br  p-6">
@@ -143,13 +168,13 @@ const ShowInterviewDetailsStudent = () => {
     {/* SME Buttons */}
     {user.role_id === 4 && (
         <>
-        <Button
+        <Button onClick={handleAccept}
             className="bg-green-700 hover:bg-green-800 text-white shadow-lg font-semibold"
         >
             Accept Interview
         </Button>
 
-        <Button
+        <Button onClick={handleReject}
             variant="outline"
             className="border-red-700 text-red-800 hover:bg-red-100 font-semibold"
         >

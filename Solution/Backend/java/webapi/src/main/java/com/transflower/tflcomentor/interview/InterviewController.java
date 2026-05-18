@@ -2,11 +2,9 @@ package com.transflower.tflcomentor.interview;
 import com.transflower.tflcomentor.configuration.DBConfig;
 import com.transflower.tflcomentor.ecm.dto.response.InterviewDetails;
 import com.transflower.tflcomentor.ecm.dto.response.InterviewList;
-import com.transflower.tflcomentor.ecm.entity.enums.InterviewStatus;
 import java.sql.Timestamp;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -189,6 +187,30 @@ public class InterviewController{
     public void cancelInterview(@PathVariable int interviewId){
         try(Connection connection=getConnection()){
             String query="UPDATE interviews set status='CANCELED' where interview_id=?";
+            PreparedStatement ps=connection.prepareStatement(query);
+            ps.setInt(1,interviewId);
+            ps.executeUpdate();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    @PutMapping("/accept/{interviewId}")
+    public void acceptInterview(@PathVariable int interviewId){
+        try(Connection connection=getConnection()){
+            String query="UPDATE interviews set outcome='ACCEPTED' where interview_id=?";
+            PreparedStatement ps=connection.prepareStatement(query);
+            ps.setInt(1,interviewId);
+            ps.executeUpdate();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    @PutMapping("/reject/{interviewId}")
+    public void rejectInterview(@PathVariable int interviewId){
+        try(Connection connection=getConnection()){
+            String query="UPDATE interviews set outcome='REJECTED' where interview_id=?";
             PreparedStatement ps=connection.prepareStatement(query);
             ps.setInt(1,interviewId);
             ps.executeUpdate();
