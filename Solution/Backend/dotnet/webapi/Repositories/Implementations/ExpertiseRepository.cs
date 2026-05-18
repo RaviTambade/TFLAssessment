@@ -43,7 +43,7 @@ public class ExpertiseRepository : IExpertiseRepository
 
             MySqlCommand cmd = new MySqlCommand(query, con);
 
-            cmd.Parameters.AddWithValue("@UserRoleId",47);
+            cmd.Parameters.AddWithValue("@UserRoleId",expertize.user_roles_id);
 
             cmd.Parameters.AddWithValue("@Runtime",expertize.runtime);
 

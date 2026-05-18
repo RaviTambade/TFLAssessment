@@ -18,7 +18,7 @@ public class ExpertiseController : ControllerBase
         _expertiseService = expertiseService;
     }
 
-    [HttpPost]
+    [HttpPost ("expertise")]
     public async Task<IActionResult>AddExpertise([FromBody] expertise expertize
         )
     {

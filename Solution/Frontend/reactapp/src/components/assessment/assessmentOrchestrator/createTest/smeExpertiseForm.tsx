@@ -70,7 +70,7 @@ const SMEExpertiseForm = () => {
       );
 
       const response = await fetch(
-        "http://localhost:5255/api/smeexpertize",
+        "http://localhost:5201/api/Expertise/expertise",
         {
           method: "POST",
 
