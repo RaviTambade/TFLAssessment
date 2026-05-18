@@ -2,6 +2,7 @@ import { useEffect ,useState} from "react";
 import { Button } from "@/components/ui/button";
 import {Card,CardContent,CardHeader,CardTitle,} from "@/components/ui/card";
 import { WEBAPI_JAVA_URL } from "@/lib/utils";
+import { useParams } from "react-router-dom";
 
 const ShowInterviewDetailsStudent = () => {
 
@@ -15,13 +16,14 @@ const ShowInterviewDetailsStudent = () => {
 
     const storedUser = sessionStorage.getItem("current");
     const user = storedUser ? JSON.parse(storedUser) : null;
-    
+    const {id}=useParams();
+
    useEffect(() => {
     console.log(user);
     if(!user) return;
     fetch(
         // `${WEBAPI_JAVA_URL}/interview/details/student/${user.userid}/interview/1`
-        `${WEBAPI_JAVA_URL}/interview/details/${user.userid}/role/${user.role_id}/interview/1`
+        `${WEBAPI_JAVA_URL}/interview/details/${user.userid}/role/${user.role_id}/interview/${id}`
     )
     .then((res) => {
         console.log(res);
@@ -42,7 +44,7 @@ const ShowInterviewDetailsStudent = () => {
     const handleCancel=async()=>{
       try{
          const response = await fetch(
-            `${WEBAPI_JAVA_URL}/interview/3/cancel`,
+            `${WEBAPI_JAVA_URL}/interview/${id}/cancel`,
             {
                 method: "PUT",
                 body: JSON.stringify({
@@ -53,7 +55,32 @@ const ShowInterviewDetailsStudent = () => {
       }catch(error){
         console.log(error);
       }
-     
+    }
+
+    const handleAccept=async()=>{
+      try{
+        const response=await fetch(`${WEBAPI_JAVA_URL}/interview/accept/${id}`,{
+          method:"PUT",
+          body: JSON.stringify({
+                    outcome: "CANCELED"
+                })
+        });
+      }catch(error){
+        console.log(error);
+      }
+    }
+
+    const handleReject=async()=>{
+      try{
+        const response=await fetch(`${WEBAPI_JAVA_URL}/interview/reject/${id}`,{
+          method:"PUT",
+          body:JSON.stringify({
+            outcome:"REJECTED"
+          })
+        })
+      }catch(error){
+        console.log(error);
+      }
     }
     return (
     <div className="flex justify-center items-center min-h-screen bg-gradient-to-br  p-6">
@@ -141,13 +168,13 @@ const ShowInterviewDetailsStudent = () => {
     {/* SME Buttons */}
     {user.role_id === 4 && (
         <>
-        <Button
+        <Button onClick={handleAccept}
             className="bg-green-700 hover:bg-green-800 text-white shadow-lg font-semibold"
         >
             Accept Interview
         </Button>
 
-        <Button
+        <Button onClick={handleReject}
             variant="outline"
             className="border-red-700 text-red-800 hover:bg-red-100 font-semibold"
         >

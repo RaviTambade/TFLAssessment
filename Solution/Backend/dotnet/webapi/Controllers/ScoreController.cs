@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using backend.Services.Interfaces;
 using backend.DTOs.Requests;
 using backend.DTOs.Responses;
+using backend.DTO.Responses;
 
 namespace backend.Controllers
 {
@@ -40,7 +41,7 @@ namespace backend.Controllers
         }
 
         [HttpGet("GetAssessmentResultData/{studentId}/{assessmentId}")]
-        public async Task<ActionResult<AssessmentScore>> GetAssessmentResultData(int studentId, int assessmentId)
+        public async Task<ActionResult<AssessmentScores>> GetAssessmentResultData(int studentId, int assessmentId)
         {
             var result = await _scoreService.GetAssessmentResultData(studentId, assessmentId);
 

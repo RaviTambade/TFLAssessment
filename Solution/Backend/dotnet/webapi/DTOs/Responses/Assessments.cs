@@ -1,6 +1,6 @@
-namespace backend.DTO.Responses;
 
 public class Assessments
+
 {
     public long SrNo { get; set; }
     public string? AssessmentName { get; set; }
