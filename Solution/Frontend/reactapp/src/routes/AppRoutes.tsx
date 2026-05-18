@@ -160,8 +160,8 @@ function AppRoutes() {
             element={<ScheduleInterview />}
           />
           <Route
-            path="interview/show-details-student"
-            element={<ShowInterviewDetailsStudent />}
+          path="interview/show-details-student/:id"
+          element={<ShowInterviewDetailsStudent />}
           />
           <Route
             path="interview/upcoming-interviews"
