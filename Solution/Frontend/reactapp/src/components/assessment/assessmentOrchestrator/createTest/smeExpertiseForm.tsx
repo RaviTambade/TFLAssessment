@@ -71,7 +71,7 @@ const SMEExpertiseForm = () => {
       );
 
       const response = await fetch(
-        "WEBAPI_DOTNET_URL/expertise",
+        "http://localhost:5201/api/expertise",
         {
           method: "POST",
 
