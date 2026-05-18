@@ -7,7 +7,7 @@ import Assessment from "../components/assessment/ComponentButtons";
 import AssessmentOrchestrator from "@/components/assessment/assessmentOrchestrator/assessmentOrchestrator";
 import QuestionByStatus from "@/components/assessment/evaluationcontent/QuestionByStatus";
 import QuestionByType from "@/components/assessment/evaluationcontent/QuestionByType";
-
+import GetQuestionsByDate from "@/components/assessment/evaluationcontent/GetQuestionsByDate";
 import UpdateQuestion from "@/components/assessment/evaluationcontent/UpdateQuestion";
 import QuestionsByConcept from "@/components/assessment/evaluationcontent/QuestionsByConcept";
 import QuestionPage from "@/components/assessment/evaluationcontent/QuestionsPage";
@@ -73,6 +73,11 @@ function AppRoutes() {
             path="evaluationcontent/questionsbyconceptid"
             element={<QuestionByConceptId />}
           />
+          <Route
+            path="evaluationcontent/getquestionsbydate"
+            element={<GetQuestionsByDate />}
+          />
+          
           {/* Skill Taxonomy */}
           <Route
             path="skilltaxonomy/skilltaxonomy-menu"
