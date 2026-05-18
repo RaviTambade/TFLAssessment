@@ -1,15 +1,16 @@
 const AvgSessionResponseDto = require("../dtos/responses/loggeravg-sessionresponse");
 const ResponseGenerator = require("../helpers/responseGenerator");
-const UserActivityRequestDto=require("../dtos/requests/useractivityrequest")
+const UserActivityRequestDto = require("../dtos/requests/useractivityrequest");
 
 class UserActivityController {
   constructor(userActivityService) {
     this.service = userActivityService;
   }
 
-  login (req, res)  {
+  login(req, res) {
     const userId = req.params.userId;
     const roleId = req.params.roleId;
+
     const responseGenerator = new ResponseGenerator();
 
     if (!userId) {
@@ -19,20 +20,16 @@ class UserActivityController {
     if (!roleId) {
       return this.sendError(res, "Role ID is required", 400);
     }
-    
 
     this.service.login(userId, roleId, (err, result) => {
-      responseGenerator.generateResponse(
-        res,
-        err,
-        result,
-        "Invalid credentials",
-        "Validation successful",
-      );
-    });
-  };
+      const successMessage = "Validation successful";
+      const errorMessage = "Invalid credentials";
 
-  logout (req, res) {
+      responseGenerator.generateResponse(res, err, result, errorMessage, successMessage);
+    });
+  }
+
+  logout(req, res) {
     const userId = req.params.userId;
     const roleId = req.params.roleId;
 
@@ -42,18 +39,19 @@ class UserActivityController {
       return this.sendError(res, "User ID is required", 400);
     }
 
-    this.service.logout(userId, roleId,(err, result) => {
-      responseGenerator.generateResponse(
-        res,
-        err,
-        result,
-        "Failed to record logout entry",
-        "Logout entry recorded successfully",
-      );
-    });
-  };
+    if (!roleId) {
+      return this.sendError(res, "Role ID is required", 400);
+    }
 
-  getRecentLoginCount (req, res)  {
+    this.service.logout(userId, roleId, (err, result) => {
+      const successMessage = "Logout entry recorded successfully";
+      const errorMessage = "Failed to record logout entry";
+
+      responseGenerator.generateResponse(res, err, result, errorMessage, successMessage);
+    });
+  }
+
+  getRecentLoginCount(req, res) {
     const responseGenerator = new ResponseGenerator();
 
     this.service.getRecentLoginCount((err, result) => {
@@ -61,32 +59,28 @@ class UserActivityController {
         totalLogins24Hours: result?.totalLogins24h || 0,
         timestamp: new Date().toISOString(),
       };
-      responseGenerator.generateResponse(
-        res,
-        err,
-        loginStats,
-        "Failed to retrieved Login statistics",
-        "Login statistics retrieved",
-      );
-    });
-  };
 
-  getRecentAverageSessionTime  (req, res)  {
+      const successMessage = "Login statistics retrieved";
+      const errorMessage = "Failed to retrieve login statistics";
+
+      responseGenerator.generateResponse(res, err, loginStats, errorMessage, successMessage);
+    });
+  }
+
+  getRecentAverageSessionTime(req, res) {
     const responseGenerator = new ResponseGenerator();
 
     this.service.getRecentAverageSessionTime((err, result) => {
       const sessionStats = new AvgSessionResponseDto(result);
-      responseGenerator.generateResponse(
-        res,
-        err,
-        sessionStats,
-        "Failed to retrieved Average session time",
-        "Average session time retrieved",
-      );
-    });
-  };
 
-  getActiveSessionsCount (req, res)  {
+      const successMessage = "Average session time retrieved";
+      const errorMessage = "Failed to retrieve average session time";
+
+      responseGenerator.generateResponse(res, err, sessionStats, errorMessage, successMessage);
+    });
+  }
+
+  getActiveSessionsCount(req, res) {
     const responseGenerator = new ResponseGenerator();
 
     this.service.getActiveSessionsCount((err, result) => {
@@ -94,21 +88,18 @@ class UserActivityController {
         totalActiveSessions: result?.activeSessions || 0,
         timestamp: new Date().toISOString(),
       };
-      responseGenerator.generateResponse(
-        res,
-        err,
-        activeSessions,
-        "Failed to retrieved total Active sessions ",
-        "total Active sessions retrieved",
-      );
-    });
-  };
 
-  getLiveUsers (req, res) {
+      const successMessage = "Total active sessions retrieved";
+      const errorMessage = "Failed to retrieve total active sessions";
+
+      responseGenerator.generateResponse(res, err, activeSessions, errorMessage, successMessage);
+    });
+  }
+
+  getLiveUsers(req, res) {
     const responseGenerator = new ResponseGenerator();
 
     this.service.getLiveUsers((err, result) => {
-
       const formattedUsers = result.map((user) => ({
         userId: user.user_id || user.userId,
         fullName: user.full_name || user.fullName,
@@ -116,36 +107,25 @@ class UserActivityController {
         status: "ACTIVE",
       }));
 
-      responseGenerator.generateResponse(
-        res,
-        err,
-        formattedUsers,
-        "Failed to retrieved Active users ",
-        " Active user retrieved",
-      );
-    });
-  };
+      const successMessage = "Active users retrieved";
+      const errorMessage = "Failed to retrieve active users";
 
-  getAllUserActivity (req, res)  {
+      responseGenerator.generateResponse(res, err, formattedUsers, errorMessage, successMessage);
+    });
+  }
+
+  getAllUserActivity(req, res) {
     const responseGenerator = new ResponseGenerator();
 
     const sessionFilters = new UserActivityRequestDto(req.query);
 
-    // if (!sessionFilters.name) {
-    //   return responseGenerator.sendError(res, "User name filter is required", 400);
-    // }
-
     this.service.getAllUserActivity(sessionFilters.name, (err, result) => {
+      const successMessage = "Session logs retrieved successfully";
+      const errorMessage = "No session logs found for the specified criteria";
 
-      responseGenerator.generateResponse(
-        res,
-        err,
-        result,
-        "No session logs found for the specified criteria",
-        "Session logs retrieved successfully",
-      );
+      responseGenerator.generateResponse(res, err, result, errorMessage, successMessage);
     });
-  };
+  }
 }
 
 module.exports = UserActivityController;
