@@ -62,6 +62,8 @@ builder.Services.AddScoped<IScoreRepository, ScoreRepository>();
 builder.Services.AddScoped<IPasswordService, PasswordService>();
 builder.Services.AddScoped<IEmailService, EmailService>();
 
+builder.Services.AddScoped<IExpertiseService,ExpertiseService>();
+builder.Services.AddScoped<IExpertiseRepository,ExpertiseRepository>();
 
 //CORs configuration
 // to allow cross-origin requests from any domain, which is useful for development and testing purposes.

@@ -1,5 +1,4 @@
-<<<<<<<< HEAD:Solution/Backend/dotnet/webapi/DTOs/Requests/Assessment.cs
-namespace backend.DTO.Responses;
+
 public class Assessments
 
 {

@@ -1,6 +1,3 @@
- namespace backend.DTOs.Responses;
-
-
 namespace backend.DTO.Responses;
 
 public class AssessmentScores
