@@ -17,6 +17,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import com.transflower.tflcomentor.ecm.dto.request.ScheduleInterview;
 
 
+
+
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -129,31 +132,49 @@ public class InterviewController{
     }
     }
  
-   @GetMapping("/upcoming/{interviewer}")
-   public List<InterviewList> getUpcommingInterviews(@PathVariable int interviewer) {
+   @GetMapping("/upcoming/{userId}/role/{roleId}")
+   public List<InterviewList> getUpcommingInterviews(@PathVariable int userId,@PathVariable int roleId) {
 
     List<InterviewList> interviews = new ArrayList<>();
 
-    try {
+    try ( Connection connection = getConnection()){
+        //STUDENT
+        String query = "";
 
-        Connection connection = getConnection();
+            if(roleId==2){
+                query = """
+                    SELECT
+                        interview_id,
+                        interviewer,
+                        title
+                    FROM interviews
+                    WHERE student_id = ?
+                    AND scheduled_at >= NOW()
+                    AND scheduled_at <= DATE_ADD(NOW(), INTERVAL 4 DAY)
+                    AND status = 'SCHEDULED'
+                    ORDER BY scheduled_at ASC
+                    """;
+                }
+                //SME
+                else if(roleId==4){
+                query = """
+                    SELECT
+                        interview_id,
+                        interviewer,
+                        title
+                    FROM interviews
+                    WHERE interviewer = ?
+                    AND scheduled_at >= NOW()
+                    AND scheduled_at <= DATE_ADD(NOW(), INTERVAL 4 DAY)
+                    AND status = 'SCHEDULED'
+                    ORDER BY scheduled_at ASC
+                    """;
 
-        String query = """
-                SELECT 
-                    interview_id,
-                    interviewer,
-                    title
-                FROM interviews
-                WHERE interviewer = ?
-                AND scheduled_at >= NOW()
-                AND scheduled_at <= DATE_ADD(NOW(), INTERVAL 4 DAY)
-                AND status = 'SCHEDULED'
-                ORDER BY scheduled_at ASC
-                """;
+            }
 
         PreparedStatement ps = connection.prepareStatement(query);
 
-        ps.setInt(1, interviewer);
+        ps.setInt(1, userId);
 
         ResultSet rs = ps.executeQuery();
 
@@ -185,6 +206,79 @@ public class InterviewController{
     return interviews;
 }
 
+  @GetMapping("/history/{userId}/role/{roleId}")
+public List<InterviewList> getInterviewHistory(
+        @PathVariable int userId,
+        @PathVariable int roleId) {
+
+    List<InterviewList> history = new ArrayList<>();
+
+    try (Connection connection = getConnection()) {
+
+        String query = "";
+
+        // STUDENT
+        if (roleId == 2) {
+
+            query = """
+                    SELECT
+                        interview_id,
+                        title
+                    FROM interviews
+                    WHERE student_id = ?
+                    AND (scheduled_at < NOW()
+                    OR status = 'CANCELED')
+                    ORDER BY scheduled_at DESC
+                    """;
+        }
+
+        // SME
+        else if (roleId == 4) {
+
+            query = """
+                    SELECT
+                        interview_id,
+                        title
+                    FROM interviews
+                    WHERE interviewer = ?
+                    AND (scheduled_at < NOW()
+                    OR status = 'CANCELED')
+                    ORDER BY scheduled_at DESC
+                    """;
+        }
+
+        PreparedStatement ps = connection.prepareStatement(query);
+
+        ps.setInt(1, userId);
+
+        ResultSet rs = ps.executeQuery();
+
+        while (rs.next()) {
+
+            InterviewList list = new InterviewList();
+
+            list.setInterviewId(
+                    rs.getInt("interview_id")
+            );
+
+            list.setTitle(
+                    rs.getString("title")
+            );
+
+            history.add(list);
+        }
+
+    } catch (Exception e) {
+
+        e.printStackTrace();
+    }
+
+    return history;
+}
+        
+
+
+
     @PutMapping("/{interviewId}/cancel")
     public void cancelInterview(@PathVariable int interviewId){
         try(Connection connection=getConnection()){
@@ -196,4 +290,6 @@ public class InterviewController{
             e.printStackTrace();
         }
     }
+
+
 }
