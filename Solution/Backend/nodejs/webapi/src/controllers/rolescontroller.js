@@ -8,104 +8,98 @@ class RolesController {
 
   getAllRoles(req, res) {
     const responseGenerator = new ResponseGenerator();
-    this.service.getAllRoles((err, result) => {
-      responseGenerator.generateResponse(
-        res,
-        err,
-        result,
-        "failed to retrive Roles",
-        "Retrive roles successful",
-      );
+
+    const result = this.service.getAllRoles((err, result) => {
+      var successMessage = "failed to retrive Roles";
+      var errorMessage = "Retrive roles successful";
+      responseGenerator.generateResponse(res, err, result, successMessage, errorMessage);
     });
   }
 
   insert(req, res) {
     const responseGenerator = new ResponseGenerator();
     const role = new RoleRequestDto(req.body.roleName, req.body.description);
-    this.service.insert(role, (err, result) => {
-      responseGenerator.generateResponse(
-        res,
-        err,
-        result,
-        "failed to add Role",
-        "role added successfully",
-      );
-    });
+
+    const result = this.service.insert(
+      role,
+      (err, result) => {
+        var successMessage = "failed to add Role";
+        var errorMessage = "role added successfully";
+        responseGenerator.generateResponse(res, err, result, successMessage, errorMessage);
+      },
+    );
   }
 
   update(req, res) {
-    const id = req.params.id;
     const responseGenerator = new ResponseGenerator();
     const role = new RoleRequestDto(req.body.roleName, req.body.description);
-    this.service.update(id, role, (err, result) => {
-      responseGenerator.generateResponse(
-        res,
-        err,
-        result,
-        "failed to update Role",
-        "role updated successfully",
-      );
-    });
+
+    const result = this.service.update(
+      req.params.id,
+      role,
+      (err, result) => {
+        var successMessage = "failed to update Role";
+        var errorMessage = "role updated successfully";
+        responseGenerator.generateResponse(res, err, result, successMessage, errorMessage);
+      },
+    );
   }
-  
+
   getUserRolesByUserId(req, res) {
-    const id = req.params.userId;
     const responseGenerator = new ResponseGenerator();
-    this.service.getUserRolesByUserId(id, (err, result) => {
-      responseGenerator.generateResponse(
-        res, 
-        err, 
-        result, 
-        "Failed to get user's roles", 
-        "User's roles retrieved successfully");
-    });
+
+    const result = this.service.getUserRolesByUserId(
+      req.params.userId,
+      (err, result) => {
+        var successMessage = "Failed to get user's roles";
+        var errorMessage = "User's roles retrieved successfully";
+        responseGenerator.generateResponse(res, err, result, successMessage, errorMessage);
+      },
+    );
   }
 
   getUsersByRoleId(req, res) {
     console.log("IN getUsersByRoleId", req.params);
-    const roleId = req.params.roleId;
+
     const responseGenerator = new ResponseGenerator();
-    this.service.getUsersByRoleId(roleId, (err, result) => {
-      responseGenerator.generateResponse(
-        res,
-        err,
-        result,
-        "Failed to get users by role",
-        "Users retrieved successfully",
-      );
-    });
+
+    const result = this.service.getUsersByRoleId(
+      req.params.roleId,
+      (err, result) => {
+        var successMessage = "Failed to get users by role";
+        var errorMessage = "Users retrieved successfully";
+        responseGenerator.generateResponse(res, err, result, successMessage, errorMessage);
+      },
+    );
   }
 
   assignRole(req, res) {
-    const userId = req.params.userId;
-    const roleId = req.params.roleId;
     const responseGenerator = new ResponseGenerator();
-    this.service.assignRole(userId, roleId, (err, result) => {
-      responseGenerator.generateResponse(
-        res,
-        err,
-        result,
-        "Failed to assign role",
-        "Role assigned successfully",
-      );
-    });
+
+    const result = this.service.assignRole(
+      req.params.userId,
+      req.params.roleId,
+      (err, result) => {
+        var successMessage = "Failed to assign role";
+        var errorMessage = "Role assigned successfully";
+        responseGenerator.generateResponse(res, err, result, successMessage, errorMessage);
+      },
+    );
   }
 
   unAssignRole(req, res) {
-    const userId = req.params.userId;
-    const roleId = req.params.roleId;
     const responseGenerator = new ResponseGenerator();
-    this.service.unAssignRole(userId, roleId, (err, result) => {
-      responseGenerator.generateResponse(
-        res,
-        err,
-        result,
-        "Failed to unassign role",
-        "Role unassigned successfully",
-      );
-    });
-  }
 
+    const result = this.service.unAssignRole(
+      req.params.userId,
+      req.params.roleId,
+      (err, result) => {
+        var successMessage = "Failed to unassign role";
+        var errorMessage = "Role unassigned successfully";
+        responseGenerator.generateResponse(res, err, result, successMessage, errorMessage);
+      },
+    );
+  }
 }
 
 module.exports = RolesController;
