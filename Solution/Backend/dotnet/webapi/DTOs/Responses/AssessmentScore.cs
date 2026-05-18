@@ -4,7 +4,7 @@ namespace backend.DTO.Responses;
 public class AssessmentScores
 {
     public long TestId { get; set; }
-    public string TestTitle { get; set; }
+    public string? TestTitle { get; set; }
     public int StudentId { get; set; }
     public int CorrectAnswers { get; set; }
     public int WrongAnswers { get; set; }

@@ -5,6 +5,7 @@ using MySql.Data.MySqlClient;
 using backend.DTOs.Requests;
 using backend.DTOs.Responses;
 using backend.Repositories.Interfaces;
+using backend.DTO.Responses;
 
 
 namespace backend.Repositories
@@ -95,9 +96,9 @@ namespace backend.Repositories
 
             return list;
         }
-        public async Task<AssessmentScore> GetAssessmentResultData(int studentId, int assessmentId)
+        public async Task<AssessmentScores> GetAssessmentResultData(int studentId, int assessmentId)
         {
-            AssessmentScore report = new AssessmentScore();
+            AssessmentScores report = new AssessmentScores();
 
             using (MySqlConnection con = new MySqlConnection(_configuration.GetConnectionString("DefaultConnection")))
             {

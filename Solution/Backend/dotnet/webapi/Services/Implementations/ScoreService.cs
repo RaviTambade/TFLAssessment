@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using backend.DTO.Responses;
 using backend.DTOs.Requests;
 using backend.DTOs.Responses;
 using backend.Repositories.Interfaces;
@@ -23,9 +24,14 @@ namespace backend.Services
         {
             return await _scoreRepository.GetAllStudentsAverageScoreAsync();
         }
-        public async Task<AssessmentScore> GetAssessmentResultData(int studentId, int assessmentId)
+        public async Task<AssessmentScores> GetAssessmentResultData(int studentId, int assessmentId)
         {
             return await _scoreRepository.GetAssessmentResultData(studentId, assessmentId);
+        }
+
+        Task<AssessmentScores> IScoreService.GetAssessmentResultData(int studentId, int assessmentId)
+        {
+            throw new NotImplementedException();
         }
     }
 }

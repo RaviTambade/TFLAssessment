@@ -1,5 +1,6 @@
 using backend.DTOs.Responses;
 using backend.DTOs.Requests;
+using backend.DTO.Responses;
 
 namespace backend.Repositories.Interfaces
 {
@@ -7,7 +8,7 @@ namespace backend.Repositories.Interfaces
     {
         Task<AverageScore> GetAverageScoreByIdAsync(int studentId);
         Task<List<AverageScore>> GetAllStudentsAverageScoreAsync();
-        Task<AssessmentScore> GetAssessmentResultData(int studentId, int assessmentId);
+        Task<AssessmentScores> GetAssessmentResultData(int studentId, int assessmentId);
 
     }
 }
