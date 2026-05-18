@@ -69,7 +69,7 @@ const QuestionDetails = () => {
                 )}
 
                 <div className="flex gap-4 mt-6">
-                    <Button variant="outline" onClick={edit}>Edit</Button>
+                    <Button onClick={edit}>Edit</Button>
                 </div>
 
             </div>

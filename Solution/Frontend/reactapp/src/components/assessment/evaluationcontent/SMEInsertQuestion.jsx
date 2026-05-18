@@ -72,7 +72,7 @@ const SMEInsertQuestion = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center p-6">
+    <div className="bg-card border-t border-border py-12 flex items-center justify-center p-6">
       <form
         onSubmit={handleSubmit}
         className="bg-white p-8 rounded-2xl shadow-2xl w-full max-w-lg"
@@ -176,7 +176,7 @@ const SMEInsertQuestion = () => {
           </>
         )}
 
-        <Button className="text-center mb-6 w-full bg-gradient-to-r from-green-400 to-green-600 hover:from-green-500 hover:to-green-700 text-white font-bold py-2 px-4 rounded">
+        <Button className="text-center mb-6 w-full  text-white font-bold py-2 px-4 rounded">
           Submit 🚀
         </Button>
       </form>
