@@ -5,7 +5,7 @@ const dbconfig = {
   user: "root",
   password: "password",
   database: "tflcomentor_db",
-   multipleStatements: true,
+  multipleStatements: true,
 };
 
 const connection = mysql.createConnection(dbconfig);

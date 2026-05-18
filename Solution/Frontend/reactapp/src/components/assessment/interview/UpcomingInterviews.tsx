@@ -4,9 +4,10 @@ import { Card, CardContent } from "@/components/ui/card";
 import InterviewHistory from "./InterviewHistory";
 
 type InterviewList = {
+  interviewId:number;
   interviewer: number;
   title: string;
-  interviewId: number;
+ 
 };
 
 const UpcomingInterviews = () => {
@@ -78,6 +79,11 @@ const UpcomingInterviews = () => {
                   `/models/interview/show-details/${interview.interviewId}`
                 )
               }
+            <Card onClick={() =>
+              navigate(`/models/interview/show-details-student/${interview.interviewId}`)
+            }
+              key={index}
+              className="border-0 shadow-elegant overflow-hidden"
             >
 
               <div className="bg-gradient-hero p-3">

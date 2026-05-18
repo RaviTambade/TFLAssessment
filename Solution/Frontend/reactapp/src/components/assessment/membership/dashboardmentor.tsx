@@ -1,7 +1,16 @@
 import { useEffect, useState } from "react";
-
+import { useNavigate } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "../../ui/card";
-import { Bell, Users, Zap, TrendingUp, CheckCircle, AlertCircle, BookOpen, MessageSquare } from "lucide-react";
+import {
+  Bell,
+  Users,
+  Zap,
+  TrendingUp,
+  CheckCircle,
+  AlertCircle,
+  BookOpen,
+  MessageSquare,
+} from "lucide-react";
 import { WEBAPI_NODE_URL } from "@/lib/utils";
 import Notification from "./entities/Notification";
 import MentorshipActivity from "./entities/MentorshipActivity";
@@ -12,32 +21,50 @@ import AllmentorshipActivities from "./data/mentorshipActivities.json";
 import AllMenteeGrowth from "./data/menteeGrowths.json";
 import AllMentee from "./data/users/mentees.json";
 
-
 //function component for Mentor Dashboard - Transflower
 const DashboardMentor = () => {
-
+  const navigate = useNavigate();
   //data members
   const [mentorName, setMentorName] = useState<string>("Ravi Tambade");
   const [organization, setOrganization] = useState<string>("Transflower");
-  const [profilePicture, setProfilePicture] = useState<string>("https://avatars.githubusercontent.com/u/12345678?v=4");
- 
-  const mentorNotifications: Notification[] = AllmentorNotifications as Notification[];
+  const [profilePicture, setProfilePicture] = useState<string>(
+    "https://avatars.githubusercontent.com/u/12345678?v=4",
+  );
+
+  const mentorNotifications: Notification[] =
+    AllmentorNotifications as Notification[];
 
   const mentees: Mentee[] = AllMentee as Mentee[];
- 
-  const mentorshipActivities: MentorshipActivity[] = AllmentorshipActivities as MentorshipActivity[];
+
+  const mentorshipActivities: MentorshipActivity[] =
+    AllmentorshipActivities as MentorshipActivity[];
 
   const menteeGrowth: MenteeGrowth[] = AllMenteeGrowth as MenteeGrowth[];
 
+  const [menteeCount, setMenteeCount] = useState<number>(0);
+
   useEffect(() => {
     const apiURL = `${WEBAPI_NODE_URL}/mentor/profile`;
-    fetch(apiURL).then((response) => response.json()).then((data) => {
-      setMentorName(data.name);
-      setOrganization(data.organization);
-      setProfilePicture(data.profilePicture);
-    });
+    fetch(apiURL)
+      .then((response) => response.json())
+      .then((data) => {
+        setMentorName(data.name);
+        setOrganization(data.organization);
+        setProfilePicture(data.profilePicture);
+      });
+  }, []);
 
+  useEffect(() => {
+    fetch(`${WEBAPI_NODE_URL}/mentors/3/mentees/count`)
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
 
+        setMenteeCount(data.data[0].menteeCount);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   }, []);
 
   // Render the Mentor dashboard UI
@@ -46,19 +73,30 @@ const DashboardMentor = () => {
       <div className="max-w-7xl mx-auto space-y-8">
         {/* Header */}
         <div>
-          <h1 className="text-4xl font-bold text-gray-900 mb-2">Mentor Dashboard</h1>
-          <h3 className="text-xl text-gray-700 mb-4">Welcome, {mentorName} | {organization}</h3>
-          <p className="text-gray-600">Track mentee progress, manage mentorship activities, and guide career development at Transflower.</p>
+          <h1 className="text-4xl font-bold text-gray-900 mb-2">
+            Mentor Dashboard
+          </h1>
+          <h3 className="text-xl text-gray-700 mb-4">
+            Welcome, {mentorName} | {organization}
+          </h3>
+          <p className="text-gray-600">
+            Track mentee progress, manage mentorship activities, and guide
+            career development at Transflower.
+          </p>
         </div>
 
         {/* Top Stats */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-          <Card>
+          <Card onClick={() => navigate("/models/membership/Mentees")}>
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-gray-600 text-sm font-medium">Active Mentees</p>
-                  <p className="text-3xl font-bold text-gray-900 mt-1">4</p>
+                  <p className="text-gray-600 text-sm font-medium">
+                    Active Mentees
+                  </p>
+                  <p className="text-3xl font-bold text-gray-900 mt-1">
+                    {menteeCount}
+                  </p>
                 </div>
                 <Users className="w-12 h-12 text-blue-500 opacity-20" />
               </div>
@@ -69,7 +107,9 @@ const DashboardMentor = () => {
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-gray-600 text-sm font-medium">Avg Mentee Progress</p>
+                  <p className="text-gray-600 text-sm font-medium">
+                    Avg Mentee Progress
+                  </p>
                   <p className="text-3xl font-bold text-gray-900 mt-1">75.5%</p>
                 </div>
                 <TrendingUp className="w-12 h-12 text-green-500 opacity-20" />
@@ -81,7 +121,9 @@ const DashboardMentor = () => {
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-gray-600 text-sm font-medium">Pending Activities</p>
+                  <p className="text-gray-600 text-sm font-medium">
+                    Pending Activities
+                  </p>
                   <p className="text-3xl font-bold text-gray-900 mt-1">2</p>
                 </div>
                 <MessageSquare className="w-12 h-12 text-orange-500 opacity-20" />
@@ -93,7 +135,9 @@ const DashboardMentor = () => {
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-gray-600 text-sm font-medium">Career Ready</p>
+                  <p className="text-gray-600 text-sm font-medium">
+                    Career Ready
+                  </p>
                   <p className="text-3xl font-bold text-gray-900 mt-1">2</p>
                 </div>
                 <Zap className="w-12 h-12 text-yellow-500 opacity-20" />
@@ -117,20 +161,27 @@ const DashboardMentor = () => {
                 {mentorNotifications.map((notification) => (
                   <div
                     key={notification.id}
-                    className={`p-4 rounded-lg border-l-4 ${notification.type === "info"
+                    className={`p-4 rounded-lg border-l-4 ${
+                      notification.type === "info"
                         ? "bg-blue-50 border-blue-400"
                         : notification.type === "success"
                           ? "bg-green-50 border-green-400"
                           : notification.type === "warning"
                             ? "bg-yellow-50 border-yellow-400"
                             : "bg-red-50 border-red-400"
-                      }`}
+                    }`}
                   >
                     <div className="flex items-start justify-between">
                       <div className="flex-1">
-                        <p className="font-semibold text-gray-900">{notification.title}</p>
-                        <p className="text-sm text-gray-700 mt-1">{notification.message}</p>
-                        <p className="text-xs text-gray-500 mt-2">{notification.timestamp}</p>
+                        <p className="font-semibold text-gray-900">
+                          {notification.title}
+                        </p>
+                        <p className="text-sm text-gray-700 mt-1">
+                          {notification.message}
+                        </p>
+                        <p className="text-xs text-gray-500 mt-2">
+                          {notification.timestamp}
+                        </p>
                       </div>
                       {!notification.read && (
                         <div className="w-2 h-2 bg-blue-500 rounded-full ml-2 mt-2 flex-shrink-0" />
@@ -151,11 +202,18 @@ const DashboardMentor = () => {
               </CardHeader>
               <CardContent className="space-y-4">
                 {mentorshipActivities.map((activity) => (
-                  <div key={activity.id} className="p-4 border rounded-lg hover:bg-gray-50 transition">
+                  <div
+                    key={activity.id}
+                    className="p-4 border rounded-lg hover:bg-gray-50 transition"
+                  >
                     <div className="flex items-start justify-between">
                       <div className="flex-1">
-                        <p className="font-semibold text-gray-900">{activity.menteeName}</p>
-                        <p className="text-sm text-gray-600 mt-1">{activity.description}</p>
+                        <p className="font-semibold text-gray-900">
+                          {activity.menteeName}
+                        </p>
+                        <p className="text-sm text-gray-600 mt-1">
+                          {activity.description}
+                        </p>
                         <div className="flex items-center gap-4 mt-2 text-sm text-gray-600">
                           <span className="inline-block bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs font-medium">
                             {activity.activityType}
@@ -163,10 +221,15 @@ const DashboardMentor = () => {
                           <span>{activity.date}</span>
                         </div>
                       </div>
-                      <span className={`px-3 py-1 rounded-full text-xs font-medium ${activity.completionStatus === "completed" ? "bg-green-100 text-green-800" :
-                          activity.completionStatus === "in-progress" ? "bg-yellow-100 text-yellow-800" :
-                            "bg-gray-100 text-gray-800"
-                        }`}>
+                      <span
+                        className={`px-3 py-1 rounded-full text-xs font-medium ${
+                          activity.completionStatus === "completed"
+                            ? "bg-green-100 text-green-800"
+                            : activity.completionStatus === "in-progress"
+                              ? "bg-yellow-100 text-yellow-800"
+                              : "bg-gray-100 text-gray-800"
+                        }`}
+                      >
                         {activity.completionStatus}
                       </span>
                     </div>
@@ -191,8 +254,12 @@ const DashboardMentor = () => {
                   <div key={mentee.id} className="p-3 border rounded-lg">
                     <div className="flex items-start justify-between mb-2">
                       <div>
-                        <p className="font-medium text-gray-900 text-sm">{mentee.name}</p>
-                        <p className="text-xs text-gray-600">{mentee.careerGoal}</p>
+                        <p className="font-medium text-gray-900 text-sm">
+                          {mentee.name}
+                        </p>
+                        <p className="text-xs text-gray-600">
+                          {mentee.careerGoal}
+                        </p>
                       </div>
                       {mentee.status === "exceeding" ? (
                         <CheckCircle className="w-4 h-4 text-green-600" />
@@ -204,15 +271,21 @@ const DashboardMentor = () => {
                     </div>
                     <div className="w-full bg-gray-200 rounded-full h-2 mb-2">
                       <div
-                        className={`h-2 rounded-full transition-all ${mentee.status === "exceeding" ? "bg-green-500" :
-                            mentee.status === "onTrack" ? "bg-blue-500" :
-                              mentee.status === "needsSupport" ? "bg-yellow-500" : "bg-red-500"
-                          }`}
+                        className={`h-2 rounded-full transition-all ${
+                          mentee.status === "exceeding"
+                            ? "bg-green-500"
+                            : mentee.status === "onTrack"
+                              ? "bg-blue-500"
+                              : mentee.status === "needsSupport"
+                                ? "bg-yellow-500"
+                                : "bg-red-500"
+                        }`}
                         style={{ width: `${mentee.progress}%` }}
                       />
                     </div>
                     <p className="text-xs font-semibold text-gray-900">
-                      Progress: {mentee.progress}% | Last: {mentee.lastMeetingDate}
+                      Progress: {mentee.progress}% | Last:{" "}
+                      {mentee.lastMeetingDate}
                     </p>
                   </div>
                 ))}
@@ -232,13 +305,22 @@ const DashboardMentor = () => {
                   <div key={index} className="p-3 border rounded-lg">
                     <div className="flex items-center justify-between mb-2">
                       <div>
-                        <p className="text-xs font-medium text-gray-600">{growth.menteeName}</p>
-                        <p className="text-sm font-semibold text-gray-900">{growth.skillName}</p>
+                        <p className="text-xs font-medium text-gray-600">
+                          {growth.menteeName}
+                        </p>
+                        <p className="text-sm font-semibold text-gray-900">
+                          {growth.skillName}
+                        </p>
                       </div>
-                      <span className={`text-xs font-bold px-2 py-1 rounded ${growth.currentLevel === "advanced" ? "bg-green-100 text-green-800" :
-                          growth.currentLevel === "intermediate" ? "bg-blue-100 text-blue-800" :
-                            "bg-yellow-100 text-yellow-800"
-                        }`}>
+                      <span
+                        className={`text-xs font-bold px-2 py-1 rounded ${
+                          growth.currentLevel === "advanced"
+                            ? "bg-green-100 text-green-800"
+                            : growth.currentLevel === "intermediate"
+                              ? "bg-blue-100 text-blue-800"
+                              : "bg-yellow-100 text-yellow-800"
+                        }`}
+                      >
                         {growth.currentLevel}
                       </span>
                     </div>
@@ -249,7 +331,10 @@ const DashboardMentor = () => {
                       />
                     </div>
                     <p className="text-xs text-gray-600">
-                      {growth.improvementPercentage}% improvement • <span className="font-semibold">{growth.recommendedFocus}</span>
+                      {growth.improvementPercentage}% improvement •{" "}
+                      <span className="font-semibold">
+                        {growth.recommendedFocus}
+                      </span>
                     </p>
                   </div>
                 ))}
@@ -260,6 +345,6 @@ const DashboardMentor = () => {
       </div>
     </div>
   );
-}
+};
 
 export default DashboardMentor;

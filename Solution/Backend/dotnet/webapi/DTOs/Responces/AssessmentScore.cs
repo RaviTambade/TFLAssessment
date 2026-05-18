@@ -1,10 +1,7 @@
- namespace backend.DTOs.Responses;
-
 
 namespace backend.DTO.Responses;
 
 public class AssessmentScores
-
 {
     public long TestId { get; set; }
     public string TestTitle { get; set; }

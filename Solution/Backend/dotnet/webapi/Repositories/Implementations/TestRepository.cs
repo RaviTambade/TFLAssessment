@@ -83,7 +83,7 @@ public async Task<long> CreateTestAsync(CreateTestRequests dto)
 
     long testId = 0;
 
-    string connectionString = ("Server=192.168.1.149;Port=3306;Database=tflcomentor_db;User=root;Password=password;");
+    string connectionString = ("Server=localhost;Port=3306;Database=tflcomentor_db;User=root;Password=password;");
 
     using (MySqlConnection con = new MySqlConnection(connectionString))
     {
@@ -93,57 +93,47 @@ public async Task<long> CreateTestAsync(CreateTestRequests dto)
         {
             try
             {
-                // Check SME exists
-                string Query = @"
-                    SELECT COUNT(1)
-                    FROM SmeRuntimes
-                    WHERE SmeRuntimeId = @SmeId";
-
-                using (MySqlCommand Cmd = new MySqlCommand(Query, con, transaction))
-                {
-                    Cmd.Parameters.AddWithValue("@SmeId", dto.SmeId);
-
-                    int count = Convert.ToInt32(await Cmd.ExecuteScalarAsync());
-
-                    if (count == 0)
-                        throw new ArgumentException($"SmeRuntime with id {dto.SmeId} not found.");
-                }
-
                 // Insert Test
                 string insertTestQuery = @"
-                    INSERT INTO Tests
-                    (
-                        Title,
-                        Duration,
-                        Difficulty,
-                        SmeRuntimeId,
-                        Description,
-                        CreatedAt,
-                        Status
-                    )
-                    VALUES
-                    (
-                        @Title,
-                        @Duration,
-                        @Difficulty,
-                        @SmeRuntimeId,
-                        @Description,
-                        @CreatedAt,
-                        @Status
-                    );
+                                    INSERT INTO tests
+                                    (
+                                        user_roles_id,
+                                        title,
+                                        duration,
+                                        difficulty,
+                                        description,
+                                        created_at,
+                                        status,
+                                        sme_id
+                                    )
+                                    VALUES
+                                    (
+                                        @UserRolesId,
+                                        @Title,
+                                        @Duration,
+                                        @Difficulty,
+                                        @Description,
+                                        @Created_At,
+                                        @Status,
+                                        @SmeId
+                                    );
 
-                    SELECT LAST_INSERT_ID();";
+                                    SELECT LAST_INSERT_ID();
+                                ";
+
+                   
 
                 using (MySqlCommand cmd = new MySqlCommand(insertTestQuery, con, transaction))
-                {
+                        {
+                     cmd.Parameters.AddWithValue("@UserRolesId", dto.UserRolesId);
                     cmd.Parameters.AddWithValue("@Title", dto.Title);
                     cmd.Parameters.AddWithValue("@Duration", (int)dto.Duration);
                     cmd.Parameters.AddWithValue("@Difficulty", dto.SkillLevel);
-                    cmd.Parameters.AddWithValue("@SmeRuntimeId", dto.SmeId);
                     cmd.Parameters.AddWithValue("@Description",
                         dto.Description ?? (object)DBNull.Value);
-                    cmd.Parameters.AddWithValue("@CreatedAt", DateTime.Now);
-                    cmd.Parameters.AddWithValue("@Status", true);
+                    cmd.Parameters.AddWithValue("@Created_At", DateTime.Now);
+                            cmd.Parameters.AddWithValue("@Status", true);
+                    cmd.Parameters.AddWithValue("@SmeId",dto.SmeId);
 
                     testId = Convert.ToInt64(await cmd.ExecuteScalarAsync());
                 }
@@ -156,18 +146,18 @@ public async Task<long> CreateTestAsync(CreateTestRequests dto)
                     foreach (var questionId in dto.QuestionIds)
                     {
                         string insertQuestionQuery = @"
-                            INSERT INTO TestQuestions
-                            (
-                                TestId,
-                                QuestionId,
-                                SequenceOrder
-                            )
-                            VALUES
-                            (
-                                @TestId,
-                                @QuestionId,
-                                @SequenceOrder
-                            )";
+                                    INSERT INTO test_questions
+                                    (
+                                        test_id,
+                                        question_id,
+                                        sequence_order
+                                    )
+                                    VALUES
+                                    (
+                                        @TestId,
+                                        @QuestionId,
+                                        @SequenceOrder
+                                    )";
 
                         using (MySqlCommand questionCmd =
                                new MySqlCommand(insertQuestionQuery, con, transaction))

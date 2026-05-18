@@ -32,7 +32,8 @@ const MentorReviewQuestion = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-500 via-indigo-500 to-purple-600 p-6">
+    <div className="min-h-screen bg-gradient-to-br bg-card border-t border-border p-6">
+      
       <div className="max-w-6xl mx-auto">
         <h2 className="bg-gradient-primary bg-clip-text text-transparent text-4xl font-bold mb-8 text-center">
           Review Questions
@@ -68,7 +69,7 @@ const MentorReviewQuestion = () => {
                     <tr key={q.questionId} className="border-b hover:bg-gray-100 cursor-pointer transition" onClick={() =>
                         navigate(`/models/evaluationcontent/questiondetails/${q.questionId}`,)} >
                       <td className="p-3 font-medium">{q.questionId}</td>
-                      <td className="p-3 text-blue-600 underline">
+                      <td className="p-3 text-black underline">
                         {q.description}
                       </td>
                     </tr>
