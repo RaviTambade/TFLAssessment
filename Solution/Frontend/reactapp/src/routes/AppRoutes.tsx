@@ -49,6 +49,7 @@ import InterviewMenu from "@/components/assessment/interview/interviewmenu";
 import ShowInterviewDetailsStudent from "@/components/assessment/interview/ShowInterviewDetailsStudent";
 import GetQuestionSme from "@/components/assessment/evaluationcontent/getQuestionsme";
 import UpcomingInterviews from "@/components/assessment/interview/UpcomingInterviews";
+import InterviewHistory from "@/components/assessment/interview/InterviewHistory";
 
 
 function AppRoutes() {
@@ -123,7 +124,8 @@ ce2
           <Route path="interview/interview-menu" element={<InterviewMenu/>} />
           <Route path="interview/scheduleinterview" element={<ScheduleInterview/>} />
           <Route path="interview/show-details-student" element={<ShowInterviewDetailsStudent />} />
-           <Route path="interview/upcoming-interviews" element={<UpcomingInterviews/>}/>
+          <Route path="interview/upcoming-interviews" element={<UpcomingInterviews />} />
+         <Route path="interview/interviewhistory" element={<InterviewHistory/>}/>
 
           {/* Membership model */}
           <Route path="membership/ChangePassword" element={<ChangePassword />} />

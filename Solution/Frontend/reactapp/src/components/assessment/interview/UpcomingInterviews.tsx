@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
+import InterviewHistory from "./InterviewHistory";
 
 type InterviewList = {
   interviewer: number;
   title: string;
+  interviewId: number;
 };
 
 const UpcomingInterviews = () => {
@@ -16,6 +18,7 @@ const UpcomingInterviews = () => {
   const user = storedUser ? JSON.parse(storedUser) : {};
 
   const navigate = useNavigate();
+
   useEffect(() => {
     fetchUpcomingInterviews();
   }, []);
@@ -25,7 +28,7 @@ const UpcomingInterviews = () => {
     try {
 
       const response = await fetch(
-        `http://localhost:8080/api/interview/upcoming/${user.userid}`
+        `http://localhost:8080/api/interview/upcoming/${user.userid}/role/${user.role_id}`
       );
 
       const data = await response.json();
@@ -65,13 +68,16 @@ const UpcomingInterviews = () => {
         {/* Interview List */}
         <div className="max-w-3xl mx-auto space-y-3">
 
-          {interviews.map((interview, index) => (
+          {interviews.map((interview) => (
 
-            <Card onClick={() =>
-              navigate("/models/interview/show-details-student")
-            }
-              key={index}
-              className="border-0 shadow-elegant overflow-hidden"
+            <Card
+              key={interview.interviewId}
+              className="border-0 shadow-elegant overflow-hidden cursor-pointer"
+              onClick={() =>
+                navigate(
+                  `/models/interview/show-details/${interview.interviewId}`
+                )
+              }
             >
 
               <div className="bg-gradient-hero p-3">
@@ -89,9 +95,8 @@ const UpcomingInterviews = () => {
               </div>
 
             </Card>
-
           ))}
-
+          <InterviewHistory/>
         </div>
 
       </div>
