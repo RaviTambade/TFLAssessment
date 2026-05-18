@@ -69,16 +69,7 @@ const UpcomingInterviews = () => {
         {/* Interview List */}
         <div className="max-w-3xl mx-auto space-y-3">
 
-          {interviews.map((interview) => (
-
-            <Card
-              key={interview.interviewId}
-              className="border-0 shadow-elegant overflow-hidden cursor-pointer"
-              onClick={() =>
-                navigate(
-                  `/models/interview/show-details/${interview.interviewId}`
-                )
-              }
+          {interviews.map((interview,index) => (
             <Card onClick={() =>
               navigate(`/models/interview/show-details-student/${interview.interviewId}`)
             }
