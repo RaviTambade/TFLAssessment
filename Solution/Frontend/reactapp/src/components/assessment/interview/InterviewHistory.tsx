@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
+import { useNavigate } from "react-router-dom";
+import { Item } from "@radix-ui/react-toggle-group";
 
 type InterviewHistory = {
   interviewId: number;
@@ -8,7 +10,7 @@ type InterviewHistory = {
 
 const InterviewHistory = () => {
   const [history, setHistory] = useState<InterviewHistory[]>([]);
-
+  const navigate=useNavigate();
   const storedUser = sessionStorage.getItem("current");
   const user = storedUser ? JSON.parse(storedUser) : {};
 
@@ -42,18 +44,14 @@ const InterviewHistory = () => {
               History
             </span>
           </h2>
-
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            View all your previous interview records.
-          </p>
         </div>
 
         {/* History List */}
-        <div className="max-w-4xl mx-auto space-y-4">
+       <div className="max-w-3xl mx-auto space-y-3">
 
           {history.length > 0 ? (
             history.map((item) => (
-              <Card
+              <Card onClick={()=>navigate(`/models/interview/show-details-student/${item.interviewId}`)}
                 key={item.interviewId}
                 className="border-0 shadow-elegant overflow-hidden hover:shadow-glow transition-all duration-300"
               >
@@ -65,7 +63,8 @@ const InterviewHistory = () => {
                       {/* Title */}
                       <div>
 
-                        <h3 className="text-lg font-semibold text-foreground">
+                        <h3 className="text-sm font-medium text-foreground leading-relaxed">
+
                           {item.title}
                         </h3>
                       </div>

@@ -11,7 +11,8 @@ const ShowInterviewDetailsStudent = () => {
         scheduleDate: "",
         mode: "",
         interviewer: "",
-        interviewId:0
+        interviewId:0,
+        status:""
     });
 
     const storedUser = sessionStorage.getItem("current");
@@ -123,6 +124,15 @@ const ShowInterviewDetailsStudent = () => {
               </p>
               <h4 className="text-lg font-semibold text-gray-800 mt-1">
                 {interviewDetail.mode}
+              </h4>
+            </div>
+
+             <div className=" p-5 rounded-xl border border-orange-300 shadow-sm hover:shadow-md transition">
+              <p className="text-sm text-orange-900 font-medium">
+                Status
+              </p>
+              <h4 className="text-lg font-semibold text-gray-800 mt-1">
+                {interviewDetail.status}
               </h4>
             </div>
 

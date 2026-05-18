@@ -2,6 +2,8 @@ package com.transflower.tflcomentor.interview;
 import com.transflower.tflcomentor.configuration.DBConfig;
 import com.transflower.tflcomentor.ecm.dto.response.InterviewDetails;
 import com.transflower.tflcomentor.ecm.dto.response.InterviewList;
+import com.transflower.tflcomentor.ecm.entity.enums.InterviewStatus;
+
 import java.sql.Timestamp;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,13 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PathVariable;
-
 import com.transflower.tflcomentor.ecm.dto.request.ScheduleInterview;
-
-
-
-
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -91,7 +87,7 @@ public class InterviewController{
         // STUDENT
         if (roleId == 2) {
             query =
-                "SELECT i.interview_id, i.scheduled_at, i.mode, i.title, " +
+                "SELECT i.interview_id, i.scheduled_at, i.mode, i.title,i.status, " +
                 "CONCAT(pi.first_name,' ',pi.last_name) AS interviewer " +
                 "FROM interviews i " +
                 "JOIN personal_informations pi " +
@@ -102,7 +98,7 @@ public class InterviewController{
         // SME
         else if (roleId == 4) {
             query =
-                "SELECT i.interview_id, i.scheduled_at, i.mode, i.title, " +
+                "SELECT i.interview_id, i.scheduled_at, i.mode, i.title,i.status, " +
                 "CONCAT(pi.first_name,' ',pi.last_name) AS interviewer " +
                 "FROM interviews i " +
                 "JOIN personal_informations pi " +
@@ -122,6 +118,8 @@ public class InterviewController{
             details.setMode(rs.getString("mode"));
             details.setTitle(rs.getString("title"));
             details.setInterviewer(rs.getString("interviewer"));
+            String status=rs.getString("status");
+            details.setStatus(InterviewStatus.valueOf(status));
         }
         return details;
     } catch (Exception e) {
