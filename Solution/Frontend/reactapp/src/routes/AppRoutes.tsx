@@ -37,6 +37,7 @@ import UserProfile from "@/components/assessment/membership/UserProfile";
 import SMECreateTest from "@/components/assessment/assessmentOrchestrator/SMECreateTest";
 import AssignAssessment from "@/components/assessment/assessmentOrchestrator/AssignAssessment";
 import ConceptByFramework from "@/components/assessment/skilltaxonomy/ConceptByFramework";
+import QuestionOptions from "@/components/assessment/assessmentOrchestrator/createTest/QuestionOptions";
 
 import QuestionByConceptId from "@/components/assessment/evaluationcontent/QuestionByConceptId";
 import Dashboard from "@/components/assessment/membership/dashboard";
@@ -138,6 +139,7 @@ function AppRoutes() {
           <Route index element={<Assessment />} />
           <Route path="upcoming-assessment" element={<UpcomingAssessment />} />
           <Route path="create-test" element={<SMECreateTest />} />
+          <Route path="question-options" element={<QuestionOptions />} />
           <Route path="assign-assessment" element={<AssignAssessment />} />
           <Route path="all-assessment" element={<AllAssessment />} />
           <Route

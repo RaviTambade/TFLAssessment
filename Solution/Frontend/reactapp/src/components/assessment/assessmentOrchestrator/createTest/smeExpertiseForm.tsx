@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "../../../ui/card";
 import { Button } from "../../../ui/button";
+import { WEBAPI_DOTNET_URL } from "@/lib/utils";
 
 const options = {
   runtime: ["Node.js", "JVM", ".NET", "Python Runtime", "Go"],
@@ -70,7 +71,7 @@ const SMEExpertiseForm = () => {
       );
 
       const response = await fetch(
-        "http://localhost:5255/api/smeexpertize",
+        "WEBAPI_DOTNET_URL/expertise",
         {
           method: "POST",
 
