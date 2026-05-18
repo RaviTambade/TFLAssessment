@@ -14,9 +14,9 @@ lastDtbSucceeded
 
 [properties]
 AssemblyName=TestingWebAPI
-CommandLineArgsForDesignTimeEvaluation=-langversion:14.0 -define:TRACE
+CommandLineArgsForDesignTimeEvaluation=-langversion:13.0 -define:TRACE
 CompilerGeneratedFilesOutputPath=
-MaxSupportedLangVersion=14.0
+MaxSupportedLangVersion=13.0
 ProjectAssetsFile=<PATH>obj/project.assets.json
 RootNamespace=TestingWebAPI
 RunAnalyzers=
@@ -56,10 +56,6 @@ TemporaryDependencyNodeTargetIdentifier=net10.0
 
 [sourceFiles]
 expertise.cs
-obj/Debug/net10.0/
- .NETCoreApp,Version=v10.0.AssemblyAttributes.cs
- TestingWebAPI.AssemblyInfo.cs
- TestingWebAPI.GlobalUsings.g.cs
 Program.cs
 
 [metadataReferences]
