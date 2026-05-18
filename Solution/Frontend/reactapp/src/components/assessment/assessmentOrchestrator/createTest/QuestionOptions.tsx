@@ -10,6 +10,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../../../ui/select";
+import SMEInsertQuestion from "../../evaluationcontent/SMEInsertQuestion";
 
 type QuestionOptionsState = {
   testId?: number | string;
@@ -75,6 +76,7 @@ const QuestionOptions = () => {
   const [status, setStatus] = useState("");
   const [showQuestions, setShowQuestions] = useState(false);
   const [selectedQuestions, setSelectedQuestions] = useState<number[]>([]);
+  const [showInsertQuestion, setShowInsertQuestion] = useState(false);
 
   const showActions = questionType && status;
   const filteredQuestions = dummyQuestions.filter(
@@ -164,20 +166,29 @@ const QuestionOptions = () => {
 
           {showActions && (
             <div className="pt-6 border-t border-slate-100 flex flex-col gap-4 sm:flex-row">
-              <Button className="flex-1 bg-red-600 hover:bg-red-700 text-white py-6 text-lg rounded-xl">
+              <Button
+                className="flex-1 bg-red-600 hover:bg-red-700 text-white py-6 text-lg rounded-xl"
+                onClick={() => {
+                  setShowInsertQuestion(true);
+                  setShowQuestions(false); // Hide select questions
+                }}
+              >
                 Add Questions
               </Button>
               <Button
                 variant="outline"
                 className="flex-1 py-6 text-lg rounded-xl border-slate-200 hover:bg-slate-50"
-                onClick={() => setShowQuestions(true)}
+                onClick={() => {
+                  setShowQuestions(true);
+                  setShowInsertQuestion(false); // Hide add questions
+                }}
               >
                 Select Questions
               </Button>
             </div>
           )}
 
-          {showQuestions && (
+          {showQuestions && !showInsertQuestion && (
             <div className="pt-6 border-t border-slate-100 space-y-4">
               <div>
                 <h2 className="text-lg font-bold text-slate-900">
@@ -239,6 +250,10 @@ const QuestionOptions = () => {
                 </Button>
               </div>
             </div>
+          )}
+
+          {showInsertQuestion && !showQuestions && (
+            <SMEInsertQuestion onClose={() => setShowInsertQuestion(false)} />
           )}
         </CardContent>
       </Card>

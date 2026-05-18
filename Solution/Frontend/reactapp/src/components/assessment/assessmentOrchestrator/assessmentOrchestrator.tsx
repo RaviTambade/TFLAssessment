@@ -17,6 +17,11 @@ const actions = [
     roles: ["Admin"],
   },
   {
+    label: "SME Expertise Form",
+    path: "/models/sme-expertise-form",
+    roles: ["SME"],
+  },
+  {
     label: "Create Test",
     path: "/models/create-test",
     roles: ["SME"],
