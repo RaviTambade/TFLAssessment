@@ -7,7 +7,7 @@ import Assessment from "../components/assessment/ComponentButtons";
 import AssessmentOrchestrator from "@/components/assessment/assessmentOrchestrator/assessmentOrchestrator";
 import QuestionByStatus from "@/components/assessment/evaluationcontent/QuestionByStatus";
 import QuestionByType from "@/components/assessment/evaluationcontent/QuestionByType";
-
+import GetQuestionsByDate from "@/components/assessment/evaluationcontent/GetQuestionsByDate";
 import UpdateQuestion from "@/components/assessment/evaluationcontent/UpdateQuestion";
 import QuestionsByConcept from "@/components/assessment/evaluationcontent/QuestionsByConcept";
 import QuestionPage from "@/components/assessment/evaluationcontent/QuestionsPage";
@@ -49,6 +49,7 @@ import InterviewMenu from "@/components/assessment/interview/interviewmenu";
 import ShowInterviewDetailsStudent from "@/components/assessment/interview/ShowInterviewDetailsStudent";
 import GetQuestionSme from "@/components/assessment/evaluationcontent/getQuestionsme";
 import UpcomingInterviews from "@/components/assessment/interview/UpcomingInterviews";
+import InterviewHistory from "@/components/assessment/interview/InterviewHistory";
 
 import Mentees from "@/components/assessment/membership/Mentees";
 
@@ -73,6 +74,11 @@ function AppRoutes() {
             path="evaluationcontent/questionsbyconceptid"
             element={<QuestionByConceptId />}
           />
+          <Route
+            path="evaluationcontent/getquestionsbydate"
+            element={<GetQuestionsByDate />}
+          />
+          
           {/* Skill Taxonomy */}
           <Route
             path="skilltaxonomy/skilltaxonomy-menu"
@@ -149,6 +155,12 @@ function AppRoutes() {
             element={<ProjectByMentee />}
           />
           {/* Interview */}
+          <Route path="interview/interview-menu" element={<InterviewMenu/>} />
+          <Route path="interview/scheduleinterview" element={<ScheduleInterview/>} />
+          <Route path="interview/show-details-student" element={<ShowInterviewDetailsStudent />} />
+          <Route path="interview/upcoming-interviews" element={<UpcomingInterviews />} />
+         <Route path="interview/interviewhistory" element={<InterviewHistory/>}/>
+
           <Route path="interview/interview-menu" element={<InterviewMenu />} />
           <Route
             path="interview/scheduleinterview"
