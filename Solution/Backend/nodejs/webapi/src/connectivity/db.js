@@ -4,7 +4,7 @@ const dbconfig = {
   host: "localhost",
   user: "root",
   password: "password",
-  database: "tflcomentor_db",
+  database: "tflcomentor",
   multipleStatements: true,
 };
 
