@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 
 type InterviewList = {
+  interviewId:number;
   interviewer: number;
   title: string;
 };
@@ -68,7 +69,7 @@ const UpcomingInterviews = () => {
           {interviews.map((interview, index) => (
 
             <Card onClick={() =>
-              navigate("/models/interview/show-details-student")
+              navigate(`/models/interview/show-details-student/${interview.interviewId}`)
             }
               key={index}
               className="border-0 shadow-elegant overflow-hidden"
