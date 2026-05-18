@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using backend.Services.Interfaces;
-using backend.DTO.Requests;
-using backend.DTO.Responses;
+using backend.DTOs.Requests;
+using backend.DTOs.Responses;
 
 namespace backend.Controllers
 {
@@ -18,7 +18,7 @@ namespace backend.Controllers
         }
 
         [HttpGet("GetAverageScoreById/{studentId}")]
-        public async Task<ActionResult<AverageScores>> GetAverageScoreById(int studentId)
+        public async Task<ActionResult<AverageScore>> GetAverageScoreById(int studentId)
         {
             var result = await _scoreService.GetAverageScoreByIdAsync(studentId);
 
@@ -28,8 +28,8 @@ namespace backend.Controllers
             return Ok(result);
         }
 
-          [HttpGet("GetAllStudentsAverageScore")]
-        public async Task<ActionResult<List<AverageScores>>> GetAllStudentsAverageScore()
+        [HttpGet("GetAllStudentsAverageScore")]
+        public async Task<ActionResult<List<AverageScore>>> GetAllStudentsAverageScore()
         {
             var result = await _scoreService.GetAllStudentsAverageScoreAsync();
 
@@ -40,7 +40,7 @@ namespace backend.Controllers
         }
 
         [HttpGet("GetAssessmentResultData/{studentId}/{assessmentId}")]
-        public async Task<ActionResult<AssessmentScores>> GetAssessmentResultData(int studentId, int assessmentId)
+        public async Task<ActionResult<AssessmentScore>> GetAssessmentResultData(int studentId, int assessmentId)
         {
             var result = await _scoreService.GetAssessmentResultData(studentId, assessmentId);
 

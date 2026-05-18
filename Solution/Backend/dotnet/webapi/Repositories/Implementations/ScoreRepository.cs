@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using MySql.Data.MySqlClient; 
-using backend.DTO.Requests;
-using backend.DTO.Responses;
+using MySql.Data.MySqlClient;
+using backend.DTOs.Requests;
+using backend.DTOs.Responses;
 using backend.Repositories.Interfaces;
 
 
@@ -18,9 +18,9 @@ namespace backend.Repositories
             _configuration = configuration;
         }
 
-        public async Task<AverageScores> GetAverageScoreByIdAsync(int studentId)
+        public async Task<AverageScore> GetAverageScoreByIdAsync(int studentId)
         {
-            AverageScores score = new AverageScores();
+            AverageScore score = new AverageScore();
 
             using (MySqlConnection con = new MySqlConnection(_configuration.GetConnectionString("DefaultConnection")))
             {
@@ -48,7 +48,7 @@ namespace backend.Repositories
                         {
                             score.StudentId = Convert.ToInt32(reader["student_id"]);
                             score.TotalCompletedAssessments = Convert.ToInt32(reader["total_completed_assessments"]);
-                            score.AvgScore = Convert.ToDouble(reader["avg_score"]); 
+                            score.AvgScore = Convert.ToDouble(reader["avg_score"]);
                         }
                     }
                 }
@@ -57,9 +57,9 @@ namespace backend.Repositories
             return score;
         }
 
-        public async Task<List<AverageScores>> GetAllStudentsAverageScoreAsync()
+        public async Task<List<AverageScore>> GetAllStudentsAverageScoreAsync()
         {
-            List<AverageScores> list = new List<AverageScores>();
+            List<AverageScore> list = new List<AverageScore>();
 
             using (MySqlConnection con = new MySqlConnection(_configuration.GetConnectionString("DefaultConnection")))
             {
@@ -82,11 +82,11 @@ namespace backend.Repositories
                     {
                         while (await reader.ReadAsync())
                         {
-                            list.Add(new AverageScores
+                            list.Add(new AverageScore
                             {
                                 StudentId = Convert.ToInt32(reader["student_id"]),
                                 TotalCompletedAssessments = Convert.ToInt32(reader["total_completed_assessments"]),
-                                AvgScore = Convert.ToDouble(reader["avg_score"]) 
+                                AvgScore = Convert.ToDouble(reader["avg_score"])
                             });
                         }
                     }
@@ -95,13 +95,13 @@ namespace backend.Repositories
 
             return list;
         }
-         public async Task<AssessmentScores> GetAssessmentResultData(int studentId, int assessmentId)
+        public async Task<AssessmentScore> GetAssessmentResultData(int studentId, int assessmentId)
         {
-        AssessmentScores report = new AssessmentScores();
+            AssessmentScore report = new AssessmentScore();
 
-        using (MySqlConnection con = new MySqlConnection(_configuration.GetConnectionString("DefaultConnection")))
-        {
-            string query = @"
+            using (MySqlConnection con = new MySqlConnection(_configuration.GetConnectionString("DefaultConnection")))
+            {
+                string query = @"
                 SELECT 
                     t.id AS test_id,
                     t.title AS test_title,
@@ -133,30 +133,30 @@ namespace backend.Repositories
                 GROUP BY t.id, t.title, sa.StudentId;
             ";
 
-            using (MySqlCommand cmd = new MySqlCommand(query, con))
-            {
-                cmd.Parameters.AddWithValue("@student_id", studentId);
-                cmd.Parameters.AddWithValue("@assessment_id", assessmentId);
-
-                await con.OpenAsync();
-
-                using (MySqlDataReader reader = (MySqlDataReader)await cmd.ExecuteReaderAsync())
+                using (MySqlCommand cmd = new MySqlCommand(query, con))
                 {
-                    if (await reader.ReadAsync())
+                    cmd.Parameters.AddWithValue("@student_id", studentId);
+                    cmd.Parameters.AddWithValue("@assessment_id", assessmentId);
+
+                    await con.OpenAsync();
+
+                    using (MySqlDataReader reader = (MySqlDataReader)await cmd.ExecuteReaderAsync())
                     {
-                        report.TestId = Convert.ToInt64(reader["test_id"]);
-                        report.TestTitle = reader["test_title"].ToString();
-                        report.StudentId = Convert.ToInt32(reader["StudentId"]);
-                        report.CorrectAnswers = Convert.ToInt32(reader["correct_answers"]);
-                        report.WrongAnswers = Convert.ToInt32(reader["wrong_answers"]);
-                        report.TotalQuestions = Convert.ToInt32(reader["total_questions"]);
-                        report.ScorePercentage = Convert.ToDecimal(reader["score_percentage"]);
+                        if (await reader.ReadAsync())
+                        {
+                            report.TestId = Convert.ToInt64(reader["test_id"]);
+                            report.TestTitle = reader["test_title"].ToString();
+                            report.StudentId = Convert.ToInt32(reader["StudentId"]);
+                            report.CorrectAnswers = Convert.ToInt32(reader["correct_answers"]);
+                            report.WrongAnswers = Convert.ToInt32(reader["wrong_answers"]);
+                            report.TotalQuestions = Convert.ToInt32(reader["total_questions"]);
+                            report.ScorePercentage = Convert.ToDecimal(reader["score_percentage"]);
+                        }
                     }
                 }
             }
-        }
 
-        return report;
+            return report;
         }
     }
 }

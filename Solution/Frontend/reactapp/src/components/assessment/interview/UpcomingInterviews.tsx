@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 
 type InterviewList = {
+  interviewId:number;
   interviewer: number;
   title: string;
 };
@@ -14,6 +16,7 @@ const UpcomingInterviews = () => {
 
   const user = storedUser ? JSON.parse(storedUser) : {};
 
+  const navigate = useNavigate();
   useEffect(() => {
     fetchUpcomingInterviews();
   }, []);
@@ -65,7 +68,9 @@ const UpcomingInterviews = () => {
 
           {interviews.map((interview, index) => (
 
-            <Card
+            <Card onClick={() =>
+              navigate(`/models/interview/show-details-student/${interview.interviewId}`)
+            }
               key={index}
               className="border-0 shadow-elegant overflow-hidden"
             >

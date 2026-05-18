@@ -1,13 +1,13 @@
-using backend.DTO.Responses;
-
+using backend.DTOs.Responses;
+using backend.DTOs.Requests;
 
 namespace backend.Repositories.Interfaces
 {
     public interface IScoreRepository
     {
-        Task<AverageScores> GetAverageScoreByIdAsync(int studentId);
-        Task<List<AverageScores>> GetAllStudentsAverageScoreAsync();
-        Task<AssessmentScores> GetAssessmentResultData(int studentId, int assessmentId);
+        Task<AverageScore> GetAverageScoreByIdAsync(int studentId);
+        Task<List<AverageScore>> GetAllStudentsAverageScoreAsync();
+        Task<AssessmentScore> GetAssessmentResultData(int studentId, int assessmentId);
 
     }
 }

@@ -1,4 +1,3 @@
-
 namespace backend.DTO.Responses;
 
 public class AssessmentStatus
