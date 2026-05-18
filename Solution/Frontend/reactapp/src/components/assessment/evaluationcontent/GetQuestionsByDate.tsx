@@ -51,7 +51,7 @@ const GetQuestionsByDate: React.FC = () => {
                                 Recent Questions
                             </h1>
 
-                
+
                         </div>
 
                     </div>
@@ -187,7 +187,7 @@ const GetQuestionsByDate: React.FC = () => {
 
             </div>
 
-            
+
 
         </div>
     );

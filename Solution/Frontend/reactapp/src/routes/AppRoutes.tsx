@@ -21,7 +21,7 @@ import UpcomingAssessment from "../components/assessment/assessmentOrchestrator/
 import AllAssessment from "@/components/assessment/assessmentOrchestrator/AllAssessment";
 //import Question from "@/components/assessment/assessmentOrchestrator/applyAssessment";
 import Result from "@/components/assessment/assessmentOrchestrator/Result";
-
+import SMEInterviewDashboard from "@/components/assessment/evaluationcontent/SMEInterviewDashboard";
 import ViewProjectInfo from "@/components/assessment/evaluationcontent/ViewProjectInfo";
 import ProjectByMentee from "@/components/assessment/evaluationcontent/ProjectByMentee";
 import QuestionsByDifficulty from "@/components/assessment/evaluationcontent/QuestionByDifficulty";
@@ -173,6 +173,10 @@ function AppRoutes() {
           <Route
             path="interview/upcoming-interviews"
             element={<UpcomingInterviews />}
+          />
+          <Route
+          path="interview/SMEInterviewDashboard"
+          element={<SMEInterviewDashboard />}
           />
           {/* Membership model */}
           <Route
