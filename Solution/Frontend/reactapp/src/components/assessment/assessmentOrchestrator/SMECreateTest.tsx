@@ -4,8 +4,8 @@ import SMEExpertiseForm from "./createTest/smeExpertiseForm";
 const SMECreateTest = () => {
   return (
     <div>
-      {/* <CreateTest /> */}
-      <SMEExpertiseForm/>
+        {/* <CreateTest />  */}
+      <SMEExpertiseForm /> 
     </div>
   );
 };

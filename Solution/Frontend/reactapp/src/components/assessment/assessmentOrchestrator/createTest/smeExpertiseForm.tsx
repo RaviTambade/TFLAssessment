@@ -57,6 +57,11 @@ const SMEExpertiseForm = () => {
       const smeId =
         localStorage.getItem("smeId");
 
+      if (!smeId) {
+        alert("SME ID not found. Please log in again.");
+        return;
+      }
+
       const payload = {
         user_roles_id: Number(smeId),
         runtime: form.runtime,
@@ -70,8 +75,7 @@ const SMEExpertiseForm = () => {
         payload
       );
 
-      const response = await fetch(
-        "http://localhost:5201/api/expertise",
+      const response = await fetch(`http://localhost:5201/api/Expertise/expertise`,
         {
           method: "POST",
 
@@ -84,12 +88,14 @@ const SMEExpertiseForm = () => {
         }
       );
 
-      const data = await response.json();
-
-      console.log(
-        "API Response:",
-        data
-      );
+      if (response.ok) {
+        const text = await response.text();
+        const data = text ? JSON.parse(text) : {};
+        console.log("API Response:", data);
+      } else {
+        const errorText = await response.text();
+        throw new Error(errorText || `Server responded with ${response.status}`);
+      }
 
       alert(
         "Expertise Saved Successfully"
