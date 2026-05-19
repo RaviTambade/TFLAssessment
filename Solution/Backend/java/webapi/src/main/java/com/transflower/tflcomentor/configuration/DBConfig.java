@@ -1,10 +1,10 @@
 package com.transflower.tflcomentor.configuration;
- 
+
 import java.sql.Connection;
 import java.sql.DriverManager;
- 
+
 import org.springframework.context.annotation.Configuration;
- 
+
 @Configuration
 public class DBConfig {
  
@@ -12,7 +12,7 @@ public class DBConfig {
     private static final String USERNAME = "root";
     private static final String PASSWORD = "password";
     private static final String DRIVER = "com.mysql.cj.jdbc.Driver";
- 
+
     public static Connection getConnection() {
         Connection connection = null;
         try {
@@ -24,4 +24,3 @@ public class DBConfig {
         return connection;
     }
 }
- 

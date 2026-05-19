@@ -18,9 +18,24 @@ import com.transflower.tflcomentor.ecm.dto.request.InterviewFeedback;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.transflower.tflcomentor.configuration.DBConfig;
+import com.transflower.tflcomentor.ecm.dto.request.ScheduleInterview;
+import com.transflower.tflcomentor.ecm.dto.response.InterviewDetails;
+import com.transflower.tflcomentor.ecm.dto.response.InterviewList;
+import com.transflower.tflcomentor.ecm.entity.enums.InterviewStatus;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
@@ -371,4 +386,34 @@ public List<InterviewList> getInterviewHistory(
         }
         return status;
     }
+
+    @GetMapping
+public List<InterviewDetails> getInterviews(){
+
+    List<InterviewDetails> interviews =new ArrayList<>();
+
+    try(Connection connection = getConnection()){
+        String query ="SELECT * FROM interviews";
+        PreparedStatement ps =connection.prepareStatement(query);
+        ResultSet rs =ps.executeQuery();
+
+        while(rs.next()){
+
+            InterviewDetails interview =new InterviewDetails();
+
+            interview.setInterviewId(rs.getInt("interview_id") );
+            interview.setTitle(rs.getString("title"));
+            interview.setScheduleDate(rs.getTimestamp("scheduled_at").toLocalDateTime());
+            interview.setMode(rs.getString("mode"));
+            interview.setInterviewer(rs.getString("interviewer"));
+            interview.setStatus(InterviewStatus.valueOf(rs.getString("status")) );
+            interviews.add(interview);
+        }
+    }catch(Exception e){
+        e.printStackTrace();
+    }
+
+    return interviews;
+}
+    
 }
