@@ -762,3 +762,141 @@ Add session tracking:
   - Number of EASY, MEDIUM, and HARD questions
   - Balance of question difficulty in the system
   - Question bank statistics for reporting/dashboard modules
+
+  ---
+# SQL QUERIES USED IN INTERVIEW CONTROLLER
+
+## INTERVIEWS ##
+
+- ### scheduleInterview ###
+  ` INSERT INTO interviews(scheduled_at, mode, status, title, created_at, interviewer, student_id)
+    VALUES (?, ?, 'SCHEDULED', ?, NOW(), ?, ?) `
+
+- ### getInterviewDetailsForStudent ###
+  ` SELECT
+        i.interview_id,
+        i.scheduled_at,
+        i.mode,
+        i.title,
+        i.status,
+        CONCAT(pi.first_name,' ',pi.last_name) AS interviewer
+    FROM interviews i
+    JOIN personal_informations pi
+        ON pi.user_id = i.interviewer
+    WHERE i.student_id = ?
+    AND i.interview_id = ? `
+
+- ### getInterviewDetailsForSME ###
+  ` SELECT
+        i.interview_id,
+        i.scheduled_at,
+        i.mode,
+        i.title,
+        i.status,
+        CONCAT(pi.first_name,' ',pi.last_name) AS interviewer
+    FROM interviews i
+    JOIN personal_informations pi
+        ON pi.user_id = i.student_id
+    WHERE i.interviewer = ?
+    AND i.interview_id = ? `
+
+- ### getUpcomingInterviewsForStudent ###
+  ` SELECT
+        interview_id,
+        interviewer,
+        title
+    FROM interviews
+    WHERE student_id = ?
+    AND scheduled_at >= NOW()
+    AND scheduled_at <= DATE_ADD(NOW(), INTERVAL 4 DAY)
+    AND status = 'SCHEDULED'
+    ORDER BY scheduled_at ASC `
+
+- ### getUpcomingInterviewsForSME ###
+  ` SELECT
+        interview_id,
+        interviewer,
+        title
+    FROM interviews
+    WHERE interviewer = ?
+    AND scheduled_at >= NOW()
+    AND scheduled_at <= DATE_ADD(NOW(), INTERVAL 4 DAY)
+    AND status = 'SCHEDULED'
+    ORDER BY scheduled_at ASC `
+
+- ### getInterviewHistoryForStudent ###
+  ` SELECT
+        interview_id,
+        title
+    FROM interviews
+    WHERE student_id = ?
+    AND (scheduled_at < NOW()
+    OR status = 'CANCELED')
+    ORDER BY scheduled_at DESC `
+
+- ### getInterviewHistoryForSME ###
+  ` SELECT
+        interview_id,
+        title
+    FROM interviews
+    WHERE interviewer = ?
+    AND (scheduled_at < NOW()
+    OR status = 'CANCELED')
+    ORDER BY scheduled_at DESC `
+
+- ### cancelInterview ###
+  ` UPDATE interviews
+    SET status='CANCELED'
+    WHERE interview_id=? `
+
+- ### acceptInterview ###
+  ` UPDATE interviews
+    SET outcome='ACCEPTED'
+    WHERE interview_id=? `
+
+- ### rejectInterview ###
+  ` UPDATE interviews
+    SET outcome='REJECTED'
+    WHERE interview_id=? `
+
+- ### getInterviews ###
+  ` SELECT * FROM interviews `
+
+---
+
+## SQL STATEMENTS WITH EXPLANATIONS ##
+
+### `InterviewController`
+
+- `INSERT INTO interviews(scheduled_at, mode, status, title, created_at, interviewer, student_id) VALUES (?, ?, 'SCHEDULED', ?, NOW(), ?, ?)`
+  - Schedules a new interview with default status `SCHEDULED`.
+
+- `SELECT i.interview_id, i.scheduled_at, i.mode, i.title, i.status, CONCAT(pi.first_name,' ',pi.last_name) AS interviewer FROM interviews i JOIN personal_informations pi ON pi.user_id = i.interviewer WHERE i.student_id = ? AND i.interview_id = ?`
+  - Retrieves interview details for a student.
+
+- `SELECT i.interview_id, i.scheduled_at, i.mode, i.title, i.status, CONCAT(pi.first_name,' ',pi.last_name) AS interviewer FROM interviews i JOIN personal_informations pi ON pi.user_id = i.student_id WHERE i.interviewer = ? AND i.interview_id = ?`
+  - Retrieves interview details for an SME/interviewer.
+
+- `SELECT interview_id, interviewer, title FROM interviews WHERE student_id = ? AND scheduled_at >= NOW() AND scheduled_at <= DATE_ADD(NOW(), INTERVAL 4 DAY) AND status = 'SCHEDULED' ORDER BY scheduled_at ASC`
+  - Retrieves upcoming scheduled interviews for students within the next 4 days.
+
+- `SELECT interview_id, interviewer, title FROM interviews WHERE interviewer = ? AND scheduled_at >= NOW() AND scheduled_at <= DATE_ADD(NOW(), INTERVAL 4 DAY) AND status = 'SCHEDULED' ORDER BY scheduled_at ASC`
+  - Retrieves upcoming interviews for SMEs/interviewers.
+
+- `SELECT interview_id, title FROM interviews WHERE student_id = ? AND (scheduled_at < NOW() OR status = 'CANCELED') ORDER BY scheduled_at DESC`
+  - Retrieves interview history for students.
+
+- `SELECT interview_id, title FROM interviews WHERE interviewer = ? AND (scheduled_at < NOW() OR status = 'CANCELED') ORDER BY scheduled_at DESC`
+  - Retrieves interview history for SMEs/interviewers.
+
+- `UPDATE interviews SET status='CANCELED' WHERE interview_id=?`
+  - Cancels a scheduled interview.
+
+- `UPDATE interviews SET outcome='ACCEPTED' WHERE interview_id=?`
+  - Marks interview outcome as accepted.
+
+- `UPDATE interviews SET outcome='REJECTED' WHERE interview_id=?`
+  - Marks interview outcome as rejected.
+
+- `SELECT * FROM interviews`
+  - Retrieves all interview records.
