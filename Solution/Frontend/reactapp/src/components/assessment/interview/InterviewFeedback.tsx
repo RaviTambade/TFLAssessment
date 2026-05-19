@@ -5,8 +5,9 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import {Select,SelectContent,SelectItem,SelectTrigger,SelectValue} from "@/components/ui/select";
 import { WEBAPI_JAVA_URL } from "@/lib/utils";
-import { CalendarDays, MessageSquare, Star, ThumbsUp, User, Zap } from "lucide-react";
+import { CalendarDays, IdCard, MessageSquare, Star, ThumbsUp, User, Zap } from "lucide-react";
 import { useState } from "react";
+import { useParams } from "react-router-dom";
 
 type InterviewFeedback = {
   interviewId: number;
@@ -20,22 +21,25 @@ type InterviewFeedback = {
   recommendation: string;
 };
 
-const INITIAL_STATE: InterviewFeedback = {
-  interviewId: 10,
-  smeId: 0,
-  startTime: "",
-  endTime: "",
-  communicationRating: 0,
-  problemSolvingRating: 0,
-  strengths: "",
-  feedbackComment: "",
-  recommendation: "",
-};
-
 const InterviewFeedbackForm = () => {
-  const [formData, setFormData] = useState<InterviewFeedback>(INITIAL_STATE);
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
+    const { id } = useParams();
+    const [formData, setFormData] = useState<InterviewFeedback>({
+        interviewId: Number(id),
+        smeId: 0,
+        startTime: "",
+        endTime: "",
+        communicationRating: 0,
+        problemSolvingRating: 0,
+        strengths: "",
+        feedbackComment: "",
+        recommendation: "",
+        });
+
+    
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -61,7 +65,17 @@ const InterviewFeedbackForm = () => {
 
       if (response.ok) {
         alert("Feedback submitted successfully!");
-        setFormData(INITIAL_STATE);
+        setFormData({
+        interviewId: Number(id),
+        smeId: 0,
+        startTime: "",
+        endTime: "",
+        communicationRating: 0,
+        problemSolvingRating: 0,
+        strengths: "",
+        feedbackComment: "",
+        recommendation: "",
+        });
       } else {
         alert("Failed to submit feedback. Please try again.");
       }
