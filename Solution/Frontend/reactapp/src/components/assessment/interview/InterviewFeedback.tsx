@@ -87,20 +87,14 @@ const InterviewFeedbackForm = () => {
           <h1 className="text-3xl font-bold text-orange-900 tracking-tight">
             Interview Feedback
           </h1>
-          <p className="mt-1 text-orange-500 text-sm">
-            Submit your evaluation for the interview session
-          </p>
         </div>
 
         <Card className="shadow-lg border border-orange-200 rounded-2xl overflow-hidden bg-white">
-          <CardHeader className="bg-orange-500 px-8 py-6">
+          <CardHeader className="bg-orange-700 px-8 py-6">
             <CardTitle className="text-xl font-bold text-white tracking-wide flex items-center gap-2">
               <MessageSquare className="h-5 w-5 text-white/80" />
               Evaluation Form
             </CardTitle>
-            <CardDescription className="text-orange-100 text-sm mt-1">
-              All fields are required unless noted otherwise.
-            </CardDescription>
           </CardHeader>
 
           <CardContent className="pt-6 px-8 pb-8">
@@ -209,7 +203,6 @@ const InterviewFeedbackForm = () => {
                   name="strengths"
                   value={formData.strengths}
                   onChange={handleChange}
-                  placeholder="e.g. Strong analytical thinking, clear communicator…"
                   required
                   className="border-orange-200 focus-visible:ring-orange-400 text-orange-900 bg-orange-50/50"
                 />
@@ -229,7 +222,6 @@ const InterviewFeedbackForm = () => {
                   name="feedbackComment"
                   value={formData.feedbackComment}
                   onChange={handleChange}
-                  placeholder="Provide detailed feedback about the candidate's performance…"
                   required
                   rows={4}
                   className="border-orange-200 focus-visible:ring-orange-400 text-orange-900 bg-orange-50/50 resize-none"
@@ -260,19 +252,19 @@ const InterviewFeedbackForm = () => {
                     <SelectItem value="SELECTED">
                       <span className="flex items-center gap-2">
                         <span className="inline-block h-2 w-2 rounded-full bg-green-500" />
-                        Selected
+                        SELECTED
                       </span>
                     </SelectItem>
                     <SelectItem value="REJECTED">
                       <span className="flex items-center gap-2">
                         <span className="inline-block h-2 w-2 rounded-full bg-red-500" />
-                        Rejected
+                        REJECTED
                       </span>
                     </SelectItem>
                     <SelectItem value="HOLD">
                       <span className="flex items-center gap-2">
                         <span className="inline-block h-2 w-2 rounded-full bg-amber-400" />
-                        Hold
+                        HOLD
                       </span>
                     </SelectItem>
                   </SelectContent>
@@ -286,7 +278,7 @@ const InterviewFeedbackForm = () => {
               <Button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full h-11 text-base font-semibold bg-orange-500 hover:bg-orange-600 text-white transition-colors rounded-xl shadow-sm disabled:opacity-60"
+                className="w-full h-11 text-base font-semibold bg-orange-700 hover:bg-orange-600 text-white transition-colors rounded-xl shadow-sm disabled:opacity-60"
               >
                 {isSubmitting ? "Submitting…" : "Submit Feedback"}
               </Button>
