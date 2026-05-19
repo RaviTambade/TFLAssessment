@@ -193,16 +193,11 @@ public class InterviewController{
 public List<InterviewList> getInterviewHistory(
         @PathVariable int userId,
         @PathVariable int roleId) {
-
     List<InterviewList> history = new ArrayList<>();
-
     try (Connection connection = getConnection()) {
-
         String query = "";
-
         // STUDENT
         if (roleId == 2) {
-
             query = """
                     SELECT
                         interview_id,
@@ -217,7 +212,6 @@ public List<InterviewList> getInterviewHistory(
 
         // SME
         else if (roleId == 4) {
-
             query = """
                     SELECT
                         interview_id,
@@ -355,8 +349,8 @@ public List<InterviewList> getInterviewHistory(
         return status;
     }
 
-    @GetMapping("/{roleId}")
-public List<InterviewDetails> getInterviews(@PathVariable int roleId){
+    @GetMapping("/{roleId}/{userId}")
+public List<InterviewDetails> getInterviews(@PathVariable int roleId, @PathVariable int userId){
 
     List<InterviewDetails> interviews =new ArrayList<>();
 
@@ -372,13 +366,15 @@ public List<InterviewDetails> getInterviews(@PathVariable int roleId){
                 "i.title " +
                 "FROM interviews i " +
                 "JOIN personal_informations ps " +
-                "ON ps.user_id = i.student_id";
+                "ON ps.user_id = i.student_id " +
+                "WHERE i.interviewer = ? " ;
         }
         else{
         System.out.println("Invalid roleId: " + roleId);
         return interviews; 
         }
         PreparedStatement ps =connection.prepareStatement(query);
+        ps.setInt(1, userId);
         ResultSet rs =ps.executeQuery();
 
         while(rs.next()){
@@ -397,6 +393,5 @@ public List<InterviewDetails> getInterviews(@PathVariable int roleId){
     }
 
     return interviews;
-}
-    
+ }
 }

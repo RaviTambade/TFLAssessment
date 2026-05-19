@@ -8,6 +8,8 @@ const InterviewMenu = () => {
 
   const navigate = useNavigate();
   const { ref, isVisible } = useScrollAnimation();
+  const storedUser = sessionStorage.getItem("current");
+  const user = storedUser ? JSON.parse(storedUser) : {};
 
   return (
     <section className="py-16 sm:py-20 bg-background">
@@ -24,43 +26,90 @@ const InterviewMenu = () => {
             <div className="bg-gradient-hero p-6 sm:p-8">
               <CardContent>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <Button variant="hero" size="lg" className="group" onClick={() =>
-                    navigate("/models/interview/ScheduleInterview")}>
-                    Schedule Interview
-                    <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                  </Button>
 
-                  <Button variant="hero" size="lg" className="group" onClick={() =>
-                    navigate("/models/interview/show-details-student")}>
-                    Show Details Student
-                    <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                  </Button>
+                  {/* STUDENT */}
+                  {user.role_id === 1 && (
+                    <Button
+                      variant="hero"
+                      size="lg"
+                      className="group"
+                      onClick={() =>
+                        navigate("/models/interview/show-details-student")
+                      }
+                    >
+                      Show Student Details
 
-                  <Button variant="hero" size="lg" className="group" onClick={() =>
-                    navigate("/models/interview/upcoming-interviews")}>
-                    upcoming interviews
-                    <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                  </Button>
+                      <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                    </Button>
+                  )}
 
-                  <Button variant="hero" size="lg" className="group" onClick={() =>
-                    navigate("/models/interview/InterviewHistory")}>
-                    Interview History
-                    <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                  </Button>
+                  {/* SME */}
+                  {user.role_id === 4 && (
+                    <>
+                      <Button
+                        variant="hero"
+                        size="lg"
+                        className="group"
+                        onClick={() =>
+                          navigate("/models/interview/ScheduleInterview")
+                        }
+                      >
+                        Schedule Interview
 
-                  <Button variant="hero" size="lg" className="group" onClick={() =>
+                        <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                      </Button>
+
+                  <Button variant="hero"
+                  size="lg" 
+                  className="group" 
+                  onClick={() =>
                     navigate("/models/interview/feedback")}>
                     Feedback
                     <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                   </Button>
                   
-                   <Button variant="hero" size="lg" className="group" onClick={() =>
-                    navigate("/models/interview/SMEInterviewDashboard")}>
-                    SME Interview Dashboard
-                    <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                  </Button>
+                  
 
+                      <Button
+                        variant="hero"
+                        size="lg"
+                        className="group"
+                        onClick={() =>
+                          navigate("/models/interview/upcoming-interviews")
+                        }
+                      >
+                        Upcoming Interviews
 
+                        <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                      </Button>
+
+                      <Button
+                        variant="hero"
+                        size="lg"
+                        className="group"
+                        onClick={() =>
+                          navigate("/models/interview/InterviewHistory")
+                        }
+                      >
+                        Interview History
+
+                        <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                      </Button>
+
+                      <Button
+                        variant="hero"
+                        size="lg"
+                        className="group"
+                        onClick={() =>
+                          navigate("/models/interview/SMEInterviewDashboard")
+                        }
+                      >
+                        SME Interview Dashboard
+
+                        <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                      </Button>
+                    </>
+                  )}
 
                 </div>
               </CardContent>
