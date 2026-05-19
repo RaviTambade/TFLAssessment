@@ -322,7 +322,13 @@ http://localhost:PORT/api
 ### 3.1 Get All Roles
 - **Endpoint**: `GET /api/roles/getAllRoles`
 - **Description**: Retrieve all available roles
-- **Input Format**: No body required
+
+### Request
+
+```http
+GET /api/roles/getAllRoles
+```
+
 - **Output Format**:
   ```json
   {
@@ -331,24 +337,64 @@ http://localhost:PORT/api
     "status": 200,
     "data": [
       {
-        "role_id": "number",
-        "role_name": "string",
-        "description": "string"
+        "role_id": 1,
+        "role_name": "Admin",
+        "description": "Orchestrate over Roles and Membership Management"
+      },
+      {
+        "role_id": 2,
+        "role_name": "Student",
+        "description": "Takes assessments and views results"
+      },
+      {
+        "role_id": 3,
+        "role_name": "Mentor",
+        "description": "Guides students and reviews performance"
+      },
+      {
+        "role_id": 4,
+        "role_name": "SME",
+        "description": "Creates and reviews questions"
+      },
+      {
+        "role_id": 5,
+        "role_name": "Employer",
+        "description": "Views candidates and assessments"
+      },
+      {
+        "role_id": 6,
+        "role_name": "Alumni",
+        "description": "Former students associated with the system"
+      },
+      {
+        "role_id": 7,
+        "role_name": "UnAssigned",
+        "description": "Users not assigned with any role"
       }
     ]
   }
   ```
 
+---
+
 ### 3.2 Create New Role
 - **Endpoint**: `POST /api/roles/insert`
 - **Description**: Create a new role
+
+### Request
+
+```http
+POST /api/roles/insert
+```
+
 - **Input Format**:
   ```json
   {
-    "roleName": "string",
-    "description": "string"
+    "roleName": "HR",
+    "description": "Handles employee management and recruitment"
   }
   ```
+
 - **Output Format**:
   ```json
   {
@@ -356,25 +402,33 @@ http://localhost:PORT/api
     "message": "role added successfully",
     "status": 200,
     "data": {
-      "role_id": "number",
-      "role_name": "string",
-      "description": "string"
+      "role_id": 8,
+      "role_name": "HR",
+      "description": "Handles employee management and recruitment"
     }
   }
   ```
 
+---
+
 ### 3.3 Update Role
 - **Endpoint**: `PUT /api/roles/update/:id`
 - **Description**: Update an existing role
-- **Parameters**:
-  - `id` (URL parameter): Role ID (number)
+
+### Request
+
+```http
+PUT /api/roles/update/5
+```
+
 - **Input Format**:
   ```json
   {
-    "roleName": "string",
-    "description": "string"
+    "roleName": "Employer",
+    "description": "Views candidate profiles and hiring assessments"
   }
   ```
+
 - **Output Format**:
   ```json
   {
@@ -385,12 +439,18 @@ http://localhost:PORT/api
   }
   ```
 
+---
+
 ### 3.4 Get User Roles By User ID
 - **Endpoint**: `GET /api/roles/getUserRolesByUserId/:userId`
 - **Description**: Retrieve all roles assigned to a user
-- **Parameters**:
-  - `userId` (URL parameter): User ID (number)
-- **Input Format**: No body required
+
+### Request
+
+```http
+GET /api/roles/getUserRolesByUserId/3
+```
+
 - **Output Format**:
   ```json
   {
@@ -399,20 +459,37 @@ http://localhost:PORT/api
     "status": 200,
     "data": [
       {
-        "role_id": "number",
-        "role_name": "string",
-        "description": "string"
+        "role_id": 1,
+        "role_name": "Admin"
+      },
+      {
+        "role_id": 2,
+        "role_name": "Student"
+      },
+      {
+        "role_id": 3,
+        "role_name": "Mentor"
+      },
+      {
+        "role_id": 4,
+        "role_name": "SME"
       }
     ]
   }
   ```
 
+---
+
 ### 3.5 Get Users By Role ID
 - **Endpoint**: `GET /api/roles/getUsersByRoleId/:roleId`
 - **Description**: Retrieve all users with a specific role
-- **Parameters**:
-  - `roleId` (URL parameter): Role ID (number)
-- **Input Format**: No body required
+
+### Request
+
+```http
+GET /api/roles/getUsersByRoleId/2
+```
+
 - **Output Format**:
   ```json
   {
@@ -421,23 +498,39 @@ http://localhost:PORT/api
     "status": 200,
     "data": [
       {
-        "user_id": "number",
-        "first_name": "string",
-        "last_name": "string",
-        "email": "string",
-        "role_name": "string"
+        "user_id": 4,
+        "full_name": "Tejas Pawale",
+        "email": "pawaletejas98@gmail.com",
+        "role_name": "Student"
+      },
+      {
+        "user_id": 7,
+        "full_name": "Samruddhi Rasal",
+        "email": "samruddhirasal03@gmail.com",
+        "role_name": "Student"
+      },
+      {
+        "user_id": 8,
+        "full_name": "Anish Adak",
+        "email": "anishadak4210@gmail.com",
+        "role_name": "Student"
       }
     ]
   }
   ```
 
+---
+
 ### 3.6 Assign Role to User
 - **Endpoint**: `POST /api/roles/assignRole/:userId/role/:roleId`
 - **Description**: Assign a role to a user
-- **Parameters**:
-  - `userId` (URL parameter): User ID (number)
-  - `roleId` (URL parameter): Role ID (number)
-- **Input Format**: No body required (parameters in URL)
+
+### Request
+
+```http
+POST /api/roles/assignRole/6/role/5
+```
+
 - **Output Format**:
   ```json
   {
@@ -448,13 +541,24 @@ http://localhost:PORT/api
   }
   ```
 
+### Database Effect
+
+```text
+User ID 6 assigned with role Employer (Role ID 5)
+```
+
+---
+
 ### 3.7 Unassign Role from User
 - **Endpoint**: `PUT /api/roles/unAssignRole/:userId/role/:roleId`
 - **Description**: Remove a role from a user
-- **Parameters**:
-  - `userId` (URL parameter): User ID (number)
-  - `roleId` (URL parameter): Role ID (number)
-- **Input Format**: No body required (parameters in URL)
+
+### Request
+
+```http
+PUT /api/roles/unAssignRole/6/role/5
+```
+
 - **Output Format**:
   ```json
   {
@@ -464,6 +568,12 @@ http://localhost:PORT/api
     "data": {}
   }
   ```
+
+### Database Effect
+
+```text
+Role ID 5 marked as INACTIVE for User ID 6
+```
 
 ---
 
