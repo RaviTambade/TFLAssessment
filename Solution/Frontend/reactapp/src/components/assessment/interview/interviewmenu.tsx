@@ -28,7 +28,8 @@ const InterviewMenu = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
                   {/* STUDENT */}
-                  {user.role_id === 1 && (
+                  {user.role_id === 2 && (
+                    <>
                     <Button
                       variant="hero"
                       size="lg"
@@ -41,6 +42,36 @@ const InterviewMenu = () => {
 
                       <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                     </Button>
+
+
+                    <Button
+                        variant="hero"
+                        size="lg"
+                        className="group"
+                        onClick={() =>
+                          navigate("/models/interview/InterviewHistory")
+                        }
+                      >
+                        Interview History
+
+                        <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                      </Button>
+
+                        <Button
+                        variant="hero"
+                        size="lg"
+                        className="group"
+                        onClick={() =>
+                          navigate("/models/interview/upcoming-interviews")
+                        }
+                      >
+                        Upcoming Interviews
+
+                        <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                      </Button>
+                      </>
+
+
                   )}
 
                   {/* SME */}
@@ -105,12 +136,10 @@ const InterviewMenu = () => {
                         }
                       >
                         SME Interview Dashboard
-
                         <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                       </Button>
                     </>
                   )}
-
                 </div>
               </CardContent>
             </div>

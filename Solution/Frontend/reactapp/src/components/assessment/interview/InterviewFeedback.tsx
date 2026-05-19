@@ -84,7 +84,7 @@ const InterviewFeedbackForm = () => {
 
         {/* Header */}
         <div className="mb-6 text-center">
-          <h1 className="text-3xl font-bold text-orange-900 tracking-tight">
+          <h1 className="text-3xl font-bold bg-gradient-primary bg-clip-text text-transparent">
             Interview Feedback
           </h1>
         </div>
