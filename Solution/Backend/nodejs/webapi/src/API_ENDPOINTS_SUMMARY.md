@@ -111,11 +111,10 @@ http://localhost:PORT/api
     "data": [
       {
         "user_id": "number",
-        "first_name": "string",
-        "last_name": "string",
-        "email": "string",
-        "contact": "string",
-        "status": "string"
+        "full_name": "string",
+        "created_at": "DateTime",
+        "status": "string",
+        "role_name": " String"
       }
     ]
   }
@@ -134,16 +133,20 @@ http://localhost:PORT/api
     "message": "User details retrieved successfully",
     "status": 200,
     "data": {
-      "user_id": "number",
-      "first_name": "string",
-      "last_name": "string",
-      "email": "string",
-      "contact": "string",
-      "status": "string",
-      "personal_info": {},
-      "academic_info": {},
-      "professional_info": {}
-    }
+            "user_id": 16,
+            "contact": "8433752395",
+            "status": "ACTIVE",
+            "first_name": "Tejas",
+            "last_name": "Naukudkar",
+            "gender": "MALE",
+            "date_of_birth": "2004-12-09T18:30:00.000Z",
+            "email": "tejas@gmail.com",
+            "enrollment_year": 2022,
+            "passing_year": 2026,
+            "percentage": "85.50",
+            "college_name": "MIT ADT University",
+            "skills": "JavaScript, React, Node.js"
+        }
   }
   ```
 
@@ -160,13 +163,14 @@ http://localhost:PORT/api
     "message": "User Personal information retrieve successfully",
     "status": 200,
     "data": {
-      "user_id": "number",
-      "first_name": "string",
-      "last_name": "string",
-      "email": "string",
-      "contact": "string",
-      "dob": "string (YYYY-MM-DD)",
-      "address": "string"
+        "first_name": "Tejas",
+        "last_name": "Naukudkar",
+        "gender": "MALE",
+        "date_of_birth": "2004-12-09T18:30:00.000Z",
+        "email": "tejas@gmail.com",
+        "address": "Mumbai",
+        "pincode": "410218",
+        "contact": "8433752395"
     }
   }
   ```
@@ -184,13 +188,13 @@ http://localhost:PORT/api
     "message": "User Academic information retrieve successfully",
     "status": 200,
     "data": {
-      "user_id": "number",
-      "education_level": "string",
-      "institution": "string",
-      "specialization": "string",
-      "gpa": "number",
-      "graduation_year": "number"
-    }
+        "enrollment_year": 2022,
+        "passing_year": 2026,
+        "percentage": "85.50",
+        "college_name": "MIT ADT University",
+        "stream_name": "Engineering",
+        "specialization": "Cloud Computing"
+    }}
   }
   ```
 
@@ -207,12 +211,15 @@ http://localhost:PORT/api
     "message": "User Professional information retrieve successfully",
     "status": 200,
     "data": {
-      "user_id": "number",
-      "job_title": "string",
-      "company": "string",
-      "experience_years": "number",
-      "skills": "string",
-      "linkedin_url": "string"
+        "company_name": "Transflower Learning pvt ltd",
+        "job_title": "Developer",
+        "employment_type": "INTERNSHIP",
+        "start_date": "2026-01-31T18:30:00.000Z",
+        "end_date": null,
+        "is_current_job": 1,
+        "experience_years": 0,
+        "location": "Walvekar Nagar",
+        "skills": "JavaScript, React, Node.js"
     }
   }
   ```
@@ -228,9 +235,7 @@ http://localhost:PORT/api
     "first_name": "string",
     "last_name": "string",
     "email": "string",
-    "contact": "string",
-    "dob": "string (YYYY-MM-DD)",
-    "address": "string"
+    
   }
   ```
 - **Output Format**:
@@ -252,10 +257,8 @@ http://localhost:PORT/api
   ```json
   {
     "job_title": "string",
-    "company": "string",
-    "experience_years": "number",
-    "skills": "string",
-    "linkedin_url": "string"
+    "company_name": "string",
+    "experience_years": 3
   }
   ```
 - **Output Format**:
