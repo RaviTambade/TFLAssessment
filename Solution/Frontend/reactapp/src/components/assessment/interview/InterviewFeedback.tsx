@@ -90,7 +90,7 @@ const InterviewFeedbackForm = () => {
         </div>
 
         <Card className="shadow-lg border border-orange-200 rounded-2xl overflow-hidden bg-white">
-          <CardHeader className="bg-orange-700 px-8 py-6">
+          <CardHeader className="bg-primary/100 px-8 py-6">
             <CardTitle className="text-xl font-bold text-white tracking-wide flex items-center gap-2">
               <MessageSquare className="h-5 w-5 text-white/80" />
               Evaluation Form
@@ -277,9 +277,7 @@ const InterviewFeedbackForm = () => {
               {/* Submit */}
               <Button
                 type="submit"
-                disabled={isSubmitting}
-                className="w-full h-11 text-base font-semibold bg-orange-700 hover:bg-orange-600 text-white transition-colors rounded-xl shadow-sm disabled:opacity-60"
-              >
+                disabled={isSubmitting}>
                 {isSubmitting ? "Submitting…" : "Submit Feedback"}
               </Button>
             </form>
