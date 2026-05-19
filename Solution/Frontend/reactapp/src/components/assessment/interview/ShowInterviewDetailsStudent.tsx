@@ -2,7 +2,7 @@ import { useEffect ,useState} from "react";
 import { Button } from "@/components/ui/button";
 import {Card,CardContent,CardHeader,CardTitle,} from "@/components/ui/card";
 import { WEBAPI_JAVA_URL } from "@/lib/utils";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const ShowInterviewDetailsStudent = () => {
 
@@ -18,6 +18,7 @@ const ShowInterviewDetailsStudent = () => {
     const storedUser = sessionStorage.getItem("current");
     const user = storedUser ? JSON.parse(storedUser) : null;
     const {id}=useParams();
+    const navigate=useNavigate();
 
    useEffect(() => {
     console.log(user);
@@ -196,6 +197,15 @@ const ShowInterviewDetailsStudent = () => {
             className="border-red-700 text-red-800 hover:bg-red-100 font-semibold"
         >
             Cancel Interview
+        </Button>
+
+        <Button onClick={()=>{
+          navigate(`/models/interview/feedback/${id}`)
+        }}
+            variant="outline"
+            className="border-red-700 text-red-800 hover:bg-red-100 font-semibold"
+        >
+           Feedback
         </Button>
         </>
     )}

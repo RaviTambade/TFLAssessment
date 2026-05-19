@@ -166,26 +166,11 @@ function AppRoutes() {
          <Route path="interview/interviewhistory" element={<InterviewHistory/>}/>
 
           <Route path="interview/interview-menu" element={<InterviewMenu />} />
-          <Route
-            path="interview/scheduleinterview"
-            element={<ScheduleInterview />}
-          />
-          <Route
-          path="interview/show-details-student/:id"
-          element={<ShowInterviewDetailsStudent />}
-          />
-          <Route
-            path="interview/upcoming-interviews"
-            element={<UpcomingInterviews />}
-          />
-          <Route
-          path="interview/SMEInterviewDashboard"
-          element={<SMEInterviewDashboard />}
-          />
-           <Route
-          path="interview/feedback"
-          element={<InterviewFeedback />}
-          />
+          <Route path="interview/scheduleinterview" element={<ScheduleInterview />} />
+          <Route path="interview/show-details-student/:id" element={<ShowInterviewDetailsStudent />} />
+          <Route path="interview/upcoming-interviews" element={<UpcomingInterviews />} />
+          <Route path="interview/SMEInterviewDashboard" element={<SMEInterviewDashboard />} />
+          <Route path="interview/feedback/:id" element={<InterviewFeedback />} />
           {/* Membership model */}
           <Route
             path="membership/ChangePassword"

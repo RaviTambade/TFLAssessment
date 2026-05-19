@@ -5,8 +5,9 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import {Select,SelectContent,SelectItem,SelectTrigger,SelectValue} from "@/components/ui/select";
 import { WEBAPI_JAVA_URL } from "@/lib/utils";
-import { CalendarDays, MessageSquare, Star, ThumbsUp, User, Zap } from "lucide-react";
+import { CalendarDays, IdCard, MessageSquare, Star, ThumbsUp, User, Zap } from "lucide-react";
 import { useState } from "react";
+import { useParams } from "react-router-dom";
 
 type InterviewFeedback = {
   interviewId: number;
@@ -20,22 +21,25 @@ type InterviewFeedback = {
   recommendation: string;
 };
 
-const INITIAL_STATE: InterviewFeedback = {
-  interviewId: 10,
-  smeId: 0,
-  startTime: "",
-  endTime: "",
-  communicationRating: 0,
-  problemSolvingRating: 0,
-  strengths: "",
-  feedbackComment: "",
-  recommendation: "",
-};
-
 const InterviewFeedbackForm = () => {
-  const [formData, setFormData] = useState<InterviewFeedback>(INITIAL_STATE);
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
+    const { id } = useParams();
+    const [formData, setFormData] = useState<InterviewFeedback>({
+        interviewId: Number(id),
+        smeId: 0,
+        startTime: "",
+        endTime: "",
+        communicationRating: 0,
+        problemSolvingRating: 0,
+        strengths: "",
+        feedbackComment: "",
+        recommendation: "",
+        });
+
+    
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -61,7 +65,17 @@ const InterviewFeedbackForm = () => {
 
       if (response.ok) {
         alert("Feedback submitted successfully!");
-        setFormData(INITIAL_STATE);
+        setFormData({
+        interviewId: Number(id),
+        smeId: 0,
+        startTime: "",
+        endTime: "",
+        communicationRating: 0,
+        problemSolvingRating: 0,
+        strengths: "",
+        feedbackComment: "",
+        recommendation: "",
+        });
       } else {
         alert("Failed to submit feedback. Please try again.");
       }
@@ -87,20 +101,14 @@ const InterviewFeedbackForm = () => {
           <h1 className="text-3xl font-bold text-orange-900 tracking-tight">
             Interview Feedback
           </h1>
-          <p className="mt-1 text-orange-500 text-sm">
-            Submit your evaluation for the interview session
-          </p>
         </div>
 
         <Card className="shadow-lg border border-orange-200 rounded-2xl overflow-hidden bg-white">
-          <CardHeader className="bg-orange-500 px-8 py-6">
+          <CardHeader className="bg-primary/100 px-8 py-6">
             <CardTitle className="text-xl font-bold text-white tracking-wide flex items-center gap-2">
               <MessageSquare className="h-5 w-5 text-white/80" />
               Evaluation Form
             </CardTitle>
-            <CardDescription className="text-orange-100 text-sm mt-1">
-              All fields are required unless noted otherwise.
-            </CardDescription>
           </CardHeader>
 
           <CardContent className="pt-6 px-8 pb-8">
@@ -209,7 +217,6 @@ const InterviewFeedbackForm = () => {
                   name="strengths"
                   value={formData.strengths}
                   onChange={handleChange}
-                  placeholder="e.g. Strong analytical thinking, clear communicator…"
                   required
                   className="border-orange-200 focus-visible:ring-orange-400 text-orange-900 bg-orange-50/50"
                 />
@@ -229,7 +236,6 @@ const InterviewFeedbackForm = () => {
                   name="feedbackComment"
                   value={formData.feedbackComment}
                   onChange={handleChange}
-                  placeholder="Provide detailed feedback about the candidate's performance…"
                   required
                   rows={4}
                   className="border-orange-200 focus-visible:ring-orange-400 text-orange-900 bg-orange-50/50 resize-none"
@@ -260,19 +266,19 @@ const InterviewFeedbackForm = () => {
                     <SelectItem value="SELECTED">
                       <span className="flex items-center gap-2">
                         <span className="inline-block h-2 w-2 rounded-full bg-green-500" />
-                        Selected
+                        SELECTED
                       </span>
                     </SelectItem>
                     <SelectItem value="REJECTED">
                       <span className="flex items-center gap-2">
                         <span className="inline-block h-2 w-2 rounded-full bg-red-500" />
-                        Rejected
+                        REJECTED
                       </span>
                     </SelectItem>
                     <SelectItem value="HOLD">
                       <span className="flex items-center gap-2">
                         <span className="inline-block h-2 w-2 rounded-full bg-amber-400" />
-                        Hold
+                        HOLD
                       </span>
                     </SelectItem>
                   </SelectContent>
@@ -285,9 +291,7 @@ const InterviewFeedbackForm = () => {
               {/* Submit */}
               <Button
                 type="submit"
-                disabled={isSubmitting}
-                className="w-full h-11 text-base font-semibold bg-orange-500 hover:bg-orange-600 text-white transition-colors rounded-xl shadow-sm disabled:opacity-60"
-              >
+                disabled={isSubmitting}>
                 {isSubmitting ? "Submitting…" : "Submit Feedback"}
               </Button>
             </form>
