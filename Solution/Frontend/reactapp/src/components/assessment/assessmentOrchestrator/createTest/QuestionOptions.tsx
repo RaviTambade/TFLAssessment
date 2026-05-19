@@ -74,11 +74,12 @@ const QuestionOptions = () => {
   const { testId } = (location.state as QuestionOptionsState | null) ?? {};
   const [questionType, setQuestionType] = useState("");
   const [status, setStatus] = useState("");
+  const [skillLevel, setSkillLevel] = useState("");
   const [showQuestions, setShowQuestions] = useState(false);
   const [selectedQuestions, setSelectedQuestions] = useState<number[]>([]);
   const [showInsertQuestion, setShowInsertQuestion] = useState(false);
 
-  const showActions = questionType && status;
+  const showActions = questionType && status && skillLevel;
   const filteredQuestions = dummyQuestions.filter(
     (question) => question.type === questionType && question.status === status
   );
@@ -91,6 +92,12 @@ const QuestionOptions = () => {
 
   const handleStatusChange = (value: string) => {
     setStatus(value);
+    setShowQuestions(false);
+    setSelectedQuestions([]);
+  };
+
+  const handleSkillLevelChange = (value: string) => {
+    setSkillLevel(value);
     setShowQuestions(false);
     setSelectedQuestions([]);
   };
@@ -126,7 +133,7 @@ const QuestionOptions = () => {
         </CardHeader>
 
         <CardContent className="p-8 space-y-8">
-          <div className="grid gap-6 md:grid-cols-2">
+          <div className="grid gap-6 md:grid-cols-3">
             <div className="space-y-2">
               <Label className="text-sm font-bold text-slate-700 uppercase tracking-wider">
                 Question Type
@@ -143,6 +150,25 @@ const QuestionOptions = () => {
                   <SelectItem value="ProblemStatements">
                     Problem Statements
                   </SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div className="space-y-2">
+              <Label className="text-sm font-bold text-slate-700 uppercase tracking-wider">
+                Skill Level
+              </Label>
+              <Select
+                value={skillLevel}
+                onValueChange={handleSkillLevelChange}
+              >
+                <SelectTrigger className="h-12 rounded-xl border-slate-200">
+                  <SelectValue placeholder="Select skill level" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="beginner">Beginner</SelectItem>
+                  <SelectItem value="intermediate">Intermediate</SelectItem>
+                  <SelectItem value="advance">Advance</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -195,7 +221,8 @@ const QuestionOptions = () => {
                   Dummy Questions
                 </h2>
                 <p className="text-sm text-slate-600">
-                  {questionType} questions with {status} status
+                  {questionType} questions with {skillLevel} skill level and{" "}
+                  {status} status
                 </p>
               </div>
 

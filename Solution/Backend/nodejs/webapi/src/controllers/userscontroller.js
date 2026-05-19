@@ -19,7 +19,7 @@ class UsersController {
   updateUserPersonalDetails(req, res) {
     const responseGenerator = new ResponseGenerator();
     const result = this.service.updateUserPersonalDetails(req.params.userId, req.body, (err, result) => {
-      var successMessage = "Failed to Update user Personal information";
+      var successMessage = "Failed to Update user Personal Information";
       var errorMessage = "User Personal information Update successfully";
       responseGenerator.generateResponse(res, err, result, successMessage, errorMessage);
     });
@@ -28,8 +28,8 @@ class UsersController {
   updateUserProfessionalDetails(req, res) {
     const responseGenerator = new ResponseGenerator();
     const result = this.service.updateUserProfessionalDetails(req.params.userId, req.body, (err, result) => {
-      var successMessage = "Failed to Update user Professinal information";
-      var errorMessage = "User Personal Professinal Update successfully";
+      var successMessage = "Failed to Update user Professional Information";
+      var errorMessage = "User Professional information Update successfully";
       responseGenerator.generateResponse(res, err, result, successMessage, errorMessage);
     });
   }
@@ -37,7 +37,7 @@ class UsersController {
   updateUserAcademicDetails(req, res) {
     const responseGenerator = new ResponseGenerator();
     const result = this.service.updateUserAcademicDetails(req.params.userId, req.body, (err, result) => {
-      var successMessage = "Failed to Update user Academic information";
+      var successMessage = "Failed to Update user Academic Information";
       var errorMessage = "User Academic information Update successfully";
       responseGenerator.generateResponse(res, err, result, successMessage, errorMessage);
     });

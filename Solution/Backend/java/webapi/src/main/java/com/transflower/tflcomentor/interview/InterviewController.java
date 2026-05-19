@@ -1,4 +1,20 @@
 package com.transflower.tflcomentor.interview;
+import com.transflower.tflcomentor.configuration.DBConfig;
+import com.transflower.tflcomentor.ecm.dto.response.InterviewDetails;
+import com.transflower.tflcomentor.ecm.dto.response.InterviewList;
+import com.transflower.tflcomentor.ecm.entity.enums.InterviewStatus;
+
+import java.sql.Timestamp;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PathVariable;
+import com.transflower.tflcomentor.ecm.dto.request.ScheduleInterview;
+import com.transflower.tflcomentor.ecm.dto.request.InterviewFeedback;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -308,7 +324,67 @@ public List<InterviewList> getInterviewHistory(
             ps.executeUpdate();
         }catch(Exception e){
             e.printStackTrace();
+        }   
+    }
+
+    @PostMapping("/feedback")
+    public boolean addFeedback(@RequestBody InterviewFeedback feedback){
+        boolean status = false;
+        try(Connection connection=getConnection()){
+         String query = """
+            INSERT INTO interview_feedback (
+                interview_id,
+                sme_id,
+                start_time,
+                end_time,
+                communication_rating,
+                problem_solving_rating,
+                strengths,
+                feedback_comment,
+                recommendation
+            )
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+        """;
+   
+               PreparedStatement statement =
+                connection.prepareStatement(query);
+
+        statement.setLong(1, feedback.getInterviewId());
+        statement.setLong(2, feedback.getSmeId());
+
+        statement.setTimestamp(
+                3,
+                Timestamp.valueOf(feedback.getStartTime())
+        );
+
+        statement.setTimestamp(
+                4,
+                Timestamp.valueOf(feedback.getEndTime())
+        );
+
+        statement.setInt(5,
+                feedback.getCommunicationRating());
+
+        statement.setInt(6,
+                feedback.getProblemSolvingRating());
+
+        statement.setString(7,
+                feedback.getStrengths());
+
+        statement.setString(8,
+                feedback.getFeedbackComment());
+
+        statement.setString(9,
+                feedback.getRecommendation());
+
+        int rows = statement.executeUpdate();
+
+        status = rows > 0;
+
+        } catch(Exception e){
+            e.printStackTrace();
         }
+        return status;
     }
 
     @GetMapping("/{roleId}")
