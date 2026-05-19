@@ -325,7 +325,13 @@ http://localhost:PORT/api
 ### 3.1 Get All Roles
 - **Endpoint**: `GET /api/roles/getAllRoles`
 - **Description**: Retrieve all available roles
-- **Input Format**: No body required
+
+### Request
+
+```http
+GET /api/roles/getAllRoles
+```
+
 - **Output Format**:
   ```json
   {
@@ -334,24 +340,64 @@ http://localhost:PORT/api
     "status": 200,
     "data": [
       {
-        "role_id": "number",
-        "role_name": "string",
-        "description": "string"
+        "role_id": 1,
+        "role_name": "Admin",
+        "description": "Orchestrate over Roles and Membership Management"
+      },
+      {
+        "role_id": 2,
+        "role_name": "Student",
+        "description": "Takes assessments and views results"
+      },
+      {
+        "role_id": 3,
+        "role_name": "Mentor",
+        "description": "Guides students and reviews performance"
+      },
+      {
+        "role_id": 4,
+        "role_name": "SME",
+        "description": "Creates and reviews questions"
+      },
+      {
+        "role_id": 5,
+        "role_name": "Employer",
+        "description": "Views candidates and assessments"
+      },
+      {
+        "role_id": 6,
+        "role_name": "Alumni",
+        "description": "Former students associated with the system"
+      },
+      {
+        "role_id": 7,
+        "role_name": "UnAssigned",
+        "description": "Users not assigned with any role"
       }
     ]
   }
   ```
 
+---
+
 ### 3.2 Create New Role
 - **Endpoint**: `POST /api/roles/insert`
 - **Description**: Create a new role
+
+### Request
+
+```http
+POST /api/roles/insert
+```
+
 - **Input Format**:
   ```json
   {
-    "roleName": "string",
-    "description": "string"
+    "roleName": "HR",
+    "description": "Handles employee management and recruitment"
   }
   ```
+
 - **Output Format**:
   ```json
   {
@@ -359,25 +405,33 @@ http://localhost:PORT/api
     "message": "role added successfully",
     "status": 200,
     "data": {
-      "role_id": "number",
-      "role_name": "string",
-      "description": "string"
+      "role_id": 8,
+      "role_name": "HR",
+      "description": "Handles employee management and recruitment"
     }
   }
   ```
 
+---
+
 ### 3.3 Update Role
 - **Endpoint**: `PUT /api/roles/update/:id`
 - **Description**: Update an existing role
-- **Parameters**:
-  - `id` (URL parameter): Role ID (number)
+
+### Request
+
+```http
+PUT /api/roles/update/5
+```
+
 - **Input Format**:
   ```json
   {
-    "roleName": "string",
-    "description": "string"
+    "roleName": "Employer",
+    "description": "Views candidate profiles and hiring assessments"
   }
   ```
+
 - **Output Format**:
   ```json
   {
@@ -388,12 +442,18 @@ http://localhost:PORT/api
   }
   ```
 
+---
+
 ### 3.4 Get User Roles By User ID
 - **Endpoint**: `GET /api/roles/getUserRolesByUserId/:userId`
 - **Description**: Retrieve all roles assigned to a user
-- **Parameters**:
-  - `userId` (URL parameter): User ID (number)
-- **Input Format**: No body required
+
+### Request
+
+```http
+GET /api/roles/getUserRolesByUserId/3
+```
+
 - **Output Format**:
   ```json
   {
@@ -402,20 +462,37 @@ http://localhost:PORT/api
     "status": 200,
     "data": [
       {
-        "role_id": "number",
-        "role_name": "string",
-        "description": "string"
+        "role_id": 1,
+        "role_name": "Admin"
+      },
+      {
+        "role_id": 2,
+        "role_name": "Student"
+      },
+      {
+        "role_id": 3,
+        "role_name": "Mentor"
+      },
+      {
+        "role_id": 4,
+        "role_name": "SME"
       }
     ]
   }
   ```
 
+---
+
 ### 3.5 Get Users By Role ID
 - **Endpoint**: `GET /api/roles/getUsersByRoleId/:roleId`
 - **Description**: Retrieve all users with a specific role
-- **Parameters**:
-  - `roleId` (URL parameter): Role ID (number)
-- **Input Format**: No body required
+
+### Request
+
+```http
+GET /api/roles/getUsersByRoleId/2
+```
+
 - **Output Format**:
   ```json
   {
@@ -424,23 +501,39 @@ http://localhost:PORT/api
     "status": 200,
     "data": [
       {
-        "user_id": "number",
-        "first_name": "string",
-        "last_name": "string",
-        "email": "string",
-        "role_name": "string"
+        "user_id": 4,
+        "full_name": "Tejas Pawale",
+        "email": "pawaletejas98@gmail.com",
+        "role_name": "Student"
+      },
+      {
+        "user_id": 7,
+        "full_name": "Samruddhi Rasal",
+        "email": "samruddhirasal03@gmail.com",
+        "role_name": "Student"
+      },
+      {
+        "user_id": 8,
+        "full_name": "Anish Adak",
+        "email": "anishadak4210@gmail.com",
+        "role_name": "Student"
       }
     ]
   }
   ```
 
+---
+
 ### 3.6 Assign Role to User
 - **Endpoint**: `POST /api/roles/assignRole/:userId/role/:roleId`
 - **Description**: Assign a role to a user
-- **Parameters**:
-  - `userId` (URL parameter): User ID (number)
-  - `roleId` (URL parameter): Role ID (number)
-- **Input Format**: No body required (parameters in URL)
+
+### Request
+
+```http
+POST /api/roles/assignRole/6/role/5
+```
+
 - **Output Format**:
   ```json
   {
@@ -451,13 +544,24 @@ http://localhost:PORT/api
   }
   ```
 
+### Database Effect
+
+```text
+User ID 6 assigned with role Employer (Role ID 5)
+```
+
+---
+
 ### 3.7 Unassign Role from User
 - **Endpoint**: `PUT /api/roles/unAssignRole/:userId/role/:roleId`
 - **Description**: Remove a role from a user
-- **Parameters**:
-  - `userId` (URL parameter): User ID (number)
-  - `roleId` (URL parameter): Role ID (number)
-- **Input Format**: No body required (parameters in URL)
+
+### Request
+
+```http
+PUT /api/roles/unAssignRole/6/role/5
+```
+
 - **Output Format**:
   ```json
   {
@@ -467,6 +571,12 @@ http://localhost:PORT/api
     "data": {}
   }
   ```
+
+### Database Effect
+
+```text
+Role ID 5 marked as INACTIVE for User ID 6
+```
 
 ---
 
@@ -483,16 +593,18 @@ http://localhost:PORT/api
   ```json
   {
     "success": true,
-    "message": "Validation successful",
-    "status": 200,
     "data": {
-      "login_id": "number",
-      "user_id": "number",
-      "role_id": "number",
-      "login_time": "string (ISO-8601)",
-      "status": "string"
-    }
+        "fieldCount": 0,
+        "affectedRows": 1,
+        "insertId": 153,
+        "info": "",
+        "serverStatus": 2,
+        "warningStatus": 0,
+        "changedRows": 0
+    },
+    "message": "Validation successful"
   }
+
   ```
 
 ### 4.2 User Logout (Activity Tracking)
@@ -506,12 +618,18 @@ http://localhost:PORT/api
   ```json
   {
     "success": true,
-    "message": "Logout entry recorded successfully",
-    "status": 200,
     "data": {
-      "logout_time": "string (ISO-8601)"
-    }
+        "fieldCount": 0,
+        "affectedRows": 1,
+        "insertId": 0,
+        "info": "Rows matched: 1  Changed: 1  Warnings: 0",
+        "serverStatus": 2,
+        "warningStatus": 0,
+        "changedRows": 1
+    },
+    "message": "Logout entry recorded successfully"
   }
+
   ```
 
 ### 4.3 Get Recent Login Count (Last 24 Hours)
@@ -521,13 +639,9 @@ http://localhost:PORT/api
 - **Output Format**:
   ```json
   {
-    "success": true,
-    "message": "Login statistics retrieved",
-    "status": 200,
-    "data": {
-      "totalLogins24Hours": "number",
-      "timestamp": "string (ISO-8601)"
-    }
+  "success":true,
+  "data":{"totalLogins24Hours":5,"timestamp":"2026-05-19T06:50:47.417Z"},
+  "message":"Login statistics retrieved"
   }
   ```
 
@@ -539,13 +653,12 @@ http://localhost:PORT/api
   ```json
   {
     "success": true,
-    "message": "Average session time retrieved",
-    "status": 200,
     "data": {
-      "averageSessionTime": "number (minutes)",
-      "timestamp": "string (ISO-8601)"
-    }
+        "avgSessionTime": "2h 3m 13.11999999999989s"
+    },
+    "message": "Average session time retrieved"
   }
+
   ```
 
 ### 4.5 Get Active Sessions Count
@@ -556,12 +669,11 @@ http://localhost:PORT/api
   ```json
   {
     "success": true,
-    "message": "Total active sessions retrieved",
-    "status": 200,
     "data": {
-      "totalActiveSessions": "number",
-      "timestamp": "string (ISO-8601)"
-    }
+        "totalActiveSessions": 20,
+        "timestamp": "2026-05-19T07:01:25.866Z"
+    },
+    "message": "Total active sessions retrieved"
   }
   ```
 
@@ -573,18 +685,17 @@ http://localhost:PORT/api
   ```json
   {
     "success": true,
-    "message": "Live users retrieved",
-    "status": 200,
     "data": [
-      {
-        "user_id": "number",
-        "first_name": "string",
-        "last_name": "string",
-        "role_name": "string",
-        "login_time": "string (ISO-8601)",
-        "last_activity": "string (ISO-8601)"
-      }
-    ]
+        {
+            "fullName": "Sayali Kulkarni",
+            "loginTime": "2026-05-13T10:39:59.000Z",
+            "status": "ACTIVE"
+        },
+        {
+            "fullName": "Abhay Rathod",
+            "loginTime": "2026-05-14T05:42:04.000Z",
+            "status": "ACTIVE"
+        }]
   }
   ```
 
@@ -600,24 +711,25 @@ http://localhost:PORT/api
   ```json
   {
     "success": true,
-    "message": "Activity logs retrieved",
-    "status": 200,
     "data": [
-      {
-        "activity_id": "number",
-        "user_id": "number",
-        "first_name": "string",
-        "activity_type": "string (login/logout)",
-        "activity_time": "string (ISO-8601)",
-        "role_name": "string",
-        "session_duration": "number (minutes)"
-      }
-    ],
-    "pagination": {
-      "page": "number",
-      "limit": "number",
-      "total": "number"
-    }
+        {
+            "session_id": 6,
+            "user_id": 6,
+            "full_name": "Arnav Tolahunase",
+            "role": "Admin",
+            "login_time": "2026-05-19T06:56:06.000Z",
+            "logout_time": "2026-05-19T06:59:13.000Z",
+            "session_duration_minutes": 3
+        },
+        {
+            "session_id": 6,
+            "user_id": 6,
+            "full_name": "Arnav Tolahunase",
+            "role": "Student",
+            "login_time": "2026-05-19T06:56:06.000Z",
+            "logout_time": "2026-05-19T06:59:13.000Z",
+            "session_duration_minutes": 3
+        }]
   }
   ```
 
@@ -635,12 +747,13 @@ http://localhost:PORT/api
   ```json
   {
     "success": true,
-    "message": "Mentees count retrieved successfully",
-    "status": 200,
-    "data": {
-      "mentee_count": "number"
+    "data": [
+        {
+            "menteeCount": 0
+        }
+    ],
+    "message": "Mentees count retrieved successfully"
     }
-  }
   ```
 
 ### 5.2 Get Mentees List
