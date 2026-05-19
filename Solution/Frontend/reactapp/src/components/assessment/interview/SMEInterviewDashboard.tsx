@@ -36,7 +36,7 @@ const SMEInterviewDashboard = () => {
 
     try {
 
-      const response = await fetch(`http://localhost:8080/api/interview/${user.role_id}`);
+      const response = await fetch(`http://localhost:8080/api/interview/${user.role_id}/${user.userid}`);
       setInterviewsData(await response.json());
 
     } catch (error) {
