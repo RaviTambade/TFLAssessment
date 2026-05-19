@@ -7,7 +7,7 @@ const options = {
   runtime: ["Node.js", "JVM", ".NET", "Python Runtime", "Go", ".net core"],
   framework: ["React", "Angular", "Spring Boot", "Express",".net"],
   layer: ["Frontend", "backend", "Database", "DevOps"],
-  language: ["JavaScript", "TypeScript", "Java", "Python", "C#", "DotNet"],
+  language: ["JavaScript", "TypeScript", "Java", "Python", "C#", "Dotnet"],
 };
  
 const sections = [
@@ -58,7 +58,7 @@ const SMEExpertiseForm = () => {
         localStorage.getItem("smeId");
  
       const payload = {
-        user_roles_id: Number(smeId),
+        userId: Number(smeId),
         runtime: form.runtime,
         framework: form.framework,
         layer: form.layer,
@@ -84,6 +84,10 @@ const SMEExpertiseForm = () => {
       );
  
       const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data?.message || "Failed to save expertise");
+      }
  
       console.log(
         "API Response:",

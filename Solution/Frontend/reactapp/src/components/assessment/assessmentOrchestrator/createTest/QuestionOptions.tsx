@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { Button } from "../../../ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "../../../ui/card";
@@ -11,97 +11,88 @@ import {
   SelectValue,
 } from "../../../ui/select";
 import SMEInsertQuestion from "../../evaluationcontent/SMEInsertQuestion";
-
+import { WEBAPI_DOTNET_URL } from "@/lib/utils";
+ 
 type QuestionOptionsState = {
   testId?: number | string;
+  test?: {
+    testId?: number | string;
+    TestId?: number | string;
+  };
 };
-
-type DummyQuestion = {
-  id: number;
-  title: string;
+ 
+type ApiQuestion = {
+  questionId: number;
   description: string;
-  type: "MCQ" | "ProblemStatements";
-  status: "approved" | "drafted" | "rejected";
+  questionType: string;
+  difficultyLevel: string;
+  status: string;
 };
-
-const dummyQuestions: DummyQuestion[] = [
-  {
-    id: 1,
-    title: "JavaScript Closure",
-    description: "Which statement best describes a closure in JavaScript?",
-    type: "MCQ",
-    status: "approved",
-  },
-  {
-    id: 2,
-    title: "React State Update",
-    description: "What happens when setState is called in a React component?",
-    type: "MCQ",
-    status: "drafted",
-  },
-  {
-    id: 3,
-    title: "Array Deduplication",
-    description: "Write a function to remove duplicate values from an array.",
-    type: "ProblemStatements",
-    status: "approved",
-  },
-  {
-    id: 4,
-    title: "API Response Parser",
-    description: "Build a parser that normalizes nested API response data.",
-    type: "ProblemStatements",
-    status: "drafted",
-  },
-  {
-    id: 5,
-    title: "Promise Handling",
-    description: "Which method handles both resolved and rejected promises?",
-    type: "MCQ",
-    status: "rejected",
-  },
-  {
-    id: 6,
-    title: "String Compression",
-    description: "Create a method that compresses repeated characters in a string.",
-    type: "ProblemStatements",
-    status: "rejected",
-  },
-];
-
+ 
 const QuestionOptions = () => {
   const location = useLocation();
-  const { testId } = (location.state as QuestionOptionsState | null) ?? {};
+  const routeState = (location.state as QuestionOptionsState | null) ?? {};
+  const testId = routeState.testId ?? routeState.test?.testId ?? routeState.test?.TestId;
+ 
   const [questionType, setQuestionType] = useState("");
   const [status, setStatus] = useState("");
   const [skillLevel, setSkillLevel] = useState("");
+ 
   const [showQuestions, setShowQuestions] = useState(false);
   const [selectedQuestions, setSelectedQuestions] = useState<number[]>([]);
   const [showInsertQuestion, setShowInsertQuestion] = useState(false);
-
-  const showActions = questionType && status && skillLevel;
-  const filteredQuestions = dummyQuestions.filter(
-    (question) => question.type === questionType && question.status === status
+ 
+  const [questions, setQuestions] = useState<ApiQuestion[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [isCreatingTest, setIsCreatingTest] = useState(false);
+ 
+  // ✅ SESSION STORAGE + FETCH QUESTIONS
+  useEffect(() => {
+    const userData = JSON.parse(sessionStorage.getItem("current") || "{}");
+    const userId = Number(
+      userData.userid ||
+        userData.id ||
+        localStorage.getItem("smeId") ||
+        0
+    );
+ 
+    if (!userId) {
+      setError("User Id not found in session storage");
+      return;
+    }
+ 
+    setLoading(true);
+ 
+    fetch(`${WEBAPI_DOTNET_URL}/CreateTest/questions/${userId}`)
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("Failed to fetch questions");
+        }
+        return res.json();
+      })
+      .then((data) => {
+        setQuestions(Array.isArray(data) ? data : []);
+        setError(null);
+      })
+      .catch((err) => {
+        setError(err.message);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, []);
+ 
+  // ✅ CLIENT SIDE FILTERING
+  const filteredQuestions = questions.filter(
+    (q) =>
+      q.questionType?.toLowerCase() === questionType.toLowerCase() &&
+      q.status?.toLowerCase() === status.toLowerCase() &&
+      q.difficultyLevel?.toLowerCase() === skillLevel.toLowerCase()
   );
-
-  const handleQuestionTypeChange = (value: string) => {
-    setQuestionType(value);
-    setShowQuestions(false);
-    setSelectedQuestions([]);
-  };
-
-  const handleStatusChange = (value: string) => {
-    setStatus(value);
-    setShowQuestions(false);
-    setSelectedQuestions([]);
-  };
-
-  const handleSkillLevelChange = (value: string) => {
-    setSkillLevel(value);
-    setShowQuestions(false);
-    setSelectedQuestions([]);
-  };
-
+ 
+  const showActions = questionType && status && skillLevel;
+ 
   const toggleQuestion = (questionId: number) => {
     setSelectedQuestions((current) =>
       current.includes(questionId)
@@ -109,17 +100,164 @@ const QuestionOptions = () => {
         : [...current, questionId]
     );
   };
-
+ 
   const handleCancel = () => {
     setShowQuestions(false);
     setSelectedQuestions([]);
   };
-
-  const handleCreateTest = () => {
-    console.log("Selected Questions:", selectedQuestions);
-    alert("Test questions selected successfully");
+ 
+  const readResponse = async (response: Response) => {
+    const text = await response.text();
+ 
+    if (!text) {
+      return null;
+    }
+ 
+    try {
+      return JSON.parse(text);
+    } catch {
+      return text;
+    }
   };
-
+ 
+  const getApiErrorMessage = (data: unknown) => {
+    if (typeof data === "string") {
+      return data || "Failed to create test.";
+    }
+ 
+    if (!data || typeof data !== "object") {
+      return "Failed to create test.";
+    }
+ 
+    const record = data as Record<string, unknown>;
+ 
+    if (typeof record.message === "string") {
+      return record.message;
+    }
+ 
+    if (typeof record.error === "string") {
+      return record.error;
+    }
+ 
+    if (record.errors && typeof record.errors === "object") {
+      const errors = Object.values(record.errors as Record<string, unknown>)
+        .flatMap((value) => (Array.isArray(value) ? value : [value]))
+        .filter((value): value is string => typeof value === "string");
+ 
+      if (errors.length > 0) {
+        return `Validation failed: ${errors.join("; ")}`;
+      }
+    }
+ 
+    return "Failed to create test.";
+  };
+ 
+  // ✅ CREATE TEST API
+  const handleCreateTest = async () => {
+    if (isCreatingTest) {
+      return;
+    }
+ 
+    setError(null);
+ 
+    if (selectedQuestions.length === 0) {
+      setError("Please select at least one question.");
+      return;
+    }
+ 
+    const storedTestDataRaw = sessionStorage.getItem("createTestDraft");
+ 
+    if (!storedTestDataRaw) {
+      setError("Test details not found. Please go back and fill the test information.");
+      return;
+    }
+ 
+    try {
+      setIsCreatingTest(true);
+ 
+      const userData = JSON.parse(sessionStorage.getItem("current") || "{}");
+      const storedTestData = JSON.parse(storedTestDataRaw) as {
+        smeId?: number | string;
+        title?: string;
+        description?: string;
+        duration?: number | string;
+      };
+ 
+      const currentUserId = Number(
+        userData.userid || userData.id || localStorage.getItem("smeId") || 0
+      );
+      const smeId = Number(storedTestData.smeId || currentUserId);
+      const duration = Number(storedTestData.duration);
+ 
+      if (!currentUserId || currentUserId <= 0) {
+        throw new Error("User ID not found. Please log in again.");
+      }
+ 
+      if (!smeId || smeId <= 0) {
+        throw new Error("SME ID is invalid. Please create the test again.");
+      }
+ 
+      if (!duration || duration <= 0) {
+        throw new Error("Test duration is invalid. Please enter a valid duration.");
+      }
+ 
+      const payload = {
+        userId: currentUserId,
+        smeId,
+        title: storedTestData.title || "Untitled Test",
+        description: storedTestData.description || "",
+        duration,
+        skillLevel,
+        questionIds: selectedQuestions,
+      };
+ 
+      console.log("FINAL PAYLOAD:", payload);
+ 
+      const response = await fetch(`${WEBAPI_DOTNET_URL}/CreateTest/create`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+ 
+      const data = await readResponse(response);
+ 
+      if (!response.ok) {
+        throw new Error(getApiErrorMessage(data));
+      }
+ 
+      if (
+        data &&
+        typeof data === "object" &&
+        "success" in data &&
+        (data as { success?: boolean }).success === false
+      ) {
+        throw new Error(getApiErrorMessage(data));
+      }
+ 
+      alert("Test created successfully");
+ 
+      setSelectedQuestions([]);
+      setShowQuestions(false);
+      setQuestionType("");
+      setStatus("");
+      setSkillLevel("");
+      sessionStorage.removeItem("createTestDraft");
+    } catch (err) {
+      const message =
+        err instanceof Error
+          ? err.message
+          : "An unexpected error occurred while creating the test.";
+ 
+      console.error("Create test error:", err);
+      setError(message);
+      alert(message);
+    } finally {
+      setIsCreatingTest(false);
+    }
+  };
+ 
   return (
     <div className="w-full max-w-4xl mx-auto p-6">
       <Card className="border-0 shadow-soft ring-1 ring-slate-200">
@@ -131,146 +269,124 @@ const QuestionOptions = () => {
             <p className="text-sm text-slate-600">Test ID: {testId}</p>
           )}
         </CardHeader>
-
+ 
         <CardContent className="p-8 space-y-8">
+          {/* FILTERS */}
           <div className="grid gap-6 md:grid-cols-3">
             <div className="space-y-2">
-              <Label className="text-sm font-bold text-slate-700 uppercase tracking-wider">
-                Question Type
-              </Label>
-              <Select
-                value={questionType}
-                onValueChange={handleQuestionTypeChange}
-              >
-                <SelectTrigger className="h-12 rounded-xl border-slate-200">
+              <Label>Question Type</Label>
+              <Select value={questionType} onValueChange={setQuestionType}>
+                <SelectTrigger>
                   <SelectValue placeholder="Select question type" />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="MCQ">MCQ</SelectItem>
-                  <SelectItem value="ProblemStatements">
-                    Problem Statements
+                  <SelectItem value="PROBLEM_STATEMENT">
+                    Problem Statement
                   </SelectItem>
                 </SelectContent>
               </Select>
             </div>
-
+ 
             <div className="space-y-2">
-              <Label className="text-sm font-bold text-slate-700 uppercase tracking-wider">
-                Skill Level
-              </Label>
-              <Select
-                value={skillLevel}
-                onValueChange={handleSkillLevelChange}
-              >
-                <SelectTrigger className="h-12 rounded-xl border-slate-200">
+              <Label>Skill Level</Label>
+              <Select value={skillLevel} onValueChange={setSkillLevel}>
+                <SelectTrigger>
                   <SelectValue placeholder="Select skill level" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="beginner">Beginner</SelectItem>
-                  <SelectItem value="intermediate">Intermediate</SelectItem>
-                  <SelectItem value="advance">Advance</SelectItem>
+                  <SelectItem value="BEGINNER">Beginner</SelectItem>
+                  <SelectItem value="INTERMEDIATE">Intermediate</SelectItem>
+                  <SelectItem value="ADVANCE">Advance</SelectItem>
                 </SelectContent>
               </Select>
             </div>
-
+ 
             <div className="space-y-2">
-              <Label className="text-sm font-bold text-slate-700 uppercase tracking-wider">
-                Status
-              </Label>
-              <Select value={status} onValueChange={handleStatusChange}>
-                <SelectTrigger className="h-12 rounded-xl border-slate-200">
+              <Label>Status</Label>
+              <Select value={status} onValueChange={setStatus}>
+                <SelectTrigger>
                   <SelectValue placeholder="Select status" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="approved">Approved</SelectItem>
-                  <SelectItem value="drafted">Drafted</SelectItem>
-                  <SelectItem value="rejected">Rejected</SelectItem>
+                  <SelectItem value="APPROVED">Approved</SelectItem>
+                  <SelectItem value="DRAFT">Draft</SelectItem>
+                  <SelectItem value="REJECTED">Rejected</SelectItem>
                 </SelectContent>
               </Select>
             </div>
           </div>
-
+ 
+          {/* ACTION BUTTONS */}
           {showActions && (
-            <div className="pt-6 border-t border-slate-100 flex flex-col gap-4 sm:flex-row">
+            <div className="pt-6 border-t flex gap-4">
               <Button
-                className="flex-1 bg-red-600 hover:bg-red-700 text-white py-6 text-lg rounded-xl"
+                className="flex-1 bg-red-600 text-white"
                 onClick={() => {
                   setShowInsertQuestion(true);
-                  setShowQuestions(false); // Hide select questions
+                  setShowQuestions(false);
                 }}
               >
                 Add Questions
               </Button>
+ 
               <Button
                 variant="outline"
-                className="flex-1 py-6 text-lg rounded-xl border-slate-200 hover:bg-slate-50"
+                className="flex-1"
                 onClick={() => {
                   setShowQuestions(true);
-                  setShowInsertQuestion(false); // Hide add questions
+                  setShowInsertQuestion(false);
                 }}
               >
                 Select Questions
               </Button>
             </div>
           )}
-
+ 
+          {/* QUESTIONS LIST */}
           {showQuestions && !showInsertQuestion && (
-            <div className="pt-6 border-t border-slate-100 space-y-4">
-              <div>
-                <h2 className="text-lg font-bold text-slate-900">
-                  Dummy Questions
-                </h2>
-                <p className="text-sm text-slate-600">
-                  {questionType} questions with {skillLevel} skill level and{" "}
-                  {status} status
-                </p>
-              </div>
-
-              <div className="space-y-3">
-                {filteredQuestions.length > 0 ? (
-                  filteredQuestions.map((question) => (
-                    <label
-                      key={question.id}
-                      className={`flex gap-4 rounded-xl border p-4 cursor-pointer transition-all ${
-                        selectedQuestions.includes(question.id)
-                          ? "bg-red-50 border-red-200 ring-1 ring-red-200"
-                          : "bg-white border-slate-200 hover:border-red-200"
-                      }`}
-                    >
-                      <input
-                        type="checkbox"
-                        checked={selectedQuestions.includes(question.id)}
-                        onChange={() => toggleQuestion(question.id)}
-                        className="mt-1 h-4 w-4 accent-red-600"
-                      />
-                      <span>
-                        <span className="block font-semibold text-slate-900">
-                          {question.title}
-                        </span>
-                        <span className="block text-sm text-slate-600">
-                          {question.description}
-                        </span>
-                      </span>
-                    </label>
-                  ))
-                ) : (
-                  <div className="rounded-xl border border-slate-200 bg-slate-50 p-4 text-sm text-slate-600">
-                    No dummy questions found for this filter.
-                  </div>
-                )}
-              </div>
-
-              <div className="pt-4 flex flex-col gap-4 sm:flex-row">
+            <div className="pt-6 space-y-4">
+              <h2 className="text-lg font-bold">Questions</h2>
+ 
+              {loading && <p>Loading questions...</p>}
+              {error && <p className="text-red-500">{error}</p>}
+ 
+              {!loading && filteredQuestions.length > 0 ? (
+                filteredQuestions.map((q) => (
+                  <label
+                    key={q.questionId}
+                    className="flex gap-3 p-4 border rounded-xl"
+                  >
+                    <input
+                      type="checkbox"
+                      checked={selectedQuestions.includes(q.questionId)}
+                      onChange={() => toggleQuestion(q.questionId)}
+                    />
+                    <div>
+                      <p className="font-semibold">
+                        Question ID: {q.questionId}
+                      </p>
+                      <p className="text-sm">{q.description}</p>
+                    </div>
+                  </label>
+                ))
+              ) : (
+                !loading && <p>No questions found.</p>
+              )}
+ 
+              {/* ACTIONS */}
+              <div className="flex gap-4 pt-4">
                 <Button
-                  className="flex-1 bg-red-600 hover:bg-red-700 text-white py-6 text-lg rounded-xl"
-                  onClick={handleCreateTest}
+                  className="bg-red-600 text-white flex-1"
                   disabled={selectedQuestions.length === 0}
+                  onClick={handleCreateTest}
                 >
                   Create Test
                 </Button>
+ 
                 <Button
                   variant="outline"
-                  className="flex-1 py-6 text-lg rounded-xl border-slate-200 hover:bg-slate-50"
+                  className="flex-1"
                   onClick={handleCancel}
                 >
                   Cancel
@@ -278,14 +394,17 @@ const QuestionOptions = () => {
               </div>
             </div>
           )}
-
+ 
+          {/* INSERT QUESTION */}
           {showInsertQuestion && !showQuestions && (
-            <SMEInsertQuestion onClose={() => setShowInsertQuestion(false)} />
+            <SMEInsertQuestion
+              onClose={() => setShowInsertQuestion(false)}
+            />
           )}
         </CardContent>
       </Card>
     </div>
   );
 };
-
+ 
 export default QuestionOptions;

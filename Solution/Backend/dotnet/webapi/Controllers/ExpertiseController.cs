@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
+using backend.DTO.Requests;
 using backend.Models;
 using backend.Services.Interfaces;
 
@@ -18,16 +19,37 @@ public class ExpertiseController : ControllerBase
         _expertiseService = expertiseService;
     }
 
-    [HttpPost ("expertise")]
-    public async Task<IActionResult>AddExpertise([FromBody] expertise expertize
-        )
+    [HttpPost]
+    [HttpPost("expertise")]
+    public async Task<IActionResult> AddSmeExpertise([FromBody] AddExpertiseRequest request)
     {
         try
         {
+            long userId = request.UserId > 0
+                ? request.UserId
+                : request.UserRolesId;
+
+            if (userId <= 0)
+            {
+                return BadRequest(new
+                {
+                    message = "UserId is required."
+                });
+            }
+
+            Expertise expertise = new Expertise
+            {
+                User_Id = userId,
+                Runtime = request.Runtime,
+                Framework = request.Framework,
+                Layer = request.Layer,
+                Language = request.Language
+            };
+
             int rows =
                 await _expertiseService
                     .AddSmeExpertise(
-                        expertize
+                        expertise
                     );
 
             return Ok(new
@@ -37,7 +59,7 @@ public class ExpertiseController : ControllerBase
 
                 insertedRows = rows,
 
-                data = expertize
+                data = expertise
             });
         }
         catch (Exception ex)
