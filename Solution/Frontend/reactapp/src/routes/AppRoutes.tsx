@@ -21,7 +21,7 @@ import UpcomingAssessment from "../components/assessment/assessmentOrchestrator/
 import AllAssessment from "@/components/assessment/assessmentOrchestrator/AllAssessment";
 //import Question from "@/components/assessment/assessmentOrchestrator/applyAssessment";
 import Result from "@/components/assessment/assessmentOrchestrator/Result";
-
+import SMEInterviewDashboard from "@/components/assessment/interview/SMEInterviewDashboard";
 import ViewProjectInfo from "@/components/assessment/evaluationcontent/ViewProjectInfo";
 import ProjectByMentee from "@/components/assessment/evaluationcontent/ProjectByMentee";
 import QuestionsByDifficulty from "@/components/assessment/evaluationcontent/QuestionByDifficulty";
@@ -34,7 +34,7 @@ import RegisterPage from "@/components/assessment/membership/Register";
 import GetUserInformation from "@/components/assessment/membership/UserInformation";
 import UserActivity from "@/components/assessment/membership/UserActivity";
 import UserProfile from "@/components/assessment/membership/UserProfile";
-import SMECreateTest from "@/components/assessment/assessmentOrchestrator/SMECreateTest";
+import CreateTest from "@/components/assessment/assessmentOrchestrator/createTest/createTest";
 import AssignAssessment from "@/components/assessment/assessmentOrchestrator/AssignAssessment";
 import ConceptByFramework from "@/components/assessment/skilltaxonomy/ConceptByFramework";
 import QuestionOptions from "@/components/assessment/assessmentOrchestrator/createTest/QuestionOptions";
@@ -53,6 +53,7 @@ import UpcomingInterviews from "@/components/assessment/interview/UpcomingInterv
 import InterviewHistory from "@/components/assessment/interview/InterviewHistory";
 
 import Mentees from "@/components/assessment/membership/Mentees";
+import SMEExpertiseForm from "@/components/assessment/assessmentOrchestrator/createTest/smeExpertiseForm";
 
 function AppRoutes() {
   return (
@@ -144,7 +145,8 @@ function AppRoutes() {
           />
           <Route index element={<Assessment />} />
           <Route path="upcoming-assessment" element={<UpcomingAssessment />} />
-          <Route path="create-test" element={<SMECreateTest />} />
+          <Route path="create-test" element={<CreateTest />} />
+          <Route path="sme-expertise-form" element={<SMEExpertiseForm />} />
           <Route path="question-options" element={<QuestionOptions />} />
           <Route path="assign-assessment" element={<AssignAssessment />} />
           <Route path="all-assessment" element={<AllAssessment />} />
@@ -175,6 +177,10 @@ function AppRoutes() {
           <Route
             path="interview/upcoming-interviews"
             element={<UpcomingInterviews />}
+          />
+          <Route
+          path="interview/SMEInterviewDashboard"
+          element={<SMEInterviewDashboard />}
           />
           {/* Membership model */}
           <Route
