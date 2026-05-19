@@ -99,11 +99,7 @@ return (
                     Schedule Interview
                     <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                   </Button>
-                  <Button variant="hero" size="lg" className="group" onClick={() =>
-                    navigate("/models/interview/SMEInterviewDashboard")}> 
-                    SME Interview Dashboard
-                    <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                  </Button>
+                 
                 
                 </div>
               </CardContent>

@@ -355,26 +355,41 @@ public List<InterviewList> getInterviewHistory(
         return status;
     }
 
-    @GetMapping
-public List<InterviewDetails> getInterviews(){
+    @GetMapping("/{roleId}")
+public List<InterviewDetails> getInterviews(@PathVariable int roleId){
 
     List<InterviewDetails> interviews =new ArrayList<>();
 
     try(Connection connection = getConnection()){
-        String query ="SELECT * FROM interviews";
+        String query = "";
+        if (roleId == 4) {
+        query = "SELECT " +
+                "i.interview_id, " +
+                "i.mode, " +
+                "i.status, " +
+                "CONCAT(ps.first_name, ' ', ps.last_name) AS student_name, "+
+                "i.scheduled_at, " +
+                "i.title " +
+                "FROM interviews i " +
+                "JOIN personal_informations ps " +
+                "ON ps.user_id = i.student_id";
+        }
+        else{
+        System.out.println("Invalid roleId: " + roleId);
+        return interviews; 
+        }
         PreparedStatement ps =connection.prepareStatement(query);
         ResultSet rs =ps.executeQuery();
 
         while(rs.next()){
 
             InterviewDetails interview =new InterviewDetails();
-
-            interview.setInterviewId(rs.getInt("interview_id") );
+            interview.setInterviewId(rs.getInt("interview_id"));
             interview.setTitle(rs.getString("title"));
-            interview.setScheduleDate(rs.getTimestamp("scheduled_at").toLocalDateTime());
             interview.setMode(rs.getString("mode"));
-            interview.setInterviewer(rs.getString("interviewer"));
+            interview.setScheduleDate(rs.getTimestamp("scheduled_at").toLocalDateTime());
             interview.setStatus(InterviewStatus.valueOf(rs.getString("status")) );
+            interview.setInterviewer(rs.getString("student_name"));
             interviews.add(interview);
         }
     }catch(Exception e){
