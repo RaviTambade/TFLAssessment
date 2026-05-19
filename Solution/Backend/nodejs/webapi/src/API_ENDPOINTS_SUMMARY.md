@@ -1,7 +1,8 @@
 # TFL Assessment API Endpoints Summary
 
 ## Base URL
-```
+
+```text
 http://localhost:PORT/api
 ```
 
@@ -10,6 +11,7 @@ http://localhost:PORT/api
 ## 1. Authentication Endpoints (`/api/auth/`)
 
 ### 1.1 User Login
+
 - **Endpoint**: `POST /api/auth/login`
 - **Description**: Authenticate user with username, password, and role
 - **Input Format**:
@@ -35,16 +37,9 @@ http://localhost:PORT/api
     }
   }
   ```
-- **Error Response**:
-  ```json
-  {
-    "success": false,
-    "message": "Invalid credentials",
-    "status": 401
-  }
-  ```
 
 ### 1.2 User Registration
+
 - **Endpoint**: `POST /api/auth/register`
 - **Description**: Register a new user
 - **Input Format**:
@@ -63,11 +58,15 @@ http://localhost:PORT/api
     "success": true,
     "message": "User registered successfully",
     "status": 200,
-    "data": {}
+    "data": {
+      "affectedRows": "number",
+      "insertId": "number"
+    }
   }
   ```
 
 ### 1.3 Change Password
+
 - **Endpoint**: `PUT /api/auth/changepassword`
 - **Description**: Change user password
 - **Input Format**:
@@ -82,15 +81,11 @@ http://localhost:PORT/api
   {
     "success": true,
     "message": "Password updated successfully",
-    "status": 200
-  }
-  ```
-- **Error Response**:
-  ```json
-  {
-    "success": false,
-    "message": "User not found",
-    "status": 404
+    "status": 200,
+    "data": {
+      "affectedRows": "number",
+      "changedRows": "number"
+    }
   }
   ```
 
@@ -99,6 +94,7 @@ http://localhost:PORT/api
 ## 2. User Management Endpoints (`/api/users/`)
 
 ### 2.1 Get All Users
+
 - **Endpoint**: `GET /api/users/getAllUsers`
 - **Description**: Retrieve list of all users
 - **Input Format**: No body required
@@ -106,7 +102,7 @@ http://localhost:PORT/api
   ```json
   {
     "success": true,
-    "message": "Users retrieve successfully",
+    "message": "Users retrive successfully",
     "status": 200,
     "data": [
       {
@@ -114,13 +110,14 @@ http://localhost:PORT/api
         "full_name": "string",
         "created_at": "DateTime",
         "status": "string",
-        "role_name": " String"
+        "role_name": "string"
       }
     ]
   }
   ```
 
 ### 2.2 Get User Details By ID
+
 - **Endpoint**: `GET /api/users/:userId`
 - **Description**: Retrieve complete user details by user ID
 - **Parameters**:
@@ -133,24 +130,25 @@ http://localhost:PORT/api
     "message": "User details retrieved successfully",
     "status": 200,
     "data": {
-            "user_id": 16,
-            "contact": "8433752395",
-            "status": "ACTIVE",
-            "first_name": "Tejas",
-            "last_name": "Naukudkar",
-            "gender": "MALE",
-            "date_of_birth": "2004-12-09T18:30:00.000Z",
-            "email": "tejas@gmail.com",
-            "enrollment_year": 2022,
-            "passing_year": 2026,
-            "percentage": "85.50",
-            "college_name": "MIT ADT University",
-            "skills": "JavaScript, React, Node.js"
-        }
+      "user_id": "number",
+      "contact": "string",
+      "status": "string",
+      "first_name": "string",
+      "last_name": "string",
+      "gender": "string",
+      "date_of_birth": "DateTime",
+      "email": "string",
+      "enrollment_year": "number",
+      "passing_year": "number",
+      "percentage": "number",
+      "college_name": "string",
+      "skills": "string"
+    }
   }
   ```
 
 ### 2.3 Get User Personal Details
+
 - **Endpoint**: `GET /api/users/:userId/personal`
 - **Description**: Retrieve user's personal information
 - **Parameters**:
@@ -160,22 +158,23 @@ http://localhost:PORT/api
   ```json
   {
     "success": true,
-    "message": "User Personal information retrieve successfully",
+    "message": "User Personal information retrive successfully",
     "status": 200,
     "data": {
-        "first_name": "Tejas",
-        "last_name": "Naukudkar",
-        "gender": "MALE",
-        "date_of_birth": "2004-12-09T18:30:00.000Z",
-        "email": "tejas@gmail.com",
-        "address": "Mumbai",
-        "pincode": "410218",
-        "contact": "8433752395"
+      "first_name": "string",
+      "last_name": "string",
+      "gender": "string",
+      "date_of_birth": "DateTime",
+      "email": "string",
+      "address": "string",
+      "pincode": "string",
+      "contact": "string"
     }
   }
   ```
 
 ### 2.4 Get User Academic Details
+
 - **Endpoint**: `GET /api/users/:userId/academic`
 - **Description**: Retrieve user's academic information
 - **Parameters**:
@@ -185,20 +184,21 @@ http://localhost:PORT/api
   ```json
   {
     "success": true,
-    "message": "User Academic information retrieve successfully",
+    "message": "User Academic information retrive successfully",
     "status": 200,
     "data": {
-        "enrollment_year": 2022,
-        "passing_year": 2026,
-        "percentage": "85.50",
-        "college_name": "MIT ADT University",
-        "stream_name": "Engineering",
-        "specialization": "Cloud Computing"
-    }}
+      "enrollment_year": "number",
+      "passing_year": "number",
+      "percentage": "number",
+      "college_name": "string",
+      "stream_name": "string",
+      "specialization": "string"
+    }
   }
   ```
 
 ### 2.5 Get User Professional Details
+
 - **Endpoint**: `GET /api/users/:userId/professional`
 - **Description**: Retrieve user's professional information
 - **Parameters**:
@@ -208,23 +208,24 @@ http://localhost:PORT/api
   ```json
   {
     "success": true,
-    "message": "User Professional information retrieve successfully",
+    "message": "User Professinal information retrive successfully",
     "status": 200,
     "data": {
-        "company_name": "Transflower Learning pvt ltd",
-        "job_title": "Developer",
-        "employment_type": "INTERNSHIP",
-        "start_date": "2026-01-31T18:30:00.000Z",
-        "end_date": null,
-        "is_current_job": 1,
-        "experience_years": 0,
-        "location": "Walvekar Nagar",
-        "skills": "JavaScript, React, Node.js"
+      "company_name": "string",
+      "job_title": "string",
+      "employment_type": "string",
+      "start_date": "DateTime",
+      "end_date": "DateTime | null",
+      "is_current_job": "number",
+      "experience_years": "number",
+      "location": "string",
+      "skills": "string"
     }
   }
   ```
 
 ### 2.6 Update User Personal Information
+
 - **Endpoint**: `PATCH /api/users/:userId/personal-info`
 - **Description**: Update user's personal details
 - **Parameters**:
@@ -234,8 +235,7 @@ http://localhost:PORT/api
   {
     "first_name": "string",
     "last_name": "string",
-    "email": "string",
-    
+    "email": "string"
   }
   ```
 - **Output Format**:
@@ -244,11 +244,15 @@ http://localhost:PORT/api
     "success": true,
     "message": "User Personal information Update successfully",
     "status": 200,
-    "data": {}
+    "data": {
+      "affectedRows": "number",
+      "changedRows": "number"
+    }
   }
   ```
 
 ### 2.7 Update User Professional Information
+
 - **Endpoint**: `PATCH /api/users/:userId/professional-info`
 - **Description**: Update user's professional details
 - **Parameters**:
@@ -258,7 +262,7 @@ http://localhost:PORT/api
   {
     "job_title": "string",
     "company_name": "string",
-    "experience_years": 3
+    "experience_years": "number"
   }
   ```
 - **Output Format**:
@@ -267,11 +271,15 @@ http://localhost:PORT/api
     "success": true,
     "message": "User Professional information Update successfully",
     "status": 200,
-    "data": {}
+    "data": {
+      "affectedRows": "number",
+      "changedRows": "number"
+    }
   }
   ```
 
 ### 2.8 Update User Academic Information
+
 - **Endpoint**: `PATCH /api/users/:userId/academic-info`
 - **Description**: Update user's academic details
 - **Parameters**:
@@ -292,20 +300,24 @@ http://localhost:PORT/api
     "success": true,
     "message": "User Academic information Update successfully",
     "status": 200,
-    "data": {}
+    "data": {
+      "affectedRows": "number",
+      "changedRows": "number"
+    }
   }
   ```
 
 ### 2.9 Update User Status
+
 - **Endpoint**: `PATCH /api/users/:userId/status`
-- **Description**: Update user's status (active/inactive)
+- **Description**: Update user's status
 - **Parameters**:
   - `userId` (URL parameter): User ID (number)
 - **Input Format**:
   ```json
   {
     "user_id": "number",
-    "status": "string (active/inactive)"
+    "status": "string"
   }
   ```
 - **Output Format**:
@@ -314,7 +326,10 @@ http://localhost:PORT/api
     "success": true,
     "message": "User Status update successfully",
     "status": 200,
-    "data": {}
+    "data": {
+      "affectedRows": "number",
+      "changedRows": "number"
+    }
   }
   ```
 
@@ -323,81 +338,37 @@ http://localhost:PORT/api
 ## 3. Role Management Endpoints (`/api/roles/`)
 
 ### 3.1 Get All Roles
+
 - **Endpoint**: `GET /api/roles/getAllRoles`
 - **Description**: Retrieve all available roles
-
-### Request
-
-```http
-GET /api/roles/getAllRoles
-```
-
+- **Input Format**: No body required
 - **Output Format**:
   ```json
   {
     "success": true,
-    "message": "Retrieve roles successful",
+    "message": "Retrive roles successful",
     "status": 200,
     "data": [
       {
-        "role_id": 1,
-        "role_name": "Admin",
-        "description": "Orchestrate over Roles and Membership Management"
-      },
-      {
-        "role_id": 2,
-        "role_name": "Student",
-        "description": "Takes assessments and views results"
-      },
-      {
-        "role_id": 3,
-        "role_name": "Mentor",
-        "description": "Guides students and reviews performance"
-      },
-      {
-        "role_id": 4,
-        "role_name": "SME",
-        "description": "Creates and reviews questions"
-      },
-      {
-        "role_id": 5,
-        "role_name": "Employer",
-        "description": "Views candidates and assessments"
-      },
-      {
-        "role_id": 6,
-        "role_name": "Alumni",
-        "description": "Former students associated with the system"
-      },
-      {
-        "role_id": 7,
-        "role_name": "UnAssigned",
-        "description": "Users not assigned with any role"
+        "role_id": "number",
+        "role_name": "string",
+        "description": "string"
       }
     ]
   }
   ```
 
----
-
 ### 3.2 Create New Role
+
 - **Endpoint**: `POST /api/roles/insert`
 - **Description**: Create a new role
-
-### Request
-
-```http
-POST /api/roles/insert
-```
-
 - **Input Format**:
   ```json
   {
-    "roleName": "HR",
-    "description": "Handles employee management and recruitment"
+    "roleName": "string",
+    "description": "string"
   }
   ```
-
 - **Output Format**:
   ```json
   {
@@ -405,55 +376,45 @@ POST /api/roles/insert
     "message": "role added successfully",
     "status": 200,
     "data": {
-      "role_id": 8,
-      "role_name": "HR",
-      "description": "Handles employee management and recruitment"
+      "affectedRows": "number",
+      "insertId": "number"
     }
   }
   ```
 
----
-
 ### 3.3 Update Role
+
 - **Endpoint**: `PUT /api/roles/update/:id`
 - **Description**: Update an existing role
-
-### Request
-
-```http
-PUT /api/roles/update/5
-```
-
+- **Parameters**:
+  - `id` (URL parameter): Role ID (number)
 - **Input Format**:
   ```json
   {
-    "roleName": "Employer",
-    "description": "Views candidate profiles and hiring assessments"
+    "roleName": "string",
+    "description": "string"
   }
   ```
-
 - **Output Format**:
   ```json
   {
     "success": true,
     "message": "role updated successfully",
     "status": 200,
-    "data": {}
+    "data": {
+      "affectedRows": "number",
+      "changedRows": "number"
+    }
   }
   ```
 
----
-
 ### 3.4 Get User Roles By User ID
+
 - **Endpoint**: `GET /api/roles/getUserRolesByUserId/:userId`
-- **Description**: Retrieve all roles assigned to a user
-
-### Request
-
-```http
-GET /api/roles/getUserRolesByUserId/3
-```
-
+- **Description**: Retrieve all active roles assigned to a user
+- **Parameters**:
+  - `userId` (URL parameter): User ID (number)
+- **Input Format**: No body required
 - **Output Format**:
   ```json
   {
@@ -462,37 +423,20 @@ GET /api/roles/getUserRolesByUserId/3
     "status": 200,
     "data": [
       {
-        "role_id": 1,
-        "role_name": "Admin"
-      },
-      {
-        "role_id": 2,
-        "role_name": "Student"
-      },
-      {
-        "role_id": 3,
-        "role_name": "Mentor"
-      },
-      {
-        "role_id": 4,
-        "role_name": "SME"
+        "user_id": "number",
+        "role_name": "string"
       }
     ]
   }
   ```
 
----
-
 ### 3.5 Get Users By Role ID
+
 - **Endpoint**: `GET /api/roles/getUsersByRoleId/:roleId`
-- **Description**: Retrieve all users with a specific role
-
-### Request
-
-```http
-GET /api/roles/getUsersByRoleId/2
-```
-
+- **Description**: Retrieve all active users with a specific role
+- **Parameters**:
+  - `roleId` (URL parameter): Role ID (number)
+- **Input Format**: No body required
 - **Output Format**:
   ```json
   {
@@ -501,88 +445,64 @@ GET /api/roles/getUsersByRoleId/2
     "status": 200,
     "data": [
       {
-        "user_id": 4,
-        "full_name": "Tejas Pawale",
-        "email": "pawaletejas98@gmail.com",
-        "role_name": "Student"
-      },
-      {
-        "user_id": 7,
-        "full_name": "Samruddhi Rasal",
-        "email": "samruddhirasal03@gmail.com",
-        "role_name": "Student"
-      },
-      {
-        "user_id": 8,
-        "full_name": "Anish Adak",
-        "email": "anishadak4210@gmail.com",
-        "role_name": "Student"
+        "user_id": "number",
+        "full_name": "string",
+        "role_id": "number",
+        "role_name": "string"
       }
     ]
   }
   ```
 
----
-
 ### 3.6 Assign Role to User
+
 - **Endpoint**: `POST /api/roles/assignRole/:userId/role/:roleId`
 - **Description**: Assign a role to a user
-
-### Request
-
-```http
-POST /api/roles/assignRole/6/role/5
-```
-
+- **Parameters**:
+  - `userId` (URL parameter): User ID (number)
+  - `roleId` (URL parameter): Role ID (number)
+- **Input Format**: No body required
 - **Output Format**:
   ```json
   {
     "success": true,
     "message": "Role assigned successfully",
     "status": 200,
-    "data": {}
+    "data": {
+      "affectedRows": "number",
+      "insertId": "number",
+      "changedRows": "number"
+    }
   }
   ```
 
-### Database Effect
-
-```text
-User ID 6 assigned with role Employer (Role ID 5)
-```
-
----
-
 ### 3.7 Unassign Role from User
+
 - **Endpoint**: `PUT /api/roles/unAssignRole/:userId/role/:roleId`
-- **Description**: Remove a role from a user
-
-### Request
-
-```http
-PUT /api/roles/unAssignRole/6/role/5
-```
-
+- **Description**: Remove a role from a user by marking it inactive
+- **Parameters**:
+  - `userId` (URL parameter): User ID (number)
+  - `roleId` (URL parameter): Role ID (number)
+- **Input Format**: No body required
 - **Output Format**:
   ```json
   {
     "success": true,
     "message": "Role unassigned successfully",
     "status": 200,
-    "data": {}
+    "data": {
+      "affectedRows": "number",
+      "changedRows": "number"
+    }
   }
   ```
-
-### Database Effect
-
-```text
-Role ID 5 marked as INACTIVE for User ID 6
-```
 
 ---
 
 ## 4. User Activity Endpoints (`/api/useractivity/`)
 
-### 4.1 User Login (Activity Tracking)
+### 4.1 User Login Activity
+
 - **Endpoint**: `POST /api/useractivity/login/:userId/role/:roleId`
 - **Description**: Record user login activity
 - **Parameters**:
@@ -593,21 +513,18 @@ Role ID 5 marked as INACTIVE for User ID 6
   ```json
   {
     "success": true,
+    "message": "Validation successful",
+    "status": 200,
     "data": {
-        "fieldCount": 0,
-        "affectedRows": 1,
-        "insertId": 153,
-        "info": "",
-        "serverStatus": 2,
-        "warningStatus": 0,
-        "changedRows": 0
-    },
-    "message": "Validation successful"
+      "affectedRows": "number",
+      "insertId": "number",
+      "changedRows": "number"
+    }
   }
-
   ```
 
-### 4.2 User Logout (Activity Tracking)
+### 4.2 User Logout Activity
+
 - **Endpoint**: `PUT /api/useractivity/logout/:userId/role/:roleId`
 - **Description**: Record user logout activity
 - **Parameters**:
@@ -618,34 +535,36 @@ Role ID 5 marked as INACTIVE for User ID 6
   ```json
   {
     "success": true,
+    "message": "Logout entry recorded successfully",
+    "status": 200,
     "data": {
-        "fieldCount": 0,
-        "affectedRows": 1,
-        "insertId": 0,
-        "info": "Rows matched: 1  Changed: 1  Warnings: 0",
-        "serverStatus": 2,
-        "warningStatus": 0,
-        "changedRows": 1
-    },
-    "message": "Logout entry recorded successfully"
+      "affectedRows": "number",
+      "insertId": "number",
+      "changedRows": "number"
+    }
   }
-
   ```
 
-### 4.3 Get Recent Login Count (Last 24 Hours)
+### 4.3 Get Recent Login Count
+
 - **Endpoint**: `GET /api/useractivity/logins-24h`
 - **Description**: Get total logins in the last 24 hours
 - **Input Format**: No body required
 - **Output Format**:
   ```json
   {
-  "success":true,
-  "data":{"totalLogins24Hours":5,"timestamp":"2026-05-19T06:50:47.417Z"},
-  "message":"Login statistics retrieved"
+    "success": true,
+    "message": "Login statistics retrieved",
+    "status": 200,
+    "data": {
+      "totalLogins24Hours": "number",
+      "timestamp": "DateTime"
+    }
   }
   ```
 
 ### 4.4 Get Average Session Time
+
 - **Endpoint**: `GET /api/useractivity/average-time`
 - **Description**: Get average session duration
 - **Input Format**: No body required
@@ -653,15 +572,16 @@ Role ID 5 marked as INACTIVE for User ID 6
   ```json
   {
     "success": true,
+    "message": "Average session time retrieved",
+    "status": 200,
     "data": {
-        "avgSessionTime": "2h 3m 13.11999999999989s"
-    },
-    "message": "Average session time retrieved"
+      "avgSessionTime": "string"
+    }
   }
-
   ```
 
 ### 4.5 Get Active Sessions Count
+
 - **Endpoint**: `GET /api/useractivity/active-count`
 - **Description**: Get number of currently active sessions
 - **Input Format**: No body required
@@ -669,15 +589,17 @@ Role ID 5 marked as INACTIVE for User ID 6
   ```json
   {
     "success": true,
+    "message": "Total active sessions retrieved",
+    "status": 200,
     "data": {
-        "totalActiveSessions": 20,
-        "timestamp": "2026-05-19T07:01:25.866Z"
-    },
-    "message": "Total active sessions retrieved"
+      "totalActiveSessions": "number",
+      "timestamp": "DateTime"
+    }
   }
   ```
 
 ### 4.6 Get Live Users
+
 - **Endpoint**: `GET /api/useractivity/active-users`
 - **Description**: Get list of currently active users
 - **Input Format**: No body required
@@ -685,51 +607,45 @@ Role ID 5 marked as INACTIVE for User ID 6
   ```json
   {
     "success": true,
+    "message": "Active users retrieved",
+    "status": 200,
     "data": [
-        {
-            "fullName": "Sayali Kulkarni",
-            "loginTime": "2026-05-13T10:39:59.000Z",
-            "status": "ACTIVE"
-        },
-        {
-            "fullName": "Abhay Rathod",
-            "loginTime": "2026-05-14T05:42:04.000Z",
-            "status": "ACTIVE"
-        }]
+      {
+        "userId": "number",
+        "fullName": "string",
+        "loginTime": "DateTime",
+        "status": "string"
+      }
+    ]
   }
   ```
 
 ### 4.7 Get All User Activity Logs
+
 - **Endpoint**: `GET /api/useractivity/logs`
-- **Description**: Get all user activity logs with pagination
+- **Description**: Get all user activity logs with optional name filter
 - **Query Parameters**:
   - `name` (optional): Filter by user name
-  - `page` (optional, default: 1): Page number
-  - `limit` (optional, default: 10): Records per page
-- **Input Format**: Query parameters (no body)
+  - `page` (optional): Page number
+  - `limit` (optional): Records per page
+- **Input Format**: Query parameters only
 - **Output Format**:
   ```json
   {
     "success": true,
+    "message": "Session logs retrieved successfully",
+    "status": 200,
     "data": [
-        {
-            "session_id": 6,
-            "user_id": 6,
-            "full_name": "Arnav Tolahunase",
-            "role": "Admin",
-            "login_time": "2026-05-19T06:56:06.000Z",
-            "logout_time": "2026-05-19T06:59:13.000Z",
-            "session_duration_minutes": 3
-        },
-        {
-            "session_id": 6,
-            "user_id": 6,
-            "full_name": "Arnav Tolahunase",
-            "role": "Student",
-            "login_time": "2026-05-19T06:56:06.000Z",
-            "logout_time": "2026-05-19T06:59:13.000Z",
-            "session_duration_minutes": 3
-        }]
+      {
+        "session_id": "number",
+        "user_id": "number",
+        "full_name": "string",
+        "role": "string",
+        "login_time": "DateTime",
+        "logout_time": "DateTime | null",
+        "session_duration_minutes": "number"
+      }
+    ]
   }
   ```
 
@@ -738,6 +654,7 @@ Role ID 5 marked as INACTIVE for User ID 6
 ## 5. Mentor Management Endpoints (`/api/mentors/`)
 
 ### 5.1 Get Mentee Count
+
 - **Endpoint**: `GET /api/mentors/:id/mentees/count`
 - **Description**: Get the number of mentees assigned to a mentor
 - **Parameters**:
@@ -747,16 +664,18 @@ Role ID 5 marked as INACTIVE for User ID 6
   ```json
   {
     "success": true,
+    "message": "Mentees count retrieved successfully",
+    "status": 200,
     "data": [
-        {
-            "menteeCount": 0
-        }
-    ],
-    "message": "Mentees count retrieved successfully"
-    }
+      {
+        "menteeCount": "number"
+      }
+    ]
+  }
   ```
 
 ### 5.2 Get Mentees List
+
 - **Endpoint**: `GET /api/mentors/:id/mentees`
 - **Description**: Get list of all mentees for a specific mentor
 - **Parameters**:
@@ -776,11 +695,24 @@ Role ID 5 marked as INACTIVE for User ID 6
         "email": "string",
         "contact": "string",
         "status": "string",
-        "assignment_date": "string (YYYY-MM-DD)"
+        "assignment_date": "Date"
       }
     ]
   }
   ```
+
+---
+
+## Common Error Response Format
+
+```json
+{
+  "success": false,
+  "message": "Error description",
+  "status": "number",
+  "data": null
+}
+```
 
 ---
 
@@ -797,32 +729,10 @@ Role ID 5 marked as INACTIVE for User ID 6
 
 ---
 
-## Authentication Notes
-
-- The `/api/auth/login` endpoint should be called first to authenticate the user.
-- Upon successful login, the response includes user details and role information.
-- Subsequent API calls can use the user ID and role ID for authorization checks.
-- Token-based authentication may be implemented for production environments.
-
----
-
-## Error Handling
-
-All endpoints follow a consistent error response format:
-```json
-{
-  "success": false,
-  "message": "Error description",
-  "status": "error_code"
-}
-```
-
----
-
 ## Notes
 
-- All timestamps are in ISO-8601 format (UTC)
-- User IDs and Role IDs are numeric identifiers
-- Pagination is supported in user activity logs endpoint
-- PATCH method is used for partial updates
-- PUT method is used for full updates or status changes
+- All timestamps are in ISO-8601 format.
+- User IDs and Role IDs are numeric identifiers.
+- `PATCH` is used for partial updates.
+- `PUT` is used for full updates or status changes.
+- The documentation uses a consistent `success`, `message`, `status`, and `data` response envelope for all endpoints.
