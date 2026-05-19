@@ -5,7 +5,6 @@ import EvaluationContentMenu from "../components/assessment/evaluationcontent/Ev
 import SkillTaxonomyMenu from "../components/assessment/skilltaxonomy/SkillTaxonomyMenu";
 import Assessment from "../components/assessment/ComponentButtons";
 import AssessmentOrchestrator from "@/components/assessment/assessmentOrchestrator/assessmentOrchestrator";
-import QuestionByStatus from "@/components/assessment/evaluationcontent/QuestionByStatus";
 import QuestionByType from "@/components/assessment/evaluationcontent/QuestionByType";
 import GetQuestionsByDate from "@/components/assessment/evaluationcontent/GetQuestionsByDate";
 import UpdateQuestion from "@/components/assessment/evaluationcontent/UpdateQuestion";
@@ -54,6 +53,7 @@ import InterviewHistory from "@/components/assessment/interview/InterviewHistory
 
 import Mentees from "@/components/assessment/membership/Mentees";
 import SMEExpertiseForm from "@/components/assessment/assessmentOrchestrator/createTest/smeExpertiseForm";
+import InterviewFeedback from "@/components/assessment/interview/InterviewFeedback";
 
 function AppRoutes() {
   return (
@@ -181,6 +181,10 @@ function AppRoutes() {
           <Route
           path="interview/SMEInterviewDashboard"
           element={<SMEInterviewDashboard />}
+          />
+           <Route
+          path="interview/feedback"
+          element={<InterviewFeedback />}
           />
           {/* Membership model */}
           <Route

@@ -64,35 +64,6 @@ public class InterviewController{
         }
     }
 
-    // @GetMapping("/details/student/{studentId}/interview/{interviewId}")
-    // public InterviewDetails getDetails(@PathVariable int studentId,@PathVariable int interviewId){
-    //     try(Connection connection=getConnection()){
-    //         String query="SELECT i.interview_id,i.scheduled_at,i.mode,i.title,CONCAT(pi.first_name,' ',pi.last_name) AS interviewer\n" +
-    //                             "FROM interviews i\n" +
-    //                             "JOIN personal_informations pi ON pi.user_id=i.interviewer\n" +
-    //                             "WHERE i.student_id=? "+
-    //                             "AND i.interview_id=?";
-                       
-    //         PreparedStatement ps=connection.prepareStatement(query);
-    //         ps.setInt(1,studentId);
-    //         ps.setInt(2,interviewId);
-    //         ResultSet rs=ps.executeQuery();
-    //         InterviewDetails details=new InterviewDetails();
-
-    //         while(rs.next()){
-    //             details.setInterviewId(rs.getInt("interview_id"));
-    //             details.setScheduleDate(rs.getTimestamp("scheduled_at").toLocalDateTime());
-    //             details.setMode(rs.getString("mode"));
-    //             details.setTitle(rs.getString("title"));
-    //             details.setInterviewer(rs.getString("interviewer"));
-    //         }
-    //         return details;
-    //     }catch(Exception e){
-    //         e.printStackTrace();
-    //         return null;
-    //     }
-    // }
-
    @GetMapping("/details/{userId}/role/{roleId}/interview/{interviewId}")
     public InterviewDetails getInterviewDetails(
         @PathVariable int userId,
@@ -334,7 +305,6 @@ public List<InterviewList> getInterviewHistory(
          String query = """
             INSERT INTO interview_feedback (
                 interview_id,
-                sme_id,
                 start_time,
                 end_time,
                 communication_rating,
@@ -343,38 +313,36 @@ public List<InterviewList> getInterviewHistory(
                 feedback_comment,
                 recommendation
             )
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+            VALUES ( ?, ?, ?, ?, ?, ?, ?, ?)
         """;
    
                PreparedStatement statement =
                 connection.prepareStatement(query);
 
         statement.setLong(1, feedback.getInterviewId());
-        statement.setLong(2, feedback.getSmeId());
-
         statement.setTimestamp(
-                3,
+                2,
                 Timestamp.valueOf(feedback.getStartTime())
         );
 
         statement.setTimestamp(
-                4,
+                3,
                 Timestamp.valueOf(feedback.getEndTime())
         );
 
-        statement.setInt(5,
+        statement.setInt(4,
                 feedback.getCommunicationRating());
 
-        statement.setInt(6,
+        statement.setInt(5,
                 feedback.getProblemSolvingRating());
 
-        statement.setString(7,
+        statement.setString(6,
                 feedback.getStrengths());
 
-        statement.setString(8,
+        statement.setString(7,
                 feedback.getFeedbackComment());
 
-        statement.setString(9,
+        statement.setString(8,
                 feedback.getRecommendation());
 
         int rows = statement.executeUpdate();
