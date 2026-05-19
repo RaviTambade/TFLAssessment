@@ -4,10 +4,10 @@ import { Button } from "../../../ui/button";
 import { WEBAPI_DOTNET_URL } from "@/lib/utils";
  
 const options = {
-  runtime: ["Node.js", "JVM", ".NET", "Python Runtime", "Go"],
-  framework: ["React", "Angular", "Spring Boot", "Express"],
-  layer: ["Frontend", "Backend", "Database", "DevOps"],
-  language: ["JavaScript", "TypeScript", "Java", "Python", "C#"],
+  runtime: ["Node.js", "JVM", ".NET", "Python Runtime", "Go", ".net core"],
+  framework: ["React", "Angular", "Spring Boot", "Express",".net"],
+  layer: ["Frontend", "backend", "Database", "DevOps"],
+  language: ["JavaScript", "TypeScript", "Java", "Python", "C#", "DotNet"],
 };
  
 const sections = [
