@@ -47,7 +47,6 @@ const CreateTest = () => {
       
             console.log("Submitting Payload:", payload);
 
-            alert("Test Created Successfully");
             setTestName("");
             setDescription("");
             setDuration("");
