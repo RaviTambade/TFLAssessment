@@ -480,16 +480,18 @@ http://localhost:PORT/api
   ```json
   {
     "success": true,
-    "message": "Validation successful",
-    "status": 200,
     "data": {
-      "login_id": "number",
-      "user_id": "number",
-      "role_id": "number",
-      "login_time": "string (ISO-8601)",
-      "status": "string"
-    }
+        "fieldCount": 0,
+        "affectedRows": 1,
+        "insertId": 153,
+        "info": "",
+        "serverStatus": 2,
+        "warningStatus": 0,
+        "changedRows": 0
+    },
+    "message": "Validation successful"
   }
+
   ```
 
 ### 4.2 User Logout (Activity Tracking)
@@ -503,12 +505,18 @@ http://localhost:PORT/api
   ```json
   {
     "success": true,
-    "message": "Logout entry recorded successfully",
-    "status": 200,
     "data": {
-      "logout_time": "string (ISO-8601)"
-    }
+        "fieldCount": 0,
+        "affectedRows": 1,
+        "insertId": 0,
+        "info": "Rows matched: 1  Changed: 1  Warnings: 0",
+        "serverStatus": 2,
+        "warningStatus": 0,
+        "changedRows": 1
+    },
+    "message": "Logout entry recorded successfully"
   }
+
   ```
 
 ### 4.3 Get Recent Login Count (Last 24 Hours)
@@ -518,13 +526,9 @@ http://localhost:PORT/api
 - **Output Format**:
   ```json
   {
-    "success": true,
-    "message": "Login statistics retrieved",
-    "status": 200,
-    "data": {
-      "totalLogins24Hours": "number",
-      "timestamp": "string (ISO-8601)"
-    }
+  "success":true,
+  "data":{"totalLogins24Hours":5,"timestamp":"2026-05-19T06:50:47.417Z"},
+  "message":"Login statistics retrieved"
   }
   ```
 
@@ -536,13 +540,12 @@ http://localhost:PORT/api
   ```json
   {
     "success": true,
-    "message": "Average session time retrieved",
-    "status": 200,
     "data": {
-      "averageSessionTime": "number (minutes)",
-      "timestamp": "string (ISO-8601)"
-    }
+        "avgSessionTime": "2h 3m 13.11999999999989s"
+    },
+    "message": "Average session time retrieved"
   }
+
   ```
 
 ### 4.5 Get Active Sessions Count
@@ -553,12 +556,11 @@ http://localhost:PORT/api
   ```json
   {
     "success": true,
-    "message": "Total active sessions retrieved",
-    "status": 200,
     "data": {
-      "totalActiveSessions": "number",
-      "timestamp": "string (ISO-8601)"
-    }
+        "totalActiveSessions": 20,
+        "timestamp": "2026-05-19T07:01:25.866Z"
+    },
+    "message": "Total active sessions retrieved"
   }
   ```
 
@@ -570,18 +572,17 @@ http://localhost:PORT/api
   ```json
   {
     "success": true,
-    "message": "Live users retrieved",
-    "status": 200,
     "data": [
-      {
-        "user_id": "number",
-        "first_name": "string",
-        "last_name": "string",
-        "role_name": "string",
-        "login_time": "string (ISO-8601)",
-        "last_activity": "string (ISO-8601)"
-      }
-    ]
+        {
+            "fullName": "Sayali Kulkarni",
+            "loginTime": "2026-05-13T10:39:59.000Z",
+            "status": "ACTIVE"
+        },
+        {
+            "fullName": "Abhay Rathod",
+            "loginTime": "2026-05-14T05:42:04.000Z",
+            "status": "ACTIVE"
+        }]
   }
   ```
 
@@ -597,24 +598,25 @@ http://localhost:PORT/api
   ```json
   {
     "success": true,
-    "message": "Activity logs retrieved",
-    "status": 200,
     "data": [
-      {
-        "activity_id": "number",
-        "user_id": "number",
-        "first_name": "string",
-        "activity_type": "string (login/logout)",
-        "activity_time": "string (ISO-8601)",
-        "role_name": "string",
-        "session_duration": "number (minutes)"
-      }
-    ],
-    "pagination": {
-      "page": "number",
-      "limit": "number",
-      "total": "number"
-    }
+        {
+            "session_id": 6,
+            "user_id": 6,
+            "full_name": "Arnav Tolahunase",
+            "role": "Admin",
+            "login_time": "2026-05-19T06:56:06.000Z",
+            "logout_time": "2026-05-19T06:59:13.000Z",
+            "session_duration_minutes": 3
+        },
+        {
+            "session_id": 6,
+            "user_id": 6,
+            "full_name": "Arnav Tolahunase",
+            "role": "Student",
+            "login_time": "2026-05-19T06:56:06.000Z",
+            "logout_time": "2026-05-19T06:59:13.000Z",
+            "session_duration_minutes": 3
+        }]
   }
   ```
 
@@ -632,12 +634,13 @@ http://localhost:PORT/api
   ```json
   {
     "success": true,
-    "message": "Mentees count retrieved successfully",
-    "status": 200,
-    "data": {
-      "mentee_count": "number"
+    "data": [
+        {
+            "menteeCount": 0
+        }
+    ],
+    "message": "Mentees count retrieved successfully"
     }
-  }
   ```
 
 ### 5.2 Get Mentees List
