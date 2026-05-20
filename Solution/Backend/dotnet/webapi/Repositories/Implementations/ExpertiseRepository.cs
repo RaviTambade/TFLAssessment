@@ -12,7 +12,6 @@ public class ExpertiseRepository : IExpertiseRepository
     {
         _configuration = configuration;
     }
-
     public async Task<int> AddSmeExpertise(Expertise expertise)
     {
         string connectionString =

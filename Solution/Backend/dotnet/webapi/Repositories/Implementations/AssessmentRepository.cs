@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using backend.DTO.Responses;
 using backend.DTO.Requests;
 
-
 namespace backend.Repositories.Interfaces;
 public class AssessmentRepository : IAssessmentRepository
 {
