@@ -119,7 +119,7 @@ const EvaluationDashboard = () => {
                                 key={index}
                                 className="border-0 shadow-elegant hover:shadow-glow transition-all duration-300 rounded-3xl overflow-hidden group hover:-translate-y-2"
                             >
-                                <CardContent className="p-4 text-center h-full flex flex-col">
+                                <CardContent className="p-2 text-center h-full flex flex-col">
 
                                     {/* ICON */}
                                     <div
