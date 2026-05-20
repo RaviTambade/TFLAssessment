@@ -13,37 +13,37 @@ import GetQuestionsByDate from "./GetQuestionsByDate";
 const dashboardItems = [
   {
     title: "Questions by Status",
-    description: "Filter questions based on current status.",
     icon: BarChart3,
-    color: "from-violet-500 to-purple-500",
-    iconColor: "text-violet-500",
+    color: "from-red-500 to-orange-500",
+    bg: "bg-red-50",
+    iconColor: "text-red-500",
   },
   {
     title: "Questions by Type",
-    description: "View questions categorized by type.",
     icon: Tags,
-    color: "from-cyan-500 to-sky-500",
-    iconColor: "text-cyan-500",
+    color: "from-red-500 to-orange-500",
+    bg: "bg-red-50",
+    iconColor: "text-red-500",
   },
   {
     title: "Questions by Difficulty",
-    description: "Analyze questions based on difficulty level.",
     icon: Star,
-    color: "from-pink-500 to-rose-500",
-    iconColor: "text-pink-500",
+    color: "from-red-500 to-orange-500",
+    bg: "bg-red-50",
+    iconColor: "text-red-500",
   },
   {
     title: "Questions by Date",
-    description: "Search and filter questions using dates.",
     icon: CalendarDays,
-    color: "from-indigo-500 to-blue-500",
-    iconColor: "text-indigo-500",
+    color: "from-red-500 to-orange-500",
+    bg: "bg-red-50",
+    iconColor: "text-red-500",
   },
 ];
 
 const QuestionsPage = () => {
-  const [selectedModule, setSelectedModule] = useState("");
 
+  const [selectedModule, setSelectedModule] = useState("");
   const { ref, isVisible } = useScrollAnimation();
 
   return (
@@ -59,10 +59,6 @@ const QuestionsPage = () => {
                 Questions
               </span>
             </h2>
-
-            <p className="text-lg sm:text-xl text-muted-foreground max-w-3xl mx-auto">
-              Manage and organize evaluation questions efficiently.
-            </p>
           </div>
 
           {/* GRID */}
@@ -92,9 +88,6 @@ const QuestionsPage = () => {
                           {item.title}
                         </p>
 
-                        <p className="text-gray-500 text-xs mt-1 max-w-[140px]">
-                          {item.description}
-                        </p>
                       </div>
 
                       <Icon
@@ -105,8 +98,7 @@ const QuestionsPage = () => {
                     <Button
                       className={`w-full bg-gradient-to-r ${item.color} text-white border-0 rounded-xl mt-2`}
                     >
-                      Open Module
-
+                      View
                       <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                     </Button>
 

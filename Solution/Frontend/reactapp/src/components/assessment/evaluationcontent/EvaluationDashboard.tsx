@@ -26,7 +26,7 @@ const dashboardItems = [
     {
         title: "All Questions",
         icon: FileText,
-        path: "/questions",
+        path: "/models/evaluationcontent/viewquestion",
         color: "from-red-500 to-orange-500",
         bg: "bg-red-50",
         iconColor: "text-red-500",
