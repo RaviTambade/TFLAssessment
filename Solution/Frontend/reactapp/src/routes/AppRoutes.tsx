@@ -40,20 +40,23 @@ import QuestionOptions from "@/components/assessment/assessmentOrchestrator/crea
 
 import QuestionByConceptId from "@/components/assessment/evaluationcontent/QuestionByConceptId";
 import Dashboard from "@/components/assessment/membership/dashboard";
-import DashboardSME from "@/components/assessment/membership/dashboardsme";
+import EvaluationDashboard from "@/components/assessment/evaluationcontent/EvaluationDashboard";
+// import GetQuestionSme from "@/components/assessment/evaluationcontent/getQuestionsme";
+
+
 // import EvaluationContentSme from "@/components/assessment/evaluationcontent/EvaluationContents";
 import Question from "@/components/assessment/assessmentOrchestrator/applyAssessment";
 import RTUpdateQuestion from "@/components/assessment/evaluationcontent/RTUpdateQuestion";
 import ScheduleInterview from "@/components/assessment/interview/ScheduleInterview";
 import InterviewMenu from "@/components/assessment/interview/interviewmenu";
 import ShowInterviewDetailsStudent from "@/components/assessment/interview/ShowInterviewDetailsStudent";
-import GetQuestionSme from "@/components/assessment/evaluationcontent/getQuestionsme";
 import UpcomingInterviews from "@/components/assessment/interview/UpcomingInterviews";
 import InterviewHistory from "@/components/assessment/interview/InterviewHistory";
 
 import Mentees from "@/components/assessment/membership/Mentees";
 import SMEExpertiseForm from "@/components/assessment/assessmentOrchestrator/createTest/smeExpertiseForm";
 import InterviewFeedback from "@/components/assessment/interview/InterviewFeedback";
+import DashboardSME from "@/components/assessment/membership/dashboardsme";
 
 function AppRoutes() {
   return (
@@ -67,6 +70,11 @@ function AppRoutes() {
             path="evaluationcontent/componentmenu"
             element={<EvaluationContentMenu />}
           />
+          <Route path="evaluationcontent/dashboard" element={<EvaluationDashboard />} />
+          {/* <Route
+          path="evaluationcontent/sme"
+          element={<GetQuestionSme />}
+          /> */}
           {/* Question by Type */}
           <Route
             path="evaluationcontent/questionbytype"

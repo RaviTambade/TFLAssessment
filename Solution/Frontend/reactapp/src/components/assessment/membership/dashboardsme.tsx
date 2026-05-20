@@ -114,7 +114,7 @@ const DashboardSME = () => {
 
           <Card
           className="cursor-pointer hover:shadow-lg transition"
-           onClick={() => navigate("/models/evaluationcontent/sme")}>
+           onClick={() => navigate("/models/evaluationcontent/dashboard")}>
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
@@ -125,6 +125,8 @@ const DashboardSME = () => {
               </div>
             </CardContent>
           </Card>
+
+          
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">

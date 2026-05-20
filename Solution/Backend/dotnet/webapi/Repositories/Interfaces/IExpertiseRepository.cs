@@ -3,5 +3,5 @@ namespace backend.Repositories.Interfaces;
 
 public interface IExpertiseRepository
 {
-    Task<int> AddSmeExpertise(expertise expertize);
+    Task<int> AddSmeExpertise(Expertise expertise);
 }

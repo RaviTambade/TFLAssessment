@@ -1,6 +1,3 @@
-
-
-
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using backend.Models;
@@ -26,12 +23,28 @@ public class CreateTestController : ControllerBase
         _logger = logger;
     }
 
-    [HttpGet("questions")]
-    public async Task<IActionResult> GetQuestionsByConceptAsync(
-        [FromQuery] string concept)
-        
+    //http://localhost:5201/api/CreateTest/questions/{userId}
+    [HttpGet("questions/{userId}")]
+    public async Task<IActionResult> GetQuestionsBySMEAsync(
+        [FromRoute] long userId)
     {
-        return Ok(await _service.GetQuestionsByConceptAsync(concept));
+        try
+        {
+            if (userId <= 0)
+                return BadRequest(new { message = "Invalid userId supplied." });
+
+            var questions = await _service.GetQuestionsBySMEAsync(userId);
+
+            if (questions == null || !questions.Any())
+                return NotFound(new { message = "No questions found for this user." });
+
+            return Ok(questions);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error fetching questions for userId {UserId}", userId);
+            return StatusCode(500, new { message = "Internal server error", error = ex.Message });
+        }
     }
 
 
@@ -40,8 +53,20 @@ public class CreateTestController : ControllerBase
     //http://localhost:5201/api/CreateTest/create
     public async Task<IActionResult> CreateTest([FromBody] CreateTestRequests dto)
     {
-        var id = await _service.CreateTestAsync(dto);
-        return Ok(new { TestId = id });
+        try
+        {
+            var id = await _service.CreateTestAsync(dto);
+            return Ok(new { TestId = id });
+        }
+        catch (ArgumentException ex)
+        {
+            return BadRequest(new { message = ex.Message });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error creating test");
+            return StatusCode(500, new { message = "Internal server error", error = ex.Message });
+        }
     }
 
     /// <summary>

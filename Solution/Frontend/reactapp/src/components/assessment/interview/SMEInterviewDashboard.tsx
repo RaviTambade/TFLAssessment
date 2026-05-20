@@ -18,13 +18,9 @@ import {
 const SMEInterviewDashboard = () => {
 
   const [interviewsData, setInterviewsData] =useState([]);
-
   const [selectedType, setSelectedType] = useState("");
-
   const [selectedInterview, setSelectedInterview] =useState(null);
-
   const storedUser = sessionStorage.getItem("current");
-
   const user = storedUser ? JSON.parse(storedUser) : {};
   const navigate = useNavigate();
 
@@ -47,13 +43,9 @@ const SMEInterviewDashboard = () => {
 
 
   const totalInterviews =interviewsData.length;
-
   const upcomingInterviews =interviewsData.filter((item) => item.status === "SCHEDULED").length;
-
   const scheduledInterviews =interviewsData.filter((item) => item.status === "SCHEDULED").length;
-
   const completedInterviews =interviewsData.filter((item) => item.status === "COMPLETED").length;
-
   const canceledInterviews = interviewsData.filter((item) => item.status === "CANCELED").length;
 
 

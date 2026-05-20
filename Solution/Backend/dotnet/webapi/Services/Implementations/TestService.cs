@@ -13,8 +13,8 @@ namespace backend.Services
             _repo = repo;
         }
 
-        public Task<List<Questions>> GetQuestionsByConceptAsync(string concept)
-             => _repo.GetQuestionsByConceptAsync(concept);
+        public Task<List<TestQuestions>> GetQuestionsBySMEAsync(long userId)
+             => _repo.GetQuestionsBySMEAsync(userId);
 
         public Task<long> CreateTestAsync(CreateTestRequests dto)
             => _repo.CreateTestAsync(dto);

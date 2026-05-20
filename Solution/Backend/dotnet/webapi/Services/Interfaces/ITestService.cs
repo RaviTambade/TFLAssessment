@@ -5,7 +5,7 @@ namespace backend.Services.Interfaces
 {
     public interface ICreateTestService
     {
-        Task<List<Questions>> GetQuestionsByConceptAsync(string concept);
+        Task<List<TestQuestions>> GetQuestionsBySMEAsync(long userId);
         Task<long> CreateTestAsync(CreateTestRequests dto);
         Task<bool> CancelTestAsync(int id);
         
