@@ -112,10 +112,10 @@ const ShowInterviewDetailsStudent = () => {
 
             <div className=" p-5 rounded-xl border border-orange-300 shadow-sm hover:shadow-md transition">
               <p className="text-sm text-orange-900 font-medium">
-                Scheduled Date
+                Scheduled Date and Time
               </p>
               <h4 className="text-lg font-semibold text-gray-800 mt-1">
-                {interviewDetail.scheduleDate}
+                {new Date(interviewDetail.scheduleDate).toLocaleString()}
               </h4>
             </div>
 
