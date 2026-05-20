@@ -82,11 +82,11 @@ const QuestionByStatus = () => {
             Question Status
           </label>
 
-          <div className="flex flex-wrap gap-4">
+          <div className="flex flex-wrap gap-100">
             {QUESTION_STATUSES.map((status) => (
               <label
                 key={status}
-                className={`flex items-center gap-2 px-4 py-2 rounded-lg border cursor-pointer transition
+                className={`flex items-center gap-14 px-14 py-2 rounded-lg border cursor-pointer transition
                   ${
                     selectedStatus === status ? "border-orange-400 bg-orange-100 text-orange-600" : "border-border hover:border-orange-300"
                   }`}
