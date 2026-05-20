@@ -68,25 +68,19 @@ const QuestionByType = () => {
   }, [selectedType]);
 
   return (
-    <section className="py-12 bg-gradient-to-b from-orange-50/40 to-background">
+    <section className="py-5 bg-gradient-to-b from-orange-50/40 to-background">
       <div className="container mx-auto px-4 max-w-5xl">
         
-        {/* Header */}
         <div className="mb-8">
-          <h1 className="text-3xl sm:text-4xl font-extrabold text-foreground tracking-tight">
+          <h1 className="text-3xl sm:text-2xl font-extrabold text-foreground tracking-tight">
             View Questions By Type
           </h1>
-          <p className="text-sm sm:text-base text-muted-foreground mt-2">
-            Select a category to load questions.
-          </p>
         </div>
 
-        {/* Radio Buttons */}
         <div className="mb-8">
           <label className="text-sm font-semibold text-foreground mb-3 block">
             Question Type
           </label>
-
           <div className="flex flex-wrap gap-4">
             {QUESTION_TYPES.map((type) => (
               <label
@@ -112,7 +106,6 @@ const QuestionByType = () => {
           </div>
         </div>
 
-        {/* States */}
         {loading && (
           <div className="rounded-lg border border-border bg-card p-4 text-sm text-muted-foreground animate-pulse shadow-sm">
             Loading questions...

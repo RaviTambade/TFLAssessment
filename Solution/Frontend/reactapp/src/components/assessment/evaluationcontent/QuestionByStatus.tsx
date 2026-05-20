@@ -67,17 +67,13 @@ const QuestionByStatus = () => {
   }, [selectedStatus]);
 
   return (
-    <section className="py-12 bg-gradient-to-b from-orange-50/40 to-background">
+    <section className="py-5 bg-gradient-to-b from-orange-50/40 to-background">
       <div className="container mx-auto px-4 max-w-5xl">
         
-        {/* Header */}
         <div className="mb-8">
-          <h1 className="text-3xl sm:text-4xl font-extrabold text-foreground tracking-tight">
+          <h1 className="text-3xl sm:text-2xl font-extrabold text-foreground tracking-tight">
             View Questions By Status
           </h1>
-          <p className="text-sm sm:text-base text-muted-foreground mt-2">
-            Select a status to load questions.
-          </p>
         </div>
 
         {/* Radio Buttons */}
