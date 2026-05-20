@@ -14,7 +14,7 @@ type Question = {
 };
 
 const fetchQuestionsByStatus = async (status: string) => {
-  const res = await fetch(`${WEBAPI_JAVA_URL}/questions?status=${status}`);
+  const res = await fetch(`${WEBAPI_JAVA_URL}/filter/questions?status=${status}`);
   if (!res.ok) throw new Error('Failed to fetch');
   return res.json();
 };

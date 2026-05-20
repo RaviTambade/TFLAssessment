@@ -11,10 +11,10 @@ import UpdateQuestion from "@/components/assessment/evaluationcontent/UpdateQues
 import QuestionsByConcept from "@/components/assessment/evaluationcontent/QuestionsByConcept";
 import QuestionPage from "@/components/assessment/evaluationcontent/QuestionsPage";
 import SMEInsertQuestion from "@/components/assessment/evaluationcontent/SMEInsertQuestion";
-import MentorReviewQuestion from "@/components/assessment/evaluationcontent/MentorReviewQuestion";
 import QuestionDetails from "@/components/assessment/evaluationcontent/QuestionDetails";
 import EditQuestion from "@/components/assessment/evaluationcontent/EditQuestion";
 import ViewRuntimes from "@/components/assessment/skilltaxonomy/ViewRuntimes";
+import Getallquestions from "@/components/assessment/evaluationcontent/Getallquestions";
 // import AddConcept from "@/components/assessment/skilltaxonomy/AddConcept";
 import UpcomingAssessment from "../components/assessment/assessmentOrchestrator/UpcomingAssessment";
 import AllAssessment from "@/components/assessment/assessmentOrchestrator/AllAssessment";
@@ -89,7 +89,10 @@ function AppRoutes() {
             path="evaluationcontent/getquestionsbydate"
             element={<GetQuestionsByDate />}
           />
-          
+            <Route
+            path="evaluationcontent/GetAllQuestions"
+            element={<Getallquestions />}
+          />
           {/* Skill Taxonomy */}
           <Route
             path="skilltaxonomy/skilltaxonomy-menu"
@@ -143,10 +146,7 @@ function AppRoutes() {
             path="evaluationcontent/insertquestion"
             element={<SMEInsertQuestion />}
           />
-          <Route
-            path="evaluationcontent/reviewquestion"
-            element={<MentorReviewQuestion />}
-          />
+         
           <Route index element={<Assessment />} />
           <Route
             path="evaluationcontent/viewprojectinfo"

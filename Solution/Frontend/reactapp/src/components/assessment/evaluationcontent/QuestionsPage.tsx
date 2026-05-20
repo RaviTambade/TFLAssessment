@@ -9,6 +9,7 @@ import QuestionByType from "./QuestionByType";
 import QuestionByStatus from "./QuestionByStatus";
 import QuestionByDifficulty from "./QuestionByDifficulty";
 import GetQuestionsByDate from "./GetQuestionsByDate";
+import Getallquestions from "./Getallquestions";
 
 const dashboardItems = [
   {
@@ -127,6 +128,10 @@ const QuestionsPage = () => {
             {selectedModule === "Questions by Date" && (
               <GetQuestionsByDate />
             )}
+
+            <Getallquestions/>
+
+          
 
           </div>
         </div>

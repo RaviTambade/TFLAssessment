@@ -18,7 +18,7 @@ const QuestionsByDifficulty = () => {
 
   const fetchQuestions = async () => {
     try {
-      const response = await fetch(`${WEBAPI_JAVA_URL}/questions`);
+      const response = await fetch(`${WEBAPI_JAVA_URL}/filter/questions`);
       const data = await response.json();
       setQuestions(data);
     } catch (error) {
