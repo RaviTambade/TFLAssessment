@@ -57,6 +57,7 @@ import Mentees from "@/components/assessment/membership/Mentees";
 import SMEExpertiseForm from "@/components/assessment/assessmentOrchestrator/createTest/smeExpertiseForm";
 import InterviewFeedback from "@/components/assessment/interview/InterviewFeedback";
 import DashboardSME from "@/components/assessment/membership/dashboardsme";
+import QuestionFeedback from "@/components/assessment/interview/QuestionFeedback";
 
 function AppRoutes() {
   return (
@@ -172,13 +173,13 @@ function AppRoutes() {
           <Route path="interview/show-details-student" element={<ShowInterviewDetailsStudent />} />
           <Route path="interview/upcoming-interviews" element={<UpcomingInterviews />} />
          <Route path="interview/interviewhistory" element={<InterviewHistory/>}/>
-
           <Route path="interview/interview-menu" element={<InterviewMenu />} />
           <Route path="interview/scheduleinterview" element={<ScheduleInterview />} />
           <Route path="interview/show-details-student/:id" element={<ShowInterviewDetailsStudent />} />
           <Route path="interview/upcoming-interviews" element={<UpcomingInterviews />} />
           <Route path="interview/SMEInterviewDashboard" element={<SMEInterviewDashboard />} />
           <Route path="interview/feedback/:id" element={<InterviewFeedback />} />
+          <Route path="interview/question/feedback/:id" element={<QuestionFeedback/>} />
           {/* Membership model */}
           <Route
             path="membership/ChangePassword"
