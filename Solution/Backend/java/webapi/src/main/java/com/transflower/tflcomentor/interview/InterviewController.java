@@ -2,6 +2,7 @@ package com.transflower.tflcomentor.interview;
 import com.transflower.tflcomentor.configuration.DBConfig;
 import com.transflower.tflcomentor.interview.dto.enums.InterviewStatus;
 import com.transflower.tflcomentor.interview.dto.request.InterviewFeedback;
+import com.transflower.tflcomentor.interview.dto.request.QuestionFeedback;
 import com.transflower.tflcomentor.interview.dto.request.ScheduleInterview;
 import com.transflower.tflcomentor.interview.dto.response.InterviewDetails;
 import com.transflower.tflcomentor.interview.dto.response.InterviewList;
@@ -391,4 +392,21 @@ public List<InterviewDetails> getInterviews(@PathVariable int roleId, @PathVaria
 
     return interviews;
  }
+
+ @PostMapping("/question/feedback")
+ public void questionFeedback(@RequestBody QuestionFeedback feedback){
+    try(Connection connection=getConnection()){
+        String query="INSERT INTO interview_question_feedback(interview_id,question,confidence,correctness,comment) VALUES(?,?,?,?,?)";
+        PreparedStatement ps=connection.prepareStatement(query);
+        ps.setLong(1, feedback.getInterviewId());
+        ps.setString(2, feedback.getQuestion());
+        ps.setInt(3,feedback.getConfidence());
+        ps.setInt(4,feedback.getCorrectness());
+        ps.setString(5,feedback.getComment());
+        ps.executeUpdate();
+    }catch(Exception e){
+        e.printStackTrace();
+    }
+ }
+
 }
