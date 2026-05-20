@@ -4,7 +4,6 @@ public class CreateTestRequests
 {
     public long UserId { get; set; }
     public long UserRolesId { get; set; }
-    public long SmeId { get; set; }
     public string? Title { get; set; }
     public long Duration { get; set; }
     public string? SkillLevel { get; set; }
@@ -23,13 +22,6 @@ public class CreateTestRequests
     {
         get => UserRolesId;
         set => UserRolesId = value;
-    }
-
-    [System.Text.Json.Serialization.JsonPropertyName("sme_id")]
-    public long SmeIdSnakeCase
-    {
-        get => SmeId;
-        set => SmeId = value;
     }
 
     [System.Text.Json.Serialization.JsonPropertyName("skill_level")]
