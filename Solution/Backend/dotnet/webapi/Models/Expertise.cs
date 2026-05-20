@@ -1,15 +1,15 @@
 namespace backend.Models;
 public class Expertise
 {
-    public int id {get;set;}
+    public int Id { get; set; }
 
-    public long user_id  {get;set;}
+    public long User_Id  {get;set;}
 
-    public string runtime {get;set;}
+    public string Runtime { get; set; } = string.Empty;
 
-    public string framework {get; set;}
+    public string Framework { get; set; } = string.Empty;
 
-    public string layer {get; set;}
+    public string Layer { get; set; } = string.Empty;
 
-    public string language {get; set;}
+    public string Language { get; set; } = string.Empty;
 }

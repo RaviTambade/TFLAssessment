@@ -105,10 +105,10 @@ public class QuestionController {
         return service.getQuestions(status);
     }
 
-    @GetMapping("/concepts/{conceptId}/questions")
-    // http://localhost:8080/api/questions/concepts/1/questions
-    public List<Question> getQuestionsByConcept(@PathVariable Long conceptId) {
-        return service.getQuestionsByConceptId(conceptId);
+    @GetMapping("/concepts/{concept}")
+    // http://localhost:8080/api/questions/concepts/RESTAPI
+    public List<Question> getQuestionsByConcept(@PathVariable String concept) {
+        return service.getQuestionsByConcept(concept);
     }
 
 
@@ -129,5 +129,11 @@ public class QuestionController {
     public String insertCompleteQuestion(@RequestBody CompleteQuestion question) {
         service.insertCompleteQuestion(question);
         return "Complete Question Inserted Successfully";
+    }
+
+    @GetMapping("/concepts")
+    // http://localhost:8080/api/questions/concepts
+    public List<String> getConcepts() {
+        return service.getConcepts();
     }
 }

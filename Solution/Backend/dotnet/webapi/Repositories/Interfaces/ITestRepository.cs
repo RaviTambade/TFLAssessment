@@ -5,7 +5,7 @@ namespace backend.Repositories.Interfaces
 {
     public interface ICreateTestRepository
     {
-        public Task<List<Questions>> GetQuestionsByConceptAsync(string concept);
+        public Task<List<TestQuestions>> GetQuestionsBySMEAsync(long userId);
         Task<long> CreateTestAsync(CreateTestRequests dto);
          Task<bool> CancelTestAsync(int id);
     }

@@ -103,8 +103,8 @@ public class QuestionsServiceImpl implements QuestionService {
     }
 
     @Override
-    public List<Question> getQuestionsByConceptId(Long conceptId) {
-        return repository.getQuestionsByConceptId(conceptId);
+    public List<Question> getQuestionsByConcept(String concept) {
+        return repository.getQuestionsByConcept(concept);
     }
 
     @Override
@@ -114,5 +114,10 @@ public class QuestionsServiceImpl implements QuestionService {
     @Override
     public void insertCompleteQuestion(CompleteQuestion q) {
         repository.insertCompleteQuestion(q);
+    }
+
+    @Override
+    public List<String> getConcepts() {
+        return repository.getConcepts();
     }
 }

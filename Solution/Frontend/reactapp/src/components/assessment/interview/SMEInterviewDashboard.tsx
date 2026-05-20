@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 import { Card, CardContent } from "../../ui/card";
 import { Button } from "../../ui/button";
@@ -16,30 +17,23 @@ import {
 
 const SMEInterviewDashboard = () => {
 
-  const [interviewsData, setInterviewsData] =
-    useState([]);
-
-  const [selectedType, setSelectedType] =
-    useState("");
-
-  const [selectedInterview, setSelectedInterview] =
-    useState(null);
+  const [interviewsData, setInterviewsData] =useState([]);
+  const [selectedType, setSelectedType] = useState("");
+  const [selectedInterview, setSelectedInterview] =useState(null);
+  const storedUser = sessionStorage.getItem("current");
+  const user = storedUser ? JSON.parse(storedUser) : {};
+  const navigate = useNavigate();
 
   useEffect(() => {
 
-    fetchInterviews();
-
-  }, []);
+    fetchInterviews();}, []);
 
   const fetchInterviews = async () => {
 
     try {
 
-      const response = await axios.get(
-        "http://localhost:8080/api/interview"
-      );
-
-      setInterviewsData(response.data);
+      const response = await fetch(`http://localhost:8080/api/interview/${user.role_id}/${user.userid}`);
+      setInterviewsData(await response.json());
 
     } catch (error) {
 
@@ -49,24 +43,12 @@ const SMEInterviewDashboard = () => {
 
 
   const totalInterviews =interviewsData.length;
-
   const upcomingInterviews =interviewsData.filter((item) => item.status === "SCHEDULED").length;
-
   const scheduledInterviews =interviewsData.filter((item) => item.status === "SCHEDULED").length;
+  const completedInterviews =interviewsData.filter((item) => item.status === "COMPLETED").length;
+  const canceledInterviews = interviewsData.filter((item) => item.status === "CANCELED").length;
 
-  const completedInterviews =
-    interviewsData.filter(
-      (item) => item.status === "COMPLETED"
-    ).length;
 
-  const canceledInterviews =
-    interviewsData.filter(
-      (item) => item.status === "CANCELED"
-    ).length;
-
-  // =========================================
-  // FILTER LOGIC
-  // =========================================
   const getFilteredData = () => {
 
     switch (selectedType) {
@@ -292,9 +274,6 @@ const SMEInterviewDashboard = () => {
                         {item.title}
                       </h3>
 
-                      <p className="text-muted-foreground text-sm mt-1">
-                        Interview ID : {item.interviewId}
-                      </p>
 
                     </div>
 
@@ -320,22 +299,11 @@ const SMEInterviewDashboard = () => {
 
                       <CalendarDays className="h-5 w-5 text-primary" />
 
-                      <span>
-                        {item.scheduleDate}
-                      </span>
+                      {new Date(item.scheduleDate).toLocaleDateString("en-GB")}
 
                     </div>
 
-                    <div className="flex items-center gap-3">
-
-                      <Monitor className="h-5 w-5 text-primary" />
-
-                      <span>
-                        {item.mode}
-                      </span>
-
-                    </div>
-
+                    
                     <div className="flex items-center gap-3">
 
                       <User className="h-5 w-5 text-primary" />
@@ -353,7 +321,7 @@ const SMEInterviewDashboard = () => {
                     variant="hero"
                     className="w-full mt-6 rounded-xl"
                     onClick={() =>
-                      setSelectedInterview(item)
+                  navigate(`/models/interview/show-details-student/${item.interviewId}`)
                     }
                   >
                     View Full Details
@@ -362,128 +330,6 @@ const SMEInterviewDashboard = () => {
                 </div>
               </Card>
             ))}
-          </div>
-        )}
-
-        {/* DETAILS */}
-        {selectedInterview && (
-
-          <div className="mt-16">
-
-            <Card className="border-0 rounded-3xl shadow-elegant overflow-hidden">
-
-              <div className="bg-gradient-hero p-8">
-
-                <div className="flex justify-between items-center mb-8">
-
-                  <div>
-
-                    <h2 className="text-3xl font-bold text-foreground">
-                      Interview Details
-                    </h2>
-
-                  </div>
-
-                  <Button
-                    variant="hero"
-                    onClick={() =>
-                      setSelectedInterview(null)
-                    }
-                  >
-                    Close
-                  </Button>
-                </div>
-
-                {/* DETAILS GRID */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-
-                  <Card className="rounded-2xl border-0 shadow-md">
-                    <CardContent className="p-5">
-
-                      <p className="text-sm text-muted-foreground">
-                        Interview ID
-                      </p>
-
-                      <h3 className="text-xl font-bold mt-2">
-                        {selectedInterview.interviewId}
-                      </h3>
-
-                    </CardContent>
-                  </Card>
-
-                  <Card className="rounded-2xl border-0 shadow-md">
-                    <CardContent className="p-5">
-
-                      <p className="text-sm text-muted-foreground">
-                        Title
-                      </p>
-
-                      <h3 className="text-xl font-bold mt-2">
-                        {selectedInterview.title}
-                      </h3>
-
-                    </CardContent>
-                  </Card>
-
-                  <Card className="rounded-2xl border-0 shadow-md">
-                    <CardContent className="p-5">
-
-                      <p className="text-sm text-muted-foreground">
-                        Status
-                      </p>
-
-                      <h3 className="text-xl font-bold mt-2">
-                        {selectedInterview.status}
-                      </h3>
-
-                    </CardContent>
-                  </Card>
-
-                  <Card className="rounded-2xl border-0 shadow-md">
-                    <CardContent className="p-5">
-
-                      <p className="text-sm text-muted-foreground">
-                        Mode
-                      </p>
-
-                      <h3 className="text-xl font-bold mt-2">
-                        {selectedInterview.mode}
-                      </h3>
-
-                    </CardContent>
-                  </Card>
-
-                  <Card className="rounded-2xl border-0 shadow-md">
-                    <CardContent className="p-5">
-
-                      <p className="text-sm text-muted-foreground">
-                        Schedule Date
-                      </p>
-
-                      <h3 className="text-xl font-bold mt-2">
-                        {selectedInterview.scheduleDate}
-                      </h3>
-
-                    </CardContent>
-                  </Card>
-
-                  <Card className="rounded-2xl border-0 shadow-md">
-                    <CardContent className="p-5">
-
-                      <p className="text-sm text-muted-foreground">
-                        Interviewer
-                      </p>
-
-                      <h3 className="text-xl font-bold mt-2">
-                        {selectedInterview.interviewer}
-                      </h3>
-
-                    </CardContent>
-                  </Card>
-
-                </div>
-              </div>
-            </Card>
           </div>
         )}
       </div>

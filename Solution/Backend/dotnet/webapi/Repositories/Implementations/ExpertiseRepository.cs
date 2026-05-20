@@ -6,18 +6,19 @@ namespace backend.Repositories.Implementations;
 
 public class ExpertiseRepository : IExpertiseRepository
 {
-    private readonly AppDbContext _context;
+    private readonly IConfiguration _configuration;
 
-    public ExpertiseRepository(AppDbContext context)
+    public ExpertiseRepository(IConfiguration configuration)
     {
-        _context = context;
+        _configuration = configuration;
     }
 
     public async Task<int> AddSmeExpertise(Expertise expertize)
     
     {
         string connectionString =
-        "server=localhost;port=3306;database=tflcomentor_db;user=root;password=password";
+            _configuration.GetConnectionString("DefaultConnection")
+            ?? throw new InvalidOperationException("DefaultConnection is not configured.");
 
         string query = @"
         INSERT INTO expertise
@@ -41,24 +42,50 @@ public class ExpertiseRepository : IExpertiseRepository
         {
             await con.OpenAsync();
 
-            MySqlCommand cmd = new MySqlCommand(query, con);
+            using (MySqlCommand cmd = new MySqlCommand(query, con))
+            {
+                cmd.Parameters.AddWithValue("@UserId", expertize.User_Id);
 
-            cmd.Parameters.AddWithValue("@Userid",expertize.user_id);
 
-            cmd.Parameters.AddWithValue("@Runtime",expertize.runtime);
+                cmd.Parameters.AddWithValue("@Framework", expertize.Framework);
 
-            cmd.Parameters.AddWithValue("@Framework",expertize.framework);
+                cmd.Parameters.AddWithValue("@Layer", expertize.Layer);
 
-            cmd.Parameters.AddWithValue("@Layer",expertize.layer);
+                cmd.Parameters.AddWithValue("@Language", expertize.Language);
 
-            cmd.Parameters.AddWithValue("@Language",expertize.language);
+                int rows = await cmd.ExecuteNonQueryAsync();
 
-            int rows =
-                await cmd.ExecuteNonQueryAsync();
+                return rows;
+            }
+        }
+    }
 
-            await con.CloseAsync();
-
-            return rows;
+    public async Task SeedExpertiseAsync()
+    {
+        // Only seed if table is empty
+        string connectionString =
+            _configuration.GetConnectionString("DefaultConnection")
+            ?? throw new InvalidOperationException("DefaultConnection is not configured.");
+        string countQuery = "SELECT COUNT(*) FROM expertise";
+        using (MySqlConnection con = new MySqlConnection(connectionString))
+        {
+            await con.OpenAsync();
+            using (MySqlCommand countCmd = new MySqlCommand(countQuery, con))
+            {
+                object? countResult = await countCmd.ExecuteScalarAsync();
+                long count = Convert.ToInt64(countResult);
+                if (count == 0)
+                {
+                    string insertQuery = @"
+                    INSERT INTO expertise (user_id, runtime, framework, layer, language)
+                    VALUES (1, 'Node.js', 'Express', 'Backend', 'JavaScript');
+                ";
+                    using (MySqlCommand insertCmd = new MySqlCommand(insertQuery, con))
+                    {
+                        await insertCmd.ExecuteNonQueryAsync();
+                    }
+                }
+            }
         }
     }
 }

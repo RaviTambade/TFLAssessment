@@ -37,8 +37,9 @@ public interface QuestionService {
 
     public void updateQuestionStatus(long questionId, QuestionStatus status);
 
-    public  List<Question> getQuestionsByConceptId(Long conceptId);
+    public  List<Question> getQuestionsByConcept(String concept);
 
     public int getQuestionCountByConcept(String concept);
     public void insertCompleteQuestion(CompleteQuestion q);
+    public List<String> getConcepts();
 }

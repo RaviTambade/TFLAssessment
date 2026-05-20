@@ -2,197 +2,137 @@ import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
-import {  WEBAPI_DOTNET_URL, WEBAPI_NODE_URL ,WEBAPI_JAVA_URL} from "@/lib/utils";
+import { ArrowRight, BarChart3, CalendarDays, Star, Tags } from "lucide-react";
 
-type Question = {
-  questionId?: number;
-  description: string;
-  questionType: string;
-  difficultyLevel: string;
-};
+import { useScrollAnimation } from "@/hooks/use-scroll-animation";
+import QuestionByType from "./QuestionByType";
+import QuestionByStatus from "./QuestionByStatus";
+import QuestionByDifficulty from "./QuestionByDifficulty";
+import GetQuestionsByDate from "./GetQuestionsByDate";
+
+const dashboardItems = [
+  {
+    title: "Questions by Status",
+    icon: BarChart3,
+    color: "from-red-500 to-orange-500",
+    bg: "bg-red-50",
+    iconColor: "text-red-500",
+  },
+  {
+    title: "Questions by Type",
+    icon: Tags,
+    color: "from-red-500 to-orange-500",
+    bg: "bg-red-50",
+    iconColor: "text-red-500",
+  },
+  {
+    title: "Questions by Difficulty",
+    icon: Star,
+    color: "from-red-500 to-orange-500",
+    bg: "bg-red-50",
+    iconColor: "text-red-500",
+  },
+  {
+    title: "Questions by Date",
+    icon: CalendarDays,
+    color: "from-red-500 to-orange-500",
+    bg: "bg-red-50",
+    iconColor: "text-red-500",
+  },
+];
 
 const QuestionsPage = () => {
-  const [questions, setQuestions] = useState<Question[]>([]);
-  const [question, setQuestion] = useState<Question | null>(null);
 
-  const [questionId, setQuestionId] = useState("");
-  const [error, setError] = useState("");
-
-  const [mode, setMode] = useState<"list" | "fetch" | null>(null);
-
-  // ✅ Fetch all questions
-  const fetchQuestions = () => {
-    setMode("list");
-    setQuestion(null);
-    setError("");
-
-    fetch(`${WEBAPI_JAVA_URL}/questions`)
-      .then((res) => {
-        if (!res.ok) throw new Error("API Error");
-        return res.json();
-      })
-      .then((data) => {
-        setQuestions(Array.isArray(data) ? data : []);
-      })
-      .catch((err) => console.error(err));
-  };
-
-  // ✅ Fetch question by ID
-  const fetchQuestion = async () => {
-    if (!questionId) {
-      setError("Please enter Question ID");
-      return;
-    }
-
-    try {
-      setError("");
-      setQuestion(null);
-
-      const res = await fetch(
-        `${WEBAPI_JAVA_URL}/questions/${questionId}`
-      );
-
-      if (!res.ok) throw new Error("Not found");
-
-      const data = await res.json();
-
-      // 👇 IMPORTANT (handles both API formats)
-      const result = data.data ? data.data : data;
-
-      setQuestion(result);
-    } catch (err) {
-      setError("Question not found");
-    }
-  };
+  const [selectedModule, setSelectedModule] = useState("");
+  const { ref, isVisible } = useScrollAnimation();
 
   return (
-    <section className="py-16 sm:py-20 bg-background">
-      <div className="container mx-auto px-4">
+    <>
+      <section className="py-16 sm:py-20 bg-background min-h-screen">
+        <div className="container mx-auto px-4">
 
-        {/* Title */}
-        <div className="text-center mb-12">
-          <h2 className="text-3xl sm:text-4xl font-bold text-foreground">
-            Questions
-          </h2>
-        </div>
-
-        {/* 🔥 Buttons */}
-        <div className="flex justify-center gap-4 mb-10">
-          <Button variant="hero" onClick={fetchQuestions}>
-            List Of Questions
-          </Button>
-
-          <Button variant="hero" onClick={() => setMode("fetch")}>
-            Fetch Question
-          </Button>
-        </div>
-
-        {/* ✅ FETCH UI (your screenshot style) */}
-        {mode === "fetch" && (
-          <div className="bg-muted/40 rounded-xl p-10 max-w-4xl mx-auto mb-10">
-            <div className="flex justify-center gap-4">
-              <input
-                type="number"
-                placeholder="Enter Question ID"
-                value={questionId}
-                onChange={(e) => setQuestionId(e.target.value)}
-                className="px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary"
-              />
-
-              <Button variant="hero" onClick={fetchQuestion}>
-                Fetch Question
-              </Button>
-            </div>
+          {/* HEADER */}
+          <div className="text-center mb-14">
+            <h2 className="text-4xl sm:text-5xl font-bold text-foreground mb-4">
+              Evaluation{" "}
+              <span className="bg-gradient-primary bg-clip-text text-transparent">
+                Questions
+              </span>
+            </h2>
           </div>
-        )}
 
-        {/* ✅ TABLE */}
-        {mode === "list" && (
-          <Card className="border-0 shadow-elegant overflow-hidden mb-16">
-            <CardContent className="p-0">
-              <div className="overflow-x-auto">
-                <table className="w-full border-collapse">
+          {/* GRID */}
+          <div
+            ref={ref}
+            className={`grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-8 transition-all duration-1000 ${
+              isVisible
+                ? "opacity-100 translate-y-0"
+                : "opacity-0 translate-y-10"
+            }`}
+          >
+            {dashboardItems.map((item, index) => {
+              const Icon = item.icon;
 
-                  <thead className="bg-gradient-hero text-white">
-                    <tr>
-                      <th className="p-4 text-primary font-semibold">
-                        Description
-                      </th>
-                      <th className="p-4 text-primary font-semibold">
-                        Question Type
-                      </th>
-                      <th className="p-4 text-primary font-semibold">
-                        Difficulty Level
-                      </th>
-                    </tr>
-                  </thead>
+              return (
+                <Card
+                  key={index}
+                  onClick={() => setSelectedModule(item.title)}
+                  className="group cursor-pointer border-0 transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl"
+                >
+                  <CardContent className="p-6">
 
-                  <tbody>
-                    {questions.map((q, index) => (
-                      <tr
-                        key={index}
-                        className="border-b hover:bg-primary/5 transition"
-                      >
-                        <td className="p-4 text-foreground">
-                          {q.description}
-                        </td>
-                        <td className="p-4 text-foreground">
-                          {q.questionType}
-                        </td>
-                        <td className="p-4 text-foreground">
-                          {q.difficultyLevel}
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
+                    <div className="flex items-center justify-between mb-4">
 
-                </table>
-              </div>
-            </CardContent>
-          </Card>
-        )}
+                      <div>
+                        <p className="text-gray-600 text-sm font-medium">
+                          {item.title}
+                        </p>
 
-        {/* ✅ RESULT (FIXED ISSUE HERE) */}
-        {mode === "fetch" && question && (
-          <div className="max-w-5xl mx-auto">
-            <Card className="border-0 shadow-elegant overflow-hidden">
-              <div className="bg-gradient-hero p-8 sm:p-10">
-                <CardContent className="bg-white rounded-xl p-6 text-left">
+                      </div>
 
-                  <h3 className="text-xl font-bold mb-4 text-foreground">
-                    Question Details
-                  </h3>
+                      <Icon
+                        className={`w-12 h-12 opacity-20 ${item.iconColor}`}
+                      />
+                    </div>
 
-                  <p className="mb-2">
-                    <strong>ID:</strong> {question.questionId}
-                  </p>
+                    <Button
+                      className={`w-full bg-gradient-to-r ${item.color} text-white border-0 rounded-xl mt-2`}
+                    >
+                      View
+                      <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                    </Button>
 
-                  <p className="mb-2">
-                    <strong>Description:</strong> {question.description}
-                  </p>
-
-                  <p className="mb-2">
-                    <strong>Type:</strong> {question.questionType}
-                  </p>
-                  <p className="mb-2">
-                    <strong>Difficulty Level:</strong> {question.difficultyLevel}
-                  </p>
-
-                </CardContent>
-              </div>
-            </Card>
+                  </CardContent>
+                </Card>
+              );
+            })}
           </div>
-        )}
 
-        {/* ✅ ERROR */}
-        {error && (
-          <p className="text-center text-red-500 font-semibold mt-4">
-            {error}
-          </p>
-        )}
+          {/* COMPONENTS DISPLAY BELOW */}
 
-      </div>
-    </section>
+          <div className="mt-16">
+
+            {selectedModule === "Questions by Status" && (
+              <QuestionByStatus />
+            )}
+
+            {selectedModule === "Questions by Type" && (
+              <QuestionByType />
+            )}
+
+            {selectedModule === "Questions by Difficulty" && (
+              <QuestionByDifficulty />
+            )}
+
+            {selectedModule === "Questions by Date" && (
+              <GetQuestionsByDate />
+            )}
+
+          </div>
+
+        </div>
+      </section>
+    </>
   );
 };
 

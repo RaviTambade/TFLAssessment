@@ -18,44 +18,91 @@ namespace backend.Repositories
         }
 
 
-    public async Task<List<Questions>> GetQuestionsByConceptAsync(string concept)
+    public async Task<List<TestQuestions>> GetQuestionsBySMEAsync(long userId)
+    {
+        List<TestQuestions> questions = new();
+
+        string query = @"
+            SELECT 
+                q.question_id,
+                q.description,
+                q.question_type,
+                q.difficulty_level,
+                q.created_at,
+                q.status,
+                q.language,
+                q.layer,
+                q.framework,
+                q.concept,
+                q.runtime
+
+            FROM expertise e
+
+            INNER JOIN questions q
+                ON e.runtime = q.runtime
+                AND e.framework = q.framework
+                AND e.layer = q.layer
+                AND e.language = q.language
+
+            WHERE e.user_id = @UserId;
+        ";
+
+            string connectionString = ("Server=localhost;Port=3306;Database=tflcomentor_db;User=root;Password=password;");
+            using MySqlConnection conn =
+                new MySqlConnection(connectionString);
+
+        await conn.OpenAsync();
+
+        using MySqlCommand cmd =
+            new MySqlCommand(query, conn);
+
+        cmd.Parameters.AddWithValue("@UserId", userId);
+
+        using MySqlDataReader reader =
+            (MySqlDataReader)await cmd.ExecuteReaderAsync();
+
+        while (await reader.ReadAsync())
         {
-            List<Questions> questions = new List<Questions>();
-
-            string query = @"SELECT  q.question_id, q.description, q.question_type,q.difficulty_level,
-                            m.option_a,m.option_b,m.option_c,m.option_d, m.correct_answer
-                            FROM questions q INNER JOIN mcq_options m ON q.question_id = m.question_id and language='" + concept + "';";
-
-            string connectionString = "server=192.168.1.149;port=3306;database=tflcomentor_db;user=root;password='password'";
-            using (MySqlConnection con = new MySqlConnection(connectionString))
+            questions.Add(new TestQuestions
             {
-                await con.OpenAsync();
-                using (MySqlCommand cmd = new MySqlCommand(query, con))
-                {
-                    using (var reader = await cmd.ExecuteReaderAsync())
-                    {
+                QuestionId =
+                    Convert.ToInt64(reader["question_id"]),
 
-                        while (await reader.ReadAsync())
-                        {
-                            questions.Add(new Questions
-                            {
-                                QuestionId = reader.GetInt32("question_id"),
-                                Description = reader.GetString("description"),
-                                QuestionType = reader.GetString("question_type"),
-                                DifficultyLevel = reader.GetString("difficulty_level"),
-                                OptionA = reader.GetString("option_a"),
-                                OptionB = reader.GetString("option_b"),
-                                OptionC = reader.GetString("option_c"),
-                                OptionD = reader.GetString("option_d"),
-                                CorrectAnswer = reader.GetString("correct_answer")
-                            });
-                        }
-                    }
-                }
-            }
+                Description =
+                    reader["description"]?.ToString(),
 
-            return  questions;
+                QuestionType =
+                    reader["question_type"]?.ToString(),
+
+                DifficultyLevel =
+                    reader["difficulty_level"]?.ToString(),
+
+                CreatedAt =
+                    Convert.ToDateTime(reader["created_at"]),
+
+                Status =
+                    reader["status"]?.ToString(),
+
+                Language =
+                    reader["language"]?.ToString(),
+
+                Layer =
+                    reader["layer"]?.ToString(),
+
+                Framework =
+                    reader["framework"]?.ToString(),
+
+                Concept =
+                    reader["concept"]?.ToString(),
+
+                Runtime =
+                    reader["runtime"]?.ToString()
+            });
         }
+
+        return questions;
+    }
+
 
  public async Task<bool> CancelTestAsync(int id)
     {
@@ -78,8 +125,12 @@ namespace backend.Repositories
 
 public async Task<long> CreateTestAsync(CreateTestRequests dto)
 {
-    if (dto.SmeId <= 0)
-        throw new ArgumentException("SmeId must be supplied and greater than 0.");
+    long userId = dto.UserId > 0
+        ? dto.UserId
+        : dto.UserRolesId;
+
+    if (userId <= 0)
+        throw new ArgumentException("UserId or UserRolesId must be supplied and greater than 0.");
 
     long testId = 0;
 
@@ -93,11 +144,12 @@ public async Task<long> CreateTestAsync(CreateTestRequests dto)
         {
             try
             {
-                // Insert Test
+                // Insert core columns present across DB variants (avoids mismatches: some DBs use
+                // `user_id` without `sme_runtime_id`; dumps may use `sme_runtime_id` without `user_id`).
                 string insertTestQuery = @"
                                     INSERT INTO tests
                                                     (
-                                                        sme_runtime_id,
+                                                        userid,
                                                         title,
                                                         duration,
                                                         description,
@@ -108,7 +160,7 @@ public async Task<long> CreateTestAsync(CreateTestRequests dto)
                                                     )
                                                     VALUES
                                                     (
-                                                        @SmeRuntimeId,
+                                                        @userid,
                                                         @Title,
                                                         @Duration,
                                                         @Description,
@@ -124,7 +176,7 @@ public async Task<long> CreateTestAsync(CreateTestRequests dto)
 
                 using (MySqlCommand cmd = new MySqlCommand(insertTestQuery, con, transaction))
                         {
-                     cmd.Parameters.AddWithValue("@SmeRuntimeId", dto.SmeRuntimeId);
+                     cmd.Parameters.AddWithValue("@userid", dto.UserId);
                     cmd.Parameters.AddWithValue("@Title", dto.Title);
                     cmd.Parameters.AddWithValue("@Duration", (int)dto.Duration);
                     cmd.Parameters.AddWithValue("@Difficulty", dto.Difficulty);
@@ -132,9 +184,15 @@ public async Task<long> CreateTestAsync(CreateTestRequests dto)
                         dto.Description ?? (object)DBNull.Value);
                     cmd.Parameters.AddWithValue("@CreatedAt", DateTime.Now);
                             cmd.Parameters.AddWithValue("@Status", true);
-                    cmd.Parameters.AddWithValue("@SmeId",dto.SmeId);
 
-                    testId = Convert.ToInt64(await cmd.ExecuteScalarAsync());
+                    await cmd.ExecuteNonQueryAsync();
+                }
+
+                using (MySqlCommand idCmd =
+                       new MySqlCommand("SELECT LAST_INSERT_ID();", con, transaction))
+                {
+                    var idScalar = await idCmd.ExecuteScalarAsync();
+                    testId = Convert.ToInt64(idScalar);
                 }
 
                 // Insert Questions
