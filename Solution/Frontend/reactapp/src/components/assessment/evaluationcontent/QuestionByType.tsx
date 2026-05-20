@@ -13,7 +13,7 @@ type Question = {
 };
 
 const fetchQuestionsByType = async (type: string) => {
-  const res = await fetch(`${WEBAPI_JAVA_URL}/questions/type/${type}`);
+  const res = await fetch(`${WEBAPI_JAVA_URL}/filter/questions?question_type=${type}`);
   if (!res.ok) throw new Error('Failed to fetch');
   const data = await res.json();
   return Array.isArray(data) ? data : data.content || [];
