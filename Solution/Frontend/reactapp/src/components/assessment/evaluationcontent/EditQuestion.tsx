@@ -15,7 +15,7 @@ const { id } = useParams();
 
 const returnPath =
   (location.state as { from?: string } | null)?.from ??
-  "/models/evaluationcontent/reviewquestion";
+  "/models/evaluationcontent/viewquestion";
     
 const [loading, setLoading] = useState(true);
 const [formData, setFormData] = useState<QuestionFormData>({
