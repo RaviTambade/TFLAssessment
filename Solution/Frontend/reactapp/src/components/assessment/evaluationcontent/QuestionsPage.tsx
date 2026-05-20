@@ -48,12 +48,12 @@ const QuestionsPage = () => {
 
   return (
     <>
-      <section className="py-16 sm:py-20 bg-background min-h-screen">
-        <div className="container mx-auto px-4">
+      <section className="py-8 sm:py-8 bg-background min-h-screen">
+        <div className="container mx-auto px-2">
 
           {/* HEADER */}
-          <div className="text-center mb-14">
-            <h2 className="text-4xl sm:text-5xl font-bold text-foreground mb-4">
+          <div className="text-center mb-8">
+            <h2 className="text-2xl sm:text-3xl font-bold text-foreground mb-2">
               Evaluation{" "}
               <span className="bg-gradient-primary bg-clip-text text-transparent">
                 Questions
@@ -79,7 +79,7 @@ const QuestionsPage = () => {
                   onClick={() => setSelectedModule(item.title)}
                   className="group cursor-pointer border-0 transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl"
                 >
-                  <CardContent className="p-6">
+                  <CardContent className="p-2">
 
                     <div className="flex items-center justify-between mb-4">
 
@@ -129,7 +129,6 @@ const QuestionsPage = () => {
             )}
 
           </div>
-
         </div>
       </section>
     </>
