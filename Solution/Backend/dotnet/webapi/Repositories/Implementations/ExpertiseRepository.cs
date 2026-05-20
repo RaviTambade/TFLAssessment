@@ -31,7 +31,7 @@ public class ExpertiseRepository : IExpertiseRepository
         )
         VALUES
         (
-            @Userid,
+            @UserId,
             @Runtime,
             @Framework,
             @Layer,
@@ -45,6 +45,8 @@ public class ExpertiseRepository : IExpertiseRepository
             using (MySqlCommand cmd = new MySqlCommand(query, con))
             {
                 cmd.Parameters.AddWithValue("@UserId", expertize.User_Id);
+
+                cmd.Parameters.AddWithValue("@Runtime",expertize.Runtime);
 
 
                 cmd.Parameters.AddWithValue("@Framework", expertize.Framework);
