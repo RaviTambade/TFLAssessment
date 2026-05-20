@@ -5,8 +5,10 @@ import { Label } from "../../../ui/label";
 // import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useNavigate } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "../../../ui/card";
- 
-const TEST_DRAFT_STORAGE_KEY = "createTestDraft";
+import {
+  CREATE_TEST_DRAFT_STORAGE_KEY,
+  type CreateTestDraftPayload,
+} from "./createTestDraftStorage";
  
 const CreateTest = () => {
       const navigate = useNavigate();
@@ -22,7 +24,7 @@ const CreateTest = () => {
  
         if (userData) {
           const user = JSON.parse(userData);
-          localStorage.setItem("smeId", String(user.userid || user.id));
+          localStorage.setItem("userId", String(user.userid || user.id));
         }
       }, []);
      
@@ -37,22 +39,23 @@ const CreateTest = () => {
             setError(null);
             setIsSubmitting(true);
      
-            const smeId = Number(localStorage.getItem("smeId") || 0);
-     
-            const payload = {
-              smeId: smeId,
+            const payload: CreateTestDraftPayload = {
               title: testName,
               description: description,
-              duration: Number(duration)
+              duration: Number(duration),
             };
      
             console.log("Submitting Payload:", payload);
  
-            sessionStorage.setItem(
-              TEST_DRAFT_STORAGE_KEY,
-              JSON.stringify(payload)
-            );
- 
+            try {
+              sessionStorage.setItem(
+                CREATE_TEST_DRAFT_STORAGE_KEY,
+                JSON.stringify(payload)
+              );
+            } catch {
+              // Draft still travels via router state if storage is unavailable.
+            }
+
             navigate("/models/question-options", { state: { test: payload } });
           } catch (err) {
             setError("Failed to create test.");

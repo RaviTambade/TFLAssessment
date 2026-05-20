@@ -96,6 +96,7 @@ var app = builder.Build();
 //Middleware configuration: CORS, Authorization, and routing for controllers
 app.UseCors("AllowAll");
 
+app.UseDeveloperExceptionPage();
 
 app.UseAuthorization();
 app.MapControllers();
