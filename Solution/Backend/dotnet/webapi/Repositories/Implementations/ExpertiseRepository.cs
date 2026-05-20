@@ -12,13 +12,9 @@ public class ExpertiseRepository : IExpertiseRepository
     {
         _configuration = configuration;
     }
-<<<<<<< HEAD
-    public async Task<int> AddSmeExpertise(Expertise expertise)
-=======
 
     public async Task<int> AddSmeExpertise(Expertise expertize)
     
->>>>>>> 433c142e15f6c0adfdb5c90a2564da03c0eb6a27
     {
         string connectionString =
             _configuration.GetConnectionString("DefaultConnection")
