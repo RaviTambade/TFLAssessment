@@ -128,10 +128,12 @@ const QuestionsPage = () => {
             {selectedModule === "Questions by Date" && (
               <GetQuestionsByDate />
             )}
+  
+            {!selectedModule  && (
+              <Getallquestions />
+            )}
 
-            <Getallquestions/>
-
-          
+      
 
           </div>
         </div>
