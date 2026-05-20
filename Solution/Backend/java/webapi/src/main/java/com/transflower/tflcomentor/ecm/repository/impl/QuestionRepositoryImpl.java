@@ -109,7 +109,7 @@ public class QuestionRepositoryImpl implements QuestionRepository {
     }
 
     @Override
-public List<DescriptiveQuestion> getDescriptiveQuestion(QuestionType questionType) {
+    public List<DescriptiveQuestion> getDescriptiveQuestion(QuestionType questionType) {
 
     String sql = """
         SELECT question_id, question_type, description, difficulty_level
@@ -302,21 +302,15 @@ public List<DescriptiveQuestion> getDescriptiveQuestion(QuestionType questionTyp
 
 
     @Override
-    public List<Question> getQuestionsByConceptId(Long conceptId) {
+    public List<Question> getQuestionsByConcept(String concept) {
         List<Question> list = new ArrayList<>();
         String sql = """ 
-                    SELECT q.question_id, q.description, q.question_type
-                    FROM questions q
-                    JOIN question_framework_concepts qfc 
-                        ON q.question_id = qfc.question_id
-                    JOIN framework_concepts fc 
-                        ON qfc.framework_concepts_id = fc.id
-                    WHERE fc.concept_id = ?;
+                    SELECT * FROM questions WHERE FIND_IN_SET(concept, ?);
                     """;
 
         try (Connection connection = getConnection(); 
         PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setLong(1, conceptId);
+            statement.setString(1, concept.toString());
             ResultSet rs = statement.executeQuery();
 
             while (rs.next()) {
@@ -437,8 +431,23 @@ public List<DescriptiveQuestion> getDescriptiveQuestion(QuestionType questionTyp
         }
         return 0;
     }
-}
 
+    @Override
+    public List<String> getConcepts() {
+        List<String> concepts = new ArrayList<>();
+        String sql = "SELECT DISTINCT concept FROM questions";
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql);
+             ResultSet rs = statement.executeQuery()) {
+            while (rs.next()) {
+                concepts.add(rs.getString("concept"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return concepts;
+    }
+}
 
 /*
 
