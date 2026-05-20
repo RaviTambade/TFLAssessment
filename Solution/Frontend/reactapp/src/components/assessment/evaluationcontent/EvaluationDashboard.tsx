@@ -17,7 +17,6 @@ import { Link } from "react-router-dom";
 const dashboardItems = [
     {
         title: "Update Questions",
-        description: "Edit and manage existing interview questions easily.",
         icon: Pencil,
         path: "/models/evaluationcontent/updatequestion",
         color: "from-red-500 to-orange-500",
@@ -26,28 +25,25 @@ const dashboardItems = [
     },
     {
         title: "All Questions",
-        description: "Browse and manage all questions in the repository.",
         icon: FileText,
         path: "/questions",
-        color: "from-blue-500 to-cyan-500",
-        bg: "bg-blue-50",
-        iconColor: "text-blue-500",
+        color: "from-red-500 to-orange-500",
+        bg: "bg-red-50",
+        iconColor: "text-red-500",
     },
     {
         title: "Questions by Concept",
-        description: "Explore questions grouped by concepts and topics.",
         icon: Brain,
         path: "/models/evaluationcontent/questionbyconcept",
-        color: "from-green-500 to-emerald-500",
-        bg: "bg-green-50",
-        iconColor: "text-green-500",
+        color: "from-red-500 to-orange-500",
+        bg: "bg-orange-50",
+        iconColor: "text-orange-500",
     },
     {
         title: "SME Insert Question",
-        description: "Add new questions created by subject experts.",
         icon: PlusCircle,
         path: "/models/evaluationcontent/insertquestion",
-        color: "from-orange-500 to-amber-500",
+        color: "from-red-500 to-orange-500",
         bg: "bg-orange-50",
         iconColor: "text-orange-500",
     },
@@ -93,22 +89,18 @@ const EvaluationDashboard = () => {
     const { ref, isVisible } = useScrollAnimation();
 
     return (
-        <section className="py-16 sm:py-20 bg-background min-h-screen">
-            <div className="container mx-auto px-4">
+        <section className="py-6 sm:py-6 bg-background min-h-screen">
+            <div className="container mx-auto px-6">
 
                 {/* HEADER */}
-                <div className="text-center mb-14">
-                    <h2 className="text-4xl sm:text-5xl font-bold text-foreground mb-4">
+                <div className="text-center mb-8">
+                    <h2 className="text-2xl sm:text-3xl font-bold text-foreground mb-3">
                         Evaluation Content{" "}
                         <span className="bg-gradient-primary bg-clip-text text-transparent">
                             Dashboard
                         </span>
                     </h2>
 
-                    <p className="text-lg sm:text-xl text-muted-foreground max-w-3xl mx-auto">
-                        Manage and organize evaluation questions efficiently with a
-                        modern and professional dashboard.
-                    </p>
                 </div>
 
                 {/* GRID */}
@@ -127,7 +119,7 @@ const EvaluationDashboard = () => {
                                 key={index}
                                 className="border-0 shadow-elegant hover:shadow-glow transition-all duration-300 rounded-3xl overflow-hidden group hover:-translate-y-2"
                             >
-                                <CardContent className="p-8 text-center h-full flex flex-col">
+                                <CardContent className="p-4 text-center h-full flex flex-col">
 
                                     {/* ICON */}
                                     <div
@@ -137,21 +129,18 @@ const EvaluationDashboard = () => {
                                     </div>
 
                                     {/* TITLE */}
-                                    <h3 className="text-2xl font-bold text-foreground mb-4">
+                                    <h3 className="text-1xl font-bold text-foreground mb-3">
                                         {item.title}
                                     </h3>
 
-                                    {/* DESCRIPTION */}
-                                    <p className="text-muted-foreground leading-relaxed mb-8 flex-grow">
-                                        {item.description}
-                                    </p>
+                                    
 
                                     {/* BUTTON */}
                                     <Link to={item.path}>
                                         <Button
                                             className={`w-full bg-gradient-to-r ${item.color} text-white border-0 group rounded-xl`}
                                         >
-                                            Open Module
+                                            View
                                             <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                                         </Button>
                                     </Link>
