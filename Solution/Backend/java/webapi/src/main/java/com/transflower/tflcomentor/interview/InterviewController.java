@@ -1,8 +1,10 @@
 package com.transflower.tflcomentor.interview;
 import com.transflower.tflcomentor.configuration.DBConfig;
-import com.transflower.tflcomentor.ecm.dto.response.InterviewDetails;
-import com.transflower.tflcomentor.ecm.dto.response.InterviewList;
-import com.transflower.tflcomentor.ecm.entity.enums.InterviewStatus;
+import com.transflower.tflcomentor.interview.dto.enums.InterviewStatus;
+import com.transflower.tflcomentor.interview.dto.request.InterviewFeedback;
+import com.transflower.tflcomentor.interview.dto.request.ScheduleInterview;
+import com.transflower.tflcomentor.interview.dto.response.InterviewDetails;
+import com.transflower.tflcomentor.interview.dto.response.InterviewList;
 
 import java.sql.Timestamp;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -13,8 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PathVariable;
-import com.transflower.tflcomentor.ecm.dto.request.ScheduleInterview;
-import com.transflower.tflcomentor.ecm.dto.request.InterviewFeedback;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -32,10 +33,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.transflower.tflcomentor.configuration.DBConfig;
-import com.transflower.tflcomentor.ecm.dto.request.ScheduleInterview;
-import com.transflower.tflcomentor.ecm.dto.response.InterviewDetails;
-import com.transflower.tflcomentor.ecm.dto.response.InterviewList;
-import com.transflower.tflcomentor.ecm.entity.enums.InterviewStatus;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
