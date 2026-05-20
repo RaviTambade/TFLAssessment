@@ -52,7 +52,7 @@ public partial class AppDbContext : DbContext
 
     public virtual DbSet<MentorFeedback> MentorFeedbacks { get; set; }
 
-    public virtual DbSet<MentorMentee> MentorMentees { get; set; }
+    // public virtual DbSet<MentorMentee> MentorMentees { get; set; }
 
     public virtual DbSet<Notification> Notifications { get; set; }
 

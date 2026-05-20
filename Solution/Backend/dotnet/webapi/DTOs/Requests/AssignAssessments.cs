@@ -8,7 +8,9 @@ public class AssignAssessments
 
     public DateTime ScheduledAt { get; set; }
 
-    //public DateTime AssignedAt { get; set; }
+    public long AssignedBy {get; set;}
+
+    public DateTime AssignedAt { get; set; }
 
     public string? Status { get; set; }
 }

@@ -47,42 +47,7 @@ const dashboardItems = [
         bg: "bg-orange-50",
         iconColor: "text-orange-500",
     },
-    // {
-    //     title: "Questions by Status",
-    //     description: "Filter questions based on current status.",
-    //     icon: BarChart3,
-    //     path: "/questions-status",
-    //     color: "from-violet-500 to-purple-500",
-    //     bg: "bg-violet-50",
-    //     iconColor: "text-violet-500",
-    // },
-    // {
-    //     title: "Questions by Type",
-    //     description: "View questions categorized by type.",
-    //     icon: Tags,
-    //     path: "/questions-type",
-    //     color: "from-cyan-500 to-sky-500",
-    //     bg: "bg-cyan-50",
-    //     iconColor: "text-cyan-500",
-    // },
-    // {
-    //     title: "Questions by Difficulty",
-    //     description: "Analyze questions based on difficulty level.",
-    //     icon: Star,
-    //     path: "/questions-difficulty",
-    //     color: "from-pink-500 to-rose-500",
-    //     bg: "bg-pink-50",
-    //     iconColor: "text-pink-500",
-    // },
-    // {
-    //     title: "Questions by Date",
-    //     description: "Search and filter questions using dates.",
-    //     icon: CalendarDays,
-    //     path: "/questions-date",
-    //     color: "from-indigo-500 to-blue-500",
-    //     bg: "bg-indigo-50",
-    //     iconColor: "text-indigo-500",
-    // },
+    
 ];
 
 const EvaluationDashboard = () => {

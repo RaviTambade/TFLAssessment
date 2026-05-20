@@ -362,6 +362,9 @@ export default function AssignAssessment() {
 
     setSuccessMessage(null);
     setErrorMessage(null);
+    const currentUser = JSON.parse(
+      sessionStorage.getItem("current") || "{}"
+    );
 
     try {
 
@@ -383,6 +386,8 @@ export default function AssignAssessment() {
 
         return;
       }
+        const assignedBy =
+          currentUser.userid;
 
       // CANCEL FLOW
       if (status === "Cancelled") {
@@ -410,13 +415,43 @@ export default function AssignAssessment() {
 
         const cancelledCount = Number(
           result &&
-          typeof result === "object" &&
-          "cancelledCount" in result
+            typeof result === "object" &&
+            "cancelledCount" in result
             ? (result as { cancelledCount?: number }).cancelledCount ?? 0
             : 0
         );
 
         setErrorMessage(null);
+        // GET USER FROM SESSION STORAGE
+        const userData =
+          sessionStorage.getItem("currentuser");
+
+        console.log("RAW SESSION => ", userData);
+
+        // PARSE USER
+        const currentUser =
+          userData ? JSON.parse(userData) : {};
+
+        console.log("PARSED USER => ", currentUser);
+
+        // GET USER ID
+        const assignedBy =currentUser.userid ??currentUser.userId ?? currentUser.id;
+        console.log("CURRENT USER OBJECT => ", currentUser);
+
+console.log("USER ID VALUES => ", {userid: currentUser.userid,userId: currentUser.userId,id: currentUser.id
+});
+
+        // VALIDATE USER
+        if (!assignedBy) {
+
+          setErrorMessage(
+            "User Id not found in session storage"
+          );
+
+          return;
+        }
+
+        console.log("ASSIGNED BY => ", assignedBy);
 
         setSuccessMessage(
           getResponseMessage(
@@ -428,12 +463,28 @@ export default function AssignAssessment() {
         return;
       }
 
-      // ASSIGN DTO
+      // // ASSIGN DTO
+      // const dto = {
+
+      //   StudentIds: selectedStudents,
+
+      //   TestId: selectedTest,
+
+      //   ScheduledAt: new Date(
+      //     `${date}T${time}:00`
+      //   ).toISOString(),
+
+      //   Status: status
+      // };
+
+      // DTO
       const dto = {
 
         StudentIds: selectedStudents,
 
         TestId: selectedTest,
+
+        AssignedBy: assignedBy,
 
         ScheduledAt: new Date(
           `${date}T${time}:00`
@@ -442,6 +493,7 @@ export default function AssignAssessment() {
         Status: status
       };
 
+      console.log("ASSIGN DTO => ", dto);
       console.log("ASSIGN DTO => ", dto);
 
       // API CALL
@@ -504,11 +556,11 @@ export default function AssignAssessment() {
       const assessmentIds = responseAssessmentIds.length > 0
         ? responseAssessmentIds
         : await fetchLatestAssessmentIds(
-            testName,
-            selectedStudents,
-            dto.Status,
-            date
-          );
+          testName,
+          selectedStudents,
+          dto.Status,
+          date
+        );
 
       // SHOW SUCCESS MESSAGE
       setSummary({
@@ -573,60 +625,60 @@ export default function AssignAssessment() {
         {/* SUCCESS MESSAGE */}
         {successMessage && (
           <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4">
-          <div className="w-full max-w-4xl rounded-lg border border-green-300 bg-green-50 p-8 text-green-800 shadow-2xl">
-            <div className="flex items-center justify-between mb-4">
-              <span className="text-lg font-bold">
-                ✅ {successMessage}
-              </span>
-            </div>
-            
-            {summary && (
-              <div className="bg-white border border-green-200 rounded-md p-4 space-y-2 text-sm">
-                <h3 className="font-bold border-b pb-1 mb-2 uppercase tracking-wider text-green-700">Assignment Summary</h3>
-                <div className="grid grid-cols-2 gap-2">
-                  <div>
-                    <span className="font-semibold">
-                      {summary.AssessmentIds.length > 1 ? "Assessment IDs:" : "Assessment ID:"}
-                    </span>
-                    <div className="flex flex-wrap gap-1 mt-1">
-                      {summary.AssessmentIds.length > 0 ? (
-                        summary.AssessmentIds.map(id => (
-                          <span key={id.toString()} className="bg-green-100 px-2 py-0.5 rounded border border-green-200">{id}</span>
-                        ))
-                      ) : (
-                        <span className="text-green-700">Not returned by API</span>
-                      )}
+            <div className="w-full max-w-4xl rounded-lg border border-green-300 bg-green-50 p-8 text-green-800 shadow-2xl">
+              <div className="flex items-center justify-between mb-4">
+                <span className="text-lg font-bold">
+                  ✅ {successMessage}
+                </span>
+              </div>
+
+              {summary && (
+                <div className="bg-white border border-green-200 rounded-md p-4 space-y-2 text-sm">
+                  <h3 className="font-bold border-b pb-1 mb-2 uppercase tracking-wider text-green-700">Assignment Summary</h3>
+                  <div className="grid grid-cols-2 gap-2">
+                    <div>
+                      <span className="font-semibold">
+                        {summary.AssessmentIds.length > 1 ? "Assessment IDs:" : "Assessment ID:"}
+                      </span>
+                      <div className="flex flex-wrap gap-1 mt-1">
+                        {summary.AssessmentIds.length > 0 ? (
+                          summary.AssessmentIds.map(id => (
+                            <span key={id.toString()} className="bg-green-100 px-2 py-0.5 rounded border border-green-200">{id}</span>
+                          ))
+                        ) : (
+                          <span className="text-green-700">Not returned by API</span>
+                        )}
+                      </div>
                     </div>
-                  </div>
-                  <p><span className="font-semibold">Status:</span> {summary.Status}</p>
-                  <p className="col-span-2"><span className="font-semibold">Test Name:</span> {summary.TestName}</p>
-                  <p className="col-span-2"><span className="font-semibold">Scheduled At:</span> {new Date(summary.ScheduledAt).toLocaleString()}</p>
-                  <div className="col-span-2">
-                    <span className="font-semibold">Students:</span>
-                    <div className="flex flex-wrap gap-1 mt-1">
-                      {summary.StudentNames.map(name => (
-                        <span key={name} className="bg-green-100 px-2 py-0.5 rounded border border-green-200">{name}</span>
-                      ))}
+                    <p><span className="font-semibold">Status:</span> {summary.Status}</p>
+                    <p className="col-span-2"><span className="font-semibold">Test Name:</span> {summary.TestName}</p>
+                    <p className="col-span-2"><span className="font-semibold">Scheduled At:</span> {new Date(summary.ScheduledAt).toLocaleString()}</p>
+                    <div className="col-span-2">
+                      <span className="font-semibold">Students:</span>
+                      <div className="flex flex-wrap gap-1 mt-1">
+                        {summary.StudentNames.map(name => (
+                          <span key={name} className="bg-green-100 px-2 py-0.5 rounded border border-green-200">{name}</span>
+                        ))}
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            )}
+              )}
 
-            <button
-              type="button"
-              onClick={() => {
+              <button
+                type="button"
+                onClick={() => {
 
-                setSuccessMessage(null);
-                setSummary(null);
-                reset();
-              }}
-              className="mt-4 w-full rounded-md bg-green-600 px-4 py-2 text-sm font-bold text-white transition hover:bg-green-700"
-            >
-              OK
-            </button>
+                  setSuccessMessage(null);
+                  setSummary(null);
+                  reset();
+                }}
+                className="mt-4 w-full rounded-md bg-green-600 px-4 py-2 text-sm font-bold text-white transition hover:bg-green-700"
+              >
+                OK
+              </button>
 
-          </div>
+            </div>
           </div>
         )}
 
@@ -675,11 +727,10 @@ export default function AssignAssessment() {
 
                 <label
                   key={t.id}
-                  className={`flex items-center gap-3 p-3 mb-2 rounded-lg cursor-pointer transition ${
-                    selectedTest === t.id
+                  className={`flex items-center gap-3 p-3 mb-2 rounded-lg cursor-pointer transition ${selectedTest === t.id
                       ? "bg-orange-100 border-orange-400 border"
                       : "bg-gray-50 border border-transparent hover:bg-gray-100"
-                  }`}
+                    }`}
                 >
 
                   <input
@@ -769,10 +820,10 @@ export default function AssignAssessment() {
                   placeholder={
                     selectedStudents.length === 0
                       ? (
-                          status === "Cancelled"
-                            ? "Students are not required for cancellation"
-                            : "Search and select students..."
-                        )
+                        status === "Cancelled"
+                          ? "Students are not required for cancellation"
+                          : "Search and select students..."
+                      )
                       : ""
                   }
                   value={searchStudent}
@@ -803,11 +854,10 @@ export default function AssignAssessment() {
                         onClick={() =>
                           toggleStudent(s.id)
                         }
-                        className={`p-2 hover:bg-orange-50 cursor-pointer flex items-center gap-2 ${
-                          selectedStudents.includes(s.id)
+                        className={`p-2 hover:bg-orange-50 cursor-pointer flex items-center gap-2 ${selectedStudents.includes(s.id)
                             ? "bg-orange-50 font-bold"
                             : ""
-                        }`}
+                          }`}
                       >
 
                         <input
@@ -852,11 +902,10 @@ export default function AssignAssessment() {
                   <button
                     key={s}
                     onClick={() => setStatus(s)}
-                    className={`flex-1 py-2 rounded-md border font-medium transition ${
-                      status === s
+                    className={`flex-1 py-2 rounded-md border font-medium transition ${status === s
                         ? "bg-orange-600 text-white border-orange-600"
                         : "bg-white text-gray-600 border-gray-300 hover:bg-gray-50"
-                    }`}
+                      }`}
                   >
 
                     {s}
