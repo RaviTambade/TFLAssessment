@@ -58,7 +58,7 @@ const QuestionsByDifficulty = () => {
 
   return (
     <section className="py-16 sm:py-20 bg-background">
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto px-4 max-w-7xl">
 
         {/* Title */}
         <div className="text-center mb-12">

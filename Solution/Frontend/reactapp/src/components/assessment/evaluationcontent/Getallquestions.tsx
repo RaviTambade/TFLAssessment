@@ -9,8 +9,8 @@ type Question = {
     title?: string;
     description: string;
     questionType: string;
-    difficultyLevel: string;
-    status: string;
+            // difficultyLevel: string;
+            // status: string;
 
 };
 
@@ -32,7 +32,7 @@ const Getallquestions = () => {
     const fetchQuestions = async () => {
         try {
             const response = await fetch(
-                `${WEBAPI_JAVA_URL}/questions`
+                `${WEBAPI_JAVA_URL}/filter/questions`
             );
 
             if (!response.ok) {
@@ -51,7 +51,7 @@ const Getallquestions = () => {
     return (
         <section
             ref={ref}
-            className="py-10 bg-background min-h-screen"
+            className="py-0 bg-background min-h-screen"
         >
             <div className="container mx-auto px-4">
 
@@ -89,8 +89,8 @@ const Getallquestions = () => {
                                     <th className="p-4 text-left">ID</th>
                                     <th className="p-4 text-left">Question</th>
                                     <th className="p-4 text-left">Type</th>
-                                    <th className="p-4 text-left">Difficulty</th>
-                                    <th className="p-4 text-left">Status</th>
+                                    {/* <th className="p-4 text-left">Difficulty</th>
+                                    <th className="p-4 text-left">Status</th> */}
 
                                 </tr>
                             </thead>
@@ -118,13 +118,13 @@ const Getallquestions = () => {
                                             {question.questionType}
                                         </td>
 
-                                        <td className="p-4">
+                                        {/* <td className="p-4">
                                             {question.difficultyLevel}
                                         </td>
 
                                         <td className="p-4">
                                             {question.status}
-                                        </td>
+                                        </td> */}
 
 
                                     </tr>

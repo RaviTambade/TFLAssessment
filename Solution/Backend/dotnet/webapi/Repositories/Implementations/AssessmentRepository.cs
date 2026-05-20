@@ -14,9 +14,13 @@ public class AssessmentRepository : IAssessmentRepository
 {
     private readonly IConfiguration _configuration;
 
-    public AssessmentRepository(IConfiguration configuration)
+    private readonly AppDbContext _context;
+    private readonly string _connectionString;
+
+    public AssessmentRepository(AppDbContext context, IConfiguration configuration)
     {
-        _configuration = configuration;
+        _context = context;
+        _connectionString = configuration.GetConnectionString("DefaultConnection") ?? "server=localhost;port=3306;database=tflcomentor_db;user=root;password='password'";
     }
 
     public async Task<List<Assessments>> GetAllUpcomingAssessments(long userId, DateTime fromDate, DateTime toDate)
@@ -556,58 +560,77 @@ ORDER BY a.scheduled_at ASC;
 
 
 
-    public async Task<List<AssessmentQuestions>> GetAssessmentQuestionsAsync(int assessmentId)
+   public async Task<List<AssessmentQuestions>> GetAssessmentQuestionsAsync(int assessmentId)
+{
+    var questions = new List<AssessmentQuestions>();
+
+    using (var connection = new MySqlConnection(_connectionString))
     {
-        var list = new List<AssessmentQuestions>();
-    string connectionString = _configuration.GetConnectionString("DefaultConnection") ?? "server=localhost;port=3306;database=tflcomentor_db;user=root;password='password'";
-        using var conn = new MySqlConnection(connectionString);
-        await conn.OpenAsync();
+        await connection.OpenAsync();
 
         string query = @"
             SELECT
                 ques.question_id        AS QuestionId,
                 ques.description        AS Description,
                 ques.question_type      AS QuestionType,
-                MAX(mcq.option_a)       AS OptionA,
-                MAX(mcq.option_b)       AS OptionB,
-                MAX(mcq.option_c)       AS OptionC,
-                MAX(mcq.option_d)       AS OptionD
+
+                mcq.option_a            AS OptionA,
+                mcq.option_b            AS OptionB,
+                mcq.option_c            AS OptionC,
+                mcq.option_d            AS OptionD
+
             FROM assessments AS asm
+
             INNER JOIN tests AS tst
                 ON asm.test_id = tst.id
+
             INNER JOIN test_questions AS testQues
                 ON testQues.test_id = tst.id
+
             INNER JOIN questions AS ques
                 ON ques.question_id = testQues.question_id
-            INNER JOIN mcq_options AS mcq
+
+            LEFT JOIN mcq_options AS mcq
                 ON mcq.question_id = ques.question_id
-            WHERE asm.id = @AssessmentId
-            GROUP BY 
-                ques.question_id, 
-                ques.description, 
-                ques.question_type, 
-                testQues.sequence_order
-            ORDER BY testQues.sequence_order ASC;";
 
-        using var cmd = new MySqlCommand(query, conn);
-        cmd.Parameters.AddWithValue("@AssessmentId", assessmentId);
-        using var reader = await cmd.ExecuteReaderAsync();
-        while (await reader.ReadAsync())
+            WHERE asm.id = @assessmentId
+
+            ORDER BY testQues.sequence_order ASC;
+        ";
+
+        using (var command = new MySqlCommand(query, connection))
         {
-            list.Add(new AssessmentQuestions
-            {
-                QuestionId = reader.GetInt32("QuestionId"),
-                Description = reader["Description"]?.ToString(),
-                QuestionType = reader["QuestionType"]?.ToString(),
-                OptionA = reader["OptionA"]?.ToString(),
-                OptionB = reader["OptionB"]?.ToString(),
-                OptionC = reader["OptionC"]?.ToString(),
-                OptionD = reader["OptionD"]?.ToString()
-            });
-        }
+            command.Parameters.AddWithValue("@assessmentId", assessmentId);
 
-        return list;
+            using (var reader = await command.ExecuteReaderAsync())
+            {
+                while (await reader.ReadAsync())
+                {
+                    questions.Add(new AssessmentQuestions
+                    {
+                        QuestionId = reader["QuestionId"] != DBNull.Value
+                            ? Convert.ToInt32(reader["QuestionId"])
+                            : 0,
+
+                        Description = reader["Description"]?.ToString(),
+
+                        QuestionType = reader["QuestionType"]?.ToString(),
+
+                        OptionA = reader["OptionA"]?.ToString(),
+
+                        OptionB = reader["OptionB"]?.ToString(),
+
+                        OptionC = reader["OptionC"]?.ToString(),
+
+                        OptionD = reader["OptionD"]?.ToString()
+                    });
+                }
+            }
+        }
     }
+
+    return questions;
+}
 
     public async Task<bool> SaveAssessmentAnswersAsync(List<StudentAnswer>? answers)
     {
