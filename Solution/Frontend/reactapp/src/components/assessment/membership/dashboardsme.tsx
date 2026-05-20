@@ -1,4 +1,4 @@
-import { useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "../../ui/card";
 import { Bell, Users, Target, TrendingUp, CheckCircle, AlertCircle, BarChart3, FileText } from "lucide-react";
@@ -14,39 +14,39 @@ import SkillGapAnalyse from "./data/skills/skillGapAnalysis.json";
 
 //function component for SME Dashboard
 const DashboardSME = () => {
-    //parts
-    // State for SME user data
-    // Data members for candidate insights
-    // Helper functions for analytics
-    // Render functions for SME features
+  //parts
+  // State for SME user data
+  // Data members for candidate insights
+  // Helper functions for analytics
+  // Render functions for SME features
 
-    //data members
-   const[smeName, setSMEName] = useState<string>("Ravi Tambade");
-   const[department, setDepartment] = useState<string>("Chief Mentor");
-   const[profilePicture, setProfilePicture] = useState<string>("https://avatars.githubusercontent.com/u/12345678?v=4");
+  //data members
+  const [smeName, setSMEName] = useState<string>("Ravi Tambade");
+  const [department, setDepartment] = useState<string>("Chief Mentor");
+  const [profilePicture, setProfilePicture] = useState<string>("https://avatars.githubusercontent.com/u/12345678?v=4");
 
   // SME-specific Notifications
   const smeNotifications: Notification[] = SmeNotifications as Notification[];
 
   // Candidate Performance Overview
-  const candidatePerformance: CandidatePerformance[] =CandidatePerformances as CandidatePerformance[] ;
+  const candidatePerformance: CandidatePerformance[] = CandidatePerformances as CandidatePerformance[];
 
   // Assessment Metrics
   const assessmentMetrics: AssessmentMetrics[] = AssessmentMetric as AssessmentMetrics[];
 
   // Skill Gap Analysis
-  const skillGapAnalysis: SkillGapAnalysis[] = SkillGapAnalyse as SkillGapAnalysis[] ;
+  const skillGapAnalysis: SkillGapAnalysis[] = SkillGapAnalyse as SkillGapAnalysis[];
 
   //navigate
   const navigate = useNavigate();
 
   useEffect(() => {
     const apiURL = `${WEBAPI_NODE_URL}/sme/profile`;
-        fetch(apiURL).then((response) => response.json()).then((data) => {
-          setSMEName(data.name);
-          setDepartment(data.department);
-          setProfilePicture(data.profilePicture);
-        });
+    fetch(apiURL).then((response) => response.json()).then((data) => {
+      setSMEName(data.name);
+      setDepartment(data.department);
+      setProfilePicture(data.profilePicture);
+    });
 
 
   }, []);
@@ -112,9 +112,9 @@ const DashboardSME = () => {
             </CardContent>
           </Card>
 
-           <Card
-          className="cursor-pointer hover:shadow-lg transition"
-           onClick={() => navigate("/models/interview/SMEInterviewDashboard")}>
+          <Card
+            className="cursor-pointer hover:shadow-lg transition"
+            onClick={() => navigate("/models/interview/SMEInterviewDashboard")}>
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
@@ -125,10 +125,10 @@ const DashboardSME = () => {
               </div>
             </CardContent>
           </Card>
-          
+
           <Card
-          className="cursor-pointer hover:shadow-lg transition"
-           onClick={() => navigate("/models/evaluationcontent/dashboard")}>
+            className="cursor-pointer hover:shadow-lg transition"
+            onClick={() => navigate("/models/evaluationcontent/dashboard")}>
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
@@ -140,7 +140,7 @@ const DashboardSME = () => {
             </CardContent>
           </Card>
 
-          
+
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -158,15 +158,14 @@ const DashboardSME = () => {
                 {smeNotifications.map((notification) => (
                   <div
                     key={notification.id}
-                    className={`p-4 rounded-lg border-l-4 ${
-                      notification.type === "info"
+                    className={`p-4 rounded-lg border-l-4 ${notification.type === "info"
                         ? "bg-blue-50 border-blue-400"
                         : notification.type === "success"
-                        ? "bg-green-50 border-green-400"
-                        : notification.type === "warning"
-                        ? "bg-yellow-50 border-yellow-400"
-                        : "bg-red-50 border-red-400"
-                    }`}
+                          ? "bg-green-50 border-green-400"
+                          : notification.type === "warning"
+                            ? "bg-yellow-50 border-yellow-400"
+                            : "bg-red-50 border-red-400"
+                      }`}
                   >
                     <div className="flex items-start justify-between">
                       <div className="flex-1">
@@ -213,11 +212,10 @@ const DashboardSME = () => {
                           </div>
                         </div>
                       </div>
-                      <span className={`px-3 py-1 rounded-full text-xs font-medium ${
-                        assessment.difficultyLevel === "beginner" ? "bg-green-100 text-green-800" :
-                        assessment.difficultyLevel === "intermediate" ? "bg-yellow-100 text-yellow-800" :
-                        "bg-red-100 text-red-800"
-                      }`}>
+                      <span className={`px-3 py-1 rounded-full text-xs font-medium ${assessment.difficultyLevel === "beginner" ? "bg-green-100 text-green-800" :
+                          assessment.difficultyLevel === "intermediate" ? "bg-yellow-100 text-yellow-800" :
+                            "bg-red-100 text-red-800"
+                        }`}>
                         {assessment.difficultyLevel}
                       </span>
                     </div>
@@ -255,11 +253,10 @@ const DashboardSME = () => {
                     </div>
                     <div className="w-full bg-gray-200 rounded-full h-2 mb-2">
                       <div
-                        className={`h-2 rounded-full transition-all ${
-                          candidate.status === "excellent" ? "bg-green-500" :
-                          candidate.status === "good" ? "bg-blue-500" :
-                          candidate.status === "average" ? "bg-yellow-500" : "bg-red-500"
-                        }`}
+                        className={`h-2 rounded-full transition-all ${candidate.status === "excellent" ? "bg-green-500" :
+                            candidate.status === "good" ? "bg-blue-500" :
+                              candidate.status === "average" ? "bg-yellow-500" : "bg-red-500"
+                          }`}
                         style={{ width: `${candidate.averageScore}%` }}
                       />
                     </div>
@@ -284,11 +281,10 @@ const DashboardSME = () => {
                   <div key={index} className="p-3 border rounded-lg">
                     <div className="flex items-center justify-between mb-2">
                       <p className="text-sm font-medium text-gray-900">{gap.skill}</p>
-                      <span className={`text-xs font-bold px-2 py-1 rounded ${
-                        gap.priority === "high" ? "bg-red-100 text-red-800" :
-                        gap.priority === "medium" ? "bg-yellow-100 text-yellow-800" :
-                        "bg-green-100 text-green-800"
-                      }`}>
+                      <span className={`text-xs font-bold px-2 py-1 rounded ${gap.priority === "high" ? "bg-red-100 text-red-800" :
+                          gap.priority === "medium" ? "bg-yellow-100 text-yellow-800" :
+                            "bg-green-100 text-green-800"
+                        }`}>
                         {gap.priority}
                       </span>
                     </div>
@@ -298,10 +294,9 @@ const DashboardSME = () => {
                     </div>
                     <div className="w-full bg-gray-200 rounded-full h-1.5">
                       <div
-                        className={`h-1.5 rounded-full ${
-                          gap.priority === "high" ? "bg-red-500" :
-                          gap.priority === "medium" ? "bg-yellow-500" : "bg-green-500"
-                        }`}
+                        className={`h-1.5 rounded-full ${gap.priority === "high" ? "bg-red-500" :
+                            gap.priority === "medium" ? "bg-yellow-500" : "bg-green-500"
+                          }`}
                         style={{ width: `${gap.averagePerformance}%` }}
                       />
                     </div>

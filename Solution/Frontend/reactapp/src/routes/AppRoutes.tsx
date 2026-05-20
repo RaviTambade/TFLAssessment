@@ -15,6 +15,7 @@ import MentorReviewQuestion from "@/components/assessment/evaluationcontent/Ment
 import QuestionDetails from "@/components/assessment/evaluationcontent/QuestionDetails";
 import EditQuestion from "@/components/assessment/evaluationcontent/EditQuestion";
 import ViewRuntimes from "@/components/assessment/skilltaxonomy/ViewRuntimes";
+import Getallquestions from "@/components/assessment/evaluationcontent/Getallquestions";
 // import AddConcept from "@/components/assessment/skilltaxonomy/AddConcept";
 import UpcomingAssessment from "../components/assessment/assessmentOrchestrator/UpcomingAssessment";
 import AllAssessment from "@/components/assessment/assessmentOrchestrator/AllAssessment";
@@ -89,7 +90,10 @@ function AppRoutes() {
             path="evaluationcontent/getquestionsbydate"
             element={<GetQuestionsByDate />}
           />
-          
+            <Route
+            path="evaluationcontent/GetAllQuestions"
+            element={<Getallquestions />}
+          />
           {/* Skill Taxonomy */}
           <Route
             path="skilltaxonomy/skilltaxonomy-menu"
