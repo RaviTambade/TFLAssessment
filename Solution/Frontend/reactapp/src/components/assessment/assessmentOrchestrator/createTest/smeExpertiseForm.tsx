@@ -26,6 +26,10 @@ const SMEExpertiseForm = () => {
     language: "TypeScript",
   });
  
+
+  
+
+  
   // =========================
   // HANDLE CHANGE
   // =========================
@@ -50,25 +54,55 @@ const SMEExpertiseForm = () => {
   // =========================
   // SAVE API
   // =========================
+  // const handleSave = async () => {
+ 
+  //   try {
+ 
+  //     const userid =
+  //       localStorage.getItem("userid");
+ 
+  //     const payload = {
+  //       user_id: Number(userid),
+  //       runtime: form.runtime,
+  //       framework: form.framework,
+  //       layer: form.layer,
+  //       language: form.language,
+  //     };
+ 
+  //     console.log(
+  //       "Sending Payload:",
+  //       payload
+  //     );
+
+
   const handleSave = async () => {
- 
     try {
- 
-      const smeId =
-        localStorage.getItem("smeId");
- 
-      const payload = {
-        userId: Number(smeId),
-        runtime: form.runtime,
+
+    // ✅ Step 1 — get the "current" key
+    const raw = sessionStorage.getItem("current");
+
+    if (!raw) {
+        alert("Session expired. Please login again.");
+        return;
+    }
+
+    // ✅ Step 2 — parse the JSON string
+    const user = JSON.parse(raw);
+
+    // ✅ Step 3 — now read the fields
+    console.log(user.userid);    // 4
+    console.log(user.role_id);   // 4
+    console.log(user.rolename);  // "SME"
+
+    const payload = {
+        user_id:  user.userid,   // ✅ now sends 4, not 0
+        runtime:  form.runtime,
         framework: form.framework,
-        layer: form.layer,
+        layer:    form.layer,
         language: form.language,
-      };
- 
-      console.log(
-        "Sending Payload:",
-        payload
-      );
+    };
+
+
  
       const response = await fetch(`${WEBAPI_DOTNET_URL}/Expertise/expertise`,
         {
@@ -98,7 +132,7 @@ const SMEExpertiseForm = () => {
         "Expertise Saved Successfully"
       );
  
-    } catch (error) {
+    }catch (error) {
  
       console.error(
         "Save Error:",
