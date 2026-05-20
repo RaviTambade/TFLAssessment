@@ -112,10 +112,10 @@ const ShowInterviewDetailsStudent = () => {
 
             <div className=" p-5 rounded-xl border border-orange-300 shadow-sm hover:shadow-md transition">
               <p className="text-sm text-orange-900 font-medium">
-                Scheduled Date
+                Scheduled Date and Time
               </p>
               <h4 className="text-lg font-semibold text-gray-800 mt-1">
-                {interviewDetail.scheduleDate}
+                {new Date(interviewDetail.scheduleDate).toLocaleString()}
               </h4>
             </div>
 
@@ -179,7 +179,7 @@ const ShowInterviewDetailsStudent = () => {
     {/* SME Buttons */}
     {user.role_id === 4 && (
         <>
-        <Button onClick={handleAccept}
+        {/* <Button onClick={handleAccept}
             className="bg-green-700 hover:bg-green-800 text-white shadow-lg font-semibold"
         >
             Accept Interview
@@ -190,7 +190,7 @@ const ShowInterviewDetailsStudent = () => {
             className="border-red-700 text-red-800 hover:bg-red-100 font-semibold"
         >
             Reject Interview
-        </Button>
+        </Button> */}
 
         <Button onClick={handleCancel}
             variant="outline"
@@ -206,6 +206,14 @@ const ShowInterviewDetailsStudent = () => {
             className="border-red-700 text-red-800 hover:bg-red-100 font-semibold"
         >
            Feedback
+        </Button>
+
+         <Button onClick={()=>{
+          navigate(`/models/interview/question/feedback/${id}`)}}
+            variant="outline"
+            className="border-red-700 text-red-800 hover:bg-red-100 font-semibold"
+        >
+            Feedback per Question
         </Button>
         </>
     )}

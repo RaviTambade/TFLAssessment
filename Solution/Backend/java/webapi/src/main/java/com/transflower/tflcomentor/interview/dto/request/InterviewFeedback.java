@@ -1,4 +1,4 @@
-package com.transflower.tflcomentor.ecm.dto.request;
+package com.transflower.tflcomentor.interview.dto.request;
 
 import java.time.LocalDateTime;
 

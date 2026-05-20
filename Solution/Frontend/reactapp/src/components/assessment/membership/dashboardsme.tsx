@@ -112,9 +112,23 @@ const DashboardSME = () => {
             </CardContent>
           </Card>
 
+           <Card
+          className="cursor-pointer hover:shadow-lg transition"
+           onClick={() => navigate("/models/interview/SMEInterviewDashboard")}>
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-gray-600 text-sm font-medium">Interviews</p>
+                  <p className="text-3xl font-bold text-gray-900 mt-1"></p>
+                </div>
+                <BarChart3 className="w-12 h-12 text-red-500 opacity-20" />
+              </div>
+            </CardContent>
+          </Card>
+          
           <Card
           className="cursor-pointer hover:shadow-lg transition"
-           onClick={() => navigate("/models/evaluationcontent/sme")}>
+           onClick={() => navigate("/models/evaluationcontent/dashboard")}>
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
@@ -125,6 +139,8 @@ const DashboardSME = () => {
               </div>
             </CardContent>
           </Card>
+
+          
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">

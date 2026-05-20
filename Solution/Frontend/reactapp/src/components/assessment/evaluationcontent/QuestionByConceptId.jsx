@@ -6,13 +6,13 @@ import {  WEBAPI_JAVA_URL} from "@/lib/utils";
 const QuestionByConceptId = ()=>{
 
   
-    const [conceptId,setConceptId] = useState('');
+    const [conceptId,setConcept] = useState('');
     const [questions,setQuestions] = useState([]);
    
     const fetchConcept = async () => {
-        if(!conceptId || conceptId === '0') return;
+        if(!concept || concept === null) return;
         try{
-            const response = await fetch(`${WEBAPI_JAVA_URL}/questions/concepts/${conceptId}/questions`,
+            const response = await fetch(`${WEBAPI_JAVA_URL}/questions/concepts/${concept}`,
                 {
                     method: 'GET',
                 });
@@ -29,10 +29,10 @@ const QuestionByConceptId = ()=>{
     return(
         <div>
             <input 
-                type="number" 
-                value={conceptId} 
-                onChange={(e)=>setConceptId(e.target.value)}
-                placeholder="Enter concept ID"
+                type="text" 
+                value={concept} 
+                onChange={(e)=>setConcept(e.target.value)}
+                placeholder="Enter concept name"
             />
             <Button onClick={fetchConcept}>Fetch Questions</Button>
             <div>

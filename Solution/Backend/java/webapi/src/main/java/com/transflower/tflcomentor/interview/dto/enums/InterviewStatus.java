@@ -1,4 +1,4 @@
-package com.transflower.tflcomentor.ecm.entity.enums;
+package com.transflower.tflcomentor.interview.dto.enums;
 
 public enum InterviewStatus {
     CANCELED,

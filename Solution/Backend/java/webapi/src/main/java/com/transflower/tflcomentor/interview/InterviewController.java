@@ -1,8 +1,11 @@
 package com.transflower.tflcomentor.interview;
 import com.transflower.tflcomentor.configuration.DBConfig;
-import com.transflower.tflcomentor.ecm.dto.response.InterviewDetails;
-import com.transflower.tflcomentor.ecm.dto.response.InterviewList;
-import com.transflower.tflcomentor.ecm.entity.enums.InterviewStatus;
+import com.transflower.tflcomentor.interview.dto.enums.InterviewStatus;
+import com.transflower.tflcomentor.interview.dto.request.InterviewFeedback;
+import com.transflower.tflcomentor.interview.dto.request.QuestionFeedback;
+import com.transflower.tflcomentor.interview.dto.request.ScheduleInterview;
+import com.transflower.tflcomentor.interview.dto.response.InterviewDetails;
+import com.transflower.tflcomentor.interview.dto.response.InterviewList;
 
 import java.sql.Timestamp;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -13,8 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PathVariable;
-import com.transflower.tflcomentor.ecm.dto.request.ScheduleInterview;
-import com.transflower.tflcomentor.ecm.dto.request.InterviewFeedback;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -32,10 +34,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.transflower.tflcomentor.configuration.DBConfig;
-import com.transflower.tflcomentor.ecm.dto.request.ScheduleInterview;
-import com.transflower.tflcomentor.ecm.dto.response.InterviewDetails;
-import com.transflower.tflcomentor.ecm.dto.response.InterviewList;
-import com.transflower.tflcomentor.ecm.entity.enums.InterviewStatus;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
@@ -394,4 +392,21 @@ public List<InterviewDetails> getInterviews(@PathVariable int roleId, @PathVaria
 
     return interviews;
  }
+
+ @PostMapping("/question/feedback")
+ public void questionFeedback(@RequestBody QuestionFeedback feedback){
+    try(Connection connection=getConnection()){
+        String query="INSERT INTO interview_question_feedback(interview_id,question,confidence,correctness,comment) VALUES(?,?,?,?,?)";
+        PreparedStatement ps=connection.prepareStatement(query);
+        ps.setLong(1, feedback.getInterviewId());
+        ps.setString(2, feedback.getQuestion());
+        ps.setInt(3,feedback.getConfidence());
+        ps.setInt(4,feedback.getCorrectness());
+        ps.setString(5,feedback.getComment());
+        ps.executeUpdate();
+    }catch(Exception e){
+        e.printStackTrace();
+    }
+ }
+
 }
