@@ -1,24 +1,24 @@
-using Microsoft.EntityFrameworkCore;
+using System;
 using backend.Models;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Configuration;
 using backend.DTO.Responses;
+using backend.Repositories.Interfaces;
 using backend.DTO.Requests;
 using MySql.Data.MySqlClient;
 using System.Data;
 
-namespace backend.Repositories.Interfaces;
+namespace backend.Repositories.Implementations;
 
 public class AssessmentRepository : IAssessmentRepository
 {
+    private readonly IConfiguration _configuration;
 
-    private readonly AppDbContext _context;
-
-    public AssessmentRepository(AppDbContext context)
+    public AssessmentRepository(IConfiguration configuration)
     {
-        _context = context;
+        _configuration = configuration;
     }
 
-    [HttpGet]
     public async Task<List<Assessments>> GetAllUpcomingAssessments(long userId, DateTime fromDate, DateTime toDate)
     {
         Console.WriteLine($"UserId: {userId}, FromDate: {fromDate}, ToDate: {toDate}");
@@ -29,7 +29,7 @@ public class AssessmentRepository : IAssessmentRepository
 
         List<Assessments> assessments = new List<Assessments>();
 
-        string connectionString = "server=localhost;port=3306;database=tflcomentor_db;user=root;password='password'";
+    string connectionString = _configuration.GetConnectionString("DefaultConnection") ?? "server=localhost;port=3306;database=tflcomentor_db;user=root;password='password'";
 
 
         using (MySqlConnection connection =
@@ -110,92 +110,101 @@ ORDER BY a.scheduled_at ASC;
 
     public async Task<List<AllAssessments>> GetAllAssessments()
     {
-        var data = await (
-            from a in _context.Assessments
+        var list = new List<AllAssessments>();
+    string connectionString = _configuration.GetConnectionString("DefaultConnection") ?? "server=localhost;port=3306;database=tflcomentor_db;user=root;password='password'";
 
-            join t in _context.Tests on a.TestId equals t.Id into testGroup
-            from t in testGroup.DefaultIfEmpty()
+        using var conn = new MySqlConnection(connectionString);
+        await conn.OpenAsync();
 
-            join u in _context.Users on a.StudentId equals u.Id into userGroup
-            from u in userGroup.DefaultIfEmpty()
+        string query = @"
+            SELECT a.id AS Id,
+                   COALESCE(t.title, 'N/A') AS AssessmentTitle,
+                   COALESCE(p.first_name, 'N/A') AS FullName,
+                   COALESCE(t.difficulty, 'N/A') AS DifficultyLevel,
+                   a.status AS Status,
+                   a.is_active AS IsActive
+            FROM assessments a
+            LEFT JOIN tests t ON a.test_id = t.id
+            LEFT JOIN users u ON a.student_id = u.id
+            LEFT JOIN personal_informations p ON u.id = p.user_id
+        ";
 
-            join p in _context.PersonalInformations on u.Id equals p.UserId into personalGroup
-            from p in personalGroup.DefaultIfEmpty()
-
-            select new AllAssessments
-            {
-                Id = a.Id,
-                AssessmentTitle = t != null ? t.Title : "N/A",
-                FullName = p != null ? p.FirstName : "N/A",
-                DifficultyLevel = t != null ? t.Difficulty : "N/A",
-                Status = a.Status,
-                IsActive = a.IsActive
-            }
-        ).ToListAsync();
-
-        for (int i = 0; i < data.Count; i++)
+        using var cmd = new MySqlCommand(query, conn);
+        using var reader = await cmd.ExecuteReaderAsync();
+        int srNo = 1;
+        while (await reader.ReadAsync())
         {
-            data[i].SrNo = i + 1;
+            var item = new AllAssessments
+            {
+                Id = reader.GetInt64("Id"),
+                AssessmentTitle = reader["AssessmentTitle"]?.ToString(),
+                FullName = reader["FullName"]?.ToString(),
+                DifficultyLevel = reader["DifficultyLevel"]?.ToString(),
+                Status = reader["Status"]?.ToString(),
+                IsActive = reader["IsActive"] != DBNull.Value && Convert.ToBoolean(reader["IsActive"])
+            };
+            item.SrNo = srNo++;
+            list.Add(item);
         }
 
-        return data;
+        return list;
     }
 
     public async Task<bool> DeactivateAssessment(long id)
     {
-        var assessment = await _context.Assessments.FindAsync(id);
+    string connectionString = _configuration.GetConnectionString("DefaultConnection") ?? "server=localhost;port=3306;database=tflcomentor_db;user=root;password='password'";
+        using var conn = new MySqlConnection(connectionString);
+        await conn.OpenAsync();
 
-        if (assessment == null)
-            return false;
-
-        if (!assessment.IsActive)
-            return true;
-
-        assessment.IsActive = false;
-
-        await _context.SaveChangesAsync();
-
-        return true;
+        string query = @"UPDATE assessments SET is_active = 0 WHERE id = @Id AND is_active = 1";
+        using var cmd = new MySqlCommand(query, conn);
+        cmd.Parameters.AddWithValue("@Id", id);
+        var affected = await cmd.ExecuteNonQueryAsync();
+        return affected > 0;
     }
 
     public async Task<int> CancelAssessmentsByTestId(long testId)
     {
-        var testExists = await _context.Tests.AnyAsync(t => t.Id == testId);
+    string connectionString = _configuration.GetConnectionString("DefaultConnection") ?? "server=localhost;port=3306;database=tflcomentor_db;user=root;password='password'";
+        using var conn = new MySqlConnection(connectionString);
+        await conn.OpenAsync();
 
-        if (!testExists)
-            return 0;
+        // Check test exists
+        string checkQuery = "SELECT COUNT(*) FROM tests WHERE id = @TestId";
+        using var checkCmd = new MySqlCommand(checkQuery, conn);
+        checkCmd.Parameters.AddWithValue("@TestId", testId);
+        var count = Convert.ToInt32(await checkCmd.ExecuteScalarAsync());
+        if (count == 0) return 0;
 
-        var testRowsAffected = await _context.Database.ExecuteSqlInterpolatedAsync($@"
-            UPDATE tests
-            SET status = 0
-            WHERE id = {testId}");
+        string updateTest = "UPDATE tests SET status = 0 WHERE id = @TestId";
+        using var updTestCmd = new MySqlCommand(updateTest, conn);
+        updTestCmd.Parameters.AddWithValue("@TestId", testId);
+        var testRows = await updTestCmd.ExecuteNonQueryAsync();
 
-        var assessmentRowsAffected = await _context.Database.ExecuteSqlInterpolatedAsync($@"
+        string updateAssess = @"
             UPDATE assessments
-            SET status = 'Cancelled',
-                is_active = 0
-            WHERE test_id = {testId}
+            SET status = 'Cancelled', is_active = 0
+            WHERE test_id = @TestId
               AND is_active = 1
-              AND status <> 'Completed'");
+              AND status <> 'Completed'";
+        using var updAssessCmd = new MySqlCommand(updateAssess, conn);
+        updAssessCmd.Parameters.AddWithValue("@TestId", testId);
+        var assessRows = await updAssessCmd.ExecuteNonQueryAsync();
 
-        return Math.Max(1, testRowsAffected + assessmentRowsAffected);
+        return Math.Max(1, testRows + assessRows);
     }
 
     public async Task<bool> RestoreAssessment(long id)
     {
-        var assessment = await _context.Assessments.FindAsync(id);
+    string connectionString = _configuration.GetConnectionString("DefaultConnection") ?? "server=localhost;port=3306;database=tflcomentor_db;user=root;password='password'";
+        using var conn = new MySqlConnection(connectionString);
+        await conn.OpenAsync();
 
-        if (assessment == null)
-            return false;
-
-        if (assessment.IsActive)
-            return true;
-
-        assessment.IsActive = true;
-
-        await _context.SaveChangesAsync();
-
-        return true;
+        string query = @"UPDATE assessments SET is_active = 1 WHERE id = @Id AND is_active = 0";
+        using var cmd = new MySqlCommand(query, conn);
+        cmd.Parameters.AddWithValue("@Id", id);
+        var affected = await cmd.ExecuteNonQueryAsync();
+        return affected > 0;
     }
 
     // public async Task<List<Tests>> GetTestsAsync()
@@ -215,7 +224,7 @@ ORDER BY a.scheduled_at ASC;
     public async Task<List<Tests>> GetTestsAsync()
     {
         var tests = new List<Tests>();
-        string connectionString = "server=localhost;port=3306;database=tflcomentor_db;user=root;password='password'";
+    string connectionString = _configuration.GetConnectionString("DefaultConnection") ?? "server=localhost;port=3306;database=tflcomentor_db;user=root;password='password'";
 
 
         using (var connection = new MySqlConnection(connectionString))
@@ -265,7 +274,7 @@ ORDER BY a.scheduled_at ASC;
     {
         List<Student> students = new List<Student>();
 
-        string connectionString = "server=localhost;port=3306;database=tflcomentor_db;user=root;password='password'";
+    string connectionString = _configuration.GetConnectionString("DefaultConnection") ?? "server=localhost;port=3306;database=tflcomentor_db;user=root;password='password'";
 
 
         using (MySqlConnection conn = new MySqlConnection(connectionString))
@@ -303,9 +312,9 @@ ORDER BY a.scheduled_at ASC;
                         {
                             Id = reader.GetInt64("id"),
 
-                            FullName = reader["FullName"].ToString(),
+                            FullName = Convert.ToString(reader["FullName"])!,
 
-                            Email = reader["email"].ToString()
+                            Email = Convert.ToString(reader["email"])!
                         });
                     }
                 }
@@ -392,7 +401,7 @@ ORDER BY a.scheduled_at ASC;
     //     };
     // }
 
-    public async Task<string> AssignAssessmentAsync(
+    public async Task AssignAssessmentAsync(
     AssignAssessments dto
 )
     {
@@ -415,7 +424,7 @@ ORDER BY a.scheduled_at ASC;
         // =========================
         // STEP 2 : OPEN CONNECTION
         // =========================
-        string connectionString = "server=localhost;port=3306;database=tflcomentor_db;user=root;password='password'";
+    string connectionString = _configuration.GetConnectionString("DefaultConnection") ?? "server=localhost;port=3306;database=tflcomentor_db;user=root;password='password'";
 
 
         using var conn =
@@ -538,102 +547,169 @@ ORDER BY a.scheduled_at ASC;
         }
 
 
-        // =========================
-        // STEP 7 : RETURN
-        // =========================
+    // =========================
+    // STEP 7 : RETURN
+    // =========================
 
-        return "Assessment assigned successfully";
+    return;
     }
 
 
 
     public async Task<List<AssessmentQuestions>> GetAssessmentQuestionsAsync(int assessmentId)
     {
-        return await _context.Set<AssessmentQuestions>()
-            .FromSqlInterpolated($@"
-                SELECT
-                    ques.question_id        AS QuestionId,
-                    ques.description        AS Description,
-                    ques.question_type      AS QuestionType,
-                    MAX(mcq.option_a)       AS OptionA,
-                    MAX(mcq.option_b)       AS OptionB,
-                    MAX(mcq.option_c)       AS OptionC,
-                    MAX(mcq.option_d)       AS OptionD
-                FROM assessments AS asm
-                INNER JOIN tests AS tst
-                    ON asm.test_id = tst.id
-                INNER JOIN test_questions AS testQues
-                    ON testQues.test_id = tst.id
-                INNER JOIN questions AS ques
-                    ON ques.question_id = testQues.question_id
-                INNER JOIN mcq_options AS mcq
-                    ON mcq.question_id = ques.question_id
-                WHERE asm.id = {assessmentId}
-                GROUP BY 
-                    ques.question_id, 
-                    ques.description, 
-                    ques.question_type, 
-                    testQues.sequence_order
-                ORDER BY testQues.sequence_order ASC;
-            ")
-            .ToListAsync();
+        var list = new List<AssessmentQuestions>();
+    string connectionString = _configuration.GetConnectionString("DefaultConnection") ?? "server=localhost;port=3306;database=tflcomentor_db;user=root;password='password'";
+        using var conn = new MySqlConnection(connectionString);
+        await conn.OpenAsync();
+
+        string query = @"
+            SELECT
+                ques.question_id        AS QuestionId,
+                ques.description        AS Description,
+                ques.question_type      AS QuestionType,
+                MAX(mcq.option_a)       AS OptionA,
+                MAX(mcq.option_b)       AS OptionB,
+                MAX(mcq.option_c)       AS OptionC,
+                MAX(mcq.option_d)       AS OptionD
+            FROM assessments AS asm
+            INNER JOIN tests AS tst
+                ON asm.test_id = tst.id
+            INNER JOIN test_questions AS testQues
+                ON testQues.test_id = tst.id
+            INNER JOIN questions AS ques
+                ON ques.question_id = testQues.question_id
+            INNER JOIN mcq_options AS mcq
+                ON mcq.question_id = ques.question_id
+            WHERE asm.id = @AssessmentId
+            GROUP BY 
+                ques.question_id, 
+                ques.description, 
+                ques.question_type, 
+                testQues.sequence_order
+            ORDER BY testQues.sequence_order ASC;";
+
+        using var cmd = new MySqlCommand(query, conn);
+        cmd.Parameters.AddWithValue("@AssessmentId", assessmentId);
+        using var reader = await cmd.ExecuteReaderAsync();
+        while (await reader.ReadAsync())
+        {
+            list.Add(new AssessmentQuestions
+            {
+                QuestionId = reader.GetInt32("QuestionId"),
+                Description = reader["Description"]?.ToString(),
+                QuestionType = reader["QuestionType"]?.ToString(),
+                OptionA = reader["OptionA"]?.ToString(),
+                OptionB = reader["OptionB"]?.ToString(),
+                OptionC = reader["OptionC"]?.ToString(),
+                OptionD = reader["OptionD"]?.ToString()
+            });
+        }
+
+        return list;
     }
 
     public async Task<bool> SaveAssessmentAnswersAsync(List<StudentAnswer>? answers)
     {
         if (answers == null || !answers.Any())
             return false;
-
         var studentId = answers[0].StudentId;
         var assessmentId = answers[0].AssessmentId;
 
-        // ✅ Delete any previous answers for this student + assessment
-        var existingAnswers = _context.StudentAnswers
-            .Where(s => s.StudentId == studentId
-                     && s.AssessmentId == assessmentId);
+        string connectionString = "server=localhost;port=3306;database=tflcomentor_db;user=root;password='password'";
+        using var conn = new MySqlConnection(connectionString);
+        await conn.OpenAsync();
 
-        _context.StudentAnswers.RemoveRange(existingAnswers);
-
-        // ✅ Set timestamp on fresh answers
-        foreach (var answer in answers)
+        using var trans = await conn.BeginTransactionAsync();
+        try
         {
-            answer.CreatedAt = DateTime.Now;
-            Console.WriteLine("Date: " + answer.CreatedAt);
+            // Delete previous answers
+            using (var delCmd = new MySqlCommand("DELETE FROM student_answers WHERE student_id = @StudentId AND assessment_id = @AssessmentId", conn, (MySql.Data.MySqlClient.MySqlTransaction)trans))
+            {
+                delCmd.Parameters.AddWithValue("@StudentId", studentId);
+                delCmd.Parameters.AddWithValue("@AssessmentId", assessmentId);
+                await delCmd.ExecuteNonQueryAsync();
+            }
+
+            // Insert fresh answers
+            foreach (var answer in answers)
+            {
+                answer.CreatedAt = DateTime.Now;
+                using var insertCmd = new MySqlCommand(@"INSERT INTO student_answers (student_id, assessment_id, question_id, selected_option, time_taken_minutes, created_at) VALUES (@StudentId, @AssessmentId, @QuestionId, @SelectedOption, @TimeTakenMinutes, @CreatedAt)", conn, (MySql.Data.MySqlClient.MySqlTransaction)trans);
+                insertCmd.Parameters.AddWithValue("@StudentId", answer.StudentId);
+                insertCmd.Parameters.AddWithValue("@AssessmentId", answer.AssessmentId);
+                insertCmd.Parameters.AddWithValue("@QuestionId", answer.QuestionId);
+                insertCmd.Parameters.AddWithValue("@SelectedOption", answer.SelectedOption ?? string.Empty);
+                insertCmd.Parameters.AddWithValue("@TimeTakenMinutes", answer.TimeTakenMinutes);
+                insertCmd.Parameters.AddWithValue("@CreatedAt", answer.CreatedAt);
+                await insertCmd.ExecuteNonQueryAsync();
+            }
+
+            // Mark assessment as Completed
+            using (var updCmd = new MySqlCommand("UPDATE assessments SET status = 'Completed' WHERE id = @AssessmentId", conn, (MySql.Data.MySqlClient.MySqlTransaction)trans))
+            {
+                updCmd.Parameters.AddWithValue("@AssessmentId", assessmentId);
+                await updCmd.ExecuteNonQueryAsync();
+            }
+
+            await trans.CommitAsync();
+            return true;
         }
-
-        await _context.StudentAnswers.AddRangeAsync(answers);
-
-        // ✅ Mark assessment as Completed
-        var assessment = await _context.Assessments
-            .FirstOrDefaultAsync(a => a.Id == assessmentId);
-
-        if (assessment != null)
+        catch
         {
-            assessment.Status = "Completed";
+            await trans.RollbackAsync();
+            throw;
         }
-
-        var rowsAffected = await _context.SaveChangesAsync();
-        return rowsAffected > 0;
     }
 
     public async Task<AssessmentReports> GetResultData(int studentId, int assessmentId)
     {
-        var results = await _context.StudentAssessmentReports
-            .FromSqlInterpolated($"CALL GetStudentAssessmentReport({studentId}, {assessmentId})")
-            .ToListAsync();
+        AssessmentReports? report = null;
+        string connectionString = "server=localhost;port=3306;database=tflcomentor_db;user=root;password='password'";
+        using var conn = new MySqlConnection(connectionString);
+        await conn.OpenAsync();
 
-        var report = results.FirstOrDefault();
-        return report;
+        using var cmd = new MySqlCommand("GetStudentAssessmentReport", conn);
+        cmd.CommandType = CommandType.StoredProcedure;
+        cmd.Parameters.AddWithValue("@studentId", studentId);
+        cmd.Parameters.AddWithValue("@assessmentId", assessmentId);
+
+        using var reader = await cmd.ExecuteReaderAsync();
+        if (await reader.ReadAsync())
+        {
+            report = new AssessmentReports
+            {
+                StudentId = reader.GetInt32("StudentId"),
+                AssessmentId = reader.GetInt32("AssessmentId"),
+                Score = reader.GetInt32("Score"),
+                Percentage = reader.GetInt32("Percentage"),
+                TestTitle = reader["TestTitle"]?.ToString(),
+                TotalQuestions = reader.GetInt32("TotalQuestions"),
+                CorrectAnswers = reader.GetInt32("CorrectAnswers"),
+                WrongAnswers = reader.GetInt32("WrongAnswers"),
+                ScorePercentage = reader.GetDouble("ScorePercentage")
+            };
+        }
+
+        return report!;
     }
 
     public async Task<int> GetTotalAssessmentsAsync()
     {
-        return await _context.Assessments.CountAsync();
+    string connectionString = _configuration.GetConnectionString("DefaultConnection") ?? "server=localhost;port=3306;database=tflcomentor_db;user=root;password='password'";
+    using var conn = new MySqlConnection(connectionString);
+    await conn.OpenAsync();
+    using var cmd = new MySqlCommand("SELECT COUNT(*) FROM assessments", conn);
+    return Convert.ToInt32(await cmd.ExecuteScalarAsync());
     }
 
     public async Task<int> GetCompletedAssessmentsAsync()
     {
-        return await _context.Assessments.CountAsync(x => x.Status == "Completed");
+    string connectionString = _configuration.GetConnectionString("DefaultConnection") ?? "server=localhost;port=3306;database=tflcomentor_db;user=root;password='password'";
+    using var conn = new MySqlConnection(connectionString);
+    await conn.OpenAsync();
+    using var cmd = new MySqlCommand("SELECT COUNT(*) FROM assessments WHERE status = 'Completed'", conn);
+    return Convert.ToInt32(await cmd.ExecuteScalarAsync());
     }
 
     public async Task<List<AssessmentSummaries>> GetAssessmentSummariesForStudent(long studentId)
@@ -645,51 +721,56 @@ ORDER BY a.scheduled_at ASC;
 
     public List<StudentAssessments> GetFullData()
     {
-        var data = (from a in _context.Assessments
+        var list = new List<StudentAssessments>();
+        string connectionString = "server=localhost;port=3306;database=tflcomentor_db;user=root;password='password'";
+        using var conn = new MySqlConnection(connectionString);
+        conn.Open();
 
-                    join t in _context.Tests
-                        on a.TestId equals t.Id into testGroup
-                    from t in testGroup.DefaultIfEmpty()
+        string query = @"
+            SELECT a.id AS AssessmentId,
+                   COALESCE(t.id, 0) AS TestId,
+                   COALESCE(t.title, 'No Test') AS TestTitle,
+                   COALESCE(u.id, 0) AS StudentId,
+                   COALESCE(p.first_name, 'Unknown') AS StudentName,
+                   a.status AS Status,
+                   a.assigned_at AS AssignedAt,
+                   a.scheduled_at AS ScheduledAt,
+                   r.score AS ResultScore,
+                   r.percentile AS ResultPercentile,
+                   r.time_taken_minutes AS ResultTimeTaken
+            FROM assessments a
+            LEFT JOIN tests t ON a.test_id = t.id
+            LEFT JOIN users u ON a.student_id = u.id
+            LEFT JOIN personal_informations p ON u.id = p.user_id
+            LEFT JOIN student_assessment_results r ON a.id = r.assessment_id
+        ";
 
-                    join u in _context.Users
-                        on a.StudentId equals u.Id into userGroup
-                    from u in userGroup.DefaultIfEmpty()
+        using var cmd = new MySqlCommand(query, conn);
+        using var reader = cmd.ExecuteReader();
+        while (reader.Read())
+        {
+            var item = new StudentAssessments
+            {
+                AssessmentId = reader.GetInt64("AssessmentId"),
+                TestId = reader.GetInt64("TestId"),
+                TestTitle = reader["TestTitle"]?.ToString(),
+                StudentId = reader.GetInt64("StudentId"),
+                StudentName = reader["StudentName"]?.ToString(),
+                Status = reader["Status"]?.ToString(),
+                AssignedAt = reader["AssignedAt"] == DBNull.Value ? null : (DateTime?)reader.GetDateTime("AssignedAt"),
+                ScheduledAt = reader["ScheduledAt"] == DBNull.Value ? null : (DateTime?)reader.GetDateTime("ScheduledAt"),
+                Result = reader["ResultScore"] == DBNull.Value ? null : new backend.DTO.Responses.Results
+                {
+                    Score = reader.GetDouble("ResultScore"),
+                    Percentile = reader.GetDouble("ResultPercentile"),
+                    TimeTakenMinutes = reader["ResultTimeTaken"] == DBNull.Value ? null : (int?)Convert.ToInt32(reader["ResultTimeTaken"]) 
+                }
+            };
+            list.Add(item);
+        }
 
-                    join p in _context.PersonalInformations
-                        on u.Id equals p.UserId into personalGroup
-                    from p in personalGroup.DefaultIfEmpty()
-
-                    join r in _context.StudentAssessmentResults
-                        on a.Id equals (long?)r.AssessmentId into resultGroup
-                    from r in resultGroup.DefaultIfEmpty()
-
-                    select new StudentAssessments
-                    {
-                        AssessmentId = a.Id,
-
-                        TestId = t != null ? t.Id : 0,
-                        TestTitle = t != null ? t.Title : "No Test",
-
-                        StudentId = u != null ? u.Id : 0,
-                        StudentName = p != null ? p.FullName : "Unknown",
-
-                        Status = a.Status,
-                        AssignedAt = a.AssignedAt,
-                        ScheduledAt = a.ScheduledAt,
-
-                        Result = r == null ? null : new backend.DTO.Responses.Results
-                        {
-                            Score = r.Score,
-                            Percentile = r.Percentile,
-                            TimeTakenMinutes = r.TimeTakenMinutes
-                        }
-                    }).ToList();
-
-        return data;
+        return list;
     }
 
-    Task IAssessmentRepository.AssignAssessmentAsync(AssignAssessments dto)
-    {
-        return AssignAssessmentAsync(dto);
-    }
+    // interface implementation is provided by AssignAssessmentAsync
 }
