@@ -21,11 +21,7 @@ ProjectAssetsFile=<PATH>obj/project.assets.json
 RootNamespace=backend
 RunAnalyzers=
 RunAnalyzersDuringLiveAnalysis=
-<<<<<<< HEAD
-SolutionPath=<PATH>backend.sln
-=======
 SolutionPath=*Undefined*
->>>>>>> 4c066d854557a9a6390596b09655d994fe3cd4f2
 TargetFrameworkIdentifier=.NETCoreApp
 TargetPath=<PATH>bin/Debug/net9.0/backend.dll
 TargetRefPath=<PATH>obj/Debug/net9.0/ref/backend.dll

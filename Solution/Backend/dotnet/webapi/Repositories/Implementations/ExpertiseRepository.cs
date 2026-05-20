@@ -13,7 +13,8 @@ public class ExpertiseRepository : IExpertiseRepository
         _configuration = configuration;
     }
 
-    public async Task<int> AddSmeExpertise(Expertise expertise)
+    public async Task<int> AddSmeExpertise(Expertise expertize)
+    
     {
         string connectionString =
             _configuration.GetConnectionString("DefaultConnection")
@@ -30,7 +31,7 @@ public class ExpertiseRepository : IExpertiseRepository
         )
         VALUES
         (
-            @UserId,
+            @Userid,
             @Runtime,
             @Framework,
             @Layer,
@@ -43,15 +44,14 @@ public class ExpertiseRepository : IExpertiseRepository
 
             using (MySqlCommand cmd = new MySqlCommand(query, con))
             {
-                cmd.Parameters.AddWithValue("@UserId", expertise.User_Id);
+                cmd.Parameters.AddWithValue("@UserId", expertize.User_Id);
 
-                cmd.Parameters.AddWithValue("@Runtime", expertise.Runtime);
 
-                cmd.Parameters.AddWithValue("@Framework", expertise.Framework);
+                cmd.Parameters.AddWithValue("@Framework", expertize.Framework);
 
-                cmd.Parameters.AddWithValue("@Layer", expertise.Layer);
+                cmd.Parameters.AddWithValue("@Layer", expertize.Layer);
 
-                cmd.Parameters.AddWithValue("@Language", expertise.Language);
+                cmd.Parameters.AddWithValue("@Language", expertize.Language);
 
                 int rows = await cmd.ExecuteNonQueryAsync();
 

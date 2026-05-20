@@ -1,5 +1,5 @@
-using backend.Models; 
 
+using backend.Models;
 namespace backend.Services.Interfaces;
 public interface IExpertiseService
 {
