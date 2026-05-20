@@ -1,21 +1,17 @@
 import { useEffect, useState } from "react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Loader2 } from "lucide-react";
 import { WEBAPI_JAVA_URL } from "@/lib/utils";
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
+import { useNavigate } from "react-router-dom";
 
 type Question = {
-    id: number;
+    questionId: number;
     title?: string;
     description: string;
     questionType: string;
     difficultyLevel: string;
     status: string;
-    language?: string;
-    layer?: string;
-    framework?: string;
-    concept?: string;
+
 };
 
 const Getallquestions = () => {
@@ -23,10 +19,15 @@ const Getallquestions = () => {
     const [loading, setLoading] = useState(true);
 
     const { ref, isVisible } = useScrollAnimation();
+    const navigate = useNavigate();
 
     useEffect(() => {
         fetchQuestions();
     }, []);
+
+    const handleQuestionClick = (id: number) => {
+        navigate(`/models/evaluationcontent/questiondetails/${id}`);
+    };
 
     const fetchQuestions = async () => {
         try {
@@ -50,23 +51,20 @@ const Getallquestions = () => {
     return (
         <section
             ref={ref}
-            className="py-16 sm:py-20 bg-background min-h-screen"
+            className="py-10 bg-background min-h-screen"
         >
-            <div className="container mx-auto px-2">
+            <div className="container mx-auto px-4">
+
                 {/* Heading */}
                 <div
-                    className={`text-center mb-12 transition-all duration-1000 ${isVisible
+                    className={`text-center mb-6 transition-all duration-1000 ${isVisible
                             ? "opacity-100 translate-y-0"
                             : "opacity-0 translate-y-10"
                         }`}
                 >
-                    <h2 className="text-4xl sm:text-5xl font-bold mb-4">
-                        All Questions
+                    <h2 className="text-2xl font-bold">
+                        Questions
                     </h2>
-
-                    <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-                        Browse all available interview and technical questions.
-                    </p>
                 </div>
 
                 {/* Loader */}
@@ -79,66 +77,60 @@ const Getallquestions = () => {
                         No Questions Found
                     </div>
                 ) : (
-                    <div className="grid gap-6">
-                        {questions.map((question, index) => (
-                            <Card
-                                key={index}
-                                className={`border border-border shadow-md hover:shadow-xl transition-all duration-500 ${isVisible
-                                        ? "opacity-100 translate-y-0"
-                                        : "opacity-0 translate-y-10"
-                                    }`}
-                            >
-                                <CardContent className="p-6 space-y-4">
-                                    {/* Question Description */}
-                                    <div>
-                                        <h3 className="text-xl font-semibold mb-2">
-                                            {question.title || "Question"}
-                                        </h3>
+                    <div
+                        className={`overflow-x-auto rounded-xl border shadow-md transition-all duration-1000 ${isVisible
+                                ? "opacity-100 translate-y-0"
+                                : "opacity-0 translate-y-10"
+                            }`}
+                    >
+                        <table className="w-full border-collapse">
+                            <thead className="bg-muted">
+                                <tr>
+                                    <th className="p-4 text-left">ID</th>
+                                    <th className="p-4 text-left">Question</th>
+                                    <th className="p-4 text-left">Type</th>
+                                    <th className="p-4 text-left">Difficulty</th>
+                                    <th className="p-4 text-left">Status</th>
 
-                                        <p className="text-muted-foreground leading-relaxed">
-                                            {question.description}
-                                        </p>
-                                    </div>
+                                </tr>
+                            </thead>
 
-                                    {/* Badges */}
-                                    <div className="flex flex-wrap gap-3">
-                                        <Badge variant="secondary">
+                            <tbody>
+                                {questions.map((question, index) => (
+                                    <tr
+                                        key={index}
+                                        onClick={() => handleQuestionClick(question.questionId)}
+                                        className="border-t hover:bg-muted/50 transition"
+                                    >
+                                        <td className="p-4">
+                                            {question.questionId}
+                                        </td>
+
+                                        <td className="p-4 min-w-[300px]">
+
+
+                                            <div className="p-4">
+                                                {question.description}
+                                            </div>
+                                        </td>
+
+                                        <td className="p-4">
                                             {question.questionType}
-                                        </Badge>
+                                        </td>
 
-                                        <Badge variant="outline">
+                                        <td className="p-4">
                                             {question.difficultyLevel}
-                                        </Badge>
+                                        </td>
 
-                                        <Badge>{question.status}</Badge>
+                                        <td className="p-4">
+                                            {question.status}
+                                        </td>
 
-                                        {question.language && (
-                                            <Badge variant="secondary">
-                                                {question.language}
-                                            </Badge>
-                                        )}
 
-                                        {question.layer && (
-                                            <Badge variant="outline">
-                                                {question.layer}
-                                            </Badge>
-                                        )}
-
-                                        {question.framework && (
-                                            <Badge>
-                                                {question.framework}
-                                            </Badge>
-                                        )}
-
-                                        {question.concept && (
-                                            <Badge variant="secondary">
-                                                {question.concept}
-                                            </Badge>
-                                        )}
-                                    </div>
-                                </CardContent>
-                            </Card>
-                        ))}
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
                     </div>
                 )}
             </div>

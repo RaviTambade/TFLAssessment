@@ -11,7 +11,6 @@ import UpdateQuestion from "@/components/assessment/evaluationcontent/UpdateQues
 import QuestionsByConcept from "@/components/assessment/evaluationcontent/QuestionsByConcept";
 import QuestionPage from "@/components/assessment/evaluationcontent/QuestionsPage";
 import SMEInsertQuestion from "@/components/assessment/evaluationcontent/SMEInsertQuestion";
-import MentorReviewQuestion from "@/components/assessment/evaluationcontent/MentorReviewQuestion";
 import QuestionDetails from "@/components/assessment/evaluationcontent/QuestionDetails";
 import EditQuestion from "@/components/assessment/evaluationcontent/EditQuestion";
 import ViewRuntimes from "@/components/assessment/skilltaxonomy/ViewRuntimes";
@@ -147,10 +146,7 @@ function AppRoutes() {
             path="evaluationcontent/insertquestion"
             element={<SMEInsertQuestion />}
           />
-          <Route
-            path="evaluationcontent/reviewquestion"
-            element={<MentorReviewQuestion />}
-          />
+         
           <Route index element={<Assessment />} />
           <Route
             path="evaluationcontent/viewprojectinfo"
