@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Loader2, Brain, Check } from "lucide-react";
 import { WEBAPI_JAVA_URL } from "@/lib/utils";
+import { useNavigate } from "react-router-dom";
 
 type Question = {
     questionId: number;
@@ -14,6 +15,7 @@ const QuestionsByConcept = () => {
     const [selectedConcepts, setSelectedConcepts] = useState<string[]>([]);
     const [questions, setQuestions] = useState<Question[]>([]);
     const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
 
     // ✅ Load Concepts
     useEffect(() => {
@@ -23,7 +25,10 @@ const QuestionsByConcept = () => {
             .catch((err) => console.error(err));
     }, []);
 
-    // ✅ Multiple Concept Selection
+     const handleQuestionClick = (id: number) => {
+        navigate(`/models/evaluationcontent/questiondetails/${id}`);
+    };
+
     const handleConceptClick = async (concept: string) => {
         let updatedConcepts: string[];
 
@@ -73,16 +78,16 @@ const QuestionsByConcept = () => {
     };
 
     return (
-        <section className="min-h-screen py-16 bg-background">
+        <section className="min-h-screen py-4 bg-background">
             <div className="container mx-auto px-4">
 
                 {/* HEADER */}
-                <div className="text-center mb-14">
+                <div className="text-center mb-8">
 
-                    <h2 className="text-4xl sm:text-5xl font-bold text-foreground mb-4">
-                        Questions By{" "}
+                    <h2 className="text-2xl sm:text-3xl font-bold text-foreground mb-4">
+                    
                         <span className="bg-gradient-primary bg-clip-text text-transparent">
-                            Concept
+                            Questions By Concept
                         </span>
                     </h2>
                 </div>
@@ -169,8 +174,9 @@ const QuestionsByConcept = () => {
                                         {questions.map((question, index) => (
                                             <Card
                                                 key={index}
-                                                className="border border-border rounded-2xl hover:shadow-md transition-all"
-                                            >
+                                                onClick={() => handleQuestionClick(question.questionId)}
+                                                className="border border-border rounded-2xl hover:shadow-md transition-all cursor-pointer"
+                                                >
                                                 <CardContent className="p-6">
 
                                                     <div className="flex items-start justify-between gap-4">
