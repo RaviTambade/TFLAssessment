@@ -2,6 +2,7 @@ using backend.Models;
 using backend.Repositories.Interfaces;
 using backend.Services.Interfaces;
 
+
 namespace backend.Services.Implementations;
 
 public class ExpertiseService : IExpertiseService
@@ -13,10 +14,10 @@ public class ExpertiseService : IExpertiseService
         _repo = repo;
     }
 
-    public async Task<int> AddSmeExpertise(expertise expertize)
+    public async Task<int> AddSmeExpertise(Expertise expertise)
     {
 
 
-        return await _repo .AddSmeExpertise(expertize);
+        return await _repo .AddSmeExpertise(expertise);
     }
 }

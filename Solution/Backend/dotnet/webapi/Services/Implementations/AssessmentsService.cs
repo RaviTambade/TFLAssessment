@@ -35,9 +35,20 @@ namespace backend.Services.Interfaces
             return await _repository.GetTestsAsync();
         }
 
-        public async Task<List<string>> GetStudentsAsync()
+        // public async Task<List<string>> GetStudentsAsync()
+        // {
+        //       return await Task.FromResult(new List<string>());
+        // }
+
+        // public async Task<List<Student>> GetStudentsAsync()
+        // {
+        //      await _repository.GetStudentsAsync();
+        // }
+
+          public async Task<List<Student>> GetStudentsAsync()
         {
-              return await Task.FromResult(new List<string>());
+            return await
+                _repository.GetStudentsAsync();
         }
 
       public async Task AssignAssessmentAsync(AssignAssessments dto)

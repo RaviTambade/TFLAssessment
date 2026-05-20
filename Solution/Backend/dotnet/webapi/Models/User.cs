@@ -19,9 +19,9 @@ public partial class User
 
     public virtual ICollection<AcademicInformation> AcademicInformations { get; set; } = new List<AcademicInformation>();
 
-    public virtual ICollection<MentorMentee> MentorMenteeMentees { get; set; } = new List<MentorMentee>();
+    // public virtual ICollection<MentorMentee> MentorMenteeMentees { get; set; } = new List<MentorMentee>();
 
-    public virtual ICollection<MentorMentee> MentorMenteeMentors { get; set; } = new List<MentorMentee>();
+    // public virtual ICollection<MentorMentee> MentorMenteeMentors { get; set; } = new List<MentorMentee>();
 
     public virtual ICollection<PersonalInformation> PersonalInformations { get; set; } = new List<PersonalInformation>();
 

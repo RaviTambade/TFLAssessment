@@ -1,9 +1,9 @@
-
-public class expertise
+namespace backend.Models;
+public class Expertise
 {
     public int id {get;set;}
 
-    public long user_roles_id  {get;set;}
+    public long user_id  {get;set;}
 
     public string runtime {get;set;}
 

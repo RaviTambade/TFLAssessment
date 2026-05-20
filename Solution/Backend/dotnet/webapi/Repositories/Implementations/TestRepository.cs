@@ -96,42 +96,41 @@ public async Task<long> CreateTestAsync(CreateTestRequests dto)
                 // Insert Test
                 string insertTestQuery = @"
                                     INSERT INTO tests
-                                    (
-                                        user_roles_id,
-                                        title,
-                                        duration,
-                                        difficulty,
-                                        description,
-                                        created_at,
-                                        status,
-                                        sme_id
-                                    )
-                                    VALUES
-                                    (
-                                        @UserRolesId,
-                                        @Title,
-                                        @Duration,
-                                        @Difficulty,
-                                        @Description,
-                                        @Created_At,
-                                        @Status,
-                                        @SmeId
-                                    );
+                                                    (
+                                                        sme_runtime_id,
+                                                        title,
+                                                        duration,
+                                                        description,
+                                                        difficulty,
+                                                        created_at,
+                                                        status,
+                                                        sme_id
+                                                    )
+                                                    VALUES
+                                                    (
+                                                        @SmeRuntimeId,
+                                                        @Title,
+                                                        @Duration,
+                                                        @Description,
+                                                        @Difficulty,
+                                                        @CreatedAt,
+                                                        @Status,
+                                                        @SmeId
+                                                    );
 
-                                    SELECT LAST_INSERT_ID();
-                                ";
+                                                    SELECT LAST_INSERT_ID()";
 
                    
 
                 using (MySqlCommand cmd = new MySqlCommand(insertTestQuery, con, transaction))
                         {
-                     cmd.Parameters.AddWithValue("@UserRolesId", dto.UserRolesId);
+                     cmd.Parameters.AddWithValue("@SmeRuntimeId", dto.SmeRuntimeId);
                     cmd.Parameters.AddWithValue("@Title", dto.Title);
                     cmd.Parameters.AddWithValue("@Duration", (int)dto.Duration);
-                    cmd.Parameters.AddWithValue("@Difficulty", dto.SkillLevel);
+                    cmd.Parameters.AddWithValue("@Difficulty", dto.Difficulty);
                     cmd.Parameters.AddWithValue("@Description",
                         dto.Description ?? (object)DBNull.Value);
-                    cmd.Parameters.AddWithValue("@Created_At", DateTime.Now);
+                    cmd.Parameters.AddWithValue("@CreatedAt", DateTime.Now);
                             cmd.Parameters.AddWithValue("@Status", true);
                     cmd.Parameters.AddWithValue("@SmeId",dto.SmeId);
 

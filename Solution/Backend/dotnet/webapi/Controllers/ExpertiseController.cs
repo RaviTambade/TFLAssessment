@@ -19,16 +19,11 @@ public class ExpertiseController : ControllerBase
     }
 
     [HttpPost ("expertise")]
-    public async Task<IActionResult>AddExpertise([FromBody] expertise expertize
-        )
+    public async Task<IActionResult>AddSmeExpertise([FromBody] Expertise expertize)
     {
         try
         {
-            int rows =
-                await _expertiseService
-                    .AddSmeExpertise(
-                        expertize
-                    );
+            int rows = await _expertiseService.AddSmeExpertise(expertize);
 
             return Ok(new
             {

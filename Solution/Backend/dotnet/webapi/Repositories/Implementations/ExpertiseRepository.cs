@@ -13,7 +13,7 @@ public class ExpertiseRepository : IExpertiseRepository
         _context = context;
     }
 
-    public async Task<int> AddSmeExpertise(expertise expertize)
+    public async Task<int> AddSmeExpertise(Expertise expertize)
     
     {
         string connectionString =
@@ -22,7 +22,7 @@ public class ExpertiseRepository : IExpertiseRepository
         string query = @"
         INSERT INTO expertise
         (
-            user_roles_id,
+            user_id,
             runtime,
             framework,
             layer,
@@ -30,7 +30,7 @@ public class ExpertiseRepository : IExpertiseRepository
         )
         VALUES
         (
-            @UserRoleId,
+            @Userid,
             @Runtime,
             @Framework,
             @Layer,
@@ -43,7 +43,7 @@ public class ExpertiseRepository : IExpertiseRepository
 
             MySqlCommand cmd = new MySqlCommand(query, con);
 
-            cmd.Parameters.AddWithValue("@UserRoleId",expertize.user_roles_id);
+            cmd.Parameters.AddWithValue("@Userid",expertize.user_id);
 
             cmd.Parameters.AddWithValue("@Runtime",expertize.runtime);
 
