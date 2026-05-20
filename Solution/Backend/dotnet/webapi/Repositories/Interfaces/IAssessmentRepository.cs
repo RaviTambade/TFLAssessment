@@ -12,7 +12,7 @@ namespace backend.Repositories.Interfaces
         Task<List<AllAssessments>> GetAllAssessments();
 
         Task<List<Tests>> GetTestsAsync();
-        Task<List<string>> GetStudentsAsync();
+        Task<List<Student>> GetStudentsAsync();
         Task AssignAssessmentAsync(AssignAssessments dto);
 
         // Task<List<AssessmentResultDto>> GetAssessmentResults();

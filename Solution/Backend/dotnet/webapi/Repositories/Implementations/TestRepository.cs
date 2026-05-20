@@ -147,42 +147,43 @@ public async Task<long> CreateTestAsync(CreateTestRequests dto)
                 // Insert core columns present across DB variants (avoids mismatches: some DBs use
                 // `user_id` without `sme_runtime_id`; dumps may use `sme_runtime_id` without `user_id`).
                 string insertTestQuery = @"
-                    INSERT INTO tests
-                    (
-                        title,
-                        duration,
-                        difficulty,
-                        description,
-                        created_at,
-                        status,
-                        user_id
-                    )
-                    VALUES
-                    (
-                        @Title,
-                        @Duration,
-                        @Difficulty,
-                        @Description,
-                        @Created_At,
-                        @Status,
-                        @UserId
-                    );";
+                                    INSERT INTO tests
+                                                    (
+                                                        userid,
+                                                        title,
+                                                        duration,
+                                                        description,
+                                                        difficulty,
+                                                        created_at,
+                                                        status,
+                                                        sme_id
+                                                    )
+                                                    VALUES
+                                                    (
+                                                        @userid,
+                                                        @Title,
+                                                        @Duration,
+                                                        @Description,
+                                                        @Difficulty,
+                                                        @CreatedAt,
+                                                        @Status,
+                                                        @SmeId
+                                                    );
+
+                                                    SELECT LAST_INSERT_ID()";
+
+                   
 
                 using (MySqlCommand cmd = new MySqlCommand(insertTestQuery, con, transaction))
-                {
-                    cmd.Parameters.AddWithValue("@Title", (object?)dto.Title ?? DBNull.Value);
+                        {
+                     cmd.Parameters.AddWithValue("@userid", dto.UserId);
+                    cmd.Parameters.AddWithValue("@Title", dto.Title);
                     cmd.Parameters.AddWithValue("@Duration", (int)dto.Duration);
-                    cmd.Parameters.AddWithValue(
-                        "@Difficulty",
-                        string.IsNullOrWhiteSpace(dto.SkillLevel)
-                            ? DBNull.Value
-                            : dto.SkillLevel);
-                    cmd.Parameters.AddWithValue(
-                        "@Description",
+                    cmd.Parameters.AddWithValue("@Difficulty", dto.Difficulty);
+                    cmd.Parameters.AddWithValue("@Description",
                         dto.Description ?? (object)DBNull.Value);
-                    cmd.Parameters.AddWithValue("@Created_At", DateTime.Now);
-                    cmd.Parameters.AddWithValue("@Status", true);
-                    cmd.Parameters.AddWithValue("@UserId", userId);
+                    cmd.Parameters.AddWithValue("@CreatedAt", DateTime.Now);
+                            cmd.Parameters.AddWithValue("@Status", true);
 
                     await cmd.ExecuteNonQueryAsync();
                 }
