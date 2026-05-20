@@ -149,14 +149,14 @@ public async Task<long> CreateTestAsync(CreateTestRequests dto)
                 string insertTestQuery = @"
                                     INSERT INTO tests
                                                     (
-                                                        userid,
+                                                        user_id,
                                                         title,
                                                         duration,
                                                         description,
                                                         difficulty,
                                                         created_at,
-                                                        status,
-                                                        sme_id
+                                                        status
+                                                       
                                                     )
                                                     VALUES
                                                     (
@@ -166,8 +166,8 @@ public async Task<long> CreateTestAsync(CreateTestRequests dto)
                                                         @Description,
                                                         @Difficulty,
                                                         @CreatedAt,
-                                                        @Status,
-                                                        @SmeId
+                                                        @Status
+                                                        
                                                     );
 
                                                     SELECT LAST_INSERT_ID()";
@@ -184,7 +184,6 @@ public async Task<long> CreateTestAsync(CreateTestRequests dto)
                         dto.Description ?? (object)DBNull.Value);
                     cmd.Parameters.AddWithValue("@CreatedAt", DateTime.Now);
                             cmd.Parameters.AddWithValue("@Status", true);
-
                     await cmd.ExecuteNonQueryAsync();
                 }
 

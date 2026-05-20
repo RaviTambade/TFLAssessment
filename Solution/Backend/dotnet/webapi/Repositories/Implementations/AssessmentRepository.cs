@@ -6,7 +6,6 @@ using backend.DTO.Requests;
 using MySql.Data.MySqlClient;
 using System.Data;
 
-
 namespace backend.Repositories.Interfaces;
 
 public class AssessmentRepository : IAssessmentRepository
