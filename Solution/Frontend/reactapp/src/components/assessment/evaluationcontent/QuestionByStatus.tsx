@@ -68,7 +68,7 @@ const QuestionByStatus = () => {
 
   return (
     <section className="py-5 bg-gradient-to-b from-orange-50/40 to-background">
-      <div className="container mx-auto px-4 max-w-5xl">
+      <div className="container mx-auto px-4 max-w-7xl">
         
         <div className="mb-8">
           <h1 className="text-3xl sm:text-2xl font-extrabold text-foreground tracking-tight">
