@@ -1,5 +1,5 @@
-package com.transflower.tflcomentor.ecm.dto.response;
-import com.transflower.tflcomentor.ecm.entity.enums.InterviewStatus;
+package com.transflower.tflcomentor.interview.dto.response;
+import com.transflower.tflcomentor.interview.dto.enums.InterviewStatus;
 
 public class InterviewList {
 

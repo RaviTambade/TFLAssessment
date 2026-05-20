@@ -1,8 +1,8 @@
-package com.transflower.tflcomentor.ecm.dto.request;
+package com.transflower.tflcomentor.interview.dto.request;
 
 import java.time.LocalDateTime;
 
-import com.transflower.tflcomentor.ecm.entity.enums.InterviewStatus;
+import com.transflower.tflcomentor.interview.dto.enums.InterviewStatus;
 
 public class ScheduleInterview {
     private String title;
