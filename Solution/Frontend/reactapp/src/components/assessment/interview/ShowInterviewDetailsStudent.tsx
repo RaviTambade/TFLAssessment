@@ -179,7 +179,7 @@ const ShowInterviewDetailsStudent = () => {
     {/* SME Buttons */}
     {user.role_id === 4 && (
         <>
-        <Button onClick={handleAccept}
+        {/* <Button onClick={handleAccept}
             className="bg-green-700 hover:bg-green-800 text-white shadow-lg font-semibold"
         >
             Accept Interview
@@ -190,7 +190,7 @@ const ShowInterviewDetailsStudent = () => {
             className="border-red-700 text-red-800 hover:bg-red-100 font-semibold"
         >
             Reject Interview
-        </Button>
+        </Button> */}
 
         <Button onClick={handleCancel}
             variant="outline"
@@ -206,6 +206,14 @@ const ShowInterviewDetailsStudent = () => {
             className="border-red-700 text-red-800 hover:bg-red-100 font-semibold"
         >
            Feedback
+        </Button>
+
+         <Button onClick={()=>{
+          navigate(`/models/interview/question/feedback/${id}`)}}
+            variant="outline"
+            className="border-red-700 text-red-800 hover:bg-red-100 font-semibold"
+        >
+            Feedback per Question
         </Button>
         </>
     )}

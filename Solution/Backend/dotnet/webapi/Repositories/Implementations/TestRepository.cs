@@ -132,9 +132,6 @@ public async Task<long> CreateTestAsync(CreateTestRequests dto)
     if (userId <= 0)
         throw new ArgumentException("UserId or UserRolesId must be supplied and greater than 0.");
 
-    if (dto.SmeId <= 0)
-        throw new ArgumentException("SmeId must be supplied and greater than 0.");
-
     long testId = 0;
 
     string connectionString = ("Server=localhost;Port=3306;Database=tflcomentor_db;User=root;Password=password;");
@@ -147,49 +144,54 @@ public async Task<long> CreateTestAsync(CreateTestRequests dto)
         {
             try
             {
-                // Insert Test
+                // Insert core columns present across DB variants (avoids mismatches: some DBs use
+                // `user_id` without `sme_runtime_id`; dumps may use `sme_runtime_id` without `user_id`).
                 string insertTestQuery = @"
-                                    INSERT INTO tests
-                                    (
-                                        user_id,
-                                        title,
-                                        duration,
-                                        difficulty,
-                                        description,
-                                        created_at,
-                                        status,
-                                        sme_id
-                                    )
-                                    VALUES
-                                    (
-                                        @User_Id,
-                                        @Title,
-                                        @Duration,
-                                        @Difficulty,
-                                        @Description,
-                                        @Created_At,
-                                        @Status,
-                                        @SmeId
-                                    );
-
-                                    SELECT LAST_INSERT_ID();
-                                ";
-
-                   
+                    INSERT INTO tests
+                    (
+                        title,
+                        duration,
+                        difficulty,
+                        description,
+                        created_at,
+                        status,
+                        user_id
+                    )
+                    VALUES
+                    (
+                        @Title,
+                        @Duration,
+                        @Difficulty,
+                        @Description,
+                        @Created_At,
+                        @Status,
+                        @UserId
+                    );";
 
                 using (MySqlCommand cmd = new MySqlCommand(insertTestQuery, con, transaction))
-                        {
-                     cmd.Parameters.AddWithValue("@User_Id", userId);
-                    cmd.Parameters.AddWithValue("@Title", dto.Title);
+                {
+                    cmd.Parameters.AddWithValue("@Title", (object?)dto.Title ?? DBNull.Value);
                     cmd.Parameters.AddWithValue("@Duration", (int)dto.Duration);
-                    cmd.Parameters.AddWithValue("@Difficulty", dto.SkillLevel);
-                    cmd.Parameters.AddWithValue("@Description",
+                    cmd.Parameters.AddWithValue(
+                        "@Difficulty",
+                        string.IsNullOrWhiteSpace(dto.SkillLevel)
+                            ? DBNull.Value
+                            : dto.SkillLevel);
+                    cmd.Parameters.AddWithValue(
+                        "@Description",
                         dto.Description ?? (object)DBNull.Value);
                     cmd.Parameters.AddWithValue("@Created_At", DateTime.Now);
-                            cmd.Parameters.AddWithValue("@Status", true);
-                    cmd.Parameters.AddWithValue("@SmeId",dto.SmeId);
+                    cmd.Parameters.AddWithValue("@Status", true);
+                    cmd.Parameters.AddWithValue("@UserId", userId);
 
-                    testId = Convert.ToInt64(await cmd.ExecuteScalarAsync());
+                    await cmd.ExecuteNonQueryAsync();
+                }
+
+                using (MySqlCommand idCmd =
+                       new MySqlCommand("SELECT LAST_INSERT_ID();", con, transaction))
+                {
+                    var idScalar = await idCmd.ExecuteScalarAsync();
+                    testId = Convert.ToInt64(idScalar);
                 }
 
                 // Insert Questions

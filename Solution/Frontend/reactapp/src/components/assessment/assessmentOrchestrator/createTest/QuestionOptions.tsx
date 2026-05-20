@@ -12,13 +12,16 @@ import {
 } from "../../../ui/select";
 import SMEInsertQuestion from "../../evaluationcontent/SMEInsertQuestion";
 import { WEBAPI_DOTNET_URL } from "@/lib/utils";
- 
-type QuestionOptionsState = {
+import {
+  CREATE_TEST_DRAFT_STORAGE_KEY,
+  type CreateTestDraftPayload,
+  isCreateTestDraftPayload,
+  readCreateTestDraftFromSession,
+} from "./createTestDraftStorage";
+
+type QuestionOptionsLocationState = {
   testId?: number | string;
-  test?: {
-    testId?: number | string;
-    TestId?: number | string;
-  };
+  test?: CreateTestDraftPayload;
 };
  
 type ApiQuestion = {
@@ -31,8 +34,10 @@ type ApiQuestion = {
  
 const QuestionOptions = () => {
   const location = useLocation();
-  const routeState = (location.state as QuestionOptionsState | null) ?? {};
-  const testId = routeState.testId ?? routeState.test?.testId ?? routeState.test?.TestId;
+  const routeState = (location.state as QuestionOptionsLocationState | null) ?? {};
+  const testId = routeState.testId;
+
+  const [testDraft, setTestDraft] = useState<CreateTestDraftPayload | null>(null);
  
   const [questionType, setQuestionType] = useState("");
   const [status, setStatus] = useState("");
@@ -47,13 +52,34 @@ const QuestionOptions = () => {
   const [error, setError] = useState<string | null>(null);
   const [isCreatingTest, setIsCreatingTest] = useState(false);
  
-  // ✅ SESSION STORAGE + FETCH QUESTIONS
+  // Prefer router state from Create Test (reliable in-SPA); mirror to session for refresh.
+  useEffect(() => {
+    const state = location.state as QuestionOptionsLocationState | null;
+    const fromNavigate = state?.test;
+
+    if (isCreateTestDraftPayload(fromNavigate)) {
+      setTestDraft(fromNavigate);
+      try {
+        sessionStorage.setItem(
+          CREATE_TEST_DRAFT_STORAGE_KEY,
+          JSON.stringify(fromNavigate)
+        );
+      } catch {
+        /* storage may be blocked; in-memory testDraft is enough until refresh */
+      }
+      return;
+    }
+
+    setTestDraft(readCreateTestDraftFromSession());
+  }, [location.key]);
+
+  // ✅ FETCH QUESTIONS
   useEffect(() => {
     const userData = JSON.parse(sessionStorage.getItem("current") || "{}");
     const userId = Number(
       userData.userid ||
         userData.id ||
-        localStorage.getItem("smeId") ||
+        // localStorage.getItem("smeId") ||
         0
     );
  
@@ -165,37 +191,35 @@ const QuestionOptions = () => {
       return;
     }
  
-    const storedTestDataRaw = sessionStorage.getItem("createTestDraft");
- 
-    if (!storedTestDataRaw) {
+    const fromLocation = (location.state as QuestionOptionsLocationState | null)?.test;
+    const storedTestData =
+      testDraft ??
+      readCreateTestDraftFromSession() ??
+      (isCreateTestDraftPayload(fromLocation) ? fromLocation : null);
+
+    if (!storedTestData) {
       setError("Test details not found. Please go back and fill the test information.");
       return;
     }
- 
+
     try {
       setIsCreatingTest(true);
- 
+
       const userData = JSON.parse(sessionStorage.getItem("current") || "{}");
-      const storedTestData = JSON.parse(storedTestDataRaw) as {
-        smeId?: number | string;
-        title?: string;
-        description?: string;
-        duration?: number | string;
-      };
  
       const currentUserId = Number(
-        userData.userid || userData.id || localStorage.getItem("smeId") || 0
+        userData.userid || userData.id || 0
       );
-      const smeId = Number(storedTestData.smeId || currentUserId);
+      // const smeId = Number(storedTestData.smeId || currentUserId);
       const duration = Number(storedTestData.duration);
  
       if (!currentUserId || currentUserId <= 0) {
         throw new Error("User ID not found. Please log in again.");
       }
  
-      if (!smeId || smeId <= 0) {
-        throw new Error("SME ID is invalid. Please create the test again.");
-      }
+      // if (!smeId || smeId <= 0) {
+      //   throw new Error("SME ID is invalid. Please create the test again.");
+      // }
  
       if (!duration || duration <= 0) {
         throw new Error("Test duration is invalid. Please enter a valid duration.");
@@ -203,7 +227,6 @@ const QuestionOptions = () => {
  
       const payload = {
         userId: currentUserId,
-        smeId,
         title: storedTestData.title || "Untitled Test",
         description: storedTestData.description || "",
         duration,
@@ -243,7 +266,8 @@ const QuestionOptions = () => {
       setQuestionType("");
       setStatus("");
       setSkillLevel("");
-      sessionStorage.removeItem("createTestDraft");
+      sessionStorage.removeItem(CREATE_TEST_DRAFT_STORAGE_KEY);
+      setTestDraft(null);
     } catch (err) {
       const message =
         err instanceof Error
@@ -267,6 +291,13 @@ const QuestionOptions = () => {
           </CardTitle>
           {testId && (
             <p className="text-sm text-slate-600">Test ID: {testId}</p>
+          )}
+          {testDraft && (
+            <p className="text-sm text-slate-600">
+              Test: <span className="font-medium text-slate-800">{testDraft.title}</span>
+              {" · "}
+              {testDraft.duration} min
+            </p>
           )}
         </CardHeader>
  
