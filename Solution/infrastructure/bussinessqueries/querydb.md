@@ -1,3 +1,122 @@
+# SQL QUERIES USED IN WEB APIs #
+## USERS ##
+- ### getUserDetailsByID ###
+  ` SELECT  u.id AS user_id, u.contact, u.status, p.first_name, p.last_name,
+        p.gender, p.date_of_birth,  p.email, a.enrollment_year,
+        a.passing_year, a.percentage, a.college_name, prof.skills
+      FROM users u
+      LEFT JOIN personal_informations p ON u.id = p.user_id
+      LEFT JOIN academic_informations a ON u.id = a.user_id
+      LEFT JOIN professional_informations prof ON u.id = prof.user_id
+      WHERE u.id = ? `
+- ### getUserPersonalDetails ###
+  ` SELECT p.first_name, p.last_name, p.gender, p.date_of_birth, p.email, p.address, p.pincode,u.contact
+      FROM personal_informations p 
+      join users u on u.id = p.user_id
+      WHERE user_id = ? `
+- ### getUserAcademicDetails ###
+  ` SELECT enrollment_year, passing_year, percentage, college_name, stream_name, specialization
+      FROM academic_informations
+      WHERE user_id = ? `
+- ### getUserProfessionalDetails ###
+  ` SELECT company_name, job_title, employment_type, start_date, end_date, is_current_job, experience_years, location, skills
+      FROM professional_informations
+      WHERE user_id = ? `
+- ### updateUserPersonalDetails ###
+  ` UPDATE personal_informations SET ${fields} WHERE user_id = ? `
+- ### updateUserProfessionalDetails ###
+  ` UPDATE professional_informations SET ${fields} WHERE user_id = ? `
+- ### updateUserAcademicDetails ###
+  ` UPDATE academic_informations SET ${fields} WHERE user_id = ? `
+- ### updateUserStatus ###
+  ` UPDATE users SET status = ? WHERE id = ? `
+- ### getAllUsers ###
+  ` SELECT 
+        p.user_id, 
+        p.full_name, 
+        u.created_at,
+        u.status,
+        r.role_name
+    FROM personal_informations p
+    LEFT JOIN user_roles ur ON p.user_id = ur.user_id
+    LEFT JOIN roles r ON ur.role_id = r.role_id
+    LEFT JOIN users u ON p.user_id = u.id 
+    ORDER BY p.user_id `
+
+## USER ACTIVITY ##
+- ### login ###
+  ` INSERT INTO user_logs (user_id,login_time) VALUES(?,NOW() ) `
+- ### logout ###
+  ` UPDATE user_logs SET logout_time=now() WHERE user_id=? AND logout_time is null `
+- ### getRecentLoginCount ###
+  ` SELECT COUNT(*) AS totalLogins24h
+      FROM user_logs
+      WHERE login_time >= NOW() `
+- ### getRecentAverageSessionTime ###
+  ` SELECT AVG(TIMESTAMPDIFF(SECOND, login_time, logout_time)) AS avgSessionTime
+      FROM (
+        SELECT login_time, logout_time
+        FROM user_logs
+        WHERE logout_time IS NOT NULL
+        ORDER BY login_time DESC
+        LIMIT 50
+      ) AS last50 `
+- ### getActiveSessionsCount ###
+  ` SELECT COUNT(*) AS activeSessions
+      FROM user_logs
+      WHERE logout_time IS NULL `
+- ### getLiveUsers ###
+  ` SELECT 
+        CONCAT(p.first_name,' ', p.last_name) AS full_name,
+        l.login_time,
+        TIMESTAMPDIFF(SECOND, l.login_time, NOW()) AS active_seconds
+      FROM user_logs l
+      JOIN personal_informations p ON l.user_id = p.user_id
+      WHERE l.logout_time IS NULL `
+- ### getAllUserActivity ###
+  ` SELECT
+        u.id AS session_id,
+        ul.user_id,
+        CONCAT(p.first_name,' ', p.last_name) AS full_name,
+        r.role_name AS role,
+        ul.login_time,
+        ul.logout_time,
+        TIMESTAMPDIFF(MINUTE, ul.login_time, COALESCE(ul.logout_time, NOW())) AS session_duration_minutes 
+      FROM user_logs ul
+      LEFT JOIN users u ON ul.user_id = u.id
+      LEFT JOIN personal_informations p ON ul.user_id = p.user_id
+      LEFT JOIN user_roles ur ON u.id = ur.user_id
+      LEFT JOIN roles r ON ur.role_id = r.role_id `
+## ROLES ##
+- ### getAllRoles ###
+ ` SELECT * from roles `
+- ### insert ###
+  ` INSERT INTO roles(role_name,description) VALUES(?,?) `
+- ### update ###
+  ` UPDATE roles SET role_name=?, description=? WHERE role_id=? `
+- ### getUserRolesByUserId ###
+  ` SELECT r.role_id, r.role_name FROM user_roles ur JOIN roles r ON ur.role_id = r.role_id WHERE ur.user_id = ? `
+- ### unAssignRole ###
+  ` DELETE FROM user_roles WHERE user_id = ? AND role_id = ? `
+- ### unAssignRoles ###
+  ` DELETE FROM user_roles WHERE user_id = ? AND role_id IN (?) `
+- ### assignRole ###
+  ` INSERT INTO user_roles (user_id, role_id, assigned_at)
+    VALUES ${placeholders}
+    ON DUPLICATE KEY UPDATE assigned_at = NOW() `
+## AUTH ##
+- ### validateUser ###
+  ` SELECT u.id, p.first_name, p.last_name, r.role_name from users u
+                  JOIN user_roles ur ON u.id= ur.user_id 
+                  JOIN roles r ON r.role_id = ur.role_id
+                  JOIN personal_informations p on p.user_id = u.id
+                    WHERE u.contact=? AND u.password=? AND u.status="ACTIVE" AND r.role_name=? `
+- ### register ###
+  ` CALL RegisterUser(?,?,?,?,?) `
+- ### changePassword ###
+  ` UPDATE users SET password = ?, updated_at =now() WHERE id = ? `
+
+
 ## SQL statements with explanations
 
 ### `evaluationcontentmanagement.repository.impl.QuestionsRepositoryImpl`
@@ -278,5 +397,506 @@ Add session tracking:
 * Add `session_id` column (UUID)
 * Track login/logout more accurately (especially for multiple devices)
 
- 
- 
+---
+
+# SQL QUERIES USED IN PROJECT REPOSITORY
+
+## PROJECTS ##
+
+- ### getAllProjects ###
+  ` SELECT * FROM projects `
+
+- ### getProjectById ###
+  ` SELECT * FROM tflcomentor_db.projects WHERE project_id = ? `
+
+- ### getProjectByStudentId ###
+  ` SELECT 
+        p.project_name,
+        p.project_id,
+        p.mentor_id,
+        p.description,
+        p.repository_url,
+        p.status,
+        p.created_at
+    FROM project_allocations pa
+    JOIN projects p ON pa.project_id = p.project_id
+    WHERE pa.student_id = ? `
+
+---
+
+## PROJECT ALLOCATIONS ##
+
+- ### addMember ###
+  ` INSERT INTO project_allocations(project_id, student_id, joined_date)
+    VALUES (?, ?, NOW()) `
+
+- ### removeMember ###
+  ` UPDATE project_allocations
+    SET release_date = NOW()
+    WHERE project_id = ? AND student_id = ? `
+
+- ### getProjectAllocationDetails ###
+  ` SELECT
+        pa.project_id,
+        p.project_name,
+        pa.student_id,
+        CONCAT(pi.first_name, ' ', pi.last_name) AS student_name,
+        pa.joined_date,
+        pa.release_date
+    FROM project_allocations pa
+    JOIN projects p ON pa.project_id = p.project_id
+    JOIN users u ON pa.student_id = u.id
+    JOIN personal_informations pi ON u.id = pi.user_id
+    ORDER BY pa.project_id `
+
+- ### getProjectMember ###
+  ` SELECT
+        pa.project_id,
+        p.project_name,
+        pa.student_id,
+        CONCAT(pi.first_name, ' ', pi.last_name) AS student_name,
+        pa.joined_date,
+        pa.release_date
+    FROM project_allocations pa
+    JOIN projects p ON pa.project_id = p.project_id
+    JOIN users u ON pa.student_id = u.id
+    JOIN personal_informations pi ON u.id = pi.user_id
+    WHERE pa.project_id = ? `
+
+- ### getStudentByProjectId ###
+  ` SELECT
+        pa.project_id,
+        p.project_name,
+        pa.student_id,
+        CONCAT(pi.first_name, ' ', pi.last_name) AS student_name,
+        pa.joined_date,
+        pa.release_date
+    FROM project_allocations pa
+    JOIN projects p ON pa.project_id = p.project_id
+    JOIN users u ON pa.student_id = u.id
+    JOIN personal_informations pi ON u.id = pi.user_id
+    WHERE pa.project_id = ? `
+
+---
+
+## SQL STATEMENTS WITH EXPLANATIONS ##
+
+### `ProjectRepositoryImpl`
+
+- `SELECT * FROM projects`
+  - Retrieves all project records from the `projects` table.
+
+- `SELECT * FROM tflcomentor_db.projects WHERE project_id = ?`
+  - Retrieves a specific project using its `project_id`.
+
+- `INSERT INTO project_allocations(project_id, student_id, joined_date) VALUES (?, ?, NOW())`
+  - Allocates a student to a project and stores the joining timestamp.
+
+- `UPDATE project_allocations SET release_date = NOW() WHERE project_id = ? AND student_id = ?`
+  - Marks a student as released from a project by updating `release_date`.
+
+- `SELECT pa.project_id, p.project_name, pa.student_id, CONCAT(pi.first_name, ' ', pi.last_name) AS student_name, pa.joined_date, pa.release_date FROM project_allocations pa JOIN projects p ON pa.project_id = p.project_id JOIN users u ON pa.student_id = u.id JOIN personal_informations pi ON u.id = pi.user_id ORDER BY pa.project_id`
+  - Retrieves complete project allocation details along with student names.
+
+- `SELECT pa.project_id, p.project_name, pa.student_id, CONCAT(pi.first_name, ' ', pi.last_name) AS student_name, pa.joined_date, pa.release_date FROM project_allocations pa JOIN projects p ON pa.project_id = p.project_id JOIN users u ON pa.student_id = u.id JOIN personal_informations pi ON u.id = pi.user_id WHERE pa.project_id = ?`
+  - Retrieves all students assigned to a particular project.
+
+- `SELECT p.project_name, p.project_id, p.mentor_id, p.description, p.repository_url, p.status, p.created_at FROM project_allocations pa JOIN projects p ON pa.project_id = p.project_id WHERE pa.student_id = ?`
+  - Retrieves all projects assigned to a particular student.
+---
+
+# SQL QUERIES USED IN QUESTION FILTER REPOSITORY
+
+## QUESTIONS ##
+
+- ### getQuestions ###
+  ` SELECT *
+    FROM questions q
+    WHERE (? IS NULL OR q.language = ?)
+    AND (? IS NULL OR q.layer = ?)
+    AND (? IS NULL OR q.concept = ?)
+    AND (? IS NULL OR q.framework = ?)
+    AND (? IS NULL OR q.question_type = ?)
+    AND (? IS NULL OR q.difficulty_level = ?)
+    AND (? IS NULL OR q.status = ?) `
+
+---
+
+## SQL STATEMENTS WITH EXPLANATIONS ##
+
+### `QuestionFilterRepositoryImpl`
+
+- `SELECT * FROM questions q WHERE (? IS NULL OR q.language = ?) AND (? IS NULL OR q.layer = ?) AND (? IS NULL OR q.concept = ?) AND (? IS NULL OR q.framework = ?) AND (? IS NULL OR q.question_type = ?) AND (? IS NULL OR q.difficulty_level = ?) AND (? IS NULL OR q.status = ?)`
+  - Retrieves questions dynamically based on optional filters such as:
+    - Language
+    - Layer
+    - Concept
+    - Framework
+    - Question Type
+    - Difficulty Level
+    - Status
+
+  - If a parameter is `NULL`, that filter is ignored.
+
+  - This query supports flexible searching without building SQL dynamically in Java code.
+
+  ---
+
+  # SQL QUERIES USED IN QUESTION REPOSITORY
+
+## QUESTIONS ##
+
+- ### getQuestionById ###
+  ` SELECT * FROM questions WHERE question_id = ? `
+
+- ### getAllQuestions ###
+  ` SELECT * FROM questions `
+
+- ### getQuestionsByDifficulty ###
+  ` SELECT * FROM questions WHERE difficulty_level = ? `
+
+- ### getDescriptiveQuestion ###
+  ` SELECT question_id, question_type, description, difficulty_level
+    FROM questions
+    WHERE question_type = ?
+    ORDER BY question_id `
+
+- ### insertCompleteQuestion ###
+  ` INSERT INTO questions(description, question_type, difficulty_level, created_at, status, language, layer, framework, concept)
+    VALUES (?, ?, ?, NOW(), 'DRAFT', ?, ?, ?, ?) `
+
+- ### insertMCQOptions ###
+  ` INSERT INTO mcq_options(option_a, option_b, option_c, option_d, correct_answer, question_id)
+    VALUES (?, ?, ?, ?, ?, ?) `
+
+- ### getQuestionDetails ###
+  ` SELECT * FROM questions WHERE question_id=? `
+
+- ### getQuestionOptions ###
+  ` SELECT * FROM mcq_options WHERE question_id=? `
+
+- ### updateQuestionDetailsById ###
+  ` UPDATE questions
+    SET description=?,
+        question_type=?,
+        difficulty_level=?,
+        status=?,
+        language=?,
+        layer=?,
+        framework=?,
+        concept=?
+    WHERE question_id=? `
+
+- ### updateMCQOptions ###
+  ` UPDATE mcq_options
+    SET option_a=?,
+        option_b=?,
+        option_c=?,
+        option_d=?,
+        correct_answer=?
+    WHERE question_id=? `
+
+- ### getQuestionsByStatus ###
+  ` SELECT question_id, question_type, description, difficulty_level, status
+    FROM questions
+    WHERE status = ?
+    ORDER BY question_id `
+
+- ### getQuestionsByConceptId ###
+  ` SELECT q.question_id, q.description, q.question_type
+    FROM questions q
+    JOIN question_framework_concepts qfc
+        ON q.question_id = qfc.question_id
+    JOIN framework_concepts fc
+        ON qfc.framework_concepts_id = fc.id
+    WHERE fc.concept_id = ? `
+
+- ### getQuestionsByDateRange ###
+  ` SELECT * FROM questions
+    WHERE DATE(created_at) BETWEEN ? AND ? `
+
+- ### updateQuestionStatusBulk ###
+  ` UPDATE questions
+    SET status = ?
+    WHERE status = 'DRAFT'
+    AND question_id IN (?) `
+
+- ### updateQuestionStatus ###
+  ` UPDATE questions
+    SET status=?
+    WHERE question_id=? `
+
+- ### getFrameworkConceptId ###
+  ` SELECT id
+    FROM framework_concepts
+    WHERE concept_id = ? AND framework_id = ? `
+
+- ### insertQuestionFrameworkConceptMapping ###
+  ` INSERT INTO question_framework_concepts(question_id, framework_concepts_id)
+    VALUES (?, ?) `
+
+- ### getQuestionCountByConcept ###
+  ` SELECT COUNT(*)
+    FROM questions
+    WHERE concept=? `
+
+---
+
+## MCQ OPTIONS ##
+
+- ### insertMCQOptions ###
+  ` INSERT INTO mcq_options(option_a, option_b, option_c, option_d, correct_answer, question_id)
+    VALUES (?, ?, ?, ?, ?, ?) `
+
+- ### getQuestionOptions ###
+  ` SELECT * FROM mcq_options WHERE question_id=? `
+
+- ### updateMCQOptions ###
+  ` UPDATE mcq_options
+    SET option_a=?,
+        option_b=?,
+        option_c=?,
+        option_d=?,
+        correct_answer=?
+    WHERE question_id=? `
+
+---
+
+## SQL STATEMENTS WITH EXPLANATIONS ##
+
+### `QuestionRepositoryImpl`
+
+- `SELECT * FROM questions WHERE question_id = ?`
+  - Retrieves a specific question using its question ID.
+
+- `SELECT * FROM questions`
+  - Retrieves all questions from the questions table.
+
+- `SELECT * FROM questions WHERE difficulty_level = ?`
+  - Retrieves questions filtered by difficulty level.
+
+- `SELECT question_id, question_type, description, difficulty_level FROM questions WHERE question_type = ? ORDER BY question_id`
+  - Retrieves descriptive questions filtered by question type.
+
+- `INSERT INTO questions(description, question_type, difficulty_level, created_at, status, language, layer, framework, concept) VALUES (?, ?, ?, NOW(), 'DRAFT', ?, ?, ?, ?)`
+  - Inserts a new question with draft status and metadata.
+
+- `INSERT INTO mcq_options(option_a, option_b, option_c, option_d, correct_answer, question_id) VALUES (?, ?, ?, ?, ?, ?)`
+  - Inserts MCQ options linked to a question.
+
+- `SELECT * FROM mcq_options WHERE question_id=?`
+  - Retrieves MCQ options for a specific question.
+
+- `UPDATE questions SET description=?, question_type=?, difficulty_level=?, status=?, language=?, layer=?, framework=?, concept=? WHERE question_id=?`
+  - Updates question details and metadata.
+
+- `UPDATE mcq_options SET option_a=?, option_b=?, option_c=?, option_d=?, correct_answer=? WHERE question_id=?`
+  - Updates MCQ option details for a question.
+
+- `SELECT question_id, question_type, description, difficulty_level, status FROM questions WHERE status = ? ORDER BY question_id`
+  - Retrieves questions filtered by status.
+
+- `SELECT q.question_id, q.description, q.question_type FROM questions q JOIN question_framework_concepts qfc ON q.question_id = qfc.question_id JOIN framework_concepts fc ON qfc.framework_concepts_id = fc.id WHERE fc.concept_id = ?`
+  - Retrieves questions associated with a specific concept.
+
+- `SELECT * FROM questions WHERE DATE(created_at) BETWEEN ? AND ?`
+  - Retrieves questions created within a date range.
+
+- `UPDATE questions SET status = ? WHERE status = 'DRAFT' AND question_id IN (?)`
+  - Updates status of multiple draft questions in bulk.
+
+- `UPDATE questions SET status=? WHERE question_id=?`
+  - Updates the status of a specific question.
+
+- `SELECT id FROM framework_concepts WHERE concept_id = ? AND framework_id = ?`
+  - Retrieves framework concept mapping ID.
+
+- `INSERT INTO question_framework_concepts(question_id, framework_concepts_id) VALUES (?, ?)`
+  - Creates mapping between question and framework concept.
+
+- `SELECT COUNT(*) FROM questions WHERE concept=?`
+  - Counts total questions for a specific concept.
+
+  ---
+
+  # SQL QUERIES USED IN TECHNOLOGY REPOSITORY
+
+## TECHNOLOGY / ANALYTICS ##
+
+- ### getAllConceptsCount ###
+  ` SELECT DISTINCT concept,
+           COUNT(*) AS question_count
+    FROM questions
+    GROUP BY concept `
+
+- ### getAllQuestionsByDifficulty ###
+  ` SELECT DISTINCT difficulty_level,
+           COUNT(*) AS question_count
+    FROM questions
+    GROUP BY difficulty_level `
+
+---
+
+## SQL STATEMENTS WITH EXPLANATIONS ##
+
+### `TechnologyRepositoryImpl`
+
+- `SELECT DISTINCT concept, COUNT(*) AS question_count FROM questions GROUP BY concept`
+  - Retrieves all concepts along with the total number of questions available for each concept.
+
+- `SELECT DISTINCT difficulty_level, COUNT(*) AS question_count FROM questions GROUP BY difficulty_level`
+  - Retrieves question counts grouped by difficulty level.
+
+---
+
+## ANALYTICS PURPOSE ##
+
+### Concept-wise Question Count
+- Helps generate dashboards showing:
+  - Number of questions available per concept
+  - Popular or heavily used concepts
+  - Content distribution across concepts
+
+### Difficulty-wise Question Count
+- Helps analyze:
+  - Number of EASY, MEDIUM, and HARD questions
+  - Balance of question difficulty in the system
+  - Question bank statistics for reporting/dashboard modules
+
+  ---
+# SQL QUERIES USED IN INTERVIEW CONTROLLER
+
+## INTERVIEWS ##
+
+- ### scheduleInterview ###
+  ` INSERT INTO interviews(scheduled_at, mode, status, title, created_at, interviewer, student_id)
+    VALUES (?, ?, 'SCHEDULED', ?, NOW(), ?, ?) `
+
+- ### getInterviewDetailsForStudent ###
+  ` SELECT
+        i.interview_id,
+        i.scheduled_at,
+        i.mode,
+        i.title,
+        i.status,
+        CONCAT(pi.first_name,' ',pi.last_name) AS interviewer
+    FROM interviews i
+    JOIN personal_informations pi
+        ON pi.user_id = i.interviewer
+    WHERE i.student_id = ?
+    AND i.interview_id = ? `
+
+- ### getInterviewDetailsForSME ###
+  ` SELECT
+        i.interview_id,
+        i.scheduled_at,
+        i.mode,
+        i.title,
+        i.status,
+        CONCAT(pi.first_name,' ',pi.last_name) AS interviewer
+    FROM interviews i
+    JOIN personal_informations pi
+        ON pi.user_id = i.student_id
+    WHERE i.interviewer = ?
+    AND i.interview_id = ? `
+
+- ### getUpcomingInterviewsForStudent ###
+  ` SELECT
+        interview_id,
+        interviewer,
+        title
+    FROM interviews
+    WHERE student_id = ?
+    AND scheduled_at >= NOW()
+    AND scheduled_at <= DATE_ADD(NOW(), INTERVAL 4 DAY)
+    AND status = 'SCHEDULED'
+    ORDER BY scheduled_at ASC `
+
+- ### getUpcomingInterviewsForSME ###
+  ` SELECT
+        interview_id,
+        interviewer,
+        title
+    FROM interviews
+    WHERE interviewer = ?
+    AND scheduled_at >= NOW()
+    AND scheduled_at <= DATE_ADD(NOW(), INTERVAL 4 DAY)
+    AND status = 'SCHEDULED'
+    ORDER BY scheduled_at ASC `
+
+- ### getInterviewHistoryForStudent ###
+  ` SELECT
+        interview_id,
+        title
+    FROM interviews
+    WHERE student_id = ?
+    AND (scheduled_at < NOW()
+    OR status = 'CANCELED')
+    ORDER BY scheduled_at DESC `
+
+- ### getInterviewHistoryForSME ###
+  ` SELECT
+        interview_id,
+        title
+    FROM interviews
+    WHERE interviewer = ?
+    AND (scheduled_at < NOW()
+    OR status = 'CANCELED')
+    ORDER BY scheduled_at DESC `
+
+- ### cancelInterview ###
+  ` UPDATE interviews
+    SET status='CANCELED'
+    WHERE interview_id=? `
+
+- ### acceptInterview ###
+  ` UPDATE interviews
+    SET outcome='ACCEPTED'
+    WHERE interview_id=? `
+
+- ### rejectInterview ###
+  ` UPDATE interviews
+    SET outcome='REJECTED'
+    WHERE interview_id=? `
+
+- ### getInterviews ###
+  ` SELECT * FROM interviews `
+
+---
+
+## SQL STATEMENTS WITH EXPLANATIONS ##
+
+### `InterviewController`
+
+- `INSERT INTO interviews(scheduled_at, mode, status, title, created_at, interviewer, student_id) VALUES (?, ?, 'SCHEDULED', ?, NOW(), ?, ?)`
+  - Schedules a new interview with default status `SCHEDULED`.
+
+- `SELECT i.interview_id, i.scheduled_at, i.mode, i.title, i.status, CONCAT(pi.first_name,' ',pi.last_name) AS interviewer FROM interviews i JOIN personal_informations pi ON pi.user_id = i.interviewer WHERE i.student_id = ? AND i.interview_id = ?`
+  - Retrieves interview details for a student.
+
+- `SELECT i.interview_id, i.scheduled_at, i.mode, i.title, i.status, CONCAT(pi.first_name,' ',pi.last_name) AS interviewer FROM interviews i JOIN personal_informations pi ON pi.user_id = i.student_id WHERE i.interviewer = ? AND i.interview_id = ?`
+  - Retrieves interview details for an SME/interviewer.
+
+- `SELECT interview_id, interviewer, title FROM interviews WHERE student_id = ? AND scheduled_at >= NOW() AND scheduled_at <= DATE_ADD(NOW(), INTERVAL 4 DAY) AND status = 'SCHEDULED' ORDER BY scheduled_at ASC`
+  - Retrieves upcoming scheduled interviews for students within the next 4 days.
+
+- `SELECT interview_id, interviewer, title FROM interviews WHERE interviewer = ? AND scheduled_at >= NOW() AND scheduled_at <= DATE_ADD(NOW(), INTERVAL 4 DAY) AND status = 'SCHEDULED' ORDER BY scheduled_at ASC`
+  - Retrieves upcoming interviews for SMEs/interviewers.
+
+- `SELECT interview_id, title FROM interviews WHERE student_id = ? AND (scheduled_at < NOW() OR status = 'CANCELED') ORDER BY scheduled_at DESC`
+  - Retrieves interview history for students.
+
+- `SELECT interview_id, title FROM interviews WHERE interviewer = ? AND (scheduled_at < NOW() OR status = 'CANCELED') ORDER BY scheduled_at DESC`
+  - Retrieves interview history for SMEs/interviewers.
+
+- `UPDATE interviews SET status='CANCELED' WHERE interview_id=?`
+  - Cancels a scheduled interview.
+
+- `UPDATE interviews SET outcome='ACCEPTED' WHERE interview_id=?`
+  - Marks interview outcome as accepted.
+
+- `UPDATE interviews SET outcome='REJECTED' WHERE interview_id=?`
+  - Marks interview outcome as rejected.
+
+- `SELECT * FROM interviews`
+  - Retrieves all interview records.
