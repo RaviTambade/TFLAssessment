@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+         http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.shopping</groupId>
+    <artifactId>online-shopping</artifactId>
+    <version>1.0.0</version>
+    <packaging>pom</packaging>               <!-- MUST be pom -->
+    <name>Online Shopping - Parent</name>
+
+    <!-- All child modules -->
+    <modules>
+        <module>shopping-bo</module>
+        <module>shopping-dal</module>
+        <module>shopping-bll</module>
+        <module>shopping-console</module>
+        <module>shopping-swing</module>
+        <module>shopping-web</module>
+    </modules>
+
+    <properties>
+        <java.version>17</java.version>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <!-- Versions managed centrally — child modules don't specify versions -->
+    <dependencyManagement>
+        <dependencies>
+            <!-- Internal Modules -->
+            <dependency>
+                <groupId>com.shopping</groupId>
+                <artifactId>shopping-bo</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.shopping</groupId>
+                <artifactId>shopping-dal</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.shopping</groupId>
+                <artifactId>shopping-bll</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <!-- External -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>3.2.0</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>1.18.30</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+</project>
+
+ <!-- :: 1. Build all
+cd D:\GIT\JAVA\ModularProject\online-shopping
+mvn clean install -DskipTests
+
+:: 2. Run Console
+cd shopping-console
+mvn exec:java -Dexec.mainClass="com.shopping.console.ConsoleApp"
+
+:: 3. Run Web API (new CMD window)
+cd D:\GIT\JAVA\ModularProject\online-shopping\shopping-web
+mvn spring-boot:run -->
+
+<!-- cd shopping-web
+mvn spring-boot:run -->
+
+<!-- cd shopping-console\target
+java -cp "shopping-console-1.0.0.jar;dependency\*" com.shopping.console.ConsoleApp -->
+
+<!-- cd shopping-console
+mvn exec:java -Dexec.mainClass="com.shopping.console.ConsoleApp" -->
