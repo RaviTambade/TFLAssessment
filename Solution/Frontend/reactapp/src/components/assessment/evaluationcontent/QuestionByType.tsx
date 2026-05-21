@@ -13,7 +13,10 @@ type Question = {
 };
 
 const fetchQuestionsByType = async (type: string) => {
-  const res = await fetch(`${WEBAPI_JAVA_URL}/filter/questions?question_type=${type}`);
+  const currentUser = JSON.parse(sessionStorage.getItem("current") || "{}");
+  const userId = currentUser.userid;
+  const roleId = currentUser.role_id;
+  const res = await fetch(`${WEBAPI_JAVA_URL}/filter/questions/${userId}/${roleId}?question_type=${type}`);
   if (!res.ok) throw new Error('Failed to fetch');
   const data = await res.json();
   return Array.isArray(data) ? data : data.content || [];

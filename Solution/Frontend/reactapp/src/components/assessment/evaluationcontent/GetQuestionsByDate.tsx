@@ -76,7 +76,7 @@ const GetQuestionsByDate: React.FC = () => {
 
                             <input
                                 type="date"
-                                value={fromDate}
+                                value={fromDate }
                                 onChange={(e) => setFromDate(e.target.value)}
                                 className="w-full border border-border rounded-lg px-4 py-3 bg-background focus:outline-none focus:ring-2 focus:ring-primary"
                             />

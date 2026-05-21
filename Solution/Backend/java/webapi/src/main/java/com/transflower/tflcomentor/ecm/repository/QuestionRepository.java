@@ -3,19 +3,19 @@ package com.transflower.tflcomentor.ecm.repository;
 import java.time.LocalDate;
 import java.util.List;
 
-import com.transflower.tflcomentor.ecm.dto.response.QuestionDisplay;
 import com.transflower.tflcomentor.ecm.dto.request.QuestionOptionsRequest;
+import com.transflower.tflcomentor.ecm.dto.response.DescriptiveQuestion;
+import com.transflower.tflcomentor.ecm.dto.response.QuestionDisplay;
 import com.transflower.tflcomentor.ecm.dto.response.QuestionWithStatus;
+import com.transflower.tflcomentor.ecm.entity.CompleteQuestion;
 import com.transflower.tflcomentor.ecm.entity.Question;
 import com.transflower.tflcomentor.ecm.entity.enums.DifficultyLevel;
 import com.transflower.tflcomentor.ecm.entity.enums.QuestionStatus;
 import com.transflower.tflcomentor.ecm.entity.enums.QuestionType;
-import com.transflower.tflcomentor.ecm.dto.response.DescriptiveQuestion;
-import com.transflower.tflcomentor.ecm.entity.CompleteQuestion;
 public interface QuestionRepository {
 
     QuestionDisplay getQuestionById(long question_id);
-    List<QuestionDisplay> getAllQuestions();
+    List<QuestionDisplay> getAllQuestions( Long user_role_Id);
     List<Question> getQuestionsByDifficulty(DifficultyLevel difficulty);
     void updateQuestionDetailsById(Long question_id, QuestionOptionsRequest dto);
     List<Question> getQuestions(LocalDate fromDate, LocalDate toDate);

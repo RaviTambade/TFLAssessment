@@ -10,9 +10,9 @@ import org.springframework.stereotype.Repository;
 
 import com.transflower.tflcomentor.configuration.DBConfig;
 import com.transflower.tflcomentor.ecm.entity.Question;
-import com.transflower.tflcomentor.ecm.entity.enums.QuestionType;
 import com.transflower.tflcomentor.ecm.entity.enums.DifficultyLevel;
 import com.transflower.tflcomentor.ecm.entity.enums.QuestionStatus;
+import com.transflower.tflcomentor.ecm.entity.enums.QuestionType;
 import com.transflower.tflcomentor.ecm.repository.QuestionFilterRepository;
 
 @Repository
@@ -30,22 +30,31 @@ public class QuestionFilterRepositoryImpl implements QuestionFilterRepository{
         String language,
         String layer,
         String framework,
-        String concept) {
+        String concept,
+        Long userId,
+        Long roleId) {
 
     List<Question> questionList = new ArrayList<>();
 
     String query = """
-            SELECT *
-            FROM questions q
-            WHERE (? IS NULL OR q.language = ?)
-            AND (? IS NULL OR q.layer = ?)
-            AND (? IS NULL OR q.concept = ?)
-            AND (? IS NULL OR q.framework = ?)
-            AND (? IS NULL OR q.question_type = ?)
-            AND (? IS NULL OR q.difficulty_level = ?)
-            AND (? IS NULL OR q.status = ?)
-            """;
-
+                SELECT *
+                FROM questions q
+                JOIN expertise e
+                    ON q.runtime = e.runtime
+                WHERE (? IS NULL OR q.language = ?)
+                AND (? IS NULL OR q.layer = ?)
+                AND (? IS NULL OR q.concept = ?)
+                AND (? IS NULL OR q.framework = ?)
+                AND (? IS NULL OR q.question_type = ?)
+                AND (? IS NULL OR q.difficulty_level = ?)
+                AND (? IS NULL OR q.status = ?)
+                AND e.user_roles_id = (
+                                    SELECT id
+                                    FROM user_roles
+                                    WHERE user_id = ?
+                                    AND role_id = ?
+                                );
+                                """;
     try (Connection connection = getConnection()) {
 
         PreparedStatement ps = connection.prepareStatement(query);
@@ -78,11 +87,16 @@ public class QuestionFilterRepositoryImpl implements QuestionFilterRepository{
         ps.setString(13, status != null ? status.name() : null);
         ps.setString(14, status != null ? status.name() : null);
 
+        // user role id
+       ps.setLong(15, userId);
+       ps.setLong(16, roleId);
+
         ResultSet rs = ps.executeQuery();
 
         while (rs.next()) {
 
             Question question = new Question();
+            question.setQuestionId(rs.getLong("question_Id"));
 
             question.setDescription(rs.getString("description"));
 

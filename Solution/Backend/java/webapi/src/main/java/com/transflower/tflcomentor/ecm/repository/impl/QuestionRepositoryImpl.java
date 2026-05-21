@@ -56,12 +56,19 @@ public class QuestionRepositoryImpl implements QuestionRepository {
     }
 
     @Override
-    public List<QuestionDisplay> getAllQuestions() {
+    public List<QuestionDisplay> getAllQuestions( Long user_role_Id) {
         List<QuestionDisplay> list = new ArrayList<>();
         try (Connection connection = getConnection()) {
-            String query = "SELECT * FROM questions";
-            Statement statement = connection.createStatement();
-            ResultSet rs = statement.executeQuery(query);
+            String query = """ 
+                        SELECT q.*
+                        FROM questions q
+                        JOIN expertise e 
+                            ON q.runtime = e.runtime
+                        WHERE e.user_roles_id = ?; 
+                        """;
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setLong(1, user_role_Id);
+            ResultSet rs = statement.executeQuery();
             while (rs.next()) {
                 QuestionDisplay q = new QuestionDisplay(
                         rs.getLong("question_id"),

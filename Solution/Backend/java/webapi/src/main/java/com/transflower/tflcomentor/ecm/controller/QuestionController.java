@@ -15,10 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.transflower.tflcomentor.ecm.dto.response.QuestionDisplay;
 import com.transflower.tflcomentor.ecm.dto.request.QuestionOptionsRequest;
-import com.transflower.tflcomentor.ecm.dto.response.QuestionWithStatus;
 import com.transflower.tflcomentor.ecm.dto.response.DescriptiveQuestion;
+import com.transflower.tflcomentor.ecm.dto.response.QuestionDisplay;
+import com.transflower.tflcomentor.ecm.dto.response.QuestionWithStatus;
 import com.transflower.tflcomentor.ecm.entity.CompleteQuestion;
 import com.transflower.tflcomentor.ecm.entity.Question;
 import com.transflower.tflcomentor.ecm.entity.enums.DifficultyLevel;
@@ -42,11 +42,11 @@ public class QuestionController {
         return service.getQuestionById(question_id);
     }
 
-    @GetMapping
-    // http://localhost:8080/api/questions
-    public List<QuestionDisplay> getAllQuestions() {
-        return service.getAllQuestions();
-    }
+    // @GetMapping({"user/{user_role_Id}"})
+    // // http://localhost:8080/api/questions
+    // public List<QuestionDisplay> getAllQuestions( @PathVariable Long user_role_Id) {
+    //     return service.getAllQuestions(user_role_Id);
+    // }
 
     @GetMapping("/difficulty/{level}")
     // http://localhost:8080/api/questions/difficulty/ADVANCE

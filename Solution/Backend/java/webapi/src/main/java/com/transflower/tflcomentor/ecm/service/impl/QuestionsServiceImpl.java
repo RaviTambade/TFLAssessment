@@ -58,8 +58,8 @@ public class QuestionsServiceImpl implements QuestionService {
     }
 
     @Override
-    public List<QuestionDisplay> getAllQuestions() {
-        return repository.getAllQuestions();
+    public List<QuestionDisplay> getAllQuestions(Long user_role_Id) {
+        return repository.getAllQuestions(user_role_Id);
     }
 
     @Override
