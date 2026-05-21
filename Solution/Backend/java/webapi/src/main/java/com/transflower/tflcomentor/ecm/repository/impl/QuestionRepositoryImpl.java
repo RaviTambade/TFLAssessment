@@ -310,15 +310,25 @@ public class QuestionRepositoryImpl implements QuestionRepository {
 
 
     @Override
-    public List<Question> getQuestionsByConcept(String concept) {
+    public List<Question> getQuestionsByConcept(String concept,Long userId,Long roleId) {
         List<Question> list = new ArrayList<>();
         String sql = """ 
-                    SELECT * FROM questions WHERE FIND_IN_SET(concept, ?);
+                    SELECT q.*
+                        FROM questions q
+                        JOIN expertise e
+                            ON q.runtime = e.runtime
+                        WHERE FIND_IN_SET(q.concept, ?) AND
+                        e.user_roles_id = (SELECT id
+                                                FROM user_roles
+                                                WHERE user_id = ?
+                                                AND role_id = ?)
                     """;
 
         try (Connection connection = getConnection(); 
         PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, concept.toString());
+            statement.setLong(2, userId);
+            statement.setLong(3, roleId);
             ResultSet rs = statement.executeQuery();
 
             while (rs.next()) {
@@ -441,18 +451,34 @@ public class QuestionRepositoryImpl implements QuestionRepository {
     }
 
     @Override
-    public List<String> getConcepts() {
+    public List<String> getConcepts( Long userId, Long roleId) {
         List<String> concepts = new ArrayList<>();
-        String sql = "SELECT DISTINCT concept FROM questions";
-        try (Connection connection = getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql);
-             ResultSet rs = statement.executeQuery()) {
-            while (rs.next()) {
-                concepts.add(rs.getString("concept"));
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+        String sql = """ 
+                        SELECT DISTINCT q.concept
+                        FROM questions q
+                        JOIN expertise e
+                            ON q.runtime = e.runtime
+                        WHERE  e.user_roles_id = (SELECT id
+                                                FROM user_roles
+                                                WHERE user_id = ?
+                                                AND role_id = ?) 
+                        """;
+         try (Connection connection = getConnection();
+         PreparedStatement statement = connection.prepareStatement(sql)) {
+
+        statement.setLong(1, userId);
+        statement.setLong(2, roleId);
+
+        ResultSet rs = statement.executeQuery();
+
+        while (rs.next()) {
+            concepts.add(rs.getString("concept"));
         }
+
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+
         return concepts;
     }
 }

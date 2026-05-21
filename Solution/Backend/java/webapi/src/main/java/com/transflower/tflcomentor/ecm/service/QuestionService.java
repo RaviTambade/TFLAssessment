@@ -36,11 +36,11 @@ public interface QuestionService {
 
     public void updateQuestionStatus(long questionId, QuestionStatus status);
 
-    public List<Question> getQuestionsByConcept(String concept);
+    public List<Question> getQuestionsByConcept(String concept,Long userId,Long roleId);
 
     public int getQuestionCountByConcept(String concept);
 
     public void insertCompleteQuestion(CompleteQuestion q);
 
-    public List<String> getConcepts();
+    public List<String> getConcepts(Long userId,Long roleId);
 }

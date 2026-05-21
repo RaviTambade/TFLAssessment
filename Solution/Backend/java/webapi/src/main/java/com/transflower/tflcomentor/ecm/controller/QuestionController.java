@@ -105,12 +105,11 @@ public class QuestionController {
         return service.getQuestions(status);
     }
 
-    @GetMapping("/concepts/{concept}")
+    @GetMapping("/concepts/{concept}/{userId}/{roleId}")
     // http://localhost:8080/api/questions/concepts/RESTAPI
-    public List<Question> getQuestionsByConcept(@PathVariable String concept) {
-        return service.getQuestionsByConcept(concept);
+    public List<Question> getQuestionsByConcept(@PathVariable String concept,@PathVariable Long userId, @PathVariable Long roleId) {
+        return service.getQuestionsByConcept(concept, userId, roleId);
     }
-
 
     @GetMapping("/concepts/{concept}/count")
     // http://localhost:8080/api/questions/concepts/loops/count
@@ -131,9 +130,9 @@ public class QuestionController {
         return "Complete Question Inserted Successfully";
     }
 
-    @GetMapping("/concepts")
+    @GetMapping("/concepts/{userId}/{roleId}")
     // http://localhost:8080/api/questions/concepts
-    public List<String> getConcepts() {
-        return service.getConcepts();
+    public List<String> getConcepts(@PathVariable Long userId, @PathVariable Long roleId) {
+        return service.getConcepts(userId, roleId);
     }
 }

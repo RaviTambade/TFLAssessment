@@ -29,8 +29,8 @@ public interface QuestionRepository {
     //single question status update
     void updateQuestionStatus(long question_id, QuestionStatus status);
     // Questions updateQuestion(Questions question);
-    List<Question> getQuestionsByConcept(String concept);
-    public List<String> getConcepts();
+    List<Question> getQuestionsByConcept(String concept,Long userId,Long roleId);
+    public List<String> getConcepts( Long userId, Long roleId);
     void insertQuestionFrameworkConceptMapping(Long questionId, Long frameworkConceptId);
     Long getFrameworkConceptId(int conceptId, int frameworkId);
     int getQuestionCountByConcept(String concept);
