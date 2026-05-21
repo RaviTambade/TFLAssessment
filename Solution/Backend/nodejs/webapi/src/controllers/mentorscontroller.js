@@ -12,7 +12,7 @@ class MentorsController {
     var errorMessage = "Failed to get mentees";
     var successMessage = "Mentees retrieved successfully";
     this.service.getMentees(mentorId, (err, result) => {
-      responseGenerator.generateResponse(res, err, result, successMessage, errorMessage);
+      responseGenerator.generateResponse(res, err, result, errorMessage ,successMessage );
     });
   }
 
@@ -23,7 +23,7 @@ class MentorsController {
     var errorMessage = "Failed to get mentees count";
     var successMessage = "Mentees count retrieved successfully";
     this.service.getMenteeCount(mentorId, (err, result) => {
-      responseGenerator.generateResponse(res, err, result, successMessage, errorMessage);
+      responseGenerator.generateResponse(res, err, result, errorMessage ,successMessage );
     });
   }
 }
