@@ -25,11 +25,27 @@ const AllAssessment = () => {
       setShowAssessments(true);
       setLoading(true);
       const response = await fetch(`${WEBAPI_DOTNET_URL}/Assessment/all`);
-      const allAssessments = await response.json();
-      setAssessments(allAssessments);
+      const text = await response.text();
+      // Try to parse JSON defensively; the server may return HTML for errors.
+      let allAssessments: unknown = null;
+      try {
+        allAssessments = JSON.parse(text) as unknown;
+      } catch (err) {
+        console.error('Failed to parse /Assessment/all response as JSON. Response text:', text);
+        throw new Error('Invalid JSON response from server');
+      }
+
+      // Type-guard: ensure parsed value is an array before assigning to state
+      if (!Array.isArray(allAssessments)) {
+        console.error('/Assessment/all did not return an array:', allAssessments);
+        throw new Error('Expected an array of assessments');
+      }
+
+      setAssessments(allAssessments as Assessment[]);
     } 
     catch (error) {
-      console.log("Error:", error);
+      console.log("Error fetching assessments:", error);
+      // keep assessments as-is (empty or previous)
     } 
     finally {
       setLoading(false);
