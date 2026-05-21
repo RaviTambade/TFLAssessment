@@ -12,7 +12,7 @@ class UsersController {
      this.service.getUserDetailsById(Number(req.params.userId), (err, result) => {
       var errorMessage = "Failed to get user details";
       var successMessage = "User details retrieved successfully";
-      responseGenerator.generateResponse(res, err, result, successMessage, errorMessage);
+      responseGenerator.generateResponse(res, err, result,errorMessage,successMessage);
     });
   }
 
@@ -21,7 +21,7 @@ class UsersController {
      this.service.updateUserPersonalDetails(req.params.userId, req.body, (err, result) => {
       var errorMessage = "Failed to Update user Personal Information";
       var successMessage = "User Personal information Update successfully";
-      responseGenerator.generateResponse(res, err, result, successMessage, errorMessage);
+      responseGenerator.generateResponse(res, err, result,errorMessage,successMessage);
     });
   }
 
@@ -30,7 +30,7 @@ class UsersController {
      this.service.updateUserProfessionalDetails(req.params.userId, req.body, (err, result) => {
       var errorMessage = "Failed to Update user Professional Information";
       var successMessage = "User Professional information Update successfully";
-      responseGenerator.generateResponse(res, err, result, successMessage, errorMessage);
+      responseGenerator.generateResponse(res, err, result,errorMessage,successMessage);
     });
   }
 
@@ -39,7 +39,7 @@ class UsersController {
      this.service.updateUserAcademicDetails(req.params.userId, req.body, (err, result) => {
       var errorMessage = "Failed to Update user Academic Information";
       var successMessage = "User Academic information Update successfully";
-      responseGenerator.generateResponse(res, err, result, successMessage, errorMessage);
+      responseGenerator.generateResponse(res, err, result,errorMessage,successMessage);
     });
   }
 
@@ -50,7 +50,7 @@ class UsersController {
      this.service.updateUserStatus(Number(requestDto.user_id), requestDto.status, (err, result) => {
       var errorMessage = "Failed to update User Status";
       var successMessage = "User Status update successfully";
-      responseGenerator.generateResponse(res, err, result, successMessage, errorMessage);
+      responseGenerator.generateResponse(res, err, result,errorMessage,successMessage);
     });
   }
 
@@ -59,7 +59,7 @@ class UsersController {
      this.service.getUserPersonalDetails(Number(req.params.userId), (err, result) => {
       var errorMessage = "Failed to get user Personal information";
       var successMessage = "User Personal information retrive successfully";
-      responseGenerator.generateResponse(res, err, result, successMessage, errorMessage);
+      responseGenerator.generateResponse(res, err, result,errorMessage,successMessage);
     });
   }
 
@@ -68,7 +68,7 @@ class UsersController {
      this.service.getUserAcademicDetails(Number(req.params.userId), (err, result) => {
       var errorMessage = "Failed to get user Academic information";
       var successMessage = "User Academic information retrive successfully";
-      responseGenerator.generateResponse(res, err, result, successMessage, errorMessage);
+      responseGenerator.generateResponse(res, err, result,errorMessage,successMessage);
     });
   }
 
@@ -77,7 +77,7 @@ class UsersController {
      this.service.getUserProfessionalDetails(Number(req.params.userId), (err, result) => {
       var errorMessage = "Failed to get user Professinal information";
       var successMessage = "User Professinal information retrive successfully";
-      responseGenerator.generateResponse(res, err, result, successMessage, errorMessage);
+      responseGenerator.generateResponse(res, err, result,errorMessage,successMessage);
     });
   }
 
@@ -86,7 +86,7 @@ class UsersController {
      this.service.getAllUsers((err, result) => {
       var errorMessage = "Failed to get users";
       var successMessage = "Users retrive successfully";
-      responseGenerator.generateResponse(res, err, result, successMessage, errorMessage);
+      responseGenerator.generateResponse(res, err, result,errorMessage,successMessage);
     });
   }
 }
