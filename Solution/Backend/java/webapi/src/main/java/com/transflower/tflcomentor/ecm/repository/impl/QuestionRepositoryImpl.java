@@ -157,7 +157,7 @@ public class QuestionRepositoryImpl implements QuestionRepository {
     public void insertCompleteQuestion(CompleteQuestion q) {
 
 
-        String questionSql = "INSERT INTO questions(description, question_type, difficulty_level, created_at, status, language, layer, framework, concept) VALUES (?, ?, ?, NOW(), 'DRAFT', ?, ?, ?, ?)";
+        String questionSql = "INSERT INTO questions(description, question_type, difficulty_level, created_at, status, language, layer, framework, concept,runtime) VALUES (?, ?, ?, NOW(), 'DRAFT', ?, ?, ?, ?, ?)";
         String optionSql = "INSERT INTO mcq_options(option_a, option_b, option_c, option_d, correct_answer, question_id) VALUES (?, ?, ?, ?, ?, ?)";
 
         try (Connection connection = getConnection()) {
@@ -172,6 +172,7 @@ public class QuestionRepositoryImpl implements QuestionRepository {
                 qStatement.setString(5, q.getLayer());
                 qStatement.setString(6, q.getFramework());
                 qStatement.setString(7, q.getConcept());
+                qStatement.setString(8, q.getRuntime());
                 qStatement.executeUpdate();
                 try (ResultSet rs = qStatement.getGeneratedKeys()) {
                     if (rs.next()) {

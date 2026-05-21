@@ -42,7 +42,6 @@ const UpdateQuestion = () => {
     void fetchQuestions();
   }, [fetchQuestions]);
 
-  // ================= FETCH BY ID =================
   const fetchById = async () => {
     if (!inputId) {
       alert("Please enter Question ID");
