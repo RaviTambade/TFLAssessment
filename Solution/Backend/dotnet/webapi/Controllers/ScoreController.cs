@@ -42,9 +42,9 @@ namespace backend.Controllers
         
 
         [HttpGet("GetAssessmentResultData/{studentId}/{assessmentId}")]
-        public async Task<ActionResult<AssessmentScores>> GetAssessmentResultData(int studentId, int assessmentId)
+        public async Task<ActionResult<AssessmentScores>> GetAssessmentResultData(long studentId, long assessmentId)
         {
-            var result = await _scoreService.GetAssessmentResultData(studentId, assessmentId);
+            var result = await _scoreService.GetAssessmentResultData((int)studentId, (int)assessmentId);
 
             if (result == null)
                 return NotFound("No data found");

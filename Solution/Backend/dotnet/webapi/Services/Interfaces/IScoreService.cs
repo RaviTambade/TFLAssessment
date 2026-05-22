@@ -11,7 +11,7 @@ namespace backend.Services.Interfaces
 
         Task<List<AverageScore>> GetAllStudentsAverageScoreAsync();
 
-        Task<AssessmentScores> GetAssessmentResultData(int studentId, int assessmentId);
+        Task<AssessmentScores> GetAssessmentResultData(long studentId, long assessmentId);
 
     }
 }
