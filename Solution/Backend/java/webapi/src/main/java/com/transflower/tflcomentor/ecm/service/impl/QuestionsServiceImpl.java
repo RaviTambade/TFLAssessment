@@ -58,8 +58,8 @@ public class QuestionsServiceImpl implements QuestionService {
     }
 
     @Override
-    public List<QuestionDisplay> getAllQuestions() {
-        return repository.getAllQuestions();
+    public List<QuestionDisplay> getAllQuestions(Long user_role_Id) {
+        return repository.getAllQuestions(user_role_Id);
     }
 
     @Override
@@ -103,8 +103,8 @@ public class QuestionsServiceImpl implements QuestionService {
     }
 
     @Override
-    public List<Question> getQuestionsByConcept(String concept) {
-        return repository.getQuestionsByConcept(concept);
+    public List<Question> getQuestionsByConcept(String concept,Long userId, Long roleId) {
+        return repository.getQuestionsByConcept(concept, userId, roleId);
     }
 
     @Override
@@ -117,7 +117,7 @@ public class QuestionsServiceImpl implements QuestionService {
     }
 
     @Override
-    public List<String> getConcepts() {
-        return repository.getConcepts();
+    public List<String> getConcepts(Long userId, Long roleId) {
+        return repository.getConcepts( userId, roleId);
     }
 }

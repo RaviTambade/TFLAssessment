@@ -206,21 +206,19 @@ const fetchQuestion = async () => {
                         </div>
 
                         {formData.questionType === "MCQ" && (
-                            <div className="bg-muted/50 p-4 rounded-xl space-y-3">
-                                <h3 className="font-semibold text-primary">Options</h3>
-
-                                <input name="optionA" value={formData.optionA} onChange={handleChange} placeholder="Option A" className="w-full p-3 border rounded-lg" />
-                                <input name="optionB" value={formData.optionB} onChange={handleChange} placeholder="Option B" className="w-full p-3 border rounded-lg" />
-                                <input name="optionC" value={formData.optionC} onChange={handleChange} placeholder="Option C" className="w-full p-3 border rounded-lg" />
-                                <input name="optionD" value={formData.optionD} onChange={handleChange} placeholder="Option D" className="w-full p-3 border rounded-lg" />
-                                <input name="correctAnswer" value={formData.correctAnswer} onChange={handleChange} placeholder="Correct Answer (A/B/C/D or full value)" className="w-full p-3 border rounded-lg border-primary" />
+                            <div className="bg-muted/40 p-4 rounded-xl space-y-3 ">
+                                <h3 className="font-semibold text-primary p-0">Options</h3>
+                                
+                                <label className="text-sm font-medium">Option A : </label><input name="optionA" value={formData.optionA} onChange={handleChange} placeholder="Option A" className=" w-80 p-3 border rounded-lg" />
+                                <label className="text-sm font-medium">Option B : </label> <input name="optionB" value={formData.optionB} onChange={handleChange} placeholder="Option B" className="w-80 p-3 border rounded-lg" />
+                                <label className="text-sm font-medium">Option C : </label> <input name="optionC" value={formData.optionC} onChange={handleChange} placeholder="Option C" className="w-80 p-3 border rounded-lg" />
+                                <label className="text-sm font-medium">Option D : </label> <input name="optionD" value={formData.optionD} onChange={handleChange} placeholder="Option D" className="w-80 p-3 border rounded-lg" /><br />
+                                <label className="text-sm font-medium">Correct Answer : </label> <input name="correctAnswer" value={formData.correctAnswer} onChange={handleChange} placeholder="Correct Answer (A/B/C/D or full value)" className="w-full p-3 border rounded-lg border-primary" />
                             </div>
                         )}
 
                         <div className="flex justify-end gap-4 pt-4">
-                            <Button variant="outline" onClick={() => navigate(returnPath)}>
-              Cancel
-            </Button>
+                            <Button variant="outline" onClick={() => navigate(returnPath)}>Cancel</Button>
                             <Button onClick={handleUpdate}>Update Question</Button>
                         </div>
                     </CardContent>

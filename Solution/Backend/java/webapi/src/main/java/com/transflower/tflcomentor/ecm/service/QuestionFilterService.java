@@ -9,5 +9,5 @@ import com.transflower.tflcomentor.ecm.entity.enums.QuestionType;
 
 public interface QuestionFilterService {
      List<Question> getQuestions(QuestionType question_type,DifficultyLevel difficulty_level,QuestionStatus status,String language,
-                                String layer,String framework,String concept);
+                              String layer,String framework,String concept,Long userId,Long roleId);
 }

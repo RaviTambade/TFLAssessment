@@ -19,6 +19,7 @@ public class CompleteQuestion {
     private String layer;
     private String framework;
     private String concept;
+    private String runtime;
     private String optionA;
     private String optionB;
     private String optionC;
@@ -132,6 +133,12 @@ public class CompleteQuestion {
     }
     public void setConcept(String concept) {
         this.concept = concept;
+    }
+    public String getRuntime() {
+        return runtime;
+    }
+    public void setRuntime(String runtime) {
+        this.runtime = runtime;
     }
    
    

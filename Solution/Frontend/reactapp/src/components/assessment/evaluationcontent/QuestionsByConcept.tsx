@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
-import { Loader2, Brain, Check } from "lucide-react";
+import { Loader2, Brain, Check, User } from "lucide-react";
 import { WEBAPI_JAVA_URL } from "@/lib/utils";
 import { useNavigate } from "react-router-dom";
 
@@ -19,7 +19,10 @@ const QuestionsByConcept = () => {
 
     // ✅ Load Concepts
     useEffect(() => {
-        fetch(`${WEBAPI_JAVA_URL}/questions/concepts`)
+        const currentUser = JSON.parse(sessionStorage.getItem("current") || "{}");
+        const UserId = currentUser.userid;
+        const RoleId = currentUser.role_id;
+        fetch(`${WEBAPI_JAVA_URL}/questions/concepts/${UserId}/${RoleId}`)
             .then((res) => res.json())
             .then((data) => setConcepts(data))
             .catch((err) => console.error(err));
@@ -52,12 +55,16 @@ const QuestionsByConcept = () => {
         setLoading(true);
 
         try {
+            const currentUser = JSON.parse(sessionStorage.getItem("current") || "{}");
+            const UserId = currentUser.userid;
+            const RoleId = currentUser.role_id;
+
             let allQuestions: Question[] = [];
 
             // Fetch questions for all selected concepts
             for (const item of updatedConcepts) {
                 const response = await fetch(
-                    `${WEBAPI_JAVA_URL}/questions/concepts/${item}`
+                    `${WEBAPI_JAVA_URL}/questions/concepts/${item}/${UserId}/${RoleId}`
                 );
 
                 const data = await response.json();

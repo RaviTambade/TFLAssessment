@@ -20,7 +20,10 @@ const UpdateQuestion = () => {
     setLoading(true);
 
     try {
-      const res = await fetch(`${WEBAPI_JAVA_URL}/questions`);
+      const currentUser = JSON.parse(sessionStorage.getItem("current") || "{}");
+      const userId = currentUser.userid;
+      const roleId = currentUser.role_id;
+      const res = await fetch(`${WEBAPI_JAVA_URL}/filter/questions/${userId}/${roleId}`);
 
       if (!res.ok) {
         throw new Error("Failed to fetch questions");
@@ -42,7 +45,6 @@ const UpdateQuestion = () => {
     void fetchQuestions();
   }, [fetchQuestions]);
 
-  // ================= FETCH BY ID =================
   const fetchById = async () => {
     if (!inputId) {
       alert("Please enter Question ID");

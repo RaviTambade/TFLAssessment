@@ -30,9 +30,21 @@ const Getallquestions = () => {
     };
 
     const fetchQuestions = async () => {
+
+        
         try {
+            const currentUser = JSON.parse(
+                sessionStorage.getItem("current") || "{}"
+            );
+            console.log(currentUser);
+            const userId = currentUser.userid;
+            const roleId = currentUser.role_id;
+            if (!roleId) {
+            console.error("User Role Id not found");
+            return;
+        }
             const response = await fetch(
-                `${WEBAPI_JAVA_URL}/filter/questions`
+                `${WEBAPI_JAVA_URL}/filter/questions/${userId}/${roleId}`
             );
 
             if (!response.ok) {

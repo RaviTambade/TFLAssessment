@@ -13,12 +13,17 @@ const QuestionsByDifficulty = () => {
 
   // Fetch Data
   useEffect(() => {
-    fetchQuestions();
+  fetchQuestions("BEGINNER");
+  fetchQuestions("INTERMEDIATE");
+  fetchQuestions("ADVANCE");
   }, []);
 
-  const fetchQuestions = async () => {
+  const fetchQuestions = async (level: string) => {
     try {
-      const response = await fetch(`${WEBAPI_JAVA_URL}/filter/questions`);
+      const currentUser = JSON.parse(sessionStorage.getItem("current") || "{}");
+      const userId = currentUser.userid;
+      const roleId = currentUser.role_id;
+      const response = await fetch(`${WEBAPI_JAVA_URL}/filter/questions/${userId}/${roleId}?difficulty_level=${level}`);
       const data = await response.json();
       setQuestions(data);
     } catch (error) {

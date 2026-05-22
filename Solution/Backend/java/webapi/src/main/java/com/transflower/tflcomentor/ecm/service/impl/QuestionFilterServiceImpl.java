@@ -22,8 +22,8 @@ public class QuestionFilterServiceImpl implements QuestionFilterService{
 
 
     public List<Question> getQuestions(QuestionType question_type,DifficultyLevel difficulty_level,QuestionStatus status,String language,
-                                String layer,String framework,String concept)
+                                String layer,String framework,String concept,Long userId,Long roleId)
     {
-        return questionFilterRepository.getQuestions(question_type,difficulty_level,status,language,layer,framework,concept);
+        return questionFilterRepository.getQuestions(question_type,difficulty_level,status,language,layer,framework,concept,userId,roleId);
     }
 }

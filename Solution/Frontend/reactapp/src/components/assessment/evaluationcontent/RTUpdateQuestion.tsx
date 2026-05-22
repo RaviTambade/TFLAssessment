@@ -348,7 +348,7 @@ const RTUpdateQuestion = () => {
             {/* MCQ OPTIONS */}
             {formData.questionType ===
               "MCQ" && (
-              <div className="space-y-3">
+              <div className="space-y-3"> 
                 <input
                   type="text"
                   name="optionA"

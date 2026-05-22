@@ -14,7 +14,10 @@ type Question = {
 };
 
 const fetchQuestionsByStatus = async (status: string) => {
-  const res = await fetch(`${WEBAPI_JAVA_URL}/filter/questions?status=${status}`);
+  const currentUser = JSON.parse(sessionStorage.getItem("current") || "{}");
+  const userId = currentUser.userid;
+  const roleId = currentUser.role_id;
+  const res = await fetch(`${WEBAPI_JAVA_URL}/filter/questions/${userId}/${roleId}?status=${status}`);
   if (!res.ok) throw new Error('Failed to fetch');
   return res.json();
 };
@@ -82,11 +85,11 @@ const QuestionByStatus = () => {
             Question Status
           </label>
 
-          <div className="flex flex-wrap gap-4">
+          <div className="flex flex-wrap gap-100">
             {QUESTION_STATUSES.map((status) => (
               <label
                 key={status}
-                className={`flex items-center gap-2 px-4 py-2 rounded-lg border cursor-pointer transition
+                className={`flex items-center gap-14 px-14 py-2 rounded-lg border cursor-pointer transition
                   ${
                     selectedStatus === status ? "border-orange-400 bg-orange-100 text-orange-600" : "border-border hover:border-orange-300"
                   }`}
