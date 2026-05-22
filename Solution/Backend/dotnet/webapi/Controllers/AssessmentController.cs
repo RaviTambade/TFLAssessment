@@ -86,30 +86,50 @@ public class AssessmentController : ControllerBase
         return Ok(assessmentQuestions);
     }
 
-    [HttpPost("submit")]
-    public async Task<IActionResult> SaveAssessmentAnswersAsync([FromBody] AssessmentAnswers submission)
+  [HttpPost("submit")]
+public async Task<IActionResult> SaveAssessmentAnswersAsync(
+    [FromBody] AssessmentAnswers submission)
+{
+    try
     {
-        try
+        if (submission == null)
         {
-            if (submission == null)
+            return BadRequest(new
             {
-                return BadRequest("Invalid data");
-            }
-
-            var result = await _service.SaveAssessmentAnswersAsync(submission);
-
-            if (result)
-            {
-                return Ok(new { message = "Assessment submitted successfully" });
-            }
-
-            return StatusCode(500, "Failed to save assessment");
+                success = false,
+                message = "Invalid data"
+            });
         }
-        catch (Exception ex)
+
+        var result =
+            await _service.SaveAssessmentAnswersAsync(submission);
+
+        if (result)
         {
-            return StatusCode(500, ex.Message);
+            return Ok(new
+            {
+                success = true,
+                message = "Assessment submitted successfully"
+            });
         }
+
+        return StatusCode(500, new
+        {
+            success = false,
+            message = "Failed to save assessment"
+        });
     }
+    catch (Exception ex)
+    {
+        Console.WriteLine(ex.ToString());
+
+        return StatusCode(500, new
+        {
+            success = false,
+            message = ex.Message
+        });
+    }
+}
 
     [HttpGet("{studentId}/{assessmentId}")]
     public async Task<IActionResult> GetResultData(int studentId, int assessmentId)

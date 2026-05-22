@@ -20,34 +20,20 @@ namespace backend.Repositories.Implementations
 
         public async Task<List<StudentResults>> GetStudentResultsAsync()
         {
-         
-             return await Task.FromResult(new List<StudentResults>());
+
+            return await Task.FromResult(new List<StudentResults>());
         }
 
         public async Task<StudentAnswersResults> GetStudentAnswerResultAsync(int questionId, int studentId, int assessmentId)
         {
             StudentAnswersResults result = null;
 
-            string query = @"
-                SELECT 
-                    q.question_id,
-                    q.description AS question_description,
-
-                    m.option_a,
-                    m.option_b,
-                    m.option_c,
-                    m.option_d,
-
-                    m.correct_answer,
-                    sa.SelectedOption AS student_selected_answer
-
-                FROM questions q
-
-                LEFT JOIN mcq_options m 
-                    ON q.question_id = m.question_id
-
-                LEFT JOIN studentanswers sa 
-                    ON q.question_id = sa.QuestionId
+            string query = @"SELECT q.question_id, q.description AS question_description,
+                            m.option_a, m.option_b, m.option_c, m.option_d,
+                            m.correct_answer, sa.SelectedOption AS student_selected_answer
+                        FROM questions q
+                            LEFT JOIN mcq_options m ON q.question_id = m.question_id
+                            LEFT JOIN studentanswers sa ON q.question_id = sa.QuestionId
                     AND sa.StudentId = @student_id
                     AND sa.AssessmentId = @assessment_id
 
@@ -63,7 +49,7 @@ namespace backend.Repositories.Implementations
                     cmd.Parameters.AddWithValue("@student_id", studentId);
                     cmd.Parameters.AddWithValue("@assessment_id", assessmentId);
                     cmd.Parameters.AddWithValue("@question_id", questionId);
-                                      
+
 
                     using (var reader = await cmd.ExecuteReaderAsync())
                     {

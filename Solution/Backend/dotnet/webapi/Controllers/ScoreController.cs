@@ -39,6 +39,7 @@ namespace backend.Controllers
 
             return Ok(result);
         }
+        
 
         [HttpGet("GetAssessmentResultData/{studentId}/{assessmentId}")]
         public async Task<ActionResult<AssessmentScores>> GetAssessmentResultData(int studentId, int assessmentId)

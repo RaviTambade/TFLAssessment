@@ -31,11 +31,6 @@ const actions = [
     path: "/models/assign-assessment",
     roles: ["Admin"],
   },
-  {
-    label: "Applying Assessment",
-    path: "/models/apply-assessment",
-    roles: ["Student"],
-  },
 ];
 
 const AssessmentOrchestrator = () => {
