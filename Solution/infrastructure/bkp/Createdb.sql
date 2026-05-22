@@ -633,3 +633,373 @@ CREATE TABLE `student_assessment_results` (
   CONSTRAINT `fk_result_assessment` FOREIGN KEY (`assessment_id`) REFERENCES `assessments` (`id`),
   CONSTRAINT `fk_result_student` FOREIGN KEY (`student_id`) REFERENCES `users` (`id`)
 );
+
+
+
+CREATE TABLE roadmaps (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    title VARCHAR(300) NOT NULL,
+    description TEXT,
+    difficulty_level VARCHAR(50),
+    duration_in_weeks INT,
+    created_by BIGINT,
+    status VARCHAR(50),
+    created_at  datetime DEFAULT NULL,
+
+    CONSTRAINT fk_roadmap_mentor
+    FOREIGN KEY(created_by)
+    REFERENCES users(id)
+);
+
+
+CREATE TABLE courses (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    title VARCHAR(300) NOT NULL,
+    description TEXT,
+    level VARCHAR(50),
+    duration_in_hours INT,
+    technology VARCHAR(100),
+    status VARCHAR(50),
+    created_by BIGINT,
+    created_at  datetime DEFAULT NULL,
+
+    CONSTRAINT fk_course_mentor
+    FOREIGN KEY(created_by)
+    REFERENCES users(id)
+);
+
+
+CREATE TABLE roadmap_courses (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    roadmap_id BIGINT,
+    course_id BIGINT,
+    week_no INT,
+    sequence_no INT,
+
+    CONSTRAINT fk_rc_roadmap
+    FOREIGN KEY(roadmap_id)
+    REFERENCES roadmaps(id),
+
+    CONSTRAINT fk_rc_course
+    FOREIGN KEY(course_id)
+    REFERENCES courses(id)
+);
+
+
+CREATE TABLE student_roadmaps (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    student_id BIGINT,
+    roadmap_id BIGINT,
+    mentor_id BIGINT,
+    assigned_date DATE,
+    completion_percent DECIMAL(5,2),
+    status ENUM(
+        'ASSIGNED',
+        'IN_PROGRESS',
+        'COMPLETED',
+        'CANCELLED'
+    ) DEFAULT 'ASSIGNED',
+
+    CONSTRAINT fk_sr_student
+    FOREIGN KEY(student_id)
+    REFERENCES users(id),
+
+    CONSTRAINT fk_sr_roadmap
+    FOREIGN KEY(roadmap_id)
+    REFERENCES roadmaps(id),
+
+    CONSTRAINT fk_sr_mentor
+    FOREIGN KEY(mentor_id)
+    REFERENCES user_roles(id)
+);
+
+
+CREATE TABLE sessions (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    roadmap_id BIGINT,
+    sme_id BIGINT,
+    title VARCHAR(300),
+    topic VARCHAR(300),
+    description TEXT,
+    learning_objectives TEXT,
+    session_date DATETIME,
+    duration_in_minutes INT,
+    status enum('InProgress','Pending','Completed') DEFAULT NULL,
+    created_at  datetime DEFAULT NULL,
+
+    CONSTRAINT fk_session_roadmap
+    FOREIGN KEY(roadmap_id)
+    REFERENCES roadmaps(id),
+
+    CONSTRAINT fk_session_mentor
+    FOREIGN KEY(sme_id)
+    REFERENCES users(id)
+);
+
+
+CREATE TABLE session_students (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    session_id BIGINT,
+    student_id BIGINT,
+    attendance_status tinyint(1) DEFAULT '0',
+    joined_at  datetime DEFAULT NULL,
+
+    CONSTRAINT fk_ss_session
+    FOREIGN KEY(session_id)
+    REFERENCES sessions(id),
+
+    CONSTRAINT fk_ss_student
+    FOREIGN KEY(student_id)
+    REFERENCES users(id)
+);
+
+
+CREATE TABLE learning_materials (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    session_id BIGINT,
+    title VARCHAR(300),
+    material_type VARCHAR(50),
+    material_url TEXT,
+    description TEXT,
+    sequence_no INT,
+    created_at datetime DEFAULT NULL,
+
+    CONSTRAINT fk_material_session
+    FOREIGN KEY(session_id)
+    REFERENCES sessions(id)
+);
+
+CREATE TABLE student_material_progress (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    student_id BIGINT,
+    material_id BIGINT,
+    progress_percent DECIMAL(5,2),
+    status VARCHAR(50),
+    last_accessed datetime DEFAULT NULL,
+
+    CONSTRAINT fk_smp_student
+    FOREIGN KEY(student_id)
+    REFERENCES users(id),
+
+    CONSTRAINT fk_smp_material
+    FOREIGN KEY(material_id)
+    REFERENCES learning_materials(id)
+);
+
+
+CREATE TABLE assignments (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    session_id BIGINT,
+    title VARCHAR(300),
+    description TEXT,
+    due_date DATETIME,
+    total_marks INT,
+    created_at datetime DEFAULT NULL,
+
+    CONSTRAINT fk_assignment_session
+    FOREIGN KEY(session_id)
+    REFERENCES sessions(id)
+);
+
+
+
+CREATE TABLE assignment_submissions (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    assignment_id BIGINT,
+    student_id BIGINT,
+    submission_url TEXT,
+    submitted_at datetime DEFAULT NULL,
+    marks_obtained DECIMAL(5,2),
+    feedback TEXT,
+    status enum('InProgress','Pending','Completed') DEFAULT NULL,
+ ,
+
+    CONSTRAINT fk_submission_assignment
+    FOREIGN KEY(assignment_id)
+    REFERENCES assignments(id),
+
+    CONSTRAINT fk_submission_student
+    FOREIGN KEY(student_id)
+    REFERENCES users(id)
+);
+
+
+CREATE TABLE projects (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    mentor_id BIGINT,
+    title VARCHAR(300),
+    description TEXT,
+    technology_stack VARCHAR(300),
+    difficulty_level VARCHAR(50),
+    start_date datetime DEFAULT NULL,
+    end_date datetime DEFAULT NULL,
+   status enum('InProgress','Pending','Completed') DEFAULT NULL,
+
+    CONSTRAINT fk_project_mentor
+    FOREIGN KEY(mentor_id)
+    REFERENCES users(id)
+);
+
+CREATE TABLE student_projects (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    project_id BIGINT,
+    student_id BIGINT,
+    assigned_date datetime DEFAULT NULL,
+    completion_percent DECIMAL(5,2),
+    github_repository_url TEXT,
+    deployment_url TEXT,
+    status enum('InProgress','Pending','Completed') DEFAULT NULL,
+
+
+    CONSTRAINT fk_sp_project
+    FOREIGN KEY(project_id)
+    REFERENCES projects(id),
+
+    CONSTRAINT fk_sp_student
+    FOREIGN KEY(student_id)
+    REFERENCES students(id)
+);
+
+
+
+CREATE TABLE skills (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(200),
+    category VARCHAR(100),
+    description TEXT
+);
+
+
+CREATE TABLE student_skills (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    student_id BIGINT,
+    skill_id BIGINT,
+    proficiency_level VARCHAR(50),
+    last_assessed_at TIMESTAMP,
+
+    CONSTRAINT fk_sskill_student
+    FOREIGN KEY(student_id)
+    REFERENCES students(id),
+
+    CONSTRAINT fk_sskill_skill
+    FOREIGN KEY(skill_id)
+    REFERENCES skills(id)
+);
+
+
+CREATE TABLE `assessments` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+    session_id BIGINT,
+  `student_id` bigint DEFAULT NULL,
+  `assigned_by` bigint DEFAULT NULL,
+  `assigned_at` datetime DEFAULT CURRENT_TIMESTAMP,
+  `scheduled_at` datetime DEFAULT NULL,
+  `status` enum('Assigned','Pending','Completed','UnAssigned') DEFAULT 'UnAssigned',
+  `is_active` tinyint(1) DEFAULT '1',
+  PRIMARY KEY (`id`),
+  KEY `fk_assessment_test` (`test_id`),
+  KEY `fk_assessment_student` (`student_id`),
+  KEY `fk_assessment_assigned_by` (`assigned_by`),
+  CONSTRAINT `fk_assessment_assigned_by` FOREIGN KEY (`assigned_by`) REFERENCES `users` (`id`),
+  CONSTRAINT `fk_assessment_student` FOREIGN KEY (`student_id`) REFERENCES `users` (`id`),
+  CONSTRAINT `fk_assessment_test` FOREIGN KEY (`test_id`) REFERENCES `tests` (`id`),
+  CONSTRAINT fk_assessment_session
+FOREIGN KEY(session_id)
+    REFERENCES sessions(session_id)
+
+
+) 
+
+
+CREATE TABLE student_assessments (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    assessment_id BIGINT,
+    student_id BIGINT,
+    marks_obtained DECIMAL(5,2),
+    feedback TEXT,
+    completed_at datetime DEFAULT NULL,
+
+    CONSTRAINT fk_sa_assessment
+    FOREIGN KEY(assessment_id)
+    REFERENCES assessments(id),
+
+    CONSTRAINT fk_sa_student
+    FOREIGN KEY(student_id)
+    REFERENCES users(id)
+);
+
+
+
+
+CREATE TABLE mentor_feedback (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    mentor_id BIGINT,
+    student_id BIGINT,
+    session_id BIGINT,
+    feedback TEXT,
+    rating INT,
+    created_at datetime DEFAULT NULL,
+
+    CONSTRAINT fk_feedback_mentor
+    FOREIGN KEY(mentor_id)
+    REFERENCES users(id),
+
+    CONSTRAINT fk_feedback_student
+    FOREIGN KEY(student_id)
+    REFERENCES users(id),
+
+    CONSTRAINT fk_feedback_session
+    FOREIGN KEY(session_id)
+    REFERENCES sessions(id)
+);
+
+
+CREATE TABLE discussion_messages (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    session_id BIGINT,
+    sender_type VARCHAR(50),
+    sender_id BIGINT,
+    message TEXT,
+    created_at  DEFAULT NULL,
+
+    CONSTRAINT fk_dm_session
+    FOREIGN KEY(session_id)
+    REFERENCES sessions(id)
+
+    CONSTRAINT fk_sender_id
+    FOREIGN KEY(sender_id)
+    REFERENCES users(id)
+);
+
+
+CREATE TABLE notifications (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    recipient_type VARCHAR(50),
+    recipient_id BIGINT,
+    title VARCHAR(300),
+    message TEXT,
+    is_read BOOLEAN DEFAULT FALSE,
+    created_at DEFAULT NULL 
+
+    CONSTRAINT fk_Notification_recipient
+    FOREIGN KEY(recipient_id)
+    REFERENCES users(id)
+);
+
+
+CREATE TABLE employability_scores (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    student_id BIGINT,
+    technical_score DECIMAL(5,2),
+    communication_score DECIMAL(5,2),
+    project_score DECIMAL(5,2),
+    interview_score DECIMAL(5,2),
+    overall_score DECIMAL(5,2),
+    evaluated_at DEFAULT NULL,
+
+    CONSTRAINT fk_employability_student
+    FOREIGN KEY(student_id)
+    REFERENCES users(id)
+);
+
+
