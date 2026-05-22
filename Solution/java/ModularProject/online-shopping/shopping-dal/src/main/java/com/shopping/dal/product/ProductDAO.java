@@ -78,7 +78,7 @@ public class ProductDAO implements IProductDAO {
     @Override
     public boolean save(Product product) {
         String sql = "INSERT INTO products (name, description, price, stock_quantity, category, image_url) "
-                   + "VALUES (?, ?, ?, ?, ?, ?)";
+                 + "VALUES (?, ?, ?, ?, ?, ?)";
         try (PreparedStatement ps = getConn().prepareStatement(sql)) {
             ps.setString(1, product.getName());
             ps.setString(2, product.getDescription());
