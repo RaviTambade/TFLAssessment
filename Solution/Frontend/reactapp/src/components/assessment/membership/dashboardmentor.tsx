@@ -1,56 +1,95 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "../../ui/card";
-import {
-  Bell,
-  Users,
-  Zap,
-  TrendingUp,
-  CheckCircle,
-  AlertCircle,
-  BookOpen,
-  MessageSquare,
-} from "lucide-react";
-import { WEBAPI_NODE_URL } from "@/lib/utils";
+import { WEBAPI_JAVA_URL } from "@/lib/utils";
+import { Bell, FolderKanban, Users, Zap, TrendingUp, CheckCircle, AlertCircle, BookOpen, MessageSquare, } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
+import { WEBAPI_NODE_URL, WEBAPI_DOTNET_URL } from "@/lib/utils";
 import Notification from "./entities/Notification";
 import MentorshipActivity from "./entities/MentorshipActivity";
 import Mentee from "./entities/Mentee";
 import MenteeGrowth from "./entities/MenteeGrowth";
 import AllmentorNotifications from "./data/notifications/mentorNotifications.json";
-import AllmentorshipActivities from "./data/mentorshipActivities.json";
 import AllMenteeGrowth from "./data/menteeGrowths.json";
 import AllMentee from "./data/users/mentees.json";
+import Student from "../assessmentOrchestrator/entities/Student";
 
-//function component for Mentor Dashboard - Transflower
+
 const DashboardMentor = () => {
   const navigate = useNavigate();
   //data members
-  const [mentorName, setMentorName] = useState<string>("Ravi Tambade");
-  const [organization, setOrganization] = useState<string>("Transflower");
-  const [profilePicture, setProfilePicture] = useState<string>(
-    "https://avatars.githubusercontent.com/u/12345678?v=4",
-  );
-
-  const mentorNotifications: Notification[] =
-    AllmentorNotifications as Notification[];
-
+  const [mentorName, setMentorName] = useState<string>("");
+  const [organization, setOrganization] = useState<string>("Transflower");;
+  const [projectCount, setProjectCount] = useState<number>(0);
+  const [students, setStudents] = useState<Student[]>([]);
+  const [questionCount, setQuestionCount] = useState<number>(0);
+  const mentorNotifications: Notification[] = AllmentorNotifications as Notification[];
   const mentees: Mentee[] = AllMentee as Mentee[];
-
-  const mentorshipActivities: MentorshipActivity[] =
-    AllmentorshipActivities as MentorshipActivity[];
-
+  const [mentorshipActivities, setMentorshipActivities] = useState<MentorshipActivity[]>([]);
   const menteeGrowth: MenteeGrowth[] = AllMenteeGrowth as MenteeGrowth[];
-
   const [menteeCount, setMenteeCount] = useState<number>(0);
 
   useEffect(() => {
-    const apiURL = `${WEBAPI_NODE_URL}/mentor/profile`;
-    fetch(apiURL)
-      .then((response) => response.json())
+    const currentUser = sessionStorage.getItem("current");
+
+    if (currentUser) {
+      const user = JSON.parse(currentUser);
+
+      setMentorName(`${user.firstname} ${user.lastname}`);
+      setOrganization("Transflower");
+    }
+  }, []);
+
+  useEffect(() => {
+    const fetchStudents = async () => {
+      try {
+        const response = await fetch(`${WEBAPI_DOTNET_URL}/Students`);
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch students");
+        }
+
+        const data = await response.json();
+        setStudents(data);
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    };
+
+    fetchStudents();
+  }, []);
+
+  useEffect(() => {
+    const fetchQuestions = async () => {
+      try {
+        const response = await fetch(`${WEBAPI_JAVA_URL}/questions/count`);
+        if (!response.ok) {
+          throw new Error("Failed to fetch question count");
+        }
+        const data = await response.json();
+        setQuestionCount(data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchQuestions();
+  }, []);
+
+
+
+  useEffect(() => {
+    fetch(`${WEBAPI_JAVA_URL}/projects`)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to fetch projects");
+        }
+        return response.json();
+      })
       .then((data) => {
-        setMentorName(data.name);
-        setOrganization(data.organization);
-        setProfilePicture(data.profilePicture);
+        setProjectCount(data.length);
+      })
+      .catch((err) => {
+        console.error(err);
       });
   }, []);
 
@@ -67,71 +106,139 @@ const DashboardMentor = () => {
       });
   }, []);
 
+
+  useEffect(() => {
+    console.log("Mentorship useEffect started");
+    const currentUser = sessionStorage.getItem("current");
+    console.log("Current User:", currentUser);
+    if (!currentUser) return;
+    const user = JSON.parse(currentUser);
+    console.log("User ID:", user.id);
+    console.log("User ID:", user.userid);
+    fetch(`${WEBAPI_JAVA_URL}/projects/activities/${user.userid}`)
+      .then((response) => {
+        console.log("HTTP Status:", response.status);
+        return response.json();
+      })
+      .then((data) => {
+        console.log("API Response:", data);
+        console.log("Is Array:", Array.isArray(data));
+        setMentorshipActivities(data);
+      })
+      .catch((err) => console.error(err));
+  }, []);
+  console.log("State:", mentorshipActivities);
+
   // Render the Mentor dashboard UI
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
+    <div className="min-h-screen bg-background p-8">
       <div className="max-w-7xl mx-auto space-y-8">
         {/* Header */}
-        <div>
-          <h1 className="text-4xl font-bold text-gray-900 mb-2">
+        <div className="mb-8">
+          <h1 className="text-3xl font-bold text-slate-900">
             Mentor Dashboard
           </h1>
-          <h3 className="text-xl text-gray-700 mb-4">
-            Welcome, {mentorName} | {organization}
-          </h3>
-          <p className="text-gray-600">
-            Track mentee progress, manage mentorship activities, and guide
-            career development at Transflower.
+
+          <p className="text-2xl text-primary mt-3 font-bold">
+            Welcome, <span className="font-bold">{mentorName}</span>
+          </p>
+
+          <p className="text-slate-500 mt-3 text-lg">
+            Track mentee progress, manage mentorship activities and monitor student performance.
           </p>
         </div>
-
         {/* Top Stats */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-          <Card onClick={() => navigate("/models/membership/Mentees")}>
-            <CardContent className="p-6">
+
+          <Card className="group cursor-pointer border-0 overflow-hidden shadow-elegant hover:shadow-glow transition-all duration-300 hover:-translate-y-2" 
+          onClick={() => navigate("/models/evaluationcontent/ProjectByMentee")}>
+            <CardContent className="p-7">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-muted-foreground text-sm font-medium">
+                    Project By Mentees
+                  </p>
+                  <p className="text-4xl font-bold text-foreground mt-2">
+                    {projectCount}
+                  </p>
+                </div>
+                <div
+                  className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 group-hover:scale-110 transition-all ">
+                  <FolderKanban className="w-8 h-8 text-primary" />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+
+          <Card className="group cursor-pointer border-0 overflow-hidden shadow-elegant hover:shadow-glow transition-all duration-300 hover:-translate-y-2" 
+          onClick={() => navigate("/models/membership/Mentees")}>
+            <CardContent className="p-7">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-gray-600 text-sm font-medium">
-                    Active Mentees
+                    Mentees
                   </p>
                   <p className="text-3xl font-bold text-gray-900 mt-1">
                     {menteeCount}
                   </p>
                 </div>
-                <Users className="w-12 h-12 text-blue-500 opacity-20" />
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-gray-600 text-sm font-medium">
-                    Avg Mentee Progress
-                  </p>
-                  <p className="text-3xl font-bold text-gray-900 mt-1">75.5%</p>
+                <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 group-hover:scale-110 transition-all ">
+                  <Users className="w-8 h-8 text-primary" />
                 </div>
-                <TrendingUp className="w-12 h-12 text-green-500 opacity-20" />
               </div>
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="group cursor-pointer border-0 overflow-hidden shadow-elegant hover:shadow-glow transition-all duration-300 hover:-translate-y-2" 
+          onClick={() => navigate("/models/evaluationcontent/dashboard")}>
+            <CardContent className="p-7">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-gray-600 text-sm font-medium">
+                    Question Bank
+                  </p>
+                  <div className="text-3xl font-bold">{questionCount}</div>
+                </div>
+                <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 group-hover:scale-110 transition-all ">
+                  <BookOpen className="w-8 h-8 text-primary" />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="group cursor-pointer border-0 overflow-hidden shadow-elegant hover:shadow-glow transition-all duration-300 hover:-translate-y-2" 
+          onClick={() => navigate("/models/students")}>
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between">
+                <div>
+
+                  <p className="text-gray-600 text-sm font-medium bold">
+                    Total Students
+                  </p>
+                  <div className="text-3xl font-bold">{students.length}</div>
+                </div>
+                <TrendingUp className="w-8 h-8 text-primary" />
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="group cursor-pointer border-0 overflow-hidden shadow-elegant hover:shadow-glow transition-all duration-300 hover:-translate-y-2"
+            onClick={() => navigate("/models/Assessment/testList")}>
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-gray-600 text-sm font-medium">
-                    Pending Activities
+                    Tests
                   </p>
                   <p className="text-3xl font-bold text-gray-900 mt-1">2</p>
                 </div>
-                <MessageSquare className="w-12 h-12 text-orange-500 opacity-20" />
+                <MessageSquare className="w-8 h-8 text-primary" />
               </div>
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="group cursor-pointer border-0 overflow-hidden shadow-elegant hover:shadow-glow transition-all duration-300 hover:-translate-y-2">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
@@ -140,7 +247,7 @@ const DashboardMentor = () => {
                   </p>
                   <p className="text-3xl font-bold text-gray-900 mt-1">2</p>
                 </div>
-                <Zap className="w-12 h-12 text-yellow-500 opacity-20" />
+                <Zap className="w-8 h-8 text-primary" />
               </div>
             </CardContent>
           </Card>
@@ -161,15 +268,14 @@ const DashboardMentor = () => {
                 {mentorNotifications.map((notification) => (
                   <div
                     key={notification.id}
-                    className={`p-4 rounded-lg border-l-4 ${
-                      notification.type === "info"
-                        ? "bg-blue-50 border-blue-400"
-                        : notification.type === "success"
-                          ? "bg-green-50 border-green-400"
-                          : notification.type === "warning"
-                            ? "bg-yellow-50 border-yellow-400"
-                            : "bg-red-50 border-red-400"
-                    }`}
+                    className={`p-4 rounded-lg border-l-4 ${notification.type === "info"
+                      ? "bg-blue-50 border-blue-400"
+                      : notification.type === "success"
+                        ? "bg-green-50 border-green-400"
+                        : notification.type === "warning"
+                          ? "bg-yellow-50 border-yellow-400"
+                          : "bg-red-50 border-red-400"
+                      }`}
                   >
                     <div className="flex items-start justify-between">
                       <div className="flex-1">
@@ -197,52 +303,64 @@ const DashboardMentor = () => {
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <BookOpen className="w-5 h-5" />
-                  Recent Mentorship Activities
+                  Mentorship Activities
                 </CardTitle>
               </CardHeader>
+
               <CardContent className="space-y-4">
-                {mentorshipActivities.map((activity) => (
-                  <div
-                    key={activity.id}
-                    className="p-4 border rounded-lg hover:bg-gray-50 transition"
-                  >
-                    <div className="flex items-start justify-between">
-                      <div className="flex-1">
-                        <p className="font-semibold text-gray-900">
-                          {activity.menteeName}
-                        </p>
-                        <p className="text-sm text-gray-600 mt-1">
-                          {activity.description}
-                        </p>
-                        <div className="flex items-center gap-4 mt-2 text-sm text-gray-600">
-                          <span className="inline-block bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs font-medium">
-                            {activity.activityType}
-                          </span>
-                          <span>{activity.date}</span>
+                {mentorshipActivities.length > 0 ? (
+                  mentorshipActivities.map((activity, index) => (
+                    <div
+                      key={index}
+                      className="p-4 border rounded-lg hover:bg-gray-50 transition"
+                    >
+                      <div className="flex items-start justify-between">
+                        <div className="flex-1">
+                          <p className="font-semibold text-gray-900">
+                            {activity.menteeName}
+                          </p>
+
+                          <p className="text-sm text-gray-600 mt-1">
+                            {activity.activity}
+                          </p>
+
+                          <div className="flex items-center gap-4 mt-2 text-sm text-gray-600">
+                            <span className="inline-block bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs font-medium">
+                              {activity.activityType}
+                            </span>
+
+                            <span>{activity.activityDate}</span>
+                          </div>
                         </div>
-                      </div>
-                      <span
-                        className={`px-3 py-1 rounded-full text-xs font-medium ${
-                          activity.completionStatus === "completed"
+
+                        <span
+                          className={`px-3 py-1 rounded-full text-xs font-medium ${activity.status === "COMPLETED"
                             ? "bg-green-100 text-green-800"
-                            : activity.completionStatus === "in-progress"
+                            : activity.status === "SCHEDULED"
                               ? "bg-yellow-100 text-yellow-800"
-                              : "bg-gray-100 text-gray-800"
-                        }`}
-                      >
-                        {activity.completionStatus}
-                      </span>
+                              : activity.status === "CANCELLED"
+                                ? "bg-red-100 text-red-800"
+                                : "bg-gray-100 text-gray-800"
+                            }`}
+                        >
+                          {activity.status}
+                        </span>
+                      </div>
                     </div>
+                  ))
+                ) : (
+                  <div className="text-center py-8 text-gray-500">
+                    No mentorship activities found.
                   </div>
-                ))}
+                )}
               </CardContent>
             </Card>
           </div>
 
-          {/* Right Column: Mentee Progress and Growth Tracking */}
+
           <div className="space-y-8">
             {/* Mentee Progress Overview */}
-            <Card>
+            <Card >
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Users className="w-5 h-5" />
@@ -271,15 +389,14 @@ const DashboardMentor = () => {
                     </div>
                     <div className="w-full bg-gray-200 rounded-full h-2 mb-2">
                       <div
-                        className={`h-2 rounded-full transition-all ${
-                          mentee.status === "exceeding"
-                            ? "bg-green-500"
-                            : mentee.status === "onTrack"
-                              ? "bg-blue-500"
-                              : mentee.status === "needsSupport"
-                                ? "bg-yellow-500"
-                                : "bg-red-500"
-                        }`}
+                        className={`h-2 rounded-full transition-all ${mentee.status === "exceeding"
+                          ? "bg-green-500"
+                          : mentee.status === "onTrack"
+                            ? "bg-blue-500"
+                            : mentee.status === "needsSupport"
+                              ? "bg-yellow-500"
+                              : "bg-red-500"
+                          }`}
                         style={{ width: `${mentee.progress}%` }}
                       />
                     </div>
@@ -313,13 +430,12 @@ const DashboardMentor = () => {
                         </p>
                       </div>
                       <span
-                        className={`text-xs font-bold px-2 py-1 rounded ${
-                          growth.currentLevel === "advanced"
-                            ? "bg-green-100 text-green-800"
-                            : growth.currentLevel === "intermediate"
-                              ? "bg-blue-100 text-blue-800"
-                              : "bg-yellow-100 text-yellow-800"
-                        }`}
+                        className={`text-xs font-bold px-2 py-1 rounded ${growth.currentLevel === "advanced"
+                          ? "bg-green-100 text-green-800"
+                          : growth.currentLevel === "intermediate"
+                            ? "bg-blue-100 text-blue-800"
+                            : "bg-yellow-100 text-yellow-800"
+                          }`}
                       >
                         {growth.currentLevel}
                       </span>
@@ -344,6 +460,7 @@ const DashboardMentor = () => {
         </div>
       </div>
     </div>
+
   );
 };
 

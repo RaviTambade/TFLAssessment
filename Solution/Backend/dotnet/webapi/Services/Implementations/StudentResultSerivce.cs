@@ -23,4 +23,10 @@ public class StudentResultService : IStudentResultService
     {
         return await _repo.GetStudentAnswerResultAsync(questionId, studentId, assessmentId);
     }
+
+    public async Task<bool> SaveStudentAssessmentResult(StudentAssessmentResultRequest result)
+    {
+        return await _repo.SaveStudentAssessmentResult(result);
+    }
+
 }

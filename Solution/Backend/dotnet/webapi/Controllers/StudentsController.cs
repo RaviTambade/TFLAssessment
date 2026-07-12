@@ -21,5 +21,25 @@ namespace backend.Controllers
             var result = await _service.GetTotalStudents();
             return Ok(result);
         }
+
+         [HttpGet]
+        public async Task<IActionResult> GetStudents()
+        {
+            var students = await _service.GetAllStudents();
+            return Ok(students);
+        }
+
+        [HttpGet("performance/{studentId}")]
+        public async Task<IActionResult> GetStudentPerformance(long studentId)
+        {
+            var result = await _service.GetStudentPerformance(studentId);
+
+            if (result == null)
+            {
+                return NotFound("No performance found.");
+            }
+
+            return Ok(result);
+        }
     }
 }

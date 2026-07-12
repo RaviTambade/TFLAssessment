@@ -42,8 +42,7 @@ builder.Services.AddScoped<IStudentResultRepository, StudentResultRepository>();
 
 builder.Services.AddScoped<IUserSessionRepository, UsersessionRepository>();
 builder.Services.AddScoped<IQuestionsRepository, QuestionsRepository>();
-builder.Services.AddScoped<IQuestionsService, QuestionsService>();
- 
+builder.Services.AddScoped<IQuestionsService, QuestionsService>(); 
 
 // builder.Services.AddScoped<ILayersService, LayersService>();
 // builder.Services.AddScoped<ILayersRepository, LayersRepository>();
@@ -64,6 +63,11 @@ builder.Services.AddScoped<IEmailService, EmailService>();
 
 builder.Services.AddScoped<IExpertiseService,ExpertiseService>();
 builder.Services.AddScoped<IExpertiseRepository,ExpertiseRepository>();
+
+builder.Services.AddScoped<IRolesService,RolesService>();
+builder.Services.AddScoped<IRolesRepository,RolesRepository>();
+
+
 
 //CORs configuration
 // to allow cross-origin requests from any domain, which is useful for development and testing purposes.

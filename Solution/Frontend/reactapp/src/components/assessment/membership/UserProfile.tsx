@@ -49,14 +49,25 @@ const UserProfile = () => {
 
 
   const { id } = useParams();
+  
 
-  const [userId, setUserId] = useState(null);
+const currentUser = sessionStorage.getItem("current");
+
+const loggedInUserId = currentUser
+  ? JSON.parse(currentUser).userid
+  : null;
+
+// If URL contains an id, use it.
+// Otherwise use the logged-in user's id.
+const profileUserId = id ?? loggedInUserId;
+
+const userId = profileUserId;
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [userRoles, setUserRoles] = useState([]);
   const [activeTab, setActiveTab] = useState<TabType>("professional");
-  
+
   const [personalData, setPersonalData] = useState<PersonalDetails | null>(null);
   const [professionalData, setProfessionalData] = useState<ProfessionalDetails | null>(null);
   const [academicData, setAcademicData] = useState<AcademicDetails | null>(null);
@@ -68,17 +79,7 @@ const UserProfile = () => {
   const fetchPersonalDetails = async () => {
     setLoading(true);
 
-    let userid;
-
-    const storedUser = sessionStorage.getItem("current");
-    if (storedUser) {
-      try {
-        const user = JSON.parse(storedUser);
-        userid = user?.userid;
-      } catch {
-        console.error("Invalid user data");
-      }
-    }
+    const userid = profileUserId;
 
     if (!userid) {
       console.error("User ID not found");
@@ -87,7 +88,7 @@ const UserProfile = () => {
     }
 
     try {
-      const res = await fetch( `${WEBAPI_NODE_URL}/users/${userid}/personal`);
+      const res = await fetch(`${WEBAPI_NODE_URL}/users/${userid}/personal`);
       const data = await res.json();
       console.log("API RESPONSE:", data);
 
@@ -110,17 +111,7 @@ const UserProfile = () => {
   const fetchProfessionalDetails = async () => {
     setLoading(true);
 
-    let userid;
-
-    const storedUser = sessionStorage.getItem("current");
-    if (storedUser) {
-      try {
-        const user = JSON.parse(storedUser);
-        userid = user?.userid;
-      } catch {
-        console.error("Invalid user data");
-      }
-    }
+    const userid = profileUserId;
 
     if (!userid) {
       console.error("User ID not found");
@@ -148,17 +139,7 @@ const UserProfile = () => {
   const fetchAcademicDetails = async () => {
     setLoading(true);
 
-    let userid;
-
-    const storedUser = sessionStorage.getItem("current");
-    if (storedUser) {
-      try {
-        const user = JSON.parse(storedUser);
-        userid = user?.userid;
-      } catch {
-        console.error("Invalid user data");
-      }
-    }
+    const userid = profileUserId;
 
     if (!userid) {
       console.error("User ID not found");
@@ -184,58 +165,33 @@ const UserProfile = () => {
   };
 
 
+  
   useEffect(() => {
-    const currentuser = sessionStorage.getItem("current");
+  if (!profileUserId) return;
 
-    if (currentuser) {
-      try {
-        const user = JSON.parse(currentuser);
-        setUserId(user?.userid);
-      } catch (e) {
-        console.error("Invalid user data in sessionStorage");
+  fetch(`${WEBAPI_NODE_URL}/roles/getUserByRole/${profileUserId}`)
+    .then(res => res.json())
+    .then(res => {
+      if (res.success) {
+        setUserRoles(res.data);
       }
-    }
+    });
 
-  }, []);
+  fetchPersonalDetails();
+  fetchProfessionalDetails();
+  fetchAcademicDetails();
 
-  useEffect(() => {
-    if (!userId) return;
-
-    fetch(`${WEBAPI_NODE_URL}/roles/getUserByRole/${userId}`) 
-      .then(res => {
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        return res.json();
-      })
-      .then(res => {
-        if (res.success) {
-          console.log("USER ROLES:", res.data);
-          setUserRoles(res.data);
-        } else {
-          setError("No data found");
-        }
-        setLoading(false);
-      })
-      .catch(err => {
-        console.error("Failed to fetch roles:", err);
-        setLoading(false);
-      });
-
-
-    fetchPersonalDetails();
-    fetchProfessionalDetails();
-    fetchAcademicDetails();
-
-  }, [userId]);
+}, [profileUserId]);
 
   if (loading) return <div className="text-center mt-20">Loading...</div>;
   if (error) return <div className="text-center text-red-500 mt-20">{error}</div>;
 
   const fullName = personalData?.first_name + " " + personalData?.last_name;
-  const initials = fullName? fullName.split(" ").map(n => n[0]).join("").slice(0, 2).toUpperCase(): "NA";
+  const initials = fullName ? fullName.split(" ").map(n => n[0]).join("").slice(0, 2).toUpperCase() : "NA";
 
-  const handleChange = (section:string ,field: string, value: any ) => {
+  const handleChange = (section: string, field: string, value: any) => {
     if (section === "personal") {
-      setPersonalData((prev) =>prev ? { ...prev, [field]: value } : null
+      setPersonalData((prev) => prev ? { ...prev, [field]: value } : null
       );
     }
 
@@ -244,40 +200,45 @@ const UserProfile = () => {
     }
 
     if (section === "academic") {
-      setAcademicData((prev) => ( { ...prev, [field]: value }));
+      setAcademicData((prev) => ({ ...prev, [field]: value }));
     };
   };
 
-  const updateSingleField = async (endpoint: string,field: string,value: any) => {
-    try {
+const updateSingleField = async (
+  endpoint: string,
+  field: string,
+  value: any
+) => {
+  try {
+    const userid = profileUserId;
 
-      const storedUser = sessionStorage.getItem("current");
-
-      if (!storedUser) return;
-      const user = JSON.parse(storedUser);
-      const userid = user?.userid;
-      const response = await fetch(`${WEBAPI_NODE_URL}/users/${userid}/${endpoint}`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
-
-          body: JSON.stringify({[field]: value,}),
-        }
-      );
-
-      const result = await response.json();
-
-      console.log("UPDATED:", result);
-
-      setEditingField("");
-
-    } catch (error) {
-      console.error("Update failed", error);
+    if (!userid) {
+      console.error("User ID not found");
+      return;
     }
-  };
 
+    const response = await fetch(
+      `${WEBAPI_NODE_URL}/users/${userid}/${endpoint}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          [field]: value,
+        }),
+      }
+    );
+
+    const result = await response.json();
+
+    console.log("UPDATED:", result);
+
+    setEditingField("");
+  } catch (error) {
+    console.error("Update failed", error);
+  }
+};
   const onEditHandle = (field: string) => {setEditingField(field); };
 
 
@@ -354,7 +315,7 @@ const UserProfile = () => {
                   <button
                     key={tab}
                     onClick={() => setActiveTab(tab as TabType)}
-                    className={`flex-1 py-4 px-6 font-semibold ${activeTab === tab? "border-b-2 border-blue-600 text-blue-600": "text-gray-600"}`}
+                    className={`flex-1 py-4 px-6 font-semibold ${activeTab === tab ? "border-b-2 border-blue-600 text-blue-600" : "text-gray-600"}`}
                   >
                     {tab.charAt(0).toUpperCase() + tab.slice(1)} Details
                   </button>
@@ -381,8 +342,8 @@ const UserProfile = () => {
                             value={personalData?.first_name || ""}
                             className="flex-1"
                             disabled={editingField !== "first_name"}
-                            onChange={(e) =>handleChange("personal","first_name",e.target.value)}>
-                            </Input>
+                            onChange={(e) => handleChange("personal", "first_name", e.target.value)}>
+                          </Input>
 
 
                           <img
@@ -408,7 +369,7 @@ const UserProfile = () => {
                             value={personalData?.last_name || ""}
                             className="flex-1"
                             disabled={editingField !== "last_name"}
-                            onChange={(e) =>handleChange("personal","last_name",e.target.value)}
+                            onChange={(e) => handleChange("personal", "last_name", e.target.value)}
                           />
 
                           <img
@@ -422,8 +383,8 @@ const UserProfile = () => {
                             <Button onClick={() => updateSingleField("personal-info", "last_name", personalData.last_name)}
                               variant="ghost"
                               className="flex items-center gap-2">
-                              <Save size={18} /></Button></div>                        
-                              </div>
+                              <Save size={18} /></Button></div>
+                        </div>
 
                         <div className="flex items-center gap-4">
                           <div className="w-32">
@@ -435,7 +396,7 @@ const UserProfile = () => {
                             value={personalData?.email || ""}
                             className="flex-1"
                             disabled={editingField !== "email"}
-                            onChange={(e) => handleChange("personal","email",e.target.value)}
+                            onChange={(e) => handleChange("personal", "email", e.target.value)}
                           />
 
                           <img
@@ -449,9 +410,9 @@ const UserProfile = () => {
                             <Button onClick={() => updateSingleField("personal-info", "email", personalData.email)}
                               variant="ghost"
                               className="flex items-center gap-2">
-                              <Save size={18} /></Button></div>                       
-                              
-                               </div>
+                              <Save size={18} /></Button></div>
+
+                        </div>
 
 
 
@@ -465,7 +426,7 @@ const UserProfile = () => {
                             value={personalData?.date_of_birth || ""}
                             className="flex-1"
                             disabled={editingField !== "date_of_birth"}
-                            onChange={(e) =>handleChange("personal","date_of_birth",e.target.value)}
+                            onChange={(e) => handleChange("personal", "date_of_birth", e.target.value)}
                           />
 
                           <img
@@ -478,8 +439,8 @@ const UserProfile = () => {
                             <Button onClick={() => updateSingleField("personal-info", "date_of_birth", personalData.date_of_birth)}
                               variant="ghost"
                               className="flex items-center gap-2">
-                              <Save size={18} /></Button></div>                        
-                              </div>
+                              <Save size={18} /></Button></div>
+                        </div>
 
 
 
@@ -493,7 +454,7 @@ const UserProfile = () => {
                             value={personalData?.address || ""}
                             className="flex-1"
                             disabled={editingField !== "address"}
-                            onChange={(e) =>handleChange("personal","address",e.target.value )}
+                            onChange={(e) => handleChange("personal", "address", e.target.value)}
                           />
 
                           <img
@@ -519,7 +480,7 @@ const UserProfile = () => {
                             value={personalData?.pincode || ""}
                             className="flex-1"
                             disabled={editingField !== "pincode"}
-                            onChange={(e) =>handleChange("personal","pincode",e.target.value)}
+                            onChange={(e) => handleChange("personal", "pincode", e.target.value)}
                           />
 
                           <img
@@ -532,8 +493,8 @@ const UserProfile = () => {
                             <Button onClick={() => updateSingleField("personal-info", "pincode", personalData.pincode)}
                               variant="ghost"
                               className="flex items-center gap-2">
-                              <Save size={18} /></Button></div>                       
-                               </div>
+                              <Save size={18} /></Button></div>
+                        </div>
 
                         <div className="flex items-center gap-4">
 
@@ -553,7 +514,7 @@ const UserProfile = () => {
                                     name="gender"
                                     value="MALE"
                                     checked={personalData?.gender === "MALE"}
-                                    onChange={(e) =>handleChange("personal", "gender", e.target.value)}
+                                    onChange={(e) => handleChange("personal", "gender", e.target.value)}
                                   />
                                   Male
                                 </label>
@@ -609,16 +570,16 @@ const UserProfile = () => {
                             type="text"
                             value={personalData?.contact || ""}
                             className="flex-1"
-                            disabled={editingField !== "Contact"}
+                            disabled={editingField !== "contact"}
                             onChange={(e) => handleChange("personal", "contact", e.target.value)}
                           />
-                          {/* 
+                          
                           <img
                             src="/editlogo.png"
-                            onClick={() => onEditHandle("Contact")}
+                            onClick={() => onEditHandle("contact")}
                             className="h-8 w-8 cursor-pointer"
                             alt="Edit Logo"
-                          /> */}
+                          />
                         </div>
                       </>
                     )}
@@ -641,7 +602,7 @@ const UserProfile = () => {
                         value={professionalData?.company_name || ""}
                         className="flex-1"
                         disabled={editingField !== "company_name"}
-                        onChange={(e) =>handleChange( "professional", "company_name",e.target.value)}
+                        onChange={(e) => handleChange("professional", "company_name", e.target.value)}
                       />
 
                       <img
@@ -667,7 +628,7 @@ const UserProfile = () => {
                         value={professionalData?.job_title || ""}
                         className="flex-1"
                         disabled={editingField !== "job_title"}
-                        onChange={(e) => handleChange( "professional","job_title",e.target.value)}
+                        onChange={(e) => handleChange("professional", "job_title", e.target.value)}
                       />
 
                       <img
@@ -693,7 +654,7 @@ const UserProfile = () => {
                         value={professionalData?.employment_type || ""}
                         className="flex-1"
                         disabled={editingField !== "employment_type"}
-                        onChange={(e) => handleChange("professional","employment_type",e.target.value)}/>
+                        onChange={(e) => handleChange("professional", "employment_type", e.target.value)} />
                       <img
                         src="/editlogo.png"
                         onClick={() => onEditHandle("employment_type")}
@@ -717,7 +678,7 @@ const UserProfile = () => {
                         value={professionalData?.experience_years || ""}
                         className="flex-1"
                         disabled={editingField !== "experience_years"}
-                        onChange={(e) =>handleChange("professional","experience_years",e.target.value)}
+                        onChange={(e) => handleChange("professional", "experience_years", e.target.value)}
                       />
 
                       <img
@@ -730,8 +691,8 @@ const UserProfile = () => {
                         <Button onClick={() => updateSingleField("professional-info", "experience_years", professionalData.experience_years)}
                           variant="ghost"
                           className="flex items-center gap-2">
-                          <Save size={18} /></Button></div>                    
-                          </div>
+                          <Save size={18} /></Button></div>
+                    </div>
 
                     <div className="flex items-center gap-4">
                       <div className="w-32">
@@ -743,7 +704,7 @@ const UserProfile = () => {
                         value={professionalData?.location || ""}
                         className="flex-1"
                         disabled={editingField !== "location"}
-                        onChange={(e) =>handleChange("professional","location",e.target.value.split(","))}
+                        onChange={(e) => handleChange("professional", "location", e.target.value.split(","))}
                       />
 
                       <img
@@ -768,7 +729,7 @@ const UserProfile = () => {
                         value={professionalData?.skills || ""}
                         className="flex-1"
                         disabled={editingField !== "skills"}
-                        onChange={(e) =>handleChange("professional","skills",e.target.value)}
+                        onChange={(e) => handleChange("professional", "skills", e.target.value)}
                       />
 
                       <img
@@ -778,7 +739,7 @@ const UserProfile = () => {
                         alt="Edit Logo"
                       />
                       <div className="flex justify-center mt-1">
-                        <Button  onClick={() => updateSingleField("professional-info", "skills", professionalData.skills)}
+                        <Button onClick={() => updateSingleField("professional-info", "skills", professionalData.skills)}
                           variant="ghost"
                           className="flex items-center gap-2">
                           <Save size={18} /></Button></div>
@@ -800,7 +761,7 @@ const UserProfile = () => {
                         value={academicData?.stream_name || ""}
                         className="flex-1"
                         disabled={editingField !== "stream_name"}
-                        onChange={(e) =>handleChange("academic","stream_name",e.target.value)}
+                        onChange={(e) => handleChange("academic", "stream_name", e.target.value)}
                       />
 
                       <img
@@ -827,7 +788,7 @@ const UserProfile = () => {
                         value={academicData?.specialization || ""}
                         className="flex-1"
                         disabled={editingField !== "specialization"}
-                        onChange={(e) =>handleChange("academic","specialization",e.target.value)}
+                        onChange={(e) => handleChange("academic", "specialization", e.target.value)}
                       />
 
                       <img
@@ -852,7 +813,7 @@ const UserProfile = () => {
                         value={academicData?.enrollment_year || ""}
                         className="flex-1"
                         disabled={editingField !== "enrollment_year"}
-                        onChange={(e) =>handleChange("academic","enrollment_year",e.target.value)}
+                        onChange={(e) => handleChange("academic", "enrollment_year", e.target.value)}
                       />
 
                       <img
@@ -865,8 +826,8 @@ const UserProfile = () => {
                         <Button onClick={() => updateSingleField("academic-info", "enrollment_year", academicData.enrollment_year)}
                           variant="ghost"
                           className="flex items-center gap-2">
-                          <Save size={18} /></Button></div>                  
-                          </div>
+                          <Save size={18} /></Button></div>
+                    </div>
 
                     <div className="flex items-center gap-4">
                       <div className="w-32">
@@ -878,7 +839,7 @@ const UserProfile = () => {
                         value={academicData?.passing_year || ""}
                         className="flex-1"
                         disabled={editingField !== "passing_year"}
-                        onChange={(e) =>handleChange("academic","passing_year",e.target.value)}
+                        onChange={(e) => handleChange("academic", "passing_year", e.target.value)}
                       />
 
                       <img
@@ -904,7 +865,7 @@ const UserProfile = () => {
                         value={academicData?.percentage || ""}
                         className="flex-1"
                         disabled={editingField !== "percentage"}
-                        onChange={(e) =>handleChange("academic","percentage",e.target.value)}
+                        onChange={(e) => handleChange("academic", "percentage", e.target.value)}
                       />
 
                       <img
@@ -930,7 +891,7 @@ const UserProfile = () => {
                         value={academicData?.college_name || ""}
                         className="flex-1"
                         disabled={editingField !== "college_name"}
-                        onChange={(e) =>handleChange("academic","college_name",e.target.value)}
+                        onChange={(e) => handleChange("academic", "college_name", e.target.value)}
                       />
 
                       <img

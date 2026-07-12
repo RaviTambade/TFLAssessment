@@ -9,6 +9,7 @@ public class ProjectAllocationResponse {
     private String studentName;
     private LocalDateTime joinedDate;
     private LocalDateTime releaseDate;
+    private String mentorName;
 
     public Long getProjectId() { return projectId; }
     public void setProjectId(Long projectId) { this.projectId = projectId; }
@@ -27,4 +28,8 @@ public class ProjectAllocationResponse {
 
     public LocalDateTime getReleaseDate() { return releaseDate; }
     public void setReleaseDate(LocalDateTime releaseDate) { this.releaseDate = releaseDate; }
+
+    public String getMentorName() { return mentorName; }
+    public void setMentorName(String mentorName) { this.mentorName = mentorName; }
+    
 }

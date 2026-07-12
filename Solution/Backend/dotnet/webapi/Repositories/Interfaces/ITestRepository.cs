@@ -7,8 +7,10 @@ namespace backend.Repositories.Interfaces
     {
         public Task<List<TestQuestions>> GetQuestionsBySMEAsync(long userId);
         Task<long> CreateTestAsync(CreateTestRequests dto);
-         Task<bool> CancelTestAsync(int id);
+        Task<bool> CancelTestAsync(int id);
         Task<List<GetSmeCreatedTestResponse>> GetSmeCreatedTestAsync(long userId);
+        Task<List<TestStudentDetails>> GetTestStudentsDetails(long TestId);
+        Task<List<TestDetails>> GetTestDetailsForMentor();
 
     }
 }

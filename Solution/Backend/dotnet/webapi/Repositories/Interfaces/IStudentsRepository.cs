@@ -5,5 +5,9 @@ namespace backend.Repositories.Interfaces
     public interface IStudentsRepository
     {
         Task<StudentCounts> GetTotalStudents();
+
+        Task<List<StudentResponse>> GetAllStudents();
+
+        Task<StudentPerformanceResponse?> GetStudentPerformance(long studentId);
     }
 }

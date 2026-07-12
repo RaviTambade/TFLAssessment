@@ -4,6 +4,8 @@ using backend.Models;
 using backend.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using MySql.Data.MySqlClient;
+using Org.BouncyCastle.Security;
+using ZstdSharp.Unsafe;
 
 namespace backend.Repositories.Implementations
 {
@@ -74,6 +76,46 @@ namespace backend.Repositories.Implementations
             }
 
             return result;
+        }
+
+        public async Task<bool> SaveStudentAssessmentResult(StudentAssessmentResultRequest result)
+        {
+            string query = @"
+                            INSERT INTO student_assessment_results
+                            (
+                                student_id,
+                                assessment_id,
+                                score,
+                                percentile,
+                                time_taken_minutes
+                            )
+                            VALUES
+                            (
+                                @student_id,
+                                @assessment_id,
+                                @score,
+                                @percentile,
+                                @time_taken_minutes
+                            );";
+                        
+            using(MySqlConnection con= new MySqlConnection(_connectionString))
+            {
+                await con.OpenAsync();
+
+                using(MySqlCommand cmd = new MySqlCommand(query, con))
+                {
+                    cmd.Parameters.AddWithValue("@student_id",result.StudentId);
+                    cmd.Parameters.AddWithValue("@assessment_id", result.AssessmentId);
+                    cmd.Parameters.AddWithValue("@score", result.Score);
+                    cmd.Parameters.AddWithValue("@percentile", result.Percentile);
+                    cmd.Parameters.AddWithValue("@time_taken_minutes", result.TimeTakenMinutes);
+
+                    int rowsAffected = await cmd.ExecuteNonQueryAsync();
+
+                    return rowsAffected > 0;
+                }
+            }
+
         }
     }
 }

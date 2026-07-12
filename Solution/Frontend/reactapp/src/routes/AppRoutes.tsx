@@ -5,6 +5,7 @@ import EvaluationContentMenu from "../components/assessment/evaluationcontent/Ev
 import SkillTaxonomyMenu from "../components/assessment/skilltaxonomy/SkillTaxonomyMenu";
 import Assessment from "../components/assessment/ComponentButtons";
 import AssessmentOrchestrator from "@/components/assessment/assessmentOrchestrator/assessmentOrchestrator";
+import CreatedAssessments from "@/components/assessment/assessmentOrchestrator/createTest/SmeCreatedTest";
 import QuestionByType from "@/components/assessment/evaluationcontent/QuestionByType";
 import GetQuestionsByDate from "@/components/assessment/evaluationcontent/GetQuestionsByDate";
 import UpdateQuestion from "@/components/assessment/evaluationcontent/UpdateQuestion";
@@ -57,7 +58,19 @@ import Mentees from "@/components/assessment/membership/Mentees";
 import SMEExpertiseForm from "@/components/assessment/assessmentOrchestrator/createTest/smeExpertiseForm";
 import InterviewFeedback from "@/components/assessment/interview/InterviewFeedback";
 import DashboardSME from "@/components/assessment/membership/dashboardsme";
+import StudentList from "@/components/assessment/assessmentOrchestrator/StudentList";
 import QuestionFeedback from "@/components/assessment/interview/QuestionFeedback";
+import ParticulerTestStudentDetails from "@/components/assessment/assessmentOrchestrator/ParticulerTestStudentDetails";
+
+
+// mentor dashboard
+import MentorUpdateQuestions from "@/components/assessment/evaluationcontent/Mentor/MentorUpdateQuestions";
+<<<<<<< HEAD
+import CompletedAssessments from "@/components/assessment/assessmentOrchestrator/CompletedAssessments";
+=======
+import TestList from "@/components/assessment/assessmentOrchestrator/TestList";
+
+>>>>>>> 47e999c741171d57c1c7a7037d0ea14296adc577
 
 function AppRoutes() {
   return (
@@ -81,10 +94,12 @@ function AppRoutes() {
             path="evaluationcontent/questionbytype"
             element={<QuestionByType />}
           />
-          <Route
-            path="evaluationcontent/questionsbyconceptid"
-            element={<QuestionByConceptId />}
+          <Route 
+          path="assessmentorchestrator/completed-assessments" 
+          element={<CompletedAssessments />} 
           />
+          <Route
+            path="evaluationcontent/questionsbyconceptid"element={<QuestionByConceptId />}/>
           <Route
             path="evaluationcontent/getquestionsbydate"
             element={<GetQuestionsByDate />}
@@ -103,6 +118,7 @@ function AppRoutes() {
             path="assessmentorchestrator/assessmentorchestrator-menu"
             element={<AssessmentOrchestrator />}
           />
+          <Route path="/students" element={<StudentList />}/>
           <Route path="upcoming-assessment" element={<UpcomingAssessment />} />
           <Route path="all-assessment" element={<AllAssessment />} />
           <Route path="apply-assessment" element={<Question />} />
@@ -114,7 +130,7 @@ function AppRoutes() {
             element={<MembershipMenu />}
           />
           <Route path="skilltaxonomy/ViewRuntimes" element={<ViewRuntimes />} />
-          ce2
+          
           {/* <Route path="skilltaxonomy/AddConcept" element={<AddConcept />} /> */}
           <Route
             path="skilltaxonomy/ConceptByFramework"
@@ -181,6 +197,10 @@ function AppRoutes() {
           <Route path="interview/feedback/:id" element={<InterviewFeedback />} />
           <Route path="interview/question/feedback/:id" element={<QuestionFeedback/>} />
           {/* Membership model */}
+
+          <Route path="/mentor/update-questions" 
+          element={<MentorUpdateQuestions/>}
+          />
           <Route
             path="membership/ChangePassword"
             element={<ChangePassword />}
@@ -193,11 +213,25 @@ function AppRoutes() {
             path="membership/GetUserLogDetail"
             element={<GetUserLogDetail />}
           />
+
+           <Route
+            path="/created-assessments"
+            element={<CreatedAssessments />}
+          />
+          <Route path="Assessment/testList" element={<TestList/>}/>
+
+          <Route
+          path="/tests/:testId"
+          element={<ParticulerTestStudentDetails />}
+        />
+
+
           <Route path="membership/Login" element={<LoginPage />} />
           <Route path="membership/ManageUsers" element={<ManageUsers />} />
           <Route path="membership/Register" element={<RegisterPage />} />
           <Route path="membership/UserActivity" element={<UserActivity />} />
           <Route path="membership/UserProfile" element={<UserProfile />} />
+          <Route path="membership/UserProfile/:id" element={<UserProfile />} />
           <Route path="membership/dashboard" element={<Dashboard />} />
           <Route path="membership/SmeDashboard" element={<DashboardSME />} />
           <Route path="membership/Mentees" element={<Mentees />} />
