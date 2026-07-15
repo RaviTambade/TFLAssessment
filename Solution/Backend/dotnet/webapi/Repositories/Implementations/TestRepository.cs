@@ -23,7 +23,7 @@ namespace backend.Repositories
         List<TestQuestions> questions = new();
 
         string query = @"
-            SELECT 
+            SELECT DISTINCT
                 q.question_id,
                 q.description,
                 q.question_type,
