@@ -24,7 +24,6 @@ import com.transflower.tflcomentor.ecm.entity.enums.QuestionStatus;
 import com.transflower.tflcomentor.ecm.entity.enums.QuestionType;
 import com.transflower.tflcomentor.ecm.repository.QuestionRepository;
 
-
 @Repository
 public class QuestionRepositoryImpl implements QuestionRepository {
 
@@ -56,15 +55,11 @@ public class QuestionRepositoryImpl implements QuestionRepository {
     }
 
     @Override
-    public List<QuestionDisplay> getAllQuestions( Long user_role_Id) {
+    public List<QuestionDisplay> getAllQuestions(Long user_role_Id) {
         List<QuestionDisplay> list = new ArrayList<>();
         try (Connection connection = getConnection()) {
             String query = """ 
-                        SELECT q.*
-                        FROM questions q
-                        JOIN expertise e 
-                            ON q.runtime = e.runtime
-                        WHERE e.user_roles_id = ?; 
+                        SELECT question_id,description, question_type,difficulty_level,status FROM questions; 
                         """;
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setLong(1, user_role_Id);
@@ -118,44 +113,41 @@ public class QuestionRepositoryImpl implements QuestionRepository {
     @Override
     public List<DescriptiveQuestion> getDescriptiveQuestion(QuestionType questionType) {
 
-    String sql = """
+        String sql = """
         SELECT question_id, question_type, description, difficulty_level
         FROM questions
         WHERE question_type = ?
         ORDER BY question_id
     """;
 
-    List<DescriptiveQuestion> results = new ArrayList<>();
+        List<DescriptiveQuestion> results = new ArrayList<>();
 
-    try (Connection connection = getConnection();
-         PreparedStatement statement = connection.prepareStatement(sql)) {
+        try (Connection connection = getConnection(); PreparedStatement statement = connection.prepareStatement(sql)) {
 
-        statement.setString(1, questionType.toString());
+            statement.setString(1, questionType.toString());
 
-        try (ResultSet rs = statement.executeQuery()) {
+            try (ResultSet rs = statement.executeQuery()) {
 
-            while (rs.next()) {
+                while (rs.next()) {
 
-                DescriptiveQuestion question = new DescriptiveQuestion();
+                    DescriptiveQuestion question = new DescriptiveQuestion();
 
-                question.setDescription(rs.getString("description"));
-                question.setQuestionType(QuestionType.valueOf(rs.getString("question_type")));
+                    question.setDescription(rs.getString("description"));
+                    question.setQuestionType(QuestionType.valueOf(rs.getString("question_type")));
 
-                results.add(question);
+                    results.add(question);
+                }
             }
+
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to fetch questions by type", e);
         }
 
-    } catch (Exception e) {
-        throw new RuntimeException("Failed to fetch questions by type", e);
+        return results;
     }
-
-    return results;
-}
-
 
     @Override
     public void insertCompleteQuestion(CompleteQuestion q) {
-
 
         String questionSql = "INSERT INTO questions(description, question_type, difficulty_level, created_at, status, language, layer, framework, concept,runtime) VALUES (?, ?, ?, NOW(), 'DRAFT', ?, ?, ?, ?, ?)";
         String optionSql = "INSERT INTO mcq_options(option_a, option_b, option_c, option_d, correct_answer, question_id) VALUES (?, ?, ?, ?, ?, ?)";
@@ -196,13 +188,11 @@ public class QuestionRepositoryImpl implements QuestionRepository {
 
             connection.commit();
 
-        } 
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    
     @Override
     public QuestionOptionsRequest getQuestionDetails(Long question_id) {
         QuestionOptionsRequest dto = new QuestionOptionsRequest();
@@ -245,8 +235,7 @@ public class QuestionRepositoryImpl implements QuestionRepository {
 
         String sql = "UPDATE questions SET description=?, question_type=?, difficulty_level=?,status=? ,language=?, layer=?, framework=?, concept=? WHERE question_id=?";
 
-        try (Connection connection = getConnection();
-        PreparedStatement statement = connection.prepareStatement(sql)) {
+        try (Connection connection = getConnection(); PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setString(1, dto.getDescription());
             statement.setString(2, dto.getQuestionType().name());
@@ -291,8 +280,7 @@ public class QuestionRepositoryImpl implements QuestionRepository {
                 WHERE status = ?
                 ORDER BY question_id
                 """;
-        try (Connection connection = getConnection(); 
-        PreparedStatement statement = connection.prepareStatement(sql)) {
+        try (Connection connection = getConnection(); PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, status.name());
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
@@ -308,9 +296,8 @@ public class QuestionRepositoryImpl implements QuestionRepository {
         return list;
     }
 
-
     @Override
-    public List<Question> getQuestionsByConcept(String concept,Long userId,Long roleId) {
+    public List<Question> getQuestionsByConcept(String concept, Long userId, Long roleId) {
         List<Question> list = new ArrayList<>();
         String sql = """ 
                     SELECT q.*
@@ -324,8 +311,7 @@ public class QuestionRepositoryImpl implements QuestionRepository {
                                                 AND role_id = ?)
                     """;
 
-        try (Connection connection = getConnection(); 
-        PreparedStatement statement = connection.prepareStatement(sql)) {
+        try (Connection connection = getConnection(); PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, concept.toString());
             statement.setLong(2, userId);
             statement.setLong(3, roleId);
@@ -378,8 +364,7 @@ public class QuestionRepositoryImpl implements QuestionRepository {
         String placeholders = String.join(",", Collections.nCopies(question_ids.size(), "?"));
         String sql = "UPDATE questions SET status = ? "
                 + "WHERE status = 'DRAFT' AND question_id IN (" + placeholders + ")";
-        try (Connection connection = getConnection(); 
-        PreparedStatement statement = connection.prepareStatement(sql)) {
+        try (Connection connection = getConnection(); PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, status.name());
             for (int i = 0; i < question_ids.size(); i++) {
                 statement.setLong(i + 2, question_ids.get(i));
@@ -394,8 +379,7 @@ public class QuestionRepositoryImpl implements QuestionRepository {
     public void updateQuestionStatus(long question_id, QuestionStatus status) {
 
         String sql = "UPDATE questions SET status=? WHERE question_id=?";
-        try (Connection connection = getConnection(); 
-        PreparedStatement statement = connection.prepareStatement(sql)) {
+        try (Connection connection = getConnection(); PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, status.name());
             statement.setLong(2, question_id);
             statement.executeUpdate();
@@ -407,8 +391,7 @@ public class QuestionRepositoryImpl implements QuestionRepository {
     @Override
     public Long getFrameworkConceptId(int conceptId, int frameworkId) {
         String sql = "SELECT id FROM framework_concepts WHERE concept_id = ? AND framework_id = ?";
-        try (Connection connection = getConnection();
-            PreparedStatement statement = connection.prepareStatement(sql)) {
+        try (Connection connection = getConnection(); PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, conceptId);
             statement.setInt(2, frameworkId);
             ResultSet rs = statement.executeQuery();
@@ -424,8 +407,7 @@ public class QuestionRepositoryImpl implements QuestionRepository {
     @Override
     public void insertQuestionFrameworkConceptMapping(Long questionId, Long frameworkConceptId) {
         String sql = "INSERT INTO question_framework_concepts(question_id, framework_concepts_id) VALUES (?, ?)";
-        try (Connection connection = getConnection();
-        PreparedStatement statement = connection.prepareStatement(sql)) {
+        try (Connection connection = getConnection(); PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setLong(1, questionId);
             statement.setLong(2, frameworkConceptId);
             statement.executeUpdate();
@@ -435,10 +417,9 @@ public class QuestionRepositoryImpl implements QuestionRepository {
     }
 
     @Override
-    public int getQuestionCountByConcept(String concept){
-        String sql="SELECT COUNT(*) FROM questions WHERE concept=?";
-        try (Connection connection = getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+    public int getQuestionCountByConcept(String concept) {
+        String sql = "SELECT COUNT(*) FROM questions WHERE concept=?";
+        try (Connection connection = getConnection(); PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, concept);
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
@@ -451,7 +432,7 @@ public class QuestionRepositoryImpl implements QuestionRepository {
     }
 
     @Override
-    public List<String> getConcepts( Long userId, Long roleId) {
+    public List<String> getConcepts(Long userId, Long roleId) {
         List<String> concepts = new ArrayList<>();
         String sql = """ 
                         SELECT DISTINCT q.concept
@@ -463,21 +444,20 @@ public class QuestionRepositoryImpl implements QuestionRepository {
                                                 WHERE user_id = ?
                                                 AND role_id = ?) 
                         """;
-         try (Connection connection = getConnection();
-         PreparedStatement statement = connection.prepareStatement(sql)) {
+        try (Connection connection = getConnection(); PreparedStatement statement = connection.prepareStatement(sql)) {
 
-        statement.setLong(1, userId);
-        statement.setLong(2, roleId);
+            statement.setLong(1, userId);
+            statement.setLong(2, roleId);
 
-        ResultSet rs = statement.executeQuery();
+            ResultSet rs = statement.executeQuery();
 
-        while (rs.next()) {
-            concepts.add(rs.getString("concept"));
+            while (rs.next()) {
+                concepts.add(rs.getString("concept"));
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-
-    } catch (Exception e) {
-        e.printStackTrace();
-    }
 
         return concepts;
     }
