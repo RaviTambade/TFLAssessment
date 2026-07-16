@@ -23,7 +23,7 @@ const DashboardSME = () => {
 
   //data members
   const [smeName, setSMEName] = useState<string>("");
-const [department, setDepartment] = useState<string>("");
+  const [department, setDepartment] = useState<string>("");
   const [profilePicture, setProfilePicture] = useState<string>("https://avatars.githubusercontent.com/u/12345678?v=4");
   const [totalStudents, setTotalStudents] = useState<number>(0);
 
@@ -86,7 +86,7 @@ const [department, setDepartment] = useState<string>("");
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           <Card
   className="cursor-pointer hover:shadow-lg transition duration-200"
-  onClick={() => navigate("/models/students")}
+  onClick={() => navigate("/models/students")} 
 >
   <CardContent className="p-6">
     <div className="flex items-center justify-between">
