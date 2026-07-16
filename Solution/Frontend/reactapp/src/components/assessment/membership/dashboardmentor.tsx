@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "../../ui/card";
+import { WEBAPI_JAVA_URL } from "@/lib/utils";
 import {
   Bell,
   Users,
@@ -25,11 +26,13 @@ import AllMentee from "./data/users/mentees.json";
 const DashboardMentor = () => {
   const navigate = useNavigate();
   //data members
-  const [mentorName, setMentorName] = useState<string>("Ravi Tambade");
-  const [organization, setOrganization] = useState<string>("Transflower");
-  const [profilePicture, setProfilePicture] = useState<string>(
-    "https://avatars.githubusercontent.com/u/12345678?v=4",
-  );
+  const [mentorName, setMentorName] = useState<string>("");
+const [organization, setOrganization] = useState<string>("Transflower");
+const [profilePicture, setProfilePicture] = useState<string>(
+  "https://avatars.githubusercontent.com/u/12345678?v=4"
+);
+const [projectCount, setProjectCount] = useState<number>(0);
+const [students, setStudents] = useState<Student[]>([]);
 
   const mentorNotifications: Notification[] =
     AllmentorNotifications as Notification[];
@@ -44,15 +47,32 @@ const DashboardMentor = () => {
   const [menteeCount, setMenteeCount] = useState<number>(0);
 
   useEffect(() => {
-    const apiURL = `${WEBAPI_NODE_URL}/mentor/profile`;
-    fetch(apiURL)
-      .then((response) => response.json())
-      .then((data) => {
-        setMentorName(data.name);
-        setOrganization(data.organization);
-        setProfilePicture(data.profilePicture);
-      });
-  }, []);
+  const currentUser = sessionStorage.getItem("current");
+
+  if (currentUser) {
+    const user = JSON.parse(currentUser);
+
+    setMentorName(`${user.firstname} ${user.lastname}`);
+    setOrganization("Transflower");
+  }
+}, []);
+
+
+useEffect(() => {
+  fetch(`${WEBAPI_JAVA_URL}/projects`)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Failed to fetch projects");
+      }
+      return response.json();
+    })
+    .then((data) => {
+      setProjectCount(data.length);
+    })
+    .catch((err) => {
+      console.error(err);
+    });
+}, []);
 
   useEffect(() => {
     fetch(`${WEBAPI_NODE_URL}/mentors/3/mentees/count`)
@@ -87,31 +107,46 @@ const DashboardMentor = () => {
 
         {/* Top Stats */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-          <Card onClick={() => navigate("/models/membership/Mentees")}>
+          <Card onClick={() => navigate("/models/evaluationcontent/ProjectByMentee")}>
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-gray-600 text-sm font-medium">
-                    Active Mentees
+                    Project By Mentees
                   </p>
                   <p className="text-3xl font-bold text-gray-900 mt-1">
-                    {menteeCount}
-                  </p>
+                  {projectCount}
+                    </p>
                 </div>
                 <Users className="w-12 h-12 text-blue-500 opacity-20" />
               </div>
             </CardContent>
           </Card>
 
-          <Card>
+  
+          <Card onClick={() => navigate("/models/evaluationcontent/dashboard")}>
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-gray-600 text-sm font-medium">
-                    Avg Mentee Progress
+                    Question Bank
                   </p>
-                  <p className="text-3xl font-bold text-gray-900 mt-1">75.5%</p>
+                  
                 </div>
+                <Users className="w-12 h-12 text-blue-500 opacity-20" />
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card onClick={()=>navigate("/models/students")}>
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  
+                  <p className="text-gray-600 text-sm font-medium bold">
+                    Total Students
+                  </p>
+                  <div className="text-3xl font-bold">{students.length}</div>                </div>
                 <TrendingUp className="w-12 h-12 text-green-500 opacity-20" />
               </div>
             </CardContent>
