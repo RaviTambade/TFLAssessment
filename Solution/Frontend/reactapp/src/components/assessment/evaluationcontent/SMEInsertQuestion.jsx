@@ -72,13 +72,13 @@ const SMEInsertQuestion = () => {
   };
 
   return (
-    <div className="bg-card border-t border-border py-12 flex justify-center items-center p-6">
+    <div className="bg-card border-t border-border py-0 flex justify-center items-center p-6">
       <form
         onSubmit={handleSubmit}
-        className="bg-white shadow-2xl rounded-2xl p-8 w-full max-w-xl"
+        className="bg-white shadow-2xl rounded-2xl p-6 w-full max-w-6xl"
       >
         <h2 className=" text-3xl font-bold bg-gradient-primary bg-clip-text text-transparent  text-center mb-6">
-          Create Question ✍️
+          Create Question
         </h2>
 
         {/* Question */}
@@ -243,7 +243,7 @@ const SMEInsertQuestion = () => {
 
         <Button
           type="submit"
-          className="w-full text-white font-bold py-2"
+          className="w-full text-white font-bold py-2 p-3 "
         >
           Submit 🚀
         </Button>

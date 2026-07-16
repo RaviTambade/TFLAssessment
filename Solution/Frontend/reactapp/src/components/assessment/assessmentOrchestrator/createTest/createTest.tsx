@@ -13,6 +13,7 @@ import {
 const CreateTest = () => {
       const navigate = useNavigate();
       const [testName, setTestName] = useState("");
+      const[difficultyLevel,setDifficultyLevel]=useState("BEGINNER");
       const [description, setDescription] = useState("");
       const [duration, setDuration] = useState("");
       const [error, setError] = useState<string | null>(null);      
@@ -41,8 +42,9 @@ const CreateTest = () => {
      
             const payload: CreateTestDraftPayload = {
               title: testName,
+              difficulty: difficultyLevel,
               description: description,
-              duration: Number(duration),
+              duration: Number(duration)
             };
      
             console.log("Submitting Payload:", payload);
@@ -57,6 +59,7 @@ const CreateTest = () => {
             }
 
             navigate("/models/question-options", { state: { test: payload } });
+            console.log("Payload from CreateTest", payload);
           } catch (err) {
             setError("Failed to create test.");
             console.error(err);
@@ -95,6 +98,34 @@ const CreateTest = () => {
                   required
                 />
               </div>
+
+
+
+              <div>
+              <label className="font-medium block mb-2">
+                Difficulty Level
+              </label>
+
+              <select
+                name="difficultyLevel"
+                value={difficultyLevel}
+                onChange={(e) => setDifficultyLevel(e.target.value)}
+                className="w-full border p-3 rounded"
+              >
+                <option value="BEGINNER">
+                  BEGINNER
+                </option>
+
+                <option value="INTERMEDIATE">
+                  INTERMEDIATE
+                </option>
+
+                <option value="ADVANCE">
+                  ADVANCE
+                </option>
+              </select>
+            </div>
+              
  
               {/* DESCRIPTION */}
               <div className="space-y-2">
@@ -125,6 +156,7 @@ const CreateTest = () => {
                   required
                 />
               </div>
+
  
               {/* BUTTONS */}
               <div className="mt-10 pt-6 border-t border-slate-100 flex gap-4">
@@ -137,6 +169,7 @@ const CreateTest = () => {
                   className="flex-1 py-6 text-lg rounded-xl border-slate-200 hover:bg-slate-50"
                   onClick={() => {
                     setTestName("");
+                    setDifficultyLevel("BEGINNER");
                     setDescription("");
                     setDuration("");
                   }}
