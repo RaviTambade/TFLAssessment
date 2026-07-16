@@ -25,9 +25,9 @@ public class CreateTestRequests
 
     public string? Description { get; set; }
 
-     public string? Difficulty { get; set; }
+    public string? Difficulty { get; set; }
 
-     public List<long>? QuestionIds { get; set; }
+    public List<long>? QuestionIds { get; set; }
 
 
 }

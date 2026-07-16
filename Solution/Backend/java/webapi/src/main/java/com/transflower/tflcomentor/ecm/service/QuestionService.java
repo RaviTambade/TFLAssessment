@@ -18,9 +18,9 @@ public interface QuestionService {
     // public Long createQuestionWithOptions(QuestionOptionsRequest   dto);
     public QuestionDisplay getQuestionById(long questionId);
 
-    public List<QuestionDisplay> getAllQuestions(Long user_role_Id);
+   // public List<QuestionDisplay> getAllQuestions(Long user_role_Id);
 
-    public List<Question> getQuestionsByDifficulty(DifficultyLevel difficulty);
+   // public List<Question> getQuestionsByDifficulty(DifficultyLevel difficulty);
 
     public void updateQuestionDetailsById(Long questionId, QuestionOptionsRequest dto);
 
@@ -28,17 +28,17 @@ public interface QuestionService {
 
     public QuestionOptionsRequest getQuestionDetails(Long questionId);
 
-    public List<DescriptiveQuestion> getDescriptiveQuestion(QuestionType questionType);
+   // public List<DescriptiveQuestion> getDescriptiveQuestion(QuestionType questionType);
 
-    public List<QuestionWithStatus> getQuestions(QuestionStatus status);
+    //public List<QuestionWithStatus> getQuestions(QuestionStatus status);
 
-    public void updateQuestionStatus(List<Long> questionIds, QuestionStatus status);
+    //public void updateQuestionStatus(List<Long> questionIds, QuestionStatus status);
 
-    public void updateQuestionStatus(long questionId, QuestionStatus status);
+    //public void updateQuestionStatus(long questionId, QuestionStatus status);
 
     public List<Question> getQuestionsByConcept(String concept,Long userId,Long roleId);
 
-    public int getQuestionCountByConcept(String concept);
+    //public int getQuestionCountByConcept(String concept);
 
     public void insertCompleteQuestion(CompleteQuestion q);
 

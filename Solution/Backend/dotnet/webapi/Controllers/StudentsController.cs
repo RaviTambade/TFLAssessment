@@ -21,5 +21,12 @@ namespace backend.Controllers
             var result = await _service.GetTotalStudents();
             return Ok(result);
         }
+
+         [HttpGet]
+        public async Task<IActionResult> GetStudents()
+        {
+            var students = await _service.GetAllStudents();
+            return Ok(students);
+        }
     }
 }

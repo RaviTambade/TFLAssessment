@@ -208,7 +208,27 @@ public class CreateTestController : ControllerBase
                 });
             }
         }
-    
+
+
+        [HttpGet("GetSmeCreatedTest/{userId}")]
+        public async Task<IActionResult> GetSmeCreatedTest(long userId)
+        {
+            try
+            {
+                var result = await _service.GetSmeCreatedTestAsync(userId);
+
+                if (result == null || result.Count == 0)
+                {
+                    return NotFound("No tests found.");
+                }
+
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
     
 
 }

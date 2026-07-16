@@ -8,13 +8,8 @@ import org.springframework.stereotype.Service;
 
 import com.transflower.tflcomentor.ecm.dto.response.QuestionDisplay;
 import com.transflower.tflcomentor.ecm.dto.request.QuestionOptionsRequest;
-import com.transflower.tflcomentor.ecm.dto.response.QuestionWithStatus;
-import com.transflower.tflcomentor.ecm.dto.response.DescriptiveQuestion;
 import com.transflower.tflcomentor.ecm.entity.CompleteQuestion;
 import com.transflower.tflcomentor.ecm.entity.Question;
-import com.transflower.tflcomentor.ecm.entity.enums.DifficultyLevel;
-import com.transflower.tflcomentor.ecm.entity.enums.QuestionStatus;
-import com.transflower.tflcomentor.ecm.entity.enums.QuestionType;
 import com.transflower.tflcomentor.ecm.repository.QuestionRepository;
 import com.transflower.tflcomentor.ecm.service.QuestionService;
 
@@ -57,15 +52,15 @@ public class QuestionsServiceImpl implements QuestionService {
         return repository.getQuestionById(question_id);
     }
 
-    @Override
-    public List<QuestionDisplay> getAllQuestions(Long user_role_Id) {
-        return repository.getAllQuestions(user_role_Id);
-    }
+    // @Override
+    // public List<QuestionDisplay> getAllQuestions(Long user_role_Id) {
+    //     return repository.getAllQuestions(user_role_Id);
+    // }
 
-    @Override
-    public List<Question> getQuestionsByDifficulty(DifficultyLevel difficulty) {
-        return repository.getQuestionsByDifficulty(difficulty);
-    }
+    // @Override
+    // public List<Question> getQuestionsByDifficulty(DifficultyLevel difficulty) {
+    //     return repository.getQuestionsByDifficulty(difficulty);
+    // }
 
     @Override
     public void updateQuestionDetailsById(Long questionId, QuestionOptionsRequest dto) {
@@ -82,35 +77,35 @@ public class QuestionsServiceImpl implements QuestionService {
         return repository.getQuestionDetails(questionId);
     }
 
-    @Override
-    public List<DescriptiveQuestion> getDescriptiveQuestion(QuestionType questionType) {
-        return repository.getDescriptiveQuestion(questionType);
-    }
+    // @Override
+    // public List<DescriptiveQuestion> getDescriptiveQuestion(QuestionType questionType) {
+    //     return repository.getDescriptiveQuestion(questionType);
+    // }
 
-    @Override
-    public List<QuestionWithStatus> getQuestions(QuestionStatus status) {
-        return repository.getQuestions(status);
-    }
+    // @Override
+    // public List<QuestionWithStatus> getQuestions(QuestionStatus status) {
+    //     return repository.getQuestions(status);
+    // }
 
-    @Override
-    public void updateQuestionStatus(List<Long> questionIds, QuestionStatus status) {
-        repository.updateQuestionStatus(questionIds, status);
-    }
+    // @Override
+    // public void updateQuestionStatus(List<Long> questionIds, QuestionStatus status) {
+    //     repository.updateQuestionStatus(questionIds, status);
+    // }
 
-    @Override
-    public void updateQuestionStatus(long questionId, QuestionStatus status) {
-        repository.updateQuestionStatus(questionId, status);
-    }
+    // @Override
+    // public void updateQuestionStatus(long questionId, QuestionStatus status) {
+    //     repository.updateQuestionStatus(questionId, status);
+    // }
 
     @Override
     public List<Question> getQuestionsByConcept(String concept,Long userId, Long roleId) {
         return repository.getQuestionsByConcept(concept, userId, roleId);
     }
 
-    @Override
-    public int getQuestionCountByConcept(String concept) {
-        return repository.getQuestionCountByConcept(concept);
-    }
+    // @Override
+    // public int getQuestionCountByConcept(String concept) {
+    //     return repository.getQuestionCountByConcept(concept);
+    // }
     @Override
     public void insertCompleteQuestion(CompleteQuestion q) {
         repository.insertCompleteQuestion(q);
