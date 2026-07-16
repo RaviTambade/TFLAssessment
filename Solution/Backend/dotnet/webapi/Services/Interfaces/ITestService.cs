@@ -8,6 +8,7 @@ namespace backend.Services.Interfaces
         Task<List<TestQuestions>> GetQuestionsBySMEAsync(long userId);
         Task<long> CreateTestAsync(CreateTestRequests dto);
         Task<bool> CancelTestAsync(int id);
+         Task<List<GetSmeCreatedTestResponse>> GetSmeCreatedTestAsync(long userId);
         
     }
 }

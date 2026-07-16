@@ -19,8 +19,8 @@ public class ExpertiseController : ControllerBase
         _expertiseService = expertiseService;
     }
 
-    [HttpPost ("expertise")]
-    public async Task<IActionResult>AddSmeExpertise([FromBody] Expertise expertize)
+    [HttpPost("expertise")]
+    public async Task<IActionResult> AddSmeExpertise([FromBody] Expertise expertize)
     {
         try
         {
@@ -44,4 +44,12 @@ public class ExpertiseController : ControllerBase
             });
         }
     }
+    
+[HttpGet("options")]
+public async Task<IActionResult> GetOptions()
+{
+    var result = await _expertiseService.GetExpertiseOptions();
+
+    return Ok(result);
+}
 }

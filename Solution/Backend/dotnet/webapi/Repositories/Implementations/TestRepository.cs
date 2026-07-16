@@ -149,7 +149,7 @@ public async Task<long> CreateTestAsync(CreateTestRequests dto)
                 string insertTestQuery = @"
                                     INSERT INTO tests
                                                     (
-                                                        sme_id,
+                                                        user_id,
                                                         title,
                                                         duration,
                                                         description,
@@ -159,7 +159,7 @@ public async Task<long> CreateTestAsync(CreateTestRequests dto)
                                                     )
                                                     VALUES
                                                     (
-                                                        @smeId,
+                                                        @userId,
                                                         @Title,
                                                         @Duration,
                                                         @Description,
@@ -174,7 +174,7 @@ public async Task<long> CreateTestAsync(CreateTestRequests dto)
 
                 using (MySqlCommand cmd = new MySqlCommand(insertTestQuery, con, transaction))
                         {
-                     cmd.Parameters.AddWithValue("@smeId", dto.UserId);
+                     cmd.Parameters.AddWithValue("@userId", dto.UserId);
                     cmd.Parameters.AddWithValue("@Title", dto.Title);
                     cmd.Parameters.AddWithValue("@Duration", (int)dto.Duration);
                     cmd.Parameters.AddWithValue("@Difficulty", dto.Difficulty);
@@ -237,5 +237,66 @@ public async Task<long> CreateTestAsync(CreateTestRequests dto)
         }
     }
 }
+
+  public async Task<List<GetSmeCreatedTestResponse>> GetSmeCreatedTestAsync(long userId)
+{
+    List<GetSmeCreatedTestResponse> tests = new List<GetSmeCreatedTestResponse>();
+
+            string query = @"
+                SELECT
+                    t.id,
+                    t.title,
+                    t.description,
+                    t.duration,
+                    t.difficulty,
+                    t.created_at
+                FROM tests t
+                INNER JOIN user_roles ur
+                    ON t.user_id = ur.user_id
+                WHERE ur.user_id = @UserId
+                AND ur.role_id = 4
+                AND ur.status = 'ACTIVE';";
+
+    string connectionString = "Server=localhost;Port=3306;Database=tflcomentor_db;User=root;Password=password;";
+
+    using (MySqlConnection conn = new MySqlConnection(connectionString))
+    {
+        try
+        {
+            await conn.OpenAsync();
+
+            using (MySqlCommand cmd = new MySqlCommand(query, conn))
+            {
+                cmd.Parameters.AddWithValue("@UserId", userId);
+
+                using (MySqlDataReader reader = (MySqlDataReader)await cmd.ExecuteReaderAsync())
+                {
+                    while (await reader.ReadAsync())
+                    {
+                        tests.Add(new GetSmeCreatedTestResponse
+                        {
+                            Id = Convert.ToInt64(reader["id"]),
+                            Title = reader["title"]?.ToString(),
+                            Description = reader["description"]?.ToString(),
+                            Duration = Convert.ToInt32(reader["duration"]),
+                            Difficulty = reader["difficulty"]?.ToString(),
+                            CreatedAt = Convert.ToDateTime(reader["created_at"])
+                        });
+                    }
+                }
+            }
+
+            return tests;
+        }
+        catch (Exception ex)
+        {
+            throw new Exception("Error while fetching SME created tests.", ex);
+        }
     }
 }
+    }
+}
+    
+
+  
+   
