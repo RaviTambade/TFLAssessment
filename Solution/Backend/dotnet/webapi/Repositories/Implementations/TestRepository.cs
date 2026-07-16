@@ -149,7 +149,7 @@ public async Task<long> CreateTestAsync(CreateTestRequests dto)
                 string insertTestQuery = @"
                                     INSERT INTO tests
                                                     (
-                                                        sme_id,
+                                                        user_id,
                                                         title,
                                                         duration,
                                                         description,
@@ -159,7 +159,7 @@ public async Task<long> CreateTestAsync(CreateTestRequests dto)
                                                     )
                                                     VALUES
                                                     (
-                                                        @smeId,
+                                                        @userId,
                                                         @Title,
                                                         @Duration,
                                                         @Description,
@@ -174,7 +174,7 @@ public async Task<long> CreateTestAsync(CreateTestRequests dto)
 
                 using (MySqlCommand cmd = new MySqlCommand(insertTestQuery, con, transaction))
                         {
-                     cmd.Parameters.AddWithValue("@smeId", dto.UserId);
+                     cmd.Parameters.AddWithValue("@userId", dto.UserId);
                     cmd.Parameters.AddWithValue("@Title", dto.Title);
                     cmd.Parameters.AddWithValue("@Duration", (int)dto.Duration);
                     cmd.Parameters.AddWithValue("@Difficulty", dto.Difficulty);
