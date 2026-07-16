@@ -12,6 +12,7 @@ import CandidatePerformances from "./data/candidatePerformance.json";
 import AssessmentMetric from "./data/assessmentMetrics.json";
 import SkillGapAnalyse from "./data/skills/skillGapAnalysis.json";
 
+
 //function component for SME Dashboard
 const DashboardSME = () => {
   //parts
@@ -76,11 +77,13 @@ const DashboardSME = () => {
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="cursor-pointer hover:shadow-lg"
+                onClick={() => navigate("/models/created-assessments")}>
             <CardContent className="p-6">
+                
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-gray-600 text-sm font-medium">Assessments Created</p>
+                  <p className="text-gray-600 text-sm font-medium">Tests Created</p>
                   <p className="text-3xl font-bold text-gray-900 mt-1">12</p>
                 </div>
                 <FileText className="w-12 h-12 text-green-500 opacity-20" />
