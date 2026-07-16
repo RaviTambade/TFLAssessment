@@ -235,7 +235,7 @@ const QuestionOptions = () => {
         title: storedTestData.title || "Untitled Test",
         description: storedTestData.description || "",
         duration,
-        skillLevel,
+        difficulty: storedTestData.difficulty,
         questionIds: selectedQuestions,
       };
  

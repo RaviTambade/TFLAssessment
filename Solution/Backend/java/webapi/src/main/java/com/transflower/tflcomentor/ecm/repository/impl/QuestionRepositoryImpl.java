@@ -54,61 +54,60 @@ public class QuestionRepositoryImpl implements QuestionRepository {
         return null;
     }
 
-    @Override
-    public List<QuestionDisplay> getAllQuestions(Long user_role_Id) {
-        List<QuestionDisplay> list = new ArrayList<>();
-        try (Connection connection = getConnection()) {
-            String query = """ 
-                        SELECT question_id,description, question_type,difficulty_level,status FROM questions; 
-                        """;
-            PreparedStatement statement = connection.prepareStatement(query);
-            statement.setLong(1, user_role_Id);
-            ResultSet rs = statement.executeQuery();
-            while (rs.next()) {
-                QuestionDisplay q = new QuestionDisplay(
-                        rs.getLong("question_id"),
-                        rs.getString("description"),
-                        QuestionType.valueOf(rs.getString("question_type")),
-                        DifficultyLevel.valueOf(rs.getString("difficulty_level")),
-                        QuestionStatus.valueOf(rs.getString("status"))
-                );
-                list.add(q);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return list;
-    }
+    // @Override
+    // public List<QuestionDisplay> getAllQuestions(Long user_role_Id) {
+    //     List<QuestionDisplay> list = new ArrayList<>();
+    //     try (Connection connection = getConnection()) {
+    //         String query = """ 
+    //                     SELECT question_id,description, question_type,difficulty_level,status FROM questions; 
+    //                     """;
+    //         PreparedStatement statement = connection.prepareStatement(query);
+    //         statement.setLong(1, user_role_Id);
+    //         ResultSet rs = statement.executeQuery();
+    //         while (rs.next()) {
+    //             QuestionDisplay q = new QuestionDisplay(
+    //                     rs.getLong("question_id"),
+    //                     rs.getString("description"),
+    //                     QuestionType.valueOf(rs.getString("question_type")),
+    //                     DifficultyLevel.valueOf(rs.getString("difficulty_level")),
+    //                     QuestionStatus.valueOf(rs.getString("status"))
+    //             );
+    //             list.add(q);
+    //         }
+    //     } catch (Exception e) {
+    //         e.printStackTrace();
+    //     }
+    //     return list;
+    // }
 
-    @Override
-    public List<Question> getQuestionsByDifficulty(DifficultyLevel difficulty) {
-        List<Question> list = new ArrayList<>();
-        try (Connection connection = getConnection()) {
-            String query = "SELECT * FROM questions WHERE difficulty_level = ?";
-            PreparedStatement statement = connection.prepareStatement(query);
-            statement.setString(1, difficulty.toString());
-            ResultSet rs = statement.executeQuery();
-            while (rs.next()) {
-                Question q = new Question(
-                        rs.getLong("question_id"),
-                        rs.getString("description"),
-                        QuestionType.valueOf(rs.getString("question_type")),
-                        DifficultyLevel.valueOf(rs.getString("difficulty_level")),
-                        rs.getTimestamp("created_at").toLocalDateTime(),
-                        QuestionStatus.valueOf(rs.getString("status")),
-                        rs.getString("language"),
-                        rs.getString("layer"),
-                        rs.getString("framework"),
-                        rs.getString("concept")
-                );
-                list.add(q);
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return list;
-    }
+    // @Override
+    // public List<Question> getQuestionsByDifficulty(DifficultyLevel difficulty) {
+    //     List<Question> list = new ArrayList<>();
+    //     try (Connection connection = getConnection()) {
+    //         String query = "SELECT * FROM questions WHERE difficulty_level = ?";
+    //         PreparedStatement statement = connection.prepareStatement(query);
+    //         statement.setString(1, difficulty.toString());
+    //         ResultSet rs = statement.executeQuery();
+    //         while (rs.next()) {
+    //             Question q = new Question(
+    //                     rs.getLong("question_id"),
+    //                     rs.getString("description"),
+    //                     QuestionType.valueOf(rs.getString("question_type")),
+    //                     DifficultyLevel.valueOf(rs.getString("difficulty_level")),
+    //                     rs.getTimestamp("created_at").toLocalDateTime(),
+    //                     QuestionStatus.valueOf(rs.getString("status")),
+    //                     rs.getString("language"),
+    //                     rs.getString("layer"),
+    //                     rs.getString("framework"),
+    //                     rs.getString("concept")
+    //             );
+    //             list.add(q);
+    //         }
+    //     } catch (Exception e) {
+    //         e.printStackTrace();
+    //     }
+    //     return list;
+    // }
 
     @Override
     public List<DescriptiveQuestion> getDescriptiveQuestion(QuestionType questionType) {
@@ -271,44 +270,44 @@ public class QuestionRepositoryImpl implements QuestionRepository {
         }
     }
 
-    @Override
-    public List<QuestionWithStatus> getQuestions(QuestionStatus status) {
-        List<QuestionWithStatus> list = new ArrayList<>();
-        String sql = """
-                SELECT question_id, question_type, description, difficulty_level, status
-                FROM questions
-                WHERE status = ?
-                ORDER BY question_id
-                """;
-        try (Connection connection = getConnection(); PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setString(1, status.name());
-            ResultSet rs = statement.executeQuery();
-            while (rs.next()) {
-                QuestionWithStatus questionStatus = new QuestionWithStatus();
-                questionStatus.setQuestionId(rs.getLong("question_id"));
-                questionStatus.setDescription(rs.getString("description"));
-                questionStatus.setStatus(rs.getString("status"));
-                list.add(questionStatus);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return list;
-    }
+    // @Override
+    // public List<QuestionWithStatus> getQuestions(QuestionStatus status) {
+    //     List<QuestionWithStatus> list = new ArrayList<>();
+    //     String sql = """
+    //             SELECT question_id, question_type, description, difficulty_level, status
+    //             FROM questions
+    //             WHERE status = ?
+    //             ORDER BY question_id
+    //             """;
+    //     try (Connection connection = getConnection(); PreparedStatement statement = connection.prepareStatement(sql)) {
+    //         statement.setString(1, status.name());
+    //         ResultSet rs = statement.executeQuery();
+    //         while (rs.next()) {
+    //             QuestionWithStatus questionStatus = new QuestionWithStatus();
+    //             questionStatus.setQuestionId(rs.getLong("question_id"));
+    //             questionStatus.setDescription(rs.getString("description"));
+    //             questionStatus.setStatus(rs.getString("status"));
+    //             list.add(questionStatus);
+    //         }
+    //     } catch (Exception e) {
+    //         e.printStackTrace();
+    //     }
+    //     return list;
+    // }
 
     @Override
     public List<Question> getQuestionsByConcept(String concept, Long userId, Long roleId) {
         List<Question> list = new ArrayList<>();
-        String sql = """ 
-                    SELECT q.*
-                        FROM questions q
-                        JOIN expertise e
-                            ON q.runtime = e.runtime
-                        WHERE FIND_IN_SET(q.concept, ?) AND
-                        e.user_roles_id = (SELECT id
-                                                FROM user_roles
-                                                WHERE user_id = ?
-                                                AND role_id = ?)
+        String sql = """
+                    SELECT DISTINCT q.*
+                    FROM questions q
+                    JOIN expertise e
+                        ON q.runtime = e.runtime
+                    JOIN user_roles ur
+                        ON e.user_id = ur.user_id
+                    WHERE FIND_IN_SET(q.concept, ?)
+                    AND ur.user_id = ?
+                    AND ur.role_id = ?
                     """;
 
         try (Connection connection = getConnection(); PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -356,93 +355,92 @@ public class QuestionRepositoryImpl implements QuestionRepository {
         return list;
     }
 
-    @Override
-    public void updateQuestionStatus(List<Long> question_ids, QuestionStatus status) {
-        if (question_ids == null || question_ids.isEmpty()) {
-            return;
-        }
-        String placeholders = String.join(",", Collections.nCopies(question_ids.size(), "?"));
-        String sql = "UPDATE questions SET status = ? "
-                + "WHERE status = 'DRAFT' AND question_id IN (" + placeholders + ")";
-        try (Connection connection = getConnection(); PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setString(1, status.name());
-            for (int i = 0; i < question_ids.size(); i++) {
-                statement.setLong(i + 2, question_ids.get(i));
-            }
-            statement.executeUpdate();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
+    // @Override
+    // public void updateQuestionStatus(List<Long> question_ids, QuestionStatus status) {
+    //     if (question_ids == null || question_ids.isEmpty()) {
+    //         return;
+    //     }
+    //     String placeholders = String.join(",", Collections.nCopies(question_ids.size(), "?"));
+    //     String sql = "UPDATE questions SET status = ? "
+    //             + "WHERE status = 'DRAFT' AND question_id IN (" + placeholders + ")";
+    //     try (Connection connection = getConnection(); PreparedStatement statement = connection.prepareStatement(sql)) {
+    //         statement.setString(1, status.name());
+    //         for (int i = 0; i < question_ids.size(); i++) {
+    //             statement.setLong(i + 2, question_ids.get(i));
+    //         }
+    //         statement.executeUpdate();
+    //     } catch (Exception e) {
+    //         throw new RuntimeException(e);
+    //     }
+    // }
 
-    @Override
-    public void updateQuestionStatus(long question_id, QuestionStatus status) {
+    // @Override
+    // public void updateQuestionStatus(long question_id, QuestionStatus status) {
+    //     String sql = "UPDATE questions SET status=? WHERE question_id=?";
+    //     try (Connection connection = getConnection(); PreparedStatement statement = connection.prepareStatement(sql)) {
+    //         statement.setString(1, status.name());
+    //         statement.setLong(2, question_id);
+    //         statement.executeUpdate();
+    //     } catch (Exception e) {
+    //         e.printStackTrace();
+    //     }
+    // }
 
-        String sql = "UPDATE questions SET status=? WHERE question_id=?";
-        try (Connection connection = getConnection(); PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setString(1, status.name());
-            statement.setLong(2, question_id);
-            statement.executeUpdate();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+    // @Override
+    // public Long getFrameworkConceptId(int conceptId, int frameworkId) {
+    //     String sql = "SELECT id FROM framework_concepts WHERE concept_id = ? AND framework_id = ?";
+    //     try (Connection connection = getConnection(); PreparedStatement statement = connection.prepareStatement(sql)) {
+    //         statement.setInt(1, conceptId);
+    //         statement.setInt(2, frameworkId);
+    //         ResultSet rs = statement.executeQuery();
+    //         if (rs.next()) {
+    //             return rs.getLong("id");
+    //         }
+    //     } catch (Exception e) {
+    //         e.printStackTrace();
+    //     }
+    //     throw new RuntimeException("Framework concept not found for conceptId: " + conceptId + " and frameworkId: " + frameworkId);
+    // }
 
-    @Override
-    public Long getFrameworkConceptId(int conceptId, int frameworkId) {
-        String sql = "SELECT id FROM framework_concepts WHERE concept_id = ? AND framework_id = ?";
-        try (Connection connection = getConnection(); PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setInt(1, conceptId);
-            statement.setInt(2, frameworkId);
-            ResultSet rs = statement.executeQuery();
-            if (rs.next()) {
-                return rs.getLong("id");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        throw new RuntimeException("Framework concept not found for conceptId: " + conceptId + " and frameworkId: " + frameworkId);
-    }
+    // @Override
+    // public void insertQuestionFrameworkConceptMapping(Long questionId, Long frameworkConceptId) {
+    //     String sql = "INSERT INTO question_framework_concepts(question_id, framework_concepts_id) VALUES (?, ?)";
+    //     try (Connection connection = getConnection(); PreparedStatement statement = connection.prepareStatement(sql)) {
+    //         statement.setLong(1, questionId);
+    //         statement.setLong(2, frameworkConceptId);
+    //         statement.executeUpdate();
+    //     } catch (Exception e) {
+    //         e.printStackTrace();
+    //     }
+    // }
 
-    @Override
-    public void insertQuestionFrameworkConceptMapping(Long questionId, Long frameworkConceptId) {
-        String sql = "INSERT INTO question_framework_concepts(question_id, framework_concepts_id) VALUES (?, ?)";
-        try (Connection connection = getConnection(); PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setLong(1, questionId);
-            statement.setLong(2, frameworkConceptId);
-            statement.executeUpdate();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
-    public int getQuestionCountByConcept(String concept) {
-        String sql = "SELECT COUNT(*) FROM questions WHERE concept=?";
-        try (Connection connection = getConnection(); PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setString(1, concept);
-            ResultSet rs = statement.executeQuery();
-            if (rs.next()) {
-                return rs.getInt(1);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return 0;
-    }
+    // @Override
+    // public int getQuestionCountByConcept(String concept) {
+    //     String sql = "SELECT COUNT(*) FROM questions WHERE concept=?";
+    //     try (Connection connection = getConnection(); PreparedStatement statement = connection.prepareStatement(sql)) {
+    //         statement.setString(1, concept);
+    //         ResultSet rs = statement.executeQuery();
+    //         if (rs.next()) {
+    //             return rs.getInt(1);
+    //         }
+    //     } catch (Exception e) {
+    //         e.printStackTrace();
+    //     }
+    //     return 0;
+    // }
 
     @Override
     public List<String> getConcepts(Long userId, Long roleId) {
         List<String> concepts = new ArrayList<>();
         String sql = """ 
-                        SELECT DISTINCT q.concept
-                        FROM questions q
-                        JOIN expertise e
-                            ON q.runtime = e.runtime
-                        WHERE  e.user_roles_id = (SELECT id
-                                                FROM user_roles
-                                                WHERE user_id = ?
-                                                AND role_id = ?) 
+                    SELECT DISTINCT q.concept
+                    FROM questions q
+                    JOIN expertise e
+                        ON q.runtime = e.runtime
+                    JOIN user_roles ur
+                        ON ur.user_id = e.user_id
+                    WHERE ur.user_id = ?
+                    AND ur.role_id = ?;
                         """;
         try (Connection connection = getConnection(); PreparedStatement statement = connection.prepareStatement(sql)) {
 
@@ -557,4 +555,4 @@ public Long insertQuestionWithOptions(
 
 
 
-*/
+ */

@@ -3,6 +3,7 @@ export type CreateTestDraftPayload = {
   title: string;
   description: string;
   duration: number;
+  difficulty: string;
 };
 
 export const CREATE_TEST_DRAFT_STORAGE_KEY = "createTestDraft";

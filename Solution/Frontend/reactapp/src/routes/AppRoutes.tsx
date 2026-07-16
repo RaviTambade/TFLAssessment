@@ -5,6 +5,7 @@ import EvaluationContentMenu from "../components/assessment/evaluationcontent/Ev
 import SkillTaxonomyMenu from "../components/assessment/skilltaxonomy/SkillTaxonomyMenu";
 import Assessment from "../components/assessment/ComponentButtons";
 import AssessmentOrchestrator from "@/components/assessment/assessmentOrchestrator/assessmentOrchestrator";
+import CreatedAssessments from "@/components/assessment/assessmentOrchestrator/createTest/SmeCreatedTest";
 import QuestionByType from "@/components/assessment/evaluationcontent/QuestionByType";
 import GetQuestionsByDate from "@/components/assessment/evaluationcontent/GetQuestionsByDate";
 import UpdateQuestion from "@/components/assessment/evaluationcontent/UpdateQuestion";
@@ -195,6 +196,13 @@ function AppRoutes() {
             path="membership/GetUserLogDetail"
             element={<GetUserLogDetail />}
           />
+
+           <Route
+            path="/created-assessments"
+            element={<CreatedAssessments />}
+          />
+
+
           <Route path="membership/Login" element={<LoginPage />} />
           <Route path="membership/ManageUsers" element={<ManageUsers />} />
           <Route path="membership/Register" element={<RegisterPage />} />
