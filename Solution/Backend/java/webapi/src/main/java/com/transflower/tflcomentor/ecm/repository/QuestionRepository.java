@@ -15,24 +15,24 @@ import com.transflower.tflcomentor.ecm.entity.enums.QuestionType;
 public interface QuestionRepository {
 
     QuestionDisplay getQuestionById(long question_id);
-    List<QuestionDisplay> getAllQuestions( Long user_role_Id);
-    List<Question> getQuestionsByDifficulty(DifficultyLevel difficulty);
+    // List<QuestionDisplay> getAllQuestions( Long user_role_Id);
+    // List<Question> getQuestionsByDifficulty(DifficultyLevel difficulty);
     void updateQuestionDetailsById(Long question_id, QuestionOptionsRequest dto);
     List<Question> getQuestions(LocalDate fromDate, LocalDate toDate);
     QuestionOptionsRequest getQuestionDetails(Long question_id);
     List<DescriptiveQuestion> getDescriptiveQuestion(QuestionType questionType);
     // List<Questions> getAllQuestions();
     // List<QuestionResponse> getRecentQuestions();
-    List<QuestionWithStatus> getQuestions(QuestionStatus status);
+    // List<QuestionWithStatus> getQuestions(QuestionStatus status);
     //multiple question status update
-    void updateQuestionStatus(List<Long> question_ids, QuestionStatus status);
+   // void updateQuestionStatus(List<Long> question_ids, QuestionStatus status);
     //single question status update
-    void updateQuestionStatus(long question_id, QuestionStatus status);
+   // void updateQuestionStatus(long question_id, QuestionStatus status);
     // Questions updateQuestion(Questions question);
     List<Question> getQuestionsByConcept(String concept,Long userId,Long roleId);
     public List<String> getConcepts( Long userId, Long roleId);
-    void insertQuestionFrameworkConceptMapping(Long questionId, Long frameworkConceptId);
-    Long getFrameworkConceptId(int conceptId, int frameworkId);
-    int getQuestionCountByConcept(String concept);
+   // void insertQuestionFrameworkConceptMapping(Long questionId, Long frameworkConceptId);
+    //Long getFrameworkConceptId(int conceptId, int frameworkId);
+    //int getQuestionCountByConcept(String concept);
     void insertCompleteQuestion(CompleteQuestion q);
 }
