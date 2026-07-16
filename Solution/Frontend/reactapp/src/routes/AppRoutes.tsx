@@ -59,6 +59,10 @@ import InterviewFeedback from "@/components/assessment/interview/InterviewFeedba
 import DashboardSME from "@/components/assessment/membership/dashboardsme";
 import QuestionFeedback from "@/components/assessment/interview/QuestionFeedback";
 
+
+// mentor dashboard
+import MentorUpdateQuestions from "@/components/assessment/evaluationcontent/Mentor/MentorUpdateQuestions";
+
 function AppRoutes() {
   return (
     <div className="min-h-screen bg-background">
@@ -181,6 +185,10 @@ function AppRoutes() {
           <Route path="interview/feedback/:id" element={<InterviewFeedback />} />
           <Route path="interview/question/feedback/:id" element={<QuestionFeedback/>} />
           {/* Membership model */}
+
+          <Route path="/mentor/update-questions" 
+          element={<MentorUpdateQuestions/>}
+          />
           <Route
             path="membership/ChangePassword"
             element={<ChangePassword />}
