@@ -32,6 +32,8 @@ const [profilePicture, setProfilePicture] = useState<string>(
   "https://avatars.githubusercontent.com/u/12345678?v=4"
 );
 const [projectCount, setProjectCount] = useState<number>(0);
+const [students, setStudents] = useState<Student[]>([]);
+
   const mentorNotifications: Notification[] =
     AllmentorNotifications as Notification[];
 
@@ -136,15 +138,15 @@ useEffect(() => {
             </CardContent>
           </Card>
 
-          <Card>
+          <Card onClick={()=>navigate("/models/students")}>
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-gray-600 text-sm font-medium">
-                    Avg Mentee Progress
+                  
+                  <p className="text-gray-600 text-sm font-medium bold">
+                    Total Students
                   </p>
-                  <p className="text-3xl font-bold text-gray-900 mt-1">75.5%</p>
-                </div>
+                  <div className="text-3xl font-bold">{students.length}</div>                </div>
                 <TrendingUp className="w-12 h-12 text-green-500 opacity-20" />
               </div>
             </CardContent>
