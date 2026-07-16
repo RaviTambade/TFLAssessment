@@ -57,6 +57,7 @@ import Mentees from "@/components/assessment/membership/Mentees";
 import SMEExpertiseForm from "@/components/assessment/assessmentOrchestrator/createTest/smeExpertiseForm";
 import InterviewFeedback from "@/components/assessment/interview/InterviewFeedback";
 import DashboardSME from "@/components/assessment/membership/dashboardsme";
+import StudentList from "@/components/assessment/assessmentOrchestrator/StudentList";
 import QuestionFeedback from "@/components/assessment/interview/QuestionFeedback";
 
 function AppRoutes() {
@@ -103,6 +104,7 @@ function AppRoutes() {
             path="assessmentorchestrator/assessmentorchestrator-menu"
             element={<AssessmentOrchestrator />}
           />
+          <Route path="/students" element={<StudentList />}/>
           <Route path="upcoming-assessment" element={<UpcomingAssessment />} />
           <Route path="all-assessment" element={<AllAssessment />} />
           <Route path="apply-assessment" element={<Question />} />

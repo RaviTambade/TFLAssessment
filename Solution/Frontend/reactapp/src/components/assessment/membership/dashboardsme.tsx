@@ -12,6 +12,7 @@ import CandidatePerformances from "./data/candidatePerformance.json";
 import AssessmentMetric from "./data/assessmentMetrics.json";
 import SkillGapAnalyse from "./data/skills/skillGapAnalysis.json";
 
+
 //function component for SME Dashboard
 const DashboardSME = () => {
   //parts
@@ -24,6 +25,7 @@ const DashboardSME = () => {
   const [smeName, setSMEName] = useState<string>("Ravi Tambade");
   const [department, setDepartment] = useState<string>("Chief Mentor");
   const [profilePicture, setProfilePicture] = useState<string>("https://avatars.githubusercontent.com/u/12345678?v=4");
+  const [totalStudents, setTotalStudents] = useState<number>(0);
 
   // SME-specific Notifications
   const smeNotifications: Notification[] = SmeNotifications as Notification[];
@@ -48,6 +50,15 @@ const DashboardSME = () => {
       setProfilePicture(data.profilePicture);
     });
 
+     fetch("http://localhost:5201/api/Students/total")
+  .then((response) => response.json())
+  .then((data) => {
+      setTotalStudents(data.totalStudents);
+  })
+  .catch((error) => {
+      console.error(error);
+  });
+
 
   }, []);
 
@@ -64,17 +75,25 @@ const DashboardSME = () => {
 
         {/* Top Stats */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-          <Card>
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-gray-600 text-sm font-medium">Total Candidates</p>
-                  <p className="text-3xl font-bold text-gray-900 mt-1">48</p>
-                </div>
-                <Users className="w-12 h-12 text-blue-500 opacity-20" />
-              </div>
-            </CardContent>
-          </Card>
+          <Card
+  className="cursor-pointer hover:shadow-lg transition duration-200"
+  onClick={() => navigate("/models/students")}
+>
+  <CardContent className="p-6">
+    <div className="flex items-center justify-between">
+      <div>
+        <p className="text-gray-600 text-sm font-medium">
+          Total Candidates
+        </p>
+        <p className="text-3xl font-bold text-gray-900 mt-1">
+          {totalStudents}
+        </p>
+      </div>
+
+      <Users className="w-12 h-12 text-blue-500 opacity-20" />
+    </div>
+  </CardContent>
+</Card>
 
           <Card>
             <CardContent className="p-6">
