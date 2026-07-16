@@ -16,121 +16,121 @@ import com.transflower.tflcomentor.ecm.entity.enums.QuestionType;
 import com.transflower.tflcomentor.ecm.repository.QuestionFilterRepository;
 
 @Repository
-public class QuestionFilterRepositoryImpl implements QuestionFilterRepository{
-   
-   private Connection getConnection() throws Exception {
+public class QuestionFilterRepositoryImpl implements QuestionFilterRepository {
+
+    private Connection getConnection() throws Exception {
         return DBConfig.getConnection();
     }
 
     @Override
     public List<Question> getQuestions(
-        QuestionType question_type,
-        DifficultyLevel difficulty_level,
-        QuestionStatus status,
-        String language,
-        String layer,
-        String framework,
-        String concept,
-        Long userId,
-        Long roleId) {
+            QuestionType question_type,
+            DifficultyLevel difficulty_level,
+            QuestionStatus status,
+            String language,
+            String layer,
+            String framework,
+            String concept,
+            Long userId,
+            Long roleId) {
 
-    List<Question> questionList = new ArrayList<>();
+        List<Question> questionList = new ArrayList<>();
 
-    String query = """
-                SELECT *
+        String query = """
+                                    SELECT DISTINCT q.*
                 FROM questions q
                 JOIN expertise e
-                    ON q.runtime = e.runtime
-                WHERE (? IS NULL OR q.language = ?)
-                AND (? IS NULL OR q.layer = ?)
-                AND (? IS NULL OR q.concept = ?)
-                AND (? IS NULL OR q.framework = ?)
+                    ON LOWER(q.runtime) = LOWER(e.runtime)
+                WHERE e.user_id = ?
+                AND EXISTS (
+                    SELECT 1
+                    FROM user_roles ur
+                    WHERE ur.user_id = e.user_id
+                        AND ur.role_id = ?
+                )
+                AND (? IS NULL OR LOWER(q.language) = LOWER(?))
+                AND (? IS NULL OR LOWER(q.layer) = LOWER(?))
+                AND (? IS NULL OR LOWER(q.concept) = LOWER(?))
+                AND (? IS NULL OR LOWER(q.framework) = LOWER(?))
                 AND (? IS NULL OR q.question_type = ?)
                 AND (? IS NULL OR q.difficulty_level = ?)
-                AND (? IS NULL OR q.status = ?)
-                AND e.user_roles_id = (
-                                    SELECT id
-                                    FROM user_roles
-                                    WHERE user_id = ?
-                                    AND role_id = ?
-                                );
+                AND (? IS NULL OR q.status = ?);
                                 """;
-    try (Connection connection = getConnection()) {
+        try (Connection connection = getConnection()) {
 
-        PreparedStatement ps = connection.prepareStatement(query);
+            PreparedStatement ps = connection.prepareStatement(query);
 
-        // language
-        ps.setString(1, language);
-        ps.setString(2, language);
+                // user id & role id
+                ps.setLong(1, userId);
+                ps.setLong(2, roleId);
 
-        // layer
-        ps.setString(3, layer);
-        ps.setString(4, layer);
+                // language
+                ps.setString(3, language);
+                ps.setString(4, language);
 
-        // concept
-        ps.setString(5, concept);
-        ps.setString(6, concept);
+                // layer
+                ps.setString(5, layer);
+                ps.setString(6, layer);
 
-        // framework
-        ps.setString(7, framework);
-        ps.setString(8, framework);
+                // concept
+                ps.setString(7, concept);
+                ps.setString(8, concept);
 
-        // question type
-        ps.setString(9, question_type != null ? question_type.name() : null);
-        ps.setString(10, question_type != null ? question_type.name() : null);
+                // framework
+                ps.setString(9, framework);
+                ps.setString(10, framework);
 
-        // difficulty level
-        ps.setString(11, difficulty_level != null ? difficulty_level.name() : null);
-        ps.setString(12, difficulty_level != null ? difficulty_level.name() : null);
+                // question type
+                ps.setString(11, question_type != null ? question_type.name() : null);
+                ps.setString(12, question_type != null ? question_type.name() : null);
 
-        // status
-        ps.setString(13, status != null ? status.name() : null);
-        ps.setString(14, status != null ? status.name() : null);
+                // difficulty
+                ps.setString(13, difficulty_level != null ? difficulty_level.name() : null);
+                ps.setString(14, difficulty_level != null ? difficulty_level.name() : null);
 
-        // user role id
-       ps.setLong(15, userId);
-       ps.setLong(16, roleId);
+                // status
+                ps.setString(15, status != null ? status.name() : null);
+                ps.setString(16, status != null ? status.name() : null);
+            ResultSet rs = ps.executeQuery();
 
-        ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
 
-        while (rs.next()) {
+                Question question = new Question();
+                question.setQuestionId(rs.getLong("question_Id"));
 
-            Question question = new Question();
-            question.setQuestionId(rs.getLong("question_Id"));
+                question.setDescription(rs.getString("description"));
 
-            question.setDescription(rs.getString("description"));
+                String setquestionType = rs.getString("question_type");
+                if (setquestionType != null) {
+                    question.setQuestionType(
+                            QuestionType.valueOf(setquestionType));
+                }
 
-            String setquestionType = rs.getString("question_type");
-            if (setquestionType != null) {
-                question.setQuestionType(
-                        QuestionType.valueOf(setquestionType));
+                String setDifficultyLevel = rs.getString("difficulty_level");
+                if (setDifficultyLevel != null) {
+
+                    question.setDifficultyLevel(
+                            DifficultyLevel.valueOf(setDifficultyLevel));
+                }
+
+                String setStatus = rs.getString("status");
+                if (setStatus != null) {
+                    question.setQuestionStatus(
+                            QuestionStatus.valueOf(setStatus));
+                }
+
+                question.setLanguage(rs.getString("language"));
+                question.setLayer(rs.getString("layer"));
+                question.setFramework(rs.getString("framework"));
+                question.setConcept(rs.getString("concept"));
+
+                questionList.add(question);
             }
 
-            String setDifficultyLevel = rs.getString("difficulty_level");
-            if (setDifficultyLevel != null) {
-                
-                question.setDifficultyLevel(
-                        DifficultyLevel.valueOf(setDifficultyLevel));
-            }
-
-            String setStatus = rs.getString("status");
-            if (setStatus != null) {
-                question.setQuestionStatus(
-                        QuestionStatus.valueOf(setStatus));
-            }
-
-            question.setLanguage(rs.getString("language"));
-            question.setLayer(rs.getString("layer"));
-            question.setFramework(rs.getString("framework"));
-            question.setConcept(rs.getString("concept"));
-
-            questionList.add(question);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
-    } catch (Exception e) {
-        e.printStackTrace();
+        return questionList;
     }
-
-    return questionList;
-}
 }
