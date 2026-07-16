@@ -22,8 +22,8 @@ const DashboardSME = () => {
   // Render functions for SME features
 
   //data members
-  const [smeName, setSMEName] = useState<string>("Ravi Tambade");
-  const [department, setDepartment] = useState<string>("Chief Mentor");
+  const [smeName, setSMEName] = useState<string>("");
+const [department, setDepartment] = useState<string>("");
   const [profilePicture, setProfilePicture] = useState<string>("https://avatars.githubusercontent.com/u/12345678?v=4");
   const [totalStudents, setTotalStudents] = useState<number>(0);
 
@@ -43,6 +43,15 @@ const DashboardSME = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+
+      const currentUser = sessionStorage.getItem("current");
+
+  if (currentUser) {
+    const user = JSON.parse(currentUser);
+
+    setSMEName(`${user.firstname} ${user.lastname}`);
+    setDepartment(user.rolename);
+  }
     const apiURL = `${WEBAPI_NODE_URL}/sme/profile`;
     fetch(apiURL).then((response) => response.json()).then((data) => {
       setSMEName(data.name);
