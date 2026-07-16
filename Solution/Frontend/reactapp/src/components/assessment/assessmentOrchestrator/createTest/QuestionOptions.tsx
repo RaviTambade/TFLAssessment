@@ -82,6 +82,11 @@ const QuestionOptions = () => {
         // localStorage.getItem("smeId") ||
         0
     );
+    const roleId = Number(
+  userData.roleid ||
+  userData.roleId ||
+  0
+);
  
     if (!userId) {
       setError("User Id not found in session storage");
