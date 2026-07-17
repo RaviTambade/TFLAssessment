@@ -108,16 +108,7 @@ useEffect(() => {
         {/* Top Stats */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           
-          <Card onClick={() => navigate("/models/evaluationcontent/ProjectByMentee")} className="
-cursor-pointer
-rounded-2xl
-border
-border-slate-200
-shadow-sm
-hover:shadow-xl
-hover:border-primary
-transition-all
-duration-300">
+          <Card onClick={() => navigate("/models/evaluationcontent/ProjectByMentee")}>
             <CardContent className="p-7">
               <div className="flex items-center justify-between">
                 <div>
@@ -133,6 +124,22 @@ duration-300">
             </CardContent>
           </Card>
 
+
+<Card onClick={() => navigate("/models/membership/Mentees")}>
+            <CardContent className="p-7">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-gray-600 text-sm font-medium">
+                    Mentees
+                  </p>
+                  <p className="text-3xl font-bold text-gray-900 mt-1">
+                  {projectCount}
+                    </p>
+                </div>
+                <Users className="w-12 h-12 text-blue-500 opacity-20" />
+              </div>
+            </CardContent>
+          </Card>
   
           <Card onClick={() => navigate("/models/evaluationcontent/dashboard")}>
             <CardContent className="p-7">
