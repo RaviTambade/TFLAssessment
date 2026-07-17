@@ -4,14 +4,10 @@ import java.time.LocalDate;
 import java.util.List;
 
 import com.transflower.tflcomentor.ecm.dto.request.QuestionOptionsRequest;
-import com.transflower.tflcomentor.ecm.dto.response.DescriptiveQuestion;
 import com.transflower.tflcomentor.ecm.dto.response.QuestionDisplay;
-import com.transflower.tflcomentor.ecm.dto.response.QuestionWithStatus;
+import com.transflower.tflcomentor.ecm.dto.response.QuestionDisplayToMentor;
 import com.transflower.tflcomentor.ecm.entity.CompleteQuestion;
 import com.transflower.tflcomentor.ecm.entity.Question;
-import com.transflower.tflcomentor.ecm.entity.enums.DifficultyLevel;
-import com.transflower.tflcomentor.ecm.entity.enums.QuestionStatus;
-import com.transflower.tflcomentor.ecm.entity.enums.QuestionType;
 
 public interface QuestionService {
 
@@ -27,6 +23,9 @@ public interface QuestionService {
     public List<Question> getQuestions(LocalDate fromDate, LocalDate toDate);
 
     public QuestionOptionsRequest getQuestionDetails(Long questionId);
+
+   // List<QuestionDisplayToMentor> getAllQuestions(Long userId,Long roleId);
+
 
    // public List<DescriptiveQuestion> getDescriptiveQuestion(QuestionType questionType);
 
