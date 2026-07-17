@@ -117,8 +117,8 @@ public class QuestionsServiceImpl implements QuestionService {
         return repository.getConcepts( userId, roleId);
     }
 
-    @Override
-    public List<QuestionDisplayToMentor> getAllQuestions(Long userId,Long roleId) {
-        return repository.getAllQuestions(userId,roleId);
-    }
+    // @Override
+    // public List<QuestionDisplayToMentor> getAllQuestions(Long userId,Long roleId) {
+    //     return repository.getAllQuestions(userId,roleId);
+    // }
 }

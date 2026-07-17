@@ -19,7 +19,7 @@ public interface QuestionRepository {
     List<Question> getQuestions(LocalDate fromDate, LocalDate toDate);
     QuestionOptionsRequest getQuestionDetails(Long question_id);
     List<DescriptiveQuestion> getDescriptiveQuestion(QuestionType questionType);
-     List<QuestionDisplayToMentor> getAllQuestions(Long userId,Long roleId);
+    //List<QuestionDisplayToMentor> getAllQuestions(Long userId,Long roleId);
     // List<QuestionResponse> getRecentQuestions();
     // List<QuestionWithStatus> getQuestions(QuestionStatus status);
     //multiple question status update
