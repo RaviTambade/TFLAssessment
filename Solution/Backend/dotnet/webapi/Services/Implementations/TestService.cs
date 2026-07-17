@@ -27,7 +27,7 @@ namespace backend.Services
 
         public async Task<List<GetSmeCreatedTestResponse>> GetSmeCreatedTestAsync(long userId)
 {
-      return await _repo.GetSmeCreatedTestAsync(userId);
+        return await _repo.GetSmeCreatedTestAsync(userId);
 }
     }
 }
