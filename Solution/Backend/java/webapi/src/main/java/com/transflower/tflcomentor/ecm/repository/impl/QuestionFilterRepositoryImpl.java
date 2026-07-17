@@ -37,7 +37,7 @@ public class QuestionFilterRepositoryImpl implements QuestionFilterRepository {
         List<Question> questionList = new ArrayList<>();
 
         String query = """
-                                    SELECT DISTINCT q.*
+                SELECT DISTINCT q.*
                 FROM questions q
                 JOIN expertise e
                     ON LOWER(q.runtime) = LOWER(e.runtime)
@@ -91,6 +91,7 @@ public class QuestionFilterRepositoryImpl implements QuestionFilterRepository {
                 // status
                 ps.setString(15, status != null ? status.name() : null);
                 ps.setString(16, status != null ? status.name() : null);
+                
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {

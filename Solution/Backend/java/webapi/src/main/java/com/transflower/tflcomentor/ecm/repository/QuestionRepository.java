@@ -6,11 +6,9 @@ import java.util.List;
 import com.transflower.tflcomentor.ecm.dto.request.QuestionOptionsRequest;
 import com.transflower.tflcomentor.ecm.dto.response.DescriptiveQuestion;
 import com.transflower.tflcomentor.ecm.dto.response.QuestionDisplay;
-import com.transflower.tflcomentor.ecm.dto.response.QuestionWithStatus;
+import com.transflower.tflcomentor.ecm.dto.response.QuestionDisplayToMentor;
 import com.transflower.tflcomentor.ecm.entity.CompleteQuestion;
 import com.transflower.tflcomentor.ecm.entity.Question;
-import com.transflower.tflcomentor.ecm.entity.enums.DifficultyLevel;
-import com.transflower.tflcomentor.ecm.entity.enums.QuestionStatus;
 import com.transflower.tflcomentor.ecm.entity.enums.QuestionType;
 public interface QuestionRepository {
 
@@ -21,7 +19,7 @@ public interface QuestionRepository {
     List<Question> getQuestions(LocalDate fromDate, LocalDate toDate);
     QuestionOptionsRequest getQuestionDetails(Long question_id);
     List<DescriptiveQuestion> getDescriptiveQuestion(QuestionType questionType);
-    // List<Questions> getAllQuestions();
+     List<QuestionDisplayToMentor> getAllQuestions(Long userId,Long roleId);
     // List<QuestionResponse> getRecentQuestions();
     // List<QuestionWithStatus> getQuestions(QuestionStatus status);
     //multiple question status update

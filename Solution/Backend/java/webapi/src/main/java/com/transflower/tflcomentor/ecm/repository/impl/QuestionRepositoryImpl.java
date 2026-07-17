@@ -7,7 +7,6 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
@@ -16,7 +15,7 @@ import com.transflower.tflcomentor.configuration.DBConfig;
 import com.transflower.tflcomentor.ecm.dto.request.QuestionOptionsRequest;
 import com.transflower.tflcomentor.ecm.dto.response.DescriptiveQuestion;
 import com.transflower.tflcomentor.ecm.dto.response.QuestionDisplay;
-import com.transflower.tflcomentor.ecm.dto.response.QuestionWithStatus;
+import com.transflower.tflcomentor.ecm.dto.response.QuestionDisplayToMentor;
 import com.transflower.tflcomentor.ecm.entity.CompleteQuestion;
 import com.transflower.tflcomentor.ecm.entity.Question;
 import com.transflower.tflcomentor.ecm.entity.enums.DifficultyLevel;
@@ -54,31 +53,41 @@ public class QuestionRepositoryImpl implements QuestionRepository {
         return null;
     }
 
-    // @Override
-    // public List<QuestionDisplay> getAllQuestions(Long user_role_Id) {
-    //     List<QuestionDisplay> list = new ArrayList<>();
-    //     try (Connection connection = getConnection()) {
-    //         String query = """ 
-    //                     SELECT question_id,description, question_type,difficulty_level,status FROM questions; 
-    //                     """;
-    //         PreparedStatement statement = connection.prepareStatement(query);
-    //         statement.setLong(1, user_role_Id);
-    //         ResultSet rs = statement.executeQuery();
-    //         while (rs.next()) {
-    //             QuestionDisplay q = new QuestionDisplay(
-    //                     rs.getLong("question_id"),
-    //                     rs.getString("description"),
-    //                     QuestionType.valueOf(rs.getString("question_type")),
-    //                     DifficultyLevel.valueOf(rs.getString("difficulty_level")),
-    //                     QuestionStatus.valueOf(rs.getString("status"))
-    //             );
-    //             list.add(q);
-    //         }
-    //     } catch (Exception e) {
-    //         e.printStackTrace();
-    //     }
-    //     return list;
-    // }
+    @Override
+    public List<QuestionDisplayToMentor> getAllQuestions(Long userId,Long roleId) {
+        List<QuestionDisplayToMentor> list = new ArrayList<>();
+        try (Connection connection = getConnection()) {
+            String query = """ 
+                   SELECT
+                        q.question_id,
+                        q.description,
+                        q.question_type
+                    FROM questions q
+                    JOIN user_roles ur
+                        ON ur.user_id = ?
+                    JOIN roles r
+                        ON ur.role_id = r.role_id
+                    WHERE ur.role_id = ?
+                    AND ur.status = 'ACTIVE';      
+
+                     """;
+                PreparedStatement statement = connection.prepareStatement(query);
+            statement.setLong(1, userId);
+            statement.setLong(2, roleId);
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                QuestionDisplayToMentor q = new QuestionDisplayToMentor(
+                        rs.getLong("question_id"),
+                        rs.getString("description"),
+                        QuestionType.valueOf(rs.getString("question_type"))
+                    );
+                list.add(q);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
 
     // @Override
     // public List<Question> getQuestionsByDifficulty(DifficultyLevel difficulty) {
