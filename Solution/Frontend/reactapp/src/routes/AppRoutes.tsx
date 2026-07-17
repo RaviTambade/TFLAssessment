@@ -121,7 +121,7 @@ function AppRoutes() {
             element={<MembershipMenu />}
           />
           <Route path="skilltaxonomy/ViewRuntimes" element={<ViewRuntimes />} />
-          ce2
+          
           {/* <Route path="skilltaxonomy/AddConcept" element={<AddConcept />} /> */}
           <Route
             path="skilltaxonomy/ConceptByFramework"
@@ -216,6 +216,7 @@ function AppRoutes() {
           <Route path="membership/Register" element={<RegisterPage />} />
           <Route path="membership/UserActivity" element={<UserActivity />} />
           <Route path="membership/UserProfile" element={<UserProfile />} />
+          <Route path="membership/UserProfile/:id" element={<UserProfile />} />
           <Route path="membership/dashboard" element={<Dashboard />} />
           <Route path="membership/SmeDashboard" element={<DashboardSME />} />
           <Route path="membership/Mentees" element={<Mentees />} />

@@ -22,8 +22,8 @@ const DashboardSME = () => {
   // Render functions for SME features
 
   //data members
-  const [smeName, setSMEName] = useState<string>("Ravi Tambade");
-  const [department, setDepartment] = useState<string>("Chief Mentor");
+  const [smeName, setSMEName] = useState<string>("");
+  const [department, setDepartment] = useState<string>("");
   const [profilePicture, setProfilePicture] = useState<string>("https://avatars.githubusercontent.com/u/12345678?v=4");
   const [totalStudents, setTotalStudents] = useState<number>(0);
 
@@ -43,6 +43,15 @@ const DashboardSME = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+
+      const currentUser = sessionStorage.getItem("current");
+
+  if (currentUser) {
+    const user = JSON.parse(currentUser);
+
+    setSMEName(`${user.firstname} ${user.lastname}`);
+    setDepartment(user.rolename);
+  }
     const apiURL = `${WEBAPI_NODE_URL}/sme/profile`;
     fetch(apiURL).then((response) => response.json()).then((data) => {
       setSMEName(data.name);
@@ -77,7 +86,7 @@ const DashboardSME = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           <Card
   className="cursor-pointer hover:shadow-lg transition duration-200"
-  onClick={() => navigate("/models/students")}
+  onClick={() => navigate("/models/students")} 
 >
   <CardContent className="p-6">
     <div className="flex items-center justify-between">

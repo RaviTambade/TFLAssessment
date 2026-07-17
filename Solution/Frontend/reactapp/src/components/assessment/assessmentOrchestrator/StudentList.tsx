@@ -168,7 +168,7 @@ export default function StudentList() {
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                 <Input
-                  placeholder="Search by name or contact number..."
+                  placeholder="Search by name ..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   className="pl-9"
@@ -243,7 +243,7 @@ export default function StudentList() {
                             size="sm"
                             variant="ghost"
                             className="gap-2"
-                            onClick={() => handleViewStudent(student.id)}
+                             onClick={() => navigate(`/models/membership/UserProfile/${student.id}`)}
                           >
                             <Eye className="h-4 w-4" />
                             View
