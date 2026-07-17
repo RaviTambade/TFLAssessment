@@ -89,26 +89,36 @@ useEffect(() => {
 
   // Render the Mentor dashboard UI
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
-      <div className="max-w-7xl mx-auto space-y-8">
+        <div className="min-h-screen bg-background p-8">
+        <div className="max-w-7xl mx-auto space-y-8">
         {/* Header */}
-        <div>
-          <h1 className="text-4xl font-bold text-gray-900 mb-2">
-            Mentor Dashboard
-          </h1>
-          <h3 className="text-xl text-gray-700 mb-4">
-            Welcome, {mentorName} | {organization}
-          </h3>
-          <p className="text-gray-600">
-            Track mentee progress, manage mentorship activities, and guide
-            career development at Transflower.
-          </p>
-        </div>
+              <div className="mb-8">
+        <h1 className="text-3xl font-bold text-slate-900">
+          Mentor Dashboard
+        </h1>
 
+        <p className="text-2xl text-primary mt-3 font-bold">
+          Welcome, <span className="font-bold">{mentorName}</span>
+        </p>
+
+        <p className="text-slate-500 mt-3 text-lg">
+          Track mentee progress, manage mentorship activities and monitor student performance.
+        </p>
+        </div>
         {/* Top Stats */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-          <Card onClick={() => navigate("/models/evaluationcontent/ProjectByMentee")}>
-            <CardContent className="p-6">
+          
+          <Card onClick={() => navigate("/models/evaluationcontent/ProjectByMentee")} className="
+cursor-pointer
+rounded-2xl
+border
+border-slate-200
+shadow-sm
+hover:shadow-xl
+hover:border-primary
+transition-all
+duration-300">
+            <CardContent className="p-7">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-gray-600 text-sm font-medium">
@@ -125,7 +135,7 @@ useEffect(() => {
 
   
           <Card onClick={() => navigate("/models/evaluationcontent/dashboard")}>
-            <CardContent className="p-6">
+            <CardContent className="p-7">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-gray-600 text-sm font-medium">
