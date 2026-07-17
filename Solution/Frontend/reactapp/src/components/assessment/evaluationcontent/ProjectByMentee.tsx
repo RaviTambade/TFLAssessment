@@ -1,10 +1,19 @@
-
-
 import React, { useEffect, useState } from "react";
-import {  WEBAPI_DOTNET_URL, WEBAPI_NODE_URL ,WEBAPI_JAVA_URL} from "@/lib/utils";
+import { WEBAPI_JAVA_URL } from "@/lib/utils";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import {
+  FolderKanban,
+  Search,
+  RefreshCw,
+  Calendar,
+  Github,
+  User,
+} from "lucide-react";
 
 function ProjectByMentee() {
-  const [projects, setProjects] = useState([]);
+  const [projects, setProjects] = useState<any[]>([]);
   const [menteeId, setMenteeId] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -13,7 +22,6 @@ function ProjectByMentee() {
     fetchAllProjects();
   }, []);
 
-  //  Fetch all projects
   const fetchAllProjects = async () => {
     try {
       setLoading(true);
@@ -27,17 +35,16 @@ function ProjectByMentee() {
 
       const data = await response.json();
       setProjects(data);
-    } catch (err) {
+    } catch (err: any) {
       setError(err.message);
     } finally {
       setLoading(false);
     }
   };
 
-  //  Fetch by Mentee ID
   const fetchByMenteeId = async () => {
     if (!menteeId) {
-      setError("Please enter Mentee ID");
+      setError("Please enter a Mentee ID");
       return;
     }
 
@@ -50,12 +57,12 @@ function ProjectByMentee() {
       );
 
       if (!response.ok) {
-        throw new Error("No projects found for this Mentee");
+        throw new Error("No projects found");
       }
 
       const data = await response.json();
       setProjects(data);
-    } catch (err) {
+    } catch (err: any) {
       setError(err.message);
       setProjects([]);
     } finally {
@@ -63,75 +70,167 @@ function ProjectByMentee() {
     }
   };
 
+  const getStatusColor = (status: string) => {
+    switch (status?.toLowerCase()) {
+      case "completed":
+        return "bg-green-100 text-green-700";
+      case "in progress":
+        return "bg-yellow-100 text-yellow-700";
+      case "pending":
+        return "bg-red-100 text-red-700";
+      default:
+        return "bg-gray-100 text-gray-700";
+    }
+  };
+
   return (
-    <div className="p-6">
-      <h2 className="text-3xl font-bold text-center mb-6">
-        Mentor Dashboard - All Projects
-      </h2>
+    <div className="min-h-screen bg-gray-50 p-6">
 
-      {/* 🔍 Search Box */}
-      <div className="flex flex-col sm:flex-row justify-center gap-4 mb-6">
-        <input
-          type="number"
-          placeholder="Enter Mentee ID"
-          value={menteeId}
-          onChange={(e) => setMenteeId(e.target.value)}
-          className="border px-4 py-2 rounded w-full sm:w-64"
-        />
+      <div className="max-w-7xl mx-auto">
 
-        <button
-          onClick={fetchByMenteeId}
-          className="bg-red-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-        >
-          Search
-        </button>
+        {/* Heading */}
+        <div className="mb-8">
+          <h1 className="text-4xl font-bold bg-gradient-primary bg-clip-text text-transparent">
+            Student Projects
+          </h1>
 
-        <button
-          onClick={fetchAllProjects}
-          className="bg-red-500 text-white px-4 py-2 rounded hover:bg-gray-600"
-        >
-          Show All
-        </button>
-      </div>
+          <p className="text-gray-600 mt-2">
+            Monitor and review all mentee projects from one place.
+          </p>
+        </div>
 
-      {/* Loading / Error */}
-      {loading && <p className="text-center">Loading projects...</p>}
-      {error && <p className="text-center text-red-500">{error}</p>}
+        {/* Search Card */}
+        <Card className="mb-8 shadow-lg">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <Search className="w-5 h-5 text-red-600" />
+              Search Projects
+            </CardTitle>
+          </CardHeader>
 
-      {/* Projects Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {projects.length > 0 ? (
-          projects.map((p) => (
-            <div
-              key={p.projectId}
-              className="border rounded-xl p-5 shadow-md bg-white"
-            >
-              <h3 className="text-xl font-semibold mb-2">
-                {p.projectName}
-              </h3>
+          <CardContent>
 
-              <p><b>Mentor ID:</b> {p.mentorId}</p>
-              <p><b>Description:</b> {p.description}</p>
+            <div className="flex flex-col md:flex-row gap-4">
 
-              <p>
-                <b>Status:</b>{" "}
-                <span className="px-2 py-1 rounded bg-gray-100 text-gray-700">
-                  {p.status}
-                </span>
-              </p>
+    
 
-              <p><b>Created:</b> {p.createdAt}</p>
-              <p><b>Repo:</b> {p.repositoryUrl}</p>
+              <Button onClick={fetchByMenteeId}>
+                <Search className="mr-2 h-4 w-4" />
+                Search
+              </Button>
+
+              <Button
+                variant="outline"
+                onClick={fetchAllProjects}
+              >
+                <RefreshCw className="mr-2 h-4 w-4" />
+                Show All
+              </Button>
+
             </div>
-          ))
-        ) : (
-          !loading && (
-            <p className="text-center col-span-full">
-              No projects available
-            </p>
-          )
+
+          </CardContent>
+        </Card>
+
+        {loading && (
+          <div className="text-center py-10 text-lg">
+            Loading projects...
+          </div>
         )}
+
+        {error && (
+          <div className="text-center text-red-600 font-medium mb-6">
+            {error}
+          </div>
+        )}
+
+        {/* Project Cards */}
+
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+
+          {!loading && projects.length === 0 && (
+            <div className="col-span-full text-center text-gray-500">
+              No projects available.
+            </div>
+          )}
+
+          {projects.map((project: any) => (
+
+            <Card
+              key={project.projectId}
+              className="hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 border-l-4 border-red-500"
+            >
+              <CardHeader>
+
+                <CardTitle className="flex items-center gap-2">
+
+                  <FolderKanban className="text-red-600 w-6 h-6" />
+
+                  {project.projectName}
+
+                </CardTitle>
+
+              </CardHeader>
+
+              <CardContent className="space-y-4">
+
+                <p className="text-gray-600 text-sm">
+                  {project.description}
+                </p>
+
+                <div className="space-y-2 text-sm">
+
+                 
+                  <div className="flex items-center gap-2">
+                    <Calendar size={16} className="text-gray-500" />
+                    <strong>Created:</strong> {new Date(project.createdAt).toLocaleDateString("en-IN", {
+                                    day: "2-digit",
+                                    month: "long",
+                                    year: "numeric",
+                                  })}
+                  </div>
+
+                  <div>
+
+                    <span
+                      className={`px-3 py-1 rounded-full text-xs font-semibold ${getStatusColor(
+                        project.status
+                      )}`}
+                    >
+                      {project.status}
+                    </span>
+
+                  </div>
+
+                </div>
+
+                {project.repositoryUrl && (
+
+                  <a
+                    href={project.repositoryUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <Button className="w-full mt-3">
+
+                      <Github className="mr-2 h-4 w-4" />
+
+                      Open Repository
+
+                    </Button>
+                  </a>
+
+                )}
+
+              </CardContent>
+            </Card>
+
+          ))}
+
+        </div>
+
       </div>
+
     </div>
   );
 }
