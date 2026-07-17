@@ -24,7 +24,7 @@ public interface QuestionService {
 
     public QuestionOptionsRequest getQuestionDetails(Long questionId);
 
-    List<QuestionDisplayToMentor> getAllQuestions(Long userId,Long roleId);
+   // List<QuestionDisplayToMentor> getAllQuestions(Long userId,Long roleId);
 
 
    // public List<DescriptiveQuestion> getDescriptiveQuestion(QuestionType questionType);

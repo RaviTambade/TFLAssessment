@@ -53,41 +53,41 @@ public class QuestionRepositoryImpl implements QuestionRepository {
         return null;
     }
 
-    @Override
-    public List<QuestionDisplayToMentor> getAllQuestions(Long userId,Long roleId) {
-        List<QuestionDisplayToMentor> list = new ArrayList<>();
-        try (Connection connection = getConnection()) {
-            String query = """ 
-                   SELECT
-                        q.question_id,
-                        q.description,
-                        q.question_type
-                    FROM questions q
-                    JOIN user_roles ur
-                        ON ur.user_id = ?
-                    JOIN roles r
-                        ON ur.role_id = r.role_id
-                    WHERE ur.role_id = ?
-                    AND ur.status = 'ACTIVE';      
+    // @Override
+    // public List<QuestionDisplayToMentor> getAllQuestions(Long userId,Long roleId) {
+    //     List<QuestionDisplayToMentor> list = new ArrayList<>();
+    //     try (Connection connection = getConnection()) {
+    //         String query = """ 
+    //                SELECT
+    //                     q.question_id,
+    //                     q.description,
+    //                     q.question_type
+    //                 FROM questions q
+    //                 JOIN user_roles ur
+    //                     ON ur.user_id = ?
+    //                 JOIN roles r
+    //                     ON ur.role_id = r.role_id
+    //                 WHERE ur.role_id = ?
+    //                 AND ur.status = 'ACTIVE';      
 
-                     """;
-                PreparedStatement statement = connection.prepareStatement(query);
-            statement.setLong(1, userId);
-            statement.setLong(2, roleId);
-            ResultSet rs = statement.executeQuery();
-            while (rs.next()) {
-                QuestionDisplayToMentor q = new QuestionDisplayToMentor(
-                        rs.getLong("question_id"),
-                        rs.getString("description"),
-                        QuestionType.valueOf(rs.getString("question_type"))
-                    );
-                list.add(q);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return list;
-    }
+    //                  """;
+    //             PreparedStatement statement = connection.prepareStatement(query);
+    //         statement.setLong(1, userId);
+    //         statement.setLong(2, roleId);
+    //         ResultSet rs = statement.executeQuery();
+    //         while (rs.next()) {
+    //             QuestionDisplayToMentor q = new QuestionDisplayToMentor(
+    //                     rs.getLong("question_id"),
+    //                     rs.getString("description"),
+    //                     QuestionType.valueOf(rs.getString("question_type"))
+    //                 );
+    //             list.add(q);
+    //         }
+    //     } catch (Exception e) {
+    //         e.printStackTrace();
+    //     }
+    //     return list;
+    // }
 
     // @Override
     // public List<Question> getQuestionsByDifficulty(DifficultyLevel difficulty) {
