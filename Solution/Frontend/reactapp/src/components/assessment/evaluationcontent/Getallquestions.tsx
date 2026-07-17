@@ -9,8 +9,8 @@ type Question = {
     title?: string;
     description: string;
     questionType: string;
-            // difficultyLevel: string;
-            // status: string;
+    // difficultyLevel: string;
+    // status: string;
 
 };
 

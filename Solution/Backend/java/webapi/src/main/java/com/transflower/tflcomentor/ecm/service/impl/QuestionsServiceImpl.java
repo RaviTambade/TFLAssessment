@@ -6,8 +6,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.transflower.tflcomentor.ecm.dto.response.QuestionDisplay;
 import com.transflower.tflcomentor.ecm.dto.request.QuestionOptionsRequest;
+import com.transflower.tflcomentor.ecm.dto.response.QuestionDisplay;
+import com.transflower.tflcomentor.ecm.dto.response.QuestionDisplayToMentor;
 import com.transflower.tflcomentor.ecm.entity.CompleteQuestion;
 import com.transflower.tflcomentor.ecm.entity.Question;
 import com.transflower.tflcomentor.ecm.repository.QuestionRepository;
@@ -114,5 +115,10 @@ public class QuestionsServiceImpl implements QuestionService {
     @Override
     public List<String> getConcepts(Long userId, Long roleId) {
         return repository.getConcepts( userId, roleId);
+    }
+
+    @Override
+    public List<QuestionDisplayToMentor> getAllQuestions(Long userId,Long roleId) {
+        return repository.getAllQuestions(userId,roleId);
     }
 }
