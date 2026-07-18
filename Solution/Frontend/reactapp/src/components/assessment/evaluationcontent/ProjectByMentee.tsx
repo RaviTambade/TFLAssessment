@@ -3,20 +3,20 @@ import { WEBAPI_JAVA_URL } from "@/lib/utils";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import {
-  FolderKanban,
-  Search,
-  RefreshCw,
-  Calendar,
-  Github,
-  User,
-} from "lucide-react";
+import { ArrowLeft, Users } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+
+import { FolderKanban, Search, RefreshCw, Calendar, Github, User, } from "lucide-react";
 
 function ProjectByMentee() {
   const [projects, setProjects] = useState<any[]>([]);
-  const [menteeId, setMenteeId] = useState("");
+  const navigate = useNavigate();
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+
+  const currentUser = JSON.parse(sessionStorage.getItem("current") || "{}");
+  const menteeId = currentUser.userid;
 
   useEffect(() => {
     fetchAllProjects();
@@ -43,10 +43,8 @@ function ProjectByMentee() {
   };
 
   const fetchByMenteeId = async () => {
-    if (!menteeId) {
-      setError("Please enter a Mentee ID");
-      return;
-    }
+    const currentUser = JSON.parse(sessionStorage.getItem("current") || "{}");
+    const menteeId = currentUser.userid;
 
     try {
       setLoading(true);
@@ -89,14 +87,25 @@ function ProjectByMentee() {
       <div className="max-w-7xl mx-auto">
 
         {/* Heading */}
-        <div className="mb-8">
-          <h1 className="text-4xl font-bold bg-gradient-primary bg-clip-text text-transparent">
-            Student Projects
-          </h1>
+        <div className="mb-8 flex items-start justify-between">
+          <div>
+            <h1 className="text-4xl font-bold bg-gradient-primary bg-clip-text text-transparent">
+              Student Projects
+            </h1>
 
-          <p className="text-gray-600 mt-2">
-            Monitor and review all mentee projects from one place.
-          </p>
+            <p className="text-muted-foreground mt-2">
+              Monitor and review all mentee projects from one place.
+            </p>
+          </div>
+
+          <Button
+            variant="outline"
+            onClick={() => navigate("/models/membership/dashboard")}
+            className="flex items-center gap-2"
+          >
+            <ArrowLeft className="h-4 w-4" />
+            Back to Dashboard
+          </Button>
         </div>
 
         {/* Search Card */}
@@ -112,20 +121,19 @@ function ProjectByMentee() {
 
             <div className="flex flex-col md:flex-row gap-4">
 
-    
 
-              <Button onClick={fetchByMenteeId}>
-                <Search className="mr-2 h-4 w-4" />
-                Search
-              </Button>
 
-              <Button
-                variant="outline"
-                onClick={fetchAllProjects}
-              >
-                <RefreshCw className="mr-2 h-4 w-4" />
-                Show All
-              </Button>
+              <div className="flex gap-4">
+                <Button onClick={fetchByMenteeId}>
+                  <User className="mr-2 h-4 w-4" />
+                  My Projects
+                </Button>
+
+                <Button variant="outline" onClick={fetchAllProjects}>
+                  <RefreshCw className="mr-2 h-4 w-4" />
+                  All Projects
+                </Button>
+              </div>
 
             </div>
 
@@ -177,17 +185,37 @@ function ProjectByMentee() {
                 <p className="text-gray-600 text-sm">
                   {project.description}
                 </p>
+                <div className="space-y-3">
+
+                  <div className="flex items-center gap-2">
+                    <User className="w-4 h-4 text-blue-500" />
+                    <span className="font-medium">Mentor:</span>
+                    <span>{project.mentorName}</span>
+                  </div>
+
+                  <div className="flex items-start gap-2">
+                    <Users className="w-4 h-4 text-green-500 mt-1" />
+                    <div>
+                      <span className="font-medium">Students:</span>
+
+                      <p className="text-sm text-muted-foreground">
+                        {project.allocatedStudents || "No students allocated"}
+                      </p>
+                    </div>
+                  </div>
+
+                </div>
 
                 <div className="space-y-2 text-sm">
 
-                 
+
                   <div className="flex items-center gap-2">
                     <Calendar size={16} className="text-gray-500" />
                     <strong>Created:</strong> {new Date(project.createdAt).toLocaleDateString("en-IN", {
-                                    day: "2-digit",
-                                    month: "long",
-                                    year: "numeric",
-                                  })}
+                      day: "2-digit",
+                      month: "long",
+                      year: "numeric",
+                    })}
                   </div>
 
                   <div>

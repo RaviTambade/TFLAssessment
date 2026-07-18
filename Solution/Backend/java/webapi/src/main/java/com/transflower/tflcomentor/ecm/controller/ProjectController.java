@@ -2,6 +2,7 @@ package com.transflower.tflcomentor.ecm.controller;
 
 import java.util.List;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.transflower.tflcomentor.ecm.dto.request.ProjectAllocationRequest;
+import com.transflower.tflcomentor.ecm.dto.response.MentorshipActivityResponse;
 import com.transflower.tflcomentor.ecm.dto.response.ProjectAllocationResponse;
 import com.transflower.tflcomentor.ecm.entity.Project;
 import com.transflower.tflcomentor.ecm.entity.ProjectAllocation;
@@ -75,6 +77,16 @@ public class ProjectController {
             return "Student released successfully";
         }
         return "Failed to release student";
+    }
+
+    @GetMapping("/projectMembers/{projectId}")
+    public List<ProjectAllocationResponse> getProjectMembers(@PathVariable Long projectId) {
+        return service.getProjectMember(projectId);
+    }
+
+    @GetMapping("/activities/{mentorId}")
+    public ResponseEntity<List<MentorshipActivityResponse>>getRecentActivities(@PathVariable Long mentorId) {
+        return ResponseEntity.ok(service.getRecentActivities(mentorId));
     }
 
 }

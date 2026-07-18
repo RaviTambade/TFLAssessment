@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.transflower.tflcomentor.ecm.dto.response.MentorshipActivityResponse;
 import com.transflower.tflcomentor.ecm.dto.response.ProjectAllocationResponse;
 import com.transflower.tflcomentor.ecm.entity.Project;
 import com.transflower.tflcomentor.ecm.entity.ProjectAllocation;
@@ -58,5 +59,10 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public List<ProjectAllocationResponse> getProjectMember(Long projectId) {
         return repository.getProjectMember(projectId);
+    }
+
+     @Override
+    public List<MentorshipActivityResponse> getRecentActivities(Long mentorId) {
+        return repository.getRecentActivities(mentorId);
     }
 }

@@ -73,6 +73,11 @@ public class QuestionController {
         return service.getQuestionsByConcept(concept, userId, roleId);
     }
 
+    @GetMapping("/count")
+    public int getQuestionCount() {
+    return service.getQuestionCount();
+    }
+
     // @GetMapping("/all/{userId}/{roleId}")
     // // http://localhost:8080/api/questions/all/22/2
     // public List<QuestionDisplayToMentor> getAllQuestions(@PathVariable Long userId, @PathVariable Long roleId) {

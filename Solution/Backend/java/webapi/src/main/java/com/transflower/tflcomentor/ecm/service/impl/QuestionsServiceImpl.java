@@ -53,6 +53,11 @@ public class QuestionsServiceImpl implements QuestionService {
         return repository.getQuestionById(question_id);
     }
 
+    @Override
+    public int getQuestionCount(){
+        return repository.getQuestionCount();
+    }
+
     // @Override
     // public List<QuestionDisplay> getAllQuestions(Long user_role_Id) {
     //     return repository.getAllQuestions(user_role_Id);
