@@ -49,8 +49,19 @@ const UserProfile = () => {
 
 
   const { id } = useParams();
+  
 
-  const [userId, setUserId] = useState(null);
+const currentUser = sessionStorage.getItem("current");
+
+const loggedInUserId = currentUser
+  ? JSON.parse(currentUser).userid
+  : null;
+
+// If URL contains an id, use it.
+// Otherwise use the logged-in user's id.
+const profileUserId = id ?? loggedInUserId;
+
+const userId = profileUserId;
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -68,20 +79,8 @@ const UserProfile = () => {
   const fetchPersonalDetails = async () => {
     setLoading(true);
 
-   let userid = id;
+    const userid = profileUserId;
 
-if (!userid) {
-  const storedUser = sessionStorage.getItem("current");
-
-  if (storedUser) {
-    try {
-      const user = JSON.parse(storedUser);
-      userid = user.userid;
-    } catch {
-      console.error("Invalid user data");
-    }
-  }
-}
     if (!userid) {
       console.error("User ID not found");
       setLoading(false);
@@ -112,20 +111,7 @@ if (!userid) {
   const fetchProfessionalDetails = async () => {
     setLoading(true);
 
-   let userid = id;
-
-if (!userid) {
-  const storedUser = sessionStorage.getItem("current");
-
-  if (storedUser) {
-    try {
-      const user = JSON.parse(storedUser);
-      userid = user.userid;
-    } catch {
-      console.error("Invalid user data");
-    }
-  }
-}
+    const userid = profileUserId;
 
     if (!userid) {
       console.error("User ID not found");
@@ -153,20 +139,7 @@ if (!userid) {
   const fetchAcademicDetails = async () => {
     setLoading(true);
 
-    let userid = id;
-
-if (!userid) {
-  const storedUser = sessionStorage.getItem("current");
-
-  if (storedUser) {
-    try {
-      const user = JSON.parse(storedUser);
-      userid = user.userid;
-    } catch {
-      console.error("Invalid user data");
-    }
-  }
-}
+    const userid = profileUserId;
 
     if (!userid) {
       console.error("User ID not found");
@@ -191,47 +164,24 @@ if (!userid) {
     }
   };
 
-useEffect(() => {
-  if (id) {
-    setUserId(Number(id));
-  } else {
-    const currentuser = sessionStorage.getItem("current");
 
-    if (currentuser) {
-      const user = JSON.parse(currentuser);
-      setUserId(user.userid);
-    }
-  }
-}, [id]);
-
+  
   useEffect(() => {
-    if (!userId) return;
+  if (!profileUserId) return;
 
-    fetch(`${WEBAPI_NODE_URL}/roles/getUserByRole/${userId}`)
-      .then(res => {
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        return res.json();
-      })
-      .then(res => {
-        if (res.success) {
-          console.log("USER ROLES:", res.data);
-          setUserRoles(res.data);
-        } else {
-          setError("No data found");
-        }
-        setLoading(false);
-      })
-      .catch(err => {
-        console.error("Failed to fetch roles:", err);
-        setLoading(false);
-      });
+  fetch(`${WEBAPI_NODE_URL}/roles/getUserByRole/${profileUserId}`)
+    .then(res => res.json())
+    .then(res => {
+      if (res.success) {
+        setUserRoles(res.data);
+      }
+    });
 
+  fetchPersonalDetails();
+  fetchProfessionalDetails();
+  fetchAcademicDetails();
 
-    fetchPersonalDetails();
-    fetchProfessionalDetails();
-    fetchAcademicDetails();
-
-  }, [userId]);
+}, [profileUserId]);
 
   if (loading) return <div className="text-center mt-20">Loading...</div>;
   if (error) return <div className="text-center text-red-500 mt-20">{error}</div>;
@@ -254,37 +204,42 @@ useEffect(() => {
     };
   };
 
-  const updateSingleField = async (endpoint: string, field: string, value: any) => {
-    try {
+const updateSingleField = async (
+  endpoint: string,
+  field: string,
+  value: any
+) => {
+  try {
+    const userid = profileUserId;
 
-      const storedUser = sessionStorage.getItem("current");
-
-      if (!storedUser) return;
-      const user = JSON.parse(storedUser);
-      const userid = user?.userid;
-      const response = await fetch(`${WEBAPI_NODE_URL}/users/${userid}/${endpoint}`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
-
-          body: JSON.stringify({ [field]: value, }),
-        }
-      );
-
-      const result = await response.json();
-
-      console.log("UPDATED:", result);
-
-      setEditingField("");
-
-    } catch (error) {
-      console.error("Update failed", error);
+    if (!userid) {
+      console.error("User ID not found");
+      return;
     }
-  };
 
-  const onEditHandle = (field: string) => { setEditingField(field); };
+    const response = await fetch(
+      `${WEBAPI_NODE_URL}/users/${userid}/${endpoint}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          [field]: value,
+        }),
+      }
+    );
+
+    const result = await response.json();
+
+    console.log("UPDATED:", result);
+
+    setEditingField("");
+  } catch (error) {
+    console.error("Update failed", error);
+  }
+};
+  const onEditHandle = (field: string) => {setEditingField(field); };
 
 
   return (
@@ -615,16 +570,16 @@ useEffect(() => {
                             type="text"
                             value={personalData?.contact || ""}
                             className="flex-1"
-                            disabled={editingField !== "Contact"}
+                            disabled={editingField !== "contact"}
                             onChange={(e) => handleChange("personal", "contact", e.target.value)}
                           />
-                          {/* 
+                          
                           <img
                             src="/editlogo.png"
-                            onClick={() => onEditHandle("Contact")}
+                            onClick={() => onEditHandle("contact")}
                             className="h-8 w-8 cursor-pointer"
                             alt="Edit Logo"
-                          /> */}
+                          />
                         </div>
                       </>
                     )}

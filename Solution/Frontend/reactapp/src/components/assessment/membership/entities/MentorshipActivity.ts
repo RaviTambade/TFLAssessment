@@ -1,10 +1,7 @@
-
-interface MentorshipActivity {
-  id: number;
+export default interface MentorshipActivity {
   menteeName: string;
-  activityType: "session" | "feedback" | "assignment" | "guidance";
-  description: string;
-  date: string;
-  completionStatus: "completed" | "pending" | "in-progress";
+  activityType: string;
+  activity: string;
+  activityDate: string;
+  status: string;
 }
-export default MentorshipActivity;  

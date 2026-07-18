@@ -60,10 +60,7 @@ const EvaluationDashboard = () => {
                 {/* HEADER */}
                 <div className="text-center mb-8">
                     <h2 className="text-2xl sm:text-3xl font-bold text-foreground mb-3">
-                        Evaluation Content{" "}
-                        <span className="bg-gradient-primary bg-clip-text text-transparent">
-                            Dashboard
-                        </span>
+                            QUESTION BANK
                     </h2>
 
                 </div>

@@ -6,7 +6,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -17,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.transflower.tflcomentor.ecm.dto.request.QuestionOptionsRequest;
 import com.transflower.tflcomentor.ecm.dto.response.QuestionDisplay;
-import com.transflower.tflcomentor.ecm.dto.response.QuestionWithStatus;
+import com.transflower.tflcomentor.ecm.dto.response.QuestionDisplayToMentor;
 import com.transflower.tflcomentor.ecm.entity.CompleteQuestion;
 import com.transflower.tflcomentor.ecm.entity.Question;
 import com.transflower.tflcomentor.ecm.service.QuestionService;
@@ -73,6 +72,17 @@ public class QuestionController {
     public List<Question> getQuestionsByConcept(@PathVariable String concept, @PathVariable Long userId, @PathVariable Long roleId) {
         return service.getQuestionsByConcept(concept, userId, roleId);
     }
+
+    @GetMapping("/count")
+    public int getQuestionCount() {
+    return service.getQuestionCount();
+    }
+
+    // @GetMapping("/all/{userId}/{roleId}")
+    // // http://localhost:8080/api/questions/all/22/2
+    // public List<QuestionDisplayToMentor> getAllQuestions(@PathVariable Long userId, @PathVariable Long roleId) {
+    //     return service.getAllQuestions(userId, roleId);
+    // }
 
     // @GetMapping({"user/{user_role_Id}"})
     // // http://localhost:8080/api/questions

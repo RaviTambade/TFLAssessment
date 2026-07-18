@@ -37,60 +37,66 @@ public class QuestionFilterRepositoryImpl implements QuestionFilterRepository {
         List<Question> questionList = new ArrayList<>();
 
         String query = """
-                                    SELECT DISTINCT q.*
-                FROM questions q
-                JOIN expertise e
-                    ON LOWER(q.runtime) = LOWER(e.runtime)
-                WHERE e.user_id = ?
-                AND EXISTS (
-                    SELECT 1
-                    FROM user_roles ur
-                    WHERE ur.user_id = e.user_id
-                        AND ur.role_id = ?
+                SELECT DISTINCT q.*
+        FROM questions q
+        WHERE
+        (
+            ? = 3
+            OR
+            (
+                ? = 4
+                AND q.runtime IN (
+                    SELECT e.runtime
+                    FROM expertise e
+                    WHERE e.user_id = ?
                 )
-                AND (? IS NULL OR LOWER(q.language) = LOWER(?))
-                AND (? IS NULL OR LOWER(q.layer) = LOWER(?))
-                AND (? IS NULL OR LOWER(q.concept) = LOWER(?))
-                AND (? IS NULL OR LOWER(q.framework) = LOWER(?))
-                AND (? IS NULL OR q.question_type = ?)
-                AND (? IS NULL OR q.difficulty_level = ?)
-                AND (? IS NULL OR q.status = ?);
+            )
+        )
+        AND (? IS NULL OR LOWER(q.language) = LOWER(?))
+        AND (? IS NULL OR LOWER(q.layer) = LOWER(?))
+        AND (? IS NULL OR LOWER(q.concept) = LOWER(?))
+        AND (? IS NULL OR LOWER(q.framework) = LOWER(?))
+        AND (? IS NULL OR q.question_type = ?)
+        AND (? IS NULL OR q.difficulty_level = ?)
+        AND (? IS NULL OR q.status = ?);
                                 """;
         try (Connection connection = getConnection()) {
 
             PreparedStatement ps = connection.prepareStatement(query);
 
-                // user id & role id
-                ps.setLong(1, userId);
-                ps.setLong(2, roleId);
+            // role check
+            ps.setLong(1, roleId);   // Mentor check
+            ps.setLong(2, roleId);   // SME check
+            ps.setLong(3, userId);   // SME expertise lookup
 
-                // language
-                ps.setString(3, language);
-                ps.setString(4, language);
+            // language
+            ps.setString(4, language);
+            ps.setString(5, language);
 
-                // layer
-                ps.setString(5, layer);
-                ps.setString(6, layer);
+            // layer
+            ps.setString(6, layer);
+            ps.setString(7, layer);
 
-                // concept
-                ps.setString(7, concept);
-                ps.setString(8, concept);
+            // concept
+            ps.setString(8, concept);
+            ps.setString(9, concept);
 
-                // framework
-                ps.setString(9, framework);
-                ps.setString(10, framework);
+            // framework
+            ps.setString(10, framework);
+            ps.setString(11, framework);
 
-                // question type
-                ps.setString(11, question_type != null ? question_type.name() : null);
-                ps.setString(12, question_type != null ? question_type.name() : null);
+            // question type
+            ps.setString(12, question_type != null ? question_type.name() : null);
+            ps.setString(13, question_type != null ? question_type.name() : null);
 
-                // difficulty
-                ps.setString(13, difficulty_level != null ? difficulty_level.name() : null);
-                ps.setString(14, difficulty_level != null ? difficulty_level.name() : null);
+            // difficulty
+            ps.setString(14, difficulty_level != null ? difficulty_level.name() : null);
+            ps.setString(15, difficulty_level != null ? difficulty_level.name() : null);
 
-                // status
-                ps.setString(15, status != null ? status.name() : null);
-                ps.setString(16, status != null ? status.name() : null);
+            // status
+            ps.setString(16, status != null ? status.name() : null);
+            ps.setString(17, status != null ? status.name() : null);
+                
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
