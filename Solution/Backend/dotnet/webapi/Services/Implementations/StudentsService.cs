@@ -24,5 +24,10 @@ namespace backend.Services.Implementations
         {
              return await _repository.GetAllStudents();
         }
+
+        public async Task<StudentPerformanceResponse?> GetStudentPerformance(long studentId)
+        {
+            return await _repository.GetStudentPerformance(studentId);
+        }
     }
 }

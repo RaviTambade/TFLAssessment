@@ -65,8 +65,12 @@ import ParticulerTestStudentDetails from "@/components/assessment/assessmentOrch
 
 // mentor dashboard
 import MentorUpdateQuestions from "@/components/assessment/evaluationcontent/Mentor/MentorUpdateQuestions";
+<<<<<<< HEAD
+import CompletedAssessments from "@/components/assessment/assessmentOrchestrator/CompletedAssessments";
+=======
 import TestList from "@/components/assessment/assessmentOrchestrator/TestList";
 
+>>>>>>> 47e999c741171d57c1c7a7037d0ea14296adc577
 
 function AppRoutes() {
   return (
@@ -89,6 +93,10 @@ function AppRoutes() {
           <Route
             path="evaluationcontent/questionbytype"
             element={<QuestionByType />}
+          />
+          <Route 
+          path="assessmentorchestrator/completed-assessments" 
+          element={<CompletedAssessments />} 
           />
           <Route
             path="evaluationcontent/questionsbyconceptid"element={<QuestionByConceptId />}/>

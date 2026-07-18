@@ -42,8 +42,7 @@ builder.Services.AddScoped<IStudentResultRepository, StudentResultRepository>();
 
 builder.Services.AddScoped<IUserSessionRepository, UsersessionRepository>();
 builder.Services.AddScoped<IQuestionsRepository, QuestionsRepository>();
-builder.Services.AddScoped<IQuestionsService, QuestionsService>();
- 
+builder.Services.AddScoped<IQuestionsService, QuestionsService>(); 
 
 // builder.Services.AddScoped<ILayersService, LayersService>();
 // builder.Services.AddScoped<ILayersRepository, LayersRepository>();
