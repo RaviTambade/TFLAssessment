@@ -58,7 +58,8 @@ public class AssessmentRepository : IAssessmentRepository
                 command.Parameters.AddWithValue("@FromDate", fromDate);
                 command.Parameters.AddWithValue("@ToDate", toDate);
 
-                using (MySqlDataReader reader =
+                using (
+                     MySqlDataReader reader =
                        (MySqlDataReader)await command.ExecuteReaderAsync())
                 {
                     int srNo = 1;
