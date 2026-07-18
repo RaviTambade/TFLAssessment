@@ -7,5 +7,7 @@ namespace backend.Repositories.Interfaces
         Task<StudentCounts> GetTotalStudents();
 
         Task<List<StudentResponse>> GetAllStudents();
+
+        Task<StudentPerformanceResponse?> GetStudentPerformance(long studentId);
     }
 }

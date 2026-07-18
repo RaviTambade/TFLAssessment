@@ -825,5 +825,63 @@ public class AssessmentRepository : IAssessmentRepository
         return list;
     }
 
+    public async Task<List<CompletedAssessmentsResponse>> GetCompletedAssessments(int studentId)
+{
+    List<CompletedAssessmentsResponse> list = new();
+
+
+    string query = @"
+                    SELECT
+                    sar.id,
+                    sar.assessment_id,
+                    t.title AS assessment_name,
+                    sar.score,
+                    sar.percentage,
+                    sar.time_taken_minutes
+
+                FROM student_assessment_results sar
+
+                JOIN assessments a
+                ON sar.assessment_id = a.id
+
+                JOIN tests t
+                ON a.test_id = t.id
+
+                WHERE sar.student_id =@studentId";
+
+
+    using(MySqlConnection con = new MySqlConnection(_connectionString))
+    {
+        await con.OpenAsync();
+
+        MySqlCommand cmd = new MySqlCommand(query, con);
+
+        cmd.Parameters.AddWithValue("@studentId", studentId);
+
+
+        using(MySqlDataReader reader = (MySqlDataReader)await  cmd.ExecuteReaderAsync())
+        {
+            while( await reader.ReadAsync())
+            {
+                list.Add(new CompletedAssessmentsResponse
+                {
+                    Id = reader.GetInt32("id"),
+
+                    AssessmentId = reader.GetInt32("assessment_id"),
+
+                    AssessmentName = reader.GetString("assessment_name"),
+
+                    Score = reader.GetInt32("score"),
+
+                    Percentage = reader.GetDouble("percentage"),
+
+                    TimeTakenMinutes = reader.GetInt32("time_taken_minutes")
+                });
+            }
+        }
+    }
+    return list;
+}
+
     // interface implementation is provided by AssignAssessmentAsync
 }

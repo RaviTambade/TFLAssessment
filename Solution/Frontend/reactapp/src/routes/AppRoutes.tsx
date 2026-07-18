@@ -64,6 +64,7 @@ import QuestionFeedback from "@/components/assessment/interview/QuestionFeedback
 
 // mentor dashboard
 import MentorUpdateQuestions from "@/components/assessment/evaluationcontent/Mentor/MentorUpdateQuestions";
+import CompletedAssessments from "@/components/assessment/assessmentOrchestrator/CompletedAssessments";
 
 function AppRoutes() {
   return (
@@ -86,6 +87,10 @@ function AppRoutes() {
           <Route
             path="evaluationcontent/questionbytype"
             element={<QuestionByType />}
+          />
+          <Route 
+          path="assessmentorchestrator/completed-assessments" 
+          element={<CompletedAssessments />} 
           />
           <Route
             path="evaluationcontent/questionsbyconceptid"

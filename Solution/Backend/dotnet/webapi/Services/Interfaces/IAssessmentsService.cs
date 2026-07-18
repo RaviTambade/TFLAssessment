@@ -28,5 +28,7 @@ public interface IAssessmentsService
     Task<List<AllAssessments>> GetAllAssessments();
 
     Task<List<AssessmentSummaries>> GetAssessmentSummariesForStudent(long studentId);
+
+    Task<List<CompletedAssessmentsResponse>> GetCompletedAssessments(int studentId);
 }
 

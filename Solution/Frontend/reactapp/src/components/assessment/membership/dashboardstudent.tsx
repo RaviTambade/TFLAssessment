@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
-
+import { useEffect, useState, } from "react";
+import { useNavigate } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "../../ui/card";
 import { Bell, Calendar, Award, TrendingUp, CheckCircle, AlertCircle, Clock } from "lucide-react";
-import { WEBAPI_NODE_URL } from "@/lib/utils";
+import { WEBAPI_DOTNET_URL } from "@/lib/utils";
 import Notification from "./entities/Notification";
 import ScheduledAssessment from "./entities/ScheduledAssessment";
 import Result from "./entities/StudentResult";
@@ -10,7 +10,6 @@ import LearningCurveData from "./entities/LearningCurveData";
 import AllNotification from "./data/notifications/studentNotification.json";
 import AllScheduledAssessments from "./data/ScheuledAssessment.json";
 import StudentResults from "./data/studentResult.json";
-
 
 
 
@@ -25,10 +24,11 @@ const DashboardStudent = () => {
     // render functions
 
 
-
+   const navigate= useNavigate();
     //data members
-   const[name, setName] = useState<string>("Ravi Tambade");
-   const[role, setRole] = useState<string>("Chief Mentor");
+   const[name, setName] = useState<string>("");
+   const[role, setRole] = useState<string>("");
+   const [performance, setPerformance] = useState({totalCompletedAssessments: 0,averageScore: 0});
 
    const[profilePicture, setProfilePicture] = useState<string>("https://avatars.githubusercontent.com/u/12345678?v=4");
   // Hardcoded Notifications Data
@@ -69,6 +69,14 @@ useEffect(() => {
   if (currentUser) {
 
     const user = JSON.parse(currentUser);
+    const studentId = user.userid;
+
+    fetch(`${WEBAPI_DOTNET_URL}/Students/performance/${studentId}`)
+    .then((response) => response.json())
+   .then((data) => {
+    setPerformance(data);
+})
+  .catch((error) => console.error(error));
 
     setName(
       `${user.firstname} ${user.lastname}`
@@ -91,13 +99,17 @@ useEffect(() => {
         </div>
 
         {/* Top Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4"
+        >
           <Card>
-            <CardContent className="p-6">
+            <CardContent className="p-6"
+            
+                     onClick={() => navigate("/models/assessmentorchestrator/completed-assessments")}
+>
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-gray-600 text-sm font-medium">Assessments Completed</p>
-                  <p className="text-3xl font-bold text-gray-900 mt-1">4</p>
+                  <p className="text-3xl font-bold text-gray-900 mt-1">{performance.totalCompletedAssessments}</p>
                 </div>
                 <Award className="w-12 h-12 text-blue-500 opacity-20" />
               </div>
@@ -109,7 +121,7 @@ useEffect(() => {
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-gray-600 text-sm font-medium">Average Score</p>
-                  <p className="text-3xl font-bold text-gray-900 mt-1">80.25%</p>
+                  <p className="text-3xl font-bold text-gray-900 mt-1">{performance.averageScore}%</p>
                 </div>
                 <TrendingUp className="w-12 h-12 text-green-500 opacity-20" />
               </div>
@@ -118,7 +130,8 @@ useEffect(() => {
 
           <Card>
             <CardContent className="p-6">
-              <div className="flex items-center justify-between">
+              <div className="flex items-center justify-between"
+              onClick={() => navigate("/models/upcoming-assessment")}>
                 <div>
                   <p className="text-gray-600 text-sm font-medium">Upcoming Assessments</p>
                   <p className="text-3xl font-bold text-gray-900 mt-1">3</p>
