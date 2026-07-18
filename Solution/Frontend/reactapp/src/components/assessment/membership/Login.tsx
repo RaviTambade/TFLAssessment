@@ -24,7 +24,11 @@ import Role from "./entities/Role";
 const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
+<<<<<<< HEAD
   const [username, setUsername] = useState("7972542628");
+=======
+  const [username, setUsername] = useState("");
+>>>>>>> 47e999c741171d57c1c7a7037d0ea14296adc577
   const [password, setPassword] = useState("12345");
   const [roles, setRoles] = useState<Role[]>([]);
   const [role, setRole] = useState("");

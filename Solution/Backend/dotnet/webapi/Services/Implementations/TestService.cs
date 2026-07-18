@@ -1,6 +1,7 @@
 using backend.DTO.Requests;
 using backend.DTO.Responses;
 using backend.Repositories.Interfaces;
+using backend.Services.Interfaces;
 
 namespace backend.Services
 {
@@ -14,7 +15,7 @@ namespace backend.Services
         }
 
         public Task<List<TestQuestions>> GetQuestionsBySMEAsync(long userId)
-             => _repo.GetQuestionsBySMEAsync(userId);
+            => _repo.GetQuestionsBySMEAsync(userId);
 
         public Task<long> CreateTestAsync(CreateTestRequests dto)
             => _repo.CreateTestAsync(dto);
@@ -26,8 +27,19 @@ namespace backend.Services
         }
 
         public async Task<List<GetSmeCreatedTestResponse>> GetSmeCreatedTestAsync(long userId)
-{
-      return await _repo.GetSmeCreatedTestAsync(userId);
-}
+        {
+        return await _repo.GetSmeCreatedTestAsync(userId);
+        }
+
+        public async Task<List<TestDetails>> GetTestDetailsForMentor()
+        {
+            return await _repo.GetTestDetailsForMentor();
+        }
+
+        public async Task<List<TestStudentDetails>> GetTestStudentsDetails(long TestId)
+        {
+            return await _repo.GetTestStudentsDetails(TestId);
+        }
+
     }
 }

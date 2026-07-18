@@ -4,6 +4,7 @@ import { Bell, Users, Lock, TrendingUp, CheckCircle, AlertCircle, Shield, Settin
 import UserActivity from "./UserActivity";
 import { useNavigate } from "react-router-dom";
 import { WEBAPI_NODE_URL } from "@/lib/utils";
+import { WEBAPI_DOTNET_URL } from "@/lib/utils";
 
 
 import Notification from "./entities/Notification";
@@ -17,23 +18,27 @@ import MemberActivities from "./data/memberActivities.json";
 
 //function component for Admin Dashboard - Transflower Membership & Roles Management
 const DashboardAdmin = () => {
-    //parts
-    // State for admin user data
-    // Data members for member management
-    // Helper functions for role management
-    // Render functions for admin features
+  //parts
+  // State for admin user data
+  // Data members for member management
+  // Helper functions for role management
+  // Render functions for admin features
 
-    //data members
-   const[adminName, setAdminName] = useState<string>("Admin User");
-   const[organization, setOrganization] = useState<string>("Transflower");
-   const[profilePicture, setProfilePicture] = useState<string>("https://avatars.githubusercontent.com/u/12345678?v=4");
-   const navigate=useNavigate();
+  //data members
+  const [adminName, setAdminName] = useState<string>("Admin User");
+  const [organization, setOrganization] = useState<string>("Transflower");
+  const [profilePicture, setProfilePicture] = useState<string>("https://avatars.githubusercontent.com/u/12345678?v=4");
+  const [activeRoles, setActiveRoles] = useState<number>(0);
+  const [activeRolesList, setActiveRolesList] = useState<number>(0);
+
+  
+  const navigate = useNavigate();
 
   // Admin System Notifications
-  const adminNotifications: Notification[] = AdminNotifications as Notification[] ;
+  const adminNotifications: Notification[] = AdminNotifications as Notification[];
 
   // Member Directory - Organization Membership
-  const members: Member[] =  Members as Member[] ;
+  const members: Member[] = Members as Member[];
 
   // Role Definitions and Permissions
   const rolePermissions: RolePermission[] = RolePermissions as RolePermission[];
@@ -44,12 +49,20 @@ const DashboardAdmin = () => {
   useEffect(() => {
 
     const apiURL = `${WEBAPI_NODE_URL}/admin/profile`;
-    
+
     fetch(apiURL).then((response) => response.json()).then((data) => {
-          setAdminName(data.adminName);
-          setOrganization(data.organization);
-          setProfilePicture(data.profilePicture);
-        });
+      setAdminName(data.adminName);
+      setOrganization(data.organization);
+      setProfilePicture(data.profilePicture);
+    });
+
+    fetch(`${WEBAPI_DOTNET_URL}/Roles/active/_roles/count`)
+       .then((response) => response.json())
+    .then((data) => {
+      setActiveRoles(data); 
+    })
+      .catch((error) => console.error(error));
+    
   }, []);
 
   // Render the Admin Management dashboard UI
@@ -67,7 +80,7 @@ const DashboardAdmin = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           <Card>
             <CardContent className="p-6">
-              <div className="flex items-center justify-between" onClick={()=>{navigate("/models/membership/ManageUsers")}}>
+              <div className="flex items-center justify-between" onClick={() => { navigate("/models/membership/ManageUsers") }}>
                 <div>
                   <p className="text-gray-600 text-sm font-medium">Total Members</p>
                   <p className="text-3xl font-bold text-gray-900 mt-1">72</p>
@@ -77,18 +90,25 @@ const DashboardAdmin = () => {
             </CardContent>
           </Card>
 
-          <Card>
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-gray-600 text-sm font-medium">Active Roles</p>
-                  <p className="text-3xl font-bold text-gray-900 mt-1">5</p>
-                </div>
-                <Shield className="w-12 h-12 text-green-500 opacity-20" />
-              </div>
-            </CardContent>
-          </Card>
+         <Card>
+  <CardContent className="p-6">
+    <div
+      className="flex items-center justify-between cursor-pointer"
+      onClick={() => navigate("/models/membership/active-roles")}
+    >
+      <div>
+        <p className="text-gray-600 text-sm font-medium">
+          Active Roles
+        </p>
+        <p className="text-3xl font-bold text-gray-900 mt-1">
+          {activeRoles}
+        </p>
+      </div>
 
+      <Shield className="w-12 h-12 text-green-500 opacity-20" />
+    </div>
+  </CardContent>
+</Card>
           <Card>
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
@@ -103,7 +123,7 @@ const DashboardAdmin = () => {
 
           <Card>
             <CardContent className="p-6">
-              <div className="flex items-center justify-between" onClick={()=>{navigate("/models/membership/UserActivity")}}>
+              <div className="flex items-center justify-between" onClick={() => { navigate("/models/membership/UserActivity") }}>
                 <div>
                   <p className="text-gray-600 text-sm font-medium">Active Sessions</p>
                   <p className="text-3xl font-bold text-gray-900 mt-1">28</p>
@@ -129,15 +149,14 @@ const DashboardAdmin = () => {
                 {adminNotifications.map((notification) => (
                   <div
                     key={notification.id}
-                    className={`p-4 rounded-lg border-l-4 ${
-                      notification.type === "info"
-                        ? "bg-blue-50 border-blue-400"
-                        : notification.type === "success"
+                    className={`p-4 rounded-lg border-l-4 ${notification.type === "info"
+                      ? "bg-blue-50 border-blue-400"
+                      : notification.type === "success"
                         ? "bg-green-50 border-green-400"
                         : notification.type === "warning"
-                        ? "bg-yellow-50 border-yellow-400"
-                        : "bg-red-50 border-red-400"
-                    }`}
+                          ? "bg-yellow-50 border-yellow-400"
+                          : "bg-red-50 border-red-400"
+                      }`}
                   >
                     <div className="flex items-start justify-between">
                       <div className="flex-1">
@@ -180,10 +199,9 @@ const DashboardAdmin = () => {
                           Created: {role.createdDate} • Members: {role.memberCount}
                         </p>
                       </div>
-                      <span className={`px-3 py-1 rounded-full text-xs font-medium ${
-                        role.status === "active" ? "bg-green-100 text-green-800" :
+                      <span className={`px-3 py-1 rounded-full text-xs font-medium ${role.status === "active" ? "bg-green-100 text-green-800" :
                         "bg-gray-100 text-gray-800"
-                      }`}>
+                        }`}>
                         {role.status}
                       </span>
                     </div>
@@ -220,20 +238,18 @@ const DashboardAdmin = () => {
                       )}
                     </div>
                     <div className="flex justify-between text-xs mb-2">
-                      <span className={`font-bold px-2 py-0.5 rounded ${
-                        member.role === "admin" ? "bg-red-100 text-red-800" :
+                      <span className={`font-bold px-2 py-0.5 rounded ${member.role === "admin" ? "bg-red-100 text-red-800" :
                         member.role === "mentor" ? "bg-blue-100 text-blue-800" :
-                        member.role === "sme" ? "bg-purple-100 text-purple-800" :
-                        member.role === "employer" ? "bg-green-100 text-green-800" :
-                        "bg-gray-100 text-gray-800"
-                      }`}>
+                          member.role === "sme" ? "bg-purple-100 text-purple-800" :
+                            member.role === "employer" ? "bg-green-100 text-green-800" :
+                              "bg-gray-100 text-gray-800"
+                        }`}>
                         {member.role}
                       </span>
-                      <span className={`px-2 py-0.5 rounded font-bold ${
-                        member.status === "active" ? "bg-green-100 text-green-800" :
+                      <span className={`px-2 py-0.5 rounded font-bold ${member.status === "active" ? "bg-green-100 text-green-800" :
                         member.status === "pending" ? "bg-yellow-100 text-yellow-800" :
-                        "bg-red-100 text-red-800"
-                      }`}>
+                          "bg-red-100 text-red-800"
+                        }`}>
                         {member.status}
                       </span>
                     </div>
@@ -261,11 +277,10 @@ const DashboardAdmin = () => {
                         <p className="font-medium text-gray-900">{activity.memberName}</p>
                         <p className="text-xs text-gray-600">{activity.description}</p>
                       </div>
-                      <span className={`text-xs font-bold px-2 py-0.5 rounded ${
-                        activity.status === "completed" ? "bg-green-100 text-green-800" :
+                      <span className={`text-xs font-bold px-2 py-0.5 rounded ${activity.status === "completed" ? "bg-green-100 text-green-800" :
                         activity.status === "pending" ? "bg-yellow-100 text-yellow-800" :
-                        "bg-red-100 text-red-800"
-                      }`}>
+                          "bg-red-100 text-red-800"
+                        }`}>
                         {activity.status}
                       </span>
                     </div>

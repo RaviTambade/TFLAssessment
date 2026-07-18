@@ -1,5 +1,6 @@
 using backend.DTO.Requests;
 using backend.DTO.Responses;
+using backend.Models;
 
 namespace backend.Services.Interfaces
 {
@@ -9,6 +10,7 @@ namespace backend.Services.Interfaces
         Task<long> CreateTestAsync(CreateTestRequests dto);
         Task<bool> CancelTestAsync(int id);
          Task<List<GetSmeCreatedTestResponse>> GetSmeCreatedTestAsync(long userId);
-        
+        Task<List<TestDetails>> GetTestDetailsForMentor();
+        Task<List<TestStudentDetails>> GetTestStudentsDetails(long TestId);
     }
 }

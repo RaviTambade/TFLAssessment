@@ -46,12 +46,27 @@ public class QuestionRepositoryImpl implements QuestionRepository {
                 String status = rs.getString("status");
                 return new QuestionDisplay(id, description, questionType, DifficultyLevel.valueOf(difficultyLevel), QuestionStatus.valueOf(status));
             }
-
         } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
     }
+
+    @Override
+    public int getQuestionCount() {
+        int count = 0;
+        try (Connection connection = getConnection()) {
+        String sql = "SELECT COUNT(*) AS total FROM questions";
+        PreparedStatement statement = connection.prepareStatement(sql);
+        ResultSet rs = statement.executeQuery();
+        if (rs.next()) {
+            count = rs.getInt("total");
+        }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return count;
+}
 
     // @Override
     // public List<QuestionDisplayToMentor> getAllQuestions(Long userId,Long roleId) {

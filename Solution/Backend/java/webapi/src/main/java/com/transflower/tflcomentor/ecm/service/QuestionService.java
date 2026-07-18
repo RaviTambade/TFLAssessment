@@ -13,6 +13,7 @@ public interface QuestionService {
 
     // public Long createQuestionWithOptions(QuestionOptionsRequest   dto);
     public QuestionDisplay getQuestionById(long questionId);
+    public int getQuestionCount();
 
    // public List<QuestionDisplay> getAllQuestions(Long user_role_Id);
 
