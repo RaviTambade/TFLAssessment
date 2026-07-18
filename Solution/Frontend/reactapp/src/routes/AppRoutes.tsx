@@ -60,10 +60,13 @@ import InterviewFeedback from "@/components/assessment/interview/InterviewFeedba
 import DashboardSME from "@/components/assessment/membership/dashboardsme";
 import StudentList from "@/components/assessment/assessmentOrchestrator/StudentList";
 import QuestionFeedback from "@/components/assessment/interview/QuestionFeedback";
+import ParticulerTestStudentDetails from "@/components/assessment/assessmentOrchestrator/ParticulerTestStudentDetails";
 
 
 // mentor dashboard
 import MentorUpdateQuestions from "@/components/assessment/evaluationcontent/Mentor/MentorUpdateQuestions";
+import TestList from "@/components/assessment/assessmentOrchestrator/TestList";
+
 
 function AppRoutes() {
   return (
@@ -88,9 +91,7 @@ function AppRoutes() {
             element={<QuestionByType />}
           />
           <Route
-            path="evaluationcontent/questionsbyconceptid"
-            element={<QuestionByConceptId />}
-          />
+            path="evaluationcontent/questionsbyconceptid"element={<QuestionByConceptId />}/>
           <Route
             path="evaluationcontent/getquestionsbydate"
             element={<GetQuestionsByDate />}
@@ -209,6 +210,12 @@ function AppRoutes() {
             path="/created-assessments"
             element={<CreatedAssessments />}
           />
+          <Route path="Assessment/testList" element={<TestList/>}/>
+
+          <Route
+          path="/tests/:testId"
+          element={<ParticulerTestStudentDetails />}
+        />
 
 
           <Route path="membership/Login" element={<LoginPage />} />

@@ -75,7 +75,7 @@ public class CreateTestController : ControllerBase
     /// </summary>
     
     
-     [HttpPut("cancel/{id}")]
+    [HttpPut("cancel/{id}")]
     public async Task<IActionResult> CancelTest(int id)
     {
         var result = await _service.CancelTestAsync(id);
@@ -213,15 +213,25 @@ public class CreateTestController : ControllerBase
         [HttpGet("GetSmeCreatedTest/{userId}")]
         public async Task<IActionResult> GetSmeCreatedTest(long userId)
         {
-            
             {
                 var result = await _service.GetSmeCreatedTestAsync(userId);
-
-                  return Ok(result);
+                return Ok(result);
             }
-            
-            
         }
+
+        [HttpGet("testDetailsForMentor")]
+        public async Task<IActionResult> GetTestDetailsForMentor()
+    {
+        var result= await _service.GetTestDetailsForMentor();
+        return Ok(result);
+    }
+
+    [HttpGet("testStudentDetails/{TestId}")]
+     public async Task<IActionResult> GetTestStudentsDetails(long TestId)
+    {
+        var result=await _service.GetTestStudentsDetails(TestId);
+        return Ok(result);
+    }
     
 
 }

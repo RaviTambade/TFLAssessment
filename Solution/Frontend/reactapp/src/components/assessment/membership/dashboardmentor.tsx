@@ -150,7 +150,8 @@ const DashboardMentor = () => {
         {/* Top Stats */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
 
-          <Card className="group cursor-pointer border-0 overflow-hidden shadow-elegant hover:shadow-glow transition-all duration-300 hover:-translate-y-2" onClick={() => navigate("/models/evaluationcontent/ProjectByMentee")}>
+          <Card className="group cursor-pointer border-0 overflow-hidden shadow-elegant hover:shadow-glow transition-all duration-300 hover:-translate-y-2" 
+          onClick={() => navigate("/models/evaluationcontent/ProjectByMentee")}>
             <CardContent className="p-7">
               <div className="flex items-center justify-between">
                 <div>
@@ -170,7 +171,8 @@ const DashboardMentor = () => {
           </Card>
 
 
-          <Card className="group cursor-pointer border-0 overflow-hidden shadow-elegant hover:shadow-glow transition-all duration-300 hover:-translate-y-2" onClick={() => navigate("/models/membership/Mentees")}>
+          <Card className="group cursor-pointer border-0 overflow-hidden shadow-elegant hover:shadow-glow transition-all duration-300 hover:-translate-y-2" 
+          onClick={() => navigate("/models/membership/Mentees")}>
             <CardContent className="p-7">
               <div className="flex items-center justify-between">
                 <div>
@@ -188,7 +190,8 @@ const DashboardMentor = () => {
             </CardContent>
           </Card>
 
-          <Card className="group cursor-pointer border-0 overflow-hidden shadow-elegant hover:shadow-glow transition-all duration-300 hover:-translate-y-2" onClick={() => navigate("/models/evaluationcontent/dashboard")}>
+          <Card className="group cursor-pointer border-0 overflow-hidden shadow-elegant hover:shadow-glow transition-all duration-300 hover:-translate-y-2" 
+          onClick={() => navigate("/models/evaluationcontent/dashboard")}>
             <CardContent className="p-7">
               <div className="flex items-center justify-between">
                 <div>
@@ -204,7 +207,8 @@ const DashboardMentor = () => {
             </CardContent>
           </Card>
 
-          <Card className="group cursor-pointer border-0 overflow-hidden shadow-elegant hover:shadow-glow transition-all duration-300 hover:-translate-y-2" onClick={() => navigate("/models/students")}>
+          <Card className="group cursor-pointer border-0 overflow-hidden shadow-elegant hover:shadow-glow transition-all duration-300 hover:-translate-y-2" 
+          onClick={() => navigate("/models/students")}>
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
@@ -219,12 +223,13 @@ const DashboardMentor = () => {
             </CardContent>
           </Card>
 
-          <Card className="group cursor-pointer border-0 overflow-hidden shadow-elegant hover:shadow-glow transition-all duration-300 hover:-translate-y-2">
+          <Card className="group cursor-pointer border-0 overflow-hidden shadow-elegant hover:shadow-glow transition-all duration-300 hover:-translate-y-2"
+            onClick={() => navigate("/models/Assessment/testList")}>
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-gray-600 text-sm font-medium">
-                    Pending Activities
+                    Tests
                   </p>
                   <p className="text-3xl font-bold text-gray-900 mt-1">2</p>
                 </div>
