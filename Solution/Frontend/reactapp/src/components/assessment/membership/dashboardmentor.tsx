@@ -13,6 +13,7 @@ import AllmentorNotifications from "./data/notifications/mentorNotifications.jso
 import AllMenteeGrowth from "./data/menteeGrowths.json";
 import AllMentee from "./data/users/mentees.json";
 import Student from "../assessmentOrchestrator/entities/Student";
+import TestDetails from "../assessmentOrchestrator/entities/TestDetails";
 
 
 const DashboardMentor = () => {
@@ -28,6 +29,7 @@ const DashboardMentor = () => {
   const [mentorshipActivities, setMentorshipActivities] = useState<MentorshipActivity[]>([]);
   const menteeGrowth: MenteeGrowth[] = AllMenteeGrowth as MenteeGrowth[];
   const [menteeCount, setMenteeCount] = useState<number>(0);
+  const [tests, setTests] = useState<TestDetails[]>([]);
 
   useEffect(() => {
     const currentUser = sessionStorage.getItem("current");
@@ -231,7 +233,9 @@ const DashboardMentor = () => {
                   <p className="text-gray-600 text-sm font-medium">
                     Tests
                   </p>
-                  <p className="text-3xl font-bold text-gray-900 mt-1">2</p>
+                 <p className="text-3xl font-bold mt-2">
+                                    {tests.length}
+                                </p>
                 </div>
                 <MessageSquare className="w-8 h-8 text-primary" />
               </div>
