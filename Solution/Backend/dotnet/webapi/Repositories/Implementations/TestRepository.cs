@@ -149,7 +149,7 @@ public async Task<long> CreateTestAsync(CreateTestRequests dto)
                 string insertTestQuery = @"
                                     INSERT INTO tests
                                                     (
-                                                        user_id,
+                                                        sme_id,
                                                         title,
                                                         duration,
                                                         description,
@@ -159,7 +159,7 @@ public async Task<long> CreateTestAsync(CreateTestRequests dto)
                                                     )
                                                     VALUES
                                                     (
-                                                        @userId,
+                                                        @smeId,
                                                         @Title,
                                                         @Duration,
                                                         @Description,
@@ -174,7 +174,7 @@ public async Task<long> CreateTestAsync(CreateTestRequests dto)
 
                 using (MySqlCommand cmd = new MySqlCommand(insertTestQuery, con, transaction))
                         {
-                     cmd.Parameters.AddWithValue("@userId", dto.UserId);
+                     cmd.Parameters.AddWithValue("@smeId", dto.UserId);
                     cmd.Parameters.AddWithValue("@Title", dto.Title);
                     cmd.Parameters.AddWithValue("@Duration", (int)dto.Duration);
                     cmd.Parameters.AddWithValue("@Difficulty", dto.Difficulty);
@@ -244,18 +244,15 @@ public async Task<long> CreateTestAsync(CreateTestRequests dto)
 
             string query = @"
                 SELECT
-                    t.id,
-                    t.title,
-                    t.description,
-                    t.duration,
-                    t.difficulty,
-                    t.created_at
-                FROM tests t
-                INNER JOIN user_roles ur
-                    ON t.user_id = ur.user_id
-                WHERE ur.user_id = @UserId
-                AND ur.role_id = 4
-                AND ur.status = 'ACTIVE';";
+                id,
+                title,
+                description,
+                duration,
+                difficulty,
+                created_at
+            FROM tests t
+
+            WHERE user_id =  @UserId;";
 
     string connectionString = "Server=localhost;Port=3306;Database=tflcomentor_db;User=root;Password=password;";
 

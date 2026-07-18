@@ -15,7 +15,12 @@ interface Assessment {
 // ---------------------------------------------------------------------------
 // Config
 // ---------------------------------------------------------------------------
-const userId = localStorage.getItem("userId");
+// const userId = localStorage.getItem("userId");
+const currentUser = JSON.parse(
+  sessionStorage.getItem("current") || "{}"
+);
+
+const userId = currentUser.userid;
 const API_URL = `http://localhost:5201/api/CreateTest/GetSmeCreatedTest/${userId}`;
 
 const DIFFICULTY_STYLES: Record<Difficulty, { bg: string; text: string }> = {
