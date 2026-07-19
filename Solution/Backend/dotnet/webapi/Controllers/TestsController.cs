@@ -232,6 +232,12 @@ public class CreateTestController : ControllerBase
         var result=await _service.GetTestStudentsDetails(TestId);
         return Ok(result);
     }
+
+    [HttpGet("testCount")]
+    public async Task<IActionResult> GetTestCount()
+    {
+        return Ok(await _service.GetTestCount());
+    }
     
 
 }

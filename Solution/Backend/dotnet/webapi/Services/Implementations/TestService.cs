@@ -41,5 +41,10 @@ namespace backend.Services
             return await _repo.GetTestStudentsDetails(TestId);
         }
 
+        public async Task<int> GetTestCount()
+        {
+            return await _repo.GetTestCount();
+        }
+
     }
 }

@@ -24,6 +24,7 @@ const DashboardMentor = () => {
   const [projectCount, setProjectCount] = useState<number>(0);
   const [students, setStudents] = useState<Student[]>([]);
   const [questionCount, setQuestionCount] = useState<number>(0);
+  const[testCount,setTestCount]=useState<number>(0);
   const mentorNotifications: Notification[] = AllmentorNotifications as Notification[];
   const mentees: Mentee[] = AllMentee as Mentee[];
   const [mentorshipActivities, setMentorshipActivities] = useState<MentorshipActivity[]>([]);
@@ -77,6 +78,21 @@ const DashboardMentor = () => {
     fetchQuestions();
   }, []);
 
+  useEffect(() => {
+    const fetchTests = async () => {
+      try {
+        const response = await fetch(`${WEBAPI_DOTNET_URL}/CreateTest/testCount`);
+        if (!response.ok) {
+          throw new Error("Failed to fetch tests count");
+        }
+        const data = await response.json();
+        setTestCount(data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchTests();
+  }, []);
 
 
   useEffect(() => {
@@ -233,9 +249,7 @@ const DashboardMentor = () => {
                   <p className="text-gray-600 text-sm font-medium">
                     Tests
                   </p>
-                 <p className="text-3xl font-bold mt-2">
-                                    {tests.length}
-                                </p>
+                  <div className="text-3xl font-bold">{testCount}</div>
                 </div>
                 <MessageSquare className="w-8 h-8 text-primary" />
               </div>

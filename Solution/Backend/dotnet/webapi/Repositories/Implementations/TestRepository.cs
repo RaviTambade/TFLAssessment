@@ -358,7 +358,7 @@ namespace backend.Repositories
                 {
                     cmd.Parameters.AddWithValue("@TestId", TestId);
                     using MySqlDataReader reader = (MySqlDataReader)await cmd.ExecuteReaderAsync();
-                {
+                    {
                         while (await reader.ReadAsync())
                         {
                             testDetails.Add(new TestStudentDetails
@@ -376,6 +376,21 @@ namespace backend.Repositories
                 }
             }
             return testDetails;
+        }
+
+        public async Task<int> GetTestCount()
+        {
+            string query = @"SELECT COUNT(*) FROM tests";
+
+            using (MySqlConnection connection = new MySqlConnection(_configuration.GetConnectionString("DefaultConnection")))
+            {
+                await connection.OpenAsync();
+                using (MySqlCommand cmd = new MySqlCommand(query, connection))
+                {
+                    object result = await cmd.ExecuteScalarAsync();
+                    return Convert.ToInt32(result);
+                }
+            }
         }
     }
 }
