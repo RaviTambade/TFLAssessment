@@ -50,6 +50,8 @@ const ParticulerTestStudentDetails = () => {
       </div>
     );
   }
+  const names = details.studentName.split(",");
+const ids = details.studentIds.split(",");
 
   return (
     <div className="min-h-screen bg-background p-8">
@@ -150,7 +152,7 @@ const ParticulerTestStudentDetails = () => {
 
           <Card className="border-0 shadow-elegant hover:shadow-glow transition-all">
 
-            <CardContent className="p-6 flex justify-between items-center">
+            <CardContent className="p-6 flex justify-between items-center" >
 
               <div>
                 <p className="text-sm text-muted-foreground">
@@ -180,48 +182,35 @@ const ParticulerTestStudentDetails = () => {
 
               <Users className="w-7 h-7 text-primary" />
 
-              <h2 className="text-2xl font-bold">
+              <h2 className="text-2xl font-bold" >
                 Assigned Students
               </h2>
 
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-
-              {details.studentName
-                .split(",")
-                .map((student, index) => (
-
-                  <div
-                    key={index}
-                    className="border rounded-xl p-4 bg-background hover:shadow-glow transition-all"
-                  >
-
-                    <div className="flex items-center gap-3">
-
-                      <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
-
-                        <Users className="w-5 h-5 text-primary" />
-
-                      </div>
-
-                      <div>
-
-                        <p className="font-semibold">
-                          {student.trim()}
-                        </p>
-
-                        <p className="text-xs text-muted-foreground">
-                          Assigned Student
-                        </p>
-
-                      </div>
-
-                    </div>
-
+                  {names.map((student, index) => (
+              <div
+                key={ids[index]}
+                onClick={() =>
+                  navigate(`/models/membership/UserProfile/${ids[index]}`)
+                }
+                className="border rounded-xl p-4 bg-background hover:shadow-glow transition-all cursor-pointer"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                    <Users className="w-5 h-5 text-primary" />
                   </div>
 
-                ))}
+                  <div>
+                    <p className="font-semibold">{student.trim()}</p>
+                    <p className="text-xs text-muted-foreground">
+                      Assigned Student
+                    </p>
+                  </div>
+                </div>
+              </div>
+            ))}
 
             </div>
 

@@ -335,6 +335,10 @@ namespace backend.Repositories
             string query = @"SELECT
                             t.id  AS testId,
                             t.title,
+                            GROUP_CONCAT(
+                            a.student_id
+                            ORDER BY pi.first_name SEPARATOR ','
+                        ) AS assigned_student_ids,
                         GROUP_CONCAT(
                                 CONCAT(pi.first_name, ' ', pi.last_name)
                                 ORDER BY pi.first_name SEPARATOR ', ') AS assigned_students,
@@ -362,6 +366,7 @@ namespace backend.Repositories
                                 TestId = Convert.ToInt64(reader["testId"]),
                                 Title = reader["title"].ToString(),
                                 StudentName = reader["assigned_students"].ToString(),
+                                StudentIds = reader["assigned_student_ids"].ToString(),
                                 Difficulty = reader["difficulty"].ToString(),
                                 Duration = Convert.ToInt32(reader["duration"]),
                                 CreatedAt = Convert.ToDateTime(reader["created_at"])
