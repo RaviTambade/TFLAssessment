@@ -9,7 +9,6 @@ import SkillGapAnalysis from "./entities/SkillGapAnalysis";
 import Notification from "./entities/Notification";
 import SmeNotifications from "./data/notifications/smeNotifications.json";
 import CandidatePerformances from "./data/candidatePerformance.json";
-import AssessmentMetric from "./data/assessmentMetrics.json";
 import SkillGapAnalyse from "./data/skills/skillGapAnalysis.json";
 
 
@@ -26,6 +25,8 @@ const DashboardSME = () => {
   const [department, setDepartment] = useState<string>("");
   const [profilePicture, setProfilePicture] = useState<string>("https://avatars.githubusercontent.com/u/12345678?v=4");
   const [totalStudents, setTotalStudents] = useState<number>(0);
+  const [totalAssessments, setTotalAssessments] = useState<number>(0);
+  const [assessmentMetrics, setAssessmentMetrics] = useState<any[]>([]);
 
   // SME-specific Notifications
   const smeNotifications: Notification[] = SmeNotifications as Notification[];
@@ -33,8 +34,7 @@ const DashboardSME = () => {
   // Candidate Performance Overview
   const candidatePerformance: CandidatePerformance[] = CandidatePerformances as CandidatePerformance[];
 
-  // Assessment Metrics
-  const assessmentMetrics: AssessmentMetrics[] = AssessmentMetric as AssessmentMetrics[];
+  
 
   // Skill Gap Analysis
   const skillGapAnalysis: SkillGapAnalysis[] = SkillGapAnalyse as SkillGapAnalysis[];
@@ -43,15 +43,13 @@ const DashboardSME = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+const currentUser = JSON.parse(sessionStorage.getItem("current") || "{}");
+const userId = currentUser.userid;
 
-      const currentUser = sessionStorage.getItem("current");
-
-  if (currentUser) {
-    const user = JSON.parse(currentUser);
-
-    setSMEName(`${user.firstname} ${user.lastname}`);
-    setDepartment(user.rolename);
-  }
+if (currentUser) {
+    setSMEName(`${currentUser.firstname} ${currentUser.lastname}`);
+    setDepartment(currentUser.rolename);
+}
     const apiURL = `${WEBAPI_NODE_URL}/sme/profile`;
     fetch(apiURL).then((response) => response.json()).then((data) => {
       setSMEName(data.name);
@@ -68,6 +66,14 @@ const DashboardSME = () => {
       console.error(error);
   });
 
+  fetch(`http://localhost:5201/api/Assessment/performance/${userId}`)
+  .then((response) => response.json())
+  .then((data) => {
+    setAssessmentMetrics(data);
+  })
+  .catch((error) => {
+    console.error(error);
+  });
 
   }, []);
 
@@ -240,11 +246,11 @@ const DashboardSME = () => {
                     <div className="flex items-start justify-between">
                       <div className="flex-1">
                         <p className="font-semibold text-gray-900">{assessment.assessmentName}</p>
-                        <p className="text-sm text-gray-600 mt-1">Subject: {assessment.subject}</p>
+                        <p className="text-sm text-gray-600 mt-1">Description: {assessment.description}</p>
                         <div className="grid grid-cols-3 gap-4 mt-3 text-sm">
                           <div>
                             <p className="text-gray-500 text-xs">Candidates</p>
-                            <p className="font-bold text-gray-900">{assessment.totalCandidates}</p>
+                            <p className="font-bold text-gray-900">{assessment.candidateCount}</p>
                           </div>
                           <div>
                             <p className="text-gray-500 text-xs">Avg Score</p>
@@ -256,11 +262,11 @@ const DashboardSME = () => {
                           </div>
                         </div>
                       </div>
-                      <span className={`px-3 py-1 rounded-full text-xs font-medium ${assessment.difficultyLevel === "beginner" ? "bg-green-100 text-green-800" :
-                          assessment.difficultyLevel === "intermediate" ? "bg-yellow-100 text-yellow-800" :
+                      <span className={`px-3 py-1 rounded-full text-xs font-medium ${assessment.difficulty.toLowerCase() === "beginner" ? "bg-green-100 text-green-800" :
+                          assessment.difficulty.toLowerCase() === "intermediate" ? "bg-yellow-100 text-yellow-800" :
                             "bg-red-100 text-red-800"
                         }`}>
-                        {assessment.difficultyLevel}
+                        {assessment.difficulty.toLowerCase()}
                       </span>
                     </div>
                   </div>

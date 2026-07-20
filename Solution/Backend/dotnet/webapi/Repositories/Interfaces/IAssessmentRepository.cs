@@ -27,6 +27,7 @@ namespace backend.Repositories.Interfaces
 
         Task<List<AssessmentSummaries>> GetAssessmentSummariesForStudent(long studentId);
         List<StudentAssessments> GetFullData();
+         Task<List<AssessmentPerformanceResponse>> GetAssessmentPerformance(long userId);
 
 
     }

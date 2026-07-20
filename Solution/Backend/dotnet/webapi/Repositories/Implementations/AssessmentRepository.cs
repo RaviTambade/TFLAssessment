@@ -20,6 +20,7 @@ public class AssessmentRepository : IAssessmentRepository
     public AssessmentRepository(AppDbContext context, IConfiguration configuration)
     {
         _context = context;
+         _configuration = configuration;
         _connectionString = configuration.GetConnectionString("DefaultConnection") ?? "server=localhost;port=3306;database=tflcomentor_db;user=root;password='password'";
     }
 
@@ -746,6 +747,62 @@ public class AssessmentRepository : IAssessmentRepository
 
         return report!;
     }
+
+    public async Task<List<AssessmentPerformanceResponse>> GetAssessmentPerformance(long userId)
+        {
+            List<AssessmentPerformanceResponse> assessments = new();
+
+            string query = @"
+                        SELECT
+    t.id AS AssessmentId,
+    t.title AS AssessmentTitle,
+    t.description AS Description,
+    t.difficulty AS Difficulty,
+    COUNT(a.student_id) AS CandidateCount
+FROM tests t
+LEFT JOIN assessments a
+    ON t.id = a.test_id
+    AND a.is_active = 1
+WHERE t.user_id = @UserId
+GROUP BY
+    t.id,
+    t.title,
+    t.description,
+    t.difficulty
+ORDER BY t.id;
+            ";
+
+            using (MySqlConnection con =
+                new MySqlConnection(_configuration.GetConnectionString("DefaultConnection")))
+            {
+                await con.OpenAsync();
+
+                MySqlCommand cmd = new MySqlCommand(query, con);
+                cmd.Parameters.AddWithValue("@UserId", userId);
+
+                using (var reader = await cmd.ExecuteReaderAsync())
+                {
+                    while (await reader.ReadAsync())
+                    {
+                        assessments.Add(new AssessmentPerformanceResponse
+                        {
+                            AssessmentId = Convert.ToInt64(reader["AssessmentId"]),
+                            AssessmentName = reader["AssessmentTitle"].ToString(),
+                            Description = reader["description"].ToString(),
+                            CandidateCount = Convert.ToInt32(reader["CandidateCount"]),
+                            Difficulty = reader["difficulty"].ToString(),
+
+                            // Temporary values
+                            Subject = "JavaScript",
+                            AverageScore = 82.5,
+                            PassRate = 86.7
+                        });
+                    }
+                }
+            }
+
+            return assessments;
+        }
 
     public async Task<int> GetTotalAssessmentsAsync()
     {
