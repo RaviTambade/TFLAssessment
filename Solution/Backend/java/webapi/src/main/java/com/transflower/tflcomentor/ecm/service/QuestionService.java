@@ -13,6 +13,7 @@ public interface QuestionService {
 
     // public Long createQuestionWithOptions(QuestionOptionsRequest   dto);
     public QuestionDisplay getQuestionById(long questionId);
+    public int getQuestionCount();
 
    // public List<QuestionDisplay> getAllQuestions(Long user_role_Id);
 
@@ -24,7 +25,7 @@ public interface QuestionService {
 
     public QuestionOptionsRequest getQuestionDetails(Long questionId);
 
-    List<QuestionDisplayToMentor> getAllQuestions(Long userId,Long roleId);
+   // List<QuestionDisplayToMentor> getAllQuestions(Long userId,Long roleId);
 
 
    // public List<DescriptiveQuestion> getDescriptiveQuestion(QuestionType questionType);

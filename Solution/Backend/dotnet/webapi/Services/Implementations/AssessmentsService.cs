@@ -140,6 +140,11 @@ namespace backend.Services.Interfaces
             return await _repository.GetAssessmentSummariesForStudent(studentId);
         }
 
+        public async Task<List<CompletedAssessmentsResponse>> GetCompletedAssessments(int studentId)
+        {
+            return await _repository.GetCompletedAssessments(studentId);
+        }
+
     }
 
 }

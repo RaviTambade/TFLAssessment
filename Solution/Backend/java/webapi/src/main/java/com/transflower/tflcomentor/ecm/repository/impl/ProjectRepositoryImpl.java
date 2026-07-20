@@ -1,5 +1,6 @@
 package com.transflower.tflcomentor.ecm.repository.impl;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import com.transflower.tflcomentor.configuration.DBConfig;
 import com.transflower.tflcomentor.ecm.entity.ProjectAllocation;
+import com.transflower.tflcomentor.ecm.dto.response.MentorshipActivityResponse;
 import com.transflower.tflcomentor.ecm.dto.response.ProjectAllocationResponse;
 import com.transflower.tflcomentor.ecm.entity.Project;
 import com.transflower.tflcomentor.ecm.repository.ProjectRepository;
@@ -28,7 +30,35 @@ public class ProjectRepositoryImpl implements ProjectRepository {
         try {
             Connection connection = getConnection();
 
-            String query = "SELECT * FROM projects ";
+            String query = """
+                     SELECT
+    p.project_id,
+    p.project_name,
+    CONCAT(mp.first_name, ' ', mp.last_name) AS mentor_name,
+    GROUP_CONCAT(
+        CONCAT(sp.first_name, ' ', sp.last_name)
+        SEPARATOR ', '
+    ) AS allocated_students,
+    p.description,
+    p.repository_url,
+    p.status,
+    p.created_at
+FROM projects p
+LEFT JOIN personal_informations mp
+    ON p.mentor_id = mp.user_id
+LEFT JOIN project_allocations pa
+    ON p.project_id = pa.project_id
+LEFT JOIN personal_informations sp
+    ON pa.student_id = sp.user_id
+GROUP BY
+    p.project_id,
+    p.project_name,
+    mentor_name,
+    p.description,
+    p.repository_url,
+    p.status,
+    p.created_at;
+                    """; 
             PreparedStatement statement = connection.prepareStatement(query);
 
             ResultSet rs = statement.executeQuery();
@@ -36,7 +66,8 @@ public class ProjectRepositoryImpl implements ProjectRepository {
             while (rs.next()) {
                 Project project = new Project();
                 project.setProjectId(rs.getInt("project_id"));
-                project.setMentorId(rs.getInt("mentor_id"));
+                project.setMentorName(rs.getString("mentor_name"));
+                project.setAllocatedStudents(rs.getString("allocated_students"));
                 project.setProjectName(rs.getString("project_name"));
                 project.setDescription(rs.getString("description"));
                 project.setRepositoryUrl(rs.getString("repository_url"));
@@ -45,7 +76,7 @@ public class ProjectRepositoryImpl implements ProjectRepository {
                 projects.add(project);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            e.printStackTrace();    
         }
 
         return projects;
@@ -177,17 +208,23 @@ public class ProjectRepositoryImpl implements ProjectRepository {
 
         String query = """
                      SELECT
-                         pa.project_id,
-                         p.project_name,
-                         pa.student_id,
-                         CONCAT(pi.first_name, ' ', pi.last_name) AS student_name,
-                         pa.joined_date,
-                         pa.release_date
-                     FROM project_allocations pa
-                     JOIN projects p ON pa.project_id = p.project_id
-                     JOIN users u ON pa.student_id = u.id
-                     JOIN personal_informations pi ON u.id = pi.user_id
-                     WHERE pa.project_id = ?
+    pa.project_id,
+    p.project_name,
+    pa.student_id,
+    CONCAT(spi.first_name, ' ', spi.last_name) AS student_name,
+    CONCAT(mpi.first_name, ' ', mpi.last_name) AS mentor_name,
+    pa.joined_date,
+    pa.release_date
+FROM project_allocations pa
+JOIN projects p
+    ON pa.project_id = p.project_id
+JOIN users u
+    ON pa.student_id = u.id
+JOIN personal_informations spi
+    ON u.id = spi.user_id
+LEFT JOIN personal_informations mpi
+    ON p.mentor_id = mpi.user_id
+WHERE pa.project_id = ?;
                  """;
 
         try (
@@ -204,6 +241,7 @@ public class ProjectRepositoryImpl implements ProjectRepository {
 
                 dto.setStudentId(rs.getLong("student_id"));
                 dto.setStudentName(rs.getString("student_name"));
+                dto.setMentorName(rs.getString("mentor_name"));
 
                 if (rs.getTimestamp("joined_date") != null) {
                     dto.setJoinedDate(rs.getTimestamp("joined_date").toLocalDateTime());
@@ -308,5 +346,32 @@ public class ProjectRepositoryImpl implements ProjectRepository {
 
         return students;
     }
+
+
+    // Mentor 
+    @Override
+public List<MentorshipActivityResponse> getRecentActivities(Long mentorId) {
+
+    List<MentorshipActivityResponse> activities = new ArrayList<>();
+
+    try {
+        Connection connection = getConnection();
+        CallableStatement statement =connection.prepareCall("{CALL GetRecentMentorshipActivities(?)}");
+        statement.setLong(1, mentorId);
+        ResultSet rs = statement.executeQuery();
+        while (rs.next()) {
+            MentorshipActivityResponse response =new MentorshipActivityResponse();
+            response.setMenteeName(rs.getString("mentee_name"));
+            response.setActivityType(rs.getString("activity_type"));
+            response.setActivity(rs.getString("activity"));
+            response.setActivityDate(rs.getDate("activity_date").toLocalDate());
+            response.setStatus(rs.getString("status"));
+            activities.add(response);
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    return activities;
+}
 
 }

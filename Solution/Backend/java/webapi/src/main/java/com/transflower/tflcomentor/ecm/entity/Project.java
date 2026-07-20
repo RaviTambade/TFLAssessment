@@ -6,25 +6,37 @@ public class Project {
 
     private long project_id;
     private long mentor_id;
+    private String mentor_name;
     private String project_name;
     private String description;
     private String repository_url;
     private String status;
     private LocalDateTime created_at;
+    private String allocatedStudents; // New field to store allocated students
 
     public Project() {
 
     }
 
-    public Project(long project_id, long mentor_id, String project_name, String description, String repository_url, String status, LocalDateTime created_at) {
+    public Project(long project_id, long mentor_id, String mentor_name, String project_name, String description, String repository_url, String status, LocalDateTime created_at, String allocatedStudents) {
         this.project_id = project_id;
         this.mentor_id = mentor_id;
+        this.mentor_name = mentor_name;
         this.project_name = project_name;
         this.description = description;
         this.repository_url = repository_url;
         this.status = status;
         this.created_at = created_at;
+        this.allocatedStudents = allocatedStudents;
 
+    }
+
+    public String getAllocatedStudents() {
+        return allocatedStudents;
+    }
+
+    public void setAllocatedStudents(String allocatedStudents) {
+        this.allocatedStudents = allocatedStudents;
     }
 
     public long getProjectId() {
@@ -35,12 +47,12 @@ public class Project {
         this.project_id = project_id;
     }
 
-    public long getMentorId() {
-        return mentor_id;
+    public String getMentorName() {
+        return mentor_name;
     }
 
-    public void setMentorId(long mentor_id) {
-        this.mentor_id = mentor_id;
+    public void setMentorName(String mentor_name) {
+        this.mentor_name = mentor_name;
     }
 
     public String getProjectName() {
@@ -65,6 +77,14 @@ public class Project {
 
     public void setRepositoryUrl(String repository_url) {
         this.repository_url = repository_url;
+    }
+
+    public long getMentorId() {
+        return mentor_id;
+    }
+
+    public void setMentorId(long mentor_id) {
+        this.mentor_id = mentor_id;
     }
 
     public String getStatus() {

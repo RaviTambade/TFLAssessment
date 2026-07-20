@@ -235,4 +235,12 @@ public async Task<IActionResult> SaveAssessmentAnswersAsync(
         var data = await _service.GetAllAssessments();
         return Ok(data);
     }
+
+    [HttpGet("completed-assessments/{studentId}")]
+    public async Task<IActionResult> GetCompletedAssessments(int studentId)
+    {
+        var data = await _service.GetCompletedAssessments(studentId);
+
+        return Ok(data);
+    }
 }

@@ -86,6 +86,48 @@ namespace backend.Repositories.Implementations
     return students;
 }
 
+public async Task<StudentPerformanceResponse?> GetStudentPerformance(long studentId)
+{
+    StudentPerformanceResponse? performance = null;
+
+    using (MySqlConnection con = new MySqlConnection(_configuration.GetConnectionString("DefaultConnection")))
+    {
+        string query = @"
+            SELECT
+                sar.student_id,
+                COUNT(*) AS total_completed_assessments,
+                ROUND(AVG(sar.percentage), 2) AS avg_score
+            FROM student_assessment_results sar
+            JOIN assessments a
+                ON sar.assessment_id = a.id
+            WHERE a.status = 'Completed'
+              AND sar.student_id = @studentId
+            GROUP BY sar.student_id;";
+
+        using (MySqlCommand cmd = new MySqlCommand(query, con))
+        {
+        cmd.Parameters.AddWithValue("@studentId", studentId);
+
+        await con.OpenAsync();
+
+        using (MySqlDataReader reader = (MySqlDataReader)await cmd.ExecuteReaderAsync())
+        {
+            if (await reader.ReadAsync())
+            {
+                performance = new StudentPerformanceResponse
+                {
+                    StudentId = (int)reader.GetInt64("student_id"),
+                    TotalCompletedAssessments = reader.GetInt32("total_completed_assessments"),
+                    AverageScore = (decimal)reader.GetDouble("avg_score")
+                };
+            }
+        }
+        }
+    }
+
+    return performance;
+}
+
 
     }
 }

@@ -12,6 +12,8 @@ import UpcomingAssessment from "./components/assessment/assessmentOrchestrator/U
 import UserProfile from "./components/assessment/membership/UserProfile";
 import ChangePassword from "./components/assessment/membership/ChangePassword";
 import Navbar from "./components/Navbar";
+import ActiveRolesList from "./components/assessment/membership/ActiveRolesList";
+import RoleUsers from "./components/assessment/membership/RoleUsers";
 
 const queryClient = new QueryClient();
 
@@ -46,7 +48,17 @@ const App = () => {
           <Route path="/ravi-tambade" element={<RaviTambade />} />
           <Route path="/upcoming-assessment" element={<UpcomingAssessment />} />
           <Route path="/component/assessment/membership/UserProfile/:id" element={<UserProfile />} />
-          <Route path="/change-password/:id" element={<ChangePassword />} />
+            <Route path="/change-password/:id" element={<ChangePassword />} />
+<Route
+  path="/models/membership/active-roles"
+  element={<ActiveRolesList />}
+/>
+
+<Route
+  path="/models/membership/active-roles/:roleId/users"
+  element={<RoleUsers />}
+/>            
+
 
           {/* Module routes - /models/* */}
           <Route path="/models/*" element={<AppRoutes />} />
