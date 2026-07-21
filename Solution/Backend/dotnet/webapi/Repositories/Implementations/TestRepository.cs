@@ -392,6 +392,22 @@ namespace backend.Repositories
                 }
             }
         }
+
+        public async Task<int> GetMenteeCount(long userId)
+        {
+            string query=@"select count(mentee_id) from mentor_mentees where mentor_id=@userId ";
+            using(MySqlConnection connection=new MySqlConnection(_configuration.GetConnectionString("DefaultConnection")))
+            {
+                await connection.OpenAsync();
+                using(MySqlCommand cmd=new MySqlCommand(query, connection))
+                {
+                    cmd.Parameters.AddWithValue("@userId", userId);
+                    object result=await cmd.ExecuteScalarAsync();
+                    return Convert.ToInt32(result);
+                }
+
+            }
+        }
     }
 }
 

@@ -12,6 +12,7 @@ namespace backend.Repositories.Interfaces
         Task<List<TestStudentDetails>> GetTestStudentsDetails(long TestId);
         Task<List<TestDetails>> GetTestDetailsForMentor();
         Task<int> GetTestCount();
+        Task<int>GetMenteeCount(long userId);
 
     }
 }

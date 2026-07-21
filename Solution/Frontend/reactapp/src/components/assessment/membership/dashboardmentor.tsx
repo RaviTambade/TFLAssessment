@@ -24,13 +24,13 @@ const DashboardMentor = () => {
   const [projectCount, setProjectCount] = useState<number>(0);
   const [students, setStudents] = useState<Student[]>([]);
   const [questionCount, setQuestionCount] = useState<number>(0);
-  const[testCount,setTestCount]=useState<number>(0);
+  const [testCount, setTestCount] = useState<number>(0);
   const mentorNotifications: Notification[] = AllmentorNotifications as Notification[];
   const mentees: Mentee[] = AllMentee as Mentee[];
   const [mentorshipActivities, setMentorshipActivities] = useState<MentorshipActivity[]>([]);
   const menteeGrowth: MenteeGrowth[] = AllMenteeGrowth as MenteeGrowth[];
-  const [menteeCount, setMenteeCount] = useState<number>(0);
   const [tests, setTests] = useState<TestDetails[]>([]);
+  const [menteeCount, setMenteeCount] = useState(0);
 
   useEffect(() => {
     const currentUser = sessionStorage.getItem("current");
@@ -42,6 +42,36 @@ const DashboardMentor = () => {
       setOrganization("Transflower");
     }
   }, []);
+
+
+  useEffect(() => {
+    const currentUser = sessionStorage.getItem("current");
+
+    if (!currentUser) return;
+
+    const user = JSON.parse(currentUser);
+    const userId = user.userid;
+
+    const getMenteeCount = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:5201/api/CreateTest/mentee/Count/${userId}`
+        );
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch mentee count");
+        }
+
+        const data = await response.json();
+        setMenteeCount(data);
+      } catch (error) {
+        console.error("Error fetching mentee count:", error);
+      }
+    };
+
+    getMenteeCount();
+  }, []);
+
 
   useEffect(() => {
     const fetchStudents = async () => {
@@ -111,18 +141,7 @@ const DashboardMentor = () => {
       });
   }, []);
 
-  useEffect(() => {
-    fetch(`${WEBAPI_NODE_URL}/mentors/3/mentees/count`)
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
 
-        setMenteeCount(data.data[0].menteeCount);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  }, []);
 
 
   useEffect(() => {
@@ -168,9 +187,9 @@ const DashboardMentor = () => {
         {/* Top Stats */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
 
-          <Card className="group cursor-pointer border-0 overflow-hidden shadow-elegant hover:shadow-glow transition-all duration-300 hover:-translate-y-2" 
-          onClick={() => navigate("/models/evaluationcontent/ProjectByMentee")}>
-            <CardContent className="p-7">
+          <Card className="group cursor-pointer border border-border overflow-hidden shadow-elegant hover:shadow-glow hover:border-primary/30 transition-all duration-300 hover:-translate-y-2"
+            onClick={() => navigate("/models/evaluationcontent/ProjectByMentee")}>
+            <CardContent className="p-7 border-0 shadow-elegant" >
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-muted-foreground text-sm font-medium">
@@ -189,17 +208,15 @@ const DashboardMentor = () => {
           </Card>
 
 
-          <Card className="group cursor-pointer border-0 overflow-hidden shadow-elegant hover:shadow-glow transition-all duration-300 hover:-translate-y-2" 
-          onClick={() => navigate("/models/membership/Mentees")}>
+          <Card className="group cursor-pointer border border-border overflow-hidden shadow-elegant hover:shadow-glow hover:border-primary/30 transition-all duration-300 hover:-translate-y-2"
+            onClick={() => navigate("/models/membership/Mentees")}>
             <CardContent className="p-7">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-gray-600 text-sm font-medium">
                     Mentees
                   </p>
-                  <p className="text-3xl font-bold text-gray-900 mt-1">
-                    {menteeCount}
-                  </p>
+                  <div className="text-3xl font-bold">{menteeCount}</div>
                 </div>
                 <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 group-hover:scale-110 transition-all ">
                   <Users className="w-8 h-8 text-primary" />
@@ -208,8 +225,8 @@ const DashboardMentor = () => {
             </CardContent>
           </Card>
 
-          <Card className="group cursor-pointer border-0 overflow-hidden shadow-elegant hover:shadow-glow transition-all duration-300 hover:-translate-y-2" 
-          onClick={() => navigate("/models/evaluationcontent/dashboard")}>
+          <Card className="group cursor-pointer border border-border overflow-hidden shadow-elegant hover:shadow-glow hover:border-primary/30 transition-all duration-300 hover:-translate-y-2"
+            onClick={() => navigate("/models/evaluationcontent/dashboard")}>
             <CardContent className="p-7">
               <div className="flex items-center justify-between">
                 <div>
@@ -225,8 +242,8 @@ const DashboardMentor = () => {
             </CardContent>
           </Card>
 
-          <Card className="group cursor-pointer border-0 overflow-hidden shadow-elegant hover:shadow-glow transition-all duration-300 hover:-translate-y-2" 
-          onClick={() => navigate("/models/students")}>
+          <Card className="group cursor-pointer border border-border overflow-hidden shadow-elegant hover:shadow-glow hover:border-primary/30 transition-all duration-300 hover:-translate-y-2"
+            onClick={() => navigate("/models/students")}>
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
@@ -241,7 +258,7 @@ const DashboardMentor = () => {
             </CardContent>
           </Card>
 
-          <Card className="group cursor-pointer border-0 overflow-hidden shadow-elegant hover:shadow-glow transition-all duration-300 hover:-translate-y-2"
+          <Card className="group cursor-pointer border border-border overflow-hidden shadow-elegant hover:shadow-glow hover:border-primary/30 transition-all duration-300 hover:-translate-y-2"
             onClick={() => navigate("/models/Assessment/testList")}>
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
@@ -256,7 +273,7 @@ const DashboardMentor = () => {
             </CardContent>
           </Card>
 
-          <Card className="group cursor-pointer border-0 overflow-hidden shadow-elegant hover:shadow-glow transition-all duration-300 hover:-translate-y-2">
+          <Card className="group cursor-pointer border border-border overflow-hidden shadow-elegant hover:shadow-glow hover:border-primary/30 transition-all duration-300 hover:-translate-y-2">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
