@@ -826,8 +826,59 @@ public class AssessmentRepository : IAssessmentRepository
         return list;
     }
 
+    public async Task<List<UpcomingAssessmentResponse>> GetUpcomingAssessments(int studentId)
+    {
+    List<UpcomingAssessmentResponse> assessments = new();
+
+    string connectionString = "server=localhost;port=3306;database=tflcomentor_db;user=root;password='password'";
+
+    using (MySqlConnection connection = new MySqlConnection(connectionString))
+    {
+        await connection.OpenAsync();
+
+        string query = @"
+        SELECT
+            a.id,
+            t.title,
+            a.scheduled_at,
+            t.duration,
+            a.status
+        FROM assessments a
+        INNER JOIN tests t
+            ON a.test_id = t.id
+        LEFT JOIN student_assessment_results sar
+            ON sar.assessment_id = a.id
+            AND sar.student_id = a.student_id
+        WHERE a.student_id = @studentId
+          AND a.status = 'Assigned'
+          AND sar.id IS NULL
+        ORDER BY a.scheduled_at;";
+
+        using (MySqlCommand cmd = new MySqlCommand(query, connection))
+        {
+            cmd.Parameters.AddWithValue("@studentId", studentId);
+
+            using (var reader = await cmd.ExecuteReaderAsync())
+            {
+                while (await reader.ReadAsync())
+                {
+                    assessments.Add(new UpcomingAssessmentResponse
+                    {
+                        AssessmentId = Convert.ToInt32(reader["id"]),
+                        AssessmentName = reader["title"].ToString()!,
+                        ScheduledAt = Convert.ToDateTime(reader["scheduled_at"]),
+                        Duration = Convert.ToInt32(reader["duration"]),
+                        Status = reader["status"].ToString()!
+                    });
+                }
+            }
+        }
+    }
+
+    return assessments;
+    }
     public async Task<List<CompletedAssessmentsResponse>> GetCompletedAssessments(int studentId)
-{
+    {
     List<CompletedAssessmentsResponse> list = new();
 
 

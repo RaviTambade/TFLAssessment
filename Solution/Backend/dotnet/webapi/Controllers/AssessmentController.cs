@@ -237,4 +237,12 @@ public async Task<IActionResult> SaveAssessmentAnswersAsync(
 
         return Ok(data);
     }
+
+    [HttpGet("upcoming/{studentId}")]
+    public async Task<IActionResult> GetUpcomingAssessments(int studentId)
+    {
+        var assessments = await _service.GetUpcomingAssessments(studentId);
+
+        return Ok(assessments);
+    }
 }
