@@ -20,6 +20,7 @@ public class AssessmentRepository : IAssessmentRepository
     public AssessmentRepository(AppDbContext context, IConfiguration configuration)
     {
         _context = context;
+         _configuration = configuration;
         _connectionString = configuration.GetConnectionString("DefaultConnection") ?? "server=localhost;port=3306;database=tflcomentor_db;user=root;password='password'";
     }
 
@@ -748,6 +749,62 @@ public class AssessmentRepository : IAssessmentRepository
         return report!;
     }
 
+    public async Task<List<AssessmentPerformanceResponse>> GetAssessmentPerformance(long userId)
+        {
+            List<AssessmentPerformanceResponse> assessments = new();
+
+            string query = @"
+                        SELECT
+    t.id AS AssessmentId,
+    t.title AS AssessmentTitle,
+    t.description AS Description,
+    t.difficulty AS Difficulty,
+    COUNT(a.student_id) AS CandidateCount
+FROM tests t
+LEFT JOIN assessments a
+    ON t.id = a.test_id
+    AND a.is_active = 1
+WHERE t.user_id = @UserId
+GROUP BY
+    t.id,
+    t.title,
+    t.description,
+    t.difficulty
+ORDER BY t.id;
+            ";
+
+            using (MySqlConnection con =
+                new MySqlConnection(_configuration.GetConnectionString("DefaultConnection")))
+            {
+                await con.OpenAsync();
+
+                MySqlCommand cmd = new MySqlCommand(query, con);
+                cmd.Parameters.AddWithValue("@UserId", userId);
+
+                using (var reader = await cmd.ExecuteReaderAsync())
+                {
+                    while (await reader.ReadAsync())
+                    {
+                        assessments.Add(new AssessmentPerformanceResponse
+                        {
+                            AssessmentId = Convert.ToInt64(reader["AssessmentId"]),
+                            AssessmentName = reader["AssessmentTitle"].ToString(),
+                            Description = reader["description"].ToString(),
+                            CandidateCount = Convert.ToInt32(reader["CandidateCount"]),
+                            Difficulty = reader["difficulty"].ToString(),
+
+                            // Temporary values
+                            Subject = "JavaScript",
+                            AverageScore = 82.5,
+                            PassRate = 86.7
+                        });
+                    }
+                }
+            }
+
+            return assessments;
+        }
+
     public async Task<int> GetTotalAssessmentsAsync()
     {
         string connectionString = _configuration.GetConnectionString("DefaultConnection") ?? "server=localhost;port=3306;database=tflcomentor_db;user=root;password='password'";
@@ -826,8 +883,59 @@ public class AssessmentRepository : IAssessmentRepository
         return list;
     }
 
+    public async Task<List<UpcomingAssessmentResponse>> GetUpcomingAssessments(int studentId)
+    {
+    List<UpcomingAssessmentResponse> assessments = new();
+
+    string connectionString = "server=localhost;port=3306;database=tflcomentor_db;user=root;password='password'";
+
+    using (MySqlConnection connection = new MySqlConnection(connectionString))
+    {
+        await connection.OpenAsync();
+
+        string query = @"
+        SELECT
+            a.id,
+            t.title,
+            a.scheduled_at,
+            t.duration,
+            a.status
+        FROM assessments a
+        INNER JOIN tests t
+            ON a.test_id = t.id
+        LEFT JOIN student_assessment_results sar
+            ON sar.assessment_id = a.id
+            AND sar.student_id = a.student_id
+        WHERE a.student_id = @studentId
+          AND a.status = 'Assigned'
+          AND sar.id IS NULL
+        ORDER BY a.scheduled_at;";
+
+        using (MySqlCommand cmd = new MySqlCommand(query, connection))
+        {
+            cmd.Parameters.AddWithValue("@studentId", studentId);
+
+            using (var reader = await cmd.ExecuteReaderAsync())
+            {
+                while (await reader.ReadAsync())
+                {
+                    assessments.Add(new UpcomingAssessmentResponse
+                    {
+                        AssessmentId = Convert.ToInt32(reader["id"]),
+                        AssessmentName = reader["title"].ToString()!,
+                        ScheduledAt = Convert.ToDateTime(reader["scheduled_at"]),
+                        Duration = Convert.ToInt32(reader["duration"]),
+                        Status = reader["status"].ToString()!
+                    });
+                }
+            }
+        }
+    }
+
+    return assessments;
+    }
     public async Task<List<CompletedAssessmentsResponse>> GetCompletedAssessments(int studentId)
-{
+    {
     List<CompletedAssessmentsResponse> list = new();
 
 

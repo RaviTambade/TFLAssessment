@@ -50,6 +50,12 @@ public class AssessmentController : ControllerBase
         }
     }
 
+     [HttpGet("performance/{userId}")]
+public async Task<IActionResult> GetAssessmentPerformance(long userId)
+{
+    var result = await _service.GetAssessmentPerformance(userId);
+    return Ok(result);
+}
 
     [HttpGet("tests")]
     public async Task<IActionResult> GetTestsAsync()
@@ -236,5 +242,13 @@ public async Task<IActionResult> SaveAssessmentAnswersAsync(
         var data = await _service.GetCompletedAssessments(studentId);
 
         return Ok(data);
+    }
+
+    [HttpGet("upcoming/{studentId}")]
+    public async Task<IActionResult> GetUpcomingAssessments(int studentId)
+    {
+        var assessments = await _service.GetUpcomingAssessments(studentId);
+
+        return Ok(assessments);
     }
 }

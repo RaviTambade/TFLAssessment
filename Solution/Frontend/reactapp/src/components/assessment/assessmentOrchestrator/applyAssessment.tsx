@@ -212,7 +212,7 @@ const Question = () => {
     );
 
   // SUBMIT
-  const handleSubmit = (
+  const handleSubmit = async (
     e: React.FormEvent<HTMLFormElement>
   ) => {
 
@@ -232,47 +232,102 @@ const Question = () => {
       sessionStorage.getItem("current") || "{}"
     );
 
+    const studentId =
+      currentStudent.userid || 0;
+
+    const currentAssessmentId =
+      parseInt(assessmentId || "0");
+
     const payload = {
 
-      studentId:
-        currentStudent.userid || 0,
+      studentId,
 
       assessmentId:
-        parseInt(assessmentId || "0"),
+        currentAssessmentId,
 
       timeTakenMinutes: 10,
 
       answers: answersArray,
     };
 
-    fetch(
-      `${WEBAPI_DOTNET_URL}/Assessment/submit`,
-      {
-        method: "POST",
+    try {
+      const submitResponse = await fetch(
+        `${WEBAPI_DOTNET_URL}/Assessment/submit`,
+        {
+          method: "POST",
 
-        headers: {
-          "Content-Type":
-            "application/json",
-        },
+          headers: {
+            "Content-Type":
+              "application/json",
+          },
 
-        body: JSON.stringify(payload),
-      }
-    )
-      .then((res) => res.json())
-
-      .then(() => {
-
-        // ✅ FIXED: pass assessmentId so Result page can fetch the report
-        navigate(`/models/result/${assessmentId}`);
-
-      })
-
-      .catch((error) =>
-        console.error(
-          "Error submitting answers:",
-          error
-        )
+          body: JSON.stringify(payload),
+        }
       );
+
+      if (!submitResponse.ok) {
+        throw new Error(
+          "Failed to submit assessment answers"
+        );
+      }
+
+      await submitResponse.json();
+
+      const scoreResponse = await fetch(
+        `${WEBAPI_DOTNET_URL}/Score/GetAssessmentResultData/${studentId}/${currentAssessmentId}`
+      );
+
+      if (!scoreResponse.ok) {
+        throw new Error(
+          "Failed to fetch assessment score"
+        );
+      }
+
+      const scoreData = await scoreResponse.json();
+
+      const resultPayload = {
+        studentId,
+        assessmentId:
+          currentAssessmentId,
+        score: Number(
+          scoreData?.scorePercentage ?? 0
+        ),
+        percentile: Number(
+          scoreData?.scorePercentage ?? 0
+        ),
+        timeTakenMinutes:
+          payload.timeTakenMinutes,
+      };
+
+      const saveResultResponse = await fetch(
+        `${WEBAPI_DOTNET_URL}/StudentResult/save`,
+        {
+          method: "POST",
+
+          headers: {
+            "Content-Type":
+              "application/json",
+          },
+
+          body: JSON.stringify(resultPayload),
+        }
+      );
+
+      if (!saveResultResponse.ok) {
+        throw new Error(
+          "Failed to save student assessment result"
+        );
+      }
+
+      await saveResultResponse.json();
+
+      navigate(`/models/result/${currentAssessmentId}`);
+    } catch (error) {
+      console.error(
+        "Error submitting answers:",
+        error
+      );
+    }
   };
 
   // LOADING

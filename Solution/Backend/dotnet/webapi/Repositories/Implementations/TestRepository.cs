@@ -152,7 +152,7 @@ namespace backend.Repositories
                         string insertTestQuery = @"
                                     INSERT INTO tests
                                                     (
-                                                        sme_id,
+                                                        user_id,
                                                         title,
                                                         duration,
                                                         description,
