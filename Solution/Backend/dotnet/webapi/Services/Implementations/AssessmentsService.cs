@@ -56,6 +56,11 @@ namespace backend.Services.Interfaces
             await _repository.AssignAssessmentAsync(dto);
         }
 
+         public async Task<List<AssessmentPerformanceResponse>> GetAssessmentPerformance(long userId)
+        {
+            return await _repository.GetAssessmentPerformance(userId);
+        }
+
         //   public async Task<List<AssessmentResultDto>> GetAssessmentResults()
         // {
         //     return await _repository.GetAssessmentResults();

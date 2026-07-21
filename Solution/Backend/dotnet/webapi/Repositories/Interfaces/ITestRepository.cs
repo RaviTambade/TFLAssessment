@@ -11,6 +11,7 @@ namespace backend.Repositories.Interfaces
         Task<List<GetSmeCreatedTestResponse>> GetSmeCreatedTestAsync(long userId);
         Task<List<TestStudentDetails>> GetTestStudentsDetails(long TestId);
         Task<List<TestDetails>> GetTestDetailsForMentor();
+        Task<int> GetTestCount();
 
     }
 }

@@ -50,6 +50,12 @@ public class AssessmentController : ControllerBase
         }
     }
 
+     [HttpGet("performance/{userId}")]
+public async Task<IActionResult> GetAssessmentPerformance(long userId)
+{
+    var result = await _service.GetAssessmentPerformance(userId);
+    return Ok(result);
+}
 
     [HttpGet("tests")]
     public async Task<IActionResult> GetTestsAsync()

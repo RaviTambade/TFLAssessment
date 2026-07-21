@@ -86,7 +86,7 @@ namespace backend.Repositories.Implementations
                                 student_id,
                                 assessment_id,
                                 score,
-                                percentile,
+                                percentage,
                                 time_taken_minutes
                             )
                             VALUES

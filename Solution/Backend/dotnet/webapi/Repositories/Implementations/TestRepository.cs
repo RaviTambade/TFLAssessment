@@ -152,7 +152,7 @@ namespace backend.Repositories
                         string insertTestQuery = @"
                                     INSERT INTO tests
                                                     (
-                                                        sme_id,
+                                                        user_id,
                                                         title,
                                                         duration,
                                                         description,
@@ -335,6 +335,10 @@ namespace backend.Repositories
             string query = @"SELECT
                             t.id  AS testId,
                             t.title,
+                            GROUP_CONCAT(
+                            a.student_id
+                            ORDER BY pi.first_name SEPARATOR ','
+                        ) AS assigned_student_ids,
                         GROUP_CONCAT(
                                 CONCAT(pi.first_name, ' ', pi.last_name)
                                 ORDER BY pi.first_name SEPARATOR ', ') AS assigned_students,
@@ -354,7 +358,7 @@ namespace backend.Repositories
                 {
                     cmd.Parameters.AddWithValue("@TestId", TestId);
                     using MySqlDataReader reader = (MySqlDataReader)await cmd.ExecuteReaderAsync();
-                {
+                    {
                         while (await reader.ReadAsync())
                         {
                             testDetails.Add(new TestStudentDetails
@@ -362,6 +366,7 @@ namespace backend.Repositories
                                 TestId = Convert.ToInt64(reader["testId"]),
                                 Title = reader["title"].ToString(),
                                 StudentName = reader["assigned_students"].ToString(),
+                                StudentIds = reader["assigned_student_ids"].ToString(),
                                 Difficulty = reader["difficulty"].ToString(),
                                 Duration = Convert.ToInt32(reader["duration"]),
                                 CreatedAt = Convert.ToDateTime(reader["created_at"])
@@ -371,6 +376,21 @@ namespace backend.Repositories
                 }
             }
             return testDetails;
+        }
+
+        public async Task<int> GetTestCount()
+        {
+            string query = @"SELECT COUNT(*) FROM tests";
+
+            using (MySqlConnection connection = new MySqlConnection(_configuration.GetConnectionString("DefaultConnection")))
+            {
+                await connection.OpenAsync();
+                using (MySqlCommand cmd = new MySqlCommand(query, connection))
+                {
+                    object result = await cmd.ExecuteScalarAsync();
+                    return Convert.ToInt32(result);
+                }
+            }
         }
     }
 }
