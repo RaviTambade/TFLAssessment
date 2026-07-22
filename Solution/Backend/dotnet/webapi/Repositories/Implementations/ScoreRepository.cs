@@ -18,12 +18,17 @@ namespace backend.Repositories
         {
             _configuration = configuration;
         }
+        private MySqlConnection GetConnection()
+        {
+            return new MySqlConnection(_configuration.GetConnectionString("DefaultConnection"));
+        }
+
 
         public async Task<AverageScore> GetAverageScoreByIdAsync(int studentId)
         {
             AverageScore score = new AverageScore();
 
-            using (MySqlConnection con = new MySqlConnection(_configuration.GetConnectionString("DefaultConnection")))
+            using (MySqlConnection con = GetConnection())
             {
                 string query = @"
                     SELECT 
@@ -62,7 +67,7 @@ namespace backend.Repositories
         {
             List<AverageScore> list = new List<AverageScore>();
 
-            using (MySqlConnection con = new MySqlConnection(_configuration.GetConnectionString("DefaultConnection")))
+            using (MySqlConnection con = GetConnection())
             {
                 string query = @"
                     SELECT 
@@ -93,114 +98,100 @@ namespace backend.Repositories
                     }
                 }
             }
-
             return list;
         }
-       public async Task<AssessmentScores> GetAssessmentResultData(long studentId, long assessmentId)
-{
-    AssessmentScores report = new AssessmentScores();
-
-    using (MySqlConnection con =
-           new MySqlConnection(_configuration.GetConnectionString("DefaultConnection")))
-    {
-        string query = @"
-        SELECT 
-            t.id AS test_id,
-            t.title AS test_title,
-            sa.StudentId,
-
-            COUNT(
-                CASE 
-                    WHEN sa.SelectedOption = mo.correct_answer 
-                    THEN 1 
-                END
-            ) AS correct_answers,
-
-            COUNT(
-                CASE 
-                    WHEN sa.SelectedOption IS NOT NULL
-                         AND sa.SelectedOption <> mo.correct_answer 
-                    THEN 1 
-                END
-            ) AS wrong_answers,
-
-            COUNT(sa.QuestionId) AS total_questions,
-
-            ROUND(
-                (
-                    COUNT(
-                        CASE 
-                            WHEN sa.SelectedOption = mo.correct_answer 
-                            THEN 1 
-                        END
-                    ) * 100.0
-                ) / COUNT(sa.QuestionId),
-                2
-            ) AS score_percentage
-
-        FROM studentanswers sa
-
-        INNER JOIN assessments a
-            ON sa.AssessmentId = a.id
-
-        INNER JOIN tests t
-            ON a.test_id = t.id
-
-        INNER JOIN mcq_options mo
-            ON sa.QuestionId = mo.question_id
-
-        WHERE sa.StudentId = @studentId
-              AND sa.AssessmentId = @assessmentId
-
-        GROUP BY 
-            t.id,
-            t.title,
-            sa.StudentId;
-        ";
-
-        using (MySqlCommand cmd = new MySqlCommand(query, con))
+        public async Task<AssessmentScores> GetAssessmentResultData(long studentId, long assessmentId)
         {
-            cmd.Parameters.AddWithValue("@studentId", studentId);
-            cmd.Parameters.AddWithValue("@assessmentId", assessmentId);
+            AssessmentScores report = new AssessmentScores();
 
-            await con.OpenAsync();
-
-            using (MySqlDataReader reader =
-                   (MySqlDataReader)await cmd.ExecuteReaderAsync())
+            using (MySqlConnection con =GetConnection())
             {
-                if (await reader.ReadAsync())
+                string query = @"
+                        SELECT 
+                            t.id AS test_id,
+                            t.title AS test_title,
+                            sa.StudentId,
+                            COUNT(
+                                CASE 
+                                    WHEN sa.SelectedOption = mo.correct_answer 
+                                    THEN 1 
+                                END
+                            ) AS correct_answers,
+                            COUNT(
+                                CASE 
+                                    WHEN sa.SelectedOption IS NOT NULL
+                                        AND sa.SelectedOption <> mo.correct_answer 
+                                    THEN 1 
+                                END
+                            ) AS wrong_answers,
+                            COUNT(sa.QuestionId) AS total_questions,
+                            ROUND(
+                                (
+                                    COUNT(
+                                        CASE 
+                                            WHEN sa.SelectedOption = mo.correct_answer 
+                                            THEN 1 
+                                        END
+                                    ) * 100.0
+                                ) / COUNT(sa.QuestionId),
+                                2
+                            ) AS score_percentage
+                        FROM studentanswers sa
+                        INNER JOIN assessments a
+                            ON sa.AssessmentId = a.id
+                        INNER JOIN tests t
+                            ON a.test_id = t.id
+                        INNER JOIN mcq_options mo
+                            ON sa.QuestionId = mo.question_id
+                        WHERE sa.StudentId = @studentId
+                            AND sa.AssessmentId = @assessmentId
+                        GROUP BY 
+                            t.id,
+                            t.title,
+                            sa.StudentId;
+                        ";
+
+                using (MySqlCommand cmd = new MySqlCommand(query, con))
                 {
-                    report.TestId = reader["test_id"] != DBNull.Value
-                        ? Convert.ToInt64(reader["test_id"])
-                        : 0;
+                    cmd.Parameters.AddWithValue("@studentId", studentId);
+                    cmd.Parameters.AddWithValue("@assessmentId", assessmentId);
 
-                    report.TestTitle = reader["test_title"]?.ToString();
+                    await con.OpenAsync();
+                    using (MySqlDataReader reader =(MySqlDataReader)await cmd.ExecuteReaderAsync())
+                    {
+                        if (await reader.ReadAsync())
+                        {
+                            report.TestId = reader["test_id"] != DBNull.Value
+                                ? Convert.ToInt64(reader["test_id"])
+                                : 0;
 
-                    report.StudentId = reader["StudentId"] != DBNull.Value
-                        ? Convert.ToInt32(reader["StudentId"])
-                        : 0;
+                            report.TestTitle = reader["test_title"]?.ToString();
 
-                    report.CorrectAnswers = reader["correct_answers"] != DBNull.Value
-                        ? Convert.ToInt32(reader["correct_answers"])
-                        : 0;
+                            report.StudentId = reader["StudentId"] != DBNull.Value
+                                ? Convert.ToInt32(reader["StudentId"])
+                                : 0;
 
-                    report.WrongAnswers = reader["wrong_answers"] != DBNull.Value
-                        ? Convert.ToInt32(reader["wrong_answers"])
-                        : 0;
+                            report.CorrectAnswers = reader["correct_answers"] != DBNull.Value
+                                ? Convert.ToInt32(reader["correct_answers"])
+                                : 0;
 
-                    report.TotalQuestions = reader["total_questions"] != DBNull.Value
-                        ? Convert.ToInt32(reader["total_questions"])
-                        : 0;
+                            report.WrongAnswers = reader["wrong_answers"] != DBNull.Value
+                                ? Convert.ToInt32(reader["wrong_answers"])
+                                : 0;
 
-                    report.ScorePercentage = reader["score_percentage"] != DBNull.Value
-                        ? Convert.ToDecimal(reader["score_percentage"])
-                        : 0;
+                            report.TotalQuestions = reader["total_questions"] != DBNull.Value
+                                ? Convert.ToInt32(reader["total_questions"])
+                                : 0;
+
+                            report.ScorePercentage = reader["score_percentage"] != DBNull.Value
+                                ? Convert.ToDecimal(reader["score_percentage"])
+                                : 0;
+                        }
+                    }
                 }
             }
+
+            return report;
         }
     }
-
-    return report;
-}
-}
 }
