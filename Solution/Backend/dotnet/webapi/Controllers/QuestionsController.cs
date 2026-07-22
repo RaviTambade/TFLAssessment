@@ -80,5 +80,21 @@ namespace backend.Controllers
             return Ok(result);
         }
 
+        [HttpGet("GetQuestionsByTestId/{testId}")]
+        public async Task<IActionResult> GetQuestionsByTestId(long testId)
+        {
+            var result = await _service.GetQuestionsByTestId(testId);
+
+            if (result == null || result.Count == 0)
+            {
+                return NotFound(new
+                {
+                    Message = "No questions found for this test."
+                });
+            }
+
+            return Ok(result);
+        }
+
     }
 }

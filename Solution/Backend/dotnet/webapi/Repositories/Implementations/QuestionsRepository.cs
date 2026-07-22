@@ -6,6 +6,7 @@ using System.Data; // Fixes IDbConnection
 using Dapper;
 using System.Threading.Tasks;
 using System.Data.SqlClient;
+using API.DTOs;
 
 namespace backend.Repositories.Implementations
 {
@@ -213,5 +214,52 @@ namespace backend.Repositories.Implementations
 
             return dto;
         }
+    
+
+    public async Task<List<GetQuestionsByTestId>> GetQuestionsByTestId(long testId)
+        {
+            List<GetQuestionsByTestId> questions = new();
+
+            string connectionString = _configuration.GetConnectionString("DefaultConnection");
+
+            using MySqlConnection connection = new MySqlConnection(connectionString);
+
+            await connection.OpenAsync();
+
+            string query = @"
+                        SELECT
+                            q.description,
+                            q.question_type,
+                            q.language,
+                            q.framework
+                        FROM tests t
+                        INNER JOIN test_questions tq
+                            ON t.id = tq.test_id
+                        INNER JOIN questions q
+                            ON tq.question_id = q.question_id
+                        WHERE t.id=@TestId;";
+
+            using MySqlCommand command = new MySqlCommand(query, connection);
+
+            command.Parameters.AddWithValue("@TestId", testId);
+
+            using MySqlDataReader reader = (MySqlDataReader)await command.ExecuteReaderAsync();
+
+            while (await reader.ReadAsync())
+            {
+                questions.Add(new GetQuestionsByTestId
+                {
+                    Description = reader["description"].ToString()!,
+                    QuestionType = reader["question_type"].ToString()!,
+                    Language = reader["language"].ToString()!,
+                    Framework = reader["framework"].ToString()!
+                });
+            }
+
+            return questions;
+        }
     }
+    
+
+
 }
