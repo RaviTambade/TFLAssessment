@@ -145,6 +145,10 @@ namespace backend.Services.Interfaces
             return await _repository.GetCompletedAssessments(studentId);
         }
 
+        public async Task<List<UpcomingAssessmentResponse>> GetUpcomingAssessments(int studentId)
+        {
+            return await _repository.GetUpcomingAssessments(studentId);
+        }
     }
 
 }

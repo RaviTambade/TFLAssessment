@@ -207,25 +207,25 @@ GROUP BY
         List<ProjectAllocationResponse> allocations = new ArrayList<>();
 
         String query = """
-                     SELECT
-    pa.project_id,
-    p.project_name,
-    pa.student_id,
-    CONCAT(spi.first_name, ' ', spi.last_name) AS student_name,
-    CONCAT(mpi.first_name, ' ', mpi.last_name) AS mentor_name,
-    pa.joined_date,
-    pa.release_date
-FROM project_allocations pa
-JOIN projects p
-    ON pa.project_id = p.project_id
-JOIN users u
-    ON pa.student_id = u.id
-JOIN personal_informations spi
-    ON u.id = spi.user_id
-LEFT JOIN personal_informations mpi
-    ON p.mentor_id = mpi.user_id
-WHERE pa.project_id = ?;
-                 """;
+                                        SELECT
+                        pa.project_id,
+                        p.project_name,
+                        pa.student_id,
+                        CONCAT(spi.first_name, ' ', spi.last_name) AS student_name,
+                        CONCAT(mpi.first_name, ' ', mpi.last_name) AS mentor_name,
+                        pa.joined_date,
+                        pa.release_date
+                    FROM project_allocations pa
+                    JOIN projects p
+                        ON pa.project_id = p.project_id
+                    JOIN users u
+                        ON pa.student_id = u.id
+                    JOIN personal_informations spi
+                        ON u.id = spi.user_id
+                    LEFT JOIN personal_informations mpi
+                        ON p.mentor_id = mpi.user_id
+                    WHERE pa.project_id = ?;
+                                    """;
 
         try (
                 Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(query)) {

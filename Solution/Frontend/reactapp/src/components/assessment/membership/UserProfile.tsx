@@ -251,27 +251,27 @@ const updateSingleField = async (
         <div className="w-full max-w-5xl space-y-8">
 
           {/* HEADER */}
-          <Card>
-            <CardContent className="p-8">
-              <div className="flex justify-between items-center border-b pb-6">
+          <Card className="border-border/50 shadow-lg overflow-hidden">
+            <CardContent className="p-10">
+              <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8 border-b border-border pb-8">
 
-                <div className="flex gap-6 items-center">
-                  <Avatar className="h-24 w-24">
-                    <AvatarFallback>{initials}</AvatarFallback>
+                <div className="flex  items-center gap-8">
+                  <Avatar className="h-24 w-24  border-4 border-primary/20 shadow-md">
+                    <AvatarFallback className="bg-primary text-primary-foreground text-3xl font-bold">{initials}</AvatarFallback>
                   </Avatar>
 
                   <div>
-                    <h2 className="text-3xl font-bold">
+                    <h2 className="text-4xl font-bold tracking-tight">
                       {fullName || "No Name"}
                     </h2>
 
                     {/* ✅ Dynamic Role */}
-                    <Badge className="mt-2 bg-primary text-white">
+                    <Badge className="mt-3 rounded-full px-4 py-1">
                       <p>{userRoles?.map(r => r.role_name).join(", ")}</p>
 
                     </Badge>
 
-                    <div className="flex gap-4 mt-3 text-primary">
+                    <div className="flex items-center gap-3 mt-5">
                       <Linkedin size={20} />
                       <Github size={20} />
 
@@ -290,11 +290,11 @@ const updateSingleField = async (
                   </div>
                 </div>
 
-                <div className="text-right">
-                  <p className="text-muted-foreground">
+                <div className="rounded-xl border bg-muted/30 px-8 py-5 text-center min-w-[170px]">
+                  <p className="text-xs uppercase tracking-wider text-muted-foreground">
                     Experience
                   </p>
-                  <p className="text-primary font-semibold">
+                  <p className="text-3xl font-bold text-primary mt-2">
                     {professionalData?.experience_years ?? 0} years
                   </p>
 

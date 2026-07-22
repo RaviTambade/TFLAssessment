@@ -8,12 +8,14 @@ import ScheduledAssessment from "./entities/ScheduledAssessment";
 import Result from "./entities/StudentResult";
 import LearningCurveData from "./entities/LearningCurveData";
 import AllNotification from "./data/notifications/studentNotification.json";
-import AllScheduledAssessments from "./data/ScheuledAssessment.json";
 import StudentResults from "./data/studentResult.json";
 
-
-
-
+type UpcomingAssessmentApiResponse = {
+  assessmentId?: number;
+  assessmentName?: string;
+  scheduledAt?: string;
+  duration?: number;
+};
 
 //function component for dashboard
 const DashboardStudent = () => {
@@ -34,9 +36,8 @@ const DashboardStudent = () => {
   // Hardcoded Notifications Data
   const notifications: Notification[] = AllNotification as Notification[];
 
-  // Hardcoded Scheduled Assessments Data
-  const scheduledAssessments: ScheduledAssessment[] = AllScheduledAssessments as ScheduledAssessment[]; 
-   
+  const [scheduledAssessments, setScheduledAssessments] = useState<ScheduledAssessment[]>([]);
+  const [upcomingCount, setUpcomingCount] = useState<number>(0);
 
   // Hardcoded Results Data
   const results: Result[] = StudentResults as Result[];
@@ -77,6 +78,23 @@ useEffect(() => {
     setPerformance(data);
 })
   .catch((error) => console.error(error));
+
+    fetch(`${WEBAPI_DOTNET_URL}/Assessment/upcoming/${studentId}`)
+      .then((response) => response.json())
+      .then((data: UpcomingAssessmentApiResponse[]) => {
+        const mappedAssessments: ScheduledAssessment[] = (data || []).map((item, index) => ({
+          id: item.assessmentId ?? index + 1,
+          name: item.assessmentName ?? "Assessment",
+          subject: "Assessment",
+          scheduledDate: item.scheduledAt ? new Date(item.scheduledAt).toLocaleDateString() : "TBD",
+          duration: item.duration ?? 0,
+          totalQuestions: 0,
+          status: "upcoming",
+        }));
+        setScheduledAssessments(mappedAssessments);
+        setUpcomingCount(mappedAssessments.length);
+      })
+      .catch((error) => console.error("Failed to fetch upcoming assessments", error));
 
     setName(
       `${user.firstname} ${user.lastname}`
@@ -134,7 +152,7 @@ useEffect(() => {
               onClick={() => navigate("/models/upcoming-assessment")}>
                 <div>
                   <p className="text-gray-600 text-sm font-medium">Upcoming Assessments</p>
-                  <p className="text-3xl font-bold text-gray-900 mt-1">3</p>
+                  <p className="text-3xl font-bold text-gray-900 mt-1">{upcomingCount}</p>
                 </div>
                 <Calendar className="w-12 h-12 text-orange-500 opacity-20" />
               </div>
@@ -203,7 +221,9 @@ useEffect(() => {
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
-                {scheduledAssessments.map((assessment) => (
+                {scheduledAssessments.length === 0 ? (
+                  <div className="p-4 border rounded-lg text-gray-600">No upcoming assessments found.</div>
+                ) : scheduledAssessments.map((assessment) => (
                   <div key={assessment.id} className="p-4 border rounded-lg hover:bg-gray-50 transition">
                     <div className="flex items-start justify-between">
                       <div className="flex-1">

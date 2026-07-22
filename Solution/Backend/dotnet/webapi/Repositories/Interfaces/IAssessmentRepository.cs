@@ -24,12 +24,13 @@ namespace backend.Repositories.Interfaces
         Task<bool> DeactivateAssessment(long id);
         Task<int> CancelAssessmentsByTestId(long testId);
         Task<bool> RestoreAssessment(long id);
-
         Task<List<AssessmentSummaries>> GetAssessmentSummariesForStudent(long studentId);
         List<StudentAssessments> GetFullData();
+        Task<List<UpcomingAssessmentResponse>> GetUpcomingAssessments(int studentId);
+        Task<List<CompletedAssessmentsResponse>> GetCompletedAssessments(int studentId);
          Task<List<AssessmentPerformanceResponse>> GetAssessmentPerformance(long userId);
 
-         Task<List<CompletedAssessmentsResponse>> GetCompletedAssessments(int studentId);
+        // Task<List<CompletedAssessmentsResponse>> GetCompletedAssessments(int studentId);
 
 
     }

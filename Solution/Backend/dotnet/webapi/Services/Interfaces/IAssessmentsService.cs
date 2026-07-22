@@ -31,5 +31,6 @@ public interface IAssessmentsService
      Task<List<AssessmentPerformanceResponse>> GetAssessmentPerformance(long userId);
 
     Task<List<CompletedAssessmentsResponse>> GetCompletedAssessments(int studentId);
+    Task<List<UpcomingAssessmentResponse>> GetUpcomingAssessments(int studentId);
 }
 

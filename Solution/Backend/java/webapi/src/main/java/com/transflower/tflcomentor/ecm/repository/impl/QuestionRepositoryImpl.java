@@ -15,7 +15,6 @@ import com.transflower.tflcomentor.configuration.DBConfig;
 import com.transflower.tflcomentor.ecm.dto.request.QuestionOptionsRequest;
 import com.transflower.tflcomentor.ecm.dto.response.DescriptiveQuestion;
 import com.transflower.tflcomentor.ecm.dto.response.QuestionDisplay;
-import com.transflower.tflcomentor.ecm.dto.response.QuestionDisplayToMentor;
 import com.transflower.tflcomentor.ecm.entity.CompleteQuestion;
 import com.transflower.tflcomentor.ecm.entity.Question;
 import com.transflower.tflcomentor.ecm.entity.enums.DifficultyLevel;
@@ -32,7 +31,6 @@ public class QuestionRepositoryImpl implements QuestionRepository {
 
     @Override
     public QuestionDisplay getQuestionById(long question_id) {
-
         try (Connection connection = getConnection()) {
             String sql = "SELECT * FROM questions WHERE question_id = ?";
             PreparedStatement statement = connection.prepareStatement(sql);
@@ -84,7 +82,6 @@ public class QuestionRepositoryImpl implements QuestionRepository {
     //                     ON ur.role_id = r.role_id
     //                 WHERE ur.role_id = ?
     //                 AND ur.status = 'ACTIVE';      
-
     //                  """;
     //             PreparedStatement statement = connection.prepareStatement(query);
     //         statement.setLong(1, userId);
@@ -456,21 +453,37 @@ public class QuestionRepositoryImpl implements QuestionRepository {
     @Override
     public List<String> getConcepts(Long userId, Long roleId) {
         List<String> concepts = new ArrayList<>();
-        String sql = """ 
-                    SELECT DISTINCT q.concept
-                    FROM questions q
-                    JOIN expertise e
-                        ON q.runtime = e.runtime
-                    JOIN user_roles ur
-                        ON ur.user_id = e.user_id
-                    WHERE ur.user_id = ?
-                    AND ur.role_id = ?;
-                        """;
+        String sql;
+
+                    if(roleId==4)
+                    {
+                        sql = """
+                            SELECT DISTINCT q.concept
+                            FROM questions q
+                            JOIN expertise e
+                                ON q.runtime = e.runtime
+                            JOIN user_roles ur
+                                ON ur.user_id = e.user_id
+                            WHERE ur.user_id = ?
+                            AND ur.role_id = ?;
+                            """;
+                    }
+                    else if(roleId==3)
+                    {
+                        sql = """
+                            SELECT DISTINCT concept
+                            FROM questions;
+                            """;
+                    }
+                    else {
+                    return concepts;
+            }
         try (Connection connection = getConnection(); PreparedStatement statement = connection.prepareStatement(sql)) {
 
+            if(roleId==4){
             statement.setLong(1, userId);
             statement.setLong(2, roleId);
-
+            }
             ResultSet rs = statement.executeQuery();
 
             while (rs.next()) {

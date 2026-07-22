@@ -239,5 +239,11 @@ public class CreateTestController : ControllerBase
         return Ok(await _service.GetTestCount());
     }
     
+    [HttpGet("mentee/Count/{userId}")]
+    public async Task<IActionResult> GetMenteeCount(long userId)
+    {
+        return Ok(await _service.GetMenteeCount(userId));
+    }
+    
 
 }
