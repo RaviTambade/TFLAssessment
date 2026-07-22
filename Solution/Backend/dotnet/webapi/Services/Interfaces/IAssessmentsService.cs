@@ -28,11 +28,8 @@ public interface IAssessmentsService
     Task<List<AllAssessments>> GetAllAssessments();
 
     Task<List<AssessmentSummaries>> GetAssessmentSummariesForStudent(long studentId);
-<<<<<<< HEAD
      Task<List<AssessmentPerformanceResponse>> GetAssessmentPerformance(long userId);
-=======
 
     Task<List<CompletedAssessmentsResponse>> GetCompletedAssessments(int studentId);
->>>>>>> f19324d558d63180c81495a075f4f52cdff55120
 }
 
