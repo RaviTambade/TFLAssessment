@@ -13,11 +13,14 @@ public class RolesRepository : IRolesRepository
         _configuration = configuration;
     }
 
-   
+    private MySqlConnection GetConnection()
+        {
+            return new MySqlConnection(_configuration.GetConnectionString("DefaultConnection"));
+        }
+
     public async Task<int> GetActiveRolesCount()
     {
-        using MySqlConnection con = new MySqlConnection(
-            _configuration.GetConnectionString("DefaultConnection"));
+        using MySqlConnection con =GetConnection();
 
         string query = @"
             SELECT COUNT(DISTINCT r.role_id)
@@ -30,9 +33,7 @@ public class RolesRepository : IRolesRepository
             AND ur.status = 'ACTIVE';";
 
         MySqlCommand cmd = new MySqlCommand(query, con);
-
         await con.OpenAsync();
-
         return Convert.ToInt32(await cmd.ExecuteScalarAsync());
     }
 
@@ -41,9 +42,7 @@ public class RolesRepository : IRolesRepository
     public async Task<List<ActiveRole>> GetActiveRoles()
     {
         List<ActiveRole> roles = new List<ActiveRole>();
-
-        using MySqlConnection con = new MySqlConnection(
-            _configuration.GetConnectionString("DefaultConnection"));
+        using MySqlConnection con = GetConnection();
 
         string query = @"
             SELECT
@@ -65,11 +64,8 @@ public class RolesRepository : IRolesRepository
                 r.role_name;";
 
         MySqlCommand cmd = new MySqlCommand(query, con);
-
         await con.OpenAsync();
-
-        using MySqlDataReader reader =
-            (MySqlDataReader)await cmd.ExecuteReaderAsync();
+        using MySqlDataReader reader =(MySqlDataReader)await cmd.ExecuteReaderAsync();
 
         while (await reader.ReadAsync())
         {
@@ -80,7 +76,6 @@ public class RolesRepository : IRolesRepository
                 UserCount = Convert.ToInt32(reader["UserCount"])
             });
         }
-
         return roles;
     }
 
@@ -89,8 +84,7 @@ public class RolesRepository : IRolesRepository
     {
         List<RoleUser> users = new List<RoleUser>();
 
-        using MySqlConnection con = new MySqlConnection(
-            _configuration.GetConnectionString("DefaultConnection"));
+        using MySqlConnection con = GetConnection();
 
         string query = @"
             SELECT DISTINCT

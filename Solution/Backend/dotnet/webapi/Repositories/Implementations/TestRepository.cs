@@ -19,6 +19,10 @@ namespace backend.Repositories
             _configuration = configuration;
 
         }
+        private MySqlConnection GetConnection()
+        {
+            return new MySqlConnection(_configuration.GetConnectionString("DefaultConnection"));
+        }
 
 
         public async Task<List<TestQuestions>> GetQuestionsBySMEAsync(long userId)
@@ -50,56 +54,28 @@ namespace backend.Repositories
             WHERE e.user_id = @UserId;
         ";
 
-            string connectionString = ("Server=localhost;Port=3306;Database=tflcomentor_db;User=root;Password=password;");
-            using MySqlConnection conn =
-                new MySqlConnection(connectionString);
-
+            // string connectionString = ("Server=localhost;Port=3306;Database=tflcomentor_db;User=root;Password=password;");
+            using MySqlConnection conn = GetConnection();
             await conn.OpenAsync();
-
-            using MySqlCommand cmd =
-                new MySqlCommand(query, conn);
-
+            using MySqlCommand cmd = new MySqlCommand(query, conn);
             cmd.Parameters.AddWithValue("@UserId", userId);
-
-            using MySqlDataReader reader =
-                (MySqlDataReader)await cmd.ExecuteReaderAsync();
+            using MySqlDataReader reader =(MySqlDataReader)await cmd.ExecuteReaderAsync();
 
             while (await reader.ReadAsync())
             {
                 questions.Add(new TestQuestions
                 {
-                    QuestionId =
-                        Convert.ToInt64(reader["question_id"]),
-
-                    Description =
-                        reader["description"]?.ToString(),
-
-                    QuestionType =
-                        reader["question_type"]?.ToString(),
-
-                    DifficultyLevel =
-                        reader["difficulty_level"]?.ToString(),
-
-                    CreatedAt =
-                        Convert.ToDateTime(reader["created_at"]),
-
-                    Status =
-                        reader["status"]?.ToString(),
-
-                    Language =
-                        reader["language"]?.ToString(),
-
-                    Layer =
-                        reader["layer"]?.ToString(),
-
-                    Framework =
-                        reader["framework"]?.ToString(),
-
-                    Concept =
-                        reader["concept"]?.ToString(),
-
-                    Runtime =
-                        reader["runtime"]?.ToString()
+                    QuestionId =Convert.ToInt64(reader["question_id"]),
+                    Description =reader["description"]?.ToString(),
+                    QuestionType = reader["question_type"]?.ToString(),
+                    DifficultyLevel = reader["difficulty_level"]?.ToString(),
+                    CreatedAt =Convert.ToDateTime(reader["created_at"]),
+                    Status =reader["status"]?.ToString(),
+                    Language =reader["language"]?.ToString(),
+                    Layer =reader["layer"]?.ToString(),
+                    Framework =reader["framework"]?.ToString(),
+                    Concept =reader["concept"]?.ToString(),
+                    Runtime =reader["runtime"]?.ToString()
                 });
             }
 
@@ -109,19 +85,14 @@ namespace backend.Repositories
 
         public async Task<bool> CancelTestAsync(int id)
         {
-            var test = await _context.Tests
-                .FirstOrDefaultAsync(x => x.Id == id);
-
+            var test = await _context.Tests.FirstOrDefaultAsync(x => x.Id == id);
             if (test == null)
             {
                 return false;
             }
-
             // Make inactive
             test.Status = false;
-
             await _context.SaveChangesAsync();
-
             return true;
         }
 
@@ -134,46 +105,21 @@ namespace backend.Repositories
 
             if (userId <= 0)
                 throw new ArgumentException("UserId or UserRolesId must be supplied and greater than 0.");
-
             long testId = 0;
+            // string connectionString = ("Server=localhost;Port=3306;Database=tflcomentor_db;User=root;Password=password;");
 
-            string connectionString = ("Server=localhost;Port=3306;Database=tflcomentor_db;User=root;Password=password;");
-
-            using (MySqlConnection con = new MySqlConnection(connectionString))
+            using (MySqlConnection con = GetConnection())
             {
                 await con.OpenAsync();
-
                 using (MySqlTransaction transaction = await con.BeginTransactionAsync())
                 {
                     try
                     {
-                        // Insert core columns present across DB variants (avoids mismatches: some DBs use
-                        // `user_id` without `sme_runtime_id`; dumps may use `sme_runtime_id` without `user_id`).
-                        string insertTestQuery = @"
-                                    INSERT INTO tests
-                                                    (
-                                                        user_id,
-                                                        title,
-                                                        duration,
-                                                        description,
-                                                        difficulty,
-                                                        created_at,
-                                                        status
-                                                    )
-                                                    VALUES
-                                                    (
-                                                        @smeId,
-                                                        @Title,
-                                                        @Duration,
-                                                        @Description,
-                                                        @Difficulty,
-                                                        @CreatedAt,
-                                                        @Status
-                                                        
-                                                    );
-                                                    SELECT LAST_INSERT_ID()";
-
-
+                    string insertTestQuery = @" INSERT INTO tests(
+                                            user_id, title,duration,description,difficulty,created_at,status)
+                                            VALUES( @smeId,@Title,@Duration,@Description,@Difficulty,@CreatedAt,@Status
+                                            );
+                                            SELECT LAST_INSERT_ID()";
 
                         using (MySqlCommand cmd = new MySqlCommand(insertTestQuery, con, transaction))
                         {
@@ -188,8 +134,7 @@ namespace backend.Repositories
                             await cmd.ExecuteNonQueryAsync();
                         }
 
-                        using (MySqlCommand idCmd =
-                               new MySqlCommand("SELECT LAST_INSERT_ID();", con, transaction))
+                        using (MySqlCommand idCmd =new MySqlCommand("SELECT LAST_INSERT_ID();", con, transaction))
                         {
                             var idScalar = await idCmd.ExecuteScalarAsync();
                             testId = Convert.ToInt64(idScalar);
@@ -199,7 +144,6 @@ namespace backend.Repositories
                         if (dto.QuestionIds != null && dto.QuestionIds.Any())
                         {
                             int seq = 1;
-
                             foreach (var questionId in dto.QuestionIds)
                             {
                                 string insertQuestionQuery = @"
@@ -216,20 +160,17 @@ namespace backend.Repositories
                                         @SequenceOrder
                                     )";
 
-                                using (MySqlCommand questionCmd =
-                                    new MySqlCommand(insertQuestionQuery, con, transaction))
-                                {
-                                    questionCmd.Parameters.AddWithValue("@TestId", testId);
-                                    questionCmd.Parameters.AddWithValue("@QuestionId", questionId);
-                                    questionCmd.Parameters.AddWithValue("@SequenceOrder", seq++);
+            using (MySqlCommand questionCmd =new MySqlCommand(insertQuestionQuery, con, transaction))
+                {
+                    questionCmd.Parameters.AddWithValue("@TestId", testId);
+                    questionCmd.Parameters.AddWithValue("@QuestionId", questionId);
+                    questionCmd.Parameters.AddWithValue("@SequenceOrder", seq++);
 
-                                    await questionCmd.ExecuteNonQueryAsync();
-                                }
-                            }
-                        }
-
-                        await transaction.CommitAsync();
-
+                    await questionCmd.ExecuteNonQueryAsync();
+                }
+            }
+        }
+                await transaction.CommitAsync();
                         return testId;
                     }
                     catch
@@ -245,18 +186,11 @@ namespace backend.Repositories
         {
             List<GetSmeCreatedTestResponse> tests = new List<GetSmeCreatedTestResponse>();
 
-            string query = @"
-                SELECT
-                id,
-                title,
-                description,
-                duration,
-                difficulty,
-                created_at
-            FROM tests t
-            WHERE user_id =  @UserId;";
-            string connectionString = "Server=localhost;Port=3306;Database=tflcomentor_db;User=root;Password=password;";
-            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            string query = @"SELECT id, title, description, duration, difficulty, created_at
+                            FROM tests t
+                            WHERE user_id =  @UserId;";
+            // string connectionString = "Server=localhost;Port=3306;Database=tflcomentor_db;User=root;Password=password;";
+            using (MySqlConnection conn = GetConnection())
             {
                 try
                 {
@@ -282,7 +216,6 @@ namespace backend.Repositories
                             }
                         }
                     }
-
                     return tests;
                 }
                 catch (Exception ex)
@@ -309,7 +242,7 @@ namespace backend.Repositories
                         ON e.user_id = u.id
                     ORDER BY t.created_at ASC;";
 
-            using (MySqlConnection connection = new MySqlConnection(_configuration.GetConnectionString("DefaultConnection")))
+            using (MySqlConnection connection = GetConnection())
             {
                 await connection.OpenAsync();
                 MySqlCommand cmd = new MySqlCommand(query, connection);
@@ -382,7 +315,7 @@ namespace backend.Repositories
         {
             string query = @"SELECT COUNT(*) FROM tests";
 
-            using (MySqlConnection connection = new MySqlConnection(_configuration.GetConnectionString("DefaultConnection")))
+            using (MySqlConnection connection = GetConnection())
             {
                 await connection.OpenAsync();
                 using (MySqlCommand cmd = new MySqlCommand(query, connection))
@@ -395,14 +328,14 @@ namespace backend.Repositories
 
         public async Task<int> GetMenteeCount(long userId)
         {
-            string query=@"select count(mentee_id) from mentor_mentees where mentor_id=@userId ";
-            using(MySqlConnection connection=new MySqlConnection(_configuration.GetConnectionString("DefaultConnection")))
+            string query = @"select count(mentee_id) from mentor_mentees where mentor_id=@userId ";
+            using (MySqlConnection connection = GetConnection())
             {
                 await connection.OpenAsync();
-                using(MySqlCommand cmd=new MySqlCommand(query, connection))
+                using (MySqlCommand cmd = new MySqlCommand(query, connection))
                 {
                     cmd.Parameters.AddWithValue("@userId", userId);
-                    object result=await cmd.ExecuteScalarAsync();
+                    object result = await cmd.ExecuteScalarAsync();
                     return Convert.ToInt32(result);
                 }
 
