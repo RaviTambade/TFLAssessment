@@ -24,7 +24,7 @@ public class RolesService:IRolesService{
         return await _rolesRepository.GetUsersByRole(roleId);
     }
 
-    public async Task<List<unassignedUsers>> GetUnAssignedUsers(){
+    public async Task<List<UnassignedUsers>> GetUnAssignedUsers(){
         return await _rolesRepository.GetUnAssignedUsers();
     }
 

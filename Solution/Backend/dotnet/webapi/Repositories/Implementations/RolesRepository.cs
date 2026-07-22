@@ -127,9 +127,9 @@ public class RolesRepository : IRolesRepository
         return users;
     }
 
-    public async Task<List<unassignedUsers>> GetUnAssignedUsers()
+    public async Task<List<UnassignedUsers>> GetUnAssignedUsers()
     {
-        List<unassignedUsers> users=new List<unassignedUsers>();
+        List<UnassignedUsers> users=new List<UnassignedUsers>();
         using MySqlConnection connection = GetConnection();
         string query=@"
                         SELECT
@@ -146,7 +146,7 @@ public class RolesRepository : IRolesRepository
 
         while (await reader.ReadAsync())
         {
-            users.Add(new unassignedUsers
+            users.Add(new UnassignedUsers
             {
                 UserId = Convert.ToInt64(reader["user_id"]),
                 FullName = reader["full_name"].ToString()!
