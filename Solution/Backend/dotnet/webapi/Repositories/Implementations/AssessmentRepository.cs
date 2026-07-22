@@ -29,7 +29,6 @@ public class AssessmentRepository : IAssessmentRepository
         return new MySqlConnection(_configuration.GetConnectionString("DefaultConnection"));
     }
 
-
     public async Task<List<Assessments>> GetAllUpcomingAssessments(long userId, DateTime fromDate, DateTime toDate)
     {
         Console.WriteLine($"UserId: {userId}, FromDate: {fromDate}, ToDate: {toDate}");
@@ -269,7 +268,6 @@ public class AssessmentRepository : IAssessmentRepository
     // {
     //   return await Task.FromResult(new List<string>());
     // }
-
 
     public async Task<List<Student>> GetStudentsAsync()
     {

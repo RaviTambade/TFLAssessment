@@ -19,7 +19,6 @@ public class ExpertiseRepository : IExpertiseRepository
         return new MySqlConnection(_configuration.GetConnectionString("DefaultConnection"));
     }
 
-
     public async Task<int> AddSmeExpertise(Expertise expertize)
 
     {
