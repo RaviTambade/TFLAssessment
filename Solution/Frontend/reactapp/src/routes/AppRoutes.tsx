@@ -1,6 +1,7 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 
+
 import EvaluationContentMenu from "../components/assessment/evaluationcontent/EvaluationContentMenu";
 import SkillTaxonomyMenu from "../components/assessment/skilltaxonomy/SkillTaxonomyMenu";
 import Assessment from "../components/assessment/ComponentButtons";
@@ -43,6 +44,8 @@ import Dashboard from "@/components/assessment/membership/dashboard";
 import EvaluationDashboard from "@/components/assessment/evaluationcontent/EvaluationDashboard";
 // import GetQuestionSme from "@/components/assessment/evaluationcontent/getQuestionsme";
 // import EvaluationContentSme from "@/components/assessment/evaluationcontent/EvaluationContents";
+
+import TestQuestionDetails from "@/components/assessment/assessmentOrchestrator/createTest/TestQuestionDetails";
 import Question from "@/components/assessment/assessmentOrchestrator/applyAssessment";
 import RTUpdateQuestion from "@/components/assessment/evaluationcontent/RTUpdateQuestion";
 import ScheduleInterview from "@/components/assessment/interview/ScheduleInterview";
@@ -70,6 +73,7 @@ function AppRoutes() {
         <Routes>
           {/* Main Component Page */}
           <Route path="evaluationcontent/components" element={<Assessment />} />
+       
           {/* Evaluation Content */}
           <Route path="evaluationcontent/componentmenu" element={<EvaluationContentMenu />}/>
           <Route path="evaluationcontent/dashboard" element={<EvaluationDashboard />} />
@@ -83,7 +87,8 @@ function AppRoutes() {
           <Route path="skilltaxonomy/skilltaxonomy-menu"element={<SkillTaxonomyMenu />}/>
           {/* Assessment Orchestrator */}
           <Route path="assessmentorchestrator/assessmentorchestrator-menu"element={<AssessmentOrchestrator />}/>
-          <Route path="/students" element={<StudentList />}/>
+          <Route path="assessmentorchestrator/testquestiondetails/:testId" element={<TestQuestionDetails />} />
+          <Route path="/students" element={<StudentList />}/> 
           <Route path="upcoming-assessment" element={<UpcomingAssessment />} />
           <Route path="all-assessment" element={<AllAssessment />} />
           <Route path="apply-assessment" element={<Question />} />
@@ -137,6 +142,7 @@ function AppRoutes() {
           <Route path="/created-assessments"element={<CreatedAssessments />}/>
           <Route path="Assessment/testList" element={<TestList/>}/>
           <Route path="/tests/:testId" element={<ParticulerTestStudentDetails />}/>
+          
 
           <Route path="membership/Login" element={<LoginPage />} />
           <Route path="membership/ManageUsers" element={<ManageUsers />} />
@@ -147,6 +153,7 @@ function AppRoutes() {
           <Route path="membership/dashboard" element={<Dashboard />} />
           <Route path="membership/SmeDashboard" element={<DashboardSME />} />
           <Route path="membership/Mentees" element={<Mentees />} />
+          
         </Routes>
       </main>
     </div>
