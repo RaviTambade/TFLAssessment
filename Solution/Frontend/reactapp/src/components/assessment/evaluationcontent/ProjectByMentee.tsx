@@ -185,7 +185,7 @@ function ProjectByMentee() {
 
                 <CardTitle className="flex items-center gap-2">
 
-                  <FolderKanban className="text-red-600 w-6 h-6" />
+                  <FolderKanban className="text-red-600 w-6 h-6"  />
 
                   {project.projectName}
 
