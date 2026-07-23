@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "../../ui/card";
 import { Bell, Users, Lock, TrendingUp, CheckCircle, AlertCircle, Shield, Settings } from "lucide-react";
 import UserActivity from "./UserActivity";
+import { UsersRound, ShieldCheck, Clock3, Activity, ClipboardList, ClipboardCheck, BellRing, History, Sparkles, ArrowUpRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { WEBAPI_NODE_URL } from "@/lib/utils";
 import { WEBAPI_DOTNET_URL } from "@/lib/utils";
@@ -24,14 +25,18 @@ const DashboardAdmin = () => {
   // Helper functions for role management
   // Render functions for admin features
 
+
+
   //data members
   const [adminName, setAdminName] = useState<string>("Admin User");
   const [organization, setOrganization] = useState<string>("Transflower");
   const [profilePicture, setProfilePicture] = useState<string>("https://avatars.githubusercontent.com/u/12345678?v=4");
   const [activeRoles, setActiveRoles] = useState<number>(0);
   const [activeRolesList, setActiveRolesList] = useState<number>(0);
+  const [assessmentCount, setAssessmentCount] = useState<number>(0);
+   const [smeName, setSmeName] = useState<string>("");
 
-  
+
   const navigate = useNavigate();
 
   // Admin System Notifications
@@ -44,7 +49,41 @@ const DashboardAdmin = () => {
   const rolePermissions: RolePermission[] = RolePermissions as RolePermission[];
 
   // Member Activity Log
-  const memberActivities: MemberActivity[] = MemberActivities as MemberActivity[];
+  // const memberActivities: MemberActivity[] = MemberActivities as MemberActivity[];
+
+useEffect(() => {
+    const currentUser = sessionStorage.getItem("current");
+
+    if (currentUser) {
+      const user = JSON.parse(currentUser);
+
+      setSmeName(`${user.firstname} ${user.lastname}`);
+      setOrganization("Transflower");
+    }
+  }, []);
+
+  useEffect(() => {
+    const fetchAssessments = async () => {
+      try {
+        const response = await fetch(`${WEBAPI_DOTNET_URL}/Assessment/total`);
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch assessment count");
+        }
+
+        const data = await response.json();
+
+        console.log(data);
+
+        setAssessmentCount(data.totalAssessment);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchAssessments();
+  }, []);
+
 
   useEffect(() => {
 
@@ -57,78 +96,125 @@ const DashboardAdmin = () => {
     });
 
     fetch(`${WEBAPI_DOTNET_URL}/Roles/active/_roles/count`)
-       .then((response) => response.json())
-    .then((data) => {
-      setActiveRoles(data); 
-    })
+      .then((response) => response.json())
+      .then((data) => {
+        setActiveRoles(data);
+      })
       .catch((error) => console.error(error));
-    
+
   }, []);
 
   // Render the Admin Management dashboard UI
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
+    <div className="min-h-screen bg-background p-8">
       <div className="max-w-7xl mx-auto space-y-8">
         {/* Header */}
-        <div>
-          <h1 className="text-4xl font-bold text-gray-900 mb-2">Admin Control Panel</h1>
-          <h3 className="text-xl text-gray-700 mb-4">Welcome, {adminName} | {organization} Administration</h3>
-          <p className="text-gray-600">Manage membership, roles, permissions, and system access for Transflower organization.</p>
+        <div className="mb-8">
+          <h1 className="text-3xl font-bold text-slate-900">
+            SME Dashboard
+          </h1>
+
+          <p className="text-2xl text-primary mt-3 font-bold">
+            Welcome, <span className="font-bold">{smeName}</span>
+          </p>
+
+          <p className="text-slate-500 mt-3 text-lg">
+            Manage membership, roles, permissions, and system access for Transflower organization.
+          </p>
         </div>
 
         {/* Top Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-          <Card>
-            <CardContent className="p-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+          <Card className="group cursor-pointer border border-border rounded-2xl shadow-elegant hover:shadow-glow hover:-translate-y-2 transition-all duration-300">
+            <CardContent className="p-7">
               <div className="flex items-center justify-between" onClick={() => { navigate("/models/membership/ManageUsers") }}>
                 <div>
                   <p className="text-gray-600 text-sm font-medium">Total Members</p>
                   <p className="text-3xl font-bold text-gray-900 mt-1">72</p>
                 </div>
-                <Users className="w-12 h-12 text-blue-500 opacity-20" />
+                <div className="bg-primary/10 rounded-2xl p-4 group-hover:scale-110 transition">
+                  <Users className="w-8 h-8 text-primary" />
+                </div>
               </div>
             </CardContent>
           </Card>
 
-         <Card>
-  <CardContent className="p-6">
-    <div
-      className="flex items-center justify-between cursor-pointer"
-      onClick={() => navigate("/models/membership/active-roles")}
-    >
-      <div>
-        <p className="text-gray-600 text-sm font-medium">
-          Active Roles
-        </p>
-        <p className="text-3xl font-bold text-gray-900 mt-1">
-          {activeRoles}
-        </p>
-      </div>
-
-      <Shield className="w-12 h-12 text-green-500 opacity-20" />
-    </div>
-  </CardContent>
-</Card>
-          <Card>
+          <Card className="group cursor-pointer border border-border rounded-2xl shadow-elegant hover:shadow-glow hover:-translate-y-2 transition-all duration-300">
             <CardContent className="p-6">
-              <div className="flex items-center justify-between">
+              <div
+                className="flex items-center justify-between cursor-pointer"
+                onClick={() => navigate("/models/membership/active-roles")}
+              >
+                <div>
+                  <p className="text-gray-600 text-sm font-medium">
+                    Active Roles
+                  </p>
+                  <p className="text-3xl font-bold text-gray-900 mt-1">
+                    {activeRoles}
+                  </p>
+                </div>
+                <div className="bg-primary/10 rounded-2xl p-4 group-hover:scale-110 transition">
+
+                  <Shield className="w-8 h-8 text-primary" />
+
+                </div>
+
+              </div>
+            </CardContent>
+          </Card >
+          <Card className="group cursor-pointer border border-border rounded-2xl shadow-elegant hover:shadow-glow hover:-translate-y-2 transition-all duration-300">
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between" onClick={() => { navigate("/models/membership/Unassigned/Users") }}>
                 <div>
                   <p className="text-gray-600 text-sm font-medium">Pending Approvals</p>
+                  
                   <p className="text-3xl font-bold text-gray-900 mt-1">5</p>
                 </div>
-                <AlertCircle className="w-12 h-12 text-orange-500 opacity-20" />
+                <div className="bg-primary/10 rounded-2xl p-4 group-hover:scale-110 transition">
+                <AlertCircle className="w-8 h-8 text-primary" />
+                </div>
               </div>
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="group cursor-pointer border border-border rounded-2xl shadow-elegant hover:shadow-glow hover:-translate-y-2 transition-all duration-300">
             <CardContent className="p-6">
               <div className="flex items-center justify-between" onClick={() => { navigate("/models/membership/UserActivity") }}>
                 <div>
                   <p className="text-gray-600 text-sm font-medium">Active Sessions</p>
                   <p className="text-3xl font-bold text-gray-900 mt-1">28</p>
                 </div>
-                <TrendingUp className="w-12 h-12 text-purple-500 opacity-20" />
+                <div className="bg-primary/10 rounded-2xl p-4 group-hover:scale-110 transition">
+                <Activity className="w-8 h-8 text-primary" />
+              </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="group cursor-pointer border border-border rounded-2xl shadow-elegant hover:shadow-glow hover:-translate-y-2 transition-all duration-300">
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between" onClick={() => { navigate("/models/all-assessment") }}>
+                <div>
+                  <p className="text-gray-600 text-sm font-medium">Assessments</p>
+                  <p className="text-3xl font-bold text-gray-900 mt-1">{assessmentCount}</p>
+                </div>
+                <div className="bg-primary/10 rounded-2xl p-4 group-hover:scale-110 transition">
+                <ClipboardList className="w-8 h-8 text-primary" />
+              </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="group cursor-pointer border border-border rounded-2xl shadow-elegant hover:shadow-glow hover:-translate-y-2 transition-all duration-300">
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between" onClick={() => { navigate("/models/assign-assessment") }}>
+                <div>
+                  <p className="text-gray-600 text-sm font-medium">Assign Assessment</p>
+                  <p className="text-3xl font-bold text-gray-900 mt-1">{assessmentCount}</p>
+                </div>
+                 <div className="bg-primary/10 rounded-2xl p-4 group-hover:scale-110 transition">
+                <ClipboardCheck className="w-8 h-8 text-primary" />
+              </div>
               </div>
             </CardContent>
           </Card>
@@ -141,7 +227,7 @@ const DashboardAdmin = () => {
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <Bell className="w-5 h-5" />
+                  <BellRing className="w-5 h-5" />
                   System Alerts & Administration
                 </CardTitle>
               </CardHeader>
@@ -177,7 +263,7 @@ const DashboardAdmin = () => {
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <Shield className="w-5 h-5" />
+                  <ShieldCheck className="w-5 h-5" />
                   Role Definitions & Permissions
                 </CardTitle>
               </CardHeader>
@@ -217,7 +303,7 @@ const DashboardAdmin = () => {
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <Users className="w-5 h-5" />
+                  <UsersRound className="w-5 h-5" />
                   Member Directory
                 </CardTitle>
               </CardHeader>
@@ -232,7 +318,7 @@ const DashboardAdmin = () => {
                       {member.status === "active" ? (
                         <CheckCircle className="w-4 h-4 text-green-600" />
                       ) : member.status === "pending" ? (
-                        <AlertCircle className="w-4 h-4 text-yellow-600" />
+                        <Clock3 className="w-4 h-4 text-yellow-600" />
                       ) : (
                         <Lock className="w-4 h-4 text-red-600" />
                       )}
@@ -265,12 +351,12 @@ const DashboardAdmin = () => {
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <Settings className="w-5 h-5" />
+                  <History className="w-5 h-5" />
                   Member Activity Log
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-3">
-                {memberActivities.map((activity) => (
+                {MemberActivities.map((activity) => (
                   <div key={activity.id} className="p-3 border rounded-lg text-sm">
                     <div className="flex items-start justify-between mb-2">
                       <div>

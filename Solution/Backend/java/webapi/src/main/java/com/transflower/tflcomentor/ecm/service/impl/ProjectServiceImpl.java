@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.transflower.tflcomentor.ecm.dto.response.MentorshipActivityResponse;
 import com.transflower.tflcomentor.ecm.dto.response.ProjectAllocationResponse;
+import com.transflower.tflcomentor.ecm.dto.response.ProjectResponse;
 import com.transflower.tflcomentor.ecm.entity.Project;
 import com.transflower.tflcomentor.ecm.entity.ProjectAllocation;
 import com.transflower.tflcomentor.ecm.repository.ProjectRepository;
@@ -21,8 +22,8 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public List<Project> getAllProjects() {
-        return repository.getAllProjects();
+    public List<Project> getAllProjects(Long mentorId) {
+        return repository.getAllProjects(mentorId);
     }
 
     @Override
@@ -46,14 +47,14 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-
     public List<Project> getProjectByStudentId(Long studentId) {
         return repository.getProjectByStudentId(studentId);
     }
 
     @Override
-    public boolean addMember(ProjectAllocation projectAllocations) {
-        return repository.addMember(projectAllocations);
+    public boolean allocateMembersToProject(ProjectAllocation projectAllocation) {
+        return repository.allocateMembersToProject(projectAllocation);
+        
     }
 
     @Override
@@ -61,8 +62,13 @@ public class ProjectServiceImpl implements ProjectService {
         return repository.getProjectMember(projectId);
     }
 
-     @Override
+    @Override
     public List<MentorshipActivityResponse> getRecentActivities(Long mentorId) {
         return repository.getRecentActivities(mentorId);
+    }
+
+    @Override
+    public boolean addProject(ProjectResponse project,Long mentorId){
+        return repository.addProject(project, mentorId);
     }
 }

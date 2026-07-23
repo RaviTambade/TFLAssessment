@@ -1,28 +1,30 @@
 package com.transflower.tflcomentor.ecm.entity;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ProjectAllocation {
 
     private Long id;
     private Long projectId;
-    private Long studentId;
+    private List<Long> studentIds;
     private LocalDateTime joinedDate;
     private LocalDateTime releaseDate;
 
     public ProjectAllocation() {
         this.id = 0L;
         this.projectId = 0L;
-        this.studentId = 0L;
+        this.studentIds = new ArrayList<>();
         this.joinedDate = null;
         this.releaseDate = null;
 
     }
 
-    public ProjectAllocation(Long id, Long projectId, Long studentId, LocalDateTime joinedDate, LocalDateTime releaseDate) {
+    public ProjectAllocation(Long id, Long projectId, List<Long> studentIds, LocalDateTime joinedDate, LocalDateTime releaseDate) {
         this.id = id;
         this.projectId = projectId;
-        this.studentId = studentId;
+        this.studentIds = studentIds;
         this.joinedDate = joinedDate;
         this.releaseDate = releaseDate;
     }
@@ -43,12 +45,12 @@ public class ProjectAllocation {
         this.projectId = projectId;
     }
 
-    public Long getStudentId() {
-        return studentId;
+   public List<Long> getStudentIds() {
+        return studentIds;
     }
 
-    public void setStudentId(Long studentId) {
-        this.studentId = studentId;
+    public void setStudentIds(List<Long> studentIds) {
+        this.studentIds = studentIds;
     }
 
     public LocalDateTime getJoinedDate() {

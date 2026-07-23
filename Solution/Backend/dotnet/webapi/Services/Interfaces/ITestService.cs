@@ -12,6 +12,7 @@ namespace backend.Services.Interfaces
         Task<List<GetSmeCreatedTestResponse>> GetSmeCreatedTestAsync(long userId);
         Task<List<TestDetails>> GetTestDetailsForMentor();
         Task<int> GetTestCount();
+        Task<int>GetMenteeCount(long userId);
 
         Task<List<TestStudentDetails>> GetTestStudentsDetails(long TestId);
     }

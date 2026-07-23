@@ -46,5 +46,10 @@ namespace backend.Services
             return await _repo.GetTestCount();
         }
 
+        public async Task<int> GetMenteeCount(long userId)
+        {
+            return await _repo.GetMenteeCount(userId);
+        }
+
     }
 }

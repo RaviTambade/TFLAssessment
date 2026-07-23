@@ -31,7 +31,7 @@ namespace backend.Repositories.Interfaces
          Task<List<AssessmentPerformanceResponse>> GetAssessmentPerformance(long userId);
 
         // Task<List<CompletedAssessmentsResponse>> GetCompletedAssessments(int studentId);
-
+        // Task <int>GetAssessmentCount();
 
     }
 }

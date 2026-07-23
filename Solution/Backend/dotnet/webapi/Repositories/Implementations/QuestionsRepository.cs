@@ -6,6 +6,7 @@ using System.Data; // Fixes IDbConnection
 using Dapper;
 using System.Threading.Tasks;
 using System.Data.SqlClient;
+using API.DTOs;
 
 namespace backend.Repositories.Implementations
 {
@@ -17,19 +18,23 @@ namespace backend.Repositories.Implementations
         public QuestionsRepository(IConfiguration configuration)
         {
             _configuration = configuration;
-            _connectionString = _configuration.GetConnectionString("DefaultConnection")
-                                            ?? throw new ArgumentNullException(nameof(configuration), "DefaultConnection string is missing");
         }
 
-         public async Task<List<Dictionary<string, object>>> GetAllConcepts()
+        private MySqlConnection GetConnection()
+        {
+            return new MySqlConnection(_configuration.GetConnectionString("DefaultConnection"));
+        }
+
+
+        public async Task<List<Dictionary<string, object>>> GetAllConcepts()
         {
             List<Dictionary<string, object>> concepts = new List<Dictionary<string, object>>();
 
-            
-            string connectionString = "server=192.168.1.149;port=3306;database=tflcomentor_db;user=root;password='password'";
+
+            // string connectionString = "server=192.168.1.149;port=3306;database=tflcomentor_db;user=root;password='password'";
             string query = "SELECT question_id, concept FROM questions";
 
-            using (MySqlConnection con = new MySqlConnection(connectionString))
+            using (MySqlConnection con = GetConnection())
             {
                 await con.OpenAsync();
 
@@ -44,15 +49,12 @@ namespace backend.Repositories.Implementations
                 {
                     // Create dictionary
                     Dictionary<string, object> data = new Dictionary<string, object>();
-
                     // Add values
                     data["question_id"] = reader["question_id"];
                     data["concept"] = reader["concept"];
-
                     // Add into list
                     concepts.Add(data);
                 }
-
                 // Close reader
                 reader.Close();
             }
@@ -68,8 +70,7 @@ namespace backend.Repositories.Implementations
             string query = @"
                     SELECT q.question_id,q.description AS question_description,q.question_type,q.difficulty_level,q.status,
                     f.name AS framework_name,c.name AS concept_name,
-                     m.option_a,m.option_b,m.option_c,m.option_d,m.correct_answer,psa.answer AS problem_answer FROM questions q
-
+                    m.option_a,m.option_b,m.option_c,m.option_d,m.correct_answer,psa.answer AS problem_answer FROM questions q
                     LEFT JOIN question_framework_concepts qfc ON q.question_id = qfc.question_id
                     LEFT JOIN framework_concepts fc ON qfc.framework_concepts_id = fc.id
                     LEFT JOIN frameworks f ON fc.framework_id = f.id
@@ -79,7 +80,7 @@ namespace backend.Repositories.Implementations
                     WHERE q.question_id = @question_id;
                     ";
 
-            using (MySqlConnection con = new MySqlConnection(_configuration.GetConnectionString("DefaultConnection")))
+            using (MySqlConnection con = GetConnection())
             {
                 MySqlCommand cmd = new MySqlCommand(query, con);
                 cmd.Parameters.AddWithValue("@question_id", questionId);
@@ -106,7 +107,6 @@ namespace backend.Repositories.Implementations
                             OptionC = reader["option_c"]?.ToString(),
                             OptionD = reader["option_d"]?.ToString(),
                             CorrectAnswer = reader["correct_answer"]?.ToString(),
-
                             ProblemAnswer = reader["problem_answer"]?.ToString()
                         };
                     }
@@ -118,36 +118,35 @@ namespace backend.Repositories.Implementations
         public async Task<IEnumerable<AssessmentQuestionAnswers>> GetStudentAssessmentQuestionsResultAsync(int assessmentId, int studentId)
         {
             const string sql = @"
-            SELECT 
-        a.id                        AS AssessmentId,
-        a.student_id                AS StudentId,
-        sa.QuestionId,
-        qu.description,
-	    mo.option_a,
-        mo.option_b,
-        mo.option_c,
-        mo.option_d,
-        mo.correct_answer           AS CorrectAnswer,
-        sa.SelectedOption           AS StudentSelectedAnswer,
-        CASE 
-        WHEN sa.SelectedOption = mo.correct_answer 
-        THEN 'Correct' 
-        ELSE 'Wrong' 
-        END                         AS Result
-        FROM assessments a
-        JOIN StudentAnswers sa 
-            ON sa.AssessmentId = a.Id 
-            AND sa.StudentId = a.student_id
-
-        JOIN mcq_options mo 
-            ON mo.question_id = sa.QuestionId
-        join questions qu 
-            ON qu.question_id=mo.question_id
-        WHERE 
-            a.id = @AssessmentId        
-            AND a.student_id = @StudentId 
-        ORDER BY 
-            sa.QuestionId;";
+                        SELECT 
+                    a.id  AS AssessmentId,
+                    a.student_id AS StudentId,
+                    sa.QuestionId,
+                    qu.description,
+                    mo.option_a,
+                    mo.option_b,
+                    mo.option_c,
+                    mo.option_d,
+                    mo.correct_answer AS CorrectAnswer,
+                    sa.SelectedOption AS StudentSelectedAnswer,
+                    CASE 
+                    WHEN sa.SelectedOption = mo.correct_answer 
+                    THEN 'Correct' 
+                    ELSE 'Wrong' 
+                    END                         AS Result
+                    FROM assessments a
+                    JOIN StudentAnswers sa 
+                        ON sa.AssessmentId = a.Id 
+                        AND sa.StudentId = a.student_id
+                    JOIN mcq_options mo 
+                        ON mo.question_id = sa.QuestionId
+                    join questions qu 
+                        ON qu.question_id=mo.question_id
+                    WHERE 
+                        a.id = @AssessmentId        
+                        AND a.student_id = @StudentId 
+                    ORDER BY 
+                        sa.QuestionId;";
 
             using (IDbConnection db = new MySqlConnection(_connectionString))
             {
@@ -162,10 +161,8 @@ namespace backend.Repositories.Implementations
         public async Task<QuestionDetails> GetQuestionDetails(int questionId)
         {
             QuestionDetails dto = null;
-
-            string connStr = _configuration.GetConnectionString("DefaultConnection");
-
-            using (MySqlConnection conn = new MySqlConnection(connStr))
+            // string connStr = _configuration.GetConnectionString("DefaultConnection");
+            using (MySqlConnection conn = GetConnection())
             {
                 string query = @"
                                 SELECT 
@@ -190,9 +187,7 @@ namespace backend.Repositories.Implementations
 
                 MySqlCommand cmd = new MySqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@question_id", questionId);
-
                 await conn.OpenAsync();
-
                 using (MySqlDataReader reader = (MySqlDataReader)await cmd.ExecuteReaderAsync())
                 {
                     if (await reader.ReadAsync())
@@ -213,5 +208,52 @@ namespace backend.Repositories.Implementations
 
             return dto;
         }
+    
+
+    public async Task<List<GetQuestionsByTestId>> GetQuestionsByTestId(long testId)
+        {
+            List<GetQuestionsByTestId> questions = new();
+
+            string connectionString = _configuration.GetConnectionString("DefaultConnection");
+
+            using MySqlConnection connection = new MySqlConnection(connectionString);
+
+            await connection.OpenAsync();
+
+            string query = @"
+                        SELECT
+                            q.description,
+                            q.question_type,
+                            q.language,
+                            q.framework
+                        FROM tests t
+                        INNER JOIN test_questions tq
+                            ON t.id = tq.test_id
+                        INNER JOIN questions q
+                            ON tq.question_id = q.question_id
+                        WHERE t.id=@TestId;";
+
+            using MySqlCommand command = new MySqlCommand(query, connection);
+
+            command.Parameters.AddWithValue("@TestId", testId);
+
+            using MySqlDataReader reader = (MySqlDataReader)await command.ExecuteReaderAsync();
+
+            while (await reader.ReadAsync())
+            {
+                questions.Add(new GetQuestionsByTestId
+                {
+                    Description = reader["description"].ToString()!,
+                    QuestionType = reader["question_type"].ToString()!,
+                    Language = reader["language"].ToString()!,
+                    Framework = reader["framework"].ToString()!
+                });
+            }
+
+            return questions;
+        }
     }
+    
+
+
 }

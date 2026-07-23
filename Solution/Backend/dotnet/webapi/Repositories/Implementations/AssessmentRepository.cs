@@ -15,13 +15,18 @@ public class AssessmentRepository : IAssessmentRepository
     private readonly IConfiguration _configuration;
 
     private readonly AppDbContext _context;
-    private readonly string _connectionString;
+    // private readonly string _connectionString;
 
     public AssessmentRepository(AppDbContext context, IConfiguration configuration)
     {
         _context = context;
-         _configuration = configuration;
-        _connectionString = configuration.GetConnectionString("DefaultConnection") ?? "server=localhost;port=3306;database=tflcomentor_db;user=root;password='password'";
+        _configuration = configuration;
+        // _connectionString = configuration.GetConnectionString("DefaultConnection") ?? "server=localhost;port=3306;database=tflcomentor_db;user=root;password='password'";
+    }
+
+    private MySqlConnection GetConnection()
+    {
+        return new MySqlConnection(_configuration.GetConnectionString("DefaultConnection"));
     }
 
     public async Task<List<Assessments>> GetAllUpcomingAssessments(long userId, DateTime fromDate, DateTime toDate)
@@ -34,11 +39,10 @@ public class AssessmentRepository : IAssessmentRepository
 
         List<Assessments> assessments = new List<Assessments>();
 
-        string connectionString = _configuration.GetConnectionString("DefaultConnection") ?? "server=localhost;port=3306;database=tflcomentor_db;user=root;password='password'";
+        // string connectionString = _configuration.GetConnectionString("DefaultConnection") ?? "server=localhost;port=3306;database=tflcomentor_db;user=root;password='password'";
 
 
-        using (MySqlConnection connection =
-               new MySqlConnection(connectionString))
+        using (MySqlConnection connection = GetConnection())
         {
             await connection.OpenAsync();
 
@@ -50,8 +54,7 @@ public class AssessmentRepository : IAssessmentRepository
                     AND DATE(a.scheduled_at) BETWEEN @FromDate AND @ToDate
                     ORDER BY a.scheduled_at ASC;";
 
-            using (MySqlCommand command =
-                   new MySqlCommand(query, connection))
+            using (MySqlCommand command = new MySqlCommand(query, connection))
             {
                 // Parameters
                 command.Parameters.AddWithValue("@UserId", userId);
@@ -59,36 +62,27 @@ public class AssessmentRepository : IAssessmentRepository
                 command.Parameters.AddWithValue("@FromDate", fromDate);
                 command.Parameters.AddWithValue("@ToDate", toDate);
 
-                using (
-                     MySqlDataReader reader =
-                       (MySqlDataReader)await command.ExecuteReaderAsync())
+                using (MySqlDataReader reader = (MySqlDataReader)await command.ExecuteReaderAsync())
                 {
                     int srNo = 1;
-
                     while (await reader.ReadAsync())
                     {
                         Assessments assessment = new Assessments
                         {
                             SrNo = srNo,
+                            AssessmentId = Convert.ToInt32(reader["AssessmentId"]),
 
-                            AssessmentId =
-                                Convert.ToInt32(reader["AssessmentId"]),
-
-                            AssessmentName =
-                                reader["AssessmentName"] != DBNull.Value
+                            AssessmentName = reader["AssessmentName"] != DBNull.Value
                                     ? reader["AssessmentName"].ToString()
                                     : null,
 
-                            ScheduledAt =
-                                Convert.ToDateTime(reader["ScheduledAt"]),
+                            ScheduledAt = Convert.ToDateTime(reader["ScheduledAt"]),
 
-                            Duration =
-                                reader["Duration"] != DBNull.Value
+                            Duration = reader["Duration"] != DBNull.Value
                                     ? Convert.ToInt32(reader["Duration"])
                                     : null,
 
-                            Status =
-                                reader["Status"].ToString()
+                            Status = reader["Status"].ToString()
                         };
 
                         assessments.Add(assessment);
@@ -105,100 +99,111 @@ public class AssessmentRepository : IAssessmentRepository
     public async Task<List<AllAssessments>> GetAllAssessments()
     {
         var list = new List<AllAssessments>();
-        string connectionString = _configuration.GetConnectionString("DefaultConnection") ?? "server=localhost;port=3306;database=tflcomentor_db;user=root;password='password'";
+        // string connectionString = _configuration.GetConnectionString("DefaultConnection") ?? "server=localhost;port=3306;database=tflcomentor_db;user=root;password='password'";
 
-        using var conn = new MySqlConnection(connectionString);
-        await conn.OpenAsync();
+        // using var conn = new MySqlConnection(connectionString);
+        using (MySqlConnection connection = GetConnection())
+        {
+            await connection.OpenAsync();
 
-        string query = @"
+            string query = @"
             SELECT a.id AS Id,
-                   COALESCE(t.title, 'N/A') AS AssessmentTitle,
-                   COALESCE(p.first_name, 'N/A') AS FullName,
-                   COALESCE(t.difficulty, 'N/A') AS DifficultyLevel,
-                   a.status AS Status,
-                   a.is_active AS IsActive
+                COALESCE(t.title, 'N/A') AS AssessmentTitle,
+                COALESCE(p.first_name, 'N/A') AS FullName,
+                COALESCE(t.difficulty, 'N/A') AS DifficultyLevel,
+                a.status AS Status,
+                a.is_active AS IsActive
             FROM assessments a
             LEFT JOIN tests t ON a.test_id = t.id
             LEFT JOIN users u ON a.student_id = u.id
             LEFT JOIN personal_informations p ON u.id = p.user_id
         ";
 
-        using var cmd = new MySqlCommand(query, conn);
-        using var reader = await cmd.ExecuteReaderAsync();
-        int srNo = 1;
-        while (await reader.ReadAsync())
-        {
-            var item = new AllAssessments
+            using var cmd = new MySqlCommand(query, connection);
+            using var reader = await cmd.ExecuteReaderAsync();
+            int srNo = 1;
+            while (await reader.ReadAsync())
             {
-                Id = reader.GetInt64("Id"),
-                AssessmentTitle = reader["AssessmentTitle"]?.ToString(),
-                FullName = reader["FullName"]?.ToString(),
-                DifficultyLevel = reader["DifficultyLevel"]?.ToString(),
-                Status = reader["Status"]?.ToString(),
-                IsActive = reader["IsActive"] != DBNull.Value && Convert.ToBoolean(reader["IsActive"])
-            };
-            item.SrNo = srNo++;
-            list.Add(item);
+                var item = new AllAssessments
+                {
+                    Id = reader.GetInt64("Id"),
+                    AssessmentTitle = reader["AssessmentTitle"]?.ToString(),
+                    FullName = reader["FullName"]?.ToString(),
+                    DifficultyLevel = reader["DifficultyLevel"]?.ToString(),
+                    Status = reader["Status"]?.ToString(),
+                    IsActive = reader["IsActive"] != DBNull.Value && Convert.ToBoolean(reader["IsActive"])
+                };
+                item.SrNo = srNo++;
+                list.Add(item);
+            }
+            return list;
         }
-
-        return list;
     }
-
     public async Task<bool> DeactivateAssessment(long id)
     {
-        string connectionString = _configuration.GetConnectionString("DefaultConnection") ?? "server=localhost;port=3306;database=tflcomentor_db;user=root;password='password'";
-        using var conn = new MySqlConnection(connectionString);
-        await conn.OpenAsync();
+        // string connectionString = _configuration.GetConnectionString("DefaultConnection") ?? "server=localhost;port=3306;database=tflcomentor_db;user=root;password='password'";
+        // using var conn = new MySqlConnection(connectionString);
+        using (MySqlConnection connection = GetConnection())
+        {
+            await connection.OpenAsync();
 
-        string query = @"UPDATE assessments SET is_active = 0 WHERE id = @Id AND is_active = 1";
-        using var cmd = new MySqlCommand(query, conn);
-        cmd.Parameters.AddWithValue("@Id", id);
-        var affected = await cmd.ExecuteNonQueryAsync();
-        return affected > 0;
+            string query = @"UPDATE assessments SET is_active = 0 WHERE id = @Id AND is_active = 1";
+            using var cmd = new MySqlCommand(query, connection);
+            cmd.Parameters.AddWithValue("@Id", id);
+            var affected = await cmd.ExecuteNonQueryAsync();
+            return affected > 0;
+        }
     }
 
     public async Task<int> CancelAssessmentsByTestId(long testId)
     {
-        string connectionString = _configuration.GetConnectionString("DefaultConnection") ?? "server=localhost;port=3306;database=tflcomentor_db;user=root;password='password'";
-        using var conn = new MySqlConnection(connectionString);
-        await conn.OpenAsync();
+        // string connectionString = _configuration.GetConnectionString("DefaultConnection") ?? "server=localhost;port=3306;database=tflcomentor_db;user=root;password='password'";
+        // using var conn = new MySqlConnection(connectionString);
 
-        // Check test exists
-        string checkQuery = "SELECT COUNT(*) FROM tests WHERE id = @TestId";
-        using var checkCmd = new MySqlCommand(checkQuery, conn);
-        checkCmd.Parameters.AddWithValue("@TestId", testId);
-        var count = Convert.ToInt32(await checkCmd.ExecuteScalarAsync());
-        if (count == 0) return 0;
+        using (MySqlConnection connection = GetConnection())
+        {
+            await connection.OpenAsync();
 
-        string updateTest = "UPDATE tests SET status = 0 WHERE id = @TestId";
-        using var updTestCmd = new MySqlCommand(updateTest, conn);
-        updTestCmd.Parameters.AddWithValue("@TestId", testId);
-        var testRows = await updTestCmd.ExecuteNonQueryAsync();
+            // Check test exists
+            string checkQuery = "SELECT COUNT(*) FROM tests WHERE id = @TestId";
+            using var checkCmd = new MySqlCommand(checkQuery, connection);
+            checkCmd.Parameters.AddWithValue("@TestId", testId);
+            var count = Convert.ToInt32(await checkCmd.ExecuteScalarAsync());
+            if (count == 0) return 0;
 
-        string updateAssess = @"
+            string updateTest = "UPDATE tests SET status = 0 WHERE id = @TestId";
+            using var updTestCmd = new MySqlCommand(updateTest, connection);
+            updTestCmd.Parameters.AddWithValue("@TestId", testId);
+            var testRows = await updTestCmd.ExecuteNonQueryAsync();
+
+            string updateAssess = @"
             UPDATE assessments
             SET status = 'Cancelled', is_active = 0
             WHERE test_id = @TestId
               AND is_active = 1
               AND status <> 'Completed'";
-        using var updAssessCmd = new MySqlCommand(updateAssess, conn);
-        updAssessCmd.Parameters.AddWithValue("@TestId", testId);
-        var assessRows = await updAssessCmd.ExecuteNonQueryAsync();
+            using var updAssessCmd = new MySqlCommand(updateAssess, connection);
+            updAssessCmd.Parameters.AddWithValue("@TestId", testId);
+            var assessRows = await updAssessCmd.ExecuteNonQueryAsync();
 
-        return Math.Max(1, testRows + assessRows);
+            return Math.Max(1, testRows + assessRows);
+        }
     }
 
     public async Task<bool> RestoreAssessment(long id)
     {
-        string connectionString = _configuration.GetConnectionString("DefaultConnection") ?? "server=localhost;port=3306;database=tflcomentor_db;user=root;password='password'";
-        using var conn = new MySqlConnection(connectionString);
-        await conn.OpenAsync();
+        // string connectionString = _configuration.GetConnectionString("DefaultConnection") ?? "server=localhost;port=3306;database=tflcomentor_db;user=root;password='password'";
+        // using var conn = new MySqlConnection(connectionString);
+        using (MySqlConnection connection = GetConnection())
+        {
+            await connection.OpenAsync();
 
-        string query = @"UPDATE assessments SET is_active = 1 WHERE id = @Id AND is_active = 0";
-        using var cmd = new MySqlCommand(query, conn);
-        cmd.Parameters.AddWithValue("@Id", id);
-        var affected = await cmd.ExecuteNonQueryAsync();
-        return affected > 0;
+            string query = @"UPDATE assessments SET is_active = 1 WHERE id = @Id AND is_active = 0";
+            using var cmd = new MySqlCommand(query, connection);
+            cmd.Parameters.AddWithValue("@Id", id);
+            var affected = await cmd.ExecuteNonQueryAsync();
+            return affected > 0;
+        }
     }
 
     // public async Task<List<Tests>> GetTestsAsync()
@@ -218,10 +223,11 @@ public class AssessmentRepository : IAssessmentRepository
     public async Task<List<Tests>> GetTestsAsync()
     {
         var tests = new List<Tests>();
-        string connectionString = _configuration.GetConnectionString("DefaultConnection") ?? "server=localhost;port=3306;database=tflcomentor_db;user=root;password='password'";
+        // string connectionString = _configuration.GetConnectionString("DefaultConnection") ?? "server=localhost;port=3306;database=tflcomentor_db;user=root;password='password'";
 
 
-        using (var connection = new MySqlConnection(connectionString))
+        // using (var connection = new MySqlConnection(connectionString))
+        using (MySqlConnection connection = GetConnection())
         {
             await connection.OpenAsync();
 
@@ -263,15 +269,12 @@ public class AssessmentRepository : IAssessmentRepository
     //   return await Task.FromResult(new List<string>());
     // }
 
-
     public async Task<List<Student>> GetStudentsAsync()
     {
         List<Student> students = new List<Student>();
 
-        string connectionString = _configuration.GetConnectionString("DefaultConnection") ?? "server=localhost;port=3306;database=tflcomentor_db;user=root;password='password'";
-
-
-        using (MySqlConnection conn = new MySqlConnection(connectionString))
+        // string connectionString = _configuration.GetConnectionString("DefaultConnection") ?? "server=localhost;port=3306;database=tflcomentor_db;user=root;password='password'";
+        using (MySqlConnection conn = GetConnection())
         {
             await conn.OpenAsync();
 
@@ -395,88 +398,76 @@ public class AssessmentRepository : IAssessmentRepository
     //     };
     // }
 
-    public async Task AssignAssessmentAsync(
-    AssignAssessments dto
-)
+    public async Task AssignAssessmentAsync(AssignAssessments dto)
     {
         // =========================
         // STEP 1 : VALIDATION
         // =========================
-
         if (dto.TestId <= 0)
         {
             throw new Exception("Invalid Test Id");
         }
-
         if (dto.StudentIds == null ||
             dto.StudentIds.Count == 0)
         {
             throw new Exception("Students are required");
         }
-
-
         // =========================
         // STEP 2 : OPEN CONNECTION
         // =========================
-        string connectionString = _configuration.GetConnectionString("DefaultConnection") ?? "server=localhost;port=3306;database=tflcomentor_db;user=root;password='password'";
-
-
-        using var conn =
-            new MySqlConnection(connectionString);
-
-        await conn.OpenAsync();
-
-
-        // =========================
-        // STEP 3 : LOOP STUDENTS
-        // =========================
-
-        foreach (var studentId in dto.StudentIds)
+        // string connectionString = _configuration.GetConnectionString("DefaultConnection") ?? "server=localhost;port=3306;database=tflcomentor_db;user=root;password='password'";
+        using (MySqlConnection connection = GetConnection())
         {
+
+            await connection.OpenAsync();
             // =========================
-            // STEP 4 : CHECK DUPLICATE
+            // STEP 3 : LOOP STUDENTS
             // =========================
 
-            string checkQuery = @"
+            foreach (var studentId in dto.StudentIds)
+            {
+                // =========================
+                // STEP 4 : CHECK DUPLICATE
+                // =========================
+
+                string checkQuery = @"
             SELECT COUNT(*)
             FROM assessments
             WHERE test_id = @TestId
             AND student_id = @StudentId
         ";
 
-            using var checkCmd =
-                new MySqlCommand(checkQuery, conn);
+                using var checkCmd =
+                    new MySqlCommand(checkQuery, connection);
 
-            checkCmd.Parameters.AddWithValue(
-                "@TestId",
-                dto.TestId
-            );
+                checkCmd.Parameters.AddWithValue(
+                    "@TestId",
+                    dto.TestId
+                );
 
-            checkCmd.Parameters.AddWithValue(
-                "@StudentId",
-                studentId
-            );
+                checkCmd.Parameters.AddWithValue(
+                    "@StudentId",
+                    studentId
+                );
 
-            int count = Convert.ToInt32(
-                await checkCmd.ExecuteScalarAsync()
-            );
+                int count = Convert.ToInt32(await checkCmd.ExecuteScalarAsync());
 
 
-            // =========================
-            // STEP 5 : SKIP IF EXISTS
-            // =========================
+                // =========================
+                // STEP 5 : SKIP IF EXISTS
+                // =========================
 
-            if (count > 0)
-            {
-                continue;
-            }
+                if (count > 0)
+                {
+                    continue;
+                }
 
 
-            // =========================
-            // STEP 6 : INSERT
-            // =========================
+                // =========================
+                // STEP 6 : INSERT
+                // =========================
 
-            string insertQuery = @"
+                string insertQuery = @"
             INSERT INTO assessments
             (
                 test_id,
@@ -499,62 +490,63 @@ public class AssessmentRepository : IAssessmentRepository
             )
         ";
 
-            using var insertCmd =
-                new MySqlCommand(insertQuery, conn);
+                using var insertCmd =
+                    new MySqlCommand(insertQuery, connection);
 
-            insertCmd.Parameters.AddWithValue(
-                "@TestId",
-                dto.TestId
-            );
+                insertCmd.Parameters.AddWithValue(
+                    "@TestId",
+                    dto.TestId
+                );
 
-            insertCmd.Parameters.AddWithValue(
-                "@StudentId",
-                studentId
-            );
+                insertCmd.Parameters.AddWithValue(
+                    "@StudentId",
+                    studentId
+                );
 
-            insertCmd.Parameters.AddWithValue(
-                "@AssignedBy",
-                dto.AssignedBy
-            );
+                insertCmd.Parameters.AddWithValue(
+                    "@AssignedBy",
+                    dto.AssignedBy
+                );
 
-            insertCmd.Parameters.AddWithValue(
-                "@AssignedAt",
-                DateTime.Now
-            );
+                insertCmd.Parameters.AddWithValue(
+                    "@AssignedAt",
+                    DateTime.Now
+                );
 
-            insertCmd.Parameters.AddWithValue(
-                "@ScheduledAt",
-                dto.ScheduledAt
-            );
+                insertCmd.Parameters.AddWithValue(
+                    "@ScheduledAt",
+                    dto.ScheduledAt
+                );
 
-            insertCmd.Parameters.AddWithValue(
-                "@Status",
-                "Assigned"
-            );
+                insertCmd.Parameters.AddWithValue(
+                    "@Status",
+                    "Assigned"
+                );
 
-            insertCmd.Parameters.AddWithValue(
-                "@IsActive",
-                true
-            );
+                insertCmd.Parameters.AddWithValue(
+                    "@IsActive",
+                    true
+                );
 
-            await insertCmd.ExecuteNonQueryAsync();
+                await insertCmd.ExecuteNonQueryAsync();
+            }
+
+
+            // =========================
+            // STEP 7 : RETURN
+            // =========================
+
+            return;
         }
-
-
-        // =========================
-        // STEP 7 : RETURN
-        // =========================
-
-        return;
     }
-
 
 
     public async Task<List<AssessmentQuestions>> GetAssessmentQuestionsAsync(int assessmentId)
     {
         var questions = new List<AssessmentQuestions>();
 
-        using (var connection = new MySqlConnection(_connectionString))
+        // using (var connection = new MySqlConnection(_connectionString))
+        using (MySqlConnection connection = GetConnection())
         {
             await connection.OpenAsync();
 
@@ -622,45 +614,42 @@ public class AssessmentRepository : IAssessmentRepository
         return questions;
     }
 
-   public async Task<bool> SaveAssessmentAnswersAsync(List<StudentAnswer>? answers)
-{
-    if (answers == null || !answers.Any())
-        return false;
-
-    var studentId = answers[0].StudentId;
-    var assessmentId = answers[0].AssessmentId;
-
-    string connectionString =
-        "server=localhost;port=3306;database=tflcomentor_db;user=root;password=password";
-
-    using var conn = new MySqlConnection(connectionString);
-    await conn.OpenAsync();
-
-    using var trans = await conn.BeginTransactionAsync();
-
-    try
+    public async Task<bool> SaveAssessmentAnswersAsync(List<StudentAnswer>? answers)
     {
-        // Delete previous answers
-        using (var delCmd = new MySqlCommand(
-            @"DELETE FROM studentanswers 
+        if (answers == null || !answers.Any())
+            return false;
+
+        var studentId = answers[0].StudentId;
+        var assessmentId = answers[0].AssessmentId;
+
+        // string connectionString =
+        //     "server=localhost;port=3306;database=tflcomentor_db;user=root;password=password";
+
+        // using var conn = new MySqlConnection(connectionString);
+        using (MySqlConnection connection = GetConnection())
+        {
+            await connection.OpenAsync();
+            using var trans = await connection.BeginTransactionAsync();
+            try
+            {
+                // Delete previous answers
+                using (var delCmd = new MySqlCommand(
+                    @"DELETE FROM studentanswers 
               WHERE StudentId = @StudentId 
               AND AssessmentId = @AssessmentId",
-            conn,
-            (MySql.Data.MySqlClient.MySqlTransaction)trans))
-        {
-            delCmd.Parameters.AddWithValue("@StudentId", studentId);
-            delCmd.Parameters.AddWithValue("@AssessmentId", assessmentId);
-
-            await delCmd.ExecuteNonQueryAsync();
-        }
-
-        // Insert new answers
-        foreach (var answer in answers)
-        {
-            answer.CreatedAt = DateTime.Now;
-
-            using var insertCmd = new MySqlCommand(
-                @"INSERT INTO studentanswers
+                    connection,
+                    (MySql.Data.MySqlClient.MySqlTransaction)trans))
+                {
+                    delCmd.Parameters.AddWithValue("@StudentId", studentId);
+                    delCmd.Parameters.AddWithValue("@AssessmentId", assessmentId);
+                    await delCmd.ExecuteNonQueryAsync();
+                }
+                // Insert new answers
+                foreach (var answer in answers)
+                {
+                    answer.CreatedAt = DateTime.Now;
+                    using var insertCmd = new MySqlCommand(
+                        @"INSERT INTO studentanswers
                 (
                     StudentId,
                     AssessmentId,
@@ -678,53 +667,49 @@ public class AssessmentRepository : IAssessmentRepository
                     @TimeTakenMinutes,
                     @CreatedAt
                 )",
-                conn,
-                (MySql.Data.MySqlClient.MySqlTransaction)trans);
-
-            insertCmd.Parameters.AddWithValue("@StudentId", answer.StudentId);
-            insertCmd.Parameters.AddWithValue("@AssessmentId", answer.AssessmentId);
-            insertCmd.Parameters.AddWithValue("@QuestionId", answer.QuestionId);
-            insertCmd.Parameters.AddWithValue("@SelectedOption", answer.SelectedOption ?? "");
-            insertCmd.Parameters.AddWithValue("@TimeTakenMinutes", answer.TimeTakenMinutes);
-            insertCmd.Parameters.AddWithValue("@CreatedAt", answer.CreatedAt);
-
-            await insertCmd.ExecuteNonQueryAsync();
-        }
-
-        // Update assessment status
-        using (var updCmd = new MySqlCommand(
-            @"UPDATE assessments 
+                        connection,
+                        (MySql.Data.MySqlClient.MySqlTransaction)trans);
+                    insertCmd.Parameters.AddWithValue("@StudentId", answer.StudentId);
+                    insertCmd.Parameters.AddWithValue("@AssessmentId", answer.AssessmentId);
+                    insertCmd.Parameters.AddWithValue("@QuestionId", answer.QuestionId);
+                    insertCmd.Parameters.AddWithValue("@SelectedOption", answer.SelectedOption ?? "");
+                    insertCmd.Parameters.AddWithValue("@TimeTakenMinutes", answer.TimeTakenMinutes);
+                    insertCmd.Parameters.AddWithValue("@CreatedAt", answer.CreatedAt);
+                    await insertCmd.ExecuteNonQueryAsync();
+                }
+                // Update assessment status
+                using (var updCmd = new MySqlCommand(
+                    @"UPDATE assessments 
               SET status = 'Completed' 
               WHERE Id = @AssessmentId",
-            conn,
-            (MySql.Data.MySqlClient.MySqlTransaction)trans))
-        {
-            updCmd.Parameters.AddWithValue("@AssessmentId", assessmentId);
-
-            await updCmd.ExecuteNonQueryAsync();
+                    connection,
+                    (MySql.Data.MySqlClient.MySqlTransaction)trans))
+                {
+                    updCmd.Parameters.AddWithValue("@AssessmentId", assessmentId);
+                    await updCmd.ExecuteNonQueryAsync();
+                }
+                await trans.CommitAsync();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                await trans.RollbackAsync();
+                Console.WriteLine(ex.ToString());
+                throw;
+            }
         }
-
-        await trans.CommitAsync();
-
-        return true;
     }
-    catch (Exception ex)
-{
-    await trans.RollbackAsync();
-
-    Console.WriteLine(ex.ToString());
-
-    throw;
-}
-}
     public async Task<AssessmentReports> GetResultData(int studentId, int assessmentId)
     {
         AssessmentReports? report = null;
-        string connectionString = "server=localhost;port=3306;database=tflcomentor_db;user=root;password='password'";
-        using var conn = new MySqlConnection(connectionString);
-        await conn.OpenAsync();
+        // string connectionString = "server=localhost;port=3306;database=tflcomentor_db;user=root;password='password'";
+        // using var conn = new MySqlConnection(connectionString);
+        
+        using (MySqlConnection connection =GetConnection())
+        {
+            await connection.OpenAsync();
 
-        using var cmd = new MySqlCommand("GetStudentAssessmentReport", conn);
+        using var cmd = new MySqlCommand("GetStudentAssessmentReport", connection);
         cmd.CommandType = CommandType.StoredProcedure;
         cmd.Parameters.AddWithValue("@studentId", studentId);
         cmd.Parameters.AddWithValue("@assessmentId", assessmentId);
@@ -748,12 +733,13 @@ public class AssessmentRepository : IAssessmentRepository
 
         return report!;
     }
+    }
 
     public async Task<List<AssessmentPerformanceResponse>> GetAssessmentPerformance(long userId)
-        {
-            List<AssessmentPerformanceResponse> assessments = new();
+    {
+        List<AssessmentPerformanceResponse> assessments = new();
 
-            string query = @"
+        string query = @"
                         SELECT
     t.id AS AssessmentId,
     t.title AS AssessmentTitle,
@@ -773,69 +759,72 @@ GROUP BY
 ORDER BY t.id;
             ";
 
-            using (MySqlConnection con =
-                new MySqlConnection(_configuration.GetConnectionString("DefaultConnection")))
+        using (MySqlConnection con =GetConnection())
+        {
+            await con.OpenAsync();
+
+            MySqlCommand cmd = new MySqlCommand(query, con);
+            cmd.Parameters.AddWithValue("@UserId", userId);
+
+            using (var reader = await cmd.ExecuteReaderAsync())
             {
-                await con.OpenAsync();
-
-                MySqlCommand cmd = new MySqlCommand(query, con);
-                cmd.Parameters.AddWithValue("@UserId", userId);
-
-                using (var reader = await cmd.ExecuteReaderAsync())
+                while (await reader.ReadAsync())
                 {
-                    while (await reader.ReadAsync())
+                    assessments.Add(new AssessmentPerformanceResponse
                     {
-                        assessments.Add(new AssessmentPerformanceResponse
-                        {
-                            AssessmentId = Convert.ToInt64(reader["AssessmentId"]),
-                            AssessmentName = reader["AssessmentTitle"].ToString(),
-                            Description = reader["description"].ToString(),
-                            CandidateCount = Convert.ToInt32(reader["CandidateCount"]),
-                            Difficulty = reader["difficulty"].ToString(),
+                        AssessmentId = Convert.ToInt64(reader["AssessmentId"]),
+                        AssessmentName = reader["AssessmentTitle"].ToString(),
+                        Description = reader["description"].ToString(),
+                        CandidateCount = Convert.ToInt32(reader["CandidateCount"]),
+                        Difficulty = reader["difficulty"].ToString(),
 
-                            // Temporary values
-                            Subject = "JavaScript",
-                            AverageScore = 82.5,
-                            PassRate = 86.7
-                        });
-                    }
+                        // Temporary values
+                        Subject = "JavaScript",
+                        AverageScore = 82.5,
+                        PassRate = 86.7
+                    });
                 }
             }
-
-            return assessments;
         }
+
+        return assessments;
+    }
 
     public async Task<int> GetTotalAssessmentsAsync()
     {
-        string connectionString = _configuration.GetConnectionString("DefaultConnection") ?? "server=localhost;port=3306;database=tflcomentor_db;user=root;password='password'";
-        using var conn = new MySqlConnection(connectionString);
-        await conn.OpenAsync();
-        using var cmd = new MySqlCommand("SELECT COUNT(*) FROM assessments", conn);
+        // string connectionString = _configuration.GetConnectionString("DefaultConnection") ?? "server=localhost;port=3306;database=tflcomentor_db;user=root;password='password'";
+        // using var conn = new MySqlConnection(connectionString);
+        using (MySqlConnection connection =GetConnection()){
+        await connection.OpenAsync();
+        using var cmd = new MySqlCommand("SELECT COUNT(*) FROM assessments", connection);
         return Convert.ToInt32(await cmd.ExecuteScalarAsync());
+    }
     }
 
     public async Task<int> GetCompletedAssessmentsAsync()
     {
-        string connectionString = _configuration.GetConnectionString("DefaultConnection") ?? "server=localhost;port=3306;database=tflcomentor_db;user=root;password='password'";
-        using var conn = new MySqlConnection(connectionString);
-        await conn.OpenAsync();
-        using var cmd = new MySqlCommand("SELECT COUNT(*) FROM assessments WHERE status = 'Completed'", conn);
+        // string connectionString = _configuration.GetConnectionString("DefaultConnection") ?? "server=localhost;port=3306;database=tflcomentor_db;user=root;password='password'";
+        // using var conn = new MySqlConnection(connectionString);
+        using (MySqlConnection connection =GetConnection()){
+        await connection.OpenAsync();
+        using var cmd = new MySqlCommand("SELECT COUNT(*) FROM assessments WHERE status = 'Completed'",connection);
         return Convert.ToInt32(await cmd.ExecuteScalarAsync());
     }
+    }
+
 
     public async Task<List<AssessmentSummaries>> GetAssessmentSummariesForStudent(long studentId)
     {
-
         return await Task.FromResult(new List<AssessmentSummaries>());
-
     }
 
     public List<StudentAssessments> GetFullData()
     {
         var list = new List<StudentAssessments>();
-        string connectionString = "server=localhost;port=3306;database=tflcomentor_db;user=root;password='password'";
-        using var conn = new MySqlConnection(connectionString);
-        conn.Open();
+        // string connectionString = "server=localhost;port=3306;database=tflcomentor_db;user=root;password='password'";
+        // using var conn = new MySqlConnection(connectionString);
+        using (MySqlConnection connection =GetConnection()){
+        connection.Open();
 
         string query = @"
             SELECT a.id AS AssessmentId,
@@ -856,7 +845,7 @@ ORDER BY t.id;
             LEFT JOIN student_assessment_results r ON a.id = r.assessment_id
         ";
 
-        using var cmd = new MySqlCommand(query, conn);
+        using var cmd = new MySqlCommand(query, connection);
         using var reader = cmd.ExecuteReader();
         while (reader.Read())
         {
@@ -882,18 +871,19 @@ ORDER BY t.id;
 
         return list;
     }
+    }
 
     public async Task<List<UpcomingAssessmentResponse>> GetUpcomingAssessments(int studentId)
     {
-    List<UpcomingAssessmentResponse> assessments = new();
+        List<UpcomingAssessmentResponse> assessments = new();
 
-    string connectionString = "server=localhost;port=3306;database=tflcomentor_db;user=root;password='password'";
+        // string connectionString = "server=localhost;port=3306;database=tflcomentor_db;user=root;password='password'";
 
-    using (MySqlConnection connection = new MySqlConnection(connectionString))
-    {
-        await connection.OpenAsync();
+        using (MySqlConnection connection = GetConnection())
+        {
+            await connection.OpenAsync();
 
-        string query = @"
+            string query = @"
         SELECT
             a.id,
             t.title,
@@ -911,35 +901,35 @@ ORDER BY t.id;
           AND sar.id IS NULL
         ORDER BY a.scheduled_at;";
 
-        using (MySqlCommand cmd = new MySqlCommand(query, connection))
-        {
-            cmd.Parameters.AddWithValue("@studentId", studentId);
-
-            using (var reader = await cmd.ExecuteReaderAsync())
+            using (MySqlCommand cmd = new MySqlCommand(query, connection))
             {
-                while (await reader.ReadAsync())
+                cmd.Parameters.AddWithValue("@studentId", studentId);
+
+                using (var reader = await cmd.ExecuteReaderAsync())
                 {
-                    assessments.Add(new UpcomingAssessmentResponse
+                    while (await reader.ReadAsync())
                     {
-                        AssessmentId = Convert.ToInt32(reader["id"]),
-                        AssessmentName = reader["title"].ToString()!,
-                        ScheduledAt = Convert.ToDateTime(reader["scheduled_at"]),
-                        Duration = Convert.ToInt32(reader["duration"]),
-                        Status = reader["status"].ToString()!
-                    });
+                        assessments.Add(new UpcomingAssessmentResponse
+                        {
+                            AssessmentId = Convert.ToInt32(reader["id"]),
+                            AssessmentName = reader["title"].ToString()!,
+                            ScheduledAt = Convert.ToDateTime(reader["scheduled_at"]),
+                            Duration = Convert.ToInt32(reader["duration"]),
+                            Status = reader["status"].ToString()!
+                        });
+                    }
                 }
             }
         }
-    }
 
-    return assessments;
+        return assessments;
     }
     public async Task<List<CompletedAssessmentsResponse>> GetCompletedAssessments(int studentId)
     {
-    List<CompletedAssessmentsResponse> list = new();
+        List<CompletedAssessmentsResponse> list = new();
 
 
-    string query = @"
+        string query = @"
                     SELECT
                     sar.id,
                     sar.assessment_id,
@@ -959,38 +949,38 @@ ORDER BY t.id;
                 WHERE sar.student_id =@studentId";
 
 
-    using(MySqlConnection con = new MySqlConnection(_connectionString))
-    {
-        await con.OpenAsync();
-
-        MySqlCommand cmd = new MySqlCommand(query, con);
-
-        cmd.Parameters.AddWithValue("@studentId", studentId);
-
-
-        using(MySqlDataReader reader = (MySqlDataReader)await  cmd.ExecuteReaderAsync())
+        using (MySqlConnection con = GetConnection())
         {
-            while( await reader.ReadAsync())
+            await con.OpenAsync();
+
+            MySqlCommand cmd = new MySqlCommand(query, con);
+
+            cmd.Parameters.AddWithValue("@studentId", studentId);
+
+
+            using (MySqlDataReader reader = (MySqlDataReader)await cmd.ExecuteReaderAsync())
             {
-                list.Add(new CompletedAssessmentsResponse
+                while (await reader.ReadAsync())
                 {
-                    Id = reader.GetInt32("id"),
+                    list.Add(new CompletedAssessmentsResponse
+                    {
+                        Id = reader.GetInt32("id"),
 
-                    AssessmentId = reader.GetInt32("assessment_id"),
+                        AssessmentId = reader.GetInt32("assessment_id"),
 
-                    AssessmentName = reader.GetString("assessment_name"),
+                        AssessmentName = reader.GetString("assessment_name"),
 
-                    Score = reader.GetInt32("score"),
+                        Score = reader.GetInt32("score"),
 
-                    Percentage = reader.GetDouble("percentage"),
+                        Percentage = reader.GetDouble("percentage"),
 
-                    TimeTakenMinutes = reader.GetInt32("time_taken_minutes")
-                });
+                        TimeTakenMinutes = reader.GetInt32("time_taken_minutes")
+                    });
+                }
             }
         }
+        return list;
     }
-    return list;
-}
 
     // interface implementation is provided by AssignAssessmentAsync
 }
