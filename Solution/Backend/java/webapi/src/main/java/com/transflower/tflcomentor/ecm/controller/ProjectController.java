@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import com.transflower.tflcomentor.ecm.dto.response.ProjectResponse;
 
 import com.transflower.tflcomentor.ecm.dto.request.ProjectAllocationRequest;
 import com.transflower.tflcomentor.ecm.dto.response.MentorshipActivityResponse;
@@ -32,9 +33,9 @@ public class ProjectController {
         this.service = service;
     }
 
-    @GetMapping
-    public List<Project> getAllProjects() {
-        return service.getAllProjects();
+    @GetMapping("/mentee/{mentorId}")
+    public List<Project> getAllProjects(@PathVariable Long mentorId) {
+        return service.getAllProjects(mentorId);
     }
 
     @GetMapping("/{id}")
@@ -53,17 +54,17 @@ public class ProjectController {
     }
 
     @PostMapping("/add")
-    public String addMember(@RequestBody ProjectAllocationRequest request) {
+        public String allocateMembersToProject(@RequestBody ProjectAllocationRequest request) {
 
-        ProjectAllocation allocation = new ProjectAllocation();
-        allocation.setProjectId(request.getProjectId());
-        allocation.setStudentId(request.getStudentId());
-        boolean status = service.addMember(allocation);
-        if (status) {
-            return "Student added successfully";
+            ProjectAllocation allocation = new ProjectAllocation();
+            allocation.setProjectId(request.getProjectId());
+            allocation.setStudentIds(request.getStudentIds());
+            boolean status = service.allocateMembersToProject(allocation);
+            if (status) {
+                return "Student(s) added successfully";
+            }
+            return "Failed to add student(s)";
         }
-        return "Failed to add student";
-    }
 
     @GetMapping("/student/{studentId}/projects")
     public List<Project> getProjectByStudentId(@PathVariable Long studentId) {
@@ -89,4 +90,11 @@ public class ProjectController {
         return ResponseEntity.ok(service.getRecentActivities(mentorId));
     }
 
+    @PostMapping("/createProject/{mentor_id}")
+    public boolean addProject(@PathVariable("mentor_id") Long mentorId,@RequestBody ProjectResponse project) 
+    {
+        return service.addProject(project,mentorId);
+    }
+
 }
+

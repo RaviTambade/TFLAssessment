@@ -193,7 +193,7 @@ const DashboardMentor = () => {
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-muted-foreground text-sm font-medium">
-                    Project By Mentees
+                    Projects
                   </p>
                   <p className="text-4xl font-bold text-foreground mt-2">
                     {projectCount}

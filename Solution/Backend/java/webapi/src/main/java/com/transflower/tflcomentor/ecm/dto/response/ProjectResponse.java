@@ -2,10 +2,7 @@ package com.transflower.tflcomentor.ecm.dto.response;
 
 public class ProjectResponse {
 
-    private long project_id;
-    private long mentor_id;
-    private Long menteeId;
-    private String assignedOn;
+    // private long mentor_id;
     private String project_name;
     private String description;
     private String repository_url;
@@ -15,35 +12,24 @@ public class ProjectResponse {
     public ProjectResponse() {
     }
 
-    public ProjectResponse(long project_id, long mentor_id, String project_name,
+    public ProjectResponse(  String project_name,
             String description, String repository_url,
-            String status, String created_at, Long menteeId, String assignedOn) {
-        this.project_id = project_id;
-        this.mentor_id = mentor_id;
+            String status, String created_at) {
+        // this.mentor_id = mentor_id;
         this.project_name = project_name;
         this.description = description;
         this.repository_url = repository_url;
         this.status = status;
         this.created_at = created_at;
-        this.menteeId = menteeId;
-        this.assignedOn = assignedOn;
     }
 
-    public long getProject_id() {
-        return project_id;
-    }
+    // public long getMentor_id() {
+    //     return mentor_id;
+    // }
 
-    public void setProject_id(long project_id) {
-        this.project_id = project_id;
-    }
-
-    public long getMentor_id() {
-        return mentor_id;
-    }
-
-    public void setMentor_id(long mentor_id) {
-        this.mentor_id = mentor_id;
-    }
+    // public void setMentor_id(long mentor_id) {
+    //     this.mentor_id = mentor_id;
+    // }
 
     public String getProject_name() {
         return project_name;
@@ -85,19 +71,5 @@ public class ProjectResponse {
         this.created_at = created_at;
     }
 
-    public Long getMenteeId() {
-        return menteeId;
-    }
-
-    public void setMenteeId(Long menteeId) {
-        this.menteeId = menteeId;
-    }
-
-    public String getAssignedOn() {
-        return assignedOn;
-    }
-
-    public void setAssignedOn(String assignedOn) {
-        this.assignedOn = assignedOn;
-    }
+    
 }

@@ -64,6 +64,9 @@ import ParticulerTestStudentDetails from "@/components/assessment/assessmentOrch
 import MentorUpdateQuestions from "@/components/assessment/evaluationcontent/Mentor/MentorUpdateQuestions";
 import CompletedAssessments from "@/components/assessment/assessmentOrchestrator/CompletedAssessments";
 import TestList from "@/components/assessment/assessmentOrchestrator/TestList";
+import UnassignedUsers from "@/components/assessment/evaluationcontent/Admin/UnAssignedUsers";
+import AddProject from "@/components/assessment/evaluationcontent/Mentor/AddProject";
+import AllocateProject from "@/components/assessment/evaluationcontent/Mentor/AllocateProject";
 
 
 function AppRoutes() {
@@ -119,6 +122,8 @@ function AppRoutes() {
           <Route path="all-assessment" element={<AllAssessment />} />
           <Route path="evaluationcontent/questionbydifficulty" element={<QuestionsByDifficulty />}/>
           <Route path="evaluationcontent/projectbymentee" element={<ProjectByMentee />}/>
+          <Route path="evaluationcontent/createProject" element={<AddProject/>}/>
+          <Route path="evaluationcontent/allocate/project" element={<AllocateProject/>}/>
           {/* Interview */}
           <Route path="interview/interview-menu" element={<InterviewMenu/>} />
           <Route path="interview/scheduleinterview" element={<ScheduleInterview/>} />
@@ -153,6 +158,7 @@ function AppRoutes() {
           <Route path="membership/dashboard" element={<Dashboard />} />
           <Route path="membership/SmeDashboard" element={<DashboardSME />} />
           <Route path="membership/Mentees" element={<Mentees />} />
+          <Route path="membership/Unassigned/Users" element={<UnassignedUsers/>}/>
           
         </Routes>
       </main>

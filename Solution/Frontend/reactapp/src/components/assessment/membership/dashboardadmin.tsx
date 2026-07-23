@@ -164,9 +164,10 @@ useEffect(() => {
           </Card >
           <Card className="group cursor-pointer border border-border rounded-2xl shadow-elegant hover:shadow-glow hover:-translate-y-2 transition-all duration-300">
             <CardContent className="p-6">
-              <div className="flex items-center justify-between">
+              <div className="flex items-center justify-between" onClick={() => { navigate("/models/membership/Unassigned/Users") }}>
                 <div>
                   <p className="text-gray-600 text-sm font-medium">Pending Approvals</p>
+                  
                   <p className="text-3xl font-bold text-gray-900 mt-1">5</p>
                 </div>
                 <div className="bg-primary/10 rounded-2xl p-4 group-hover:scale-110 transition">
@@ -197,7 +198,7 @@ useEffect(() => {
                   <p className="text-gray-600 text-sm font-medium">Assessments</p>
                   <p className="text-3xl font-bold text-gray-900 mt-1">{assessmentCount}</p>
                 </div>
-                 <div className="bg-primary/10 rounded-2xl p-4 group-hover:scale-110 transition">
+                <div className="bg-primary/10 rounded-2xl p-4 group-hover:scale-110 transition">
                 <ClipboardList className="w-8 h-8 text-primary" />
               </div>
               </div>
