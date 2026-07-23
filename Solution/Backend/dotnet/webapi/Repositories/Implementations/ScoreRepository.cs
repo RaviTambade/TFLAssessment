@@ -96,6 +96,60 @@ namespace backend.Repositories
 
             return list;
         }
+
+        public async Task<List<StudentAssessmentAnswerDetail>> GetAssessmentAnswerDetailsAsync(int studentId, int assessmentId)
+        {
+            var details = new List<StudentAssessmentAnswerDetail>();
+
+            using (MySqlConnection con = new MySqlConnection(_configuration.GetConnectionString("DefaultConnection")))
+            {
+                string query = @"
+                    SELECT
+                        q.question_id,
+                        q.description AS question_description,
+                        mo.option_a,
+                        mo.option_b,
+                        mo.option_c,
+                        mo.option_d,
+                        mo.correct_answer,
+                        sa.SelectedOption
+                    FROM studentanswers sa
+                    INNER JOIN questions q ON sa.QuestionId = q.question_id
+                    LEFT JOIN mcq_options mo ON q.question_id = mo.question_id
+                    WHERE sa.StudentId = @studentId
+                      AND sa.AssessmentId = @assessmentId
+                    ORDER BY q.question_id;";
+
+                using (MySqlCommand cmd = new MySqlCommand(query, con))
+                {
+                    cmd.Parameters.AddWithValue("@studentId", studentId);
+                    cmd.Parameters.AddWithValue("@assessmentId", assessmentId);
+
+                    await con.OpenAsync();
+
+                    using (MySqlDataReader reader = (MySqlDataReader)await cmd.ExecuteReaderAsync())
+                    {
+                        while (await reader.ReadAsync())
+                        {
+                            details.Add(new StudentAssessmentAnswerDetail
+                            {
+                                QuestionId = Convert.ToInt32(reader["question_id"]),
+                                QuestionDescription = reader["question_description"]?.ToString() ?? string.Empty,
+                                OptionA = reader["option_a"]?.ToString(),
+                                OptionB = reader["option_b"]?.ToString(),
+                                OptionC = reader["option_c"]?.ToString(),
+                                OptionD = reader["option_d"]?.ToString(),
+                                CorrectAnswer = reader["correct_answer"]?.ToString(),
+                                SelectedOption = reader["SelectedOption"]?.ToString()
+                            });
+                        }
+                    }
+                }
+            }
+
+            return details;
+        }
+
        public async Task<AssessmentScores> GetAssessmentResultData(long studentId, long assessmentId)
 {
     AssessmentScores report = new AssessmentScores();

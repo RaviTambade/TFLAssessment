@@ -38,7 +38,7 @@ namespace backend.Repositories
                 q.framework,
                 q.concept,
                 q.runtime
-
+                
             FROM expertise e
 
             INNER JOIN questions q

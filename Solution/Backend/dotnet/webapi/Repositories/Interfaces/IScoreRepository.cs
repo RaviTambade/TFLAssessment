@@ -9,6 +9,7 @@ namespace backend.Repositories.Interfaces
         Task<AverageScore> GetAverageScoreByIdAsync(int studentId);
         Task<List<AverageScore>> GetAllStudentsAverageScoreAsync();
         Task<AssessmentScores> GetAssessmentResultData(long studentId, long assessmentId);
+        Task<List<StudentAssessmentAnswerDetail>> GetAssessmentAnswerDetailsAsync(int studentId, int assessmentId);
 
     }
 }

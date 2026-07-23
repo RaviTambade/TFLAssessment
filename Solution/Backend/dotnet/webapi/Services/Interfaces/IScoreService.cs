@@ -13,5 +13,7 @@ namespace backend.Services.Interfaces
 
         Task<AssessmentScores> GetAssessmentResultData(long studentId, long assessmentId);
 
+        Task<List<StudentAssessmentAnswerDetail>> GetAssessmentAnswerDetailsAsync(int studentId, int assessmentId);
+
     }
 }
