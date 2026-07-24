@@ -1,7 +1,7 @@
 using backend.DTO.Requests;
 using backend.DTO.Responses;
 using System.Threading.Tasks;
-
+using API.DTOs;
 namespace backend.Services.Interfaces
 {
     public interface IQuestionsService
@@ -18,5 +18,6 @@ namespace backend.Services.Interfaces
 
                
         Task<QuestionDetails> GetQuestionDetails(int questionId);
+        Task<List<GetQuestionsByTestId>> GetQuestionsByTestId(long testId);
     }
 }

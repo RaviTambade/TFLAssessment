@@ -36,6 +36,25 @@ public class AssessmentController : ControllerBase
             });
         }
     }
+
+    [HttpGet("user/{userId}/all-upcoming")]
+    public async Task<IActionResult> GetAllUpcomingWithoutDateFilter(long userId)
+    {
+        try
+        {
+            var data = await _service.GetAllUpcomingAssessmentsWithoutDateFilter(userId);
+            return Ok(data);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, new
+            {
+                message = "Error fetching assessments",
+                error = ex.Message
+            });
+        }
+    }
+
     [HttpGet("all")]
     public async Task<IActionResult> GetAll(bool? isActive = null)
     {

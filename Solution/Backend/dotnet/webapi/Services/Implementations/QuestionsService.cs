@@ -2,6 +2,7 @@ using backend.DTO.Requests;
 using backend.DTO.Responses;
 using backend.Repositories.Interfaces;
 using backend.Services.Interfaces;
+using API.DTOs;
 
 
 namespace backend.Services.Implementations
@@ -65,6 +66,11 @@ namespace backend.Services.Implementations
                 throw new KeyNotFoundException($"No assessment found for AssessmentId={assessmentId}, StudentId={studentId}.");
 
             return results;
+        }
+
+        public async Task<List<GetQuestionsByTestId>> GetQuestionsByTestId(long testId)
+        {
+            return await _repository.GetQuestionsByTestId(testId);
         }
     }
 }

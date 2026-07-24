@@ -1,6 +1,7 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 
+import ProjectDetails from "@/components/assessment/evaluationcontent/Mentor/ProjectDetails";
 import EvaluationContentMenu from "../components/assessment/evaluationcontent/EvaluationContentMenu";
 import SkillTaxonomyMenu from "../components/assessment/skilltaxonomy/SkillTaxonomyMenu";
 import Assessment from "../components/assessment/ComponentButtons";
@@ -43,6 +44,8 @@ import Dashboard from "@/components/assessment/membership/dashboard";
 import EvaluationDashboard from "@/components/assessment/evaluationcontent/EvaluationDashboard";
 // import GetQuestionSme from "@/components/assessment/evaluationcontent/getQuestionsme";
 // import EvaluationContentSme from "@/components/assessment/evaluationcontent/EvaluationContents";
+
+import TestQuestionDetails from "@/components/assessment/assessmentOrchestrator/createTest/TestQuestionDetails";
 import Question from "@/components/assessment/assessmentOrchestrator/applyAssessment";
 import RTUpdateQuestion from "@/components/assessment/evaluationcontent/RTUpdateQuestion";
 import ScheduleInterview from "@/components/assessment/interview/ScheduleInterview";
@@ -60,7 +63,11 @@ import ParticulerTestStudentDetails from "@/components/assessment/assessmentOrch
 // mentor dashboard
 import MentorUpdateQuestions from "@/components/assessment/evaluationcontent/Mentor/MentorUpdateQuestions";
 import CompletedAssessments from "@/components/assessment/assessmentOrchestrator/CompletedAssessments";
+import CompletedAssessmentDetails from "@/components/assessment/assessmentOrchestrator/CompletedAssessmentDetails";
 import TestList from "@/components/assessment/assessmentOrchestrator/TestList";
+import UnassignedUsers from "@/components/assessment/evaluationcontent/Admin/UnAssignedUsers";
+import AddProject from "@/components/assessment/evaluationcontent/Mentor/AddProject";
+import AllocateProject from "@/components/assessment/evaluationcontent/Mentor/AllocateProject";
 
 
 function AppRoutes() {
@@ -70,12 +77,14 @@ function AppRoutes() {
         <Routes>
           {/* Main Component Page */}
           <Route path="evaluationcontent/components" element={<Assessment />} />
+          <Route path="evaluationcontent/project/:projectId/mentees" element={<ProjectDetails />}/>
           {/* Evaluation Content */}
           <Route path="evaluationcontent/componentmenu" element={<EvaluationContentMenu />}/>
           <Route path="evaluationcontent/dashboard" element={<EvaluationDashboard />} />
           {/* <Route path="evaluationcontent/sme" element={<GetQuestionSme />}/> */}
           <Route path="evaluationcontent/questionbytype"element={<QuestionByType />}/>
           <Route path="assessmentorchestrator/completed-assessments" element={<CompletedAssessments />} />
+          <Route path="assessmentorchestrator/completed-assessment-details/:assessmentId" element={<CompletedAssessmentDetails />} />
           <Route path="evaluationcontent/questionsbyconceptid"element={<QuestionByConceptId />}/>
           <Route path="evaluationcontent/getquestionsbydate" element={<GetQuestionsByDate />}/>
           <Route path="evaluationcontent/GetAllQuestions"element={<Getallquestions />}/>
@@ -83,7 +92,8 @@ function AppRoutes() {
           <Route path="skilltaxonomy/skilltaxonomy-menu"element={<SkillTaxonomyMenu />}/>
           {/* Assessment Orchestrator */}
           <Route path="assessmentorchestrator/assessmentorchestrator-menu"element={<AssessmentOrchestrator />}/>
-          <Route path="/students" element={<StudentList />}/>
+          <Route path="assessmentorchestrator/testquestiondetails/:testId" element={<TestQuestionDetails />} />
+          <Route path="/students" element={<StudentList />}/> 
           <Route path="upcoming-assessment" element={<UpcomingAssessment />} />
           <Route path="all-assessment" element={<AllAssessment />} />
           <Route path="apply-assessment" element={<Question />} />
@@ -114,6 +124,8 @@ function AppRoutes() {
           <Route path="all-assessment" element={<AllAssessment />} />
           <Route path="evaluationcontent/questionbydifficulty" element={<QuestionsByDifficulty />}/>
           <Route path="evaluationcontent/projectbymentee" element={<ProjectByMentee />}/>
+          <Route path="evaluationcontent/createProject" element={<AddProject/>}/>
+          <Route path="evaluationcontent/allocate/project" element={<AllocateProject/>}/>
           {/* Interview */}
           <Route path="interview/interview-menu" element={<InterviewMenu/>} />
           <Route path="interview/scheduleinterview" element={<ScheduleInterview/>} />
@@ -137,6 +149,7 @@ function AppRoutes() {
           <Route path="/created-assessments"element={<CreatedAssessments />}/>
           <Route path="Assessment/testList" element={<TestList/>}/>
           <Route path="/tests/:testId" element={<ParticulerTestStudentDetails />}/>
+          
 
           <Route path="membership/Login" element={<LoginPage />} />
           <Route path="membership/ManageUsers" element={<ManageUsers />} />
@@ -147,6 +160,8 @@ function AppRoutes() {
           <Route path="membership/dashboard" element={<Dashboard />} />
           <Route path="membership/SmeDashboard" element={<DashboardSME />} />
           <Route path="membership/Mentees" element={<Mentees />} />
+          <Route path="membership/Unassigned/Users" element={<UnassignedUsers/>}/>
+          
         </Routes>
       </main>
     </div>

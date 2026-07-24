@@ -126,4 +126,33 @@ public class RolesRepository : IRolesRepository
 
         return users;
     }
+
+    public async Task<List<UnassignedUsers>> GetUnAssignedUsers()
+    {
+        List<UnassignedUsers> users=new List<UnassignedUsers>();
+        using MySqlConnection connection = GetConnection();
+        string query=@"
+                        SELECT
+                    pi.user_id,
+                    pi.full_name
+                FROM personal_informations pi
+                JOIN user_roles ur
+                    ON pi.user_id = ur.user_id
+                WHERE ur.role_id = 7 ";
+
+        MySqlCommand cmd=new MySqlCommand(query, connection);
+        await connection.OpenAsync();
+        using MySqlDataReader reader= (MySqlDataReader) await cmd.ExecuteReaderAsync();
+
+        while (await reader.ReadAsync())
+        {
+            users.Add(new UnassignedUsers
+            {
+                UserId = Convert.ToInt64(reader["user_id"]),
+                FullName = reader["full_name"].ToString()!
+            });
+        }
+        return users;
+    }
+    
 }

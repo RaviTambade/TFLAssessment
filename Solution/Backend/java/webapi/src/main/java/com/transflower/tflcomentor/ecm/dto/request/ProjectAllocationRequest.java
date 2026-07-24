@@ -1,15 +1,22 @@
 package com.transflower.tflcomentor.ecm.dto.request;
 
+import java.util.List;
+
 public class ProjectAllocationRequest{
 
     private Long projectId;
-    private Long studentId;
+    private List<Long> studentIds;
 
     public Long getProjectId() { return projectId; }
     public void setProjectId(Long projectId) { this.projectId = projectId; }
 
-    public Long getStudentId() { return studentId; }
-    public void setStudentId(Long studentId) { this.studentId = studentId; }
+    public List<Long> getStudentIds() {
+        return studentIds;
+    }
+
+    public void setStudentIds(List<Long> studentIds) {
+        this.studentIds = studentIds;
+    }
 }     
 
 

@@ -50,5 +50,16 @@ namespace backend.Controllers
 
             return Ok(result);
         }
+
+        [HttpGet("GetAssessmentAnswerDetails/{studentId}/{assessmentId}")]
+        public async Task<ActionResult<List<StudentAssessmentAnswerDetail>>> GetAssessmentAnswerDetails(int studentId, int assessmentId)
+        {
+            var result = await _scoreService.GetAssessmentAnswerDetailsAsync(studentId, assessmentId);
+
+            if (result == null || result.Count == 0)
+                return NotFound("No data found");
+
+            return Ok(result);
+        }
     }
 }

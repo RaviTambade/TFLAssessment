@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "../../ui/card";
 import { WEBAPI_JAVA_URL } from "@/lib/utils";
-import { Bell, FolderKanban, Users, Zap, TrendingUp, CheckCircle, AlertCircle, BookOpen, MessageSquare, } from "lucide-react";
+import { Bell, FolderKanban, Users, Zap, TrendingUp, CheckCircle, AlertCircle, BookOpen, MessageSquare, ClipboardList, } from "lucide-react";
 import { ArrowLeft } from "lucide-react";
 import { WEBAPI_NODE_URL, WEBAPI_DOTNET_URL } from "@/lib/utils";
 import Notification from "./entities/Notification";
@@ -31,6 +31,9 @@ const DashboardMentor = () => {
   const menteeGrowth: MenteeGrowth[] = AllMenteeGrowth as MenteeGrowth[];
   const [tests, setTests] = useState<TestDetails[]>([]);
   const [menteeCount, setMenteeCount] = useState(0);
+  const [assessmentCount, setAssessmentCount] = useState<number>(0);
+
+
 
   useEffect(() => {
     const currentUser = sessionStorage.getItem("current");
@@ -126,7 +129,15 @@ const DashboardMentor = () => {
 
 
   useEffect(() => {
-    fetch(`${WEBAPI_JAVA_URL}/projects`)
+
+
+     const currentUser = sessionStorage.getItem("current");
+
+    if (!currentUser) return;
+
+    const user = JSON.parse(currentUser);
+    const mentor_id = user.userid;
+    fetch(`${WEBAPI_JAVA_URL}/projects/mentee/${mentor_id}`)
       .then((response) => {
         if (!response.ok) {
           throw new Error("Failed to fetch projects");
@@ -139,6 +150,28 @@ const DashboardMentor = () => {
       .catch((err) => {
         console.error(err);
       });
+  }, []);
+
+  useEffect(() => {
+    const fetchAssessments = async () => {
+      try {
+        const response = await fetch(`${WEBAPI_DOTNET_URL}/Assessment/total`);
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch assessment count");
+        }
+
+        const data = await response.json();
+
+        console.log(data);
+
+        setAssessmentCount(data.totalAssessment);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchAssessments();
   }, []);
 
 
@@ -193,7 +226,7 @@ const DashboardMentor = () => {
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-muted-foreground text-sm font-medium">
-                    Project By Mentees
+                    Projects
                   </p>
                   <p className="text-4xl font-bold text-foreground mt-2">
                     {projectCount}
@@ -269,6 +302,20 @@ const DashboardMentor = () => {
                   <div className="text-3xl font-bold">{testCount}</div>
                 </div>
                 <MessageSquare className="w-8 h-8 text-primary" />
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="group cursor-pointer border border-border rounded-2xl shadow-elegant hover:shadow-glow hover:-translate-y-2 transition-all duration-300">
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between" onClick={() => { navigate("/models/all-assessment") }}>
+                <div>
+                  <p className="text-gray-600 text-sm font-medium">Assessments</p>
+                  <p className="text-3xl font-bold text-gray-900 mt-1">{assessmentCount}</p>
+                </div>
+                <div className="bg-primary/10 rounded-2xl p-4 group-hover:scale-110 transition">
+                <ClipboardList className="w-8 h-8 text-primary" />
+              </div>
               </div>
             </CardContent>
           </Card>

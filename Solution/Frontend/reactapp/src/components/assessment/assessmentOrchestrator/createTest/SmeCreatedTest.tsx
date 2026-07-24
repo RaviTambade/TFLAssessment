@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+import { useNavigate, useParams } from "react-router-dom";
 
 type Difficulty = "BEGINNER" | "INTERMEDIATE" | "ADVANCED";
 
@@ -75,6 +76,7 @@ function SkeletonCard() {
 // ---------------------------------------------------------------------------
 
 function AssessmentCard({ assessment }: { assessment: Assessment }) {
+  const navigate = useNavigate();
   const difficultyStyle =
     DIFFICULTY_STYLES[assessment.difficulty] ?? DIFFICULTY_STYLES.BEGINNER;
 
@@ -122,9 +124,9 @@ function AssessmentCard({ assessment }: { assessment: Assessment }) {
       <button
         type="button"
         className="ca-view-btn"
-        onClick={() => {
-          window.location.href = `/assessments/${assessment.id}`;
-        }}
+        onClick={() => navigate(`/models/assessmentorchestrator/TestQuestionDetails/${assessment.id}`)}
+          
+        
       >
         View Details
       </button>
@@ -151,7 +153,9 @@ function EmptyState() {
 // Main page
 // ---------------------------------------------------------------------------
 
-export default function CreatedAssessments() {
+export default function CreatedAssessments(){
+  const navigate = useNavigate();
+  
   const [assessments, setAssessments] = useState<Assessment[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);

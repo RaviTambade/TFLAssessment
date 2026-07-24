@@ -23,11 +23,14 @@ function ProjectByMentee() {
   }, []);
 
   const fetchAllProjects = async () => {
+     const currentUser = JSON.parse(sessionStorage.getItem("current") || "{}");
+    const mentorId = currentUser.userid;
+
     try {
       setLoading(true);
       setError("");
 
-      const response = await fetch(`${WEBAPI_JAVA_URL}/projects`);
+      const response = await fetch(`${WEBAPI_JAVA_URL}/projects/mentee/${mentorId}`);
 
       if (!response.ok) {
         throw new Error("Failed to fetch projects");
@@ -133,6 +136,16 @@ function ProjectByMentee() {
                   <RefreshCw className="mr-2 h-4 w-4" />
                   All Projects
                 </Button>
+                 
+                <Button  onClick={() => navigate("/models/evaluationcontent/createProject")}>
+                  <User className="mr-2 h-4 w-4" />
+                  Add project
+                </Button>
+                
+                <Button onClick={()=> navigate("/models/evaluationcontent/allocate/project")}>
+                  <User className="mr-2 h-4 w-4" />
+                  Allowcate members
+                </Button>
               </div>
 
             </div>
@@ -172,7 +185,7 @@ function ProjectByMentee() {
 
                 <CardTitle className="flex items-center gap-2">
 
-                  <FolderKanban className="text-red-600 w-6 h-6" />
+                  <FolderKanban className="text-red-600 w-6 h-6"  />
 
                   {project.projectName}
 

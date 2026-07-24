@@ -9,6 +9,7 @@ namespace backend.Repositories.Interfaces
     public interface IAssessmentRepository
     {
         Task<List<Assessments>> GetAllUpcomingAssessments(long userId , DateTime fromDate, DateTime toDate);
+        Task<List<Assessments>> GetAllUpcomingAssessmentsWithoutDateFilter(long userId);
         Task<List<AllAssessments>> GetAllAssessments();
 
         Task<List<Tests>> GetTestsAsync();
@@ -31,7 +32,7 @@ namespace backend.Repositories.Interfaces
          Task<List<AssessmentPerformanceResponse>> GetAssessmentPerformance(long userId);
 
         // Task<List<CompletedAssessmentsResponse>> GetCompletedAssessments(int studentId);
-
+        // Task <int>GetAssessmentCount();
 
     }
 }
