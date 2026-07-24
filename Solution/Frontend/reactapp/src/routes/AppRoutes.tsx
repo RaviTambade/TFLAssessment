@@ -63,6 +63,7 @@ import ParticulerTestStudentDetails from "@/components/assessment/assessmentOrch
 // mentor dashboard
 import MentorUpdateQuestions from "@/components/assessment/evaluationcontent/Mentor/MentorUpdateQuestions";
 import CompletedAssessments from "@/components/assessment/assessmentOrchestrator/CompletedAssessments";
+import CompletedAssessmentDetails from "@/components/assessment/assessmentOrchestrator/CompletedAssessmentDetails";
 import TestList from "@/components/assessment/assessmentOrchestrator/TestList";
 import UnassignedUsers from "@/components/assessment/evaluationcontent/Admin/UnAssignedUsers";
 import AddProject from "@/components/assessment/evaluationcontent/Mentor/AddProject";
@@ -83,6 +84,7 @@ function AppRoutes() {
           {/* <Route path="evaluationcontent/sme" element={<GetQuestionSme />}/> */}
           <Route path="evaluationcontent/questionbytype"element={<QuestionByType />}/>
           <Route path="assessmentorchestrator/completed-assessments" element={<CompletedAssessments />} />
+          <Route path="assessmentorchestrator/completed-assessment-details/:assessmentId" element={<CompletedAssessmentDetails />} />
           <Route path="evaluationcontent/questionsbyconceptid"element={<QuestionByConceptId />}/>
           <Route path="evaluationcontent/getquestionsbydate" element={<GetQuestionsByDate />}/>
           <Route path="evaluationcontent/GetAllQuestions"element={<Getallquestions />}/>

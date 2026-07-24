@@ -11,6 +11,7 @@ const UpcomingAssessment = () => {
   const navigate = useNavigate();
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
+  const [showFilterPanel, setShowFilterPanel] = useState(false);
 
   const [assessments, setAssessments] = useState<Assessments[]>([]);
 
@@ -40,7 +41,12 @@ const UpcomingAssessment = () => {
       if (from) query.append("fromDate", from);
       if (to) query.append("toDate", to);
 
-      const apiUrl = `${WEBAPI_DOTNET_URL}/Assessment/user/${userId}${query.toString() ? `?${query.toString()}` : ""}`;
+      const hasDateFilter = Boolean(from || to);
+      const endpoint = hasDateFilter
+        ? `Assessment/user/${userId}`
+        : `Assessment/user/${userId}/all-upcoming`;
+
+      const apiUrl = `${WEBAPI_DOTNET_URL}/${endpoint}${query.toString() ? `?${query.toString()}` : ""}`;
       const response = await fetch(apiUrl);
       if (!response.ok) {
         throw new Error("Failed to fetch assessments");
@@ -66,11 +72,23 @@ const UpcomingAssessment = () => {
   return (
     <div className="min-h-screen bg-rose-100 flex flex-col items-center p-6">
       <h2 className="text-xl font-semibold mb-6"> Upcoming Assessments</h2>
-      <div className="flex flex-col md:flex-row gap-3 mb-6 w-full max-w-5xl">
-        <input type="date" value={fromDate} onChange={(e) => setFromDate(e.target.value)} className="px-3 py-2 border rounded-md"/>
-        <input type="date" value={toDate} onChange={(e) => setToDate(e.target.value)} className="px-3 py-2 border rounded-md" />
-        <button onClick={() => fetchAssessments(fromDate, toDate)} className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600" >Show Assessments</button>
+
+      <div className="w-full max-w-5xl flex justify-end mb-4">
+        <button
+          onClick={() => setShowFilterPanel((prev) => !prev)}
+          className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600"
+        >
+          {showFilterPanel ? "Hide Filter" : "Filter by Date"}
+        </button>
       </div>
+
+      {showFilterPanel && (
+        <div className="flex flex-col md:flex-row gap-3 mb-6 w-full max-w-5xl">
+          <input type="date" value={fromDate} onChange={(e) => setFromDate(e.target.value)} className="px-3 py-2 border rounded-md"/>
+          <input type="date" value={toDate} onChange={(e) => setToDate(e.target.value)} className="px-3 py-2 border rounded-md" />
+          <button onClick={() => fetchAssessments(fromDate, toDate)} className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600" >Apply Filter</button>
+        </div>
+      )}
 
       {(fromDate || toDate) && (<p className="mb-4 text-gray-700"> Showing: {fromDate ? formatToDisplay(fromDate) : "All"} {" "}→{" "}{toDate ? formatToDisplay(toDate) : "All"}</p>)}
       {loading && (<p className="text-gray-500">Loading...</p>)} 

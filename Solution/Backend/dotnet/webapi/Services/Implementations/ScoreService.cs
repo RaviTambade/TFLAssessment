@@ -30,6 +30,9 @@ namespace backend.Services
             return await _scoreRepository.GetAssessmentResultData(studentId, assessmentId);
         }
 
-       
+        public async Task<List<StudentAssessmentAnswerDetail>> GetAssessmentAnswerDetailsAsync(int studentId, int assessmentId)
+        {
+            return await _scoreRepository.GetAssessmentAnswerDetailsAsync(studentId, assessmentId);
+        }
     }
 }

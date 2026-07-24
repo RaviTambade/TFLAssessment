@@ -8,6 +8,7 @@ namespace backend.Services.Interfaces;
 public interface IAssessmentsService
 {
     Task<List<Assessments>> GetAllUpcomingAssessmentsService(long userId ,DateTime fromDate, DateTime toDate);
+    Task<List<Assessments>> GetAllUpcomingAssessmentsWithoutDateFilter(long userId);
     Task<List<AllAssessments>> GetAssessments();
      Task<bool> DeactivateAssessment(long id);
      Task<int> CancelAssessmentsByTestId(long testId);
