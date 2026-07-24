@@ -1,7 +1,7 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 
-
+import ProjectDetails from "@/components/assessment/evaluationcontent/Mentor/ProjectDetails";
 import EvaluationContentMenu from "../components/assessment/evaluationcontent/EvaluationContentMenu";
 import SkillTaxonomyMenu from "../components/assessment/skilltaxonomy/SkillTaxonomyMenu";
 import Assessment from "../components/assessment/ComponentButtons";
@@ -76,7 +76,7 @@ function AppRoutes() {
         <Routes>
           {/* Main Component Page */}
           <Route path="evaluationcontent/components" element={<Assessment />} />
-       
+          <Route path="evaluationcontent/project/:projectId/mentees" element={<ProjectDetails />}/>
           {/* Evaluation Content */}
           <Route path="evaluationcontent/componentmenu" element={<EvaluationContentMenu />}/>
           <Route path="evaluationcontent/dashboard" element={<EvaluationDashboard />} />

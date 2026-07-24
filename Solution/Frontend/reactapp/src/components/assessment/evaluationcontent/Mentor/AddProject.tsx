@@ -149,8 +149,10 @@ function AddProject() {
 
                         <Button
                             className="w-full"
-                            onClick={saveProject}
-                        >
+                            onClick={() => {
+                            saveProject();
+                            navigate("/models/evaluationcontent/allocate/project");
+                            }}                        >
                             <Save className="mr-2 w-4 h-4" />
                             Create Project
                         </Button>

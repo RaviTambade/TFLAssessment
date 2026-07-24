@@ -18,6 +18,7 @@ WHERE mentor_id = 1;
           SELECT
           u.id,
           pi.full_name AS mentee_name,
+          p.project_id AS projectId,
           p.project_name AS allocated_project,
           u.contact,
           u.status,

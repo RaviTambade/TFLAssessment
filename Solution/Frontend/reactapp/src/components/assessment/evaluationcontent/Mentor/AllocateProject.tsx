@@ -19,35 +19,35 @@ function AllocateProject() {
 
     useEffect(() => {
         loadData();
-        
+
     }, []);
 
-    
 
-  const loadData = async () => {
 
-    const currentUser = JSON.parse(sessionStorage.getItem("current") || "{}");
-    const mentorId = currentUser.userid;
+    const loadData = async () => {
 
-    console.log("Mentor ID:", mentorId);
+        const currentUser = JSON.parse(sessionStorage.getItem("current") || "{}");
+        const mentorId = currentUser.userid;
 
-    const projectResponse = await fetch(
-        `${WEBAPI_JAVA_URL}/projects/mentee/${mentorId}`
-    );
+        console.log("Mentor ID:", mentorId);
 
-    console.log("Status:", projectResponse.status);
+        const projectResponse = await fetch(
+            `${WEBAPI_JAVA_URL}/projects/mentee/${mentorId}`
+        );
 
-    const projectData = await projectResponse.json();
+        console.log("Status:", projectResponse.status);
 
-    console.log("Projects:", projectData);
+        const projectData = await projectResponse.json();
 
-    setProjects(projectData);
+        console.log("Projects:", projectData);
 
-    const studentResponse = await fetch(`${WEBAPI_DOTNET_URL}/Students`);
-    const studentData = await studentResponse.json();
+        setProjects(projectData);
 
-    setStudents(studentData);
-};
+        const studentResponse = await fetch(`${WEBAPI_DOTNET_URL}/Students`);
+        const studentData = await studentResponse.json();
+
+        setStudents(studentData);
+    };
     const allocateProject = async () => {
         const response = await fetch(
             `${WEBAPI_JAVA_URL}/projects/add`,
@@ -131,14 +131,14 @@ function AllocateProject() {
                                         type="checkbox"
                                         checked={selectedStudents.includes(student.id)}
                                         onChange={() => {
-    if (selectedStudents.includes(student.id)) {
-        setSelectedStudents(
-            selectedStudents.filter((id) => id !== student.id)
-        );
-    } else {
-        setSelectedStudents([...selectedStudents, student.id]);
-    }
-}}
+                                            if (selectedStudents.includes(student.id)) {
+                                                setSelectedStudents(
+                                                    selectedStudents.filter((id) => id !== student.id)
+                                                );
+                                            } else {
+                                                setSelectedStudents([...selectedStudents, student.id]);
+                                            }
+                                        }}
                                     />
 
                                     <Users className="w-4 h-4 text-blue-500" />
@@ -165,7 +165,10 @@ function AllocateProject() {
 
                         <Button
                             className="w-full"
-                            onClick={allocateProject}
+                            onClick={() => {
+                                allocateProject();
+                                navigate("/models/evaluationcontent/ProjectByMentee");
+                            }}
                             disabled={!projectId || selectedStudents.length === 0}
                         >
                             Allocate Students

@@ -8,6 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "../../ui/card";
 interface Mentee {
   id: number;
   mentee_name: string;
+  projectId: number;
   allocated_project: string | null;
   repositoryUrl: string | null;
   contact: string;
@@ -132,20 +133,22 @@ const Mentees = () => {
                       >
                         <td className="p-4">{mentee.id}</td>
 
-                        <td className="p-4">{mentee.mentee_name}</td>
+                        <td className="p-4"><button
+                          onClick={() => navigate(`/models/membership/UserProfile/${mentee.id}`)}
+                          
+                        >
+                          {mentee.mentee_name}
+                        </button></td>
 
                     <td className="p-4">
                           {mentee.allocated_project ? (
-                            <button
-                              onClick={() =>
-                                navigate(
-                                  `/models/evaluationcontent/project/${mentee.id}/mentees`
-                                )
-                              }
-                              className="border-b border-border hover:bg-muted/40 transition"
-                            >
-                              {mentee.allocated_project}
-                            </button>
+                                                      <button
+                            onClick={() =>
+                              navigate(`/models/evaluationcontent/project/${mentee.projectId}/mentees`)
+                            }
+                          >
+                            {mentee.allocated_project}
+                          </button>
                           ) : (
                             <span className="text-muted-foreground">
                               Not Allocated
