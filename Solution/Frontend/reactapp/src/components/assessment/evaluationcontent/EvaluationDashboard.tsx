@@ -15,14 +15,14 @@ import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 import { Link } from "react-router-dom";
 
 const dashboardItems = [
-    {
-        title: "Update Questions",
-        icon: Pencil,
-        path: "/models/evaluationcontent/updatequestion",
-        color: "from-red-500 to-orange-500",
-        bg: "bg-red-50",
-        iconColor: "text-red-500",
-    },
+    // {
+    //     title: "Update Questions",
+    //     icon: Pencil,
+    //     path: "/models/evaluationcontent/updatequestion",
+    //     color: "from-red-500 to-orange-500",
+    //     bg: "bg-red-50",
+    //     iconColor: "text-red-500",
+    // },
     {
         title: "All Questions",
         icon: FileText,
@@ -31,22 +31,22 @@ const dashboardItems = [
         bg: "bg-red-50",
         iconColor: "text-red-500",
     },
-    {
-        title: "Questions by Concept",
-        icon: Brain,
-        path: "/models/evaluationcontent/questionbyconcept",
-        color: "from-red-500 to-orange-500",
-        bg: "bg-orange-50",
-        iconColor: "text-orange-500",
-    },
-    {
-        title: "SME Insert Question",
-        icon: PlusCircle,
-        path: "/models/evaluationcontent/insertquestion",
-        color: "from-red-500 to-orange-500",
-        bg: "bg-orange-50",
-        iconColor: "text-orange-500",
-    },
+    // {
+    //     title: "Questions by Concept",
+    //     icon: Brain,
+    //     path: "/models/evaluationcontent/questionbyconcept",
+    //     color: "from-red-500 to-orange-500",
+    //     bg: "bg-orange-50",
+    //     iconColor: "text-orange-500",
+    // },
+    // {
+    //     title: "SME Insert Question",
+    //     icon: PlusCircle,
+    //     path: "/models/evaluationcontent/insertquestion",
+    //     color: "from-red-500 to-orange-500",
+    //     bg: "bg-orange-50",
+    //     iconColor: "text-orange-500",
+    // },
     
 ];
 

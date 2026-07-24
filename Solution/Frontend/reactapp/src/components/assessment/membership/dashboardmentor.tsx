@@ -259,7 +259,7 @@ const DashboardMentor = () => {
           </Card>
 
           <Card className="group cursor-pointer border border-border overflow-hidden shadow-elegant hover:shadow-glow hover:border-primary/30 transition-all duration-300 hover:-translate-y-2"
-            onClick={() => navigate("/models/evaluationcontent/dashboard")}>
+            onClick={() => navigate("/models/evaluationcontent/viewquestion")}>
             <CardContent className="p-7">
               <div className="flex items-center justify-between">
                 <div>
@@ -322,7 +322,7 @@ const DashboardMentor = () => {
 
           <Card className="group cursor-pointer border border-border overflow-hidden shadow-elegant hover:shadow-glow hover:border-primary/30 transition-all duration-300 hover:-translate-y-2">
             <CardContent className="p-6">
-              <div className="flex items-center justify-between">
+              <div className="flex items-center justify-between"onClick={() => { navigate("/models/evaluationcontent/QuestionsByLanguage") }}>
                 <div>
                   <p className="text-gray-600 text-sm font-medium">
                     Career Ready

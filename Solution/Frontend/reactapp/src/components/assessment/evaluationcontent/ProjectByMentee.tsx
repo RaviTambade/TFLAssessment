@@ -144,7 +144,7 @@ function ProjectByMentee() {
                 
                 <Button onClick={()=> navigate("/models/evaluationcontent/allocate/project")}>
                   <User className="mr-2 h-4 w-4" />
-                  Allowcate members
+                  Allocate members
                 </Button>
               </div>
 
@@ -200,11 +200,11 @@ function ProjectByMentee() {
                 </p>
                 <div className="space-y-3">
 
-                  <div className="flex items-center gap-2">
+                  {/* <div className="flex items-center gap-2">
                     <User className="w-4 h-4 text-blue-500" />
                     <span className="font-medium">Mentor:</span>
                     <span>{project.mentorName}</span>
-                  </div>
+                  </div> */}
 
                   <div className="flex items-start gap-2">
                     <Users className="w-4 h-4 text-green-500 mt-1" />

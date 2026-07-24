@@ -44,6 +44,7 @@ import Dashboard from "@/components/assessment/membership/dashboard";
 import EvaluationDashboard from "@/components/assessment/evaluationcontent/EvaluationDashboard";
 // import GetQuestionSme from "@/components/assessment/evaluationcontent/getQuestionsme";
 // import EvaluationContentSme from "@/components/assessment/evaluationcontent/EvaluationContents";
+import QuestionsByLanguage from "@/components/assessment/evaluationcontent/QuestionsByLanguage";
 
 import TestQuestionDetails from "@/components/assessment/assessmentOrchestrator/createTest/TestQuestionDetails";
 import Question from "@/components/assessment/assessmentOrchestrator/applyAssessment";
@@ -88,6 +89,7 @@ function AppRoutes() {
           <Route path="evaluationcontent/questionsbyconceptid"element={<QuestionByConceptId />}/>
           <Route path="evaluationcontent/getquestionsbydate" element={<GetQuestionsByDate />}/>
           <Route path="evaluationcontent/GetAllQuestions"element={<Getallquestions />}/>
+          <Route path="evaluationcontent/QuestionsByLanguage" element={<QuestionsByLanguage/>}/>
           {/* Skill Taxonomy */}
           <Route path="skilltaxonomy/skilltaxonomy-menu"element={<SkillTaxonomyMenu />}/>
           {/* Assessment Orchestrator */}

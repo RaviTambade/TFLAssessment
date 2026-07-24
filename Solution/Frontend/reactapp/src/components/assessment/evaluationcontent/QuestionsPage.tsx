@@ -9,7 +9,9 @@ import QuestionByType from "./QuestionByType";
 import QuestionByStatus from "./QuestionByStatus";
 import QuestionByDifficulty from "./QuestionByDifficulty";
 import GetQuestionsByDate from "./GetQuestionsByDate";
-import Getallquestions from "./Getallquestions";
+import QuestionsByLanguage from "./QuestionsByLanguage";
+import QuestionsByConcept from "./QuestionsByConcept";
+import SMEInsertQuestion from "./SMEInsertQuestion";
 
 const dashboardItems = [
   {
@@ -40,6 +42,20 @@ const dashboardItems = [
     bg: "bg-red-50",
     iconColor: "text-red-500",
   },
+   {
+    title: "Questions by Concept",
+    icon: CalendarDays,
+    color: "from-red-500 to-orange-500",
+    bg: "bg-red-50",
+    iconColor: "text-red-500",
+  },
+   {
+    title: "New Question",
+    icon: CalendarDays,
+    color: "from-red-500 to-orange-500",
+    bg: "bg-red-50",
+    iconColor: "text-red-500",
+  },
 ];
 
 const QuestionsPage = () => {
@@ -55,22 +71,22 @@ const QuestionsPage = () => {
           {/* HEADER */}
           <div className="text-center mb-8">
             <h2 className="text-2xl sm:text-3xl font-bold text-foreground mb-2">
-              Evaluation{" "}
-              <span className="bg-gradient-primary bg-clip-text text-transparent">
+              Question Bank
+              {/* <span className="bg-gradient-primary bg-clip-text text-transparent">
                 Questions
-              </span>
+              </span> */}
             </h2>
           </div>
 
           {/* GRID */}
-          <div
-            ref={ref}
-            className={`grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-8 transition-all duration-1000 ${
-              isVisible
-                ? "opacity-100 translate-y-0"
-                : "opacity-0 translate-y-10"
-            }`}
-          >
+                <div
+        ref={ref}
+        className={`grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-4 transition-all duration-1000 ${
+          isVisible
+            ? "opacity-100 translate-y-0"
+            : "opacity-0 translate-y-10"
+        }`}
+>
             {dashboardItems.map((item, index) => {
               const Icon = item.icon;
 
@@ -92,7 +108,7 @@ const QuestionsPage = () => {
                       </div>
 
                       <Icon
-                        className={`w-12 h-12 opacity-20 ${item.iconColor}`}
+                        className={`w-8 h-8 text-primary ${item.iconColor}`}
                       />
                     </div>
 
@@ -100,7 +116,7 @@ const QuestionsPage = () => {
                       className={`w-full bg-gradient-to-r ${item.color} text-white border-0 rounded-xl mt-2`}
                     >
                       View
-                      <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                      {/* <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" /> */}
                     </Button>
 
                   </CardContent>
@@ -128,9 +144,16 @@ const QuestionsPage = () => {
             {selectedModule === "Questions by Date" && (
               <GetQuestionsByDate />
             )}
+
+            {selectedModule === "Questions by Concept" && (
+              <QuestionsByConcept />
+            )}
+            {selectedModule === "New Question" && (
+              <SMEInsertQuestion />
+            )}
   
             {!selectedModule  && (
-              <Getallquestions />
+              <QuestionsByLanguage />
             )}
 
       

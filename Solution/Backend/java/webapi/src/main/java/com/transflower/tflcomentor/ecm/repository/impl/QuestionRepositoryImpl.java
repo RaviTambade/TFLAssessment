@@ -141,13 +141,10 @@ public class QuestionRepositoryImpl implements QuestionRepository {
     """;
 
         List<DescriptiveQuestion> results = new ArrayList<>();
-
-        try (Connection connection = getConnection(); PreparedStatement statement = connection.prepareStatement(sql)) {
-
+        try (Connection connection = getConnection(); 
+        PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, questionType.toString());
-
             try (ResultSet rs = statement.executeQuery()) {
-
                 while (rs.next()) {
 
                     DescriptiveQuestion question = new DescriptiveQuestion();
