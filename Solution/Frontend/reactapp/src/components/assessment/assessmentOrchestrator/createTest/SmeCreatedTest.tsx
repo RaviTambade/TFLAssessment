@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 
 type Difficulty = "BEGINNER" | "INTERMEDIATE" | "ADVANCED";
@@ -154,6 +155,7 @@ export default function CreatedAssessments() {
   const [assessments, setAssessments] = useState<Assessment[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     let cancelled = false;
@@ -198,8 +200,21 @@ export default function CreatedAssessments() {
       
 
       <main className="ca-main">
-        <h1 className="ca-title">Tests Created</h1>
-        <p className="ca-subtitle">View all tests created by the SME.</p>
+        <div className="ca-header-row">
+  <div>
+    <h1 className="ca-title">Tests Created</h1>
+    <p className="ca-subtitle">
+      View all tests created by the SME.
+    </p>
+  </div>
+
+  <button
+    className="ca-create-btn"
+    onClick={() => navigate("/models/create-test")}
+  >
+    + Create Test
+  </button>
+</div>
 
         {error && (
           <div className="ca-error" role="alert">
@@ -248,6 +263,28 @@ const STYLES = `
     font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, Arial, sans-serif;
     color: var(--tf-ink);
   }
+
+  .ca-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.ca-create-btn {
+  background: #DC2A2A;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 20px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.ca-create-btn:hover {
+  background: #B91F1F;
+}
 
   /* ---- Header ---- */
   .ca-header {
