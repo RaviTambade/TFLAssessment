@@ -96,6 +96,59 @@ public class AssessmentRepository : IAssessmentRepository
         return assessments;
     }
 
+    public async Task<List<Assessments>> GetAllUpcomingAssessmentsWithoutDateFilter(long userId)
+    {
+        List<Assessments> assessments = new List<Assessments>();
+
+        using (MySqlConnection connection = GetConnection())
+        {
+            await connection.OpenAsync();
+
+            string query = @"SELECT a.id AS AssessmentId, t.title AS AssessmentName, a.scheduled_at AS ScheduledAt, t.duration, a.status
+                    FROM assessments a
+                    LEFT JOIN tests t ON a.test_id = t.id
+                    WHERE a.student_id = @UserId
+                    AND a.status = 'Assigned'
+                    ORDER BY a.scheduled_at ASC;";
+
+            using (MySqlCommand command = new MySqlCommand(query, connection))
+            {
+                command.Parameters.AddWithValue("@UserId", userId);
+
+                using (MySqlDataReader reader = (MySqlDataReader)await command.ExecuteReaderAsync())
+                {
+                    int srNo = 1;
+                    while (await reader.ReadAsync())
+                    {
+                        Assessments assessment = new Assessments
+                        {
+                            SrNo = srNo,
+                            AssessmentId = Convert.ToInt32(reader["AssessmentId"]),
+
+                            AssessmentName = reader["AssessmentName"] != DBNull.Value
+                                    ? reader["AssessmentName"].ToString()
+                                    : null,
+
+                            ScheduledAt = Convert.ToDateTime(reader["ScheduledAt"]),
+
+                            Duration = reader["Duration"] != DBNull.Value
+                                    ? Convert.ToInt32(reader["Duration"])
+                                    : null,
+
+                            Status = reader["Status"].ToString()
+                        };
+
+                        assessments.Add(assessment);
+
+                        srNo++;
+                    }
+                }
+            }
+        }
+
+        return assessments;
+    }
+
     public async Task<List<AllAssessments>> GetAllAssessments()
     {
         var list = new List<AllAssessments>();

@@ -135,7 +135,8 @@ useEffect(() => {
           </Card>
 
           <Card>
-            <CardContent className="p-6">
+            <CardContent className="p-6"
+            onClick={() => navigate("/models/assessmentorchestrator/completed-assessments")}>
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-gray-600 text-sm font-medium">Average Score</p>

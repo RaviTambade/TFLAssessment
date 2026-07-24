@@ -177,7 +177,7 @@ const CompletedAssessmentDetails = () => {
                     })}
                   </div>
 
-                  {/* Show only if wrong */}
+                  {/* Show only if wrong
                   {!item.isCorrect && (
                     <div className="mt-5 rounded-lg border border-green-300 bg-green-50 p-4">
                       <p className="text-sm text-green-700">
@@ -188,7 +188,7 @@ const CompletedAssessmentDetails = () => {
                         {item.correctAnswer}
                       </p>
                     </div>
-                  )}
+                  )} */}
 
                 </CardContent>
               </Card>

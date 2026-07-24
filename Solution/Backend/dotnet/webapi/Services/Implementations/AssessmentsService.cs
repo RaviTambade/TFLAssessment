@@ -25,6 +25,11 @@ namespace backend.Services.Interfaces
             return await _repository.GetAllUpcomingAssessments(userId,fromDate, toDate); 
         }
 
+        public async Task<List<Assessments>> GetAllUpcomingAssessmentsWithoutDateFilter(long userId)
+        {
+            return await _repository.GetAllUpcomingAssessmentsWithoutDateFilter(userId);
+        }
+
         public async Task<List<AllAssessments>> GetAssessments()
         {
             return await _repository.GetAllAssessments();
