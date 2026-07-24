@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 import { useNavigate, useParams } from "react-router-dom";
 
@@ -154,7 +153,7 @@ function EmptyState() {
 // ---------------------------------------------------------------------------
 
 export default function CreatedAssessments(){
-  const navigate = useNavigate();
+  
   
   const [assessments, setAssessments] = useState<Assessment[]>([]);
   const [isLoading, setIsLoading] = useState(true);
