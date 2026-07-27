@@ -3,15 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { WEBAPI_JAVA_URL } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import {
-    BookOpen,
-    Code2,
-    Layers3,
-    Brain,
-    Target,
-    Pencil,
-    CheckCircle2,
-} from "lucide-react";
+import { BookOpen, Code2, Layers3, Brain, Target, Pencil, CheckCircle2, } from "lucide-react";
 
 const QuestionDetails = () => {
     const { question_id } = useParams();
@@ -34,7 +26,6 @@ const QuestionDetails = () => {
     const edit = () => {
         navigate(`/models/evaluationcontent/edit/${question_id}`);
     };
-
     if (!q) {
         return (
             <div className="h-screen flex items-center justify-center">
@@ -79,7 +70,6 @@ const QuestionDetails = () => {
 
                         {/* Question */}
                         <div className="mb-5">
-
                             <div className="flex items-center justify-between mb-2">
                                 <p className="text-base leading-7 font-medium">
                                     {q.description}
@@ -87,15 +77,11 @@ const QuestionDetails = () => {
                                 <Button
                                     onClick={edit}
                                     size="sm"
-                                    className="bg-gradient-primary hover:opacity-90"
-                                >
-                                    
+                                    className="bg-gradient-primary hover:opacity-90">
                                     <Pencil className="w-4 h-4 mr-2" />
                                     Edit Question
                                 </Button>
                             </div>
-
-                           
 
                         </div>
 
@@ -159,15 +145,15 @@ const QuestionDetails = () => {
                                             <div
                                                 key={option.key}
                                                 className={`rounded-xl border p-3 transition-all ${correct
-                                                        ? "border-green-500 bg-green-50 dark:bg-green-950/20"
-                                                        : "hover:border-primary hover:bg-primary/5"
+                                                    ? "border-green-500 bg-green-50 dark:bg-green-950/20"
+                                                    : "hover:border-primary hover:bg-primary/5"
                                                     }`}
                                             >
                                                 <div className="flex items-center gap-3">
                                                     <div
                                                         className={`h-9 w-9 rounded-full flex items-center justify-center font-bold ${correct
-                                                                ? "bg-green-500 text-white"
-                                                                : "bg-primary text-primary-foreground"
+                                                            ? "bg-green-500 text-white"
+                                                            : "bg-primary text-primary-foreground"
                                                             }`}
                                                     >
                                                         {option.key}
