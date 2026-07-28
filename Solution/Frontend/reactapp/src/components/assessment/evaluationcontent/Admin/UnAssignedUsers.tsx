@@ -3,6 +3,8 @@ import { Card,CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { User, RefreshCw } from "lucide-react";
 import { useScrollAnimation } from "@/components/../hooks/use-scroll-animation";
+import { useNavigate } from "react-router-dom";
+
 
 interface UnassignedUser {
   userId: number;
@@ -14,6 +16,8 @@ const UnassignedUsers = () => {
 
   const [users, setUsers] = useState<UnassignedUser[]>([]);
   const [loading, setLoading] = useState(false);
+
+  const navigate = useNavigate();
 
   const fetchUsers = async () => {
     try {
@@ -79,9 +83,9 @@ const UnassignedUsers = () => {
           >
             {users.map((user) => (
               <Card
-                key={user.userId}
-                className="border-0 shadow-elegant hover:shadow-glow transition-all duration-300 hover:-translate-y-2"
-              >
+                    key={user.userId}
+                    onClick={() => navigate(`/models/membership/manage-users/${user.userId}`)}
+                    className="cursor-pointer border-0 shadow-elegant hover:shadow-glow transition-all duration-300 hover:-translate-y-2">
                 <CardContent className="p-6 bg-gradient-hero">
                   <div className="flex items-center gap-4">
                     <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center">

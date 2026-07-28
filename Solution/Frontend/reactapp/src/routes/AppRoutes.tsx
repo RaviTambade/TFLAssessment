@@ -1,6 +1,7 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 
+import ManageSingleUser from "@/components/assessment/evaluationcontent/Admin/ManageSingleUser";
 import ProjectDetails from "@/components/assessment/evaluationcontent/Mentor/ProjectDetails";
 import EvaluationContentMenu from "../components/assessment/evaluationcontent/EvaluationContentMenu";
 import SkillTaxonomyMenu from "../components/assessment/skilltaxonomy/SkillTaxonomyMenu";
@@ -163,6 +164,7 @@ function AppRoutes() {
           <Route path="membership/SmeDashboard" element={<DashboardSME />} />
           <Route path="membership/Mentees" element={<Mentees />} />
           <Route path="membership/Unassigned/Users" element={<UnassignedUsers/>}/>
+          <Route path="membership/manage-users/:userId" element={<ManageSingleUser />}/>
           
         </Routes>
       </main>

@@ -7,6 +7,8 @@ import { WEBAPI_NODE_URL } from "@/lib/utils";
 import User from "./entities/User";
 import ApiUser from "./entities/ApiUser";
 import ApiRole from "./entities/ApiRole";
+import { useParams } from "react-router-dom";
+
 
 
 type Role = {
@@ -21,7 +23,11 @@ const formatDate = (value?: string) => {
   return isNaN(d.getTime()) ? value : d.toLocaleDateString()
 }
 
+
 const ManageUsers = () => {
+  const { userId } = useParams();
+
+console.log("UserId:", userId);
 
   const [users, setUsers] = useState<User[]>([])
   const [roles, setRoles] = useState<Role[]>([])
@@ -184,6 +190,19 @@ const ManageUsers = () => {
   useEffect(() => {
     fetchUsers()
   }, [])
+
+  useEffect(() => {
+  if (!userId || users.length === 0 || roles.length === 0) return;
+
+  const selectedUser = users.find(
+    (u) => u.id === Number(userId)
+  );
+
+  if (selectedUser) {
+    setEditingUser(selectedUser.id);
+    setEditingRoles(getRoleIdsFromRoleString(selectedUser.role));
+  }
+}, [userId, users, roles]); 
 
   useEffect(() => {
     const fetchRoles = async () => {
