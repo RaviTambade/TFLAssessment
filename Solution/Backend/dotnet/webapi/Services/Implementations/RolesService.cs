@@ -28,4 +28,9 @@ public class RolesService:IRolesService{
         return await _rolesRepository.GetUnAssignedUsers();
     }
 
+    public async Task<int> GetUnAssignedUsersCount()
+    {
+        return await _rolesRepository.GetUnAssignedUsersCount();
+    }
+
 }

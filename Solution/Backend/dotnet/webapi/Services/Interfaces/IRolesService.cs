@@ -7,4 +7,5 @@ public interface IRolesService{
     Task<List<ActiveRole>> GetActiveRoles();
     Task<List<RoleUser>> GetUsersByRole(long roleId); 
     Task<List<UnassignedUsers>> GetUnAssignedUsers();
+    Task<int> GetUnAssignedUsersCount();
 }

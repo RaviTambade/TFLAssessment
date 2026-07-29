@@ -161,4 +161,25 @@ public class RolesRepository : IRolesRepository
         return users;
     }
 
+    public async Task<int> GetUnAssignedUsersCount()
+    {
+        using MySqlConnection con = GetConnection();
+
+        string query = @"
+                SELECT COUNT(*)
+                FROM user_roles ur
+                WHERE ur.role_id = 7
+                AND NOT EXISTS (
+                    SELECT 1
+                    FROM user_roles ur2
+                    WHERE ur2.user_id = ur.user_id
+                    AND ur2.role_id <> 7
+                );";
+
+        MySqlCommand cmd = new MySqlCommand(query, con);
+
+        await con.OpenAsync();
+
+        return Convert.ToInt32(await cmd.ExecuteScalarAsync());
+    }
 }
