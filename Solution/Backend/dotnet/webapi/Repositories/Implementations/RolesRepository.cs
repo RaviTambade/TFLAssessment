@@ -14,13 +14,13 @@ public class RolesRepository : IRolesRepository
     }
 
     private MySqlConnection GetConnection()
-        {
-            return new MySqlConnection(_configuration.GetConnectionString("DefaultConnection"));
-        }
+    {
+        return new MySqlConnection(_configuration.GetConnectionString("DefaultConnection"));
+    }
 
     public async Task<int> GetActiveRolesCount()
     {
-        using MySqlConnection con =GetConnection();
+        using MySqlConnection con = GetConnection();
 
         string query = @"
             SELECT COUNT(DISTINCT r.role_id)
@@ -65,7 +65,7 @@ public class RolesRepository : IRolesRepository
 
         MySqlCommand cmd = new MySqlCommand(query, con);
         await con.OpenAsync();
-        using MySqlDataReader reader =(MySqlDataReader)await cmd.ExecuteReaderAsync();
+        using MySqlDataReader reader = (MySqlDataReader)await cmd.ExecuteReaderAsync();
 
         while (await reader.ReadAsync())
         {
@@ -129,20 +129,26 @@ public class RolesRepository : IRolesRepository
 
     public async Task<List<UnassignedUsers>> GetUnAssignedUsers()
     {
-        List<UnassignedUsers> users=new List<UnassignedUsers>();
+        List<UnassignedUsers> users = new List<UnassignedUsers>();
         using MySqlConnection connection = GetConnection();
-        string query=@"
+        string query = @"
                         SELECT
-                    pi.user_id,
-                    pi.full_name
-                FROM personal_informations pi
-                JOIN user_roles ur
-                    ON pi.user_id = ur.user_id
-                WHERE ur.role_id = 7 ";
+                        pi.user_id,
+                        pi.full_name
+                    FROM personal_informations pi
+                    JOIN user_roles ur
+                        ON pi.user_id = ur.user_id
+                    WHERE ur.role_id = 7
+                    AND NOT EXISTS (
+                        SELECT 1
+                        FROM user_roles ur2
+                        WHERE ur2.user_id = ur.user_id
+                        AND ur2.role_id <> 7
+                    )";
 
-        MySqlCommand cmd=new MySqlCommand(query, connection);
+        MySqlCommand cmd = new MySqlCommand(query, connection);
         await connection.OpenAsync();
-        using MySqlDataReader reader= (MySqlDataReader) await cmd.ExecuteReaderAsync();
+        using MySqlDataReader reader = (MySqlDataReader)await cmd.ExecuteReaderAsync();
 
         while (await reader.ReadAsync())
         {
@@ -154,5 +160,5 @@ public class RolesRepository : IRolesRepository
         }
         return users;
     }
-    
+
 }
