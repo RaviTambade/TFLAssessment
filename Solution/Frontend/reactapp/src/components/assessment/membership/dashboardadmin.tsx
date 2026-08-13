@@ -34,6 +34,7 @@ const DashboardAdmin = () => {
   const [activeRoles, setActiveRoles] = useState<number>(0);
   const [activeRolesList, setActiveRolesList] = useState<number>(0);
   const [assessmentCount, setAssessmentCount] = useState<number>(0);
+  const[unassignedUsersCount,setUnAssignedUsersCount]=useState<number>(0);
    const [smeName, setSmeName] = useState<string>("");
 
 
@@ -85,6 +86,29 @@ useEffect(() => {
   }, []);
 
 
+   useEffect(() => {
+    const fetchUnAssignedUserCount = async () => {
+      try {
+        const response = await fetch(`${WEBAPI_DOTNET_URL}/Roles/unassigned/users/count`);
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch unassigned users count");
+        }
+
+        const data = await response.json();
+
+        console.log(data);
+
+        setUnAssignedUsersCount(data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchUnAssignedUserCount();
+  }, []);
+
+
   useEffect(() => {
 
     const apiURL = `${WEBAPI_NODE_URL}/admin/profile`;
@@ -111,7 +135,7 @@ useEffect(() => {
         {/* Header */}
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-slate-900">
-            SME Dashboard
+            ADMIN Dashboard
           </h1>
 
           <p className="text-2xl text-primary mt-3 font-bold">
@@ -168,7 +192,7 @@ useEffect(() => {
                 <div>
                   <p className="text-gray-600 text-sm font-medium">Pending Approvals</p>
                   
-                  <p className="text-3xl font-bold text-gray-900 mt-1">5</p>
+                  <p className="text-3xl font-bold text-gray-900 mt-1">{unassignedUsersCount}</p>
                 </div>
                 <div className="bg-primary/10 rounded-2xl p-4 group-hover:scale-110 transition">
                 <AlertCircle className="w-8 h-8 text-primary" />
