@@ -3,18 +3,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import { WEBAPI_DOTNET_URL } from "@/lib/utils";
 import { Card, CardContent } from "@/components/ui/card";
 import { ArrowLeft, CheckCircle2, XCircle } from "lucide-react";
+import { AssessmentAnswerDetail } from "@/components/assessment/assessmentOrchestrator/entities/AssessmentAnswerDetail";
 
-interface AssessmentAnswerDetail {
-  questionId: number;
-  questionDescription: string;
-  optionA?: string;
-  optionB?: string;
-  optionC?: string;
-  optionD?: string;
-  correctAnswer?: string;
-  selectedOption?: string;
-  isCorrect: boolean;
-}
 
 const CompletedAssessmentDetails = () => {
   const { assessmentId } = useParams();
