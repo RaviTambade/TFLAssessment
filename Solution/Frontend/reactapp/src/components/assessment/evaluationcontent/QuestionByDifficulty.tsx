@@ -8,14 +8,13 @@ import {  WEBAPI_DOTNET_URL, WEBAPI_NODE_URL ,WEBAPI_JAVA_URL} from "@/lib/utils
 const QuestionsByDifficulty = () => {
   const [questions, setQuestions] = useState([]);
   const [filter, setFilter] = useState([]); 
-
   const { ref, isVisible } = useScrollAnimation();
 
   // Fetch Data
   useEffect(() => {
   fetchQuestions("BEGINNER");
   fetchQuestions("INTERMEDIATE");
-  fetchQuestions("ADVANCE");
+  fetchQuestions("ADVANCE"); 
   }, []);
 
   const fetchQuestions = async (level: string) => {
