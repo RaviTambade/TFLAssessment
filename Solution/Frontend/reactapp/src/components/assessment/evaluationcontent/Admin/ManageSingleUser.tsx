@@ -174,7 +174,6 @@ const ManageSingleUser = () => {
                                 {role.name}
                             </Button>
                         ))}
-
                     </div>
 
                     <div className="flex gap-3">

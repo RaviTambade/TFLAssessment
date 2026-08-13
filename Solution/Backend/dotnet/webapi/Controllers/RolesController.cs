@@ -47,6 +47,13 @@ namespace backend.controllers
             var result =await _roleService.GetUnAssignedUsers();
             return Ok(result);
         }
+
+        [HttpGet("unassigned/users/count")]
+        public async Task<IActionResult> GetUnAssignedUsersCount()
+        {
+            var result=await _roleService.GetUnAssignedUsersCount();
+            return Ok(result);
+        }
     }
 }
 

@@ -1,7 +1,7 @@
 const mysql = require("mysql2");
 
 const dbconfig = {
-  host: "localhost",
+  host: "192.168.1.149",
   user: "root",
   password: "password",
   database: "tflcomentor_db",
