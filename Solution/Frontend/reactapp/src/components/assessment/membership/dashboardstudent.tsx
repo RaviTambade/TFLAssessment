@@ -70,6 +70,7 @@ useEffect(() => {
   if (currentUser) {
 
     const user = JSON.parse(currentUser);
+    console.log(user);
     const studentId = user.userid;
 
     fetch(`${WEBAPI_DOTNET_URL}/Students/performance/${studentId}`)
