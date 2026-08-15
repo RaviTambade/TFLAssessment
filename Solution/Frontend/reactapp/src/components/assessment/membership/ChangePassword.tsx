@@ -8,8 +8,13 @@ import ChangePasswordResponse from "./entities/ChangePasswordResponse";
 
 
 const ChangePassword = () => {
+
+    const currentUser = sessionStorage.getItem("current");
+    const user = JSON.parse(currentUser);
+    const studentId = user.userid;
   
-  const [userId, setUserId] = useState("")
+  
+  const [userId, setUserId] = useState(studentId)
   const [currentPassword, setCurrentPassword] = useState("")
   const [newPassword, setNewPassword] = useState("")
   const [confirmPassword, setConfirmPassword] = useState("")
@@ -19,6 +24,10 @@ const ChangePassword = () => {
   const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
+
+
+
+
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -114,7 +123,6 @@ const ChangePassword = () => {
                   type="text"
                   placeholder="Enter user ID"
                   value={userId}
-                  onChange={(e) => setUserId(e.target.value)}
                 />
               </div>
 
