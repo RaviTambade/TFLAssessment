@@ -184,6 +184,9 @@ const Navbar = ({ isLoggedIn }: NavbarProps) => {
                   <DropdownMenuItem onClick={() => navigate("/models/membership/UserProfile")}>
                     Profile
                   </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => navigate("/models/membership/ChangePassword")}>
+                    Change Password
+                  </DropdownMenuItem>
 
                   <DropdownMenuItem
                     onClick={() => {
