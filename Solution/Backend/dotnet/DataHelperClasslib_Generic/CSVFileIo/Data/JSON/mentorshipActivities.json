@@ -1,0 +1,34 @@
+[
+    {
+      "id": 1,
+      "menteeName": "Priya Sharma",
+      "activityType": "session",
+      "description": "1-on-1 Technical Mentoring: React Advanced Patterns Discussion",
+      "date": "2026-04-25",
+      "completionStatus": "completed"
+    },
+    {
+      "id": 2,
+      "menteeName": "Arjun Patel",
+      "activityType": "feedback",
+      "description": "Code Review & Feedback: AWS Lambda Implementation",
+      "date": "2026-04-24",
+      "completionStatus": "in-progress"
+    },
+    {
+      "id": 3,
+      "menteeName": "Ananya Desai",
+      "activityType": "guidance",
+      "description": "Career Development Guidance: Interview Preparation",
+      "date": "2026-04-28",
+      "completionStatus": "pending"
+    },
+    {
+      "id": 4,
+      "menteeName": "Rohit Kumar",
+      "activityType": "assignment",
+      "description": "Practical Assignment: Set up CI/CD Pipeline",
+      "date": "2026-04-20",
+      "completionStatus": "completed"
+    }
+]
