@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 import org.springframework.stereotype.Repository;
 
@@ -25,126 +26,132 @@ public class ProjectRepositoryImpl implements ProjectRepository {
     }
 
     @Override
-    public List<Project> getAllProjects(Long mentorId) {
-        List<Project> projects = new ArrayList<>();
+    public CompletableFuture<List<Project>> getAllProjects(Long mentorId) {
+        return CompletableFuture.supplyAsync(() -> {
+            List<Project> projects = new ArrayList<>();
 
-        String query = """
-                     SELECT
-                            p.project_id,
-                            p.project_name,
-                            CONCAT(mp.first_name, ' ', mp.last_name) AS mentor_name,
-                            GROUP_CONCAT(
-                                CONCAT(sp.first_name, ' ', sp.last_name)
-                                SEPARATOR ', '
-                            ) AS allocated_students,
-                            p.description,
-                            p.repository_url,
-                            p.status,
-                            p.created_at
-                        FROM projects p
-                        LEFT JOIN personal_informations mp
-                            ON p.mentor_id = mp.user_id
-                        LEFT JOIN project_allocations pa
-                            ON p.project_id = pa.project_id
-                        LEFT JOIN personal_informations sp
-                            ON pa.student_id = sp.user_id
-                            where p.mentor_id=?
-                        GROUP BY
-                            p.project_id,
-                            p.project_name,
-                            mentor_name,
-                            p.description,
-                            p.repository_url,
-                            p.status,
-                            p.created_at;
-                    """;
+            String query = """
+                        SELECT
+                                p.project_id,
+                                p.project_name,
+                                CONCAT(mp.first_name, ' ', mp.last_name) AS mentor_name,
+                                GROUP_CONCAT(
+                                    CONCAT(sp.first_name, ' ', sp.last_name)
+                                    SEPARATOR ', '
+                                ) AS allocated_students,
+                                p.description,
+                                p.repository_url,
+                                p.status,
+                                p.created_at
+                            FROM projects p
+                            LEFT JOIN personal_informations mp
+                                ON p.mentor_id = mp.user_id
+                            LEFT JOIN project_allocations pa
+                                ON p.project_id = pa.project_id
+                            LEFT JOIN personal_informations sp
+                                ON pa.student_id = sp.user_id
+                                where p.mentor_id=?
+                            GROUP BY
+                                p.project_id,
+                                p.project_name,
+                                mentor_name,
+                                p.description,
+                                p.repository_url,
+                                p.status,
+                                p.created_at;
+                        """;
 
-        System.out.println("Mentor ID: " + mentorId);
-        try (
-                Connection connection = getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setLong(1, mentorId);
-            System.out.println("Projects Found: " + projects.size());
+            System.out.println("Mentor ID: " + mentorId);
+            try (
+                    Connection connection = getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {
+                statement.setLong(1, mentorId);
+                System.out.println("Projects Found: " + projects.size());
 
-            try (ResultSet rs = statement.executeQuery()) {
+                try (ResultSet rs = statement.executeQuery()) {
 
-                while (rs.next()) {
-                    Project project = new Project();
+                    while (rs.next()) {
+                        Project project = new Project();
+                        project.setProjectId(rs.getInt("project_id"));
+                        project.setMentorName(rs.getString("mentor_name"));
+                        project.setAllocatedStudents(rs.getString("allocated_students"));
+                        project.setProjectName(rs.getString("project_name"));
+                        project.setDescription(rs.getString("description"));
+                        project.setRepositoryUrl(rs.getString("repository_url"));
+                        project.setStatus(rs.getString("status"));
+                        project.setCreatedAt(rs.getTimestamp("created_at").toLocalDateTime());
+                        projects.add(project);
+                    }
+
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        return projects;
+        });
+    }
+
+    @Override
+    public CompletableFuture<Project> getProjectById(long project_id) {
+        return CompletableFuture.supplyAsync(() -> {
+            Project project = null;
+
+            try {
+                Connection connection = getConnection();
+
+                String query = "SELECT * FROM tflcomentor_db.projects WHERE project_id = ?";
+                PreparedStatement ps = connection.prepareStatement(query);
+                ps.setLong(1, project_id);
+
+                ResultSet rs = ps.executeQuery();
+
+                if (rs.next()) {
+                    project = new Project();
                     project.setProjectId(rs.getInt("project_id"));
-                    project.setMentorName(rs.getString("mentor_name"));
-                    project.setAllocatedStudents(rs.getString("allocated_students"));
+                    project.setMentorId(rs.getInt("mentor_id"));
                     project.setProjectName(rs.getString("project_name"));
                     project.setDescription(rs.getString("description"));
                     project.setRepositoryUrl(rs.getString("repository_url"));
                     project.setStatus(rs.getString("status"));
                     project.setCreatedAt(rs.getTimestamp("created_at").toLocalDateTime());
-                    projects.add(project);
                 }
 
+            } catch (Exception e) {
+                e.printStackTrace();
             }
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return projects;
+            return project;
+        });
     }
 
     @Override
-    public Project getProjectById(long project_id) {
-        Project project = null;
+    public CompletableFuture<Boolean> allocateMembersToProject(ProjectAllocation projectAllocation) {
 
-        try {
-            Connection connection = getConnection();
+        return CompletableFuture.supplyAsync(() -> {
+            String query = "INSERT INTO project_allocations(project_id, student_id, joined_date) VALUES (?, ?, NOW())";
 
-            String query = "SELECT * FROM tflcomentor_db.projects WHERE project_id = ?";
-            PreparedStatement ps = connection.prepareStatement(query);
-            ps.setLong(1, project_id);
+            try (
+                    Connection connection = getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {
+                
+                    for (Long studentId : projectAllocation.getStudentIds()) {
+                        statement.setLong(1, projectAllocation.getProjectId());
+                        statement.setLong(2, studentId);
 
-            ResultSet rs = ps.executeQuery();
-
-            if (rs.next()) {
-                project = new Project();
-                project.setProjectId(rs.getInt("project_id"));
-                project.setMentorId(rs.getInt("mentor_id"));
-                project.setProjectName(rs.getString("project_name"));
-                project.setDescription(rs.getString("description"));
-                project.setRepositoryUrl(rs.getString("repository_url"));
-                project.setStatus(rs.getString("status"));
-                project.setCreatedAt(rs.getTimestamp("created_at").toLocalDateTime());
+                        statement.executeUpdate();
+                    }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return project;
+            return true;
+        });
     }
 
     @Override
-    public boolean allocateMembersToProject(ProjectAllocation projectAllocation) {
-
-        String query = "INSERT INTO project_allocations(project_id, student_id, joined_date) VALUES (?, ?, NOW())";
-
-        try (
-                Connection connection = getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {
-            
-                for (Long studentId : projectAllocation.getStudentIds()) {
-                    statement.setLong(1, projectAllocation.getProjectId());
-                    statement.setLong(2, studentId);
-
-                    statement.executeUpdate();
-                }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return true;
-    }
-
-    @Override
-    public boolean removeMember(Long projectId, Long studentId) {
-
-        String query = """
+    public CompletableFuture<Boolean> removeMember(Long projectId, Long studentId) {
+        return CompletableFuture.supplyAsync(() -> {
+            String query = """
             UPDATE project_allocations
             SET release_date = NOW()
             WHERE project_id = ? AND student_id = ?
@@ -161,11 +168,13 @@ public class ProjectRepositoryImpl implements ProjectRepository {
         }
 
         return false;
+        });
     }
 
     @Override
-    public List<ProjectAllocationResponse> getProjectAllocationDetails() {
-        List<ProjectAllocationResponse> allocations = new ArrayList<>();
+    public CompletableFuture<List<ProjectAllocationResponse>> getProjectAllocationDetails() {
+        return CompletableFuture.supplyAsync(() -> {
+            List<ProjectAllocationResponse> allocations = new ArrayList<>();
 
         String query = """
             SELECT
@@ -210,11 +219,13 @@ public class ProjectRepositoryImpl implements ProjectRepository {
         }
 
         return allocations;
+        });
     }
 
     @Override
-    public List<ProjectAllocationResponse> getProjectMember(Long projectId) {
-        List<ProjectAllocationResponse> allocations = new ArrayList<>();
+    public CompletableFuture<List<ProjectAllocationResponse>> getProjectMember(Long projectId) {
+        return CompletableFuture.supplyAsync(() -> {
+            List<ProjectAllocationResponse> allocations = new ArrayList<>();
         String query = """
                                         SELECT
                         pa.project_id,
@@ -267,18 +278,20 @@ public class ProjectRepositoryImpl implements ProjectRepository {
         }
 
         return allocations;
+        });
     }
 
     @Override
-    public List<Project> getProjectByStudentId(Long studentId) {
-        List<Project> projects = new ArrayList<Project>();
+    public CompletableFuture<List<Project>> getProjectByStudentId(Long studentId) {
+        return CompletableFuture.supplyAsync(() -> {
+            List<Project> projects = new ArrayList<Project>();
 
         String query = """
         SELECT p.project_name, p.project_id, p.mentor_id, p.description, p.repository_url, p.status, p.created_at
         FROM project_allocations pa
         JOIN projects p ON pa.project_id = p.project_id
         WHERE pa.student_id = ?
-    """;
+        """;
 
         try (
                 Connection connection = getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {
@@ -303,11 +316,13 @@ public class ProjectRepositoryImpl implements ProjectRepository {
         }
 
         return projects;
+        });
     }
 
     @Override
-    public List<ProjectAllocationResponse> getStudentByProjectId(Long projectId) {
-        List<ProjectAllocationResponse> students = new ArrayList<>();
+    public CompletableFuture<List<ProjectAllocationResponse>> getStudentByProjectId(Long projectId) {
+        return CompletableFuture.supplyAsync(() -> {
+            List<ProjectAllocationResponse> students = new ArrayList<>();
 
         String query = """
             SELECT
@@ -354,13 +369,14 @@ public class ProjectRepositoryImpl implements ProjectRepository {
         }
 
         return students;
+        });
     }
 
     // Mentor 
     @Override
-    public List<MentorshipActivityResponse> getRecentActivities(Long mentorId) {
-
-        List<MentorshipActivityResponse> activities = new ArrayList<>();
+    public CompletableFuture<List<MentorshipActivityResponse>> getRecentActivities(Long mentorId) {
+        return CompletableFuture.supplyAsync(() -> {
+            List<MentorshipActivityResponse> activities = new ArrayList<>();
 
         try {
             Connection connection = getConnection();
@@ -380,11 +396,13 @@ public class ProjectRepositoryImpl implements ProjectRepository {
             e.printStackTrace();
         }
         return activities;
+        });
     }
 
     @Override
-    public boolean addProject(ProjectResponse project, Long mentorId) {
-        String query = """
+    public CompletableFuture<Boolean> addProject(ProjectResponse project, Long mentorId) {
+        return CompletableFuture.supplyAsync(() -> {
+            String query = """
                 INSERT INTO projects
                 (mentor_id, project_name, description, repository_url, status, created_at)
                 VALUES (?, ?, ?, ?, ?, NOW())
@@ -407,5 +425,6 @@ public class ProjectRepositoryImpl implements ProjectRepository {
         }
 
         return false;
+        });
     }
     }

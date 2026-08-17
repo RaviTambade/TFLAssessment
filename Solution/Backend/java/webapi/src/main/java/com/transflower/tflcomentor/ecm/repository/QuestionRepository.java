@@ -2,6 +2,7 @@ package com.transflower.tflcomentor.ecm.repository;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 import com.transflower.tflcomentor.ecm.dto.request.QuestionOptionsRequest;
 import com.transflower.tflcomentor.ecm.dto.response.DescriptiveQuestion;
@@ -11,15 +12,15 @@ import com.transflower.tflcomentor.ecm.entity.Question;
 import com.transflower.tflcomentor.ecm.entity.enums.QuestionType;
 public interface QuestionRepository {
 
-    QuestionDisplay getQuestionById(long question_id);
-    void updateQuestionDetailsById(Long question_id, QuestionOptionsRequest dto);
-    List<Question> getQuestions(LocalDate fromDate, LocalDate toDate);
-    QuestionOptionsRequest getQuestionDetails(Long question_id);
-    List<DescriptiveQuestion> getDescriptiveQuestion(QuestionType questionType);
-    List<Question> getQuestionsByConcept(String concept,Long userId,Long roleId);
-    public List<String> getConcepts( Long userId, Long roleId);
-    void insertCompleteQuestion(CompleteQuestion q);
-    public int getQuestionCount(); 
+    CompletableFuture<QuestionDisplay> getQuestionById(long question_id);
+    CompletableFuture<Void> updateQuestionDetailsById(Long question_id, QuestionOptionsRequest dto);
+    CompletableFuture<List<Question>> getQuestions(LocalDate fromDate, LocalDate toDate);
+    CompletableFuture<QuestionOptionsRequest> getQuestionDetails(Long question_id);
+    CompletableFuture<List<DescriptiveQuestion>> getDescriptiveQuestion(QuestionType questionType);
+    CompletableFuture<List<Question>> getQuestionsByConcept(String concept,Long userId,Long roleId);
+    public CompletableFuture<List<String>> getConcepts( Long userId, Long roleId);
+    CompletableFuture<Void> insertCompleteQuestion(CompleteQuestion q);
+    public CompletableFuture<Integer> getQuestionCount(); 
     
     // List<QuestionDisplay> getAllQuestions( Long user_role_Id);
     // List<Question> getQuestionsByDifficulty(DifficultyLevel difficulty);

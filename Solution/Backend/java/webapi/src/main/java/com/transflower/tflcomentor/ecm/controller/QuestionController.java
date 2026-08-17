@@ -2,6 +2,7 @@ package com.transflower.tflcomentor.ecm.controller;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -16,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.transflower.tflcomentor.ecm.dto.request.QuestionOptionsRequest;
 import com.transflower.tflcomentor.ecm.dto.response.QuestionDisplay;
-import com.transflower.tflcomentor.ecm.dto.response.QuestionDisplayToMentor;
 import com.transflower.tflcomentor.ecm.entity.CompleteQuestion;
 import com.transflower.tflcomentor.ecm.entity.Question;
 import com.transflower.tflcomentor.ecm.service.QuestionService;
@@ -31,50 +31,50 @@ public class QuestionController {
 
     @GetMapping("/{question_id}")
     // http://localhost:8080/api/questions/1
-    public QuestionDisplay getQuestionById(@PathVariable("question_id") long question_id) {
+    public CompletableFuture<QuestionDisplay> getQuestionById(@PathVariable("question_id") long question_id) {
         return service.getQuestionById(question_id);
     }
 
     @PostMapping("/complete")
     // http://localhost:8080/api/questions/complete
-    public String insertCompleteQuestion(@RequestBody CompleteQuestion question) {
-        service.insertCompleteQuestion(question);
-        return "Complete Question Inserted Successfully";
+    public CompletableFuture<String> insertCompleteQuestion(@RequestBody CompleteQuestion question) {
+        return service.insertCompleteQuestion(question)
+        .thenApply(result -> "Complete Question Inserted Successfully");
     }
 
     @GetMapping("/concepts/{userId}/{roleId}")
     // http://localhost:8080/api/questions/concepts
-    public List<String> getConcepts(@PathVariable Long userId, @PathVariable Long roleId) {
+    public CompletableFuture<List<String>> getConcepts(@PathVariable Long userId, @PathVariable Long roleId) {
         return service.getConcepts(userId, roleId);
     }
 
     @GetMapping("/recent")
     // http://localhost:8080/api/questions/recent?fromDate=2024-01-01&toDate=2024-12-31
-    public List<Question> getByDate(@RequestParam LocalDate fromDate, @RequestParam LocalDate toDate) {
+    public CompletableFuture<List<Question>> getByDate(@RequestParam LocalDate fromDate, @RequestParam LocalDate toDate) {
         return service.getQuestions(fromDate, toDate);
     }
 
     @GetMapping("/{question_id}/details")
     //http://localhost:8080/api/questions/1/details
-    public QuestionOptionsRequest getQuestionDetailsById(@PathVariable Long question_id) {
+    public CompletableFuture<QuestionOptionsRequest> getQuestionDetailsById(@PathVariable Long question_id) {
         return service.getQuestionDetails(question_id);
     }
 
     @PutMapping("/{question_id}")
     // http://localhost:8080/api/questions/1
-    public String updateQuestionDetailsById(@PathVariable Long question_id, @RequestBody QuestionOptionsRequest dto) {
-        service.updateQuestionDetailsById(question_id, dto);
-        return "Question Updated Successfully";
+    public CompletableFuture<String> updateQuestionDetailsById(@PathVariable Long question_id, @RequestBody QuestionOptionsRequest dto) {
+        return service.updateQuestionDetailsById(question_id, dto)
+        .thenApply(result -> "Question Updated Successfully");
     }
 
     @GetMapping("/concepts/{concept}/{userId}/{roleId}")
     // http://localhost:8080/api/questions/concepts/RESTAPI
-    public List<Question> getQuestionsByConcept(@PathVariable String concept, @PathVariable Long userId, @PathVariable Long roleId) {
+    public CompletableFuture<List<Question>> getQuestionsByConcept(@PathVariable String concept, @PathVariable Long userId, @PathVariable Long roleId) {
         return service.getQuestionsByConcept(concept, userId, roleId);
     }
 
     @GetMapping("/count")
-    public int getQuestionCount() {
+    public CompletableFuture<Integer> getQuestionCount() {
     return service.getQuestionCount();
     }
 
