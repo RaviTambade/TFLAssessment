@@ -1,6 +1,7 @@
 package com.transflower.tflcomentor.ecm.controller;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,7 +28,7 @@ public class QuestionFilterController {
     }
 
     @GetMapping("/questions/{userId}/{roleId}")
-    public List<Question> getQuestions(@RequestParam(required = false) QuestionType question_type,
+    public CompletableFuture<List<Question>> getQuestions(@RequestParam(required = false) QuestionType question_type,
             @RequestParam(required = false) DifficultyLevel difficulty_level,
             @RequestParam(required = false) QuestionStatus status,
             @RequestParam(required = false) String language,

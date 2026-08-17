@@ -1,6 +1,7 @@
 package com.transflower.tflcomentor.ecm.controller;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -34,64 +35,69 @@ public class ProjectController {
     }
 
     @GetMapping("/mentee/{mentorId}")
-    public List<Project> getAllProjects(@PathVariable Long mentorId) {
+    public CompletableFuture<List<Project>> getAllProjects(@PathVariable Long mentorId) {
         return service.getAllProjects(mentorId);
     }
 
     @GetMapping("/{id}")
-    public Project getProjectById(@PathVariable("id") long project_id) {
+    public CompletableFuture<Project> getProjectById(@PathVariable("id") long project_id) {
         return service.getProjectById(project_id);
     }
 
     @GetMapping("/{projectId}/students")
-    public List<ProjectAllocationResponse> getStudentByProjectId(@PathVariable Long projectId) {
+    public CompletableFuture<List<ProjectAllocationResponse>> getStudentByProjectId(@PathVariable Long projectId) {
         return service.getStudentByProjectId(projectId);
     }
 
     @GetMapping("/allocations")
-    public List<ProjectAllocationResponse> getProjectAllocationDetails() {
+    public CompletableFuture<List<ProjectAllocationResponse>> getProjectAllocationDetails() {
         return service.getProjectAllocationDetails();
     }
 
     @PostMapping("/add")
-        public String allocateMembersToProject(@RequestBody ProjectAllocationRequest request) {
+    public CompletableFuture<String> allocateMembersToProject(@RequestBody ProjectAllocationRequest request) {
 
-            ProjectAllocation allocation = new ProjectAllocation();
-            allocation.setProjectId(request.getProjectId());
-            allocation.setStudentIds(request.getStudentIds());
-            boolean status = service.allocateMembersToProject(allocation);
-            if (status) {
-                return "Student(s) added successfully";
-            }
-            return "Failed to add student(s)";
-        }
+        ProjectAllocation allocation = new ProjectAllocation();
+        allocation.setProjectId(request.getProjectId());
+        allocation.setStudentIds(request.getStudentIds());
+        return service.allocateMembersToProject(allocation)
+            .thenApply(status -> {
+                if (status) {
+                    return "Student(s) added successfully";
+                }
+                return "Failed to add student(s)";
+            });
+    }
 
     @GetMapping("/student/{studentId}/projects")
-    public List<Project> getProjectByStudentId(@PathVariable Long studentId) {
+    public CompletableFuture<List<Project>> getProjectByStudentId(@PathVariable Long studentId) {
         return service.getProjectByStudentId(studentId);
     }
 
     @DeleteMapping("/remove")
-    public String removeMember(@RequestParam Long projectId, @RequestParam Long studentId) {
-        boolean status = service.removeMember(projectId, studentId);
-        if (status) {
-            return "Student released successfully";
-        }
-        return "Failed to release student";
+    public CompletableFuture<String> removeMember(@RequestParam Long projectId, @RequestParam Long studentId) {
+        
+            return service.removeMember(projectId,studentId)
+            .thenApply(status -> {
+                if (status) {
+                    return "Student(s) added successfully";
+                }
+                return "Failed to add student(s)";
+            });
     }
 
     @GetMapping("/projectMembers/{projectId}")
-    public List<ProjectAllocationResponse> getProjectMembers(@PathVariable Long projectId) {
+    public CompletableFuture<List<ProjectAllocationResponse>> getProjectMembers(@PathVariable Long projectId) {
         return service.getProjectMember(projectId);
     }
 
     @GetMapping("/activities/{mentorId}")
-    public ResponseEntity<List<MentorshipActivityResponse>>getRecentActivities(@PathVariable Long mentorId) {
+    public ResponseEntity<CompletableFuture<List<MentorshipActivityResponse>>> getRecentActivities(@PathVariable Long mentorId) {
         return ResponseEntity.ok(service.getRecentActivities(mentorId));
     }
 
     @PostMapping("/createProject/{mentor_id}")
-    public boolean addProject(@PathVariable("mentor_id") Long mentorId,@RequestBody ProjectResponse project) 
+    public CompletableFuture<Boolean> addProject(@PathVariable("mentor_id") Long mentorId,@RequestBody ProjectResponse project) 
     {
         return service.addProject(project,mentorId);
     }
