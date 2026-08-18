@@ -34,15 +34,13 @@ const DashboardSME = () => {
   // Candidate Performance Overview
   const candidatePerformance: CandidatePerformance[] = CandidatePerformances as CandidatePerformance[];
 
-  
-
   // Skill Gap Analysis
   const skillGapAnalysis: SkillGapAnalysis[] = SkillGapAnalyse as SkillGapAnalysis[];
 
   //navigate
   const navigate = useNavigate();
 
-  useEffect(() => {
+useEffect(() => {
 const currentUser = JSON.parse(sessionStorage.getItem("current") || "{}");
 const userId = currentUser.userid;
 
@@ -57,7 +55,7 @@ if (currentUser) {
       setProfilePicture(data.profilePicture);
     });
 
-     fetch("http://localhost:5201/api/Students/total")
+    fetch("http://localhost:5201/api/Students/total")
   .then((response) => response.json())
   .then((data) => {
       setTotalStudents(data.totalStudents);
