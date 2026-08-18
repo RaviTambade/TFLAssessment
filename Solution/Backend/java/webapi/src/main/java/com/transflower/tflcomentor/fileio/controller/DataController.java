@@ -3,6 +3,7 @@ package com.transflower.tflcomentor.fileio.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,8 +25,9 @@ import com.transflower.tflcomentor.fileio.Entity.Mentee;
 import com.transflower.tflcomentor.fileio.Entity.MenteeGrowth;
 import com.transflower.tflcomentor.fileio.Entity.MentorshipActivities;
 
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
-@RequestMapping("/data")
+@RequestMapping("/api/data")
 public class DataController {
     
     @Autowired

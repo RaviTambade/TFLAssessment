@@ -2,13 +2,13 @@ import { useEffect, useState, } from "react";
 import { useNavigate } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "../../ui/card";
 import { Bell, Calendar, Award, TrendingUp, CheckCircle, AlertCircle, Clock } from "lucide-react";
-import { WEBAPI_DOTNET_URL } from "@/lib/utils";
+import { WEBAPI_DOTNET_URL,WEBAPI_JAVA_URL } from "@/lib/utils";
 import Notification from "./entities/Notification";
 import ScheduledAssessment from "./entities/ScheduledAssessment";
 import Result from "./entities/StudentResult";
 import LearningCurveData from "./entities/LearningCurveData";
 import AllNotification from "./data/notifications/studentNotification.json";
-import StudentResults from "./data/studentResult.json";
+//import StudentResults from "./data/studentResult.json";
 
 type UpcomingAssessmentApiResponse = {
   assessmentId?: number;
@@ -31,6 +31,7 @@ const DashboardStudent = () => {
    const[name, setName] = useState<string>("");
    const[role, setRole] = useState<string>("");
    const [performance, setPerformance] = useState({totalCompletedAssessments: 0,averageScore: 0});
+   const [results, setResultsData] = useState<Result[]>([]);
 
    const[profilePicture, setProfilePicture] = useState<string>("https://avatars.githubusercontent.com/u/12345678?v=4");
   // Hardcoded Notifications Data
@@ -40,7 +41,7 @@ const DashboardStudent = () => {
   const [upcomingCount, setUpcomingCount] = useState<number>(0);
 
   // Hardcoded Results Data
-  const results: Result[] = StudentResults as Result[];
+  //const results: Result[] = StudentResults as Result[];
 
   // Hardcoded Learning Curve Data
   const learningCurveData: LearningCurveData[] = [
@@ -104,6 +105,28 @@ useEffect(() => {
     setRole(user.rolename);
 
   }
+
+  fetch(`${WEBAPI_JAVA_URL}/data/studentresults`)
+  .then((response) => {
+    console.log("Status:", response.status);
+    console.log("Response OK:", response.ok);
+
+    if (!response.ok) {
+      throw new Error(`HTTP error: ${response.status}`);
+    }
+
+    return response.json();
+  })
+  .then((data) => {
+    console.log("RESULT DATA FROM API:", data);
+    console.log("Is Array:", Array.isArray(data));
+
+    setResultsData(data);
+  })
+  .catch((error) => {
+    console.error("RESULT FETCH ERROR:", error);
+  });
+
 
 }, []);
   // Render the dashboard UI
