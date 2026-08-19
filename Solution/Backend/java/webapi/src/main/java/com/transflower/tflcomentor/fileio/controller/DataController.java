@@ -9,9 +9,16 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.transflower.tflcomentor.fileio.Entity.AssessmentMetrics;
 import com.transflower.tflcomentor.fileio.Entity.Candidate;
+import com.transflower.tflcomentor.fileio.Entity.CandidatePerformance;
 import com.transflower.tflcomentor.fileio.Entity.JobOpenings;
 import com.transflower.tflcomentor.fileio.Entity.LearningCurve;
+import com.transflower.tflcomentor.fileio.Entity.Member;
+import com.transflower.tflcomentor.fileio.Entity.MemberActivities;
+import com.transflower.tflcomentor.fileio.Entity.Mentee;
+import com.transflower.tflcomentor.fileio.Entity.MenteeGrowth;
+import com.transflower.tflcomentor.fileio.Entity.MentorshipActivities;
 import com.transflower.tflcomentor.fileio.Entity.Notification;
 import com.transflower.tflcomentor.fileio.Entity.RolePermissions;
 import com.transflower.tflcomentor.fileio.Entity.ScheduledAssessment;
@@ -19,11 +26,6 @@ import com.transflower.tflcomentor.fileio.Entity.SkillGap;
 import com.transflower.tflcomentor.fileio.Entity.SkillRequirement;
 import com.transflower.tflcomentor.fileio.Entity.StudentResult;
 import com.transflower.tflcomentor.fileio.service.DataService;
-import com.transflower.tflcomentor.fileio.Entity.Member;
-import com.transflower.tflcomentor.fileio.Entity.MemberActivities;
-import com.transflower.tflcomentor.fileio.Entity.Mentee;
-import com.transflower.tflcomentor.fileio.Entity.MenteeGrowth;
-import com.transflower.tflcomentor.fileio.Entity.MentorshipActivities;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
@@ -202,5 +204,15 @@ public class DataController {
     @GetMapping("/studentresults/{id}")
     public StudentResult getStudentResultById(@PathVariable int id) {
         return dataService.getStudentResultById(id);
+    }
+
+    @GetMapping("/candidatePerformance")
+    public List<CandidatePerformance> getCandidatePerformance(){
+        return dataService.showCandidatePerformance();
+    }
+
+    @GetMapping("/assessmentMetrics")
+    public List<AssessmentMetrics> showAssessmentMetrics() {
+        return dataService.showAssessmentMetrics();
     }
 }

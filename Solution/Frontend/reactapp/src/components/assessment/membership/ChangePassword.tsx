@@ -36,7 +36,6 @@ const ChangePassword = () => {
 
     // FULL VALIDATION
     if (
-      !userId.trim() ||
       !currentPassword.trim() ||
       !newPassword.trim() ||
       !confirmPassword.trim()

@@ -7,10 +7,10 @@ import Candidate from "./entities/Candidate";
 import JobOpening from "./entities/jobopening";
 import SkillRequirement from "./entities/SkillRequirement";
 
-import  openings from "./data/jobopenings.json";
-import  allCandidates from "./data/users/candidates.json";
-import  allSkillRequirements from "./data/skills/skillrequirements.json";
-import  RecruiterNotifications from "./data/notifications/recruiterNotifications.json";
+// import  openings from "./data/jobopenings.json";
+// import  allCandidates from "./data/users/candidates.json";
+// import  allSkillRequirements from "./data/skills/skillrequirements.json";
+// import  RecruiterNotifications from "./data/notifications/recruiterNotifications.json";
 
 //function component for Employer Recruitment Dashboard - Transflower
 const DashboardEmployer = () => {
