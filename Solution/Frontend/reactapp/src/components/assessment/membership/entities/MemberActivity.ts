@@ -1,4 +1,4 @@
-export default interface MentorshipActivity {
+export default interface MemberActivity {
   menteeName: string;
   activityType: string;
   activity: string;
