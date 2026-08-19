@@ -7,8 +7,6 @@ import Notification from "./entities/Notification";
 import ScheduledAssessment from "./entities/ScheduledAssessment";
 import Result from "./entities/StudentResult";
 import LearningCurveData from "./entities/LearningCurveData";
-import AllNotification from "./data/notifications/studentNotification.json";
-//import StudentResults from "./data/studentResult.json";
 
 type UpcomingAssessmentApiResponse = {
   assessmentId?: number;
