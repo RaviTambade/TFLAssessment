@@ -6,16 +6,20 @@ import { UsersRound, ShieldCheck, Clock3, Activity, ClipboardList, ClipboardChec
 import { useNavigate } from "react-router-dom";
 import { WEBAPI_NODE_URL } from "@/lib/utils";
 import { WEBAPI_DOTNET_URL } from "@/lib/utils";
+import {WEBAPI_JAVA_URL}from "@/lib/utils"; 
 
 
-import Notification from "./entities/Notification";
+//import Notification from ""
 import Member from "./entities/Member";
 import RolePermission from "./entities/RolePermission";
 import MemberActivity from "./entities/MemberActivity";
 import AdminNotifications from "./data/notifications/adminNotifications.json";
-import Members from "./data/users/members.json";
+// import Members from "./data/users/members.json";
 import RolePermissions from "./data/rolePermissions.json";
-import MemberActivities from "./data/memberActivities.json";
+// import MemberActivities from "./data/memberActivities.json";
+import Notification from "./entities/Notification";
+
+// import AdminNotification from "./entities/AdminNotification";
 
 //function component for Admin Dashboard - Transflower Membership & Roles Management
 const DashboardAdmin = () => {
@@ -36,15 +40,20 @@ const DashboardAdmin = () => {
   const [assessmentCount, setAssessmentCount] = useState<number>(0);
   const[unassignedUsersCount,setUnAssignedUsersCount]=useState<number>(0);
    const [smeName, setSmeName] = useState<string>("");
+   const [adminNotifications, setAdminNotifications] = useState<Notification[]>([]);
+   const [loading, setLoading] = useState(true);
+   const[memberDirectory,setMemberDirectory]=useState<Member[]>([]);
+   const [memberActivities, setMemberActivities] = useState<MemberActivity[]>([]);
+
 
 
   const navigate = useNavigate();
 
   // Admin System Notifications
-  const adminNotifications: Notification[] = AdminNotifications as Notification[];
+  // const adminNotifications: Notification[] = AdminNotifications as Notification[];
 
   // Member Directory - Organization Membership
-  const members: Member[] = Members as Member[];
+  // const members: Member[] = Members as Member[];
 
   // Role Definitions and Permissions
   const rolePermissions: RolePermission[] = RolePermissions as RolePermission[];
@@ -127,6 +136,63 @@ useEffect(() => {
       .catch((error) => console.error(error));
 
   }, []);
+
+  useEffect(() => {
+    fetch(`${WEBAPI_JAVA_URL}/data/adminNotification`)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to fetch notifications");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setAdminNotifications(data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching notifications:", error);
+        setLoading(false);
+      });
+  }, []);
+
+   useEffect(() => {
+  fetch(`${WEBAPI_JAVA_URL}/data/Member`)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Failed to fetch members");
+      }
+      return response.json();
+    })
+    .then((data) => {
+      setMemberDirectory(data);
+      setLoading(false);
+    })
+    .catch((error) => {
+      console.error("Error fetching members:", error);
+      setLoading(false);
+    });
+}, []);
+
+ useEffect(() => {
+  fetch(`${WEBAPI_JAVA_URL}/data/memberactivities`)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Failed to fetch members");
+      }
+      return response.json();
+    })
+    .then((data) => {
+         setMemberActivities(data);
+      setLoading(false);
+    })
+    .catch((error) => {
+      console.error("Error fetching members:", error);
+      setLoading(false);
+    });
+}, []);
+
+
+  
 
   // Render the Admin Management dashboard UI
   return (
@@ -332,7 +398,7 @@ useEffect(() => {
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-3">
-                {members.slice(0, 4).map((member) => (
+                {memberDirectory.map((member) => (
                   <div key={member.id} className="p-3 border rounded-lg">
                     <div className="flex items-start justify-between mb-2">
                       <div>
@@ -366,6 +432,9 @@ useEffect(() => {
                     <p className="text-xs text-gray-600">
                       Joined: {member.joinDate} • Last: {member.lastLoginDate}
                     </p>
+                     <p className="text-xs text-gray-600">
+                      Department: {member.department} 
+                    </p>
                   </div>
                 ))}
               </CardContent>
@@ -380,7 +449,10 @@ useEffect(() => {
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-3">
-                {MemberActivities.map((activity) => (
+                {
+
+                
+                  memberActivities.map((activity) => (
                   <div key={activity.id} className="p-3 border rounded-lg text-sm">
                     <div className="flex items-start justify-between mb-2">
                       <div>
