@@ -44,14 +44,14 @@ namespace backend.controllers
         [HttpGet("unassigned/users")]
         public async Task<IActionResult> GetUnAssignedUsers()
         {
-            var result =await _roleService.GetUnAssignedUsers();
+            var result = await _roleService.GetUnAssignedUsers();
             return Ok(result);
         }
 
         [HttpGet("unassigned/users/count")]
         public async Task<IActionResult> GetUnAssignedUsersCount()
         {
-            var result=await _roleService.GetUnAssignedUsersCount();
+            var result = await _roleService.GetUnAssignedUsersCount();
             return Ok(result);
         }
     }

@@ -83,9 +83,7 @@ public class RolesRepository : IRolesRepository
     public async Task<List<RoleUser>> GetUsersByRole(long roleId)
     {
         List<RoleUser> users = new List<RoleUser>();
-
         using MySqlConnection con = GetConnection();
-
         string query = @"
             SELECT DISTINCT
                 u.id,
@@ -106,14 +104,10 @@ public class RolesRepository : IRolesRepository
                 p.first_name;";
 
         MySqlCommand cmd = new MySqlCommand(query, con);
-
         cmd.Parameters.AddWithValue("@roleId", roleId);
-
         await con.OpenAsync();
-
         using MySqlDataReader reader =
             (MySqlDataReader)await cmd.ExecuteReaderAsync();
-
         while (await reader.ReadAsync())
         {
             users.Add(new RoleUser
