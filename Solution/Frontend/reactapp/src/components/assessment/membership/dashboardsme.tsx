@@ -28,6 +28,8 @@ const DashboardSME = () => {
   const [totalAssessments, setTotalAssessments] = useState<number>(0);
   const [assessmentMetrics, setAssessmentMetrics] = useState<any[]>([]);
   const [smeNotifications, setSmeNotifications] = useState<Notification[]>([]);
+  
+
   // SME-specific Notifications
  // const smeNotifications: Notification[] = SmeNotifications as Notification[];
  
