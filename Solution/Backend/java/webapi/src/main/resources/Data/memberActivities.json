@@ -1,0 +1,38 @@
+[
+  {
+    "id": 1,
+    "memberName": "Priya Sharma",
+    "role": "Student",
+    "activityType": "login",
+    "description": "Logged in to assessment portal",
+    "timestamp": "2 hours ago",
+    "status": "completed"
+  },
+  {
+    "id": 2,
+    "memberName": "Arjun Patel",
+    "role": "Mentor",
+    "activityType": "profile_update",
+    "description": "Updated profile information",
+    "timestamp": "1 day ago",
+    "status": "completed"
+  },
+  {
+    "id": 3,
+    "memberName": "Rohit Kumar",
+    "role": "Employer",
+    "activityType": "role_change",
+    "description": "Role assignment pending approval",
+    "timestamp": "2 days ago",
+    "status": "pending"
+  },
+  {
+    "id": 4,
+    "memberName": "Ananya Desai",
+    "role": "SME",
+    "activityType": "permission_grant",
+    "description": "New assessment creation permission granted",
+    "timestamp": "3 days ago",
+    "status": "completed"
+  }
+]

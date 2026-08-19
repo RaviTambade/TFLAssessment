@@ -2,12 +2,12 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "../../ui/card";
 import { Bell, Users, Target, TrendingUp, CheckCircle, AlertCircle, BarChart3, FileText } from "lucide-react";
-import { WEBAPI_NODE_URL } from "@/lib/utils";
+import { WEBAPI_NODE_URL,WEBAPI_JAVA_URL } from "@/lib/utils";
 import AssessmentMetrics from "./entities/AssessmentMetrics";
 import CandidatePerformance from "./entities/CandidatePerformance";
 import SkillGapAnalysis from "./entities/SkillGapAnalysis";
 import Notification from "./entities/Notification";
-import SmeNotifications from "./data/notifications/smeNotifications.json";
+//import SmeNotifications from "./data/notifications/smeNotifications.json";
 import CandidatePerformances from "./data/candidatePerformance.json";
 import SkillGapAnalyse from "./data/skills/skillGapAnalysis.json";
 
@@ -27,14 +27,13 @@ const DashboardSME = () => {
   const [totalStudents, setTotalStudents] = useState<number>(0);
   const [totalAssessments, setTotalAssessments] = useState<number>(0);
   const [assessmentMetrics, setAssessmentMetrics] = useState<any[]>([]);
-
+  const [smeNotifications, setSmeNotifications] = useState<Notification[]>([]);
   // SME-specific Notifications
-  const smeNotifications: Notification[] = SmeNotifications as Notification[];
+ // const smeNotifications: Notification[] = SmeNotifications as Notification[];
+ 
 
   // Candidate Performance Overview
   const candidatePerformance: CandidatePerformance[] = CandidatePerformances as CandidatePerformance[];
-
-  
 
   // Skill Gap Analysis
   const skillGapAnalysis: SkillGapAnalysis[] = SkillGapAnalyse as SkillGapAnalysis[];
@@ -42,7 +41,7 @@ const DashboardSME = () => {
   //navigate
   const navigate = useNavigate();
 
-  useEffect(() => {
+useEffect(() => {
 const currentUser = JSON.parse(sessionStorage.getItem("current") || "{}");
 const userId = currentUser.userid;
 
@@ -57,7 +56,7 @@ if (currentUser) {
       setProfilePicture(data.profilePicture);
     });
 
-     fetch("http://localhost:5201/api/Students/total")
+    fetch("http://localhost:5201/api/Students/total")
   .then((response) => response.json())
   .then((data) => {
       setTotalStudents(data.totalStudents);
@@ -73,6 +72,27 @@ if (currentUser) {
   })
   .catch((error) => {
     console.error(error);
+  });
+  // fetching notification from java api
+  fetch(`${WEBAPI_JAVA_URL}/data/smeNotification`)
+  .then((response) => {
+    console.log("Status:", response.status);
+    console.log("Response OK:", response.ok);
+
+    if (!response.ok) {
+      throw new Error(`HTTP error: ${response.status}`);
+    }
+
+    return response.json();
+  })
+  .then((data) => {
+    console.log("NOTIFICATION DATA FROM API:", data);
+    console.log("Is Array:", Array.isArray(data));
+
+    setSmeNotifications(data);
+  })
+  .catch((error) => {
+    console.error("NOTIFICATION FETCH ERROR:", error);
   });
 
   }, []);

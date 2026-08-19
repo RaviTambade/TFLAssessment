@@ -2,13 +2,13 @@ import { useEffect, useState, } from "react";
 import { useNavigate } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "../../ui/card";
 import { Bell, Calendar, Award, TrendingUp, CheckCircle, AlertCircle, Clock } from "lucide-react";
-import { WEBAPI_DOTNET_URL } from "@/lib/utils";
+import { WEBAPI_DOTNET_URL,WEBAPI_JAVA_URL } from "@/lib/utils";
 import Notification from "./entities/Notification";
 import ScheduledAssessment from "./entities/ScheduledAssessment";
 import Result from "./entities/StudentResult";
 import LearningCurveData from "./entities/LearningCurveData";
 import AllNotification from "./data/notifications/studentNotification.json";
-import StudentResults from "./data/studentResult.json";
+//import StudentResults from "./data/studentResult.json";
 
 type UpcomingAssessmentApiResponse = {
   assessmentId?: number;
@@ -31,16 +31,16 @@ const DashboardStudent = () => {
    const[name, setName] = useState<string>("");
    const[role, setRole] = useState<string>("");
    const [performance, setPerformance] = useState({totalCompletedAssessments: 0,averageScore: 0});
-
+   const [results, setResultsData] = useState<Result[]>([]);
+   const [notifications, setNotifications] = useState<Notification[]>([]);
    const[profilePicture, setProfilePicture] = useState<string>("https://avatars.githubusercontent.com/u/12345678?v=4");
   // Hardcoded Notifications Data
-  const notifications: Notification[] = AllNotification as Notification[];
-
+  //const notifications: Notification[] = AllNotification as Notification[];
   const [scheduledAssessments, setScheduledAssessments] = useState<ScheduledAssessment[]>([]);
   const [upcomingCount, setUpcomingCount] = useState<number>(0);
 
   // Hardcoded Results Data
-  const results: Result[] = StudentResults as Result[];
+  //const results: Result[] = StudentResults as Result[];
 
   // Hardcoded Learning Curve Data
   const learningCurveData: LearningCurveData[] = [
@@ -105,6 +105,48 @@ useEffect(() => {
 
   }
 
+  fetch(`${WEBAPI_JAVA_URL}/data/studentresults`)
+  .then((response) => {
+    console.log("Status:", response.status);
+    console.log("Response OK:", response.ok);
+
+    if (!response.ok) {
+      throw new Error(`HTTP error: ${response.status}`);
+    }
+
+    return response.json();
+  })
+  .then((data) => {
+    console.log("RESULT DATA FROM API:", data);
+    console.log("Is Array:", Array.isArray(data));
+
+    setResultsData(data);
+  })
+  .catch((error) => {
+    console.error("RESULT FETCH ERROR:", error);
+  });
+
+    fetch(`${WEBAPI_JAVA_URL}/data/studentNotification`)
+  .then((response) => {
+    console.log("Status:", response.status);
+    console.log("Response OK:", response.ok);
+
+    if (!response.ok) {
+      throw new Error(`HTTP error: ${response.status}`);
+    }
+    return response.json();
+  })
+  .then((data) => {
+    console.log("NOTIFICATION DATA FROM API:", data);
+    console.log("Is Array:", Array.isArray(data));
+
+    setNotifications(data);
+  })
+  .catch((error) => {
+    console.error("NOTIFICATION FETCH ERROR:", error);
+  });
+
+
 }, []);
   // Render the dashboard UI
   return (
@@ -118,8 +160,7 @@ useEffect(() => {
         </div>
 
         {/* Top Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4"
-        >
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           <Card>
             <CardContent className="p-6"
             
@@ -215,7 +256,7 @@ useEffect(() => {
             </Card>
 
             {/* Scheduled Assessments Section */}
-            <Card>
+            {/* <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Calendar className="w-5 h-5" />
@@ -250,7 +291,7 @@ useEffect(() => {
                   </div>
                 ))}
               </CardContent>
-            </Card>
+            </Card> */}
           </div>
 
           {/* Right Column: Results and Learning Curve */}

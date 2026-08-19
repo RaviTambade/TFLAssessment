@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 import org.springframework.stereotype.Repository;
 
@@ -23,7 +24,7 @@ public class QuestionFilterRepositoryImpl implements QuestionFilterRepository {
     }
 
     @Override
-    public List<Question> getQuestions(
+    public CompletableFuture<List<Question>> getQuestions(
             QuestionType question_type,
             DifficultyLevel difficulty_level,
             QuestionStatus status,
@@ -33,8 +34,9 @@ public class QuestionFilterRepositoryImpl implements QuestionFilterRepository {
             String concept,
             Long userId,
             Long roleId) {
-
-        List<Question> questionList = new ArrayList<>();
+        
+        return CompletableFuture.supplyAsync(() -> {
+            List<Question> questionList = new ArrayList<>();
 
         String query = """
                 SELECT DISTINCT q.*
@@ -138,5 +140,6 @@ public class QuestionFilterRepositoryImpl implements QuestionFilterRepository {
         }
 
         return questionList;
+        });
     }
 }
