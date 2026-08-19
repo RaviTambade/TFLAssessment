@@ -9,9 +9,6 @@ import Notification from "./entities/Notification";
 import MentorshipActivity from "./entities/MentorshipActivity";
 import Mentee from "./entities/Mentee";
 import MenteeGrowth from "./entities/MenteeGrowth";
-import AllmentorNotifications from "./data/notifications/mentorNotifications.json";
-import AllMenteeGrowth from "./data/menteeGrowths.json";
-import AllMentee from "./data/users/mentees.json";
 import Student from "../assessmentOrchestrator/entities/Student";
 import TestDetails from "../assessmentOrchestrator/entities/TestDetails";
 

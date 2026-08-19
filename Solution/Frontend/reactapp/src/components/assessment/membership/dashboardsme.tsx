@@ -8,8 +8,6 @@ import CandidatePerformance from "./entities/CandidatePerformance";
 import SkillGapAnalysis from "./entities/SkillGapAnalysis";
 import Notification from "./entities/Notification";
 //import SmeNotifications from "./data/notifications/smeNotifications.json";
-import CandidatePerformances from "./data/candidatePerformance.json";
-import SkillGapAnalyse from "./data/skills/skillGapAnalysis.json";
 
 
 //function component for SME Dashboard
@@ -33,10 +31,10 @@ const DashboardSME = () => {
  
 
   // Candidate Performance Overview
-  const candidatePerformance: CandidatePerformance[] = CandidatePerformances as CandidatePerformance[];
+  // const candidatePerformance: CandidatePerformance[] = CandidatePerformances as CandidatePerformance[];
 
   // Skill Gap Analysis
-  const skillGapAnalysis: SkillGapAnalysis[] = SkillGapAnalyse as SkillGapAnalysis[];
+  // const skillGapAnalysis: SkillGapAnalysis[] = SkillGapAnalyse as SkillGapAnalysis[];
 
   //navigate
   const navigate = useNavigate();
