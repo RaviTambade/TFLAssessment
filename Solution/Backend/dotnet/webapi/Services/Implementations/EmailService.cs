@@ -1,6 +1,7 @@
 using backend.Services.Interfaces;
 using MailKit.Net.Smtp;
 using MimeKit;
+using System;
 
 namespace backend.Services
 {
@@ -15,7 +16,9 @@ namespace backend.Services
 
         public void SendEmail(string toEmail, string passphrase)
         {
-            var email = new MimeMessage();
+            try
+            {
+                 var email = new MimeMessage();
             string emailby = _config["EmailService:email"];
             string emailpassword = _config["EmailService:password"];
             string host = _config["EmailService:host"];
@@ -35,6 +38,13 @@ namespace backend.Services
             smtp.Authenticate(emailby, emailpassword  );
             smtp.Send(email);
             smtp.Disconnect(true);
+            }
+            catch (System.Exception e)
+            {
+                // e.Message="Failed to Send email";
+                throw new ArgumentException("Failed to Send email");
+            }
+           
         }
     }
 }
