@@ -6,6 +6,8 @@ using backend.Services.Interfaces;
 using backend.Services.Implementations;
 using backend.Services;
 using backend.Repositories;   
+using Hangfire;
+using Hangfire.MySql;
 
 
 
@@ -15,6 +17,19 @@ using backend.Repositories;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 
+var connectionString =
+    builder.Configuration.GetConnectionString("HangfireConnection");
+
+builder.Services.AddHangfire(config =>
+{
+    config.UseStorage(new MySqlStorage(
+        connectionString,
+        new MySqlStorageOptions
+        {
+            QueuePollInterval = TimeSpan.FromSeconds(15)
+        }
+    ));
+});
 
 //Service and Repository registrations for Dependency Injection
 
@@ -27,7 +42,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 );
 
 builder.Services.AddMemoryCache();
-
+builder.Services.AddHangfireServer();
 
 //Registering services and repositories for Dependency Injection
 
@@ -104,6 +119,8 @@ app.UseDeveloperExceptionPage();
 
 app.UseAuthorization();
 app.MapControllers();
+
+app.UseHangfireDashboard("/hangfire");
 
 
 

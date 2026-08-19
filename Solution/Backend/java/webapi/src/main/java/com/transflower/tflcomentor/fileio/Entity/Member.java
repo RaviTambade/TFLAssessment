@@ -1,6 +1,6 @@
 package com.transflower.tflcomentor.fileio.Entity;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,8 +20,8 @@ public class Member {
     private String email;
     private String role;
     private String status;
-    private Date joinDate;
-    private Date lastLoginDate;
+    private LocalDate joinDate;
+    private LocalDate lastLoginDate;
     private String department;
   
 }

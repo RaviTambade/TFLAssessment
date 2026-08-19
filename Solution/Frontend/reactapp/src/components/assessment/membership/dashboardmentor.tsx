@@ -25,10 +25,16 @@ const DashboardMentor = () => {
   const [students, setStudents] = useState<Student[]>([]);
   const [questionCount, setQuestionCount] = useState<number>(0);
   const [testCount, setTestCount] = useState<number>(0);
-  const mentorNotifications: Notification[] = AllmentorNotifications as Notification[];
-  const mentees: Mentee[] = AllMentee as Mentee[];
+  const [mentorNotifications, setMentorNotifications] = useState<Notification[]>([]);
+  const [mentees, setMentees] = useState<Mentee[]>([]);
+  const [menteeGrowth, setMenteeGrowth] = useState<MenteeGrowth[]>([]);
+  
+  //const mentorNotifications: Notification[] = AllmentorNotifications as Notification[];
+
+  //const mentees: Mentee[] = AllMentee as Mentee[];
+
   const [mentorshipActivities, setMentorshipActivities] = useState<MentorshipActivity[]>([]);
-  const menteeGrowth: MenteeGrowth[] = AllMenteeGrowth as MenteeGrowth[];
+  //const menteeGrowth: MenteeGrowth[] = AllMenteeGrowth as MenteeGrowth[];
   const [tests, setTests] = useState<TestDetails[]>([]);
   const [menteeCount, setMenteeCount] = useState(0);
   const [assessmentCount, setAssessmentCount] = useState<number>(0);
@@ -198,6 +204,55 @@ const DashboardMentor = () => {
       .catch((err) => console.error(err));
   }, []);
   console.log("State:", mentorshipActivities);
+
+  fetch(`${WEBAPI_JAVA_URL}/data/mentorNotification`)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Failed to fetch mentor notifications");
+      }
+      return response.json();
+    })
+    .then((data) => {
+      setMentorNotifications(data);
+    })
+    .catch((err) => console.error(err));
+
+    fetch(`${WEBAPI_JAVA_URL}/data/Mentee`)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Failed to fetch mentees");
+      }
+      return response.json();
+    })
+    .then((data) => {
+      setMentees(data);
+    })
+    .catch((err) => console.error(err));
+
+    fetch(`${WEBAPI_JAVA_URL}/data/menteegrowth`)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Failed to fetch mentee growth data");
+      }
+      return response.json();
+    })
+    .then((data) => {
+      setMenteeGrowth(data);
+    })
+    .catch((err) => console.error(err));
+
+    fetch(`${WEBAPI_JAVA_URL}/data/mentorshipactivities`)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Failed to fetch mentorship activities");
+      }
+      return response.json();
+    })
+    .then((data) => {
+      setMentorshipActivities(data);
+    })
+    .catch((err) => console.error(err));
+
 
   // Render the Mentor dashboard UI
   return (
