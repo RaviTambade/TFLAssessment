@@ -32,11 +32,10 @@ const DashboardStudent = () => {
    const[role, setRole] = useState<string>("");
    const [performance, setPerformance] = useState({totalCompletedAssessments: 0,averageScore: 0});
    const [results, setResultsData] = useState<Result[]>([]);
-
+   const [notifications, setNotifications] = useState<Notification[]>([]);
    const[profilePicture, setProfilePicture] = useState<string>("https://avatars.githubusercontent.com/u/12345678?v=4");
   // Hardcoded Notifications Data
-  const notifications: Notification[] = AllNotification as Notification[];
-
+  //const notifications: Notification[] = AllNotification as Notification[];
   const [scheduledAssessments, setScheduledAssessments] = useState<ScheduledAssessment[]>([]);
   const [upcomingCount, setUpcomingCount] = useState<number>(0);
 
@@ -127,6 +126,26 @@ useEffect(() => {
     console.error("RESULT FETCH ERROR:", error);
   });
 
+    fetch(`${WEBAPI_JAVA_URL}/data/studentNotification`)
+  .then((response) => {
+    console.log("Status:", response.status);
+    console.log("Response OK:", response.ok);
+
+    if (!response.ok) {
+      throw new Error(`HTTP error: ${response.status}`);
+    }
+    return response.json();
+  })
+  .then((data) => {
+    console.log("NOTIFICATION DATA FROM API:", data);
+    console.log("Is Array:", Array.isArray(data));
+
+    setNotifications(data);
+  })
+  .catch((error) => {
+    console.error("NOTIFICATION FETCH ERROR:", error);
+  });
+
 
 }, []);
   // Render the dashboard UI
@@ -141,8 +160,7 @@ useEffect(() => {
         </div>
 
         {/* Top Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4"
-        >
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           <Card>
             <CardContent className="p-6"
             
@@ -238,7 +256,7 @@ useEffect(() => {
             </Card>
 
             {/* Scheduled Assessments Section */}
-            <Card>
+            {/* <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Calendar className="w-5 h-5" />
@@ -273,7 +291,7 @@ useEffect(() => {
                   </div>
                 ))}
               </CardContent>
-            </Card>
+            </Card> */}
           </div>
 
           {/* Right Column: Results and Learning Curve */}
