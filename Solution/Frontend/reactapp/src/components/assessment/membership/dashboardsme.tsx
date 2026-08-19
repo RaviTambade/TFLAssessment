@@ -8,8 +8,8 @@ import CandidatePerformance from "./entities/CandidatePerformance";
 import SkillGapAnalysis from "./entities/SkillGapAnalysis";
 import Notification from "./entities/Notification";
 //import SmeNotifications from "./data/notifications/smeNotifications.json";
-import CandidatePerformances from "./data/candidatePerformance.json";
-import SkillGapAnalyse from "./data/skills/skillGapAnalysis.json";
+// import CandidatePerformances from "./data/candidatePerformance.json";
+// import SkillGapAnalyse from "./data/skills/skillGapAnalysis.json";
 
 
 //function component for SME Dashboard

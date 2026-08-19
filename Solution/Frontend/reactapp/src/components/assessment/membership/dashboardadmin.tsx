@@ -13,9 +13,9 @@ import {WEBAPI_JAVA_URL}from "@/lib/utils";
 import Member from "./entities/Member";
 import RolePermission from "./entities/RolePermission";
 import MemberActivity from "./entities/MemberActivity";
-import AdminNotifications from "./data/notifications/adminNotifications.json";
+// import AdminNotifications from "./data/notifications/adminNotifications.json";
 // import Members from "./data/users/members.json";
-import RolePermissions from "./data/rolePermissions.json";
+// import RolePermissions from "./data/rolePermissions.json";
 // import MemberActivities from "./data/memberActivities.json";
 import Notification from "./entities/Notification";
 
@@ -44,6 +44,8 @@ const DashboardAdmin = () => {
    const [loading, setLoading] = useState(true);
    const[memberDirectory,setMemberDirectory]=useState<Member[]>([]);
    const [memberActivities, setMemberActivities] = useState<MemberActivity[]>([]);
+   const [rolePermission, setRolePermission] = useState<RolePermission[]>([]);
+   
 
 
 
@@ -56,7 +58,7 @@ const DashboardAdmin = () => {
   // const members: Member[] = Members as Member[];
 
   // Role Definitions and Permissions
-  const rolePermissions: RolePermission[] = RolePermissions as RolePermission[];
+  // const rolePermissions: RolePermission[] = RolePermissions as RolePermission[];
 
   // Member Activity Log
   // const memberActivities: MemberActivity[] = MemberActivities as MemberActivity[];
@@ -183,6 +185,25 @@ useEffect(() => {
     })
     .then((data) => {
          setMemberActivities(data);
+      setLoading(false);
+    })
+    .catch((error) => {
+      console.error("Error fetching members:", error);
+      setLoading(false);
+    });
+}, []);
+
+
+useEffect(() => {
+  fetch(`${WEBAPI_JAVA_URL}/data/rolepermissions`)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Failed to fetch members");
+      }
+      return response.json();
+    })
+    .then((data) => {
+         setRolePermission(data);
       setLoading(false);
     })
     .catch((error) => {
@@ -358,7 +379,7 @@ useEffect(() => {
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
-                {rolePermissions.map((role) => (
+                {rolePermission.map((role) => (
                   <div key={role.id} className="p-4 border rounded-lg hover:bg-gray-50 transition">
                     <div className="flex items-start justify-between">
                       <div className="flex-1">
