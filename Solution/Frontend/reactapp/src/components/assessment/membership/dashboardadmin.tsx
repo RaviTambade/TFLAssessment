@@ -6,16 +6,16 @@ import { UsersRound, ShieldCheck, Clock3, Activity, ClipboardList, ClipboardChec
 import { useNavigate } from "react-router-dom";
 import { WEBAPI_NODE_URL } from "@/lib/utils";
 import { WEBAPI_DOTNET_URL } from "@/lib/utils";
-import {WEBAPI_JAVA_URL}from "@/lib/utils"; 
+import { WEBAPI_JAVA_URL } from "@/lib/utils";
 
 
 //import Notification from ""
 import Member from "./entities/Member";
 import RolePermission from "./entities/RolePermission";
 import MemberActivity from "./entities/MemberActivity";
-import AdminNotifications from "./data/notifications/adminNotifications.json";
+//import AdminNotifications from "./data/notifications/adminNotifications.json";
 // import Members from "./data/users/members.json";
-import RolePermissions from "./data/rolePermissions.json";
+//import RolePermissions from "./data/rolePermissions.json";
 // import MemberActivities from "./data/memberActivities.json";
 import Notification from "./entities/Notification";
 
@@ -38,12 +38,12 @@ const DashboardAdmin = () => {
   const [activeRoles, setActiveRoles] = useState<number>(0);
   const [activeRolesList, setActiveRolesList] = useState<number>(0);
   const [assessmentCount, setAssessmentCount] = useState<number>(0);
-  const[unassignedUsersCount,setUnAssignedUsersCount]=useState<number>(0);
-   const [smeName, setSmeName] = useState<string>("");
-   const [adminNotifications, setAdminNotifications] = useState<Notification[]>([]);
-   const [loading, setLoading] = useState(true);
-   const[memberDirectory,setMemberDirectory]=useState<Member[]>([]);
-   const [memberActivities, setMemberActivities] = useState<MemberActivity[]>([]);
+  const [unassignedUsersCount, setUnAssignedUsersCount] = useState<number>(0);
+  const [smeName, setSmeName] = useState<string>("");
+  const [adminNotifications, setAdminNotifications] = useState<Notification[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [memberDirectory, setMemberDirectory] = useState<Member[]>([]);
+  const [memberActivities, setMemberActivities] = useState<MemberActivity[]>([]);
 
 
 
@@ -56,12 +56,12 @@ const DashboardAdmin = () => {
   // const members: Member[] = Members as Member[];
 
   // Role Definitions and Permissions
-  const rolePermissions: RolePermission[] = RolePermissions as RolePermission[];
+  //const rolePermissions: RolePermission[] = RolePermissions as RolePermission[];
 
   // Member Activity Log
   // const memberActivities: MemberActivity[] = MemberActivities as MemberActivity[];
 
-useEffect(() => {
+  useEffect(() => {
     const currentUser = sessionStorage.getItem("current");
 
     if (currentUser) {
@@ -95,7 +95,7 @@ useEffect(() => {
   }, []);
 
 
-   useEffect(() => {
+  useEffect(() => {
     const fetchUnAssignedUserCount = async () => {
       try {
         const response = await fetch(`${WEBAPI_DOTNET_URL}/Roles/unassigned/users/count`);
@@ -155,44 +155,44 @@ useEffect(() => {
       });
   }, []);
 
-   useEffect(() => {
-  fetch(`${WEBAPI_JAVA_URL}/data/Member`)
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error("Failed to fetch members");
-      }
-      return response.json();
-    })
-    .then((data) => {
-      setMemberDirectory(data);
-      setLoading(false);
-    })
-    .catch((error) => {
-      console.error("Error fetching members:", error);
-      setLoading(false);
-    });
-}, []);
+  useEffect(() => {
+    fetch(`${WEBAPI_JAVA_URL}/data/Member`)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to fetch members");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setMemberDirectory(data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching members:", error);
+        setLoading(false);
+      });
+  }, []);
 
- useEffect(() => {
-  fetch(`${WEBAPI_JAVA_URL}/data/memberactivities`)
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error("Failed to fetch members");
-      }
-      return response.json();
-    })
-    .then((data) => {
-         setMemberActivities(data);
-      setLoading(false);
-    })
-    .catch((error) => {
-      console.error("Error fetching members:", error);
-      setLoading(false);
-    });
-}, []);
+  useEffect(() => {
+    fetch(`${WEBAPI_JAVA_URL}/data/memberactivities`)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to fetch members");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setMemberActivities(data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching members:", error);
+        setLoading(false);
+      });
+  }, []);
 
 
-  
+
 
   // Render the Admin Management dashboard UI
   return (
@@ -257,11 +257,11 @@ useEffect(() => {
               <div className="flex items-center justify-between" onClick={() => { navigate("/models/membership/Unassigned/Users") }}>
                 <div>
                   <p className="text-gray-600 text-sm font-medium">Pending Approvals</p>
-                  
+
                   <p className="text-3xl font-bold text-gray-900 mt-1">{unassignedUsersCount}</p>
                 </div>
                 <div className="bg-primary/10 rounded-2xl p-4 group-hover:scale-110 transition">
-                <AlertCircle className="w-8 h-8 text-primary" />
+                  <AlertCircle className="w-8 h-8 text-primary" />
                 </div>
               </div>
             </CardContent>
@@ -275,8 +275,8 @@ useEffect(() => {
                   <p className="text-3xl font-bold text-gray-900 mt-1">28</p>
                 </div>
                 <div className="bg-primary/10 rounded-2xl p-4 group-hover:scale-110 transition">
-                <Activity className="w-8 h-8 text-primary" />
-              </div>
+                  <Activity className="w-8 h-8 text-primary" />
+                </div>
               </div>
             </CardContent>
           </Card>
@@ -289,8 +289,8 @@ useEffect(() => {
                   <p className="text-3xl font-bold text-gray-900 mt-1">{assessmentCount}</p>
                 </div>
                 <div className="bg-primary/10 rounded-2xl p-4 group-hover:scale-110 transition">
-                <ClipboardList className="w-8 h-8 text-primary" />
-              </div>
+                  <ClipboardList className="w-8 h-8 text-primary" />
+                </div>
               </div>
             </CardContent>
           </Card>
@@ -302,9 +302,9 @@ useEffect(() => {
                   <p className="text-gray-600 text-sm font-medium">Assign Assessment</p>
                   <p className="text-3xl font-bold text-gray-900 mt-1">{assessmentCount}</p>
                 </div>
-                 <div className="bg-primary/10 rounded-2xl p-4 group-hover:scale-110 transition">
-                <ClipboardCheck className="w-8 h-8 text-primary" />
-              </div>
+                <div className="bg-primary/10 rounded-2xl p-4 group-hover:scale-110 transition">
+                  <ClipboardCheck className="w-8 h-8 text-primary" />
+                </div>
               </div>
             </CardContent>
           </Card>
@@ -432,8 +432,8 @@ useEffect(() => {
                     <p className="text-xs text-gray-600">
                       Joined: {member.joinDate} • Last: {member.lastLoginDate}
                     </p>
-                     <p className="text-xs text-gray-600">
-                      Department: {member.department} 
+                    <p className="text-xs text-gray-600">
+                      Department: {member.department}
                     </p>
                   </div>
                 ))}
@@ -451,29 +451,29 @@ useEffect(() => {
               <CardContent className="space-y-3">
                 {
 
-                
+
                   memberActivities.map((activity) => (
-                  <div key={activity.id} className="p-3 border rounded-lg text-sm">
-                    <div className="flex items-start justify-between mb-2">
-                      <div>
-                        <p className="font-medium text-gray-900">{activity.memberName}</p>
-                        <p className="text-xs text-gray-600">{activity.description}</p>
+                    <div key={activity.id} className="p-3 border rounded-lg text-sm">
+                      <div className="flex items-start justify-between mb-2">
+                        <div>
+                          <p className="font-medium text-gray-900">{activity.memberName}</p>
+                          <p className="text-xs text-gray-600">{activity.description}</p>
+                        </div>
+                        <span className={`text-xs font-bold px-2 py-0.5 rounded ${activity.status === "completed" ? "bg-green-100 text-green-800" :
+                          activity.status === "pending" ? "bg-yellow-100 text-yellow-800" :
+                            "bg-red-100 text-red-800"
+                          }`}>
+                          {activity.status}
+                        </span>
                       </div>
-                      <span className={`text-xs font-bold px-2 py-0.5 rounded ${activity.status === "completed" ? "bg-green-100 text-green-800" :
-                        activity.status === "pending" ? "bg-yellow-100 text-yellow-800" :
-                          "bg-red-100 text-red-800"
-                        }`}>
-                        {activity.status}
-                      </span>
+                      <div className="flex justify-between text-xs text-gray-600">
+                        <span className="bg-gray-100 px-2 py-0.5 rounded">
+                          {activity.activityType.replace(/_/g, " ")}
+                        </span>
+                        <span>{activity.timestamp}</span>
+                      </div>
                     </div>
-                    <div className="flex justify-between text-xs text-gray-600">
-                      <span className="bg-gray-100 px-2 py-0.5 rounded">
-                        {activity.activityType.replace(/_/g, " ")}
-                      </span>
-                      <span>{activity.timestamp}</span>
-                    </div>
-                  </div>
-                ))}
+                  ))}
               </CardContent>
             </Card>
           </div>
