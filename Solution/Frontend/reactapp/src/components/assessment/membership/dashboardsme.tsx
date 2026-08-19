@@ -8,8 +8,9 @@ import CandidatePerformance from "./entities/CandidatePerformance";
 import SkillGapAnalysis from "./entities/SkillGapAnalysis";
 import Notification from "./entities/Notification";
 //import SmeNotifications from "./data/notifications/smeNotifications.json";
-// import CandidatePerformances from "./data/candidatePerformance.json";
-// import SkillGapAnalyse from "./data/skills/skillGapAnalysis.json";
+//import CandidatePerformances from "./data/candidatePerformance.json";
+//import SkillGapAnalyse from "./data/skills/skillGapAnalysis.json";
+//import AssessmentMetrics from "./data/assessmentMetrics.json;
 
 
 //function component for SME Dashboard
@@ -26,7 +27,7 @@ const DashboardSME = () => {
   const [profilePicture, setProfilePicture] = useState<string>("https://avatars.githubusercontent.com/u/12345678?v=4");
   const [totalStudents, setTotalStudents] = useState<number>(0);
   const [totalAssessments, setTotalAssessments] = useState<number>(0);
-  const [assessmentMetrics, setAssessmentMetrics] = useState<any[]>([]);
+  const [assessmentMetrics, setAssessmentMetrics] = useState<AssessmentMetrics[]>([]);
   const [smeNotifications, setSmeNotifications] = useState<Notification[]>([]);
   // SME-specific Notifications
  // const smeNotifications: Notification[] = SmeNotifications as Notification[];
@@ -65,14 +66,7 @@ if (currentUser) {
       console.error(error);
   });
 
-  fetch(`http://localhost:5201/api/Assessment/performance/${userId}`)
-  .then((response) => response.json())
-  .then((data) => {
-    setAssessmentMetrics(data);
-  })
-  .catch((error) => {
-    console.error(error);
-  });
+
   // fetching notification from java api
   fetch(`${WEBAPI_JAVA_URL}/data/smeNotification`)
   .then((response) => {
@@ -96,6 +90,73 @@ if (currentUser) {
   });
 
   }, []);
+
+  // CandidatePerformance
+  fetch(`${WEBAPI_JAVA_URL}/data/candidatePerformance`)
+  .then((response) => {
+    console.log("Status:", response.status);
+    console.log("Response OK:", response.ok);
+    if (!response.ok) {
+      throw new Error(`HTTP error: ${response.status}`);
+    }
+
+    return response.json();
+  })
+  .then((data) => {
+    console.log("CANDIDATE PERFORMANCE DATA FROM API:", data);
+    console.log("Is Array:", Array.isArray(data));
+
+    setCandidatePerformance(data);
+  })
+  .catch((error) => {
+    console.error("CANDIDATE PERFORMANCE FETCH ERROR:", error);
+  });
+
+  //SkillGapAnalysis
+  fetch(`${WEBAPI_JAVA_URL}/data/skillGapAnalysis`)
+  .then((response) => {
+    console.log("Status:", response.status);
+    console.log("Response OK:", response.ok);
+
+    if (!response.ok) {
+      throw new Error(`HTTP error: ${response.status}`);
+    }
+
+    return response.json();
+  })
+  .then((data) => {
+    console.log("SKILL GAP ANALYSIS DATA FROM API:", data);
+    console.log("Is Array:", Array.isArray(data));
+
+    setSkillGapAnalysis(data);
+  })
+  .catch((error) => {
+    console.error("SKILL GAP ANALYSIS FETCH ERROR:", error);
+  });
+
+  //Assessment Metrics
+  fetch(`${WEBAPI_JAVA_URL}/data/assessmentMetrics`)
+  .then((response) => {
+    console.log("Status:", response.status);
+    console.log("Response OK:", response.ok);
+
+    if (!response.ok) {
+      throw new Error(`HTTP error: ${response.status}`);
+    }
+
+    return response.json();
+  })
+  .then((data) => {
+    console.log("ASSESSMENT METRICS DATA FROM API:", data);
+    console.log("Is Array:", Array.isArray(data));
+
+    setAssessmentMetrics(data);
+  })
+  .catch((error) => {
+    console.error("ASSESSMENT METRICS FETCH ERROR:", error);
+  });
+
+
 
   // Render the SME dashboard UI
   return (
@@ -255,11 +316,11 @@ if (currentUser) {
                     <div className="flex items-start justify-between">
                       <div className="flex-1">
                         <p className="font-semibold text-gray-900">{assessment.assessmentName}</p>
-                        <p className="text-sm text-gray-600 mt-1">Description: {assessment.description}</p>
+                        <p className="text-sm text-gray-600 mt-1">Description: {assessment.subject}</p>
                         <div className="grid grid-cols-3 gap-4 mt-3 text-sm">
                           <div>
                             <p className="text-gray-500 text-xs">Candidates</p>
-                            <p className="font-bold text-gray-900">{assessment.candidateCount}</p>
+                            <p className="font-bold text-gray-900">{assessment.totalCandidates}</p>
                           </div>
                           <div>
                             <p className="text-gray-500 text-xs">Avg Score</p>
@@ -271,11 +332,11 @@ if (currentUser) {
                           </div>
                         </div>
                       </div>
-                      <span className={`px-3 py-1 rounded-full text-xs font-medium ${assessment.difficulty.toLowerCase() === "beginner" ? "bg-green-100 text-green-800" :
-                          assessment.difficulty.toLowerCase() === "intermediate" ? "bg-yellow-100 text-yellow-800" :
+                      <span className={`px-3 py-1 rounded-full text-xs font-medium ${assessment.difficultyLevel.toLowerCase() === "beginner" ? "bg-green-100 text-green-800" :
+                          assessment.difficultyLevel.toLowerCase() === "intermediate" ? "bg-yellow-100 text-yellow-800" :
                             "bg-red-100 text-red-800"
                         }`}>
-                        {assessment.difficulty.toLowerCase()}
+                        {assessment.difficultyLevel.toLowerCase()}
                       </span>
                     </div>
                   </div>
