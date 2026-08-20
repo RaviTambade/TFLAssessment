@@ -394,10 +394,9 @@ public class DataRepositoryImpl implements DataRepository{
 
         DataIO dataIO = new DataIOImpl();
 
-        List<MemberActivities> memberActivities = 
-                dataIO.deserialize("Data/memberActivities.json", MemberActivities.class);
+        List<MemberActivities> activities =dataIO.deserialize("Data/memberActivities.json", MemberActivities.class);
 
-        for (MemberActivities memberActivity : memberActivities) {
+        for (MemberActivities memberActivity : activities) {
             if (memberActivity.getId() == id) {
                 return memberActivity;
             }

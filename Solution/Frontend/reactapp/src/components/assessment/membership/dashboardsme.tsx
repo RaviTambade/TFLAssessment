@@ -19,6 +19,17 @@ const DashboardSME = () => {
   const [candidatePerformance, setCandidatePerformance] = useState<CandidatePerformance[]>([]);
   const [skillGapAnalysis, setSkillGapAnalysis] = useState<SkillGapAnalysis[]>([]);
 
+  // SME-specific Notifications[]
+ // const smeNotifications: Notification[] = SmeNotifications as Notification[];
+ 
+
+  // Candidate Performance Overview
+  //const candidatePerformance: CandidatePerformance[] = CandidatePerformances as CandidatePerformance[];
+
+  // Skill Gap Analysis
+  //const skillGapAnalysis: SkillGapAnalysis[] = SkillGapAnalyse as SkillGapAnalysis[];
+
+  //navigate
   const navigate = useNavigate();
 
 useEffect(() => {
