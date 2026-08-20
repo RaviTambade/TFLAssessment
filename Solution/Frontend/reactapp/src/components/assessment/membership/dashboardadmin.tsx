@@ -43,7 +43,7 @@ const DashboardAdmin = () => {
   useEffect(() => {
     const fetchAssessments = async () => {
       try {
-        const response = await fetch(`${WEBAPI_DOTNET_URL}/Assessment/total`);\
+        const response = await fetch(`${WEBAPI_DOTNET_URL}/Assessment/total`);
         if (!response.ok) {
           throw new Error("Failed to fetch assessment count");
         }
