@@ -4,7 +4,7 @@ import DashboardAdmin from "./dashboardadmin";
 import DashboardStudent from "./dashboardstudent";
 import DashboardSME from "./dashboardsme";
 import DashboardMentor from "./dashboardmentor";
-import DashboardEmployer from "./dashboardemployer";
+//import DashboardEmployer from "./dashboardemployer";
 
 
 const Dashboard = () => {
@@ -27,7 +27,7 @@ const Dashboard = () => {
       {role === "Student" && <DashboardStudent />}  
       {role === "SME" && <DashboardSME />}  
       {role === "Mentor" && <DashboardMentor />}  
-      {role === "Employer" && <DashboardEmployer />}  
+      {/* {role === "Employer" && <DashboardEmployer />}   */}
     </div>
   );
 };

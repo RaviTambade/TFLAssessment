@@ -3,15 +3,11 @@ import { useNavigate } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "../../ui/card";
 import { WEBAPI_JAVA_URL } from "@/lib/utils";
 import { Bell, FolderKanban, Users, Zap, TrendingUp, CheckCircle, AlertCircle, BookOpen, MessageSquare, ClipboardList, } from "lucide-react";
-import { ArrowLeft } from "lucide-react";
 import { WEBAPI_NODE_URL, WEBAPI_DOTNET_URL } from "@/lib/utils";
 import Notification from "./entities/Notification";
 import MentorshipActivity from "./entities/MentorshipActivity";
 import Mentee from "./entities/Mentee";
 import MenteeGrowth from "./entities/MenteeGrowth";
-import AllmentorNotifications from "./data/notifications/mentorNotifications.json";
-import AllMenteeGrowth from "./data/menteeGrowths.json";
-import AllMentee from "./data/users/mentees.json";
 import Student from "../assessmentOrchestrator/entities/Student";
 import TestDetails from "../assessmentOrchestrator/entities/TestDetails";
 
@@ -28,13 +24,7 @@ const DashboardMentor = () => {
   const [mentorNotifications, setMentorNotifications] = useState<Notification[]>([]);
   const [mentees, setMentees] = useState<Mentee[]>([]);
   const [menteeGrowth, setMenteeGrowth] = useState<MenteeGrowth[]>([]);
-  
-  //const mentorNotifications: Notification[] = AllmentorNotifications as Notification[];
-
-  //const mentees: Mentee[] = AllMentee as Mentee[];
-
   const [mentorshipActivities, setMentorshipActivities] = useState<MentorshipActivity[]>([]);
-  //const menteeGrowth: MenteeGrowth[] = AllMenteeGrowth as MenteeGrowth[];
   const [tests, setTests] = useState<TestDetails[]>([]);
   const [menteeCount, setMenteeCount] = useState(0);
   const [assessmentCount, setAssessmentCount] = useState<number>(0);
@@ -43,61 +33,48 @@ const DashboardMentor = () => {
 
   useEffect(() => {
     const currentUser = sessionStorage.getItem("current");
-
     if (currentUser) {
       const user = JSON.parse(currentUser);
-
       setMentorName(`${user.firstname} ${user.lastname}`);
       setOrganization("Transflower");
     }
   }, []);
 
-
   useEffect(() => {
     const currentUser = sessionStorage.getItem("current");
-
     if (!currentUser) return;
-
     const user = JSON.parse(currentUser);
     const userId = user.userid;
-
     const getMenteeCount = async () => {
       try {
-        const response = await fetch(
-          `http://localhost:5201/api/CreateTest/mentee/Count/${userId}`
-        );
-
+        const response = await fetch(`http://localhost:5201/api/CreateTest/mentee/Count/${userId}`);
         if (!response.ok) {
           throw new Error("Failed to fetch mentee count");
         }
-
         const data = await response.json();
         setMenteeCount(data);
-      } catch (error) {
+      }
+      catch (error) {
         console.error("Error fetching mentee count:", error);
       }
     };
-
     getMenteeCount();
   }, []);
-
 
   useEffect(() => {
     const fetchStudents = async () => {
       try {
         const response = await fetch(`${WEBAPI_DOTNET_URL}/Students`);
-
         if (!response.ok) {
           throw new Error("Failed to fetch students");
         }
-
         const data = await response.json();
         setStudents(data);
-      } catch (error) {
+      }
+      catch (error) {
         console.error("Error:", error);
       }
     };
-
     fetchStudents();
   }, []);
 
@@ -126,25 +103,21 @@ const DashboardMentor = () => {
         }
         const data = await response.json();
         setTestCount(data);
-      } catch (error) {
+      }
+      catch (error) {
         console.error(error);
       }
     };
     fetchTests();
   }, []);
-
-
   useEffect(() => {
 
-
-     const currentUser = sessionStorage.getItem("current");
-
+    const currentUser = sessionStorage.getItem("current");
     if (!currentUser) return;
-
     const user = JSON.parse(currentUser);
     const mentor_id = user.userid;
     fetch(`${WEBAPI_JAVA_URL}/projects/mentee/${mentor_id}`)
-      .then((response) => {
+    .then((response) => {
         if (!response.ok) {
           throw new Error("Failed to fetch projects");
         }
@@ -162,26 +135,19 @@ const DashboardMentor = () => {
     const fetchAssessments = async () => {
       try {
         const response = await fetch(`${WEBAPI_DOTNET_URL}/Assessment/total`);
-
         if (!response.ok) {
           throw new Error("Failed to fetch assessment count");
         }
-
         const data = await response.json();
-
         console.log(data);
-
         setAssessmentCount(data.totalAssessment);
-      } catch (error) {
+      }
+      catch (error) {
         console.error(error);
       }
     };
-
     fetchAssessments();
   }, []);
-
-
-
 
   useEffect(() => {
     console.log("Mentorship useEffect started");
@@ -203,7 +169,7 @@ const DashboardMentor = () => {
       })
       .catch((err) => console.error(err));
   }, []);
-  console.log("State:", mentorshipActivities);
+
 
   fetch(`${WEBAPI_JAVA_URL}/data/mentorNotification`)
     .then((response) => {
@@ -217,7 +183,7 @@ const DashboardMentor = () => {
     })
     .catch((err) => console.error(err));
 
-    fetch(`${WEBAPI_JAVA_URL}/data/Mentee`)
+  fetch(`${WEBAPI_JAVA_URL}/data/Mentee`)
     .then((response) => {
       if (!response.ok) {
         throw new Error("Failed to fetch mentees");
@@ -229,7 +195,7 @@ const DashboardMentor = () => {
     })
     .catch((err) => console.error(err));
 
-    fetch(`${WEBAPI_JAVA_URL}/data/menteegrowth`)
+  fetch(`${WEBAPI_JAVA_URL}/data/menteegrowth`)
     .then((response) => {
       if (!response.ok) {
         throw new Error("Failed to fetch mentee growth data");
@@ -241,7 +207,7 @@ const DashboardMentor = () => {
     })
     .catch((err) => console.error(err));
 
-    fetch(`${WEBAPI_JAVA_URL}/data/mentorshipactivities`)
+  fetch(`${WEBAPI_JAVA_URL}/data/mentorshipactivities`)
     .then((response) => {
       if (!response.ok) {
         throw new Error("Failed to fetch mentorship activities");
@@ -369,15 +335,15 @@ const DashboardMentor = () => {
                   <p className="text-3xl font-bold text-gray-900 mt-1">{assessmentCount}</p>
                 </div>
                 <div className="bg-primary/10 rounded-2xl p-4 group-hover:scale-110 transition">
-                <ClipboardList className="w-8 h-8 text-primary" />
-              </div>
+                  <ClipboardList className="w-8 h-8 text-primary" />
+                </div>
               </div>
             </CardContent>
           </Card>
 
           <Card className="group cursor-pointer border border-border overflow-hidden shadow-elegant hover:shadow-glow hover:border-primary/30 transition-all duration-300 hover:-translate-y-2">
             <CardContent className="p-6">
-              <div className="flex items-center justify-between"onClick={() => { navigate("/models/evaluationcontent/QuestionsByLanguage") }}>
+              <div className="flex items-center justify-between" onClick={() => { navigate("/models/evaluationcontent/QuestionsByLanguage") }}>
                 <div>
                   <p className="text-gray-600 text-sm font-medium">
                     Career Ready
@@ -458,7 +424,7 @@ const DashboardMentor = () => {
                           </p>
 
                           <p className="text-sm text-gray-600 mt-1">
-                            {activity.activity}
+                            {activity.description}
                           </p>
 
                           <div className="flex items-center gap-4 mt-2 text-sm text-gray-600">
@@ -466,21 +432,21 @@ const DashboardMentor = () => {
                               {activity.activityType}
                             </span>
 
-                            <span>{activity.activityDate}</span>
+                            <span>{activity.date}</span>
                           </div>
                         </div>
 
                         <span
-                          className={`px-3 py-1 rounded-full text-xs font-medium ${activity.status === "COMPLETED"
+                          className={`px-3 py-1 rounded-full text-xs font-medium ${activity.completionStatus === "COMPLETED"
                             ? "bg-green-100 text-green-800"
-                            : activity.status === "SCHEDULED"
+                            : activity.completionStatus === "SCHEDULED"
                               ? "bg-yellow-100 text-yellow-800"
-                              : activity.status === "CANCELLED"
+                              : activity.completionStatus === "CANCELLED"
                                 ? "bg-red-100 text-red-800"
                                 : "bg-gray-100 text-gray-800"
                             }`}
                         >
-                          {activity.status}
+                          {activity.completionStatus}
                         </span>
                       </div>
                     </div>
@@ -597,7 +563,6 @@ const DashboardMentor = () => {
         </div>
       </div>
     </div>
-
   );
 };
 

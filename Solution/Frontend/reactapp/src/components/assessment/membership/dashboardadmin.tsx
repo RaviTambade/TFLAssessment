@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "../../ui/card";
 import { Bell, Users, Lock, TrendingUp, CheckCircle, AlertCircle, Shield, Settings } from "lucide-react";
-import UserActivity from "./UserActivity";
 import { UsersRound, ShieldCheck, Clock3, Activity, ClipboardList, ClipboardCheck, BellRing, History, Sparkles, ArrowUpRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { WEBAPI_NODE_URL } from "@/lib/utils";
@@ -15,29 +14,27 @@ import Notification from "./entities/Notification";
 //function component for Admin Dashboard - Transflower Membership & Roles Management
 const DashboardAdmin = () => {
 
-//data members
-const [adminName, setAdminName] = useState<string>("Admin User");
-const [organization, setOrganization] = useState<string>("Transflower");
-const [profilePicture, setProfilePicture] = useState<string>("https://avatars.githubusercontent.com/u/12345678?v=4");
-const [activeRoles, setActiveRoles] = useState<number>(0);
-const [activeRolesList, setActiveRolesList] = useState<number>(0);
-const [assessmentCount, setAssessmentCount] = useState<number>(0);
-const [unassignedUsersCount,setUnAssignedUsersCount] = useState<number>(0);
-const [smeName, setSmeName] = useState<string>("");
-const [adminNotifications, setAdminNotifications] = useState<Notification[]>([]);
-const [loading, setLoading] = useState(true);
-const [memberDirectory,setMemberDirectory] = useState<Member[]>([]);
-const [memberActivities, setMemberActivities] = useState<MemberActivity[]>([]);
-const [rolePermission, setRolePermission] = useState<RolePermission[]>([]);
-   
-const navigate = useNavigate();
+  //data members
+  const [adminName, setAdminName] = useState<string>("Admin User");
+  const [organization, setOrganization] = useState<string>("Transflower");
+  const [profilePicture, setProfilePicture] = useState<string>("https://avatars.githubusercontent.com/u/12345678?v=4");
+  const [activeRoles, setActiveRoles] = useState<number>(0);
+  const [activeRolesList, setActiveRolesList] = useState<number>(0);
+  const [assessmentCount, setAssessmentCount] = useState<number>(0);
+  const [unassignedUsersCount, setUnAssignedUsersCount] = useState<number>(0);
+  const [smeName, setSmeName] = useState<string>("");
+  const [adminNotifications, setAdminNotifications] = useState<Notification[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [memberDirectory, setMemberDirectory] = useState<Member[]>([]);
+  const [memberActivities, setMemberActivities] = useState<MemberActivity[]>([]);
+  const [rolePermission, setRolePermission] = useState<RolePermission[]>([]);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const currentUser = sessionStorage.getItem("current");
-
     if (currentUser) {
       const user = JSON.parse(currentUser);
-
       setSmeName(`${user.firstname} ${user.lastname}`);
       setOrganization("Transflower");
     }
@@ -47,52 +44,40 @@ const navigate = useNavigate();
     const fetchAssessments = async () => {
       try {
         const response = await fetch(`${WEBAPI_DOTNET_URL}/Assessment/total`);
-
         if (!response.ok) {
           throw new Error("Failed to fetch assessment count");
         }
-
         const data = await response.json();
-
         console.log(data);
-
         setAssessmentCount(data.totalAssessment);
-      } catch (error) {
+      }
+      catch (error) {
         console.error(error);
       }
     };
-
     fetchAssessments();
   }, []);
-
 
   useEffect(() => {
     const fetchUnAssignedUserCount = async () => {
       try {
         const response = await fetch(`${WEBAPI_DOTNET_URL}/Roles/unassigned/users/count`);
-
         if (!response.ok) {
           throw new Error("Failed to fetch unassigned users count");
         }
-
         const data = await response.json();
-
         console.log(data);
-
         setUnAssignedUsersCount(data);
-      } catch (error) {
+      }
+      catch (error) {
         console.error(error);
       }
     };
-
     fetchUnAssignedUserCount();
   }, []);
 
-
   useEffect(() => {
-
     const apiURL = `${WEBAPI_NODE_URL}/admin/profile`;
-
     fetch(apiURL).then((response) => response.json()).then((data) => {
       setAdminName(data.adminName);
       setOrganization(data.organization);
@@ -105,7 +90,6 @@ const navigate = useNavigate();
         setActiveRoles(data);
       })
       .catch((error) => console.error(error));
-
   }, []);
 
   useEffect(() => {
@@ -162,28 +146,23 @@ const navigate = useNavigate();
       });
   }, []);
 
-
-
-useEffect(() => {
-  fetch(`${WEBAPI_JAVA_URL}/data/rolepermissions`)
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error("Failed to fetch members");
-      }
-      return response.json();
-    })
-    .then((data) => {
-         setRolePermission(data);
-      setLoading(false);
-    })
-    .catch((error) => {
-      console.error("Error fetching members:", error);
-      setLoading(false);
-    });
-}, []);
-
-
-  
+  useEffect(() => {
+    fetch(`${WEBAPI_JAVA_URL}/data/rolepermissions`)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to fetch members");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setRolePermission(data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching members:", error);
+        setLoading(false);
+      });
+  }, []);
 
   // Render the Admin Management dashboard UI
   return (
@@ -194,18 +173,16 @@ useEffect(() => {
           <h1 className="text-3xl font-bold text-slate-900">
             ADMIN Dashboard
           </h1>
-
           <p className="text-2xl text-primary mt-3 font-bold">
             Welcome, <span className="font-bold">{smeName}</span>
           </p>
-
           <p className="text-slate-500 mt-3 text-lg">
             Manage membership, roles, permissions, and system access for Transflower organization.
           </p>
         </div>
-
         {/* Top Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 md
+        :grid-cols-2 xl:grid-cols-4 gap-6">
           <Card className="group cursor-pointer border border-border rounded-2xl shadow-elegant hover:shadow-glow hover:-translate-y-2 transition-all duration-300">
             <CardContent className="p-7">
               <div className="flex items-center justify-between" onClick={() => { navigate("/models/membership/ManageUsers") }}>
@@ -219,13 +196,11 @@ useEffect(() => {
               </div>
             </CardContent>
           </Card>
-
           <Card className="group cursor-pointer border border-border rounded-2xl shadow-elegant hover:shadow-glow hover:-translate-y-2 transition-all duration-300">
             <CardContent className="p-6">
               <div
                 className="flex items-center justify-between cursor-pointer"
-                onClick={() => navigate("/models/membership/active-roles")}
-              >
+                onClick={() => navigate("/models/membership/active-roles")} >
                 <div>
                   <p className="text-gray-600 text-sm font-medium">
                     Active Roles
@@ -235,11 +210,8 @@ useEffect(() => {
                   </p>
                 </div>
                 <div className="bg-primary/10 rounded-2xl p-4 group-hover:scale-110 transition">
-
                   <Shield className="w-8 h-8 text-primary" />
-
                 </div>
-
               </div>
             </CardContent>
           </Card >
@@ -248,7 +220,6 @@ useEffect(() => {
               <div className="flex items-center justify-between" onClick={() => { navigate("/models/membership/Unassigned/Users") }}>
                 <div>
                   <p className="text-gray-600 text-sm font-medium">Pending Approvals</p>
-
                   <p className="text-3xl font-bold text-gray-900 mt-1">{unassignedUsersCount}</p>
                 </div>
                 <div className="bg-primary/10 rounded-2xl p-4 group-hover:scale-110 transition">
@@ -257,7 +228,6 @@ useEffect(() => {
               </div>
             </CardContent>
           </Card>
-
           <Card className="group cursor-pointer border border-border rounded-2xl shadow-elegant hover:shadow-glow hover:-translate-y-2 transition-all duration-300">
             <CardContent className="p-6">
               <div className="flex items-center justify-between" onClick={() => { navigate("/models/membership/UserActivity") }}>
@@ -271,7 +241,6 @@ useEffect(() => {
               </div>
             </CardContent>
           </Card>
-
           <Card className="group cursor-pointer border border-border rounded-2xl shadow-elegant hover:shadow-glow hover:-translate-y-2 transition-all duration-300">
             <CardContent className="p-6">
               <div className="flex items-center justify-between" onClick={() => { navigate("/models/all-assessment") }}>
@@ -285,7 +254,6 @@ useEffect(() => {
               </div>
             </CardContent>
           </Card>
-
           <Card className="group cursor-pointer border border-border rounded-2xl shadow-elegant hover:shadow-glow hover:-translate-y-2 transition-all duration-300">
             <CardContent className="p-6">
               <div className="flex items-center justify-between" onClick={() => { navigate("/models/assign-assessment") }}>
@@ -302,7 +270,6 @@ useEffect(() => {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Left Column: Admin Alerts and Member Management */}
           <div className="lg:col-span-2 space-y-8">
             {/* Admin System Notifications Section */}
             <Card>
@@ -323,8 +290,7 @@ useEffect(() => {
                         : notification.type === "warning"
                           ? "bg-yellow-50 border-yellow-400"
                           : "bg-red-50 border-red-400"
-                      }`}
-                  >
+                      }`}>
                     <div className="flex items-start justify-between">
                       <div className="flex-1">
                         <p className="font-semibold text-gray-900">{notification.title}</p>
@@ -441,8 +407,6 @@ useEffect(() => {
               </CardHeader>
               <CardContent className="space-y-3">
                 {
-
-
                   memberActivities.map((activity) => (
                     <div key={activity.id} className="p-3 border rounded-lg text-sm">
                       <div className="flex items-start justify-between mb-2">
@@ -473,5 +437,4 @@ useEffect(() => {
     </div>
   );
 }
-
 export default DashboardAdmin;

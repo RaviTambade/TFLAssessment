@@ -1,26 +1,15 @@
-package com.transflower.tflcomentor.configuration;
+// package com.transflower.tflcomentor.configuration;
+// import javax.sql.DataSource;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
+// import org.springframework.boot.jdbc.DataSourceBuilder;
+// import org.springframework.context.annotation.Bean;
+// import org.springframework.context.annotation.Configuration;
 
-import org.springframework.context.annotation.Configuration;
+// @Configuration
+// public class DBConfig {
 
-@Configuration
-public class DBConfig {
- 
-    private static final String URL = "jdbc:mysql://192.168.1.149:3306/tflcomentor_db";
-    private static final String USERNAME = "root";
-    private static final String PASSWORD = "password";
-    private static final String DRIVER = "com.mysql.cj.jdbc.Driver";
-
-    public static Connection getConnection() {
-        Connection connection = null;
-        try {
-            Class.forName(DRIVER);
-            connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return connection;
-    }
-}
+//     @Bean
+//     public DataSource dataSource() {
+//         return DataSourceBuilder.create().build();
+//     }
+// }

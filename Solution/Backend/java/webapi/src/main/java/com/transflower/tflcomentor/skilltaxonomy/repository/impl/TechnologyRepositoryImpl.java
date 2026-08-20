@@ -8,9 +8,10 @@ import java.util.ArrayList;
 import java.util.List;
 // import java.util.Optional;
 
+import javax.sql.DataSource;
+
 import org.springframework.stereotype.Repository;
 
-import com.transflower.tflcomentor.configuration.DBConfig;
 import com.transflower.tflcomentor.skilltaxonomy.dto.response.ConceptQuestionCount;
 import com.transflower.tflcomentor.skilltaxonomy.dto.response.DifficultyQuestionCount;
 import com.transflower.tflcomentor.skilltaxonomy.entity.Concept;
@@ -18,39 +19,46 @@ import com.transflower.tflcomentor.skilltaxonomy.repository.TechnologyRepository
 
 @Repository
 public class TechnologyRepositoryImpl implements TechnologyRepository {
+    
  private Concept concepts;
+ 
+     private final DataSource dataSource;
+   
 
-    public TechnologyRepositoryImpl() {
-        this.concepts = new Concept();
-    }
+    // public TechnologyRepositoryImpl() {
+    //     this.concepts = new Concept();
+    // }
 
-    public TechnologyRepositoryImpl(Concept concepts) {
+    public TechnologyRepositoryImpl(DataSource dataSource) {
+        this.dataSource = dataSource;
         this.concepts = concepts;
     }
 
-    private Connection getConnection() {
-        return DBConfig.getConnection();
+    private Connection getConnection() throws SQLException {
+        return dataSource.getConnection();
     }   
 
     @Override
     public List<ConceptQuestionCount> getAllConceptsCount() {
         String query = "SELECT DISTINCT concept, COUNT(*) as question_count FROM questions GROUP BY concept";
         List<ConceptQuestionCount> conceptCounts = new ArrayList<>();
-        try (Connection connection = getConnection()) {
+        try (Connection connection = getConnection(); 
             PreparedStatement statement = connection.prepareStatement(query);
-            ResultSet resultSet = statement.executeQuery();
+            ResultSet resultSet = statement.executeQuery()){
             while (resultSet.next()) {
                 conceptCounts.add(new ConceptQuestionCount(
                     resultSet.getString("concept"),
                     resultSet.getInt("question_count")
                 ));
             }
-            return conceptCounts;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return new ArrayList<>();
         }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return conceptCounts;
     }
+    
 
     @Override
     public List<DifficultyQuestionCount> getAllQuestionsByDifficulty(){
