@@ -7,61 +7,30 @@ import { useNavigate } from "react-router-dom";
 import { WEBAPI_NODE_URL } from "@/lib/utils";
 import { WEBAPI_DOTNET_URL } from "@/lib/utils";
 import { WEBAPI_JAVA_URL } from "@/lib/utils";
-
-
-//import Notification from ""
 import Member from "./entities/Member";
 import RolePermission from "./entities/RolePermission";
 import MemberActivity from "./entities/MemberActivity";
-// import AdminNotifications from "./data/notifications/adminNotifications.json";
-// import Members from "./data/users/members.json";
-// import RolePermissions from "./data/rolePermissions.json";
-// import MemberActivities from "./data/memberActivities.json";
 import Notification from "./entities/Notification";
-
-// import AdminNotification from "./entities/AdminNotification";
 
 //function component for Admin Dashboard - Transflower Membership & Roles Management
 const DashboardAdmin = () => {
-  //parts
-  // State for admin user data
-  // Data members for member management
-  // Helper functions for role management
-  // Render functions for admin features
 
-
-
-  //data members
-  const [adminName, setAdminName] = useState<string>("Admin User");
-  const [organization, setOrganization] = useState<string>("Transflower");
-  const [profilePicture, setProfilePicture] = useState<string>("https://avatars.githubusercontent.com/u/12345678?v=4");
-  const [activeRoles, setActiveRoles] = useState<number>(0);
-  const [activeRolesList, setActiveRolesList] = useState<number>(0);
-  const [assessmentCount, setAssessmentCount] = useState<number>(0);
-  const[unassignedUsersCount,setUnAssignedUsersCount]=useState<number>(0);
-   const [smeName, setSmeName] = useState<string>("");
-   const [adminNotifications, setAdminNotifications] = useState<Notification[]>([]);
-   const [loading, setLoading] = useState(true);
-   const[memberDirectory,setMemberDirectory]=useState<Member[]>([]);
-   const [memberActivities, setMemberActivities] = useState<MemberActivity[]>([]);
-   const [rolePermission, setRolePermission] = useState<RolePermission[]>([]);
+//data members
+const [adminName, setAdminName] = useState<string>("Admin User");
+const [organization, setOrganization] = useState<string>("Transflower");
+const [profilePicture, setProfilePicture] = useState<string>("https://avatars.githubusercontent.com/u/12345678?v=4");
+const [activeRoles, setActiveRoles] = useState<number>(0);
+const [activeRolesList, setActiveRolesList] = useState<number>(0);
+const [assessmentCount, setAssessmentCount] = useState<number>(0);
+const [unassignedUsersCount,setUnAssignedUsersCount] = useState<number>(0);
+const [smeName, setSmeName] = useState<string>("");
+const [adminNotifications, setAdminNotifications] = useState<Notification[]>([]);
+const [loading, setLoading] = useState(true);
+const [memberDirectory,setMemberDirectory] = useState<Member[]>([]);
+const [memberActivities, setMemberActivities] = useState<MemberActivity[]>([]);
+const [rolePermission, setRolePermission] = useState<RolePermission[]>([]);
    
-
-
-
-  const navigate = useNavigate();
-
-  // Admin System Notifications
-  // const adminNotifications: Notification[] = AdminNotifications as Notification[];
-
-  // Member Directory - Organization Membership
-  // const members: Member[] = Members as Member[];
-
-  // Role Definitions and Permissions
-  // const rolePermissions: RolePermission[] = RolePermissions as RolePermission[];
-
-  // Member Activity Log
-  // const memberActivities: MemberActivity[] = MemberActivities as MemberActivity[];
+const navigate = useNavigate();
 
   useEffect(() => {
     const currentUser = sessionStorage.getItem("current");

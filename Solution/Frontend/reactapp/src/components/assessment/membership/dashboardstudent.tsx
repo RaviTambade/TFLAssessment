@@ -5,130 +5,80 @@ import { Bell, Calendar, Award, TrendingUp, CheckCircle, AlertCircle, Clock } fr
 import { WEBAPI_DOTNET_URL,WEBAPI_JAVA_URL } from "@/lib/utils";
 import Notification from "./entities/Notification";
 import ScheduledAssessment from "./entities/ScheduledAssessment";
+import UpcomingAssessmentApiResponse from "./entities/UpcomingAssessmentApiResponse";
 import Result from "./entities/StudentResult";
 import LearningCurveData from "./entities/LearningCurveData";
 
-type UpcomingAssessmentApiResponse = {
-  assessmentId?: number;
-  assessmentName?: string;
-  scheduledAt?: string;
-  duration?: number;
-};
-
-//function component for dashboard
 const DashboardStudent = () => {
-    //parts
-    // State 
-    // helper functions
-    // hook functions
-    // render functions
-
-
-   const navigate= useNavigate();
-    //data members
-   const[name, setName] = useState<string>("");
-   const[role, setRole] = useState<string>("");
-   const [performance, setPerformance] = useState({totalCompletedAssessments: 0,averageScore: 0});
-   const [results, setResultsData] = useState<Result[]>([]);
-   const [notifications, setNotifications] = useState<Notification[]>([]);
-   const[profilePicture, setProfilePicture] = useState<string>("https://avatars.githubusercontent.com/u/12345678?v=4");
-  // Hardcoded Notifications Data
-  //const notifications: Notification[] = AllNotification as Notification[];
+   
+  const navigate= useNavigate();
+  
+  const [name, setName] = useState<string>("");
+  const [role, setRole] = useState<string>("");
+  const [performance, setPerformance] = useState({totalCompletedAssessments: 0,averageScore: 0});
+  const [results, setResultsData] = useState<Result[]>([]);
+  const [notifications, setNotifications] = useState<Notification[]>([]);
+  const [profilePicture, setProfilePicture] = useState<string>("https://avatars.githubusercontent.com/u/12345678?v=4");
   const [scheduledAssessments, setScheduledAssessments] = useState<ScheduledAssessment[]>([]);
   const [upcomingCount, setUpcomingCount] = useState<number>(0);
+  const [learningCurveData, setLearningCurve] = useState<LearningCurveData[]>([]);
 
-  // Hardcoded Results Data
-  //const results: Result[] = StudentResults as Result[];
-
-  // Hardcoded Learning Curve Data
-  const learningCurveData: LearningCurveData[] = [
-    { week: "Week 1", score: 65, assessmentCount: 2, averageTime: 45 },
-    { week: "Week 2", score: 72, assessmentCount: 3, averageTime: 50 },
-    { week: "Week 3", score: 78, assessmentCount: 3, averageTime: 48 },
-    { week: "Week 4", score: 82, assessmentCount: 4, averageTime: 55 },
-    { week: "Week 5", score: 85, assessmentCount: 3, averageTime: 52 },
-    { week: "Current", score: 88, assessmentCount: 2, averageTime: 58 },
-  ];
-
-
-  // useEffect(() => {
-  //   const apiURl = `${WEBAPI_NODE_URL}/user/profile`;
-  //       fetch(apiURl).then((response) => response.json()).then((data) => {
-  //         setName(data.name);
-  //         setRole(data.role);
-  //         setProfilePicture(data.profilePicture);
-  //       });
-
-
-  // }, []);
-useEffect(() => {
-
+  useEffect(() => {
   const currentUser = sessionStorage.getItem("current");
-
   if (currentUser) {
-
     const user = JSON.parse(currentUser);
     console.log(user);
     const studentId = user.userid;
 
-    fetch(`${WEBAPI_DOTNET_URL}/Students/performance/${studentId}`)
-    .then((response) => response.json())
-   .then((data) => {
-    setPerformance(data);
-})
+  fetch(`${WEBAPI_DOTNET_URL}/Students/performance/${studentId}`)
+  .then((response) => response.json())
+  .then((data) => {
+  setPerformance(data);
+  })
   .catch((error) => console.error(error));
 
-    fetch(`${WEBAPI_DOTNET_URL}/Assessment/upcoming/${studentId}`)
-      .then((response) => response.json())
-      .then((data: UpcomingAssessmentApiResponse[]) => {
-        const mappedAssessments: ScheduledAssessment[] = (data || []).map((item, index) => ({
-          id: item.assessmentId ?? index + 1,
-          name: item.assessmentName ?? "Assessment",
-          subject: "Assessment",
-          scheduledDate: item.scheduledAt ? new Date(item.scheduledAt).toLocaleDateString() : "TBD",
-          duration: item.duration ?? 0,
-          totalQuestions: 0,
-          status: "upcoming",
-        }));
-        setScheduledAssessments(mappedAssessments);
-        setUpcomingCount(mappedAssessments.length);
-      })
-      .catch((error) => console.error("Failed to fetch upcoming assessments", error));
-
-    setName(
-      `${user.firstname} ${user.lastname}`
-    );
-
-    setRole(user.rolename);
-
+  fetch(`${WEBAPI_DOTNET_URL}/Assessment/upcoming/${studentId}`)
+  .then((response) => response.json())
+  .then((data: UpcomingAssessmentApiResponse[]) => {
+  const mappedAssessments: ScheduledAssessment[] = (data || []).map((item, index) => ({
+        id: item.assessmentId ?? index + 1,
+        name: item.assessmentName ?? "Assessment",
+        subject: "Assessment",
+        scheduledDate: item.scheduledAt ? new Date(item.scheduledAt).toLocaleDateString() : "TBD",
+        duration: item.duration ?? 0,
+        totalQuestions: 0,
+        status: "upcoming",
+  }));
+  setScheduledAssessments(mappedAssessments);
+  setUpcomingCount(mappedAssessments.length);
+  })
+  .catch((error) => console.error("Failed to fetch upcoming assessments", error));
+  setName(`${user.firstname} ${user.lastname}`);
+  setRole(user.rolename);
   }
 
   fetch(`${WEBAPI_JAVA_URL}/data/studentresults`)
   .then((response) => {
     console.log("Status:", response.status);
     console.log("Response OK:", response.ok);
-
-    if (!response.ok) {
-      throw new Error(`HTTP error: ${response.status}`);
-    }
-
-    return response.json();
+  if (!response.ok) {
+    throw new Error(`HTTP error: ${response.status}`);
+  }
+  return response.json();
   })
   .then((data) => {
     console.log("RESULT DATA FROM API:", data);
     console.log("Is Array:", Array.isArray(data));
-
     setResultsData(data);
   })
   .catch((error) => {
     console.error("RESULT FETCH ERROR:", error);
   });
 
-    fetch(`${WEBAPI_JAVA_URL}/data/studentNotification`)
+  fetch(`${WEBAPI_JAVA_URL}/data/studentNotification`)
   .then((response) => {
     console.log("Status:", response.status);
     console.log("Response OK:", response.ok);
-
     if (!response.ok) {
       throw new Error(`HTTP error: ${response.status}`);
     }
@@ -137,33 +87,43 @@ useEffect(() => {
   .then((data) => {
     console.log("NOTIFICATION DATA FROM API:", data);
     console.log("Is Array:", Array.isArray(data));
-
     setNotifications(data);
   })
   .catch((error) => {
     console.error("NOTIFICATION FETCH ERROR:", error);
   });
 
-
-}, []);
-  // Render the dashboard UI
+  fetch(`${WEBAPI_JAVA_URL}/data/learningCurve`)
+  .then((response) => {
+    console.log("Status:", response.status);
+    console.log("Response OK:", response.ok);
+    if (!response.ok) {
+      throw new Error(`HTTP error: ${response.status}`);
+    }
+    return response.json();
+  })
+  .then((data) => {
+    console.log("LEARNING CURVE DATA FROM API:", data);
+    console.log("Is Array:", Array.isArray(data));
+    setLearningCurve(data);
+  })
+  .catch((error) => {
+    console.error("LEARNING CURVE FETCH ERROR:", error);
+  });
+  }, []);
+  
   return (
     <div className="min-h-screen bg-gray-50 p-6">
       <div className="max-w-7xl mx-auto space-y-8">
-        {/* Header */}
         <div>
           <h1 className="text-4xl font-bold text-gray-900 mb-2">Dashboard</h1>
           <h3 className="text-xl text-gray-700 mb-4">Hello, {name} ({role})</h3>
           <p className="text-gray-600">Welcome back! Here's your learning progress and upcoming assessments.</p>
         </div>
 
-        {/* Top Stats */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           <Card>
-            <CardContent className="p-6"
-            
-                     onClick={() => navigate("/models/assessmentorchestrator/completed-assessments")}
->
+            <CardContent className="p-6" onClick={() => navigate("/models/assessmentorchestrator/completed-assessments")}>
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-gray-600 text-sm font-medium">Assessments Completed</p>
@@ -214,9 +174,8 @@ useEffect(() => {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Left Column: Notifications and Scheduled Assessments */}
           <div className="lg:col-span-2 space-y-8">
-            {/* Notifications Section */}
+            
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
@@ -236,8 +195,7 @@ useEffect(() => {
                         : notification.type === "warning"
                         ? "bg-yellow-50 border-yellow-400"
                         : "bg-red-50 border-red-400"
-                    }`}
-                  >
+                    }`}>
                     <div className="flex items-start justify-between">
                       <div className="flex-1">
                         <p className="font-semibold text-gray-900">{notification.title}</p>
@@ -252,49 +210,9 @@ useEffect(() => {
                 ))}
               </CardContent>
             </Card>
-
-            {/* Scheduled Assessments Section */}
-            {/* <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Calendar className="w-5 h-5" />
-                  Scheduled Assessments
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                {scheduledAssessments.length === 0 ? (
-                  <div className="p-4 border rounded-lg text-gray-600">No upcoming assessments found.</div>
-                ) : scheduledAssessments.map((assessment) => (
-                  <div key={assessment.id} className="p-4 border rounded-lg hover:bg-gray-50 transition">
-                    <div className="flex items-start justify-between">
-                      <div className="flex-1">
-                        <p className="font-semibold text-gray-900">{assessment.name}</p>
-                        <p className="text-sm text-gray-600 mt-1">Subject: {assessment.subject}</p>
-                        <div className="flex items-center gap-4 mt-2 text-sm text-gray-600">
-                          <span className="flex items-center gap-1">
-                            <Calendar className="w-4 h-4" />
-                            {assessment.scheduledDate}
-                          </span>
-                          <span className="flex items-center gap-1">
-                            <Clock className="w-4 h-4" />
-                            {assessment.duration} mins
-                          </span>
-                          <span>{assessment.totalQuestions} questions</span>
-                        </div>
-                      </div>
-                      <span className="bg-orange-100 text-orange-800 px-3 py-1 rounded-full text-xs font-medium">
-                        Upcoming
-                      </span>
-                    </div>
-                  </div>
-                ))}
-              </CardContent>
-            </Card> */}
           </div>
-
-          {/* Right Column: Results and Learning Curve */}
           <div className="space-y-8">
-            {/* Results Section */}
+
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
@@ -315,12 +233,8 @@ useEffect(() => {
                     </div>
                     <p className="text-xs text-gray-600 mb-2">{result.completedDate}</p>
                     <div className="w-full bg-gray-200 rounded-full h-2">
-                      <div
-                        className={`h-2 rounded-full transition-all ${
-                          result.status === "pass" ? "bg-green-500" : "bg-red-500"
-                        }`}
-                        style={{ width: `${result.percentage}%` }}
-                      />
+                      <div className={`h-2 rounded-full transition-all ${result.status === "pass" ? "bg-green-500" : "bg-red-500"}`}
+                        style={{ width: `${result.percentage}%`}}/>
                     </div>
                     <p className="text-xs font-semibold text-gray-900 mt-2">
                       {result.score}/{result.totalScore} ({result.percentage}%)
@@ -330,7 +244,6 @@ useEffect(() => {
               </CardContent>
             </Card>
 
-            {/* Learning Curve Section */}
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
@@ -347,10 +260,8 @@ useEffect(() => {
                         <p className="text-sm font-bold text-blue-600">{data.score}%</p>
                       </div>
                       <div className="w-full bg-gray-200 rounded-full h-2">
-                        <div
-                          className="h-2 rounded-full bg-gradient-to-r from-blue-400 to-blue-600 transition-all"
-                          style={{ width: `${data.score}%` }}
-                        />
+                        <div className="h-2 rounded-full bg-gradient-to-r from-blue-400 to-blue-600 transition-all"
+                          style={{ width: `${data.score}%` }} />
                       </div>
                       <p className="text-xs text-gray-500">
                         {data.assessmentCount} assessments • Avg {data.averageTime} mins

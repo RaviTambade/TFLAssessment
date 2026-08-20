@@ -7,39 +7,20 @@ import AssessmentMetrics from "./entities/AssessmentMetrics";
 import CandidatePerformance from "./entities/CandidatePerformance";
 import SkillGapAnalysis from "./entities/SkillGapAnalysis";
 import Notification from "./entities/Notification";
-//import SmeNotifications from "./data/notifications/smeNotifications.json";
-//import CandidatePerformances from "./data/candidatePerformance.json";
-//import SkillGapAnalyse from "./data/skills/skillGapAnalysis.json";
-//import AssessmentMetrics from "./data/assessmentMetrics.json;
-
 
 //function component for SME Dashboard
 const DashboardSME = () => {
-  //parts
-  // State for SME user data
-  // Data members for candidate insights
-  // Helper functions for analytics
-  // Render functions for SME features
-
+ 
   //data members
   const [smeName, setSMEName] = useState<string>("");
   const [department, setDepartment] = useState<string>("");
   const [profilePicture, setProfilePicture] = useState<string>("https://avatars.githubusercontent.com/u/12345678?v=4");
   const [totalStudents, setTotalStudents] = useState<number>(0);
-  const [totalAssessments, setTotalAssessments] = useState<number>(0);
   const [assessmentMetrics, setAssessmentMetrics] = useState<AssessmentMetrics[]>([]);
   const [smeNotifications, setSmeNotifications] = useState<Notification[]>([]);
-  // SME-specific Notifications
- // const smeNotifications: Notification[] = SmeNotifications as Notification[];
- 
+  const [candidatePerformance, setCandidatePerformance] = useState<CandidatePerformance[]>([]);
+  const [skillGapAnalysis, setSkillGapAnalysis] = useState<SkillGapAnalysis[]>([]);
 
-  // Candidate Performance Overview
-  // const candidatePerformance: CandidatePerformance[] = CandidatePerformances as CandidatePerformance[];
-
-  // Skill Gap Analysis
-  // const skillGapAnalysis: SkillGapAnalysis[] = SkillGapAnalyse as SkillGapAnalysis[];
-
-  //navigate
   const navigate = useNavigate();
 
 useEffect(() => {
@@ -49,7 +30,7 @@ const userId = currentUser.userid;
 if (currentUser) {
     setSMEName(`${currentUser.firstname} ${currentUser.lastname}`);
     setDepartment(currentUser.rolename);
-}
+  }
     const apiURL = `${WEBAPI_NODE_URL}/sme/profile`;
     fetch(apiURL).then((response) => response.json()).then((data) => {
       setSMEName(data.name);
@@ -57,40 +38,32 @@ if (currentUser) {
       setProfilePicture(data.profilePicture);
     });
 
-    fetch("http://localhost:5201/api/Students/total")
-  .then((response) => response.json())
-  .then((data) => {
-      setTotalStudents(data.totalStudents);
-  })
-  .catch((error) => {
+  fetch("http://localhost:5201/api/Students/total").then((response) => 
+    response.json()).then((data) => {
+    setTotalStudents(data.totalStudents);
+  }).catch((error) => {
       console.error(error);
   });
 
-
   // fetching notification from java api
-  fetch(`${WEBAPI_JAVA_URL}/data/smeNotification`)
-  .then((response) => {
+  fetch(`${WEBAPI_JAVA_URL}/data/smeNotification`).then((response) => {
     console.log("Status:", response.status);
     console.log("Response OK:", response.ok);
-
     if (!response.ok) {
       throw new Error(`HTTP error: ${response.status}`);
     }
-
     return response.json();
   })
   .then((data) => {
     console.log("NOTIFICATION DATA FROM API:", data);
     console.log("Is Array:", Array.isArray(data));
-
     setSmeNotifications(data);
   })
   .catch((error) => {
     console.error("NOTIFICATION FETCH ERROR:", error);
   });
-
-  }, []);
-
+  },[]);
+  
   // CandidatePerformance
   fetch(`${WEBAPI_JAVA_URL}/data/candidatePerformance`)
   .then((response) => {
