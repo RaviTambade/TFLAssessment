@@ -1,4 +1,4 @@
-package com.transflower.tflcomentor.fileio.FileIO;
+package com.transflower.tflcomentor.fileio.helper;
 
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -7,7 +7,7 @@ import java.io.File;
 
 import tools.jackson.databind.ObjectMapper;
 
-public class DataIOImpl implements DataIO{
+public class FileManagerImpl implements FileManager{
     @Override
     public <T> void serialize(String filename, List<T> data) {
     ObjectMapper mapper = new ObjectMapper();
