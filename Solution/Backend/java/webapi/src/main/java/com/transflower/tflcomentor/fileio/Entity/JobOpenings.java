@@ -1,4 +1,4 @@
-package com.transflower.tflcomentor.fileio.Entity;
+package com.transflower.tflcomentor.fileio.entity;
 
 import java.util.List;
 
