@@ -2,6 +2,8 @@ package com.transflower.tflcomentor.fileio.repository;
 
 
 import java.util.List;
+
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
 import com.transflower.tflcomentor.fileio.Entity.AssessmentMetrics;
@@ -26,11 +28,71 @@ import com.transflower.tflcomentor.fileio.Entity.MentorshipActivities;
 @Repository
 public class DataRepositoryImpl implements DataRepository{
 
+    @Value("${app.admin.notification.path}")
+    private String adminNotificationPath;
+
+    @Value("${app.mentor.notification.path}")
+    private String mentorNotificationPath;
+
+    @Value("${app.recruiter.notification.path}")
+    private String recruiterNotificationPath;
+
+    @Value("${app.sme.notification.path}")
+    private String smeNotificationPath;
+
+    @Value("${app.student.notification.path}")
+    private String studentNotificationPath;
+
+    @Value("${app.learning.curve.path}")
+    private String learningCurvePath;
+
+    @Value("${app.skill.gap.path}")
+    private String skillGapPath;
+
+    @Value("${app.skill.requirement.path}")
+    private String skillRequirementPath;
+
+    @Value("${app.candidates.path}")
+    private String candidatesPath;
+
+    @Value("${app.members.path}")
+    private String membersPath;
+
+    @Value("${app.mentees.path}")
+    private String menteesPath;
+
+    @Value("${app.assessment.metrics.path}")
+    private String assessmentMetricsPath;
+
+    @Value("${app.candidate.performance.path}")
+    private String candidatePerformancePath;
+
+    @Value("${app.job.openings.path}")
+    private String jobOpeningsPath;
+
+    @Value("${app.member.activities.path}")
+    private String memberActivitiesPath;
+
+    @Value("${app.mentee.growth.path}")
+    private String menteeGrowthPath;
+
+    @Value("${app.mentorship.activities.path}")
+    private String mentorshipActivitiesPath;
+
+    @Value("${app.role.permissions.path}")
+    private String rolePermissionsPath;
+
+    @Value("${app.scheduled.assessment.path}")
+    private String scheduledAssessmentPath;
+
+    @Value("${app.student.result.path}")
+    private String studentResultPath;
+
     @Override
     public List<Notification> showAdminNotification(){
         DataIO notificationFile = new DataIOImpl();
         try{
-            List<Notification> notifications = notificationFile.deserialize("Data/notifications/adminNotifications.json",Notification.class);
+            List<Notification> notifications = notificationFile.deserialize(adminNotificationPath,Notification.class);
             return notifications;
         }catch(Exception e){
             e.printStackTrace();
@@ -44,7 +106,7 @@ public class DataRepositoryImpl implements DataRepository{
         DataIO dataIO = new DataIOImpl();
 
         List<Notification> notifications =
-                dataIO.deserialize("Data/notifications/adminNotifications.json", Notification.class);
+                dataIO.deserialize(adminNotificationPath, Notification.class);
 
         for (Notification notification : notifications) {
             if (notification.getId() == id) {
@@ -59,7 +121,7 @@ public class DataRepositoryImpl implements DataRepository{
     public List<Notification> showMentorNotification(){
         DataIO notificationFile = new DataIOImpl();
         try{
-            List<Notification> notifications = notificationFile.deserialize("Data/notifications/mentorNotifications.json",Notification.class);
+            List<Notification> notifications = notificationFile.deserialize(mentorNotificationPath,Notification.class);
             return notifications;
         }catch(Exception e){
             e.printStackTrace();
@@ -73,7 +135,7 @@ public class DataRepositoryImpl implements DataRepository{
         DataIO dataIO = new DataIOImpl();
 
         List<Notification> notifications =
-                dataIO.deserialize("Data/notifications/mentorNotifications.json", Notification.class);
+                dataIO.deserialize(mentorNotificationPath, Notification.class);
 
         for (Notification notification : notifications) {
             if (notification.getId() == id) {
@@ -87,7 +149,7 @@ public class DataRepositoryImpl implements DataRepository{
     public List<Notification> showRecruiterNotification(){
         DataIO notificationFile = new DataIOImpl();
         try{
-            List<Notification> notifications = notificationFile.deserialize("Data/notifications/recruiterNotifications.json",Notification.class);
+            List<Notification> notifications = notificationFile.deserialize(recruiterNotificationPath,Notification.class);
             return notifications;
         }catch(Exception e){
             e.printStackTrace();
@@ -101,7 +163,7 @@ public class DataRepositoryImpl implements DataRepository{
         DataIO dataIO = new DataIOImpl();
 
         List<Notification> notifications =
-            dataIO.deserialize("Data/notifications/recruiterNotifications.json", Notification.class);
+            dataIO.deserialize(recruiterNotificationPath, Notification.class);
 
         for (Notification notification : notifications) {
             if (notification.getId() == id) {
@@ -115,7 +177,7 @@ public class DataRepositoryImpl implements DataRepository{
     public List<Notification> showSmeNotification(){
         DataIO notificationFile = new DataIOImpl();
         try{
-            List<Notification> notifications = notificationFile.deserialize("Data/notifications/smeNotifications.json",Notification.class);
+            List<Notification> notifications = notificationFile.deserialize(smeNotificationPath,Notification.class);
             return notifications;
         }catch(Exception e){
             e.printStackTrace();
@@ -129,7 +191,7 @@ public class DataRepositoryImpl implements DataRepository{
         DataIO dataIO = new DataIOImpl();
 
         List<Notification> notifications =
-            dataIO.deserialize("Data/notifications/smeNotifications.json", Notification.class);
+            dataIO.deserialize(smeNotificationPath, Notification.class);
 
         for (Notification notification : notifications) {
             if (notification.getId() == id) {
@@ -143,7 +205,7 @@ public class DataRepositoryImpl implements DataRepository{
     public List<Notification> showStudentNotification(){
         DataIO notificationFile = new DataIOImpl();
         try{
-            List<Notification> notifications = notificationFile.deserialize("Data/notifications/studentNotification.json",Notification.class);
+            List<Notification> notifications = notificationFile.deserialize(studentNotificationPath,Notification.class);
             return notifications;
         }catch(Exception e){
             e.printStackTrace();
@@ -157,7 +219,7 @@ public class DataRepositoryImpl implements DataRepository{
         DataIO dataIO = new DataIOImpl();
 
         List<Notification> notifications =
-            dataIO.deserialize("Data/notifications/studentNotification.json", Notification.class);
+            dataIO.deserialize(studentNotificationPath, Notification.class);
 
         for (Notification notification : notifications) {
             if (notification.getId() == id) {
@@ -171,7 +233,7 @@ public class DataRepositoryImpl implements DataRepository{
     public List<LearningCurve> showLearningCurve(){
         DataIO notificationFile = new DataIOImpl();
         try{
-            List<LearningCurve> learningCurve = notificationFile.deserialize("Data/skills/learningCurveData.json",LearningCurve.class);
+            List<LearningCurve> learningCurve = notificationFile.deserialize(learningCurvePath,LearningCurve.class);
             return learningCurve;
         }catch(Exception e){
             e.printStackTrace();
@@ -183,7 +245,7 @@ public class DataRepositoryImpl implements DataRepository{
     public List<SkillGap> showSkillGap(){
         DataIO notificationFile = new DataIOImpl();
         try{
-            List<SkillGap> gap = notificationFile.deserialize("Data/skills/skillGapAnalysis.json",SkillGap.class);
+            List<SkillGap> gap = notificationFile.deserialize(skillGapPath,SkillGap.class);
             return gap;
         }catch(Exception e){
             e.printStackTrace();
@@ -195,7 +257,7 @@ public class DataRepositoryImpl implements DataRepository{
     public List<SkillRequirement> showSkillRequirement(){
         DataIO notificationFile = new DataIOImpl();
         try{
-            List<SkillRequirement> skills = notificationFile.deserialize("Data/skills/skillRequirements.json",SkillRequirement.class);
+            List<SkillRequirement> skills = notificationFile.deserialize(skillRequirementPath,SkillRequirement.class);
             return skills;
         }catch(Exception e){
             e.printStackTrace();
@@ -207,7 +269,7 @@ public class DataRepositoryImpl implements DataRepository{
     public List<Candidate> showCandidates(){
         DataIO notificationFile = new DataIOImpl();
         try{
-            List<Candidate> candidates = notificationFile.deserialize("Data/users/candidates.json",Candidate.class);
+            List<Candidate> candidates = notificationFile.deserialize(candidatesPath,Candidate.class);
             return candidates;
         }catch(Exception e){
             e.printStackTrace();
@@ -221,7 +283,7 @@ public class DataRepositoryImpl implements DataRepository{
         DataIO dataIO = new DataIOImpl();
 
         List<Candidate> candidates =
-                dataIO.deserialize("Data/users/candidates.json", Candidate.class);
+                dataIO.deserialize(candidatesPath, Candidate.class);
 
         for (Candidate candidate : candidates) {
             if (candidate.getId() == id) {
@@ -236,7 +298,7 @@ public class DataRepositoryImpl implements DataRepository{
     public List<Member> showMember(){
         DataIO notificationFile = new DataIOImpl();
         try{
-            List<Member> members = notificationFile.deserialize("Data/users/members.json",Member.class);
+            List<Member> members = notificationFile.deserialize(membersPath,Member.class);
             return members;
         }catch(Exception e){
             e.printStackTrace();
@@ -250,7 +312,7 @@ public class DataRepositoryImpl implements DataRepository{
         DataIO dataIO = new DataIOImpl();
 
         List<Member> memberIds = 
-                dataIO.deserialize("Data/users/members.json", Member.class);
+                dataIO.deserialize(membersPath, Member.class);
 
         for (Member memberId : memberIds) {
             if (memberId.getId() == id) {
@@ -265,7 +327,7 @@ public class DataRepositoryImpl implements DataRepository{
     public List<Mentee> showMentee(){
         DataIO notificationFile = new DataIOImpl();
         try{
-            List<Mentee> mentees = notificationFile.deserialize("Data/users/mentees.json",Mentee.class);
+            List<Mentee> mentees = notificationFile.deserialize(menteesPath,Mentee.class);
             return mentees;
         }catch(Exception e){
             e.printStackTrace();
@@ -279,7 +341,7 @@ public class DataRepositoryImpl implements DataRepository{
         DataIO dataIO = new DataIOImpl();
 
         List<Mentee> menteeIds = 
-                dataIO.deserialize("Data/users/mentees.json", Mentee.class);
+                dataIO.deserialize(menteesPath, Mentee.class);
 
         for (Mentee menteeId : menteeIds) {
             if (menteeId.getId() == id) {
@@ -294,7 +356,7 @@ public class DataRepositoryImpl implements DataRepository{
     public List<AssessmentMetrics> showAssessmentMetrics(){
         DataIO notificationFile = new DataIOImpl();
         try{
-            List<AssessmentMetrics> assesments = notificationFile.deserialize("Data/assessmentMetrics.json",AssessmentMetrics.class);
+            List<AssessmentMetrics> assesments = notificationFile.deserialize(assessmentMetricsPath,AssessmentMetrics.class);
             return assesments;
         }catch(Exception e){
             e.printStackTrace();
@@ -308,7 +370,7 @@ public class DataRepositoryImpl implements DataRepository{
         DataIO dataIO = new DataIOImpl();
 
         List<AssessmentMetrics> assesmentMetrics = 
-                dataIO.deserialize("Data/assessmentMetrics.json", AssessmentMetrics.class);
+                dataIO.deserialize(assessmentMetricsPath, AssessmentMetrics.class);
 
         for (AssessmentMetrics assesmentMetric : assesmentMetrics) {
             if (assesmentMetric.getId() == id) {
@@ -323,7 +385,7 @@ public class DataRepositoryImpl implements DataRepository{
     public List<CandidatePerformance> showCandidatePerformance(){
         DataIO notificationFile = new DataIOImpl();
         try{
-            List<CandidatePerformance> performance = notificationFile.deserialize("Data/candidatePerformance.json",CandidatePerformance.class);
+            List<CandidatePerformance> performance = notificationFile.deserialize(candidatePerformancePath,CandidatePerformance.class);
             return performance;
         }catch(Exception e){
             e.printStackTrace();
@@ -337,7 +399,7 @@ public class DataRepositoryImpl implements DataRepository{
         DataIO dataIO = new DataIOImpl();
 
         List<CandidatePerformance> candidatePerformances = 
-                dataIO.deserialize("Data/candidatePerformance.json", CandidatePerformance.class);
+                dataIO.deserialize(candidatePerformancePath, CandidatePerformance.class);
 
         for (CandidatePerformance candidatePerformance : candidatePerformances) {
             if (candidatePerformance.getId() == id) {
@@ -352,7 +414,7 @@ public class DataRepositoryImpl implements DataRepository{
     public List<JobOpenings> showJobOpenings(){
         DataIO notificationFile = new DataIOImpl();
         try{
-            List<JobOpenings> opening = notificationFile.deserialize("Data/jobOpenings.json",JobOpenings.class);
+            List<JobOpenings> opening = notificationFile.deserialize(jobOpeningsPath,JobOpenings.class);
             return opening;
         }catch(Exception e){
             e.printStackTrace();
@@ -366,7 +428,7 @@ public class DataRepositoryImpl implements DataRepository{
         DataIO dataIO = new DataIOImpl();
 
         List<JobOpenings> jobOpenings = 
-                dataIO.deserialize("Data/jobopenings.json", JobOpenings.class);
+                dataIO.deserialize(jobOpeningsPath, JobOpenings.class);
 
         for (JobOpenings jobOpening : jobOpenings) {
             if (jobOpening.getId() == id) {
@@ -381,7 +443,7 @@ public class DataRepositoryImpl implements DataRepository{
     public List<MemberActivities> showMemberActivities(){
         DataIO notificationFile = new DataIOImpl();
         try{
-            List<MemberActivities> activity = notificationFile.deserialize("Data/memberActivities.json",MemberActivities.class);
+            List<MemberActivities> activity = notificationFile.deserialize(memberActivitiesPath,MemberActivities.class);
             return activity;
         }catch(Exception e){
             e.printStackTrace();
@@ -394,7 +456,7 @@ public class DataRepositoryImpl implements DataRepository{
 
         DataIO dataIO = new DataIOImpl();
 
-        List<MemberActivities> activities =dataIO.deserialize("Data/memberActivities.json", MemberActivities.class);
+        List<MemberActivities> activities =dataIO.deserialize(memberActivitiesPath, MemberActivities.class);
 
         for (MemberActivities memberActivity : activities) {
             if (memberActivity.getId() == id) {
@@ -409,7 +471,7 @@ public class DataRepositoryImpl implements DataRepository{
     public List<MenteeGrowth> showMenteeGrowth(){
         DataIO notificationFile = new DataIOImpl();
         try{
-            List<MenteeGrowth> growth = notificationFile.deserialize("Data/menteeGrowths.json",MenteeGrowth.class);
+            List<MenteeGrowth> growth = notificationFile.deserialize(menteeGrowthPath,MenteeGrowth.class);
             return growth;
         }catch(Exception e){
             e.printStackTrace();
@@ -421,7 +483,7 @@ public class DataRepositoryImpl implements DataRepository{
     public List<MentorshipActivities> showMentorshipActivities(){
         DataIO notificationFile = new DataIOImpl();
         try{
-            List<MentorshipActivities> activity = notificationFile.deserialize("Data/mentorshipActivities.json",MentorshipActivities.class);
+            List<MentorshipActivities> activity = notificationFile.deserialize(mentorshipActivitiesPath,MentorshipActivities.class);
             return activity;
         }catch(Exception e){
             e.printStackTrace();
@@ -435,7 +497,7 @@ public class DataRepositoryImpl implements DataRepository{
         DataIO dataIO = new DataIOImpl();
 
         List<MentorshipActivities> mentorActivities = 
-                dataIO.deserialize("Data/mentorshipActivities.json", MentorshipActivities.class);
+                dataIO.deserialize(mentorshipActivitiesPath, MentorshipActivities.class);
 
         for (MentorshipActivities mentorActivity : mentorActivities) {
             if (mentorActivity.getId() == id) {
@@ -450,7 +512,7 @@ public class DataRepositoryImpl implements DataRepository{
     public List<RolePermissions> showRolePermissions(){
         DataIO notificationFile = new DataIOImpl();
         try{
-            List<RolePermissions> permission = notificationFile.deserialize("Data/rolePermissions.json",RolePermissions.class);
+            List<RolePermissions> permission = notificationFile.deserialize(rolePermissionsPath,RolePermissions.class);
             return permission;
         }catch(Exception e){
             e.printStackTrace();
@@ -464,7 +526,7 @@ public class DataRepositoryImpl implements DataRepository{
         DataIO dataIO = new DataIOImpl();
 
         List<RolePermissions> rolePermissions = 
-                dataIO.deserialize("Data/rolePermissions.json", RolePermissions.class);
+                dataIO.deserialize(rolePermissionsPath, RolePermissions.class);
 
         for (RolePermissions rolePermission : rolePermissions) {
             if (rolePermission.getId() == id) {
@@ -479,7 +541,7 @@ public class DataRepositoryImpl implements DataRepository{
     public List<ScheduledAssessment> showScheduledAssessment(){
         DataIO notificationFile = new DataIOImpl();
         try{
-            List<ScheduledAssessment> permission = notificationFile.deserialize("Data/ScheduledAssessment.json",ScheduledAssessment.class);
+            List<ScheduledAssessment> permission = notificationFile.deserialize(scheduledAssessmentPath,ScheduledAssessment.class);
             return permission;
         }catch(Exception e){
             e.printStackTrace();
@@ -493,7 +555,7 @@ public class DataRepositoryImpl implements DataRepository{
         DataIO dataIO = new DataIOImpl();
 
         List<ScheduledAssessment> rolePermissions = 
-                dataIO.deserialize("Data/ScheduledAssessment.json", ScheduledAssessment.class);
+                dataIO.deserialize(scheduledAssessmentPath, ScheduledAssessment.class);
 
         for (ScheduledAssessment rolePermission : rolePermissions) {
             if (rolePermission.getId() == id) {
@@ -508,7 +570,7 @@ public class DataRepositoryImpl implements DataRepository{
     public List<StudentResult> showStudentResult(){
         DataIO notificationFile = new DataIOImpl();
         try{
-            List<StudentResult> result = notificationFile.deserialize("Data/studentResult.json",StudentResult.class);
+            List<StudentResult> result = notificationFile.deserialize(studentResultPath,StudentResult.class);
             return result;
         }catch(Exception e){
             e.printStackTrace();
@@ -522,7 +584,7 @@ public class DataRepositoryImpl implements DataRepository{
         DataIO dataIO = new DataIOImpl();
 
         List<StudentResult> studentResults = 
-                dataIO.deserialize("Data/studentResult.json", StudentResult.class);
+                dataIO.deserialize(studentResultPath, StudentResult.class);
 
         for (StudentResult studentResult : studentResults) {
             if (studentResult.getId() == id) {
