@@ -170,7 +170,7 @@ const DashboardMentor = () => {
       .catch((err) => console.error(err));
   }, []);
 
-  console.log("State:", mentorshipActivities);
+
   fetch(`${WEBAPI_JAVA_URL}/data/mentorNotification`)
     .then((response) => {
       if (!response.ok) {
@@ -424,7 +424,7 @@ const DashboardMentor = () => {
                           </p>
 
                           <p className="text-sm text-gray-600 mt-1">
-                            {activity.activity}
+                            {activity.description}
                           </p>
 
                           <div className="flex items-center gap-4 mt-2 text-sm text-gray-600">
@@ -432,21 +432,21 @@ const DashboardMentor = () => {
                               {activity.activityType}
                             </span>
 
-                            <span>{activity.activityDate}</span>
+                            <span>{activity.date}</span>
                           </div>
                         </div>
 
                         <span
-                          className={`px-3 py-1 rounded-full text-xs font-medium ${activity.status === "COMPLETED"
+                          className={`px-3 py-1 rounded-full text-xs font-medium ${activity.completionStatus === "COMPLETED"
                             ? "bg-green-100 text-green-800"
-                            : activity.status === "SCHEDULED"
+                            : activity.completionStatus === "SCHEDULED"
                               ? "bg-yellow-100 text-yellow-800"
-                              : activity.status === "CANCELLED"
+                              : activity.completionStatus === "CANCELLED"
                                 ? "bg-red-100 text-red-800"
                                 : "bg-gray-100 text-gray-800"
                             }`}
                         >
-                          {activity.status}
+                          {activity.completionStatus}
                         </span>
                       </div>
                     </div>
