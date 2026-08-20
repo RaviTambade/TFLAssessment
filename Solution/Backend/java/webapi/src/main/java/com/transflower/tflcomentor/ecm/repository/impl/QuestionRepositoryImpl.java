@@ -10,9 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
+import javax.sql.DataSource;
+
 import org.springframework.stereotype.Repository;
 
-import com.transflower.tflcomentor.configuration.DBConfig;
 import com.transflower.tflcomentor.ecm.dto.request.QuestionOptionsRequest;
 import com.transflower.tflcomentor.ecm.dto.response.DescriptiveQuestion;
 import com.transflower.tflcomentor.ecm.dto.response.QuestionDisplay;
@@ -26,8 +27,12 @@ import com.transflower.tflcomentor.ecm.repository.QuestionRepository;
 @Repository
 public class QuestionRepositoryImpl implements QuestionRepository {
 
+    private final DataSource dataSource;
+    public QuestionRepositoryImpl(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
     private Connection getConnection() throws Exception {
-        return DBConfig.getConnection();
+        return dataSource.getConnection();
     }
 
     @Override

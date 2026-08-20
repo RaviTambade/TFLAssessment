@@ -1,5 +1,4 @@
 package com.transflower.tflcomentor.interview;
-import com.transflower.tflcomentor.configuration.DBConfig;
 import com.transflower.tflcomentor.interview.dto.enums.InterviewStatus;
 import com.transflower.tflcomentor.interview.dto.request.InterviewFeedback;
 import com.transflower.tflcomentor.interview.dto.request.QuestionFeedback;
@@ -24,6 +23,8 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.sql.DataSource;
+
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,15 +34,18 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.transflower.tflcomentor.configuration.DBConfig;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @RequestMapping("/api/interview")
 public class InterviewController{
 
+    private final DataSource dataSource;
+    public InterviewController(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
     private Connection getConnection() throws Exception {
-            return DBConfig.getConnection();
+            return dataSource.getConnection();
     }
 
     @PostMapping("/schedule")
