@@ -1,33 +1,38 @@
-import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import { useScrollAnimation } from "@/hooks/use-scroll-animation";
+import { useState, useEffect } from 'react';
+
 import { getUserLogDetails, UserLog } from '../../../services/RolesManagement/GetUserLogDetail';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 import { Skeleton } from "@/components/ui/skeleton";
 
 
 const GetUserLogDetail = () => {
-  const { userId: routeUserId } = useParams<{ userId: string }>();
-  const { ref, isVisible } = useScrollAnimation();
-  const [userId, setUserId] = useState<string>(routeUserId ?? '');
-  const [userLogs, setUserLogs] = useState<UserLog[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string | null>(null);
-  const [inputValue, setInputValue] = useState<string>(routeUserId ?? '');
 
-  useEffect(() => {
+const { userId: routeUserId } = useParams<{ userId: string }>();
+const { ref, isVisible } = useScrollAnimation();
+
+const [userId, setUserId] = useState<string>(routeUserId ?? '');
+const [userLogs, setUserLogs] = useState<UserLog[]>([]);
+const [loading, setLoading] = useState<boolean>(false);
+const [error, setError] = useState<string | null>(null);
+const [inputValue, setInputValue] = useState<string>(routeUserId ?? '');
+
+useEffect(() => {
     const fetchUserLogs = async () => {
       if (!userId) return;
       try {
-        setLoading(true);
-        const logs = await getUserLogDetails(parseInt(userId, 10));
-        setUserLogs(logs);
-        setError(null);
-      } catch (err) {
+            setLoading(true);
+            const logs = await getUserLogDetails(parseInt(userId, 10));
+            setUserLogs(logs);
+            setError(null);
+      } 
+      catch (err) {
         setError('Failed to fetch user log details');
         console.error(err);
-      } finally {
+      } 
+      finally {
         setLoading(false);
       }
     };
@@ -42,7 +47,6 @@ const GetUserLogDetail = () => {
       setError('Please enter a valid user ID.');
       return;
     }
-
     setUserId(inputValue.trim());
   };
 
@@ -55,29 +59,19 @@ const GetUserLogDetail = () => {
             User Log Details
           </h2>
           <p className="text-lg text-muted-foreground">
-            {userId
-              ? `Viewing logs for User ID: ${userId}`
-              : 'Enter a user ID below to fetch log history.'}
+            {userId ? `Viewing logs for User ID: ${userId}` : 'Enter a user ID below to fetch log history.'}
           </p>
         </div>
 
         <div className="max-w-xl mx-auto mb-8">
           <div className="grid gap-4 md:grid-cols-[1fr_auto]">
-            <input
-              value={inputValue}
-              onChange={(e) => {
-                setInputValue(e.target.value);
-                setError(null);
-              }}
-              type="text"
-              placeholder="Enter user ID"
-              className="w-full rounded-lg border border-slate-200 px-4 py-3 text-base shadow-sm outline-none focus:border-slate-400 focus:ring-2 focus:ring-slate-100"
-            />
-            <button
-              type="button"
-              onClick={handleFetchLogs}
-              className="rounded-lg bg-primary px-6 py-3 text-white transition hover:bg-primary/90"
-            >
+            <input value={inputValue} onChange={(e) => 
+              {
+              setInputValue(e.target.value);
+              setError(null);
+              }} type="text" placeholder="Enter user ID"
+               className="w-full rounded-lg border border-slate-200 px-4 py-3 text-base shadow-sm outline-none focus:border-slate-400 focus:ring-2 focus:ring-slate-100"/>
+            <button type="button" onClick={handleFetchLogs} className="rounded-lg bg-primary px-6 py-3 text-white transition hover:bg-primary/90" >
               Load Logs
             </button>
           </div>
@@ -85,12 +79,8 @@ const GetUserLogDetail = () => {
 
         {/* Card */}
         <div className="max-w-6xl mx-auto">
-          <Card
-            ref={ref}
-            className={`border-0 shadow-elegant overflow-hidden transition-all duration-1000 ${
-              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-            }`}
-          >
+          <Card ref={ref} className={`border-0 shadow-elegant overflow-hidden transition-all duration-1000 
+          ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
             <CardHeader className="bg-primary text-primary-foreground">
               <CardTitle>Login/Logout History</CardTitle>
             </CardHeader>

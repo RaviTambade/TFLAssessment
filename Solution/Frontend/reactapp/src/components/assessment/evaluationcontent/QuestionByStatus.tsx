@@ -3,15 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import {  WEBAPI_DOTNET_URL, WEBAPI_NODE_URL ,WEBAPI_JAVA_URL} from "@/lib/utils";
 
-
-type Question = {
-  questionId: number;
-  description: string;
-  questionType: string;
-  difficultyLevel: string;
-  status?: string;
-  createdAt?: string;
-};
+import Question from "./entities/Question";
 
 const fetchQuestionsByStatus = async (status: string) => {
   const currentUser = JSON.parse(sessionStorage.getItem("current") || "{}");
@@ -22,17 +14,12 @@ const fetchQuestionsByStatus = async (status: string) => {
   return res.json();
 };
 
-const QUESTION_STATUSES = [
-  "APPROVED",
-  "REJECTED",
-  "DRAFT",
-];
+const QUESTION_STATUSES = ["APPROVED","REJECTED","DRAFT",];
 const QuestionByStatus = () => {
   const [selectedStatus, setSelectedStatus] = useState(QUESTION_STATUSES[0]);
   const [questions, setQuestions] = useState<Question[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-
   const isEmpty = useMemo(
     () => !loading && questions.length === 0,
     [loading, questions]
@@ -40,23 +27,21 @@ const QuestionByStatus = () => {
 
   useEffect(() => {
     let isMounted = true;
-
     const load = async () => {
       setLoading(true);
       setError(null);
       try {
-        const data = await fetchQuestionsByStatus(selectedStatus);
+          const data = await fetchQuestionsByStatus(selectedStatus);
+          if (isMounted) {
+            setQuestions(Array.isArray(data) ? data : data.content || []);
+          }
+      }
+      catch (err) {
         if (isMounted) {
-          setQuestions(Array.isArray(data) ? data : data.content || []);
+          setError(err instanceof Error ? err.message : "Failed to load questions");setQuestions([]);
         }
-      } catch (err) {
-        if (isMounted) {
-          setError(
-            err instanceof Error ? err.message : "Failed to load questions"
-          );
-          setQuestions([]);
-        }
-      } finally {
+      }
+      finally {
         if (isMounted) {
           setLoading(false);
         }
@@ -72,43 +57,27 @@ const QuestionByStatus = () => {
   return (
     <section className="py-5 bg-gradient-to-b from-orange-50/40 to-background">
       <div className="container mx-auto px-4 max-w-7xl">
-        
         <div className="mb-8">
           <h1 className="text-3xl sm:text-2xl font-extrabold text-foreground tracking-tight">
             View Questions By Status
           </h1>
         </div>
-
-        {/* Radio Buttons */}
         <div className="mb-8">
           <label className="text-sm font-semibold text-foreground mb-3 block">
             Question Status
           </label>
-
           <div className="flex flex-wrap gap-100">
             {QUESTION_STATUSES.map((status) => (
-              <label
-                key={status}
-                className={`flex items-center gap-14 px-14 py-2 rounded-lg border cursor-pointer transition
-                  ${
-                    selectedStatus === status ? "border-orange-400 bg-orange-100 text-orange-600" : "border-border hover:border-orange-300"
-                  }`}
-              >
-                <input
-                  type="radio"
-                  name="questionStatus"
-                  value={status}
-                  checked={selectedStatus === status}
-                  onChange={() => setSelectedStatus(status)}
-                  className="accent-orange-500"
-                />
+              <label key={status} className={`flex items-center gap-14 px-14 py-2 rounded-lg border cursor-pointer transition
+                  ${ selectedStatus === status ? "border-orange-400 bg-orange-100 text-orange-600" : "border-border hover:border-orange-300"}`}>
+                <input type="radio" name="questionStatus" value={status} checked={selectedStatus === status}
+                        onChange={() => setSelectedStatus(status)}className="accent-orange-500"/>
                 <span className="text-sm font-medium">{status}</span>
               </label>
             ))}
           </div>
         </div>
 
-        {/* States */}
         {loading && (
           <div className="rounded-lg border border-border bg-card p-4 text-sm text-muted-foreground animate-pulse shadow-sm">
             Loading questions...
@@ -127,7 +96,6 @@ const QuestionByStatus = () => {
           </div>
         )}
 
-        {/* Questions */}
         {questions.length > 0 && (
           <div className="group rounded-xl border border-border bg-card p-5 shadow-sm">
             <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
@@ -138,10 +106,7 @@ const QuestionByStatus = () => {
 
             <ul className="space-y-3">
               {questions.map((question) => (
-                <li
-                  key={question.questionId}
-                  className="rounded-lg border border-border bg-background p-3"
-                >
+                <li key={question.questionId} className="rounded-lg border border-border bg-background p-3">
                   <p className="text-sm sm:text-base text-foreground leading-relaxed">
                     {question.description}
                   </p>

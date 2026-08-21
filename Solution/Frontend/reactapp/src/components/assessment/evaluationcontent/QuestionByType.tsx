@@ -1,16 +1,7 @@
-//working...
-
 import { useEffect, useMemo, useState } from "react";
 import {  WEBAPI_DOTNET_URL, WEBAPI_NODE_URL ,WEBAPI_JAVA_URL} from "@/lib/utils";
 
-
-type Question = {
-  questionId: number;
-  description: string;
-  questionType: string;
-  difficultyLevel: string;
-  status: string;
-};
+import Question from "./entities/Question";
 
 const fetchQuestionsByType = async (type: string) => {
   const currentUser = JSON.parse(sessionStorage.getItem("current") || "{}");
@@ -21,27 +12,15 @@ const fetchQuestionsByType = async (type: string) => {
   const data = await res.json();
   return Array.isArray(data) ? data : data.content || [];
 };
-
-const QUESTION_TYPES = [
-  "MCQ",
-  "PROBLEM_STATEMENT",
-  "HANDS_ON"
-];
-
+const QUESTION_TYPES = ["MCQ", "PROBLEM_STATEMENT", "HANDS_ON"];
 const QuestionByType = () => {
   const [selectedType, setSelectedType] = useState(QUESTION_TYPES[0]);
   const [questions, setQuestions] = useState<Question[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-
-  const isEmpty = useMemo(
-    () => !loading && questions.length === 0,
-    [loading, questions]
-  );
-
+  const isEmpty = useMemo(() => !loading && questions.length === 0, [loading, questions]);
   useEffect(() => {
     let isMounted = true;
-
     const load = async () => {
       setLoading(true);
       setError(null);
@@ -50,36 +29,34 @@ const QuestionByType = () => {
         if (isMounted) {
           setQuestions(data);
         }
-      } catch (err) {
+      } 
+      catch (err) {
         if (isMounted) {
           setError(
             err instanceof Error ? err.message : "Failed to load questions"
           );
           setQuestions([]);
         }
-      } finally {
+      } 
+      finally {
         if (isMounted) {
           setLoading(false);
         }
       }
     };
-
     load();
     return () => {
       isMounted = false;
     };
   }, [selectedType]);
-
   return (
     <section className="py-5 bg-gradient-to-b from-orange-50/40 to-background">
       <div className="container mx-auto px-4 max-w-7xl">
-        
         <div className="mb-8">
           <h1 className="text-3xl sm:text-2xl font-extrabold text-foreground tracking-tight">
             View Questions By Type
           </h1>
         </div>
-
         <div className="mb-8">
           <label className="text-sm font-semibold text-foreground mb-3 block">
             Question Type
@@ -90,11 +67,9 @@ const QuestionByType = () => {
                 key={type}
                 className={`flex items-center gap-2 px-4 py-2 rounded-lg border cursor-pointer transition
                   ${
-                    selectedType === type
-                      ? "border-orange-400 bg-orange-100 text-orange-600"
-                      : "border-border hover:border-orange-300"
+                    selectedType === type ? "border-orange-400 bg-orange-100 text-orange-600" : "border-border hover:border-orange-300"
                   }`}
-              >
+                >
                 <input
                   type="radio"
                   name="questionType"
@@ -108,38 +83,29 @@ const QuestionByType = () => {
             ))}
           </div>
         </div>
-
         {loading && (
           <div className="rounded-lg border border-border bg-card p-4 text-sm text-muted-foreground animate-pulse shadow-sm">
             Loading questions...
           </div>
         )}
-
         {error && (
           <div className="rounded-lg border border-destructive/40 bg-destructive/10 p-4 text-sm text-destructive shadow-sm">
             {error}
           </div>
         )}
-
         {isEmpty && !error && (
           <div className="rounded-lg border border-border bg-card p-4 text-sm text-muted-foreground shadow-sm">
             No questions found.
           </div>
         )}
-
-        {/* Questions */}
         {questions.length > 0 && (
           <div className="group rounded-xl border border-border bg-card p-5 shadow-sm">
             <h2 className="text-lg font-semibold text-foreground mb-4">
               {selectedType.split("_").join(" ")} Questions
             </h2>
-
             <ul className="space-y-3">
               {questions.map((question) => (
-                <li
-                  key={question.questionId}
-                  className="rounded-lg border border-border bg-background p-3"
-                >
+                <li key={question.questionId} className="rounded-lg border border-border bg-background p-3">
                   <p className="text-sm sm:text-base text-foreground leading-relaxed">
                     {question.description}
                   </p>
@@ -152,5 +118,4 @@ const QuestionByType = () => {
     </section>
   );
 };
-
 export default QuestionByType;
