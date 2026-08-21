@@ -9,20 +9,10 @@ import { Textarea } from "@/components/ui/textarea";
 import {Select,SelectContent,SelectItem,SelectTrigger,SelectValue} from "@/components/ui/select";
 import { CalendarDays, IdCard, MessageSquare, Star, ThumbsUp, User, Zap } from "lucide-react";
 
+import type InterviewFeedback from "./entities/InterviewFeedback";
 
 import { WEBAPI_JAVA_URL } from "@/lib/utils";
 
-type InterviewFeedback = {
-  interviewId: number;
-  smeId: number;
-  startTime: string;
-  endTime: string;
-  communicationRating: number;
-  problemSolvingRating: number;
-  strengths: string;
-  feedbackComment: string;
-  recommendation: string;
-};
 
 const InterviewFeedbackForm = () => {
     const { id } = useParams();

@@ -3,11 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import { Card, CardContent } from "@/components/ui/card";
 
-type InterviewHistory = {
-  interviewId: number;
-  title: string;
-};
-
+import type InterviewHistory from "./entities/Interviewhistory";
   const InterviewHistory = () => {
   const [history, setHistory] = useState<InterviewHistory[]>([]);
   const navigate=useNavigate();
