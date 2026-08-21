@@ -1,25 +1,17 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {FileText } from "lucide-react";
 import GetQuestionSme from "./getQuestionsme";
+
 import { WEBAPI_JAVA_URL } from "@/lib/utils";
 
-
-type ConceptCount={
-    concept:string;
-    question_count:number;
-};
-
-type DifficultyCount={
-    difficulty:string;
-    count:number;
-};
+import ConceptCountModel from "./entities/ConceptCountModel";
+import DifficultyCount from "./entities/DifficultyCountModel";
 
 const EvaluationContentSme = () => {
- 
     const navigate=useNavigate();
-    
     const [conceptQuestionCount, setConceptQuestionCount] = useState([]);
     const [difficultyQuestionCount,setDifficultyQuestionCount]=useState([]);
     const [selectedFilter,setSelectedFilter]=useState({ concept: "",difficultyLevel: "",language: "",framework: "",layer: ""});
@@ -30,7 +22,7 @@ const EvaluationContentSme = () => {
         const response=await fetch(`${WEBAPI_JAVA_URL}/technologies/concepts/question-count`,{
           method:"GET",
         });
-        const data:ConceptCount[]=await response.json();
+        const data:ConceptCountModel[]=await response.json();
         setConceptQuestionCount(Array.isArray(data)?data:[]);
       }catch(error){
         console.log(error);
@@ -53,14 +45,10 @@ const EvaluationContentSme = () => {
   };
   void fetchDifficultyCount();
  },[]);
-
-    console.log(selectedFilter);
-    
+  
    return (
   <div className="min-h-screen bg-gray-50 p-8">
-    {/* Wrapper */}
     <div className="max-w-7xl mx-auto space-y-10">
-      
       {/* Header */}
       <div>
         <h1 className="text-4xl font-extrabold text-gray-900 tracking-tight">
@@ -92,8 +80,7 @@ const EvaluationContentSme = () => {
                 layer: "",
               })
             }
-            className="cursor-pointer transition transform hover:scale-105 hover:shadow-lg"
-          >
+            className="cursor-pointer transition transform hover:scale-105 hover:shadow-lg">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
@@ -109,7 +96,6 @@ const EvaluationContentSme = () => {
             </CardContent>
           </Card>
         ))}
-
         {/* Difficulty Section */}
         <div className="col-span-full mt-8">
           <h5 className="text-lg font-semibold text-gray-800 mb-4">
@@ -128,8 +114,7 @@ const EvaluationContentSme = () => {
                 layer: "",
               })
             }
-            className="cursor-pointer transition transform hover:scale-105 hover:shadow-lg"
-          >
+            className="cursor-pointer transition transform hover:scale-105 hover:shadow-lg" >
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
@@ -146,8 +131,6 @@ const EvaluationContentSme = () => {
           </Card>
         ))}
       </div>
-
-      {/* Questions Component */}
       <div className="mt-10">
         <GetQuestionSme
           concept={selectedFilter.concept}
@@ -158,5 +141,4 @@ const EvaluationContentSme = () => {
   </div>
 );
 }
-
 export default EvaluationContentSme;

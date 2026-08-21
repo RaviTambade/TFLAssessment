@@ -3,9 +3,10 @@ import { useNavigate } from "react-router-dom";
 
 import { Card, CardContent } from "@/components/ui/card";
 
-import type InterviewHistory from "./entities/Interviewhistory";
+import InterviewHistoryModel from "./entities/InterviewHistoryModel";
+
   const InterviewHistory = () => {
-  const [history, setHistory] = useState<InterviewHistory[]>([]);
+  const [history, setHistory] = useState<InterviewHistoryModel[]>([]);
   const navigate=useNavigate();
   const storedUser = sessionStorage.getItem("current");
   const user = storedUser ? JSON.parse(storedUser) : {};

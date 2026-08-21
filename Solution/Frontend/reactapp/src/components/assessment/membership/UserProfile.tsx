@@ -410,7 +410,6 @@ return (
                       <div className="w-32">
                         <p className="font-bold">Job Title</p>
                       </div>
-
                       <Input type="text" value={professionalData?.job_title || ""}className="flex-1" disabled={editingField !== "job_title"}
                         onChange={(e) => handleChange("professional", "job_title", e.target.value)} />
 

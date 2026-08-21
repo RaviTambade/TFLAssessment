@@ -9,7 +9,6 @@ import { WEBAPI_JAVA_URL } from "@/lib/utils";
 import QuestionFormData from "../assessmentOrchestrator/entities/MultipleChoiceQuestion";
 
 const EditQuestion = () => {
-    
 const navigate = useNavigate();
 const location = useLocation();
 const { id } = useParams();

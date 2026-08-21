@@ -1,29 +1,10 @@
 import { useState, useEffect } from "react";
 import { WEBAPI_JAVA_URL } from "@/lib/utils";
+
 import axios from "axios";
 
-type Props = {
-  concept?: string;
-  difficulty_level?: string;
-  question_type?: string;
-  status?: string;
-  language?: string;
-  layer?: string;
-  framework?: string;
-};
-
-type Question = {
-  questionId: number;
-  description: string;
-  questionType: string;
-  difficultyLevel: string;
-  createdAt: string;
-  status: string;
-  language: string;
-  layer: string;
-  framework: string;
-  concept: string;
-};
+import Props from "./entities/Props";
+import Question from "./entities/Question";
 
 const GetQuestionSme = ({
   concept,
@@ -33,14 +14,12 @@ const GetQuestionSme = ({
   language,
   layer,
   framework,
-}: Props) => {
-  const [questions, setQuestions] = useState<Question[]>([]);
+}: Props) => {const [questions, setQuestions] = useState<Question[]>([]);
 
   useEffect(() => {
     const fetchQuestions = async () => {
       try {
-        const params: Record<string, string> = {};
-
+        const params : Record<string, string> = {};
         if (concept) params.concept = concept;
         if (difficulty_level) params.difficulty_level = difficulty_level;
         if (question_type) params.question_type = question_type;
@@ -48,19 +27,13 @@ const GetQuestionSme = ({
         if (language) params.language = language;
         if (layer) params.layer = layer;
         if (framework) params.framework = framework;
-
-        console.log("Sending params:", params);
-
-        const response = await axios.get(
-          `${WEBAPI_JAVA_URL}/filter/questions`,
-          { params },
-        );
+        const response = await axios.get(`${WEBAPI_JAVA_URL}/filter/questions`, { params },);
         setQuestions(response.data);
-      } catch (error) {
+      } 
+      catch (error) {
         console.log(error);
       }
     };
-
     void fetchQuestions();
   }, [
     concept,
@@ -83,5 +56,4 @@ const GetQuestionSme = ({
     </div>
   );
 };
-
 export default GetQuestionSme;
