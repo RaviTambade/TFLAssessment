@@ -8,7 +8,7 @@ import { Label } from "@/components/ui/label";
 import { MessageSquare, Star, User, Zap } from "lucide-react";
 
 
-import  type QuestionFeedback from "./entities/QuestionFeedback";
+import type QuestionFeedback from "./entities/QuestionFeedback";
 
 import { WEBAPI_JAVA_URL } from "@/lib/utils";
 

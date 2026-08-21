@@ -1,4 +1,4 @@
-type QuestionFeedback={
+interface QuestionFeedback{
     interviewId:number
     question:string;
     confidence:number;
