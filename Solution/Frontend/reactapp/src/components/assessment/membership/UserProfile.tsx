@@ -411,23 +411,12 @@ return (
                         <p className="font-bold">Job Title</p>
                       </div>
 
-                      <Input type="text"
-                        value={professionalData?.job_title || ""}
-                        className="flex-1"
-                        disabled={editingField !== "job_title"}
-                        onChange={(e) => handleChange("professional", "job_title", e.target.value)}
-                      />
+                      <Input type="text" value={professionalData?.job_title || ""}className="flex-1" disabled={editingField !== "job_title"}
+                        onChange={(e) => handleChange("professional", "job_title", e.target.value)} />
 
-                      <img
-                        src="/editlogo.png"
-                        onClick={() => onEditHandle("job_title")}
-                        className="h-8 w-8 cursor-pointer"
-                        alt="Edit Logo"
-                      />
+                      <img src="/editlogo.png" onClick={() => onEditHandle("job_title")}className="h-8 w-8 cursor-pointer"alt="Edit Logo"/>
                       <div className="flex justify-center mt-1">
-                        <Button onClick={() => updateSingleField("professional-info", "job_title", professionalData.job_title)}
-                          variant="ghost"
-                          className="flex items-center gap-2">
+                        <Button onClick={() => updateSingleField("professional-info", "job_title", professionalData.job_title)}variant="ghost" className="flex items-center gap-2">
                           <Save size={18} /></Button></div>
                     </div>
 
@@ -436,22 +425,12 @@ return (
                         <p className="font-bold">Employment Type</p>
                       </div>
 
-                      <Input
-                        type="text"
-                        value={professionalData?.employment_type || ""}
-                        className="flex-1"
-                        disabled={editingField !== "employment_type"}
-                        onChange={(e) => handleChange("professional", "employment_type", e.target.value)} />
+                     <Input type="text" value={professionalData?.employment_type || ""} className="flex-1" disabled={editingField !== "employment_type"} onChange={(e) => handleChange("professional", "employment_type", e.target.value)} />
                       <img
-                        src="/editlogo.png"
-                        onClick={() => onEditHandle("employment_type")}
-                        className="h-8 w-8 cursor-pointer"
-                        alt="Edit Logo"
-                      />
+                        src="/editlogo.png" onClick={() => onEditHandle("employment_type")} className="h-8 w-8 cursor-pointer" alt="Edit Logo" />
                       <div className="flex justify-center mt-1">
                         <Button onClick={() => updateSingleField("professional-info", "employment_type", professionalData.employment_type)}
-                          variant="ghost"
-                          className="flex items-center gap-2">
+                          variant="ghost" className="flex items-center gap-2">
                           <Save size={18} /></Button></div>
                     </div>
 
@@ -460,24 +439,12 @@ return (
                         <p className="font-bold">Experience</p>
                       </div>
 
-                      <Input
-                        type="number"
-                        value={professionalData?.experience_years || ""}
-                        className="flex-1"
-                        disabled={editingField !== "experience_years"}
-                        onChange={(e) => handleChange("professional", "experience_years", e.target.value)}
-                      />
+                      <Input type="number" value={professionalData?.experience_years || ""} className="flex-1" disabled={editingField !== "experience_years"} 
+                         onChange={(e) => handleChange("professional", "experience_years", e.target.value)} />
 
-                      <img
-                        src="/editlogo.png"
-                        onClick={() => onEditHandle("experience_years")}
-                        className="h-8 w-8 cursor-pointer"
-                        alt="Edit Logo"
-                      />
+                      <img src="/editlogo.png" onClick={() => onEditHandle("experience_years")} className="h-8 w-8 cursor-pointer" alt="Edit Logo" />
                       <div className="flex justify-center mt-1">
-                        <Button onClick={() => updateSingleField("professional-info", "experience_years", professionalData.experience_years)}
-                          variant="ghost"
-                          className="flex items-center gap-2">
+                        <Button onClick={() => updateSingleField("professional-info", "experience_years", professionalData.experience_years)} variant="ghost" className="flex items-center gap-2">
                           <Save size={18} /></Button></div>
                     </div>
 
@@ -486,55 +453,32 @@ return (
                         <p className="font-bold">Location</p>
                       </div>
 
-                      <Input
-                        type="text"
-                        value={professionalData?.location || ""}
-                        className="flex-1"
-                        disabled={editingField !== "location"}
-                        onChange={(e) => handleChange("professional", "location", e.target.value.split(","))}
-                      />
+                      <Input type="text" value={professionalData?.location || ""} className="flex-1" disabled={editingField !== "location"} onChange={(e) => handleChange("professional", "location", e.target.value.split(","))} />
 
-                      <img
-                        src="/editlogo.png"
-                        onClick={() => onEditHandle("location")}
-                        className="h-8 w-8 cursor-pointer"
-                        alt="Edit Logo"
-                      />
+                      <img src="/editlogo.png" onClick={() => onEditHandle("location")} className="h-8 w-8 cursor-pointer" alt="Edit Logo" />
                       <div className="flex justify-center mt-1">
                         <Button onClick={() => updateSingleField("professional-info", "location", professionalData.location)}
-                          variant="ghost"
-                          className="flex items-center gap-2">
-                          <Save size={18} /></Button></div>                    </div>
+                          variant="ghost" className="flex items-center gap-2">
+                          <Save size={18} /></Button>
+                       </div>                    
+                      </div>
 
                     <div className="flex items-center gap-4">
                       <div className="w-32">
                         <p className="font-bold">Skills</p>
                       </div>
 
-                      <Input
-                        type="text"
-                        value={professionalData?.skills || ""}
-                        className="flex-1"
-                        disabled={editingField !== "skills"}
-                        onChange={(e) => handleChange("professional", "skills", e.target.value)}
-                      />
+                      <Input type="text" value={professionalData?.skills || ""} className="flex-1" disabled={editingField !== "skills"} onChange={(e) => handleChange("professional", "skills", e.target.value)} />
 
-                      <img
-                        src="/editlogo.png"
-                        onClick={() => onEditHandle("skills")}
-                        className="h-8 w-8 cursor-pointer"
-                        alt="Edit Logo"
-                      />
+                      <img src="/editlogo.png" onClick={() => onEditHandle("skills")} className="h-8 w-8 cursor-pointer" alt="Edit Logo" />
                       <div className="flex justify-center mt-1">
                         <Button onClick={() => updateSingleField("professional-info", "skills", professionalData.skills)}
-                          variant="ghost"
-                          className="flex items-center gap-2">
+                          variant="ghost" className="flex items-center gap-2">
                           <Save size={18} /></Button></div>
                     </div>
 
                   </div>
                 )}
-                {/* ACADEMIC */}
                 {activeTab === "academic" && (
                   <div className="space-y-4">
 
@@ -543,24 +487,12 @@ return (
                         <p className="font-bold">Stream Name</p>
                       </div>
 
-                      <Input
-                        type="text"
-                        value={academicData?.stream_name || ""}
-                        className="flex-1"
-                        disabled={editingField !== "stream_name"}
-                        onChange={(e) => handleChange("academic", "stream_name", e.target.value)}
-                      />
+                      <Input type="text" value={academicData?.stream_name || ""} className="flex-1" disabled={editingField !== "stream_name"} onChange={(e) => handleChange("academic", "stream_name", e.target.value)} />
 
-                      <img
-                        src="/editlogo.png"
-                        onClick={() => onEditHandle("stream_name")}
-                        className="h-8 w-8 cursor-pointer"
-                        alt="Edit Logo"
-                      />
+                      <img src="/editlogo.png" onClick={() => onEditHandle("stream_name")} className="h-8 w-8 cursor-pointer" alt="Edit Logo" />
                       <div className="flex justify-center mt-1">
                         <Button onClick={() => updateSingleField("academic-info", "stream_name", academicData.stream_name)}
-                          variant="ghost"
-                          className="flex items-center gap-2">
+                          variant="ghost" className="flex items-center gap-2">
                           <Save size={18} /></Button>
                       </div>
                     </div>
@@ -570,50 +502,29 @@ return (
                         <p className="font-bold">Specialization</p>
                       </div>
 
-                      <Input
-                        type="text"
-                        value={academicData?.specialization || ""}
-                        className="flex-1"
-                        disabled={editingField !== "specialization"}
-                        onChange={(e) => handleChange("academic", "specialization", e.target.value)}
-                      />
+                      <Input type="text" value={academicData?.specialization || ""} className="flex-1" disabled={editingField !== "specialization"} onChange={(e) => handleChange("academic", "specialization", e.target.value)} />
 
-                      <img
-                        src="/editlogo.png"
-                        onClick={() => onEditHandle("specialization")}
-                        className="h-8 w-8 cursor-pointer"
-                        alt="Edit Logo"
-                      />
+                      <img src="/editlogo.png" onClick={() => onEditHandle("specialization")} className="h-8 w-8 cursor-pointer" alt="Edit Logo" />
                       <div className="flex justify-center mt-1">
                         <Button onClick={() => updateSingleField("academic-info", "specialization", academicData.specialization)}
-                          variant="ghost"
-                          className="flex items-center gap-2">
-                          <Save size={18} /></Button></div>                  </div>
+                          variant="ghost"className="flex items-center gap-2">
+                          <Save size={18} /></Button>
+                      </div>                
+                    </div>
 
                     <div className="flex items-center gap-4">
                       <div className="w-32">
                         <p className="font-bold">Enrollment Year</p>
                       </div>
 
-                      <Input
-                        type="number"
-                        value={academicData?.enrollment_year || ""}
-                        className="flex-1"
-                        disabled={editingField !== "enrollment_year"}
-                        onChange={(e) => handleChange("academic", "enrollment_year", e.target.value)}
-                      />
+                      <Input type="number" value={academicData?.enrollment_year || ""} className="flex-1" disabled={editingField !== "enrollment_year"} onChange={(e) => handleChange("academic", "enrollment_year", e.target.value)} />
 
-                      <img
-                        src="/editlogo.png"
-                        onClick={() => onEditHandle("enrollment_year")}
-                        className="h-8 w-8 cursor-pointer"
-                        alt="Edit Logo"
-                      />
+                      <img src="/editlogo.png" onClick={() => onEditHandle("enrollment_year")} className="h-8 w-8 cursor-pointer" alt="Edit Logo" />
                       <div className="flex justify-center mt-1">
                         <Button onClick={() => updateSingleField("academic-info", "enrollment_year", academicData.enrollment_year)}
-                          variant="ghost"
-                          className="flex items-center gap-2">
-                          <Save size={18} /></Button></div>
+                          variant="ghost" className="flex items-center gap-2">
+                          <Save size={18} /></Button>
+                      </div>
                     </div>
 
                     <div className="flex items-center gap-4">
@@ -621,25 +532,14 @@ return (
                         <p className="font-bold">Passing Year</p>
                       </div>
 
-                      <Input
-                        type="number"
-                        value={academicData?.passing_year || ""}
-                        className="flex-1"
-                        disabled={editingField !== "passing_year"}
-                        onChange={(e) => handleChange("academic", "passing_year", e.target.value)}
-                      />
+                      <Input type="number" value={academicData?.passing_year || ""} className="flex-1" disabled={editingField !== "passing_year"} onChange={(e) => handleChange("academic", "passing_year", e.target.value)} />
 
-                      <img
-                        src="/editlogo.png"
-                        onClick={() => onEditHandle("passing_year")}
-                        className="h-8 w-8 cursor-pointer"
-                        alt="Edit Logo"
-                      />
+                      <img src="/editlogo.png" onClick={() => onEditHandle("passing_year")} className="h-8 w-8 cursor-pointer" alt="Edit Logo" />
                       <div className="flex justify-center mt-1">
                         <Button onClick={() => updateSingleField("academic-info", "passing_year", academicData.passing_year)}
-                          variant="ghost"
-                          className="flex items-center gap-2">
-                          <Save size={18} /></Button></div>
+                          variant="ghost" className="flex items-center gap-2">
+                          <Save size={18} /></Button>
+                      </div>
                     </div>
 
                     <div className="flex items-center gap-4">
@@ -647,25 +547,14 @@ return (
                         <p className="font-bold">Percentage</p>
                       </div>
 
-                      <Input
-                        type="number"
-                        value={academicData?.percentage || ""}
-                        className="flex-1"
-                        disabled={editingField !== "percentage"}
-                        onChange={(e) => handleChange("academic", "percentage", e.target.value)}
-                      />
+                      <Input type="number" value={academicData?.percentage || ""} className="flex-1" disabled={editingField !== "percentage"} onChange={(e) => handleChange("academic", "percentage", e.target.value)} />
 
-                      <img
-                        src="/editlogo.png"
-                        onClick={() => onEditHandle("percentage")}
-                        className="h-8 w-8 cursor-pointer"
-                        alt="Edit Logo"
-                      />
+                      <img src="/editlogo.png" onClick={() => onEditHandle("percentage")} className="h-8 w-8 cursor-pointer" alt="Edit Logo" />
                       <div className="flex justify-center mt-1">
                         <Button onClick={() => updateSingleField("academic-info", "percentage", academicData.percentage)}
-                          variant="ghost"
-                          className="flex items-center gap-2">
-                          <Save size={18} /></Button></div>
+                          variant="ghost" className="flex items-center gap-2">
+                          <Save size={18} /></Button>
+                      </div>
                     </div>
 
                     <div className="flex items-center gap-4">
@@ -673,46 +562,23 @@ return (
                         <p className="font-bold">College Name</p>
                       </div>
 
-                      <Input
-                        type="text"
-                        value={academicData?.college_name || ""}
-                        className="flex-1"
-                        disabled={editingField !== "college_name"}
-                        onChange={(e) => handleChange("academic", "college_name", e.target.value)}
-                      />
+                      <Input type="text" value={academicData?.college_name || ""} className="flex-1" disabled={editingField !== "college_name"} onChange={(e) => handleChange("academic", "college_name", e.target.value)} />
 
-                      <img
-                        src="/editlogo.png"
-                        onClick={() => onEditHandle("college_name")}
-                        className="h-8 w-8 cursor-pointer"
-                        alt="Edit Logo"
-                      />
+                      <img src="/editlogo.png" onClick={() => onEditHandle("college_name")} className="h-8 w-8 cursor-pointer" alt="Edit Logo" />
                       <div className="flex justify-center mt-1">
                         <Button onClick={() => updateSingleField("academic-info", "college_name", academicData.college_name)}
-                          variant="ghost"
-                          className="flex items-center gap-2">
+                          variant="ghost" className="flex items-center gap-2">
                           <Save size={18} /></Button></div>
-
-
                     </div>
-
-
                   </div>
-
                 )}
               </CardContent>
-
             </Card>
           </div>
-
-
         </div>
       </div>
-
       <Footer />
     </div>
   );
 };
-
-
 export default UserProfile;
