@@ -25,7 +25,7 @@ function UserInformation() {
           setResponse({
           success: false,
           error: "Backend not running",
-                     }); 
+      }); 
     } 
     finally{
           setLoading(false);
