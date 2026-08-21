@@ -1,15 +1,22 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 import { Card, CardContent, CardHeader, CardTitle } from "../../ui/card";
 import { Bell, Users, Lock, TrendingUp, CheckCircle, AlertCircle, Shield, Settings } from "lucide-react";
 import { UsersRound, ShieldCheck, Clock3, Activity, ClipboardList, ClipboardCheck, BellRing, History, Sparkles, ArrowUpRight } from "lucide-react";
-import { useNavigate } from "react-router-dom";
-import { WEBAPI_NODE_URL } from "@/lib/utils";
-import { WEBAPI_DOTNET_URL } from "@/lib/utils";
-import { WEBAPI_JAVA_URL } from "@/lib/utils";
+
+
 import Member from "./entities/Member";
 import RolePermission from "./entities/RolePermission";
 import MemberActivity from "./entities/MemberActivity";
 import Notification from "./entities/Notification";
+
+
+import { WEBAPI_NODE_URL } from "@/lib/utils";
+import { WEBAPI_DOTNET_URL } from "@/lib/utils";
+import { WEBAPI_JAVA_URL } from "@/lib/utils";
+
+
 
 //function component for Admin Dashboard - Transflower Membership & Roles Management
 const DashboardAdmin = () => {
@@ -48,7 +55,7 @@ const DashboardAdmin = () => {
           throw new Error("Failed to fetch assessment count");
         }
         const data = await response.json();
-        console.log(data);
+ 
         setAssessmentCount(data.totalAssessment);
       }
       catch (error) {
@@ -66,7 +73,7 @@ const DashboardAdmin = () => {
           throw new Error("Failed to fetch unassigned users count");
         }
         const data = await response.json();
-        console.log(data);
+    
         setUnAssignedUsersCount(data);
       }
       catch (error) {

@@ -7,9 +7,6 @@ import ApiSession from "./entities/ApiSession";
 import UserActivitySession from "./entities/UserActivitySession";
 
 
-
-
-
 const UserActivity = () => {
 
   const [activeUsersCount, setActiveUsersCount] = useState(0);
@@ -26,9 +23,7 @@ const UserActivity = () => {
   
   const formatTimeOnly = (dateString?: string) => {
     if (!dateString) return "N/A";
-
     const d = new Date(dateString);
-
     return isNaN(d.getTime()) ? "N/A": d.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit",});
   };
 
