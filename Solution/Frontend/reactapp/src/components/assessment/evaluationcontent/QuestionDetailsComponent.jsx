@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
+import { Loader2, AlertCircle, CheckCircle } from "lucide-react";
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Loader2, AlertCircle, CheckCircle } from "lucide-react";
 
 const QuestionDetailsComponent = ({ question, language }) => {
   const [questionDetails, setQuestionDetails] = useState(null);
@@ -22,19 +23,19 @@ const QuestionDetailsComponent = ({ question, language }) => {
       setError(null);
       setSelectedAnswer(null);
       setSubmitted(false);
-
-      // Replace with your actual API endpoint
       const questionId = question.id || question.questionId;
-      const response = await fetch(`/api/questions/${questionId}`); // Update with your backend URL
+      const response = await fetch(`/api/questions/${questionId}`); 
       if (!response.ok) {
         throw new Error("Failed to fetch question details");
       }
       const data = await response.json();
       setQuestionDetails(data.question || data);
-    } catch (err) {
+    }
+    catch (err) {
       setError(err.message || "Error fetching question details");
       console.error("Error fetching question details:", err);
-    } finally {
+    }
+    finally {
       setLoading(false);
     }
   };
@@ -42,8 +43,6 @@ const QuestionDetailsComponent = ({ question, language }) => {
   const handleSubmitAnswer = () => {
     if (selectedAnswer) {
       setSubmitted(true);
-      // You can add additional logic here to save the answer
-      console.log("Answer submitted:", selectedAnswer);
     }
   };
 
@@ -63,12 +62,7 @@ const QuestionDetailsComponent = ({ question, language }) => {
         <div>
           <p className="text-red-900 font-semibold">Error Loading Question Details</p>
           <p className="text-red-700">{error}</p>
-          <Button
-            onClick={fetchQuestionDetails}
-            variant="outline"
-            size="sm"
-            className="mt-2"
-          >
+          <Button onClick={fetchQuestionDetails} variant="outline" size="sm" className="mt-2">
             Try Again
           </Button>
         </div>
