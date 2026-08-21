@@ -2,54 +2,46 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 import { Card, CardContent, CardHeader, CardTitle } from "../../ui/card";
-import { Users, User } from "lucide-react";
+import { Users } from "lucide-react";
 
 import { WEBAPI_DOTNET_URL } from "@/lib/utils";
-
-interface User {
-  userId: number;
-  firstName: string;
-  lastName: string;
-}
+import User from "./entities/User";
 
 const RoleUsers = () => {
-  const { roleId } = useParams();
-  const navigate = useNavigate();
-  const [users, setUsers] = useState<User[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
+        const { roleId } = useParams();
+        const navigate = useNavigate();
+        
+        const [users, setUsers] = useState<User[]>([]);
+        const [loading, setLoading] = useState<boolean>(true);
+
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await fetch(
-          `${WEBAPI_DOTNET_URL}/Roles/active-roles/${roleId}/users`
-        );
-        if (!response.ok) {
-          throw new Error("Failed to fetch users");
-        }
-        const data: User[] = await response.json();
-        console.log("Users:", data);
-        setUsers(data);
-      }
+          const response = await fetch(`${WEBAPI_DOTNET_URL}/Roles/active-roles/${roleId}/users`);
+          if (!response.ok) {
+            throw new Error("Failed to fetch users");
+          }
+          const data: User[] = await response.json();
+          console.log("Users:", data);
+          setUsers(data);
+      } 
       catch (error) {
-        console.error("Error fetching users:", error);
-      }
+            console.error("Error fetching users:", error);
+      } 
       finally {
-        setLoading(false);
+            setLoading(false);
       }
     };
-    if (roleId) {
-      fetchUsers();
-    }
-  }, [roleId]);
-  if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-background">
-        <h2 className="text-2xl font-semibold text-foreground">
-          Loading Users...
-        </h2>
-      </div>
-    );
-  }
+        
+      if (roleId) { fetchUsers();}}, [roleId]);
+      if (loading) {
+        return (
+          <div className="min-h-screen flex items-center justify-center bg-background">
+            <h2 className="text-2xl font-semibold text-foreground">Loading Users...</h2>
+          </div>
+        );
+      }
+
   return (
     <section className="min-h-screen py-16 bg-background">
       <div className="container mx-auto px-4">
@@ -68,20 +60,11 @@ const RoleUsers = () => {
                     <tbody>
                       {users.length > 0 ? (
                         users.map((user) => (
-                          <tr
-                            key={user.userId}
-                            className="border-t hover:bg-muted/50 transition-colors"
-                          >
-                            <td
-                              className="px-6 py-4 cursor-pointer"
-                              onClick={() =>
-                                navigate(
-                                  `/component/assessment/membership/UserProfile/${user.userId}`
-                                )
-                              }
-                            >
+                          <tr key={user.id} className="border-t hover:bg-muted/50 transition-colors">
+                            <td className="px-6 py-4 cursor-pointer"
+                              onClick={() => navigate(`/component/assessment/membership/UserProfile/${user.id}`)}>              
                               <div className="flex items-center gap-3">
-                                <User className="h-5 w-5 text-primary" />
+                                <Users className="h-5 w-5 text-primary" />
                                 <span className="text-primary hover:underline font-medium">
                                   {user.firstName} {user.lastName}
                                 </span>
@@ -97,20 +80,14 @@ const RoleUsers = () => {
                         </tr>
                       )}
                     </tbody>
-
                   </table>
                 </div>
-
               </CardContent>
-
             </div>
-
           </Card>
         </div>
-
       </div>
     </section>
   );
 };
-
 export default RoleUsers;
