@@ -9,22 +9,22 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.transflower.tflcomentor.fileio.Entity.AssessmentMetrics;
-import com.transflower.tflcomentor.fileio.Entity.Candidate;
-import com.transflower.tflcomentor.fileio.Entity.CandidatePerformance;
-import com.transflower.tflcomentor.fileio.Entity.JobOpenings;
-import com.transflower.tflcomentor.fileio.Entity.LearningCurve;
-import com.transflower.tflcomentor.fileio.Entity.Member;
-import com.transflower.tflcomentor.fileio.Entity.MemberActivities;
-import com.transflower.tflcomentor.fileio.Entity.Mentee;
-import com.transflower.tflcomentor.fileio.Entity.MenteeGrowth;
-import com.transflower.tflcomentor.fileio.Entity.MentorshipActivities;
-import com.transflower.tflcomentor.fileio.Entity.Notification;
-import com.transflower.tflcomentor.fileio.Entity.RolePermissions;
-import com.transflower.tflcomentor.fileio.Entity.ScheduledAssessment;
-import com.transflower.tflcomentor.fileio.Entity.SkillGap;
-import com.transflower.tflcomentor.fileio.Entity.SkillRequirement;
-import com.transflower.tflcomentor.fileio.Entity.StudentResult;
+import com.transflower.tflcomentor.fileio.entity.AssessmentMetrics;
+import com.transflower.tflcomentor.fileio.entity.Candidate;
+import com.transflower.tflcomentor.fileio.entity.CandidatePerformance;
+import com.transflower.tflcomentor.fileio.entity.JobOpenings;
+import com.transflower.tflcomentor.fileio.entity.LearningCurve;
+import com.transflower.tflcomentor.fileio.entity.Member;
+import com.transflower.tflcomentor.fileio.entity.MemberActivities;
+import com.transflower.tflcomentor.fileio.entity.Mentee;
+import com.transflower.tflcomentor.fileio.entity.MenteeGrowth;
+import com.transflower.tflcomentor.fileio.entity.MentorshipActivities;
+import com.transflower.tflcomentor.fileio.entity.Notification;
+import com.transflower.tflcomentor.fileio.entity.RolePermissions;
+import com.transflower.tflcomentor.fileio.entity.ScheduledAssessment;
+import com.transflower.tflcomentor.fileio.entity.SkillGap;
+import com.transflower.tflcomentor.fileio.entity.SkillRequirement;
+import com.transflower.tflcomentor.fileio.entity.StudentResult;
 import com.transflower.tflcomentor.fileio.service.FileService;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
