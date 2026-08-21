@@ -1,4 +1,4 @@
-package com.transflower.tflcomentor.fileio.entity;
+package com.transflower.tflcomentor.fileio.Entity;
 import java.util.Date;
 
 import lombok.AllArgsConstructor;

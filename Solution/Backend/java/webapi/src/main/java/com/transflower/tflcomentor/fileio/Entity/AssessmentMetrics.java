@@ -1,4 +1,4 @@
-package com.transflower.tflcomentor.fileio.entity;
+package com.transflower.tflcomentor.fileio.Entity;
 
 
 import lombok.AllArgsConstructor;
