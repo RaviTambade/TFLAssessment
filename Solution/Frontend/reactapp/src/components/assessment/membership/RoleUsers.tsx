@@ -60,9 +60,9 @@ const RoleUsers = () => {
                     <tbody>
                       {users.length > 0 ? (
                         users.map((user) => (
-                          <tr key={user.id} className="border-t hover:bg-muted/50 transition-colors">
+                          <tr key={user.userId} className="border-t hover:bg-muted/50 transition-colors">
                             <td className="px-6 py-4 cursor-pointer"
-                              onClick={() => navigate(`/component/assessment/membership/UserProfile/${user.id}`)}>              
+                              onClick={() => {navigate(`/component/assessment/membership/UserProfile/${user.userId}`)}}>              
                               <div className="flex items-center gap-3">
                                 <Users className="h-5 w-5 text-primary" />
                                 <span className="text-primary hover:underline font-medium">

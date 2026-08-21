@@ -1,5 +1,5 @@
 interface User {
-  id: number
+  userId: number
   name: string
   role: string
   joiningDate: string
