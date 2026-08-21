@@ -75,7 +75,6 @@ const LoginPage = () => {
               throw new Error("user log failed");
         }
         const data = await res.json();
-        console.log(data.message);
     }
     catch (error) {
         console.error(error);
