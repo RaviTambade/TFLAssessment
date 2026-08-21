@@ -6,6 +6,7 @@ interface Question {
     createdAt: string;
     difficultyLevel: string;
     status?: string;
+
 }
 
 export default Question;
