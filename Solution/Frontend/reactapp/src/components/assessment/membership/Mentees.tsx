@@ -1,29 +1,21 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { WEBAPI_NODE_URL } from "@/lib/utils";
-import { Users, FolderKanban, Phone, CalendarDays, CheckCircle2, ArrowLeft } from "lucide-react";
 
 import { Card, CardContent, CardHeader, CardTitle } from "../../ui/card";
+import { Users, FolderKanban, Phone, CalendarDays, CheckCircle2, ArrowLeft } from "lucide-react";
 
-interface Mentee {
-  id: number;
-  mentee_name: string;
-  projectId: number;
-  allocated_project: string | null;
-  repositoryUrl: string | null;
-  contact: string;
-  status: string;
-  assigned_on: string;
-}
+import { WEBAPI_NODE_URL } from "@/lib/utils";
 
+import MenteeProject from "./entities/MenteeProject";
 
 const Mentees = () => {
-  const [mentees, setMentees] = useState<Mentee[]>([]);
+  const [mentees, setMentees] = useState<MenteeProject[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>("");
-
+  
   const currentUser = JSON.parse(sessionStorage.getItem("current") || "{}");
   const mentorId = currentUser.userid;
+  
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -32,28 +24,24 @@ const Mentees = () => {
 
   const fetchMentees = async () => {
     try {
-      setLoading(true);
-
-      const response = await fetch(
-        `${WEBAPI_NODE_URL}/mentors/${mentorId}/mentees`
-      );
-
+         setLoading(true);
+         const response = await fetch(`${WEBAPI_NODE_URL}/mentors/${mentorId}/mentees`);
       if (!response.ok) {
         throw new Error("Failed to fetch mentees");
       }
-
       const result = await response.json();
-
       console.log("API RESPONSE:", result);
-
       setMentees(result.data || []);
-    } catch (err) {
+    } 
+    catch (err) {
       console.error(err);
       setError("Failed to load mentees");
-    } finally {
+    } 
+    finally {
       setLoading(false);
     }
   };
+  
   return (
     <div className="min-h-screen bg-[var(--gradient-hero)] p-6">
       <div className="max-w-6xl mx-auto">
@@ -65,10 +53,8 @@ const Mentees = () => {
             </h1>
           </div>
 
-          <button
-            onClick={() => navigate("/models/membership/dashboard")}
-            className="flex items-center gap-2 px-4 py-2 rounded-lg border border-border bg-card/50 backdrop-blur-sm hover:bg-primary/10 transition-all"
-          >
+          <button onClick={() => navigate("/models/membership/dashboard")}
+                  className="flex items-center gap-2 px-4 py-2 rounded-lg border border-border bg-card/50 backdrop-blur-sm hover:bg-primary/10 transition-all">
             <ArrowLeft className="h-4 w-4" />
             Back to Dashboard
           </button>
@@ -81,13 +67,8 @@ const Mentees = () => {
           </CardHeader>
 
           <CardContent>
-            {/* Loading */}
             {loading && <p className="text-center py-6">Loading mentees...</p>}
-
-            {/* Error */}
             {error && <p className="text-center text-red-500 py-6">{error}</p>}
-
-            {/* Empty State */}
             {!loading && mentees.length === 0 && (
               <p className="text-center py-2 text-muted-foreground">
                 No mentees assigned yet.
@@ -103,7 +84,6 @@ const Mentees = () => {
                       {mentees.length}
                     </h2>
                   </div>
-
                   <div className="p-4 rounded-full bg-primary/10">
                     <Users className="h-8 w-8 text-primary" />
                   </div>
@@ -127,43 +107,29 @@ const Mentees = () => {
 
                   <tbody>
                     {mentees.map((mentee) => (
-                      <tr
-                        key={mentee.id}
-                        className="border-b border-border hover:bg-muted/40 transition"
-                      >
+                      <tr key={mentee.id} className="border-b border-border hover:bg-muted/40 transition">
                         <td className="p-4">{mentee.id}</td>
-
-                        <td className="p-4"><button
-                          onClick={() => navigate(`/models/membership/UserProfile/${mentee.id}`)}
-                          
-                        >
-                          {mentee.mentee_name}
-                        </button></td>
-
-                    <td className="p-4">
-                          {mentee.allocated_project ? (
-                                                      <button
-                            onClick={() =>
-                              navigate(`/models/evaluationcontent/project/${mentee.projectId}/mentees`)
-                            }
-                          >
-                            {mentee.allocated_project}
+                        <td className="p-4">
+                          <button onClick={() => navigate(`/models/membership/UserProfile/${mentee.id}`)}>
+                            {mentee.mentee_name}
                           </button>
-                          ) : (
-                            <span className="text-muted-foreground">
-                              Not Allocated
-                            </span>
-                          )}
-                    </td>
-
+                        </td>
+                        <td className="p-4">
+                              {mentee.allocated_project ? (<button onClick={() => navigate(`/models/evaluationcontent/project/${mentee.projectId}/mentees`)}>
+                                {mentee.allocated_project}
+                              </button>
+                              ) : (
+                                <span className="text-muted-foreground">
+                                  Not Allocated
+                                </span>
+                              )}
+                        </td>
                         <td className="p-4">{mentee.contact}</td>
-
                         <td className="p-4">
                           <span className="px-3 py-1 rounded-full text-sm bg-green-500/20 text-green-400">
                             {mentee.status}
                           </span>
                         </td>
-
                         <td className="p-4 text-muted-foreground">
                           {new Date(mentee.assigned_on).toLocaleDateString()}
                         </td>

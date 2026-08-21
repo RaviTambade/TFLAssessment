@@ -2,12 +2,6 @@ package com.transflower.tflcomentor.fileio.repository;
 
 import java.util.List;
 
-import com.transflower.tflcomentor.fileio.entity.Notification;
-import com.transflower.tflcomentor.fileio.entity.RolePermissions;
-import com.transflower.tflcomentor.fileio.entity.ScheduledAssessment;
-import com.transflower.tflcomentor.fileio.entity.SkillGap;
-import com.transflower.tflcomentor.fileio.entity.SkillRequirement;
-import com.transflower.tflcomentor.fileio.entity.StudentResult;
 import com.transflower.tflcomentor.fileio.entity.AssessmentMetrics;
 import com.transflower.tflcomentor.fileio.entity.Candidate;
 import com.transflower.tflcomentor.fileio.entity.CandidatePerformance;
@@ -18,6 +12,12 @@ import com.transflower.tflcomentor.fileio.entity.MemberActivities;
 import com.transflower.tflcomentor.fileio.entity.Mentee;
 import com.transflower.tflcomentor.fileio.entity.MenteeGrowth;
 import com.transflower.tflcomentor.fileio.entity.MentorshipActivities;
+import com.transflower.tflcomentor.fileio.entity.Notification;
+import com.transflower.tflcomentor.fileio.entity.RolePermissions;
+import com.transflower.tflcomentor.fileio.entity.ScheduledAssessment;
+import com.transflower.tflcomentor.fileio.entity.SkillGap;
+import com.transflower.tflcomentor.fileio.entity.SkillRequirement;
+import com.transflower.tflcomentor.fileio.entity.StudentResult;
 
 
 public interface FileRepository {
