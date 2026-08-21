@@ -9,11 +9,11 @@ import ChangePasswordResponse from "./entities/ChangePasswordResponse";
 
 const ChangePassword = () => {
 
-    const currentUser = sessionStorage.getItem("current");
-    const user = JSON.parse(currentUser);
-    const studentId = user.userid;
-  
-  
+  const currentUser = sessionStorage.getItem("current");
+  const user = JSON.parse(currentUser);
+  const studentId = user.userid;
+
+
   const [userId, setUserId] = useState(studentId)
   const [currentPassword, setCurrentPassword] = useState("")
   const [newPassword, setNewPassword] = useState("")
@@ -31,7 +31,7 @@ const ChangePassword = () => {
     setMessage(null)
 
     // FULL VALIDATION
-    if (!currentPassword.trim() ||!newPassword.trim() ||!confirmPassword.trim()) {
+    if (!currentPassword.trim() || !newPassword.trim() || !confirmPassword.trim()) {
       setError("All fields are required.")
       return
     }
@@ -41,50 +41,34 @@ const ChangePassword = () => {
     }
     setLoading(true)
     try {
-      console.log({userId,currentPassword,newPassword,})
-      const response = await fetch(`${WEBAPI_NODE_URL}/auth/changepassword`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          id: userId,
-          oldPassword: currentPassword,
-          newPassword: newPassword,
-        }),
-      });
+      console.log({ userId, currentPassword, newPassword })
+      const response = await fetch(
+        `${WEBAPI_NODE_URL}/auth/changepassword`,
+        {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ id: userId, oldPassword: currentPassword, newPassword: newPassword }),
+        });
 
       let data: ChangePasswordResponse | null = null
       const contentType = response.headers.get("content-type") || ""
 
-      if (contentType.includes("application/json")) {
-        data = await response.json().catch(() => null)
-      }
-
+      if (contentType.includes("application/json")) { data = await response.json().catch(() => null) }
       if (!response.ok) {
-        const text = !contentType.includes("application/json")
-          ? await response.text().catch(() => null)
-          : null
-
-        const errorMessage =
-          data?.message ||
-          data?.error ||
-          text ||
-          `${response.status} ${response.statusText}`
-
+        const text = !contentType.includes("application/json") ? await response.text().catch(() => null) : null
+        const errorMessage = data?.message || data?.error || text || `${response.status} ${response.statusText}`
         throw new Error(errorMessage)
       }
-
-      // ✅ SUCCESS
       setMessage("Password changed successfully.")
       setUserId("")
       setCurrentPassword("")
       setNewPassword("")
       setConfirmPassword("")
-
-    } catch (error: unknown) {
+    }
+    catch (error: unknown) {
       setError(error instanceof Error ? error.message : "Something went wrong.")
-    } finally {
+    }
+    finally {
       setLoading(false)
     }
   }
@@ -95,104 +79,56 @@ const ChangePassword = () => {
         <Card className="w-full max-w-md shadow-lg">
           <CardContent className="p-8 space-y-6">
             <form onSubmit={handleSubmit} className="space-y-6">
-
               <h1 className="text-3xl font-bold text-center">
                 Change Password
               </h1>
-
-              {/* User ID */}
               <div>
                 <label className="text-sm font-semibold">User ID *</label>
-                <Input
-                  type="text"
-                  placeholder="Enter user ID"
-                  value={userId}
-                />
+                <Input type="text" placeholder="Enter user ID" value={userId} />
               </div>
-
-              {/* Current Password */}
               <div>
                 <label className="text-sm font-semibold">Current Password *</label>
                 <div className="relative">
-                  <Input
-                    type={showCurrent ? "text" : "password"}
-                    placeholder="Enter current password"
-                    value={currentPassword}
-                    onChange={(e) => setCurrentPassword(e.target.value)}
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowCurrent(!showCurrent)}
-                    className="absolute right-3 top-2.5"
-                  >
+                  <Input type={showCurrent ? "text" : "password"} placeholder="Enter current password" value={currentPassword}
+                    onChange={(e) => setCurrentPassword(e.target.value)} />
+                  <button type="button" onClick={() => setShowCurrent(!showCurrent)} className="absolute right-3 top-2.5">
                     {showCurrent ? <EyeOff size={18} /> : <Eye size={18} />}
                   </button>
                 </div>
               </div>
-
-              {/* New Password */}
               <div>
                 <label className="text-sm font-semibold">New Password *</label>
                 <div className="relative">
-                  <Input
-                    type={showNew ? "text" : "password"}
-                    placeholder="Enter new password"
-                    value={newPassword}
-                    onChange={(e) => setNewPassword(e.target.value)}
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowNew(!showNew)}
-                    className="absolute right-3 top-2.5"
-                  >
+                  <Input type={showNew ? "text" : "password"} placeholder="Enter new password" value={newPassword}
+                    onChange={(e) => setNewPassword(e.target.value)} />
+                  <button type="button" onClick={() => setShowNew(!showNew)} className="absolute right-3 top-2.5">
                     {showNew ? <EyeOff size={18} /> : <Eye size={18} />}
                   </button>
                 </div>
               </div>
-
-              {/* Confirm Password */}
               <div>
                 <label className="text-sm font-semibold">Confirm Password *</label>
                 <div className="relative">
-                  <Input
-                    type={showConfirm ? "text" : "password"}
-                    placeholder="Confirm new password"
-                    value={confirmPassword}
-                    onChange={(e) => setConfirmPassword(e.target.value)}
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowConfirm(!showConfirm)}
-                    className="absolute right-3 top-2.5"
-                  >
+                  <Input type={showConfirm ? "text" : "password"} placeholder="Confirm new password" value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)} />
+                  <button type="button" onClick={() => setShowConfirm(!showConfirm)} className="absolute right-3 top-2.5">
                     {showConfirm ? <EyeOff size={18} /> : <Eye size={18} />}
                   </button>
                 </div>
               </div>
-
-              {/* Error */}
               {error && (
                 <div className="bg-red-100 text-red-700 p-2 rounded">
                   {error}
                 </div>
               )}
-
-              {/* Success */}
               {message && (
                 <div className="bg-green-100 text-green-700 p-2 rounded">
                   {message}
                 </div>
               )}
-
-              {/* Submit */}
-              <Button
-                type="submit"
-                className="w-full"
-                disabled={loading}
-              >
+              <Button type="submit" className="w-full" disabled={loading}>
                 {loading ? "Submitting..." : "Submit"}
               </Button>
-
             </form>
           </CardContent>
         </Card>
