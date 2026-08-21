@@ -13,7 +13,6 @@ const DashboardSME = () => {
   const [department, setDepartment] = useState<string>("");
   const [profilePicture, setProfilePicture] = useState<string>("https://avatars.githubusercontent.com/u/12345678?v=4");
   const [totalStudents, setTotalStudents] = useState<number>(0);
-  const [totalAssessments, setTotalAssessments] = useState<number>(0);
   const [assessmentMetrics, setAssessmentMetrics] = useState<AssessmentMetrics[]>([]);
   const [smeNotifications, setSmeNotifications] = useState<Notification[]>([]);
   const [candidatePerformance, setCandidatePerformance] = useState<CandidatePerformance[]>([]);

@@ -21,21 +21,21 @@ import com.transflower.tflcomentor.fileio.Entity.ScheduledAssessment;
 import com.transflower.tflcomentor.fileio.Entity.SkillGap;
 import com.transflower.tflcomentor.fileio.Entity.SkillRequirement;
 import com.transflower.tflcomentor.fileio.Entity.StudentResult;
-import com.transflower.tflcomentor.fileio.repository.DataRepository;
+import com.transflower.tflcomentor.fileio.repository.FileRepository;
 
 @Service
-public class DataServiceImpl implements DataService {
+public class FileServiceImpl implements FileService {
     
     @Autowired
-    DataRepository dataRepository;
+    FileRepository dataRepository;
 
-    public DataServiceImpl(DataRepository dataRepository){
+    public FileServiceImpl(FileRepository dataRepository){
         this.dataRepository = dataRepository;
     }
 
     @Override
-    public List<Notification> showAdminNotification() {
-        return dataRepository.showAdminNotification();
+    public List<Notification> getAdminNotifications() {
+        return dataRepository.getAdminNotifications();
     }
 
     @Override
@@ -44,8 +44,8 @@ public class DataServiceImpl implements DataService {
     }
 
     @Override
-    public List<Notification> showMentorNotification() {
-        return dataRepository.showMentorNotification();
+    public List<Notification> getMentorNotifications() {
+        return dataRepository.getMentorNotifications();
     }
 
     @Override
@@ -54,8 +54,8 @@ public class DataServiceImpl implements DataService {
     }
 
     @Override
-    public List<Notification> showRecruiterNotification() {
-        return dataRepository.showRecruiterNotification();
+    public List<Notification> getRecruiterNotifications() {
+        return dataRepository.getRecruiterNotifications();
     }
 
     @Override
@@ -64,8 +64,8 @@ public class DataServiceImpl implements DataService {
     }
 
     @Override
-    public List<Notification> showSmeNotification() {
-        return dataRepository.showSmeNotification();
+    public List<Notification> getSmeNotifications() {
+        return dataRepository.getSmeNotifications();
     }
 
     @Override
@@ -74,8 +74,8 @@ public class DataServiceImpl implements DataService {
     }
 
     @Override
-    public List<Notification> showStudentNotification() {
-        return dataRepository.showStudentNotification();
+    public List<Notification> getStudentNotifications() {
+        return dataRepository.getStudentNotifications();
     }
 
     @Override
@@ -84,23 +84,23 @@ public class DataServiceImpl implements DataService {
     }
 
     @Override
-    public List<LearningCurve> showLearningCurve() {
-        return dataRepository.showLearningCurve();
+    public List<LearningCurve> getLearningCurves() {
+        return dataRepository.getLearningCurves();
     }
 
     @Override
-    public List<SkillGap> showSkillGap() {
-        return dataRepository.showSkillGap();
+    public List<SkillGap> getSkillGaps() {
+        return dataRepository.getSkillGaps();
     }
 
     @Override
-    public List<SkillRequirement> showSkillRequirement() {
-        return dataRepository.showSkillRequirement();
+    public List<SkillRequirement> getSkillRequirements() {
+        return dataRepository.getSkillRequirements();
     }
 
     @Override
-    public List<Candidate> showCandidates(){
-        return dataRepository.showCandidates();
+    public List<Candidate> getCandidates(){
+        return dataRepository.getCandidates();
 
     }
 
@@ -110,8 +110,8 @@ public class DataServiceImpl implements DataService {
     }
 
     @Override
-    public List<Member> showMember() {
-        return dataRepository.showMember();
+    public List<Member> getMembers() {
+        return dataRepository.getMembers();
     }
 
     @Override
@@ -120,8 +120,8 @@ public class DataServiceImpl implements DataService {
     }
 
     @Override
-    public List<Mentee> showMentee() {
-        return dataRepository.showMentee();
+    public List<Mentee> getMentees() {
+        return dataRepository.getMentees();
     }
 
     @Override
@@ -130,8 +130,8 @@ public class DataServiceImpl implements DataService {
     }
 
     @Override
-    public List<AssessmentMetrics> showAssessmentMetrics() {
-        return dataRepository.showAssessmentMetrics();
+    public List<AssessmentMetrics> getAssessmentMetrics() {
+        return dataRepository.getAssessmentMetrics();
     }
 
     @Override
@@ -140,8 +140,8 @@ public class DataServiceImpl implements DataService {
     }
 
     @Override
-    public List<CandidatePerformance> showCandidatePerformance() {
-        return dataRepository.showCandidatePerformance();
+    public List<CandidatePerformance> getCandidatePerformances() {
+        return dataRepository.getCandidatePerformances();
     }
 
     @Override
@@ -150,33 +150,33 @@ public class DataServiceImpl implements DataService {
     }
 
     @Override
-    public List<JobOpenings> showJobOpenings() {
-        return dataRepository.showJobOpenings();
+    public List<JobOpenings> getJobOpenings() {
+        return dataRepository.getJobOpenings();
     }
 
     @Override
-    public JobOpenings getJobOpeningsById(int id) {
-        return dataRepository.getJobOpeningsById(id);
+    public JobOpenings getJobOpeningById(int id) {
+        return dataRepository.getJobOpeningById(id);
     }
 
     @Override
-    public List<MemberActivities> showMemberActivities() {
-        return dataRepository.showMemberActivities();
+    public List<MemberActivities> getMemberActivities() {
+        return dataRepository.getMemberActivities();
     }
 
     @Override
-    public MemberActivities getMemberActivitiesById(int id) {
-        return dataRepository.getMemberActivitiesById(id);
+    public MemberActivities getMemberActivityById(int id) {
+        return dataRepository.getMemberActivityById(id);
     }
 
     @Override
-    public List<MenteeGrowth> showMenteeGrowth() {
-        return dataRepository.showMenteeGrowth();
+    public List<MenteeGrowth> getMenteeGrowths() {
+        return dataRepository.getMenteeGrowths();
     }
 
     @Override
-    public List<MentorshipActivities> showMentorshipActivities() {
-        return dataRepository.showMentorshipActivities();
+    public List<MentorshipActivities> getMentorshipActivities() {
+        return dataRepository.getMentorshipActivities();
     }
 
     @Override
@@ -185,8 +185,8 @@ public class DataServiceImpl implements DataService {
     }
 
     @Override
-    public List<RolePermissions> showRolePermissions() {
-        return dataRepository.showRolePermissions();
+    public List<RolePermissions> getRolePermissions() {
+        return dataRepository.getRolePermissions();
     }
 
     @Override
@@ -195,8 +195,8 @@ public class DataServiceImpl implements DataService {
     }
 
     @Override
-    public List<ScheduledAssessment> showScheduledAssessment() {
-        return dataRepository.showScheduledAssessment();
+    public List<ScheduledAssessment> getScheduledAssessments() {
+        return dataRepository.getScheduledAssessments();
     }
 
     @Override
@@ -205,8 +205,8 @@ public class DataServiceImpl implements DataService {
     }
 
     @Override
-    public List<StudentResult> showStudentResult() {
-        return dataRepository.showStudentResult();
+    public List<StudentResult> getStudentsResults() {
+        return dataRepository.getStudentsResults();
     }
 
     @Override

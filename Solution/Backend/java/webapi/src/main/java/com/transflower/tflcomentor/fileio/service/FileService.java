@@ -1,97 +1,98 @@
-package com.transflower.tflcomentor.fileio.repository;
+package com.transflower.tflcomentor.fileio.service;
 
 import java.util.List;
 
+import com.transflower.tflcomentor.fileio.Entity.AssessmentMetrics;
+import com.transflower.tflcomentor.fileio.Entity.Candidate;
+import com.transflower.tflcomentor.fileio.Entity.CandidatePerformance;
+import com.transflower.tflcomentor.fileio.Entity.JobOpenings;
+import com.transflower.tflcomentor.fileio.Entity.LearningCurve;
 import com.transflower.tflcomentor.fileio.Entity.Notification;
 import com.transflower.tflcomentor.fileio.Entity.RolePermissions;
 import com.transflower.tflcomentor.fileio.Entity.ScheduledAssessment;
 import com.transflower.tflcomentor.fileio.Entity.SkillGap;
 import com.transflower.tflcomentor.fileio.Entity.SkillRequirement;
 import com.transflower.tflcomentor.fileio.Entity.StudentResult;
-import com.transflower.tflcomentor.fileio.Entity.AssessmentMetrics;
-import com.transflower.tflcomentor.fileio.Entity.Candidate;
-import com.transflower.tflcomentor.fileio.Entity.CandidatePerformance;
-import com.transflower.tflcomentor.fileio.Entity.JobOpenings;
-import com.transflower.tflcomentor.fileio.Entity.LearningCurve;
 import com.transflower.tflcomentor.fileio.Entity.Member;
 import com.transflower.tflcomentor.fileio.Entity.MemberActivities;
 import com.transflower.tflcomentor.fileio.Entity.Mentee;
 import com.transflower.tflcomentor.fileio.Entity.MenteeGrowth;
 import com.transflower.tflcomentor.fileio.Entity.MentorshipActivities;
 
+public interface FileService {
 
-public interface DataRepository {
     
-    
-    List<Notification> showAdminNotification();
+    List<Notification> getAdminNotifications();
 
     Notification getAdminNotificationById(int id);
 
-    List<Notification> showMentorNotification();
+    List<Notification> getMentorNotifications();
 
     Notification getMentorNotificationById(int id);
-
-    List<Notification> showRecruiterNotification();
-
+    
+    List<Notification> getRecruiterNotifications();
+    
     Notification getRecruiterNotificationById(int id);
 
-    List<Notification> showSmeNotification();
+    List<Notification> getSmeNotifications();
 
     Notification getSmeNotificationById(int id);
 
-    List<Notification> showStudentNotification();
+    List<Notification> getStudentNotifications();
 
     Notification getStudentNotificationById(int id);
 
-    List<LearningCurve> showLearningCurve();
+    List<LearningCurve> getLearningCurves();
 
-    List<SkillGap> showSkillGap();
+    List<SkillGap> getSkillGaps();
 
-    List<SkillRequirement> showSkillRequirement();
+    List<SkillRequirement> getSkillRequirements();
 
-    List<Candidate> showCandidates();
-    
+    List<Candidate> getCandidates();
+
     Candidate getCandidateById(int id);
 
-    List<Member> showMember();
+    List<Member> getMembers();
 
     Member getMemberById(int id);
 
-    List<Mentee> showMentee();
+    List<Mentee> getMentees();
 
     Mentee getMenteeById(int id);
 
-    List<AssessmentMetrics> showAssessmentMetrics();
-    
+    List<AssessmentMetrics> getAssessmentMetrics();
+
     AssessmentMetrics getAssessmentMetricsById(int id);
 
-    List<CandidatePerformance> showCandidatePerformance();
+    List<CandidatePerformance> getCandidatePerformances();
 
     CandidatePerformance getCandidatePerformanceById(int id);
 
-    List<JobOpenings> showJobOpenings();
+    List<JobOpenings> getJobOpenings();
 
-    JobOpenings getJobOpeningsById(int id);
+    JobOpenings getJobOpeningById(int id);
 
-    List<MemberActivities> showMemberActivities();
+    List<MemberActivities> getMemberActivities();
 
-    MemberActivities getMemberActivitiesById(int id);
+    MemberActivities getMemberActivityById(int id);
 
-    List<MenteeGrowth> showMenteeGrowth();
+    List<MenteeGrowth> getMenteeGrowths();
 
-    List<MentorshipActivities> showMentorshipActivities();
+    List<MentorshipActivities> getMentorshipActivities();
 
     MentorshipActivities getMentorshipActivitiesById(int id);
 
-    List<RolePermissions> showRolePermissions();
+    List<RolePermissions> getRolePermissions();
 
     RolePermissions getRolePermissionById(int id);
 
-    List<ScheduledAssessment> showScheduledAssessment();
+    List<ScheduledAssessment> getScheduledAssessments();
 
     ScheduledAssessment getScheduledAssessmentById(int id);
 
-    List<StudentResult> showStudentResult();
+    List<StudentResult> getStudentsResults();
 
     StudentResult getStudentResultById(int id);
+
 }
+

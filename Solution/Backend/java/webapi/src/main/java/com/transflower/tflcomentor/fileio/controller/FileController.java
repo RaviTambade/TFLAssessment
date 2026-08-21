@@ -25,23 +25,24 @@ import com.transflower.tflcomentor.fileio.Entity.ScheduledAssessment;
 import com.transflower.tflcomentor.fileio.Entity.SkillGap;
 import com.transflower.tflcomentor.fileio.Entity.SkillRequirement;
 import com.transflower.tflcomentor.fileio.Entity.StudentResult;
-import com.transflower.tflcomentor.fileio.service.DataService;
+import com.transflower.tflcomentor.fileio.service.FileService;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @RequestMapping("/api/data")
-public class DataController {
+public class FileController {
     
     @Autowired
-    DataService dataService;
+    FileService dataService;
 
-    public DataController(DataService dataService) {
+    public FileController(FileService dataService) {
         this.dataService = dataService;
     }
 
+    //Admin Notification
     @GetMapping("/adminNotification")
-    public List<Notification> showAdminNotification(){
-        return dataService.showAdminNotification();
+    public List<Notification> getAdminNotifications(){
+        return dataService.getAdminNotifications();
     }
 
     @GetMapping("/adminNotification/{id}")
@@ -49,9 +50,10 @@ public class DataController {
         return dataService.getAdminNotificationById(id);
     }
 
+    //Mentor Notification
     @GetMapping("/mentorNotification")
-    public List<Notification> showMentorNotification(){
-        return dataService.showMentorNotification();
+    public List<Notification> getMentorNotifications(){
+        return dataService.getMentorNotifications();
     }
 
     @GetMapping("/mentorNotification/{id}")
@@ -59,9 +61,10 @@ public class DataController {
         return dataService.getMentorNotificationById(id);
     }
 
+    //Recruiter Notification
     @GetMapping("/recruiterNotification")
-    public List<Notification> showRecruiterNotification(){
-        return dataService.showRecruiterNotification();
+    public List<Notification> getRecruiterNotifications(){
+        return dataService.getRecruiterNotifications();
     }
 
     @GetMapping("/recruiterNotification/{id}")
@@ -69,9 +72,10 @@ public class DataController {
         return dataService.getRecruiterNotificationById(id);
     }
 
+    //SME Notification
     @GetMapping("/smeNotification")
-    public List<Notification> showSmeNotification(){
-        return dataService.showSmeNotification();
+    public List<Notification> getSmeNotifications(){
+        return dataService.getSmeNotifications();
     }
 
     @GetMapping("/smeNotification/{id}")
@@ -79,9 +83,10 @@ public class DataController {
         return dataService.getSmeNotificationById(id);
     }
 
+    //Student Notification
     @GetMapping("/studentNotification")
-    public List<Notification> showStudentNotification(){
-        return dataService.showStudentNotification();
+    public List<Notification> getStudentNotifications(){
+        return dataService.getStudentNotifications();
     }
 
     @GetMapping("/studentNotification/{id}")
@@ -89,24 +94,28 @@ public class DataController {
         return dataService.getStudentNotificationById(id);
     }
 
+    //Learning Curve
     @GetMapping("/learningCurve")
-    public List<LearningCurve> showLearningCurve(){
-        return dataService.showLearningCurve();
+    public List<LearningCurve> getLearningCurves(){
+        return dataService.getLearningCurves();
     }
 
+    //Skill Gap Analysis
     @GetMapping("/skillGapAnalysis")
-    public List<SkillGap> showSkillGap(){
-        return dataService.showSkillGap();
+    public List<SkillGap> getSkillGaps(){
+        return dataService.getSkillGaps();
     }
 
+    //Skill Requirement
     @GetMapping("/skillRequirement")
-    public List<SkillRequirement> showSkillRequirement(){
-        return dataService.showSkillRequirement();
+    public List<SkillRequirement> getSkillRequirements(){
+        return dataService.getSkillRequirements();
     }
 
+    //Candidates
     @GetMapping("/candidates")
-    public List<Candidate> showCandidates(){
-        return dataService.showCandidates();
+    public List<Candidate> getCandidates(){
+        return dataService.getCandidates();
     }
 
     @GetMapping("/candidates/{id}")
@@ -114,9 +123,10 @@ public class DataController {
         return dataService.getCandidateById(id);
     }
 
+    //Member
     @GetMapping("/Member")
-    public List<Member> showMember(){
-        return dataService.showMember();
+    public List<Member> getMembers(){
+        return dataService.getMembers();
     }
 
     @GetMapping("/Member/{id}")
@@ -124,9 +134,10 @@ public class DataController {
         return dataService.getMemberById(id);
     }
 
+    //Mentee
     @GetMapping("/Mentee")
-    public List<Mentee> showMentee(){
-        return dataService.showMentee();
+    public List<Mentee> getMentees(){
+        return dataService.getMentees();
     }
 
     @GetMapping("/Mentee/{id}")
@@ -134,38 +145,60 @@ public class DataController {
         return dataService.getMenteeById(id);
     }
 
+    //Assessment Metrics
+    @GetMapping("/assessmentMetrics")
+    public List<AssessmentMetrics> getAssessmentMetrics() {
+        return dataService.getAssessmentMetrics();
+    }
+
+    @GetMapping("/assessmentMetrics/{id}")
+    public AssessmentMetrics getAssessmentMetricsById(@PathVariable int id) {
+        return dataService.getAssessmentMetricsById(id);
+    }
+
+    //Candidate Performance
+    @GetMapping("/candidatePerformance")
+    public List<CandidatePerformance> getCandidatePerformances(){
+        return dataService.getCandidatePerformances();
+    }
+
+    @GetMapping("/candidatePerformance/{id}")
+    public CandidatePerformance getCandidatePerformanceById(@PathVariable int id) {
+        return dataService.getCandidatePerformanceById(id);
+    }
+
     // Job Openings
     @GetMapping("/jobopenings")
-    public List<JobOpenings> showJobOpenings() {
-        return dataService.showJobOpenings();
+    public List<JobOpenings> getJobOpenings() {
+        return dataService.getJobOpenings();
     }
 
     @GetMapping("/jobopenings/{id}")
-    public JobOpenings getJobOpeningsById(@PathVariable int id) {
-        return dataService.getJobOpeningsById(id);
+    public JobOpenings getJobOpeningById(@PathVariable int id) {
+        return dataService.getJobOpeningById(id);
     }
 
     //Member Activities
     @GetMapping("/memberactivities")
-    public List<MemberActivities> showMemberActivities() {
-        return dataService.showMemberActivities();
+    public List<MemberActivities> getMemberActivities() {
+        return dataService.getMemberActivities();
     }
 
     @GetMapping("/memberactivities/{id}")
-    public MemberActivities getMemberActivitiesById(@PathVariable int id) {
-        return dataService.getMemberActivitiesById(id);
+    public MemberActivities getMemberActivityById(@PathVariable int id) {
+        return dataService.getMemberActivityById(id);
     }
 
     // Mentee Growth
     @GetMapping("/menteegrowth")
-    public List<MenteeGrowth> showMenteeGrowth() {
-        return dataService.showMenteeGrowth();
+    public List<MenteeGrowth> getMenteeGrowths() {
+        return dataService.getMenteeGrowths();
     }
 
     // Mentorship Activities
     @GetMapping("/mentorshipactivities")
-    public List<MentorshipActivities> showMentorshipActivities() {
-        return dataService.showMentorshipActivities();
+    public List<MentorshipActivities> getMentorshipActivities() {
+        return dataService.getMentorshipActivities();
     }
 
     @GetMapping("/mentorshipactivities/{id}")
@@ -175,8 +208,8 @@ public class DataController {
 
     // Role Permissions
     @GetMapping("/rolepermissions")
-    public List<RolePermissions> showRolePermissions() {
-        return dataService.showRolePermissions();
+    public List<RolePermissions> getRolePermissions() {
+        return dataService.getRolePermissions();
     }
 
     @GetMapping("/rolepermissions/{id}")
@@ -186,8 +219,8 @@ public class DataController {
 
     // Scheduled Assessment
     @GetMapping("/scheduledassessments")
-    public List<ScheduledAssessment> showScheduledAssessment() {
-        return dataService.showScheduledAssessment();
+    public List<ScheduledAssessment> getScheduledAssessments() {
+        return dataService.getScheduledAssessments();
     }
 
     @GetMapping("/scheduledassessments/{id}")
@@ -197,8 +230,8 @@ public class DataController {
 
     // Student Results
     @GetMapping("/studentresults")
-    public List<StudentResult> showStudentResult() {
-        return dataService.showStudentResult();
+    public List<StudentResult> getStudentsResults() {
+        return dataService.getStudentsResults();
     }
 
     @GetMapping("/studentresults/{id}")
@@ -206,13 +239,5 @@ public class DataController {
         return dataService.getStudentResultById(id);
     }
 
-    @GetMapping("/candidatePerformance")
-    public List<CandidatePerformance> getCandidatePerformance(){
-        return dataService.showCandidatePerformance();
-    }
-
-    @GetMapping("/assessmentMetrics")
-    public List<AssessmentMetrics> showAssessmentMetrics() {
-        return dataService.showAssessmentMetrics();
-    }
+    
 }
