@@ -25,38 +25,23 @@ const ChangePassword = () => {
   const [message, setMessage] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
 
-
-
-
-
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     setError(null)
     setMessage(null)
 
     // FULL VALIDATION
-    if (
-      !currentPassword.trim() ||
-      !newPassword.trim() ||
-      !confirmPassword.trim()
-    ) {
+    if (!currentPassword.trim() ||!newPassword.trim() ||!confirmPassword.trim()) {
       setError("All fields are required.")
       return
     }
-
     if (newPassword !== confirmPassword) {
       setError("New password and confirm password do not match.")
       return
     }
-
     setLoading(true)
-
     try {
-      console.log({
-        userId,
-        currentPassword,
-        newPassword,
-      })
+      console.log({userId,currentPassword,newPassword,})
       const response = await fetch(`${WEBAPI_NODE_URL}/auth/changepassword`, {
         method: "PUT",
         headers: {
