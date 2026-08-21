@@ -8,14 +8,14 @@ import { Label } from "@/components/ui/label";
 import { MessageSquare, Star, User, Zap } from "lucide-react";
 
 
-import type QuestionFeedback from "./entities/QuestionFeedback";
+import QuestionFeedbackModel from "./entities/QuestionFeedbackModel";
 
 import { WEBAPI_JAVA_URL } from "@/lib/utils";
 
 
 const QuestionFeedback=()=>{
     const { id } = useParams();
-    const [questionfeedback,setQuestionFeedback]=useState<QuestionFeedback>({ interviewId:Number(id), question:"",  confidence:0,  correctness:0,comment:""})
+    const [questionfeedback,setQuestionFeedback]=useState<QuestionFeedbackModel>({ interviewId:Number(id), question:"",  confidence:0,  correctness:0,comment:""})
                                                                                                                   
     const submitFeedback=async()=>{
         try{

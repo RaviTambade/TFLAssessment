@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
+
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
 import { WEBAPI_JAVA_URL } from "@/lib/utils";
+
 import QuestionFormData from "../assessmentOrchestrator/entities/MultipleChoiceQuestion";
 
 const EditQuestion = () => {
-    
 const navigate = useNavigate();
 const location = useLocation();
-
 const { id } = useParams();
 
 const returnPath =
@@ -39,7 +39,6 @@ const [formData, setFormData] = useState<QuestionFormData>({
     if (!id) return;
 
 const fetchQuestion = async () => {
-        
     try {
             const res = await fetch(`${WEBAPI_JAVA_URL}/questions/${id}/details`);
             const data = await res.json();
@@ -93,7 +92,8 @@ const fetchQuestion = async () => {
             alert("Question Updated Successfully ");
             navigate(returnPath);
 
-        } catch {
+        }
+        catch {
             alert("Update Failed - Please try again");
         }
     };

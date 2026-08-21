@@ -1,8 +1,8 @@
-interface QuestionFeedback{
+interface QuestionFeedbackModel{
     interviewId:number
     question:string;
     confidence:number;
     correctness:number;
     comment:string;
 }
-export default QuestionFeedback;
+export default QuestionFeedbackModel;

@@ -1,4 +1,4 @@
-interface InterviewFeedback  {
+interface InterviewFeedbackModel  {
   interviewId: number;
   smeId: number;
   startTime: string;
@@ -9,4 +9,4 @@ interface InterviewFeedback  {
   feedbackComment: string;
   recommendation: string;
 };
-export default InterviewFeedback;
+export default InterviewFeedbackModel;

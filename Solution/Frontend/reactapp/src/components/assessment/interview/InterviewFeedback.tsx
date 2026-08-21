@@ -9,14 +9,14 @@ import { Textarea } from "@/components/ui/textarea";
 import {Select,SelectContent,SelectItem,SelectTrigger,SelectValue} from "@/components/ui/select";
 import { CalendarDays, IdCard, MessageSquare, Star, ThumbsUp, User, Zap } from "lucide-react";
 
-import type InterviewFeedback from "./entities/InterviewFeedback";
+import  InterviewFeedbackModel from "./entities/InterviewFeedbackModel";
 
 import { WEBAPI_JAVA_URL } from "@/lib/utils";
 
 
 const InterviewFeedbackForm = () => {
     const { id } = useParams();
-    const [formData, setFormData] = useState<InterviewFeedback>({
+    const [formData, setFormData] = useState<InterviewFeedbackModel>({
         interviewId: Number(id),
         smeId: 0,
         startTime: "",

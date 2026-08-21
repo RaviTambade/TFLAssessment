@@ -3,25 +3,11 @@ import { useParams, useNavigate } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
-import {  WEBAPI_DOTNET_URL, WEBAPI_NODE_URL ,WEBAPI_JAVA_URL} from "@/lib/utils";
+import { WEBAPI_DOTNET_URL, WEBAPI_NODE_URL, WEBAPI_JAVA_URL } from "@/lib/utils";
 
-type Concept = {
-    id: string | number;
-    name?: string;
-    title?: string;
-};
+import Concept from "./entities/Concept";
+import QuestionFormData from "./entities/QuestionFormData";
 
-type QuestionFormData = {
-    description: string;
-    questionType: string;
-    difficultyLevel: string;
-    selectedConcept: string;
-    optionA: string;
-    optionB: string;
-    optionC: string;
-    optionD: string;
-    correctAnswer: string;
-};
 
 type QuestionListItem = QuestionFormData & {
     id: number;
@@ -30,12 +16,8 @@ type QuestionListItem = QuestionFormData & {
 const RTCreateQuestion = () => {
     const { id } = useParams();
     const navigate = useNavigate();
-
-    // const BASE_URL = `${WEBAPI_JAVA_URL}/questions`;
-    // const CONCEPTS_URL = `${WEBAPI_JAVA_URL}/concepts`;
-
     const [loading, setLoading] = useState(id ? true : false);
-    const [concepts, setConcepts] = useState<Concept[]>([]);
+    const [concepts, setConcepts] = useState<Concept[]>([]);    
     const [questionsList, setQuestionsList] = useState<QuestionListItem[]>([]);
 
     const [formData, setFormData] = useState({
@@ -52,12 +34,9 @@ const RTCreateQuestion = () => {
 
     useEffect(() => {
         if (!id) return;
-
         fetch(`${WEBAPI_JAVA_URL}/questions/details/${id}`)
             .then(res => res.json())
             .then(data => {
-                console.log("API DATA:", data);
-
                 setFormData({
                     description: data.description || "",
                     questionType: data.questionType || "MCQ",
@@ -67,7 +46,6 @@ const RTCreateQuestion = () => {
                     optionB: data.optionB || "",
                     optionC: data.optionC || "",
                     optionD: data.optionD || "",
-
                     correctAnswer: data.correctAnswer || ""
                 });
 
@@ -75,12 +53,11 @@ const RTCreateQuestion = () => {
             })
             .catch(err => {
                 console.error(err);
-                alert("Error loading data ❌");
+                alert("Error loading data ");
                 setLoading(false);
             });
     }, [id]);
 
-    // Fetch concepts on component mount
     useEffect(() => {
         fetch(`${WEBAPI_JAVA_URL}/concepts`)
             .then(res => res.json())
@@ -103,28 +80,28 @@ const RTCreateQuestion = () => {
 
     const validateForm = () => {
         if (!formData.description.trim()) {
-            alert("Please enter question description ❌");
+            alert("Please enter question description ");
             return false;
         }
         if (!formData.selectedConcept) {
-            alert("Please select a concept ❌");
+            alert("Please select a concept ");
             return false;
         }
         if (!formData.questionType) {
-            alert("Please select question type ❌");
+            alert("Please select question type ");
             return false;
         }
         if (!formData.difficultyLevel) {
-            alert("Please select difficulty level ❌");
+            alert("Please select difficulty level ");
             return false;
         }
         if (formData.questionType === "MCQ") {
             if (!formData.optionA.trim() || !formData.optionB.trim() || !formData.optionC.trim() || !formData.optionD.trim()) {
-                alert("Please fill all options ❌");
+                alert("Please fill all options ");
                 return false;
             }
             if (!formData.correctAnswer.trim()) {
-                alert("Please specify correct answer ❌");
+                alert("Please specify correct answer ");
                 return false;
             }
         }
@@ -133,17 +110,12 @@ const RTCreateQuestion = () => {
 
     const handleSubmit = () => {
         if (!validateForm()) return;
-
-        // Add question to list
         const newQuestion = {
             id: questionsList.length + 1,
             ...formData
         };
-
         setQuestionsList([...questionsList, newQuestion]);
         alert("Question Added Successfully ✅");
-
-        // Reset form
         setFormData({
             description: "",
             questionType: "MCQ",
@@ -159,32 +131,27 @@ const RTCreateQuestion = () => {
 
     const handleUpdate = async () => {
         if (!validateForm()) return;
-
         try {
             await fetch(`${WEBAPI_JAVA_URL}/questions/${id}`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(formData)
             });
-
-            alert("Question Updated Successfully ✅");
+            alert("Question Updated Successfully ");
             navigate("/models/evaluationcontent/reviewquestion");
         } catch {
-            alert("Update Failed ❌");
+            alert("Update Failed ");
         }
     };
 
     const removeQuestion = (questionId: number) => {
         setQuestionsList(questionsList.filter(q => q.id !== questionId));
-        alert("Question Removed ✅");
+        alert("Question Removed ");
     };
-
     if (loading) {
         return <div className="text-center mt-10 text-lg">Loading...</div>;
-    }
-
+    }``
     const isEditMode = !!id;
-
     return (
         <div className="min-h-screen bg-gradient-to-br from-background to-muted p-6">
             <div className="max-w-6xl mx-auto">
@@ -196,15 +163,11 @@ const RTCreateQuestion = () => {
                         </span>
                     </h1>
                 </div>
-
                 <Card className="border-0 shadow-2xl rounded-2xl overflow-hidden mb-8">
-
                     <div className="bg-gradient-primary p-5 text-white text-lg font-semibold">
                         Question Details
                     </div>
-
                     <CardContent className="p-6 space-y-5">
-
                         {/* Description */}
                         <div>
                             <label className="text-sm font-medium">Description</label>
@@ -213,10 +176,8 @@ const RTCreateQuestion = () => {
                                 name="description"
                                 value={formData.description}
                                 onChange={handleChange}
-                                className="w-full mt-1 p-3 border rounded-lg"
-                            />
+                                className="w-full mt-1 p-3 border rounded-lg" />
                         </div>
-
                         {/* Concept Selection */}
                         <div>
                             <label className="text-sm font-medium">Select Concept *</label>
@@ -224,8 +185,7 @@ const RTCreateQuestion = () => {
                                 name="selectedConcept"
                                 value={formData.selectedConcept}
                                 onChange={handleChange}
-                                className="w-full mt-1 p-3 border rounded-lg"
-                            >
+                                className="w-full mt-1 p-3 border rounded-lg"   >
                                 <option value="">-- Choose a Concept --</option>
                                 {concepts.map((concept) => (
                                     <option key={concept.id} value={concept.id}>
@@ -234,37 +194,31 @@ const RTCreateQuestion = () => {
                                 ))}
                             </select>
                         </div>
-
                         {/* Type + Difficulty */}
                         <div className="grid md:grid-cols-2 gap-4">
-
                             <div>
                                 <label className="text-sm font-medium">Question Type</label>
                                 <select
                                     name="questionType"
                                     value={formData.questionType}
                                     onChange={handleChange}
-                                    className="w-full mt-1 p-3 border rounded-lg"
-                                >
+                                    className="w-full mt-1 p-3 border rounded-lg" >
                                     <option value="MCQ">MCQ</option>
                                     <option value="PROBLEM_STATEMENT">Problem Statement</option>
                                 </select>
                             </div>
-
                             <div>
                                 <label className="text-sm font-medium">Difficulty Level</label>
                                 <select
                                     name="difficultyLevel"
                                     value={formData.difficultyLevel}
                                     onChange={handleChange}
-                                    className="w-full mt-1 p-3 border rounded-lg"
-                                >
+                                    className="w-full mt-1 p-3 border rounded-lg" >
                                     <option value="BEGINNER">BEGINNER</option>
                                     <option value="INTERMEDIATE">INTERMEDIATE</option>
                                     <option value="ADVANCE">ADVANCE</option>
                                 </select>
                             </div>
-
                         </div>
 
                         {/* MCQ Section */}
@@ -282,8 +236,8 @@ const RTCreateQuestion = () => {
                                     value={formData.correctAnswer}
                                     onChange={handleChange}
                                     placeholder="Correct Answer (A/B/C/D or full value)"
-                                    className="w-full p-3 border rounded-lg border-primary"
-                                />
+                                    className="w-full p-3 border rounded-lg border-primary"  />
+                              
                             </div>
                         )}
 
@@ -301,16 +255,13 @@ const RTCreateQuestion = () => {
                                     optionC: "",
                                     optionD: "",
                                     correctAnswer: ""
-                                })}
-                            >
-                                {isEditMode ? "Cancel" : "Clear"}
+                                })} >               
+                            {isEditMode ? "Cancel" : "Clear"}
                             </Button>
-
                             <Button onClick={isEditMode ? handleUpdate : handleSubmit}>
                                 {isEditMode ? "Update Question" : "Add Question"}
                             </Button>
                         </div>
-
                     </CardContent>
                 </Card>
 
@@ -320,7 +271,6 @@ const RTCreateQuestion = () => {
                         <div className="bg-gradient-primary p-5 text-white text-lg font-semibold">
                             Added Questions ({questionsList.length})
                         </div>
-
                         <CardContent className="p-6">
                             <div className="space-y-4">
                                 {questionsList.map((question, index) => (
@@ -332,12 +282,10 @@ const RTCreateQuestion = () => {
                                             <Button
                                                 variant="destructive"
                                                 size="sm"
-                                                onClick={() => removeQuestion(question.id)}
-                                            >
+                                                onClick={() => removeQuestion(question.id)}>
                                                 Remove
                                             </Button>
                                         </div>
-
                                         <div className="space-y-2 text-sm">
                                             <p><span className="font-medium">Description:</span> {question.description}</p>
                                             <p><span className="font-medium">Concept:</span> {concepts.find(c => c.id === question.selectedConcept)?.name || question.selectedConcept || "N/A"}</p>
@@ -364,8 +312,7 @@ const RTCreateQuestion = () => {
                             <div className="flex justify-end gap-4 mt-6 pt-4 border-t">
                                 <Button
                                     variant="outline"
-                                    onClick={() => navigate("/models/evaluationcontent/reviewquestion")}
-                                >
+                                    onClick={() => navigate("/models/evaluationcontent/reviewquestion")} > 
                                     Cancel All
                                 </Button>
 
@@ -374,8 +321,7 @@ const RTCreateQuestion = () => {
                                         console.log("Submitting questions:", questionsList);
                                         alert(`${questionsList.length} questions submitted! ✅`);
                                         // Here you can add API call to submit all questions
-                                    }}
-                                >
+                                    }} >
                                     Submit All Questions
                                 </Button>
                             </div>
@@ -386,5 +332,4 @@ const RTCreateQuestion = () => {
         </div>
     );
 };
-
 export default RTCreateQuestion;
