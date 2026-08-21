@@ -4,17 +4,13 @@ import DashboardAdmin from "./dashboardadmin";
 import DashboardStudent from "./dashboardstudent";
 import DashboardSME from "./dashboardsme";
 import DashboardMentor from "./dashboardmentor";
-//import DashboardEmployer from "./dashboardemployer";
-
 
 const Dashboard = () => {
-  const navigate = useNavigate();
-
   const [role, setRole] = useState<string | null>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const userData = sessionStorage.getItem("current");
-
     if (userData) {
       const user = JSON.parse(userData);
       setRole(user.rolename);
@@ -27,7 +23,6 @@ const Dashboard = () => {
       {role === "Student" && <DashboardStudent />}  
       {role === "SME" && <DashboardSME />}  
       {role === "Mentor" && <DashboardMentor />}  
-      {/* {role === "Employer" && <DashboardEmployer />}   */}
     </div>
   );
 };
