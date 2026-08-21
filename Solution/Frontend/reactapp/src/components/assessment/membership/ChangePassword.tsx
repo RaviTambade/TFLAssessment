@@ -1,14 +1,16 @@
 import { useState, FormEvent } from "react"
+
 import { Card, CardContent } from "../../ui/card";
 import { Input } from "../../ui/input";
 import { Button } from "../../ui/button";
 import { Eye, EyeOff } from "lucide-react"
+
 import { WEBAPI_NODE_URL } from "@/lib/utils";
+
 import ChangePasswordResponse from "./entities/ChangePasswordResponse";
 
 
 const ChangePassword = () => {
-
   const currentUser = sessionStorage.getItem("current");
   const user = JSON.parse(currentUser);
   const studentId = user.userid;
@@ -41,7 +43,6 @@ const ChangePassword = () => {
     }
     setLoading(true)
     try {
-      console.log({ userId, currentPassword, newPassword })
       const response = await fetch(
         `${WEBAPI_NODE_URL}/auth/changepassword`,
         {
