@@ -1,8 +1,7 @@
    interface Role {
-     roleId: number;
-       roleName: string;
-       description: string;
-
+    role_id: number;
+    role_name: string;
+    description: string;
     }
 
     export default Role;
