@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { WEBAPI_DOTNET_URL } from "@/lib/utils";
+
 import { Card, CardContent, CardHeader, CardTitle } from "../../ui/card";
 import { Users, User } from "lucide-react";
+
+import { WEBAPI_DOTNET_URL } from "@/lib/utils";
 
 interface User {
   userId: number;
@@ -13,37 +15,32 @@ interface User {
 const RoleUsers = () => {
   const { roleId } = useParams();
   const navigate = useNavigate();
-
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-
   useEffect(() => {
     const fetchUsers = async () => {
       try {
         const response = await fetch(
           `${WEBAPI_DOTNET_URL}/Roles/active-roles/${roleId}/users`
         );
-
         if (!response.ok) {
           throw new Error("Failed to fetch users");
         }
-
         const data: User[] = await response.json();
         console.log("Users:", data);
-
         setUsers(data);
-      } catch (error) {
+      }
+      catch (error) {
         console.error("Error fetching users:", error);
-      } finally {
+      }
+      finally {
         setLoading(false);
       }
     };
-
     if (roleId) {
       fetchUsers();
     }
   }, [roleId]);
-
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-background">
@@ -53,24 +50,19 @@ const RoleUsers = () => {
       </div>
     );
   }
-
   return (
     <section className="min-h-screen py-16 bg-background">
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto">
           <Card className="border-0 shadow-elegant overflow-hidden">
-
             <div className="bg-gradient-hero">
-
               <CardHeader>
                 <CardTitle className="flex items-center gap-3 text-foreground text-2xl">
                   <Users className="h-7 w-7 text-primary" />
                   Users
                 </CardTitle>
               </CardHeader>
-
               <CardContent className="pt-0">
-
                 <div className="overflow-hidden rounded-lg border bg-background">
                   <table className="w-full">
                     <tbody>
