@@ -31,7 +31,7 @@ import { Button } from "../../ui/button";
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {buttons.map(({ label, path }) => (
                     <Button key={path} variant="hero"size="lg"className="group"
-                      onClick={() => navigate(path)}>{label}
+                        onClick={() => navigate(path)}>{label}
                       <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                     </Button>
                   ))}
