@@ -35,11 +35,7 @@ const ChangePassword = () => {
     setMessage(null)
 
     // FULL VALIDATION
-    if (
-      !currentPassword.trim() ||
-      !newPassword.trim() ||
-      !confirmPassword.trim()
-    ) {
+    if (!currentPassword.trim() ||!newPassword.trim() ||!confirmPassword.trim() ) {
       setError("All fields are required.")
       return
     }
@@ -52,56 +48,38 @@ const ChangePassword = () => {
     setLoading(true)
 
     try {
-      console.log({
-        userId,
-        currentPassword,
-        newPassword,
-      })
-      const response = await fetch(`${WEBAPI_NODE_URL}/auth/changepassword`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          id: userId,
-          oldPassword: currentPassword,
-          newPassword: newPassword,
-        }),
-      });
+        console.log({userId,currentPassword,newPassword})
+        const response = await fetch(
+                  `${WEBAPI_NODE_URL}/auth/changepassword`,
+                    { method: "PUT",
+                      headers: {"Content-Type": "application/json"},
+                      body: JSON.stringify({ id: userId, oldPassword: currentPassword, newPassword: newPassword}),
+                  });
 
-      let data: ChangePasswordResponse | null = null
-      const contentType = response.headers.get("content-type") || ""
+        let data: ChangePasswordResponse | null = null 
+        const contentType = response.headers.get("content-type") || ""
 
-      if (contentType.includes("application/json")) {
-        data = await response.json().catch(() => null)
+        if (contentType.includes("application/json")) { data = await response.json().catch(() => null)}
+
+        if (!response.ok) {
+          const text = !contentType.includes("application/json") ? await response.text().catch(() => null) : null
+          const errorMessage = data?.message || data?.error || text || `${response.status} ${response.statusText}`
+          throw new Error(errorMessage)
+        }
+
+        // ✅ SUCCESS
+        setMessage("Password changed successfully.")
+        setUserId("")
+        setCurrentPassword("")
+        setNewPassword("")
+        setConfirmPassword("")
+      } 
+      catch (error: unknown) {
+        setError(error instanceof Error ? error.message : "Something went wrong.")
+      } 
+      finally {
+        setLoading(false)
       }
-
-      if (!response.ok) {
-        const text = !contentType.includes("application/json")
-          ? await response.text().catch(() => null)
-          : null
-
-        const errorMessage =
-          data?.message ||
-          data?.error ||
-          text ||
-          `${response.status} ${response.statusText}`
-
-        throw new Error(errorMessage)
-      }
-
-      // ✅ SUCCESS
-      setMessage("Password changed successfully.")
-      setUserId("")
-      setCurrentPassword("")
-      setNewPassword("")
-      setConfirmPassword("")
-
-    } catch (error: unknown) {
-      setError(error instanceof Error ? error.message : "Something went wrong.")
-    } finally {
-      setLoading(false)
-    }
   }
 
   return (
@@ -149,12 +127,8 @@ const ChangePassword = () => {
               <div>
                 <label className="text-sm font-semibold">New Password *</label>
                 <div className="relative">
-                  <Input
-                    type={showNew ? "text" : "password"}
-                    placeholder="Enter new password"
-                    value={newPassword}
-                    onChange={(e) => setNewPassword(e.target.value)}
-                  />
+                  <Input type={showNew ? "text" : "password"} placeholder="Enter new password" value={newPassword}
+                          onChange={(e) => setNewPassword(e.target.value)}/>
                   <button
                     type="button"
                     onClick={() => setShowNew(!showNew)}
