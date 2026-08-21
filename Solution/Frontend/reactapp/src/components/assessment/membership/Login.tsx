@@ -153,8 +153,8 @@ const LoginPage = () => {
 
                   <SelectContent>
                     {roles.map((r) => (
-                      <SelectItem key={r.roleId} value={r.roleName}>
-                        {r.roleName}
+                      <SelectItem key={r.role_id} value={r.role_name}>
+                        {r.role_name}
                       </SelectItem>
                     ))}
                   </SelectContent>
