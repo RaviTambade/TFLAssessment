@@ -1,15 +1,14 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useScrollAnimation } from "@/components/../hooks/use-scroll-animation";
+
 import { Card,CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { User, RefreshCw } from "lucide-react";
-import { useScrollAnimation } from "@/components/../hooks/use-scroll-animation";
-import { useNavigate } from "react-router-dom";
+
+import UnassignedUser from "./entities/UnassignedUser";
 
 
-interface UnassignedUser {
-  userId: number;
-  fullName: string;
-}
 
 const UnassignedUsers = () => {
   const { ref, isVisible } = useScrollAnimation();
@@ -22,20 +21,17 @@ const UnassignedUsers = () => {
   const fetchUsers = async () => {
     try {
       setLoading(true);
-
-      const response = await fetch(
-        "http://localhost:5201/api/Roles/unassigned/users"
-      );
-
+      const response = await fetch("http://localhost:5201/api/Roles/unassigned/users" );
       if (!response.ok) {
         throw new Error("Failed to fetch users");
       }
-
       const data: UnassignedUser[] = await response.json();
       setUsers(data);
-    } catch (error) {
+    } 
+    catch (error) {
       console.error("Error fetching users:", error);
-    } finally {
+    } 
+    finally {
       setLoading(false);
     }
   };
@@ -47,7 +43,6 @@ const UnassignedUsers = () => {
   return (
     <section className="py-16 bg-background min-h-screen">
       <div className="container mx-auto px-4">
-
         <div className="text-center mb-12">
           <h2 className="text-4xl font-bold">
             Unassigned{" "}
@@ -73,17 +68,11 @@ const UnassignedUsers = () => {
             Loading users...
           </div>
         ) : (
-          <div
-            ref={ref}
-            className={`grid md:grid-cols-2 lg:grid-cols-3 gap-6 transition-all duration-1000 ${
-              isVisible
-                ? "opacity-100 translate-y-0"
-                : "opacity-0 translate-y-10"
-            }`}
+          <div ref={ref} className={`grid md:grid-cols-2 lg:grid-cols-3 gap-6 transition-all duration-1000 ${
+              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10" }`}
           >
             {users.map((user) => (
-              <Card
-                    key={user.userId}
+              <Card key={user.userId}
                     onClick={() => navigate(`/models/membership/manage-users/${user.userId}`)}
                     className="cursor-pointer border-0 shadow-elegant hover:shadow-glow transition-all duration-300 hover:-translate-y-2">
                 <CardContent className="p-6 bg-gradient-hero">
@@ -91,12 +80,10 @@ const UnassignedUsers = () => {
                     <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center">
                       <User className="w-7 h-7 text-primary" />
                     </div>
-
                     <div>
                       <h3 className="text-lg font-semibold text-foreground">
                         {user.fullName}
                       </h3>
-
                       <p className="text-sm text-muted-foreground">
                         User ID: {user.userId}
                       </p>

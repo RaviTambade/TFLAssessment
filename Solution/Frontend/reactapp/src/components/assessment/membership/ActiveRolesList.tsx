@@ -58,14 +58,14 @@ const ActiveRolesList = () => {
         {/* Roles */}
         <div className="max-w-5xl mx-auto grid gap-6">
           {roles.map((role) => (
-            <Card key={role.roleId} onClick={() =>
-                navigate(`/models/membership/active-roles/${role.roleId}/users`)}
+            <Card key={role.role_id} onClick={() =>
+                navigate(`/models/membership/active-roles/${role.role_id}/users`)}
               className="cursor-pointer border-0 shadow-elegant overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-glow ">
               <div className="bg-gradient-hero p-6">
                 <CardHeader className="p-0">
                   <CardTitle className="flex items-center gap-3 text-foreground text-2xl">
                     <Shield className="h-7 w-7 text-primary" />
-                    {role.roleName}
+                    {role.role_name}
                   </CardTitle>
                 </CardHeader>
 
