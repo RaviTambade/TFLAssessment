@@ -3,18 +3,10 @@ import React, { useEffect, useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { CalendarDays,User,Video,GraduationCap,FileText,} from "lucide-react";
-
-type ScheduleInterview = {
-  scheduleAt: string;
-  mode: string;
-  title: string;
-  createdAt: string;
-  interviewer: number;
-  studentId: number;
-};
+import  ScheduleInterviewModel from "@/components/assessment/interview/entities/ScheduleInterview";
 
 const ScheduleInterview = () => {
-  const [formData, setFormData] = useState<ScheduleInterview>({scheduleAt: "",mode: "", title: "",createdAt: "",interviewer: 0,studentId: 0,});
+  const [formData, setFormData] = useState<ScheduleInterviewModel>({scheduleAt: "",mode: "", title: "",createdAt: "",interviewer: 0,studentId: 0,});
   const [message, setMessage] = useState("");
 
   useEffect(() => {

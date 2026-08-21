@@ -2,16 +2,13 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import InterviewHistory from "./InterviewHistory";
+import InterviewListModel from "./entities/InterviewListModel";
 
-type InterviewList = {
-  interviewId:number;
-  interviewer: number;
-  title: string;
-};
+
 
 const UpcomingInterviews = () => {
 
-      const [interviews, setInterviews] = useState<InterviewList[]>([]);
+      const [interviews, setInterviews] = useState<InterviewListModel[]>([]);
       const storedUser = sessionStorage.getItem("current");
       const user = storedUser ? JSON.parse(storedUser) : {};
       const navigate = useNavigate();
@@ -25,7 +22,6 @@ const UpcomingInterviews = () => {
       const response = await fetch(`http://localhost:8080/api/interview/upcoming/${user.userid}/role/${user.role_id}` );
       const data = await response.json();
       setInterviews(data);
-
     }
     catch (error) 
     {
