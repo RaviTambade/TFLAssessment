@@ -1,10 +1,8 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
-import { Button } from "./ui/button";
 import { useStaggeredAnimation } from "../hooks/use-scroll-animation";
 
 const Services = () => {
   const { ref, visibleItems } = useStaggeredAnimation(4, 200);
-  
   const services = [
     {
       title: "Online Live Classes",
@@ -46,8 +44,8 @@ const Services = () => {
                 visibleItems.has(index) 
                   ? 'opacity-100 translate-y-0' 
                   : 'opacity-0 translate-y-10'
-              }`}
-            >
+              }`} >
+           
               <div className={`absolute top-0 left-0 right-0 h-1 ${service.gradient}`}></div>
               <CardHeader className="pt-8">
                 <CardTitle className="text-xl font-bold text-foreground group-hover:text-primary transition-smooth">
@@ -74,5 +72,4 @@ const Services = () => {
     </section>
   );
 };
-
 export default Services;
