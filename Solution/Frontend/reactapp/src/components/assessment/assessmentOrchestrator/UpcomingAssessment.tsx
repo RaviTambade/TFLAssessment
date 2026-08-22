@@ -1,21 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { WEBAPI_DOTNET_URL } from "@/lib/utils";
+
 import Assessments from "./entities/UpcomingAssessment";
 
-
-
-
 const UpcomingAssessment = () => {
-
   const navigate = useNavigate();
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
   const [showFilterPanel, setShowFilterPanel] = useState(false);
-
   const [assessments, setAssessments] = useState<Assessments[]>([]);
-
-
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -74,10 +68,7 @@ const UpcomingAssessment = () => {
       <h2 className="text-xl font-semibold mb-6"> Upcoming Assessments</h2>
 
       <div className="w-full max-w-5xl flex justify-end mb-4">
-        <button
-          onClick={() => setShowFilterPanel((prev) => !prev)}
-          className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600"
-        >
+        <button onClick={() => setShowFilterPanel((prev) => !prev)} className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600">
           {showFilterPanel ? "Hide Filter" : "Filter by Date"}
         </button>
       </div>
@@ -122,5 +113,4 @@ const UpcomingAssessment = () => {
     </div>
   );
 };
-
 export default UpcomingAssessment;
