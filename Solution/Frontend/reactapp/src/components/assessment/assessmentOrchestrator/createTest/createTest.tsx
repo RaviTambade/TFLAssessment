@@ -30,15 +30,15 @@ const CreateTest = () => {
     if (isSubmitting) return;
 
     try {
-              setError(null);
-              setIsSubmitting(true);
-              const payload: CreateTestDraftPayload = {
+          setError(null);
+          setIsSubmitting(true);
+          const payload: CreateTestDraftPayload = {
                 title: testName,
                 difficulty: difficultyLevel,
                 description: description,
                 duration: Number(duration)
             };
-            console.log("Submitting Payload:", payload);
+          console.log("Submitting Payload:", payload);
 
         try {
             sessionStorage.setItem(CREATE_TEST_DRAFT_STORAGE_KEY,JSON.stringify(payload));

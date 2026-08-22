@@ -1,26 +1,10 @@
 import React, { useEffect, useState } from "react";
-
 import { useNavigate, useParams } from "react-router-dom";
 
-type Difficulty = "BEGINNER" | "INTERMEDIATE" | "ADVANCED";
+import AssessmentDetail from "../entities/AssessmentDetail";
+import Difficulty from "../entities/Difficulty";
 
-interface Assessment {
-  id: number;
-  title: string;
-  description: string;
-  duration: number;
-  difficulty: Difficulty;
-  createdAt: string;
-}
-
-// ---------------------------------------------------------------------------
-// Config
-// ---------------------------------------------------------------------------
-// const userId = localStorage.getItem("userId");
-const currentUser = JSON.parse(
-  sessionStorage.getItem("current") || "{}"
-);
-
+const currentUser = JSON.parse(sessionStorage.getItem("current") || "{}");
 const userId = currentUser.userid;
 const API_URL = `http://localhost:5201/api/CreateTest/GetSmeCreatedTest/${userId}`;
 
@@ -29,10 +13,6 @@ const DIFFICULTY_STYLES: Record<Difficulty, { bg: string; text: string }> = {
   INTERMEDIATE: { bg: "#FFF4E5", text: "#B5670A" },
   ADVANCED: { bg: "#FDEAEA", text: "#C4281C" },
 };
-
-// ---------------------------------------------------------------------------
-// Helpers
-// ---------------------------------------------------------------------------
 
 function formatDate(iso: string): string {
   const date = new Date(iso);
@@ -51,10 +31,6 @@ function titleCase(text: string): string {
     .join(" ");
 }
 
-// ---------------------------------------------------------------------------
-// Skeleton loading card
-// ---------------------------------------------------------------------------
-
 function SkeletonCard() {
   return (
     <div className="ca-card ca-card-skeleton" aria-hidden="true">
@@ -70,21 +46,14 @@ function SkeletonCard() {
   );
 }
 
-// ---------------------------------------------------------------------------
-// Assessment card
-// ---------------------------------------------------------------------------
-
-function AssessmentCard({ assessment }: { assessment: Assessment }) {
+function AssessmentCard({ assessment }: { assessment: AssessmentDetail }) {
   const navigate = useNavigate();
-  const difficultyStyle =
-    DIFFICULTY_STYLES[assessment.difficulty] ?? DIFFICULTY_STYLES.BEGINNER;
+  const difficultyStyle = DIFFICULTY_STYLES[assessment.difficulty] ?? DIFFICULTY_STYLES.BEGINNER;
 
   return (
     <article className="ca-card">
       <div className="ca-card-head">
-        <span className="ca-card-icon" aria-hidden="true">
-          &#128214;
-        </span>
+        <span className="ca-card-icon" aria-hidden="true">&#128214;</span>
         <h3 className="ca-card-title">{titleCase(assessment.title)}</h3>
       </div>
 
@@ -103,13 +72,8 @@ function AssessmentCard({ assessment }: { assessment: Assessment }) {
 
         <div className="ca-card-field">
           <span className="ca-field-label">Difficulty</span>
-          <span
-            className="ca-badge"
-            style={{
-              backgroundColor: difficultyStyle.bg,
-              color: difficultyStyle.text,
-            }}
-          >
+          <span className="ca-badge"
+            style={{ backgroundColor: difficultyStyle.bg, color: difficultyStyle.text, }}>
             {assessment.difficulty}
           </span>
         </div>
@@ -120,49 +84,30 @@ function AssessmentCard({ assessment }: { assessment: Assessment }) {
         <span className="ca-field-value">{formatDate(assessment.createdAt)}</span>
       </div>
 
-      <button
-        type="button"
-        className="ca-view-btn"
-        onClick={() => navigate(`/models/assessmentorchestrator/TestQuestionDetails/${assessment.id}`)}
-          
-        
-      >
+      <button type="button" className="ca-view-btn" onClick={() => navigate(`/models/assessmentorchestrator/TestQuestionDetails/${assessment.id}`)} >
         View Details
       </button>
     </article>
   );
 }
 
-// ---------------------------------------------------------------------------
-// Empty state
-// ---------------------------------------------------------------------------
-
 function EmptyState() {
   return (
     <div className="ca-empty">
-      <span className="ca-empty-icon" aria-hidden="true">
-        &#128203;
-      </span>
+      <span className="ca-empty-icon" aria-hidden="true"> &#128203; </span>
       <p className="ca-empty-text">No assessments created yet.</p>
     </div>
   );
 }
 
-// ---------------------------------------------------------------------------
-// Main page
-// ---------------------------------------------------------------------------
-
-export default function CreatedAssessments(){
-  
-  
-  const [assessments, setAssessments] = useState<Assessment[]>([]);
+export default function CreatedAssessments() {
+  const [assessments, setAssessments] = useState<AssessmentDetail[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
 
   useEffect(() => {
     let cancelled = false;
-
     async function fetchAssessments() {
       setIsLoading(true);
       setError(null);
@@ -171,19 +116,17 @@ export default function CreatedAssessments(){
         if (!response.ok) {
           throw new Error(`Request failed with status ${response.status}`);
         }
-        const data: Assessment[] = await response.json();
+        const data: AssessmentDetail[] = await response.json();
         if (!cancelled) {
           setAssessments(data);
         }
-      } catch (err) {
+      }
+      catch (err) {
         if (!cancelled) {
-          setError(
-            err instanceof Error
-              ? err.message
-              : "Something went wrong while loading assessments."
-          );
+          setError(err instanceof Error ? err.message : "Something went wrong while loading assessments.");
         }
-      } finally {
+      }
+      finally {
         if (!cancelled) {
           setIsLoading(false);
         }
@@ -199,25 +142,17 @@ export default function CreatedAssessments(){
   return (
     <div className="ca-page">
       <style>{STYLES}</style>
-
-      
-
       <main className="ca-main">
         <div className="ca-header-row">
-  <div>
-    <h1 className="ca-title">Tests Created</h1>
-    <p className="ca-subtitle">
-      View all tests created by the SME.
-    </p>
-  </div>
+          <div>
+            <h1 className="ca-title">Tests Created</h1>
+            <p className="ca-subtitle">View all tests created by the SME.</p>
+          </div>
 
-  <button
-    className="ca-create-btn"
-    onClick={() => navigate("/models/create-test")}
-  >
-    + Create Test
-  </button>
-</div>
+          <button className="ca-create-btn" onClick={() => navigate("/models/create-test")}>
+            + Create Test
+          </button>
+        </div>
 
         {error && (
           <div className="ca-error" role="alert">
@@ -227,9 +162,7 @@ export default function CreatedAssessments(){
 
         {isLoading ? (
           <div className="ca-grid">
-            {Array.from({ length: 6 }).map((_, i) => (
-              <SkeletonCard key={i} />
-            ))}
+            {Array.from({ length: 6 }).map((_, i) => (<SkeletonCard key={i} />))}
           </div>
         ) : assessments.length === 0 && !error ? (
           <EmptyState />
@@ -244,11 +177,6 @@ export default function CreatedAssessments(){
     </div>
   );
 }
-
-// ---------------------------------------------------------------------------
-// Styles — matches the Transflower Learning theme (white cards, rounded
-// corners, soft shadow, red/maroon brand accent)
-// ---------------------------------------------------------------------------
 
 const STYLES = `
   :root {
