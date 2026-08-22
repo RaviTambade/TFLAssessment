@@ -5,7 +5,8 @@ import { Button } from "../../../ui/button";
 import { Input } from "../../../ui/input";
 import { Label } from "../../../ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "../../../ui/card";
-import {CREATE_TEST_DRAFT_STORAGE_KEY,type CreateTestDraftPayload,} from "./createTestDraftStorage";
+import {CREATE_TEST_DRAFT_STORAGE_KEY} from "./createTestDraftStorage";
+import { CreateTestDraftPayload } from "../entities/CreateTestDraftPayload";
 
 const CreateTest = () => {
   const navigate = useNavigate();
@@ -29,29 +30,30 @@ const CreateTest = () => {
     if (isSubmitting) return;
 
     try {
-      setError(null);
-      setIsSubmitting(true);
-      const payload: CreateTestDraftPayload = {
-        title: testName,
-        difficulty: difficultyLevel,
-        description: description,
-        duration: Number(duration)
-      };
-      console.log("Submitting Payload:", payload);
+              setError(null);
+              setIsSubmitting(true);
+              const payload: CreateTestDraftPayload = {
+                title: testName,
+                difficulty: difficultyLevel,
+                description: description,
+                duration: Number(duration)
+            };
+            console.log("Submitting Payload:", payload);
 
-      try {
-        sessionStorage.setItem(CREATE_TEST_DRAFT_STORAGE_KEY,JSON.stringify(payload));
-      }
-      catch {
-        console.log(error);
-      }
-
-      navigate("/models/question-options", { state: { test: payload } });
-      console.log("Payload from CreateTest", payload);
-    } catch (err) {
+        try {
+            sessionStorage.setItem(CREATE_TEST_DRAFT_STORAGE_KEY,JSON.stringify(payload));
+        }
+        catch {
+          console.log(error);
+        }
+        navigate("/models/question-options", { state: { test: payload } });
+        console.log("Payload from CreateTest", payload);
+    } 
+    catch (err) {
       setError("Failed to create test.");
       console.error(err);
-    } finally {
+    } 
+    finally {
       setIsSubmitting(false);
     }
   };
@@ -78,71 +80,30 @@ const CreateTest = () => {
               <Label className="text-sm font-bold text-slate-700 uppercase tracking-wider">
                 Test Name
               </Label>
-              <Input
-                value={testName}
-                onChange={(e) => setTestName(e.target.value)}
-                placeholder="Enter test name"
-                className="h-12 rounded-xl border-slate-200 focus:ring-red-500"
-                required
-              />
+              <Input value={testName} onChange={(e) => setTestName(e.target.value)} placeholder="Enter test name" className="h-12 rounded-xl border-slate-200 focus:ring-red-500"required/>
             </div>
-
-
 
             <div>
               <label className="font-medium block mb-2">
                 Difficulty Level
               </label>
 
-              <select
-                name="difficultyLevel"
-                value={difficultyLevel}
-                onChange={(e) => setDifficultyLevel(e.target.value)}
-                className="w-full border p-3 rounded"
-              >
-                <option value="BEGINNER">
-                  BEGINNER
-                </option>
-
-                <option value="INTERMEDIATE">
-                  INTERMEDIATE
-                </option>
-
-                <option value="ADVANCE">
-                  ADVANCE
-                </option>
+              <select name="difficultyLevel" value={difficultyLevel} onChange={(e) => setDifficultyLevel(e.target.value)}className="w-full border p-3 rounded">
+                <option value="BEGINNER">BEGINNER</option>
+                <option value="INTERMEDIATE">INTERMEDIATE</option>
+                <option value="ADVANCE">ADVANCE</option>
               </select>
             </div>
 
-
-            {/* DESCRIPTION */}
             <div className="space-y-2">
-              <Label className="text-sm font-bold text-slate-700 uppercase tracking-wider">
-                Description
-              </Label>
-              <textarea
-                className="w-full border border-slate-200 rounded-xl p-3 focus:ring-2 focus:ring-red-500 focus:outline-none transition-all"
-                rows={4}
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-                placeholder="Enter description"
-                required
-              />
+              <Label className="text-sm font-bold text-slate-700 uppercase tracking-wider">Description</Label>
+              <textarea className="w-full border border-slate-200 rounded-xl p-3 focus:ring-2 focus:ring-red-500 focus:outline-none transition-all"
+                rows={4} value={description} onChange={(e) => setDescription(e.target.value)} placeholder="Enter description" required/>
             </div>
 
-            {/* DURATION */}
             <div className="space-y-2">
-              <Label className="text-sm font-bold text-slate-700 uppercase tracking-wider">
-                Duration (Minutes)
-              </Label>
-              <Input
-                type="number"
-                value={duration}
-                onChange={(e) => setDuration(e.target.value)}
-                placeholder="Enter duration"
-                className="h-12 rounded-xl border-slate-200 focus:ring-red-500"
-                required
-              />
+              <Label className="text-sm font-bold text-slate-700 uppercase tracking-wider">Duration (Minutes)</Label>
+              <Input type="number" value={duration} onChange={(e) => setDuration(e.target.value)} placeholder="Enter duration" className="h-12 rounded-xl border-slate-200 focus:ring-red-500" required />
             </div>
 
 
@@ -151,17 +112,13 @@ const CreateTest = () => {
               <Button type="submit" disabled={isSubmitting} className="flex-1 bg-red-600 hover:bg-red-700 text-white py-6 text-lg rounded-xl transition-all">
                 {isSubmitting ? "Creating..." : "Create New Test"}
               </Button>
-              <Button
-                type="reset"
-                variant="outline"
-                className="flex-1 py-6 text-lg rounded-xl border-slate-200 hover:bg-slate-50"
+              <Button type="reset" variant="outline" className="flex-1 py-6 text-lg rounded-xl border-slate-200 hover:bg-slate-50"
                 onClick={() => {
                   setTestName("");
                   setDifficultyLevel("BEGINNER");
                   setDescription("");
                   setDuration("");
-                }}
-              >
+                }}>
                 Clear
               </Button>
             </div>

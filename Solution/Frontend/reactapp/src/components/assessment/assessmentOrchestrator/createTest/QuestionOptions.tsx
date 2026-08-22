@@ -12,12 +12,8 @@ import {
 } from "../../../ui/select";
 import SMEInsertQuestion from "../../evaluationcontent/SMEInsertQuestion";
 import { WEBAPI_DOTNET_URL } from "@/lib/utils";
-import {
-  CREATE_TEST_DRAFT_STORAGE_KEY,
-  type CreateTestDraftPayload,
-  isCreateTestDraftPayload,
-  readCreateTestDraftFromSession,
-} from "./createTestDraftStorage";
+import { CREATE_TEST_DRAFT_STORAGE_KEY,  isCreateTestDraftPayload,  readCreateTestDraftFromSession,} from "./createTestDraftStorage";
+import { CreateTestDraftPayload } from "../entities/CreateTestDraftPayload";
 
 type QuestionOptionsLocationState = {
   testId?: number | string;

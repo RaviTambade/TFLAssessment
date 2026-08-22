@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+
 import { Loader2, AlertCircle } from "lucide-react";
 
 const QuestionsComponent = ({ language, onQuestionSelect }) => {
@@ -18,9 +19,8 @@ const QuestionsComponent = ({ language, onQuestionSelect }) => {
     try {
       setLoading(true);
       setError(null);
-      // Replace with your actual API endpoint
       const languageId = language.id || language.languageId;
-      const response = await fetch(`/api/questions?languageId=${languageId}`); // Update with your backend URL
+      const response = await fetch(`/api/questions?languageId=${languageId}`); 
       if (!response.ok) {
         throw new Error("Failed to fetch questions");
       }
@@ -33,7 +33,6 @@ const QuestionsComponent = ({ language, onQuestionSelect }) => {
       setLoading(false);
     }
   };
-
   if (loading) {
     return (
       <div className="flex flex-col items-center justify-center py-12">
@@ -42,7 +41,6 @@ const QuestionsComponent = ({ language, onQuestionSelect }) => {
       </div>
     );
   }
-
   if (error) {
     return (
       <div className="p-6 bg-red-50 border border-red-200 rounded-lg flex items-center gap-4">
@@ -50,19 +48,13 @@ const QuestionsComponent = ({ language, onQuestionSelect }) => {
         <div>
           <p className="text-red-900 font-semibold">Error Loading Questions</p>
           <p className="text-red-700">{error}</p>
-          <Button
-            onClick={fetchQuestions}
-            variant="outline"
-            size="sm"
-            className="mt-2"
-          >
+          <Button onClick={fetchQuestions} variant="outline" size="sm" className="mt-2">
             Try Again
           </Button>
         </div>
       </div>
     );
   }
-
   if (questions.length === 0) {
     return (
       <div className="text-center py-12">
@@ -73,7 +65,6 @@ const QuestionsComponent = ({ language, onQuestionSelect }) => {
       </div>
     );
   }
-
   return (
     <div className="space-y-4">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -97,14 +88,7 @@ const QuestionsComponent = ({ language, onQuestionSelect }) => {
               <p className="text-slate-600 text-sm mb-4 flex-1">
                 {question.description || question.questionText || "Click to view details"}
               </p>
-              <Button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  onQuestionSelect(question);
-                }}
-                className="w-full mt-auto"
-                variant="default"
-              >
+              <Button onClick={(e) => {e.stopPropagation(); onQuestionSelect(question);}} className="w-full mt-auto" variant="default">
                 View Details
               </Button>
             </CardContent>
@@ -114,5 +98,4 @@ const QuestionsComponent = ({ language, onQuestionSelect }) => {
     </div>
   );
 };
-
 export default QuestionsComponent;

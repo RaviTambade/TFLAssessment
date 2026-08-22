@@ -3,19 +3,15 @@ import { useNavigate, useParams } from "react-router-dom";
 
 import { Button } from "@/components/ui/button";
 import {Card,CardContent,CardHeader,CardTitle,} from "@/components/ui/card";
+
+import ShowInterviewDetail from "./entities/ShowInterviewDetail";
+
 import { WEBAPI_JAVA_URL } from "@/lib/utils";
 
 
 const ShowInterviewDetailsStudent = () => {
 
-    const [interviewDetail,setInterviewDetail]=useState({
-        title: "",
-        scheduleDate: "",
-        mode: "",
-        interviewer: "",
-        interviewId:0,
-        status:""
-    });
+    const [interviewDetail,setInterviewDetail]=useState<ShowInterviewDetail | null>(null);
 
     const storedUser = sessionStorage.getItem("current");
     const user = storedUser ? JSON.parse(storedUser) : null;
