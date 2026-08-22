@@ -6,11 +6,7 @@ import { Loader2, Brain, Check, User } from "lucide-react";
 
 import { WEBAPI_JAVA_URL } from "@/lib/utils";
 
-type Question = {
-    questionId: number;
-    description: string;
-    questionType: string;
-};
+type Question = {questionId: number; description: string; questionType: string;};
 
 const QuestionsByConcept = () => {
         const [concepts, setConcepts] = useState<string[]>([]);

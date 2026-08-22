@@ -1,43 +1,21 @@
-import { Card, CardContent } from "../../ui/card";
-import { Button } from "../../ui/button";
-import { useNavigate } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+import { Card, CardContent } from "../../ui/card";
+import { Button } from "../../ui/button";
 
 
 const actions = [
-  {
-    label: "Upcoming Assessment",
-    path: "/models/upcoming-assessment",
-    roles: ["Mentor", "Student"],
-  },
-  {
-    label: "All Assessment",
-    path: "/models/all-assessment",
-    roles: ["Admin"],
-  },
-  {
-    label: "SME Expertise Form",
-    path: "/models/sme-expertise-form",
-    roles: ["SME"],
-  },
-  {
-    label: "Create Test",
-    path: "/models/create-test",
-    roles: ["SME"],
-  },
-  {
-    label: "Assign Assessment",
-    path: "/models/assign-assessment",
-    roles: ["Admin"],
-  },
-];
-
-const AssessmentOrchestrator = () => {
+  { label: "Upcoming Assessment", path: "/models/upcoming-assessment",roles: ["Mentor", "Student"],},
+  { label: "All Assessment",path: "/models/all-assessment",roles: ["Admin"],},
+  { label: "SME Expertise Form", path: "/models/sme-expertise-form",  roles: ["SME"], },
+  { label: "Create Test", path: "/models/create-test", roles: ["SME"], },
+  { label: "Assign Assessment", path: "/models/assign-assessment", roles: ["Admin"],},];
+  
+  const AssessmentOrchestrator = () => {
   const navigate = useNavigate();
-
   const [role, setRole] = useState<string | null>(null);
-
   useEffect(() => {
     const userData = sessionStorage.getItem("current");
     if (userData) {
@@ -56,17 +34,11 @@ const AssessmentOrchestrator = () => {
                 {actions
                   .filter((action) => role && action.roles.includes(role))
                   .map((action) => (
-                    <Button
-                      key={action.label}
-                      variant="hero"
-                      size="lg"
-                      className="group"
-                      onClick={() => navigate(action.path)}
-                    >
+                    <Button key={action.label} variant="hero"  size="lg" className="group" onClick={() => navigate(action.path)}>
                       {action.label}
-                      <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                    </Button>
-                  ))}
+                    <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                    </Button> 
+                ))}
               </div>
             </CardContent>
           </div>
@@ -75,5 +47,4 @@ const AssessmentOrchestrator = () => {
     </section>
   );
 };
-
 export default AssessmentOrchestrator;

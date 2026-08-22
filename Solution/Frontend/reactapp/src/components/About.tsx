@@ -1,10 +1,12 @@
-import { Card, CardContent } from "./ui/card";
-import { Button } from "./ui/button";
-import { useScrollAnimation } from "../hooks/use-scroll-animation";
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 
-const About = () => {
+import { Card, CardContent } from "./ui/card";
+import { Button } from "./ui/button";
+import { useScrollAnimation } from "../hooks/use-scroll-animation";
+
+
+  const About = () => {
   const { ref, isVisible } = useScrollAnimation();
 
   return (
@@ -20,23 +22,12 @@ const About = () => {
         </div>
         
         <div className="max-w-6xl mx-auto">
-          <Card 
-            ref={ref}
-            className={`border-0 shadow-elegant overflow-hidden transition-all duration-1000 ${
-              isVisible 
-                ? 'opacity-100 translate-y-0' 
-                : 'opacity-0 translate-y-10'
-            }`}
-          >
+          <Card  ref={ref} className={`border-0 shadow-elegant overflow-hidden transition-all duration-1000 ${ isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
             <div className="bg-gradient-hero p-6 sm:p-8">
               <div className="grid lg:grid-cols-3 gap-6 lg:gap-8 items-center">
                 <div className="lg:col-span-1 text-center">
                   <div className="w-40 h-40 sm:w-48 sm:h-48 mx-auto rounded-full overflow-hidden shadow-glow border-4 border-primary/20">
-                    <img 
-                      src="/lovable-uploads/bc1b22a1-548e-47b8-a0d2-1f43d49543b8.png" 
-                      alt="Ravi Tambade at work - Chief Mentor at Transflower Learning" 
-                      className="w-full h-full object-cover object-top"
-                    />
+                    <img  src="/lovable-uploads/bc1b22a1-548e-47b8-a0d2-1f43d49543b8.png"  alt="Ravi Tambade at work - Chief Mentor at Transflower Learning"  className="w-full h-full object-cover object-top"/>
                   </div>
                 </div>
                 
@@ -52,15 +43,7 @@ const About = () => {
                     With over 25 years of experience in technology training and mentoring, Ravi has shaped the careers of thousands of IT professionals across the globe.
                   </p>
                   <Link to="/ravi-tambade">
-                    <Button 
-                      variant="hero" 
-                      size="sm" 
-                      className="group"
-                      onClick={() => {
-                        // Scroll to top when navigating to new page
-                        setTimeout(() => window.scrollTo(0, 0), 100);
-                      }}
-                    >
+                    <Button  variant="hero" size="sm" className="group"onClick={() => {setTimeout(() => window.scrollTo(0, 0), 100);}}>
                       Learn More About Ravi
                       <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                     </Button>

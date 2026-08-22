@@ -29,6 +29,7 @@ const UpcomingInterviews = () => {
     }
   };
 
+
   return (
   <section className="py-10 sm:py-14 bg-background min-h-screen">
       <div className="container mx-auto px-4">
