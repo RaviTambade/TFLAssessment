@@ -5,6 +5,7 @@ import ApiResponse from "./entities/ApiResponse";
 import { WEBAPI_NODE_URL } from "@/lib/utils";
 
 function UserInformation() {
+
   const [userId, setUserId] = useState("");
   const [response, setResponse] = useState<ApiResponse | null>(null);
   const [loading, setLoading] = useState(false);
@@ -18,16 +19,15 @@ function UserInformation() {
     try {
           const res = await fetch(`${WEBAPI_NODE_URL}/users/${userId}`);
           const data: ApiResponse = await res.json();
-          console.log("API RESPONSE:", data);
           setResponse(data);
-        } 
-    catch{
+    } 
+    catch {
           setResponse({
           success: false,
           error: "Backend not running",
       }); 
     } 
-    finally{
+    finally {
           setLoading(false);
     }
   };
@@ -59,6 +59,6 @@ function UserInformation() {
       )}
       {response && !response.success && (<p style={{ color: "red" }}>{response.error || response.message} </p>)}
     </div>
-  );
+  ); 
 }
 export default UserInformation;
