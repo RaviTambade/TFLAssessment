@@ -13,7 +13,6 @@ class ResponseGenerator {
     return res.status(statusCode).json({ success: false, error: message });
   }
 
-
   generateResponse(res, err, result, errorMessage, successMessage) {
     
     if (err) {

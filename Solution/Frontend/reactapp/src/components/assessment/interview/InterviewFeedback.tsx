@@ -1,30 +1,22 @@
+import { useState } from "react";
+import { useParams } from "react-router-dom";
+
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import {Select,SelectContent,SelectItem,SelectTrigger,SelectValue} from "@/components/ui/select";
-import { WEBAPI_JAVA_URL } from "@/lib/utils";
 import { CalendarDays, IdCard, MessageSquare, Star, ThumbsUp, User, Zap } from "lucide-react";
-import { useState } from "react";
-import { useParams } from "react-router-dom";
 
-type InterviewFeedback = {
-  interviewId: number;
-  smeId: number;
-  startTime: string;
-  endTime: string;
-  communicationRating: number;
-  problemSolvingRating: number;
-  strengths: string;
-  feedbackComment: string;
-  recommendation: string;
-};
+import  InterviewFeedbackModel from "./entities/InterviewFeedbackModel";
+
+import { WEBAPI_JAVA_URL } from "@/lib/utils";
+
 
 const InterviewFeedbackForm = () => {
-
     const { id } = useParams();
-    const [formData, setFormData] = useState<InterviewFeedback>({
+    const [formData, setFormData] = useState<InterviewFeedbackModel>({
         interviewId: Number(id),
         smeId: 0,
         startTime: "",
@@ -34,15 +26,10 @@ const InterviewFeedbackForm = () => {
         strengths: "",
         feedbackComment: "",
         recommendation: "",
-        });
-
-    
-
-  const [isSubmitting, setIsSubmitting] = useState(false);
+    });
   
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const handleChange = (  e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>  ) => {
     const { name, value, type } = e.target;
     setFormData((prev) => ({
       ...prev,
@@ -50,8 +37,7 @@ const InterviewFeedbackForm = () => {
     }));
   };
 
-  const handleSelectChange = (value: string) => {
-    setFormData((prev) => ({ ...prev, recommendation: value }));
+  const handleSelectChange = (value: string) => { setFormData((prev) => ({ ...prev, recommendation: value }));
   };
 
   const submitFeedback = async () => {
@@ -76,13 +62,16 @@ const InterviewFeedbackForm = () => {
         feedbackComment: "",
         recommendation: "",
         });
-      } else {
+      }
+      else {
         alert("Failed to submit feedback. Please try again.");
       }
-    } catch (error) {
+    }
+    catch (error) {
       console.error(error);
       alert("An error occurred. Please try again.");
-    } finally {
+    }
+    finally {
       setIsSubmitting(false);
     }
   };
@@ -95,7 +84,6 @@ const InterviewFeedbackForm = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-50 to-amber-100 flex items-center justify-center p-6">
       <div className="w-full max-w-2xl">
-
         {/* Header */}
         <div className="mb-6 text-center">
           <h1 className="text-3xl font-bold bg-gradient-primary bg-clip-text text-transparent">
@@ -113,14 +101,12 @@ const InterviewFeedbackForm = () => {
 
           <CardContent className="pt-6 px-8 pb-8">
             <form onSubmit={handleSubmit} className="space-y-6">
-
               {/* Time Range */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label
                     htmlFor="startTime"
-                    className="flex items-center gap-1.5 text-orange-700 font-medium"
-                  >
+                    className="flex items-center gap-1.5 text-orange-700 font-medium">
                     <CalendarDays className="h-4 w-4 text-orange-400" />
                     Start Time
                   </Label>
@@ -131,15 +117,13 @@ const InterviewFeedbackForm = () => {
                     value={formData.startTime}
                     onChange={handleChange}
                     required
-                    className="border-orange-200 focus-visible:ring-orange-400 text-orange-900 bg-orange-50/50"
-                  />
+                    className="border-orange-200 focus-visible:ring-orange-400 text-orange-900 bg-orange-50/50"   />
                 </div>
 
                 <div className="space-y-2">
                   <Label
                     htmlFor="endTime"
-                    className="flex items-center gap-1.5 text-orange-700 font-medium"
-                  >
+                    className="flex items-center gap-1.5 text-orange-700 font-medium">
                     <CalendarDays className="h-4 w-4 text-orange-400" />
                     End Time
                   </Label>
@@ -150,8 +134,7 @@ const InterviewFeedbackForm = () => {
                     value={formData.endTime}
                     onChange={handleChange}
                     required
-                    className="border-orange-200 focus-visible:ring-orange-400 text-orange-900 bg-orange-50/50"
-                  />
+                    className="border-orange-200 focus-visible:ring-orange-400 text-orange-900 bg-orange-50/50"/>      
                 </div>
               </div>
 
@@ -160,8 +143,7 @@ const InterviewFeedbackForm = () => {
                 <div className="space-y-2">
                   <Label
                     htmlFor="communicationRating"
-                    className="flex items-center gap-1.5 text-orange-700 font-medium"
-                  >
+                    className="flex items-center gap-1.5 text-orange-700 font-medium" >
                     <Star className="h-4 w-4 text-orange-400" />
                     Communication Rating
                   </Label>
@@ -175,15 +157,13 @@ const InterviewFeedbackForm = () => {
                     min={1}
                     max={10}
                     required
-                    className="border-orange-200 focus-visible:ring-orange-400 text-orange-900 bg-orange-50/50"
-                  />
+                    className="border-orange-200 focus-visible:ring-orange-400 text-orange-900 bg-orange-50/50"/>
                 </div>
-
+                
                 <div className="space-y-2">
                   <Label
                     htmlFor="problemSolvingRating"
-                    className="flex items-center gap-1.5 text-orange-700 font-medium"
-                  >
+                    className="flex items-center gap-1.5 text-orange-700 font-medium">      
                     <Zap className="h-4 w-4 text-orange-400" />
                     Problem Solving Rating
                   </Label>
@@ -197,8 +177,7 @@ const InterviewFeedbackForm = () => {
                     min={1}
                     max={10}
                     required
-                    className="border-orange-200 focus-visible:ring-orange-400 text-orange-900 bg-orange-50/50"
-                  />
+                    className="border-orange-200 focus-visible:ring-orange-400 text-orange-900 bg-orange-50/50"  />  
                 </div>
               </div>
 
@@ -206,8 +185,7 @@ const InterviewFeedbackForm = () => {
               <div className="space-y-2">
                 <Label
                   htmlFor="strengths"
-                  className="flex items-center gap-1.5 text-orange-700 font-medium"
-                >
+                  className="flex items-center gap-1.5 text-orange-700 font-medium" > 
                   <User className="h-4 w-4 text-orange-400" />
                   Strengths
                 </Label>
@@ -218,16 +196,14 @@ const InterviewFeedbackForm = () => {
                   value={formData.strengths}
                   onChange={handleChange}
                   required
-                  className="border-orange-200 focus-visible:ring-orange-400 text-orange-900 bg-orange-50/50"
-                />
+                  className="border-orange-200 focus-visible:ring-orange-400 text-orange-900 bg-orange-50/50" />    
               </div>
 
               {/* Feedback Comment */}
               <div className="space-y-2">
                 <Label
                   htmlFor="feedbackComment"
-                  className="flex items-center gap-1.5 text-orange-700 font-medium"
-                >
+                  className="flex items-center gap-1.5 text-orange-700 font-medium"  >  
                   <MessageSquare className="h-4 w-4 text-orange-400" />
                   Feedback Comment
                 </Label>
@@ -238,28 +214,24 @@ const InterviewFeedbackForm = () => {
                   onChange={handleChange}
                   required
                   rows={4}
-                  className="border-orange-200 focus-visible:ring-orange-400 text-orange-900 bg-orange-50/50 resize-none"
-                />
+                  className="border-orange-200 focus-visible:ring-orange-400 text-orange-900 bg-orange-50/50 resize-none" />
               </div>
 
               {/* Recommendation */}
               <div className="space-y-2">
                 <Label
                   htmlFor="recommendation"
-                  className="flex items-center gap-1.5 text-orange-700 font-medium"
-                >
+                  className="flex items-center gap-1.5 text-orange-700 font-medium" >
                   <ThumbsUp className="h-4 w-4 text-orange-400" />
                   Recommendation
                 </Label>
                 <Select
                   value={formData.recommendation}
                   onValueChange={handleSelectChange}
-                  required
-                >
+                  required  >    
                   <SelectTrigger
                     id="recommendation"
-                    className="border-orange-200 text-orange-900 focus:ring-orange-400 bg-orange-50/50"
-                  >
+                    className="border-orange-200 text-orange-900 focus:ring-orange-400 bg-orange-50/50">
                     <SelectValue placeholder="Select a recommendation" />
                   </SelectTrigger>
                   <SelectContent>
@@ -287,7 +259,6 @@ const InterviewFeedbackForm = () => {
 
               {/* Divider */}
               <div className="border-t border-orange-100 pt-2" />
-
               {/* Submit */}
               <Button
                 type="submit"
@@ -301,5 +272,4 @@ const InterviewFeedbackForm = () => {
     </div>
   );
 };
-
 export default InterviewFeedbackForm;

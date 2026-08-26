@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
+import { Loader2, AlertCircle, CheckCircle } from "lucide-react";
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Loader2, AlertCircle, CheckCircle } from "lucide-react";
 
 const QuestionDetailsComponent = ({ question, language }) => {
   const [questionDetails, setQuestionDetails] = useState(null);
@@ -22,19 +23,19 @@ const QuestionDetailsComponent = ({ question, language }) => {
       setError(null);
       setSelectedAnswer(null);
       setSubmitted(false);
-
-      // Replace with your actual API endpoint
       const questionId = question.id || question.questionId;
-      const response = await fetch(`/api/questions/${questionId}`); // Update with your backend URL
+      const response = await fetch(`/api/questions/${questionId}`); 
       if (!response.ok) {
         throw new Error("Failed to fetch question details");
       }
       const data = await response.json();
       setQuestionDetails(data.question || data);
-    } catch (err) {
+    }
+    catch (err) {
       setError(err.message || "Error fetching question details");
       console.error("Error fetching question details:", err);
-    } finally {
+    }
+    finally {
       setLoading(false);
     }
   };
@@ -42,8 +43,6 @@ const QuestionDetailsComponent = ({ question, language }) => {
   const handleSubmitAnswer = () => {
     if (selectedAnswer) {
       setSubmitted(true);
-      // You can add additional logic here to save the answer
-      console.log("Answer submitted:", selectedAnswer);
     }
   };
 
@@ -63,12 +62,7 @@ const QuestionDetailsComponent = ({ question, language }) => {
         <div>
           <p className="text-red-900 font-semibold">Error Loading Question Details</p>
           <p className="text-red-700">{error}</p>
-          <Button
-            onClick={fetchQuestionDetails}
-            variant="outline"
-            size="sm"
-            className="mt-2"
-          >
+          <Button onClick={fetchQuestionDetails} variant="outline" size="sm" className="mt-2">
             Try Again
           </Button>
         </div>
@@ -91,27 +85,20 @@ const QuestionDetailsComponent = ({ question, language }) => {
           <div className="flex gap-6">
             <div>
               <p className="text-xs text-blue-700 font-semibold">LANGUAGE</p>
-              <p className="text-lg font-semibold text-blue-900">
-                {language.name || language.languageName}
-              </p>
+              <p className="text-lg font-semibold text-blue-900">{language.name || language.languageName}</p>
             </div>
             <div>
               <p className="text-xs text-blue-700 font-semibold">DIFFICULTY</p>
-              <p className="text-lg font-semibold text-blue-900">
-                {details.difficulty || "Medium"}
-              </p>
+              <p className="text-lg font-semibold text-blue-900">{details.difficulty || "Medium"}</p>
             </div>
             <div>
               <p className="text-xs text-blue-700 font-semibold">POINTS</p>
-              <p className="text-lg font-semibold text-blue-900">
-                {details.points || "10"}
-              </p>
+              <p className="text-lg font-semibold text-blue-900">{details.points || "10"}</p>
             </div>
           </div>
         </CardContent>
       </Card>
 
-      {/* Full Question Description */}
       <Card>
         <CardHeader>
           <CardTitle className="text-lg">Question</CardTitle>
@@ -129,11 +116,7 @@ const QuestionDetailsComponent = ({ question, language }) => {
 
           {details.imageUrl && (
             <div className="my-4">
-              <img
-                src={details.imageUrl}
-                alt="Question illustration"
-                className="max-w-full h-auto rounded-lg"
-              />
+              <img src={details.imageUrl} alt="Question illustration" className="max-w-full h-auto rounded-lg"/>
             </div>
           )}
         </CardContent>
@@ -150,20 +133,9 @@ const QuestionDetailsComponent = ({ question, language }) => {
               <label
                 key={index}
                 className={`flex items-start gap-4 p-4 border-2 rounded-lg cursor-pointer transition-all ${
-                  selectedAnswer === index
-                    ? "border-blue-500 bg-blue-50"
-                    : "border-slate-200 hover:border-slate-300"
-                }`}
-              >
-                <input
-                  type="radio"
-                  name="answer"
-                  value={index}
-                  checked={selectedAnswer === index}
-                  onChange={() => setSelectedAnswer(index)}
-                  className="mt-1"
-                  disabled={submitted}
-                />
+                  selectedAnswer === index? "border-blue-500 bg-blue-50": "border-slate-200 hover:border-slate-300"}`}>
+                <input type="radio" name="answer" value={index} checked={selectedAnswer === index}
+                        onChange={() => setSelectedAnswer(index)}className="mt-1"disabled={submitted}/>
                 <div className="flex-1">
                   <p className="font-semibold text-slate-900">
                     {option.text || option}
@@ -180,7 +152,6 @@ const QuestionDetailsComponent = ({ question, language }) => {
         </Card>
       )}
 
-      {/* Submission Status */}
       {submitted && (
         <Card className="border-2 border-green-200 bg-green-50">
           <CardContent className="p-6">
@@ -197,15 +168,9 @@ const QuestionDetailsComponent = ({ question, language }) => {
         </Card>
       )}
 
-      {/* Submit Button */}
       {!submitted && (
         <div className="flex gap-4">
-          <Button
-            onClick={handleSubmitAnswer}
-            disabled={selectedAnswer === null}
-            className="flex-1"
-            size="lg"
-          >
+          <Button onClick={handleSubmitAnswer} disabled={selectedAnswer === null} className="flex-1" size="lg">
             Submit Answer
           </Button>
         </div>
@@ -221,9 +186,7 @@ const QuestionDetailsComponent = ({ question, language }) => {
             <ul className="list-disc list-inside space-y-2">
               {Array.isArray(details.hints) ? (
                 details.hints.map((hint, index) => (
-                  <li key={index} className="text-slate-700">
-                    {hint}
-                  </li>
+                  <li key={index} className="text-slate-700">{hint}</li>
                 ))
               ) : (
                 <li className="text-slate-700">{details.hints}</li>
@@ -243,12 +206,7 @@ const QuestionDetailsComponent = ({ question, language }) => {
               {Array.isArray(details.resources) &&
                 details.resources.map((resource, index) => (
                   <li key={index}>
-                    <a
-                      href={resource.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-blue-600 hover:underline"
-                    >
+                    <a href={resource.url} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
                       {resource.title || resource.url}
                     </a>
                   </li>

@@ -2,54 +2,31 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "../../ui/card";
 import { Bell, Users, Target, TrendingUp, CheckCircle, AlertCircle, BarChart3, FileText } from "lucide-react";
-import { WEBAPI_NODE_URL } from "@/lib/utils";
+import { WEBAPI_NODE_URL, WEBAPI_JAVA_URL } from "@/lib/utils";
 import AssessmentMetrics from "./entities/AssessmentMetrics";
 import CandidatePerformance from "./entities/CandidatePerformance";
 import SkillGapAnalysis from "./entities/SkillGapAnalysis";
 import Notification from "./entities/Notification";
-import SmeNotifications from "./data/notifications/smeNotifications.json";
-import CandidatePerformances from "./data/candidatePerformance.json";
-import SkillGapAnalyse from "./data/skills/skillGapAnalysis.json";
-
-
-//function component for SME Dashboard
 const DashboardSME = () => {
-  //parts
-  // State for SME user data
-  // Data members for candidate insights
-  // Helper functions for analytics
-  // Render functions for SME features
 
-  //data members
   const [smeName, setSMEName] = useState<string>("");
   const [department, setDepartment] = useState<string>("");
   const [profilePicture, setProfilePicture] = useState<string>("https://avatars.githubusercontent.com/u/12345678?v=4");
   const [totalStudents, setTotalStudents] = useState<number>(0);
-  const [totalAssessments, setTotalAssessments] = useState<number>(0);
-  const [assessmentMetrics, setAssessmentMetrics] = useState<any[]>([]);
-
-  // SME-specific Notifications
-  const smeNotifications: Notification[] = SmeNotifications as Notification[];
-
-  // Candidate Performance Overview
-  const candidatePerformance: CandidatePerformance[] = CandidatePerformances as CandidatePerformance[];
-
-  
-
-  // Skill Gap Analysis
-  const skillGapAnalysis: SkillGapAnalysis[] = SkillGapAnalyse as SkillGapAnalysis[];
-
-  //navigate
+  const [assessmentMetrics, setAssessmentMetrics] = useState<AssessmentMetrics[]>([]);
+  const [smeNotifications, setSmeNotifications] = useState<Notification[]>([]);
+  const [candidatePerformance, setCandidatePerformance] = useState<CandidatePerformance[]>([]);
+  const [skillGapAnalysis, setSkillGapAnalysis] = useState<SkillGapAnalysis[]>([]);
   const navigate = useNavigate();
 
   useEffect(() => {
-const currentUser = JSON.parse(sessionStorage.getItem("current") || "{}");
-const userId = currentUser.userid;
+    const currentUser = JSON.parse(sessionStorage.getItem("current") || "{}");
+    const userId = currentUser.userid;
 
-if (currentUser) {
-    setSMEName(`${currentUser.firstname} ${currentUser.lastname}`);
-    setDepartment(currentUser.rolename);
-}
+    if (currentUser) {
+      setSMEName(`${currentUser.firstname} ${currentUser.lastname}`);
+      setDepartment(currentUser.rolename);
+    }
     const apiURL = `${WEBAPI_NODE_URL}/sme/profile`;
     fetch(apiURL).then((response) => response.json()).then((data) => {
       setSMEName(data.name);
@@ -57,25 +34,83 @@ if (currentUser) {
       setProfilePicture(data.profilePicture);
     });
 
-     fetch("http://localhost:5201/api/Students/total")
-  .then((response) => response.json())
-  .then((data) => {
-      setTotalStudents(data.totalStudents);
-  })
-  .catch((error) => {
-      console.error(error);
-  });
+    fetch("http://localhost:5201/api/Students/total")
+      .then((response) => response.json())
+      .then((data) => {
+        setTotalStudents(data.totalStudents);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
 
-  fetch(`http://localhost:5201/api/Assessment/performance/${userId}`)
-  .then((response) => response.json())
-  .then((data) => {
+    // fetching notification from SmeNotification Json
+    fetch(`${WEBAPI_JAVA_URL}/data/smeNotification`).then((response) => {
+      console.log("Status:", response.status);
+      console.log("Response OK:", response.ok);
+      if (!response.ok) {
+        throw new Error(`HTTP error: ${response.status}`);
+      }
+      return response.json();
+    }).then((data) => {
+      console.log("NOTIFICATION DATA FROM API:", data);
+      console.log("Is Array:", Array.isArray(data));
+      setSmeNotifications(data);
+    })
+      .catch((error) => {
+        console.error("NOTIFICATION FETCH ERROR:", error);
+      });
+  }, []);
+
+  // fetching from CandidatePerformance
+  fetch(`${WEBAPI_JAVA_URL}/data/candidatePerformance`).then((response) => {
+    console.log("Status:", response.status);
+    console.log("Response OK:", response.ok);
+    if (!response.ok) {
+      throw new Error(`HTTP error: ${response.status}`);
+    }
+    return response.json();
+  }).then((data) => {
+    console.log("CANDIDATE PERFORMANCE DATA FROM API:", data);
+    console.log("Is Array:", Array.isArray(data));
+    setCandidatePerformance(data);
+  })
+    .catch((error) => {
+      console.error("CANDIDATE PERFORMANCE FETCH ERROR:", error);
+    });
+
+  // Fetching From SkillGapAnalysis
+  fetch(`${WEBAPI_JAVA_URL}/data/skillGapAnalysis`).then((response) => {
+    console.log("Status:", response.status);
+    console.log("Response OK:", response.ok);
+    if (!response.ok) {
+      throw new Error(`HTTP error: ${response.status}`);
+    }
+    return response.json();
+  }).then((data) => {
+    console.log("SKILL GAP ANALYSIS DATA FROM API:", data);
+    console.log("Is Array:", Array.isArray(data));
+    setSkillGapAnalysis(data);
+  })
+    .catch((error) => {
+      console.error("SKILL GAP ANALYSIS FETCH ERROR:", error);
+    });
+
+  // Fetching From Assessment Metrics
+  fetch(`${WEBAPI_JAVA_URL}/data/assessmentMetrics`).then((response) => {
+    console.log("Status:", response.status);
+    console.log("Response OK:", response.ok);
+    if (!response.ok) {
+      throw new Error(`HTTP error: ${response.status}`);
+    }
+    return response.json();
+  }).then((data) => {
+    console.log("ASSESSMENT METRICS DATA FROM API:", data);
+    console.log("Is Array:", Array.isArray(data));
     setAssessmentMetrics(data);
   })
-  .catch((error) => {
-    console.error(error);
-  });
-
-  }, []);
+    .catch((error) => {
+      console.error("ASSESSMENT METRICS FETCH ERROR:", error);
+    });
 
   // Render the SME dashboard UI
   return (
@@ -87,33 +122,26 @@ if (currentUser) {
           <h3 className="text-xl text-gray-700 mb-4">Welcome, {smeName} ({department})</h3>
           <p className="text-gray-600">Manage assessments, monitor candidate performance, and identify skill gaps across your cohort.</p>
         </div>
-
         {/* Top Stats */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-          <Card
-  className="cursor-pointer hover:shadow-lg transition duration-200"
-  onClick={() => navigate("/models/students")} 
->
-  <CardContent className="p-6">
-    <div className="flex items-center justify-between">
-      <div>
-        <p className="text-gray-600 text-sm font-medium">
-          Total Candidates
-        </p>
-        <p className="text-3xl font-bold text-gray-900 mt-1">
-          {totalStudents}
-        </p>
-      </div>
-
-      <Users className="w-12 h-12 text-blue-500 opacity-20" />
-    </div>
-  </CardContent>
-</Card>
-
-          <Card className="cursor-pointer hover:shadow-lg"
-                onClick={() => navigate("/models/created-assessments")}>
+          <Card className="cursor-pointer hover:shadow-lg transition duration-200" onClick={() => navigate("/models/students")}>
             <CardContent className="p-6">
-                
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-gray-600 text-sm font-medium">
+                    Total Candidates
+                  </p>
+                  <p className="text-3xl font-bold text-gray-900 mt-1">
+                    {totalStudents}
+                  </p>
+                </div>
+                <Users className="w-12 h-12 text-blue-500 opacity-20" />
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="cursor-pointer hover:shadow-lg" onClick={() => navigate("/models/created-assessments")}>
+            <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-gray-600 text-sm font-medium">Tests Created</p>
@@ -124,8 +152,7 @@ if (currentUser) {
             </CardContent>
           </Card>
 
-          <Card  className="cursor-pointer hover:shadow-lg"
-                onClick={() => navigate("/models/sme-expertise-form")}>
+          <Card className="cursor-pointer hover:shadow-lg" onClick={() => navigate("/models/sme-expertise-form")}>
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
@@ -136,8 +163,6 @@ if (currentUser) {
               </div>
             </CardContent>
           </Card>
-
-          
 
           <Card>
             <CardContent className="p-6">
@@ -151,9 +176,7 @@ if (currentUser) {
             </CardContent>
           </Card>
 
-          <Card
-            className="cursor-pointer hover:shadow-lg transition"
-            onClick={() => navigate("/models/interview/SMEInterviewDashboard")}>
+          <Card className="cursor-pointer hover:shadow-lg transition" onClick={() => navigate("/models/interview/SMEInterviewDashboard")}>
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
@@ -165,9 +188,7 @@ if (currentUser) {
             </CardContent>
           </Card>
 
-          <Card
-            className="cursor-pointer hover:shadow-lg transition"
-            onClick={() => navigate("/models/evaluationcontent/dashboard")}>
+          <Card className="cursor-pointer hover:shadow-lg transition" onClick={() => navigate("/models/evaluationcontent/dashboard")}>
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
@@ -178,8 +199,6 @@ if (currentUser) {
               </div>
             </CardContent>
           </Card>
-
-
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -195,26 +214,15 @@ if (currentUser) {
               </CardHeader>
               <CardContent className="space-y-4">
                 {smeNotifications.map((notification) => (
-                  <div
-                    key={notification.id}
-                    className={`p-4 rounded-lg border-l-4 ${notification.type === "info"
-                        ? "bg-blue-50 border-blue-400"
-                        : notification.type === "success"
-                          ? "bg-green-50 border-green-400"
-                          : notification.type === "warning"
-                            ? "bg-yellow-50 border-yellow-400"
-                            : "bg-red-50 border-red-400"
-                      }`}
-                  >
+                  <div key={notification.id} className={`p-4 rounded-lg border-l-4 ${notification.type === "info" ? "bg-blue-50 border-blue-400" : notification.type === "success" ?
+                    "bg-green-50 border-green-400" : notification.type === "warning" ? "bg-yellow-50 border-yellow-400" : "bg-red-50 border-red-400"}`}>
                     <div className="flex items-start justify-between">
                       <div className="flex-1">
                         <p className="font-semibold text-gray-900">{notification.title}</p>
                         <p className="text-sm text-gray-700 mt-1">{notification.message}</p>
                         <p className="text-xs text-gray-500 mt-2">{notification.timestamp}</p>
                       </div>
-                      {!notification.read && (
-                        <div className="w-2 h-2 bg-blue-500 rounded-full ml-2 mt-2 flex-shrink-0" />
-                      )}
+                      {!notification.read && (<div className="w-2 h-2 bg-blue-500 rounded-full ml-2 mt-2 flex-shrink-0" />)}
                     </div>
                   </div>
                 ))}
@@ -235,11 +243,11 @@ if (currentUser) {
                     <div className="flex items-start justify-between">
                       <div className="flex-1">
                         <p className="font-semibold text-gray-900">{assessment.assessmentName}</p>
-                        <p className="text-sm text-gray-600 mt-1">Description: {assessment.description}</p>
+                        <p className="text-sm text-gray-600 mt-1">Description: {assessment.subject}</p>
                         <div className="grid grid-cols-3 gap-4 mt-3 text-sm">
                           <div>
                             <p className="text-gray-500 text-xs">Candidates</p>
-                            <p className="font-bold text-gray-900">{assessment.candidateCount}</p>
+                            <p className="font-bold text-gray-900">{assessment.totalCandidates}</p>
                           </div>
                           <div>
                             <p className="text-gray-500 text-xs">Avg Score</p>
@@ -251,11 +259,9 @@ if (currentUser) {
                           </div>
                         </div>
                       </div>
-                      <span className={`px-3 py-1 rounded-full text-xs font-medium ${assessment.difficulty.toLowerCase() === "beginner" ? "bg-green-100 text-green-800" :
-                          assessment.difficulty.toLowerCase() === "intermediate" ? "bg-yellow-100 text-yellow-800" :
-                            "bg-red-100 text-red-800"
-                        }`}>
-                        {assessment.difficulty.toLowerCase()}
+                      <span className={`px-3 py-1 rounded-full text-xs font-medium ${assessment.difficultyLevel.toLowerCase() === "beginner" ? "bg-green-100 text-green-800" :
+                        assessment.difficultyLevel.toLowerCase() === "intermediate" ? "bg-yellow-100 text-yellow-800" : "bg-red-100 text-red-800"}`}>
+                        {assessment.difficultyLevel.toLowerCase()}
                       </span>
                     </div>
                   </div>
@@ -293,8 +299,8 @@ if (currentUser) {
                     <div className="w-full bg-gray-200 rounded-full h-2 mb-2">
                       <div
                         className={`h-2 rounded-full transition-all ${candidate.status === "excellent" ? "bg-green-500" :
-                            candidate.status === "good" ? "bg-blue-500" :
-                              candidate.status === "average" ? "bg-yellow-500" : "bg-red-500"
+                          candidate.status === "good" ? "bg-blue-500" :
+                            candidate.status === "average" ? "bg-yellow-500" : "bg-red-500"
                           }`}
                         style={{ width: `${candidate.averageScore}%` }}
                       />
@@ -321,8 +327,8 @@ if (currentUser) {
                     <div className="flex items-center justify-between mb-2">
                       <p className="text-sm font-medium text-gray-900">{gap.skill}</p>
                       <span className={`text-xs font-bold px-2 py-1 rounded ${gap.priority === "high" ? "bg-red-100 text-red-800" :
-                          gap.priority === "medium" ? "bg-yellow-100 text-yellow-800" :
-                            "bg-green-100 text-green-800"
+                        gap.priority === "medium" ? "bg-yellow-100 text-yellow-800" :
+                          "bg-green-100 text-green-800"
                         }`}>
                         {gap.priority}
                       </span>
@@ -334,7 +340,7 @@ if (currentUser) {
                     <div className="w-full bg-gray-200 rounded-full h-1.5">
                       <div
                         className={`h-1.5 rounded-full ${gap.priority === "high" ? "bg-red-500" :
-                            gap.priority === "medium" ? "bg-yellow-500" : "bg-green-500"
+                          gap.priority === "medium" ? "bg-yellow-500" : "bg-green-500"
                           }`}
                         style={{ width: `${gap.averagePerformance}%` }}
                       />

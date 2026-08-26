@@ -67,11 +67,7 @@ const VideoShowcase = () => {
             <p className="text-muted-foreground mb-6">
               Visit our YouTube channel for comprehensive tutorials, live sessions, and educational content covering various technology topics.
             </p>
-            <Button 
-              variant="hero" 
-              size="lg"
-              onClick={() => window.open('https://www.youtube.com/@ravitambade-transflower', '_blank')}
-            >
+            <Button variant="hero"size="lg" onClick={() => window.open('https://www.youtube.com/@ravitambade-transflower', '_blank')}>
               Visit YouTube Channel
             </Button>
           </div>

@@ -9,12 +9,12 @@ interface NavbarProps {
   isLoggedIn?: boolean;
 }
 const Navbar = ({ isLoggedIn }: NavbarProps) => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const navigate = useNavigate();
-  const location = useLocation();
-  const [loading, setLoading] = useState<boolean>(true);
-  const [userName, setUserName] = useState<UserName>();
-  const [error, setError] = useState<string>("");
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const navigate = useNavigate();
+    const location = useLocation();
+    const [loading, setLoading] = useState<boolean>(true);
+    const [userName, setUserName] = useState<UserName>();
+    const [error, setError] = useState<string>("");
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
     interface UserName {
@@ -22,52 +22,40 @@ const Navbar = ({ isLoggedIn }: NavbarProps) => {
       lastname: string;
     }
   useEffect(() => {
-   
     const fetchProfileName = async () => {
       setLoading(true);
-
       const currentUserDetails = sessionStorage.getItem("current");
-
       if (!currentUserDetails) return;
-
       const user = JSON.parse(currentUserDetails);
       try {
-        const response = await fetch(
-          `${WEBAPI_NODE_URL}/users/${user.userid}/personal`,
-        );
-
-        if (!response.ok) {
-          throw new Error("Failed to fetch roles");
-        }
-
-        const data = await response.json();
-
-         const currentUserFullName={
-          firstname:data.data.first_name,
-          lastname:data.data.last_name
-
-        }
-
-        setUserName(currentUserFullName);
-        setError("");
-      } catch (err) {
+          const response = await fetch(
+            `${WEBAPI_NODE_URL}/users/${user.userid}/personal`,
+          );
+          if (!response.ok) {
+            throw new Error("Failed to fetch roles");
+          }
+          const data = await response.json();
+          const currentUserFullName={firstname:data.data.first_name, lastname:data.data.last_name}
+          setUserName(currentUserFullName);
+          setError("");
+      } 
+      catch (err) {
         console.error(err);
         setError("Failed to fetch roles");
-      } finally {
+      } 
+      finally {
         setLoading(false);
       }
     };
-
     fetchProfileName();
   }, []);
 
   const handleSectionClick = (sectionId: string) => {
     if (location.pathname !== "/") {
       navigate(`/${sectionId}`);
-    } else {
-      document
-        .getElementById(sectionId.replace("#", ""))
-        ?.scrollIntoView({ behavior: "smooth" });
+    } 
+    else {
+      document.getElementById(sectionId.replace("#", "")) ?.scrollIntoView({ behavior: "smooth" });
     }
   };
 
@@ -76,23 +64,21 @@ const Navbar = ({ isLoggedIn }: NavbarProps) => {
       const res = await fetch(
         `${WEBAPI_NODE_URL}/useractivity/logout/${userid}/role/${roleid}`, { method: "PUT", headers: { "Content-Type": "application/json" }},
       );
-
       if (!res.ok) {
         throw new Error("user log failed");
       }
-
       const data = await res.json();
-    } catch (error) {
+    } 
+    catch (error) {
       console.error(error);
     }
   };
+
   const handleGetStartedClick = () => {
     if (location.pathname !== "/") {
       navigate("/", { state: { scrollToContact: true } });
     } else {
-      document
-        .getElementById("contact")
-        ?.scrollIntoView({ behavior: "smooth" });
+      document.getElementById("contact") ?.scrollIntoView({ behavior: "smooth" });
     }
   };
 
@@ -101,18 +87,9 @@ const Navbar = ({ isLoggedIn }: NavbarProps) => {
     { href: "#about", label: "About", isLink: false },
     { href: "#services", label: "Services", isLink: false },
     { href: "#tap-program", label: "TAP Program", isLink: false },
-    {
-      href: "https://ravitambade.wordpress.com/",
-      label: "Blogs",
-      isLink: true,
-    },
+    { href: "https://ravitambade.wordpress.com/", label: "Blogs", isLink: true,},
     { href: "#success-stories", label: "Success Stories", isLink: false },
-    {
-      href: "/models/evaluationcontent/components",
-      label: "Assessment",
-      isLink: true,
-      requiresAuth: true,  
-    },
+    { href: "/models/evaluationcontent/components", label: "Assessment", isLink: true, requiresAuth: true,  },
   ];
 
   return (
@@ -121,48 +98,30 @@ const Navbar = ({ isLoggedIn }: NavbarProps) => {
         <div className="flex items-center justify-between">
           {/* Logo */}
           <div className="flex items-center space-x-3">
-            <img
-              src="/lovable-uploads/d49f4d74-db53-42cc-9388-fcf6ea2a49e8.png"
-              alt="Transflower Learning Logo"
-              className="w-8 h-8 sm:w-10 sm:h-10 object-contain"
-            />
-            <span className="text-lg sm:text-xl font-bold text-primary hidden sm:block">
-              Transflower Learning
-            </span>
-            <span className="text-lg font-bold text-primary sm:hidden">
-              Transflower
-            </span>
+            <img src="/lovable-uploads/d49f4d74-db53-42cc-9388-fcf6ea2a49e8.png" alt="Transflower Learning Logo" className="w-8 h-8 sm:w-10 sm:h-10 object-contain"/>
+            <span className="text-lg sm:text-xl font-bold text-primary hidden sm:block">Transflower Learning</span>
+            <span className="text-lg font-bold text-primary sm:hidden">Transflower</span>
           </div>
 
           {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center space-x-6 xl:space-x-8">
             {navItems.filter(item => !item.requiresAuth || isLoggedIn).map((item) =>
-              item.isLink ? (
-                item.href.startsWith("http") ? (
-                  <a
-                    key={item.label} 
-                    href={item.href}
-                    target="_blank"
+              item.isLink ? (item.href.startsWith("http") ? (
+                  <a key={item.label} href={item.href} target="_blank"
                     rel="noopener noreferrer"
-                    className="text-foreground hover:text-primary transition-smooth text-sm xl:text-base"
-                  >
+                    className="text-foreground hover:text-primary transition-smooth text-sm xl:text-base">
                     {item.label}
                   </a>
                 ) : (
-                  <Link
-                    key={item.label}
-                    to={item.href}
-                    className="text-foreground hover:text-primary transition-smooth text-sm xl:text-base"
-                  >
+                  <Link className="text-foreground hover:text-primary transition-smooth text-sm xl:text-base"
+                    key={item.label} to={item.href}>
                     {item.label}
                   </Link>
                 )
               ) : (
-                <button
+                <button className="text-foreground hover:text-primary transition-smooth text-sm xl:text-base"
                   key={item.label}
-                  onClick={() => handleSectionClick(item.href)}
-                  className="text-foreground hover:text-primary transition-smooth text-sm xl:text-base"
-                >
+                  onClick={() => handleSectionClick(item.href)}>
                   {item.label}
                 </button>
               ),
@@ -184,9 +143,10 @@ const Navbar = ({ isLoggedIn }: NavbarProps) => {
                   <DropdownMenuItem onClick={() => navigate("/models/membership/UserProfile")}>
                     Profile
                   </DropdownMenuItem>
-
-                  <DropdownMenuItem
-                    onClick={() => {
+                  <DropdownMenuItem onClick={() => navigate("/models/membership/ChangePassword")}>
+                    Change Password
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => {
                       try {
                         const user = JSON.parse(
                           sessionStorage.getItem("current") || "{}",
@@ -194,14 +154,14 @@ const Navbar = ({ isLoggedIn }: NavbarProps) => {
                         if (user?.userid) {
                           handleUserLogLogout(user.userid,user.role_id);
                         }
-                      } catch (error) {
+                      } 
+                      catch (error) {
                         console.error("Submit Error:", error);
                       }
                       sessionStorage.removeItem("current");
                       navigate("/");
                       window.location.reload(); // redirect
-                    }}
-                  >
+                    }}>
                     Logout
                   </DropdownMenuItem>
                 </DropdownMenuContent>
@@ -209,35 +169,18 @@ const Navbar = ({ isLoggedIn }: NavbarProps) => {
             ) : (
               <div className="flex gap-4">
                 <Link to="/models/membership/Login">
-                  <Button
-                    variant="hero"
-                    size="sm"
-                    className="text-xs sm:text-sm px-3 sm:px-4"
-                  >
-                    Sign In
-                  </Button>
+                  <Button variant="hero" size="sm" className="text-xs sm:text-sm px-3 sm:px-4">Sign In</Button>
                 </Link>
-
-                <Button
-                  variant="hero"
-                  size="sm"
-                  className="text-xs sm:text-sm px-3 sm:px-4"
-                  onClick={handleGetStartedClick}
-                >
-                  Get Started
+                <Button variant="hero" size="sm" className="text-xs sm:text-sm px-3 sm:px-4" 
+                onClick={handleGetStartedClick}>Get Started
                 </Button>
               </div>
             )}
             {/* Hamburger */}
-            <button
-              className="lg:hidden p-2 text-foreground hover:text-primary transition-smooth"
-              onClick={toggleMenu}
-              aria-label="Toggle menu"
-            >
-              {isMenuOpen ? (
-                <X className="h-5 w-5" />
-              ) : (
-                <Menu className="h-5 w-5" />
+            <button className="lg:hidden p-2 text-foreground hover:text-primary transition-smooth"
+              onClick={toggleMenu} aria-label="Toggle menu">
+              {isMenuOpen ? (<X className="h-5 w-5" />
+              ) : (<Menu className="h-5 w-5" />
               )}
             </button>
           </div>
@@ -248,37 +191,26 @@ const Navbar = ({ isLoggedIn }: NavbarProps) => {
           <div className="lg:hidden mt-4 pb-4 border-t border-border">
             <div className="flex flex-col space-y-3 pt-4">
               {navItems.map((item) =>
-                item.isLink ? (
-                  item.href.startsWith("http") ? (
-                    <a
-                      key={item.label}
-                      href={item.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-foreground hover:text-primary transition-smooth py-2 px-2"
-                      onClick={() => setIsMenuOpen(false)}
-                    >
+              item.isLink ? (
+                item.href.startsWith("http") ? (
+                    <a className="text-foreground hover:text-primary transition-smooth py-2 px-2"
+                      key={item.label} href={item.href} target="_blank" rel="noopener noreferrer"
+                      onClick={() => setIsMenuOpen(false)}>
                       {item.label}
                     </a>
                   ) : (
-                    <Link
-                      key={item.label}
-                      to={item.href}
-                      className="text-foreground hover:text-primary transition-smooth py-2 px-2"
-                      onClick={() => setIsMenuOpen(false)}
-                    >
+                    <Link className="text-foreground hover:text-primary transition-smooth py-2 px-2"
+                      key={item.label} to={item.href} onClick={() => setIsMenuOpen(false)}>
                       {item.label}
                     </Link>
                   )
                 ) : (
-                  <button
-                    key={item.label}
+                  <button key={item.label}
                     onClick={() => {
                       handleSectionClick(item.href);
                       setIsMenuOpen(false);
                     }}
-                    className="text-foreground hover:text-primary transition-smooth py-2 px-2 text-left"
-                  >
+                    className="text-foreground hover:text-primary transition-smooth py-2 px-2 text-left">
                     {item.label}
                   </button>
                 ),

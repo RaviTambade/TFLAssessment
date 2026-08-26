@@ -7,5 +7,4 @@ const Placeholder = ({ title }: PlaceholderProps) => (
     <h1 className="text-2xl font-bold text-muted-foreground">{title} (Coming Soon)</h1>
   </div>
 );
-
 export default Placeholder;

@@ -1,0 +1,34 @@
+[
+  {
+    "id": 1,
+    "title": "New Member Pending Approval",
+    "message": "5 new members awaiting admin approval for Mentor and Student roles",
+    "type": "info",
+    "timestamp": "2 hours ago",
+    "read": false
+  },
+  {
+    "id": 2,
+    "title": "Suspicious Activity Detected",
+    "message": "Multiple failed login attempts detected from 3 accounts. Review security alerts",
+    "type": "warning",
+    "timestamp": "1 day ago",
+    "read": false
+  },
+  {
+    "id": 3,
+    "title": "Role Permission Updated",
+    "message": "SME role permissions successfully updated. 12 members affected",
+    "type": "success",
+    "timestamp": "3 days ago",
+    "read": true
+  },
+  {
+    "id": 4,
+    "title": "User Deactivation",
+    "message": "3 inactive members (no login for 90 days) automatically deactivated",
+    "type": "info",
+    "timestamp": "5 days ago",
+    "read": true
+  }
+]

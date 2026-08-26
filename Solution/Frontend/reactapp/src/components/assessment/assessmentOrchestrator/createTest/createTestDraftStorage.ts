@@ -1,11 +1,4 @@
-/** Draft metadata from the Create Test form, carried to Question Options and sent with create API. */
-export type CreateTestDraftPayload = {
-  title: string;
-  description: string;
-  duration: number;
-  difficulty: string;
-};
-
+import { CreateTestDraftPayload } from "../entities/CreateTestDraftPayload";
 export const CREATE_TEST_DRAFT_STORAGE_KEY = "createTestDraft";
 
 export function isCreateTestDraftPayload(value: unknown): value is CreateTestDraftPayload {
@@ -31,7 +24,8 @@ export function readCreateTestDraftFromSession(): CreateTestDraftPayload | null 
   try {
     const parsed: unknown = JSON.parse(raw);
     return isCreateTestDraftPayload(parsed) ? parsed : null;
-  } catch {
+  } 
+  catch {
     return null;
   }
 }

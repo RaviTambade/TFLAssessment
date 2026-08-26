@@ -1,6 +1,7 @@
 package com.transflower.tflcomentor.ecm.service.impl;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 import org.springframework.stereotype.Service;
 
@@ -22,53 +23,53 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public List<Project> getAllProjects(Long mentorId) {
+    public CompletableFuture<List<Project>> getAllProjects(Long mentorId) {
         return repository.getAllProjects(mentorId);
     }
 
     @Override
-    public Project getProjectById(long project_id) {
+    public CompletableFuture<Project> getProjectById(long project_id) {
         return repository.getProjectById(project_id);
     }
 
     @Override
-    public boolean removeMember(Long projectId, Long studentId) {
+    public CompletableFuture<Boolean> removeMember(Long projectId, Long studentId) {
         return repository.removeMember(projectId, studentId);
     }
 
     @Override
-    public List<ProjectAllocationResponse> getStudentByProjectId(Long projectId) {
+    public CompletableFuture<List<ProjectAllocationResponse>> getStudentByProjectId(Long projectId) {
         return repository.getStudentByProjectId(projectId);
     }
 
     @Override
-    public List<ProjectAllocationResponse> getProjectAllocationDetails() {
+    public CompletableFuture<List<ProjectAllocationResponse>> getProjectAllocationDetails() {
         return repository.getProjectAllocationDetails();
     }
 
     @Override
-    public List<Project> getProjectByStudentId(Long studentId) {
+    public CompletableFuture<List<Project>> getProjectByStudentId(Long studentId) {
         return repository.getProjectByStudentId(studentId);
     }
 
     @Override
-    public boolean allocateMembersToProject(ProjectAllocation projectAllocation) {
+    public CompletableFuture<Boolean> allocateMembersToProject(ProjectAllocation projectAllocation) {
         return repository.allocateMembersToProject(projectAllocation);
         
     }
 
     @Override
-    public List<ProjectAllocationResponse> getProjectMember(Long projectId) {
+    public CompletableFuture<List<ProjectAllocationResponse>> getProjectMember(Long projectId) {
         return repository.getProjectMember(projectId);
     }
 
     @Override
-    public List<MentorshipActivityResponse> getRecentActivities(Long mentorId) {
+    public CompletableFuture<List<MentorshipActivityResponse>> getRecentActivities(Long mentorId) {
         return repository.getRecentActivities(mentorId);
     }
 
     @Override
-    public boolean addProject(ProjectResponse project,Long mentorId){
+    public CompletableFuture<Boolean> addProject(ProjectResponse project,Long mentorId){
         return repository.addProject(project, mentorId);
     }
 }

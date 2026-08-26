@@ -2,13 +2,13 @@ package com.transflower.tflcomentor.ecm.service.impl;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.transflower.tflcomentor.ecm.dto.request.QuestionOptionsRequest;
 import com.transflower.tflcomentor.ecm.dto.response.QuestionDisplay;
-import com.transflower.tflcomentor.ecm.dto.response.QuestionDisplayToMentor;
 import com.transflower.tflcomentor.ecm.entity.CompleteQuestion;
 import com.transflower.tflcomentor.ecm.entity.Question;
 import com.transflower.tflcomentor.ecm.repository.QuestionRepository;
@@ -49,12 +49,12 @@ public class QuestionsServiceImpl implements QuestionService {
     // }
 
     @Override
-    public QuestionDisplay getQuestionById(long question_id) {
+    public CompletableFuture<QuestionDisplay> getQuestionById(long question_id) {
         return repository.getQuestionById(question_id);
     }
 
     @Override
-    public int getQuestionCount(){
+    public CompletableFuture<Integer> getQuestionCount(){
         return repository.getQuestionCount();
     }
 
@@ -69,17 +69,19 @@ public class QuestionsServiceImpl implements QuestionService {
     // }
 
     @Override
-    public void updateQuestionDetailsById(Long questionId, QuestionOptionsRequest dto) {
-        repository.updateQuestionDetailsById(questionId, dto);
+    public CompletableFuture<Void> updateQuestionDetailsById(Long questionId, QuestionOptionsRequest dto) {
+        return CompletableFuture.runAsync(() -> {
+            repository.updateQuestionDetailsById(questionId, dto);
+        });
     }
 
     @Override
-    public List<Question> getQuestions(LocalDate fromDate, LocalDate toDate) {
+    public CompletableFuture<List<Question>> getQuestions(LocalDate fromDate, LocalDate toDate) {
         return repository.getQuestions(fromDate, toDate);
     }
 
     @Override
-    public QuestionOptionsRequest getQuestionDetails(Long questionId) {
+    public CompletableFuture<QuestionOptionsRequest> getQuestionDetails(Long questionId) {
         return repository.getQuestionDetails(questionId);
     }
 
@@ -104,7 +106,7 @@ public class QuestionsServiceImpl implements QuestionService {
     // }
 
     @Override
-    public List<Question> getQuestionsByConcept(String concept,Long userId, Long roleId) {
+    public CompletableFuture<List<Question>> getQuestionsByConcept(String concept,Long userId, Long roleId) {
         return repository.getQuestionsByConcept(concept, userId, roleId);
     }
 
@@ -113,12 +115,14 @@ public class QuestionsServiceImpl implements QuestionService {
     //     return repository.getQuestionCountByConcept(concept);
     // }
     @Override
-    public void insertCompleteQuestion(CompleteQuestion q) {
-        repository.insertCompleteQuestion(q);
+    public CompletableFuture<Void> insertCompleteQuestion(CompleteQuestion q) {
+        return CompletableFuture.runAsync(() -> {
+            repository.insertCompleteQuestion(q);
+        });
     }
 
     @Override
-    public List<String> getConcepts(Long userId, Long roleId) {
+    public CompletableFuture<List<String>> getConcepts(Long userId, Long roleId) {
         return repository.getConcepts( userId, roleId);
     }
 

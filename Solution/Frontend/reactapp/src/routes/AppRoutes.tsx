@@ -1,8 +1,8 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 
-import ManageSingleUser from "@/components/assessment/evaluationcontent/Admin/ManageSingleUser";
-import ProjectDetails from "@/components/assessment/evaluationcontent/Mentor/ProjectDetails";
+import ManageSingleUser from "@/components/assessment/evaluationcontent/ManageSingleUser";
+import ProjectDetails from "@/components/assessment/evaluationcontent/ProjectDetails";
 import EvaluationContentMenu from "../components/assessment/evaluationcontent/EvaluationContentMenu";
 import SkillTaxonomyMenu from "../components/assessment/skilltaxonomy/SkillTaxonomyMenu";
 import Assessment from "../components/assessment/ComponentButtons";
@@ -63,13 +63,13 @@ import StudentList from "@/components/assessment/assessmentOrchestrator/StudentL
 import QuestionFeedback from "@/components/assessment/interview/QuestionFeedback";
 import ParticulerTestStudentDetails from "@/components/assessment/assessmentOrchestrator/ParticulerTestStudentDetails";
 // mentor dashboard
-import MentorUpdateQuestions from "@/components/assessment/evaluationcontent/Mentor/MentorUpdateQuestions";
+import MentorUpdateQuestions from "@/components/assessment/evaluationcontent/MentorUpdateQuestions";
 import CompletedAssessments from "@/components/assessment/assessmentOrchestrator/CompletedAssessments";
 import CompletedAssessmentDetails from "@/components/assessment/assessmentOrchestrator/CompletedAssessmentDetails";
 import TestList from "@/components/assessment/assessmentOrchestrator/TestList";
-import UnassignedUsers from "@/components/assessment/evaluationcontent/Admin/UnAssignedUsers";
-import AddProject from "@/components/assessment/evaluationcontent/Mentor/AddProject";
-import AllocateProject from "@/components/assessment/evaluationcontent/Mentor/AllocateProject";
+import UnassignedUsers from "@/components/assessment/evaluationcontent/UnAssignedUsers";
+import AddProject from "@/components/assessment/evaluationcontent/AddProject";
+import AllocateProject from "@/components/assessment/evaluationcontent/AllocateProject";
 
 
 function AppRoutes() {
@@ -160,6 +160,8 @@ function AppRoutes() {
           <Route path="membership/UserActivity" element={<UserActivity />} />
           <Route path="membership/UserProfile" element={<UserProfile />} />
           <Route path="membership/UserProfile/:id" element={<UserProfile />} />
+          {/* <Route path="membership/UserProfile/:userId" element={<UserProfile />} /> */}
+
           <Route path="membership/dashboard" element={<Dashboard />} />
           <Route path="membership/SmeDashboard" element={<DashboardSME />} />
           <Route path="membership/Mentees" element={<Mentees />} />

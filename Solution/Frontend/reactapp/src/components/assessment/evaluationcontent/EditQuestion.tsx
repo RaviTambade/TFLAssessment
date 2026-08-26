@@ -1,25 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
+
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
 import { WEBAPI_JAVA_URL } from "@/lib/utils";
+
 import QuestionFormData from "../assessmentOrchestrator/entities/MultipleChoiceQuestion";
 
 const EditQuestion = () => {
-    
 const navigate = useNavigate();
 const location = useLocation();
-
 const { id } = useParams();
-
-const returnPath =
-  (location.state as { from?: string } | null)?.from ??
-  "/models/evaluationcontent/viewquestion";
-    
+const returnPath =(location.state as { from?: string } | null)?.from ??"/models/evaluationcontent/viewquestion";
 const [loading, setLoading] = useState(true);
 const [formData, setFormData] = useState<QuestionFormData>({
-
         description: "",
         questionType: "",
         difficultyLevel: "",
@@ -35,38 +30,35 @@ const [formData, setFormData] = useState<QuestionFormData>({
         correctAnswer: ""
     });
 
-   useEffect(() => {
+useEffect(() => {
     if (!id) return;
 
 const fetchQuestion = async () => {
-        
-    try {
-            const res = await fetch(`${WEBAPI_JAVA_URL}/questions/${id}/details`);
-            const data = await res.json();
-            console.log("API DATA:", data);
-
-            setFormData({
-                description: data.description || "",
-                questionType: data.questionType || "MCQ",
-                difficultyLevel: data.difficultyLevel || "",
-                status: data.status || "DRAFT",
-                language: data.language || "",
-                layer: data.layer || "",
-                framework: data.framework || "",
-                concept: data.concept || "",
-                optionA: data.optionA || "",
-                optionB: data.optionB || "",
-                optionC: data.optionC || "",
-                optionD: data.optionD || "",
-                correctAnswer: data.correctAnswer || ""
-            });
-            } 
-            catch (err) {
-            console.error(err);
-            alert("Error loading data");
-            } 
-            finally {
-            setLoading(false);
+        try {
+                const res = await fetch(`${WEBAPI_JAVA_URL}/questions/${id}/details`);
+                const data = await res.json();
+                setFormData({
+                    description: data.description || "",
+                    questionType: data.questionType || "MCQ",
+                    difficultyLevel: data.difficultyLevel || "",
+                    status: data.status || "DRAFT",
+                    language: data.language || "",
+                    layer: data.layer || "",
+                    framework: data.framework || "",
+                    concept: data.concept || "",
+                    optionA: data.optionA || "",
+                    optionB: data.optionB || "",
+                    optionC: data.optionC || "",
+                    optionD: data.optionD || "",
+                    correctAnswer: data.correctAnswer || ""
+                });
+                } 
+        catch (err) {
+                console.error(err);
+                alert("Error loading data");
+        } 
+        finally {
+                setLoading(false);
         }
     };
     fetchQuestion();
@@ -75,7 +67,6 @@ const fetchQuestion = async () => {
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         setFormData({...formData,[e.target.name]: e.target.value});
     };
-
     const handleUpdate = async () => {
         try {
             const res = await fetch(`${WEBAPI_JAVA_URL}/questions/${id}`, {
@@ -83,17 +74,15 @@ const fetchQuestion = async () => {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(formData)
             });
-
             if (!res.ok) {
                 const msg = await res.text().catch(() => res.statusText);
                 alert("Update failed: " + msg);
                 return;
             }
-
             alert("Question Updated Successfully ");
             navigate(returnPath);
-
-        } catch {
+        } 
+        catch {
             alert("Update Failed - Please try again");
         }
     };
@@ -105,7 +94,6 @@ const fetchQuestion = async () => {
     return (
         <div className="min-h-screen bg-gradient-to-br from-background to-muted p-6">
             <div className="max-w-4xl mx-auto">
-
                 <div className="text-center mb-10">
                     <h1 className="text-4xl font-bold text-foreground">
                         <span className="bg-gradient-primary bg-clip-text text-transparent">
@@ -115,13 +103,10 @@ const fetchQuestion = async () => {
                 </div>
 
                 <Card className="border-0 shadow-2xl rounded-2xl overflow-hidden">
-
                     <div className="bg-gradient-primary p-5 text-white text-lg font-semibold">
                         Question Details
                     </div>
-
                     <CardContent className="p-6 space-y-5">
-
                         <div>
                             <label className="text-sm font-medium">Description</label>
                             <input type="text" name="description" value={formData.description} onChange={handleChange}className="w-full mt-1 p-3 border rounded-lg"/>
@@ -129,12 +114,8 @@ const fetchQuestion = async () => {
 
                         <div className="grid md:grid-cols-3 gap-4">
                             <div>
-                                <label className="text-sm font-medium">
-                                    Question Type
-                                </label>
-
+                                <label className="text-sm font-medium">Question Type</label>
                                 <select name="questionType" value={formData.questionType} onChange={handleChange} className="w-full mt-1 p-3 border rounded-lg">
-
                                     <option value="MCQ">MCQ</option>
                                     <option value="PROBLEM_STATEMENT">
                                         Problem Statement
@@ -143,12 +124,8 @@ const fetchQuestion = async () => {
                             </div>
 
                             <div>
-                                <label className="text-sm font-medium">
-                                    Difficulty Level
-                                </label>
-
+                                <label className="text-sm font-medium">Difficulty Level</label>
                                 <select name="difficultyLevel" value={formData.difficultyLevel} onChange={handleChange} className="w-full mt-1 p-3 border rounded-lg">
-
                                     <option value="BEGINNER">BEGINNER</option>
                                     <option value="INTERMEDIATE">INTERMEDIATE</option>
                                     <option value="ADVANCE">ADVANCE</option>
@@ -156,46 +133,29 @@ const fetchQuestion = async () => {
                             </div>
 
                             <div>
-                                <label className="text-sm font-medium">
-                                    Status
-                                </label>
-
+                                <label className="text-sm font-medium">Status</label>
                                 <select name="status" value={formData.status} onChange={handleChange} className="w-full mt-1 p-3 border rounded-lg">
-
                                     <option value="DRAFT">DRAFT</option>
                                     <option value="APPROVED">APPROVED</option>
                                     <option value="REJECTED">REJECTED</option>
                                 </select>
                             </div>
-
                         </div>
 
                         <div className="grid md:grid-cols-2 gap-4">
-
                             <div>
-                                <label className="text-sm font-medium">
-                                    Language
-                                </label>
+                                <label className="text-sm font-medium">Language</label>
                                 <input type="text" name="language" value={formData.language} onChange={handleChange} className="w-full mt-1 p-3 border rounded-lg" />
                             </div>
-
                             <div>
-                                <label className="text-sm font-medium">
-                                    Layer
-                                </label>
-
+                                <label className="text-sm font-medium">Layer</label>
                                 <input type="text" name="layer" value={formData.layer} onChange={handleChange} className="w-full mt-1 p-3 border rounded-lg"/>
                             </div>
-
                         </div>
 
                         <div className="grid md:grid-cols-2 gap-4">
-
                             <div>
-                                <label className="text-sm font-medium">
-                                    Framework
-                                </label>
-
+                                <label className="text-sm font-medium">Framework</label>
                                 <input type="text" name="framework" value={formData.framework} onChange={handleChange} className="w-full mt-1 p-3 border rounded-lg"/>
                             </div>
 
@@ -208,7 +168,6 @@ const fetchQuestion = async () => {
                         {formData.questionType === "MCQ" && (
                             <div className="bg-muted/40 p-4 rounded-xl space-y-3 ">
                                 <h3 className="font-semibold text-primary p-0">Options</h3>
-                                
                                 <label className="text-sm font-medium">Option A : </label><input name="optionA" value={formData.optionA} onChange={handleChange} placeholder="Option A" className=" w-80 p-3 border rounded-lg" />
                                 <label className="text-sm font-medium">Option B : </label> <input name="optionB" value={formData.optionB} onChange={handleChange} placeholder="Option B" className="w-80 p-3 border rounded-lg" />
                                 <label className="text-sm font-medium">Option C : </label> <input name="optionC" value={formData.optionC} onChange={handleChange} placeholder="Option C" className="w-80 p-3 border rounded-lg" />
@@ -216,7 +175,7 @@ const fetchQuestion = async () => {
                                 <label className="text-sm font-medium">Correct Answer : </label> <input name="correctAnswer" value={formData.correctAnswer} onChange={handleChange} placeholder="Correct Answer (A/B/C/D or full value)" className="w-full p-3 border rounded-lg border-primary" />
                             </div>
                         )}
-
+                        
                         <div className="flex justify-end gap-4 pt-4">
                             <Button variant="outline" onClick={() => navigate(returnPath)}>Cancel</Button>
                             <Button onClick={handleUpdate}>Update Question</Button>

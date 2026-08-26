@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { WEBAPI_JAVA_URL } from "@/lib/utils";
+
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { BookOpen, Code2, Layers3, Brain, Target, Pencil, CheckCircle2, } from "lucide-react";
+
+import { WEBAPI_JAVA_URL } from "@/lib/utils";
 
 const QuestionDetails = () => {
     const { question_id } = useParams();
@@ -49,7 +51,6 @@ const QuestionDetails = () => {
             <div className="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
                 {icon}
             </div>
-
             <div>
                 <p className="text-[11px] uppercase tracking-wider text-muted-foreground">
                     {label}
@@ -62,12 +63,9 @@ const QuestionDetails = () => {
     return (
         <div className="bg-gradient-to-br from-background via-muted/20 to-background px-5 py-4">
             <div className="max-w-7xl mx-auto">
-
                 <Card className="shadow-xl border-0">
                     <div className="h-1.5 bg-gradient-primary rounded-t-xl" />
-
                     <CardContent className="p-5">
-
                         {/* Question */}
                         <div className="mb-5">
                             <div className="flex items-center justify-between mb-2">
@@ -82,48 +80,34 @@ const QuestionDetails = () => {
                                     Edit Question
                                 </Button>
                             </div>
-
                         </div>
-
                         {/* Details */}
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-5">
                             <DetailCard
                                 icon={<BookOpen size={18} />}
                                 label="Type"
-                                value={q.questionType}
-                            />
-
+                                value={q.questionType}   />
                             <DetailCard
                                 icon={<Code2 size={18} />}
                                 label="Language"
-                                value={q.language}
-                            />
-
+                                value={q.language}  />
                             <DetailCard
                                 icon={<Layers3 size={18} />}
                                 label="Layer"
-                                value={q.layer}
-                            />
-
+                                value={q.layer}   />
                             <DetailCard
                                 icon={<Brain size={18} />}
                                 label="Framework"
-                                value={q.framework}
-                            />
-
+                                value={q.framework} />
                             <DetailCard
                                 icon={<BookOpen size={18} />}
                                 label="Concept"
-                                value={q.concept}
-                            />
-
+                                value={q.concept}   />
                             <DetailCard
                                 icon={<Target size={18} />}
                                 label="Difficulty"
-                                value={q.difficultyLevel}
-                            />
+                                value={q.difficultyLevel}  />
                         </div>
-
                         {/* MCQ */}
                         {q.questionType === "MCQ" && (
                             <>
@@ -147,15 +131,13 @@ const QuestionDetails = () => {
                                                 className={`rounded-xl border p-3 transition-all ${correct
                                                     ? "border-green-500 bg-green-50 dark:bg-green-950/20"
                                                     : "hover:border-primary hover:bg-primary/5"
-                                                    }`}
-                                            >
+                                                    }`}  > 
                                                 <div className="flex items-center gap-3">
                                                     <div
                                                         className={`h-9 w-9 rounded-full flex items-center justify-center font-bold ${correct
                                                             ? "bg-green-500 text-white"
                                                             : "bg-primary text-primary-foreground"
-                                                            }`}
-                                                    >
+                                                            }`} >
                                                         {option.key}
                                                     </div>
 
@@ -178,11 +160,9 @@ const QuestionDetails = () => {
                         )}
                     </CardContent>
                 </Card>
-
-
             </div>
         </div>
     );
 };
-
 export default QuestionDetails;
+

@@ -9,15 +9,8 @@ import { Checkbox } from "../../ui/checkbox";
 import { Separator } from "../../ui/separator";
 import { WEBAPI_NODE_URL } from "@/lib/utils";
 
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "../../ui/select";
+import {Select,SelectContent,SelectItem, SelectTrigger,SelectValue,} from "../../ui/select";
 import { Eye, EyeOff, Lock, User } from "lucide-react";
-// import getAllRoles, { Role } from "@/services/RolesManagement/GetRoles";
 
 import Role from "./entities/Role";
 
@@ -28,7 +21,6 @@ const LoginPage = () => {
   const [password, setPassword] = useState("12345");
   const [roles, setRoles] = useState<Role[]>([]);
   const [role, setRole] = useState("");
-
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>("");
 
@@ -38,17 +30,17 @@ const LoginPage = () => {
     try {
       setLoading(true);
       const response = await fetch(`${WEBAPI_NODE_URL}/roles/getAllRoles`);
-
       if (!response.ok) {
         throw new Error("Failed to fetch roles");
       }
-
       const result = await response.json();
       setRoles(result.data);
       setError("");
-    } catch (err) {
+    } 
+    catch (err) {
       setError("Failed to fetch roles");
-    } finally {
+    } 
+    finally {
       setLoading(false);
     }
   };
@@ -57,25 +49,14 @@ const LoginPage = () => {
     try {
       const res = await fetch(`${WEBAPI_NODE_URL}/auth/login`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          username,
-          password,
-          role,
-        }),
-      });
+        headers: {"Content-Type": "application/json",},
+        body: JSON.stringify({username,password,role,}),});
 
       if (!res.ok) {
         throw new Error("Login failed");
       }
-
       const validToken = await res.json();
-
       sessionStorage.setItem("current", JSON.stringify(validToken.data));
-      // redirect after login
-      // navigate("/models/evaluationcontent/components");
     } catch (error) {
       console.error(error);
     }
@@ -83,13 +64,10 @@ const LoginPage = () => {
 
   const handleUserActivityLogin = async (userid: number, roleid: number) => {
     try {
-      const res = await fetch(
-        `${WEBAPI_NODE_URL}/useractivity/login/${userid}/role/${roleid}`,
+      const res = await fetch(`${WEBAPI_NODE_URL}/useractivity/login/${userid}/role/${roleid}`,
         {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
+          headers: {"Content-Type": "application/json",},
         },
       );
 
@@ -99,14 +77,14 @@ const LoginPage = () => {
 
       const data = await res.json();
       console.log(data.message);
-    } catch (error) {
+    } 
+    catch (error) {
       console.error(error);
     }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
     if (!username.trim()) {
       alert("Username is required");
       return;
@@ -121,19 +99,16 @@ const LoginPage = () => {
       alert("Please select a role");
       return;
     }
-
     console.log("Login →", { username, role, rememberMe });
-
     try {
-      await validateUser(); // wait for login complete
-
+      await validateUser(); 
       const user = JSON.parse(sessionStorage.getItem("current") || "{}");
-
       if (user?.userid) {
         await handleUserActivityLogin(user.userid, user.role_id);
         window.location.href = "/models/membership/dashboard";
       }
-    } catch (error) {
+    }
+    catch (error) {
       console.error("Submit Error:", error);
     }
   };
@@ -145,7 +120,6 @@ const LoginPage = () => {
   return (
     <div className="min-h-screen bg-[var(--gradient-hero)] flex items-center justify-center px-4 select-none">
       <div className="w-full max-w-md">
-        {/* Heading */}
         <div className="text-center mb-8">
           <h1 className="text-4xl sm:text-5xl font-bold leading-tight pb-2 bg-gradient-accent bg-clip-text text-transparent">
             Login
@@ -156,7 +130,6 @@ const LoginPage = () => {
           </p>
         </div>
 
-        {/* Card */}
         <Card className="bg-card/50 backdrop-blur-sm border border-border shadow-[var(--shadow-elegant)]">
           <CardHeader>
             <CardTitle className="text-center text-xl">Welcome Back</CardTitle>
@@ -164,23 +137,13 @@ const LoginPage = () => {
 
           <CardContent className="p-6 sm:p-8">
             <form onSubmit={handleSubmit} className="space-y-5">
-              {/* Username */}
               <div className="space-y-2">
                 <Label htmlFor="username">Contact Number</Label>
-
                 <div className="relative">
                   <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
 
-                  <Input
-                    id="username"
-                    type="text"
-                    placeholder="Enter your contactnumber"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                    autoComplete="username"
-                    className="pl-10"
-                    required
-                  />
+                  <Input id="username" type="text" placeholder="Enter your contactnumber" value={username}
+                    onChange={(e) => setUsername(e.target.value)} autoComplete="username" className="pl-10"required/>
                 </div>
               </div>
 

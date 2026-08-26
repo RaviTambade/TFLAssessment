@@ -5,10 +5,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
+
+import javax.sql.DataSource;
 
 import org.springframework.stereotype.Repository;
 
-import com.transflower.tflcomentor.configuration.DBConfig;
 import com.transflower.tflcomentor.ecm.entity.Question;
 import com.transflower.tflcomentor.ecm.entity.enums.DifficultyLevel;
 import com.transflower.tflcomentor.ecm.entity.enums.QuestionStatus;
@@ -18,12 +20,16 @@ import com.transflower.tflcomentor.ecm.repository.QuestionFilterRepository;
 @Repository
 public class QuestionFilterRepositoryImpl implements QuestionFilterRepository {
 
+    private final DataSource dataSource;
+    public QuestionFilterRepositoryImpl(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
     private Connection getConnection() throws Exception {
-        return DBConfig.getConnection();
+        return dataSource.getConnection();
     }
 
     @Override
-    public List<Question> getQuestions(
+    public CompletableFuture<List<Question>> getQuestions(
             QuestionType question_type,
             DifficultyLevel difficulty_level,
             QuestionStatus status,
@@ -33,8 +39,9 @@ public class QuestionFilterRepositoryImpl implements QuestionFilterRepository {
             String concept,
             Long userId,
             Long roleId) {
-
-        List<Question> questionList = new ArrayList<>();
+        
+        return CompletableFuture.supplyAsync(() -> {
+            List<Question> questionList = new ArrayList<>();
 
         String query = """
                 SELECT DISTINCT q.*
@@ -138,5 +145,6 @@ public class QuestionFilterRepositoryImpl implements QuestionFilterRepository {
         }
 
         return questionList;
+        });
     }
 }
